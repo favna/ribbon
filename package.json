@@ -1,7 +1,7 @@
 {
-  "name": "discordbot",
-  "version": "1.0.0",
-  "description": "A Discord Bot for your server",
+  "name": "ribbon",
+  "version": "0.0.1",
+  "description": "Ribbon - A discord bot for your server",
   "author": "Favna",
   "license": "LGPL-3.0",
   "main": "src/app.js",
@@ -43,7 +43,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Favna/DiscordBot.git"
+    "url": "git+https://github.com/Favna/Ribbon.git"
   },
   "keywords": [
     "Discord",
@@ -52,8 +52,8 @@
     "Node"
   ],
   "bugs": {
-    "url": "https://github.com/Favna/DiscordBot/issues"
+    "url": "https://github.com/Favna/Ribbon/issues"
   },
-  "homepage": "https://github.com/Favna/DiscordBot#readme",
+  "homepage": "https://github.com/Favna/Ribbon#readme",
   "false": {}
 }

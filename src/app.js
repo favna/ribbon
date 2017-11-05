@@ -23,11 +23,11 @@
 *         reasonable ways as different from the original version.
 */
 
-const discordSelfBot = require('./DiscordBot.js');
+const ribbon = require('./Ribbon.js');
 const keys = require('./auth.json');
 
 function start() {
-    (new discordSelfBot(keys.token).init());
+    (new ribbon(keys.token).init());
 }
 
 start();

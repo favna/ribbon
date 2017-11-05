@@ -22,3 +22,17 @@
 *         or requiring that modified versions of such material be marked in
 *         reasonable ways as different from the original version.
 */
+
+// TO DO LIST OF COMMANDS
+/**
+ * Fun: 8ball, coin, fight, dice roll
+ * Info: avatar, server (no args), userinfo, weather, bot stats
+ * Links: Github Repo, invite link for bot, invite link for support server
+ * Misc: math, zalgo, say, translate
+ * pokedex: all stuff
+ * search: anime, define, games, google, image, lmgtfy, seam, tmdb, urban, youtube
+ * music: node-oppus streaming from youtube
+ * moderation: addrole, deleterole, kick, ban, nickname, purge
+ * build-in: help, prefix, ping, commandstate
+ * logs: join and leave logs
+ */
