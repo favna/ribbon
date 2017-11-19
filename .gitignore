@@ -1,4 +1,16 @@
+# Node modules need to be installed through yarn
 node_modules/
+
+# VS Code workspace settings
 .vscode/
+
+# Files for personal use
 src/auth.json
+src/commands/fun/pastas/*
+# Exclude navy from gitignore so the folder is created on Git
+!src/commands/fun/pastas/246821351585742851/navy.txt
+
+# Any logs created
 *.log
+
+src/settings.sqlite3
