@@ -1,5 +1,5 @@
 /*
- *   This file is part of DiscordBot
+ *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,38 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires, sort-vars */
+const commando = require('discord.js-commando');
 
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
-	start = function () {
-		new Ribbon(keys.token).init();
-	};
+module.exports = class purgeCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'purge',
+			'group': 'administration',
+			'aliases': ['prune', 'delete'],
+			'memberName': 'purge',
+			'description': 'Purge a certain amount of messages',
+			'examples': ['purge 5'],
+			'guildOnly': true,
 
-start();
+			'args': [
+				{
+					'key': 'amount',
+					'prompt': 'How many messages to purge?',
+					'min': 1,
+					'max': 99,
+					'type': 'integer'
+				}
+			]
+		});
+	}
+
+	hasPermission (msg) {
+		return msg.member.hasPermission('MANAGE_MESSAGES');
+	}
+
+	run (msg, args) {
+		msg.channel.bulkDelete(args.amount + 1, true);
+		
+		return msg.say(`\`Deleted ${args.amount} messages\``).then(m => m.delete(1000));
+	}
+};

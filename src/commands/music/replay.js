@@ -1,5 +1,5 @@
 /*
- *   This file is part of DiscordBot
+ *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -22,14 +22,3 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
-
-/* eslint-disable no-mixed-requires, sort-vars */
-
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
-	start = function () {
-		new Ribbon(keys.token).init();
-	};
-
-start();

@@ -1,5 +1,5 @@
 /*
- *   This file is part of DiscordBot
+ *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,25 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires, sort-vars */
+const Ribbon = require('../Ribbon.js'),
+	test = require('tape'),
+	token = require('../auth.json').token; // eslint-disable-line prefer-destructuring
 
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
-	start = function () {
-		new Ribbon(keys.token).init();
-	};
 
-start();
+test('connect & disconnect', (timeout) => {
+	timeout.timeoutAfter(15000);
+	timeout.ok(token, 'discord token should be set');
+
+	const bot = new Ribbon(token);
+
+	timeout.false(bot.isReady, 'bot should not be ready');
+	bot.init();
+
+	const si = setInterval(() => { // eslint-disable-line one-var
+		if (bot.isReady) {
+			bot.deinit();
+			clearInterval(si);
+			timeout.end();
+		}
+	}, 5000);
+});

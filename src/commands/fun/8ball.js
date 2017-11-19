@@ -1,5 +1,5 @@
 /*
- *   This file is part of DiscordBot
+ *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,44 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires, sort-vars */
+const Discord = require('discord.js'),
+	commando = require('discord.js-commando'),
+	predict = require('eightball');
+    
+module.exports = class eightBallCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': '8ball',
+			'group': 'fun',
+			'aliases': ['eightball'],
+			'memberName': '8ball',
+			'description': 'Roll a magic 8ball',
+			'examples': ['8ball {question}', '8ball is Favna a genius coder?'],
+			'guildOnly': false,
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
 
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
-	start = function () {
-		new Ribbon(keys.token).init();
-	};
+			'args': [
+				{
+					'key': 'question',
+					'prompt': '8ball what?',
+					'type': 'string',
+					'label': 'Question to ask 8ball'
+				}
+			]
+		});
+	}
 
-start();
+	run (msg, args) {
+		const eightBallEmbed = new Discord.MessageEmbed();
+
+		eightBallEmbed
+			.setColor('#71CD40')
+			.addField(':question: Question', args.question, false)
+			.addField(':8ball: 8ball', predict(), false);
+		
+		return msg.embed(eightBallEmbed);
+	}
+};

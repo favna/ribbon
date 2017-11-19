@@ -1,5 +1,5 @@
 /*
- *   This file is part of DiscordBot
+ *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,37 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires, sort-vars */
+const Discord = require('discord.js'),
+	coin = require('flipacoin'),
+	commando = require('discord.js-commando');
 
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
-	start = function () {
-		new Ribbon(keys.token).init();
-	};
 
-start();
+module.exports = class coinCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'coin',
+			'group': 'fun',
+			'aliases': ['flip'],
+			'memberName': 'coin',
+			'description': 'Flips a coin',
+			'examples': ['flip'],
+			'guildOnly': false,
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			}
+		});
+	}
+
+	run (msg) {
+		const coinEmbed = new Discord.MessageEmbed(),
+			res = coin();
+
+		coinEmbed
+			.setColor('#FF0000')
+			.setImage(res === 'head' ? 'https://favna.s-ul.eu/8ZKmpiKO.png' : 'https://favna.s-ul.eu/NTsDbSUo.png')
+			.setTitle(`Flipped ${res}s`);
+
+		msg.embed(coinEmbed);
+	}
+};

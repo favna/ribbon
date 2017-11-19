@@ -1,5 +1,5 @@
 /*
- *   This file is part of DiscordBot
+ *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,36 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires, sort-vars */
+const Discord = require('discord.js'),
+	commando = require('discord.js-commando');
 
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
-	start = function () {
-		new Ribbon(keys.token).init();
-	};
+module.exports = class infoCommnad extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'info',
+			'aliases': ['shill', 'plug'],
+			'group': 'links',
+			'memberName': 'info',
+			'description': 'Link to Favna\'s discord-self-bot',
+			'examples': ['info'],
+			'guildOnly': false,
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			}
+		});
+	}
 
-start();
+	run (msg) {
+		const shillEmbed = new Discord.MessageEmbed();
+
+		shillEmbed
+			.setTitle('Discord-Self-Bot by Favna')
+			.setDescription('Empower your Discord experience with a fully modular and expansive set of commands')
+			.setThumbnail('https://selfbot.favna.xyz/images/selfbot.png')
+			.setURL('https://selfbot.favna.xyz')
+			.addField('​', '[Website](https://selfbot.favna.xyz) | [GitHub](https://github.com/Favna/Discord-Self-Bot) | [Wiki](https://github.com/Favna/Discord-Self-Bot/wiki)');
+
+		return msg.embed(shillEmbed, 'Find information on the bot here https://selfbot.favna.xyz');
+	}
+};

@@ -1,5 +1,5 @@
 /*
- *   This file is part of DiscordBot
+ *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,37 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires, sort-vars */
+const commando = require('discord.js-commando');
 
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
-	start = function () {
-		new Ribbon(keys.token).init();
-	};
+module.exports = class sayCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'say',
+			'aliases': ['sayd', 'repeat'],
+			'group': 'misc',
+			'memberName': 'say',
+			'description': 'I will repeat your message',
+			'examples': ['say {message}', 'say Favna is a great coder!'],
+			'guildOnly': false,
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
 
-start();
+			'args': [
+				{
+					'key': 'txt',
+					'prompt': 'What should I say?',
+					'type': 'string',
+					'label': 'Text to repeat'
+				}
+			]
+		});
+	}
+
+	run (msg, args) {
+		msg.delete();
+    
+		return msg.say(args.txt);
+	}
+};

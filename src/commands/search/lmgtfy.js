@@ -1,5 +1,5 @@
 /*
- *   This file is part of DiscordBot
+ *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,35 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires, sort-vars */
+const commando = require('discord.js-commando');
 
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
-	start = function () {
-		new Ribbon(keys.token).init();
-	};
+const replaceAll = function (string, pattern, replacement) { // eslint-disable-line one-var
+	return string.replace(new RegExp(pattern, 'g'), replacement);
+};
 
-start();
+module.exports = class lmgtfyCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'lmgtfy',
+			'group': 'search',
+			'aliases': ['dumb'],
+			'memberName': 'lmgtfy',
+			'description': 'Produce a lmgtfy (let me google that for you) URL',
+			'examples': ['lmgtfy {query}', 'lmgtfy is it legal to kill an ant???', 'lmgtfy are there birds in canada?'],
+			'guildOnly': false,
+
+			'args': [
+				{
+					'key': 'question',
+					'prompt': 'What does the idiot want to find?',
+					'type': 'string',
+					'label': 'Search query to lmgtfy'
+				}
+			]
+		});
+	}
+
+	run (msg, args) {
+		return msg.say(`https://lmgtfy.com/?q=${replaceAll(args.question, / /, '+')}`);
+	}
+};

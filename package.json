@@ -1,59 +1,74 @@
 {
   "name": "ribbon",
-  "version": "0.0.1",
+  "version": "0.5.0-alpha",
   "description": "Ribbon - A discord bot for your server",
   "author": "Favna",
   "license": "LGPL-3.0",
   "main": "src/app.js",
+  "homepage": "https://ribbon.favna.xyz",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Favna/Ribbon.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Favna/Ribbon/issues"
+  },
+  "scripts": {
+    "prestart": "yarn install",
+    "lint": "./node_modules/.bin/eslint **/*.js",
+    "start": "node src/app.js",
+    "test": "node src/test/test.js | tap-summary"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "discord.js",
+    "discord.js-commando",
+    "NodeJS"
+  ],
   "engines": {
-    "node": "8.5.0"
+    "node": ">=8.0.0 <9.0"
   },
   "dependencies": {
     "booru": "^0.3.3",
     "cheerio": "^1.0.0-rc.2",
     "common-tags": "^1.4.0",
     "countdown": "^2.6.0",
-    "currency-symbol-map": "^4.0.2",
+    "currency-symbol-map": "^4.0.3",
     "cydia-api-node": "^1.0.2",
     "did-you-mean": "0.0.1",
-    "discord.js": "git+https://github.com/hydrabolt/discord.js#stable",
+    "discord.js": "git+https://github.com/Favna/discord.js.git#active",
     "discord.js-commando": "git+https://github.com/Favna/discord.js-commando.git#active",
     "eightball": "^1.0.1",
     "flipacoin": "^1.0.0",
     "imgur": "^0.2.1",
     "malapi": "0.0.3",
-    "moment": "^2.17.1",
+    "moment": "^2.19.1",
     "money": "^0.2.0",
     "moviedb": "^0.2.10",
     "node-random": "^1.0.1",
+    "open-exchange-rates": "^0.3.0",
     "ordinal": "1.0.2",
-    "qrcode": "^0.9.0",
+    "pornsearch": "^2.2.5",
+    "qrcode": "^1.0.0",
     "querystring": "^0.2.0",
-    "request": "^2.79.0",
+    "request": "^2.83.0",
+    "scalc": "^2.0.1",
+    "snekfetch": "^3.5.8",
     "sqlite": "^2.8.0",
-    "steamapi": "^1.3.1",
-    "superagent": "^3.6.0",
+    "steamapi": "^1.3.5",
+    "strawpoll.js": "^1.0.3",
+    "superagent": "^3.8.1",
     "urban": "^0.3.1",
+    "xdicey": "^2.0.1",
     "yahoo-weather": "^2.2.2",
-    "youtube-node": "^1.3.2"
+    "youtube-node": "^1.3.2",
+    "zalgotxt": "^0.1.0"
   },
-  "scripts": {
-    "prestart": "npm install",
-    "start": "node src/app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Favna/Ribbon.git"
-  },
-  "keywords": [
-    "Discord",
-    "Bot",
-    "Public",
-    "Node"
-  ],
-  "bugs": {
-    "url": "https://github.com/Favna/Ribbon/issues"
-  },
-  "homepage": "https://github.com/Favna/Ribbon#readme",
-  "false": {}
+  "devDependencies": {
+    "eslint": "^4.10.0",
+    "eslint-plugin-node": "^5.2.1",
+    "tap-summary": "^4.0.0",
+    "tape": "^4.6.3"
+  }
 }

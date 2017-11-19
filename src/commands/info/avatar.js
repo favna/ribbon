@@ -1,5 +1,5 @@
 /*
- *   This file is part of DiscordBot
+ *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,35 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires, sort-vars */
+const commando = require('discord.js-commando');
 
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
-	start = function () {
-		new Ribbon(keys.token).init();
-	};
+module.exports = class avatarCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'avatar',
+			'aliases': ['ava'],
+			'group': 'info',
+			'memberName': 'avatar',
+			'description': 'Gets the avatar from a user',
+			'examples': ['avatar {member name or ID}', 'avatar Favna'],
+			'guildOnly': true,
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
 
-start();
+			'args': [
+				{
+					'key': 'member',
+					'prompt': 'What user would you like to get the avatar from?',
+					'type': 'member',
+					'label': 'member name or ID'
+				}
+			]
+		});
+	}
+
+	run (msg, args) {
+		msg.say(args.member.user.displayAvatarURL());
+	}
+};

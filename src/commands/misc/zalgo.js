@@ -1,5 +1,5 @@
 /*
- *   This file is part of DiscordBot
+ *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,38 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires, sort-vars */
+const commando = require('discord.js-commando'),
+	zalgo = require('zalgotxt');
 
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
-	start = function () {
-		new Ribbon(keys.token).init();
-	};
 
-start();
+module.exports = class zalgoCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'zalgo',
+			'group': 'misc',
+			'memberName': 'zalgo',
+			'description': 'F*ck up text using Zalgo',
+			'examples': ['zalgo {message}', 'zalgo HE COMES'],
+			'guildOnly': false,
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
+
+			'args': [
+				{
+					'key': 'txt',
+					'prompt': 'What should I zalgolize?',
+					'type': 'string',
+					'label': 'Text to zalgolize'
+				}
+			]
+		});
+	}
+
+	run (msg, args) {
+		msg.delete();
+		
+		return msg.say(zalgo(args.txt));
+	}
+};

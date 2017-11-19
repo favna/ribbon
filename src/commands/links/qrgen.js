@@ -1,5 +1,5 @@
 /*
- *   This file is part of DiscordBot
+ *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
  *
  *   This program is free software: you can redistribute it and/or modify
@@ -23,13 +23,44 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires, sort-vars */
+const commando = require('discord.js-commando'),
+	imgur = require('imgur'),
+	qr = require('qrcode');
 
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
-	start = function () {
-		new Ribbon(keys.token).init();
-	};
 
-start();
+module.exports = class qrgenCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'qrgen',
+			'aliases': ['qr'],
+			'group': 'links',
+			'memberName': 'qrgen',
+			'description': 'Generates a QR code from a given string',
+			'examples': ['qrgen {url}', 'qrgen https://ribbon.favna.xyz'],
+			'guildOnly': false,
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
+
+			'args': [
+				{
+					'key': 'qrurl',
+					'prompt': 'String (URL) to make a QR code for?',
+					'type': 'string',
+					'label': 'URL to get a QR for'
+				}
+			]
+		});
+	}
+
+	run (msg, args) {
+		qr.toDataURL(args.qrurl, {'errorCorrectionLevel': 'M'}, (err, url) => {
+			if (err) {
+				throw err;
+			}
+			imgur.uploadBase64(url.slice(22))
+				.then(json => msg.say(`QR Code for this file: ${json.data.link}`));
+		});
+	}
+};
