@@ -63,7 +63,7 @@ module.exports = class banCommand extends commando.Command {
 
 	run (msg, args) {
 		if (!args.member.bannable) {
-			return;
+			return msg.reply('⚠ I cannot ban that member, his role is probably higher than my own!');
 		}
 
 		args.member.ban({
@@ -82,6 +82,6 @@ module.exports = class banCommand extends commando.Command {
 				`**Reason:** ${args.reason}`)
 			.setFooter(moment().format('MMM Do YYYY | HH:mm:ss'));
 
-		modLogs !== null ? modLogs.send({'embed': banEmbed}) : msg.reply('I can keep a log of bans if you create a channel named \'mod-logs\' and give me access to it');
+		return modLogs !== null ? modLogs.send({'embed': banEmbed}) : msg.reply('I can keep a log of bans if you create a channel named \'mod-logs\' and give me access to it');
 	}
 };

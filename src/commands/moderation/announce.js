@@ -29,7 +29,7 @@ module.exports = class newsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'announce',
-			'group': 'administration',
+			'group': 'moderation',
 			'aliases': ['news'],
 			'memberName': 'announce',
 			'description': 'Make an announcement in the news channel',
@@ -55,17 +55,17 @@ module.exports = class newsCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		if (!msg.guild.channels.exists('name', 'news') || !msg.guild.channels.exists('name', 'announcements')) {
-			return msg.reply('To use the announce command you need a channel named \'news\' or \'announcements\'');
+		if (msg.guild.channels.exists('name', 'announcements') || msg.guild.channels.exists('name', 'news')) {
+			const newsChannel = msg.guild.channels.exists('name', 'announcements') ? msg.guild.channels.find('name', 'announcements') : msg.guild.channels.find('name', 'news');
+
+			let announce = args.body;
+
+			announce.slice(0, 4) !== 'http' ? announce = `${args.body.slice(0, 1).toUpperCase()}${args.body.slice(1)}` : null;
+			msg.attachments.first() && msg.attachments.first().url ? announce += `\n${msg.attachments.first().url}` : null;
+
+			return newsChannel.send(announce);
 		}
 
-		const newsChannel = msg.guild.channels.exists('name', 'news') ? msg.guild.channels.find('name', 'news') : msg.guild.channels.find('name', 'announcements');
-
-		let announce = args.body;
-
-		announce.slice(0, 4) !== 'http' ? announce = `${args.body.slice(0, 1).toUpperCase()}${args.body.slice(1)}` : null;
-		msg.attachments.first() && msg.attachments.first().url ? announce += `\n${msg.attachments.first().url}` : null;
-		
-		return newsChannel.send(announce);
+		return msg.reply('To use the announce command you need a channel named \'news\' or \'announcements\'');
 	}
 };

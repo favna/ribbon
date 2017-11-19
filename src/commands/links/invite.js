@@ -50,11 +50,12 @@ module.exports = class inviteCommnad extends commando.Command {
 			.setAuthor('Ribbon Links')
 			.setThumbnail('https://ribbon.favna.xyz/images/ribbon.png')
 			.setURL('https://selfbot.favna.xyz')
+			.setColor('#E24141')
 			.addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p536341582)\n' +
-                '| [Join the Support Server](https://discord.gg/zdt5yQt)\n' +
-                '| [Website](https://selfbot.favna.xyz)\n' +
-                '| [GitHub](https://github.com/Favna/Ribbon)\n' +
-                '| [Wiki](https://github.com/Favna/Ribbon/wiki)');
+                '[Join the Support Server](https://discord.gg/zdt5yQt)\n' +
+                '[Website](https://selfbot.favna.xyz)\n' +
+                '[GitHub](https://github.com/Favna/Ribbon)\n' +
+                '[Wiki](https://github.com/Favna/Ribbon/wiki)');
 
 		return msg.embed(inviteEmbed, 'Find information on the bot here: https://ribbon.favna.xyz');
 	}

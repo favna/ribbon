@@ -4,7 +4,7 @@ module.exports = class delRoleCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'delrole',
-			'group': 'administration',
+			'group': 'moderation',
 			'aliases': ['deleterole', 'dr', 'remrole', 'removerole'],
 			'memberName': 'delrole',
 			'description': 'Deletes a role from a member',

@@ -4,7 +4,7 @@ module.exports = class addRoleCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'addrole',
-			'group': 'administration',
+			'group': 'moderation',
 			'aliases': ['newrole', 'ar'],
 			'memberName': 'addrole',
 			'description': 'Adds a role to a member',

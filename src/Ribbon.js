@@ -169,6 +169,8 @@ class Ribbon {
 			.on('commandBlocked', this.onCmdBlock())
 			.on('commandStatusChange', this.onCmdStatusChange())
 			.on('groupStatusChange', this.onGroupStatusChange())
+			.on('guildMemberAdd', this.onGuildMemberAdd())
+			.on('guildMemberRemove', this.onGuildMemberRemove())
 			.on('message', this.onMessage());
 
 		this.client.setProvider(

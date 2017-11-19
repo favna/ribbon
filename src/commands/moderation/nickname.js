@@ -29,7 +29,7 @@ module.exports = class nickCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'nickname',
-			'group': 'administration',
+			'group': 'moderation',
 			'aliases': ['nick'],
 			'memberName': 'nickname',
 			'description': 'Assigns a nickname to a member. Use "clear" to remove the nickname.',

@@ -29,7 +29,7 @@ module.exports = class purgeCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'purge',
-			'group': 'administration',
+			'group': 'moderation',
 			'aliases': ['prune', 'delete'],
 			'memberName': 'purge',
 			'description': 'Purge a certain amount of messages',

@@ -31,7 +31,7 @@ module.exports = class kickCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'kick',
-			'group': 'administration',
+			'group': 'moderation',
 			'aliases': ['remove'],
 			'memberName': 'kick',
 			'description': 'Kick a member',
