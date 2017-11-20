@@ -46,12 +46,14 @@ module.exports = class sayCommand extends commando.Command {
 					'prompt': 'What should I say?',
 					'type': 'string',
 					'label': 'Text to repeat',
-					'validate': (rep) => {
-						if (!rep.toLowerCase().includes('@here') && !rep.toLowerCase().includes('@everyone')) {
-							return true;
+					'validate': (rep, msg) => {
+						if (msg.cleanContent.toLowerCase().includes('@here') || msg.cleanContent.toLowerCase().includes('@everyone')) {
+							msg.delete();
+
+							return 'You cannot make me mention `@here` or `@everyone`!';
 						}
-						
-						return 'Hah nice time trying to have me mention here or everyone!';
+
+						return true;
 					}
 				}
 			]
