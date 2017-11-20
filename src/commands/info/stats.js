@@ -26,14 +26,15 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-	moment = require('moment');
+	moment = require('moment'),
+	process = require('process');
 
 
 module.exports = class statsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'stats',
-			'aliases': ['botinfo'],
+			'aliases': ['botinfo', 'info'],
 			'group': 'info',
 			'memberName': 'stats',
 			'description': 'Gets statistics about Ribbon',
@@ -52,19 +53,24 @@ module.exports = class statsCommand extends commando.Command {
 
 		statsEmbed
 			.setColor('#E24141')
-			.setAuthor('Ribbon', 'https://ribbon.favna.xyz/ribbon.png')
+			.setAuthor('Ribbon Bot Stats', 'https://ribbon.favna.xyz/images/ribbon.png')
 			.addField('Guilds', this.client.guilds.size, true)
 			.addField('Channels', this.client.channels.size, true)
 			.addField('Users', this.client.users.size, true)
 			.addField('Owner', 'Favna#2846', true)
+			.addField('License', 'GPLv3 + 7b & 7c', true)
 			.addField('Discord.JS', '12.0', true)
 			.addField('NodeJS', '8.9.0', true)
+			.addField('OS', 'Raspbian Jessie', true)
+			.addField('Memory Usage', `${Math.round(process.memoryUsage().heapUsed / 10485.76) / 100} MB`, true)
 			.addField('Invite Me', '[Click Here](https://discord.now.sh/376520643862331396?p8)', true)
 			.addField('Source', '[Available on GitHub](https://github.com/favna/ribbon)', true)
 			.addField('Support', '[Server Invite](https://discord.gg/zdt5yQt)', true)
 			.addField('Uptime', moment.duration(this.client.uptime).format('DD [days], HH [hours and] mm [minutes]'))
-			.addField('\u200b', 'Be sure to use the `help` command to get the list of commands available to you in a DM. The default prefix is `!`. You can change this with the `prefix` command.\nIf you ever forget the command prefix, just use `@Ribbon#2325 prefix`'); // eslint-disable-line max-len
-
+			.addField('Current server time', moment().format('MMMM Do YYYY [|] HH:mm.ss ZZ'))
+			.addField('\u200b', 'Be sure to use the `help` command to get the list of commands available to you in a DM. The default prefix is `!`. You can change this with the `prefix` command.\nIf you ever forget the command prefix, just use `@Ribbon#2325 prefix`') // eslint-disable-line max-len
+			.setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm')}`, 'https://ribbon.favna.xyz/images/ribbon.png');
+			
 		return msg.embed(statsEmbed);
 	}
 };
