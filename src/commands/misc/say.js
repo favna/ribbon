@@ -47,7 +47,7 @@ module.exports = class sayCommand extends commando.Command {
 					'type': 'string',
 					'label': 'Text to repeat',
 					'validate': (rep) => {
-						if (!rep.toLowerCase().includes('@here') || !rep.toLowerCase().includes('@everyone')) {
+						if (!rep.toLowerCase().includes('@here') && !rep.toLowerCase().includes('@everyone')) {
 							return true;
 						}
 						
