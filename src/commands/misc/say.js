@@ -45,7 +45,14 @@ module.exports = class sayCommand extends commando.Command {
 					'key': 'txt',
 					'prompt': 'What should I say?',
 					'type': 'string',
-					'label': 'Text to repeat'
+					'label': 'Text to repeat',
+					'validate': (rep) => {
+						if (!rep.toLowerCase().includes('@here') || !rep.toLowerCase().includes('@everyone')) {
+							return true;
+						}
+						
+						return 'Hah nice time trying to have me mention here or everyone!';
+					}
 				}
 			]
 		});
@@ -53,7 +60,7 @@ module.exports = class sayCommand extends commando.Command {
 
 	run (msg, args) {
 		msg.delete();
-    
+
 		return msg.say(args.txt);
 	}
 };
