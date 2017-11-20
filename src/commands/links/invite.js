@@ -51,7 +51,7 @@ module.exports = class inviteCommnad extends commando.Command {
 			.setThumbnail('https://ribbon.favna.xyz/images/ribbon.png')
 			.setURL('https://selfbot.favna.xyz')
 			.setColor('#E24141')
-			.addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p536341582)\n' +
+			.addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p8)\n' +
                 '[Join the Support Server](https://discord.gg/zdt5yQt)\n' +
                 '[Website](https://selfbot.favna.xyz)\n' +
                 '[GitHub](https://github.com/Favna/Ribbon)\n' +

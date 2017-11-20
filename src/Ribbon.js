@@ -195,7 +195,7 @@ class Ribbon {
 				'help': true,
 				'prefix': true,
 				'ping': true,
-				'eval_': false,
+				'eval_': true,
 				'commandState': true
 			})
 			.registerCommandsIn(Path.join(__dirname, 'commands'));
