@@ -23,13 +23,6 @@
  *         reasonable ways as different from the original version.
  */
 
-/**
- * TO DO LIST OF COMMANDS
- * Info: bot stats (in need of suggestions of what to put other than server count)
- * music: play, disconnect, np, skip, remove, loopqueue, loop, join, resume, move, skipto, clear, replay, pause, removedupes, volume (services: youtube and 
- * sharding of music commands I guess :v that's gonna be fun
- */
-
 // eslint-disable-next-line no-mixed-requires
 const Commando = require('discord.js-commando'),
 	Discord = require('discord.js'),
