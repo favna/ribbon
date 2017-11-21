@@ -22,3 +22,41 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
+
+const Path = require('path'),
+	commando = require('discord.js-commando'),
+	dispatcher = require(Path.join(__dirname, 'data.js')).dispatcher,
+	queue = require(Path.join(__dirname, 'data.js')).queue;
+
+
+module.exports = class pauseCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'pause',
+			'aliases': ['halt', 'hush'],
+			'group': 'music',
+			'memberName': 'pause',
+			'description': 'Pauses the currently playing song',
+			'examples': ['pause'],
+			'guildOnly': true,
+			'throttling': {
+				'usages': 2,
+				'duration': 30
+			}
+		});
+	}
+
+	run (msg) {
+		if (!dispatcher.paused) {
+			queue[msg.guild.id].playing = false;
+
+			return dispatcher.pause();
+		}
+
+		if (!queue[msg.guild.id].playing) {
+			return msg.say('I\'m not currently playing music');
+		}
+
+		return msg.say('This command has no use until I am playing music!');
+	}
+};

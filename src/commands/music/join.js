@@ -22,3 +22,39 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
+
+const commando = require('discord.js-commando');
+
+module.exports = class playCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'join',
+			'group': 'music',
+			'memberName': 'join',
+			'description': 'Joins your voice channel',
+			'examples': ['join'],
+			'guildOnly': true,
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			}
+		});
+	}
+
+	run (msg) {
+		if (!msg.guild.voiceConnection) {
+			if (!msg.member.voiceChannel) {
+				return msg.reply('⚠️ You need to be in a voice channel before I can join you.');
+			}
+
+			if (!msg.member.voiceChannel.joinable) {
+				return msg.reply('⚠️ I couldn\'t connect to your voice channel, check the permissions!');
+			}
+			
+			return msg.member.voiceChannel.join()
+				.then(connection => msg.say(`Jamming to my jukebox in ${msg.member.voiceChannel.name}`)); // eslint-disable-line no-unused-vars
+		}
+        
+		return msg.reply('⚠️ An error occured while joining your channel, sorry 😢');
+	}
+};

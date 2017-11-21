@@ -27,20 +27,18 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	path = require('path'),
-	queue = require(path.join(__dirname, 'data.js')).queue,
+	queue = require(path.join(__dirname, 'queue.js')),
 	ytdl = require('ytdl-core');
 
-let dispatcher = require(path.join(__dirname, 'data.js')).dispatcher;
-
-module.exports = class playCommand extends commando.Command {
+module.exports = class addCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'play',
-			'aliases': ['start'],
+			'name': 'add',
+			'aliases': ['enqueue'],
 			'group': 'music',
-			'memberName': 'play',
-			'description': 'Add a song to your queue and start playing. Also auto-joins your voice channel',
-			'examples': ['play {URL}', 'play https://www.youtube.com/watch?v=aatr_2MstrI'],
+			'memberName': 'add',
+			'description': 'Add a song to the play queue',
+			'examples': ['add {URL}', 'add https://www.youtube.com/watch?v=aatr_2MstrI'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 1,
@@ -62,25 +60,16 @@ module.exports = class playCommand extends commando.Command {
 						}
 
 						return 'Your input has to be a URL';
-					},
-					'default': ''
+					}
 				}
 			]
 		});
 	}
 
 	run (msg, args) {
-		if (!msg.guild.voiceConnection) {
-			if (!msg.member.voiceChannel.joinable) {
-				return msg.reply('I couldn\'t connect to your voice channel. If you are not yet in any voice channel please join one first.');
-			}
-			msg.member.voiceChannel.join()
-				.then(connection => msg.say(`Jamming to my jukebox in ${msg.member.voiceChannel.name}`)); // eslint-disable-line no-unused-vars
-		}
-
-		ytdl.getInfo(args.url, (err, info) => { // eslint-disable-line consistent-return
+		ytdl.getInfo(args.url, (err, info) => {
 			if (err) {
-				return msg.reply(`Invalid Youtube Link: ${err}`);
+				return msg.reply(`⚠️ Invalid Youtube Link: ${err}`);
 			}
 			if (!queue.hasOwnProperty(msg.guild.id)) {
 				queue[msg.guild.id] = {};
@@ -88,11 +77,14 @@ module.exports = class playCommand extends commando.Command {
 				queue[msg.guild.id].songs = [];
 			}
 			queue[msg.guild.id].songs.push({
-				'url': args.url,
+				'url': info.video_url,
 				'title': info.title,
+				'duration': moment().startOf('day')
+					.seconds(info.length_seconds)
+					.format('HH:mm:ss'),
 				'requester': msg.member.displayName
 			});
-
+			
 			const addEmbed = new Discord.MessageEmbed();
 
 			addEmbed
@@ -108,18 +100,10 @@ module.exports = class playCommand extends commando.Command {
 				.addField('Position in queue', queue[msg.guild.id].songs.length, true)
 				.addField('Views', info.view_count, true)
 				.addField('Published on', moment(info.published).format('MMMM Do YYYY [at] HH:mm'));
+					
+			return msg.embed(addEmbed);
+		
 		});
 
-		// Check if queue has songs
-
-		if (queue[msg.guild.id].playing) {
-			return msg.say('🎵 Already playing music 🎵');
-		}
-		const song = queue[msg.guild.id].songs[0];
-
-		msg.say(`Playing: \`${song.title}\` as requested by \`${song.requester}\``);
-
-		dispatcher = msg.guild.voiceConnection.playStream(ytdl(song.url, {'filter': 'audioonly'}));
-		queue[msg.guild.id].playing = true;
 	}
 };

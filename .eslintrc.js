@@ -195,7 +195,7 @@ module.exports = {
         "no-process-env": "error",
         "no-process-exit": "error",
         "no-proto": "error",
-        "no-prototype-builtins": "error",
+        "no-prototype-builtins": "off",
         "no-restricted-globals": "error",
         "no-restricted-imports": "error",
         "no-restricted-modules": "error",
@@ -248,10 +248,10 @@ module.exports = {
         "padding-line-between-statements": "error",
         "prefer-arrow-callback": "error",
         "prefer-const": "error",
-        "prefer-destructuring": ["error", {
+        "prefer-destructuring": ["off", {
             "VariableDeclarator": {
                 "array": false,
-                "object": true
+                "object": false
             }
         }],
         "prefer-numeric-literals": "error",

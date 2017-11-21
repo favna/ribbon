@@ -22,3 +22,11 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
+
+let dispatcher; // eslint-disable-line init-declarations
+const queue = {};
+
+module.exports = {
+	dispatcher,
+	queue
+};

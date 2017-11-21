@@ -22,3 +22,35 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
+
+const commando = require('discord.js-commando');
+
+module.exports = class disconnectCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'disconnect',
+			'aliases': ['stop', 'quit', 'leave'],
+			'group': 'music',
+			'memberName': 'disconnect',
+			'description': 'Disconnects the bot from the voice channel',
+			'examples': ['disconnect'],
+			'guildOnly': true,
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			}
+		});
+	}
+
+	run (msg) {
+		if (!msg.guild.voiceConnection) {
+			return msg.reply('⚠️ I\'m not in a voice channel I can disconnect from!');
+		}
+
+		const VoiceChannel = msg.guild.voiceConnection.channel;
+
+		VoiceChannel.leave();
+		
+		return msg.reply(`Left the ${VoiceChannel.name} voice channel`);
+	}
+};

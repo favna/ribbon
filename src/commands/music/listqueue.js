@@ -22,3 +22,45 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
+
+const Discord = require('discord.js'),
+	commando = require('discord.js-commando'),
+	path = require('path'),
+	queue = require(path.join(__dirname, 'queue.js'));
+
+module.exports = class listqueueCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'listqueue',
+			'aliases': ['list', 'queue'],
+			'group': 'music',
+			'memberName': 'listqueue',
+			'description': 'Returns of list of the current queue',
+			'examples': ['listqueue'],
+			'guildOnly': true,
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			}
+		});
+	}
+
+	run (msg) {
+
+		if (!queue[msg.guild.id]) {
+			return msg.reply('The queue is empty. You can add songs with the `add` or `play` commands');
+		}
+
+		const queueEmbed = new Discord.MessageEmbed(),
+			songQueue = queue[msg.guild.id].songs;
+
+		queueEmbed
+			.setColor('#E24141')
+			.setAuthor(`Queue for ${msg.guild.name}`, msg.guild.iconURL())
+			.addField('__Now Playing:__', `[${songQueue[0].title}](${songQueue[0].url}) | \`${songQueue[0].duration}\` | \`Requested By:\` ${songQueue[0].requester}`)
+			.addField('⬇ __Up Next__ ⬇', 'tempdat', false);
+
+		return msg.embed(queueEmbed);
+
+	}
+};

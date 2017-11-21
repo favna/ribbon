@@ -22,3 +22,41 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
+
+const Path = require('path'),
+	commando = require('discord.js-commando'),
+	dispatcher = require(Path.join(__dirname, 'data.js')).dispatcher,
+	queue = require(Path.join(__dirname, 'data.js')).queue;
+
+
+module.exports = class resumeCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'resume',
+			'aliases': ['continue'],
+			'group': 'music',
+			'memberName': 'resume',
+			'description': 'Resumes the currently playing song',
+			'examples': ['resume'],
+			'guildOnly': true,
+			'throttling': {
+				'usages': 2,
+				'duration': 30
+			}
+		});
+	}
+
+	run (msg) {
+		if (!queue[msg.guild.id].playing && queue[msg.guild.id].songs) {
+			queue[msg.guild.id].playing = true;
+
+			return dispatcher.resume();
+		}
+
+		if (queue[msg.guild.id].playing) {
+			return msg.say('I\'m currently playing music');
+		}
+
+		return msg.say('This command has no use until I am playing music!');
+	}
+};
