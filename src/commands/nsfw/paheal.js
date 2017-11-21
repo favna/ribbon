@@ -22,6 +22,7 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
+
 const booru = require('booru'),
 	commando = require('discord.js-commando');
 
