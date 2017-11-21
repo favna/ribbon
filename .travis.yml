@@ -1,4 +1,3 @@
-
 sudo: required
 dist: trusty
 os: linux
@@ -11,6 +10,7 @@ cache:
   directories:
   - node_modules
 before_install:
+- echo $authfile | gpg --passphrase-fd 0 src/auth.json.gpg
 - sudo apt-get update -y
 - sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential
   g++ python3.4
@@ -28,3 +28,4 @@ notifications:
   email: false
 env:
   global:
+    secure: KdHS3goAVSsYT1yUp9zWOnQiaYfpHg7b6z2/Pys+/9J8eKXpXWI2JlTcXDFv14vRs5yI/jYWiXpVcEEAvWx8ZxHpcUY+coKf15z9gO1iBkOtDjvYyhRzgD2z9CFLXrjiMxDnu1C/0V8q4LJLQvals2E4nlWkCd9Plecxr11XnR5sYoEt/icR/oxHz726v5rpmIVfQYTaP3nEvZ87vHv5FD/pS4K0BpSBioUbXDjY4+hky4HGpyANAp0+Wpt1FZHS+I8AslQv3hSbWYmJl9fJhLBsfJeZKuUX1P3czuVvul6kqji+vO2hwz9iJDMSx/jBIi83xy0poH7lLmP5/lTIpSJwL4J+z8ScWSCW6cMCQN3fsDkS6z5Dzf7yQ1lqw3t7R9HXilqcKjCCVx65Rd0aiycnIRuN3ekmw3YsXkrHfczK4h6RmUwp72PsxJkiiZISjmlaBvQVqB18GOsHt+uSfGqSZmFq54x0faFsXtD7np6IiT3N6nL7agUdbpEQzwBfROkjETMU3l5ZoHZsiFiVf+7FhBd5pjFnsHYV8byNQ2AmdQm3UFPcQFdOBs8oo76ZLfeOWLNQDRB2zdA6eQAs3Gng/7x/r2kuczso1z4oOnTm4kVyMp32Mz0Q2sHgoGmmooE/+oHx6CI5BrFrPsdaYB408qd/ZhB+TfcR/q5T5V8=
