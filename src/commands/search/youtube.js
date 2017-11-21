@@ -66,7 +66,7 @@ module.exports = class youtubeCommand extends commando.Command {
 			if (error) {
 				console.error(error); // eslint-disable-line no-console
 
-				return msg.reply('⚠ No results found');
+				return msg.reply('⚠️ No results found');
 			} else if (!result || !result.items || result.items.length < 1) {
 				msg.say('No Results found');
 

@@ -62,10 +62,10 @@ module.exports = class e621Command extends commando.Command {
 				if (err.name === 'booruError') {
 					console.error(err.message); // eslint-disable-line no-console
 
-					return msg.reply('⚠ No juicy images found. An error was logged to your error console');
+					return msg.reply('⚠️ No juicy images found. An error was logged to your error console');
 				}
 
-				return msg.reply('⚠ No juicy images found.');
+				return msg.reply('⚠️ No juicy images found.');
 			});
 	}
 };

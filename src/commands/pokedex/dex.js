@@ -180,7 +180,7 @@ module.exports = class dexCommand extends commando.Command {
 		const dym = match.get(args.pokemon);
 		const dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
 
-		return msg.reply(`⚠ Dex entry not found! ${dymString}`);
+		return msg.reply(`⚠️ Dex entry not found! ${dymString}`);
 
 	}
 };

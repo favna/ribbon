@@ -107,7 +107,7 @@ module.exports = class moneyCommand extends commando.Command {
 			} catch (error) {
 				console.error(error); // eslint-disable-line no-console
 
-				return msg.reply('⚠ An error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
+				return msg.reply('⚠️ An error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
 			}
 		});
 	}

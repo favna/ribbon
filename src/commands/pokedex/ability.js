@@ -82,6 +82,6 @@ module.exports = class abilityCommand extends commando.Command {
 		const dym = match.get(args.ability), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the ability?';
 
-		return msg.reply(`⚠ Ability not found! ${dymString}`);
+		return msg.reply(`⚠️ Ability not found! ${dymString}`);
 	}
 };

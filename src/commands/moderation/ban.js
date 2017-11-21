@@ -63,7 +63,7 @@ module.exports = class banCommand extends commando.Command {
 
 	run (msg, args) {
 		if (!args.member.bannable) {
-			return msg.reply('⚠ I cannot ban that member, his role is probably higher than my own!');
+			return msg.reply('⚠️ I cannot ban that member, his role is probably higher than my own!');
 		}
 
 		args.member.ban({

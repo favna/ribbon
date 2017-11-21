@@ -52,7 +52,7 @@ module.exports = class urbanCommand extends commando.Command {
 	run (msg, args) {
 		urban(args.query).first((json) => {
 			if (!json) {
-				return msg.reply('⚠ No Results Found!');
+				return msg.reply('⚠️ No Results Found!');
 			}
 			const urbanEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 

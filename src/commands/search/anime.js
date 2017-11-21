@@ -92,7 +92,7 @@ module.exports = class animeCommand extends commando.Command {
 			.catch((err) => {
 				console.error(err); // eslint-disable-line no-console
 
-				return msg.reply('⚠ No results found. An error was logged to your error console');
+				return msg.reply('⚠️ No results found. An error was logged to your error console');
 			});
 
 	}

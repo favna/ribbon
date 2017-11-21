@@ -108,6 +108,6 @@ module.exports = class moveCommand extends commando.Command {
 		const dym = match.get(args.move), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the move name?';
 
-		return msg.channel.send(`⚠ Move not found! ${dymString}`);
+		return msg.channel.send(`⚠️ Move not found! ${dymString}`);
 	}
 };

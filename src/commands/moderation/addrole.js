@@ -60,6 +60,6 @@ module.exports = class addRoleCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		return args.member.addRole(args.role).then(() => msg.say(`\`${args.role.name}\` assigned to \`${args.member.displayName}\``), () => msg.reply('⚠️ An error occured!'));
+		return args.member.addRole(args.role).then(() => msg.say(`\`${args.role.name}\` assigned to \`${args.member.displayName}\``), () => msg.reply('⚠️️ An error occured!'));
 	}
 };

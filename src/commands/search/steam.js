@@ -109,10 +109,10 @@ module.exports = class steamCommand extends commando.Command {
 			} else {
 				console.error(err); // eslint-disable-line no-console
 
-				return msg.reply('⚠ An error occured while getting the store search result');
+				return msg.reply('⚠️ An error occured while getting the store search result');
 			}
 
-			return msg.reply('⚠ An error occured while getting the store search result');
+			return msg.reply('⚠️ An error occured while getting the store search result');
 		}
 
 		);

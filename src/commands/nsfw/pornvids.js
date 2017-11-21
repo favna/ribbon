@@ -66,7 +66,7 @@ module.exports = class pornvidsCommand extends commando.Command {
 					if (error) {
 						console.error(error); // eslint-disable-line no-console
 
-						return msg.reply('⚠ An error occured while drawing a random number. An error was logged to your error console');
+						return msg.reply('⚠️ An error occured while drawing a random number. An error was logged to your error console');
 					}
 					pornEmbed
 						.setURL(videos[data].url)

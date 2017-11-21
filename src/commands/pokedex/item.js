@@ -87,7 +87,7 @@ module.exports = class itemCommand extends commando.Command {
 		const dym = match.get(args.item),
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the item name?';
 
-		return msg.reply(`⚠ Item not found! ${dymString}`);
+		return msg.reply(`⚠️ Item not found! ${dymString}`);
 
 	}
 };

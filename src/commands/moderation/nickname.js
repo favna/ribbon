@@ -63,9 +63,9 @@ module.exports = class nickCommand extends commando.Command {
 		return args.nickname !== 'clear'
 			? args.member.setNickname(args.nickname)
 				.then(() => msg.say(`Nickname \`${args.nickname}\` has been assigned to \`${args.member.user.username}\``),
-					() => msg.reply('⚠️ Failed to nickname member, do I have nickname managing permission?'))
+					() => msg.reply('⚠️️ Failed to nickname member, do I have nickname managing permission?'))
 			: args.member.setNickname('')
 				.then(() => msg.say(`Nickname has been removed from \`${args.member.displayName}\``),
-					() => msg.reply('⚠️ Failed to nickname member, do I have nickname managing permission?'));
+					() => msg.reply('⚠️️ Failed to nickname member, do I have nickname managing permission?'));
 	}
 };
