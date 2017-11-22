@@ -30,7 +30,7 @@ const Discord = require('discord.js'),
 	queue = require(path.join(__dirname, 'data.js')).queue,
 	ytdl = require('ytdl-core');
 
-let dispatcher = require(path.join(__dirname, 'data.js')).dispatcher;
+let dispatcher = require(path.join(__dirname, 'data.js')).dispatcher; // eslint-disable-line no-unused-vars
 
 module.exports = class playCommand extends commando.Command {
 	constructor (client) {

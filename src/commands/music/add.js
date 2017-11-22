@@ -27,7 +27,7 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	path = require('path'),
-	queue = require(path.join(__dirname, 'queue.js')),
+	queue = require(path.join(__dirname, 'data.js')).queue,
 	ytdl = require('ytdl-core');
 
 module.exports = class addCommand extends commando.Command {

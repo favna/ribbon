@@ -26,7 +26,7 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	path = require('path'),
-	queue = require(path.join(__dirname, 'queue.js'));
+	queue = require(path.join(__dirname, 'data.js')).queue;
 
 module.exports = class listqueueCommand extends commando.Command {
 	constructor (client) {
