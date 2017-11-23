@@ -40,7 +40,7 @@ module.exports = class serverInfoCommand extends commando.Command {
 			'memberName': 'server',
 			'description': 'Gets information about the server.',
 			'examples': ['server {serverName ID (partial or full)}', 'server Favna\'s Selfbot'],
-			'guildOnly': false,
+			'guildOnly': true,
 			'throttling': {
 				'usages': 1,
 				'duration': 60

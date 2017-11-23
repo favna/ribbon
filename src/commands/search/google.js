@@ -29,8 +29,8 @@ const auth = require('../../auth.json'),
 	querystring = require('querystring'),
 	superagent = require('superagent');
 
-const {googleapikey} = auth.googleapikey, // eslint-disable-line one-var
-	{searchEngineKey} = auth.searchEngineKey;
+const googleapikey = auth.googleapikey, // eslint-disable-line one-var
+	searchEngineKey = auth.searchEngineKey;
 
 module.exports = class googleCommand extends commando.Command {
 	constructor (client) {
@@ -107,7 +107,7 @@ module.exports = class googleCommand extends commando.Command {
 					})
 					.catch(() => {
 						const SEARCH_URL = `https://www.google.com/search?safe=${safe}&q=${encodeURI(query)}`;
-						
+
 						return superagent.get(SEARCH_URL).then((res) => {
 							const $ = cheerio.load(res.text);
 							let href = $('.r').first()

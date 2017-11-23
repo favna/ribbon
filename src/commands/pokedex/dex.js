@@ -75,7 +75,8 @@ module.exports = class dexCommand extends commando.Command {
 
 	run (msg, args) {
 
-		let poke = args.pokemon.toLowerCase();
+		let poke = args.pokemon.toLowerCase(),
+			pokedexEntry = '';
 		const dexEmbed = new Discord.MessageEmbed();
 
 		if (poke.split(' ')[0] === 'mega') {
@@ -147,13 +148,13 @@ module.exports = class dexCommand extends commando.Command {
 
 			for (let index = 0; index < dexEntries.length; index += 1) {
 				if (dexEntries[index].species_id === pokeEntry.num) {
-					let pokedexEntry = `*${dexEntries[index].flavor_text}*`;
+					pokedexEntry = `*${dexEntries[index].flavor_text}*`;
 
 					break;
 				}
 			}
 			if (!pokedexEntry) {
-				let pokedexEntry = '*PokéDex data not found for this Pokémon*';
+				pokedexEntry = '*PokéDex data not found for this Pokémon*';
 			}
 
 			dexEmbed

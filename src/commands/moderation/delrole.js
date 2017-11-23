@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
- const commando = require('discord.js-commando');
+const commando = require('discord.js-commando');
 
 module.exports = class delRoleCommand extends commando.Command {
 	constructor (client) {

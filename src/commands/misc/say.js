@@ -61,8 +61,10 @@ module.exports = class sayCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		msg.delete();
-
+		if (msg.deletable) {
+			msg.delete();
+		}
+		
 		return msg.say(args.txt);
 	}
 };

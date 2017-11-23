@@ -53,7 +53,9 @@ module.exports = class zalgoCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		msg.delete();
+		if (msg.deletable) {
+			msg.delete();
+		}
 		
 		return msg.say(zalgo(args.txt));
 	}

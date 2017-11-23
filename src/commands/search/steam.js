@@ -112,7 +112,7 @@ module.exports = class steamCommand extends commando.Command {
 				return msg.reply('⚠️ An error occured while getting the store search result');
 			}
 
-			return msg.reply('⚠️ An error occured while getting the store search result');
+			return null; // This is to get consistent return
 		}
 
 		);

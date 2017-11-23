@@ -39,7 +39,7 @@ module.exports = class statsCommand extends commando.Command {
 			'memberName': 'stats',
 			'description': 'Gets statistics about Ribbon',
 			'examples': ['stats'],
-			'guildOnly': true,
+			'guildOnly': false,
 			'throttling': {
 				'usages': 1,
 				'duration': 60

@@ -29,8 +29,8 @@ const auth = require('../../auth.json'),
 	querystring = require('querystring'),
 	superagent = require('superagent');
 
-const {googleapikey} = auth.googleapikey, // eslint-disable-line one-var
-	{imageEngineKey} = auth.imageEngineKey;
+const googleapikey = auth.googleapikey, // eslint-disable-line one-var
+	imageEngineKey = auth.imageEngineKey;
 
 
 module.exports = class imageCommand extends commando.Command {
