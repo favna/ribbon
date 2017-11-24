@@ -23,10 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-let dispatcher; // eslint-disable-line init-declarations
+global.dispatcher;
 const queue = {};
 
-module.exports = {
-	dispatcher,
-	queue
-};
+module.exports = {queue};

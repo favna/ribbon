@@ -46,7 +46,7 @@ module.exports = class listqueueCommand extends commando.Command {
 	}
 
 	run (msg) {
-		if (!queue[msg.guild.id]) {
+		if (!queue[msg.guild.id] || !queue[msg.guild.id].songs) {
 			return msg.reply('The queue is empty. You can add songs with the `add` or `play` commands');
 		}
 

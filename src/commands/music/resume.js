@@ -25,9 +25,7 @@
 
 const Path = require('path'),
 	commando = require('discord.js-commando'),
-	dispatcher = require(Path.join(__dirname, 'data.js')).dispatcher,
 	queue = require(Path.join(__dirname, 'data.js')).queue;
-
 
 module.exports = class resumeCommand extends commando.Command {
 	constructor (client) {
@@ -49,8 +47,9 @@ module.exports = class resumeCommand extends commando.Command {
 	run (msg) {
 		if (!queue[msg.guild.id].playing && queue[msg.guild.id].songs) {
 			queue[msg.guild.id].playing = true;
+			msg.say('Resumed the music playback');
 
-			return dispatcher.resume();
+			return global.dispatcher.resume();
 		}
 
 		if (queue[msg.guild.id].playing) {

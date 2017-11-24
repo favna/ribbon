@@ -25,7 +25,6 @@
 
 const Path = require('path'),
 	commando = require('discord.js-commando'),
-	dispatcher = require(Path.join(__dirname, 'data.js')).dispatcher,
 	queue = require(Path.join(__dirname, 'data.js')).queue;
 
 
@@ -47,10 +46,11 @@ module.exports = class pauseCommand extends commando.Command {
 	}
 
 	run (msg) {
-		if (!dispatcher.paused) {
+		if (!global.dispatcher.paused) {
 			queue[msg.guild.id].playing = false;
-
-			return dispatcher.pause();
+			msg.say('Paused the music playback');
+			
+			return global.dispatcher.pause();
 		}
 
 		if (!queue[msg.guild.id].playing) {

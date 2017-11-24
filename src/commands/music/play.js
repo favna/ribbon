@@ -30,8 +30,6 @@ const Discord = require('discord.js'),
 	queue = require(path.join(__dirname, 'data.js')).queue,
 	ytdl = require('ytdl-core');
 
-let dispatcher = require(path.join(__dirname, 'data.js')).dispatcher; // eslint-disable-line no-unused-vars
-
 module.exports = class playCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
@@ -78,48 +76,53 @@ module.exports = class playCommand extends commando.Command {
 				.then(connection => msg.say(`Jamming to my jukebox in ${msg.member.voiceChannel.name}`)); // eslint-disable-line no-unused-vars
 		}
 
-		ytdl.getInfo(args.url, (err, info) => { // eslint-disable-line consistent-return
-			if (err) {
-				return msg.reply(`Invalid Youtube Link: ${err}`);
-			}
-			if (!queue.hasOwnProperty(msg.guild.id)) {
-				queue[msg.guild.id] = {};
-				queue[msg.guild.id].playing = false;
-				queue[msg.guild.id].songs = [];
-			}
-			queue[msg.guild.id].songs.push({
-				'url': args.url,
-				'title': info.title,
-				'requester': msg.member.displayName
+		if (args.url !== '') {
+			ytdl.getInfo(args.url, (err, info) => { // eslint-disable-line consistent-return
+				if (err) {
+					return msg.reply(`Invalid Youtube Link: ${err}`);
+				}
+				if (!queue.hasOwnProperty(msg.guild.id)) {
+					queue[msg.guild.id] = {};
+					queue[msg.guild.id].playing = false;
+					queue[msg.guild.id].songs = [];
+				}
+				queue[msg.guild.id].songs.push({
+					'url': args.url,
+					'title': info.title,
+					'requester': msg.member.displayName
+				});
+
+				const addEmbed = new Discord.MessageEmbed();
+
+				addEmbed
+					.setColor('#E24141')
+					.setAuthor('Added to the queue', msg.author.displayAvatarURL())
+					.setTitle(info.title)
+					.setThumbnail(info.iurlhq720)
+					.setURL(info.video_url)
+					.addField('Channel', info.author.name, true)
+					.addField('Song Duration', moment().startOf('day')
+						.seconds(info.length_seconds)
+						.format('HH:mm:ss'), true)
+					.addField('Position in queue', queue[msg.guild.id].songs.length, true)
+					.addField('Views', info.view_count, true)
+					.addField('Published on', moment(info.published).format('MMMM Do YYYY [at] HH:mm'));
 			});
+		}
 
-			const addEmbed = new Discord.MessageEmbed();
-
-			addEmbed
-				.setColor('#E24141')
-				.setAuthor('Added to the queue', msg.author.displayAvatarURL())
-				.setTitle(info.title)
-				.setThumbnail(info.iurlhq720)
-				.setURL(info.video_url)
-				.addField('Channel', info.author.name, true)
-				.addField('Song Duration', moment().startOf('day')
-					.seconds(info.length_seconds)
-					.format('HH:mm:ss'), true)
-				.addField('Position in queue', queue[msg.guild.id].songs.length, true)
-				.addField('Views', info.view_count, true)
-				.addField('Published on', moment(info.published).format('MMMM Do YYYY [at] HH:mm'));
-		});
-
-		// Check if queue has songs
+		if (!queue[msg.guild.id].songs) {
+			return msg.say('You need to queue up some songs before I can play them');
+		}
 
 		if (queue[msg.guild.id].playing) {
 			return msg.say('🎵 Already playing music 🎵');
 		}
 		const song = queue[msg.guild.id].songs[0];
 
-		msg.say(`Playing: \`${song.title}\` as requested by \`${song.requester}\``);
+		global.dispatcher = msg.guild.voiceConnection.playStream(ytdl(song.url, {'filter': 'audioonly'})); // eslint-disable-line sort-vars
 
-		dispatcher = msg.guild.voiceConnection.playStream(ytdl(song.url, {'filter': 'audioonly'}));
 		queue[msg.guild.id].playing = true;
+
+		return msg.say(`Playing: \`${song.title}\` as requested by \`${song.requester}\``);
 	}
 };
