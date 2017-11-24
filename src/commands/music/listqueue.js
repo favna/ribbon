@@ -58,12 +58,18 @@ module.exports = class listqueueCommand extends commando.Command {
 			mergedSongs.push(`${i}: [${songQueue[i].title}](${songQueue[i].url}) | ${songQueue[i].duration} | Requested by: ${songQueue[i].requester}`);
 		}
 
-		queueEmbed
-			.setColor('#E24141')
-			.setAuthor(`Queue for ${msg.guild.name}`, msg.guild.iconURL())
-			.addField('__Now Playing:__', `[${songQueue[0].title}](${songQueue[0].url}) | ${songQueue[0].duration} | Requested By: ${songQueue[0].requester}`)
-			.addField('⬇ __Up Next__ ⬇', mergedSongs.join('\n\n'), false);
+		if (mergedSongs.length !== 0) {
 
-		return msg.embed(queueEmbed);
+
+			queueEmbed
+				.setColor('#E24141')
+				.setAuthor(`Queue for ${msg.guild.name}`, msg.guild.iconURL())
+				.addField('__Now Playing:__', `[${songQueue[0].title}](${songQueue[0].url}) | ${songQueue[0].duration} | Requested By: ${songQueue[0].requester}`)
+				.addField('⬇ __Up Next__ ⬇', mergedSongs.join('\n\n'), false);
+
+			return msg.embed(queueEmbed);
+		}
+		
+		return msg.reply('The queue is empty. You can add songs with the `add` or `play` commands');
 	}
 };

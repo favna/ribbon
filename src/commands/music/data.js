@@ -24,6 +24,6 @@
  */
 
 global.dispatcher;
-const queue = {};
+const queue = {}; // eslint-disable-line one-var
 
 module.exports = {queue};

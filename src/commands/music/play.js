@@ -52,22 +52,22 @@ module.exports = class playCommand extends commando.Command {
 					'type': 'string',
 					'label': 'URL to play',
 					'validate': (url) => {
-						if (/((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?/.test(url)) {
-							return true;
-						}
-						if (/[a-zA-Z0-9_-]{11}/.test(url)) {
+						if (/((http[s]?|ftp):\/)?\/?([^:\/\s]+)((\/\w+)*\/)([\w\-\.]+[^#?\s]+)(.*)?(#[\w\-]+)?/.test(url) || (/[a-zA-Z0-9_-]{11}/).test(url)) {
 							return true;
 						}
 
 						return 'Your input has to be a URL';
 					},
-					'default': ''
+					'default': null
 				}
 			]
 		});
 	}
 
 	run (msg, args) {
+		console.log(args.url);
+		console.log(args);
+
 		if (!msg.guild.voiceConnection) {
 			if (!msg.member.voiceChannel.joinable) {
 				return msg.reply('I couldn\'t connect to your voice channel. If you are not yet in any voice channel please join one first.');
@@ -76,7 +76,8 @@ module.exports = class playCommand extends commando.Command {
 				.then(connection => msg.say(`Jamming to my jukebox in ${msg.member.voiceChannel.name}`)); // eslint-disable-line no-unused-vars
 		}
 
-		if (args.url !== '') {
+		if (args.url !== null) {
+			console.log('in the add to queue if clause');
 			ytdl.getInfo(args.url, (err, info) => { // eslint-disable-line consistent-return
 				if (err) {
 					return msg.reply(`Invalid Youtube Link: ${err}`);
@@ -86,6 +87,7 @@ module.exports = class playCommand extends commando.Command {
 					queue[msg.guild.id].playing = false;
 					queue[msg.guild.id].songs = [];
 				}
+				console.log('just before adding to queue now');
 				queue[msg.guild.id].songs.push({
 					'url': args.url,
 					'title': info.title,
