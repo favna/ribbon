@@ -46,21 +46,24 @@ module.exports = class listqueueCommand extends commando.Command {
 	}
 
 	run (msg) {
-
 		if (!queue[msg.guild.id]) {
 			return msg.reply('The queue is empty. You can add songs with the `add` or `play` commands');
 		}
 
-		const queueEmbed = new Discord.MessageEmbed(),
+		const mergedSongs = [],
+			queueEmbed = new Discord.MessageEmbed(),
 			songQueue = queue[msg.guild.id].songs;
+
+		for (let i = 1; i < songQueue.length && i < 6; i += 1) {
+			mergedSongs.push(`${i}: [${songQueue[i].title}](${songQueue[i].url}) | ${songQueue[i].duration} | Requested by: ${songQueue[i].requester}`);
+		}
 
 		queueEmbed
 			.setColor('#E24141')
 			.setAuthor(`Queue for ${msg.guild.name}`, msg.guild.iconURL())
-			.addField('__Now Playing:__', `[${songQueue[0].title}](${songQueue[0].url}) | \`${songQueue[0].duration}\` | \`Requested By:\` ${songQueue[0].requester}`)
-			.addField('⬇ __Up Next__ ⬇', 'tempdat', false);
+			.addField('__Now Playing:__', `[${songQueue[0].title}](${songQueue[0].url}) | ${songQueue[0].duration} | Requested By: ${songQueue[0].requester}`)
+			.addField('⬇ __Up Next__ ⬇', mergedSongs.join('\n\n'), false);
 
 		return msg.embed(queueEmbed);
-
 	}
 };
