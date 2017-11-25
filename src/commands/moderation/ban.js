@@ -34,8 +34,8 @@ module.exports = class banCommand extends commando.Command {
 			'group': 'moderation',
 			'aliases': ['banana'],
 			'memberName': 'ban',
-			'description': 'SWING THAT BANHAMMER',
-			'examples': ['ban <member> <reason>'],
+			'description': 'Bans a member from the server',
+			'examples': ['ban {member} {reason}'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 1,

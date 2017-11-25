@@ -32,10 +32,9 @@ module.exports = class kickCommand extends commando.Command {
 		super(client, {
 			'name': 'kick',
 			'group': 'moderation',
-			'aliases': ['remove'],
 			'memberName': 'kick',
-			'description': 'Kick a member',
-			'examples': ['kick <member> <duration_in_minutes> <reason>'],
+			'description': 'Kicks a member from the server',
+			'examples': ['kick {user} {reason}'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
@@ -60,7 +59,7 @@ module.exports = class kickCommand extends commando.Command {
 	}
 
 	hasPermission (msg) {
-		return msg.member.hasPermission('BAN_MEMBERS');
+		return msg.member.hasPermission('KICK_MEMBERS');
 	}
 
 	run (msg, args) {

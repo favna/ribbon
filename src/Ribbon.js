@@ -34,18 +34,18 @@ const Commando = require('discord.js-commando'),
 	sqlite = require('sqlite');
 
 class Ribbon {
-	constructor(token) { // eslint-disable-line no-unused-vars
+	constructor (token) { // eslint-disable-line no-unused-vars
 		this.bootTime = new Date();
 		this.token = auth.token;
 		this.client = new Commando.Client({
 			'owner': ownerID,
-			'commandPrefix': '%',
+			'commandPrefix': '!',
 			'selfbot': false
 		});
 		this.isReady = false;
 	}
 
-	onReady() {
+	onReady () {
 		return () => {
 			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`); // eslint-disable-line no-console
 
@@ -53,7 +53,7 @@ class Ribbon {
 		};
 	}
 
-	onCommandPrefixChange() {
+	onCommandPrefixChange () {
 		return (guild, prefix) => {
 			// eslint-disable-next-line no-console
 			console.log(oneLine ` 
@@ -63,19 +63,19 @@ class Ribbon {
 		};
 	}
 
-	onDisconnect() {
+	onDisconnect () {
 		return () => {
 			console.warn('Disconnected!'); // eslint-disable-line no-console
 		};
 	}
 
-	onReconnect() {
+	onReconnect () {
 		return () => {
 			console.warn('Reconnecting...'); // eslint-disable-line no-console
 		};
 	}
 
-	onCmdErr() {
+	onCmdErr () {
 		return (cmd, err) => {
 			if (err instanceof Commando.FriendlyError) {
 				return;
@@ -84,7 +84,7 @@ class Ribbon {
 		};
 	}
 
-	onCmdBlock() {
+	onCmdBlock () {
 		return (msg, reason) => {
 			// eslint-disable-next-line no-console
 			console.log(oneLine `
@@ -94,7 +94,7 @@ class Ribbon {
 		};
 	}
 
-	onCmdStatusChange() {
+	onCmdStatusChange () {
 		return (guild, command, enabled) => {
 			// eslint-disable-next-line no-console
 			console.log(oneLine `
@@ -105,7 +105,7 @@ class Ribbon {
 		};
 	}
 
-	onGroupStatusChange() {
+	onGroupStatusChange () {
 		return (guild, group, enabled) => {
 			// eslint-disable-next-line no-console
 			console.log(oneLine `
@@ -116,7 +116,7 @@ class Ribbon {
 		};
 	}
 
-	onMessage() {
+	onMessage () {
 		return (msg) => {
 			if (msg.guild) {
 				if (!msg.guild.available) {
@@ -126,7 +126,7 @@ class Ribbon {
 		};
 	}
 
-	onGuildMemberAdd() {
+	onGuildMemberAdd () {
 		return (member) => {
 			const embed = new Discord.MessageEmbed(),
 				memberLogs = member.guild.channels.exists('name', 'member-logs') ? member.guild.channels.find('name', 'member-logs') : null;
@@ -135,13 +135,11 @@ class Ribbon {
 				.setFooter(`User joined | ${moment().format('ddd MMM Do, YYYY at HH:mm')}`)
 				.setColor('#80F31F');
 
-			memberLogs !== null ? memberLogs.send({
-				embed
-			}) : null;
+			memberLogs !== null ? memberLogs.send({embed}) : null;
 		};
 	}
 
-	onGuildMemberRemove() {
+	onGuildMemberRemove () {
 		return (member) => {
 			const embed = new Discord.MessageEmbed(),
 				memberLogs = member.guild.channels.exists('name', 'member-logs') ? member.guild.channels.find('name', 'member-logs') : null;
@@ -149,13 +147,11 @@ class Ribbon {
 			embed.setAuthor(`${member.user.tag} (${member.id})`, member.displayAvatarURL)
 				.setFooter(`User left | ${moment().format('ddd MMM Do, YYYY at HH:mm')}`)
 				.setColor('#F4BF42');
-			memberLogs !== null ? memberLogs.send({
-				embed
-			}) : null;
+			memberLogs !== null ? memberLogs.send({embed}) : null;
 		};
 	}
 
-	init() {
+	init () {
 		this.client
 			.on('ready', this.onReady())
 			.on('commandPrefixChange', this.onCommandPrefixChange())
@@ -202,7 +198,7 @@ class Ribbon {
 		return this.client.login(this.token);
 	}
 
-	deinit() {
+	deinit () {
 		this.isReady = false;
 
 		return this.client.destroy();
