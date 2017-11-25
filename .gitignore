@@ -14,3 +14,4 @@ src/commands/fun/pastas/*
 *.log
 
 src/settings.sqlite3
+src/commands/music/
