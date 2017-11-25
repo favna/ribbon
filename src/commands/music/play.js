@@ -23,15 +23,12 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
-	Path = require('path'),
+const Path = require('path'),
 	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	queue = require(Path.join(__dirname, 'data.js')).queue,
-	ytdl = require('ytdl-core');
+	queue = require(Path.join(__dirname, 'data.js')).queue;
 
 module.exports = class playCommand extends commando.Command {
-	constructor(client) {
+	constructor (client) {
 		super(client, {
 			'name': 'play',
 			'aliases': ['start'],
@@ -47,14 +44,15 @@ module.exports = class playCommand extends commando.Command {
 		});
 	}
 
-	run(msg, args) {
+	run(msg) { // eslint-disable-line
 		if (!msg.guild.voiceConnection) {
 			if (!msg.member.voiceChannel.joinable) {
 				return msg.reply('I couldn\'t connect to your voice channel. If you are not yet in any voice channel please join one first.');
 			}
-			msg.member.voiceChannel.join()
-				.then(connection => msg.say(`Jamming to my jukebox in ${msg.member.voiceChannel.name}`)); // eslint-disable-line no-unused-vars
+			msg.member.voiceChannel.join();
+			msg.say(`Jamming to my jukebox in ${msg.member.voiceChannel.name}`); // eslint-disable-line no-unused-vars
 		}
+		
 		if (!queue[msg.guild.id]) {
 			return msg.say('You need to queue up some songs with the `add` command before I can play them');
 		}
@@ -63,8 +61,6 @@ module.exports = class playCommand extends commando.Command {
 			return msg.say('🎵 Already playing music 🎵');
 		}
 		const song = queue[msg.guild.id].songs[0];
-
-		queue[msg.guild.id].playing = true;
 
 		global.playSong(msg, song);
 		global.endStream(msg);

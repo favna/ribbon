@@ -30,13 +30,14 @@ const queue = {}; // eslint-disable-line one-var
 
 global.playSong = function (m, s) {
 	global.dispatcher = m.guild.voiceConnection.playStream(ytdl(s.url, {'filter': 'audioonly'})); // eslint-disable-line sort-vars
+	queue[m.guild.id].playing = true;
 	m.say(`Playing: \`${s.title}\` as requested by \`${s.requester}\``);
 };
 
 global.endStream = function (m) {
 	global.dispatcher.on('end', () => {
 		queue[m.guild.id].songs.shift();
-		console.log(queue[m.guild.id].songs[0]);
+		queue[m.guild.id].playing = false;
 		global.playSong(m, queue[m.guild.id].songs[0]);
 	});
 };
@@ -44,6 +45,5 @@ global.endStream = function (m) {
 global.errStream = function (m) {
 	global.dispatcher.on('error', err => m.reply(`⚠️ An error occured in the music dispatcher. You could consider contacting Favna#2846\nThe error is ${err}`));
 };
-
 
 module.exports = {queue};

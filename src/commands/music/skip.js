@@ -45,10 +45,11 @@ module.exports = class skipCommand extends commando.Command {
 
 	run (msg) {
 		global.dispatcher.end('Skipped track');
-        
+
 		global.dispatcher.on('end', () => {
 			queue[msg.guild.id].songs.shift();
 			global.playSong(msg, queue[msg.guild.id].songs[0]);
 		});
+		msg.say('Skipped currently playing song');
 	}
 };
