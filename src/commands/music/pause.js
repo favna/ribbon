@@ -27,7 +27,6 @@ const Path = require('path'),
 	commando = require('discord.js-commando'),
 	queue = require(Path.join(__dirname, 'data.js')).queue;
 
-
 module.exports = class pauseCommand extends commando.Command {
 	constructor (client) {
 		super(client, {

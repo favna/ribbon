@@ -23,7 +23,9 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const Path = require('path'),
+	commando = require('discord.js-commando'),
+	queue = require(Path.join(__dirname, 'data.js')).queue;
 
 module.exports = class disconnectCommand extends commando.Command {
 	constructor (client) {
@@ -49,6 +51,8 @@ module.exports = class disconnectCommand extends commando.Command {
 
 		const VoiceChannel = msg.guild.voiceConnection.channel;
 
+		queue[msg.guild.id].playing = false;
+		global.dispatcher.end();
 		VoiceChannel.leave();
 		
 		return msg.reply(`Left the ${VoiceChannel.name} voice channel`);

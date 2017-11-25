@@ -22,3 +22,33 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
+
+const Path = require('path'),
+	commando = require('discord.js-commando'),
+	queue = require(Path.join(__dirname, 'data.js')).queue;
+
+module.exports = class skipCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'skip',
+			'group': 'music',
+			'memberName': 'skip',
+			'description': 'Skips the currently playing song',
+			'examples': ['skip'],
+			'guildOnly': true,
+			'throttling': {
+				'usages': 2,
+				'duration': 30
+			}
+		});
+	}
+
+	run (msg) {
+		global.dispatcher.end('Skipped track');
+        
+		global.dispatcher.on('end', () => {
+			queue[msg.guild.id].songs.shift();
+			global.playSong(msg, queue[msg.guild.id].songs[0]);
+		});
+	}
+};
