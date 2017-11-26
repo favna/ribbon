@@ -64,7 +64,11 @@ module.exports = class kickCommand extends commando.Command {
 
 	run (msg, args) {
 		if (!args.member.kickable) {
-			return;
+			return msg.reply('⚠️ I cannot kick that member, his role is probably higher than my own!');
+		}
+
+		if (args.member.id === msg.author.id) {
+			return msg.reply('⚠️ I don\'t think you want to kick yourself.');
 		}
 
 		args.member.kick(args.reason);
@@ -75,10 +79,10 @@ module.exports = class kickCommand extends commando.Command {
 			.setColor('#FF8300')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-                '**Action:** Kick\n' +
-                `**Reason:** ${args.reason}`)
+				'**Action:** Kick\n' +
+				`**Reason:** ${args.reason}`)
 			.setFooter(moment().format('MMM Do YYYY | HH:mm:ss'));
 
-		modLogs !== null ? modLogs.send({'embed': kickEmbed}) : msg.reply('I can keep a log of bans if you create a channel named \'mod-logs\' and give me access to it');
+		return modLogs !== null ? modLogs.send({'embed': kickEmbed}) : msg.reply('📃 I can keep a log of bans if you create a channel named \'mod-logs\' and give me access to it');
 	}
 };
