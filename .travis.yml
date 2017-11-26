@@ -10,8 +10,7 @@ cache:
   directories:
   - node_modules
 before_install:
-- openssl aes-256-cbc -K $encrypted_efec58ab4c9a_key -iv $encrypted_efec58ab4c9a_iv
-  -in src/auth.json.enc -out src/auth.json -d
+- openssl end -aes-256-cbc -d -in auth.json.enc -out src/auth.json -K $encrypted_1a28fe9d9c4d_key -iv $encrypted_1a28fe9d9c4d_iv
 - sudo apt-get update -y
 - sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential
   g++ python3.4
