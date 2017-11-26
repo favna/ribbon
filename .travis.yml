@@ -10,7 +10,7 @@ cache:
   directories:
   - node_modules
 before_install:
-- openssl enc -aes-256-cbc -d -in auth.json.enc -out src/auth.json -K $encrypted_1a28fe9d9c4d_key -iv $encrypted_1a28fe9d9c4d_iv
+- openssl aes-256-cbc -d -k "$authdecrypt" -in src/auth.json.enc -out src/auth.json
 - sudo apt-get update -y
 - sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential
   g++ python3.4
@@ -26,3 +26,6 @@ script:
 - yarn test
 notifications:
   email: false
+env:
+  global:
+    secure: eOqDhbByvIOoESexoekoMkN3g7wnTEM9WmfRYOP+w0IcEfylzkrzCirVjIiIQk0s4a3RSiTVqrpVXEvzmPEexFcXXYHj8q3Z0WdQAenJ6P7ekPKW6XfqfatCDYhHvl4SoeGFgV0jzTiwsXG4igoECtpy+1r67h6sujPsOfxc64wYGjfE5JT5GW2UnEbSKWGWV9v0IDL0yTjfC4hKm4rXSd/a1O2ueqIMAd7dlP6cICraW3+r95kQMDUDkagh4PK2PVgbr4D2jLGNWHLvN+982dvw6O/kcsP6NkPS1tk4d6cTMM6h7z/cVR2oGrr6ttZinuLZTsRACYYmyuTgYoMKjUIQyysekkg/ytv2uSQu03vaKRBkRfN6iK6XY1Bj5vhS5nRwP6wU1gMTwKJrmTxTNuJpyHV2mX2MWnEJkFCU3+u5fSWzOu7EL1hrIPS6iNJYwknztzjdBh0DutIPJkzG5CnDcMYEKqz54DCbZ6oJL90TvzvDMjMZdvKLfOPbn2RFgIBId0QNh0qvvnzvdqlrkec0vPDfUTY4YPdu0WluPED6yDYny8g9dySwXkQqBDfHwncHKyLE0ftdb6mrBkC34QgpZSfbb2XLyWyLCPtlfQreUKx0NpAuuuYZAi3oSsukaObEJHMDHQI9PVHr+x8oEjtCVCINHx4AzTjEH45rifQ=
