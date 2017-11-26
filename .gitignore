@@ -6,9 +6,6 @@ node_modules/
 
 # Files for personal use
 src/auth.json
-src/commands/fun/pastas/*
-# Exclude navy from gitignore so the folder is created on Git
-!src/commands/fun/pastas/246821351585742851/navy.txt
 
 # Any logs created
 *.log
