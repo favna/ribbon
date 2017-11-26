@@ -1,6 +1,6 @@
 {
   "name": "ribbon",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Ribbon - A discord bot for your server",
   "author": "Favna",
   "license": "LGPL-3.0",
@@ -42,6 +42,7 @@
     "eightball": "^1.0.1",
     "flipacoin": "^1.0.0",
     "imgur": "^0.2.1",
+    "jsonfile": "^4.0.0",
     "malapi": "0.0.3",
     "moment": "^2.19.1",
     "moment-duration-format": "^1.3.0",
