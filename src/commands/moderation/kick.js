@@ -35,7 +35,7 @@ module.exports = class kickCommand extends commando.Command {
 			'aliases': ['k'],
 			'memberName': 'kick',
 			'description': 'Kicks a member from the server',
-			'examples': ['kick {user} {reason}'],
+			'examples': ['kick {member} {reason}'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
