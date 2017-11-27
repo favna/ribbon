@@ -32,6 +32,7 @@ module.exports = class kickCommand extends commando.Command {
 		super(client, {
 			'name': 'kick',
 			'group': 'moderation',
+			'aliases': ['k'],
 			'memberName': 'kick',
 			'description': 'Kicks a member from the server',
 			'examples': ['kick {user} {reason}'],
@@ -63,12 +64,12 @@ module.exports = class kickCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		if (!args.member.kickable) {
-			return msg.reply('⚠️ I cannot kick that member, his role is probably higher than my own!');
-		}
-
 		if (args.member.id === msg.author.id) {
 			return msg.reply('⚠️ I don\'t think you want to kick yourself.');
+		}
+
+		if (!args.member.kickable) {
+			return msg.reply('⚠️ I cannot kick that member, their role is probably higher than my own!');
 		}
 
 		args.member.kick(args.reason);
