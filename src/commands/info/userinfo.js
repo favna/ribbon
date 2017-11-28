@@ -47,7 +47,7 @@ module.exports = class userInfoCommand extends commando.Command {
 			'group': 'info',
 			'memberName': 'userinfo',
 			'description': 'Gets information about a user.',
-			'examples': ['uinfo {user}', 'uinfo Favna'],
+			'examples': ['uinfo {member}', 'uinfo Favna'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 1,

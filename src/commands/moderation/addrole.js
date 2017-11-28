@@ -33,7 +33,7 @@ module.exports = class addRoleCommand extends commando.Command {
 			'aliases': ['newrole', 'ar'],
 			'memberName': 'addrole',
 			'description': 'Adds a role to a member',
-			'examples': ['addrole {user} {role}', 'addrole favna testrole1'],
+			'examples': ['addrole {member} {role}', 'addrole favna testrole1'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,

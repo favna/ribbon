@@ -33,7 +33,7 @@ module.exports = class nickCommand extends commando.Command {
 			'aliases': ['nick'],
 			'memberName': 'nickname',
 			'description': 'Assigns a nickname to a member. Use "clear" to remove the nickname',
-			'examples': ['nick {user} {nickname}', 'nick favna pyrrha nikos'],
+			'examples': ['nick {member} {nickname}', 'nick favna pyrrha nikos'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,

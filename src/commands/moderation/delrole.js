@@ -33,7 +33,7 @@ module.exports = class delRoleCommand extends commando.Command {
 			'aliases': ['deleterole', 'dr', 'remrole', 'removerole'],
 			'memberName': 'delrole',
 			'description': 'Deletes a role from a member',
-			'examples': ['delrole {user} {role}'],
+			'examples': ['delrole {member} {role}'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,

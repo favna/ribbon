@@ -27,63 +27,67 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment');
 
-module.exports = class kickCommand extends commando.Command {
+module.exports = class softbanCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'kick',
+			'name': 'softban',
 			'group': 'moderation',
-			'aliases': ['k'],
-			'memberName': 'kick',
-			'description': 'Kicks a member from the server',
-			'examples': ['kick {member} {reason}'],
+			'aliases': ['sb', 'sban'],
+			'memberName': 'softban',
+			'description': 'Kicks a member while also purging messages from the last 24 hours',
+			'examples': ['softban {member} {reason}'],
 			'guildOnly': true,
 			'throttling': {
-				'usages': 2,
-				'duration': 10
+				'usages': 1,
+				'duration': 60
 			},
 
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'Which member to kick?',
-					'type': 'member',
-					'label': 'The member that you want to kick'
+					'prompt': 'Which member to softban?',
+					'type': 'member'
 				},
 				{
 					'key': 'reason',
-					'prompt': 'Reason for kicking?',
-					'type': 'string',
-					'label': 'The reason for which you want to kick that memmber'
+					'prompt': 'Reason for softbanning?',
+					'type': 'string'
 				}
 			]
 		});
 	}
 
 	hasPermission (msg) {
-		return msg.member.hasPermission('KICK_MEMBERS');
+		return msg.member.hasPermission('BAN_MEMBERS');
 	}
 
 	run (msg, args) {
 		if (args.member.id === msg.author.id) {
-			return msg.reply('⚠️ I don\'t think you want to kick yourself.');
+			return msg.reply('⚠️ I don\'t think you want to softban yourself.');
 		}
 
-		if (!args.member.kickable) {
-			return msg.reply('⚠️ I cannot kick that member, their role is probably higher than my own!');
+		if (!args.member.bannable) {
+			return msg.reply('⚠️ I cannot softban that member, their role is probably higher than my own!');
 		}
 
-		args.member.kick(args.reason);
-		const kickEmbed = new Discord.MessageEmbed(),
-			modLogs = msg.guild.channels.exists('name', 'mod-logs') ? msg.guild.channels.find('name', 'mod-logs') : null;
+		args.member.ban({
+			'days': 1,
+			'reason': args.reason
+		});
 
-		kickEmbed
-			.setColor('#FF8300')
+		msg.guild.unban(args.member.user);
+
+		const modLogs = msg.guild.channels.exists('name', 'mod-logs') ? msg.guild.channels.find('name', 'mod-logs') : null,
+			softBanEmbed = new Discord.MessageEmbed();
+
+		softBanEmbed
+			.setColor('#FF1900')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-				'**Action:** Kick\n' +
-				`**Reason:** ${args.reason}`)
+                '**Action:** Softban\n' +
+                `**Reason:** ${args.reason}`)
 			.setFooter(moment().format('MMM Do YYYY | HH:mm:ss'));
 
-		return modLogs !== null ? modLogs.send({'embed': kickEmbed}) : msg.reply('📃 I can keep a log of bans if you create a channel named \'mod-logs\' and give me access to it');
+		return modLogs !== null ? modLogs.send({'embed': softBanEmbed}) : msg.reply('📃 I can keep a log of bans if you create a channel named \'mod-logs\' and give me access to it');
 	}
 };

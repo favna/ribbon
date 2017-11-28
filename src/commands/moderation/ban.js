@@ -32,7 +32,7 @@ module.exports = class banCommand extends commando.Command {
 		super(client, {
 			'name': 'ban',
 			'group': 'moderation',
-			'aliases': ['banana'],
+			'aliases': ['b', 'banana'],
 			'memberName': 'ban',
 			'description': 'Bans a member from the server',
 			'examples': ['ban {member} {reason}'],
@@ -62,12 +62,12 @@ module.exports = class banCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		if (!args.member.bannable) {
-			return msg.reply('⚠️ I cannot ban that member, his role is probably higher than my own!');
+		if (args.member.id === msg.author.id) {
+			return msg.reply('⚠️ I don\'t think you want to ban yourself.');
 		}
 
-		if (args.member.id === msg.author.id) {
-			return msg.reply('⚠️ I don\'t think you want to kick yourself.');
+		if (!args.member.bannable) {
+			return msg.reply('⚠️ I cannot ban that member, their role is probably higher than my own!');
 		}
 
 		args.member.ban({
