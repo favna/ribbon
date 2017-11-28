@@ -22840,6 +22840,72 @@ const BattlePokedex = {
 		'color': 'Black',
 		'eggGroups': ['Undiscovered']
 	},
+	'necrozmaduskmane': {
+		'num': '800dm',
+		'species': 'Necrozma-DuskMane',
+		'baseSpecies': 'Necrozma',
+		'forme': 'Dusk-Mane',
+		'formeLetter': 'D',
+		'types': ['Psychic', 'Steel'],
+		'gender': 'N',
+		'baseStats': {
+			'hp': 97,
+			'atk': 157,
+			'def': 127,
+			'spa': 113,
+			'spd': 109,
+			'spe': 77
+		},
+		'abilities': {'0': 'Prism Armor'},
+		'heightm': 3.8,
+		'weightkg': 460,
+		'color': 'Yellow',
+		'eggGroups': ['Undiscovered']
+	},
+	'necrozmadawnwings': {
+		'num': '800dw',
+		'species': 'Necrozma-DawnWings',
+		'baseSpecies': 'Necrozma',
+		'forme': 'Dawn-Wings',
+		'formeLetter': 'D',
+		'types': ['Psychic', 'Ghost'],
+		'gender': 'N',
+		'baseStats': {
+			'hp': 97,
+			'atk': 113,
+			'def': 109,
+			'spa': 157,
+			'spd': 127,
+			'spe': 77
+		},
+		'abilities': {'0': 'Prism Armor'},
+		'heightm': 4.2,
+		'weightkg': 350,
+		'color': 'Blue',
+		'eggGroups': ['Undiscovered']
+	},
+	'necrozmaultra': {
+		'num': '800u',
+		'species': 'Necrozma-Ultra',
+		'baseSpecies': 'Necrozma',
+		'forme': 'Ultra',
+		'formeLetter': 'U',
+		'types': ['Psychic', 'Dragon'],
+		'gender': 'N',
+		'baseStats': {
+			'hp': 97,
+			'atk': 167,
+			'def': 97,
+			'spa': 167,
+			'spd': 97,
+			'spe': 129
+		},
+		'abilities': {'0': 'Neuroforce'},
+		'heightm': 7.5,
+		'weightkg': 230,
+		'color': 'Blue',
+		'eggGroups': ['Undiscovered']
+	},
 	'magearna': {
 		'num': '801',
 		'species': 'Magearna',
@@ -22860,6 +22926,28 @@ const BattlePokedex = {
 		'eggGroups': ['Undiscovered'],
 		'otherFormes': ['magearnaoriginal']
 	},
+	'magearnaoriginal': {
+		'num': '801o',
+		'species': 'Magearna-Original',
+		'baseSpecies': 'Magearna',
+		'forme': 'Original',
+		'formeLetter': 'O',
+		'types': ['Steel', 'Fairy'],
+		'gender': 'N',
+		'baseStats': {
+			'hp': 80,
+			'atk': 95,
+			'def': 115,
+			'spa': 130,
+			'spd': 115,
+			'spe': 65
+		},
+		'abilities': {'0': 'Soul-Heart'},
+		'heightm': 1,
+		'weightkg': 80.5,
+		'color': 'Red',
+		'eggGroups': ['Undiscovered']
+	},
 	'marshadow': {
 		'num': '802',
 		'species': 'Marshadow',
@@ -22877,6 +22965,104 @@ const BattlePokedex = {
 		'heightm': 0.7,
 		'weightkg': 22.2,
 		'color': 'Gray',
+		'eggGroups': ['Undiscovered']
+	},
+	'poipole': {
+		'num': '803',
+		'species': 'Poipole',
+		'types': ['Poison'],
+		'gender': 'N',
+		'baseStats': {
+			'hp': 67,
+			'atk': 73,
+			'def': 67,
+			'spa': 73,
+			'spd': 67,
+			'spe': 73
+		},
+		'abilities': {'0': 'Beast Boost'},
+		'heightm': 0.6,
+		'weightkg': 1.8,
+		'color': 'Purple',
+		'evos': ['naganadel'],
+		'eggGroups': ['Undiscovered']
+	},
+	'naganadel': {
+		'num': '804',
+		'species': 'Naganadel',
+		'types': ['Poison', 'Dragon'],
+		'gender': 'N',
+		'baseStats': {
+			'hp': 73,
+			'atk': 73,
+			'def': 73,
+			'spa': 127,
+			'spd': 73,
+			'spe': 121
+		},
+		'abilities': {'0': 'Beast Boost'},
+		'heightm': 3.6,
+		'weightkg': 150,
+		'color': 'Purple',
+		'prevo': 'poipole',
+		'evoLevel': 41,
+		'eggGroups': ['Undiscovered']
+	},
+	'stakataka': {
+		'num': '805',
+		'species': 'Stakataka',
+		'types': ['Rock', 'Steel'],
+		'gender': 'N',
+		'baseStats': {
+			'hp': 61,
+			'atk': 131,
+			'def': 211,
+			'spa': 53,
+			'spd': 101,
+			'spe': 13
+		},
+		'abilities': {'0': 'Beast Boost'},
+		'heightm': 5.5,
+		'weightkg': 820,
+		'color': 'Gray',
+		'eggGroups': ['Undiscovered']
+	},
+	'blacephalon': {
+		'num': '806',
+		'species': 'Blacephalon',
+		'types': ['Fire', 'Ghost'],
+		'gender': 'N',
+		'baseStats': {
+			'hp': 53,
+			'atk': 127,
+			'def': 53,
+			'spa': 151,
+			'spd': 79,
+			'spe': 107
+		},
+		'abilities': {'0': 'Beast Boost'},
+		'heightm': 1.8,
+		'weightkg': 13,
+		'color': 'White',
+		'eggGroups': ['Undiscovered']
+	},
+	'zeraora': {
+		'num': '807',
+		'species': 'Zeraora',
+		'types': ['Electric'],
+		'gender': 'N',
+		'baseStats': {
+			'hp': 88,
+			'atk': 112,
+			'def': 75,
+			'spa': 102,
+			'spd': 80,
+			'spe': 143
+		},
+		'abilities': {'0': 'Volt Absorb'},
+		'heightm': 1.5,
+		'weightkg': 44.5,
+		'color': 'Yellow',
 		'eggGroups': ['Undiscovered']
 	},
 	'missingno': {
