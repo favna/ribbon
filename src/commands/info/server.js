@@ -74,7 +74,7 @@ module.exports = class serverInfoCommand extends commando.Command {
 		serverEmbed
 			.setColor(msg.guild.owner.displayHexColor)
 			.setAuthor('Server Info', 'https://favna.s-ul.eu/O0qc0yt7.png')
-			.setThumbnail(msg.guild.iconURL())
+			.setThumbnail(msg.guild.iconURL({'format': 'png'}))
 			.setFooter(`Server ID: ${msg.guild.id}`)
 			.addField('Server Name', msg.guild.name, true)
 			.addField('Owner', msg.guild.owner.user.tag, true)

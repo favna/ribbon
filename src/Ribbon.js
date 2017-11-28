@@ -148,7 +148,7 @@ class Ribbon {
 			const embed = new Discord.MessageEmbed(),
 				memberLogs = member.guild.channels.exists('name', 'member-logs') ? member.guild.channels.find('name', 'member-logs') : null;
 
-			embed.setAuthor(`${member.user.tag} (${member.id})`, member.displayAvatarURL)
+			embed.setAuthor(`${member.user.tag} (${member.id})`, member.displayAvatarURL({'format': 'png'}))
 				.setFooter(`User joined | ${moment().format('ddd MMM Do, YYYY at HH:mm')}`)
 				.setColor('#80F31F');
 
@@ -161,7 +161,7 @@ class Ribbon {
 			const embed = new Discord.MessageEmbed(),
 				memberLogs = member.guild.channels.exists('name', 'member-logs') ? member.guild.channels.find('name', 'member-logs') : null;
 
-			embed.setAuthor(`${member.user.tag} (${member.id})`, member.displayAvatarURL)
+			embed.setAuthor(`${member.user.tag} (${member.id})`, member.displayAvatarURL({'format': 'png'}))
 				.setFooter(`User left | ${moment().format('ddd MMM Do, YYYY at HH:mm')}`)
 				.setColor('#F4BF42');
 			memberLogs !== null ? memberLogs.send({embed}) : null;

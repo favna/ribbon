@@ -75,11 +75,11 @@ module.exports = class userInfoCommand extends commando.Command {
 
 		uinfoEmbed
 			.setAuthor(vals.user.tag)
-			.setImage(vals.user.displayAvatarURL())
+			.setThumbnail(vals.user.displayAvatarURL({'format': 'png'}))
 			.setColor(vals.member.displayHexColor)
 			.addField('ID', vals.user.id, true)
 			.addField('Name', vals.user.username, true)
-			.addField('Nickname', vals.member.nickname !== null ? vals.member.nickname : 'No Nickname', true)
+			.addField('Nickname', vals.member.nickname ? vals.member.nickname : 'No Nickname', true)
 			.addField('Status', data.status[vals.user.presence.status], true)
 			.addField(vals.user.presence.activity !== null
 				? capitalize(vals.user.presence.activity.type)
