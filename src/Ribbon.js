@@ -54,10 +54,8 @@ class Ribbon {
 					'application': '376520643862331396',
 					'name': '@Ribbon help',
 					'type': 'WATCHING',
-					'url': 'https://discord.now.sh/376520643862331396?p8',
 					'details': 'Made by Favna',
 					'state': 'https://ribbon.favna.xyz',
-					'timestamps': {'start': data.richpresenceData.timestamp ? Math.floor(Date.now() / 1000) : null},
 					'assets': {
 						'largeImage': '385133227997921280',
 						'smallImage': '385133144245927946',
