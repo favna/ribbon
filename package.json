@@ -1,6 +1,6 @@
 {
   "name": "ribbon",
-  "version": "1.1.3",
+  "version": "2.0.0",
   "description": "Ribbon - A discord bot for your server",
   "author": "Favna",
   "license": "LGPL-3.0",
@@ -57,16 +57,18 @@
     "querystring": "^0.2.0",
     "request": "^2.83.0",
     "scalc": "^2.0.1",
+    "simple-youtube-api": "^5.0.0",
     "snekfetch": "^3.5.8",
     "sqlite": "^2.8.0",
     "steamapi": "^1.3.5",
     "strawpoll.js": "^1.0.3",
     "superagent": "^3.8.1",
     "urban": "^0.3.1",
+    "winston": "^2.4.0",
     "xdicey": "^2.0.1",
     "yahoo-weather": "^2.2.2",
     "youtube-node": "^1.3.2",
-    "ytdl-core": "^0.18.2",
+    "ytdl-core": "^0.18.3",
     "zalgotxt": "^0.1.0"
   },
   "devDependencies": {

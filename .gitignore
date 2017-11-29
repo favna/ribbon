@@ -11,4 +11,3 @@ src/auth.json
 *.log
 
 src/settings.sqlite3
-src/commands/music/
