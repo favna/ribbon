@@ -38,8 +38,8 @@ module.exports = class strawpollCommand extends commando.Command {
 			'examples': ['strawpoll {Title} {Option1 Option2 .... OptionX}', 'strawpoll Best_Anime_Waifu? Pyrrha_Nikos Asuna Saber'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

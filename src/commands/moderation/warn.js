@@ -43,7 +43,7 @@ module.exports = class warnCommand extends commando.Command {
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
-				'duration': 30
+				'duration': 3
 			},
 
 			'args': [

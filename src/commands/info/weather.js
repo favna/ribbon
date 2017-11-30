@@ -73,8 +73,8 @@ module.exports = class weatherCommand extends commando.Command {
 			'examples': ['weather {city}', 'weather amsterdam'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

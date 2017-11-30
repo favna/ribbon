@@ -50,8 +50,8 @@ module.exports = class userInfoCommand extends commando.Command {
 			'examples': ['uinfo {member}', 'uinfo Favna'],
 			'guildOnly': true,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

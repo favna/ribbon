@@ -37,7 +37,11 @@ module.exports = class rule34Command extends commando.Command {
 			'examples': ['rule34 {NSFW Query}', 'rule34 Pyrrha Nikos'],
 			'guildOnly': false,
 			'nsfw': true,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
+			
 			'args': [
 				{
 					'key': 'nsfwtags',

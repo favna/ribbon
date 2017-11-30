@@ -40,8 +40,8 @@ module.exports = class copypastaCommand extends commando.Command {
 			'examples': ['copypasta <file_name>', 'copypasta navy'],
 			'guildOnly': true,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

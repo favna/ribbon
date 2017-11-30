@@ -38,8 +38,8 @@ module.exports = class eightBallCommand extends commando.Command {
 			'examples': ['8ball {question}', '8ball is Favna a genius coder?'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

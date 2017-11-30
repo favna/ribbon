@@ -37,8 +37,8 @@ module.exports = class inviteCommnad extends commando.Command {
 			'examples': ['invite'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			}
 		});
 	}

@@ -37,7 +37,11 @@ module.exports = class urbanCommand extends commando.Command {
 			'description': 'Find definitions on urban dictionary',
 			'examples': ['urban {word}', 'urban ugt'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
+			
 			'args': [
 				{
 					'key': 'query',

@@ -37,8 +37,8 @@ module.exports = class zalgoCommand extends commando.Command {
 			'examples': ['zalgo {message}', 'zalgo HE COMES'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

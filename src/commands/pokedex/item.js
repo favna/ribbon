@@ -44,7 +44,11 @@ module.exports = class itemCommand extends commando.Command {
 			'description': 'Get the info on an item in Pokémon',
 			'examples': ['item {Item Name}', 'item Life Orb'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
+			
 			'args': [
 				{
 					'key': 'item',

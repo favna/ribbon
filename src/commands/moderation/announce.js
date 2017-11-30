@@ -36,8 +36,8 @@ module.exports = class newsCommand extends commando.Command {
 			'examples': ['announce John Appleseed reads the news'],
 			'guildOnly': true,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

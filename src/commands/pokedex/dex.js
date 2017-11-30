@@ -61,7 +61,11 @@ module.exports = class dexCommand extends commando.Command {
 			'description': 'Get the info on a Pokémon',
 			'examples': ['dex {Pokemon Name}', 'dex Dragonite'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
+			
 			'args': [
 				{
 					'key': 'pokemon',

@@ -45,7 +45,11 @@ module.exports = class abilityCommand extends commando.Command {
 			'description': 'Get the info on a Pokémon ability',
 			'examples': ['ability {ability name}', 'ability Multiscale'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
+			
 			'args': [
 				{
 					'key': 'ability',

@@ -37,7 +37,11 @@ module.exports = class defineCommand extends commando.Command {
 			'description': 'Gets the definition on a word on glosbe',
 			'examples': ['define {word}', 'define pixel'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
+			
 			'args': [
 				{
 					'key': 'query',

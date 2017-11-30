@@ -50,7 +50,11 @@ module.exports = class steamCommand extends commando.Command {
 			'description': 'Finds a game on Steam',
 			'examples': ['steam {steamGameName}', 'steam Tales of Berseria'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
+			
 			'args': [
 				{
 					'key': 'steamGameName',

@@ -38,8 +38,8 @@ module.exports = class diceCommand extends commando.Command {
 			'examples': ['dice <sides_on_die> <amount_of_rolls>', 'dice 6 5'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

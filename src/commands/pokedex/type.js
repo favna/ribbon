@@ -45,7 +45,11 @@ module.exports = class typeCommand extends commando.Command {
 			'description': 'Get type matchup for a given type or type combination',
 			'examples': ['type {type1} {type2}', 'type Dragon Flying'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
+			
 			'args': [
 				{
 					'key': 'type',

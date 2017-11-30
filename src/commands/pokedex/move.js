@@ -46,7 +46,11 @@ module.exports = class moveCommand extends commando.Command {
 			'description': 'Get the info on a Pokémon move',
 			'examples': ['move {Pokémon Move Name}', 'move Dragon Dance'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
+			
 			'args': [
 				{
 					'key': 'move',

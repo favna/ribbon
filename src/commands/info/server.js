@@ -48,8 +48,8 @@ module.exports = class serverInfoCommand extends commando.Command {
 			'examples': ['server {serverName ID (partial or full)}', 'server Favna\'s Selfbot'],
 			'guildOnly': true,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			}
 		});
 	}

@@ -57,8 +57,8 @@ module.exports = class mathCommand extends commando.Command {
 			'examples': ['math {equation to solve}', 'math -10 - abs(-3) + 2^5'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

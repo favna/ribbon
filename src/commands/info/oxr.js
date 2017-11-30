@@ -54,8 +54,8 @@ module.exports = class moneyCommand extends commando.Command {
 			'examples': ['oxr {amount} {currency_1} {currency_2}', 'convert 50 USD EUR'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

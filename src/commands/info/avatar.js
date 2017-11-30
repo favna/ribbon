@@ -36,8 +36,8 @@ module.exports = class avatarCommand extends commando.Command {
 			'examples': ['avatar {member name or ID}', 'avatar Favna'],
 			'guildOnly': true,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

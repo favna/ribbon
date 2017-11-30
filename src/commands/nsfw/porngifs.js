@@ -41,7 +41,11 @@ module.exports = class porngifsCommand extends commando.Command {
 			'examples': ['porngifs {pornograpgy query}', 'porngifs babe'],
 			'guildOnly': false,
 			'nsfw': true,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
+			
 			'args': [
 				{
 					'key': 'pornInput',

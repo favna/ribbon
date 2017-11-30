@@ -37,6 +37,10 @@ module.exports = class animeCommand extends commando.Command {
 			'description': 'Find anime on MyAnimeList',
 			'examples': ['anime {animeName}', 'anime Yu-Gi-Oh'],
 			'guildOnly': false,
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
 
 			'args': [
 				{

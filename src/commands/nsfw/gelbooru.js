@@ -36,7 +36,11 @@ module.exports = class gelbooruCommand extends commando.Command {
 			'examples': ['gelbooru {NSFW Query}', 'gelbooru Pyrrha Nikos'],
 			'guildOnly': false,
 			'nsfw': true,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
+			
 			'args': [
 				{
 					'key': 'nsfwtags',

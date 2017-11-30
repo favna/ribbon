@@ -46,7 +46,11 @@ module.exports = class gameCommand extends commando.Command {
 			'description': 'Finds info on a game on Mobygames',
 			'examples': ['games {gameName}', 'games Tales of Berseria'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
+			
 			'args': [
 				{
 					'key': 'gameData',

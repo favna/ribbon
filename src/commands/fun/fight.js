@@ -39,8 +39,8 @@ module.exports = class fightCommand extends commando.Command {
 			'examples': ['fight {fighterOne} {fighterTwo}', 'fight Favna Chuck Norris'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

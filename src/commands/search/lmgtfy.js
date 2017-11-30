@@ -39,6 +39,10 @@ module.exports = class lmgtfyCommand extends commando.Command {
 			'description': 'Produce a lmgtfy (let me google that for you) URL',
 			'examples': ['lmgtfy {query}', 'lmgtfy is it legal to kill an ant???', 'lmgtfy are there birds in canada?'],
 			'guildOnly': false,
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 
 			'args': [
 				{

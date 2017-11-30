@@ -37,7 +37,11 @@ module.exports = class e621Command extends commando.Command {
 			'examples': ['e621 {NSFW Query}', 'e621 Pyrrha Nikos'],
 			'guildOnly': false,
 			'nsfw': true,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
+			
 			'args': [
 				{
 					'key': 'nsfwtags',

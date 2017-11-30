@@ -39,8 +39,8 @@ module.exports = class qrgenCommand extends commando.Command {
 			'examples': ['qrgen {url}', 'qrgen https://ribbon.favna.xyz'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

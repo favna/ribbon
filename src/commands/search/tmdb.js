@@ -43,7 +43,11 @@ module.exports = class movieCommand extends commando.Command {
 			'description': 'Finds movies and TV shows on TheMovieDB',
 			'examples': ['tmdb {movie/tv show name}', 'tmdb Ocean\'s Eleven 2001'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
+			
 			'args': [
 				{
 					'key': 'name',

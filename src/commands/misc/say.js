@@ -36,8 +36,8 @@ module.exports = class sayCommand extends commando.Command {
 			'examples': ['say {message}', 'say Favna is a great coder!'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

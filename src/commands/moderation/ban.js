@@ -38,8 +38,8 @@ module.exports = class banCommand extends commando.Command {
 			'examples': ['ban {member} {reason}'],
 			'guildOnly': true,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [

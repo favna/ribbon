@@ -48,7 +48,11 @@ module.exports = class youtubeCommand extends commando.Command {
 			'description': 'Find videos on youtube',
 			'examples': ['youtube {videoName}', 'youtube RWBY Volume 4'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
+			
 			'args': [
 				{
 					'key': 'query',

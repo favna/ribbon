@@ -43,7 +43,11 @@ module.exports = class imageCommand extends commando.Command {
 			'description': 'Finds an image through google',
 			'examples': ['image {imageQuery}', 'image Pyrrha Nikos'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
+			
 			'args': [
 				{
 					'key': 'query',

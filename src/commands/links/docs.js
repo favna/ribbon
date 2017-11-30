@@ -40,8 +40,8 @@ module.exports = class DocsCommand extends Command {
 			'examples': ['docs {Thing to find in DJS docs} {DJS docs version}', 'docs ClientUser'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 			
 			'args': [

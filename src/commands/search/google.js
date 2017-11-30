@@ -42,7 +42,11 @@ module.exports = class googleCommand extends commando.Command {
 			'description': 'Finds anything on google',
 			'examples': ['google {searchQuery}', 'google Pyrrha Nikos'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 1,
+				'duration': 60
+			},
+			
 			'args': [
 				{
 					'key': 'query',

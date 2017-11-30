@@ -39,8 +39,8 @@ module.exports = class coinCommand extends commando.Command {
 			'examples': ['flip'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			}
 		});
 	}
