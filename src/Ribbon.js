@@ -30,7 +30,7 @@ const Commando = require('discord.js-commando'),
 	auth = require(Path.join(`${__dirname}/auth.json`)),
 	moment = require('moment'),
 	{oneLine} = require('common-tags'),
-	ownerID = auth.ownerID, // eslint-disable-line prefer-destructuring
+	ownerID = auth.ownerID,
 	sqlite = require('sqlite');
 
 class Ribbon {

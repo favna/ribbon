@@ -25,7 +25,7 @@
 
 const Ribbon = require('../Ribbon.js'),
 	test = require('tape'),
-	token = require('../auth.json').token; // eslint-disable-line prefer-destructuring
+	token = require('../auth.json').token;
 
 
 test('connect & disconnect', (timeout) => {

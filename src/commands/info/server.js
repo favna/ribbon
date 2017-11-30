@@ -29,7 +29,13 @@ const Discord = require('discord.js'),
 
 
 const contentFilter = ['Content filter disabled', 'Scan messages of members without a role', 'Scan messages sent by all members'], // eslint-disable-line one-var
-	verificationLevel = ['None - unrestricted', 'Low - must have verified email on account', 'Medium - must be registered on Discord for longer than 5 minutes', 'High - 	(╯°□°）╯︵ ┻━┻ - must be a member of the server for longer than 10 minutes', 'Very High - ┻━┻ミヽ(ಠ益ಠ)ﾉ彡┻━┻ - must have a verified phone number']; // eslint-disable-line max-len
+	verificationLevel = [
+		'None - unrestricted',
+		'Low - must have verified email on account',
+		'Medium - must be registered on Discord for longer than 5 minutes',
+		'High - 	(╯°□°）╯︵ ┻━┻ - must be a member of the server for longer than 10 minutes',
+		'Very High - ┻━┻ミヽ(ಠ益ಠ)ﾉ彡┻━┻ - must have a verified phone number'
+	];
 
 module.exports = class serverInfoCommand extends commando.Command {
 	constructor (client) {
