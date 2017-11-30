@@ -24,7 +24,7 @@
  */
 const auth = require('../../../auth.json');
 
-const DEFAULT_VOLUME = 0.5, // eslint-disable-line one-var
+const DEFAULT_VOLUME = 1, // eslint-disable-line one-var
 	GOOGLE_API = auth.googleapikey,
 	PAGINATED_ITEMS = 5,
 	PASSES = 1;
