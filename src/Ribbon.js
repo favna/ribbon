@@ -148,9 +148,14 @@ class Ribbon {
 			const embed = new Discord.MessageEmbed(),
 				memberLogs = member.guild.channels.exists('name', 'member-logs') ? member.guild.channels.find('name', 'member-logs') : null;
 
-			embed.setAuthor(`${member.user.tag} (${member.id})`, member.displayAvatarURL({'format': 'png'}))
+			embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
 				.setFooter(`User joined | ${moment().format('ddd MMM Do, YYYY at HH:mm')}`)
 				.setColor('#80F31F');
+
+			if (this.client.provider.get(member.guild.id, 'defaultRole')) {
+				member.addRole(this.client.provider.get(member.guild.id, 'defaultRole'));
+				embed.setDescription(`Automatically assigned the role ${member.guild.roles.get(this.client.provider.get(member.guild.id, 'defaultRole')).name} to this member`);
+			}
 
 			memberLogs !== null ? memberLogs.send({embed}) : null;
 		};
@@ -161,7 +166,7 @@ class Ribbon {
 			const embed = new Discord.MessageEmbed(),
 				memberLogs = member.guild.channels.exists('name', 'member-logs') ? member.guild.channels.find('name', 'member-logs') : null;
 
-			embed.setAuthor(`${member.user.tag} (${member.id})`, member.displayAvatarURL({'format': 'png'}))
+			embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
 				.setFooter(`User left | ${moment().format('ddd MMM Do, YYYY at HH:mm')}`)
 				.setColor('#F4BF42');
 			memberLogs !== null ? memberLogs.send({embed}) : null;
