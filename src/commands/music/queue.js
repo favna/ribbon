@@ -40,7 +40,7 @@ module.exports = class ViewQueueCommand extends commando.Command {
 			'aliases': ['songs', 'song-list', 'list', 'listqueue'],
 			'memberName': 'queue',
 			'description': 'Lists the queued songs.',
-			'examples': ['queue'],
+			'examples': ['queue {page number}'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,

@@ -23,19 +23,22 @@
  *         reasonable ways as different from the original version.
  */
 
-const 	Discord = require('discord.js'),
+const Discord = require('discord.js'),
 	Path = require('path'),
 	Song = require(Path.join(__dirname, 'data/SongStructure.js')),
 	YouTube = require('simple-youtube-api'),
 	commando = require('discord.js-commando'),
-	{oneLine, stripIndents} = require('common-tags'),
+	{
+		oneLine,
+		stripIndents
+	} = require('common-tags'),
 	winston = require('winston'),
 	ytdl = require('ytdl-core');
-    
+
 const DEFAULT_VOLUME = require(Path.join(__dirname, 'data/GlobalData.js')).DEFAULT_VOLUME, // eslint-disable-line one-var
 	GOOGLE_API = require(Path.join(__dirname, 'data/GlobalData.js')).GOOGLE_API,
 	PASSES = require(Path.join(__dirname, 'data/GlobalData.js')).PASSES;
-    
+
 
 module.exports = class PlaySongCommand extends commando.Command {
 	constructor (client) {
@@ -44,7 +47,8 @@ module.exports = class PlaySongCommand extends commando.Command {
 			'aliases': ['add', 'enqueue', 'start', 'join'],
 			'group': 'music',
 			'memberName': 'play',
-			'description': 'Adds a song to the queue.',
+			'description': 'Adds a song to the queue',
+			'examples': ['play {youtube video to play}'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
@@ -71,7 +75,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 		let voiceChannel; // eslint-disable-line init-declarations
 
 		if (!queue) {
-            voiceChannel = msg.member.voiceChannel; // eslint-disable-line
+			voiceChannel = msg.member.voiceChannel; // eslint-disable-line
 			if (!voiceChannel) {
 				return msg.reply('you aren\'t in a voice channel, ya dingus.');
 			}
