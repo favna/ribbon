@@ -60,7 +60,7 @@ module.exports = class kickCommand extends commando.Command {
 	}
 
 	hasPermission (msg) {
-		return msg.member.hasPermission('KICK_MEMBERS');
+		return this.client.isOwner(msg.author) || msg.member.hasPermission('KICK_MEMBERS');
 	}
 
 	run (msg, args) {

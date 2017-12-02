@@ -71,7 +71,7 @@ module.exports = class warnCommand extends commando.Command {
 	}
 
 	hasPermission (msg) {
-		return msg.member.hasPermission('ADMINISTRATOR');
+		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
 	}
 
 	run (msg, args) {

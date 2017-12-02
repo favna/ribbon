@@ -56,7 +56,7 @@ module.exports = class delRoleCommand extends commando.Command {
 	}
 
 	hasPermission (msg) {
-		return msg.member.hasPermission('MANAGE_ROLES');
+		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
 	}
 
 	async run (msg, args) {

@@ -56,7 +56,7 @@ module.exports = class nickCommand extends commando.Command {
 	}
 
 	hasPermission (msg) {
-		return msg.member.hasPermission('MANAGE_NICKNAMES');
+		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_NICKNAMES');
 	}
 
 	run (msg, args) {

@@ -58,7 +58,7 @@ module.exports = class softbanCommand extends commando.Command {
 	}
 
 	hasPermission (msg) {
-		return msg.member.hasPermission('BAN_MEMBERS');
+		return this.client.isOwner(msg.author) || msg.member.hasPermission('BAN_MEMBERS');
 	}
 
 	run (msg, args) {

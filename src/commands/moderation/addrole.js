@@ -56,7 +56,7 @@ module.exports = class addRoleCommand extends commando.Command {
 	}
 
 	hasPermission (msg) {
-		return msg.member.hasPermission('MANAGE_ROLES');
+		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
 	}
 
 	run (msg, args) {
