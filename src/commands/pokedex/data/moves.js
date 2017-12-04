@@ -25,7 +25,6 @@
  *         reasonable ways as different from the original version.
  */
 
-
 const BattleMovedex = {
 	'10000000voltthunderbolt': {
 		'num': 719,

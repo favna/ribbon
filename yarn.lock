@@ -2345,6 +2345,10 @@ require-directory@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
 
+require-from-url@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/require-from-url/-/require-from-url-3.1.2.tgz#5ac1f612519fd124396d59c3e263ce6f27ccb66f"
+
 require-main-filename@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/require-main-filename/-/require-main-filename-1.0.1.tgz#97f717b69d48784f5f526a6c5aa8ffdda055a4d1"

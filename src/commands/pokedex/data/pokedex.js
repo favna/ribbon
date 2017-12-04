@@ -25,7 +25,6 @@
  *         reasonable ways as different from the original version.
  */
 
-
 const BattlePokedex = {
 	'bulbasaur': {
 		'num': '1',
