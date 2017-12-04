@@ -127,7 +127,7 @@ module.exports = class gameCommand extends commando.Command {
 						description += descCombined.slice(0, 970);
 						const gameEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
-						gameEmbed.setColor('#FF0000').setAuthor(cheerioLoader('.niceHeaderTitle > a').text(), 'https://i.imgur.com/oHwE0nC.png')
+						gameEmbed.setColor('#E24141').setAuthor(cheerioLoader('.niceHeaderTitle > a').text(), 'https://i.imgur.com/oHwE0nC.png')
 							.setImage(`http://www.mobygames.com${cheerioLoader('#coreGameCover > a > img').attr('src')}`)
 							.setFooter(`Game info pulled from mobygames | ${moment().format('MMMM Do Do YYYY | HH:mm')}`, 'http://i.imgur.com/qPuIzb2.png')
 							.addField('Game Name', cheerioLoader('.niceHeaderTitle > a').text(), false);

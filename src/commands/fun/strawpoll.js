@@ -92,7 +92,7 @@ module.exports = class strawpollCommand extends commando.Command {
 		})
 			.then((poll) => {
 				pollEmbed
-					.setColor('#FF0000')
+					.setColor('#E24141')
 					.setTitle(poll.title)
 					.setURL(`http://www.strawpoll.me/${poll.id}`)
 					.setImage(`http://www.strawpoll.me/images/poll-results/${poll.id}.png`)

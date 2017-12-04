@@ -50,7 +50,7 @@ module.exports = class coinCommand extends commando.Command {
 			res = coin();
 
 		coinEmbed
-			.setColor('#FF0000')
+			.setColor('#E24141')
 			.setImage(res === 'head' ? 'https://favna.s-ul.eu/8ZKmpiKO.png' : 'https://favna.s-ul.eu/NTsDbSUo.png')
 			.setTitle(`Flipped ${res}s`);
 

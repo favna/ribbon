@@ -76,7 +76,7 @@ module.exports = class defineCommand extends commando.Command {
 					final.push(`**${(parseInt(index, 10) + 1)}:** ${item}`);
 				}
 				defineEmbed
-					.setColor('#FF0000')
+					.setColor('#E24141')
 					.setDescription(final);
 				
 				return msg.embed(defineEmbed);

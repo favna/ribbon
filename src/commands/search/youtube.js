@@ -83,7 +83,7 @@ module.exports = class youtubeCommand extends commando.Command {
 				.setAuthor(`Youtube Search Result for: ${args.query}`, 'https://i.imgur.com/BPFqnxz.png')
 				.setImage(result.items[0].snippet.thumbnails.high.url)
 				.setURL(`https://www.youtube.com/watch?v=${result.items[0].id.videoId}`)
-				.setColor('#ff0000')
+				.setColor('#E24141')
 				.addField('Title', result.items[0].snippet.title, true)
 				.addField('URL', `[Click Here](https://www.youtube.com/watch?v=${result.items[0].id.videoId})`, true)
 				.addField('Channel', `[${result.items[0].snippet.channelTitle}](https://www.youtube.com/channel/${result.items[0].snippet.channelId})`, true)
