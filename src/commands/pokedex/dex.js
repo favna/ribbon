@@ -78,7 +78,6 @@ module.exports = class dexCommand extends commando.Command {
 					'prompt': 'Get info from which Pokémon?',
 					'type': 'string',
 					'label': 'Pokemon to find',
-					'default': 'mewtwo'
 				}
 			]
 		});
