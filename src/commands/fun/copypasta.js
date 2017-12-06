@@ -49,7 +49,8 @@ module.exports = class copypastaCommand extends commando.Command {
 					'key': 'name',
 					'prompt': 'Send which copypasta?',
 					'type': 'string',
-					'label': 'Name of the file that has your copypasta content'
+					'label': 'Name of the file that has your copypasta content',
+					'parse': p => p.toLowerCase()
 				}
 			]
 		});
