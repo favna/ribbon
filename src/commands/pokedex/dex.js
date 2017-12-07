@@ -77,8 +77,7 @@ module.exports = class dexCommand extends commando.Command {
 					'key': 'pokemon',
 					'prompt': 'Get info from which Pokémon?',
 					'type': 'string',
-					'label': 'Pokemon to find',
-					'default': 'dragonite'
+					'label': 'Pokemon to find'
 				}
 			]
 		});
