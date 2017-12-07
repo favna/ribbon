@@ -78,6 +78,7 @@ module.exports = class dexCommand extends commando.Command {
 					'prompt': 'Get info from which Pokémon?',
 					'type': 'string',
 					'label': 'Pokemon to find',
+					'default': 'dragonite'
 				}
 			]
 		});
@@ -151,7 +152,6 @@ module.exports = class dexCommand extends commando.Command {
 		}
 
 		poke = poke.toLowerCase();
-
 		if (poke.split(' ')[0] === 'mega') {
 			poke = `${poke.substring(poke.split(' ')[0].length + 1)}mega`;
 		}
@@ -240,11 +240,10 @@ module.exports = class dexCommand extends commando.Command {
 				genderString = `${pokeEntry.genderRatio.M * 100}% Male | ${pokeEntry.genderRatio.F * 100}% Female`;
 			}
 
-			for (let i = 0; i < dexEntries.length; i += 1) {
-				if (dexEntries[i].species_id === pokeEntry.num.toString()) {
-					pokedexEntry = dexEntries[i].flavor_text;
-					break;
-				}
+			if (pokeEntry.forme) {
+				pokedexEntry = dexEntries[`${pokeEntry.num}${pokeEntry.forme.toLowerCase()}`][dexEntries[`${pokeEntry.num}${pokeEntry.forme.toLowerCase()}`].length - 1].flavor_text;
+			} else {
+				pokedexEntry = dexEntries[pokeEntry.num][dexEntries[pokeEntry.num].length - 1].flavor_text;
 			}
 
 			if (!pokedexEntry) {
