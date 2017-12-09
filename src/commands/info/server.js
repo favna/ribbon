@@ -27,7 +27,6 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment');
 
-
 const contentFilter = ['Content filter disabled', 'Scan messages of members without a role', 'Scan messages sent by all members'], // eslint-disable-line one-var
 	verificationLevel = [
 		'None - unrestricted',
@@ -78,12 +77,12 @@ module.exports = class serverInfoCommand extends commando.Command {
 		}
 
 		serverEmbed
-			.setColor(msg.guild.owner.displayHexColor)
+			.setColor(msg.guild.owner ? msg.guild.owner.displayHexColor : '#E24141')
 			.setAuthor('Server Info', 'https://favna.s-ul.eu/O0qc0yt7.png')
 			.setThumbnail(msg.guild.iconURL({'format': 'png'}))
 			.setFooter(`Server ID: ${msg.guild.id}`)
 			.addField('Server Name', msg.guild.name, true)
-			.addField('Owner', msg.guild.owner.user.tag, true)
+			.addField('Owner', msg.guild.owner ? msg.guild.owner.user.tag : 'Owner is MIA', true)
 			.addField('Members', msg.guild.memberCount, true)
 			.addField('Currently Online', onlineMembers, true)
 			.addField('Region', msg.guild.region, true)
