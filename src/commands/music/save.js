@@ -25,7 +25,12 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	{stripIndents} = require('common-tags');
+	{
+		oneLine,
+		stripIndents
+	} = require('common-tags'),
+	path = require('path'),
+	Song = require(path.join(__dirname, 'data/SongStructure.js')); // eslint-disable-line sort-vars
 
 module.exports = class saveQueueCommand extends commando.Command {
 	constructor (client) {
@@ -51,19 +56,33 @@ module.exports = class saveQueueCommand extends commando.Command {
 		if (!queue) {
 			return msg.reply('there isn\'t any music playing right now. You should get on that.');
 		}
-		const song = queue.songs[0], // eslint-disable-line one-var
-			songEmbed = new Discord.MessageEmbed();
+		const currentSong = queue.songs[0], // eslint-disable-line one-var
+			currentTime = currentSong.dispatcher ? currentSong.dispatcher.time / 1000 : 0,
+			embed = new Discord.MessageEmbed(),
+			paginated = commando.util.paginate(queue.songs, 1, Math.floor(10));
 
-
-		songEmbed
+		embed
 			.setColor()
 			.setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({'format': 'png'}))
-			.setDescription(stripIndents `**Currently Playing:** [${song}](${song.url})`)
-			.setImage(song.thumbnail);
+			.setImage(currentSong.thumbnail)
+			.setDescription(stripIndents `
+            __**First 10 songs in the queue**__
+            ${paginated.items.map(song => `**-** ${!isNaN(song.id) 
+		? `${song.name} (${song.lengthString})` 
+		: `[${song.name}](${`https://www.youtube.com/watch?v=${song.id}`})`} (${song.lengthString})`).join('\n')}
+            ${paginated.maxPage > 1 ? `\nUse ${msg.usage()} to view a specific page.\n` : ''}
+
+            **Now playing:** ${!isNaN(currentSong.id) ? `${currentSong.name}` : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`}
+            ${oneLine `
+                **Progress:**
+                ${!currentSong.playing ? 'Paused: ' : ''}${Song.timeString(currentTime)} /
+                ${currentSong.lengthString}
+                (${currentSong.timeLeft(currentTime)} left)
+            `}`);
 
 		msg.reply('✔ Check your inbox!');
 
-		return msg.author.send('', {songEmbed});
+		return msg.direct('Your saved queue', {embed});
 	}
 
 	get queue () {
