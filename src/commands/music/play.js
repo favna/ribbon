@@ -77,19 +77,19 @@ module.exports = class PlaySongCommand extends commando.Command {
 		if (!queue) {
 			voiceChannel = msg.member.voiceChannel; // eslint-disable-line
 			if (!voiceChannel) {
-				return msg.reply('you aren\'t in a voice channel, ya dingus.');
+				return msg.reply('Please join a voice channel before issueing this command.');
 			}
 
 			const permissions = voiceChannel.permissionsFor(msg.client.user);
 
 			if (!permissions.has('CONNECT')) {
-				return msg.reply('I don\'t have permission to join your voice channel. No parties allowed there.');
+				return msg.reply('I don\'t have permission to join your voice channel. Fix your server\'s permisions');
 			}
 			if (!permissions.has('SPEAK')) {
-				return msg.reply('I don\'t have permission to speak in your voice channel. What a disappointment.');
+				return msg.reply('I don\'t have permission to speak in your voice channel. Fix your server\'s permisions');
 			}
 		} else if (!queue.voiceChannel.members.has(msg.author.id)) {
-			return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
+			return msg.reply('Please join a voice channel before issueing this command.');
 		}
 
 		const statusMsg = await msg.reply('obtaining video details...'); // eslint-disable-line one-var
@@ -244,7 +244,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 				'description': stripIndents `
                         Playlist: [${playlist.title}](https://www.youtube.com/playlist?list=${playlist.id}) added to the queue!
     
-                        Check what's been added with: \`?queue\` or \`@Commando#3509 queue\`!
+                        Check what's been added with: \`${msg.guild.commandPrefix}queue\` or \`@Ribbon#2325 queue\`!
                     `
 			}
 		});
