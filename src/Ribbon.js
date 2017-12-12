@@ -158,7 +158,9 @@ class Ribbon {
 					embed.setDescription(`Automatically assigned the role ${member.guild.roles.get(this.client.provider.get(member.guild.id, 'defaultRole')).name} to this member`);
 				}
 
-				memberLogs !== null ? memberLogs.send({embed}) : null;
+				if (memberLogs !== null && memberLogs.permissionsFor(this.client.user).has('SEND_MESSAGES')) {
+					memberLogs.send({embed});
+				}
 			}
 		};
 	}
@@ -172,7 +174,10 @@ class Ribbon {
 				embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
 					.setFooter(`User left | ${moment().format('ddd MMM Do, YYYY at HH:mm')}`)
 					.setColor('#F4BF42');
-				memberLogs !== null ? memberLogs.send({embed}) : null;
+
+				if (memberLogs !== null && memberLogs.permissionsFor(this.client.user).has('SEND_MESSAGES')) {
+					memberLogs.send({embed});
+				}
 			}
 		};
 	}
