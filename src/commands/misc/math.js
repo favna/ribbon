@@ -77,7 +77,7 @@ module.exports = class mathCommand extends commando.Command {
 			wittyRandom = Math.floor(Math.random() * witty.length);
 
 		mathEmbed
-			.setColor('#3eb0f2')
+			.setColor('#E24141')
 			.addField('Equation', args.equation.toString(), false)
 			.addField('Result', scalc(args.equation), false);
 

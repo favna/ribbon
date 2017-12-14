@@ -81,7 +81,7 @@ module.exports = class softbanCommand extends commando.Command {
 			softBanEmbed = new Discord.MessageEmbed();
 
 		softBanEmbed
-			.setColor('#FF1900')
+			.setColor('#E24141')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
                 '**Action:** Softban\n' +

@@ -103,7 +103,7 @@ module.exports = class warnCommand extends commando.Command {
 					}
 
 					warnEmbed
-						.setColor('#FFFF00')
+						.setColor('#E24141')
 						.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 						.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 							'**Action:** Warn\n' +
@@ -134,7 +134,7 @@ module.exports = class warnCommand extends commando.Command {
 					}
 
 					warnEmbed
-						.setColor('#FFFF00')
+						.setColor('#E24141')
 						.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 						.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 							'**Action:** Warn\n' +

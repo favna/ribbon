@@ -78,7 +78,7 @@ module.exports = class movieCommand extends commando.Command {
 
 				movieEmbed
 					.setImage(`http://image.tmdb.org/t/p/w640${idRes.backdrop_path}`)
-					.setColor('#00D474')
+					.setColor('#E24141')
 					.addField('Title', `[${idRes.title}](https://www.themoviedb.org/movie/${idRes.id})`, true)
 					.addField('Release Date', moment(idRes.release_date).format('MMMM Do YYYY'), true)
 					.addField('Runtime', `${idRes.runtime} minutes`, true)

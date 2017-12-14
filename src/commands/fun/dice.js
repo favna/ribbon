@@ -70,7 +70,7 @@ module.exports = class diceCommand extends commando.Command {
 
 
 		diceEmbed
-			.setColor('#EA596E')
+			.setColor('#E24141')
 			.addField('Dice result', res, false)
 			.addField('Total', throwDice.total, false);
 

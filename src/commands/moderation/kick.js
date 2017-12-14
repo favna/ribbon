@@ -77,7 +77,7 @@ module.exports = class kickCommand extends commando.Command {
 			modLogs = msg.guild.channels.exists('name', 'mod-logs') ? msg.guild.channels.find('name', 'mod-logs') : null;
 
 		kickEmbed
-			.setColor('#FF8300')
+			.setColor('#E24141')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 				'**Action:** Kick\n' +

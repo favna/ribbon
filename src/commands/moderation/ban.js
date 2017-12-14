@@ -79,7 +79,7 @@ module.exports = class banCommand extends commando.Command {
 			modLogs = msg.guild.channels.exists('name', 'mod-logs') ? msg.guild.channels.find('name', 'mod-logs') : null;
 
 		banEmbed
-			.setColor('#FF1900')
+			.setColor('#E24141')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 				'**Action:** Ban\n' +

@@ -96,7 +96,7 @@ module.exports = class weatherCommand extends commando.Command {
 				.setAuthor(`Weather data for ${info.location.city} - ${info.location.country}`)
 				.setFooter(`Weather data pulled from ${info.image.title} at ${moment().format('MMMM Do YYYY | HH:mm')}`)
 				.setThumbnail(info.item.description.slice(19, 56))
-				.setColor('#790097')
+				.setColor('#E24141')
 				.addField('💨 Wind Speed', `${info.wind.speed} ${info.units.speed}`, true)
 				.addField('💧 Humidity', `${info.atmosphere.humidity}%`, true)
 				.addField('🌅 Sunrise', convertTimeFormat(info.astronomy.sunrise), true)
