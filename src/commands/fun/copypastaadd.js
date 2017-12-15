@@ -25,6 +25,7 @@
 
 const commando = require('discord.js-commando'),
 	fs = require('fs'),
+	moment = require('moment'),
 	path = require('path');
 
 module.exports = class copypastaAddCommand extends commando.Command {
@@ -61,6 +62,11 @@ module.exports = class copypastaAddCommand extends commando.Command {
 	}
 
 	run (msg, args) {
+		if (!fs.existsSync(path.join(__dirname, `pastas/${msg.guild.id}`))) {
+			console.log(`Creating guild dir for guild ${msg.guild.name}(${msg.guild.id}) at ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`); // eslint-disable-line no-console
+			fs.mkdirSync(path.join(__dirname, `pastas/${msg.guild.id}`));
+		}
+
 		fs.writeFile(path.join(__dirname, `pastas/${msg.guild.id}/${args.name}.txt`), args.content, 'utf8', (err) => {
 			if (!err) {
 				return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with $copypasta ${args.name}`);

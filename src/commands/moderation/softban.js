@@ -86,7 +86,7 @@ module.exports = class softbanCommand extends commando.Command {
 			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
                 '**Action:** Softban\n' +
                 `**Reason:** ${args.reason}`)
-			.setFooter(moment().format('MMM Do YYYY | HH:mm:ss'));
+			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
 		return modLogs !== null ? modLogs.send({'embed': softBanEmbed}) : msg.reply('📃 I can keep a log of bans if you create a channel named \'mod-logs\' and give me access to it');
 	}

@@ -80,7 +80,7 @@ module.exports = class movieCommand extends commando.Command {
 					.setImage(`http://image.tmdb.org/t/p/w640${idRes.backdrop_path}`)
 					.setColor('#E24141')
 					.addField('Title', `[${idRes.title}](https://www.themoviedb.org/movie/${idRes.id})`, true)
-					.addField('Release Date', moment(idRes.release_date).format('MMMM Do YYYY'), true)
+					.addField('Release Date', moment(idRes.release_date).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
 					.addField('Runtime', `${idRes.runtime} minutes`, true)
 					.addField('User Score', idRes.vote_average, true)
 					.addField('Genres', idRes.genres.map(genre => genre.name), true)

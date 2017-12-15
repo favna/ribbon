@@ -110,7 +110,7 @@ module.exports = class warnCommand extends commando.Command {
 							`**Previous Warning Points:** ${warnpoints}\n` +
 							`**Current Warning Points:** ${args.points}\n` +
 							`**Reason:** ${args.reason !== '' ? args.reason : 'No reason has been added by the moderator'}`)
-						.setFooter(moment().format('MMM Do YYYY | HH:mm:ss'));
+						.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
 					return modLogs !== null
 						? modLogs.send({'embed': warnEmbed})
@@ -141,7 +141,7 @@ module.exports = class warnCommand extends commando.Command {
 							`**Previous Warning Points:** ${warnpoints}\n` +
 							`**Current Warning Points:** ${warnpoints + args.points}\n` +
 							`**Reason:** ${args.reason !== '' ? args.reason : 'No reason has been added by the moderator'}`)
-						.setFooter(moment().format('MMM Do YYYY | HH:mm:ss'));
+						.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
 					return modLogs !== null
 						? modLogs.send({'embed': warnEmbed})
