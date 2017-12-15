@@ -74,7 +74,7 @@ module.exports = class listwarnCommand extends commando.Command {
 			listWarnsEmbed
 				.setColor('#E24141')
 				.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-				.setFooter(moment().format('MMM Do YYYY | HH:mm:ss'))
+				.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'))
 				.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
                     `**Current Warning Points:** ${obj[args.member.id].points}`);
 

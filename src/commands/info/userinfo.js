@@ -85,8 +85,8 @@ module.exports = class userInfoCommand extends commando.Command {
 				? capitalize(vals.user.presence.activity.type)
 				: 'Activity', vals.user.presence.activity !== null ? vals.user.presence.activity.name : 'Nothing', true)
 			.addField('Display Color', vals.member.displayHexColor, true)
-			.addField('Account created at', moment(vals.user.createdAt).format('MMMM Do YYYY'), true)
-			.addField('Joined server at', moment(vals.member.joinedAt).format('MMMM Do YYYY'), true)
+			.addField('Account created at', moment(vals.user.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
+			.addField('Joined server at', moment(vals.member.joinedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
 			.addField('Roles', vals.member.roles.size > 1 ? vals.member.roles.map(r => r.name).slice(1) : 'None', true);
 		vals.member.roles.size >= 1 ? uinfoEmbed.setFooter(`has ${vals.member.roles.size - 1} role(s)`) : uinfoEmbed.setFooter('has 0 roles');
 

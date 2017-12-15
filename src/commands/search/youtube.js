@@ -87,7 +87,7 @@ module.exports = class youtubeCommand extends commando.Command {
 				.addField('Title', result.items[0].snippet.title, true)
 				.addField('URL', `[Click Here](https://www.youtube.com/watch?v=${result.items[0].id.videoId})`, true)
 				.addField('Channel', `[${result.items[0].snippet.channelTitle}](https://www.youtube.com/channel/${result.items[0].snippet.channelId})`, true)
-				.addField('Published Date', moment(result.items[0].snippet.publishedAt).format('MMMM Do YYYY'), true);
+				.addField('Published Date', moment(result.items[0].snippet.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true);
 			result.items[0].snippet.description !== ''
 				? youtubeEmbed.addField('Description', result.items[0].snippet.description, false)
 				: youtubeEmbed.addField('Description', 'No description', false);

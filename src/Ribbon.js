@@ -150,7 +150,7 @@ class Ribbon {
 					memberLogs = member.guild.channels.exists('name', 'member-logs') ? member.guild.channels.find('name', 'member-logs') : null;
 
 				embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
-					.setFooter(`User joined | ${moment().format('ddd MMM Do, YYYY at HH:mm')}`)
+					.setFooter(`User joined | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
 					.setColor('#E24141');
 
 				if (this.client.provider.get(member.guild.id, 'defaultRole')) {
@@ -172,7 +172,7 @@ class Ribbon {
 					memberLogs = member.guild.channels.exists('name', 'member-logs') ? member.guild.channels.find('name', 'member-logs') : null;
 
 				embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
-					.setFooter(`User left | ${moment().format('ddd MMM Do, YYYY at HH:mm')}`)
+					.setFooter(`User left | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
 					.setColor('#E24141');
 
 				if (memberLogs !== null && memberLogs.permissionsFor(this.client.user).has('SEND_MESSAGES')) {

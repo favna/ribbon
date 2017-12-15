@@ -98,7 +98,7 @@ module.exports = class fightCommand extends commando.Command {
 			fighterEmbed
 				.addField('🇼 Winner', `**${winner}**`, true)
 				.addField('🇱 Loser', `**${loser}**`, true)
-				.setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY | HH:mm:ss')}`);
+				.setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
 			return msg.embed(fighterEmbed);
 		});
