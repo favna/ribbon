@@ -50,6 +50,7 @@
     "moviedb": "^0.2.10",
     "node-opus": "^0.2.7",
     "node-random": "^1.0.1",
+    "node-vibrant": "^3.0.0",
     "open-exchange-rates": "^0.3.0",
     "ordinal": "1.0.2",
     "pornsearch": "^2.2.5",

@@ -23,7 +23,9 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const Discord = require('discord.js'),
+	commando = require('discord.js-commando'),
+	vibrant = require('node-vibrant');
 
 module.exports = class avatarCommand extends commando.Command {
 	constructor (client) {
@@ -35,10 +37,6 @@ module.exports = class avatarCommand extends commando.Command {
 			'description': 'Gets the avatar from a user',
 			'examples': ['avatar {member name or ID}', 'avatar Favna'],
 			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
 
 			'args': [
 				{
@@ -49,9 +47,51 @@ module.exports = class avatarCommand extends commando.Command {
 				}
 			]
 		});
+		this.embedColor = '#FF0000';
 	}
 
-	run (msg, args) {
-		msg.say(args.member.user.displayAvatarURL());
+	async fetchColor (img) {
+
+		const palette = await vibrant.from(img).getPalette();
+
+		if (palette) {
+			const pops = [],
+				swatches = Object.values(palette);
+
+			let prominentSwatch = {};
+
+			for (const swatch in swatches) {
+				if (swatches[swatch]) {
+					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
+				}
+			}
+
+			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
+
+			for (const swatch in swatches) {
+				if (swatches[swatch]) {
+					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
+						prominentSwatch = swatches[swatch];
+						break;
+					}
+				}
+			}
+			this.embedColor = prominentSwatch.getHex();
+		}
+
+		return this.embedColor;
+	}
+
+	async run (msg, args) {
+		const ava = args.member.user.displayAvatarURL({'format': 'png'}),
+			avaColor = await this.fetchColor(ava),
+			embed = new Discord.MessageEmbed();
+
+		embed
+			.setColor(avaColor ? avaColor : this.embedColor)
+			.setImage(ava)
+			.setFooter(`Avatar for ${args.member.displayName}`);
+
+		return msg.embed(embed);
 	}
 };

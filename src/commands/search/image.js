@@ -23,15 +23,16 @@
  *         reasonable ways as different from the original version.
  */
 
-const auth = require('../../auth.json'),
+const Discord = require('discord.js'),
+	auth = require('../../auth.json'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
 	querystring = require('querystring'),
-	superagent = require('superagent');
+	superagent = require('superagent'),
+	vibrant = require('node-vibrant');
 
 const googleapikey = auth.googleapikey, // eslint-disable-line one-var
 	imageEngineKey = auth.imageEngineKey;
-
 
 module.exports = class imageCommand extends commando.Command {
 	constructor (client) {
@@ -43,11 +44,7 @@ module.exports = class imageCommand extends commando.Command {
 			'description': 'Finds an image through google',
 			'examples': ['image {imageQuery}', 'image Pyrrha Nikos'],
 			'guildOnly': false,
-			'throttling': {
-				'usages': 1,
-				'duration': 60
-			},
-			
+
 			'args': [
 				{
 					'key': 'query',
@@ -57,38 +54,87 @@ module.exports = class imageCommand extends commando.Command {
 				}
 			]
 		});
+		this.embedColor = '#FF0000';
 	}
 
-	run (msg, args) {
-		const query = args.query // Is basically the search sent by you
-			.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
-			.split(' ')
-			.map(x => encodeURIComponent(x))
-			.join('+');
-		const safe = msg.channel.nsfw ? 'medium' : 'off', // eslint-disable-line one-var
+	async fetchColor (img) {
+
+		const palette = await vibrant.from(img).getPalette();
+
+		if (palette) {
+			const pops = [],
+				swatches = Object.values(palette);
+
+			let prominentSwatch = {};
+
+			for (const swatch in swatches) {
+				if (swatches[swatch]) {
+					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
+				}
+			}
+
+			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
+
+			for (const swatch in swatches) {
+				if (swatches[swatch]) {
+					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
+						prominentSwatch = swatches[swatch];
+						break;
+					}
+				}
+			}
+			this.embedColor = prominentSwatch.getHex();
+		}
+
+		return this.embedColor;
+	}
+
+	async run (msg, args) {
+		const embed = new Discord.MessageEmbed(),
+			query = args.query
+				.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
+				.split(' ')
+				.map(x => encodeURIComponent(x))
+				.join('+'),
+			safe = msg.channel.nsfw ? 'medium' : 'off',
 			QUERY_PARAMS = { // eslint-disable-line sort-vars
-				'searchType': 'image',
-				'key': googleapikey,
 				'cx': imageEngineKey,
-				safe
+				'key': googleapikey,
+				safe,
+				'searchType': 'image'
 			};
 
-		return superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(query)}`)
-			.then(res => msg.say(res.body.items[0].link))
-			.catch(() =>
-				superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(query)}`)
-					.then((res) => {
-						const cheerioLoader = cheerio.load(res.text),
-							result = cheerioLoader('.images_table').find('img')
-								.first()
-								.attr('src');
+		let hexColor = this.embedColor,
+			res = await superagent.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(query)}`);
 
-						return result ? msg.say(result) : msg.say('**Something went wrong with the result, perhaps only nsfw results were found outside of an nsfw channel**');
-					})
-			)
-			.catch((err) => {
-				msg.say('**No Results Found**');
-				console.error(err); // eslint-disable-line no-console
-			});
+		if (res && res.body.items) {
+			hexColor = await this.fetchColor(res.body.items[0].link);
+
+			embed
+				.setColor(hexColor)
+				.setImage(res.body.items[0].link)
+				.setFooter(`Search query: "${args.query}"`);
+
+			return msg.embed(embed);
+		}
+
+		if (!res) {
+			res = await superagent.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(query)}`);
+
+			const $ = cheerio.load(res.text),
+				result = $('.images_table').find('img')
+					.first()
+					.attr('src');
+
+			hexColor = await this.fetchColor(result);
+			embed
+				.setColor(hexColor)
+				.setImage(result)
+				.setFooter(`Search query: "${args.query}"`);
+
+			return msg.embed(embed);
+		}
+
+		return msg.reply('**no results found 😦**');
 	}
 };
