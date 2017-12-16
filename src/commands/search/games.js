@@ -129,7 +129,7 @@ module.exports = class gameCommand extends commando.Command {
 
 						gameEmbed.setColor('#E24141').setAuthor(cheerioLoader('.niceHeaderTitle > a').text(), 'https://i.imgur.com/oHwE0nC.png')
 							.setImage(`http://www.mobygames.com${cheerioLoader('#coreGameCover > a > img').attr('src')}`)
-							.setFooter(`Game info pulled from mobygames | ${moment().format('MMMM Do Do YYYY | HH:mm')}`, 'http://i.imgur.com/qPuIzb2.png')
+							.setFooter(`Game info pulled from mobygames | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'http://i.imgur.com/qPuIzb2.png')
 							.addField('Game Name', cheerioLoader('.niceHeaderTitle > a').text(), false);
 
 						cheerioLoader('#coreGameRelease > div:contains("Released")').next()

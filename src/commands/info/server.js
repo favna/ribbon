@@ -90,7 +90,7 @@ module.exports = class serverInfoCommand extends commando.Command {
 			.addField('Number of emojis', msg.guild.emojis.size, true)
 			.addField('Number of roles', msg.guild.roles.size, true)
 			.addField('Number of channels', guildChannels, true)
-			.addField('Created At', moment(msg.guild.createdTimestamp).format('MMMM Do YYYY [@] HH:mm:ss [UTC]Z'), false)
+			.addField('Created At', moment(msg.guild.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
 			.addField('Verification Level', verificationLevel[msg.guild.verificationLevel], false)
 			.addField('Explicit Content Filter', contentFilter[`${msg.guild.explicitContentFilter}`], false);
 
