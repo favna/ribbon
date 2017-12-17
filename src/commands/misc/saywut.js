@@ -49,6 +49,10 @@ module.exports = class sayWutCommand extends commando.Command {
 
 	run (msg) {
 
+		if (msg.deletable) {
+			msg.delete();
+		}
+
 		const wutEmbed = new Discord.MessageEmbed();
 
 		for (const stored in storage.lastMessage) {
