@@ -47,8 +47,8 @@ module.exports = class gameCommand extends commando.Command {
 			'examples': ['games {gameName}', 'games Tales of Berseria'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 			
 			'args': [
