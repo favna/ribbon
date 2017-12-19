@@ -23,17 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{oneLine} = require('common-tags');
 
-module.exports = class newsCommand extends commando.Command {
+module.exports = class modlogsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'announce',
+			'name': 'modlogs',
 			'group': 'moderation',
-			'aliases': ['news'],
-			'memberName': 'announce',
-			'description': 'Make an announcement in the news channel',
-			'examples': ['announce John Appleseed reads the news'],
+			'aliases': ['togglemod'],
+			'memberName': 'modlogs',
+			'description': 'Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel',
+			'examples': ['modlogs {option}', 'modlogs enable'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
@@ -42,9 +43,19 @@ module.exports = class newsCommand extends commando.Command {
 
 			'args': [
 				{
-					'key': 'body',
-					'prompt': 'What do you want me to announce?',
-					'type': 'string'
+					'key': 'option',
+					'prompt': 'Enable or disable modlogs?',
+					'type': 'boolean',
+					'label': 'Option for toggling',
+					'validate': (bool) => {
+						const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
+
+						if (validBools.includes(bool)) {
+							return true;
+						}
+
+						return `Has to be one of ${validBools.join(', ')}`;
+					}
 				}
 			]
 		});
@@ -61,20 +72,15 @@ module.exports = class newsCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		if (msg.guild.channels.exists('name', 'announcements') || msg.guild.channels.exists('name', 'news')) {
-			const newsChannel = msg.guild.channels.exists('name', 'announcements') ? msg.guild.channels.find('name', 'announcements') : msg.guild.channels.find('name', 'news');
+		this.client.provider.set(msg.guild.id, 'modlogs', args.option);
 
-			let announce = args.body;
-
-			announce.slice(0, 4) !== 'http' ? announce = `${args.body.slice(0, 1).toUpperCase()}${args.body.slice(1)}` : null;
-			msg.attachments.first() && msg.attachments.first().url ? announce += `\n${msg.attachments.first().url}` : null;
-
-			this.deleteCommandMessages(msg);
-
-			return newsChannel.send(announce);
-		}
 		this.deleteCommandMessages(msg);
 
-		return msg.reply('To use the announce command you need a channel named \'news\' or \'announcements\'');
+		return msg.reply(oneLine `mod logs have been
+    ${args.option 
+		? `enabled. Please ensure there is a channel named ${this.client.provider.get(msg.guild.id, 'modlogchannel') 
+			? msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'modlogchannel')).name 
+			: 'mod-logs'} and that I have access to it!` 
+		: 'disabled. No need for a mod command logging channel'}.`);
 	}
 };

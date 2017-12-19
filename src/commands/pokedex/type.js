@@ -1,5 +1,3 @@
-/* eslint-disable max-statements, complexity, block-scoped-var, vars-on-top, one-var, no-var, no-redeclare, max-depth, init-declarations, max-lines */
-
 /*
  *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
@@ -25,15 +23,13 @@
  *         reasonable ways as different from the original version.
  */
 
+/* eslint-disable max-statements, complexity, block-scoped-var, vars-on-top, one-var, no-var, no-redeclare, max-depth, init-declarations */
+
 const Discord = require('discord.js'),
 	Path = require('path'),
 	commando = require('discord.js-commando'),
 	typeMatchups = require(Path.join(__dirname, 'data/typechart.js')).BattleTypeChart,
 	{oneLine} = require('common-tags');
-
-const capitalizeFirstLetter = function (string) { // eslint-disable-line one-var
-	return string.charAt(0).toUpperCase() + string.slice(1);
-};
 
 module.exports = class typeCommand extends commando.Command {
 	constructor (client) {
@@ -45,11 +41,7 @@ module.exports = class typeCommand extends commando.Command {
 			'description': 'Get type matchup for a given type or type combination',
 			'examples': ['type {type1} {type2}', 'type Dragon Flying'],
 			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			
+
 			'args': [
 				{
 					'key': 'type',
@@ -61,9 +53,17 @@ module.exports = class typeCommand extends commando.Command {
 		});
 	}
 
+	capitalizeFirstLetter (string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
-
-
 		const atkMulti = {
 				'Bug': 1,
 				'Dark': 1,
@@ -139,7 +139,7 @@ module.exports = class typeCommand extends commando.Command {
 
 			if (Object.keys(typeMatchups).map(c => c.toLowerCase())
 				.indexOf(argsSplit.toLowerCase()) !== -1) {
-				const toType = capitalizeFirstLetter(argsSplit);
+				const toType = this.capitalizeFirstLetter(argsSplit);
 
 				displayTypes.push(toType);
 				const dTaken = typeMatchups[toType].damageTaken;
@@ -216,7 +216,6 @@ module.exports = class typeCommand extends commando.Command {
 					}
 				}
 			}
-
 		}
 		if (vulnCheck) {
 			for (var i = 0; i < Object.keys(defMulti).length; i += 1) {
@@ -299,9 +298,11 @@ module.exports = class typeCommand extends commando.Command {
 			.addField('Offense', atkVulnDisplay.join('\n\n'))
 			.addField('Defense', vulnDisplay.join('\n\n'))
 			.addField('External Resources', oneLine `
-            [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/${args.type.split(' ')[0]}_(type\\))  
-            |  [Smogon](http://www.smogon.com/dex/sm/types/${args.type.split(' ')[0]})
-            |  [PokémonDB](http://pokemondb.net/type/${args.type.split(' ')[0]})`);
+		[Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/${args.type.split(' ')[0]}_(type\\))  
+		|  [Smogon](http://www.smogon.com/dex/sm/types/${args.type.split(' ')[0]})
+		|  [PokémonDB](http://pokemondb.net/type/${args.type.split(' ')[0]})`);
+
+		this.deleteCommandMessages(msg);
 
 		return msg.embed(typeEmbed);
 	}

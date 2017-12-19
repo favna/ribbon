@@ -55,11 +55,19 @@ module.exports = class addRoleCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
 	}
 
 	run (msg, args) {
+		this.deleteCommandMessages(msg);
+
 		return args.member.addRole(args.role).then(() => msg.say(`\`${args.role.name}\` assigned to \`${args.member.displayName}\``), () => msg.reply('⚠️️ An error occured!'));
 	}
 };

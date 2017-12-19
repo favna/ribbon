@@ -47,12 +47,13 @@ module.exports = class sayWutCommand extends commando.Command {
 		});
 	}
 
-	run (msg) {
-
-		if (msg.deletable) {
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
 			msg.delete();
 		}
+	}
 
+	run (msg) {
 		const wutEmbed = new Discord.MessageEmbed();
 
 		for (const stored in storage.lastMessage) {
@@ -79,10 +80,13 @@ module.exports = class sayWutCommand extends commando.Command {
 					return msg.reply(`couldn't fetch message for your server. Has anyone used the ${msg.guild.commandPrefix}say command before?`);
 				}
 
+				this.deleteCommandMessages(msg);
+
 				return msg.embed(wutEmbed);
 			}
 		}
-
+		this.deleteCommandMessages(msg);
+		
 		return msg.reply(`couldn't fetch message for your server. Has anyone used the ${msg.guild.commandPrefix}say command before?`);
 	}
 };

@@ -44,10 +44,18 @@ module.exports = class MusicStatusCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg) {
 		const queue = this.queue.get(msg.guild.id);
 
 		if (!queue) {
+			this.deleteCommandMessages(msg);
+			
 			return msg.say('There isn\'t any music playing right now. You should get on that.');
 		}
 		const song = queue.songs[0], // eslint-disable-line one-var
@@ -67,6 +75,8 @@ module.exports = class MusicStatusCommand extends commando.Command {
 				'image': {'url': song.thumbnail}
 			};
 
+		this.deleteCommandMessages(msg);
+		
 		return msg.embed(embed);
 	}
 

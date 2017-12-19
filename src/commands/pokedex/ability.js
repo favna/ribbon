@@ -33,15 +33,8 @@ const Discord = require('discord.js'),
 	request = require('snekfetch'),
 	requireFromURL = require('require-from-url/sync');
 
-/* eslint-enable sort-vars */
 
-const capitalizeFirstLetter = function (string) { // eslint-disable-line one-var
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	},
-	links = {
-		'abilities': 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/abilities.js',
-		'aliases': 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/aliases.js'
-	};
+/* eslint-enable sort-vars */
 
 module.exports = class abilityCommand extends commando.Command {
 	constructor (client) {
@@ -69,19 +62,28 @@ module.exports = class abilityCommand extends commando.Command {
 		this.match = [];
 	}
 
+	capitalizeFirstLetter (string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	async fetchAbilities () {
 		if (Object.keys(this.abilities).length !== 0) {
 			return this.abilities;
 		}
 
-		const abilityData = await request.get(links.abilities);
+		const abilityData = await request.get(this.fetchLinks('abilities'));
 
 		if (abilityData) {
-			this.abilities = requireFromURL(links.abilities).BattleAbilities;
+			this.abilities = requireFromURL(this.fetchLinks('abilities')).BattleAbilities;
 		} else {
 			this.abilities = require(path.join(__dirname, 'data/abilities.js')).BattleAbilities; // eslint-disable-line global-require
 		}
-
 		this.match = new Matcher(Object.keys(this.abilities).join(' ')); // eslint-disable-line one-var
 
 		return this.abilities;
@@ -92,17 +94,27 @@ module.exports = class abilityCommand extends commando.Command {
 			return this.pokeAliases;
 		}
 
-		const dexData = await request.get(links.aliases);
+		const dexData = await request.get(this.fetchLinks('aliases'));
 
 		if (dexData) {
-			this.pokeAliases = requireFromURL(links.aliases).BattleAliases;
+			this.pokeAliases = requireFromURL(this.fetchLinks('aliases')).BattleAliases;
 		} else {
 			this.pokeAliases = require(path.join(__dirname, 'data/aliases.js')).BattlePokedex; // eslint-disable-line global-require
 		}
-
 		this.match = new Matcher(Object.keys(this.pokeAliases).join(' ')); // eslint-disable-line one-var
 
 		return this.pokeAliases;
+	}
+
+	fetchLinks (type) {
+		switch (type) {
+			case 'abilities':
+				return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/abilities.js';
+			case 'aliases':
+				return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/aliases.js';
+			default:
+				return 'error';
+		}
 	}
 
 	async run (msg, args) {
@@ -134,15 +146,19 @@ module.exports = class abilityCommand extends commando.Command {
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.addField('Description', ability.desc ? ability.desc : ability.shortDesc)
 				.addField('External Resource', oneLine `
-			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(ability.name.replace(' ', '_'))}_(Ability\\))  
+			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${this.capitalizeFirstLetter(ability.name.replace(' ', '_'))}_(Ability\\))  
 			|  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(' ', '_')})  
 			|  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(' ', '-')})`);
 
-			return msg.embed(abilityEmbed, `**${capitalizeFirstLetter(ability.name)}**`);
+			this.deleteCommandMessages(msg);
+
+			return msg.embed(abilityEmbed, `**${this.capitalizeFirstLetter(ability.name)}**`);
 		}
 		const dym = this.match.get(args.ability), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the ability?';
 
-		return msg.reply(`⚠ Ability not found! ${dymString}`);
+		this.deleteCommandMessages(msg);
+
+		return msg.reply(`⚠️ Ability not found! ${dymString}`);
 	}
 };

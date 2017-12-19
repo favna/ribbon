@@ -37,29 +37,6 @@ const Discord = require('discord.js'),
 
 /* eslint-enable sort-vars */
 
-/* eslint-disable one-var */
-const capitalizeFirstLetter = function (string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	},
-	embedColours = {
-		'Red': 16724530,
-		'Blue': 2456831,
-		'Yellow': 16773977,
-		'Green': 4128590,
-		'Black': 3289650,
-		'Brown': 10702874,
-		'Purple': 10894824,
-		'Gray': 9868950,
-		'White': 14803425,
-		'Pink': 16737701
-	},
-	links = {
-		'aliases': 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/aliases.js',
-		'dex': 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/pokedex.js'
-	};
-
-/* eslint-enable one-var */
-
 module.exports = class flavorCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
@@ -86,15 +63,52 @@ module.exports = class flavorCommand extends commando.Command {
 		this.match = [];
 	}
 
+	capitalizeFirstLetter (string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
+	fetchColor (col) {
+		switch (col) {
+			case 'Black':
+				return '#323232';
+			case 'Blue':
+				return '#257CFF';
+			case 'Brown':
+				return '#A3501A';
+			case 'Gray':
+				return '#969696';
+			case 'Green':
+				return '#3EFF4E';
+			case 'Pink':
+				return '#FF65A5';
+			case 'Purple':
+				return '#A63DE8';
+			case 'Red':
+				return '#FF3232';
+			case 'White':
+				return '#E1E1E1';
+			case 'Yellow':
+				return '#FFF359';
+			default:
+				return '#FF0000';
+		}
+	}
+
 	async fetchDex () {
 		if (Object.keys(this.pokedex).length !== 0) {
 			return this.pokedex;
 		}
 
-		const dexData = await request.get(links.dex);
+		const dexData = await request.get(this.fetchLinks('dex'));
 
 		if (dexData) {
-			this.pokedex = requireFromURL(links.dex).BattlePokedex;
+			this.pokedex = requireFromURL(this.fetchLinks('dex')).BattlePokedex;
 		} else {
 			this.pokedex = require(path.join(__dirname, 'data/pokedex.js')).BattlePokedex; // eslint-disable-line global-require
 		}
@@ -109,10 +123,10 @@ module.exports = class flavorCommand extends commando.Command {
 			return this.pokeAliases;
 		}
 
-		const dexData = await request.get(links.aliases);
+		const dexData = await request.get(this.fetchLinks('aliases'));
 
 		if (dexData) {
-			this.pokeAliases = requireFromURL(links.aliases).BattleAliases;
+			this.pokeAliases = requireFromURL(this.fetchLinks('aliases')).BattleAliases;
 		} else {
 			this.pokeAliases = require(path.join(__dirname, 'data/aliases.js')).BattlePokedex; // eslint-disable-line global-require
 		}
@@ -123,7 +137,6 @@ module.exports = class flavorCommand extends commando.Command {
 	}
 
 	async fetchImage (poke) {
-
 		try {
 			await request.get(`https://cdn.rawgit.com/110Percent/beheeyem-data/44795927/webp/${poke.toLowerCase().replace(' ', '_')}.webp`);
 		} catch (err) {
@@ -131,6 +144,17 @@ module.exports = class flavorCommand extends commando.Command {
 		}
 
 		return `https://cdn.rawgit.com/110Percent/beheeyem-data/44795927/webp/${poke.toLowerCase().replace(' ', '_')}.webp`;
+	}
+
+	fetchLinks (type) {
+		switch (type) {
+			case 'aliases':
+				return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/aliases.js';
+			case 'dex':
+				return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/pokedex.js';
+			default:
+				return 'error';
+		}
 	}
 
 	async run (msg, args) {
@@ -209,16 +233,22 @@ module.exports = class flavorCommand extends commando.Command {
 			} while (i !== -1);
 
 			dataEmbed
-				.setColor(embedColours[pokeEntry.color])
-				.setFooter(`#${pokeEntry.num} - ${capitalizeFirstLetter(poke)}`, `https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(' ', '_').toLowerCase()}.png`)
+				.setColor(this.fetchColor(pokeEntry.color))
+				.setAuthor(`#${pokeEntry.num} - ${this.capitalizeFirstLetter(poke)}`,
+					`https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(' ', '_').toLowerCase()}.png`)
 				.setImage(imgURL)
-				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png');
+				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
+				.setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.');
+
+			this.deleteCommandMessages(msg);
 
 			return msg.embed(dataEmbed);
 		}
 		const dym = this.match.get(args.pokemon), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
 
-		return msg.reply(`⚠ Dex entry not found! ${dymString}`);
+		this.deleteCommandMessages(msg);
+
+		return msg.reply(`⚠️ Dex entry not found! ${dymString}`);
 	}
 };

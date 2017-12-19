@@ -35,18 +35,6 @@ const Discord = require('discord.js'),
 
 /* eslint-enable sort-vars */
 
-/* eslint-disable one-var */
-
-const capitalizeFirstLetter = function (string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	},
-	links = {
-		'aliases': 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/aliases.js',
-		'items': 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/items.js'
-	};
-/* eslint-enable one-var */
-
-
 module.exports = class itemCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
@@ -73,15 +61,25 @@ module.exports = class itemCommand extends commando.Command {
 		this.match = [];
 	}
 
+	capitalizeFirstLetter (string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	async fetchItems () {
 		if (Object.keys(this.items).length !== 0) {
 			return this.items;
 		}
 
-		const abilityData = await request.get(links.items);
+		const abilityData = await request.get(this.fetchLinks('items'));
 
 		if (abilityData) {
-			this.items = requireFromURL(links.items).BattleItems;
+			this.items = requireFromURL(this.fetchLinks('items')).BattleItems;
 		} else {
 			this.items = require(path.join(__dirname, 'data/items.js')).BattleItems; // eslint-disable-line global-require
 		}
@@ -96,10 +94,10 @@ module.exports = class itemCommand extends commando.Command {
 			return this.pokeAliases;
 		}
 
-		const dexData = await request.get(links.aliases);
+		const dexData = await request.get(this.fetchLinks('aliases'));
 
 		if (dexData) {
-			this.pokeAliases = requireFromURL(links.aliases).BattleAliases;
+			this.pokeAliases = requireFromURL(this.fetchLinks('aliases')).BattleAliases;
 		} else {
 			this.pokeAliases = require(path.join(__dirname, 'data/aliases.js')).BattlePokedex; // eslint-disable-line global-require
 		}
@@ -118,6 +116,17 @@ module.exports = class itemCommand extends commando.Command {
 		}
 
 		return `https://raw.githubusercontent.com/110Percent/beheeyem-data/master/sprites/items/${item.name.toLowerCase().replace(' ', '_')}.png`;
+	}
+
+	fetchLinks (type) {
+		switch (type) {
+			case 'aliases':
+				return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/aliases.js';
+			case 'items':
+				return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/items.js';
+			default:
+				return 'error';
+		}
 	}
 
 	async run (msg, args) {
@@ -147,17 +156,19 @@ module.exports = class itemCommand extends commando.Command {
 			itemEmbed
 				.setColor('#E24141')
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
-				.setAuthor(`${capitalizeFirstLetter(item.name)}`, imgURL)
+				.setAuthor(`${this.capitalizeFirstLetter(item.name)}`, imgURL)
 				.addField('Description', item.desc)
 				.addField('Generation Introduced', item.gen)
 				.addField('External Resources', oneLine `
-			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(item.name.replace(' ', '_').replace('\'', ''))})  
+			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${this.capitalizeFirstLetter(item.name.replace(' ', '_').replace('\'', ''))})  
 			|  [Smogon](http://www.smogon.com/dex/sm/items/${item.name.toLowerCase().replace(' ', '_')
 		.replace('\'', '')})  
 			|  [PokémonDB](http://pokemondb.net/item/${item.name.toLowerCase().replace(' ', '-')
 		.replace('\'', '')})`);
 
-			return msg.embed(itemEmbed, `**${capitalizeFirstLetter(item.name)}**`);
+			this.deleteCommandMessages(msg);
+
+			return msg.embed(itemEmbed, `**${this.capitalizeFirstLetter(item.name)}**`);
 		}
 
 		/* eslint-disable one-var */
@@ -167,7 +178,9 @@ module.exports = class itemCommand extends commando.Command {
 
 		/* eslint-enable one-var */
 
-		return msg.reply(`⚠ Item not found! ${dymString}`);
+		this.deleteCommandMessages(msg);
+		
+		return msg.reply(`⚠️ Item not found! ${dymString}`);
 
 	}
 };

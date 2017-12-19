@@ -55,11 +55,19 @@ module.exports = class delRoleCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
 	}
 
-	async run (msg, args) {
-		await args.member.removeRole(args.role).then(() => msg.say(`\`${args.role.name}\` removed from \`${args.member.displayName}\``), () => msg.reply('Error'));
+	run (msg, args) {
+		this.deleteCommandMessages(msg);
+
+		return args.member.removeRole(args.role).then(() => msg.say(`\`${args.role.name}\` removed from \`${args.member.displayName}\``), () => msg.reply('Error'));
 	}
 };

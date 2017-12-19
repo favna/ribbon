@@ -61,12 +61,20 @@ module.exports = class memberlogsCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
 	}
 
 	run (msg, args) {
 		this.client.provider.set(msg.guild.id, 'memberlogs', args.option);
+
+		this.deleteCommandMessages(msg);
 
 		return msg.reply(oneLine `member logs have been
         ${args.option 

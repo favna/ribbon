@@ -23,23 +23,41 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{oneLine} = require('common-tags');
 
-module.exports = class inviteCommnad extends commando.Command {
+module.exports = class deleteCommandMessagesCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'invite',
-			'aliases': ['inv', 'links', 'shill'],
-			'group': 'links',
-			'memberName': 'invite',
-			'description': 'Gives you invitation links',
-			'examples': ['invite'],
-			'guildOnly': false,
+			'name': 'deletecommandmessages',
+			'group': 'moderation',
+			'aliases': ['dcm'],
+			'memberName': 'deletecommandmessages',
+			'description': 'Configure whether the bot should delete command messages',
+			'examples': ['modlogs {option}', 'modlogs enable'],
+			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
-			}
+			},
+
+			'args': [
+				{
+					'key': 'option',
+					'prompt': 'Enable or disable modlogs?',
+					'type': 'boolean',
+					'label': 'Option for toggling',
+					'validate': (bool) => {
+						const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
+
+						if (validBools.includes(bool)) {
+							return true;
+						}
+
+						return `Has to be one of ${validBools.join(', ')}`;
+					}
+				}
+			]
 		});
 	}
 
@@ -49,22 +67,15 @@ module.exports = class inviteCommnad extends commando.Command {
 		}
 	}
 
-	run (msg) {
-		const inviteEmbed = new Discord.MessageEmbed();
+	hasPermission (msg) {
+		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+	}
 
-		inviteEmbed
-			.setAuthor('Ribbon Links')
-			.setThumbnail('https://ribbon.favna.xyz/images/ribbon.png')
-			.setURL('https://selfbot.favna.xyz')
-			.setColor('#E24141')
-			.addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p8)\n' +
-                '[Join the Support Server](https://discord.gg/zdt5yQt)\n' +
-                '[Website](https://selfbot.favna.xyz)\n' +
-                '[GitHub](https://github.com/Favna/Ribbon)\n' +
-                '[Wiki](https://github.com/Favna/Ribbon/wiki)');
+	run (msg, args) {
+		this.client.provider.set(msg.guild.id, 'deletecommandmessages', args.option);
 
 		this.deleteCommandMessages(msg);
-		
-		return msg.embed(inviteEmbed, 'Find information on the bot here: https://ribbon.favna.xyz');
+
+		return msg.reply(oneLine `command messages will now be ${args.option ? 'kept' : 'deleted'}.`);
 	}
 };

@@ -53,6 +53,12 @@ module.exports = class eightBallCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		const eightBallEmbed = new Discord.MessageEmbed();
 
@@ -61,6 +67,8 @@ module.exports = class eightBallCommand extends commando.Command {
 			.addField(':question: Question', args.question, false)
 			.addField(':8ball: 8ball', predict(), false);
 		
+		this.deleteCommandMessages(msg);
+
 		return msg.embed(eightBallEmbed);
 	}
 };

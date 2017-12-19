@@ -25,7 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	moment = require('moment');
+	moment = require('moment'),
+	{oneLine} = require('common-tags');
 
 module.exports = class softbanCommand extends commando.Command {
 	constructor (client) {
@@ -57,16 +58,26 @@ module.exports = class softbanCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('BAN_MEMBERS');
 	}
 
 	run (msg, args) {
 		if (args.member.id === msg.author.id) {
+			this.deleteCommandMessages(msg);
+			
 			return msg.reply('⚠️ I don\'t think you want to softban yourself.');
 		}
 
 		if (!args.member.bannable) {
+			this.deleteCommandMessages(msg);
+			
 			return msg.reply('⚠️ I cannot softban that member, their role is probably higher than my own!');
 		}
 
@@ -77,17 +88,37 @@ module.exports = class softbanCommand extends commando.Command {
 
 		msg.guild.unban(args.member.user);
 
-		const modLogs = msg.guild.channels.exists('name', 'mod-logs') ? msg.guild.channels.find('name', 'mod-logs') : null,
-			softBanEmbed = new Discord.MessageEmbed();
+		const embed = new Discord.MessageEmbed(),
+			modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
+				msg.guild.channels.exists('name', 'mod-logs')
+					? msg.guild.channels.find('name', 'mod-logs').id
+					: null);
 
-		softBanEmbed
+		embed
 			.setColor('#E24141')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-                '**Action:** Softban\n' +
-                `**Reason:** ${args.reason}`)
+				'**Action:** Softban\n' +
+				`**Reason:** ${args.reason}`)
 			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
-		return modLogs !== null ? modLogs.send({'embed': softBanEmbed}) : msg.reply('📃 I can keep a log of bans if you create a channel named \'mod-logs\' and give me access to it');
+		if (this.client.provider.get(msg.guild, 'modlogs', true)) {
+			if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+				msg.reply(oneLine `📃 I can keep a log of bans if you create a channel named \'mod-logs\'
+					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
+					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+				this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+			}
+
+			if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+				msg.delete();
+			}
+			this.deleteCommandMessages(msg);
+			
+			return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
+		}
+		this.deleteCommandMessages(msg);
+		
+		return null;
 	}
 };

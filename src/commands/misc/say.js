@@ -62,11 +62,13 @@ module.exports = class sayCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		if (msg.deletable) {
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
 			msg.delete();
 		}
+	}
 
+	run (msg, args) {
 		let storageLooped = false;
 
 		for (const stored in storage.lastMessage) {
@@ -80,7 +82,8 @@ module.exports = class sayCommand extends commando.Command {
 		if (!storageLooped) {
 			storage.lastMessage.push([msg.guild.id, {'message': msg}]);
 		}
-	
+		this.deleteCommandMessages(msg);
+
 		return msg.say(args.txt);
 	}
 };

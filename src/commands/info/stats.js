@@ -29,7 +29,6 @@ const Discord = require('discord.js'),
 	moment = require('moment'),
 	process = require('process');
 
-
 module.exports = class statsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
@@ -47,8 +46,14 @@ module.exports = class statsCommand extends commando.Command {
 		});
 	}
 
-	run (msg) {
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+	
 
+	run (msg) {
 		const statsEmbed = new Discord.MessageEmbed();
 
 		statsEmbed
@@ -71,6 +76,8 @@ module.exports = class statsCommand extends commando.Command {
 			.addField('\u200b', 'Be sure to use the `help` command to get the list of commands available to you in a DM. The default prefix is `!`. You can change this with the `prefix` command.\nIf you ever forget the command prefix, just use `@Ribbon#2325 prefix`') // eslint-disable-line max-len
 			.setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm')}`, 'https://ribbon.favna.xyz/images/ribbon.png');
 			
+		this.deleteCommandMessages(msg);
+		
 		return msg.embed(statsEmbed);
 	}
 };

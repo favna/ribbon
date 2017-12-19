@@ -29,6 +29,7 @@ const Discord = require('discord.js'),
 	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
+	{oneLine} = require('common-tags'),
 	tmdb = require('moviedb')(auth.TheMovieDBV3ApiKey);
 
 let movieID = '';
@@ -47,7 +48,7 @@ module.exports = class movieCommand extends commando.Command {
 				'usages': 1,
 				'duration': 60
 			},
-			
+
 			'args': [
 				{
 					'key': 'name',
@@ -59,10 +60,19 @@ module.exports = class movieCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		tmdb.searchMovie({'query': args.name}, (nameErr, nameRes) => {
 			if (nameErr) {
-				console.error(nameErr); // eslint-disable-line no-console
+				// eslint-disable-next-line no-console
+				console.error(oneLine `An error occured in the "tmdb" command in the server ${msg.guild.name} (${msg.guild.id}) 
+				on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}. The error is: ${nameErr}`);
+				this.deleteCommandMessages(msg);
 
 				return msg.reply('An error occured');
 			}
@@ -70,31 +80,46 @@ module.exports = class movieCommand extends commando.Command {
 			if (nameRes.results.length !== 0) {
 				movieID = nameRes.results[0].id;
 			} else {
-				return msg.reply('No result found');
+
+				this.deleteCommandMessages(msg);
+
+				return msg.reply('⚠️ ***nothing found***');
 			}
 
 			tmdb.movieInfo({'id': movieID}, (idErr, idRes) => {
-				const movieEmbed = new Discord.MessageEmbed();
+				if (!idErr) {
+					const movieEmbed = new Discord.MessageEmbed();
 
-				movieEmbed
-					.setImage(`http://image.tmdb.org/t/p/w640${idRes.backdrop_path}`)
-					.setColor('#E24141')
-					.addField('Title', `[${idRes.title}](https://www.themoviedb.org/movie/${idRes.id})`, true)
-					.addField('Release Date', moment(idRes.release_date).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
-					.addField('Runtime', `${idRes.runtime} minutes`, true)
-					.addField('User Score', idRes.vote_average, true)
-					.addField('Genres', idRes.genres.map(genre => genre.name), true)
-					.addField('Production Companies', idRes.production_companies.length === 0 ? idRes.production_companies.map(company => company.name) : 'Unavailable on TheMovieDB', true)
-					.addField('Status', idRes.status, true)
-					.addField('Collection', idRes.belongs_to_collection !== null ? idRes.belongs_to_collection.name : 'none', true)
-					.addField('Home Page', idRes.homepage !== '' ? '[Click Here](idRes.homepage)' : 'none', true)
-					.addField('IMDB Page', idRes.imdb_id_id !== '' ? `[Click Here](http://www.imdb.com/title/${idRes.imdb_id})` : 'none', true)
-					.addField('Description', idRes.overview);
+					movieEmbed
+						.setImage(`http://image.tmdb.org/t/p/w640${idRes.backdrop_path}`)
+						.setColor('#E24141')
+						.addField('Title', `[${idRes.title}](https://www.themoviedb.org/movie/${idRes.id})`, true)
+						.addField('Release Date', moment(idRes.release_date).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
+						.addField('Runtime', `${idRes.runtime} minutes`, true)
+						.addField('User Score', idRes.vote_average, true)
+						.addField('Genres', idRes.genres.map(genre => genre.name), true)
+						.addField('Production Companies', idRes.production_companies.length === 0 ? idRes.production_companies.map(company => company.name) : 'Unavailable on TheMovieDB', true)
+						.addField('Status', idRes.status, true)
+						.addField('Collection', idRes.belongs_to_collection !== null ? idRes.belongs_to_collection.name : 'none', true)
+						.addField('Home Page', idRes.homepage !== '' ? '[Click Here](idRes.homepage)' : 'none', true)
+						.addField('IMDB Page', idRes.imdb_id_id !== '' ? `[Click Here](http://www.imdb.com/title/${idRes.imdb_id})` : 'none', true)
+						.addField('Description', idRes.overview);
 
-				return msg.embed(movieEmbed);
+					this.deleteCommandMessages(msg);
+
+					return msg.embed(movieEmbed);
+				}
+
+				// eslint-disable-next-line no-console
+				console.error(oneLine `An error occured in the "tmdb" command in the server ${msg.guild.name} (${msg.guild.id}) 
+									on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}. The error is: ${idErr}`);
+				this.deleteCommandMessages(msg);
+
+				return msg.reply('An error occured');
+
 			});
-
-			return null; // This is to get consistent return
+			
+			return null;
 		});
 	}
 };

@@ -30,12 +30,6 @@ const Discord = require('discord.js'),
 	moves = require(Path.join(__dirname, 'data/moves.js')).BattleMovedex,
 	{oneLine} = require('common-tags');
 
-const capitalizeFirstLetter = function (string) { // eslint-disable-line one-var
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	},
-	match = new Matcher(Object.keys(moves).join(' '));
-
-
 module.exports = class moveCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
@@ -46,11 +40,7 @@ module.exports = class moveCommand extends commando.Command {
 			'description': 'Get the info on a Pokémon move',
 			'examples': ['move {Pokémon Move Name}', 'move Dragon Dance'],
 			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			
+
 			'args': [
 				{
 					'key': 'move',
@@ -62,9 +52,21 @@ module.exports = class moveCommand extends commando.Command {
 		});
 	}
 
+	capitalizeFirstLetter (string) {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
+		const match = new Matcher(Object.keys(moves).join(' ')),
+			moveEmbed = new Discord.MessageEmbed();
+
 		let move = moves[args.move.toLowerCase()];
-		const moveEmbed = new Discord.MessageEmbed();
 
 		if (!move) {
 			for (let index = 0; index < Object.keys(moves).length; index += 1) {
@@ -85,10 +87,9 @@ module.exports = class moveCommand extends commando.Command {
 		if (move) {
 
 			const accuracyString = move.accuracy ? 'Certain Success' : move.accuracy,
-				crystalString = move.isZ ? `${capitalizeFirstLetter(move.isZ.substring(0, move.isZ.length - 1))}Z` : 'None',
+				crystalString = move.isZ ? `${this.capitalizeFirstLetter(move.isZ.substring(0, move.isZ.length - 1))}Z` : 'None',
 				descString = move.desc ? move.desc : move.shortDesc,
-				targetString = move.target === 'normal' ? 'One Enemy' : capitalizeFirstLetter(move.target.replace(/([A-Z])/g, ' $1'));
-
+				targetString = move.target === 'normal' ? 'One Enemy' : this.capitalizeFirstLetter(move.target.replace(/([A-Z])/g, ' $1'));
 
 			moveEmbed
 				.setColor('#E24141')
@@ -104,14 +105,18 @@ module.exports = class moveCommand extends commando.Command {
 				.addField('Contest Condition', move.contestType, true)
 				.addField('Z-Crystal', crystalString, true)
 				.addField('External Resources', oneLine `
-                [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${move.name.replace(' ', '_')}_(move\\))  
-                |  [Smogon](http://www.smogon.com/dex/sm/moves/${move.name.replace(' ', '_')})  
-                |  [PokémonDB](http://pokemondb.net/move/${move.name.replace(' ', '-')})`);
+			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${move.name.replace(' ', '_')}_(move\\))  
+			|  [Smogon](http://www.smogon.com/dex/sm/moves/${move.name.replace(' ', '_')})  
+			|  [PokémonDB](http://pokemondb.net/move/${move.name.replace(' ', '-')})`);
 
-			return msg.embed(moveEmbed, `**${capitalizeFirstLetter(move.name)}**`);
+			this.deleteCommandMessages(msg);
+			
+			return msg.embed(moveEmbed, `**${this.capitalizeFirstLetter(move.name)}**`);
 		}
 		const dym = match.get(args.move), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the move name?';
+
+		this.deleteCommandMessages(msg);
 
 		return msg.channel.send(`⚠️ Move not found! ${dymString}`);
 	}

@@ -53,26 +53,31 @@ module.exports = class pahealCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		booru.search('paheal', args.nsfwtags.split(' '), {
-			'limit': 1,
-			'random': true
-		})
-			.then(booru.commonfy)
-			.then((images) => {
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
 
+	async run (msg, args) {
+		try {
+			const booruData = await booru.search('paheal', args.nsfwtags.split(' '), {
+				'limit': 1,
+				'random': true
+			}).then(booru.commonfy);
 
-				msg.say(`Score: ${images[0].common.score}\nImage: ${images[0].common.file_url}`);
+			if (booruData) {
+				this.deleteCommandMessages(msg);
 
-			})
-			.catch((err) => {
-				if (err.name === 'booruError') {
-					console.error(err.message); // eslint-disable-line no-console
-
-					return msg.reply('⚠️ No juicy images found. An error was logged to your error console');
-				}
-
-				return msg.reply('⚠️ No juicy images found.');
-			});
+				return msg.say(`Score: ${booruData[0].common.score}\nImage: ${booruData[0].common.file_url}`);
+			}
+			this.deleteCommandMessages(msg);
+			
+			return msg.reply('⚠️ No juicy images found.');
+		} catch (booruError) {
+			this.deleteCommandMessages(msg);
+			
+			return msg.reply('⚠️ No juicy images found.');
+		}
 	}
 };

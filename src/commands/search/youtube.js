@@ -23,14 +23,14 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-mixed-requires */
-
 const Discord = require('discord.js'),
 	YouTube = require('youtube-node'),
 	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	youtube = new YouTube();
+	{oneLine} = require('common-tags');
+
+const youtube = new YouTube(); // eslint-disable-line one-var
 
 youtube.setKey(auth.googleapikey);
 youtube.addParam('type', 'video');
@@ -52,7 +52,7 @@ module.exports = class youtubeCommand extends commando.Command {
 				'usages': 1,
 				'duration': 60
 			},
-			
+
 			'args': [
 				{
 					'key': 'query',
@@ -64,17 +64,26 @@ module.exports = class youtubeCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
 
+	run (msg, args) {
 		youtube.search(args.query, 1, (error, result) => {
 			if (error) {
-				console.error(error); // eslint-disable-line no-console
+				// eslint-disable-next-line no-console
+				console.error(oneLine `An error occured in the "tmdb" command in the server ${msg.guild.name} (${msg.guild.id}) 
+					on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}. The error is: ${error}`);
 
-				return msg.reply('⚠️ No results found');
+				this.deleteCommandMessages(msg);
+
+				return msg.reply('⚠️ ***nothing found***');
 			} else if (!result || !result.items || result.items.length < 1) {
-				msg.say('No Results found');
+				this.deleteCommandMessages(msg);
 
-				return msg.delete(1000);
+				return msg.reply('⚠️ ***nothing found***');
 			}
 
 			const youtubeEmbed = new Discord.MessageEmbed();
@@ -91,6 +100,8 @@ module.exports = class youtubeCommand extends commando.Command {
 			result.items[0].snippet.description !== ''
 				? youtubeEmbed.addField('Description', result.items[0].snippet.description, false)
 				: youtubeEmbed.addField('Description', 'No description', false);
+
+			this.deleteCommandMessages(msg);
 
 			return msg.embed(youtubeEmbed, `https://www.youtube.com/watch?v=${result.items[0].id.videoId}`);
 		});

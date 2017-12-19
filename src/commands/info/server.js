@@ -27,15 +27,6 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment');
 
-const contentFilter = ['Content filter disabled', 'Scan messages of members without a role', 'Scan messages sent by all members'], // eslint-disable-line one-var
-	verificationLevel = [
-		'None - unrestricted',
-		'Low - must have verified email on account',
-		'Medium - must be registered on Discord for longer than 5 minutes',
-		'High - 	(╯°□°）╯︵ ┻━┻ - must be a member of the server for longer than 10 minutes',
-		'Very High - ┻━┻ミヽ(ಠ益ಠ)ﾉ彡┻━┻ - must have a verified phone number'
-	];
-
 module.exports = class serverInfoCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
@@ -51,6 +42,42 @@ module.exports = class serverInfoCommand extends commando.Command {
 				'duration': 3
 			}
 		});
+	}
+
+	contentFilter (filter) {
+		switch (filter) {
+			case 0:
+				return 'Content filter disabled';
+			case 1:
+				return 'Scan messages of members without a role';
+			case 2:
+				return 'Scan messages sent by all members';
+			default:
+				return 'Content Filter unknown';
+		}
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
+	verificationFilter (filter) {
+		switch (filter) {
+			case 0:
+				return 'None - unrestricted';
+			case 1:
+				return 'Low - must have verified email on account';
+			case 2:
+				return 'Medium - must be registered on Discord for longer than 5 minutes';
+			case 3:
+				return 'High - 	(╯°□°）╯︵ ┻━┻ - must be a member of the server for longer than 10 minutes';
+			case 4:
+				return 'Very High - ┻━┻ミヽ(ಠ益ಠ)ﾉ彡┻━┻ - must have a verified phone number';
+			default:
+				return 'Verification Filter unknown';
+		}
 	}
 
 	run (msg, args) {
@@ -91,10 +118,12 @@ module.exports = class serverInfoCommand extends commando.Command {
 			.addField('Number of roles', msg.guild.roles.size, true)
 			.addField('Number of channels', guildChannels, true)
 			.addField('Created At', moment(msg.guild.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
-			.addField('Verification Level', verificationLevel[msg.guild.verificationLevel], false)
-			.addField('Explicit Content Filter', contentFilter[`${msg.guild.explicitContentFilter}`], false);
+			.addField('Verification Level', this.verificationFilter(msg.guild.verificationLevel), false)
+			.addField('Explicit Content Filter', this.contentFilter(msg.guild.explicitContentFilter), false);
 
 		msg.guild.splashURL() !== null ? serverEmbed.setImage(msg.guild.splashURL()) : null;
+
+		this.deleteCommandMessages(msg);
 
 		return msg.embed(serverEmbed);
 	}

@@ -58,10 +58,18 @@ module.exports = class ViewQueueCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		const queue = this.queue.get(msg.guild.id);
 
 		if (!queue) {
+			this.deleteCommandMessages(msg);
+
 			return msg.reply('there are no songs in the queue. Why not put something in my jukebox?');
 		}
 
@@ -69,6 +77,8 @@ module.exports = class ViewQueueCommand extends commando.Command {
 			currentTime = currentSong.dispatcher ? currentSong.dispatcher.time / 1000 : 0,
 			paginated = commando.util.paginate(queue.songs, args.page, Math.floor(PAGINATED_ITEMS)),
 			totalLength = queue.songs.reduce((prev, song) => prev + song.length, 0);
+
+		this.deleteCommandMessages(msg);
 
 		return msg.embed({
 			'color': 3447003,

@@ -54,13 +54,23 @@ module.exports = class qrgenCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		qr.toDataURL(args.qrurl, {'errorCorrectionLevel': 'M'}, (err, url) => {
 			if (err) {
 				throw err;
 			}
-			imgur.uploadBase64(url.slice(22))
-				.then(json => msg.say(`QR Code for this file: ${json.data.link}`));
+			imgur.uploadBase64(url.slice(22)).then((json) => {
+
+				this.deleteCommandMessages(msg);
+				
+				return msg.say(`QR Code for this URL: ${json.data.link}`);
+			});
 		});
 	}
 };

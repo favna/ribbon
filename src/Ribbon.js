@@ -147,7 +147,10 @@ class Ribbon {
 		return (member) => {
 			if (this.client.provider.get(member.guild, 'memberlogs', true)) {
 				const embed = new Discord.MessageEmbed(),
-					memberLogs = member.guild.channels.exists('name', 'member-logs') ? member.guild.channels.find('name', 'member-logs') : null;
+					memberLogs = this.client.provider.get(member.guild, 'memberlogchannel',
+						member.guild.channels.exists('name', 'member-logs')
+							? member.guild.channels.find('name', 'member-logs').id
+							: null);
 
 				embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
 					.setFooter(`User joined | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
@@ -158,8 +161,9 @@ class Ribbon {
 					embed.setDescription(`Automatically assigned the role ${member.guild.roles.get(this.client.provider.get(member.guild.id, 'defaultRole')).name} to this member`);
 				}
 
-				if (memberLogs !== null && memberLogs.permissionsFor(this.client.user).has('SEND_MESSAGES')) {
-					memberLogs.send({embed});
+				if (memberLogs !== null && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
+					.has('SEND_MESSAGES')) {
+					member.guild.channels.get(memberLogs).send({embed});
 				}
 			}
 		};
@@ -169,14 +173,18 @@ class Ribbon {
 		return (member) => {
 			if (this.client.provider.get(member.guild, 'memberlogs', true)) {
 				const embed = new Discord.MessageEmbed(),
-					memberLogs = member.guild.channels.exists('name', 'member-logs') ? member.guild.channels.find('name', 'member-logs') : null;
+					memberLogs = this.client.provider.get(member.guild, 'memberlogchannel',
+						member.guild.channels.exists('name', 'member-logs')
+							? member.guild.channels.find('name', 'member-logs').id
+							: null);
 
 				embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
 					.setFooter(`User left | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
 					.setColor('#E24141');
 
-				if (memberLogs !== null && memberLogs.permissionsFor(this.client.user).has('SEND_MESSAGES')) {
-					memberLogs.send({embed});
+				if (memberLogs !== null && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
+					.has('SEND_MESSAGES')) {
+					member.guild.channels.get(memberLogs).send({embed});
 				}
 			}
 		};

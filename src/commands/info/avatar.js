@@ -44,14 +44,36 @@ module.exports = class avatarCommand extends commando.Command {
 					'prompt': 'What user would you like to get the avatar from?',
 					'type': 'member',
 					'label': 'member name or ID'
+				},
+				{
+					'key': 'size',
+					'prompt': 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
+					'type': 'integer',
+					'label': 'size of the avatar',
+					'default': 128,
+					'validate': (size) => {
+						const validSizes = ['128', '256', '512', '1024', '2048'];
+
+						if (validSizes.includes(size)) {
+							return true;
+						}
+
+						return `Has to be one of ${validSizes.join(', ')}`;
+					}
 				}
 			]
 		});
 		this.embedColor = '#FF0000';
 	}
 
-	async fetchColor (img) {
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
 
+
+	async fetchColor (img) {
 		const palette = await vibrant.from(img).getPalette();
 
 		if (palette) {
@@ -83,15 +105,33 @@ module.exports = class avatarCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const ava = args.member.user.displayAvatarURL({'format': 'png'}),
-			avaColor = await this.fetchColor(ava),
-			embed = new Discord.MessageEmbed();
+		try {
+			const ava = args.member.user.displayAvatarURL({'size': args.size}),
+				avaColor = await this.fetchColor(ava),
+				embed = new Discord.MessageEmbed();
 
-		embed
-			.setColor(avaColor ? avaColor : this.embedColor)
-			.setImage(ava)
-			.setFooter(`Avatar for ${args.member.displayName}`);
+			embed
+				.setColor(avaColor ? avaColor : this.embedColor)
+				.setImage(ava)
+				.setFooter(`Avatar for ${args.member.displayName}`);
+			this.deleteCommandMessages(msg);
 
-		return msg.embed(embed);
+			return msg.embed(embed, ava);
+		} catch (err) {
+			const ava = args.member.user.displayAvatarURL({
+					'format': 'png',
+					'size': args.size
+				}),
+				avaColor = await this.fetchColor(ava),
+				embed = new Discord.MessageEmbed();
+
+			embed
+				.setColor(avaColor ? avaColor : this.embedColor)
+				.setImage(ava)
+				.setFooter(`Avatar for ${args.member.displayName}`);
+			this.deleteCommandMessages(msg);
+
+			return msg.embed(embed, ava);
+		}
 	}
 };

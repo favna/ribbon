@@ -41,7 +41,7 @@ module.exports = class urbanCommand extends commando.Command {
 				'usages': 1,
 				'duration': 60
 			},
-			
+
 			'args': [
 				{
 					'key': 'query',
@@ -53,9 +53,17 @@ module.exports = class urbanCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		urban(args.query).first((json) => {
 			if (!json) {
+				this.deleteCommandMessages(msg);
+				
 				return msg.reply('⚠️ No Results Found!');
 			}
 			const urbanEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
@@ -67,6 +75,8 @@ module.exports = class urbanCommand extends commando.Command {
 				.addField('Example', json.example.length <= 1024 ? json.example : `Truncated due to exceeding maximum length\n${json.example.slice(0, 970)}`, false)
 				.addField('Permalink', json.permalink, false);
 
+			this.deleteCommandMessages(msg);
+			
 			return msg.embed(urbanEmbed);
 		});
 	}

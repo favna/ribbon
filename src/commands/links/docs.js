@@ -43,7 +43,7 @@ module.exports = class DocsCommand extends Command {
 				'usages': 2,
 				'duration': 3
 			},
-			
+
 			'args': [
 				{
 					'key': 'query',
@@ -62,6 +62,12 @@ module.exports = class DocsCommand extends Command {
 		});
 
 		this.docs = {}; // Cache for docs
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
 	}
 
 	async fetchDocs (version) {
@@ -367,6 +373,8 @@ module.exports = class DocsCommand extends Command {
 			'icon_url': 'https://cdn.discordapp.com/icons/222078108977594368/bc226f09db83b9176c64d923ff37010b.webp'
 		};
 
+		this.deleteCommandMessages(msg);
+		
 		return msg.embed(embed);
 	}
 };

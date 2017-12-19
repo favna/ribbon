@@ -81,6 +81,12 @@ module.exports = class moneyCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		oxr.latest(async () => {
 			try {
@@ -103,10 +109,13 @@ module.exports = class moneyCommand extends commando.Command {
 					`${currencySymbol(args.curTwo)}${convertedMoney}`, true)
 					.setFooter(`Converted money from input using openexchangerates | converted on: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
-				return msg.embed(oxrEmbed);
-			} catch (error) {
-				console.error(error); // eslint-disable-line no-console
+				this.deleteCommandMessages(msg);
 
+				return msg.embed(oxrEmbed);
+			} catch (err) {
+
+				this.deleteCommandMessages(msg);
+				
 				return msg.reply('⚠️ An error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
 			}
 		});

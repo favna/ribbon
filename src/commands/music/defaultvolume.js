@@ -58,15 +58,25 @@ module.exports = class defaultVolumeCommand extends commando.Command {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
+
 	run (msg, args) {
 		if (args.volume === 'show') {
 			const defaultVolume = this.client.provider.get(msg.guild.id, 'defaultVolume', DEFAULT_VOLUME);
+
+			this.deleteCommandMessages(msg);
 
 			return msg.reply(`the default volume level is ${defaultVolume}.`);
 		}
 
 		if (args.volume === 'default') {
 			this.client.provider.remove(msg.guild.id, 'defaultVolume');
+			this.deleteCommandMessages(msg);
 
 			return msg.reply(`set the default volume level to the bot's default (currently ${DEFAULT_VOLUME}).`);
 		}
@@ -74,11 +84,14 @@ module.exports = class defaultVolumeCommand extends commando.Command {
 		const defaultVolume = parseInt(args.volume, 10);
 
 		if (isNaN(defaultVolume) || defaultVolume <= 0 || defaultVolume > 10) {
+			this.deleteCommandMessages(msg);
+			
 			return msg.reply('invalid number provided. It must be in the range of 0-10.');
 		}
 
 		this.client.provider.set(msg.guild.id, 'defaultVolume', defaultVolume);
-
+		this.deleteCommandMessages(msg);
+		
 		return msg.reply(`set the default volume level to ${defaultVolume}.`);
 
 	}

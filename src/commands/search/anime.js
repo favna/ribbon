@@ -25,7 +25,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	malware = require('malapi').Anime;
+	malapi = require('malapi').Anime;
 
 module.exports = class animeCommand extends commando.Command {
 	constructor (client) {
@@ -37,10 +37,6 @@ module.exports = class animeCommand extends commando.Command {
 			'description': 'Find anime on MyAnimeList',
 			'examples': ['anime {animeName}', 'anime Yu-Gi-Oh'],
 			'guildOnly': false,
-			'throttling': {
-				'usages': 1,
-				'duration': 60
-			},
 
 			'args': [
 				{
@@ -53,8 +49,16 @@ module.exports = class animeCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		malware.fromName(args.query).then((anime) => {
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
+	async run (msg, args) {
+		const anime = await malapi.fromName(args.query);
+
+		if (anime) {
 			const animeEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
 
 			animeEmbed
@@ -77,7 +81,6 @@ module.exports = class animeCommand extends commando.Command {
 					.addBlankField(true);
 			}
 
-
 			if (anime.synopsis.length >= 1024) {
 				animeEmbed.addField('Synposis',
 					`The synopsis for this anime exceeds the maximum length, check the full synopsis on myanimelist.\nSynopsis Snippet:\n${anime.synopsis.slice(0, 500)}`);
@@ -91,13 +94,13 @@ module.exports = class animeCommand extends commando.Command {
 				.addField('Status', anime.status, true)
 				.addField('URL', `https://myanimelist.net/anime/${anime.id}`, true);
 
+			this.deleteCommandMessages(msg);
+
 			return msg.embed(animeEmbed);
-		})
-			.catch((err) => {
-				console.error(err); // eslint-disable-line no-console
+		}
 
-				return msg.reply('⚠️ No results found. An error was logged to your error console');
-			});
+		this.deleteCommandMessages(msg);
 
+		return msg.reply('⚠️ ***nothing found***');
 	}
 };

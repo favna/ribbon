@@ -23,174 +23,130 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable max-statements */
-
 const Discord = require('discord.js'),
-	cheerio = require('cheerio'),
+	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
+	igdbapi = require('igdb-api-node').default,
 	moment = require('moment'),
-	request = require('request');
-
-const replaceAll = function (string, pattern, replacement) { // eslint-disable-line one-var
-	return string.replace(new RegExp(pattern, 'g'), replacement);
-};
-
+	vibrant = require('node-vibrant');
 
 module.exports = class gameCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'games',
 			'group': 'search',
-			'aliases': ['game', 'moby'],
+			'aliases': ['game', 'moby', 'igdb'],
 			'memberName': 'games',
 			'description': 'Finds info on a game on Mobygames',
 			'examples': ['games {gameName}', 'games Tales of Berseria'],
 			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			
+
 			'args': [
 				{
-					'key': 'gameData',
+					'key': 'game',
 					'prompt': 'Please supply game title',
 					'type': 'string',
 					'label': 'Game to look up'
 				}
 			]
+
 		});
+		this.embedColor = '#FF0000';
 	}
 
-	run (msg, args) {
-		
-		const searchURL = `http://www.mobygames.com/search/quick?q=${replaceAll(args.gameData, / /, '+')}&p=-1&search=Go&sFilter=1&sG=on`;
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
 
-		request({
-			'uri': searchURL,
-			'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'}
-		},
-		(err, resp, html) => {
-			if (!err && resp.statusCode === 200) {
-				const $ = cheerio.load(html);
+	async fetchColor (img) {
 
-				request({
-					'uri': `http://www.mobygames.com${$('#searchResults > div > div:nth-child(2) > div > div.searchData > div.searchTitle > a').attr('href')}`,
-					'headers': {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36'}
-				},
-				(error, response, body) => {
-					if (!error && response.statusCode === 200) {
-						const cheerioLoader = cheerio.load(body);
+		const palette = await vibrant.from(img).getPalette();
 
-						let descCombined = '',
-							description = 'Potentially truncated due to maximum allowed length:\n',
-							rating = '';
+		if (palette) {
+			const pops = [],
+				swatches = Object.values(palette);
 
-						if (cheerioLoader('.scoreHi:nth-child(1)').first()
-							.text() === '' && cheerioLoader('.scoreLow:nth-child(1)').first()
-								.text() === '') {
-							rating = cheerioLoader('.scoreMed:nth-child(1)').first()
-								.text();
-						} else if (cheerioLoader('.scoreHi:nth-child(1)').first()
-							.text() === '' && cheerioLoader('.scoreMed:nth-child(1)').first()
-								.text() === '') {
-							rating = cheerioLoader('.scoreLow:nth-child(1)').first()
-								.text();
-						} else {
-							rating = cheerioLoader('.scoreHi:nth-child(1)').first()
-								.text();
-						}
+			let prominentSwatch = {};
 
-						if (cheerioLoader('blockquote').length === 1) {
-							descCombined = cheerioLoader('blockquote').text();
-						} else {
-							cheerioLoader('#ctrq').each(function () {
-								const $set = [];
-								let nxt = this.nextSibling; // eslint-disable-line no-invalid-this
-
-								while (nxt) {
-									if (!cheerioLoader(nxt).is('.sideBarLinks')) {
-										$set.push(nxt);
-										nxt = nxt.nextSibling;
-									} else {
-										break;
-									}
-								}
-
-								for (let index = 0; index < $set.length; index += 1) {
-									if ($set[index].data) {
-										descCombined += $set[index].data;
-									}
-								}
-							});
-						}
-						description += descCombined.slice(0, 970);
-						const gameEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
-
-						gameEmbed.setColor('#E24141').setAuthor(cheerioLoader('.niceHeaderTitle > a').text(), 'https://i.imgur.com/oHwE0nC.png')
-							.setImage(`http://www.mobygames.com${cheerioLoader('#coreGameCover > a > img').attr('src')}`)
-							.setFooter(`Game info pulled from mobygames | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'http://i.imgur.com/qPuIzb2.png')
-							.addField('Game Name', cheerioLoader('.niceHeaderTitle > a').text(), false);
-
-						cheerioLoader('#coreGameRelease > div:contains("Released")').next()
-							.children()
-							.text() !== '' ? gameEmbed.addField('Release Date', cheerioLoader('#coreGameRelease > div:contains("Released")').next()
-								.children()
-								.text(), true) : gameEmbed.addField('Release Date', 'Release Date unknown', true);
-						rating !== '' ? gameEmbed.addField('Rating', rating, true) : gameEmbed.addField('Rating', 'No rating available', true);
-						cheerioLoader('#coreGameGenre > div > div:contains("Setting")').next()
-							.children()
-							.text() !== '' ? gameEmbed.addField('Setting', cheerioLoader('#coreGameGenre > div > div:contains("Setting")').next()
-								.children()
-								.text(), true) : gameEmbed.addField('Setting', 'No setting specified', true);
-						`${cheerioLoader('#coreGameGenre > div > div:contains("Genre")').next()
-							.text()},${cheerioLoader('#coreGameGenre > div > div:contains("Gameplay")').next()
-							.text()}`.split(',').join(', ') !== '' ? gameEmbed.addField('Genre(s)', `${cheerioLoader('#coreGameGenre > div > div:contains("Genre")').next()
-								.text()},${cheerioLoader('#coreGameGenre > div > div:contains("Gameplay")').next()
-								.text()}`.split(',').join(', '), true) : gameEmbed.addField('Genre(s)', 'Genre(s) unknown', true);
-						cheerioLoader('#coreGameRelease > div:contains("Platforms")').next() // eslint-disable-line no-nested-ternary
-							.children()
-							.text() === '' ? cheerioLoader('#coreGameRelease > div:contains("Platform")').next()
-								.children()
-								.text() : cheerioLoader('#coreGameRelease > div:contains("Platforms")').next()
-								.text()
-								.split(',')
-								.join(', ') !== '' ? gameEmbed.addField('Platform(s)', cheerioLoader('#coreGameRelease > div:contains("Platforms")').next()
-									.children()
-									.text() === '' ? cheerioLoader('#coreGameRelease > div:contains("Platform")').next()
-										.children()
-										.text() : cheerioLoader('#coreGameRelease > div:contains("Platforms")').next()
-										.text()
-										.split(',')
-										.join(', '), true) : gameEmbed.addField('Platform(s)', 'Platforms unknown', true);
-						cheerioLoader('#coreGameRelease > div:contains("Developed by")').next()
-							.children()
-							.text() !== '' ? gameEmbed.addField('Developer', cheerioLoader('#coreGameRelease > div:contains("Developed by")').next()
-								.children()
-								.text(), true) : gameEmbed.addField('Developer', 'Developer unknown', true);
-						cheerioLoader('#coreGameRelease > div:contains("Published by")').next()
-							.children()
-							.text() !== '' ? gameEmbed.addField('Publisher', cheerioLoader('#coreGameRelease > div:contains("Published by")').next()
-								.children()
-								.text(), true) : gameEmbed.addField('Publisher', 'Publisher unknown', true);
-						cheerioLoader('#coreGameGenre > div > div:contains("ESRB Rating")').next()
-							.children()
-							.text() !== '' ? gameEmbed.addField('ESRB Rating', cheerioLoader('#coreGameGenre > div > div:contains("ESRB Rating")').next()
-								.children()
-								.text(), true) : gameEmbed.addField('ESRB Rating', 'ESRB Rating unknown', true);
-						gameEmbed.addField('Description', description, false);
-
-						return msg.embed(gameEmbed);
-					}
-
-					return console.error(error) && msg.reply('An error occured while getting the game\'s info'); // eslint-disable-line no-console
-				});
-			} else {
-				return console.error(err) && msg.reply('An error occured while fetching search results'); // eslint-disable-line no-console
+			for (const swatch in swatches) {
+				if (swatches[swatch]) {
+					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
+				}
 			}
-			
-			return null;
-		});
 
+			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
+
+			for (const swatch in swatches) {
+				if (swatches[swatch]) {
+					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
+						prominentSwatch = swatches[swatch];
+						break;
+					}
+				}
+			}
+			this.embedColor = prominentSwatch.getHex();
+		}
+
+		return this.embedColor;
+	}
+
+	extractNames (arr) {
+		let res = '';
+
+		for (let i = 0; i < arr.length; i += 1) {
+			if (i !== arr.length - 1) {
+				res += `${arr[i].name}, `;
+			} else {
+				res += `${arr[i].name}`;
+			}
+		}
+
+		return res;
+	}
+
+	async run (msg, args) {
+	/* eslint-disable sort-vars*/
+		const gameEmbed = new Discord.MessageEmbed(),
+			igdb = igdbapi(auth.igdbAPIKey),
+			gameInfo = await igdb.games({
+				'search': args.game,
+				'fields': ['name', 'summary', 'rating', 'developers', 'publishers', 'genres', 'release_dates', 'platforms', 'cover', 'pegi'],
+				'limit': 1,
+				'offset': 0
+			}),
+			developerInfo = await igdb.companies({
+				'ids': gameInfo.body[0].developers.concat(gameInfo.body[0].publishers),
+				'fields': ['name']
+			}),
+			genreInfo = await igdb.genres({
+				'ids': gameInfo.body[0].genres,
+				'fields': ['name']
+			}),
+			hexColor = gameInfo.body[0].cover ? await this.fetchColor(gameInfo.body[0].cover.url) : this.embedColor,
+			platformInfo = await igdb.platforms({
+				'ids': gameInfo.body[0].platforms,
+				'fields': ['name']
+			}),
+			releaseDate = moment(gameInfo.body[0].release_dates[0].date).format('MMMM Do YYYY');
+		/* eslint-enable sort-vars*/
+
+		gameEmbed
+			.setColor(hexColor)
+			.setAuthor(gameInfo.body[0].name, 'https://favna.s-ul.eu/O704Q7py.png')
+			.setThumbnail(gameInfo.body[0].cover.url)
+			.setFooter('Info pulled from IGDB')
+			.addField('Rating', Math.round(gameInfo.body[0].rating * 10) / 10, true)
+			.addField('Release Date', releaseDate, true)
+			.addField('Genres', this.extractNames(genreInfo.body), true)
+			.addField('Platforms', this.extractNames(platformInfo.body), true)
+			.addField('PEGI Rating', gameInfo.body[0].pegi.rating, true)
+			.addField('Companies', this.extractNames(developerInfo.body), true)
+			.addField('Summary', gameInfo.body[0].summary, false);
+
+		this.deleteCommandMessages(msg);
+	
+		return msg.embed(gameEmbed);
 	}
 };

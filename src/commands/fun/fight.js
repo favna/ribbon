@@ -60,6 +60,12 @@ module.exports = class fightCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		const fighterEmbed = new Discord.MessageEmbed();
 
@@ -79,6 +85,8 @@ module.exports = class fightCommand extends commando.Command {
 					.setImage('https://i.imgur.com/WCFyXRr.png');
 			}
 
+			this.deleteCommandMessages(msg);
+
 			return msg.embed(fighterEmbed);
 		}
 		if (args.fighterOne.toLowerCase() === 'favna' || args.fighterTwo.toLowerCase() === 'favna') {
@@ -86,23 +94,32 @@ module.exports = class fightCommand extends commando.Command {
 				.addField('You got mega rekt', '***Favna always wins***')
 				.setImage('https://i.imgur.com/XRsLP7Q.gif');
 
+			this.deleteCommandMessages(msg);
+
 			return msg.embed(fighterEmbed);
 		}
 		random.integers({'number': 2}, (error, data) => {
-			const fighterOneChance = parseInt(data[0], 10),
-				fighterTwoChance = parseInt(data[1], 10),
-				loser = Math.min(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo,
-				winner = Math.max(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo;
+			if (!error) {
+				const fighterOneChance = parseInt(data[0], 10),
+					fighterTwoChance = parseInt(data[1], 10),
+					loser = Math.min(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo,
+					winner = Math.max(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo;
 
+				fighterEmbed
+					.addField('🇼 Winner', `**${winner}**`, true)
+					.addField('🇱 Loser', `**${loser}**`, true)
+					.setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
-			fighterEmbed
-				.addField('🇼 Winner', `**${winner}**`, true)
-				.addField('🇱 Loser', `**${loser}**`, true)
-				.setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+				this.deleteCommandMessages(msg);
 
-			return msg.embed(fighterEmbed);
+				return msg.embed(fighterEmbed);
+			}
+
+			this.deleteCommandMessages(msg);
+
+			return msg.reply('⚠️ an error occured pitting these combatants against each other 😦');
 		});
-
+		
 		return null;
 	}
 };

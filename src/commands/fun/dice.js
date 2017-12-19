@@ -58,6 +58,12 @@ module.exports = class diceCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		const diceEmbed = new Discord.MessageEmbed(),
 			res = [],
@@ -73,6 +79,8 @@ module.exports = class diceCommand extends commando.Command {
 			.setColor('#E24141')
 			.addField('Dice result', res, false)
 			.addField('Total', throwDice.total, false);
+
+		this.deleteCommandMessages(msg);
 
 		return msg.embed(diceEmbed);
 	}

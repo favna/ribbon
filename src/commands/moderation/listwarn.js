@@ -55,6 +55,12 @@ module.exports = class listwarnCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
 	}
@@ -64,11 +70,15 @@ module.exports = class listwarnCommand extends commando.Command {
 
 		jsonfile.readFile(path.join(__dirname, `data/${msg.guild.id}/warnlog.json`), 'utf8', (readErr, obj) => {
 			if (readErr) {
+				this.deleteCommandMessages(msg);
+				
 				return msg.reply(`📘 No warnpoints log found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
 
 			}
 
 			if (!obj[args.member.id]) {
+				this.deleteCommandMessages(msg);
+				
 				return msg.reply('⚠️ That user has no warning points yet');
 			}
 			listWarnsEmbed
@@ -77,6 +87,8 @@ module.exports = class listwarnCommand extends commando.Command {
 				.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'))
 				.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
                     `**Current Warning Points:** ${obj[args.member.id].points}`);
+
+			this.deleteCommandMessages(msg);
 
 			return msg.embed(listWarnsEmbed);
 		});

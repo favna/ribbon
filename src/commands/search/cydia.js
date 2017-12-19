@@ -41,10 +41,10 @@ module.exports = class cydiaCommand extends commando.Command {
 				'usages': 1,
 				'duration': 60
 			},
-			
+
 			'args': [
 				{
-					'key': 'packageName',
+					'key': 'query',
 					'prompt': 'Please supply package name',
 					'type': 'string',
 					'label': 'Package name to look up'
@@ -53,14 +53,17 @@ module.exports = class cydiaCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		cydia.getAllInfo(args.packageName).then((res) => {
-			if (res === false) {
-				return msg.say(`**Tweak/Theme \`${args.packageName}\` not found!**`);
-			}
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
 
-			const cydiaEmbed = new Discord.MessageEmbed();
+	async run (msg, args) {
+		const cydiaEmbed = new Discord.MessageEmbed(),
+			res = await cydia.getAllInfo(args.query);
 
+		if (res) {
 			cydiaEmbed
 				.setColor('#E24141')
 				.setAuthor('Tweak Info', 'http://i.imgur.com/OPZfdht.png')
@@ -73,7 +76,13 @@ module.exports = class cydiaCommand extends commando.Command {
 				.addField('Link', `[Click Here](http://cydia.saurik.com/package/${res.name})`, true)
 				.addField('Repo', `[${res.repo.name}](https://cydia.saurik.com/api/share#?source=${res.repo.link})`, true);
 
+			this.deleteCommandMessages(msg);
+
 			return msg.embed(cydiaEmbed);
-		});
+		}
+
+		this.deleteCommandMessages(msg);
+
+		return msg.say(`**Tweak/Theme \`${args.query}\` not found!**`);
 	}
 };

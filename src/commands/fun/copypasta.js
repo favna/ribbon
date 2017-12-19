@@ -56,6 +56,12 @@ module.exports = class copypastaCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		const match = new Matcher();
 
@@ -68,13 +74,19 @@ module.exports = class copypastaCommand extends commando.Command {
 
 					cpEmbed.setDescription(data);
 
+					this.deleteCommandMessages(msg);
+
 					return msg.embed(cpEmbed);
 				}
+
+				this.deleteCommandMessages(msg);
 
 				return msg.say(data, {'split': true});
 			}
 			const dym = match.get(`${args.name}.txt`),
 				dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'You can save it with `$copypastaadd <filename> <content>`';
+
+			this.deleteCommandMessages(msg);
 
 			return msg.reply(`⚠️ That copypata does not exist! ${dymString}`);
 		});

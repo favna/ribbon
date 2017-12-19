@@ -32,13 +32,13 @@ const Discord = require('discord.js'),
 		oneLine,
 		stripIndents
 	} = require('common-tags'),
+	vibrant = require('node-vibrant'),
 	winston = require('winston'),
 	ytdl = require('ytdl-core');
 
 const DEFAULT_VOLUME = require(Path.join(__dirname, 'data/GlobalData.js')).DEFAULT_VOLUME, // eslint-disable-line one-var
 	GOOGLE_API = require(Path.join(__dirname, 'data/GlobalData.js')).GOOGLE_API,
 	PASSES = require(Path.join(__dirname, 'data/GlobalData.js')).PASSES;
-
 
 module.exports = class PlaySongCommand extends commando.Command {
 	constructor (client) {
@@ -66,6 +66,45 @@ module.exports = class PlaySongCommand extends commando.Command {
 
 		this.queue = new Map();
 		this.youtube = new YouTube(GOOGLE_API);
+		this.embedColor = '#3498DB';
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
+	async fetchColor (img) {
+
+		const palette = await vibrant.from(img).getPalette();
+
+		if (palette) {
+			const pops = [],
+				swatches = Object.values(palette);
+
+			let prominentSwatch = {};
+
+			for (const swatch in swatches) {
+				if (swatches[swatch]) {
+					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
+				}
+			}
+
+			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
+
+			for (const swatch in swatches) {
+				if (swatches[swatch]) {
+					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
+						prominentSwatch = swatches[swatch];
+						break;
+					}
+				}
+			}
+			this.embedColor = prominentSwatch.getHex();
+		}
+
+		return this.embedColor;
 	}
 
 	async run (msg, args) {
@@ -77,18 +116,26 @@ module.exports = class PlaySongCommand extends commando.Command {
 		if (!queue) {
 			voiceChannel = msg.member.voiceChannel; // eslint-disable-line
 			if (!voiceChannel) {
+				this.deleteCommandMessages(msg);
+
 				return msg.reply('Please join a voice channel before issueing this command.');
 			}
 
 			const permissions = voiceChannel.permissionsFor(msg.client.user);
 
 			if (!permissions.has('CONNECT')) {
+				this.deleteCommandMessages(msg);
+
 				return msg.reply('I don\'t have permission to join your voice channel. Fix your server\'s permisions');
 			}
 			if (!permissions.has('SPEAK')) {
+				this.deleteCommandMessages(msg);
+
 				return msg.reply('I don\'t have permission to speak in your voice channel. Fix your server\'s permisions');
 			}
 		} else if (!queue.voiceChannel.members.has(msg.author.id)) {
+			this.deleteCommandMessages(msg);
+
 			return msg.reply('Please join a voice channel before issueing this command.');
 		}
 
@@ -97,10 +144,14 @@ module.exports = class PlaySongCommand extends commando.Command {
 		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 			const playlist = await this.youtube.getPlaylist(url);
 
+			this.deleteCommandMessages(msg);
+
 			return this.handlePlaylist(playlist, queue, voiceChannel, msg, statusMsg);
 		}
 		try {
 			const video = await this.youtube.getVideo(url);
+
+			this.deleteCommandMessages(msg);
 
 			return this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
 		} catch (error) {
@@ -109,9 +160,12 @@ module.exports = class PlaySongCommand extends commando.Command {
 						.catch(() => statusMsg.edit(`${msg.author}, there were no search results.`)),
 					video2 = await this.youtube.getVideoByID(videos[0].id); // eslint-disable-line sort-vars
 
+				this.deleteCommandMessages(msg);
+
 				return this.handleVideo(video2, queue, voiceChannel, msg, statusMsg);
 			} catch (err) {
 				winston.error(err);
+				this.deleteCommandMessages(msg);
 
 				return statusMsg.edit(`${msg.author}, couldn't obtain the search result video's details.`);
 			}
@@ -275,7 +329,7 @@ module.exports = class PlaySongCommand extends commando.Command {
             `;
 	}
 
-	play (guild, song) {
+	async play (guild, song) {
 		const queue = this.queue.get(guild.id),
 			vote = this.votes.get(guild.id);
 
@@ -292,19 +346,16 @@ module.exports = class PlaySongCommand extends commando.Command {
 			return;
 		}
 
-		const playing = queue.textChannel.send({ // eslint-disable-line one-var
-			'embed': {
-				'color': 3447003,
-				'author': {
-					'name': song.username,
-					'icon_url': song.avatar // eslint-disable-line camelcase
-				},
-				'description': `
-                        ${song.url.match(/^https?:\/\/(api.soundcloud.com)\/(.*)$/) ? `${song}` : `[${song}](${`${song.url}`})`}
-                    `,
-				'image': {'url': song.thumbnail}
-			}
-		});
+		const embedColor = await this.fetchColor(song.thumbnail), // eslint-disable-line one-var
+			songEmbed = new Discord.MessageEmbed();
+
+		songEmbed
+			.setColor(embedColor ? embedColor : this.embedColor)
+			.setAuthor(song.username, song.avatar)
+			.setDescription(oneLine `${song.url.match(/^https?:\/\/(api.soundcloud.com)\/(.*)$/) ? `${song}` : `[${song}](${`${song.url}`})`}`)
+			.setImage(song.thumbnail);
+
+		const playing = queue.textChannel.send({'embed': songEmbed}); // eslint-disable-line one-var
 		let streamErrored = false;
 
 		const stream = ytdl(song.url, {'audioonly': true}) // eslint-disable-line one-var

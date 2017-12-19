@@ -45,6 +45,12 @@ module.exports = class coinCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg) {
 		const coinEmbed = new Discord.MessageEmbed(),
 			res = coin();
@@ -53,6 +59,8 @@ module.exports = class coinCommand extends commando.Command {
 			.setColor('#E24141')
 			.setImage(res === 'head' ? 'https://favna.s-ul.eu/8ZKmpiKO.png' : 'https://favna.s-ul.eu/NTsDbSUo.png')
 			.setTitle(`Flipped ${res}s`);
+
+		this.deleteCommandMessages(msg);
 
 		msg.embed(coinEmbed);
 	}

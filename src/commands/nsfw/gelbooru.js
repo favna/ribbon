@@ -52,23 +52,31 @@ module.exports = class gelbooruCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		booru.search('gelbooru', args.nsfwtags.split(' '), {
-			'limit': 1,
-			'random': true
-		})
-			.then(booru.commonfy)
-			.then((images) => {
-				msg.say(`Score: ${images[0].common.score}\nImage: ${images[0].common.file_url}`);
-			})
-			.catch((err) => {
-				if (err.name === 'booruError') {
-					console.error(err.message); // eslint-disable-line no-console
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
 
-					return msg.reply('⚠️ No juicy images found. An error was logged to your error console');
-				}
+	async run (msg, args) {
+		try {
+			const booruData = await booru.search('gelbooru', args.nsfwtags.split(' '), {
+				'limit': 1,
+				'random': true
+			}).then(booru.commonfy);
 
-				return msg.reply('⚠️ No juicy images found.');
-			});
+			if (booruData) {
+				this.deleteCommandMessages(msg);
+
+				return msg.say(`Score: ${booruData[0].common.score}\nImage: ${booruData[0].common.file_url}`);
+			}
+			this.deleteCommandMessages(msg);
+			
+			return msg.reply('⚠️ No juicy images found.');
+		} catch (booruError) {
+			this.deleteCommandMessages(msg);
+			
+			return msg.reply('⚠️ No juicy images found.');
+		}
 	}
 };

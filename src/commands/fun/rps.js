@@ -44,10 +44,24 @@ module.exports = class rpsCommand extends commando.Command {
 					'prompt': 'Play Rock, Paper or Scissors?',
 					'type': 'string',
 					'label': 'What hand to play',
-					'default': 'rock'
+					'validate': (hand) => {
+						const validHands = ['rock', 'paper', 'scissors'];
+
+						if (validHands.includes(hand)) {
+							return true;
+						}
+
+						return `Has to be one of ${validHands.join(', ')}`;
+					}
 				}
 			]
 		});
+	}
+
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
 	}
 
 	run (msg, args) {
@@ -67,27 +81,32 @@ module.exports = class rpsCommand extends commando.Command {
 					resString = 'I won 😃! My 📜 covered your 🗿';
 				} else if (args.hand === 'rock' && data === 3) {
 					resString = ' I lost 😞! Your 🗿 smashed my ️️️✂️ to pieces';
-				} else 	if (args.hand === 'paper' && data === 1) {
+				} else if (args.hand === 'paper' && data === 1) {
 					resString = 'I lost 😞! Your 📜 covered my 🗿';
 				} else if (args.hand === 'paper' && data === 2) {
 					resString = 'It\'s a draw 😶! Both picked 📜';
 				} else if (args.hand === 'paper' && data === 3) {
 					resString = 'I won 😃! My ✂️ cut your 📜 to shreds';
-				} else 	if (args.hand === 'scissor' && data === 1) {
+				} else if (args.hand === 'scissors' && data === 1) {
 					resString = 'I won 😃! My 🗿 smashed your ✂️ to pieces';
-				} else if (args.hand === 'scissor' && data === 2) {
+				} else if (args.hand === 'scissors' && data === 2) {
 					resString = 'I lost 😞! Your ✂️ cut my 📜 to shreds';
-				} else if (args.hand === 'scissor' && data === 3) {
+				} else if (args.hand === 'scissors' && data === 3) {
 					resString = 'It\'s a draw 😶! Both picked ✂️';
-				} 
+				}
 
 				rpsEmbed
+					.setAuthor(`${msg.author.tag} challenged ${msg.guild.members.get(this.client.user.id).displayName}#${this.client.user.discriminator}`,
+						'https://favna.s-ul.eu/kdgP6krg.png')
 					.setColor('#E24141')
-					.setTitle('Rock Paper Scissors')
+					.setTitle('Rock Paper Scissors Showdown')
 					.setDescription(resString);
+				this.deleteCommandMessages(msg);
 
 				return msg.embed(rpsEmbed);
 			}
+
+			this.deleteCommandMessages(msg);
 
 			return msg.reply('an error occured getting a random result and I\'m not going to rig this game.');
 		});

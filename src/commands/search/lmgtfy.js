@@ -25,10 +25,6 @@
 
 const commando = require('discord.js-commando');
 
-const replaceAll = function (string, pattern, replacement) { // eslint-disable-line one-var
-	return string.replace(new RegExp(pattern, 'g'), replacement);
-};
-
 module.exports = class lmgtfyCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
@@ -49,13 +45,22 @@ module.exports = class lmgtfyCommand extends commando.Command {
 					'key': 'question',
 					'prompt': 'What does the idiot want to find?',
 					'type': 'string',
-					'label': 'Search query to lmgtfy'
+					'label': 'Search query to lmgtfy',
+					'parse': p => p.replace(/ /gim, '+')
 				}
 			]
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
-		return msg.say(`https://lmgtfy.com/?q=${replaceAll(args.question, / /, '+')}`);
+		this.deleteCommandMessages(msg);
+
+		return msg.say(`<https://lmgtfy.com/?q=${args.question}>`);
 	}
 };

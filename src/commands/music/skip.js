@@ -43,25 +43,39 @@ module.exports = class SkipSongCommand extends commando.Command {
 		this.votes = new Map();
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		const queue = this.queue.get(msg.guild.id);
 
 		if (!queue) {
+			this.deleteCommandMessages(msg);
+			
 			return msg.reply('there isn\'t a song playing right now, silly.');
 		}
 		if (!queue.voiceChannel.members.has(msg.author.id)) {
+			this.deleteCommandMessages(msg);
+			
 			return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
 		}
 		if (!queue.songs[0].dispatcher) {
+			this.deleteCommandMessages(msg);
+			
 			return msg.reply('the song hasn\'t even begun playing yet. Why not give it a chance?');
 		} // eslint-disable-line max-len
 
 		const threshold = Math.ceil((queue.voiceChannel.members.size - 1) / 3), // eslint-disable-line one-var
 			force = threshold <= 1 || // eslint-disable-line sort-vars
-            queue.voiceChannel.members.size < threshold ||
-            (msg.member.hasPermission('MANAGE_MESSAGES') && args.toLowerCase() === 'force'); // eslint-disable-line no-extra-parens
+			queue.voiceChannel.members.size < threshold ||
+			(msg.member.hasPermission('MANAGE_MESSAGES') && args.toLowerCase() === 'force'); // eslint-disable-line no-extra-parens
 
 		if (force) {
+			this.deleteCommandMessages(msg);
+			
 			return msg.reply(this.skip(msg.guild, queue));
 		}
 
@@ -69,18 +83,24 @@ module.exports = class SkipSongCommand extends commando.Command {
 
 		if (vote && vote.count >= 1) {
 			if (vote.users.some(user => user === msg.author.id)) {
+				this.deleteCommandMessages(msg);
+				
 				return msg.reply('you\'ve already voted to skip the song.');
 			}
 
 			vote.count += 1;
 			vote.users.push(msg.author.id);
 			if (vote.count >= threshold) {
+				this.deleteCommandMessages(msg);
+				
 				return msg.reply(this.skip(msg.guild, queue));
 			}
 
 			const remaining = threshold - vote.count,
 				time = this.setTimeout(vote);
 
+			this.deleteCommandMessages(msg);
+			
 			return msg.say(oneLine `
 				${vote.count} vote${vote.count > 1 ? 's' : ''} received so far,
 				${remaining} more ${remaining > 1 ? 'are' : 'is'} needed to skip.
@@ -100,6 +120,8 @@ module.exports = class SkipSongCommand extends commando.Command {
 
 		this.votes.set(msg.guild.id, newVote);
 
+		this.deleteCommandMessages(msg);
+		
 		return msg.say(oneLine `
 				Starting a voteskip.
 				${remaining} more vote${remaining > 1 ? 's are' : ' is'} required for the song to be skipped.
@@ -122,7 +144,7 @@ module.exports = class SkipSongCommand extends commando.Command {
 	}
 
 	setTimeout (vote) {
-        const time = vote.start + 15000 - Date.now() + (vote.count - 1) * 5000; // eslint-disable-line
+		const time = vote.start + 15000 - Date.now() + (vote.count - 1) * 5000; // eslint-disable-line
 
 		clearTimeout(vote.timeout);
 		vote.timeout = setTimeout(() => {

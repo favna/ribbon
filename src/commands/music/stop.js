@@ -41,19 +41,28 @@ module.exports = class StopMusicCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg) {
 		const queue = this.queue.get(msg.guild.id);
 
-		if (!queue) { 
+		if (!queue) {
+			this.deleteCommandMessages(msg);
+			
 			return msg.reply('there isn\'t any music playing right now.');
 		}
 		const song = queue.songs[0]; // eslint-disable-line one-var
 
 		queue.songs = [];
-		if (song.dispatcher) { 
-			song.dispatcher.end(); 
+		if (song.dispatcher) {
+			song.dispatcher.end();
 		}
-
+		this.deleteCommandMessages(msg);
+		
 		return msg.reply('you\'ve just killed the party. Congrats. 👏');
 	}
 

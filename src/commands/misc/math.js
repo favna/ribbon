@@ -72,6 +72,12 @@ module.exports = class mathCommand extends commando.Command {
 		});
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg, args) {
 		const mathEmbed = new Discord.MessageEmbed(), // eslint-disable-line one-var
 			wittyRandom = Math.floor(Math.random() * witty.length);
@@ -81,6 +87,8 @@ module.exports = class mathCommand extends commando.Command {
 			.addField('Equation', args.equation.toString(), false)
 			.addField('Result', scalc(args.equation), false);
 
+		this.deleteCommandMessages(msg);
+		
 		return msg.embed(mathEmbed, witty[wittyRandom]);
 	}
 };

@@ -23,23 +23,32 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{oneLine} = require('common-tags');
 
-module.exports = class inviteCommnad extends commando.Command {
+module.exports = class setMemberlogsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'invite',
-			'aliases': ['inv', 'links', 'shill'],
-			'group': 'links',
-			'memberName': 'invite',
-			'description': 'Gives you invitation links',
-			'examples': ['invite'],
-			'guildOnly': false,
+			'name': 'setmemberlogs',
+			'group': 'moderation',
+			'aliases': ['setmember'],
+			'memberName': 'setmemberlogs',
+			'description': 'Set the memberlogs channel used for logging member logs (such as people joining and leaving). Ensure to enable memberlogs with the "memberlogs" command.',
+			'examples': ['setmemberlogs {channel ID or channel Name (partial or full)}', 'setmemberlogs mod-logs'],
+			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
-			}
+			},
+
+			'args': [
+				{
+					'key': 'channel',
+					'prompt': 'Channel to use for modlogs? (make sure to start with a # when going by name)',
+					'type': 'channel',
+					'label': 'Channel for moderator logs'
+				}
+			]
 		});
 	}
 
@@ -49,22 +58,14 @@ module.exports = class inviteCommnad extends commando.Command {
 		}
 	}
 
-	run (msg) {
-		const inviteEmbed = new Discord.MessageEmbed();
+	hasPermission (msg) {
+		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+	}
 
-		inviteEmbed
-			.setAuthor('Ribbon Links')
-			.setThumbnail('https://ribbon.favna.xyz/images/ribbon.png')
-			.setURL('https://selfbot.favna.xyz')
-			.setColor('#E24141')
-			.addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p8)\n' +
-                '[Join the Support Server](https://discord.gg/zdt5yQt)\n' +
-                '[Website](https://selfbot.favna.xyz)\n' +
-                '[GitHub](https://github.com/Favna/Ribbon)\n' +
-                '[Wiki](https://github.com/Favna/Ribbon/wiki)');
-
+	run (msg, args) {
+		this.client.provider.set(msg.guild.id, 'memberlogchannel', args.channel.id);
 		this.deleteCommandMessages(msg);
-		
-		return msg.embed(inviteEmbed, 'Find information on the bot here: https://ribbon.favna.xyz');
+
+		return msg.reply(oneLine `the channel to use for the member logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'memberlogchannel')).name}`);
 	}
 };

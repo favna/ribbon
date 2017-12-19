@@ -57,31 +57,37 @@ module.exports = class pornvidsCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		const searchUnit = new Pornsearch(args.pornInput);
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
 
-		searchUnit.videos()
-			.then((videos) => {
-				random.integers({
-					'number': 1,
-					'minimum': 0,
-					'maximum': videos.length - 1
-				}, (error, data) => {
-					if (error) {
-						console.error(error); // eslint-disable-line no-console
+	async run (msg, args) {
+		const search = new Pornsearch(args.pornInput),
+			vids = await search.videos();
 
-						return msg.reply('⚠️ An error occured while drawing a random number. An error was logged to your error console');
-					}
-					pornEmbed
-						.setURL(videos[data].url)
-						.setTitle(videos[data].title)
-						.setImage(videos[data].thumb)
-						.setColor('#E24141')
-						.addField('Porn video URL', `[Click Here](${videos[data].url})`, true)
-						.addField('Porn video duration', videos[data].duration === !'' ? videos[data].url : 'unknown', true);
+		if (vids) {
+			random.integers({
+				'number': 1,
+				'minimum': 0,
+				'maximum': vids.length - 1
+			}, (error, vid) => {
+				if (error) {
+					return msg.reply('⚠ An error occured while drawing a random number.');
+				}
+				pornEmbed
+					.setURL(vids[vid].url)
+					.setTitle(vids[vid].title)
+					.setImage(vids[vid].thumb)
+					.setColor('#E24141')
+					.addField('Porn video URL', `[Click Here](${vids[vid].url})`, true)
+					.addField('Porn video duration', vids[vid].duration === !'' ? vids[vid].url : 'unknown', true);
 
-					return msg.embed(pornEmbed, videos[data].url);
-				});
+				this.deleteCommandMessages(msg);
+				
+				return msg.embed(pornEmbed, vids[vid].url);
 			});
+		}
 	}
 };

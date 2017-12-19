@@ -50,10 +50,18 @@ module.exports = class saveQueueCommand extends commando.Command {
 
 	}
 
+	deleteCommandMessages (msg) {
+		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+			msg.delete();
+		}
+	}
+
 	run (msg) {
 		const queue = this.queue.get(msg.guild.id);
 
 		if (!queue) {
+			this.deleteCommandMessages(msg);
+			
 			return msg.reply('there isn\'t any music playing right now. You should get on that.');
 		}
 		const currentSong = queue.songs[0], // eslint-disable-line one-var
@@ -79,6 +87,8 @@ module.exports = class saveQueueCommand extends commando.Command {
                 ${currentSong.lengthString}
                 (${currentSong.timeLeft(currentTime)} left)
             `}`);
+
+		this.deleteCommandMessages(msg);
 
 		msg.reply('✔ Check your inbox!');
 
