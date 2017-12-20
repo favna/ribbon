@@ -23,9 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando'),
-	path = require('path'),
-	storage = require(path.join(__dirname, 'data/SayStorage.js'));
+const commando = require('discord.js-commando');
 
 module.exports = class sayCommand extends commando.Command {
 	constructor (client) {
@@ -69,19 +67,8 @@ module.exports = class sayCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		let storageLooped = false;
 
-		for (const stored in storage.lastMessage) {
-			if (storage.lastMessage[stored][0] === msg.guild.id) {
-				storage.lastMessage[stored] = [msg.guild.id, {'message': msg}];
-				storageLooped = true;
-				break;
-			}
-		}
-
-		if (!storageLooped) {
-			storage.lastMessage.push([msg.guild.id, {'message': msg}]);
-		}
+		this.client.provider.set(msg.guild.id, 'lastSayMessage', msg);
 		this.deleteCommandMessages(msg);
 
 		return msg.say(args.txt);

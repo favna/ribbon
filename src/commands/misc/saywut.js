@@ -26,9 +26,7 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	{oneLine} = require('common-tags'),
-	path = require('path'),
-	storage = require(path.join(__dirname, 'data/SayStorage.js'));
+	{oneLine} = require('common-tags');
 
 module.exports = class sayWutCommand extends commando.Command {
 	constructor (client) {
@@ -54,39 +52,24 @@ module.exports = class sayWutCommand extends commando.Command {
 	}
 
 	run (msg) {
-		const wutEmbed = new Discord.MessageEmbed();
+		const lastMessage = this.client.provider.get(msg.guild.id, 'lastSayMessage', null),
+			wutEmbed = new Discord.MessageEmbed();
 
-		for (const stored in storage.lastMessage) {
-			if (storage.lastMessage[stored][0] === msg.guild.id) {
+		if (lastMessage) {
+			wutEmbed
+				.setColor(lastMessage.member.displayHexColor)
+				.setTitle(`Last ${msg.guild.commandPrefix}say message author`)
+				.setAuthor(oneLine `${lastMessage.author.tag} (${lastMessage.author.id})`, lastMessage.author.displayAvatarURL({'format': 'png'}))
+				.setFooter(oneLine `${moment(lastMessage.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.s-ul.eu/0wDHYIRn.png')
+				.setDescription(lastMessage.argString.slice(1));
 
-				wutEmbed
-					.setColor(storage.lastMessage[stored][1].message.member.displayHexColor)
-					.setTitle(`Last ${msg.guild.commandPrefix}say message author`)
-					.setAuthor(oneLine `${storage.lastMessage[stored][1].message.author.tag}
-                    (${storage.lastMessage[stored][1].message.author.id})`,
-					storage.lastMessage[stored][1].message.author.displayAvatarURL({'format': 'png'}))
-					.setFooter(oneLine `${moment(storage.lastMessage[stored][1].message.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`,
-						'https://favna.s-ul.eu/0wDHYIRn.png');
+			this.deleteCommandMessages(msg);
 
-				if (storage.lastMessage[stored][1].message.content.slice(0, 5) === `${msg.guild.commandPrefix}sayd`) {
-					wutEmbed.setDescription(storage.lastMessage[stored][1].message.content.slice(6));
-				} else if (storage.lastMessage[stored][1].message.content.slice(0, 4) === `${msg.guild.commandPrefix}say`) {
-					wutEmbed.setDescription(storage.lastMessage[stored][1].message.content.slice(5));
-				} else if (storage.lastMessage[stored][1].message.content.slice(0, 7) === `${msg.guild.commandPrefix}repeat`) {
-					wutEmbed.setDescription(storage.lastMessage[stored][1].message.content.slice(8));
-				} else if (storage.lastMessage[stored][1].message.content.slice(0, 16) === '@Ribbon#2325 say') {
-					wutEmbed.setDescription(storage.lastMessage[stored][1].message.content.slice(17));
-				} else {
-					return msg.reply(`couldn't fetch message for your server. Has anyone used the ${msg.guild.commandPrefix}say command before?`);
-				}
-
-				this.deleteCommandMessages(msg);
-
-				return msg.embed(wutEmbed);
-			}
+			return msg.embed(wutEmbed);
 		}
+
 		this.deleteCommandMessages(msg);
-		
+
 		return msg.reply(`couldn't fetch message for your server. Has anyone used the ${msg.guild.commandPrefix}say command before?`);
 	}
 };
