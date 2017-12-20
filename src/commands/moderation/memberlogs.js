@@ -33,7 +33,7 @@ module.exports = class memberlogsCommand extends commando.Command {
 			'group': 'moderation',
 			'aliases': ['tml', 'togglemember'],
 			'memberName': 'memberlogs',
-			'description': 'Toggle member logs in the member-logs channel',
+			'description': 'Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel',
 			'examples': ['memberlogs {option}', 'memberlogs enable'],
 			'guildOnly': true,
 			'throttling': {

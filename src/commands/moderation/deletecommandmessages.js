@@ -34,7 +34,7 @@ module.exports = class deleteCommandMessagesCommand extends commando.Command {
 			'aliases': ['dcm'],
 			'memberName': 'deletecommandmessages',
 			'description': 'Configure whether the bot should delete command messages',
-			'examples': ['modlogs {option}', 'modlogs enable'],
+			'examples': ['deletecommandmessages {option}', 'deletecommandmessages enable'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
@@ -44,7 +44,7 @@ module.exports = class deleteCommandMessagesCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'option',
-					'prompt': 'Enable or disable modlogs?',
+					'prompt': 'Enable or disable deleting of command messages?',
 					'type': 'boolean',
 					'label': 'Option for toggling',
 					'validate': (bool) => {

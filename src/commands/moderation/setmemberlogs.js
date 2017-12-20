@@ -34,7 +34,7 @@ module.exports = class setMemberlogsCommand extends commando.Command {
 			'aliases': ['setmember'],
 			'memberName': 'setmemberlogs',
 			'description': 'Set the memberlogs channel used for logging member logs (such as people joining and leaving). Ensure to enable memberlogs with the "memberlogs" command.',
-			'examples': ['setmemberlogs {channel ID or channel Name (partial or full)}', 'setmemberlogs mod-logs'],
+			'examples': ['setmemberlogs {channel ID or channel Name (partial or full)}', 'setmemberlogs member-logs'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
