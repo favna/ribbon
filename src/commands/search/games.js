@@ -112,7 +112,7 @@ module.exports = class gameCommand extends commando.Command {
 			igdb = igdbapi(auth.igdbAPIKey),
 			gameInfo = await igdb.games({
 				'search': args.game,
-				'fields': ['name', 'summary', 'rating', 'developers', 'publishers', 'genres', 'release_dates', 'platforms', 'cover', 'pegi'],
+				'fields': ['name', 'summary', 'rating', 'developers', 'publishers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
 				'limit': 1,
 				'offset': 0
 			}),
@@ -141,7 +141,7 @@ module.exports = class gameCommand extends commando.Command {
 			.addField('Release Date', releaseDate, true)
 			.addField('Genres', this.extractNames(genreInfo.body), true)
 			.addField('Platforms', this.extractNames(platformInfo.body), true)
-			.addField('PEGI Rating', gameInfo.body[0].pegi.rating, true)
+			.addField(`${gameInfo.body[0].pegi ? 'PEGI' : 'ESRB'} rating`, gameInfo.body[0].pegi ? gameInfo.body[0].pegi.rating : gameInfo.body[0].esrb.rating, true)
 			.addField('Companies', this.extractNames(developerInfo.body), true)
 			.addField('Summary', gameInfo.body[0].summary, false);
 
