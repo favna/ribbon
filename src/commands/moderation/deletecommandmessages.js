@@ -76,6 +76,6 @@ module.exports = class deleteCommandMessagesCommand extends commando.Command {
 
 		this.deleteCommandMessages(msg);
 
-		return msg.reply(oneLine `command messages will now be ${args.option ? 'kept' : 'deleted'}.`);
+		return msg.reply(oneLine `command messages will now be ${args.option ? 'deleted' : 'kept'}.`);
 	}
 };
