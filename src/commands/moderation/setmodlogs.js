@@ -34,7 +34,7 @@ module.exports = class setModlogsCommand extends commando.Command {
 			'aliases': ['setmod'],
 			'memberName': 'setmodlogs',
 			'description': 'Set the modlogs channel used for logging mod commands. Ensure to enable modlogs with the "modlogs" command.',
-			'examples': ['channel {channel ID or channel Name (partial or full)}', 'setmodlogs mod-logs'],
+			'examples': ['setmodlogs {channel ID or channel Name (partial or full)}', 'setmodlogs mod-logs'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
