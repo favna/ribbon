@@ -29,6 +29,7 @@ const Discord = require('discord.js'),
 	currencySymbol = require('currency-symbol-map'),
 	fx = require('money'),
 	moment = require('moment'),
+	{oneLine} = require('common-tags'),
 	oxr = require('open-exchange-rates');
 
 module.exports = class moneyCommand extends commando.Command {
@@ -111,7 +112,9 @@ module.exports = class moneyCommand extends commando.Command {
 
 				return msg.embed(oxrEmbed);
 			} catch (error) {
-				console.error(error); // eslint-disable-line no-console
+				// eslint-disable-next-line no-console
+				console.error(oneLine `An error occured in the oxr command on the ${msg.guild.name} (${msg.guild.id}) server. 
+				Command execute time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}. The error is: ${error}`);
 
 				return msg.reply('⚠️ An error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
 			}
