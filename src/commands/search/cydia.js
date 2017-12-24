@@ -38,8 +38,8 @@ module.exports = class cydiaCommand extends commando.Command {
 			'examples': ['cydia {packageName}', 'cydia anemone'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [
