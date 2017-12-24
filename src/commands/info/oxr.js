@@ -31,18 +31,6 @@ const Discord = require('discord.js'),
 	moment = require('moment'),
 	oxr = require('open-exchange-rates');
 
-const converter = function (value, curOne, curTwo) { // eslint-disable-line one-var
-		return fx.convert(value, {
-			'from': curOne,
-			'to': curTwo
-		});
-	},
-	replaceAll = function (string, pattern, replacement) {
-		return string.replace(new RegExp(pattern, 'g'), replacement);
-	};
-
-oxr.set({'app_id': auth.oxrAppID});
-
 module.exports = class moneyCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
@@ -53,10 +41,6 @@ module.exports = class moneyCommand extends commando.Command {
 			'description': 'Currency converter - makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
 			'examples': ['oxr {amount} {currency_1} {currency_2}', 'convert 50 USD EUR'],
 			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
 
 			'args': [
 				{
@@ -81,27 +65,41 @@ module.exports = class moneyCommand extends commando.Command {
 		});
 	}
 
+
+	converter (value, curOne, curTwo) {
+		return fx.convert(value, {
+			'from': curOne,
+			'to': curTwo
+		});
+	}
+
 	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
 			msg.delete();
 		}
 	}
 
+	replaceAll (string, pattern, replacement) {
+		return string.replace(new RegExp(pattern, 'g'), replacement);
+	}
+
 	run (msg, args) {
+		oxr.set({'app_id': auth.oxrAppID});
+
 		oxr.latest(async () => {
 			try {
 				fx.rates = oxr.rates;
 				fx.base = oxr.base;
-				const convertedMoney = await converter(replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo),
+				const convertedMoney = await this.converter(this.replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo),
 					oxrEmbed = new Discord.MessageEmbed();
 
 				oxrEmbed
-					.setColor('#E24141')
+					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 					.setAuthor('🌐 Currency Converter')
 					.addField(args.curOne !== 'BTC'
 						? `:flag_${args.curOne.slice(0, 2).toLowerCase()}: Money in ${args.curOne}`
 						: '💰 Money in Bitcoin',
-					`${currencySymbol(args.curOne)}${replaceAll(args.value, /,/, '.')}`, true)
+					`${currencySymbol(args.curOne)}${this.replaceAll(args.value, /,/, '.')}`, true)
 
 					.addField(args.curTwo !== 'BTC'
 						? `:flag_${args.curTwo.slice(0, 2).toLowerCase()}: Money in ${args.curTwo}`
@@ -112,10 +110,9 @@ module.exports = class moneyCommand extends commando.Command {
 				this.deleteCommandMessages(msg);
 
 				return msg.embed(oxrEmbed);
-			} catch (err) {
+			} catch (error) {
+				console.error(error); // eslint-disable-line no-console
 
-				this.deleteCommandMessages(msg);
-				
 				return msg.reply('⚠️ An error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
 			}
 		});
