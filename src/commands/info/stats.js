@@ -27,6 +27,7 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
 	moment = require('moment'),
+	{oneLine} = require('common-tags'),
 	process = require('process');
 
 module.exports = class statsCommand extends commando.Command {
@@ -51,7 +52,17 @@ module.exports = class statsCommand extends commando.Command {
 			msg.delete();
 		}
 	}
-	
+
+	fetchPlatform (plat) {
+		switch (plat) {
+			case 'win32':
+				return 'Windows';
+			case 'darwin':
+				return 'MacOS';
+			default:
+				return 'Linux';
+		}
+	}
 
 	run (msg) {
 		const statsEmbed = new Discord.MessageEmbed();
@@ -63,21 +74,23 @@ module.exports = class statsCommand extends commando.Command {
 			.addField('Channels', this.client.channels.size, true)
 			.addField('Users', this.client.users.size, true)
 			.addField('Owner', 'Favna#2846', true)
-			.addField('License', 'GPLv3 + 7b & 7c', true)
+			.addField('License', process.env.npm_package_license, true) // eslint-disable-line no-process-env
 			.addField('Discord.JS', '12.0', true)
-			.addField('NodeJS', '8.9.0', true)
-			.addField('OS', 'Raspbian Jessie', true)
+			.addField('NodeJS', process.version, true)
+			.addField('Platform', this.fetchPlatform(process.platform.toLowerCase()), true)
 			.addField('Memory Usage', `${Math.round(process.memoryUsage().heapUsed / 10485.76) / 100} MB`, true)
 			.addField('Invite Me', '[Click Here](https://discord.now.sh/376520643862331396?p8)', true)
 			.addField('Source', '[Available on GitHub](https://github.com/favna/ribbon)', true)
 			.addField('Support', '[Server Invite](https://discord.gg/zdt5yQt)', true)
 			.addField('Uptime', moment.duration(this.client.uptime).format('DD [days], HH [hours and] mm [minutes]'))
-			.addField('Current server time', moment().format('MMMM Do YYYY [|] HH:mm.ss ZZ'))
-			.addField('\u200b', 'Be sure to use the `help` command to get the list of commands available to you in a DM. The default prefix is `!`. You can change this with the `prefix` command.\nIf you ever forget the command prefix, just use `@Ribbon#2325 prefix`') // eslint-disable-line max-len
-			.setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm')}`, 'https://ribbon.favna.xyz/images/ribbon.png');
-			
+			.addField('Current server time', moment().format('MMMM Do YYYY [|] HH:mm.ss [UTC]ZZ'))
+			.addField('\u200b', oneLine `Use the \`${msg.guild.commandPrefix}help\` command to get the list of commands available to you in a DM. 
+            The default prefix is \`!\`. You can change this with the \`${msg.guild.commandPrefix}prefix\` command. 
+            If you ever forget the command prefix, just use \`${this.client.user.tag} prefix\``)
+			.setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://ribbon.favna.xyz/images/ribbon.png');
+
 		this.deleteCommandMessages(msg);
-		
+
 		return msg.embed(statsEmbed);
 	}
 };
