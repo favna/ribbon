@@ -28,23 +28,23 @@ const Discord = require('discord.js'),
 	maljs = require('maljs'),
 	vibrant = require('node-vibrant');
 
-module.exports = class animeCommand extends commando.Command {
+module.exports = class mangaCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'anime',
+			'name': 'manga',
 			'group': 'search',
-			'aliases': ['ani', 'mal'],
-			'memberName': 'anime',
-			'description': 'Finds anime on MyAnimeList',
-			'examples': ['anime {anime_name}', 'anime Pokemon'],
+			'aliases': ['cartoon', 'man'],
+			'memberName': 'manga',
+			'description': 'Finds manga on MyAnimeList',
+			'examples': ['manga {manga_name}', 'manga Pokemon'],
 			'guildOnly': false,
 
 			'args': [
 				{
 					'key': 'query',
-					'prompt': 'What anime do you want to find?',
+					'prompt': 'What manga do you want to find?',
 					'type': 'string',
-					'label': 'anime_name',
+					'label': 'manga_name',
 					'default': 'naruto'
 				}
 			]
@@ -91,25 +91,25 @@ module.exports = class animeCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const aniEmbed = new Discord.MessageEmbed(),
-			res = await maljs.quickSearch(args.query, 'anime');
+		const manEmbed = new Discord.MessageEmbed(),
+			res = await maljs.quickSearch(args.query, 'manga');
 
 		if (res) {
-			const anime = await res.anime[0].fetch();
+			const manga = await res.manga[0].fetch();
 
-			if (anime) {
+			if (manga) {
 
-				aniEmbed
-					.setColor(await this.fetchColor(anime.cover))
-					.setTitle(anime.title)
-					.setImage(anime.cover)
-					.setDescription(anime.description)
-					.setURL(`${anime.mal.url}${anime.path}`)
-					.addField('Score', anime.score, true)
-					.addField('Popularity', anime.popularity, true)
-					.addField('Rank', anime.ranked, true);
+				manEmbed
+					.setColor(await this.fetchColor(manga.cover))
+					.setTitle(manga.title)
+					.setImage(manga.cover)
+					.setDescription(manga.description)
+					.setURL(`${manga.mal.url}${manga.path}`)
+					.addField('Score', manga.score, true)
+					.addField('Popularity', manga.popularity, true)
+					.addField('Rank', manga.ranked, true);
 
-				msg.embed(aniEmbed, `${anime.mal.url}${anime.path}`);
+				msg.embed(manEmbed, `${manga.mal.url}${manga.path}`);
 			}
 		}
 	}
