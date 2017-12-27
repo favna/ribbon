@@ -112,7 +112,7 @@ module.exports = class avatarCommand extends commando.Command {
 
 			embed
 				.setColor(avaColor ? avaColor : this.embedColor)
-				.setImage(ava)
+				.setImage(`${ava}&f=.gif`)
 				.setFooter(`Avatar for ${args.member.displayName}`);
 			this.deleteCommandMessages(msg);
 
