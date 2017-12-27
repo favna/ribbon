@@ -44,8 +44,7 @@ module.exports = class mangaCommand extends commando.Command {
 					'key': 'query',
 					'prompt': 'What manga do you want to find?',
 					'type': 'string',
-					'label': 'manga_name',
-					'default': 'naruto'
+					'label': 'manga_name'
 				}
 			]
 		});

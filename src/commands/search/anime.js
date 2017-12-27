@@ -44,8 +44,7 @@ module.exports = class animeCommand extends commando.Command {
 					'key': 'query',
 					'prompt': 'What anime do you want to find?',
 					'type': 'string',
-					'label': 'anime_name',
-					'default': 'naruto'
+					'label': 'anime_name'
 				}
 			]
 		});
