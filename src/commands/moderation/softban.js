@@ -104,7 +104,7 @@ module.exports = class softbanCommand extends commando.Command {
 
 		if (this.client.provider.get(msg.guild, 'modlogs', true)) {
 			if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-				msg.reply(oneLine `📃 I can keep a log of bans if you create a channel named \'mod-logs\'
+				msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
 				this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);

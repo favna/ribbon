@@ -106,7 +106,7 @@ module.exports = class warnCommand extends commando.Command {
 					if (writeNoFileErr) {
 						console.error(`Error in command: Warn\nServer: ${msg.guild.id} | ${msg.guild.name}\nError: ${writeNoFileErr}`); // eslint-disable-line no-console
 						this.deleteCommandMessages(msg);
-						
+
 						return msg.reply(oneLine `⚠️ An error occured writing the warning to disc and the error has been logged on Favna\'s end.
 							You can contact my developer on his server. Use \`${msg.guild.commandPrefix}invite\` to get an invite to his server.`);
 					}
@@ -123,19 +123,19 @@ module.exports = class warnCommand extends commando.Command {
 
 					if (this.client.provider.get(msg.guild, 'modlogs', true)) {
 						if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-							msg.reply(oneLine `📃 I can keep a log of warning points given if you create a channel named \'mod-logs\'
-									(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
-									Alternatively use the ${msg.guild.commandPrefix}listwarn command to view the current warning points for a given member.
-									This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+							msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+								(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
+								Alternatively use the ${msg.guild.commandPrefix}listwarn command to view the current warning points for a given member.
+								This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
 							this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
 						}
 
 						this.deleteCommandMessages(msg);
-						
+
 						return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
 					}
 					this.deleteCommandMessages(msg);
-					
+
 					return null;
 				});
 			} else {
@@ -152,7 +152,7 @@ module.exports = class warnCommand extends commando.Command {
 				jsonfile.writeFile(path.join(__dirname, `data/${msg.guild.id}/warnlog.json`), obj, (writeFileErr) => {
 					if (writeFileErr) {
 						this.deleteCommandMessages(msg);
-						
+
 						return msg.reply(oneLine `⚠️ An error occured writing the warning to disc and the error has been logged on Favna\'s end.
 						You can contact my developer on his server. Use \`${msg.guild.commandPrefix}invite\` to get an invite to his server.`);
 					}
@@ -170,20 +170,20 @@ module.exports = class warnCommand extends commando.Command {
 
 					if (this.client.provider.get(msg.guild, 'modlogs', true)) {
 						if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-							msg.reply(oneLine `📃 I can keep a log of warning points given if you create a channel named \'mod-logs\'
+							msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 								(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 								Alternatively use the ${msg.guild.commandPrefix}listwarn command to view the current warning points for a given member.
 								This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
 							this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
 						}
 
-	
+
 						this.deleteCommandMessages(msg);
-						
+
 						return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
 					}
 					this.deleteCommandMessages(msg);
-					
+
 					return null;
 				});
 			}
