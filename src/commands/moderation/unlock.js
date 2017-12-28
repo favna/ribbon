@@ -66,8 +66,8 @@ module.exports = class unlockCommand extends commando.Command {
 		embed
 			.setColor('#E24141')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-			.setDescription(oneLine `**Action:** 🔓 locked the ${msg.channel.name} channel. 
-				This channel can now be used by everyone again. Use ${msg.guild.commandPrefix}lockdown in this channel to (re)-lock it.`)
+			.setDescription(oneLine `**Action:** 🔓 unlocked the \`${msg.channel.name}\` channel. 
+				This channel can now be used by everyone again. Use \`${msg.guild.commandPrefix}lockdown\` in this channel to (re)-lock it.`)
 			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
 		if (overwrite) {

@@ -66,8 +66,8 @@ module.exports = class lockdownCommand extends commando.Command {
 		embed
 			.setColor('#E24141')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-			.setDescription(oneLine `**Action:** 🔒 locked the ${msg.channel.name} channel. 
-				Only staff can now access this channel. Use ${msg.guild.commandPrefix}unlock in this channel to unlock the channel`)
+			.setDescription(oneLine `**Action:** 🔒 locked the \`${msg.channel.name}\` channel. 
+				Only staff can now access this channel. Use \`${msg.guild.commandPrefix}unlock\` in this channel to unlock the channel`)
 			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
 		if (overwrite) {
