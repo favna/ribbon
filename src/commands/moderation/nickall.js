@@ -63,13 +63,13 @@ module.exports = class nickallCommand extends commando.Command {
 	run (msg, args) {
 		const allMembers = msg.guild.members.values(),
 			argData = args.data.split(' '),
+			embed = new Discord.MessageEmbed(),
 			modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
 				msg.guild.channels.exists('name', 'mod-logs')
 					? msg.guild.channels.find('name', 'mod-logs').id
-					: null),
-			nickAllEmbed = new Discord.MessageEmbed();
+					: null);
 
-		nickAllEmbed
+		embed
 			.setColor('#E24141')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
@@ -78,39 +78,39 @@ module.exports = class nickallCommand extends commando.Command {
 			for (const member of allMembers) {
 				member.setNickname('');
 			}
-			nickAllEmbed.setDescription('**Action:** Removed the nicknames from all members');
+			embed.setDescription('**Action:** Removed the nicknames from all members');
 		} else if (argData[0] === 'prefix') {
 			for (const member of allMembers) {
 				member.setNickname(`${argData.slice(1).join(' ')} ${member.displayName}`);
 			}
-			nickAllEmbed.setDescription(`**Action:** Prefix the name of every member with ${argData.slice(1).join(' ')}`);
+			embed.setDescription(`**Action:** Prefix the name of every member with ${argData.slice(1).join(' ')}`);
 		} else if (argData[0] === 'append') {
 			for (const member of allMembers) {
 				member.setNickname(`${member.displayName} ${argData.slice(1).join(' ')}`);
 			}
-			nickAllEmbed.setDescription(`**Action:** Appended the name of every member with ${argData.slice(1).join(' ')}`);
+			embed.setDescription(`**Action:** Appended the name of every member with ${argData.slice(1).join(' ')}`);
 		} else {
 			for (const member of allMembers) {
 				member.setNickname(args.data);
 			}
-			nickAllEmbed.setDescription(`**Action:** Assigned the nickname ${args.data} to all members`);
+			embed.setDescription(`**Action:** Assigned the nickname ${args.data} to all members`);
 		}
 
 		if (this.client.provider.get(msg.guild, 'modlogs', true)) {
 			if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-				msg.reply(oneLine `📃 I can keep a log of mass nickname changes if you create a channel named \'mod-logs\'
-        			(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
-        			This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+				msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
+					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
 				this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
 			}
 
 			this.deleteCommandMessages(msg);
 
-			return modLogs !== null ? msg.guild.channels.get(modLogs).send({nickAllEmbed}) : null;
+			return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
 		}
 
 		this.deleteCommandMessages(msg);
 
-		return msg.reply(nickAllEmbed.description.slice(12));
+		return msg.reply(embed.description.slice(12));
 	}
 };
