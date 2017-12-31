@@ -30,7 +30,6 @@ const Commando = require('discord.js-commando'),
 	auth = require(Path.join(`${__dirname}/auth.json`)),
 	moment = require('moment'),
 	{oneLine} = require('common-tags'),
-	ownerID = auth.ownerID,
 	sqlite = require('sqlite');
 
 class Ribbon {
@@ -38,8 +37,8 @@ class Ribbon {
 		this.bootTime = new Date();
 		this.token = auth.token;
 		this.client = new Commando.Client({
-			'owner': ownerID,
 			'commandPrefix': '!',
+			'owner': '112001393140723712',
 			'selfbot': false
 		});
 		this.isReady = false;
@@ -220,6 +219,7 @@ class Ribbon {
 				['moderation', 'Moderate your server'],
 				['music', 'Jam out to music'],
 				['nsfw', 'NSFW finding commands'],
+				['owner', 'Owner only commands'],
 				['pokedex', 'PokéDex Lookup Commands'],
 				['search', 'Web Searching Commands']
 			])
