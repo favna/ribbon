@@ -27,7 +27,6 @@ const commando = require('discord.js-commando'),
 	imgur = require('imgur'),
 	qr = require('qrcode');
 
-
 module.exports = class qrgenCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
@@ -36,16 +35,12 @@ module.exports = class qrgenCommand extends commando.Command {
 			'group': 'links',
 			'memberName': 'qrgen',
 			'description': 'Generates a QR code from a given string',
-			'examples': ['qrgen {url}', 'qrgen https://ribbon.favna.xyz'],
+			'examples': ['qrgen {url}', 'qrgen https://github.com/Favna/Discord-Self-Bot/'],
 			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
 
 			'args': [
 				{
-					'key': 'qrurl',
+					'key': 'url',
 					'prompt': 'String (URL) to make a QR code for?',
 					'type': 'string',
 					'label': 'URL to get a QR for'
@@ -55,22 +50,26 @@ module.exports = class qrgenCommand extends commando.Command {
 	}
 
 	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
 			msg.delete();
 		}
 	}
 
-	run (msg, args) {
-		qr.toDataURL(args.qrurl, {'errorCorrectionLevel': 'M'}, (err, url) => {
-			if (err) {
-				throw err;
-			}
-			imgur.uploadBase64(url.slice(22)).then((json) => {
+	async run (msg, args) {
+		const base64 = await qr.toDataURL(args.url, {'errorCorrectionLevel': 'M'});
 
+		if (base64) {
+			const upload = await imgur.uploadBase64(base64.slice(22));
+
+			if (upload) {
 				this.deleteCommandMessages(msg);
-				
-				return msg.say(`QR Code for this URL: ${json.data.link}`);
-			});
-		});
+
+				return msg.say(`QR Code for this URL: ${upload.data.link}`);
+			}
+
+			return msg.reply('⚠️ An error occured uploading the QR code to imgur.');
+		}
+
+		return msg.reply('⚠️ An error occured getting a base64 image for that URL.');
 	}
 };
