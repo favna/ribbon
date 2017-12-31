@@ -60,8 +60,8 @@ module.exports = class steamCommand extends commando.Command {
 		}
 	}
 
-	insert (str, index, value) { // eslint-disable-line one-var
-		return str.substring(0, index) + value + str.substring(index);
+	insert (str, value) {
+		return str.substring(0, str.length - 2) + value + str.substring(str.length - 2);
 	}
 
 	async run (msg, args) {
@@ -95,7 +95,7 @@ module.exports = class steamCommand extends commando.Command {
 					.setImage(steamData.header_image)
 					.setDescription(cheerio.load(steamData.short_description).text())
 					.addField(`Price in ${steamData.price_overview.currency}`,
-						`${currencySymbol(steamData.price_overview.currency)}${this.insert(steamData.price_overview.final.toString(), 2, ',')}`, true)
+						`${currencySymbol(steamData.price_overview.currency)}${this.insert(steamData.price_overview.final.toString(), ',')}`, true)
 					.addField('Release Date', steamData.release_date.date, true)
 					.addField('Platforms', platforms.join(', '), true)
 					.addField('Controller Support', steamData.controller_support ? steamData.controller_support : 'None', true)
@@ -106,17 +106,17 @@ module.exports = class steamCommand extends commando.Command {
 					.addField('Steam Store Link', `http://store.steampowered.com/app/${steamData.steam_appid}/`, false);
 
 				this.deleteCommandMessages(msg);
-				
+
 				return msg.embed(steamEmbed, `http://store.steampowered.com/app/${steamData.steam_appid}/`);
 			}
 
 			this.deleteCommandMessages(msg);
-			
+
 			return msg.reply('⚠️ Steam API error');
 		}
 
 		this.deleteCommandMessages(msg);
-		
+
 		return msg.reply('⚠️ ***nothing found***');
 	}
 };
