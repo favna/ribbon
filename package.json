@@ -39,7 +39,7 @@
     "cydia-api-node": "^1.0.2",
     "did-you-mean": "0.0.1",
     "discord.js": "git+https://github.com/Favna/discord.js.git#active",
-    "discord.js-commando": "git+https://github.com/Favna/discord.js-commando.git#ribbon",
+    "discord.js-commando": "https://github.com/Favna/discord.js-commando.git#ribbon",
     "eightball": "^1.0.1",
     "flipacoin": "^1.0.0",
     "igdb-api-node": "^3.1.1",
