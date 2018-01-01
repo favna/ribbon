@@ -212,16 +212,16 @@ class Ribbon {
 
 		this.client.registry
 			.registerGroups([
-				['fun', 'Fun and Games Commands'],
-				['info', 'Information Commands'],
-				['links', 'Quick links'],
-				['misc', 'Miscellanious Commands'],
+				['fun', 'Fun and Games to play with the bot'],
+				['info', 'Get Information on various things'],
+				['links', 'Quick Website Links'],
+				['misc', 'Commands that cannot be categorized elsewhere'],
 				['moderation', 'Moderate your server'],
 				['music', 'Jam out to music'],
-				['nsfw', 'NSFW finding commands'],
+				['nsfw', 'Find NSFW content ( ͡° ͜ʖ ͡°)'],
 				['owner', 'Owner only commands'],
-				['pokedex', 'PokéDex Lookup Commands'],
-				['search', 'Web Searching Commands']
+				['pokedex', 'Get information from the PokéDex'],
+				['search', 'Search the web']
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()

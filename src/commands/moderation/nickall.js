@@ -38,9 +38,9 @@ module.exports = class nickallCommand extends commando.Command {
 			'description': 'Modify the nickname for all guildmembers',
 			'details': oneLine `Assign, remove, prefix/append with a nickname to all members. 
                                 Use \`clear\` as argument to remove the nickname, 
-                                \`pattern prefix\` to add a prefix to every member (takes their current nickname if they have one or their username if they do not), 
-                                \`pattern append\` to do the same but append it instead of prefix`,
-			'examples': ['nickall {[pattern] [prefix/append] new_nickname}', 'nickall AverageJoe', 'nickall pattern prefix ༼ つ ◕_◕ ༽つ'],
+                                \`prefix\` to add a prefix to every member (takes their current nickname if they have one or their username if they do not), 
+                                \`append\` to do the same but append it instead of prefix`,
+			'examples': ['nickall {[prefix/append/clear] new_nickname}', 'nickall AverageJoe', 'nickall prefix ༼ つ ◕_◕ ༽つ'],
 			'guildOnly': true,
 
 			'args': [
@@ -58,6 +58,10 @@ module.exports = class nickallCommand extends commando.Command {
 		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
 			msg.delete();
 		}
+	}
+
+	hasPermission (msg) {
+		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_NICKNAMES');
 	}
 
 	run (msg, args) {
