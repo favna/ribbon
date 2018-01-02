@@ -104,34 +104,25 @@ module.exports = class avatarCommand extends commando.Command {
 		return this.embedColor;
 	}
 
+	fetchExt (str) {
+		return str.substring(str.length - 14, str.length - 8);
+	}
+
 	async run (msg, args) {
-		try {
-			const ava = args.member.user.displayAvatarURL({'size': args.size}),
-				avaColor = await this.fetchColor(ava),
-				embed = new Discord.MessageEmbed();
+		const ava = args.member.user.displayAvatarURL({'size': args.size}),
+			embed = new Discord.MessageEmbed(),
+			ext = this.fetchExt(ava),
+			avaColor = ext.includes('gif') ? await this.fetchColor(ava) : this.embedColor; // eslint-disable-line sort-vars
 
-			embed
-				.setColor(avaColor ? avaColor : this.embedColor)
-				.setImage(`${ava}&f=.gif`)
-				.setFooter(`Avatar for ${args.member.displayName}`);
-			this.deleteCommandMessages(msg);
+		embed
+			.setColor(avaColor)
+			.setImage(ext.includes('gif') ? `${ava}&f=.gif` : ava)
+			.setTitle(args.member.displayName)
+			.setURL(ava)
+			.setDescription(`[Direct Link](${ava})`);
 
-			return msg.embed(embed, ava);
-		} catch (err) {
-			const ava = args.member.user.displayAvatarURL({
-					'format': 'png',
-					'size': args.size
-				}),
-				avaColor = await this.fetchColor(ava),
-				embed = new Discord.MessageEmbed();
+		this.deleteCommandMessages(msg);
 
-			embed
-				.setColor(avaColor ? avaColor : this.embedColor)
-				.setImage(ava)
-				.setFooter(`Avatar for ${args.member.displayName}`);
-			this.deleteCommandMessages(msg);
-
-			return msg.embed(embed, ava);
-		}
+		return msg.embed(embed);
 	}
 };
