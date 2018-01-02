@@ -43,10 +43,6 @@ module.exports = class googleCommand extends commando.Command {
 			'description': 'Finds anything on google',
 			'examples': ['google {searchQuery}', 'google Pyrrha Nikos'],
 			'guildOnly': false,
-			'throttling': {
-				'usages': 1,
-				'duration': 60
-			},
 
 			'args': [
 				{
@@ -60,7 +56,7 @@ module.exports = class googleCommand extends commando.Command {
 	}
 
 	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
 			msg.delete();
 		}
 	}
@@ -126,6 +122,8 @@ module.exports = class googleCommand extends commando.Command {
 
 		if (normalRes) {
 			if (normalRes.body.queries.request[0].totalResults === '0') {
+				msg.reply('⚠️ ***nothing found***');
+
 				return Promise.reject(console.error('NO RESULTS')); // eslint-disable-line no-console
 			}
 
@@ -152,8 +150,6 @@ module.exports = class googleCommand extends commando.Command {
 
 			return msg.say(href.q);
 		}
-
-		this.deleteCommandMessages(msg);
 
 		return msg.reply('⚠️ ***nothing found***');
 	}
