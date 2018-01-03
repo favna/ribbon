@@ -24620,5 +24620,4 @@ const BattlePokedex = {
 	}
 };
 
-
 module.exports = {BattlePokedex};
