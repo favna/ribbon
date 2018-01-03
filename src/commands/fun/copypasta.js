@@ -69,9 +69,9 @@ module.exports = class copypastaCommand extends commando.Command {
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : `You can save it with \`${msg.guild.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
 		/* eslint-enable sort-vars */
 
-		let pastaContent = fs.readFileSync(path.join(__dirname, `pastas/${args.name}.txt`), 'utf8');
+		let pastaContent = fs.readFileSync(path.join(__dirname, `pastas/${msg.guild.id}/${args.name}.txt`), 'utf8');
 
-		match.values = fs.readdirSync(path.join(__dirname, 'pastas'));
+		match.values = fs.readdirSync(path.join(__dirname, `pastas/${msg.guild.id}`));
 
 		if (pastaContent) {
 			if (pastaContent.length <= 1024) {
