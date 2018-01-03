@@ -542,4 +542,4 @@ const BattleTypeChart = {
 	}
 };
 
-module.exports(BattleTypeChart);
+module.exports = {BattleTypeChart};
