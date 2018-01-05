@@ -67,6 +67,8 @@ module.exports = class userInfoCommand extends commando.Command {
 				return 'Do Not Disturb';
 			case 'invisible':
 				return 'Invisible';
+			case 'offline':
+				return 'Offline';
 			default:
 				return 'Unknown status';
 		}
