@@ -52,11 +52,13 @@ module.exports = class purgeCommand extends commando.Command {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
 	}
 
-	run (msg, args) {
+	async run (msg, args) {
 		msg.channel.bulkDelete(args.amount + 1, true);
 
-		return msg.say(`\`Deleted ${args.amount} messages\``).then({
-			'timeout': 3000,
+		const reply = await msg.say(`\`Deleted ${args.amount} messages\``);
+
+		return reply.delete({
+			'timeout': 1000,
 			'reason': 'Deleting own return message after purge'
 		});
 	}
