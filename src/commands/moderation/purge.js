@@ -54,7 +54,10 @@ module.exports = class purgeCommand extends commando.Command {
 
 	run (msg, args) {
 		msg.channel.bulkDelete(args.amount + 1, true);
-		
-		return msg.say(`\`Deleted ${args.amount} messages\``).then(m => m.delete(1000));
+
+		return msg.say(`\`Deleted ${args.amount} messages\``).then({
+			'timeout': 3000,
+			'reason': 'Deleting own return message after purge'
+		});
 	}
 };
