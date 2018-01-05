@@ -53,25 +53,8 @@ module.exports = class userInfoCommand extends commando.Command {
 		});
 	}
 
-	capitalize (string) {
+	capitalizeFirstLetter (string) {
 		return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-	}
-
-	convertStatus (status) {
-		switch (status) {
-			case 'online':
-				return 'Online';
-			case 'idle':
-				return 'Idle';
-			case 'dnd':
-				return 'Do Not Disturb';
-			case 'invisible':
-				return 'Invisible';
-			case 'offline':
-				return 'Offline';
-			default:
-				return 'Unknown status';
-		}
 	}
 
 	deleteCommandMessages (msg) {
@@ -94,9 +77,9 @@ module.exports = class userInfoCommand extends commando.Command {
 			.addField('ID', vals.user.id, true)
 			.addField('Name', vals.user.username, true)
 			.addField('Nickname', vals.member.nickname ? vals.member.nickname : 'No Nickname', true)
-			.addField('Status', this.convertStatus(vals.user.presence.status), true)
+			.addField('Status', vals.user.presence.status !== 'dnd' ? this.capitalizeFirstLetter(vals.user.presence.status) : 'Do Not Disturb', true)
 			.addField(vals.user.presence.activity !== null
-				? this.capitalize(vals.user.presence.activity.type)
+				? this.capitalizeFirstLetter(vals.user.presence.activity.type)
 				: 'Activity', vals.user.presence.activity !== null ? vals.user.presence.activity.name : 'Nothing', true)
 			.addField('Display Color', vals.member.displayHexColor, true)
 			.addField('Role(s)', vals.member.roles.size > 1 ? vals.member.roles.map(r => r.name).slice(1).join(' | ') : 'None', false) // eslint-disable-line newline-per-chained-call
