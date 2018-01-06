@@ -78,7 +78,7 @@ module.exports = class copypastaAddCommand extends commando.Command {
 		if (fs.existsSync(path.join(__dirname, `pastas/${msg.guild.id}/${args.name}.txt`))) {
 			this.deleteCommandMessages(msg);
 
-			return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with ${msg.guild.id}copypasta ${args.name}`);
+			return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with ${msg.guild.commandPrefix}copypasta ${args.name}`);
 		}
 
 		return msg.reply('⚠️ An error occured and your pasta was not saved.');
