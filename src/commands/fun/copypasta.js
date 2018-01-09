@@ -69,37 +69,43 @@ module.exports = class copypastaCommand extends commando.Command {
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : `You can save it with \`${msg.guild.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
 		/* eslint-enable sort-vars */
 
-		let pastaContent = fs.readFileSync(path.join(__dirname, `pastas/${msg.guild.id}/${args.name}.txt`), 'utf8');
-
 		match.values = fs.readdirSync(path.join(__dirname, `pastas/${msg.guild.id}`));
 
-		if (pastaContent) {
-			if (pastaContent.length <= 1024) {
-				/* eslint-disable no-nested-ternary */
-				const cpEmbed = new Discord.MessageEmbed(),
-					ext = pastaContent.includes('.png') ? '.png'
-						: pastaContent.includes('.jpg') ? '.jpg'
-							: pastaContent.includes('.gif') ? '.gif'
-								: pastaContent.includes('.webp') ? '.webp' : 'none',
-					header = ext !== 'none' ? pastaContent.includes('https') ? 'https' : 'http' : 'none';
-				/* eslint-enable no-nested-ternary */
+		try {
+			let pastaContent = fs.readFileSync(path.join(__dirname, `pastas/${msg.guild.id}/${args.name}.txt`), 'utf8');
 
-				if (ext !== 'none' && header !== 'none') {
-					cpEmbed.setImage(`${pastaContent.substring(pastaContent.indexOf(header), pastaContent.indexOf(ext))}${ext}`);
-					pastaContent = pastaContent.substring(0, pastaContent.indexOf(header) - 1) + pastaContent.substring(pastaContent.indexOf(ext) + ext.length);
+			if (pastaContent) {
+				if (pastaContent.length <= 1024) {
+					/* eslint-disable no-nested-ternary */
+					const cpEmbed = new Discord.MessageEmbed(),
+						ext = pastaContent.includes('.png') ? '.png'
+							: pastaContent.includes('.jpg') ? '.jpg'
+								: pastaContent.includes('.gif') ? '.gif'
+									: pastaContent.includes('.webp') ? '.webp' : 'none',
+						header = ext !== 'none' ? pastaContent.includes('https') ? 'https' : 'http' : 'none';
+					/* eslint-enable no-nested-ternary */
+
+					if (ext !== 'none' && header !== 'none') {
+						cpEmbed.setImage(`${pastaContent.substring(pastaContent.indexOf(header), pastaContent.indexOf(ext))}${ext}`);
+						pastaContent = pastaContent.substring(0, pastaContent.indexOf(header) - 1) + pastaContent.substring(pastaContent.indexOf(ext) + ext.length);
+					}
+
+					cpEmbed.setDescription(pastaContent);
+					msg.delete();
+
+					return msg.embed(cpEmbed);
 				}
-
-				cpEmbed.setDescription(pastaContent);
 				msg.delete();
 
-				return msg.embed(cpEmbed);
+				return msg.say(pastaContent, {'split': true});
 			}
-			msg.delete();
+		} catch (err) {
+			this.deleteCommandMessages(msg);
 
-			return msg.say(pastaContent, {'split': true});
+			return msg.reply(`⚠️ that copypata does not exist! ${dymString}`);
 		}
 		this.deleteCommandMessages(msg);
-
+		
 		return msg.reply(`⚠️ that copypata does not exist! ${dymString}`);
 	}
 };
