@@ -118,7 +118,7 @@ module.exports = class activityCommand extends commando.Command {
 			const gameIcon = gameList.body.find(g => g.name === activity.name);
 
 			largeImageAssetCheck: if (activity.assets) {
-				if (activity.assets.largeImage) {
+				if (activity.assets.largeImage && !activity.assets.largeImage.includes('spotify')) {
 					embed.setThumbnail(`https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.largeImage}.png`);
 					break largeImageAssetCheck;
 				}
