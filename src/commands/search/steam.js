@@ -94,8 +94,13 @@ module.exports = class steamCommand extends commando.Command {
 					.setURL(`http://store.steampowered.com/app/${steamData.steam_appid}/`)
 					.setImage(steamData.header_image)
 					.setDescription(cheerio.load(steamData.short_description).text())
-					.addField(`Price in ${steamData.price_overview.currency}`,
-						`${currencySymbol(steamData.price_overview.currency)}${this.insert(steamData.price_overview.final.toString(), ',')}`, true)
+					.addField(steamData.price_overview
+						? `Price in ${steamData.price_overview.currency}`
+						: 'Price',
+					steamData.price_overview
+						? `${currencySymbol(steamData.price_overview.currency)}${this.insert(steamData.price_overview.final.toString(), ',')}`
+						: 'Free',
+					true)
 					.addField('Release Date', steamData.release_date.date, true)
 					.addField('Platforms', platforms.join(', '), true)
 					.addField('Controller Support', steamData.controller_support ? steamData.controller_support : 'None', true)
