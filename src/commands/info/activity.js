@@ -25,6 +25,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
 	moment = require('moment'),
 	request = require('snekfetch'),
 	vibrant = require('node-vibrant');
@@ -124,7 +125,7 @@ module.exports = class activityCommand extends commando.Command {
 					: null)
 				: null;
 			activity.timestamps && activity.timestamps.end
-				? embed.setFooter(`${embed.footer.text} | End Time: ${Math.round((Date.parse(activity.timestamps.end) - Date.now()) / 60000)} Minute(s)`)
+				? embed.setFooter(`${embed.footer ? embed.footer.text : ''} | End Time: ${moment.duration(activity.timestamps.end - Date.now()).format('HH [hours and] mm [minutes]')}`)
 				: null;
 			embed.addField(this.convertType(activity.type), activity.name, true);
 			activity.url ? embed.addField('URL', `[${activity.url.slice(8)}](${activity.url})`, true) : null;
