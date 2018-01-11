@@ -107,7 +107,7 @@ module.exports = class gameCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-	/* eslint-disable sort-vars*/
+		/* eslint-disable sort-vars*/
 		const gameEmbed = new Discord.MessageEmbed(),
 			igdb = igdbapi(auth.igdbAPIKey),
 			gameInfo = await igdb.games({
@@ -116,15 +116,17 @@ module.exports = class gameCommand extends commando.Command {
 				'limit': 1,
 				'offset': 0
 			}),
+			companies = await gameInfo.body[0].publishers ? gameInfo.body[0].developers.concat(gameInfo.body[0].publishers) : gameInfo.body[0].developers,
+			coverImg = await gameInfo.body[0].cover.url.includes('http') ? gameInfo.body[0].cover.url : `https:${gameInfo.body[0].cover.url}`,
 			developerInfo = await igdb.companies({
-				'ids': gameInfo.body[0].developers.concat(gameInfo.body[0].publishers),
+				'ids': companies,
 				'fields': ['name']
 			}),
 			genreInfo = await igdb.genres({
 				'ids': gameInfo.body[0].genres,
 				'fields': ['name']
 			}),
-			hexColor = gameInfo.body[0].cover ? await this.fetchColor(gameInfo.body[0].cover.url) : this.embedColor,
+			hexColor = await this.fetchColor(coverImg),
 			platformInfo = await igdb.platforms({
 				'ids': gameInfo.body[0].platforms,
 				'fields': ['name']
