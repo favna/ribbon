@@ -99,7 +99,7 @@ module.exports = class activityCommand extends commando.Command {
 		return str.slice(-4);
 	}
 
-	/* eslint-disable complexity */
+	/* eslint complexity: ["error", 30], max-statements: ["error", 40]*/
 	async run (msg, args) {
 
 		const activity = args.member.user.presence.activity,
@@ -117,15 +117,42 @@ module.exports = class activityCommand extends commando.Command {
 		if (activity) {
 			const gameIcon = gameList.body.find(g => g.name === activity.name);
 
-			activity.assets && activity.assets.largeImage ? embed.setThumbnail(`https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.largeImage}.png`) : null;
-			gameIcon ? embed.setThumbnail(`https://cdn.discordapp.com/game-assets/${gameIcon.id}/${gameIcon.icon}.png`) : null;
-			activity.timestamps && activity.timestamps.start
-				? embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`, activity.assets
-					? `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`
-					: null)
-				: null;
+			largeImageAssetCheck: if (activity.assets) {
+				if (activity.assets.largeImage && !activity.assets.largeImage.includes('spotify')) {
+					embed.setThumbnail(`https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.largeImage}.png`);
+					break largeImageAssetCheck;
+				}
+				if (activity.assets.largeImage && activity.assets.largeImage.includes('spotify')) {
+					embed.setThumbnail(`https://i.scdn.co/image/${activity.assets.largeImage.split(':')[1]}`);
+					break largeImageAssetCheck;
+				}
+				gameIcon ? embed.setThumbnail(`https://cdn.discordapp.com/game-assets/${gameIcon.id}/${gameIcon.icon}.png`) : null;
+			}
+
+			smallImageAssetCheck: if (activity.assets) {
+				if (activity.timestamps && activity.timestamps.start) {
+					if (activity.assets.smallImage && activity.assets.smallImage.includes('spotify')) {
+						embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`, `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`);
+						break smallImageAssetCheck;
+					} else {
+						embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`,
+							`https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`);
+						break smallImageAssetCheck;
+					}
+				} else if (activity.assets.smallImage && activity.assets.smallImage.includes('spotify')) {
+					embed.setFooter('​', `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`);
+					break smallImageAssetCheck;
+				} else {
+					embed.setFooter('​', `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`);
+					break smallImageAssetCheck;
+				}
+			} else
+			if (activity.timestamps && activity.timestamps.start) {
+				embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`);
+			}
+
 			activity.timestamps && activity.timestamps.end
-				? embed.setFooter(`${embed.footer ? embed.footer.text : ''} | End Time: ${moment.duration(activity.timestamps.end - Date.now()).format('HH [hours and] mm [minutes]')}`)
+				? embed.setFooter(`${embed.footer ? `${embed.footer.text} | ` : ''}End Time: ${moment.duration(activity.timestamps.end - Date.now()).format('HH [hours and] mm [minutes]')}`)
 				: null;
 			embed.addField(this.convertType(activity.type), activity.name, true);
 			activity.url ? embed.addField('URL', `[${activity.url.slice(8)}](${activity.url})`, true) : null;
