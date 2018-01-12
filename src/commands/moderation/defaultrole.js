@@ -34,6 +34,7 @@ module.exports = class defaultroleCommand extends commando.Command {
 			'group': 'moderation',
 			'memberName': 'defaultrole',
 			'description': 'Set a default role the bot will assign to any members joining after this command',
+			'details': 'Use "delete" to remove the default role',
 			'examples': ['defaultrole {Role name or ID}', 'defaultrole Member'],
 			'guildOnly': true,
 			'throttling': {

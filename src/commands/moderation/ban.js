@@ -93,7 +93,7 @@ module.exports = class banCommand extends commando.Command {
 					: null);
 
 		embed
-			.setColor('#E24141')
+			.setColor('#FF1900')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 				'**Action:** Ban\n' +

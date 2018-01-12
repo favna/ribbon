@@ -82,7 +82,7 @@ module.exports = class listwarnCommand extends commando.Command {
 				return msg.reply('⚠️ That user has no warning points yet');
 			}
 			listWarnsEmbed
-				.setColor('#E24141')
+				.setColor('#ECECC9')
 				.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 				.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'))
 				.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +

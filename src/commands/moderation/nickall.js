@@ -74,7 +74,7 @@ module.exports = class nickallCommand extends commando.Command {
 					: null);
 
 		embed
-			.setColor('#E24141')
+			.setColor('#355698')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 

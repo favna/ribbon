@@ -153,7 +153,7 @@ class Ribbon {
 
 				embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
 					.setFooter(`User joined | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
-					.setColor('#E24141');
+					.setColor('#80F31F');
 
 				if (this.client.provider.get(member.guild.id, 'defaultRole')) {
 					member.addRole(this.client.provider.get(member.guild.id, 'defaultRole'));
@@ -179,7 +179,7 @@ class Ribbon {
 
 				embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
 					.setFooter(`User left | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
-					.setColor('#E24141');
+					.setColor('#F4BF42');
 
 				if (memberLogs !== null && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
 					.has('SEND_MESSAGES')) {

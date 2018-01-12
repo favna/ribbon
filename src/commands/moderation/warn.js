@@ -112,7 +112,7 @@ module.exports = class warnCommand extends commando.Command {
 					}
 
 					embed
-						.setColor('#E24141')
+						.setColor('#FFFF00')
 						.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 						.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 							'**Action:** Warn\n' +

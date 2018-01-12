@@ -64,7 +64,7 @@ module.exports = class lockdownCommand extends commando.Command {
 			overwrite = msg.channel.overwritePermissions(msg.guild.roles.find('name', '@everyone'), {'SEND_MESSAGES': false}, 'Channel Lockdown');
 
 		embed
-			.setColor('#E24141')
+			.setColor('#983553')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(oneLine `**Action:** 🔒 locked the \`${msg.channel.name}\` channel. 
 				Only staff can now access this channel. Use \`${msg.guild.commandPrefix}unlock\` in this channel to unlock the channel`)

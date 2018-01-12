@@ -64,7 +64,7 @@ module.exports = class unlockCommand extends commando.Command {
 			overwrite = msg.channel.overwritePermissions(msg.guild.roles.find('name', '@everyone'), {'SEND_MESSAGES': true}, 'Channel Unlock');
 
 		embed
-			.setColor('#E24141')
+			.setColor('#359876')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(oneLine `**Action:** 🔓 unlocked the \`${msg.channel.name}\` channel. 
 				This channel can now be used by everyone again. Use \`${msg.guild.commandPrefix}lockdown\` in this channel to (re)-lock it.`)

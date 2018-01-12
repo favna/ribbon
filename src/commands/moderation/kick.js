@@ -91,7 +91,7 @@ module.exports = class kickCommand extends commando.Command {
 					: null);
 
 		embed
-			.setColor('#E24141')
+			.setColor('#FF8300')
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 				'**Action:** Kick\n' +
