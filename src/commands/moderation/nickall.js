@@ -33,7 +33,7 @@ module.exports = class nickallCommand extends commando.Command {
 		super(client, {
 			'name': 'nickall',
 			'aliases': ['na', 'massnick', 'nickmass', 'allnick'],
-			'group': 'misc',
+			'group': 'moderation',
 			'memberName': 'nickall',
 			'description': 'Modify the nickname for all guildmembers',
 			'details': oneLine `Assign, remove, prefix/append with a nickname to all members. 
@@ -46,7 +46,7 @@ module.exports = class nickallCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'data',
-					'prompt': 'What nickname to assign?',
+					'prompt': 'What nickname to assign? Check the details through the `help nickall` command to see all options',
 					'type': 'string',
 					'label': 'nick to assign'
 				}
