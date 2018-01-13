@@ -47,7 +47,7 @@ module.exports = class copypastaCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'name',
-					'prompt': 'Send which copypasta?',
+					'prompt': 'Which copypasta should I send?',
 					'type': 'string',
 					'label': 'Name of the file that has your copypasta content',
 					'parse': p => p.toLowerCase()

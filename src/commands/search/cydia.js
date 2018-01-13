@@ -45,7 +45,7 @@ module.exports = class cydiaCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'query',
-					'prompt': 'Please supply package name',
+					'prompt': 'Which cydia package do you want to search?',
 					'type': 'string',
 					'label': 'Package name to look up'
 				}

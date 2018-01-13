@@ -45,24 +45,24 @@ module.exports = class strawpollCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'title',
-					'prompt': 'Title of the strawpoll',
+					'prompt': 'What is the title of your strawpoll?',
 					'type': 'string',
 					'wait': 60,
 					'label': 'Title of the strawpoll'
 				},
 				{
 					'key': 'options',
-					'prompt': 'Options for the strawpoll?',
+					'prompt': 'What are the options in your strawpoll?',
 					'type': 'string',
 					'wait': 60,
-					'label': 'Questions for the strawpoll, delimited by a |',
+					'label': 'Options for the strawpoll, delimited by a |',
 					'validate': (opts) => {
 						if (/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~ ]*\|[a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~]*)*/.test(opts) &&
 							opts.split('|').length >= 2) {
 							return true;
 						}
 
-						return 'You need at least 2 options and the valid format for the options is `Question 1|Question 2|Question 3 etc..`';
+						return 'You need at least 2 options and the valid format for the options is `Option 1|Option 2|Option 3 etc..`';
 					}
 				}
 			]

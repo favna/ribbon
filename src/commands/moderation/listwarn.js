@@ -47,7 +47,7 @@ module.exports = class listwarnCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'Which member to warn?',
+					'prompt': 'Which member should I show warning points for?',
 					'type': 'member',
 					'label': 'member name or ID'
 				}

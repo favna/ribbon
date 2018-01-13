@@ -49,19 +49,19 @@ module.exports = class warnCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'Which member to warn?',
+					'prompt': 'Which member should I give a warning?',
 					'type': 'member',
 					'label': 'member name or ID'
 				},
 				{
 					'key': 'points',
-					'prompt': 'What do you want me to announce?',
+					'prompt': 'How many warning points should I give this member?',
 					'type': 'integer',
 					'label': 'warn points to give'
 				},
 				{
 					'key': 'reason',
-					'prompt': 'What is the reason you want to warn the user?',
+					'prompt': 'What is the reason for this warning?',
 					'type': 'string',
 					'label': 'reason for the warning',
 					'default': ''

@@ -45,7 +45,7 @@ module.exports = class defaultVolumeCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'volume',
-					'prompt': 'Default volume to set? (\'default\' to reset)',
+					'prompt': 'What is the default volume I should set? (\'default\' to reset)',
 					'type': 'string',
 					'label': 'Level|"default"',
 					'default': 'show'

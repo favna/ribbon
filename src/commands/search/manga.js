@@ -42,7 +42,7 @@ module.exports = class mangaCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'query',
-					'prompt': 'What manga do you want to find?',
+					'prompt': 'Which manga do you want to find?',
 					'type': 'string',
 					'label': 'manga_name'
 				}

@@ -50,7 +50,7 @@ module.exports = class ViewQueueCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'page',
-					'prompt': 'what page would you like to view?\n',
+					'prompt': 'what page would you like to view?',
 					'type': 'integer',
 					'default': 1
 				}

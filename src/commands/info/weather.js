@@ -46,7 +46,7 @@ module.exports = class weatherCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'city',
-					'prompt': 'Weather in which city?',
+					'prompt': 'For which city would you like to get the weather?',
 					'type': 'string',
 					'label': 'City to get weather from'
 				}

@@ -45,7 +45,7 @@ module.exports = class urbanCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'query',
-					'prompt': 'What word do you want to define?',
+					'prompt': 'Which term do you want to look up on UrbanDictionary?',
 					'type': 'string',
 					'label': 'Word to define'
 				}

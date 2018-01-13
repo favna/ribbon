@@ -47,7 +47,7 @@ module.exports = class DocsCommand extends Command {
 			'args': [
 				{
 					'key': 'query',
-					'prompt': 'what would you like to find?\n',
+					'prompt': 'what would you like to find?',
 					'type': 'string'
 				},
 				{

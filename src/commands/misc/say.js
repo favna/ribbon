@@ -53,7 +53,7 @@ module.exports = class sayCommand extends commando.Command {
 						msg.cleanContent.toLowerCase().includes('@everyone')) {
 							msg.delete();
 
-							return 'You cannot make me mention `@here` or `@everyone`!';
+							return 'You cannot make me mention `@here` or `@everyone`! Would you like me to say anything else?';
 						}
 
 						return true;

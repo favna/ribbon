@@ -46,15 +46,15 @@ module.exports = class kickCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'Which member to kick?',
+					'prompt': 'Which member do you want me to kick?',
 					'type': 'member',
-					'label': 'The member that you want to kick'
+					'label': 'Member to kick'
 				},
 				{
 					'key': 'reason',
-					'prompt': 'Reason for kicking?',
+					'prompt': 'What is the reason for this kick?',
 					'type': 'string',
-					'label': 'The reason for which you want to kick that memmber'
+					'label': 'Reason for kicking'
 				}
 			]
 		});

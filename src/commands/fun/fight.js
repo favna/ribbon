@@ -52,7 +52,7 @@ module.exports = class fightCommand extends commando.Command {
 				},
 				{
 					'key': 'fighterTwo',
-					'prompt': 'What should fighter one be fighting?',
+					'prompt': 'What or what is the second fighter?',
 					'type': 'string',
 					'label': 'Name of the second fighter'
 				}

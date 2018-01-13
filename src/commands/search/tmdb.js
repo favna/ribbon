@@ -46,7 +46,7 @@ module.exports = class movieCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'name',
-					'prompt': 'Please supply movie title',
+					'prompt': 'Which movie or series do you want to find on TheMovieDB?',
 					'type': 'string',
 					'label': 'Movie or TV Show to look up',
 					'default': 'now you see me'

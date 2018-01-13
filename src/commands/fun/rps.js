@@ -41,18 +41,19 @@ module.exports = class rpsCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'hand',
-					'prompt': 'Play Rock, Paper or Scissors?',
+					'prompt': 'Do you play rock, paper or scissors?',
 					'type': 'string',
 					'label': 'What hand to play',
 					'validate': (hand) => {
 						const validHands = ['rock', 'paper', 'scissors'];
 
-						if (validHands.includes(hand)) {
+						if (validHands.toLowerCase().includes(hand)) {
 							return true;
 						}
 
 						return `Has to be one of ${validHands.join(', ')}`;
-					}
+					},
+					'parse': p => p.toLowerCase()
 				}
 			]
 		});
@@ -65,12 +66,11 @@ module.exports = class rpsCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		/* eslint-disable complexity*/
 		random.integers({
 			'number': 1,
 			'minimum': 1,
 			'maximum': 3
-		}, (error, randoms) => {
+		}, (error, randoms) => { // eslint-disable-line complexity
 			if (!error) {
 				const rpsEmbed = new Discord.MessageEmbed();
 

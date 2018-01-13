@@ -46,12 +46,12 @@ module.exports = class softbanCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'Which member to softban?',
+					'prompt': 'Which member should I softban?',
 					'type': 'member'
 				},
 				{
 					'key': 'reason',
-					'prompt': 'Reason for softbanning?',
+					'prompt': 'What is the reason for this softban?',
 					'type': 'string'
 				}
 			]

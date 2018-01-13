@@ -39,7 +39,7 @@ module.exports = class purgeCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'amount',
-					'prompt': 'How many messages to purge?',
+					'prompt': 'How many messages should I purge?',
 					'min': 1,
 					'max': 99,
 					'type': 'integer'

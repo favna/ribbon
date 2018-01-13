@@ -44,7 +44,7 @@ module.exports = class gameCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'game',
-					'prompt': 'Please supply game title',
+					'prompt': 'Which game do you want to look up on IGDB?',
 					'type': 'string',
 					'label': 'Game to look up'
 				}

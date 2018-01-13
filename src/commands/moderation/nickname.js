@@ -43,12 +43,12 @@ module.exports = class nickCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'Assign a nickname to which member?',
+					'prompt': 'Which member should I assign a nickname to?',
 					'type': 'member'
 				},
 				{
 					'key': 'nickname',
-					'prompt': 'What nickname to assign?',
+					'prompt': 'What nickname should I assign?',
 					'type': 'string'
 				}
 			]

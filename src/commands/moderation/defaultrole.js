@@ -45,7 +45,7 @@ module.exports = class defaultroleCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'role',
-					'prompt': 'Which role would you like to set as default',
+					'prompt': 'Which role would you like to set as the default role?',
 					'type': 'role',
 					'label': 'RoleNameOrID',
 					'default': 'delete'

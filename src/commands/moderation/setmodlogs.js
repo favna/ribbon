@@ -44,7 +44,7 @@ module.exports = class setModlogsCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'channel',
-					'prompt': 'Channel to use for modlogs? (make sure to start with a # when going by name)',
+					'prompt': 'What channel should I set for member logs? (make sure to start with a # when going by name)',
 					'type': 'channel',
 					'label': 'Channel for moderator logs'
 				}

@@ -44,7 +44,7 @@ module.exports = class moveCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'move',
-					'prompt': 'Get info on which move?',
+					'prompt': 'Which move do you want to get details for?',
 					'type': 'string',
 					'label': 'Move to find'
 				}

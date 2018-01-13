@@ -41,7 +41,7 @@ module.exports = class qrgenCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'url',
-					'prompt': 'String (URL) to make a QR code for?',
+					'prompt': 'What URL should I make a QR code for?',
 					'type': 'string',
 					'label': 'URL to get a QR for'
 				}

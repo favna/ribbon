@@ -49,7 +49,7 @@ module.exports = class itemCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'item',
-					'prompt': 'Get info on which item?',
+					'prompt': 'Which item do you want to get info for?',
 					'type': 'string',
 					'label': 'Item to find'
 				}

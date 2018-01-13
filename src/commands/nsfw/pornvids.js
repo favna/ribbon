@@ -49,7 +49,7 @@ module.exports = class pornvidsCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'pornInput',
-					'prompt': 'What pornography do you want to find?',
+					'prompt': 'What type of pornography do you want me to look up?',
 					'type': 'string',
 					'label': 'Search query'
 				}

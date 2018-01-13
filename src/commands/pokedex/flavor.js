@@ -51,7 +51,7 @@ module.exports = class flavorCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'pokemon',
-					'prompt': 'Get info from which Pokémon?',
+					'prompt': 'Which Pokémon\'s flavor texts do you want to read?',
 					'type': 'string',
 					'label': 'Pokemon to find'
 				}

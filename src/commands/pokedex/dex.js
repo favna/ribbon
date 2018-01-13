@@ -52,7 +52,7 @@ module.exports = class dexCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'pokemon',
-					'prompt': 'Get info from which Pokémon?',
+					'prompt': 'Which Pokémon do you want to get info for?',
 					'type': 'string',
 					'label': 'Pokemon to find'
 				}

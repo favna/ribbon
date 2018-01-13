@@ -45,7 +45,7 @@ module.exports = class eightBallCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'question',
-					'prompt': '8ball what?',
+					'prompt': 'For what question should I roll a magic 8ball?',
 					'type': 'string',
 					'label': 'Question to ask 8ball'
 				}

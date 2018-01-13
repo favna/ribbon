@@ -44,7 +44,7 @@ module.exports = class activityCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'What user would you like to get the avatar from?',
+					'prompt': 'What user would you like to get the activity from?',
 					'type': 'member',
 					'label': 'member name or ID'
 				}

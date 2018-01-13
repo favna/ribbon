@@ -45,7 +45,7 @@ module.exports = class steamCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'game',
-					'prompt': 'What game do you want to find on the steam store?',
+					'prompt': 'Which game do you want to find on the steam store?',
 					'type': 'string',
 					'label': 'Game to look up',
 					'parse': p => p.replace(/ /gim, '+')

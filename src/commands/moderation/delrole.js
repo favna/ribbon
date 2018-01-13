@@ -43,12 +43,12 @@ module.exports = class delRoleCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'Who should get a role removed?',
+					'prompt': 'Which member should I remove a role from?',
 					'type': 'member'
 				},
 				{
 					'key': 'role',
-					'prompt': 'What role should I remove?',
+					'prompt': 'What role should I remove from that member?',
 					'type': 'role'
 				}
 			]

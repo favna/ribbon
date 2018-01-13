@@ -43,12 +43,12 @@ module.exports = class addRoleCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'To what member do you want to add the role?',
+					'prompt': 'Which member should I assign a role to?',
 					'type': 'member'
 				},
 				{
 					'key': 'role',
-					'prompt': 'What role do you want to add?',
+					'prompt': 'What role should I add to that member?',
 					'type': 'role'
 				}
 			]

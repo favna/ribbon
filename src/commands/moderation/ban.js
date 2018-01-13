@@ -46,13 +46,15 @@ module.exports = class banCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'Which member to ban?',
-					'type': 'member'
+					'prompt': 'Which member should I ban?',
+					'type': 'member',
+					'label': 'Member to ban'
 				},
 				{
 					'key': 'reason',
-					'prompt': 'Reason for banning?',
-					'type': 'string'
+					'prompt': 'What is the reason for this banishment?',
+					'type': 'string',
+					'label': 'Reason for banning'
 				}
 			]
 		});
