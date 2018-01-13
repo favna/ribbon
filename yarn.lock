@@ -672,8 +672,8 @@ dijkstrajs@^1.0.1:
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
 "discord.js-commando@https://github.com/Favna/discord.js-commando.git#ribbon":
-  version "1.1.1-F"
-  resolved "https://github.com/Favna/discord.js-commando.git#a975f98ba29032b931f8fc3f6c62fb1bdaf2a2db"
+  version "1.1.2-F"
+  resolved "https://github.com/Favna/discord.js-commando.git#182d990d34471f5a95be9496d9f5881a1ab29ed1"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
