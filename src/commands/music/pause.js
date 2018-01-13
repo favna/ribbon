@@ -38,16 +38,7 @@ module.exports = class PauseSongCommand extends commando.Command {
 			'throttling': {
 				'usages': 2,
 				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'volume',
-					'prompt': 'Default volume to set? (\'default\' to reset)',
-					'type': 'string',
-					'label': 'Level|"default"',
-					'default': 'show'
-				}
-			]
+			}
 		});
 	}
 
