@@ -32,7 +32,6 @@ const Discord = require('discord.js'),
 		oneLine,
 		stripIndents
 	} = require('common-tags'),
-	vibrant = require('node-vibrant'),
 	winston = require('winston'),
 	ytdl = require('ytdl-core');
 
@@ -58,7 +57,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'url',
-					'prompt': 'what music would you like to listen to?\n',
+					'prompt': 'what music would you like to listen to?',
 					'type': 'string'
 				}
 			]
@@ -73,38 +72,6 @@ module.exports = class PlaySongCommand extends commando.Command {
 		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
 			msg.delete();
 		}
-	}
-
-	async fetchColor (img) {
-
-		const palette = await vibrant.from(img).getPalette();
-
-		if (palette) {
-			const pops = [],
-				swatches = Object.values(palette);
-
-			let prominentSwatch = {};
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
-				}
-			}
-
-			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
-						prominentSwatch = swatches[swatch];
-						break;
-					}
-				}
-			}
-			this.embedColor = prominentSwatch.getHex();
-		}
-
-		return this.embedColor;
 	}
 
 	async run (msg, args) {
@@ -147,30 +114,30 @@ module.exports = class PlaySongCommand extends commando.Command {
 			this.deleteCommandMessages(msg);
 
 			return this.handlePlaylist(playlist, queue, voiceChannel, msg, statusMsg);
-		}
-		try {
-			const video = await this.youtube.getVideo(url);
-
-			this.deleteCommandMessages(msg);
-
-			return this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
-		} catch (error) {
+		} else { // eslint-disable-line no-else-return
 			try {
-				const videos = await this.youtube.searchVideos(url, 1)
-						.catch(() => statusMsg.edit(`${msg.author}, there were no search results.`)),
-					video2 = await this.youtube.getVideoByID(videos[0].id); // eslint-disable-line sort-vars
+				const video = await this.youtube.getVideo(url);
 
 				this.deleteCommandMessages(msg);
 
-				return this.handleVideo(video2, queue, voiceChannel, msg, statusMsg);
-			} catch (err) {
-				winston.error(err);
-				this.deleteCommandMessages(msg);
+				return this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
+			} catch (error) {
+				try {
+					const videos = await this.youtube.searchVideos(url, 1)
+							.catch(() => statusMsg.edit(`${msg.author}, there were no search results.`)),
+						video2 = await this.youtube.getVideoByID(videos[0].id); // eslint-disable-line sort-vars
 
-				return statusMsg.edit(`${msg.author}, couldn't obtain the search result video's details.`);
+					this.deleteCommandMessages(msg);
+
+					return this.handleVideo(video2, queue, voiceChannel, msg, statusMsg);
+				} catch (err) {
+					winston.error(err);
+					this.deleteCommandMessages(msg);
+
+					return statusMsg.edit(`${msg.author}, couldn't obtain the search result video's details.`);
+				}
 			}
 		}
-
 	}
 
 	async handleVideo (video, queue, voiceChannel, msg, statusMsg) {
@@ -207,6 +174,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 
 				return null;
 			}
+
 
 			statusMsg.edit(`${msg.author}, joining your voice channel...`);
 			try {
@@ -267,7 +235,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 				const result = await this.addSong(msg, video2); // eslint-disable-line no-await-in-loop
 
 				if (!result.startsWith('👍')) {
-					this.queue.delete(msg.guild.id);
+					this.queue.delete(msg.guild.id); 
 				}
 
 				statusMsg.edit(`${msg.author}, joining your voice channel...`);
@@ -307,11 +275,11 @@ module.exports = class PlaySongCommand extends commando.Command {
 	}
 
 	addSong (msg, video) {
-		const queue = this.queue.get(msg.guild.id),
-			song = new Song(video, msg.member);
+		const queue = this.queue.get(msg.guild.id);
+
 
 		if (!this.client.isOwner(msg.author)) {
-			if (queue.songs.some(track => track.id === video.id)) {
+			if (queue.songs.some(song => song.id === video.id)) {
 				return `👎 ${Discord.escapeMarkdown(video.title)} is already queued.`;
 			}
 		}
@@ -321,15 +289,16 @@ module.exports = class PlaySongCommand extends commando.Command {
 			'guild': msg.guild.id
 		});
 
+		const song = new Song(video, msg.member); // eslint-disable-line one-var
 
 		queue.songs.push(song);
 
 		return oneLine `
-                👍 ${song.url.match(/^https?:\/\/(api.soundcloud.com)\/(.*)$/) ? `${song}` : `[${song}](${`${song.url}`})`}
+                👍 ${`[${song}](${`${song.url}`})`}
             `;
 	}
 
-	async play (guild, song) {
+	play (guild, song) {
 		const queue = this.queue.get(guild.id),
 			vote = this.votes.get(guild.id);
 
@@ -346,19 +315,23 @@ module.exports = class PlaySongCommand extends commando.Command {
 			return;
 		}
 
-		const embedColor = await this.fetchColor(song.thumbnail), // eslint-disable-line one-var
-			songEmbed = new Discord.MessageEmbed();
+		const playing = queue.textChannel.send({ // eslint-disable-line one-var
+			'embed': {
+				'color': 4317875,
+				'author': {
+					'name': song.username,
+					'icon_url': song.avatar
+				},
+				'description': `${`[${song}](${`${song.url}`})`}`,
+				'image': {'url': song.thumbnail}
+			}
+		});
 
-		songEmbed
-			.setColor(embedColor ? embedColor : this.embedColor)
-			.setAuthor(song.username, song.avatar)
-			.setDescription(oneLine `${song.url.match(/^https?:\/\/(api.soundcloud.com)\/(.*)$/) ? `${song}` : `[${song}](${`${song.url}`})`}`)
-			.setImage(song.thumbnail);
+		let stream, // eslint-disable-line init-declarations
+			streamErrored = false;
 
-		const playing = queue.textChannel.send({'embed': songEmbed}); // eslint-disable-line one-var
-		let streamErrored = false;
 
-		const stream = ytdl(song.url, {'audioonly': true}) // eslint-disable-line one-var
+		stream = ytdl(song.url, {'audioonly': true}) // eslint-disable-line one-var, prefer-const
 			.on('error', (err) => {
 				streamErrored = true;
 				winston.error('Error occurred when streaming video:', err);
