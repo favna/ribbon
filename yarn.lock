@@ -464,7 +464,13 @@ commander@>=0.3.0, commander@^2.3.0, commander@^2.9.0:
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.2.tgz#0f5946c427ed9ec0d91a46bb9def53e54650e555"
 
-common-tags@^1.0.0, common-tags@^1.4.0:
+common-tags@^1.0.0:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.7.2.tgz#24d9768c63d253a56ecff93845b44b4df1d52771"
+  dependencies:
+    babel-runtime "^6.26.0"
+
+common-tags@^1.4.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/common-tags/-/common-tags-1.6.0.tgz#788e4bcc582f16993e5b2c92f76b1ccb80731537"
   dependencies:
@@ -665,9 +671,9 @@ dijkstrajs@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
-"discord.js-commando@https://github.com/Favna/discord.js-commando.git#active":
-  version "1.1.0-F"
-  resolved "https://github.com/Favna/discord.js-commando.git#093207b370cef42b186fb15e1a7b9c52d414906b"
+"discord.js-commando@https://github.com/Favna/discord.js-commando.git#ribbon":
+  version "1.1.2-F"
+  resolved "https://github.com/Favna/discord.js-commando.git#182d990d34471f5a95be9496d9f5881a1ab29ed1"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
