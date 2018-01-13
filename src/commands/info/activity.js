@@ -99,7 +99,7 @@ module.exports = class activityCommand extends commando.Command {
 		return str.slice(-4);
 	}
 
-	/* eslint complexity: ["error", 30], max-statements: ["error", 40]*/
+	/* eslint complexity: ["error", 35], max-statements: ["error", 50]*/
 	async run (msg, args) {
 
 		const activity = args.member.user.presence.activity,
@@ -116,6 +116,10 @@ module.exports = class activityCommand extends commando.Command {
 
 		if (activity) {
 			const gameIcon = gameList.body.find(g => g.name === activity.name);
+
+			if (activity.type === 'STREAMING' && activity.url.includes('twitch')) {
+				embed.setThumbnail(`https://static-cdn.jtvnw.net/previews-ttv/live_user_${activity.url.split('/')[3]}-432x240.jpg`);
+			}
 
 			largeImageAssetCheck: if (activity.assets) {
 				if (activity.assets.largeImage && !activity.assets.largeImage.includes('spotify')) {
