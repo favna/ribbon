@@ -23,8 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando'),
-	{stripIndents} = require('common-tags');
+const commando = require('discord.js-commando');
 
 module.exports = class ChangeVolumeCommand extends commando.Command {
 	constructor (client) {

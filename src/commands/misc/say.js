@@ -23,8 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando'),
-	util = require('util');
+const commando = require('discord.js-commando');
 
 module.exports = class sayCommand extends commando.Command {
 	constructor (client) {
