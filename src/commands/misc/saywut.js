@@ -52,16 +52,16 @@ module.exports = class sayWutCommand extends commando.Command {
 	}
 
 	run (msg) {
-		const lastMessage = this.client.provider.get(msg.guild.id, 'lastSayMessage', null),
+		const saydata = this.client.provider.get(msg.guild.id, 'saydata', null),
 			wutEmbed = new Discord.MessageEmbed();
 
-		if (lastMessage) {
+		if (saydata) {
 			wutEmbed
-				.setColor(lastMessage.member.displayHexColor)
-				.setTitle(`Last ${msg.guild.commandPrefix}say message author`)
-				.setAuthor(oneLine `${lastMessage.author.tag} (${lastMessage.author.id})`, lastMessage.author.displayAvatarURL({'format': 'png'}))
-				.setFooter(oneLine `${moment(lastMessage.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.s-ul.eu/0wDHYIRn.png')
-				.setDescription(lastMessage.argString.slice(1));
+				.setColor(saydata.memberHexColor)
+				.setTitle(`Last ${saydata.commandPrefix}say message author`)
+				.setAuthor(oneLine `${saydata.authorTag} (${saydata.authorID})`, saydata.avatarURL)
+				.setFooter(oneLine `${moment(saydata.messageDate).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.s-ul.eu/0wDHYIRn.png')
+				.setDescription(saydata.argString);
 
 			this.deleteCommandMessages(msg);
 

@@ -23,7 +23,8 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	util = require('util');
 
 module.exports = class sayCommand extends commando.Command {
 	constructor (client) {
@@ -71,7 +72,17 @@ module.exports = class sayCommand extends commando.Command {
 
 	run (msg, args) {
 
-		this.client.provider.set(msg.guild.id, 'lastSayMessage', msg);
+		const saydata = {
+			'memberHexColor': msg.member.displayHexColor,
+			'commandPrefix': msg.guild.commandPrefix,
+			'authorTag': msg.author.tag,
+			'authorID': msg.author.id,
+			'avatarURL': msg.author.displayAvatarURL({'format': 'png'}),
+			'messageDate': msg.createdAt,
+			'argString': msg.argString.slice(1)
+		};
+
+		this.client.provider.set(msg.guild.id, 'saydata', saydata);
 		this.deleteCommandMessages(msg);
 
 		return msg.say(args.txt);
