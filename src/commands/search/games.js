@@ -137,7 +137,7 @@ module.exports = class gameCommand extends commando.Command {
 		gameEmbed
 			.setColor(hexColor)
 			.setAuthor(gameInfo.body[0].name, 'https://favna.s-ul.eu/O704Q7py.png')
-			.setThumbnail(gameInfo.body[0].cover.url)
+			.setThumbnail(coverImg)
 			.setFooter('Info pulled from IGDB')
 			.addField('Rating', Math.round(gameInfo.body[0].rating * 10) / 10, true)
 			.addField('Release Date', releaseDate, true)
