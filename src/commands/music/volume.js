@@ -23,7 +23,8 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{stripIndents} = require('common-tags');
 
 module.exports = class ChangeVolumeCommand extends commando.Command {
 	constructor (client) {
@@ -55,17 +56,17 @@ module.exports = class ChangeVolumeCommand extends commando.Command {
 
 		if (!queue) {
 			this.deleteCommandMessages(msg);
-			
+
 			return msg.reply('there isn\'t any music playing to change the volume of. Better queue some up!');
 		}
 		if (!args) {
 			this.deleteCommandMessages(msg);
-			
+
 			return msg.reply(`the dial is currently set to ${queue.volume}.`);
 		}
 		if (!queue.voiceChannel.members.has(msg.author.id)) {
 			this.deleteCommandMessages(msg);
-			
+
 			return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
 		}
 
@@ -79,7 +80,7 @@ module.exports = class ChangeVolumeCommand extends commando.Command {
 				volume = queue.volume - 2;
 			} else {
 				this.deleteCommandMessages(msg);
-				
+
 				return msg.reply('invalid volume level. The dial goes from 0-10, baby.');
 			}
 			if (volume === 11) {
@@ -94,7 +95,7 @@ module.exports = class ChangeVolumeCommand extends commando.Command {
 		}
 
 		this.deleteCommandMessages(msg);
-		
+
 		return msg.reply(`${volume === 11 ? 'this one goes to 11!' : `set the dial to ${volume}.`}`);
 	}
 

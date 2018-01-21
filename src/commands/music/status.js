@@ -59,15 +59,15 @@ module.exports = class MusicStatusCommand extends commando.Command {
 			return msg.say('There isn\'t any music playing right now. You should get on that.');
 		}
 		const song = queue.songs[0], // eslint-disable-line one-var
-			currentTime = song.dispatcher ? song.dispatcher.time / 1000 : 0, // eslint-disable-line sort-vars
+			currentTime = song.dispatcher ? song.dispatcher.streamTime / 1000 : 0, // eslint-disable-line sort-vars
 			embed = { // eslint-disable-line sort-vars
 				'color': 3447003,
 				'author': {
 					'name': `${song.username}`,
-					'icon_url': song.avatar // eslint-disable-line camelcase
+					'icon_url': song.avatar
 				},
 				'description': stripIndents `
-				${song.url.match(/^https?:\/\/(api.soundcloud.com)\/(.*)$/) ? `${song}` : `[${song}](${`${song.url}`})`}
+				[${song}](${`${song.url}`})
 
 				We are ${Song.timeString(currentTime)} into the song, and have ${song.timeLeft(currentTime)} left.
 				${!song.playing ? 'The music is paused.' : ''}

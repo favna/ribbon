@@ -74,7 +74,7 @@ module.exports = class ViewQueueCommand extends commando.Command {
 		}
 
 		const currentSong = queue.songs[0], // eslint-disable-line one-var
-			currentTime = currentSong.dispatcher ? currentSong.dispatcher.time / 1000 : 0,
+			currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0,
 			paginated = commando.util.paginate(queue.songs, args.page, Math.floor(PAGINATED_ITEMS)),
 			totalLength = queue.songs.reduce((prev, song) => prev + song.length, 0);
 

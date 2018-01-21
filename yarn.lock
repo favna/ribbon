@@ -674,11 +674,11 @@ dijkstrajs@^1.0.1:
     require-all "^2.0.0"
 
 "discord.js@git+https://github.com/Favna/discord.js.git#active":
-  version "12.0.0-F"
-  resolved "git+https://github.com/Favna/discord.js.git#381f3a01d08f13dbbc6b7c219b2172d5110383ea"
+  version "12.0.0-F.1"
+  resolved "git+https://github.com/Favna/discord.js.git#145e609806cca52a036ff7f5f91cf42cc60b5cae"
   dependencies:
     pako "^1.0.0"
-    prism-media "^0.0.2"
+    prism-media "github:hydrabolt/prism-media"
     snekfetch "^3.5.0"
     tweetnacl "^1.0.0"
     ws "^3.3.1"
@@ -2145,9 +2145,9 @@ pretty-ms@^3.0.0:
     parse-ms "^1.0.0"
     plur "^2.1.2"
 
-prism-media@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/prism-media/-/prism-media-0.0.2.tgz#aa917b084576c4df6488e4ea8e7d6d44aed4b411"
+"prism-media@github:hydrabolt/prism-media":
+  version "0.1.0"
+  resolved "https://codeload.github.com/hydrabolt/prism-media/tar.gz/f6737178d10665934669ab2ff3da23a5ecc23e8c"
 
 process-nextick-args@~1.0.6:
   version "1.0.7"

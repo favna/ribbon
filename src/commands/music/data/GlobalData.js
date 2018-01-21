@@ -27,7 +27,7 @@ const auth = require('../../../auth.json');
 const DEFAULT_VOLUME = 1, // eslint-disable-line one-var
 	GOOGLE_API = auth.googleapikey,
 	PAGINATED_ITEMS = 5,
-	PASSES = 1;
+	PASSES = 2;
 
 module.exports = {
 	DEFAULT_VOLUME,

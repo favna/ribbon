@@ -235,7 +235,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 				const result = await this.addSong(msg, video2); // eslint-disable-line no-await-in-loop
 
 				if (!result.startsWith('👍')) {
-					this.queue.delete(msg.guild.id); 
+					this.queue.delete(msg.guild.id);
 				}
 
 				statusMsg.edit(`${msg.author}, joining your voice channel...`);
@@ -340,7 +340,9 @@ module.exports = class PlaySongCommand extends commando.Command {
 				this.play(guild, queue.songs[0]);
 			});
 
-		const dispatcher = queue.connection.playStream(stream, {'passes': PASSES}) // eslint-disable-line one-var
+		const dispatcher = queue.connection.play(stream, { // eslint-disable-line one-var
+			'passes': PASSES
+		})
 			.on('end', () => {
 				if (streamErrored) {
 					return;
@@ -353,7 +355,6 @@ module.exports = class PlaySongCommand extends commando.Command {
 				queue.textChannel.send(`An error occurred while playing the song: \`${err}\``);
 			});
 
-		queue.connection.player.opusEncoder.setPLP(0.01);
 		dispatcher.setVolumeLogarithmic(queue.volume / 5);
 		song.dispatcher = dispatcher;
 		song.playing = true;

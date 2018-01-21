@@ -65,7 +65,7 @@ module.exports = class saveQueueCommand extends commando.Command {
 			return msg.reply('there isn\'t any music playing right now. You should get on that.');
 		}
 		const currentSong = queue.songs[0], // eslint-disable-line one-var
-			currentTime = currentSong.dispatcher ? currentSong.dispatcher.time / 1000 : 0,
+			currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0,
 			embed = new Discord.MessageEmbed(),
 			paginated = commando.util.paginate(queue.songs, 1, Math.floor(10));
 
