@@ -292,8 +292,8 @@ boom@5.x.x:
     hoek "4.x.x"
 
 booru@^0.3.3:
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/booru/-/booru-0.3.3.tgz#5e770bb36f53c301d637fe16109fc30d15b1bf3b"
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/booru/-/booru-0.3.6.tgz#f6941295e272f0e0e5f7a369b264342153159e06"
   dependencies:
     request "^2.79.0"
     request-promise-native "^1.0.3"
@@ -666,8 +666,8 @@ dijkstrajs@^1.0.1:
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
 "discord.js-commando@https://github.com/Favna/discord.js-commando.git#ribbon":
-  version "1.1.2-F"
-  resolved "https://github.com/Favna/discord.js-commando.git#182d990d34471f5a95be9496d9f5881a1ab29ed1"
+  version "1.1.2-F-R.1"
+  resolved "https://github.com/Favna/discord.js-commando.git#bbfa4255fc90882ba64a3bbd186ecd1ba781412e"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
@@ -683,9 +683,9 @@ dijkstrajs@^1.0.1:
     tweetnacl "^1.0.0"
     ws "^3.3.1"
 
-doctrine@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-2.0.2.tgz#68f96ce8efc56cc42651f1faadb4f175273b0075"
+doctrine@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-2.1.0.tgz#5cd01fc101621b42c4cd7f5d1a66243716d3f39d"
   dependencies:
     esutils "^2.0.2"
 
@@ -813,9 +813,9 @@ eslint-visitor-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
 
-eslint@4.15.0:
-  version "4.15.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.15.0.tgz#89ab38c12713eec3d13afac14e4a89e75ef08145"
+eslint@4.16.0:
+  version "4.16.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.16.0.tgz#934ada9e98715e1d7bbfd6f6f0519ed2fab35cc1"
   dependencies:
     ajv "^5.3.0"
     babel-code-frame "^6.22.0"
@@ -823,7 +823,7 @@ eslint@4.15.0:
     concat-stream "^1.6.0"
     cross-spawn "^5.1.0"
     debug "^3.1.0"
-    doctrine "^2.0.2"
+    doctrine "^2.1.0"
     eslint-scope "^3.7.1"
     eslint-visitor-keys "^1.0.0"
     espree "^3.5.2"
@@ -1759,9 +1759,9 @@ mkdirp@0.5.1, mkdirp@0.x.x, "mkdirp@>=0.5 0", mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-moment-duration-format@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-2.1.1.tgz#2eb0576f66822a47a0dee73af734c23b907ba2bd"
+moment-duration-format@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-2.2.0.tgz#d65a3cbf5f8233c99efee1b8493c59e38bd581f2"
 
 moment@^2.19.1:
   version "2.20.1"
@@ -2218,8 +2218,8 @@ random-ua@0.0.6:
   resolved "https://registry.yarnpkg.com/random-ua/-/random-ua-0.0.6.tgz#eb70901b72a4fe0b8d3ab752a6b25122e40c0ad7"
 
 rc@^1.1.7:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.2.tgz#d8ce9cb57e8d64d9c7badd9876c7c34cbe3c7077"
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.4.tgz#a0f606caae2a3b862bbd0ef85482c0125b315fa3"
   dependencies:
     deep-extend "~0.4.0"
     ini "~1.3.0"
@@ -2497,13 +2497,17 @@ scalc@^2.0.1:
   dependencies:
     copy-paste "^1.1.2"
 
-"semver@2 || 3 || 4 || 5", semver@^5.3.0:
+"semver@2 || 3 || 4 || 5":
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.4.1.tgz#e059c09d8571f0540823733433505d3a2f00b18e"
 
 semver@5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
+
+semver@^5.3.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
 
 set-blocking@^2.0.0, set-blocking@~2.0.0:
   version "2.0.0"
@@ -2588,8 +2592,8 @@ sqlite3@3.1.13:
     node-pre-gyp "~0.6.38"
 
 sqlite@^2.8.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/sqlite/-/sqlite-2.9.0.tgz#33f03c646ea0f7a5d506e645a19b9c5352dd9fa4"
+  version "2.9.1"
+  resolved "https://registry.yarnpkg.com/sqlite/-/sqlite-2.9.1.tgz#2c85192c15d3e20361236f26240187f9d9f71355"
   dependencies:
     sqlite3 "3.1.13"
 
@@ -2922,8 +2926,8 @@ utile@0.2.x:
     rimraf "2.x.x"
 
 uuid@^3.0.0, uuid@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.2.1.tgz#12c528bb9d58d0b9265d9a2f6f0fe8be17ff1f14"
 
 validate-npm-package-license@^3.0.1:
   version "3.0.1"
@@ -3119,9 +3123,9 @@ youtube-node@^1.3.2:
     prompt "0.2.14"
     request "2.53.0"
 
-ytdl-core@0.18.7:
-  version "0.18.7"
-  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.18.7.tgz#e8f52b2d6dfc1f658fe2d06507fc18ce9e42f1ae"
+ytdl-core@0.19.0:
+  version "0.19.0"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.19.0.tgz#025eda629de8740b8666bfe4b9305fe60bb52614"
   dependencies:
     html-entities "^1.1.3"
     m3u8stream "^0.2.1"
