@@ -100,19 +100,24 @@ module.exports = class movieCommand extends commando.Command {
 			}),
 			tmdbres = await tmdb('searchMovie', {'query': args.name});
 
-		if (tmdbres) {
+		if (tmdbres && tmdbres.results.length !== 0) {
 			const movieres = await tmdb('movieInfo', {'id': tmdbres.results[0].id});
 
 			if (movieres) {
+				const embedColor = movieres.backdrop_path ? await this.fetchColor(`http://image.tmdb.org/t/p/w640${movieres.backdrop_path}`) : this.embedColor;
+
 				movieEmbed
-					.setImage(`http://image.tmdb.org/t/p/w640${movieres.backdrop_path}`)
-					.setColor(await this.fetchColor(`http://image.tmdb.org/t/p/w640${movieres.backdrop_path}`))
+					.setImage(movieres.backdrop_path ? `http://image.tmdb.org/t/p/w640${movieres.backdrop_path}` : null)
+					.setThumbnail(movieres.poster_path ? `http://image.tmdb.org/t/p/w640${movieres.poster_path}` : null)
+					.setColor(embedColor)
 					.addField('Title', `[${movieres.title}](https://www.themoviedb.org/movie/${movieres.id})`, true)
 					.addField('Release Date', moment(movieres.release_date).format('MMMM Do YYYY'), true)
 					.addField('Runtime', `${movieres.runtime} minutes`, true)
 					.addField('User Score', movieres.vote_average, true)
-					.addField('Genres', movieres.genres.map(genre => genre.name), true)
-					.addField('Production Companies', movieres.production_companies.length === 0 ? movieres.production_companies.map(company => company.name) : 'Unavailable on TheMovieDB', true)
+					.addField('Genre', movieres.genres.length !== 0 ? movieres.genres.map(genre => genre.name).slice(0, 1) : 'None on TheMovieDB', true)
+					.addField('Production Company',
+						movieres.production_companies.length !== 0 ? movieres.production_companies.map(company => company.name).slice(0, 1) : 'None on TheMovieDB',
+						true)
 					.addField('Status', movieres.status, true)
 					.addField('Collection', movieres.belongs_to_collection !== null ? movieres.belongs_to_collection.name : 'none', true)
 					.addField('Home Page', movieres.homepage !== '' ? '[Click Here](idRes.homepage)' : 'none', true)
