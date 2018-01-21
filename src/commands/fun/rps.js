@@ -47,7 +47,7 @@ module.exports = class rpsCommand extends commando.Command {
 					'validate': (hand) => {
 						const validHands = ['rock', 'paper', 'scissors'];
 
-						if (validHands.toLowerCase().includes(hand)) {
+						if (validHands.includes(hand.toLowerCase())) {
 							return true;
 						}
 
