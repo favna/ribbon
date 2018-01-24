@@ -212,6 +212,7 @@ class Ribbon {
 
 		this.client.registry
 			.registerGroups([
+				['custom', 'Custom commands for servers'],
 				['fun', 'Fun and Games to play with the bot'],
 				['info', 'Get Information on various things'],
 				['links', 'Quick Website Links'],
