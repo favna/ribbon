@@ -24,33 +24,24 @@
  */
 
 const Discord = require('discord.js'),
-	YouTube = require('youtube-node'),
 	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	{oneLine} = require('common-tags');
-
-const youtube = new YouTube(); // eslint-disable-line one-var
-
-youtube.setKey(auth.googleapikey);
-youtube.addParam('type', 'video');
-youtube.addParam('relevanceLanguage', 'en');
-youtube.addParam('safeSearch', 'moderate');
-youtube.addParam('regionCode', 'NL');
+	request = require('snekfetch');
 
 module.exports = class youtubeCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'youtube',
 			'group': 'search',
-			'aliases': ['yt', 'tube'],
+			'aliases': ['yt', 'tube', 'yts'],
 			'memberName': 'youtube',
 			'description': 'Find videos on youtube',
 			'examples': ['youtube {videoName}', 'youtube RWBY Volume 4'],
 			'guildOnly': false,
 			'throttling': {
-				'usages': 1,
-				'duration': 60
+				'usages': 2,
+				'duration': 3
 			},
 
 			'args': [
@@ -70,40 +61,37 @@ module.exports = class youtubeCommand extends commando.Command {
 		}
 	}
 
-	run (msg, args) {
-		youtube.search(args.query, 1, (error, result) => {
-			if (error) {
-				// eslint-disable-next-line no-console
-				console.error(oneLine `An error occured in the "tmdb" command in the server ${msg.guild.name} (${msg.guild.id}) 
-					on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}. The error is: ${error}`);
+	async run (msg, args) {
+		const res = await request.get('https://www.googleapis.com/youtube/v3/search')
+			.query('key', auth.googleapikey)
+			.query('part', 'snippet')
+			.query('maxResults', '1')
+			.query('q', args.query)
+			.query('type', 'video');
 
-				this.deleteCommandMessages(msg);
-
-				return msg.reply('⚠️ ***nothing found***');
-			} else if (!result || !result.items || result.items.length < 1) {
-				this.deleteCommandMessages(msg);
-
-				return msg.reply('⚠️ ***nothing found***');
-			}
-
-			const youtubeEmbed = new Discord.MessageEmbed();
-
-			youtubeEmbed
-				.setAuthor(`Youtube Search Result for: ${args.query}`, 'https://i.imgur.com/BPFqnxz.png')
-				.setImage(result.items[0].snippet.thumbnails.high.url)
-				.setURL(`https://www.youtube.com/watch?v=${result.items[0].id.videoId}`)
-				.setColor('#E24141')
-				.addField('Title', result.items[0].snippet.title, true)
-				.addField('URL', `[Click Here](https://www.youtube.com/watch?v=${result.items[0].id.videoId})`, true)
-				.addField('Channel', `[${result.items[0].snippet.channelTitle}](https://www.youtube.com/channel/${result.items[0].snippet.channelId})`, true)
-				.addField('Published Date', moment(result.items[0].snippet.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true);
-			result.items[0].snippet.description !== ''
-				? youtubeEmbed.addField('Description', result.items[0].snippet.description, false)
-				: youtubeEmbed.addField('Description', 'No description', false);
+		if (res && res.body.items && res.body.items.length >= 1) {
+			const embed = new Discord.MessageEmbed(),
+				video = res.body.items[0];
 
 			this.deleteCommandMessages(msg);
+			if (msg.content.split(' ')[0].slice(msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length) === 'yts') {
+				return msg.say(`https://www.youtube.com/watch?v=${video.id.videoId}`);
+			}
 
-			return msg.embed(youtubeEmbed, `https://www.youtube.com/watch?v=${result.items[0].id.videoId}`);
-		});
+			embed
+				.setTitle(`Youtube Search Result ${args.query}`)
+				.setURL(`https://www.youtube.com/watch?v=${video.id.videoId}`)
+				.setColor('#E24141')
+				.setImage(video.snippet.thumbnails.high.url)
+				.addField('Title', video.snippet.title, true)
+				.addField('URL', `[Click Here](https://www.youtube.com/watch?v=${video.id.videoId})`, true)
+				.addField('Channel', `[${video.snippet.channelTitle}](https://www.youtube.com/channel/${video.snippet.channelId})`, true)
+				.addField('Published At', moment(video.snippet.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
+				.addField('Description', video.snippet.description ? video.snippet.description : 'No Description', false);
+
+			return msg.embed(embed, `https://www.youtube.com/watch?v=${video.id.videoId}`);
+		}
+
+		return msg.reply('⚠️ ***nothing found***');
 	}
 };
