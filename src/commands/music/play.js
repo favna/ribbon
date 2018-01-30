@@ -23,11 +23,11 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
-	Path = require('path'),
+const Path = require('path'),
 	Song = require(Path.join(__dirname, 'data/SongStructure.js')),
 	YouTube = require('simple-youtube-api'),
 	commando = require('discord.js-commando'),
+	{escapeMarkdown} = require('discord.js'),
 	{
 		oneLine,
 		stripIndents
@@ -37,6 +37,8 @@ const Discord = require('discord.js'),
 
 const DEFAULT_VOLUME = require(Path.join(__dirname, 'data/GlobalData.js')).DEFAULT_VOLUME, // eslint-disable-line one-var
 	GOOGLE_API = require(Path.join(__dirname, 'data/GlobalData.js')).GOOGLE_API,
+	MAX_LENGTH = require(Path.join(__dirname, 'data/GlobalData.js')).MAX_LENGTH,
+	MAX_SONGS = require(Path.join(__dirname, 'data/GlobalData.js')).MAX_SONGS,
 	PASSES = require(Path.join(__dirname, 'data/GlobalData.js')).PASSES;
 
 module.exports = class PlaySongCommand extends commando.Command {
@@ -73,6 +75,8 @@ module.exports = class PlaySongCommand extends commando.Command {
 			msg.delete();
 		}
 	}
+
+	/* eslint-disable max-statements*/
 
 	async run (msg, args) {
 		const url = args.url.replace(/<(.+)>/g, '$1'),
@@ -275,12 +279,33 @@ module.exports = class PlaySongCommand extends commando.Command {
 	}
 
 	addSong (msg, video) {
-		const queue = this.queue.get(msg.guild.id);
+		const queue = this.queue.get(msg.guild.id),
+			songNumerator = function (prev, song) {
+				if (song.member.id === msg.author.id) {
+					prev += 1; // eslint-disable-line no-param-reassign
+				}
 
+				return prev;
+			};
 
 		if (!this.client.isOwner(msg.author)) {
+			const songMaxLength = this.client.provider.get(msg.guild.id, 'maxLength', MAX_LENGTH),
+				songMaxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', MAX_SONGS);
+
+			if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
+				return oneLine `
+					👎 ${escapeMarkdown(video.title)}
+					(${Song.timeString(video.durationSeconds)})
+					is too long. No songs longer than ${songMaxLength} minutes!
+				`;
+			}
 			if (queue.songs.some(song => song.id === video.id)) {
-				return `👎 ${Discord.escapeMarkdown(video.title)} is already queued.`;
+				return `👎 ${escapeMarkdown(video.title)} is already queued.`;
+			}
+
+			if (songMaxSongs > 0 &&
+				queue.songs.reduce(songNumerator, 0) >= songMaxSongs) {
+				return `👎 you already have ${songMaxSongs} songs in the queue. Don't hog all the airtime!`;
 			}
 		}
 
