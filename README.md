@@ -39,8 +39,11 @@ This it the source for Ribbon, a discord bot created by Favna. If you have any q
 
 This bot is open source and always will be, even if I don't get donations. That said, I know there are people out there that may still want to donate just to show their appreciation so this is for you guys. Thanks in advance!
 
-[![paypal](https://favna.s-ul.eu/X63BsACU.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GY3CFCL25HQNJ)
+I accept donations through PayPal, BitCoin, Ethereum and LiteCoin. You can use the buttons below to donate through your method of choice
 
-&nbsp;
-
-[![forthebadge](http://forthebadge.com/images/badges/uses-js.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/uses-git.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/uses-badges.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/powered-by-oxygen.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/kinda-sfw.svg)](http://forthebadge.com) [![forthebadge](http://forthebadge.com/images/badges/designed-in-ms-paint.svg)](http://forthebadge.com)
+|Donate With|QR|Address|
+|:---:|:---:|:---:|
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8VGUHM3SWY7U"><img src="https://favna.s-ul.eu/scrns/hqtB097v.png"></a>|<img src="https://favna.s-ul.eu/scrns/nm5Zu6eR.png" width="128">|[Donate with PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8VGUHM3SWY7U)|
+<img src="https://favna.s-ul.eu/scrns/yuLvpp8Q.png">|<img src="https://favna.s-ul.eu/scrns/uH4DQbUK.png" width="128">|[bitcoin:1E643TNif2MTh75rugepmXuq35Tck4TnE5](bitcoin:1E643TNif2MTh75rugepmXuq35Tck4TnE5?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot)|
+<img src="https://favna.s-ul.eu/scrns/XG42HAxq.png">|<img src="https://favna.s-ul.eu/scrns/cBE1WJFa.png" width="128">|[ethereum:LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6](ethereum:LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot)|
+<img src="https://favna.s-ul.eu/scrns/5M8KMzTa.png">|<img src="https://favna.s-ul.eu/scrns/1tTFTyKZ.png" width="128">|[litecoin:LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6](litecoin:LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot)|
