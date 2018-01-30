@@ -2540,9 +2540,9 @@ slice-ansi@1.0.0:
   dependencies:
     is-fullwidth-code-point "^2.0.0"
 
-snekfetch@3.6.2:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/snekfetch/-/snekfetch-3.6.2.tgz#1a6cbf36f890b7d478e100469789e1c4e663083c"
+snekfetch@3.6.3:
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/snekfetch/-/snekfetch-3.6.3.tgz#d1faf3bfbb71ddedc0c2ede2d8c473695c380ceb"
 
 snekfetch@^3.5.0:
   version "3.6.1"
