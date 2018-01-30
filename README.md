@@ -44,6 +44,6 @@ I accept donations through PayPal, BitCoin, Ethereum and LiteCoin. You can use t
 |Donate With|QR|Address|
 |:---:|:---:|:---:|
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8VGUHM3SWY7U"><img src="https://favna.s-ul.eu/scrns/hqtB097v.png"></a>|<img src="https://favna.s-ul.eu/scrns/nm5Zu6eR.png" width="128">|[Donate with PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8VGUHM3SWY7U)|
-<img src="https://favna.s-ul.eu/scrns/yuLvpp8Q.png">|<img src="https://favna.s-ul.eu/scrns/uH4DQbUK.png" width="128">|[bitcoin:1E643TNif2MTh75rugepmXuq35Tck4TnE5](bitcoin:1E643TNif2MTh75rugepmXuq35Tck4TnE5?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot)|
-<img src="https://favna.s-ul.eu/scrns/XG42HAxq.png">|<img src="https://favna.s-ul.eu/scrns/cBE1WJFa.png" width="128">|[ethereum:LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6](ethereum:LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot)|
-<img src="https://favna.s-ul.eu/scrns/5M8KMzTa.png">|<img src="https://favna.s-ul.eu/scrns/1tTFTyKZ.png" width="128">|[litecoin:LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6](litecoin:LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot)|
+<img src="https://favna.s-ul.eu/scrns/yuLvpp8Q.png">|<img src="https://favna.s-ul.eu/scrns/uH4DQbUK.png" width="128">|[1E643TNif2MTh75rugepmXuq35Tck4TnE5](1E643TNif2MTh75rugepmXuq35Tck4TnE5?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot)|
+<img src="https://favna.s-ul.eu/scrns/XG42HAxq.png">|<img src="https://favna.s-ul.eu/scrns/cBE1WJFa.png" width="128">|[LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6](LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot)|
+<img src="https://favna.s-ul.eu/scrns/5M8KMzTa.png">|<img src="https://favna.s-ul.eu/scrns/1tTFTyKZ.png" width="128">|[LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6](LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot)|
