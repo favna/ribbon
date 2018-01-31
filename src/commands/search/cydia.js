@@ -69,7 +69,7 @@ module.exports = class cydiaCommand extends commando.Command {
 				.setAuthor('Tweak Info', 'http://i.imgur.com/OPZfdht.png')
 				.addField('Display Name', res.display, true)
 				.addField('Package Name', res.name, true)
-				.addField('Description', res.summary, true)
+				.addField('Description', `${res.summary.slice(0, 900)}... [Read more](http://cydia.saurik.com/package/${res.name})`, true)
 				.addField('Version', res.version, true)
 				.addField('Section', res.section, true)
 				.addField('Price', res.price === 0 ? 'Free' : res.price, true)
