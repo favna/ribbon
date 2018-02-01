@@ -32,9 +32,9 @@ module.exports = class sayWutCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'saywut',
-			'aliases': ['saywat', 'saywot'],
-			'group': 'misc',
 			'memberName': 'saywut',
+			'group': 'misc',
+			'aliases': ['saywat', 'saywot'],
 			'description': 'Bust the last "say" user',
 			'examples': ['saywut'],
 			'guildOnly': true,

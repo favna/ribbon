@@ -33,17 +33,17 @@ module.exports = class listwarnCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'listwarn',
+			'memberName': 'listwarn',
 			'group': 'moderation',
 			'aliases': ['reqwarn', 'lw', 'rw'],
-			'memberName': 'listwarn',
 			'description': 'Lists the warning points given to a member',
+			'format': 'MemberID|MemberName(partial or full)',
 			'examples': ['listwarn {member}'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'member',

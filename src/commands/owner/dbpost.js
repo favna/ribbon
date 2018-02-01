@@ -31,8 +31,8 @@ module.exports = class DBPostCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'dbpost',
-			'group': 'owner',
 			'memberName': 'dbpost',
+			'group': 'owner',
 			'description': 'Post current server count to Discord Bots List',
 			'guildOnly': false,
 			'ownerOnly': true

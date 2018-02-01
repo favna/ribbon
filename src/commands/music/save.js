@@ -36,9 +36,9 @@ module.exports = class saveQueueCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'save',
-			'aliases': ['save-songs', 'save-song-list', 'ss', 'savequeue'],
-			'group': 'music',
 			'memberName': 'save',
+			'group': 'music',
+			'aliases': ['save-songs', 'save-song-list', 'ss', 'savequeue'],
 			'description': 'Saves the queued songs for later',
 			'examples': ['save'],
 			'guildOnly': true,

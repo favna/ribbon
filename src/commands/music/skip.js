@@ -30,8 +30,8 @@ module.exports = class SkipSongCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'skip',
-			'group': 'music',
 			'memberName': 'skip',
+			'group': 'music',
 			'description': 'Skips the song that is currently playing.',
 			'examples': ['skip'],
 			'guildOnly': true,

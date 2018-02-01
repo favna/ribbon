@@ -29,17 +29,17 @@ module.exports = class newsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'announce',
+			'memberName': 'announce',
 			'group': 'moderation',
 			'aliases': ['news'],
-			'memberName': 'announce',
 			'description': 'Make an announcement in the news channel',
+			'format': 'Announcement',
 			'examples': ['announce John Appleseed reads the news'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'body',

@@ -30,23 +30,22 @@ module.exports = class deleteCommandMessagesCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'deletecommandmessages',
+			'memberName': 'deletecommandmessages',
 			'group': 'moderation',
 			'aliases': ['dcm'],
-			'memberName': 'deletecommandmessages',
 			'description': 'Configure whether the bot should delete command messages',
-			'examples': ['deletecommandmessages {option}', 'deletecommandmessages enable'],
+			'format': 'Enable|Disable',
+			'examples': ['deletecommandmessages enable'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'option',
 					'prompt': 'Enable or disable deleting of command messages?',
 					'type': 'boolean',
-					'label': 'Option for toggling',
 					'validate': (bool) => {
 						const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 

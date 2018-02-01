@@ -29,9 +29,9 @@ module.exports = class PauseSongCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'pause',
-			'aliases': ['shh', 'shhh', 'shhhh', 'shhhhh', 'hush', 'halt'],
-			'group': 'music',
 			'memberName': 'pause',
+			'group': 'music',
+			'aliases': ['shh', 'shhh', 'shhhh', 'shhhhh', 'hush', 'halt'],
 			'description': 'Pauses the currently playing song',
 			'examples': ['pause'],
 			'guildOnly': true,

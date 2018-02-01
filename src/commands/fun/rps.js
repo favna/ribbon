@@ -31,19 +31,18 @@ module.exports = class rpsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'rps',
+			'memberName': 'rps',
 			'group': 'fun',
 			'aliases': ['rockpaperscissors'],
-			'memberName': 'rps',
 			'description': 'Play Rock Paper Scissors against random.org randomization',
-			'examples': ['rps {hand}', 'rps Rock'],
+			'format': 'HandToPlay',
+			'examples': ['rps Rock'],
 			'guildOnly': false,
-
 			'args': [
 				{
 					'key': 'hand',
 					'prompt': 'Do you play rock, paper or scissors?',
 					'type': 'string',
-					'label': 'What hand to play',
 					'validate': (hand) => {
 						const validHands = ['rock', 'paper', 'scissors'];
 

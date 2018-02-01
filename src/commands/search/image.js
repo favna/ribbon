@@ -38,19 +38,22 @@ module.exports = class imageCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'image',
+			'memberName': 'image',
 			'group': 'search',
 			'aliases': ['img', 'i'],
-			'memberName': 'image',
 			'description': 'Finds an image through google',
-			'examples': ['image {imageQuery}', 'image Pyrrha Nikos'],
+			'format': 'ImageQuery',
+			'examples': ['image Pyrrha Nikos'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'query',
-					'prompt': 'What image do you want to find on google?',
-					'type': 'string',
-					'label': 'Search query'
+					'prompt': 'What do you want to find images of?',
+					'type': 'string'
 				}
 			]
 		});

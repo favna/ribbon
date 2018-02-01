@@ -31,11 +31,12 @@ module.exports = class diceCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'dice',
-			'aliases': ['xdicey', 'roll', 'dicey', 'die'],
-			'group': 'fun',
 			'memberName': 'dice',
+			'group': 'fun',
+			'aliases': ['xdicey', 'roll', 'dicey', 'die'],
 			'description': 'Sends contents of a copypasta file to the chat',
-			'examples': ['dice <sides_on_die> <amount_of_rolls>', 'dice 6 5'],
+			'format': 'SidesOfTheDice AmountOfRolls',
+			'examples': ['dice 6 5'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
@@ -46,13 +47,11 @@ module.exports = class diceCommand extends commando.Command {
 				{
 					'key': 'sides',
 					'prompt': 'How many sides does your die have?',
-					'type': 'integer',
-					'label': 'Amount of sides the dice have'
+					'type': 'integer'
 				}, {
 					'key': 'rolls',
 					'prompt': 'How many times should the die be rolled?',
-					'type': 'integer',
-					'label': 'The amount of times the die is rolled'
+					'type': 'integer'
 				}
 			]
 		});

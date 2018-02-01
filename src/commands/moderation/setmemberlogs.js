@@ -30,23 +30,22 @@ module.exports = class setMemberlogsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'setmemberlogs',
+			'memberName': 'setmemberlogs',
 			'group': 'moderation',
 			'aliases': ['setmember'],
-			'memberName': 'setmemberlogs',
 			'description': 'Set the memberlogs channel used for logging member logs (such as people joining and leaving). Ensure to enable memberlogs with the "memberlogs" command.',
-			'examples': ['setmemberlogs {channel ID or channel Name (partial or full)}', 'setmemberlogs member-logs'],
+			'format': 'ChannelID|ChannelName(partial or full)',
+			'examples': ['setmemberlogs member-logs'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'channel',
 					'prompt': 'What channel should I set for member logs? (make sure to start with a # when going by name)',
-					'type': 'channel',
-					'label': 'Channel for moderator logs'
+					'type': 'channel'
 				}
 			]
 		});

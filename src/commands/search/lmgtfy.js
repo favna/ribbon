@@ -29,23 +29,22 @@ module.exports = class lmgtfyCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'lmgtfy',
+			'memberName': 'lmgtfy',
 			'group': 'search',
 			'aliases': ['dumb'],
-			'memberName': 'lmgtfy',
 			'description': 'Produce a lmgtfy (let me google that for you) URL',
-			'examples': ['lmgtfy {query}', 'lmgtfy is it legal to kill an ant???', 'lmgtfy are there birds in canada?'],
+			'format': 'Query',
+			'examples': ['lmgtfy is it legal to kill an ant???', 'lmgtfy are there birds in canada?'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'question',
 					'prompt': 'What does the idiot want to find?',
 					'type': 'string',
-					'label': 'Search query to lmgtfy',
 					'parse': p => p.replace(/ /gim, '+')
 				}
 			]

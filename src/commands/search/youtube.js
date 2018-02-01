@@ -33,23 +33,22 @@ module.exports = class youtubeCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'youtube',
+			'memberName': 'youtube',
 			'group': 'search',
 			'aliases': ['yt', 'tube', 'yts'],
-			'memberName': 'youtube',
 			'description': 'Find videos on youtube',
-			'examples': ['youtube {videoName}', 'youtube RWBY Volume 4'],
+			'format': 'VideoName',
+			'examples': ['youtube RWBY Volume 4'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'query',
 					'prompt': 'Which video do you want to find?',
-					'type': 'string',
-					'label': 'Video to find'
+					'type': 'string'
 				}
 			]
 		});

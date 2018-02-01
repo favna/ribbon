@@ -30,23 +30,22 @@ module.exports = class memberlogsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'memberlogs',
+			'memberName': 'memberlogs',
 			'group': 'moderation',
 			'aliases': ['tml', 'togglemember'],
-			'memberName': 'memberlogs',
 			'description': 'Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel',
-			'examples': ['memberlogs {option}', 'memberlogs enable'],
+			'format': 'Enable|Disable',
+			'examples': ['memberlogs enable'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'option',
 					'prompt': 'Enable or disable memberlogs?',
 					'type': 'boolean',
-					'label': 'Option for toggling',
 					'validate': (bool) => {
 						const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 

@@ -33,23 +33,22 @@ module.exports = class discordBotsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'discordbots',
+			'memberName': 'discordbots',
 			'group': 'info',
 			'aliases': ['dbapi', 'db'],
-			'memberName': 'discordbots',
 			'description': 'Gets the stats from a Discord Bot on DiscordBotList',
-			'examples': ['discordbots {discord Bot ID}', 'discordbots 376520643862331396'],
+			'format': 'DiscordBotID',
+			'examples': ['discordbots 376520643862331396'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'bot',
 					'prompt': 'ID of the bot to get stats from?',
 					'type': 'string',
-					'label': 'BotID',
 					'default': '376520643862331396'
 				}
 			]

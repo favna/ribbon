@@ -32,19 +32,22 @@ module.exports = class animeCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'anime',
+			'memberName': 'anime',
 			'group': 'search',
 			'aliases': ['ani', 'mal'],
-			'memberName': 'anime',
 			'description': 'Finds anime on MyAnimeList',
-			'examples': ['anime {anime_name}', 'anime Pokemon'],
+			'format': 'AnimeName',
+			'examples': ['anime Pokemon'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'query',
 					'prompt': 'What anime do you want to find?',
-					'type': 'string',
-					'label': 'anime_name'
+					'type': 'string'
 				}
 			]
 		});

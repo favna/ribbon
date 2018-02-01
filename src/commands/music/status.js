@@ -32,9 +32,9 @@ module.exports = class MusicStatusCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'status',
-			'aliases': ['song', 'playing', 'current-song', 'now-playing'],
-			'group': 'music',
 			'memberName': 'status',
+			'group': 'music',
+			'aliases': ['song', 'playing', 'current-song', 'now-playing'],
 			'description': 'Shows the current status of the music.',
 			'guildOnly': true,
 			'throttling': {

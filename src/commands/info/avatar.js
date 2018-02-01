@@ -31,25 +31,27 @@ module.exports = class avatarCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'avatar',
-			'aliases': ['ava'],
-			'group': 'info',
 			'memberName': 'avatar',
+			'group': 'info',
+			'aliases': ['ava'],
 			'description': 'Gets the avatar from a user',
-			'examples': ['avatar {member name or ID}', 'avatar Favna'],
+			'format': 'MemberID|MemberName(partial or full) [ImageSize]',
+			'examples': ['avatar Favna 2048'],
 			'guildOnly': true,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'member',
 					'prompt': 'What user would you like to get the avatar from?',
-					'type': 'member',
-					'label': 'member name or ID'
+					'type': 'member'
 				},
 				{
 					'key': 'size',
 					'prompt': 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
 					'type': 'integer',
-					'label': 'size of the avatar',
 					'default': 128,
 					'validate': (size) => {
 						const validSizes = ['128', '256', '512', '1024', '2048'];

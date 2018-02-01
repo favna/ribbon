@@ -32,9 +32,9 @@ module.exports = class lockdownCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'lockdown',
+			'memberName': 'lockdown',
 			'group': 'moderation',
 			'aliases': ['lock', 'ld'],
-			'memberName': 'lockdown',
 			'description': 'Locks the current channel to just staff',
 			'examples': ['lockdown'],
 			'guildOnly': true,

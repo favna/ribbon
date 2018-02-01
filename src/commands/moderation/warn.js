@@ -35,35 +35,32 @@ module.exports = class warnCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'warn',
+			'memberName': 'warn',
 			'group': 'moderation',
 			'aliases': ['warning'],
-			'memberName': 'warn',
 			'description': 'Warn a member with a specified amount of points',
-			'examples': ['warn {member} {points} {reason}'],
+			'format': 'MemberID|MemberName(partial or full) AmountOfWarnPoints ReasonForWarning',
+			'examples': ['warn JohnDoe 1 annoying'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'member',
 					'prompt': 'Which member should I give a warning?',
-					'type': 'member',
-					'label': 'member name or ID'
+					'type': 'member'
 				},
 				{
 					'key': 'points',
 					'prompt': 'How many warning points should I give this member?',
-					'type': 'integer',
-					'label': 'warn points to give'
+					'type': 'integer'
 				},
 				{
 					'key': 'reason',
 					'prompt': 'What is the reason for this warning?',
 					'type': 'string',
-					'label': 'reason for the warning',
 					'default': ''
 				}
 			]

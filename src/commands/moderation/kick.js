@@ -32,29 +32,28 @@ module.exports = class kickCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'kick',
+			'memberName': 'kick',
 			'group': 'moderation',
 			'aliases': ['k'],
-			'memberName': 'kick',
 			'description': 'Kicks a member from the server',
-			'examples': ['kick {member} {reason}'],
+			'format': 'MemberID|MemberName(partial or full) [ReasonForKicking]',
+			'examples': ['kick JohnDoe annoying'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'member',
 					'prompt': 'Which member do you want me to kick?',
-					'type': 'member',
-					'label': 'Member to kick'
+					'type': 'member'
 				},
 				{
 					'key': 'reason',
 					'prompt': 'What is the reason for this kick?',
 					'type': 'string',
-					'label': 'Reason for kicking'
+					'default': ''
 				}
 			]
 		});
@@ -83,7 +82,7 @@ module.exports = class kickCommand extends commando.Command {
 			return msg.reply('⚠️ I cannot kick that member, their role is probably higher than my own!');
 		}
 
-		args.member.kick(args.reason);
+		args.member.kick(args.reason !== '' ? args.reason : 'No reason given by staff');
 		const embed = new Discord.MessageEmbed(),
 			modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
 				msg.guild.channels.exists('name', 'mod-logs')
@@ -95,7 +94,7 @@ module.exports = class kickCommand extends commando.Command {
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 				'**Action:** Kick\n' +
-				`**Reason:** ${args.reason}`)
+				`**Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
 			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
 		if (this.client.provider.get(msg.guild, 'modlogs', true)) {

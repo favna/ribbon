@@ -40,19 +40,22 @@ module.exports = class abilityCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'ability',
+			'memberName': 'ability',
 			'group': 'pokedex',
 			'aliases': ['abilities', 'abi'],
-			'memberName': 'ability',
 			'description': 'Get the info on a Pokémon ability',
-			'examples': ['ability {ability name}', 'ability Multiscale'],
+			'format': 'AbilityName',
+			'examples': ['ability Multiscale'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'ability',
-					'prompt': 'Which ability do you want to get info for?',
-					'type': 'string',
-					'label': 'Ability to find'
+					'prompt': 'Get info on which ability?',
+					'type': 'string'
 				}
 			]
 		});

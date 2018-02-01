@@ -29,23 +29,22 @@ module.exports = class sayCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'say',
-			'aliases': ['sayd', 'repeat'],
-			'group': 'misc',
 			'memberName': 'say',
+			'group': 'misc',
+			'aliases': ['sayd', 'repeat'],
 			'description': 'I will repeat your message',
-			'examples': ['say {message}', 'say Favna is a great coder!'],
+			'format': 'MesssageToSay',
+			'examples': ['say Favna is a great coder!'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'txt',
 					'prompt': 'What should I say?',
 					'type': 'string',
-					'label': 'Text to repeat',
 					'validate': (rep, msg) => {
 						if (msg.content.toLowerCase().includes('@here') ||
 						msg.content.toLowerCase().includes('@everyone') ||
@@ -70,7 +69,6 @@ module.exports = class sayCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-
 		const saydata = {
 			'memberHexColor': msg.member.displayHexColor,
 			'commandPrefix': msg.guild.commandPrefix,
@@ -82,7 +80,8 @@ module.exports = class sayCommand extends commando.Command {
 		};
 
 		this.client.provider.set(msg.guild.id, 'saydata', saydata);
-		this.deleteCommandMessages(msg);
+
+		msg.delete();
 
 		return msg.say(args.txt);
 	}

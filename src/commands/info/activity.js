@@ -34,19 +34,22 @@ module.exports = class activityCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'activity',
-			'aliases': ['act', 'presence', 'richpresence'],
-			'group': 'info',
 			'memberName': 'activity',
+			'group': 'info',
+			'aliases': ['act', 'presence', 'richpresence'],
 			'description': 'Gets the activity (presence) data from a member',
-			'examples': ['activity {member name or ID}', 'activity Favna'],
+			'format': 'MemberID|MemberName(partial or full)',
+			'examples': ['activity Favna'],
 			'guildOnly': true,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'member',
 					'prompt': 'What user would you like to get the activity from?',
-					'type': 'member',
-					'label': 'member name or ID'
+					'type': 'member'
 				}
 			]
 		});

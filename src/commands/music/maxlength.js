@@ -32,15 +32,15 @@ module.exports = class MaxLengthCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'maxlength',
-			'aliases': ['max-duration', 'max-song-length', 'max-song-duration'],
-			'group': 'music',
 			'memberName': 'maxlength',
+			'group': 'music',
+			'aliases': ['max-duration', 'max-song-length', 'max-song-duration'],
 			'description': 'Shows or sets the max song length.',
-			'format': '[minutes|"default"]',
 			'details': oneLine `
             This is the maximum length of a song that users may queue, in minutes.
             The default is ${MAX_LENGTH}.
             Only administrators may change this setting.`,
+			'format': '[minutes|"default"]',
 			'examples': ['maxlength 10'],
 			'guildOnly': true,
 			'throttling': {

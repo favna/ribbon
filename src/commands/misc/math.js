@@ -50,23 +50,22 @@ module.exports = class mathCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'math',
-			'aliases': ['calc'],
-			'group': 'misc',
 			'memberName': 'math',
+			'group': 'misc',
+			'aliases': ['calc'],
 			'description': 'Calculate anything',
-			'examples': ['math {equation to solve}', 'math -10 - abs(-3) + 2^5'],
+			'format': 'EquationToSolve',
+			'examples': ['math -10 - abs(-3) + 2^5'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'equation',
 					'prompt': 'What is the equation to solve?',
-					'type': 'string',
-					'label': 'Equation to calculate'
+					'type': 'string'
 				}
 			]
 		});

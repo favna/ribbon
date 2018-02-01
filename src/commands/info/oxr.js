@@ -36,31 +36,32 @@ module.exports = class moneyCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'oxr',
+			'memberName': 'oxr',
 			'group': 'info',
 			'aliases': ['money', 'rate', 'convert'],
-			'memberName': 'oxr',
 			'description': 'Currency converter - makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
-			'examples': ['oxr {amount} {currency_1} {currency_2}', 'convert 50 USD EUR'],
+			'format': 'CurrencyAmount FirstValuta SecondValuta',
+			'examples': ['convert 50 USD EUR'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'value',
 					'prompt': 'Amount of money?',
-					'type': 'string',
-					'label': 'Amount to convert'
+					'type': 'string'
 				},
 				{
 					'key': 'curOne',
-					'prompt': 'What is the currency you want to convert **from**?',
-					'type': 'string',
-					'label': 'First Currency'
+					'prompt': 'What is the valuta you want to convert **from**?',
+					'type': 'string'
 				},
 				{
 					'key': 'curTwo',
-					'prompt': 'What is the currency you want to convert **to**?',
-					'type': 'string',
-					'label': 'Second Currency'
+					'prompt': 'What is the valuta you want to convert **to**?',
+					'type': 'string'
 				}
 			]
 		});

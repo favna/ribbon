@@ -29,17 +29,17 @@ module.exports = class addRoleCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'addrole',
+			'memberName': 'addrole',
 			'group': 'moderation',
 			'aliases': ['newrole', 'ar'],
-			'memberName': 'addrole',
 			'description': 'Adds a role to a member',
-			'examples': ['addrole {member} {role}', 'addrole favna testrole1'],
+			'format': 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
+			'examples': ['addrole favna testrole1'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'member',

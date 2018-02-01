@@ -41,19 +41,22 @@ module.exports = class flavorCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'flavor',
+			'memberName': 'flavor',
 			'group': 'pokedex',
 			'aliases': ['flavors', 'dexdata', 'dexentries', 'dextext', 'dextex', 'dexter'],
-			'memberName': 'flavor',
 			'description': 'Get all the available dex entries for a Pokémon',
-			'examples': ['flavor {Pokemon Name}', 'flavor Dragonite'],
+			'format': 'PokemonName',
+			'examples': ['flavor Dragonite'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'pokemon',
-					'prompt': 'Which Pokémon\'s flavor texts do you want to read?',
-					'type': 'string',
-					'label': 'Pokemon to find'
+					'prompt': 'Get info from which Pokémon?',
+					'type': 'string'
 				}
 			]
 		});

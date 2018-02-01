@@ -30,24 +30,23 @@ module.exports = class e621Command extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'e621',
+			'memberName': 'e621',
 			'group': 'nsfw',
 			'aliases': ['eee'],
-			'memberName': 'e621',
 			'description': 'Find NSFW Content on e621',
-			'examples': ['e621 {NSFW Query}', 'e621 Pyrrha Nikos'],
+			'format': 'NSFWToLookUp',
+			'examples': ['e621 Pyrrha Nikos'],
 			'guildOnly': false,
 			'nsfw': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-			
 			'args': [
 				{
 					'key': 'nsfwtags',
 					'prompt': 'What do you want to find NSFW for?',
-					'type': 'string',
-					'label': 'Search query'
+					'type': 'string'
 				}
 			]
 		});

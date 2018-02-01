@@ -30,22 +30,21 @@ module.exports = class zalgoCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'zalgo',
-			'group': 'misc',
 			'memberName': 'zalgo',
+			'group': 'misc',
 			'description': 'F*ck up text using Zalgo',
-			'examples': ['zalgo {message}', 'zalgo HE COMES'],
+			'format': 'ContentToTransform',
+			'examples': ['zalgo HE COMES'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'txt',
 					'prompt': 'What should I zalgolize?',
-					'type': 'string',
-					'label': 'Text to zalgolize'
+					'type': 'string'
 				}
 			]
 		});

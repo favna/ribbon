@@ -33,8 +33,8 @@ module.exports = class favnaCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'favna',
-			'group': 'custom',
 			'memberName': 'favna',
+			'group': 'custom',
 			'description': 'Favna is my father',
 			'details': 'Custom commands can be made for your server too! Just join the support server (use the `stats` command) and request the command.',
 			'guildOnly': true,

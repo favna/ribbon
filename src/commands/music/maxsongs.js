@@ -32,16 +32,15 @@ module.exports = class MaxSongsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'maxsongs',
-			'aliases': ['songcap', 'songmax', 'maxsong'],
-			'group': 'music',
 			'memberName': 'maxsongs',
+			'group': 'music',
+			'aliases': ['songcap', 'songmax', 'maxsong'],
 			'description': 'Shows or sets the max songs per user.',
-			'format': '[amount|"default"]',
 			'details': oneLine `
             This is the maximum number of songs a user may have in the queue.
             The default is ${MAX_SONGS}.
-            Only administrators may change this setting.
-        `,
+            Only administrators may change this setting.`,
+			'format': '[amount|"default"]',
 			'examples': ['maxsongs 3'],
 			'guildOnly': true,
 			'throttling': {

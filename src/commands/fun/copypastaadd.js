@@ -32,12 +32,13 @@ module.exports = class copypastaAddCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'copypastaadd',
-			'aliases': ['cpadd', 'pastaadd'],
-			'group': 'fun',
 			'memberName': 'copypastaadd',
+			'group': 'fun',
+			'aliases': ['cpadd', 'pastaadd'],
 			'description': 'Saves a copypasta to local file',
-			'examples': ['copypasta <file_name> <pasta>', 'copypasta navy what the fuck did you just say to me ... (etc.)'],
-			'guildOnly': true,
+			'format': 'CopypastaName CopypastaContent',
+			'examples': ['copypasta navy what the fuck did you just say to me ... (etc.)'],
+			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
@@ -48,14 +49,12 @@ module.exports = class copypastaAddCommand extends commando.Command {
 					'key': 'name',
 					'prompt': 'What is the name of the copypasta you want to save?',
 					'type': 'string',
-					'label': 'Name of the file that has your copypasta content',
 					'parse': p => p.toLowerCase()
 				},
 				{
 					'key': 'content',
 					'prompt': 'What should be stored in the copypasta?',
-					'type': 'string',
-					'label': 'The content stored in the copypasta file'
+					'type': 'string'
 				}
 			]
 		});

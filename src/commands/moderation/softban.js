@@ -32,17 +32,17 @@ module.exports = class softbanCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'softban',
+			'memberName': 'softban',
 			'group': 'moderation',
 			'aliases': ['sb', 'sban'],
-			'memberName': 'softban',
 			'description': 'Kicks a member while also purging messages from the last 24 hours',
-			'examples': ['softban {member} {reason}'],
+			'format': 'MemberID|MemberName(partial or full) [ReasonForSoftbanning]',
+			'examples': ['softban JohnDoe annoying'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'member',

@@ -36,17 +36,17 @@ module.exports = class ViewQueueCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'queue',
+			'memberName': 'queue',
 			'group': 'music',
 			'aliases': ['songs', 'song-list', 'list', 'listqueue'],
-			'memberName': 'queue',
 			'description': 'Lists the queued songs.',
-			'examples': ['queue {page number}'],
+			'format': '[PageNumber]',
+			'examples': ['queue 2'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'page',

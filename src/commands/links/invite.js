@@ -30,9 +30,9 @@ module.exports = class inviteCommnad extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'invite',
-			'aliases': ['inv', 'links', 'shill'],
-			'group': 'links',
 			'memberName': 'invite',
+			'group': 'links',
+			'aliases': ['inv', 'links', 'shill'],
 			'description': 'Gives you invitation links',
 			'examples': ['invite'],
 			'guildOnly': false,

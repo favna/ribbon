@@ -31,38 +31,36 @@ module.exports = class strawpollCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'strawpoll',
+			'memberName': 'strawpoll',
 			'group': 'fun',
 			'aliases': ['poll', 'straw'],
-			'memberName': 'strawpoll',
 			'description': 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
-			'examples': ['strawpoll {Title} {Option1 Option2 .... OptionX}', 'strawpoll Best_Anime_Waifu? Pyrrha_Nikos Asuna Saber'],
+			'format': 'TitleOfStrawpoll OptionA|OptionB|OptionC...',
+			'examples': ['strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'title',
-					'prompt': 'What is the title of your strawpoll?',
+					'prompt': 'Title of the strawpoll',
 					'type': 'string',
-					'wait': 60,
-					'label': 'Title of the strawpoll'
+					'wait': 60
 				},
 				{
 					'key': 'options',
-					'prompt': 'What are the options in your strawpoll?',
+					'prompt': 'Options for the strawpoll?',
 					'type': 'string',
 					'wait': 60,
-					'label': 'Options for the strawpoll, delimited by a |',
 					'validate': (opts) => {
 						if (/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~ ]*\|[a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~]*)*/.test(opts) &&
 							opts.split('|').length >= 2) {
 							return true;
 						}
 
-						return 'You need at least 2 options and the valid format for the options is `Option 1|Option 2|Option 3 etc..`';
+						return 'You need at least 2 options and the valid format for the options is `Question 1|Question 2|Question 3 etc..`';
 					}
 				}
 			]
@@ -70,11 +68,10 @@ module.exports = class strawpollCommand extends commando.Command {
 	}
 
 	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
 			msg.delete();
 		}
 	}
-	
 
 	async run (msg, args) {
 		const APIConvertion = {
@@ -99,7 +96,7 @@ module.exports = class strawpollCommand extends commando.Command {
 
 		if (poll) {
 			pollEmbed
-				.setColor('#E24141')
+				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
 				.setTitle(poll.title)
 				.setURL(`http://www.strawpoll.me/${poll.id}`)
 				.setImage(`http://www.strawpoll.me/images/poll-results/${poll.id}.png`)
@@ -112,8 +109,6 @@ module.exports = class strawpollCommand extends commando.Command {
 			return msg.embed(pollEmbed, `http://www.strawpoll.me/${poll.id}`);
 		}
 
-		this.deleteCommandMessages(msg);
-		
 		return msg.reply('⚠️ an error occured creating the strawpoll');
 	}
 };

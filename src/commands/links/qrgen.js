@@ -31,19 +31,22 @@ module.exports = class qrgenCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'qrgen',
-			'aliases': ['qr'],
-			'group': 'links',
 			'memberName': 'qrgen',
+			'group': 'links',
+			'aliases': ['qr'],
 			'description': 'Generates a QR code from a given string',
-			'examples': ['qrgen {url}', 'qrgen https://github.com/Favna/Discord-Self-Bot/'],
+			'format': 'URLToConvert',
+			'examples': ['qrgen https://github.com/Favna/Ribbon'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'url',
-					'prompt': 'What URL should I make a QR code for?',
-					'type': 'string',
-					'label': 'URL to get a QR for'
+					'prompt': 'String (URL) to make a QR code for?',
+					'type': 'string'
 				}
 			]
 		});

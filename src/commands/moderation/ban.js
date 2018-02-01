@@ -32,29 +32,28 @@ module.exports = class banCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'ban',
+			'memberName': 'ban',
 			'group': 'moderation',
 			'aliases': ['b', 'banana'],
-			'memberName': 'ban',
 			'description': 'Bans a member from the server',
-			'examples': ['ban {member} {reason}'],
+			'format': 'MemberID|MemberName(partial or full) [ReasonForBanning]',
+			'examples': ['ban JohnDoe annoying'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'member',
 					'prompt': 'Which member should I ban?',
-					'type': 'member',
-					'label': 'Member to ban'
+					'type': 'member'
 				},
 				{
 					'key': 'reason',
 					'prompt': 'What is the reason for this banishment?',
 					'type': 'string',
-					'label': 'Reason for banning'
+					'default': ''
 				}
 			]
 		});
@@ -85,7 +84,7 @@ module.exports = class banCommand extends commando.Command {
 
 		args.member.ban({
 			'days': 1,
-			'reason': args.reason
+			'reason': args.reason !== '' ? args.reason : 'No reason given by staff'
 		});
 
 		const embed = new Discord.MessageEmbed(),
@@ -99,7 +98,7 @@ module.exports = class banCommand extends commando.Command {
 			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 				'**Action:** Ban\n' +
-				`**Reason:** ${args.reason}`)
+				`**Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
 			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
 		if (this.client.provider.get(msg.guild, 'modlogs', true)) {

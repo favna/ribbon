@@ -30,8 +30,8 @@ module.exports = class kaiCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'kai',
-			'group': 'custom',
 			'memberName': 'kai',
+			'group': 'custom',
 			'description': 'Kai get lost',
 			'details': 'Custom commands can be made for your server too! Just join the support server (use the `stats` command) and request the command.',
 			'guildOnly': true,

@@ -31,23 +31,22 @@ module.exports = class defaultVolumeCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'defaultvolume',
+			'memberName': 'defaultvolume',
 			'group': 'music',
 			'aliases': ['defvol'],
-			'memberName': 'defaultvolume',
 			'description': 'Shows or sets the default volume level',
-			'examples': ['defaultvolume {volume}'],
+			'format': 'VolumeToSet',
+			'examples': ['defaultvolume 2'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'volume',
 					'prompt': 'What is the default volume I should set? (\'default\' to reset)',
 					'type': 'string',
-					'label': 'Level|"default"',
 					'default': 'show'
 				}
 			]

@@ -36,19 +36,22 @@ module.exports = class movieCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'tmdb',
+			'memberName': 'tmdb',
 			'group': 'search',
 			'aliases': ['movie'],
-			'memberName': 'tmdb',
 			'description': 'Finds movies and TV shows on TheMovieDB',
-			'examples': ['tmdb {movie/tv show name}', 'tmdb Ocean\'s Eleven 2001'],
+			'format': 'MovieName|ShowName',
+			'examples': ['tmdb Ocean\'s Eleven 2001'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'name',
-					'prompt': 'Which movie or series do you want to find on TheMovieDB?',
+					'prompt': 'Please supply movie title',
 					'type': 'string',
-					'label': 'Movie or TV Show to look up',
 					'default': 'now you see me'
 				}
 			]

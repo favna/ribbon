@@ -29,24 +29,23 @@ module.exports = class gelbooruCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'gelbooru',
+			'memberName': 'gelbooru',
 			'group': 'nsfw',
 			'aliases': ['gel', 'booru'],
-			'memberName': 'gelbooru',
 			'description': 'Find NSFW Content on gelbooru',
-			'examples': ['gelbooru {NSFW Query}', 'gelbooru Pyrrha Nikos'],
+			'format': 'NSFWToLookUp',
+			'examples': ['gelbooru Pyrrha Nikos'],
 			'guildOnly': false,
 			'nsfw': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-			
 			'args': [
 				{
 					'key': 'nsfwtags',
 					'prompt': 'What do you want to find NSFW for?',
-					'type': 'string',
-					'label': 'Search query'
+					'type': 'string'
 				}
 			]
 		});

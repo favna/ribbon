@@ -30,24 +30,23 @@ module.exports = class pahealCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'paheal',
+			'memberName': 'paheal',
 			'group': 'nsfw',
 			'aliases': ['pa', 'heal'],
-			'memberName': 'paheal',
 			'description': 'Find NSFW Content on Rule34 - Paheal',
-			'examples': ['paheal {NSFW Query}', 'paheal Pyrrha Nikos'],
+			'format': 'NSFWToLookUp',
+			'examples': ['paheal Pyrrha Nikos'],
 			'guildOnly': false,
 			'nsfw': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-			
 			'args': [
 				{
 					'key': 'nsfwtags',
 					'prompt': 'What do you want to find NSFW for?',
-					'type': 'string',
-					'label': 'Search query'
+					'type': 'string'
 				}
 			]
 		});

@@ -29,9 +29,9 @@ module.exports = class ResumeSongCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'resume',
-			'aliases': ['go', 'continue', 'ale', 'loss', 'res'],
-			'group': 'music',
 			'memberName': 'resume',
+			'group': 'music',
+			'aliases': ['go', 'continue', 'ale', 'loss', 'res'],
 			'description': 'Resumes the currently playing song.',
 			'examples': ['resume'],
 			'guildOnly': true,

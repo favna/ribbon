@@ -34,9 +34,9 @@ module.exports = class statsCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'stats',
-			'aliases': ['botinfo', 'info'],
-			'group': 'info',
 			'memberName': 'stats',
+			'group': 'info',
+			'aliases': ['botinfo', 'info'],
 			'description': 'Gets statistics about Ribbon',
 			'examples': ['stats'],
 			'guildOnly': false,

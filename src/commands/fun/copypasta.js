@@ -27,29 +27,29 @@ const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	fs = require('fs'),
+	{oneLine} = require('common-tags'),
 	path = require('path');
 
 module.exports = class copypastaCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'copypasta',
-			'aliases': ['cp', 'pasta'],
-			'group': 'fun',
 			'memberName': 'copypasta',
+			'group': 'fun',
+			'aliases': ['cp', 'pasta'],
 			'description': 'Sends contents of a copypasta file to the chat',
-			'examples': ['copypasta <file_name>', 'copypasta navy'],
-			'guildOnly': true,
+			'format': 'CopypastaName',
+			'examples': ['copypasta navy'],
+			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'name',
 					'prompt': 'Which copypasta should I send?',
 					'type': 'string',
-					'label': 'Name of the file that has your copypasta content',
 					'parse': p => p.toLowerCase()
 				}
 			]
@@ -63,13 +63,14 @@ module.exports = class copypastaCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		/* eslint-disable sort-vars */
-		const match = new Matcher(),
-			dym = match.get(`${args.name}.txt`),
-			dymString = dym !== null ? `Did you mean \`${dym}\`?` : `You can save it with \`${msg.guild.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
-		/* eslint-enable sort-vars */
+		const match = new Matcher();
 
-		match.values = fs.readdirSync(path.join(__dirname, `pastas/${msg.guild.id}`));
+		match.values = fs.readdirSync(path.join(__dirname, 'pastas'));
+
+		const dym = match.get(`${args.name}.txt`), // eslint-disable-line one-var
+			dymString = dym !== null
+				? oneLine `Did you mean \`${dym}\`?`
+				: oneLine `You can save it with \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
 
 		try {
 			let pastaContent = fs.readFileSync(path.join(__dirname, `pastas/${msg.guild.id}/${args.name}.txt`), 'utf8');

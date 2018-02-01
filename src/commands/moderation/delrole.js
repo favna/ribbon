@@ -29,17 +29,17 @@ module.exports = class delRoleCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'delrole',
+			'memberName': 'delrole',
 			'group': 'moderation',
 			'aliases': ['deleterole', 'dr', 'remrole', 'removerole'],
-			'memberName': 'delrole',
 			'description': 'Deletes a role from a member',
+			'format': 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
 			'examples': ['delrole {member} {role}'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'member',

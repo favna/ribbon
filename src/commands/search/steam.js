@@ -35,19 +35,22 @@ module.exports = class steamCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'steam',
+			'memberName': 'steam',
 			'group': 'search',
 			'aliases': ['valve'],
-			'memberName': 'steam',
 			'description': 'Finds a game on Steam',
-			'examples': ['steam {steamGameName}', 'steam Tales of Berseria'],
+			'format': 'GameName',
+			'examples': ['steam Tales of Berseria'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'game',
 					'prompt': 'Which game do you want to find on the steam store?',
 					'type': 'string',
-					'label': 'Game to look up',
 					'parse': p => p.replace(/ /gim, '+')
 				}
 			]

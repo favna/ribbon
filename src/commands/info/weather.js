@@ -32,23 +32,22 @@ module.exports = class weatherCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'weather',
-			'group': 'info',
-			'aliases': ['temp'],
 			'memberName': 'weather',
+			'group': 'info',
+			'aliases': ['temp', 'forecast', 'fc', 'wth'],
 			'description': 'Get the weather in a city',
-			'examples': ['weather {city}', 'weather amsterdam'],
+			'format': 'CityName',
+			'examples': ['weather amsterdam'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'city',
 					'prompt': 'For which city would you like to get the weather?',
-					'type': 'string',
-					'label': 'City to get weather from'
+					'type': 'string'
 				}
 			]
 		});

@@ -37,19 +37,22 @@ module.exports = class googleCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'google',
+			'memberName': 'google',
 			'group': 'search',
 			'aliases': ['search', 'g'],
-			'memberName': 'google',
 			'description': 'Finds anything on google',
-			'examples': ['google {searchQuery}', 'google Pyrrha Nikos'],
+			'format': 'GoogleQuery',
+			'examples': ['google Pyrrha Nikos'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'query',
 					'prompt': 'What do you want to google?',
-					'type': 'string',
-					'label': 'Search query'
+					'type': 'string'
 				}
 			]
 		});

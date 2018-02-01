@@ -45,17 +45,17 @@ module.exports = class PlaySongCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'play',
-			'aliases': ['add', 'enqueue', 'start', 'join'],
-			'group': 'music',
 			'memberName': 'play',
+			'group': 'music',
+			'aliases': ['add', 'enqueue', 'start', 'join'],
 			'description': 'Adds a song to the queue',
+			'format': 'YoutubeURL|YoutubeVideoSearch',
 			'examples': ['play {youtube video to play}'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},
-
 			'args': [
 				{
 					'key': 'url',

@@ -25,11 +25,11 @@
 
 /* eslint-disable no-mixed-requires, sort-vars */
 
-const Path = require('path'),
-	Ribbon = require(Path.join(__dirname, 'Ribbon.js')),
-	keys = require(Path.join(__dirname, 'auth.json')),
+const path = require('path'),
+	Ribbon = require(path.join(__dirname, 'Ribbon.js')),
+	token = require(path.join(__dirname, 'auth.json')).token,
 	start = function () {
-		new Ribbon(keys.token).init();
+		new Ribbon(token).init();
 	};
 
 start();

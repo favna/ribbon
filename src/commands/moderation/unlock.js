@@ -32,9 +32,9 @@ module.exports = class unlockCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'unlock',
+			'memberName': 'unlock',
 			'group': 'moderation',
 			'aliases': ['delock', 'ul'],
-			'memberName': 'unlock',
 			'description': 'Unlocks the current channel',
 			'examples': ['unlock'],
 			'guildOnly': true,

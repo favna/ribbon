@@ -32,19 +32,22 @@ module.exports = class mangaCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'manga',
+			'memberName': 'manga',
 			'group': 'search',
 			'aliases': ['cartoon', 'man'],
-			'memberName': 'manga',
 			'description': 'Finds manga on MyAnimeList',
-			'examples': ['manga {manga_name}', 'manga Pokemon'],
+			'format': 'MangaName',
+			'examples': ['manga Pokemon'],
 			'guildOnly': false,
-
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
 			'args': [
 				{
 					'key': 'query',
-					'prompt': 'Which manga do you want to find?',
-					'type': 'string',
-					'label': 'manga_name'
+					'prompt': 'What manga do you want to find?',
+					'type': 'string'
 				}
 			]
 		});

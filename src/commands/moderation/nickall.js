@@ -26,29 +26,29 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	{oneLine} = require('common-tags');
+	{oneLine, stripIndents} = require('common-tags');
 
 module.exports = class nickallCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'nickall',
+			'memberName': 'nickall',
 			'aliases': ['na', 'massnick', 'nickmass', 'allnick'],
 			'group': 'moderation',
-			'memberName': 'nickall',
 			'description': 'Modify the nickname for all guildmembers',
-			'details': oneLine `Assign, remove, prefix/append with a nickname to all members. 
+			'details': stripIndents `${oneLine `Assign, remove, prefix/append with a nickname to all members. 
                                 Use \`clear\` as argument to remove the nickname, 
                                 \`prefix\` to add a prefix to every member (takes their current nickname if they have one or their username if they do not), 
-                                \`append\` to do the same but append it instead of prefix`,
-			'examples': ['nickall {[prefix/append/clear] new_nickname}', 'nickall AverageJoe', 'nickall prefix ༼ つ ◕_◕ ༽つ'],
+								\`append\` to do the same but append it instead of prefix`}
+						**Please note that on larger servers this command can take a very long time to actually nickname all the members because Discord only allows a couple of actions per minute.**`,
+			'format': '[prefix|append] NewNickname|clear',
+			'examples': ['nickall AverageJoe', 'nickall prefix ༼ つ ◕_◕ ༽つ'],
 			'guildOnly': true,
-
 			'args': [
 				{
 					'key': 'data',
 					'prompt': 'What nickname to assign? Check the details through the `help nickall` command to see all options',
-					'type': 'string',
-					'label': 'nick to assign'
+					'type': 'string'
 				}
 			]
 		});

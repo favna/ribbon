@@ -30,18 +30,18 @@ module.exports = class tagmemberCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
 			'name': 'tagmember',
-			'group': 'owner',
 			'memberName': 'tagmember',
+			'group': 'owner',
 			'description': 'Tag a member',
+			'format': 'MemberID|MemberName(partial or full)',
+			'examples': ['tagmember Favna'],
 			'guildOnly': false,
 			'ownerOnly': true,
-
 			'args': [
 				{
 					'key': 'member',
 					'prompt': 'What user would you like to snoop on?',
-					'type': 'member',
-					'label': 'member name or ID'
+					'type': 'member'
 				}
 			]
 		});
