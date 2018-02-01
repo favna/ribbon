@@ -47,11 +47,12 @@ module.exports = class kaiCommand extends commando.Command {
 
 	fetchImage () {
 		const images = [
-				'https://cdn.discordapp.com/attachments/210739929758695425/397546140393799680/kys.png',
-				'https://cdn.discordapp.com/attachments/210739929758695425/405123534021591041/monikakys.png',
-				'https://cdn.discordapp.com/attachments/210739929758695425/405123489801175042/jail.png',
-				'https://cdn.discordapp.com/attachments/210739929758695425/405124074914840596/image.jpg',
-				'https://cdn.discordapp.com/attachments/390263112365768705/405133888432635905/kai.png'
+				'https://favna.s-ul.eu/Hmv6rsY6.png',
+				'https://favna.s-ul.eu/DerXT5C5.png',
+				'https://favna.s-ul.eu/8PvkavPo.png',
+				'https://favna.s-ul.eu/JKgRZkuq.png',
+				'https://favna.s-ul.eu/13UU9aOL.png',
+				'https://favna.s-ul.eu/auWaubvu.gif'
 			],
 			curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
 
