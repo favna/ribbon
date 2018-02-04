@@ -80,8 +80,8 @@ module.exports = class kaiCommand extends commando.Command {
 	run (msg, args) {
 		this.deleteCommandMessages(msg);
 		msg.embed({
-			'description': args.member !== '' ? `${args.member.displayName}! You have been given a Slap by ${msg.member.displayName} 💢!` : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-			'image': {'url': args.member !== '' ? this.fetchImage() : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
+			'description': args.member !== '' ? `${args.member.displayName}! You have been given a Slap by ${msg.member.displayName} 💢!` : `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
+			'image': {'url': args.member !== '' ? this.fetchImage() : 'http://cdn.awwni.me/mz98.gif'},
 			'color': msg.guild ? msg.guild.members.get(this.client.user.id).displayColor : 16064544
 		});
 	}
