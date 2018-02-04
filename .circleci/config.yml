@@ -22,8 +22,8 @@ jobs:
           - v1-dependencies-
       - run: sudo apt-get update -y
       - run: sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++ python3.4
-      - run: npm install -g node-pre-gyp node-gyp yarn
-      - run: echo "alias python=python3" >> .bashrc
+      - run: sudo npm install -g node-pre-gyp node-gyp yarn
+      - run: sudo echo "alias python=python3" >> .bashrc
       - run: source .bashrc
       - run: yarn add sqlite
       - run: yarn install
