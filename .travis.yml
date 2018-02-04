@@ -4,13 +4,11 @@ os: linux
 language: node_js
 node_js:
 - '8'
-python:
-- '3.4'
 cache:
   directories:
   - node_modules
 before_install:
-- if [ $TRAVIS_PULL_REQUEST == false]; then openssl aes-256-cbc -d -k "$authdecrypt" -in src/auth.json.enc -out src/auth.json; fi
+- if [ ${TRAVIS_PULL_REQUEST} == false]; then openssl aes-256-cbc -d -k "$authdecrypt" -in src/auth.json.enc -out src/auth.json; fi
 - sudo apt-get update -y
 - sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential
   g++ python3.4
@@ -24,7 +22,7 @@ install:
 script:
 - yarn run lintfix
 - yarn run lint
-- if [ $TRAVIS_PULL_REQUEST == false]; then yarn test; fi
+- if [ ${TRAVIS_PULL_REQUEST} == false]]; then yarn test; fi
 notifications:
   email: false
 env:
