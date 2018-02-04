@@ -59,17 +59,17 @@ module.exports = class kaiCommand extends commando.Command {
 
 	fetchImage () {
 		const images = [
-				"https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif",
-				"https://media.giphy.com/media/ZRSGWtBJG4Tza/giphy.gif",
-				"https://media.giphy.com/media/Gj8bn4pgTocog/giphy.gif",
-				"https://media.giphy.com/media/JYpVJEcNrDAWc/giphy.gif",
-				"https://media.giphy.com/media/KmeIYo9IGBoGY/giphy.gif",
-				"https://media.tenor.com/images/e83afa35d71203bf60764cbbc17516db/tenor.gif",
-				"http://25.media.tumblr.com/8ccc58d2c42dbef8ced3fc747518cffc/tumblr_mxgpinyLDk1t2wbmao1_400.gif",
-				"https://media.tenor.com/images/ba45c5d09b59761797de1c55109a4844/tenor.gif",
-				"https://i.imgur.com/eisk88U.gif",
-				"https://media.giphy.com/media/8iwfa0XSxDUSQ/giphy.gif",
-				"https://media.giphy.com/media/kU586ictpGb0Q/giphy.gif"
+				'https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif',
+				'https://media.giphy.com/media/ZRSGWtBJG4Tza/giphy.gif',
+				'https://media.giphy.com/media/Gj8bn4pgTocog/giphy.gif',
+				'https://media.giphy.com/media/JYpVJEcNrDAWc/giphy.gif',
+				'https://media.giphy.com/media/KmeIYo9IGBoGY/giphy.gif',
+				'https://media.tenor.com/images/e83afa35d71203bf60764cbbc17516db/tenor.gif',
+				'http://25.media.tumblr.com/8ccc58d2c42dbef8ced3fc747518cffc/tumblr_mxgpinyLDk1t2wbmao1_400.gif',
+				'https://media.tenor.com/images/ba45c5d09b59761797de1c55109a4844/tenor.gif',
+				'https://i.imgur.com/eisk88U.gif',
+				'https://media.giphy.com/media/8iwfa0XSxDUSQ/giphy.gif',
+				'https://media.giphy.com/media/kU586ictpGb0Q/giphy.gif'
 			],
 			curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
 
@@ -79,7 +79,9 @@ module.exports = class kaiCommand extends commando.Command {
 	run (msg, args) {
 		this.deleteCommandMessages(msg);
 		msg.embed({
-			'description': args.member !== '' ? `${args.member.displayName}! You have been given a Kiss by ${msg.member.displayName} ❤!` : `${msg.member.displayName} you must feel alone... Have a 🐈`,
+			'description': args.member !== ''
+				? `${args.member.displayName}! You were kissed by ${msg.member.displayName} 💋!`
+				: `${msg.member.displayName} you must feel alone... Have a 🐈`,
 			'image': {'url': args.member !== '' ? this.fetchImage() : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
 			'color': msg.guild ? msg.guild.members.get(this.client.user.id).displayColor : 16064544
 		});

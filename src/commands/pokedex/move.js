@@ -41,7 +41,7 @@ module.exports = class moveCommand extends commando.Command {
 			'format': 'MoveName',
 			'examples': ['move Dragon Dance'],
 			'guildOnly': false,
-	'throttling': {
+			'throttling': {
 				'usages': 2,
 				'duration': 3
 			},

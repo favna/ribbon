@@ -59,18 +59,18 @@ module.exports = class kaiCommand extends commando.Command {
 
 	fetchImage () {
 		const images = [
-				"https://media.giphy.com/media/jLeyZWgtwgr2U/giphy.gif",
-				"https://media.giphy.com/media/Zau0yrl17uzdK/giphy.gif",
-				"http://i.imgur.com/dzefPFL.gif",
-				"https://media1.tenor.com/images/85722c3e51d390e11a0493696f32fb69/tenor.gif",
-				"https://s-media-cache-ak0.pinimg.com/originals/65/57/f6/6557f684d6ffcd3cd4558f695c6d8956.gif",
-				"https://media.giphy.com/media/LB1kIoSRFTC2Q/giphy.gif",
-				"https://vignette.wikia.nocookie.net/adventuretimewithfinnandjake/images/c/cd/Slap.gif.gif",
-				"https://gifimage.net/wp-content/uploads/2017/07/anime-slap-gif-14.gif",
-				"http://gifimage.net/wp-content/uploads/2017/07/anime-slap-gif-9.gif",
-				"https://gifimage.net/wp-content/uploads/2017/07/anime-slap-gif-15.gif",
-				"http://rs1031.pbsrc.com/albums/y377/shinnidan/Toradora_-_Taiga_Slap.gif",
-				"https://orig00.deviantart.net/2d34/f/2013/339/1/2/golden_time_flower_slap_gif_by_paranoxias-d6wv007.gif"
+				'https://media.giphy.com/media/jLeyZWgtwgr2U/giphy.gif',
+				'https://media.giphy.com/media/Zau0yrl17uzdK/giphy.gif',
+				'http://i.imgur.com/dzefPFL.gif',
+				'https://media1.tenor.com/images/85722c3e51d390e11a0493696f32fb69/tenor.gif',
+				'https://s-media-cache-ak0.pinimg.com/originals/65/57/f6/6557f684d6ffcd3cd4558f695c6d8956.gif',
+				'https://media.giphy.com/media/LB1kIoSRFTC2Q/giphy.gif',
+				'https://vignette.wikia.nocookie.net/adventuretimewithfinnandjake/images/c/cd/Slap.gif.gif',
+				'https://gifimage.net/wp-content/uploads/2017/07/anime-slap-gif-14.gif',
+				'http://gifimage.net/wp-content/uploads/2017/07/anime-slap-gif-9.gif',
+				'https://gifimage.net/wp-content/uploads/2017/07/anime-slap-gif-15.gif',
+				'http://rs1031.pbsrc.com/albums/y377/shinnidan/Toradora_-_Taiga_Slap.gif',
+				'https://orig00.deviantart.net/2d34/f/2013/339/1/2/golden_time_flower_slap_gif_by_paranoxias-d6wv007.gif'
 			],
 			curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
 
@@ -80,7 +80,9 @@ module.exports = class kaiCommand extends commando.Command {
 	run (msg, args) {
 		this.deleteCommandMessages(msg);
 		msg.embed({
-			'description': args.member !== '' ? `${args.member.displayName}! You have been given a Slap by ${msg.member.displayName} 💢!` : `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
+			'description': args.member !== ''
+				? `${args.member.displayName}! You got slapped by ${msg.member.displayName} 💢!`
+				: `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
 			'image': {'url': args.member !== '' ? this.fetchImage() : 'http://cdn.awwni.me/mz98.gif'},
 			'color': msg.guild ? msg.guild.members.get(this.client.user.id).displayColor : 16064544
 		});
