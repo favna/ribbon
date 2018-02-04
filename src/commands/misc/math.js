@@ -23,7 +23,6 @@
  *         reasonable ways as different from the original version.
  */
 
-// eslint-disable-next-line no-mixed-requires
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	scalc = require('scalc'),
