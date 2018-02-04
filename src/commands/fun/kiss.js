@@ -23,7 +23,8 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class kaiCommand extends commando.Command {
 	constructor (client) {
@@ -51,12 +52,6 @@ module.exports = class kaiCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	fetchImage () {
 		const images = [
 				'https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif',
@@ -77,7 +72,7 @@ module.exports = class kaiCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 		msg.embed({
 			'description': args.member !== ''
 				? `${args.member.displayName}! You were kissed by ${msg.member.displayName} 💋!`

@@ -26,7 +26,10 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	maljs = require('maljs'),
-	vibrant = require('node-vibrant');
+	{
+		fetchColor,
+		deleteCommandMessages
+	} = require('../../util.js');
 
 module.exports = class mangaCommand extends commando.Command {
 	constructor (client) {
@@ -54,49 +57,6 @@ module.exports = class mangaCommand extends commando.Command {
 		this.embedColor = '#FF0000';
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
-	async fetchColor (img) {
-		let palette = '';
-		
-		try {
-			palette = await vibrant.from(img).getPalette();
-		} catch (err) {
-			return this.embedColor;
-		}
-
-		if (palette) {
-			const pops = [],
-				swatches = Object.values(palette);
-
-			let prominentSwatch = {};
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
-				}
-			}
-
-			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
-						prominentSwatch = swatches[swatch];
-						break;
-					}
-				}
-			}
-			this.embedColor = prominentSwatch.getHex();
-		}
-
-		return this.embedColor;
-	}
-
 	async run (msg, args) {
 		const manEmbed = new Discord.MessageEmbed(),
 			res = await maljs.quickSearch(args.query, 'manga');
@@ -107,7 +67,7 @@ module.exports = class mangaCommand extends commando.Command {
 			if (manga) {
 
 				manEmbed
-					.setColor(await this.fetchColor(manga.cover))
+					.setColor(await fetchColor(manga.cover, this.embedColor))
 					.setTitle(manga.title)
 					.setImage(manga.cover)
 					.setDescription(manga.description)
@@ -115,6 +75,8 @@ module.exports = class mangaCommand extends commando.Command {
 					.addField('Score', manga.score, true)
 					.addField('Popularity', manga.popularity, true)
 					.addField('Rank', manga.ranked, true);
+
+				deleteCommandMessages(msg, this.client);
 
 				msg.embed(manEmbed, `${manga.mal.url}${manga.path}`);
 			}

@@ -29,7 +29,8 @@ const Discord = require('discord.js'),
 	Path = require('path'),
 	commando = require('discord.js-commando'),
 	typeMatchups = require(Path.join(__dirname, 'data/typechart.js')).BattleTypeChart,
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class typeCommand extends commando.Command {
 	constructor (client) {
@@ -54,16 +55,6 @@ module.exports = class typeCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	capitalizeFirstLetter (string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	run (msg, args) {
@@ -142,7 +133,7 @@ module.exports = class typeCommand extends commando.Command {
 
 			if (Object.keys(typeMatchups).map(c => c.toLowerCase())
 				.indexOf(argsSplit.toLowerCase()) !== -1) {
-				const toType = this.capitalizeFirstLetter(argsSplit);
+				const toType = capitalizeFirstLetter(argsSplit);
 
 				displayTypes.push(toType);
 				const dTaken = typeMatchups[toType].damageTaken;
@@ -305,7 +296,7 @@ module.exports = class typeCommand extends commando.Command {
 		|  [Smogon](http://www.smogon.com/dex/sm/types/${args.type.split(' ')[0]})
 		|  [PokémonDB](http://pokemondb.net/type/${args.type.split(' ')[0]})`);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(typeEmbed);
 	}

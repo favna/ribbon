@@ -25,7 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	random = require('node-random');
+	random = require('node-random'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class rpsCommand extends commando.Command {
 	constructor (client) {
@@ -56,12 +57,6 @@ module.exports = class rpsCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	run (msg, args) {
@@ -100,7 +95,7 @@ module.exports = class rpsCommand extends commando.Command {
 					.setTitle('Rock Paper Scissors')
 					.setDescription(resString);
 
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.embed(rpsEmbed);
 			}

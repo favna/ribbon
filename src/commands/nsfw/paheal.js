@@ -24,7 +24,8 @@
  */
 
 const booru = require('booru'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class pahealCommand extends commando.Command {
 	constructor (client) {
@@ -52,12 +53,6 @@ module.exports = class pahealCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg, args) {
 		try {
 			const booruData = await booru.search('paheal', args.nsfwtags.split(' '), {
@@ -66,16 +61,16 @@ module.exports = class pahealCommand extends commando.Command {
 			}).then(booru.commonfy);
 
 			if (booruData) {
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.say(`Score: ${booruData[0].common.score}\nImage: ${booruData[0].common.file_url}`);
 			}
-			this.deleteCommandMessages(msg);
-			
+			deleteCommandMessages(msg, this.client);
+
 			return msg.reply('⚠️ No juicy images found.');
 		} catch (booruError) {
-			this.deleteCommandMessages(msg);
-			
+			deleteCommandMessages(msg, this.client);
+
 			return msg.reply('⚠️ No juicy images found.');
 		}
 	}

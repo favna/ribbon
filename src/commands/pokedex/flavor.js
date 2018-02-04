@@ -23,18 +23,15 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable max-statements */
-
-/* eslint-disable sort-vars */
-
+/* eslint-disable sort-vars, max-statements */
 const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	path = require('path'),
 	dexEntries = require(path.join(__dirname, 'data/flavorText.json')),
 	request = require('snekfetch'),
-	requireFromURL = require('require-from-url/sync');
-
+	requireFromURL = require('require-from-url/sync'),
+	{capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 /* eslint-enable sort-vars */
 
 module.exports = class flavorCommand extends commando.Command {
@@ -64,16 +61,6 @@ module.exports = class flavorCommand extends commando.Command {
 		this.pokedex = {};
 		this.pokeAliases = {};
 		this.match = [];
-	}
-
-	capitalizeFirstLetter (string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	fetchColor (col) {
@@ -237,20 +224,20 @@ module.exports = class flavorCommand extends commando.Command {
 
 			dataEmbed
 				.setColor(this.fetchColor(pokeEntry.color))
-				.setAuthor(`#${pokeEntry.num} - ${this.capitalizeFirstLetter(poke)}`,
+				.setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(poke)}`,
 					`https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(' ', '_').toLowerCase()}.png`)
 				.setImage(imgURL)
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.');
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(dataEmbed);
 		}
 		const dym = this.match.get(args.pokemon), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(`⚠️ Dex entry not found! ${dymString}`);
 	}

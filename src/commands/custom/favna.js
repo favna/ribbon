@@ -42,12 +42,6 @@ module.exports = class favnaCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	hasPermission (msg) {
 		if (this.client.isOwner(msg.author)) {
 			return true;

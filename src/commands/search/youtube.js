@@ -27,7 +27,8 @@ const Discord = require('discord.js'),
 	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	request = require('snekfetch');
+	request = require('snekfetch'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class youtubeCommand extends commando.Command {
 	constructor (client) {
@@ -54,12 +55,6 @@ module.exports = class youtubeCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg, args) {
 		const res = await request.get('https://www.googleapis.com/youtube/v3/search')
 			.query('key', auth.googleapikey)
@@ -72,7 +67,7 @@ module.exports = class youtubeCommand extends commando.Command {
 			const embed = new Discord.MessageEmbed(),
 				video = res.body.items[0];
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			if (msg.content.split(' ')[0].slice(msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length) === 'yts') {
 				return msg.say(`https://www.youtube.com/watch?v=${video.id.videoId}`);
 			}

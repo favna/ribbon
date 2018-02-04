@@ -24,7 +24,8 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class defaultroleCommand extends commando.Command {
 	constructor (client) {
@@ -53,12 +54,6 @@ module.exports = class defaultroleCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
 	}
@@ -66,13 +61,13 @@ module.exports = class defaultroleCommand extends commando.Command {
 	run (msg, args) {
 		if (args.role === 'delete') {
 			this.client.provider.remove(msg.guild.id, 'defaultRole');
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('🔒 Default role has been removed');
 		}
 
 		this.client.provider.set(msg.guild.id, 'defaultRole', args.role.id);
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(oneLine `🔓 \`${args.role.name}\` has been set as the default role for this server and will now be granted to all people joining.
         Use \`${msg.guild.commandPrefix}defaultrole delete\` to remove this setting.`);

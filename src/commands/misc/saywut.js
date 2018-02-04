@@ -26,7 +26,8 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class sayWutCommand extends commando.Command {
 	constructor (client) {
@@ -45,12 +46,6 @@ module.exports = class sayWutCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const saydata = this.client.provider.get(msg.guild.id, 'saydata', null),
 			wutEmbed = new Discord.MessageEmbed();
@@ -63,12 +58,12 @@ module.exports = class sayWutCommand extends commando.Command {
 				.setFooter(oneLine `${moment(saydata.messageDate).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.s-ul.eu/0wDHYIRn.png')
 				.setDescription(saydata.argString);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(wutEmbed);
 		}
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(`couldn't fetch message for your server. Has anyone used the ${msg.guild.commandPrefix}say command before?`);
 	}

@@ -26,7 +26,8 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class kickCommand extends commando.Command {
 	constructor (client) {
@@ -59,25 +60,19 @@ module.exports = class kickCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('KICK_MEMBERS');
 	}
 
 	run (msg, args) {
 		if (args.member.id === msg.author.id) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('⚠️ I don\'t think you want to kick yourself.');
 		}
 
 		if (!args.member.kickable) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('⚠️ I cannot kick that member, their role is probably higher than my own!');
 		}
@@ -105,11 +100,11 @@ module.exports = class kickCommand extends commando.Command {
 				this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
 			}
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
 		}
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 		
 		return null;
 	}

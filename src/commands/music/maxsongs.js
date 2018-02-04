@@ -26,7 +26,8 @@
 const commando = require('discord.js-commando'),
 	{oneLine} = require('common-tags'),
 	path = require('path'),
-	MAX_SONGS = require(path.join(__dirname, 'data/GlobalData.js')).MAX_SONGS; // eslint-disable-line sort-vars
+	MAX_SONGS = require(path.join(__dirname, 'data/GlobalData.js')).MAX_SONGS, // eslint-disable-line sort-vars
+	{deleteCommandMessages} = require('../../util.js'); 
 
 module.exports = class MaxSongsCommand extends commando.Command {
 	constructor (client) {
@@ -50,12 +51,6 @@ module.exports = class MaxSongsCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
 	}
@@ -64,23 +59,28 @@ module.exports = class MaxSongsCommand extends commando.Command {
 		if (!args) {
 			const maxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', MAX_SONGS);
 
+			deleteCommandMessages(msg, this.client);
+			
 			return msg.reply(`the maximum songs a user may have in the queue at one time is ${maxSongs}.`);
 		}
 
 		if (args.toLowerCase() === 'default') {
 			this.client.provider.remove(msg.guild.id, 'maxSongs');
-
+			deleteCommandMessages(msg, this.client);
+			
 			return msg.reply(`set the maximum songs to the default (currently ${MAX_SONGS}).`);
 		}
 
 		const maxSongs = parseInt(args, 10);
 
 		if (isNaN(maxSongs) || maxSongs <= 0) {
+
 			return msg.reply('invalid number provided.');
 		}
 
 		this.client.provider.set(msg.guild.id, 'maxSongs', maxSongs);
-
+		deleteCommandMessages(msg, this.client);
+		
 		return msg.reply(`set the maximum songs to ${maxSongs}.`);
 	}
 };

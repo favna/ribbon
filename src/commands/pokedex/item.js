@@ -24,15 +24,14 @@
  */
 
 /* eslint-disable sort-vars */
-
 const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	path = require('path'),
 	commando = require('discord.js-commando'),
 	{oneLine} = require('common-tags'),
 	request = require('snekfetch'),
-	requireFromURL = require('require-from-url/sync');
-
+	requireFromURL = require('require-from-url/sync'),
+	{capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 /* eslint-enable sort-vars */
 
 module.exports = class itemCommand extends commando.Command {
@@ -62,16 +61,6 @@ module.exports = class itemCommand extends commando.Command {
 		this.items = {};
 		this.pokeAliases = {};
 		this.match = [];
-	}
-
-	capitalizeFirstLetter (string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	async fetchItems () {
@@ -159,19 +148,19 @@ module.exports = class itemCommand extends commando.Command {
 			itemEmbed
 				.setColor('#E24141')
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
-				.setAuthor(`${this.capitalizeFirstLetter(item.name)}`, imgURL)
+				.setAuthor(`${capitalizeFirstLetter(item.name)}`, imgURL)
 				.addField('Description', item.desc)
 				.addField('Generation Introduced', item.gen)
 				.addField('External Resources', oneLine `
-			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${this.capitalizeFirstLetter(item.name.replace(' ', '_').replace('\'', ''))})  
+			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(item.name.replace(' ', '_').replace('\'', ''))})  
 			|  [Smogon](http://www.smogon.com/dex/sm/items/${item.name.toLowerCase().replace(' ', '_')
 		.replace('\'', '')})  
 			|  [PokémonDB](http://pokemondb.net/item/${item.name.toLowerCase().replace(' ', '-')
 		.replace('\'', '')})`);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
-			return msg.embed(itemEmbed, `**${this.capitalizeFirstLetter(item.name)}**`);
+			return msg.embed(itemEmbed, `**${capitalizeFirstLetter(item.name)}**`);
 		}
 
 		/* eslint-disable one-var */
@@ -181,8 +170,8 @@ module.exports = class itemCommand extends commando.Command {
 
 		/* eslint-enable one-var */
 
-		this.deleteCommandMessages(msg);
-		
+		deleteCommandMessages(msg, this.client);
+
 		return msg.reply(`⚠️ Item not found! ${dymString}`);
 
 	}

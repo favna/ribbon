@@ -25,7 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	moment = require('moment');
+	moment = require('moment'),
+	{capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class userInfoCommand extends commando.Command {
 	constructor (client) {
@@ -52,16 +53,6 @@ module.exports = class userInfoCommand extends commando.Command {
 		});
 	}
 
-	capitalizeFirstLetter (string) {
-		return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		const uinfoEmbed = new Discord.MessageEmbed(),
 			vals = {
@@ -76,9 +67,9 @@ module.exports = class userInfoCommand extends commando.Command {
 			.addField('ID', vals.user.id, true)
 			.addField('Name', vals.user.username, true)
 			.addField('Nickname', vals.member.nickname ? vals.member.nickname : 'No Nickname', true)
-			.addField('Status', vals.user.presence.status !== 'dnd' ? this.capitalizeFirstLetter(vals.user.presence.status) : 'Do Not Disturb', true)
+			.addField('Status', vals.user.presence.status !== 'dnd' ? capitalizeFirstLetter(vals.user.presence.status) : 'Do Not Disturb', true)
 			.addField(vals.user.presence.activity !== null
-				? this.capitalizeFirstLetter(vals.user.presence.activity.type)
+				? capitalizeFirstLetter(vals.user.presence.activity.type)
 				: 'Activity', vals.user.presence.activity !== null ? vals.user.presence.activity.name : 'Nothing', true)
 			.addField('Display Color', vals.member.displayHexColor, true)
 			.addField('Role(s)', vals.member.roles.size > 1 ? vals.member.roles.map(r => r.name).slice(1).join(' | ') : 'None', false) // eslint-disable-line newline-per-chained-call
@@ -86,7 +77,7 @@ module.exports = class userInfoCommand extends commando.Command {
 			.addField('Joined server at', moment(vals.member.joinedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true);
 		vals.member.roles.size >= 1 ? uinfoEmbed.setFooter(`${vals.member.displayName} has ${vals.member.roles.size - 1} role(s)`) : uinfoEmbed.setFooter(`${vals.member.displayName} has 0 roles`);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		msg.embed(uinfoEmbed);
 	}

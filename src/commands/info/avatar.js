@@ -25,7 +25,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	vibrant = require('node-vibrant');
+	{fetchColor, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class avatarCommand extends commando.Command {
 	constructor (client) {
@@ -68,50 +68,6 @@ module.exports = class avatarCommand extends commando.Command {
 		this.embedColor = '#FF0000';
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
-
-	async fetchColor (img) {
-		let palette = '';
-		
-		try {
-			palette = await vibrant.from(img).getPalette();
-		} catch (err) {
-			return this.embedColor;
-		}
-
-		if (palette) {
-			const pops = [],
-				swatches = Object.values(palette);
-
-			let prominentSwatch = {};
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
-				}
-			}
-
-			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
-						prominentSwatch = swatches[swatch];
-						break;
-					}
-				}
-			}
-			this.embedColor = prominentSwatch.getHex();
-		}
-
-		return this.embedColor;
-	}
-
 	fetchExt (str) {
 		return str.substring(str.length - 14, str.length - 8);
 	}
@@ -120,7 +76,7 @@ module.exports = class avatarCommand extends commando.Command {
 		const ava = args.member.user.displayAvatarURL({'size': args.size}),
 			embed = new Discord.MessageEmbed(),
 			ext = this.fetchExt(ava),
-			avaColor = ext.includes('gif') ? await this.fetchColor(ava) : this.embedColor; // eslint-disable-line sort-vars
+			avaColor = ext.includes('gif') ? await fetchColor(ava, this.embedColor) : this.embedColor; // eslint-disable-line sort-vars
 
 		embed
 			.setColor(avaColor)
@@ -129,7 +85,7 @@ module.exports = class avatarCommand extends commando.Command {
 			.setURL(ava)
 			.setDescription(`[Direct Link](${ava})`);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(embed);
 	}

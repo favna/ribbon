@@ -26,7 +26,8 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	random = require('node-random');
+	random = require('node-random'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class fightCommand extends commando.Command {
 	constructor (client) {
@@ -58,12 +59,6 @@ module.exports = class fightCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		const fighterEmbed = new Discord.MessageEmbed();
 
@@ -83,7 +78,7 @@ module.exports = class fightCommand extends commando.Command {
 					.setImage('https://i.imgur.com/WCFyXRr.png');
 			}
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(fighterEmbed);
 		}
@@ -92,7 +87,7 @@ module.exports = class fightCommand extends commando.Command {
 				.addField('You got mega rekt', '***Favna always wins***')
 				.setImage('https://i.imgur.com/XRsLP7Q.gif');
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(fighterEmbed);
 		}
@@ -108,12 +103,12 @@ module.exports = class fightCommand extends commando.Command {
 					.addField('🇱 Loser', `**${loser}**`, true)
 					.setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.embed(fighterEmbed);
 			}
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.reply('⚠️ an error occured pitting these combatants against each other 😦');
 		});

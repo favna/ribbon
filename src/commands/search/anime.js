@@ -26,7 +26,8 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	maljs = require('maljs'),
-	vibrant = require('node-vibrant');
+	{fetchColor} = require('../../util.js'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class animeCommand extends commando.Command {
 	constructor (client) {
@@ -54,49 +55,6 @@ module.exports = class animeCommand extends commando.Command {
 		this.embedColor = '#FF0000';
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
-	async fetchColor (img) {
-		let palette = '';
-		
-		try {
-			palette = await vibrant.from(img).getPalette();
-		} catch (err) {
-			return this.embedColor;
-		}
-
-		if (palette) {
-			const pops = [],
-				swatches = Object.values(palette);
-
-			let prominentSwatch = {};
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
-				}
-			}
-
-			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
-						prominentSwatch = swatches[swatch];
-						break;
-					}
-				}
-			}
-			this.embedColor = prominentSwatch.getHex();
-		}
-
-		return this.embedColor;
-	}
-
 	async run (msg, args) {
 		const aniEmbed = new Discord.MessageEmbed(),
 			res = await maljs.quickSearch(args.query, 'anime');
@@ -107,7 +65,7 @@ module.exports = class animeCommand extends commando.Command {
 			if (anime) {
 
 				aniEmbed
-					.setColor(await this.fetchColor(anime.cover))
+					.setColor(await fetchColor(anime.cover, this.embedColor))
 					.setTitle(anime.title)
 					.setImage(anime.cover)
 					.setDescription(anime.description)
@@ -115,6 +73,8 @@ module.exports = class animeCommand extends commando.Command {
 					.addField('Score', anime.score, true)
 					.addField('Popularity', anime.popularity, true)
 					.addField('Rank', anime.ranked, true);
+
+				deleteCommandMessages(msg, this.client);
 
 				msg.embed(aniEmbed, `${anime.mal.url}${anime.path}`);
 			}

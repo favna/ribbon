@@ -25,7 +25,8 @@
 
 const commando = require('discord.js-commando'),
 	imgur = require('imgur'),
-	qr = require('qrcode');
+	qr = require('qrcode'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class qrgenCommand extends commando.Command {
 	constructor (client) {
@@ -52,12 +53,6 @@ module.exports = class qrgenCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg, args) {
 		const base64 = await qr.toDataURL(args.url, {'errorCorrectionLevel': 'M'});
 
@@ -65,7 +60,7 @@ module.exports = class qrgenCommand extends commando.Command {
 			const upload = await imgur.uploadBase64(base64.slice(22));
 
 			if (upload) {
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.say(`QR Code for this URL: ${upload.data.link}`);
 			}

@@ -23,7 +23,8 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class nickCommand extends commando.Command {
 	constructor (client) {
@@ -55,18 +56,12 @@ module.exports = class nickCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_NICKNAMES');
 	}
 
 	run (msg, args) {
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return args.nickname !== 'clear'
 			? args.member.setNickname(args.nickname)

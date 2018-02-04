@@ -39,12 +39,6 @@ module.exports = class DBPostCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg) {
 		const post = await request.post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
 			.set('Authorization', auth.discordbotsAPIKey)

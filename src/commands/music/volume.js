@@ -23,7 +23,8 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class ChangeVolumeCommand extends commando.Command {
 	constructor (client) {
@@ -44,27 +45,21 @@ module.exports = class ChangeVolumeCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		const queue = this.queue.get(msg.guild.id);
 
 		if (!queue) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.reply('there isn\'t any music playing to change the volume of. Better queue some up!');
 		}
 		if (!args) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.reply(`the dial is currently set to ${queue.volume}.`);
 		}
 		if (!queue.voiceChannel.members.has(msg.author.id)) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
 		}
@@ -78,7 +73,7 @@ module.exports = class ChangeVolumeCommand extends commando.Command {
 			} else if (volume === 'down' || volume === '-') {
 				volume = queue.volume - 2;
 			} else {
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.reply('invalid volume level. The dial goes from 0-10, baby.');
 			}
@@ -93,7 +88,7 @@ module.exports = class ChangeVolumeCommand extends commando.Command {
 			queue.songs[0].dispatcher.setVolumeLogarithmic(queue.volume / 5);
 		}
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(`${volume === 11 ? 'this one goes to 11!' : `set the dial to ${volume}.`}`);
 	}

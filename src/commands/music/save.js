@@ -30,7 +30,8 @@ const Discord = require('discord.js'),
 		stripIndents
 	} = require('common-tags'),
 	path = require('path'),
-	Song = require(path.join(__dirname, 'data/SongStructure.js')); // eslint-disable-line sort-vars
+	Song = require(path.join(__dirname, 'data/SongStructure.js')), // eslint-disable-line sort-vars
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class saveQueueCommand extends commando.Command {
 	constructor (client) {
@@ -50,17 +51,11 @@ module.exports = class saveQueueCommand extends commando.Command {
 
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const queue = this.queue.get(msg.guild.id);
 
 		if (!queue) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('there isn\'t any music playing right now. You should get on that.');
 		}
@@ -88,7 +83,7 @@ module.exports = class saveQueueCommand extends commando.Command {
                 (${currentSong.timeLeft(currentTime)} left)
             `}`);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		msg.reply('✔ Check your inbox!');
 

@@ -27,7 +27,8 @@
 
 const {Command} = require('discord.js-commando'), 
 	{oneLineTrim} = require('common-tags'),
-	request = require('snekfetch');
+	request = require('snekfetch'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class DocsCommand extends Command {
 	constructor (client) {
@@ -62,12 +63,6 @@ module.exports = class DocsCommand extends Command {
 		});
 
 		this.docs = {}; // Cache for docs
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	async fetchDocs (version) {
@@ -373,7 +368,7 @@ module.exports = class DocsCommand extends Command {
 			'icon_url': 'https://cdn.discordapp.com/icons/222078108977594368/bc226f09db83b9176c64d923ff37010b.webp'
 		};
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 		
 		return msg.embed(embed);
 	}

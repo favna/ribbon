@@ -25,7 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	cydia = require('cydia-api-node');
+	cydia = require('cydia-api-node'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class cydiaCommand extends commando.Command {
 	constructor (client) {
@@ -52,12 +53,6 @@ module.exports = class cydiaCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg, args) {
 		const cydiaEmbed = new Discord.MessageEmbed(),
 			res = await cydia.getAllInfo(args.query);
@@ -75,12 +70,12 @@ module.exports = class cydiaCommand extends commando.Command {
 				.addField('Link', `[Click Here](http://cydia.saurik.com/package/${res.name})`, true)
 				.addField('Repo', `[${res.repo.name}](https://cydia.saurik.com/api/share#?source=${res.repo.link})`, true);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(cydiaEmbed);
 		}
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.say(`**Tweak/Theme \`${args.query}\` not found!**`);
 	}

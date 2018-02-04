@@ -26,7 +26,8 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class unlockCommand extends commando.Command {
 	constructor (client) {
@@ -43,12 +44,6 @@ module.exports = class unlockCommand extends commando.Command {
 				'duration': 3
 			}
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	hasPermission (msg) {
@@ -79,14 +74,14 @@ module.exports = class unlockCommand extends commando.Command {
 					this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
 				}
 
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
 			}
 
 			return msg.say(embed.description.slice(12));
 		}
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply('⚠️ An error occured unlocking this channel');
 	}

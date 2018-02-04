@@ -33,7 +33,8 @@ const Path = require('path'),
 		stripIndents
 	} = require('common-tags'),
 	winston = require('winston'),
-	ytdl = require('ytdl-core');
+	ytdl = require('ytdl-core'),
+	{deleteCommandMessages} = require('../../util.js');
 
 const DEFAULT_VOLUME = require(Path.join(__dirname, 'data/GlobalData.js')).DEFAULT_VOLUME, // eslint-disable-line one-var
 	GOOGLE_API = require(Path.join(__dirname, 'data/GlobalData.js')).GOOGLE_API,
@@ -70,12 +71,6 @@ module.exports = class PlaySongCommand extends commando.Command {
 		this.embedColor = '#3498DB';
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	/* eslint-disable max-statements*/
 
 	async run (msg, args) {
@@ -87,7 +82,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 		if (!queue) {
 			voiceChannel = msg.member.voiceChannel; // eslint-disable-line
 			if (!voiceChannel) {
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.reply('Please join a voice channel before issueing this command.');
 			}
@@ -95,17 +90,17 @@ module.exports = class PlaySongCommand extends commando.Command {
 			const permissions = voiceChannel.permissionsFor(msg.client.user);
 
 			if (!permissions.has('CONNECT')) {
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.reply('I don\'t have permission to join your voice channel. Fix your server\'s permisions');
 			}
 			if (!permissions.has('SPEAK')) {
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.reply('I don\'t have permission to speak in your voice channel. Fix your server\'s permisions');
 			}
 		} else if (!queue.voiceChannel.members.has(msg.author.id)) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.reply('Please join a voice channel before issueing this command.');
 		}
@@ -115,14 +110,14 @@ module.exports = class PlaySongCommand extends commando.Command {
 		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
 			const playlist = await this.youtube.getPlaylist(url);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return this.handlePlaylist(playlist, queue, voiceChannel, msg, statusMsg);
 		} else { // eslint-disable-line no-else-return
 			try {
 				const video = await this.youtube.getVideo(url);
 
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
 			} catch (error) {
@@ -131,12 +126,12 @@ module.exports = class PlaySongCommand extends commando.Command {
 							.catch(() => statusMsg.edit(`${msg.author}, there were no search results.`)),
 						video2 = await this.youtube.getVideoByID(videos[0].id); // eslint-disable-line sort-vars
 
-					this.deleteCommandMessages(msg);
+					deleteCommandMessages(msg, this.client);
 
 					return this.handleVideo(video2, queue, voiceChannel, msg, statusMsg);
 				} catch (err) {
 					winston.error(err);
-					this.deleteCommandMessages(msg);
+					deleteCommandMessages(msg, this.client);
 
 					return statusMsg.edit(`${msg.author}, couldn't obtain the search result video's details.`);
 				}

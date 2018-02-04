@@ -28,7 +28,8 @@ const Discord = require('discord.js'),
 	duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
 	moment = require('moment'),
 	{oneLine} = require('common-tags'),
-	process = require('process');
+	process = require('process'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class statsCommand extends commando.Command {
 	constructor (client) {
@@ -45,12 +46,6 @@ module.exports = class statsCommand extends commando.Command {
 				'duration': 3
 			}
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	fetchPlatform (plat) {
@@ -89,7 +84,7 @@ module.exports = class statsCommand extends commando.Command {
             If you ever forget the command prefix, just use \`${this.client.user.tag} prefix\``)
 			.setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://ribbon.favna.xyz/images/ribbon.png');
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(statsEmbed);
 	}

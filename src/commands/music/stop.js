@@ -23,7 +23,8 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class StopMusicCommand extends commando.Command {
 	constructor (client) {
@@ -41,17 +42,11 @@ module.exports = class StopMusicCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const queue = this.queue.get(msg.guild.id);
 
 		if (!queue) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('there isn\'t any music playing right now.');
 		}
@@ -61,7 +56,7 @@ module.exports = class StopMusicCommand extends commando.Command {
 		if (song.dispatcher) {
 			song.dispatcher.end();
 		}
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 		
 		return msg.reply('you\'ve just killed the party. Congrats. 👏');
 	}

@@ -29,7 +29,8 @@ const Discord = require('discord.js'),
 	jsonfile = require('jsonfile'),
 	moment = require('moment'),
 	{oneLine} = require('common-tags'),
-	path = require('path');
+	path = require('path'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class warnCommand extends commando.Command {
 	constructor (client) {
@@ -67,12 +68,6 @@ module.exports = class warnCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
 	}
@@ -102,7 +97,7 @@ module.exports = class warnCommand extends commando.Command {
 				jsonfile.writeFile(path.join(__dirname, `data/${msg.guild.id}/warnlog.json`), warnobj, {'flag': 'wx+'}, (writeNoFileErr) => {
 					if (writeNoFileErr) {
 						console.error(`Error in command: Warn\nServer: ${msg.guild.id} | ${msg.guild.name}\nError: ${writeNoFileErr}`); // eslint-disable-line no-console
-						this.deleteCommandMessages(msg);
+						deleteCommandMessages(msg, this.client);
 
 						return msg.reply(oneLine `⚠️ An error occured writing the warning to disc and the error has been logged on Favna\'s end.
 							You can contact my developer on his server. Use \`${msg.guild.commandPrefix}invite\` to get an invite to his server.`);
@@ -127,11 +122,11 @@ module.exports = class warnCommand extends commando.Command {
 							this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
 						}
 
-						this.deleteCommandMessages(msg);
+						deleteCommandMessages(msg, this.client);
 
 						return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
 					}
-					this.deleteCommandMessages(msg);
+					deleteCommandMessages(msg, this.client);
 
 					return null;
 				});
@@ -148,7 +143,7 @@ module.exports = class warnCommand extends commando.Command {
 
 				jsonfile.writeFile(path.join(__dirname, `data/${msg.guild.id}/warnlog.json`), obj, (writeFileErr) => {
 					if (writeFileErr) {
-						this.deleteCommandMessages(msg);
+						deleteCommandMessages(msg, this.client);
 
 						return msg.reply(oneLine `⚠️ An error occured writing the warning to disc and the error has been logged on Favna\'s end.
 						You can contact my developer on his server. Use \`${msg.guild.commandPrefix}invite\` to get an invite to his server.`);
@@ -175,11 +170,11 @@ module.exports = class warnCommand extends commando.Command {
 						}
 
 
-						this.deleteCommandMessages(msg);
+						deleteCommandMessages(msg, this.client);
 
 						return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
 					}
-					this.deleteCommandMessages(msg);
+					deleteCommandMessages(msg, this.client);
 
 					return null;
 				});

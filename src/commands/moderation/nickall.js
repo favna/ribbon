@@ -26,7 +26,8 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	{oneLine, stripIndents} = require('common-tags');
+	{oneLine, stripIndents} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class nickallCommand extends commando.Command {
 	constructor (client) {
@@ -52,12 +53,6 @@ module.exports = class nickallCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	hasPermission (msg) {
@@ -108,12 +103,12 @@ module.exports = class nickallCommand extends commando.Command {
 				this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
 			}
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
 		}
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(embed.description.slice(12));
 	}

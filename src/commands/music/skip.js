@@ -24,7 +24,8 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class SkipSongCommand extends commando.Command {
 	constructor (client) {
@@ -43,27 +44,21 @@ module.exports = class SkipSongCommand extends commando.Command {
 		this.votes = new Map();
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		const queue = this.queue.get(msg.guild.id);
 
 		if (!queue) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('there isn\'t a song playing right now, silly.');
 		}
 		if (!queue.voiceChannel.members.has(msg.author.id)) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
 		}
 		if (!queue.songs[0].dispatcher) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('the song hasn\'t even begun playing yet. Why not give it a chance?');
 		} // eslint-disable-line max-len
@@ -75,7 +70,7 @@ module.exports = class SkipSongCommand extends commando.Command {
 			(msg.member.hasPermission('MANAGE_MESSAGES') && args.toLowerCase() === 'force'); // eslint-disable-line no-extra-parens
 
 		if (force) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply(this.skip(msg.guild, queue));
 		}
@@ -84,7 +79,7 @@ module.exports = class SkipSongCommand extends commando.Command {
 
 		if (vote && vote.count >= 1) {
 			if (vote.users.some(user => user === msg.author.id)) {
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 				
 				return msg.reply('you\'ve already voted to skip the song.');
 			}
@@ -92,7 +87,7 @@ module.exports = class SkipSongCommand extends commando.Command {
 			vote.count += 1;
 			vote.users.push(msg.author.id);
 			if (vote.count >= threshold) {
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 				
 				return msg.reply(this.skip(msg.guild, queue));
 			}
@@ -100,7 +95,7 @@ module.exports = class SkipSongCommand extends commando.Command {
 			const remaining = threshold - vote.count,
 				time = this.setTimeout(vote);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.say(oneLine `
 				${vote.count} vote${vote.count > 1 ? 's' : ''} received so far,
@@ -121,7 +116,7 @@ module.exports = class SkipSongCommand extends commando.Command {
 
 		this.votes.set(msg.guild.id, newVote);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 		
 		return msg.say(oneLine `
 				Starting a voteskip.

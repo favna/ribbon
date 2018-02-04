@@ -39,12 +39,6 @@ module.exports = class kaiCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	fetchImage () {
 		const images = [
 				'https://favna.s-ul.eu/Hmv6rsY6.png',

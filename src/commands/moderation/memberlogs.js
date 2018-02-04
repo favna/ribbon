@@ -24,7 +24,8 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class memberlogsCommand extends commando.Command {
 	constructor (client) {
@@ -60,12 +61,6 @@ module.exports = class memberlogsCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
 	}
@@ -73,7 +68,7 @@ module.exports = class memberlogsCommand extends commando.Command {
 	run (msg, args) {
 		this.client.provider.set(msg.guild.id, 'memberlogs', args.option);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(oneLine `member logs have been
         ${args.option 

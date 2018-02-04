@@ -25,7 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	strawpoll = require('strawpoll.js');
+	strawpoll = require('strawpoll.js'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class strawpollCommand extends commando.Command {
 	constructor (client) {
@@ -67,12 +68,6 @@ module.exports = class strawpollCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg, args) {
 		const APIConvertion = {
 				'dupcheck': {
@@ -104,7 +99,7 @@ module.exports = class strawpollCommand extends commando.Command {
 				.addField('Multiple poll answers', APIConvertion.multi[poll.multi], true)
 				.addField('Poll options', poll.options, false);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(pollEmbed, `http://www.strawpoll.me/${poll.id}`);
 		}

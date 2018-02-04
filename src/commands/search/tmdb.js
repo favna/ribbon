@@ -30,7 +30,10 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	moviedb = require('moviedb')(auth.TheMovieDBV3ApiKey),
-	vibrant = require('node-vibrant');
+	{
+		fetchColor,
+		deleteCommandMessages
+	} = require('../../util.js');
 
 module.exports = class movieCommand extends commando.Command {
 	constructor (client) {
@@ -59,49 +62,6 @@ module.exports = class movieCommand extends commando.Command {
 		this.embedColor = '#FF0000';
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get('global', 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
-	async fetchColor (img) {
-		let palette = '';
-		
-		try {
-			palette = await vibrant.from(img).getPalette();
-		} catch (err) {
-			return this.embedColor;
-		}
-
-		if (palette) {
-			const pops = [],
-				swatches = Object.values(palette);
-
-			let prominentSwatch = {};
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
-				}
-			}
-
-			const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
-
-			for (const swatch in swatches) {
-				if (swatches[swatch]) {
-					if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
-						prominentSwatch = swatches[swatch];
-						break;
-					}
-				}
-			}
-			this.embedColor = prominentSwatch.getHex();
-		}
-
-		return this.embedColor;
-	}
-
 	async run (msg, args) {
 		const movieEmbed = new Discord.MessageEmbed(),
 			tmdb = (m, q) => new Promise((res, rej) => {
@@ -113,7 +73,7 @@ module.exports = class movieCommand extends commando.Command {
 			const movieres = await tmdb('movieInfo', {'id': tmdbres.results[0].id});
 
 			if (movieres) {
-				const embedColor = movieres.backdrop_path ? await this.fetchColor(`http://image.tmdb.org/t/p/w640${movieres.backdrop_path}`) : this.embedColor;
+				const embedColor = movieres.backdrop_path ? await fetchColor(`http://image.tmdb.org/t/p/w640${movieres.backdrop_path}`, this.embedColor) : this.embedColor;
 
 				movieEmbed
 					.setImage(movieres.backdrop_path ? `http://image.tmdb.org/t/p/w640${movieres.backdrop_path}` : null)
@@ -133,7 +93,7 @@ module.exports = class movieCommand extends commando.Command {
 					.addField('IMDB Page', movieres.imdb_id_id !== '' ? `[Click Here](http://www.imdb.com/title/${movieres.imdb_id})` : 'none', true)
 					.addField('Description', movieres.overview);
 
-				this.deleteCommandMessages(msg);
+				deleteCommandMessages(msg, this.client);
 
 				return msg.embed(movieEmbed);
 			}

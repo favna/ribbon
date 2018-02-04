@@ -23,10 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable max-statements, complexity */
-
-/* eslint-disable sort-vars */
-
+/* eslint-disable sort-vars, max-statements,complexity */
 const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
@@ -34,8 +31,8 @@ const Discord = require('discord.js'),
 	dexEntries = require(path.join(__dirname, 'data/flavorText.json')),
 	{oneLine} = require('common-tags'),
 	request = require('snekfetch'),
-	requireFromURL = require('require-from-url/sync');
-
+	requireFromURL = require('require-from-url/sync'),
+	{capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 /* eslint-enable sort-vars */
 
 module.exports = class dexCommand extends commando.Command {
@@ -65,16 +62,6 @@ module.exports = class dexCommand extends commando.Command {
 		this.pokedex = {};
 		this.pokeAliases = {};
 		this.match = [];
-	}
-
-	capitalizeFirstLetter (string) {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	fetchColor (col) {
@@ -202,27 +189,27 @@ module.exports = class dexCommand extends commando.Command {
 		}
 		if (pokeEntry) {
 			poke = pokeEntry.species;
-			let evoLine = `**${this.capitalizeFirstLetter(poke)}**`,
+			let evoLine = `**${capitalizeFirstLetter(poke)}**`,
 				preEvos = '';
 
 			if (pokeEntry.prevo) {
-				preEvos = `${preEvos + this.capitalizeFirstLetter(pokeEntry.prevo)} > `;
+				preEvos = `${preEvos + capitalizeFirstLetter(pokeEntry.prevo)} > `;
 				const preEntry = dex[pokeEntry.prevo];
 
 				if (preEntry.prevo) {
-					preEvos = `${this.capitalizeFirstLetter(preEntry.prevo)} > ${preEvos}`;
+					preEvos = `${capitalizeFirstLetter(preEntry.prevo)} > ${preEvos}`;
 				}
 				evoLine = preEvos + evoLine;
 			}
 			evos = '';
 
 			if (pokeEntry.evos) {
-				evos = `${evos} > ${pokeEntry.evos.map(entry => this.capitalizeFirstLetter(entry)).join(', ')}`;
+				evos = `${evos} > ${pokeEntry.evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
 				if (pokeEntry.evos.length < 2) {
 					const evoEntry = dex[pokeEntry.evos[0]];
 
 					if (evoEntry.evos) {
-						evos = `${evos} > ${evoEntry.evos.map(entry => this.capitalizeFirstLetter(entry)).join(', ')}`;
+						evos = `${evos} > ${evoEntry.evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
 					}
 				}
 				evoLine += evos;
@@ -280,7 +267,7 @@ module.exports = class dexCommand extends commando.Command {
 
 			dexEmbed
 				.setColor(this.fetchColor(pokeEntry.color))
-				.setAuthor(`#${pokeEntry.num} - ${this.capitalizeFirstLetter(poke)}`,
+				.setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(poke)}`,
 					`https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(' ', '_').toLowerCase()}.png`)
 				.setImage(imgURL)
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
@@ -296,18 +283,18 @@ module.exports = class dexCommand extends commando.Command {
 				.addField('Base Stats', Object.keys(pokeEntry.baseStats).map(index => `${index.toUpperCase()}: **${pokeEntry.baseStats[index]}**`)
 					.join(', '))
 				.addField('PokéDex Data', pokedexEntry)
-				.addField('External Resource', oneLine `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${this.capitalizeFirstLetter(poke).replace(' ', '_')}_(Pokémon\\))  
+				.addField('External Resource', oneLine `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(poke).replace(' ', '_')}_(Pokémon\\))  
 			  |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${poke.replace(' ', '_')})  
 			  |  [PokémonDB](http://pokemondb.net/pokedex/${poke.replace(' ', '-')})`);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(dexEmbed);
 		}
 		const dym = this.match.get(args.pokemon), // eslint-disable-line one-var
 			dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(`⚠️ Dex entry not found! ${dymString}`);
 	}

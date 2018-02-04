@@ -26,7 +26,8 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	weather = require('yahoo-weather');
+	weather = require('yahoo-weather'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class weatherCommand extends commando.Command {
 	constructor (client) {
@@ -99,12 +100,6 @@ module.exports = class weatherCommand extends commando.Command {
 		}
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg, args) {
 		const info = await weather(args.city),
 			weatherEmbed = new Discord.MessageEmbed();
@@ -128,11 +123,11 @@ module.exports = class weatherCommand extends commando.Command {
 				.addField(`🛰️ Forecast ${this.convertDays(info.item.forecast[2].day)} ${info.item.forecast[2].date.slice(0, -5)}`,
 					`High: ${info.item.forecast[2].high} °${info.units.temperature} | Low: ${info.item.forecast[2].low} °${info.units.temperature}`, true);
 
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(weatherEmbed);
 		}
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 		
 		return msg.reply('⚠️ an error occured getting weather info for that city');
 	}

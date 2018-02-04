@@ -24,7 +24,8 @@
  */
 
 const commando = require('discord.js-commando'),
-	zalgo = require('zalgotxt');
+	zalgo = require('zalgotxt'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class zalgoCommand extends commando.Command {
 	constructor (client) {
@@ -50,14 +51,8 @@ module.exports = class zalgoCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 		
 		return msg.say(zalgo(args.txt));
 	}

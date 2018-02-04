@@ -27,7 +27,8 @@ const Discord = require('discord.js'),
 	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
-	request = require('snekfetch');
+	request = require('snekfetch'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class discordBotsCommand extends commando.Command {
 	constructor (client) {
@@ -55,12 +56,6 @@ module.exports = class discordBotsCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg, args) {
 
 		const info = await request.get(`https://discordbots.org/api/bots/${args.bot}`)
@@ -82,8 +77,12 @@ module.exports = class discordBotsCommand extends commando.Command {
 				.addField('Shards Count', botinfo.shards.length, true)
 				.addField('Invite Link', `[Click Here](${botinfo.invite})`);
 
+
+			deleteCommandMessages(msg, this.client);
+
 			return msg.embed(infoEmbed, `https://discordbots.org/bot/${botinfo.clientid}`);
 		}
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply('⚠️ An error occured getting info from that bot, are you sure it exists on the website?');
 	}

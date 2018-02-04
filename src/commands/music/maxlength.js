@@ -26,7 +26,8 @@
 const commando = require('discord.js-commando'),
 	{oneLine} = require('common-tags'),
 	path = require('path'),
-	MAX_LENGTH = require(path.join(__dirname, 'data/GlobalData.js')).MAX_LENGTH; // eslint-disable-line sort-vars
+	MAX_LENGTH = require(path.join(__dirname, 'data/GlobalData.js')).MAX_LENGTH, // eslint-disable-line sort-vars
+	{deleteCommandMessages} = require('../../util.js'); 
 
 module.exports = class MaxLengthCommand extends commando.Command {
 	constructor (client) {
@@ -50,12 +51,6 @@ module.exports = class MaxLengthCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
 	}
@@ -64,12 +59,15 @@ module.exports = class MaxLengthCommand extends commando.Command {
 		if (!args) {
 			const maxLength = this.client.provider.get(msg.guild.id, 'maxLength', MAX_LENGTH);
 
+			deleteCommandMessages(msg, this.client);
+			
 			return msg.reply(`the maximum length of a song is ${maxLength} minutes.`);
 		}
 
 		if (args.toLowerCase() === 'default') {
 			this.client.provider.remove(msg.guild.id, 'maxLength');
-
+			deleteCommandMessages(msg, this.client);
+			
 			return msg.reply(`set the maximum song length to the default (currently ${MAX_LENGTH} minutes).`);
 		}
 
@@ -80,7 +78,8 @@ module.exports = class MaxLengthCommand extends commando.Command {
 		}
 
 		this.client.provider.set(msg.guild.id, 'maxLength', maxLength);
-
+		deleteCommandMessages(msg, this.client);
+		
 		return msg.reply(`set the maximum song length to ${maxLength} minutes.`);
 	}
 };

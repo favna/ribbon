@@ -24,7 +24,8 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags');
+	{oneLine} = require('common-tags'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class setModlogsCommand extends commando.Command {
 	constructor (client) {
@@ -51,19 +52,13 @@ module.exports = class setModlogsCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	hasPermission (msg) {
 		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
 	}
 
 	run (msg, args) {
 		this.client.provider.set(msg.guild.id, 'modlogchannel', args.channel.id);
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(oneLine `the channel to use for the moderation logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'modlogchannel')).name}`);
 	}

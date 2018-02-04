@@ -62,12 +62,6 @@ module.exports = class sayCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		const saydata = {
 			'memberHexColor': msg.member.displayHexColor,

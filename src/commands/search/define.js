@@ -17,7 +17,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	request = require('snekfetch');
+	request = require('snekfetch'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class defineCommand extends commando.Command {
 	constructor (client) {
@@ -44,12 +45,6 @@ module.exports = class defineCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	async run (msg, args) {
 		const defineEmbed = new Discord.MessageEmbed(),
 			word = await request.get(`https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=${args.query}`);
@@ -72,12 +67,12 @@ module.exports = class defineCommand extends commando.Command {
 				.setColor('#E24141')
 				.setDescription(final);
 
-			this.deleteCommandMessages(msg);
-			
+			deleteCommandMessages(msg, this.client);
+
 			return msg.embed(defineEmbed);
 		}
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply('⚠️ ***nothing found***');
 	}

@@ -30,7 +30,8 @@ const commando = require('discord.js-commando'),
 	} = require('common-tags'),
 	path = require('path'),
 	PAGINATED_ITEMS = require(path.join(__dirname, 'data/GlobalData.js')).PAGINATED_ITEMS, // eslint-disable-line sort-vars
-	Song = require(path.join(__dirname, 'data/SongStructure.js')); // eslint-disable-line sort-vars
+	Song = require(path.join(__dirname, 'data/SongStructure.js')), // eslint-disable-line sort-vars
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class ViewQueueCommand extends commando.Command {
 	constructor (client) {
@@ -58,17 +59,11 @@ module.exports = class ViewQueueCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		const queue = this.queue.get(msg.guild.id);
 
 		if (!queue) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.reply('there are no songs in the queue. Why not put something in my jukebox?');
 		}
@@ -78,7 +73,7 @@ module.exports = class ViewQueueCommand extends commando.Command {
 			paginated = commando.util.paginate(queue.songs, args.page, Math.floor(PAGINATED_ITEMS)),
 			totalLength = queue.songs.reduce((prev, song) => prev + song.length, 0);
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed({
 			'color': 3447003,

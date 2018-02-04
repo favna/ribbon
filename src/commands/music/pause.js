@@ -23,7 +23,8 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando');
+const commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class PauseSongCommand extends commando.Command {
 	constructor (client) {
@@ -42,34 +43,28 @@ module.exports = class PauseSongCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const queue = this.queue.get(msg.guild.id);
 
 		if (!queue) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('I am not playing any music right now, why not get me to start something?');
 		}
 		if (!queue.songs[0].dispatcher) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('I can\'t pause a song that hasn\'t even begun playing yet.');
 		}
 		if (!queue.songs[0].playing) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('Pauseception is not possible 🤔');
 		}
 		queue.songs[0].dispatcher.pause();
 		queue.songs[0].playing = false;
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.reply(`paused the music. Use \`${msg.guild.commandPrefix}resume\` to continue playing.`);
 	}

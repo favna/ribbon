@@ -26,7 +26,8 @@
 const commando = require('discord.js-commando'),
 	fs = require('fs'),
 	moment = require('moment'),
-	path = require('path');
+	path = require('path'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class copypastaAddCommand extends commando.Command {
 	constructor (client) {
@@ -60,12 +61,6 @@ module.exports = class copypastaAddCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		if (!fs.existsSync(path.join(__dirname, `pastas/${msg.guild.id}`))) {
 			console.log(`Creating guild dir for guild ${msg.guild.name}(${msg.guild.id}) at ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`); // eslint-disable-line no-console
@@ -75,7 +70,7 @@ module.exports = class copypastaAddCommand extends commando.Command {
 		fs.writeFileSync(path.join(__dirname, `pastas/${msg.guild.id}/${args.name}.txt`), args.content, 'utf8');
 
 		if (fs.existsSync(path.join(__dirname, `pastas/${msg.guild.id}/${args.name}.txt`))) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with ${msg.guild.commandPrefix}copypasta ${args.name}`);
 		}

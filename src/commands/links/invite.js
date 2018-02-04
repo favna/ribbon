@@ -24,7 +24,8 @@
  */
 
 const Discord = require('discord.js'),
-	commando = require('discord.js-commando');
+	commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class inviteCommnad extends commando.Command {
 	constructor (client) {
@@ -43,12 +44,6 @@ module.exports = class inviteCommnad extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg) {
 		const inviteEmbed = new Discord.MessageEmbed();
 
@@ -63,7 +58,7 @@ module.exports = class inviteCommnad extends commando.Command {
                 '[GitHub](https://github.com/Favna/Ribbon)\n' +
                 '[Wiki](https://github.com/Favna/Ribbon/wiki)');
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 		
 		return msg.embed(inviteEmbed, 'Find information on the bot here: https://ribbon.favna.xyz');
 	}

@@ -25,7 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	predict = require('eightball');
+	predict = require('eightball'),
+	{deleteCommandMessages} = require('../../util.js');
     
 module.exports = class eightBallCommand extends commando.Command {
 	constructor (client) {
@@ -52,12 +53,6 @@ module.exports = class eightBallCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		const eightBallEmbed = new Discord.MessageEmbed();
 
@@ -66,7 +61,7 @@ module.exports = class eightBallCommand extends commando.Command {
 			.addField(':question: Question', args.question, false)
 			.addField(':8ball: 8ball', predict(), false);
 		
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(eightBallEmbed);
 	}

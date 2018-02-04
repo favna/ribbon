@@ -28,7 +28,8 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	fs = require('fs'),
 	{oneLine} = require('common-tags'),
-	path = require('path');
+	path = require('path'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class copypastaCommand extends commando.Command {
 	constructor (client) {
@@ -54,12 +55,6 @@ module.exports = class copypastaCommand extends commando.Command {
 				}
 			]
 		});
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
-		}
 	}
 
 	run (msg, args) {
@@ -101,11 +96,11 @@ module.exports = class copypastaCommand extends commando.Command {
 				return msg.say(pastaContent, {'split': true});
 			}
 		} catch (err) {
-			this.deleteCommandMessages(msg);
+			deleteCommandMessages(msg, this.client);
 
 			return msg.reply(`⚠️ that copypata does not exist! ${dymString}`);
 		}
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 		
 		return msg.reply(`⚠️ that copypata does not exist! ${dymString}`);
 	}

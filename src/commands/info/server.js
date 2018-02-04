@@ -25,7 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	moment = require('moment');
+	moment = require('moment'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class serverInfoCommand extends commando.Command {
 	constructor (client) {
@@ -54,12 +55,6 @@ module.exports = class serverInfoCommand extends commando.Command {
 				return 'Scan messages sent by all members';
 			default:
 				return 'Content Filter unknown';
-		}
-	}
-
-	deleteCommandMessages (msg) {
-		if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-			msg.delete();
 		}
 	}
 
@@ -123,7 +118,7 @@ module.exports = class serverInfoCommand extends commando.Command {
 
 		msg.guild.splashURL() !== null ? serverEmbed.setImage(msg.guild.splashURL()) : null;
 
-		this.deleteCommandMessages(msg);
+		deleteCommandMessages(msg, this.client);
 
 		return msg.embed(serverEmbed);
 	}

@@ -47,14 +47,6 @@ module.exports = class tagmemberCommand extends commando.Command {
 		});
 	}
 
-	deleteCommandMessages (msg) {
-		if (msg.deletable &&
-			this.client.provider.get(msg.guild,
-				'deletecommandmessages', false)) {
-			msg.delete();
-		}
-	}
-
 	run (msg, args) {
 		msg.say(`^^^^ <@${args.member.id}> ^^^^`);
 	}
