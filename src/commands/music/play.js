@@ -68,7 +68,6 @@ module.exports = class PlaySongCommand extends commando.Command {
 
 		this.queue = new Map();
 		this.youtube = new YouTube(GOOGLE_API);
-		this.embedColor = '#3498DB';
 	}
 
 	/* eslint-disable max-statements*/

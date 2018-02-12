@@ -25,7 +25,7 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	{fetchColor, deleteCommandMessages} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class avatarCommand extends commando.Command {
 	constructor (client) {
@@ -65,21 +65,19 @@ module.exports = class avatarCommand extends commando.Command {
 				}
 			]
 		});
-		this.embedColor = '#FF0000';
 	}
 
 	fetchExt (str) {
 		return str.substring(str.length - 14, str.length - 8);
 	}
 
-	async run (msg, args) {
+	run (msg, args) {
 		const ava = args.member.user.displayAvatarURL({'size': args.size}),
 			embed = new Discord.MessageEmbed(),
-			ext = this.fetchExt(ava),
-			avaColor = ext.includes('gif') ? await fetchColor(ava, this.embedColor) : this.embedColor; // eslint-disable-line sort-vars
+			ext = this.fetchExt(ava);
 
 		embed
-			.setColor(avaColor)
+			.setColor('#E24141')
 			.setImage(ext.includes('gif') ? `${ava}&f=.gif` : ava)
 			.setTitle(args.member.displayName)
 			.setURL(ava)

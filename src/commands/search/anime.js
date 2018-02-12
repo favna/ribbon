@@ -26,7 +26,6 @@
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	maljs = require('maljs'),
-	{fetchColor} = require('../../util.js'),
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class animeCommand extends commando.Command {
@@ -52,7 +51,6 @@ module.exports = class animeCommand extends commando.Command {
 				}
 			]
 		});
-		this.embedColor = '#FF0000';
 	}
 
 	async run (msg, args) {
@@ -65,7 +63,7 @@ module.exports = class animeCommand extends commando.Command {
 			if (anime) {
 
 				aniEmbed
-					.setColor(await fetchColor(anime.cover, this.embedColor))
+					.setColor('#E24141')
 					.setTitle(anime.title)
 					.setImage(anime.cover)
 					.setDescription(anime.description)

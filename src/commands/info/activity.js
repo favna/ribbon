@@ -28,7 +28,7 @@ const Discord = require('discord.js'),
 	duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
 	moment = require('moment'),
 	request = require('snekfetch'),
-	{fetchColor, deleteCommandMessages} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class activityCommand extends commando.Command {
 	constructor (client) {
@@ -53,7 +53,6 @@ module.exports = class activityCommand extends commando.Command {
 				}
 			]
 		});
-		this.embedColor = '#FF0000';
 	}
 
 	convertType (type) {
@@ -71,11 +70,10 @@ module.exports = class activityCommand extends commando.Command {
 			ava = args.member.user.displayAvatarURL(),
 			embed = new Discord.MessageEmbed(),
 			ext = this.fetchExt(ava),
-			avaColor = ext.includes('gif') ? await fetchColor(ava, this.embedColor) : this.embedColor, // eslint-disable-line sort-vars
 			gameList = await request.get('https://canary.discordapp.com/api/v6/games');
 
 		embed
-			.setColor(avaColor)
+			.setColor('#E24141')
 			.setAuthor(args.member.user.tag, ava, `${ava}?size2048`)
 			.setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
 

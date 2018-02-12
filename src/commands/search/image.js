@@ -29,10 +29,7 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	querystring = require('querystring'),
 	request = require('snekfetch'),
-	{
-		fetchColor,
-		deleteCommandMessages
-	} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js');
 
 const googleapikey = auth.googleapikey, // eslint-disable-line one-var
 	imageEngineKey = auth.imageEngineKey;
@@ -60,7 +57,6 @@ module.exports = class imageCommand extends commando.Command {
 				}
 			]
 		});
-		this.embedColor = '#FF0000';
 	}
 
 	async run (msg, args) {
@@ -78,14 +74,11 @@ module.exports = class imageCommand extends commando.Command {
 				'searchType': 'image'
 			};
 
-		let hexColor = this.embedColor,
-			res = await request.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(query)}`);
+		let res = await request.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(query)}`);
 
 		if (res && res.body.items) {
-			hexColor = await fetchColor(res.body.items[0].link, this.embedColor);
-
 			embed
-				.setColor(hexColor)
+				.setColor('#E24141')
 				.setImage(res.body.items[0].link)
 				.setFooter(`Search query: "${args.query}"`);
 
@@ -102,9 +95,8 @@ module.exports = class imageCommand extends commando.Command {
 					.first()
 					.attr('src');
 
-			hexColor = await fetchColor(result, this.embedColor);
 			embed
-				.setColor(hexColor)
+				.setColor('#E24141')
 				.setImage(result)
 				.setFooter(`Search query: "${args.query}"`);
 

@@ -28,10 +28,7 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	igdbapi = require('igdb-api-node').default,
 	moment = require('moment'),
-	{
-		fetchColor,
-		deleteCommandMessages
-	} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class gameCommand extends commando.Command {
 	constructor (client) {
@@ -58,7 +55,6 @@ module.exports = class gameCommand extends commando.Command {
 			]
 
 		});
-		this.embedColor = '#FF0000';
 	}
 
 	extractNames (arr) {
@@ -95,7 +91,6 @@ module.exports = class gameCommand extends commando.Command {
 				'ids': gameInfo.body[0].genres,
 				'fields': ['name']
 			}),
-			hexColor = await fetchColor(coverImg, this.embedColor),
 			platformInfo = await igdb.platforms({
 				'ids': gameInfo.body[0].platforms,
 				'fields': ['name']
@@ -104,7 +99,7 @@ module.exports = class gameCommand extends commando.Command {
 		/* eslint-enable sort-vars*/
 
 		gameEmbed
-			.setColor(hexColor)
+			.setColor('#E24141')
 			.setAuthor(gameInfo.body[0].name, 'https://favna.s-ul.eu/O704Q7py.png')
 			.setThumbnail(coverImg)
 			.setFooter('Info pulled from IGDB')

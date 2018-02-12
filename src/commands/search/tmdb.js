@@ -30,10 +30,7 @@ const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	moviedb = require('moviedb')(auth.TheMovieDBV3ApiKey),
-	{
-		fetchColor,
-		deleteCommandMessages
-	} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class movieCommand extends commando.Command {
 	constructor (client) {
@@ -59,7 +56,6 @@ module.exports = class movieCommand extends commando.Command {
 				}
 			]
 		});
-		this.embedColor = '#FF0000';
 	}
 
 	async run (msg, args) {
@@ -73,12 +69,10 @@ module.exports = class movieCommand extends commando.Command {
 			const movieres = await tmdb('movieInfo', {'id': tmdbres.results[0].id});
 
 			if (movieres) {
-				const embedColor = movieres.backdrop_path ? await fetchColor(`http://image.tmdb.org/t/p/w640${movieres.backdrop_path}`, this.embedColor) : this.embedColor;
-
 				movieEmbed
 					.setImage(movieres.backdrop_path ? `http://image.tmdb.org/t/p/w640${movieres.backdrop_path}` : null)
 					.setThumbnail(movieres.poster_path ? `http://image.tmdb.org/t/p/w640${movieres.poster_path}` : null)
-					.setColor(embedColor)
+					.setColor('#E24141')
 					.addField('Title', `[${movieres.title}](https://www.themoviedb.org/movie/${movieres.id})`, true)
 					.addField('Release Date', moment(movieres.release_date).format('MMMM Do YYYY'), true)
 					.addField('Runtime', `${movieres.runtime} minutes`, true)
