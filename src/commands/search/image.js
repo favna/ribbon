@@ -24,15 +24,12 @@
  */
 
 const Discord = require('discord.js'),
-	auth = require('../../auth.json'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
 	querystring = require('querystring'),
 	request = require('snekfetch'),
-	{deleteCommandMessages} = require('../../util.js');
-
-const googleapikey = auth.googleapikey, // eslint-disable-line one-var
-	imageEngineKey = auth.imageEngineKey;
+	{deleteCommandMessages} = require('../../util.js'),
+	{googleapikey, imageEngineKey} = require('../../auth.json');
 
 module.exports = class imageCommand extends commando.Command {
 	constructor (client) {

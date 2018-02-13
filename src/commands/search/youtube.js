@@ -24,11 +24,11 @@
  */
 
 const Discord = require('discord.js'),
-	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	request = require('snekfetch'),
-	{deleteCommandMessages} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js'),
+	{googleapikey} = require('../../auth.json');
 
 module.exports = class youtubeCommand extends commando.Command {
 	constructor (client) {
@@ -57,7 +57,7 @@ module.exports = class youtubeCommand extends commando.Command {
 
 	async run (msg, args) {
 		const res = await request.get('https://www.googleapis.com/youtube/v3/search')
-			.query('key', auth.googleapikey)
+			.query('key', googleapikey)
 			.query('part', 'snippet')
 			.query('maxResults', '1')
 			.query('q', args.query)

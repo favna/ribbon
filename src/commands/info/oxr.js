@@ -24,14 +24,14 @@
  */
 
 const Discord = require('discord.js'),
-	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	currencySymbol = require('currency-symbol-map'),
 	fx = require('money'),
 	moment = require('moment'),
-	{oneLine} = require('common-tags'),
 	oxr = require('open-exchange-rates'),
-	{deleteCommandMessages} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js'),
+	{oneLine} = require('common-tags'),
+	{oxrAppID} = require('../../auth.json');
 
 module.exports = class moneyCommand extends commando.Command {
 	constructor (client) {
@@ -81,7 +81,7 @@ module.exports = class moneyCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		oxr.set({'app_id': auth.oxrAppID});
+		oxr.set({'app_id': oxrAppID});
 
 		oxr.latest(async () => {
 			try {

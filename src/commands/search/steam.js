@@ -25,12 +25,12 @@
 
 const Discord = require('discord.js'),
 	SteamAPI = require('steamapi'),
-	auth = require('../../auth.json'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
 	currencySymbol = require('currency-symbol-map'),
 	request = require('snekfetch'),
-	{deleteCommandMessages} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js'),
+	{steamAPIKey} = require('../../auth.json');
 
 module.exports = class steamCommand extends commando.Command {
 	constructor (client) {
@@ -64,7 +64,7 @@ module.exports = class steamCommand extends commando.Command {
 
 	async run (msg, args) {
 
-		const steam = new SteamAPI(auth.steamAPIKey),
+		const steam = new SteamAPI(steamAPIKey),
 			steamEmbed = new Discord.MessageEmbed(),
 			steamSearch = await request.get(`http://store.steampowered.com/search/?term=${args.game}`);
 

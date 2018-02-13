@@ -24,15 +24,12 @@
  */
 
 const Discord = require('discord.js'),
-	auth = require('../../auth.json'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
 	querystring = require('querystring'),
 	request = require('snekfetch'),
-	{deleteCommandMessages} = require('../../util.js');
-
-const googleapikey = auth.googleapikey, // eslint-disable-line one-var
-	searchEngineKey = auth.searchEngineKey;
+	{deleteCommandMessages} = require('../../util.js'),
+	{googleapikey, searchEngineKey} = require('../../auth.json');
 
 module.exports = class googleCommand extends commando.Command {
 	constructor (client) {
