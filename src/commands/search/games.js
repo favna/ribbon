@@ -24,11 +24,11 @@
  */
 
 const Discord = require('discord.js'),
-	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	igdbapi = require('igdb-api-node').default,
 	moment = require('moment'),
-	{deleteCommandMessages} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js'),
+	{igdbAPIKey} = require('../../auth.json');
 
 module.exports = class gameCommand extends commando.Command {
 	constructor (client) {
@@ -74,17 +74,16 @@ module.exports = class gameCommand extends commando.Command {
 	async run (msg, args) {
 		/* eslint-disable sort-vars*/
 		const gameEmbed = new Discord.MessageEmbed(),
-			igdb = igdbapi(auth.igdbAPIKey),
+			igdb = igdbapi(igdbAPIKey),
 			gameInfo = await igdb.games({
 				'search': args.game,
-				'fields': ['name', 'summary', 'rating', 'developers', 'publishers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
+				'fields': ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
 				'limit': 1,
 				'offset': 0
 			}),
-			companies = await gameInfo.body[0].publishers ? gameInfo.body[0].developers.concat(gameInfo.body[0].publishers) : gameInfo.body[0].developers,
 			coverImg = await gameInfo.body[0].cover.url.includes('http') ? gameInfo.body[0].cover.url : `https:${gameInfo.body[0].cover.url}`,
 			developerInfo = await igdb.companies({
-				'ids': companies,
+				'ids': gameInfo.body[0].developers,
 				'fields': ['name']
 			}),
 			genreInfo = await igdb.genres({
@@ -99,17 +98,17 @@ module.exports = class gameCommand extends commando.Command {
 		/* eslint-enable sort-vars*/
 
 		gameEmbed
-			.setColor('#E24141')
-			.setAuthor(gameInfo.body[0].name, 'https://favna.s-ul.eu/O704Q7py.png')
+			.setColor(msg.guild ? msg.member.displayHexColor : '#FF0000')
+			.setTitle(gameInfo.body[0].name)
+			.setURL(gameInfo.body[0].url)
 			.setThumbnail(coverImg)
-			.setFooter('Info pulled from IGDB')
-			.addField('Rating', Math.round(gameInfo.body[0].rating * 10) / 10, true)
+			.addField('User Score', Math.round(gameInfo.body[0].rating * 10) / 10, true)
+			.addField(`${gameInfo.body[0].pegi ? 'PEGI' : 'ESRB'} rating`, gameInfo.body[0].pegi ? gameInfo.body[0].pegi.rating : gameInfo.body[0].esrb.rating, true)
 			.addField('Release Date', releaseDate, true)
 			.addField('Genres', this.extractNames(genreInfo.body), true)
+			.addField('Developer', developerInfo.body[0].name, true)
 			.addField('Platforms', this.extractNames(platformInfo.body), true)
-			.addField(`${gameInfo.body[0].pegi ? 'PEGI' : 'ESRB'} rating`, gameInfo.body[0].pegi ? gameInfo.body[0].pegi.rating : gameInfo.body[0].esrb.rating, true)
-			.addField('Companies', this.extractNames(developerInfo.body), true)
-			.addField('Summary', gameInfo.body[0].summary, false);
+			.setDescription(gameInfo.body[0].summary);
 
 		deleteCommandMessages(msg, this.client);
 
