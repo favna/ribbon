@@ -26,6 +26,7 @@
 const commando = require('discord.js-commando'),
 	eshop = require('nintendo-switch-eshop'),
 	fs = require('fs'),
+	path = require('path'),
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class EshopFetchCommand extends commando.Command {
@@ -43,9 +44,9 @@ module.exports = class EshopFetchCommand extends commando.Command {
 	}
 
 	async run (msg) {
-		fs.writeFileSync('../../data/websearch/eshop.json', JSON.stringify(await eshop.getGamesAmerica()), 'utf8');
+		fs.writeFileSync(path.join(__dirname, '../../data/websearch/eshop.json'), JSON.stringify(await eshop.getGamesAmerica()), 'utf8');
 
-		if (fs.existsSync('../../data/websearch/eshop.json')) {
+		if (fs.existsSync(path.join(__dirname, '../../data/websearch/eshop.json'))) {
 			deleteCommandMessages(msg, this.client);
 
 			return msg.reply('Latest eshop data stored in file');

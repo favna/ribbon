@@ -26,6 +26,7 @@
 const Fuse = require('fuse.js'),
 	commando = require('discord.js-commando'),
 	fs = require('fs'),
+	path = require('path'),
 	{MessageEmbed} = require('discord.js'),
 	{oneLine} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -52,7 +53,7 @@ module.exports = class EshopCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		if (fs.existsSync('../../data/websearch/eshop.json')) {
+		if (fs.existsSync(path.join(__dirname, '../../data/websearch/eshop.json'))) {
 
 			/* eslint-disable sort-vars, no-var, vars-on-top, one-var*/
 			const embed = new MessageEmbed(),
@@ -65,7 +66,7 @@ module.exports = class EshopCommand extends commando.Command {
 					'minMatchCharLength': 1,
 					'keys': ['title']
 				},
-				games = JSON.parse(fs.readFileSync('../../data/websearch/eshop.json', 'utf8')),
+				games = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/websearch/eshop.json', 'utf8'))),
 				fuse = new Fuse(games, fsoptions),
 				results = fuse.search(args.game);
 			/* eslint-enable sort-vars*/

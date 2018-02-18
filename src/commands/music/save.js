@@ -25,9 +25,10 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
+	path = require('path'),
 	{oneLine, stripIndents} = require('common-tags'),
-	{SongStructure} = require('../../data/melody/SongStructure'),
-	{deleteCommandMessages} = require('../../util.js');
+	{SongStructure} = require(path.join(__dirname, '../../data/melody/SongStructure')),
+	{deleteCommandMessages} = require(path.join(__dirname, '../../util.js'));
 
 module.exports = class saveQueueCommand extends commando.Command {
 	constructor (client) {
@@ -52,7 +53,7 @@ module.exports = class saveQueueCommand extends commando.Command {
 
 		if (!queue) {
 			deleteCommandMessages(msg, this.client);
-			
+
 			return msg.reply('there isn\'t any music playing right now. You should get on that.');
 		}
 		const currentSong = queue.songs[0], // eslint-disable-line one-var

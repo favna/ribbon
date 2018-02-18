@@ -27,6 +27,7 @@ const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	fs = require('fs'),
+	path = require('path'),
 	{oneLine} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');
 
@@ -59,7 +60,7 @@ module.exports = class copypastaCommand extends commando.Command {
 	run (msg, args) {
 		const match = new Matcher();
 
-		match.values = fs.readdirSync('../../data/pastas');
+		match.values = fs.readdirSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`));
 
 		const dym = match.get(`${args.name}.txt`), // eslint-disable-line one-var
 			dymString = dym !== null
@@ -67,7 +68,7 @@ module.exports = class copypastaCommand extends commando.Command {
 				: oneLine `You can save it with \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
 
 		try {
-			let pastaContent = fs.readFileSync(`../../data/pastas/${msg.guild.id}/${args.name}.txt`, 'utf8');
+			let pastaContent = fs.readFileSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}/${args.name}.txt`), 'utf8');
 
 			if (pastaContent) {
 				if (pastaContent.length <= 1024) {

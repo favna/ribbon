@@ -25,13 +25,14 @@
 
 const YouTube = require('simple-youtube-api'),
 	commando = require('discord.js-commando'),
+	path = require('path'),
 	winston = require('winston'),
 	ytdl = require('ytdl-core'),
 	{escapeMarkdown} = require('discord.js'),
-	{deleteCommandMessages} = require('../../util.js'),
-	{SongStructure} = require('../../data/melody/SongStructure'),
+	{deleteCommandMessages} = require(path.join(__dirname, '../../util.js')),
+	{SongStructure} = require(path.join(__dirname, '../../data/melody/SongStructure')),
 	{oneLine, stripIndents} = require('common-tags'),
-	{DEFAULT_VOLUME, GOOGLE_API, MAX_LENGTH, MAX_SONGS, PASSES} = require('../../data/melody/GlobalData');
+	{DEFAULT_VOLUME, GOOGLE_API, MAX_LENGTH, MAX_SONGS, PASSES} = require(path.join(__dirname, '../../data/melody/GlobalData'));
 
 module.exports = class PlaySongCommand extends commando.Command {
 	constructor (client) {

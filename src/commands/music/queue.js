@@ -24,9 +24,10 @@
  */
 
 const commando = require('discord.js-commando'),
-	{SongStructure} = require('../../data/melody/SongStructure'),
+	path = require('path'),
+	{SongStructure} = require(path.join(__dirname, '../../data/melody/SongStructure')),
 	{deleteCommandMessages} = require('../../util.js'),
-	{PAGINATED_ITEMS} = require('../../data/melody/GlobalData'),
+	{PAGINATED_ITEMS} = require(path.join(__dirname, '../../data/melody/GlobalData')),
 	{oneLine, stripIndents} = require('common-tags');
 
 module.exports = class ViewQueueCommand extends commando.Command {

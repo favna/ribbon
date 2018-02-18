@@ -24,8 +24,9 @@
  */
 
 const commando = require('discord.js-commando'),
+	path = require('path'),
 	{stripIndents} = require('common-tags'),
-	{SongStructure} = require('../../data/melody/SongStructure'),
+	{SongStructure} = require(path.join(__dirname, '../../data/melody/SongStructure')),
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class MusicStatusCommand extends commando.Command {

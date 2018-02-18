@@ -23,15 +23,15 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable sort-vars */
+
 const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
+	path = require('path'),
 	request = require('snekfetch'),
 	requireFromURL = require('require-from-url/sync'),
+	{oneLine} = require('common-tags'),
 	{capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
-/* eslint-enable sort-vars */
 
 module.exports = class abilityCommand extends commando.Command {
 	constructor (client) {
@@ -72,7 +72,7 @@ module.exports = class abilityCommand extends commando.Command {
 		if (abilityData) {
 			this.abilities = requireFromURL(this.fetchLinks('abilities')).BattleAbilities;
 		} else {
-			this.abilities = require('../../data/dex/abilities').BattleAbilities; // eslint-disable-line global-require
+			this.abilities = require(path.join(__dirname, '../../data/dex/abilities')).BattleAbilities; // eslint-disable-line global-require
 		}
 		this.match = new Matcher(Object.keys(this.abilities).join(' ')); // eslint-disable-line one-var
 
@@ -89,7 +89,7 @@ module.exports = class abilityCommand extends commando.Command {
 		if (dexData) {
 			this.pokeAliases = requireFromURL(this.fetchLinks('aliases')).BattleAliases;
 		} else {
-			this.pokeAliases = require('../../data/dex/aliases').BattlePokedex; // eslint-disable-line global-require
+			this.pokeAliases = require(path.join(__dirname, '../../data/dex/aliases')).BattlePokedex; // eslint-disable-line global-require
 		}
 		this.match = new Matcher(Object.keys(this.pokeAliases).join(' ')); // eslint-disable-line one-var
 
