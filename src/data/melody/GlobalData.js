@@ -1,3 +1,4 @@
+
 /*
  *   This file is part of Ribbon
  *   Copyright (C) 2017-2018 Favna
@@ -22,14 +23,14 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
-const auth = require('../../auth.json');
+const {googleapikey} = require('../../auth.json');
 
 const DEFAULT_VOLUME = 1, // eslint-disable-line one-var
-	GOOGLE_API = auth.googleapikey,
+	GOOGLE_API = googleapikey,
 	MAX_LENGTH = 10,
 	MAX_SONGS = 3,
 	PAGINATED_ITEMS = 5,
-	PASSES = 2;
+	PASSES = 3;
 	
 module.exports = {
 	DEFAULT_VOLUME,

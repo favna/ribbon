@@ -24,11 +24,11 @@
  */
 
 const commando = require('discord.js-commando'),
+	{oneLine, stripIndents} = require('common-tags'),
 	path = require('path'),
-	{SongStructure} = require(path.join(__dirname, '../../data/melody/SongStructure')),
-	{deleteCommandMessages} = require('../../util.js'),
-	{PAGINATED_ITEMS} = require(path.join(__dirname, '../../data/melody/GlobalData')),
-	{oneLine, stripIndents} = require('common-tags');
+	Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
+	{PAGINATED_ITEMS} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class ViewQueueCommand extends commando.Command {
 	constructor (client) {
@@ -87,11 +87,11 @@ module.exports = class ViewQueueCommand extends commando.Command {
                     **Now playing:** ${!isNaN(currentSong.id) ? `${currentSong.name}` : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`}
                     ${oneLine `
                         **Progress:**
-                        ${!currentSong.playing ? 'Paused: ' : ''}${SongStructure.timeString(currentTime)} /
+                        ${!currentSong.playing ? 'Paused: ' : ''}${Song.timeString(currentTime)} /
                         ${currentSong.lengthString}
                         (${currentSong.timeLeft(currentTime)} left)
                     `}
-                    **Total queue time:** ${SongStructure.timeString(totalLength)}
+                    **Total queue time:** ${Song.timeString(totalLength)}
                 `
 			/* eslint-enable max-len */
 		});

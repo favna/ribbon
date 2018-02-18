@@ -23,14 +23,14 @@
  *         reasonable ways as different from the original version.
  */
 
-const YouTube = require('simple-youtube-api'),
-	commando = require('discord.js-commando'),
-	path = require('path'),
+const path = require('path'),
+	Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
+	YouTube = require('simple-youtube-api'), // eslint-disable-line sort-vars
+	commando = require('discord.js-commando'), // eslint-disable-line sort-vars
 	winston = require('winston'),
 	ytdl = require('ytdl-core'),
 	{escapeMarkdown} = require('discord.js'),
-	{deleteCommandMessages} = require(path.join(__dirname, '../../util.js')),
-	{SongStructure} = require(path.join(__dirname, '../../data/melody/SongStructure')),
+	{deleteCommandMessages} = require('../../util.js'),
 	{oneLine, stripIndents} = require('common-tags'),
 	{DEFAULT_VOLUME, GOOGLE_API, MAX_LENGTH, MAX_SONGS, PASSES} = require(path.join(__dirname, '../../data/melody/GlobalData'));
 
@@ -281,7 +281,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 			if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
 				return oneLine `
 					👎 ${escapeMarkdown(video.title)}
-					(${SongStructure.timeString(video.durationSeconds)})
+					(${Song.timeString(video.durationSeconds)})
 					is too long. No songs longer than ${songMaxLength} minutes!
 				`;
 			}
@@ -300,7 +300,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 			'guild': msg.guild.id
 		});
 
-		const song = new SongStructure(video, msg.member); // eslint-disable-line one-var
+		const song = new Song(video, msg.member); // eslint-disable-line one-var
 
 		queue.songs.push(song);
 

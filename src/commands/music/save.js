@@ -23,12 +23,12 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
-	commando = require('discord.js-commando'),
+const commando = require('discord.js-commando'),
 	path = require('path'),
-	{oneLine, stripIndents} = require('common-tags'),
-	{SongStructure} = require(path.join(__dirname, '../../data/melody/SongStructure')),
-	{deleteCommandMessages} = require(path.join(__dirname, '../../util.js'));
+	Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
+	{MessageEmbed} = require('discord.js'),
+	{deleteCommandMessages} = require('../../util.js'),
+	{oneLine, stripIndents} = require('common-tags');
 
 module.exports = class saveQueueCommand extends commando.Command {
 	constructor (client) {
@@ -53,12 +53,12 @@ module.exports = class saveQueueCommand extends commando.Command {
 
 		if (!queue) {
 			deleteCommandMessages(msg, this.client);
-
+			
 			return msg.reply('there isn\'t any music playing right now. You should get on that.');
 		}
 		const currentSong = queue.songs[0], // eslint-disable-line one-var
 			currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0,
-			embed = new Discord.MessageEmbed(),
+			embed = new MessageEmbed(),
 			paginated = commando.util.paginate(queue.songs, 1, Math.floor(10));
 
 		embed
@@ -75,7 +75,7 @@ module.exports = class saveQueueCommand extends commando.Command {
             **Now playing:** ${!isNaN(currentSong.id) ? `${currentSong.name}` : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`}
             ${oneLine `
                 **Progress:**
-                ${!currentSong.playing ? 'Paused: ' : ''}${SongStructure.timeString(currentTime)} /
+                ${!currentSong.playing ? 'Paused: ' : ''}${Song.timeString(currentTime)} /
                 ${currentSong.lengthString}
                 (${currentSong.timeLeft(currentTime)} left)
             `}`);

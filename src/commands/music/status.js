@@ -25,8 +25,8 @@
 
 const commando = require('discord.js-commando'),
 	path = require('path'),
+	Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
 	{stripIndents} = require('common-tags'),
-	{SongStructure} = require(path.join(__dirname, '../../data/melody/SongStructure')),
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class MusicStatusCommand extends commando.Command {
@@ -64,7 +64,7 @@ module.exports = class MusicStatusCommand extends commando.Command {
 				'description': stripIndents `
 				[${song}](${`${song.url}`})
 
-				We are ${SongStructure.timeString(currentTime)} into the song, and have ${song.timeLeft(currentTime)} left.
+				We are ${Song.timeString(currentTime)} into the song, and have ${song.timeLeft(currentTime)} left.
 				${!song.playing ? 'The music is paused.' : ''}
 			`,
 				'image': {'url': song.thumbnail}

@@ -1,7 +1,7 @@
 const {Util} = require('discord.js'), 
 	{oneLineTrim} = require('common-tags');
 
-class SongStructure {
+module.exports = class Song {
 	constructor (video, member) {
 		this.name = Util.escapeMarkdown(video.title);
 		this.id = video.id;
@@ -55,6 +55,4 @@ class SongStructure {
 			${`0${Math.floor(seconds % 60)}`.slice(-2)}
 		`;
 	}
-}
-
-module.exports = SongStructure;
+};
