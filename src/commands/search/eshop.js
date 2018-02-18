@@ -66,7 +66,7 @@ module.exports = class EshopCommand extends commando.Command {
 					'minMatchCharLength': 1,
 					'keys': ['title']
 				},
-				games = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/websearch/eshop.json', 'utf8'))),
+				games = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/websearch/eshop.json'), 'utf8')),
 				fuse = new Fuse(games, fsoptions),
 				results = fuse.search(args.game);
 			/* eslint-enable sort-vars*/
