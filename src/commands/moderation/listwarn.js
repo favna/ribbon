@@ -23,11 +23,12 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const Fuse = require('fuse.js'),
 	commando = require('discord.js-commando'),
-	jsonfile = require('jsonfile'),
+	fs = require('fs'),
 	moment = require('moment'),
 	path = require('path'),
+	{MessageEmbed} = require('discord.js'),
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class listwarnCommand extends commando.Command {
@@ -49,7 +50,7 @@ module.exports = class listwarnCommand extends commando.Command {
 				{
 					'key': 'member',
 					'prompt': 'Which member should I show warning points for?',
-					'type': 'member',
+					'type': 'string',
 					'label': 'member name or ID'
 				}
 			]
@@ -61,31 +62,40 @@ module.exports = class listwarnCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		const listWarnsEmbed = new Discord.MessageEmbed();
 
-		jsonfile.readFile(path.join(__dirname, `data/${msg.guild.id}/warnlog.json`), 'utf8', (readErr, obj) => {
-			if (readErr) {
+		if (fs.existsSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`))) {
+			/* eslint-disable sort-vars*/
+			const embed = new MessageEmbed(),
+				fsoptions = {
+					'shouldSort': true,
+					'threshold': 0.6,
+					'location': 0,
+					'distance': 100,
+					'maxPatternLength': 32,
+					'minMatchCharLength': 1,
+					'keys': ['id', 'usertag']
+				},
+				warns = JSON.parse(fs.readFileSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`)), 'utf8'),
+				fuse = new Fuse(warns, fsoptions),
+				results = fuse.search(args.member);
+			/* eslint-enable sort-vars*/
+
+			if (results.length) {
+				embed
+					.setColor('#ECECC9')
+					.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+					.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'))
+					.setDescription(`**Member:** ${results[0].usertag} (${results[0].id})\n` +
+						`**Current Warning Points:** ${results[0].points}`);
+
 				deleteCommandMessages(msg, this.client);
-				
-				return msg.reply(`📘 No warnpoints log found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
 
+				return msg.embed(embed);
 			}
 
-			if (!obj[args.member.id]) {
-				deleteCommandMessages(msg, this.client);
-				
-				return msg.reply('⚠️ That user has no warning points yet');
-			}
-			listWarnsEmbed
-				.setColor('#ECECC9')
-				.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-				.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'))
-				.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-                    `**Current Warning Points:** ${obj[args.member.id].points}`);
+			return msg.reply('⚠️ That user has no warning points yet');
+		}
 
-			deleteCommandMessages(msg, this.client);
-
-			return msg.embed(listWarnsEmbed);
-		});
+		return msg.reply(`📘 No warnpoints log found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
 	}
 };
