@@ -22,7 +22,7 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
-const auth = require('../../../auth.json');
+const auth = require('../../auth.json');
 
 const DEFAULT_VOLUME = 1, // eslint-disable-line one-var
 	GOOGLE_API = auth.googleapikey,

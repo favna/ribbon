@@ -26,9 +26,8 @@
 /* eslint-disable max-statements, complexity, block-scoped-var, vars-on-top, one-var, no-var, no-redeclare, max-depth, init-declarations */
 
 const Discord = require('discord.js'),
-	Path = require('path'),
 	commando = require('discord.js-commando'),
-	typeMatchups = require(Path.join(__dirname, 'data/typechart.js')).BattleTypeChart,
+	typeMatchups = require('../../data/dex/typechart').BattleTypeChart,
 	{oneLine} = require('common-tags'),
 	{capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 

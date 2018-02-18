@@ -23,24 +23,15 @@
  *         reasonable ways as different from the original version.
  */
 
-const Path = require('path'),
-	Song = require(Path.join(__dirname, 'data/SongStructure.js')),
-	YouTube = require('simple-youtube-api'),
+const YouTube = require('simple-youtube-api'),
 	commando = require('discord.js-commando'),
-	{escapeMarkdown} = require('discord.js'),
-	{
-		oneLine,
-		stripIndents
-	} = require('common-tags'),
 	winston = require('winston'),
 	ytdl = require('ytdl-core'),
-	{deleteCommandMessages} = require('../../util.js');
-
-const DEFAULT_VOLUME = require(Path.join(__dirname, 'data/GlobalData.js')).DEFAULT_VOLUME, // eslint-disable-line one-var
-	GOOGLE_API = require(Path.join(__dirname, 'data/GlobalData.js')).GOOGLE_API,
-	MAX_LENGTH = require(Path.join(__dirname, 'data/GlobalData.js')).MAX_LENGTH,
-	MAX_SONGS = require(Path.join(__dirname, 'data/GlobalData.js')).MAX_SONGS,
-	PASSES = require(Path.join(__dirname, 'data/GlobalData.js')).PASSES;
+	{escapeMarkdown} = require('discord.js'),
+	{deleteCommandMessages} = require('../../util.js'),
+	{SongStructure} = require('../../data/melody/SongStructure'),
+	{oneLine, stripIndents} = require('common-tags'),
+	{DEFAULT_VOLUME, GOOGLE_API, MAX_LENGTH, MAX_SONGS, PASSES} = require('../../data/melody/GlobalData');
 
 module.exports = class PlaySongCommand extends commando.Command {
 	constructor (client) {
@@ -289,7 +280,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 			if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
 				return oneLine `
 					👎 ${escapeMarkdown(video.title)}
-					(${Song.timeString(video.durationSeconds)})
+					(${SongStructure.timeString(video.durationSeconds)})
 					is too long. No songs longer than ${songMaxLength} minutes!
 				`;
 			}
@@ -308,7 +299,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 			'guild': msg.guild.id
 		});
 
-		const song = new Song(video, msg.member); // eslint-disable-line one-var
+		const song = new SongStructure(video, msg.member); // eslint-disable-line one-var
 
 		queue.songs.push(song);
 

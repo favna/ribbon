@@ -24,8 +24,7 @@
  */
 
 const commando = require('discord.js-commando'),
-	path = require('path'),
-	DEFAULT_VOLUME = require(path.join(__dirname, 'data/GlobalData.js')).DEFAULT_VOLUME, // eslint-disable-line sort-vars
+	{DEFAULT_VOLUME} = require('../../data/melody/GlobalData'),
 	{deleteCommandMessages} = require('../../util.js'); 
 
 module.exports = class defaultVolumeCommand extends commando.Command {

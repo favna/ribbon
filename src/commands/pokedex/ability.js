@@ -26,7 +26,6 @@
 /* eslint-disable sort-vars */
 const Discord = require('discord.js'),
 	Matcher = require('did-you-mean'),
-	path = require('path'),
 	commando = require('discord.js-commando'),
 	{oneLine} = require('common-tags'),
 	request = require('snekfetch'),
@@ -73,7 +72,7 @@ module.exports = class abilityCommand extends commando.Command {
 		if (abilityData) {
 			this.abilities = requireFromURL(this.fetchLinks('abilities')).BattleAbilities;
 		} else {
-			this.abilities = require(path.join(__dirname, 'data/abilities.js')).BattleAbilities; // eslint-disable-line global-require
+			this.abilities = require('../../data/dex/abilities').BattleAbilities; // eslint-disable-line global-require
 		}
 		this.match = new Matcher(Object.keys(this.abilities).join(' ')); // eslint-disable-line one-var
 
@@ -90,7 +89,7 @@ module.exports = class abilityCommand extends commando.Command {
 		if (dexData) {
 			this.pokeAliases = requireFromURL(this.fetchLinks('aliases')).BattleAliases;
 		} else {
-			this.pokeAliases = require(path.join(__dirname, 'data/aliases.js')).BattlePokedex; // eslint-disable-line global-require
+			this.pokeAliases = require('../../data/dex/aliases').BattlePokedex; // eslint-disable-line global-require
 		}
 		this.match = new Matcher(Object.keys(this.pokeAliases).join(' ')); // eslint-disable-line one-var
 

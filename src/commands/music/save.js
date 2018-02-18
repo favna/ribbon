@@ -25,12 +25,8 @@
 
 const Discord = require('discord.js'),
 	commando = require('discord.js-commando'),
-	{
-		oneLine,
-		stripIndents
-	} = require('common-tags'),
-	path = require('path'),
-	Song = require(path.join(__dirname, 'data/SongStructure.js')), // eslint-disable-line sort-vars
+	{oneLine, stripIndents} = require('common-tags'),
+	{SongStructure} = require('../../data/melody/SongStructure'),
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class saveQueueCommand extends commando.Command {
@@ -78,7 +74,7 @@ module.exports = class saveQueueCommand extends commando.Command {
             **Now playing:** ${!isNaN(currentSong.id) ? `${currentSong.name}` : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`}
             ${oneLine `
                 **Progress:**
-                ${!currentSong.playing ? 'Paused: ' : ''}${Song.timeString(currentTime)} /
+                ${!currentSong.playing ? 'Paused: ' : ''}${SongStructure.timeString(currentTime)} /
                 ${currentSong.lengthString}
                 (${currentSong.timeLeft(currentTime)} left)
             `}`);

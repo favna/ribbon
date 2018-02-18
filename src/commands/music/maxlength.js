@@ -25,8 +25,7 @@
 
 const commando = require('discord.js-commando'),
 	{oneLine} = require('common-tags'),
-	path = require('path'),
-	MAX_LENGTH = require(path.join(__dirname, 'data/GlobalData.js')).MAX_LENGTH, // eslint-disable-line sort-vars
+	{MAX_LENGTH} = require('../../data/melody/GlobalData'),
 	{deleteCommandMessages} = require('../../util.js'); 
 
 module.exports = class MaxLengthCommand extends commando.Command {
