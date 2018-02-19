@@ -34,7 +34,7 @@ module.exports = class EshopFetchCommand extends commando.Command {
 		super(client, {
 			'name': 'eshopfetch',
 			'memberName': 'eshopfetch',
-			'group': 'search',
+			'group': 'owner',
 			'aliases': ['efetch'],
 			'description': 'Fetches latest games list from the Nintendo Switch eShop',
 			'examples': ['eshopfetch'],
