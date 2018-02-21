@@ -64,7 +64,7 @@ module.exports = class statsCommand extends commando.Command {
 
 		statsEmbed
 			.setColor('#E24141')
-			.setAuthor('Ribbon Bot Stats', 'https://ribbon.favna.xyz/images/ribbon.png')
+			.setAuthor('Ribbon Bot Stats', 'https://favna.xyz/images/appIcons/ribbon.png')
 			.addField('Guilds', this.client.guilds.size, true)
 			.addField('Channels', this.client.channels.size, true)
 			.addField('Users', this.client.users.size, true)
@@ -82,7 +82,7 @@ module.exports = class statsCommand extends commando.Command {
 			.addField('\u200b', oneLine `Use the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\` command to get the list of commands available to you in a DM. 
             The default prefix is \`!\`. You can change this with the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}prefix\` command. 
             If you ever forget the command prefix, just use \`${this.client.user.tag} prefix\``)
-			.setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://ribbon.favna.xyz/images/ribbon.png');
+			.setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.xyz/images/appIcons/ribbon.png');
 
 		deleteCommandMessages(msg, this.client);
 

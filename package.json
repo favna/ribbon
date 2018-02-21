@@ -1,11 +1,11 @@
 {
   "name": "ribbon",
-  "version": "3.9.1",
+  "version": "3.9.2",
   "description": "Ribbon - A discord bot for your server",
   "author": "Favna",
   "license": "GPL-3.0",
   "main": "src/app.js",
-  "homepage": "https://ribbon.favna.xyz",
+  "homepage": "https://favna.xyz/ribbon",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Favna/Ribbon.git"
@@ -31,7 +31,7 @@
     "node": ">=8.0.0 <9.0"
   },
   "dependencies": {
-    "booru": "^0.3.3",
+    "booru": "0.4.0",
     "cheerio": "^1.0.0-rc.2",
     "common-tags": "1.7.2",
     "countdown": "^2.6.0",
@@ -48,7 +48,7 @@
     "jsonfile": "^4.0.0",
     "maljs": "^0.3.0",
     "moment": "^2.19.1",
-    "moment-duration-format": "2.2.1",
+    "moment-duration-format": "2.2.2",
     "money": "^0.2.0",
     "nintendo-switch-eshop": "^1.0.7",
     "node-opus": "^0.2.7",
@@ -75,9 +75,9 @@
     "zalgotxt": "^0.1.0"
   },
   "devDependencies": {
-    "eslint": "4.17.0",
+    "eslint": "4.18.1",
     "eslint-plugin-node": "6.0.0",
     "tap-summary": "^4.0.0",
-    "tape": "^4.6.3"
+    "tape": "4.9.0"
   }
 }

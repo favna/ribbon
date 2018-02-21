@@ -68,7 +68,7 @@ module.exports = class e621Command extends commando.Command {
 			deleteCommandMessages(msg, this.client);
 
 			return msg.reply('⚠️ No juicy images found.');
-		} catch (booruError) {
+		} catch (BooruError) {
 			deleteCommandMessages(msg, this.client);
 
 			return msg.reply('⚠️ No juicy images found.');

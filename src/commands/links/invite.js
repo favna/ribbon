@@ -49,17 +49,17 @@ module.exports = class inviteCommnad extends commando.Command {
 
 		inviteEmbed
 			.setAuthor('Ribbon Links')
-			.setThumbnail('https://ribbon.favna.xyz/images/ribbon.png')
-			.setURL('https://selfbot.favna.xyz')
+			.setThumbnail('https://favna.xyz/images/appIcons/ribbon.png')
+			.setURL('https://favna.xyz/ribbon')
 			.setColor('#E24141')
 			.addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p8)\n' +
                 '[Join the Support Server](https://discord.gg/zdt5yQt)\n' +
-                '[Website](https://selfbot.favna.xyz)\n' +
+                '[Website](https://favna.xyz/ribbon)\n' +
                 '[GitHub](https://github.com/Favna/Ribbon)\n' +
                 '[Wiki](https://github.com/Favna/Ribbon/wiki)');
 
 		deleteCommandMessages(msg, this.client);
 		
-		return msg.embed(inviteEmbed, 'Find information on the bot here: https://ribbon.favna.xyz');
+		return msg.embed(inviteEmbed, 'Find information on the bot here: https://favna.xyz/ribbon');
 	}
 };

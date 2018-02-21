@@ -54,7 +54,7 @@ class Ribbon {
 					'name': '@Ribbon help',
 					'type': 'WATCHING',
 					'details': 'Made by Favna',
-					'state': 'https://ribbon.favna.xyz',
+					'state': 'https://favna.xyz/ribbon',
 					'assets': {
 						'largeImage': '385133227997921280',
 						'smallImage': '385133144245927946',
