@@ -684,8 +684,8 @@ dijkstrajs@^1.0.1:
     require-all "^2.0.0"
 
 "discord.js@git+https://github.com/Favna/discord.js.git#active":
-  version "12.0.0-F.2"
-  resolved "git+https://github.com/Favna/discord.js.git#80474a3f067fad7f7c14ffd16a9301ebb4ffc9e9"
+  version "12.0.0-F.3"
+  resolved "git+https://github.com/Favna/discord.js.git#998e0e7972fabc19ba7018ac7e853981fb7a7d6a"
   dependencies:
     pako "^1.0.0"
     prism-media hydrabolt/prism-media
@@ -803,9 +803,9 @@ escodegen@^1.6.1:
   optionalDependencies:
     source-map "~0.5.6"
 
-eslint-plugin-node@6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-6.0.0.tgz#5ad5ee6b5346aec6cc9cde0b8619caed2c6d8f25"
+eslint-plugin-node@6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-node/-/eslint-plugin-node-6.0.1.tgz#bf19642298064379315d7a4b2a75937376fa05e4"
   dependencies:
     ignore "^3.3.6"
     minimatch "^3.0.4"
@@ -1800,9 +1800,9 @@ ncp@0.4.x:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/ncp/-/ncp-0.4.2.tgz#abcc6cbd3ec2ed2a729ff6e7c1fa8f01784a8574"
 
-nintendo-switch-eshop@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/nintendo-switch-eshop/-/nintendo-switch-eshop-1.0.7.tgz#b3eef589dba3b288ebe13aa8d0a8f5250d185610"
+nintendo-switch-eshop@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/nintendo-switch-eshop/-/nintendo-switch-eshop-1.1.0.tgz#27dd64879c5fefe36418c4af6ce3c47327f28323"
   dependencies:
     array-unique-x "^1.0.5"
     country-data "0.0.31"
@@ -2525,7 +2525,11 @@ slice-ansi@1.0.0:
   dependencies:
     is-fullwidth-code-point "^2.0.0"
 
-snekfetch@3.6.4, snekfetch@^3.6.0, snekfetch@^3.6.4:
+snekfetch@4.0.0-rc.0:
+  version "4.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/snekfetch/-/snekfetch-4.0.0-rc.0.tgz#31e9d4e8d2dec790833036e51d55ac27f34d8cba"
+
+snekfetch@^3.6.0, snekfetch@^3.6.4:
   version "3.6.4"
   resolved "https://registry.yarnpkg.com/snekfetch/-/snekfetch-3.6.4.tgz#d13e80a616d892f3d38daae4289f4d258a645120"
 
@@ -3089,9 +3093,9 @@ youtube-node@^1.3.2:
     prompt "0.2.14"
     request "2.53.0"
 
-ytdl-core@0.20.1:
-  version "0.20.1"
-  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.20.1.tgz#727f8a9b7907dc3eab766442081f88fabbb1b7d7"
+ytdl-core@0.20.2:
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.20.2.tgz#0c0a1cffc2d943196f0a0809f129876877b26dad"
   dependencies:
     html-entities "^1.1.3"
     m3u8stream "^0.2.1"
