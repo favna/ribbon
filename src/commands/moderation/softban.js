@@ -81,7 +81,7 @@ module.exports = class softbanCommand extends commando.Command {
 			'reason': args.reason
 		});
 
-		msg.guild.unban(args.member.user);
+		msg.guild.members.unban(args.member.user);
 
 		const embed = new Discord.MessageEmbed(),
 			modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
