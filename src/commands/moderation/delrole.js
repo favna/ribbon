@@ -63,6 +63,6 @@ module.exports = class delRoleCommand extends commando.Command {
 	run (msg, args) {
 		deleteCommandMessages(msg, this.client);
 
-		return args.member.removeRole(args.role).then(() => msg.say(`\`${args.role.name}\` removed from \`${args.member.displayName}\``), () => msg.reply('Error'));
+		return args.member.roles.remove(args.role).then(() => msg.say(`\`${args.role.name}\` removed from \`${args.member.displayName}\``), () => msg.reply('Error'));
 	}
 };
