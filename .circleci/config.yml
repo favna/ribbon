@@ -9,6 +9,10 @@ dependencies:
     - yarn
   cache_directories:
     - ~/.cache/yarn
+general:
+  branches:
+    only:
+      - master
 jobs:
   build:
     docker:
@@ -35,10 +39,6 @@ jobs:
       - run: yarn lintfix
       - run: yarn lint
       - run: yarn test
-experimental:
-  notify:
-    branches:
-      only:
-        - master
-    webhooks:
-      - url: https://skyhook.glitch.me/api/webhooks/309495189901279242/dAOJX74JP1k0dZ9mXdvK923dxLBa3X8jRXcQ49IGI_WgRS_HWId-Qx1_npC-s4vbt4xp/circleci
+notify:
+  webhooks:
+    - url: https://skyhook.glitch.me/api/webhooks/309495189901279242/dAOJX74JP1k0dZ9mXdvK923dxLBa3X8jRXcQ49IGI_WgRS_HWId-Qx1_npC-s4vbt4xp/circleci
