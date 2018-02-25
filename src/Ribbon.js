@@ -39,16 +39,9 @@ class Ribbon {
 		this.client = new Commando.Client({
 			'commandPrefix': '!',
 			'owner': '112001393140723712',
-			'selfbot': false
-		});
-		this.isReady = false;
-	}
-
-	onReady () {
-		return () => {
-			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`); // eslint-disable-line no-console
-
-			this.client.user.setPresence({
+			'selfbot': false,
+			'presence': {
+				'status': 'online',
 				'activity': {
 					'application': '376520643862331396',
 					'name': '@Ribbon help',
@@ -60,10 +53,16 @@ class Ribbon {
 						'smallImage': '385133144245927946',
 						'largeText': 'Invite me to your server!',
 						'smallText': 'Look at the website!'
-					},
-					'party': {'size': [this.client.guilds.size, 2000]}
+					}
 				}
-			});
+			}
+		});
+		this.isReady = false;
+	}
+
+	onReady () {
+		return () => {
+			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`); // eslint-disable-line no-console
 
 			this.isReady = true;
 		};
