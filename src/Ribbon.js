@@ -155,7 +155,7 @@ class Ribbon {
 					.setColor('#80F31F');
 
 				if (this.client.provider.get(member.guild.id, 'defaultRole')) {
-					member.addRole(this.client.provider.get(member.guild.id, 'defaultRole'));
+					member.roles.add(this.client.provider.get(member.guild.id, 'defaultRole'));
 					embed.setDescription(`Automatically assigned the role ${member.guild.roles.get(this.client.provider.get(member.guild.id, 'defaultRole')).name} to this member`);
 				}
 
