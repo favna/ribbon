@@ -61,7 +61,7 @@ module.exports = class activityCommand extends commando.Command {
 		return str.slice(-4);
 	}
 
-	/* eslint complexity: ["error", 40], max-statements: ["error", 35]*/
+	/* eslint complexity: ["error", 45], max-statements: ["error", 35]*/
 	/* eslint-disable no-nested-ternary*/
 	async run (msg, args) {
 
@@ -91,11 +91,12 @@ module.exports = class activityCommand extends commando.Command {
 
 				if (spotTokenReq) {
 					spotifyApi.setAccessToken(spotTokenReq.body.access_token);
-					const spotifyData = await spotifyApi.searchTracks(`track:${activity.details} artist:${activity.state.split(';')[0]}`); // eslint-disable-line
+
+					const spotifyData = await spotifyApi.searchTracks(`track:${activity.details} artist:${typeof activity.state === 'object' ? activity.state[0] : activity.state.split(';')[0]}`); // eslint-disable-line
 
 					if (spotifyData) {
 						spotify = spotifyData.body.tracks.items[0];
-						activity.state = activity.state.split(';');
+						activity.state = typeof activity.state === 'object' ? activity.state : activity.state.split(';');
 						for (const i in spotify.artists.length) { // eslint-disable-line max-depth
 							activity.state[i] = `[${activity.state[i]}](${spotify.artists[i].external_urls.spotify})`;
 						}
