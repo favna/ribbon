@@ -122,8 +122,8 @@ module.exports = class warnCommand extends commando.Command {
 				.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
 				.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 					'**Action:** Warn\n' +
-					`**Previous Warning Points:** ${0}\n` +
-					`**Current Warning Points:** ${args.points}\n` +
+					`**Previous Warning Points:** ${warn.points - args.points}\n` +
+					`**Current Warning Points:** ${warn.points}\n` +
 					`**Reason:** ${args.reason !== '' ? args.reason : 'No reason has been added by the moderator'}`)
 				.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
@@ -139,8 +139,8 @@ module.exports = class warnCommand extends commando.Command {
 				deleteCommandMessages(msg, this.client);
 
 				return modLogs
-					? msg.guild.channels.get(modLogs).send({embed})
-					: null;
+					? msg.guild.channels.get(modLogs).send({embed}) && msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`)
+					: msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`);
 			}
 
 			return msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`);
