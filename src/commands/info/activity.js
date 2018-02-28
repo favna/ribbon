@@ -57,6 +57,10 @@ module.exports = class activityCommand extends commando.Command {
 		});
 	}
 
+	convertType (type) {
+		return type.toLowerCase() !== 'listening' ? type.charAt(0).toUpperCase() + type.slice(1) : 'Listening to';
+	}
+
 	fetchExt (str) {
 		return str.slice(-4);
 	}
@@ -82,7 +86,7 @@ module.exports = class activityCommand extends commando.Command {
 
 		if (activity) {
 			const gameIcon = gameList.body.find(g => g.name === activity.name);
-			
+
 			let spotify = {};
 
 			if (activity.type === 'LISTENING' && activity.name === 'Spotify') {
@@ -105,7 +109,7 @@ module.exports = class activityCommand extends commando.Command {
 			}
 
 			gameIcon ? embed.setThumbnail(`https://cdn.discordapp.com/game-assets/${gameIcon.id}/${gameIcon.icon}.png`) : null;
-			embed.addField(activity.type, activity.name, true);
+			embed.addField(this.convertType(activity.type), activity.name, true);
 
 			activity.url ? embed.addField('URL', `[${activity.url.slice(8)}](${activity.url})`, true) : null;
 			activity.details
