@@ -24,11 +24,13 @@
  */
 
 const Discord = require('discord.js'),
+	Spotify = require('spotify-web-api-node'),
 	commando = require('discord.js-commando'),
 	duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
 	moment = require('moment'),
 	request = require('snekfetch'),
-	{deleteCommandMessages} = require('../../util.js');
+	{deleteCommandMessages} = require('../../util.js'),
+	{spotifyID, spotifySecret} = require('../../auth.json');
 
 module.exports = class activityCommand extends commando.Command {
 	constructor (client) {
@@ -55,22 +57,23 @@ module.exports = class activityCommand extends commando.Command {
 		});
 	}
 
-	convertType (type) {
-		return type !== 'listening' ? type.charAt(0).toUpperCase() + type.slice(1) : 'Listening to';
-	}
-
 	fetchExt (str) {
 		return str.slice(-4);
 	}
 
-	/* eslint complexity: ["error", 35], max-statements: ["error", 50]*/
+	/* eslint complexity: ["error", 40], max-statements: ["error", 35]*/
+	/* eslint-disable no-nested-ternary*/
 	async run (msg, args) {
 
-		const activity = args.member.user.presence.activity,
+		const activity = args.member.presence.activity,
 			ava = args.member.user.displayAvatarURL(),
 			embed = new Discord.MessageEmbed(),
 			ext = this.fetchExt(ava),
-			gameList = await request.get('https://canary.discordapp.com/api/v6/games');
+			gameList = await request.get('https://canary.discordapp.com/api/v6/games'),
+			spotifyApi = new Spotify({
+				'clientId': spotifyID,
+				'clientSecret': spotifySecret
+			});
 
 		embed
 			.setColor('#E24141')
@@ -79,55 +82,77 @@ module.exports = class activityCommand extends commando.Command {
 
 		if (activity) {
 			const gameIcon = gameList.body.find(g => g.name === activity.name);
+			
+			let spotify = {};
 
-			if (activity.type === 'STREAMING' && activity.url.includes('twitch')) {
-				embed.setThumbnail(`https://static-cdn.jtvnw.net/previews-ttv/live_user_${activity.url.split('/')[3]}-432x240.jpg`);
-			}
+			if (activity.type === 'LISTENING' && activity.name === 'Spotify') {
 
-			largeImageAssetCheck: if (activity.assets) {
-				if (activity.assets.largeImage && !activity.assets.largeImage.includes('spotify')) {
-					embed.setThumbnail(`https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.largeImage}.png`);
-					break largeImageAssetCheck;
-				}
-				if (activity.assets.largeImage && activity.assets.largeImage.includes('spotify')) {
-					embed.setThumbnail(`https://i.scdn.co/image/${activity.assets.largeImage.split(':')[1]}`);
-					break largeImageAssetCheck;
-				}
-				gameIcon ? embed.setThumbnail(`https://cdn.discordapp.com/game-assets/${gameIcon.id}/${gameIcon.icon}.png`) : null;
-			}
+				const spotTokenReq = await spotifyApi.clientCredentialsGrant();
 
-			smallImageAssetCheck: if (activity.assets) {
-				if (activity.timestamps && activity.timestamps.start) {
-					if (activity.assets.smallImage && activity.assets.smallImage.includes('spotify')) {
-						embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`, `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`);
-						break smallImageAssetCheck;
-					} else {
-						embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`,
-							`https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`);
-						break smallImageAssetCheck;
+				if (spotTokenReq) {
+					spotifyApi.setAccessToken(spotTokenReq.body.access_token);
+					const spotifyData = await spotifyApi.searchTracks(`track:${activity.details} artist:${activity.state.split(';')[0]}`); // eslint-disable-line
+
+					if (spotifyData) {
+						spotify = spotifyData.body.tracks.items[0];
+						activity.state = activity.state.split(';');
+						for (const i in spotify.artists.length) { // eslint-disable-line max-depth
+							activity.state[i] = `[${activity.state[i]}](${spotify.artists[i].external_urls.spotify})`;
+						}
 					}
-				} else if (activity.assets.smallImage && activity.assets.smallImage.includes('spotify')) {
-					embed.setFooter('​', `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`);
-					break smallImageAssetCheck;
-				} else {
-					embed.setFooter('​', `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`);
-					break smallImageAssetCheck;
 				}
-			} else
-			if (activity.timestamps && activity.timestamps.start) {
-				embed.setFooter(`Start Time ${moment(activity.timestamps.start).format('DD-MM-YY [at] HH:mm')}`);
 			}
 
-			activity.timestamps && activity.timestamps.end
-				? embed.setFooter(`${embed.footer ? `${embed.footer.text} | ` : ''}End Time: ${moment.duration(activity.timestamps.end - Date.now()).format('HH [hours and] mm [minutes]')}`)
-				: null;
-			embed.addField(this.convertType(activity.type), activity.name, true);
+			gameIcon ? embed.setThumbnail(`https://cdn.discordapp.com/game-assets/${gameIcon.id}/${gameIcon.icon}.png`) : null;
+			embed.addField(activity.type, activity.name, true);
+
 			activity.url ? embed.addField('URL', `[${activity.url.slice(8)}](${activity.url})`, true) : null;
-			activity.details ? embed.addField('Details', activity.details, true) : null;
-			activity.state ? embed.addField('State', activity.state, true) : null;
+			activity.details
+				? embed.addField('Details', activity.type === 'LISTENING' && activity.name === 'Spotify'
+					? `[${activity.details}](${spotify.external_urls.spotify})`
+					: activity.details, true)
+				: null;
+
+			activity.state
+				? embed.addField('State', activity.type === 'LISTENING' && activity.name === 'Spotify'
+					? `by ${activity.state.join(',')}`
+					: activity.state, true)
+				: null;
+
 			activity.party && activity.party.size ? embed.addField('Party Size', `${activity.party.size[0]} of ${activity.party.size[1]}`, true) : null;
-			activity.party && activity.party.id ? embed.addField('Party ID', activity.party.id, true) : null;
-			activity.applicationID ? embed.addField('Application ID', activity.applicationID, false) : null;
+
+			activity.assets && activity.assets.largeImage
+				? embed.setThumbnail(!activity.assets.largeImage.includes('spotify')
+					? `https://cdn.discordapp.com/app-assets/${activity.appID}/${activity.assets.largeImage}.png`
+					: `https://i.scdn.co/image/${activity.assets.largeImage.split(':')[1]}`)
+				: null;
+
+			activity.timestamps && activity.timestamps.start
+				? embed.setFooter('Start Time') && embed.setTimestamp(activity.timestamps.start) && activity.timestamps.end
+					? embed.addField('End Time', `${moment.duration(activity.timestamps.end - Date.now()).format('HH[:]mm[:]ss [seconds left]')}`, true)
+					: null
+				: null;
+
+			activity.assets && activity.assets.smallImage
+				? embed.setFooter(activity.assets.smallText
+					? activity.timestamps && activity.timestamps.start
+						? `${activity.assets.smallText} | Start Time`
+						: activity.assets.smallText
+					: activity.timestamps && activity.timestamps.start
+						? 'Start Time'
+						: '​', !activity.assets.smallImage.includes('spotify')
+					? `https://cdn.discordapp.com/app-assets/${activity.appID}/${activity.assets.smallImage}.png`
+					: `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`)
+				: null;
+
+			activity.assets && activity.assets.largeText
+				? embed.addField('Large Text', activity.type === 'LISTENING' && activity.name === 'Spotify'
+					? `on [${activity.assets.largeText}](${spotify.album.external_urls.spotify})`
+					: activity.assets.largeText, true)
+				: null;
+
+			activity.appID ? embed.addField('Application ID', activity.appID, true) : null;
+
 			deleteCommandMessages(msg, this.client);
 
 			return msg.embed(embed);
