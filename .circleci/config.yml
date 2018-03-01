@@ -2,6 +2,10 @@ version: 2
 machine:
   environment:
     PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+  node:
+    version: 8.9.4
+  npm:
+    version: 5.6.0
 dependencies:
   pre:
     - curl -o- -L https://yarnpkg.com/install.sh | bash

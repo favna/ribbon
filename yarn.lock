@@ -512,8 +512,8 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
 
 concat-stream@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.6.0.tgz#0aac662fd52be78964d5532f694784e70110acf7"
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/concat-stream/-/concat-stream-1.6.1.tgz#261b8f518301f1d834e36342b9fea095d2620a26"
   dependencies:
     inherits "^2.0.3"
     readable-stream "^2.2.2"
@@ -709,17 +709,17 @@ dijkstrajs@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
-"discord.js-commando@https://github.com/Favna/discord.js-commando.git#ribbon":
-  version "1.1.2-F-R.2"
-  resolved "https://github.com/Favna/discord.js-commando.git#d5df264410e09174a046318c41e174f635dcc2c5"
+discord.js-commando@Favna/discord.js-commando#ribbon:
+  version "1.1.2-F-R.3"
+  resolved "https://codeload.github.com/Favna/discord.js-commando/tar.gz/8659df6214a4f754b85523140065846166247526"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
     require-all "^2.0.0"
 
-"discord.js@https://github.com/Favna/discord.js.git#active":
+discord.js@Favna/discord.js#active:
   version "12.0.0-F.3"
-  resolved "https://github.com/Favna/discord.js.git#998e0e7972fabc19ba7018ac7e853981fb7a7d6a"
+  resolved "https://codeload.github.com/Favna/discord.js/tar.gz/998e0e7972fabc19ba7018ac7e853981fb7a7d6a"
   dependencies:
     pako "^1.0.0"
     prism-media hydrabolt/prism-media
