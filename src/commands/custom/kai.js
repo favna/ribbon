@@ -71,6 +71,6 @@ module.exports = class kaiCommand extends commando.Command {
 			'image': {'url': this.fetchImage()},
 			'color': msg.guild ? msg.guild.members.get(this.client.user.id).displayColor : 16064544
 		},
-		'Please <@177179479712464896> get lost');
+		'Please <@418504046337589249> get lost');
 	}
 };
