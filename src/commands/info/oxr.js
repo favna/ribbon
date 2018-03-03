@@ -91,7 +91,7 @@ module.exports = class moneyCommand extends commando.Command {
 					oxrEmbed = new Discord.MessageEmbed();
 
 				oxrEmbed
-					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 					.setAuthor('🌐 Currency Converter')
 					.addField(args.curOne !== 'BTC'
 						? `:flag_${args.curOne.slice(0, 2).toLowerCase()}: Money in ${args.curOne}`

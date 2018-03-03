@@ -80,7 +80,7 @@ module.exports = class activityCommand extends commando.Command {
 			});
 
 		embed
-			.setColor('#E24141')
+			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 			.setAuthor(args.member.user.tag, ava, `${ava}?size2048`)
 			.setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
 

@@ -74,7 +74,7 @@ module.exports = class porngifsCommand extends commando.Command {
 					.setURL(gifs[gif].url)
 					.setTitle(gifs[gif].title)
 					.setImage(`${gifs[gif].url}`)
-					.setColor('#E24141')
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 					.addField('Gif webm', `[Click Here](${gifs[gif].webm})`, true);
 				deleteCommandMessages(msg, this.client);
 

@@ -57,7 +57,7 @@ module.exports = class eightBallCommand extends commando.Command {
 		const eightBallEmbed = new Discord.MessageEmbed();
 
 		eightBallEmbed
-			.setColor('#E24141')
+			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 			.addField(':question: Question', args.question, false)
 			.addField(':8ball: 8ball', predict(), false);
 		

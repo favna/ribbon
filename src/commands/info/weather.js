@@ -109,7 +109,7 @@ module.exports = class weatherCommand extends commando.Command {
 				.setAuthor(`Weather data for ${info.location.city} - ${info.location.country}`)
 				.setFooter(`Weather data pulled from ${info.image.title} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
 				.setThumbnail(info.item.description.slice(19, 56))
-				.setColor('#E24141')
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 				.addField('💨 Wind Speed', `${info.wind.speed} ${info.units.speed}`, true)
 				.addField('💧 Humidity', `${info.atmosphere.humidity}%`, true)
 				.addField('🌅 Sunrise', this.convertTimeFormat(info.astronomy.sunrise), true)

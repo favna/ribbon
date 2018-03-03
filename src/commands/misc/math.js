@@ -81,7 +81,7 @@ module.exports = class mathCommand extends commando.Command {
 		const mathEmbed = new Discord.MessageEmbed();
 
 		mathEmbed
-			.setColor('#E24141')
+			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 			.addField('Equation', args.equation.toString(), false)
 			.addField('Result', scalc(args.equation), false);
 

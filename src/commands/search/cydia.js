@@ -59,7 +59,7 @@ module.exports = class cydiaCommand extends commando.Command {
 
 		if (res) {
 			cydiaEmbed
-				.setColor('#E24141')
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 				.setAuthor('Tweak Info', 'http://i.imgur.com/OPZfdht.png')
 				.addField('Display Name', res.display, true)
 				.addField('Package Name', res.name, true)

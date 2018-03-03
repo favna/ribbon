@@ -63,7 +63,7 @@ module.exports = class mangaCommand extends commando.Command {
 			if (manga) {
 
 				manEmbed
-					.setColor('#E24141')
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 					.setTitle(manga.title)
 					.setImage(manga.cover)
 					.setDescription(manga.description)

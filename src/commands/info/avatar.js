@@ -77,7 +77,7 @@ module.exports = class avatarCommand extends commando.Command {
 			ext = this.fetchExt(ava);
 
 		embed
-			.setColor('#E24141')
+			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 			.setImage(ext.includes('gif') ? `${ava}&f=.gif` : ava)
 			.setTitle(args.member.displayName)
 			.setURL(ava)

@@ -98,7 +98,7 @@ module.exports = class gameCommand extends commando.Command {
 		/* eslint-enable sort-vars*/
 
 		gameEmbed
-			.setColor(msg.guild ? msg.member.displayHexColor : '#FF0000')
+			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 			.setTitle(gameInfo.body[0].name)
 			.setURL(gameInfo.body[0].url)
 			.setThumbnail(coverImg)

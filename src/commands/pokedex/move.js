@@ -85,7 +85,7 @@ module.exports = class moveCommand extends commando.Command {
 				targetString = move.target === 'normal' ? 'One Enemy' : capitalizeFirstLetter(move.target.replace(/([A-Z])/g, ' $1'));
 
 			moveEmbed
-				.setColor('#E24141')
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.addField('Description', descString)
 				.addField('Type', move.type, true)
