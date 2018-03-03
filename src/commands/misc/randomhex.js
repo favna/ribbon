@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 
@@ -41,7 +41,7 @@ module.exports = class RandomHexCommand extends commando.Command {
 	}
 
 	run (msg) {
-		const embed = new Discord.MessageEmbed(),
+		const embed = new MessageEmbed(),
 			hex = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 
 		embed

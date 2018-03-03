@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	request = require('snekfetch'),
@@ -64,7 +64,7 @@ module.exports = class youtubeCommand extends commando.Command {
 			.query('type', 'video');
 
 		if (res && res.body.items && res.body.items.length >= 1) {
-			const embed = new Discord.MessageEmbed(),
+			const embed = new MessageEmbed(),
 				video = res.body.items[0];
 
 			deleteCommandMessages(msg, this.client);

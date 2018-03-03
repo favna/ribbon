@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	igdbapi = require('igdb-api-node').default,
 	moment = require('moment'),
@@ -73,7 +73,7 @@ module.exports = class gameCommand extends commando.Command {
 
 	async run (msg, args) {
 		/* eslint-disable sort-vars*/
-		const gameEmbed = new Discord.MessageEmbed(),
+		const gameEmbed = new MessageEmbed(),
 			igdb = igdbapi(igdbAPIKey),
 			gameInfo = await igdb.games({
 				'search': args.game,

@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Spotify = require('spotify-web-api-node'),
 	commando = require('discord.js-commando'),
 	duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
@@ -71,7 +71,7 @@ module.exports = class activityCommand extends commando.Command {
 
 		const activity = args.member.presence.activity,
 			ava = args.member.user.displayAvatarURL(),
-			embed = new Discord.MessageEmbed(),
+			embed = new MessageEmbed(),
 			ext = this.fetchExt(ava),
 			gameList = await request.get('https://canary.discordapp.com/api/v6/games'),
 			spotifyApi = new Spotify({

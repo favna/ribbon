@@ -24,7 +24,7 @@
  */
 
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	path = require('path'),
@@ -110,7 +110,7 @@ module.exports = class abilityCommand extends commando.Command {
 	async run (msg, args) {
 
 		const abilities = await this.fetchAbilities(),
-			abilityEmbed = new Discord.MessageEmbed(),
+			abilityEmbed = new MessageEmbed(),
 			aliases = await this.fetchAliases();
 
 		let ability = {},

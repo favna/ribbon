@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	{oneLine, stripIndents} = require('common-tags'),
@@ -62,7 +62,7 @@ module.exports = class nickallCommand extends commando.Command {
 	run (msg, args) {
 		const allMembers = msg.guild.members.values(),
 			argData = args.data.split(' '),
-			embed = new Discord.MessageEmbed(),
+			embed = new MessageEmbed(),
 			modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
 				msg.guild.channels.exists('name', 'mod-logs')
 					? msg.guild.channels.find('name', 'mod-logs').id

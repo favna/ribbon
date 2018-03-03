@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	fs = require('fs'),
@@ -73,7 +73,7 @@ module.exports = class copypastaCommand extends commando.Command {
 			if (pastaContent) {
 				if (pastaContent.length <= 1024) {
 					/* eslint-disable no-nested-ternary */
-					const cpEmbed = new Discord.MessageEmbed(),
+					const cpEmbed = new MessageEmbed(),
 						ext = pastaContent.includes('.png') ? '.png'
 							: pastaContent.includes('.jpg') ? '.jpg'
 								: pastaContent.includes('.gif') ? '.gif'

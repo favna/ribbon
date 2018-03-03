@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	strawpoll = require('strawpoll.js'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -87,7 +87,7 @@ module.exports = class strawpollCommand extends commando.Command {
 				'dupcheck': 'normal',
 				'captcha': false
 			}),
-			pollEmbed = new Discord.MessageEmbed();
+			pollEmbed = new MessageEmbed();
 
 		if (poll) {
 			pollEmbed

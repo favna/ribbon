@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	cydia = require('cydia-api-node'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -54,7 +54,7 @@ module.exports = class cydiaCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const cydiaEmbed = new Discord.MessageEmbed(),
+		const cydiaEmbed = new MessageEmbed(),
 			res = await cydia.getAllInfo(args.query);
 
 		if (res) {

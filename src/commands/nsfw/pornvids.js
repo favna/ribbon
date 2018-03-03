@@ -23,13 +23,13 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Pornsearch = require('pornsearch').default,
 	commando = require('discord.js-commando'),
 	random = require('node-random'),
 	{deleteCommandMessages} = require('../../util.js');
 
-const pornEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
+const pornEmbed = new MessageEmbed(); // eslint-disable-line one-var
 
 module.exports = class pornvidsCommand extends commando.Command {
 	constructor (client) {

@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
 	querystring = require('querystring'),
@@ -88,7 +88,7 @@ module.exports = class googleCommand extends commando.Command {
 
 			const LEARN_MORE_URL = result.detailedDescription.url.replace(/\(/, '%28').replace(/\)/, '%29'),
 				description = `${result.detailedDescription.articleBody} [Learn More...](${LEARN_MORE_URL})`,
-				knowledgeGraphEmbed = new Discord.MessageEmbed(),
+				knowledgeGraphEmbed = new MessageEmbed(),
 				title = `${result.name} ${types.length === 0 ? '' : `(${types.join(', ')})`}`,
 				url = result.detailedDescription.url;
 

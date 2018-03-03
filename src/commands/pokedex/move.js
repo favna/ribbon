@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	moves = require('../../data/dex/moves').BattleMovedex,
@@ -57,7 +57,7 @@ module.exports = class moveCommand extends commando.Command {
 
 	run (msg, args) {
 		const match = new Matcher(Object.keys(moves).join(' ')),
-			moveEmbed = new Discord.MessageEmbed();
+			moveEmbed = new MessageEmbed();
 
 		let move = moves[args.move.toLowerCase()];
 

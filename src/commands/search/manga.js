@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	maljs = require('maljs'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -54,7 +54,7 @@ module.exports = class mangaCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const manEmbed = new Discord.MessageEmbed(),
+		const manEmbed = new MessageEmbed(),
 			res = await maljs.quickSearch(args.query, 'manga');
 
 		if (res) {

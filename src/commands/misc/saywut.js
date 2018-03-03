@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	{oneLine} = require('common-tags'),
@@ -48,7 +48,7 @@ module.exports = class sayWutCommand extends commando.Command {
 
 	run (msg) {
 		const saydata = this.client.provider.get(msg.guild.id, 'saydata', null),
-			wutEmbed = new Discord.MessageEmbed();
+			wutEmbed = new MessageEmbed();
 
 		if (saydata) {
 			wutEmbed

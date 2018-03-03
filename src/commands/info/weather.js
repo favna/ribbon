@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	weather = require('yahoo-weather'),
@@ -102,7 +102,7 @@ module.exports = class weatherCommand extends commando.Command {
 
 	async run (msg, args) {
 		const info = await weather(args.city),
-			weatherEmbed = new Discord.MessageEmbed();
+			weatherEmbed = new MessageEmbed();
 
 		if (info) {
 			weatherEmbed

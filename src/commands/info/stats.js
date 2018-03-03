@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
 	moment = require('moment'),
@@ -60,7 +60,7 @@ module.exports = class statsCommand extends commando.Command {
 	}
 
 	run (msg) {
-		const statsEmbed = new Discord.MessageEmbed();
+		const statsEmbed = new MessageEmbed();
 
 		statsEmbed
 			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
@@ -70,7 +70,7 @@ module.exports = class statsCommand extends commando.Command {
 			.addField('Users', this.client.users.size, true)
 			.addField('Owner', 'Favna#2846', true)
 			.addField('License', 'GPL-3.0 + 7b & 7c', true)
-			.addField('Discord.JS', '12.0', true)
+			.addField('MessageEmbedJS', '12.0', true)
 			.addField('NodeJS', process.version, true)
 			.addField('Platform', this.fetchPlatform(process.platform.toLowerCase()), true)
 			.addField('Memory Usage', `${Math.round(process.memoryUsage().heapUsed / 10485.76) / 100} MB`, true)

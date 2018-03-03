@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 
@@ -73,7 +73,7 @@ module.exports = class avatarCommand extends commando.Command {
 
 	run (msg, args) {
 		const ava = args.member.user.displayAvatarURL({'size': args.size}),
-			embed = new Discord.MessageEmbed(),
+			embed = new MessageEmbed(),
 			ext = this.fetchExt(ava);
 
 		embed

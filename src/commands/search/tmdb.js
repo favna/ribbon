@@ -25,7 +25,7 @@
 
 /* eslint-disable no-mixed-requires*/
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	request = require('snekfetch'),
@@ -58,7 +58,7 @@ module.exports = class movieCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const embed = new Discord.MessageEmbed(),
+		const embed = new MessageEmbed(),
 			search = await request.get('https://api.themoviedb.org/3/search/movie')
 				.query('api_key', TheMovieDBV3ApiKey)
 				.query('query', args.name)

@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	coin = require('flipacoin'),
 	commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -46,7 +46,7 @@ module.exports = class coinCommand extends commando.Command {
 	}
 
 	run (msg) {
-		const coinEmbed = new Discord.MessageEmbed(),
+		const coinEmbed = new MessageEmbed(),
 			res = coin();
 
 		coinEmbed

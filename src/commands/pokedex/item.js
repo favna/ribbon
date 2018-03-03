@@ -24,7 +24,7 @@
  */
 
 /* eslint-disable sort-vars */
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	request = require('snekfetch'),
@@ -123,7 +123,7 @@ module.exports = class itemCommand extends commando.Command {
 
 	async run (msg, args) {
 		const aliases = await this.fetchAliases(),
-			itemEmbed = new Discord.MessageEmbed(),
+			itemEmbed = new MessageEmbed(),
 			items = await this.fetchItems();
 
 

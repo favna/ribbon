@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 
@@ -45,7 +45,7 @@ module.exports = class inviteCommnad extends commando.Command {
 	}
 
 	run (msg) {
-		const inviteEmbed = new Discord.MessageEmbed();
+		const inviteEmbed = new MessageEmbed();
 
 		inviteEmbed
 			.setAuthor('Ribbon Links')

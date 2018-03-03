@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	urban = require('urban'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -60,7 +60,7 @@ module.exports = class urbanCommand extends commando.Command {
 
 				return msg.reply('⚠️ No Results Found!');
 			}
-			const urbanEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
+			const urbanEmbed = new MessageEmbed(); // eslint-disable-line one-var
 
 			urbanEmbed
 				.setAuthor(`Urban Search - ${json.word}`, 'https://i.imgur.com/miYLsGw.jpg')

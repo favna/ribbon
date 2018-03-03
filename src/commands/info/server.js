@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -82,7 +82,7 @@ module.exports = class serverInfoCommand extends commando.Command {
 
 		const channels = msg.guild.channels.map(ty => ty.type), // eslint-disable-line sort-vars
 			presences = msg.guild.presences.map(st => st.status),
-			serverEmbed = new Discord.MessageEmbed();
+			serverEmbed = new MessageEmbed();
 
 		let guildChannels = 0,
 			onlineMembers = 0;

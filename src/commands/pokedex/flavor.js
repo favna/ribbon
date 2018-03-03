@@ -24,7 +24,7 @@
  */
 
 /* eslint-disable sort-vars, max-statements */
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	dexEntries = require('../../data/dex/flavorText.json'),
@@ -149,7 +149,7 @@ module.exports = class flavorCommand extends commando.Command {
 
 	async run (msg, args) {
 		const aliases = await this.fetchAliases(),
-			dataEmbed = new Discord.MessageEmbed(),
+			dataEmbed = new MessageEmbed(),
 			dex = await this.fetchDex(),
 			pokedexEntries = [];
 

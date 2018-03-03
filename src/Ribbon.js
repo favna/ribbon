@@ -25,7 +25,7 @@
 
 // eslint-disable-next-line no-mixed-requires
 const Commando = require('discord.js-commando'),
-	Discord = require('discord.js'),
+	{MessageEmbed} = require('discord.js'),
 	Path = require('path'),
 	auth = require(Path.join(`${__dirname}/auth.json`)),
 	moment = require('moment'),
@@ -144,7 +144,7 @@ class Ribbon {
 	onGuildMemberAdd () {
 		return (member) => {
 			if (this.client.provider.get(member.guild, 'memberlogs', true)) {
-				const embed = new Discord.MessageEmbed(),
+				const embed = new MessageEmbed(),
 					memberLogs = this.client.provider.get(member.guild, 'memberlogchannel',
 						member.guild.channels.exists('name', 'member-logs')
 							? member.guild.channels.find('name', 'member-logs').id
@@ -170,7 +170,7 @@ class Ribbon {
 	onGuildMemberRemove () {
 		return (member) => {
 			if (this.client.provider.get(member.guild, 'memberlogs', true)) {
-				const embed = new Discord.MessageEmbed(),
+				const embed = new MessageEmbed(),
 					memberLogs = this.client.provider.get(member.guild, 'memberlogchannel',
 						member.guild.channels.exists('name', 'member-logs')
 							? member.guild.channels.find('name', 'member-logs').id

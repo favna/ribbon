@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	{oneLine} = require('common-tags'),
@@ -51,7 +51,7 @@ module.exports = class lockdownCommand extends commando.Command {
 	}
 
 	run (msg) {
-		const embed = new Discord.MessageEmbed(),
+		const embed = new MessageEmbed(),
 			modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
 				msg.guild.channels.exists('name', 'mod-logs')
 					? msg.guild.channels.find('name', 'mod-logs').id

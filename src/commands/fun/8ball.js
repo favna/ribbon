@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	predict = require('eightball'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -54,7 +54,7 @@ module.exports = class eightBallCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		const eightBallEmbed = new Discord.MessageEmbed();
+		const eightBallEmbed = new MessageEmbed();
 
 		eightBallEmbed
 			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
