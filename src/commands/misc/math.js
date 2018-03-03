@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	scalc = require('scalc'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -78,10 +78,10 @@ module.exports = class mathCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		const mathEmbed = new Discord.MessageEmbed();
+		const mathEmbed = new MessageEmbed();
 
 		mathEmbed
-			.setColor('#E24141')
+			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 			.addField('Equation', args.equation.toString(), false)
 			.addField('Result', scalc(args.equation), false);
 

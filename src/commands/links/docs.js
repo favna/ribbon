@@ -364,7 +364,7 @@ module.exports = class DocsCommand extends Command {
 
 		embed.url = this.getLink(version);
 		embed.author = {
-			'name': version === 'commando' ? 'Commando Docs' : `Discord.js Docs (${version})`,
+			'name': version === 'commando' ? 'Commando Docs' : `MessageEmbedjs Docs (${version})`,
 			'icon_url': 'https://cdn.discordapp.com/icons/222078108977594368/bc226f09db83b9176c64d923ff37010b.webp'
 		};
 

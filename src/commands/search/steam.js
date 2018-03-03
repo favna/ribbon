@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	SteamAPI = require('steamapi'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
@@ -65,7 +65,7 @@ module.exports = class steamCommand extends commando.Command {
 	async run (msg, args) {
 
 		const steam = new SteamAPI(steamAPIKey),
-			steamEmbed = new Discord.MessageEmbed(),
+			steamEmbed = new MessageEmbed(),
 			steamSearch = await request.get(`http://store.steampowered.com/search/?term=${args.game}`);
 
 		if (steamSearch) {
@@ -87,7 +87,7 @@ module.exports = class steamCommand extends commando.Command {
 				}
 
 				steamEmbed
-					.setColor('#E24141')
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 					.setTitle(steamData.name)
 					.setURL(`http://store.steampowered.com/app/${steamData.steam_appid}/`)
 					.setImage(steamData.header_image)

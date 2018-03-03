@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	random = require('node-random'),
@@ -60,10 +60,10 @@ module.exports = class fightCommand extends commando.Command {
 	}
 
 	run (msg, args) {
-		const fighterEmbed = new Discord.MessageEmbed();
+		const fighterEmbed = new MessageEmbed();
 
 		fighterEmbed
-			.setColor('#E24141')
+			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 			.setTitle('🥊 Fight Results 🥊')
 			.setThumbnail('http://i.imgur.com/LxPAE2f.png');
 

@@ -24,7 +24,7 @@
  */
 
 /* eslint-disable sort-vars, max-statements,complexity */
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	dexEntries = require('../../data/dex/flavorText.json'),
@@ -151,7 +151,7 @@ module.exports = class dexCommand extends commando.Command {
 	async run (msg, args) {
 		const aliases = await this.fetchAliases(),
 			dex = await this.fetchDex(),
-			dexEmbed = new Discord.MessageEmbed();
+			dexEmbed = new MessageEmbed();
 
 		let abilityString = '',
 			evos = '',

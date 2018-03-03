@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	strawpoll = require('strawpoll.js'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -87,11 +87,11 @@ module.exports = class strawpollCommand extends commando.Command {
 				'dupcheck': 'normal',
 				'captcha': false
 			}),
-			pollEmbed = new Discord.MessageEmbed();
+			pollEmbed = new MessageEmbed();
 
 		if (poll) {
 			pollEmbed
-				.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 				.setTitle(poll.title)
 				.setURL(`http://www.strawpoll.me/${poll.id}`)
 				.setImage(`http://www.strawpoll.me/images/poll-results/${poll.id}.png`)

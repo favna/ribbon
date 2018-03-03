@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
@@ -60,7 +60,7 @@ module.exports = class discordBotsCommand extends commando.Command {
 
 		const info = await request.get(`https://discordbots.org/api/bots/${args.bot}`)
 				.set('Authorization', auth.discordbotsAPIKey),
-			infoEmbed = new Discord.MessageEmbed();
+			infoEmbed = new MessageEmbed();
 
 		if (info) {
 			const botinfo = JSON.parse(info.text);

@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	currencySymbol = require('currency-symbol-map'),
 	fx = require('money'),
@@ -88,10 +88,10 @@ module.exports = class moneyCommand extends commando.Command {
 				fx.rates = oxr.rates;
 				fx.base = oxr.base;
 				const convertedMoney = await this.converter(this.replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo),
-					oxrEmbed = new Discord.MessageEmbed();
+					oxrEmbed = new MessageEmbed();
 
 				oxrEmbed
-					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 					.setAuthor('🌐 Currency Converter')
 					.addField(args.curOne !== 'BTC'
 						? `:flag_${args.curOne.slice(0, 2).toLowerCase()}: Money in ${args.curOne}`

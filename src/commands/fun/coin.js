@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	coin = require('flipacoin'),
 	commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -46,11 +46,11 @@ module.exports = class coinCommand extends commando.Command {
 	}
 
 	run (msg) {
-		const coinEmbed = new Discord.MessageEmbed(),
+		const coinEmbed = new MessageEmbed(),
 			res = coin();
 
 		coinEmbed
-			.setColor('#E24141')
+			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 			.setImage(res === 'head' ? 'https://favna.s-ul.eu/8ZKmpiKO.png' : 'https://favna.s-ul.eu/NTsDbSUo.png')
 			.setTitle(`Flipped ${res}s`);
 

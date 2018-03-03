@@ -49,8 +49,7 @@ module.exports = class timeCommand extends commando.Command {
 				{
 					'key': 'city',
 					'prompt': 'Get time in which city?',
-					'type': 'string',
-					'parse': p => p.toLowerCase()
+					'type': 'string'
 				}
 			]
 		});
@@ -80,14 +79,16 @@ module.exports = class timeCommand extends commando.Command {
 				.query('lng', cords[1]);
 
 			if (time.ok) {
-				const timeEmbed = new MessageEmbed();
+				const timeArr = time.body.formatted.split(' '),
+					timeEmbed = new MessageEmbed();
 
 				timeEmbed
-					.setTitle(`The current time in **${args.city}** is ${time.body.formatted}`)
-					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-					.addField('Country', time.body.countryName, true)
-					.addField('GMT Offset', time.body.gmtOffset, true)
-					.addField('DST', time.body.dst, true);
+					.setTitle(`:flag_${time.body.countryCode.toLowerCase()}: ${args.city}`)
+					.setDescription(stripIndents `**Current Time:** ${timeArr[1]}
+					**Current Date:** ${timeArr[0]}
+					**Country:** ${time.body.countryName}
+					**DST:** ${time.body.dst}`)
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2');
 
 				deleteCommandMessages(msg, this.client);
 

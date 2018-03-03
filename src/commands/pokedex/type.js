@@ -25,7 +25,7 @@
 
 /* eslint-disable max-statements, complexity, block-scoped-var, vars-on-top, one-var, no-var, no-redeclare, max-depth, init-declarations */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	typeMatchups = require('../../data/dex/typechart').BattleTypeChart,
 	{oneLine} = require('common-tags'),
@@ -113,7 +113,7 @@ module.exports = class typeCommand extends commando.Command {
 			normalTypes = [],
 			resistRaw = [],
 			resistTypes = [],
-			typeEmbed = new Discord.MessageEmbed(),
+			typeEmbed = new MessageEmbed(),
 			vulnDisplay = [],
 			vulnRaw = [],
 			vulnTypes = [];
@@ -285,7 +285,7 @@ module.exports = class typeCommand extends commando.Command {
 		}
 
 		typeEmbed
-			.setColor('#E24141')
+			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 			.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 			.setAuthor(`Type effectiveness for ${displayTypes.join(', ')}`)
 			.addField('Offense', atkVulnDisplay.join('\n\n'))

@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	maljs = require('maljs'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -54,7 +54,7 @@ module.exports = class animeCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const aniEmbed = new Discord.MessageEmbed(),
+		const aniEmbed = new MessageEmbed(),
 			res = await maljs.quickSearch(args.query, 'anime');
 
 		if (res) {
@@ -63,7 +63,7 @@ module.exports = class animeCommand extends commando.Command {
 			if (anime) {
 
 				aniEmbed
-					.setColor('#E24141')
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 					.setTitle(anime.title)
 					.setImage(anime.cover)
 					.setDescription(anime.description)

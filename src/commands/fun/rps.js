@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	random = require('node-random'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -66,7 +66,7 @@ module.exports = class rpsCommand extends commando.Command {
 			'maximum': 3
 		}, (error, randoms) => { // eslint-disable-line complexity
 			if (!error) {
-				const rpsEmbed = new Discord.MessageEmbed();
+				const rpsEmbed = new MessageEmbed();
 
 				let resString = 'Woops something went wrong';
 
@@ -91,7 +91,7 @@ module.exports = class rpsCommand extends commando.Command {
 				}
 
 				rpsEmbed
-					.setColor(msg.member !== null ? msg.member.displayHexColor : '#FF0000')
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 					.setTitle('Rock Paper Scissors')
 					.setDescription(resString);
 

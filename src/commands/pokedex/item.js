@@ -24,7 +24,7 @@
  */
 
 /* eslint-disable sort-vars */
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	request = require('snekfetch'),
@@ -123,7 +123,7 @@ module.exports = class itemCommand extends commando.Command {
 
 	async run (msg, args) {
 		const aliases = await this.fetchAliases(),
-			itemEmbed = new Discord.MessageEmbed(),
+			itemEmbed = new MessageEmbed(),
 			items = await this.fetchItems();
 
 
@@ -146,7 +146,7 @@ module.exports = class itemCommand extends commando.Command {
 
 		if (Object.keys(item).length !== 0) {
 			itemEmbed
-				.setColor('#E24141')
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.setAuthor(`${capitalizeFirstLetter(item.name)}`, imgURL)
 				.addField('Description', item.desc)

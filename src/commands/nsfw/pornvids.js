@@ -23,13 +23,13 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Pornsearch = require('pornsearch').default,
 	commando = require('discord.js-commando'),
 	random = require('node-random'),
 	{deleteCommandMessages} = require('../../util.js');
 
-const pornEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
+const pornEmbed = new MessageEmbed(); // eslint-disable-line one-var
 
 module.exports = class pornvidsCommand extends commando.Command {
 	constructor (client) {
@@ -74,7 +74,7 @@ module.exports = class pornvidsCommand extends commando.Command {
 					.setURL(vids[vid].url)
 					.setTitle(vids[vid].title)
 					.setImage(vids[vid].thumb)
-					.setColor('#E24141')
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 					.addField('Porn video URL', `[Click Here](${vids[vid].url})`, true)
 					.addField('Porn video duration', vids[vid].duration === !'' ? vids[vid].url : 'unknown', true);
 

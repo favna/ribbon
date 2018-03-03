@@ -15,7 +15,7 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	request = require('snekfetch'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -46,7 +46,7 @@ module.exports = class defineCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const defineEmbed = new Discord.MessageEmbed(),
+		const defineEmbed = new MessageEmbed(),
 			word = await request.get(`https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=${args.query}`);
 
 		if (word.body.tuc) {
@@ -64,7 +64,7 @@ module.exports = class defineCommand extends commando.Command {
 				final.push(`**${(parseInt(index, 10) + 1)}:** ${item}`);
 			}
 			defineEmbed
-				.setColor('#E24141')
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 				.setDescription(final);
 
 			deleteCommandMessages(msg, this.client);

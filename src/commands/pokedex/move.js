@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),
 	moves = require('../../data/dex/moves').BattleMovedex,
@@ -57,7 +57,7 @@ module.exports = class moveCommand extends commando.Command {
 
 	run (msg, args) {
 		const match = new Matcher(Object.keys(moves).join(' ')),
-			moveEmbed = new Discord.MessageEmbed();
+			moveEmbed = new MessageEmbed();
 
 		let move = moves[args.move.toLowerCase()];
 
@@ -85,7 +85,7 @@ module.exports = class moveCommand extends commando.Command {
 				targetString = move.target === 'normal' ? 'One Enemy' : capitalizeFirstLetter(move.target.replace(/([A-Z])/g, ' $1'));
 
 			moveEmbed
-				.setColor('#E24141')
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.addField('Description', descString)
 				.addField('Type', move.type, true)

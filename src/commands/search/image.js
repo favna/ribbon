@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
 	querystring = require('querystring'),
@@ -57,7 +57,7 @@ module.exports = class imageCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const embed = new Discord.MessageEmbed(),
+		const embed = new MessageEmbed(),
 			query = args.query
 				.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
 				.split(' ')
@@ -75,7 +75,7 @@ module.exports = class imageCommand extends commando.Command {
 
 		if (res && res.body.items) {
 			embed
-				.setColor('#E24141')
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 				.setImage(res.body.items[0].link)
 				.setFooter(`Search query: "${args.query}"`);
 
@@ -93,7 +93,7 @@ module.exports = class imageCommand extends commando.Command {
 					.attr('src');
 
 			embed
-				.setColor('#E24141')
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 				.setImage(result)
 				.setFooter(`Search query: "${args.query}"`);
 

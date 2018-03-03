@@ -23,13 +23,13 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	Pornsearch = require('pornsearch').default,
 	commando = require('discord.js-commando'),
 	random = require('node-random'),
 	{deleteCommandMessages} = require('../../util.js');
 
-const pornEmbed = new Discord.MessageEmbed(); // eslint-disable-line one-var
+const pornEmbed = new MessageEmbed(); // eslint-disable-line one-var
 
 module.exports = class porngifsCommand extends commando.Command {
 	constructor (client) {
@@ -74,7 +74,7 @@ module.exports = class porngifsCommand extends commando.Command {
 					.setURL(gifs[gif].url)
 					.setTitle(gifs[gif].title)
 					.setImage(`${gifs[gif].url}`)
-					.setColor('#E24141')
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 					.addField('Gif webm', `[Click Here](${gifs[gif].webm})`, true);
 				deleteCommandMessages(msg, this.client);
 

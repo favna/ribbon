@@ -23,7 +23,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const Discord = require('discord.js'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -82,7 +82,7 @@ module.exports = class serverInfoCommand extends commando.Command {
 
 		const channels = msg.guild.channels.map(ty => ty.type), // eslint-disable-line sort-vars
 			presences = msg.guild.presences.map(st => st.status),
-			serverEmbed = new Discord.MessageEmbed();
+			serverEmbed = new MessageEmbed();
 
 		let guildChannels = 0,
 			onlineMembers = 0;
@@ -99,7 +99,7 @@ module.exports = class serverInfoCommand extends commando.Command {
 		}
 
 		serverEmbed
-			.setColor(msg.guild.owner ? msg.guild.owner.displayHexColor : '#E24141')
+			.setColor(msg.guild.owner ? msg.guild.owner.displayHexColor : '#A1E7B2')
 			.setAuthor('Server Info', 'https://favna.s-ul.eu/O0qc0yt7.png')
 			.setThumbnail(msg.guild.iconURL({'format': 'png'}))
 			.setFooter(`Server ID: ${msg.guild.id}`)
