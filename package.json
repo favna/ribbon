@@ -49,8 +49,8 @@
     "jsonfile": "^4.0.0",
     "libsodium-wrappers": "^0.7.3",
     "maljs": "^0.3.0",
-    "moment": "^2.19.1",
-    "moment-duration-format": "2.1.1",
+    "moment": "2.21.0",
+    "moment-duration-format": "2.2.2",
     "money": "^0.2.0",
     "nintendo-switch-eshop": "1.1.0",
     "node-opus": "^0.2.7",
@@ -79,7 +79,7 @@
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {
-    "eslint": "4.18.1",
+    "eslint": "4.18.2",
     "eslint-plugin-node": "6.0.1",
     "tap-summary": "^4.0.0",
     "tape": "4.9.0"
