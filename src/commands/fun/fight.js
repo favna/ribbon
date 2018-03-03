@@ -85,7 +85,7 @@ module.exports = class fightCommand extends commando.Command {
 		if (args.fighterOne.toLowerCase() === 'favna' || args.fighterTwo.toLowerCase() === 'favna') {
 			fighterEmbed
 				.addField('You got mega rekt', '***Favna always wins***')
-				.setImage('https://i.imgur.com/XRsLP7Q.gif');
+				.setImage('https://favna.s-ul.eu/gifs/hsp6RS9O.gif');
 
 			deleteCommandMessages(msg, this.client);
 
