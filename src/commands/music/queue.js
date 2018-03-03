@@ -73,7 +73,7 @@ module.exports = class ViewQueueCommand extends commando.Command {
 		deleteCommandMessages(msg, this.client);
 
 		return msg.embed({
-			'color': 3447003,
+			'color': msg.guild ? msg.guild.me.displayColor : 10610610,
 			'author': {
 				'name': `${msg.author.tag} (${msg.author.id})`,
 				'icon_url': msg.author.displayAvatarURL({'format': 'png'}) // eslint-disable-line camelcase

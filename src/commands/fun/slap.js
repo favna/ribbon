@@ -79,7 +79,7 @@ module.exports = class kaiCommand extends commando.Command {
 				? `${args.member.displayName}! You got slapped by ${msg.member.displayName} 💢!`
 				: `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
 			'image': {'url': args.member !== '' ? this.fetchImage() : 'http://cdn.awwni.me/mz98.gif'},
-			'color': msg.guild ? msg.guild.members.get(this.client.user.id).displayColor : 16064544
+			'color': msg.guild ? msg.guild.me.displayColor : 10610610
 		});
 	}
 };

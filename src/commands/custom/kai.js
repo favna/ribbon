@@ -69,7 +69,7 @@ module.exports = class kaiCommand extends commando.Command {
 		msg.delete();
 		msg.embed({
 			'image': {'url': this.fetchImage()},
-			'color': msg.guild ? msg.guild.members.get(this.client.user.id).displayColor : 16064544
+			'color': msg.guild ? msg.guild.me.displayColor : 10610610
 		},
 		'Please <@418504046337589249> get lost');
 	}
