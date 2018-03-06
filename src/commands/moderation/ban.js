@@ -79,11 +79,11 @@ module.exports = class banCommand extends commando.Command {
 
 		if (/--nodelete/im.test(msg.argString)) {
 			args.reason = args.reason.substring(0, args.reason.indexOf('--nodelete')) + args.reason.substring(args.reason.indexOf('--nodelete') + '--nodelete'.length + 1);
-			args.deletemessages = true;
+			args.keepmessages = true;
 		}
 		
 		args.member.ban({
-			'days': args.deletemessages ? 1 : 0,
+			'days': args.keepmessages ? 0 : 1,
 			'reason': args.reason !== '' ? args.reason : 'No reason given by staff'
 		});
 
