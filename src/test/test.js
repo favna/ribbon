@@ -25,8 +25,7 @@
 
 const Ribbon = require('../Ribbon.js'),
 	test = require('tape'),
-	token = require('../auth.json').token;
-
+	{token} = require('../auth.json');
 
 test('connect & disconnect', (timeout) => {
 	timeout.timeoutAfter(30000);

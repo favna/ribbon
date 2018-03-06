@@ -61,7 +61,7 @@ module.exports = class SkipSongCommand extends commando.Command {
 			deleteCommandMessages(msg, this.client);
 			
 			return msg.reply('the song hasn\'t even begun playing yet. Why not give it a chance?');
-		} // eslint-disable-line max-len
+		}
 
 		const threshold = Math.ceil((queue.voiceChannel.members.size - 1) / 3), // eslint-disable-line one-var
 			force = threshold <= 1 || // eslint-disable-line sort-vars

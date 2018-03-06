@@ -27,7 +27,7 @@
 
 const path = require('path'),
 	Ribbon = require(path.join(__dirname, 'Ribbon.js')),
-	token = require(path.join(__dirname, 'auth.json')).token,
+	{token} = require(path.join(__dirname, 'auth.json')),
 	start = function () {
 		new Ribbon(token).init();
 	};

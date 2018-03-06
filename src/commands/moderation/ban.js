@@ -25,8 +25,8 @@
 
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	{oneLine} = require('common-tags'),
+	moment = require('moment'), 
+	{oneLine} = require('common-tags'), 
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class banCommand extends commando.Command {
@@ -67,18 +67,23 @@ module.exports = class banCommand extends commando.Command {
 	run (msg, args) {
 		if (args.member.id === msg.author.id) {
 			deleteCommandMessages(msg, this.client);
-			
+
 			return msg.reply('⚠️ I don\'t think you want to ban yourself.');
 		}
 
 		if (!args.member.bannable) {
 			deleteCommandMessages(msg, this.client);
-			
+
 			return msg.reply('⚠️ I cannot ban that member, their role is probably higher than my own!');
 		}
 
+		if (/--nodelete/im.test(msg.argString)) {
+			args.reason = args.reason.substring(0, args.reason.indexOf('--nodelete')) + args.reason.substring(args.reason.indexOf('--nodelete') + '--nodelete'.length + 1);
+			args.keepmessages = true;
+		}
+		
 		args.member.ban({
-			'days': 1,
+			'days': args.keepmessages ? 0 : 1,
 			'reason': args.reason !== '' ? args.reason : 'No reason given by staff'
 		});
 
@@ -108,11 +113,11 @@ module.exports = class banCommand extends commando.Command {
 				msg.delete();
 			}
 			deleteCommandMessages(msg, this.client);
-			
+
 			return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
 		}
 		deleteCommandMessages(msg, this.client);
-		
+
 		return null;
 	}
 };
