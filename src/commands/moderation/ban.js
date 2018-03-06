@@ -77,7 +77,7 @@ module.exports = class banCommand extends commando.Command {
 			return msg.reply('⚠️ I cannot ban that member, their role is probably higher than my own!');
 		}
 
-		if (msg.argString.includes('--nodelete')) {
+		if (/--nodelete/im.test(msg.argString)) {
 			args.reason = args.reason.substring(0, args.reason.indexOf('--nodelete')) + args.reason.substring(args.reason.indexOf('--nodelete') + '--nodelete'.length + 1);
 			args.deletemessages = true;
 		}
