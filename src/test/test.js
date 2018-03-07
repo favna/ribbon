@@ -27,7 +27,6 @@ const Ribbon = require('../Ribbon.js'),
 	test = require('tape'),
 	{token} = require('../auth.json');
 
-
 test('connect & disconnect', (timeout) => {
 	timeout.timeoutAfter(30000);
 	timeout.ok(token, 'discord token should be set');
