@@ -23,7 +23,6 @@
  *         reasonable ways as different from the original version.
  */
 
-// eslint-disable-next-line no-mixed-requires
 const Commando = require('discord.js-commando'),
 	{MessageEmbed} = require('discord.js'),
 	Path = require('path'),
