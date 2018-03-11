@@ -249,7 +249,7 @@ bignumber.js@^2.1.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-2.4.0.tgz#838a992da9f9d737e0f4b2db0be62bb09dd0c5e8"
 
-bindings@1, bindings@~1.3.0:
+bindings@1, bindings@^1.2.1, bindings@~1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/bindings/-/bindings-1.3.0.tgz#b346f6ecf6a95f5a815c5839fc7cdb22502f1ed7"
 
@@ -597,9 +597,9 @@ ctype@0.5.3:
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/ctype/-/ctype-0.5.3.tgz#82c18c2461f74114ef16c135224ad0b9144ca12f"
 
-currency-symbol-map@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/currency-symbol-map/-/currency-symbol-map-4.0.3.tgz#2aa2359209383b30612a6fc1f1ccaf5fa4b679bc"
+currency-symbol-map@4.0.4:
+  version "4.0.4"
+  resolved "https://registry.yarnpkg.com/currency-symbol-map/-/currency-symbol-map-4.0.4.tgz#3cfba625974dd3f86822d327ecbd10248695e95e"
 
 currency-symbol-map@~2:
   version "2.2.0"
@@ -791,6 +791,13 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0:
 entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
+
+erlpack@discordapp/erlpack:
+  version "0.1.0"
+  resolved "https://codeload.github.com/discordapp/erlpack/tar.gz/674ebfd3439ba4b7ce616709821d27630f7cdc61"
+  dependencies:
+    bindings "^1.2.1"
+    nan "^2.1.0"
 
 error-ex@^1.2.0:
   version "1.3.1"
@@ -1841,7 +1848,7 @@ mute-stream@0.0.7, mute-stream@~0.0.4:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-nan@2, nan@^2.3.2, nan@^2.8.0:
+nan@2, nan@^2.1.0, nan@^2.3.2, nan@^2.8.0:
   version "2.9.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.9.2.tgz#f564d75f5f8f36a6d9456cca7a6c4fe488ab7866"
 
@@ -2680,9 +2687,9 @@ split@1.0.0:
   dependencies:
     through "2"
 
-spotify-web-api-node@^2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/spotify-web-api-node/-/spotify-web-api-node-2.5.0.tgz#b4982deeb235ede38d9cff9389ab24ed45ff19c1"
+spotify-web-api-node@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/spotify-web-api-node/-/spotify-web-api-node-3.0.0.tgz#c9f6dab8f2edf93ac0e270e434ef1135d241ab7c"
   dependencies:
     superagent "^2.0.0"
 
@@ -2724,10 +2731,6 @@ stack-trace@0.0.x:
 steamapi@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/steamapi/-/steamapi-2.0.0.tgz#71ac82cea53e7c743e0723d79d466f6b15000c4a"
-
-strawpoll.js@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/strawpoll.js/-/strawpoll.js-1.0.3.tgz#160ef73a87c1d680d8386dc1da36292bc9a1f7d0"
 
 stream-to-buffer@^0.1.0:
   version "0.1.0"
@@ -3121,9 +3124,9 @@ winston@0.8.x:
     pkginfo "0.3.x"
     stack-trace "0.0.x"
 
-winston@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/winston/-/winston-2.4.0.tgz#808050b93d52661ed9fb6c26b3f0c826708b0aee"
+winston@2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/winston/-/winston-2.4.1.tgz#a3a9265105564263c6785b4583b8c8aca26fded6"
   dependencies:
     async "~1.0.0"
     colors "1.0.x"
