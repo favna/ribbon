@@ -25,7 +25,7 @@
 
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
-	strawpoll = require('strawpoll.js'),
+	request = require('snekfetch'), 
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class strawpollCommand extends commando.Command {
@@ -57,11 +57,12 @@ module.exports = class strawpollCommand extends commando.Command {
 					'wait': 60,
 					'validate': (opts) => {
 						if (/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~ ]*\|[a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~]*)*/.test(opts) &&
-							opts.split('|').length >= 2) {
+							opts.split('|').length >= 2 && opts.split('|').length <= 30) {
 							return true;
 						}
 
-						return 'You need at least 2 options and the valid format for the options is `Question 1|Question 2|Question 3 etc..`';
+						return 'You need between 2 and 30 options and the valid format for the options is `Question 1|Question 2|Question 3 etc..`';
+
 					}
 				}
 			]
@@ -69,41 +70,33 @@ module.exports = class strawpollCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const APIConvertion = {
-				'dupcheck': {
-					'normal': 'IP Duplication Checking',
-					'permissive': 'Browser Cookie Duplication Checking',
-					'disabled': 'No Duplication Checking'
-				},
-				'multi': {
-					'true': 'Multiple poll answers allowed',
-					'false': 'Multiple poll answers disabled'
-				}
-			},
-			poll = await strawpoll.make({
-				'title': args.title,
-				'options': args.options.split('|'),
-				'multi': false,
-				'dupcheck': 'normal',
-				'captcha': false
-			}),
-			pollEmbed = new MessageEmbed();
+		const pollEmbed = new MessageEmbed(),
+			strawpoll = await request
+				.post('https://www.strawpoll.me/api/v2/polls')
+				.set('Content-Type', 'application/json')
+				.send({
+					'title': args.title,
+					'options': args.options.split('|'),
+					'multi': false,
+					'dupcheck': 'normal',
+					'captcha': true
+				});
 
-		if (poll) {
+		if (strawpoll.ok) {
 			pollEmbed
 				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-				.setTitle(poll.title)
-				.setURL(`http://www.strawpoll.me/${poll.id}`)
-				.setImage(`http://www.strawpoll.me/images/poll-results/${poll.id}.png`)
-				.addField('Duplication Check', APIConvertion.dupcheck[poll.dupcheck], true)
-				.addField('Multiple poll answers', APIConvertion.multi[poll.multi], true)
-				.addField('Poll options', poll.options, false);
+				.setTitle(strawpoll.body.title)
+				.setURL(`http://www.strawpoll.me/${strawpoll.body.id}`)
+				.setImage(`http://www.strawpoll.me/images/poll-results/${strawpoll.body.id}.png`)
+				.setDescription(`Options on this poll: \`${strawpoll.body.options.join(', ')}\` `);
 
 			deleteCommandMessages(msg, this.client);
 
-			return msg.embed(pollEmbed, `http://www.strawpoll.me/${poll.id}`);
+			return msg.embed(pollEmbed, `http://www.strawpoll.me/${strawpoll.body.id}`);
 		}
 
+		deleteCommandMessages(msg, this.client);
+		
 		return msg.reply('⚠️ an error occured creating the strawpoll');
 	}
 };
