@@ -68,7 +68,7 @@ module.exports = class statsCommand extends commando.Command {
 			.addField('Guilds', this.client.guilds.size, true)
 			.addField('Channels', this.client.channels.size, true)
 			.addField('Users', this.client.users.size, true)
-			.addField('Owner', 'Favna#2846', true)
+			.addField('Owner', 'Favna#0001', true)
 			.addField('License', 'GPL-3.0 + 7b & 7c', true)
 			.addField('MessageEmbedJS', '12.0', true)
 			.addField('NodeJS', process.version, true)
