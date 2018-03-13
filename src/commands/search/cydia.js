@@ -23,9 +23,13 @@
  *         reasonable ways as different from the original version.
  */
 
-const {MessageEmbed} = require('discord.js'),
+const Fuse = require('fuse.js'),
+	{MessageEmbed} = require('discord.js'),
+	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),
-	cydia = require('cydia-api-node'),
+	moment = require('moment'),
+	request = require('snekfetch'),
+	{stripIndents} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class cydiaCommand extends commando.Command {
@@ -54,28 +58,73 @@ module.exports = class cydiaCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		const cydiaEmbed = new MessageEmbed(),
-			res = await cydia.getAllInfo(args.query);
+		/* eslint-disable sort-vars*/
+		const baseURL = 'https://cydia.saurik.com/',
+			embed = new MessageEmbed(),
+			fsoptions = {
+				'shouldSort': true,
+				'threshold': 0.3,
+				'location': 0,
+				'distance': 100,
+				'maxPatternLength': 32,
+				'minMatchCharLength': 1,
+				'keys': ['display', 'name']
+			},
+			packages = await request.get(`${baseURL}api/macciti`).query('query', args.query);
 
-		if (res) {
-			cydiaEmbed
-				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-				.setAuthor('Tweak Info', 'http://i.imgur.com/OPZfdht.png')
-				.addField('Display Name', res.display, true)
-				.addField('Package Name', res.name, true)
-				.addField('Description', `${res.summary.slice(0, 900)}... [Read more](http://cydia.saurik.com/package/${res.name})`, true)
-				.addField('Version', res.version, true)
-				.addField('Section', res.section, true)
-				.addField('Price', res.price === 0 ? 'Free' : res.price, true)
-				.addField('Link', `[Click Here](http://cydia.saurik.com/package/${res.name})`, true)
-				.addField('Repo', `[${res.repo.name}](https://cydia.saurik.com/api/share#?source=${res.repo.link})`, true);
+		if (packages.ok) {
+			const fuse = new Fuse(packages.body.results, fsoptions),
+				results = fuse.search(args.query);
 
-			deleteCommandMessages(msg, this.client);
+			if (results.length) {
+				const result = results[0];
 
-			return msg.embed(cydiaEmbed);
+				embed
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+					.setTitle(result.display)
+					.setDescription(result.summary)
+					.addField('Version', result.version, true)
+					.addField('Link', `[Click Here](${baseURL}package/${result.name})`, true);
+
+				try {
+					const price = await request.get(`${baseURL}api/ibbignerd`).query('query', result.name),
+						site = await request.get(`${baseURL}package/${result.name}`);
+
+					if (site.ok) {
+						const $ = cheerio.load(site.text);
+
+						embed
+							.addField('Source', $('.source-name').html(), true)
+							.addField('Section', $('#section').html(), true)
+							.addField('Size', $('#extra').text(), true);
+					}
+
+					if (price.ok) {
+						embed.addField('Price', price.body ? `$${price.body.msrp}` : 'Free', true);
+					}
+
+					embed.addField('Package Name', result.name, false);
+
+					deleteCommandMessages(msg, this.client);
+
+					return msg.embed(embed);
+				} catch (e) {
+
+					// eslint-disable-next-line no-console
+					console.error(`${stripIndents `An error occured on the cydia command!
+					Server: ${msg.guild.name} (${msg.guild.id})
+					Author: ${msg.author.tag} (${msg.author.id})
+					Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+					Error Message:`} ${e}`);
+
+					embed.addField('Package Name', result.name, false);
+
+					deleteCommandMessages(msg, this.client);
+
+					return msg.embed(embed);
+				}
+			}
 		}
-
-		deleteCommandMessages(msg, this.client);
 
 		return msg.say(`**Tweak/Theme \`${args.query}\` not found!**`);
 	}

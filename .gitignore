@@ -13,3 +13,4 @@ src/stripe-auth.json
 
 # Files that shouldn't sync between my PC and RaspberryPi
 src/settings.sqlite3
+src/data/websearch/eshop.json
