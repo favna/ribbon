@@ -24,10 +24,7 @@
  */
 
 const commando = require('discord.js-commando'),
-	{
-		oneLine,
-		stripIndents
-	} = require('common-tags');
+	{oneLine, stripIndents} = require('common-tags');
 
 module.exports = class favnaCommand extends commando.Command {
 	constructor (client) {
