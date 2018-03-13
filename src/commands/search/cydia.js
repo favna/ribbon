@@ -40,9 +40,10 @@ module.exports = class cydiaCommand extends commando.Command {
 			'group': 'search',
 			'aliases': ['cy'],
 			'description': 'Finds info on a Cydia package',
-			'format': 'PackageName',
+			'format': 'PackageName | [[PackageName]]',
 			'examples': ['cydia anemone'],
 			'guildOnly': false,
+			'patterns': [/\[\[[a-zA-Z0-9 ]+\]\]/im],
 			'throttling': {
 				'usages': 2,
 				'duration': 3
@@ -58,7 +59,9 @@ module.exports = class cydiaCommand extends commando.Command {
 	}
 
 	async run (msg, args) {
-		/* eslint-disable sort-vars*/
+		if (msg.patternMatches) {
+			args.query = msg.patternMatches.input.substring(2, msg.patternMatches.input.length - 2);
+		}
 		const baseURL = 'https://cydia.saurik.com/',
 			embed = new MessageEmbed(),
 			fsoptions = {
