@@ -108,11 +108,12 @@ module.exports = class cydiaCommand extends commando.Command {
 
 					embed.addField('Package Name', result.name, false);
 
-					deleteCommandMessages(msg, this.client);
+					if (!msg.patternMatches) {
+						deleteCommandMessages(msg, this.client);
+					}
 
 					return msg.embed(embed);
 				} catch (e) {
-
 					// eslint-disable-next-line no-console
 					console.error(`${stripIndents `An error occured on the cydia command!
 					Server: ${msg.guild.name} (${msg.guild.id})
@@ -122,7 +123,9 @@ module.exports = class cydiaCommand extends commando.Command {
 
 					embed.addField('Package Name', result.name, false);
 
-					deleteCommandMessages(msg, this.client);
+					if (!msg.patternMatches) {
+						deleteCommandMessages(msg, this.client);
+					}
 
 					return msg.embed(embed);
 				}
