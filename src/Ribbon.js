@@ -23,18 +23,20 @@
  *         reasonable ways as different from the original version.
  */
 
+/* eslint-disable sort-vars */
 const Commando = require('discord.js-commando'),
 	{MessageEmbed} = require('discord.js'),
-	Path = require('path'),
-	auth = require(Path.join(`${__dirname}/auth.json`)),
 	moment = require('moment'),
-	{oneLine} = require('common-tags'),
-	sqlite = require('sqlite');
+	path = require('path'),
+	request = require('snekfetch'),
+	sqlite = require('sqlite'),
+	{twitchclientid} = require(`${__dirname}/auth.json`),
+	{oneLine, stripIndents} = require('common-tags');
+/* eslint-enable sort-vars */
 
 class Ribbon {
 	constructor (token) { // eslint-disable-line no-unused-vars
-		this.bootTime = new Date();
-		this.token = auth.token;
+		this.token = token;
 		this.client = new Commando.Client({
 			'commandPrefix': '!',
 			'owner': '112001393140723712',
@@ -202,7 +204,7 @@ class Ribbon {
 			.on('warn', console.warn);
 
 		this.client.setProvider(
-			sqlite.open(Path.join(__dirname, 'settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
+			sqlite.open(path.join(__dirname, 'settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
 		).catch(console.error);
 
 		this.client.registry
@@ -228,7 +230,7 @@ class Ribbon {
 				'eval_': true,
 				'commandState': true
 			})
-			.registerCommandsIn(Path.join(__dirname, 'commands'));
+			.registerCommandsIn(path.join(__dirname, 'commands'));
 
 		return this.client.login(this.token);
 	}
