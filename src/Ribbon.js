@@ -184,6 +184,70 @@ class Ribbon {
 		};
 	}
 
+	onPresenceUpdate () {
+		return (oldMember, newMember) => {
+			console.log(stripIndents `presenceUpdate detected!
+			User: ${newMember.user.tag}
+			Server: ${newMember.guild.name} (${newMember.guild.id})
+			New Activity: ${newMember.presence.activity}`);
+
+			if (!oldMember.presence.activity) {
+				oldMember.presence.activity = {'url': 'placeholder'};
+			}
+			if (!newMember.presence.activity) {
+				newMember.presence.activity = {'url': 'placeholder'};
+			}
+			if (!(/(twitch)/i).test(oldMember.presence.activity.url) && (/(twitch)/i).test(newMember.presence.activity.url)) {
+				if (this.client.provider.get(newMember.guild, 'twitchnotifiersenabled', false)) {
+					if (this.client.provider.get(newMember.guild, 'twitchmonitors', []).includes(newMember.id)) {
+						console.log('Passed the check if the member appears in the to monitor users');
+						const twitchChannel = this.client.provider.get(newMember.guild, 'twitchchannel', null),
+							twitchEmbed = new MessageEmbed();
+
+						request.get('https://api.twitch.tv/kraken/users')
+							.set('Accept', 'application/vnd.twitchtv.v5+json')
+							.set('Client-ID', twitchclientid)
+							.query('login', newMember.presence.activity.url.split('/')[3])
+							.then((userData) => {
+								twitchEmbed
+									.setThumbnail(newMember.user.displayAvatarURL())
+									.setURL(newMember.presence.activity.url)
+									.setColor('#6441A4')
+									.setTitle(`${newMember.displayName} just went live!`)
+									.setDescription(stripIndents `streaming \`${newMember.presence.activity.details}\`!\n\n**Title:**\n${newMember.presence.activity.name}`);
+
+								if (userData.ok) {
+									request.get('https://api.twitch.tv/kraken/streams')
+										.set('Accept', 'application/vnd.twitchtv.v5+json')
+										.set('Client-ID', twitchclientid)
+										.query('channel', userData.body.users[0]._id)
+										.then((streamData) => {
+											twitchEmbed
+												.setThumbnail(userData.body.users[0].logo)
+												.setTitle(`${userData.body.users[0].display_name} just went live!`)
+												.setDescription(stripIndents `${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
+
+											if (streamData.ok) {
+												twitchEmbed
+													.setDescription(stripIndents `${twitchEmbed.description}\n\n**Stream Started At**
+																	${moment(streamData.body.streams[0].created_at).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+													.setImage(streamData.body.streams[0].preview.large);
+											}
+											if (twitchChannel) {
+												return newMember.guild.channels.get(twitchChannel).send({'embed': twitchEmbed});
+											}
+
+											return null;
+										});
+								}
+
+								return null;
+							});
+					}
+				}
+			}
+		};
+	}
 
 	init () {
 		this.client
@@ -198,9 +262,9 @@ class Ribbon {
 			.on('guildMemberAdd', this.onGuildMemberAdd())
 			.on('guildMemberRemove', this.onGuildMemberRemove())
 			.on('message', this.onMessage())
+			.on('presenceUpdate', this.onPresenceUpdate())
 			.on('ready', this.onReady())
 			.on('reconnecting', this.onReconnect())
-			.on('userUpdate', this.onUserUpdate())
 			.on('warn', console.warn);
 
 		this.client.setProvider(
