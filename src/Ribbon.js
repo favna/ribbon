@@ -59,33 +59,13 @@ class Ribbon {
 		this.isReady = false;
 	}
 
-	onReady () {
-		return () => {
-			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`); // eslint-disable-line no-console
-
-			this.isReady = true;
-		};
-	}
-
-	onCommandPrefixChange () {
-		return (guild, prefix) => {
+	onCmdBlock () {
+		return (msg, reason) => {
 			// eslint-disable-next-line no-console
-			console.log(oneLine ` 
-			Prefix ${prefix === '' ? 'removed' : `changed to ${prefix || 'the default'}`}
-			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
-		`);
-		};
-	}
-
-	onDisconnect () {
-		return () => {
-			console.warn('Disconnected!'); // eslint-disable-line no-console
-		};
-	}
-
-	onReconnect () {
-		return () => {
-			console.warn('Reconnecting...'); // eslint-disable-line no-console
+			console.log(oneLine `
+		Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
+		blocked; ${reason}
+	`);
 		};
 	}
 
@@ -98,13 +78,13 @@ class Ribbon {
 		};
 	}
 
-	onCmdBlock () {
-		return (msg, reason) => {
+	onCommandPrefixChange () {
+		return (guild, prefix) => {
 			// eslint-disable-next-line no-console
-			console.log(oneLine `
-		Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
-		blocked; ${reason}
-	`);
+			console.log(oneLine ` 
+			Prefix ${prefix === '' ? 'removed' : `changed to ${prefix || 'the default'}`}
+			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
+		`);
 		};
 	}
 
@@ -119,6 +99,12 @@ class Ribbon {
 		};
 	}
 
+	onDisconnect () {
+		return () => {
+			console.warn('Disconnected!'); // eslint-disable-line no-console
+		};
+	}
+
 	onGroupStatusChange () {
 		return (guild, group, enabled) => {
 			// eslint-disable-next-line no-console
@@ -127,16 +113,6 @@ class Ribbon {
             ${enabled ? 'enabled' : 'disabled'}
             ${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
         `);
-		};
-	}
-
-	onMessage () {
-		return (msg) => {
-			if (msg.guild) {
-				if (!msg.guild.available) {
-					return; // eslint-disable-line no-useless-return
-				}
-			}
 		};
 	}
 
@@ -187,22 +163,47 @@ class Ribbon {
 		};
 	}
 
+	onMessage () {
+		return (msg) => {
+			if (msg.guild) {
+				if (!msg.guild.available) {
+					return; // eslint-disable-line no-useless-return
+				}
+			}
+		};
+	}
+
+	onReady () {
+		return () => {
+			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`); // eslint-disable-line no-console
+			this.isReady = true;
+		};
+	}
+
+	onReconnect () {
+		return () => {
+			console.warn('Reconnecting...'); // eslint-disable-line no-console
+		};
+	}
+
+
 	init () {
 		this.client
-			.on('ready', this.onReady())
+			.on('commandBlocked', this.onCmdBlock())
+			.on('commandError', this.onCmdErr())
 			.on('commandPrefixChange', this.onCommandPrefixChange())
-			.on('error', console.error) // eslint-disable-line no-console
-			.on('warn', console.warn) // eslint-disable-line no-console
+			.on('commandStatusChange', this.onCmdStatusChange())
 			.on('debug', console.log) // eslint-disable-line no-console
 			.on('disconnect', this.onDisconnect())
-			.on('reconnecting', this.onReconnect())
-			.on('commandError', this.onCmdErr())
-			.on('commandBlocked', this.onCmdBlock())
-			.on('commandStatusChange', this.onCmdStatusChange())
+			.on('error', console.error) // eslint-disable-line no-console
 			.on('groupStatusChange', this.onGroupStatusChange())
 			.on('guildMemberAdd', this.onGuildMemberAdd())
 			.on('guildMemberRemove', this.onGuildMemberRemove())
-			.on('message', this.onMessage());
+			.on('message', this.onMessage())
+			.on('ready', this.onReady())
+			.on('reconnecting', this.onReconnect())
+			.on('userUpdate', this.onUserUpdate())
+			.on('warn', console.warn); // eslint-disable-line no-console
 
 		this.client.setProvider(
 			sqlite.open(Path.join(__dirname, 'settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
