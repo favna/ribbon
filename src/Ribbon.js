@@ -161,16 +161,6 @@ class Ribbon {
 		};
 	}
 
-	onMessage () {
-		return (msg) => {
-			if (msg.guild) {
-				if (!msg.guild.available) {
-					return null;
-				}
-			}
-		};
-	}
-
 	onReady () {
 		return () => {
 			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
@@ -261,7 +251,6 @@ class Ribbon {
 			.on('groupStatusChange', this.onGroupStatusChange())
 			.on('guildMemberAdd', this.onGuildMemberAdd())
 			.on('guildMemberRemove', this.onGuildMemberRemove())
-			.on('message', this.onMessage())
 			.on('presenceUpdate', this.onPresenceUpdate())
 			.on('ready', this.onReady())
 			.on('reconnecting', this.onReconnect())
