@@ -61,7 +61,6 @@ class Ribbon {
 
 	onCmdBlock () {
 		return (msg, reason) => {
-			// eslint-disable-next-line no-console
 			console.log(oneLine `
 		Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
 		blocked; ${reason}
@@ -74,13 +73,12 @@ class Ribbon {
 			if (err instanceof Commando.FriendlyError) {
 				return;
 			}
-			console.error(`Error in command ${cmd.groupID}:${cmd.memberName}`, err); // eslint-disable-line no-console
+			console.error(`Error in command ${cmd.groupID}:${cmd.memberName}`, err);
 		};
 	}
 
 	onCommandPrefixChange () {
 		return (guild, prefix) => {
-			// eslint-disable-next-line no-console
 			console.log(oneLine ` 
 			Prefix ${prefix === '' ? 'removed' : `changed to ${prefix || 'the default'}`}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
@@ -90,7 +88,6 @@ class Ribbon {
 
 	onCmdStatusChange () {
 		return (guild, command, enabled) => {
-			// eslint-disable-next-line no-console
 			console.log(oneLine `
             Command ${command.groupID}:${command.memberName}
             ${enabled ? 'enabled' : 'disabled'}
@@ -101,13 +98,12 @@ class Ribbon {
 
 	onDisconnect () {
 		return () => {
-			console.warn('Disconnected!'); // eslint-disable-line no-console
+			console.warn('Disconnected!');
 		};
 	}
 
 	onGroupStatusChange () {
 		return (guild, group, enabled) => {
-			// eslint-disable-next-line no-console
 			console.log(oneLine `
             Group ${group.id}
             ${enabled ? 'enabled' : 'disabled'}
@@ -175,14 +171,14 @@ class Ribbon {
 
 	onReady () {
 		return () => {
-			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`); // eslint-disable-line no-console
+			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
 			this.isReady = true;
 		};
 	}
 
 	onReconnect () {
 		return () => {
-			console.warn('Reconnecting...'); // eslint-disable-line no-console
+			console.warn('Reconnecting...');
 		};
 	}
 
@@ -193,9 +189,9 @@ class Ribbon {
 			.on('commandError', this.onCmdErr())
 			.on('commandPrefixChange', this.onCommandPrefixChange())
 			.on('commandStatusChange', this.onCmdStatusChange())
-			.on('debug', console.log) // eslint-disable-line no-console
+			.on('debug', console.log)
 			.on('disconnect', this.onDisconnect())
-			.on('error', console.error) // eslint-disable-line no-console
+			.on('error', console.error)
 			.on('groupStatusChange', this.onGroupStatusChange())
 			.on('guildMemberAdd', this.onGuildMemberAdd())
 			.on('guildMemberRemove', this.onGuildMemberRemove())
@@ -203,11 +199,11 @@ class Ribbon {
 			.on('ready', this.onReady())
 			.on('reconnecting', this.onReconnect())
 			.on('userUpdate', this.onUserUpdate())
-			.on('warn', console.warn); // eslint-disable-line no-console
+			.on('warn', console.warn);
 
 		this.client.setProvider(
 			sqlite.open(Path.join(__dirname, 'settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
-		).catch(console.error); // eslint-disable-line no-console
+		).catch(console.error);
 
 		this.client.registry
 			.registerGroups([

@@ -63,7 +63,7 @@ module.exports = class copypastaAddCommand extends commando.Command {
 
 	run (msg, args) {
 		if (!fs.existsSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`))) {
-			console.log(`Creating guild dir for guild ${msg.guild.name}(${msg.guild.id}) at ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`); // eslint-disable-line no-console
+			console.log(`Creating guild dir for guild ${msg.guild.name}(${msg.guild.id}) at ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 			fs.mkdirSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`));
 		}
 
