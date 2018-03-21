@@ -35,7 +35,7 @@ const Commando = require('discord.js-commando'),
 /* eslint-enable sort-vars */
 
 class Ribbon {
-	constructor (token) { // eslint-disable-line no-unused-vars
+	constructor (token) {
 		this.token = token;
 		this.client = new Commando.Client({
 			'commandPrefix': '!',
@@ -165,7 +165,7 @@ class Ribbon {
 		return (msg) => {
 			if (msg.guild) {
 				if (!msg.guild.available) {
-					return; // eslint-disable-line no-useless-return
+					return null;
 				}
 			}
 		};
