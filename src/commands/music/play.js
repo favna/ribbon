@@ -372,13 +372,10 @@ module.exports = class PlaySongCommand extends commando.Command {
 	}
 
 	get votes () {
-
-		/* eslint-disable no-underscore-dangle */
 		if (!this._votes) {
 			this._votes = this.client.registry.resolveCommand('music:skip').votes;
 		}
 
 		return this._votes;
-		/* eslint-enable no-underscore-dangle */
 	}
 };

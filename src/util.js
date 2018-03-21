@@ -37,7 +37,7 @@ const capitalizeFirstLetter = function (string) {
  *
  * for (const swatch in swatches) {
  * if (swatches[swatch]) {
- * pops.push(swatches[swatch]._population); // eslint-disable-line no-underscore-dangle
+ * pops.push(swatches[swatch]._population);
  * }
  * }
  *
@@ -45,7 +45,7 @@ const capitalizeFirstLetter = function (string) {
  *
  * for (const swatch in swatches) {
  * if (swatches[swatch]) {
- * if (swatches[swatch]._population === highestPop) { // eslint-disable-line no-underscore-dangle
+ * if (swatches[swatch]._population === highestPop) {
  * prominentSwatch = swatches[swatch];
  * break;
  * }
