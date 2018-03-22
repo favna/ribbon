@@ -23,18 +23,23 @@
  *         reasonable ways as different from the original version.
  */
 
+/* eslint-disable sort-vars */
 const Commando = require('discord.js-commando'),
 	{MessageEmbed} = require('discord.js'),
-	Path = require('path'),
-	auth = require(Path.join(`${__dirname}/auth.json`)),
 	moment = require('moment'),
-	{oneLine} = require('common-tags'),
-	sqlite = require('sqlite');
+	path = require('path'),
+	request = require('snekfetch'),
+	sqlite = require('sqlite'),
+	{twitchclientid} = require(`${__dirname}/auth.json`),
+	{
+		oneLine,
+		stripIndents
+	} = require('common-tags');
+/* eslint-enable sort-vars */
 
 class Ribbon {
-	constructor (token) { // eslint-disable-line no-unused-vars
-		this.bootTime = new Date();
-		this.token = auth.token;
+	constructor (token) {
+		this.token = token;
 		this.client = new Commando.Client({
 			'commandPrefix': '!',
 			'owner': '112001393140723712',
@@ -59,33 +64,12 @@ class Ribbon {
 		this.isReady = false;
 	}
 
-	onReady () {
-		return () => {
-			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`); // eslint-disable-line no-console
-
-			this.isReady = true;
-		};
-	}
-
-	onCommandPrefixChange () {
-		return (guild, prefix) => {
-			// eslint-disable-next-line no-console
-			console.log(oneLine ` 
-			Prefix ${prefix === '' ? 'removed' : `changed to ${prefix || 'the default'}`}
-			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
-		`);
-		};
-	}
-
-	onDisconnect () {
-		return () => {
-			console.warn('Disconnected!'); // eslint-disable-line no-console
-		};
-	}
-
-	onReconnect () {
-		return () => {
-			console.warn('Reconnecting...'); // eslint-disable-line no-console
+	onCmdBlock () {
+		return (msg, reason) => {
+			console.log(oneLine `
+		Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
+		blocked; ${reason}
+	`);
 		};
 	}
 
@@ -94,23 +78,21 @@ class Ribbon {
 			if (err instanceof Commando.FriendlyError) {
 				return;
 			}
-			console.error(`Error in command ${cmd.groupID}:${cmd.memberName}`, err); // eslint-disable-line no-console
+			console.error(`Error in command ${cmd.groupID}:${cmd.memberName}`, err);
 		};
 	}
 
-	onCmdBlock () {
-		return (msg, reason) => {
-			// eslint-disable-next-line no-console
-			console.log(oneLine `
-		Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
-		blocked; ${reason}
-	`);
+	onCommandPrefixChange () {
+		return (guild, prefix) => {
+			console.log(oneLine ` 
+			Prefix ${prefix === '' ? 'removed' : `changed to ${prefix || 'the default'}`}
+			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
+		`);
 		};
 	}
 
 	onCmdStatusChange () {
 		return (guild, command, enabled) => {
-			// eslint-disable-next-line no-console
 			console.log(oneLine `
             Command ${command.groupID}:${command.memberName}
             ${enabled ? 'enabled' : 'disabled'}
@@ -119,24 +101,19 @@ class Ribbon {
 		};
 	}
 
+	onDisconnect () {
+		return () => {
+			console.warn('Disconnected!');
+		};
+	}
+
 	onGroupStatusChange () {
 		return (guild, group, enabled) => {
-			// eslint-disable-next-line no-console
 			console.log(oneLine `
             Group ${group.id}
             ${enabled ? 'enabled' : 'disabled'}
             ${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
         `);
-		};
-	}
-
-	onMessage () {
-		return (msg) => {
-			if (msg.guild) {
-				if (!msg.guild.available) {
-					return; // eslint-disable-line no-useless-return
-				}
-			}
 		};
 	}
 
@@ -187,26 +164,99 @@ class Ribbon {
 		};
 	}
 
+	onPresenceUpdate () {
+		return async (oldMember, newMember) => {
+			if (this.client.provider.get(newMember.guild, 'twitchmonitors', []).includes(newMember.id)) {
+				if (this.client.provider.get(newMember.guild, 'twitchnotifiersenabled', false)) {
+					const curDisplayName = newMember.displayName,
+						curGuild = newMember.guild,
+						curUser = newMember.user;
+
+					let newActivity = newMember.presence.activity,
+						oldActivity = oldMember.presence.activity;
+
+					if (!oldActivity) {
+						oldActivity = {'url': 'placeholder'};
+					}
+					if (!newActivity) {
+						newActivity = {'url': 'placeholder'};
+					}
+					if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
+						/* eslint-disable sort-vars*/
+						const userData = await request.get('https://api.twitch.tv/kraken/users')
+								.set('Accept', 'application/vnd.twitchtv.v5+json')
+								.set('Client-ID', twitchclientid)
+								.query('login', newActivity.url.split('/')[3]),
+							streamData = await request.get('https://api.twitch.tv/kraken/streams')
+								.set('Accept', 'application/vnd.twitchtv.v5+json')
+								.set('Client-ID', twitchclientid)
+								.query('channel', userData.body.users[0]._id),
+							twitchChannel = this.client.provider.get(curGuild, 'twitchchannel', null),
+							twitchEmbed = new MessageEmbed();
+						/* eslint-enable sort-vars*/
+
+						twitchEmbed
+							.setThumbnail(curUser.displayAvatarURL())
+							.setURL(newActivity.url)
+							.setColor('#6441A4')
+							.setTitle(`${curDisplayName} just went live!`)
+							.setDescription(stripIndents `streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
+
+						if (userData.ok && userData.body._total > 0) {
+							twitchEmbed
+								.setThumbnail(userData.body.users[0].logo)
+								.setTitle(`${userData.body.users[0].display_name} just went live!`)
+								.setDescription(stripIndents `${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
+						}
+
+						if (streamData.ok && streamData.body._total > 0) {
+							twitchEmbed.setDescription(stripIndents `${twitchEmbed.description}\n
+							**Stream Started At**${moment(streamData.body.streams[0].created_at).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+								.setImage(streamData.body.streams[0].preview.large);
+						}
+						
+						if (twitchChannel) {
+							curGuild.channels.get(twitchChannel).send({'embed': twitchEmbed});
+						}
+					}
+				}
+			}
+		};
+	}
+
+	onReady () {
+		return () => {
+			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
+			this.isReady = true;
+		};
+	}
+
+	onReconnect () {
+		return () => {
+			console.warn('Reconnecting...');
+		};
+	}
+
 	init () {
 		this.client
-			.on('ready', this.onReady())
-			.on('commandPrefixChange', this.onCommandPrefixChange())
-			.on('error', console.error) // eslint-disable-line no-console
-			.on('warn', console.warn) // eslint-disable-line no-console
-			.on('debug', console.log) // eslint-disable-line no-console
-			.on('disconnect', this.onDisconnect())
-			.on('reconnecting', this.onReconnect())
-			.on('commandError', this.onCmdErr())
 			.on('commandBlocked', this.onCmdBlock())
+			.on('commandError', this.onCmdErr())
+			.on('commandPrefixChange', this.onCommandPrefixChange())
 			.on('commandStatusChange', this.onCmdStatusChange())
+			.on('debug', console.log)
+			.on('disconnect', this.onDisconnect())
+			.on('error', console.error)
 			.on('groupStatusChange', this.onGroupStatusChange())
 			.on('guildMemberAdd', this.onGuildMemberAdd())
 			.on('guildMemberRemove', this.onGuildMemberRemove())
-			.on('message', this.onMessage());
+			.on('presenceUpdate', this.onPresenceUpdate())
+			.on('ready', this.onReady())
+			.on('reconnecting', this.onReconnect())
+			.on('warn', console.warn);
 
 		this.client.setProvider(
-			sqlite.open(Path.join(__dirname, 'settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
-		).catch(console.error); // eslint-disable-line no-console
+			sqlite.open(path.join(__dirname, 'settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
+		).catch(console.error);
 
 		this.client.registry
 			.registerGroups([
@@ -220,7 +270,8 @@ class Ribbon {
 				['nsfw', 'Find NSFW content ( ͡° ͜ʖ ͡°)'],
 				['owner', 'Owner only commands'],
 				['pokedex', 'Get information from the PokéDex'],
-				['search', 'Search the web']
+				['search', 'Search the web'],
+				['streamwatch', 'Monitor live status for your favorite streamers!']
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()
@@ -231,7 +282,7 @@ class Ribbon {
 				'eval_': true,
 				'commandState': true
 			})
-			.registerCommandsIn(Path.join(__dirname, 'commands'));
+			.registerCommandsIn(path.join(__dirname, 'commands'));
 
 		return this.client.login(this.token);
 	}

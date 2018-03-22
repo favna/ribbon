@@ -96,7 +96,6 @@ module.exports = class timeCommand extends commando.Command {
 			}
 		}
 
-		// eslint-disable-next-line no-console
 		console.error(stripIndents `Time fetching command failed due to mismatched city
 						City: ${args.city}
 						Server: ${msg.guild.name} (${msg.guild.id})

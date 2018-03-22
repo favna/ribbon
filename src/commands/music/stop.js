@@ -62,12 +62,10 @@ module.exports = class StopMusicCommand extends commando.Command {
 	}
 
 	get queue () {
-		/* eslint-disable no-underscore-dangle */
 		if (!this._queue) {
 			this._queue = this.client.registry.resolveCommand('music:play').queue;
 		}
 
 		return this._queue;
-		/* eslint-enable no-underscore-dangle */
 	}
 };

@@ -108,7 +108,6 @@ module.exports = class moneyCommand extends commando.Command {
 
 				return msg.embed(oxrEmbed);
 			} catch (error) {
-				// eslint-disable-next-line no-console
 				console.error(oneLine `An error occured in the oxr command on the ${msg.guild.name} (${msg.guild.id}) server. 
 				Command execute time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}. The error is: ${error}`);
 

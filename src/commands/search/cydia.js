@@ -114,7 +114,6 @@ module.exports = class cydiaCommand extends commando.Command {
 
 					return msg.embed(embed);
 				} catch (e) {
-					// eslint-disable-next-line no-console
 					console.error(`${stripIndents `An error occured on the cydia command!
 					Server: ${msg.guild.name} (${msg.guild.id})
 					Author: ${msg.author.tag} (${msg.author.id})
