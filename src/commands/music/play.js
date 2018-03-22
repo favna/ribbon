@@ -203,7 +203,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 		const videos = await playlist.getVideos();
 
 		for (const video of Object.values(videos)) {
-			const video2 = await this.youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
+			const video2 = await this.youtube.getVideoByID(video.id);
 
 			if (video2.durationSeconds === 0) {
 				statusMsg.edit(`${msg.author}, you can't play live streams.`);
@@ -222,7 +222,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 				};
 				this.queue.set(msg.guild.id, queue);
 
-				const result = await this.addSong(msg, video2); // eslint-disable-line no-await-in-loop
+				const result = await this.addSong(msg, video2);
 
 				if (!result.startsWith('👍')) {
 					this.queue.delete(msg.guild.id);
@@ -230,7 +230,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 
 				statusMsg.edit(`${msg.author}, joining your voice channel...`);
 				try {
-					const connection = await queue.voiceChannel.join(); // eslint-disable-line no-await-in-loop
+					const connection = await queue.voiceChannel.join();
 
 					queue.connection = connection;
 					this.play(msg.guild, queue.songs[0]);
@@ -241,7 +241,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 					statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
 				}
 			} else {
-				await this.addSong(msg, video2); // eslint-disable-line no-await-in-loop
+				await this.addSong(msg, video2);
 				statusMsg.delete();
 			}
 		}
