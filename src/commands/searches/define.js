@@ -25,7 +25,7 @@ module.exports = class defineCommand extends commando.Command {
 		super(client, {
 			'name': 'define',
 			'memberName': 'define',
-			'group': 'search',
+			'group': 'searches',
 			'aliases': ['def', 'dict'],
 			'description': 'Gets the definition on a word on glosbe',
 			'format': 'Word',
@@ -47,9 +47,13 @@ module.exports = class defineCommand extends commando.Command {
 
 	async run (msg, args) {
 		const defineEmbed = new MessageEmbed(),
-			word = await request.get(`https://glosbe.com/gapi/translate?from=en&dest=en&format=json&phrase=${args.query}`);
+			word = await request.get('https://glosbe.com/gapi/translate')
+				.query('from', 'en')
+				.query('dest', 'en')
+				.query('format', 'json')
+				.query('phrase', args.query);
 
-		if (word.body.tuc) {
+		if (word.ok && word.body.tuc && word.body.tuc.length > 0) {
 			const final = [`**Definitions for __${args.query}__:**`];
 
 			for (let [index, item] of Object.entries(word.body.tuc.filter(tuc => tuc.meanings)[0].meanings.slice(0, 5))) { // eslint-disable-line prefer-const
@@ -74,6 +78,6 @@ module.exports = class defineCommand extends commando.Command {
 
 		deleteCommandMessages(msg, this.client);
 
-		return msg.reply('⚠️ ***nothing found***');
+		return msg.reply(`⚠️ nothing found for \`${args.query}\`, maybe check your spelling?`);
 	}
 };

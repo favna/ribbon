@@ -37,7 +37,7 @@ module.exports = class cydiaCommand extends commando.Command {
 		super(client, {
 			'name': 'cydia',
 			'memberName': 'cydia',
-			'group': 'search',
+			'group': 'searches',
 			'aliases': ['cy'],
 			'description': 'Finds info on a Cydia package',
 			'format': 'PackageName | [[PackageName]]',

@@ -35,7 +35,7 @@ module.exports = class moveCommand extends commando.Command {
 		super(client, {
 			'name': 'move',
 			'memberName': 'move',
-			'group': 'pokedex',
+			'group': 'pokemon',
 			'aliases': ['attack'],
 			'description': 'Get the info on a Pokémon move',
 			'format': 'MoveName',

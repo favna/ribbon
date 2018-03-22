@@ -33,7 +33,7 @@ module.exports = class mathCommand extends commando.Command {
 		super(client, {
 			'name': 'math',
 			'memberName': 'math',
-			'group': 'misc',
+			'group': 'utility',
 			'aliases': ['calc'],
 			'description': 'Calculate anything',
 			'format': 'EquationToSolve',

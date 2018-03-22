@@ -30,7 +30,7 @@ module.exports = class sayCommand extends commando.Command {
 		super(client, {
 			'name': 'say',
 			'memberName': 'say',
-			'group': 'misc',
+			'group': 'utility',
 			'aliases': ['sayd', 'repeat'],
 			'description': 'I will repeat your message',
 			'format': 'MesssageToSay',

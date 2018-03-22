@@ -40,7 +40,7 @@ module.exports = class dexCommand extends commando.Command {
 		super(client, {
 			'name': 'dex',
 			'memberName': 'dex',
-			'group': 'pokedex',
+			'group': 'pokemon',
 			'aliases': ['pokedex', 'dexfind', 'df', 'rotom'],
 			'description': 'Get the info on a Pokémon',
 			'format': 'PokemonName',
@@ -124,17 +124,6 @@ module.exports = class dexCommand extends commando.Command {
 		this.match = new Matcher(Object.keys(this.pokeAliases).join(' ')); // eslint-disable-line one-var
 
 		return this.pokeAliases;
-	}
-
-	async fetchImage (poke) {
-
-		try {
-			await request.get(`https://cdn.rawgit.com/110Percent/beheeyem-data/44795927/webp/${poke.toLowerCase().replace(' ', '_')}.webp`);
-		} catch (err) {
-			return `https://play.pokemonshowdown.com/sprites/xyani/${poke.toLowerCase().replace(' ', '')}.gif`;
-		}
-
-		return `https://cdn.rawgit.com/110Percent/beheeyem-data/44795927/webp/${poke.toLowerCase().replace(' ', '_')}.webp`;
 	}
 
 	fetchLinks (type) {
@@ -263,13 +252,11 @@ module.exports = class dexCommand extends commando.Command {
 				pokedexEntry = '*PokéDex data not found for this Pokémon*';
 			}
 
-			const imgURL = await this.fetchImage(poke);
-
 			dexEmbed
 				.setColor(this.fetchColor(pokeEntry.color))
 				.setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(poke)}`,
 					`https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(' ', '_').toLowerCase()}.png`)
-				.setImage(imgURL)
+				.setImage(`https://play.pokemonshowdown.com/sprites/xyani/${poke.toLowerCase().replace(' ', '')}.gif`)
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.addField(typestring, pokeEntry.types.join(', '), true)
 				.addField('Height', `${pokeEntry.heightm}m`, true)

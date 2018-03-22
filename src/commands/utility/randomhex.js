@@ -32,7 +32,7 @@ module.exports = class RandomHexCommand extends commando.Command {
 		super(client, {
 			'name': 'randomhex',
 			'memberName': 'randomhex',
-			'group': 'misc',
+			'group': 'utility',
 			'aliases': ['randhex', 'rhex', 'randomcolor', 'randcol'],
 			'description': 'Generate a random hexadecimal color',
 			'examples': ['randomhex'],

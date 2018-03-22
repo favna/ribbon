@@ -31,7 +31,7 @@ module.exports = class lmgtfyCommand extends commando.Command {
 		super(client, {
 			'name': 'lmgtfy',
 			'memberName': 'lmgtfy',
-			'group': 'searcheses',
+			'group': 'searches',
 			'aliases': ['dumb'],
 			'description': 'Produce a lmgtfy (let me google that for you) URL',
 			'format': 'Query',

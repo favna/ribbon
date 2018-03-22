@@ -34,7 +34,7 @@ module.exports = class sayWutCommand extends commando.Command {
 		super(client, {
 			'name': 'saywut',
 			'memberName': 'saywut',
-			'group': 'misc',
+			'group': 'utility',
 			'aliases': ['saywat', 'saywot'],
 			'description': 'Bust the last "say" user',
 			'examples': ['saywut'],

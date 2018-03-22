@@ -38,7 +38,7 @@ module.exports = class abilityCommand extends commando.Command {
 		super(client, {
 			'name': 'ability',
 			'memberName': 'ability',
-			'group': 'pokedex',
+			'group': 'pokemon',
 			'aliases': ['abilities', 'abi'],
 			'description': 'Get the info on a Pokémon ability',
 			'format': 'AbilityName',

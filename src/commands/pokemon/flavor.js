@@ -39,7 +39,7 @@ module.exports = class flavorCommand extends commando.Command {
 		super(client, {
 			'name': 'flavor',
 			'memberName': 'flavor',
-			'group': 'pokedex',
+			'group': 'pokemon',
 			'aliases': ['flavors', 'dexdata', 'dexentries', 'dextext', 'dextex', 'dexter'],
 			'description': 'Get all the available dex entries for a Pokémon',
 			'format': 'PokemonName',
@@ -126,16 +126,6 @@ module.exports = class flavorCommand extends commando.Command {
 		return this.pokeAliases;
 	}
 
-	async fetchImage (poke) {
-		try {
-			await request.get(`https://cdn.rawgit.com/110Percent/beheeyem-data/44795927/webp/${poke.toLowerCase().replace(' ', '_')}.webp`);
-		} catch (err) {
-			return `https://play.pokemonshowdown.com/sprites/xyani/${poke.toLowerCase().replace(' ', '')}.gif`;
-		}
-
-		return `https://cdn.rawgit.com/110Percent/beheeyem-data/44795927/webp/${poke.toLowerCase().replace(' ', '_')}.webp`;
-	}
-
 	fetchLinks (type) {
 		switch (type) {
 			case 'aliases':
@@ -208,7 +198,6 @@ module.exports = class flavorCommand extends commando.Command {
 					'text': '*PokéDex data not found for this Pokémon*'
 				});
 			}
-			const imgURL = await this.fetchImage(poke);
 			let i = pokedexEntries.length - 1;
 
 			outer: do {
@@ -226,7 +215,7 @@ module.exports = class flavorCommand extends commando.Command {
 				.setColor(this.fetchColor(pokeEntry.color))
 				.setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(poke)}`,
 					`https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(' ', '_').toLowerCase()}.png`)
-				.setImage(imgURL)
+				.setImage(`https://play.pokemonshowdown.com/sprites/xyani/${poke.toLowerCase().replace(' ', '')}.gif`)
 				.setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
 				.setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.');
 

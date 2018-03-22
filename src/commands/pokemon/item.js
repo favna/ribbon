@@ -39,7 +39,7 @@ module.exports = class itemCommand extends commando.Command {
 		super(client, {
 			'name': 'item',
 			'memberName': 'item',
-			'group': 'pokedex',
+			'group': 'pokemon',
 			'aliases': ['it', 'bag'],
 			'description': 'Get the info on an item in Pokémon',
 			'format': 'ItemName',

@@ -32,7 +32,7 @@ module.exports = class zalgoCommand extends commando.Command {
 		super(client, {
 			'name': 'zalgo',
 			'memberName': 'zalgo',
-			'group': 'misc',
+			'group': 'utility',
 			'description': 'F*ck up text using Zalgo',
 			'format': 'ContentToTransform',
 			'examples': ['zalgo HE COMES'],
