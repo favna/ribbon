@@ -35,7 +35,7 @@ module.exports = class timeCommand extends commando.Command {
 		super(client, {
 			'name': 'time',
 			'memberName': 'time',
-			'group': 'info',
+			'group': 'utility',
 			'aliases': ['citytime'],
 			'description': 'Gets the time in any given city',
 			'format': 'CityName',

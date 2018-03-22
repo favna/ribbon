@@ -31,7 +31,7 @@ module.exports = class kaiCommand extends commando.Command {
 		super(client, {
 			'name': 'hug',
 			'memberName': 'hug',
-			'group': 'fun',
+			'group': 'games',
 			'aliases': ['bearhug', 'embrace'],
 			'description': 'Give someone a hug ❤',
 			'format': 'MemberToGiveAHug',

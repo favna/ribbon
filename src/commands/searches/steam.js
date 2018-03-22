@@ -37,7 +37,7 @@ module.exports = class steamCommand extends commando.Command {
 		super(client, {
 			'name': 'steam',
 			'memberName': 'steam',
-			'group': 'search',
+			'group': 'searches',
 			'aliases': ['valve'],
 			'description': 'Finds a game on Steam',
 			'format': 'GameName',

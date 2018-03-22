@@ -23,51 +23,43 @@
  *         reasonable ways as different from the original version.
  */
 
-const commando = require('discord.js-commando'),
-	imgur = require('imgur'),
-	qr = require('qrcode'),
+const {MessageEmbed} = require('discord.js'),
+	commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 
-module.exports = class qrgenCommand extends commando.Command {
+module.exports = class inviteCommnad extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'qrgen',
-			'memberName': 'qrgen',
-			'group': 'links',
-			'aliases': ['qr'],
-			'description': 'Generates a QR code from a given string',
-			'format': 'URLToConvert',
-			'examples': ['qrgen https://github.com/Favna/Ribbon'],
+			'name': 'invite',
+			'memberName': 'invite',
+			'group': 'info',
+			'aliases': ['inv', 'links', 'shill'],
+			'description': 'Gives you invitation links',
+			'examples': ['invite'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'url',
-					'prompt': 'String (URL) to make a QR code for?',
-					'type': 'string'
-				}
-			]
+			}
 		});
 	}
 
-	async run (msg, args) {
-		const base64 = await qr.toDataURL(args.url, {'errorCorrectionLevel': 'M'});
+	run (msg) {
+		const inviteEmbed = new MessageEmbed();
 
-		if (base64) {
-			const upload = await imgur.uploadBase64(base64.slice(22));
+		inviteEmbed
+			.setAuthor('Ribbon Links')
+			.setThumbnail('https://favna.xyz/images/appIcons/ribbon.png')
+			.setURL('https://favna.xyz/ribbon')
+			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+			.addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p8)\n' +
+                '[Join the Support Server](https://discord.gg/zdt5yQt)\n' +
+                '[Website](https://favna.xyz/ribbon)\n' +
+                '[GitHub](https://github.com/Favna/Ribbon)\n' +
+                '[Wiki](https://github.com/Favna/Ribbon/wiki)');
 
-			if (upload) {
-				deleteCommandMessages(msg, this.client);
-
-				return msg.say(`QR Code for this URL: ${upload.data.link}`);
-			}
-
-			return msg.reply('⚠️ An error occured uploading the QR code to imgur.');
-		}
-
-		return msg.reply('⚠️ An error occured getting a base64 image for that URL.');
+		deleteCommandMessages(msg, this.client);
+		
+		return msg.embed(inviteEmbed, 'Find information on the bot here: https://favna.xyz/ribbon');
 	}
 };

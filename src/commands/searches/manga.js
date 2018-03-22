@@ -33,7 +33,7 @@ module.exports = class mangaCommand extends commando.Command {
 		super(client, {
 			'name': 'manga',
 			'memberName': 'manga',
-			'group': 'search',
+			'group': 'searches',
 			'aliases': ['cartoon', 'man'],
 			'description': 'Finds manga on MyAnimeList',
 			'format': 'MangaName',

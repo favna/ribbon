@@ -36,7 +36,7 @@ module.exports = class EshopCommand extends commando.Command {
 		super(client, {
 			'name': 'eshop',
 			'memberName': 'eshop',
-			'group': 'search',
+			'group': 'searches',
 			'aliases': ['shop'],
 			'description': 'Gets any game from the Nintendo eShop',
 			'format': 'GameName',

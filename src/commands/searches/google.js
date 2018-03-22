@@ -36,7 +36,7 @@ module.exports = class googleCommand extends commando.Command {
 		super(client, {
 			'name': 'google',
 			'memberName': 'google',
-			'group': 'search',
+			'group': 'searches',
 			'aliases': ['search', 'g'],
 			'description': 'Finds anything on google',
 			'format': 'GoogleQuery',

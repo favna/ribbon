@@ -34,7 +34,7 @@ module.exports = class copypastaAddCommand extends commando.Command {
 		super(client, {
 			'name': 'copypastaadd',
 			'memberName': 'copypastaadd',
-			'group': 'fun',
+			'group': 'utility',
 			'aliases': ['cpadd', 'pastaadd'],
 			'description': 'Saves a copypasta to local file',
 			'format': 'CopypastaName CopypastaContent',

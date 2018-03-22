@@ -34,7 +34,7 @@ module.exports = class weatherCommand extends commando.Command {
 		super(client, {
 			'name': 'weather',
 			'memberName': 'weather',
-			'group': 'info',
+			'group': 'utility',
 			'aliases': ['temp', 'forecast', 'fc', 'wth'],
 			'description': 'Get the weather in a city',
 			'format': 'CityName',

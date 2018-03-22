@@ -24,45 +24,38 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
+	coin = require('flipacoin'),
 	commando = require('discord.js-commando'),
-	predict = require('eightball'),
 	{deleteCommandMessages} = require('../../util.js');
-    
-module.exports = class eightBallCommand extends commando.Command {
+
+module.exports = class coinCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': '8ball',
-			'memberName': '8ball',
-			'group': 'fun',
-			'aliases': ['eightball'],
-			'description': 'Roll a magic 8ball',
-			'format': 'YourQuestion',
-			'examples': ['8ball is Favna a genius coder?'],
+			'name': 'coin',
+			'memberName': 'coin',
+			'group': 'games',
+			'aliases': ['flip', 'coinflip'],
+			'description': 'Flips a coin',
+			'examples': ['coin'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'question',
-					'prompt': 'For what question should I roll a magic 8ball?',
-					'type': 'string'
-				}
-			]
+			}
 		});
 	}
 
-	run (msg, args) {
-		const eightBallEmbed = new MessageEmbed();
+	run (msg) {
+		const coinEmbed = new MessageEmbed(),
+			res = coin();
 
-		eightBallEmbed
+		coinEmbed
 			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.addField(':question: Question', args.question, false)
-			.addField(':8ball: 8ball', predict(), false);
-		
+			.setImage(res === 'head' ? 'https://favna.s-ul.eu/8ZKmpiKO.png' : 'https://favna.s-ul.eu/NTsDbSUo.png')
+			.setTitle(`Flipped ${res}s`);
+
 		deleteCommandMessages(msg, this.client);
 
-		return msg.embed(eightBallEmbed);
+		msg.embed(coinEmbed);
 	}
 };

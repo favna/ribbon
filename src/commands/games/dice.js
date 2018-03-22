@@ -33,7 +33,7 @@ module.exports = class diceCommand extends commando.Command {
 		super(client, {
 			'name': 'dice',
 			'memberName': 'dice',
-			'group': 'fun',
+			'group': 'games',
 			'aliases': ['xdicey', 'roll', 'dicey', 'die'],
 			'description': 'Sends contents of a copypasta file to the chat',
 			'format': 'SidesOfTheDice AmountOfRolls',

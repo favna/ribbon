@@ -25,41 +25,53 @@
 
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
+	urban = require('urban'),
 	{deleteCommandMessages} = require('../../util.js');
 
-module.exports = class inviteCommnad extends commando.Command {
+module.exports = class urbanCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'invite',
-			'memberName': 'invite',
-			'group': 'links',
-			'aliases': ['inv', 'links', 'shill'],
-			'description': 'Gives you invitation links',
-			'examples': ['invite'],
+			'name': 'urban',
+			'memberName': 'urban',
+			'group': 'searches',
+			'aliases': ['ub', 'ud'],
+			'description': 'Find definitions on urban dictionary',
+			'format': 'Term',
+			'examples': ['urban ugt'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
-			}
+			},
+			'args': [
+				{
+					'key': 'query',
+					'prompt': 'What word do you want to define?',
+					'type': 'string'
+				}
+			]
 		});
 	}
 
-	run (msg) {
-		const inviteEmbed = new MessageEmbed();
+	run (msg, args) {
+		urban(args.query).first((json) => {
+			if (!json) {
+				deleteCommandMessages(msg, this.client);
 
-		inviteEmbed
-			.setAuthor('Ribbon Links')
-			.setThumbnail('https://favna.xyz/images/appIcons/ribbon.png')
-			.setURL('https://favna.xyz/ribbon')
-			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p8)\n' +
-                '[Join the Support Server](https://discord.gg/zdt5yQt)\n' +
-                '[Website](https://favna.xyz/ribbon)\n' +
-                '[GitHub](https://github.com/Favna/Ribbon)\n' +
-                '[Wiki](https://github.com/Favna/Ribbon/wiki)');
+				return msg.reply('⚠️ No Results Found!');
+			}
+			const urbanEmbed = new MessageEmbed(); // eslint-disable-line one-var
 
-		deleteCommandMessages(msg, this.client);
-		
-		return msg.embed(inviteEmbed, 'Find information on the bot here: https://favna.xyz/ribbon');
+			urbanEmbed
+				.setAuthor(`Urban Search - ${json.word}`, 'https://i.imgur.com/miYLsGw.jpg')
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+				.addField('Definition', json.definition.length <= 1024 ? json.definition : `Truncated due to exceeding maximum length\n${json.definition.slice(0, 970)}`, false)
+				.addField('Example', json.example.length <= 1024 ? json.example : `Truncated due to exceeding maximum length\n${json.example.slice(0, 970)}`, false)
+				.addField('Permalink', json.permalink, false);
+
+			deleteCommandMessages(msg, this.client);
+
+			return msg.embed(urbanEmbed);
+		});
 	}
 };

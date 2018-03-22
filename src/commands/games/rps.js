@@ -33,7 +33,7 @@ module.exports = class rpsCommand extends commando.Command {
 		super(client, {
 			'name': 'rps',
 			'memberName': 'rps',
-			'group': 'fun',
+			'group': 'games',
 			'aliases': ['rockpaperscissors'],
 			'description': 'Play Rock Paper Scissors against random.org randomization',
 			'format': 'HandToPlay',

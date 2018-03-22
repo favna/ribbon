@@ -25,19 +25,19 @@
 
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
-	urban = require('urban'),
+	maljs = require('maljs'),
 	{deleteCommandMessages} = require('../../util.js');
 
-module.exports = class urbanCommand extends commando.Command {
+module.exports = class animeCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'urban',
-			'memberName': 'urban',
-			'group': 'search',
-			'aliases': ['ub', 'ud'],
-			'description': 'Find definitions on urban dictionary',
-			'format': 'Term',
-			'examples': ['urban ugt'],
+			'name': 'anime',
+			'memberName': 'anime',
+			'group': 'searches',
+			'aliases': ['ani', 'mal'],
+			'description': 'Finds anime on MyAnimeList',
+			'format': 'AnimeName',
+			'examples': ['anime Pokemon'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
@@ -46,32 +46,36 @@ module.exports = class urbanCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'query',
-					'prompt': 'What word do you want to define?',
+					'prompt': 'What anime do you want to find?',
 					'type': 'string'
 				}
 			]
 		});
 	}
 
-	run (msg, args) {
-		urban(args.query).first((json) => {
-			if (!json) {
+	async run (msg, args) {
+		const aniEmbed = new MessageEmbed(),
+			res = await maljs.quickSearch(args.query, 'anime');
+
+		if (res) {
+			const anime = await res.anime[0].fetch();
+
+			if (anime) {
+
+				aniEmbed
+					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+					.setTitle(anime.title)
+					.setImage(anime.cover)
+					.setDescription(anime.description)
+					.setURL(`${anime.mal.url}${anime.path}`)
+					.addField('Score', anime.score, true)
+					.addField('Popularity', anime.popularity, true)
+					.addField('Rank', anime.ranked, true);
+
 				deleteCommandMessages(msg, this.client);
 
-				return msg.reply('⚠️ No Results Found!');
+				msg.embed(aniEmbed, `${anime.mal.url}${anime.path}`);
 			}
-			const urbanEmbed = new MessageEmbed(); // eslint-disable-line one-var
-
-			urbanEmbed
-				.setAuthor(`Urban Search - ${json.word}`, 'https://i.imgur.com/miYLsGw.jpg')
-				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-				.addField('Definition', json.definition.length <= 1024 ? json.definition : `Truncated due to exceeding maximum length\n${json.definition.slice(0, 970)}`, false)
-				.addField('Example', json.example.length <= 1024 ? json.example : `Truncated due to exceeding maximum length\n${json.example.slice(0, 970)}`, false)
-				.addField('Permalink', json.permalink, false);
-
-			deleteCommandMessages(msg, this.client);
-
-			return msg.embed(urbanEmbed);
-		});
+		}
 	}
 };

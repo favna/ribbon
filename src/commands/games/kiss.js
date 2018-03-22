@@ -29,13 +29,13 @@ const commando = require('discord.js-commando'),
 module.exports = class kaiCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'slap',
-			'memberName': 'slap',
-			'group': 'fun',
-			'aliases': ['bakaslap'],
-			'description': 'Give someone a slap 💢',
-			'format': 'MemberToGiveASlap',
-			'examples': ['slap Favna'],
+			'name': 'kiss',
+			'memberName': 'kiss',
+			'group': 'games',
+			'aliases': ['frenchkiss'],
+			'description': 'Give someone a kiss ❤',
+			'format': 'MemberToGiveAKiss',
+			'examples': ['kiss Favna'],
 			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
@@ -44,7 +44,7 @@ module.exports = class kaiCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'member',
-					'prompt': 'Who do you want to give a slap?',
+					'prompt': 'Who do you want to give a kiss?',
 					'type': 'member',
 					'default': ''
 				}
@@ -54,18 +54,17 @@ module.exports = class kaiCommand extends commando.Command {
 
 	fetchImage () {
 		const images = [
-				'https://media.giphy.com/media/jLeyZWgtwgr2U/giphy.gif',
-				'https://media.giphy.com/media/Zau0yrl17uzdK/giphy.gif',
-				'http://i.imgur.com/dzefPFL.gif',
-				'https://media1.tenor.com/images/85722c3e51d390e11a0493696f32fb69/tenor.gif',
-				'https://s-media-cache-ak0.pinimg.com/originals/65/57/f6/6557f684d6ffcd3cd4558f695c6d8956.gif',
-				'https://media.giphy.com/media/LB1kIoSRFTC2Q/giphy.gif',
-				'https://vignette.wikia.nocookie.net/adventuretimewithfinnandjake/images/c/cd/Slap.gif.gif',
-				'https://gifimage.net/wp-content/uploads/2017/07/anime-slap-gif-14.gif',
-				'http://gifimage.net/wp-content/uploads/2017/07/anime-slap-gif-9.gif',
-				'https://gifimage.net/wp-content/uploads/2017/07/anime-slap-gif-15.gif',
-				'http://rs1031.pbsrc.com/albums/y377/shinnidan/Toradora_-_Taiga_Slap.gif',
-				'https://orig00.deviantart.net/2d34/f/2013/339/1/2/golden_time_flower_slap_gif_by_paranoxias-d6wv007.gif'
+				'https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif',
+				'https://media.giphy.com/media/ZRSGWtBJG4Tza/giphy.gif',
+				'https://media.giphy.com/media/Gj8bn4pgTocog/giphy.gif',
+				'https://media.giphy.com/media/JYpVJEcNrDAWc/giphy.gif',
+				'https://media.giphy.com/media/KmeIYo9IGBoGY/giphy.gif',
+				'https://media.tenor.com/images/e83afa35d71203bf60764cbbc17516db/tenor.gif',
+				'http://25.media.tumblr.com/8ccc58d2c42dbef8ced3fc747518cffc/tumblr_mxgpinyLDk1t2wbmao1_400.gif',
+				'https://media.tenor.com/images/ba45c5d09b59761797de1c55109a4844/tenor.gif',
+				'https://i.imgur.com/eisk88U.gif',
+				'https://media.giphy.com/media/8iwfa0XSxDUSQ/giphy.gif',
+				'https://media.giphy.com/media/kU586ictpGb0Q/giphy.gif'
 			],
 			curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
 
@@ -76,9 +75,9 @@ module.exports = class kaiCommand extends commando.Command {
 		deleteCommandMessages(msg, this.client);
 		msg.embed({
 			'description': args.member !== ''
-				? `${args.member.displayName}! You got slapped by ${msg.member.displayName} 💢!`
-				: `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
-			'image': {'url': args.member !== '' ? this.fetchImage() : 'http://cdn.awwni.me/mz98.gif'},
+				? `${args.member.displayName}! You were kissed by ${msg.member.displayName} 💋!`
+				: `${msg.member.displayName} you must feel alone... Have a 🐈`,
+			'image': {'url': args.member !== '' ? this.fetchImage() : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
 			'color': msg.guild ? msg.guild.me.displayColor : 10610610
 		});
 	}

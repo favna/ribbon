@@ -36,7 +36,7 @@ module.exports = class copypastaCommand extends commando.Command {
 		super(client, {
 			'name': 'copypasta',
 			'memberName': 'copypasta',
-			'group': 'fun',
+			'group': 'utility',
 			'aliases': ['cp', 'pasta'],
 			'description': 'Sends contents of a copypasta file to the chat',
 			'format': 'CopypastaName',

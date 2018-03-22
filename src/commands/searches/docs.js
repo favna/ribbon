@@ -35,7 +35,7 @@ module.exports = class DocsCommand extends Command {
 		super(client, {
 			'name': 'docs',
 			'memberName': 'docs',
-			'group': 'links',
+			'group': 'searches',
 			'aliases': ['djsguide', 'guide', 'djs'],
 			'description': 'Gets info from something in the DJS docs',
 			'format': 'TopicToFind [master|stable|commando]',

@@ -23,39 +23,51 @@
  *         reasonable ways as different from the original version.
  */
 
-const {MessageEmbed} = require('discord.js'),
-	coin = require('flipacoin'),
-	commando = require('discord.js-commando'),
+const commando = require('discord.js-commando'),
+	imgur = require('imgur'),
+	qr = require('qrcode'),
 	{deleteCommandMessages} = require('../../util.js');
 
-module.exports = class coinCommand extends commando.Command {
+module.exports = class qrgenCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'coin',
-			'memberName': 'coin',
-			'group': 'fun',
-			'aliases': ['flip', 'coinflip'],
-			'description': 'Flips a coin',
-			'examples': ['coin'],
+			'name': 'qrgen',
+			'memberName': 'qrgen',
+			'group': 'utility',
+			'aliases': ['qr'],
+			'description': 'Generates a QR code from a given string',
+			'format': 'URLToConvert',
+			'examples': ['qrgen https://github.com/Favna/Ribbon'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
-			}
+			},
+			'args': [
+				{
+					'key': 'url',
+					'prompt': 'String (URL) to make a QR code for?',
+					'type': 'string'
+				}
+			]
 		});
 	}
 
-	run (msg) {
-		const coinEmbed = new MessageEmbed(),
-			res = coin();
+	async run (msg, args) {
+		const base64 = await qr.toDataURL(args.url, {'errorCorrectionLevel': 'M'});
 
-		coinEmbed
-			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.setImage(res === 'head' ? 'https://favna.s-ul.eu/8ZKmpiKO.png' : 'https://favna.s-ul.eu/NTsDbSUo.png')
-			.setTitle(`Flipped ${res}s`);
+		if (base64) {
+			const upload = await imgur.uploadBase64(base64.slice(22));
 
-		deleteCommandMessages(msg, this.client);
+			if (upload) {
+				deleteCommandMessages(msg, this.client);
 
-		msg.embed(coinEmbed);
+				return msg.say(`QR Code for this URL: ${upload.data.link}`);
+			}
+
+			return msg.reply('⚠️ An error occured uploading the QR code to imgur.');
+		}
+
+		return msg.reply('⚠️ An error occured getting a base64 image for that URL.');
 	}
 };

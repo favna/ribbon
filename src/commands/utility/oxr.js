@@ -38,7 +38,7 @@ module.exports = class moneyCommand extends commando.Command {
 		super(client, {
 			'name': 'oxr',
 			'memberName': 'oxr',
-			'group': 'info',
+			'group': 'utility',
 			'aliases': ['money', 'rate', 'convert'],
 			'description': 'Currency converter - makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
 			'format': 'CurrencyAmount FirstValuta SecondValuta',

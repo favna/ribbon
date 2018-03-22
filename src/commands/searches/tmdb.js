@@ -37,7 +37,7 @@ module.exports = class movieCommand extends commando.Command {
 		super(client, {
 			'name': 'tmdb',
 			'memberName': 'tmdb',
-			'group': 'search',
+			'group': 'searches',
 			'aliases': ['movie'],
 			'description': 'Finds movies and TV shows on TheMovieDB',
 			'format': 'MovieName [release_year_movie]',

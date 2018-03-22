@@ -35,7 +35,7 @@ module.exports = class gameCommand extends commando.Command {
 		super(client, {
 			'name': 'games',
 			'memberName': 'games',
-			'group': 'search',
+			'group': 'searches',
 			'aliases': ['game', 'moby', 'igdb'],
 			'description': 'Finds info on a game on IGDB (IndieGamesDoneBad)',
 			'format': 'GameName',

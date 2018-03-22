@@ -33,7 +33,7 @@ module.exports = class strawpollCommand extends commando.Command {
 		super(client, {
 			'name': 'strawpoll',
 			'memberName': 'strawpoll',
-			'group': 'fun',
+			'group': 'games',
 			'aliases': ['poll', 'straw'],
 			'description': 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
 			'format': 'TitleOfStrawpoll OptionA|OptionB|OptionC...',
