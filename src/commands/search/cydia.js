@@ -60,7 +60,7 @@ module.exports = class cydiaCommand extends commando.Command {
 
 	async run (msg, args) {
 		if (msg.patternMatches) {
-			args.query = msg.patternMatches.input.substring(2, msg.patternMatches.input.length - 2);
+			args.query = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
 		}
 		const baseURL = 'https://cydia.saurik.com/',
 			embed = new MessageEmbed(),
@@ -108,11 +108,12 @@ module.exports = class cydiaCommand extends commando.Command {
 
 					embed.addField('Package Name', result.name, false);
 
-					deleteCommandMessages(msg, this.client);
+					if (!msg.patternMatches) {
+						deleteCommandMessages(msg, this.client);
+					}
 
 					return msg.embed(embed);
 				} catch (e) {
-
 					console.error(`${stripIndents `An error occured on the cydia command!
 					Server: ${msg.guild.name} (${msg.guild.id})
 					Author: ${msg.author.tag} (${msg.author.id})
@@ -121,7 +122,9 @@ module.exports = class cydiaCommand extends commando.Command {
 
 					embed.addField('Package Name', result.name, false);
 
-					deleteCommandMessages(msg, this.client);
+					if (!msg.patternMatches) {
+						deleteCommandMessages(msg, this.client);
+					}
 
 					return msg.embed(embed);
 				}
