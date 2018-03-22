@@ -164,19 +164,6 @@ class Ribbon {
 		};
 	}
 
-	onReady () {
-		return () => {
-			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
-			this.isReady = true;
-		};
-	}
-
-	onReconnect () {
-		return () => {
-			console.warn('Reconnecting...');
-		};
-	}
-
 	onPresenceUpdate () {
 		return async (oldMember, newMember) => {
 			if (this.client.provider.get(newMember.guild, 'twitchmonitors', []).includes(newMember.id)) {
@@ -234,6 +221,19 @@ class Ribbon {
 					}
 				}
 			}
+		};
+	}
+
+	onReady () {
+		return () => {
+			console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
+			this.isReady = true;
+		};
+	}
+
+	onReconnect () {
+		return () => {
+			console.warn('Reconnecting...');
 		};
 	}
 
