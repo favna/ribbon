@@ -31,7 +31,10 @@ const Commando = require('discord.js-commando'),
 	request = require('snekfetch'),
 	sqlite = require('sqlite'),
 	{twitchclientid} = require(`${__dirname}/auth.json`),
-	{oneLine, stripIndents} = require('common-tags');
+	{
+		oneLine,
+		stripIndents
+	} = require('common-tags');
 /* eslint-enable sort-vars */
 
 class Ribbon {
@@ -175,64 +178,59 @@ class Ribbon {
 	}
 
 	onPresenceUpdate () {
-		return (oldMember, newMember) => {
-			console.log(stripIndents `presenceUpdate detected!
-			User: ${newMember.user.tag}
-			Server: ${newMember.guild.name} (${newMember.guild.id})
-			New Activity: ${newMember.presence.activity}`);
-
-			if (!oldMember.presence.activity) {
-				oldMember.presence.activity = {'url': 'placeholder'};
-			}
-			if (!newMember.presence.activity) {
-				newMember.presence.activity = {'url': 'placeholder'};
-			}
-			if (!(/(twitch)/i).test(oldMember.presence.activity.url) && (/(twitch)/i).test(newMember.presence.activity.url)) {
+		return async (oldMember, newMember) => {
+			if (this.client.provider.get(newMember.guild, 'twitchmonitors', []).includes(newMember.id)) {
 				if (this.client.provider.get(newMember.guild, 'twitchnotifiersenabled', false)) {
-					if (this.client.provider.get(newMember.guild, 'twitchmonitors', []).includes(newMember.id)) {
-						console.log('Passed the check if the member appears in the to monitor users');
-						const twitchChannel = this.client.provider.get(newMember.guild, 'twitchchannel', null),
+					const curDisplayName = newMember.displayName,
+						curGuild = newMember.guild,
+						curUser = newMember.user;
+
+					let newActivity = newMember.presence.activity,
+						oldActivity = oldMember.presence.activity;
+
+					if (!oldActivity) {
+						oldActivity = {'url': 'placeholder'};
+					}
+					if (!newActivity) {
+						newActivity = {'url': 'placeholder'};
+					}
+					if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
+						/* eslint-disable sort-vars*/
+						const userData = await request.get('https://api.twitch.tv/kraken/users')
+								.set('Accept', 'application/vnd.twitchtv.v5+json')
+								.set('Client-ID', twitchclientid)
+								.query('login', newActivity.url.split('/')[3]),
+							streamData = await request.get('https://api.twitch.tv/kraken/streams')
+								.set('Accept', 'application/vnd.twitchtv.v5+json')
+								.set('Client-ID', twitchclientid)
+								.query('channel', userData.body.users[0]._id),
+							twitchChannel = this.client.provider.get(curGuild, 'twitchchannel', null),
 							twitchEmbed = new MessageEmbed();
+						/* eslint-enable sort-vars*/
 
-						request.get('https://api.twitch.tv/kraken/users')
-							.set('Accept', 'application/vnd.twitchtv.v5+json')
-							.set('Client-ID', twitchclientid)
-							.query('login', newMember.presence.activity.url.split('/')[3])
-							.then((userData) => {
-								twitchEmbed
-									.setThumbnail(newMember.user.displayAvatarURL())
-									.setURL(newMember.presence.activity.url)
-									.setColor('#6441A4')
-									.setTitle(`${newMember.displayName} just went live!`)
-									.setDescription(stripIndents `streaming \`${newMember.presence.activity.details}\`!\n\n**Title:**\n${newMember.presence.activity.name}`);
+						twitchEmbed
+							.setThumbnail(curUser.displayAvatarURL())
+							.setURL(newActivity.url)
+							.setColor('#6441A4')
+							.setTitle(`${curDisplayName} just went live!`)
+							.setDescription(stripIndents `streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
 
-								if (userData.ok) {
-									request.get('https://api.twitch.tv/kraken/streams')
-										.set('Accept', 'application/vnd.twitchtv.v5+json')
-										.set('Client-ID', twitchclientid)
-										.query('channel', userData.body.users[0]._id)
-										.then((streamData) => {
-											twitchEmbed
-												.setThumbnail(userData.body.users[0].logo)
-												.setTitle(`${userData.body.users[0].display_name} just went live!`)
-												.setDescription(stripIndents `${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
+						if (userData.ok && userData.body._total > 0) {
+							twitchEmbed
+								.setThumbnail(userData.body.users[0].logo)
+								.setTitle(`${userData.body.users[0].display_name} just went live!`)
+								.setDescription(stripIndents `${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
+						}
 
-											if (streamData.ok) {
-												twitchEmbed
-													.setDescription(stripIndents `${twitchEmbed.description}\n\n**Stream Started At**
-																	${moment(streamData.body.streams[0].created_at).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
-													.setImage(streamData.body.streams[0].preview.large);
-											}
-											if (twitchChannel) {
-												return newMember.guild.channels.get(twitchChannel).send({'embed': twitchEmbed});
-											}
-
-											return null;
-										});
-								}
-
-								return null;
-							});
+						if (streamData.ok && streamData.body._total > 0) {
+							twitchEmbed.setDescription(stripIndents `${twitchEmbed.description}\n
+							**Stream Started At**${moment(streamData.body.streams[0].created_at).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+								.setImage(streamData.body.streams[0].preview.large);
+						}
+						
+						if (twitchChannel) {
+							curGuild.channels.get(twitchChannel).send({'embed': twitchEmbed});
+						}
 					}
 				}
 			}
@@ -272,7 +270,8 @@ class Ribbon {
 				['nsfw', 'Find NSFW content ( ͡° ͜ʖ ͡°)'],
 				['owner', 'Owner only commands'],
 				['pokedex', 'Get information from the PokéDex'],
-				['search', 'Search the web']
+				['search', 'Search the web'],
+				['streamwatch', 'Monitor live status for your favorite streamers!']
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()

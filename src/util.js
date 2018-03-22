@@ -1,4 +1,4 @@
-/* eslint-disable one-var */
+/* eslint-disable one-var, no-mixed-operators */
 
 const deleteCommandMessages = function (msg, client) { // eslint-disable-line consistent-return
 	if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) {
@@ -10,55 +10,46 @@ const capitalizeFirstLetter = function (string) {
 	return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 };
 
-/**
- * FetchColor - fetches the most vibrant color from an image
- * Currently deprecated in Ribbon in favor of response speed
- * If Node-Vibrant speeds up it may return
- */
+const memberFilterExact = function (search) {
+	return mem => mem.user.username.toLowerCase() === search ||
+        mem.nickname && mem.nickname.toLowerCase() === search ||
+        `${mem.user.username.toLowerCase()}#${mem.user.discriminator}` === search;
+};
 
-/*
- * const fetchColor = async function (img, defaultColor) {
- * const vibrant = require('node-vibrant'); // eslint-disable-line global-require
- *
- * let color = defaultColor,
- * palette = '';
- *
- * try {
- * palette = await vibrant.from(img).getPalette();
- * } catch (err) {
- * return color;
- * }
- *
- * if (palette) {
- * const pops = [],
- * swatches = Object.values(palette);
- *
- * let prominentSwatch = {};
- *
- * for (const swatch in swatches) {
- * if (swatches[swatch]) {
- * pops.push(swatches[swatch]._population);
- * }
- * }
- *
- * const highestPop = pops.reduce((a, b) => Math.max(a, b)); // eslint-disable-line one-var
- *
- * for (const swatch in swatches) {
- * if (swatches[swatch]) {
- * if (swatches[swatch]._population === highestPop) {
- * prominentSwatch = swatches[swatch];
- * break;
- * }
- * }
- * }
- * color = prominentSwatch.getHex();
- * }
- *
- * return color;
- * };
- */
+const memberFilterInexact = function (search) {
+	return mem => mem.user.username.toLowerCase().includes(search) ||
+        mem.nickname && mem.nickname.toLowerCase().includes(search) ||
+        `${mem.user.username.toLowerCase()}#${mem.user.discriminator}`.includes(search);
+};
+
+const userSearch = async function (client, message, search) {
+	let member = '';
+	const matches = search.match(/^(?:<@!?)?([0-9]+)>?$/);
+
+	if (matches) {
+		try {
+			return await message.guild.members.fetch(await message.client.users.fetch(matches[1]));
+		} catch (err) {
+			return false;
+		}
+	}
+	member = await message.guild.members.filterArray(memberFilterInexact(search));
+	if (member.length === 0) { 
+		return null;
+	}
+	if (member.length === 1) { 
+		return member[0]; 
+	}
+	member = member.filter(memberFilterExact(search));
+	if (member.length === 1) { 
+		return member[0]; 
+	}
+	
+	return null;
+};
 
 module.exports = {
 	capitalizeFirstLetter,
-	deleteCommandMessages	
+	deleteCommandMessages,
+	userSearch
 };
