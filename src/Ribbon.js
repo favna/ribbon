@@ -31,10 +31,7 @@ const Commando = require('discord.js-commando'),
 	request = require('snekfetch'),
 	sqlite = require('sqlite'),
 	{twitchclientid} = require(`${__dirname}/auth.json`),
-	{
-		oneLine,
-		stripIndents
-	} = require('common-tags');
+	{oneLine, stripIndents} = require('common-tags');
 /* eslint-enable sort-vars */
 
 class Ribbon {
