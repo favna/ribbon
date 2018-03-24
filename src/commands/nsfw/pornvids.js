@@ -24,12 +24,9 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	Pornsearch = require('pornsearch').default,
+	Pornsearch = require('pornsearch'),
 	commando = require('discord.js-commando'),
-	random = require('node-random'),
 	{deleteCommandMessages} = require('../../util.js');
-
-const pornEmbed = new MessageEmbed(); // eslint-disable-line one-var
 
 module.exports = class pornvidsCommand extends commando.Command {
 	constructor (client) {
@@ -62,26 +59,22 @@ module.exports = class pornvidsCommand extends commando.Command {
 			vids = await search.videos();
 
 		if (vids) {
-			random.integers({
-				'number': 1,
-				'minimum': 0,
-				'maximum': vids.length - 1
-			}, (error, vid) => {
-				if (error) {
-					return msg.reply('⚠ An error occured while drawing a random number.');
-				}
-				pornEmbed
-					.setURL(vids[vid].url)
-					.setTitle(vids[vid].title)
-					.setImage(vids[vid].thumb)
-					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-					.addField('Porn video URL', `[Click Here](${vids[vid].url})`, true)
-					.addField('Porn video duration', vids[vid].duration === !'' ? vids[vid].url : 'unknown', true);
+			const pornEmbed = new MessageEmbed(),
+				random = Math.floor(Math.random() * vids.length);
 
-				deleteCommandMessages(msg, this.client);
+			pornEmbed
+				.setURL(vids[random].url)
+				.setTitle(vids[random].title)
+				.setImage(vids[random].thumb)
+				.setColor('#FFB6C1')
+				.addField('Porn video URL', `[Click Here](${vids[random].url})`, true)
+				.addField('Porn video duration', vids[random].duration !== '' ? vids[random].duration : 'unknown', true);
 
-				return msg.embed(pornEmbed, vids[vid].url);
-			});
+			deleteCommandMessages(msg, this.client);
+
+			return msg.embed(pornEmbed, vids[random].url);
 		}
+		
+		return msg.reply('nothing found for that input');
 	}
 };
