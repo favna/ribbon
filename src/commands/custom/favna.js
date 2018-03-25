@@ -53,7 +53,7 @@ module.exports = class favnaCommand extends commando.Command {
 		if (this.client.isOwner(msg.author)) {
 			return true;
 		}
-		if (msg.guild.id !== '210739734811508736') {
+		if (msg.guild.id !== '373826006651240450') {
 			return stripIndents `That command can only be used in the Chaos Gamez server, sorry 😦
 			Want your own server specific custom commands? Join the support server (link in the \`${msg.guild.commandPrefix}stats\` command) and request the command.`;
 		}
