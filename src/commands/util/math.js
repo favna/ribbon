@@ -27,7 +27,7 @@
  * Take the effort out of calculations and let the bot do it for you  
  * **Aliases**: `calc`
  * @module
- * @category utility
+ * @category util
  * @name math
  * @example math (PI - 1) * 3
  * @param {string} Equation The equation to solve
@@ -44,7 +44,7 @@ module.exports = class mathCommand extends commando.Command {
 		super(client, {
 			'name': 'math',
 			'memberName': 'math',
-			'group': 'utility',
+			'group': 'util',
 			'aliases': ['calc'],
 			'description': 'Calculate anything',
 			'format': 'EquationToSolve',

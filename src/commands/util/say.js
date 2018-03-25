@@ -27,7 +27,7 @@
  * Repeats a message and deletes your message  
  * **Aliases**: `sayd`, `repeat`
  * @module
- * @category utility
+ * @category util
  * @name say
  * @example say Favna is a great coder!
  * @param {string} Text Message you want to have repeated
@@ -41,7 +41,7 @@ module.exports = class sayCommand extends commando.Command {
 		super(client, {
 			'name': 'say',
 			'memberName': 'say',
-			'group': 'utility',
+			'group': 'util',
 			'aliases': ['sayd', 'repeat'],
 			'description': 'I will repeat your message',
 			'format': 'MesssageToSay',

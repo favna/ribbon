@@ -330,8 +330,8 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dt><a href="#module_qrgen">qrgen</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code></p>
 </dd>
-<dt><a href="#module_randomhex">randomhex</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Generates a random color<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randomcol</code></p>
+<dt><a href="#module_randomcol">randomcol</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Generates a random color<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
 </dd>
 <dt><a href="#module_say">say</a> ⇒ <code>Message</code></dt>
 <dd><p>Repeats a message and deletes your message<br><strong>Aliases</strong>: <code>sayd</code>, <code>repeat</code></p>
@@ -1661,7 +1661,7 @@ Note: It is possible to get copypastas with more than 2000 characters. Ask me to
 **Aliases**: `cp`, `pasta`
 
 **Returns**: <code>MessageEmbed</code> - Copypasta content. In a normal message if more than 1024 characters  
-**Category**: utility  
+**Category**: util  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1678,7 +1678,7 @@ Adds a new copypasta for your server
 **Aliases**: `cpadd`, `pastaadd`
 
 **Returns**: <code>Message</code> - Confirmation the copypasta was added  
-**Category**: utility  
+**Category**: util  
 
 | Param | Type |
 | --- | --- |
@@ -1696,7 +1696,7 @@ Take the effort out of calculations and let the bot do it for you
 **Aliases**: `calc`
 
 **Returns**: <code>MessageEmbed</code> - Your equation and its answer  
-**Category**: utility  
+**Category**: util  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1715,7 +1715,7 @@ For a full list of supported currencies see [this url](https://docs.openexchange
 **Aliases**: `money`, `rate`, `convert`
 
 **Returns**: <code>MessageEmbed</code> - Input and output currency's and the amount your input is worth in both  
-**Category**: utility  
+**Category**: util  
 
 | Param | Type |
 | --- | --- |
@@ -1734,7 +1734,7 @@ Generates a QR code from text (like a URL)
 **Aliases**: `qr`
 
 **Returns**: <code>MessageEmbed</code> - Embedded QR code and original image URL  
-**Category**: utility  
+**Category**: util  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1744,14 +1744,14 @@ Generates a QR code from text (like a URL)
 ```js
 qrgen https://favna.xyz/ribbon
 ```
-<a name="module_randomhex"></a>
+<a name="module_randomcol"></a>
 
-## randomhex ⇒ <code>MessageEmbed</code>
+## randomcol ⇒ <code>MessageEmbed</code>
 Generates a random color  
-**Aliases**: `randhex`, `rhex`, `randomcolor`, `randomcol`
+**Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
 
 **Returns**: <code>MessageEmbed</code> - Color of embed matches generated color  
-**Category**: utility  
+**Category**: util  
 <a name="module_say"></a>
 
 ## say ⇒ <code>Message</code>
@@ -1759,7 +1759,7 @@ Repeats a message and deletes your message
 **Aliases**: `sayd`, `repeat`
 
 **Returns**: <code>Message</code> - Your message said by the bot  
-**Category**: utility  
+**Category**: util  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1776,7 +1776,7 @@ Bust the last "say" user
 **Aliases**: `saywat`, `saywot`
 
 **Returns**: <code>MessageEmbed</code> - Info on who used the "say" command last  
-**Category**: utility  
+**Category**: util  
 <a name="module_time"></a>
 
 ## time ⇒ <code>MessageEmbed</code>
@@ -1785,7 +1785,7 @@ Uses Google's geocoding to determine the correct location therefore supports any
 **Aliases**: `citytime`
 
 **Returns**: <code>MessageEmbed</code> - Current date, current time, country and DST offset  
-**Category**: utility  
+**Category**: util  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1803,7 +1803,7 @@ Potentially you'll have to specify city if the city is in multiple countries, i.
 **Aliases**: `temp`, `forecast`, `fc`, `wth`
 
 **Returns**: <code>MessageEmbed</code> - Various statistics about the current forecast  
-**Category**: utility  
+**Category**: util  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1819,7 +1819,7 @@ weather Amsterdam
 Create zalgo-fied text from your input
 
 **Returns**: <code>Message</code> - Your text zalgo-fied  
-**Category**: utility  
+**Category**: util  
 
 | Param | Type | Description |
 | --- | --- | --- |

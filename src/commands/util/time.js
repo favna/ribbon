@@ -28,7 +28,7 @@
  * Uses Google's geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.  
  * **Aliases**: `citytime`
  * @module
- * @category utility
+ * @category util
  * @name time
  * @example time Amsterdam
  * @param {string} Location Place where you want to get the current time for
@@ -47,7 +47,7 @@ module.exports = class timeCommand extends commando.Command {
 		super(client, {
 			'name': 'time',
 			'memberName': 'time',
-			'group': 'utility',
+			'group': 'util',
 			'aliases': ['citytime'],
 			'description': 'Gets the time in any given city',
 			'format': 'CityName',

@@ -24,29 +24,30 @@
  */
 
 /**
- * Generates a random color  
- * **Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
+ * Bust the last "say" user  
+ * **Aliases**: `saywat`, `saywot`
  * @module
- * @category utility
- * @name randomcol
- * @returns {MessageEmbed} Color of embed matches generated color
+ * @category util
+ * @name saywut
+ * @returns {MessageEmbed} Info on who used the "say" command last
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'), 
-	{stripIndents} = require('common-tags'), 
+	commando = require('discord.js-commando'),
+	moment = require('moment'),
+	{oneLine} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');
 
-module.exports = class RandomColCommand extends commando.Command {
+module.exports = class sayWutCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'randomcol',
-			'memberName': 'randomcol',
-			'group': 'utility',
-			'aliases': ['randhex', 'rhex', 'randomcolor', 'randcol', 'randomhex'],
-			'description': 'Generate a random color',
-			'examples': ['randomcol'],
-			'guildOnly': false,
+			'name': 'saywut',
+			'memberName': 'saywut',
+			'group': 'util',
+			'aliases': ['saywat', 'saywot'],
+			'description': 'Bust the last "say" user',
+			'examples': ['saywut'],
+			'guildOnly': true,
 			'throttling': {
 				'usages': 2,
 				'duration': 3
@@ -54,32 +55,25 @@ module.exports = class RandomColCommand extends commando.Command {
 		});
 	}
 
-	hextodec (color) {
-		return parseInt(color.replace('#', ''), 16);
-	}
-
-	hextorgb (color) {
-		const result = (/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})(?:[a-f\d])*$/i).exec(color);
-
-		return {
-			'r': parseInt(result[1], 16),
-			'g': parseInt(result[2], 16),
-			'b': parseInt(result[3], 16)
-		};
-	}
-
 	run (msg) {
-		const embed = new MessageEmbed(),
-			hex = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+		const saydata = this.client.provider.get(msg.guild.id, 'saydata', null),
+			wutEmbed = new MessageEmbed();
 
-		embed
-			.setColor(hex)
-			.setDescription(stripIndents `**hex**: ${hex}
-			**dec**: ${this.hextodec(hex)}
-			**rgb**: rgb(${this.hextorgb(hex).r}, ${this.hextorgb(hex).g}, ${this.hextorgb(hex).b})`);
+		if (saydata) {
+			wutEmbed
+				.setColor(saydata.memberHexColor)
+				.setTitle(`Last ${saydata.commandPrefix}say message author`)
+				.setAuthor(oneLine `${saydata.authorTag} (${saydata.authorID})`, saydata.avatarURL)
+				.setFooter(oneLine `${moment(saydata.messageDate).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.s-ul.eu/0wDHYIRn.png')
+				.setDescription(saydata.argString);
+
+			deleteCommandMessages(msg, this.client);
+
+			return msg.embed(wutEmbed);
+		}
 
 		deleteCommandMessages(msg, this.client);
 
-		msg.embed(embed);
+		return msg.reply(`couldn't fetch message for your server. Has anyone used the ${msg.guild.commandPrefix}say command before?`);
 	}
 };

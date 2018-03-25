@@ -262,7 +262,7 @@ class Ribbon {
 				['music', 'Music - Let the DJ out'],
 				['searches', 'Searches - Browse the web and find results'],
 				['pokemon', 'Pokemon - Let Dexter answer your questions'],
-				['utility', 'Utility - The bot is a true utilitarian'],
+				['util', 'Util - The bot is a true utilitarian'],
 				['moderation', 'Moderation - Moderate with no effort'],
 				['streamwatch', 'Streamwatch - Spy on members and get notified when they go live'],
 				['custom', 'Custom - Server specific commnads'],
