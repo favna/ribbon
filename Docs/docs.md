@@ -57,11 +57,11 @@ Checks the bot's ping to the Discord server
 ## Modules
 
 <dl>
-<dt><a href="#module_kai">kai</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br><strong>Aliases</strong>: <code>.kai</code></p>
-</dd>
 <dt><a href="#module_favna">favna</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Custom Command exclusive to ChaosGamez server<br>A joke command to praise Favna<br><strong>Aliases</strong>: <code>.favna</code></p>
+</dd>
+<dt><a href="#module_kai">kai</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br><strong>Aliases</strong>: <code>.kai</code></p>
 </dd>
 <dt><a href="#module_8ball">8ball</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Rolls a magic 8 ball using your input<br><strong>Aliases</strong>: <code>eightball</code></p>
@@ -98,6 +98,9 @@ Checks the bot's ping to the Discord server
 </dd>
 <dt><a href="#module_discordbots">discordbots</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Gets the stats from a bot listed on DiscordBotList<br><strong>Aliases</strong>: <code>dbapi</code>, <code>db</code></p>
+</dd>
+<dt><a href="#module_emotes">emotes</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Lists all emotes from the server<br><strong>Aliases</strong>: <code>listemo</code>, <code>emolist</code>, <code>listemoji</code>, <code>emote</code></p>
 </dd>
 <dt><a href="#module_invite">invite</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Gets the invite link for the bot<br><strong>Aliases</strong>: <code>inv</code>, <code>links</code>, <code>shill</code></p>
@@ -353,14 +356,6 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 </dd>
 </dl>
 
-<a name="module_kai"></a>
-
-## kai ⇒ <code>MessageEmbed</code>
-Custom Command exclusive to ChaosGamez server  
-A joke command to spite Kai  
-**Aliases**: `.kai`
-
-**Returns**: <code>MessageEmbed</code> - A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔  
 <a name="module_favna"></a>
 
 ## favna ⇒ <code>MessageEmbed</code>
@@ -369,6 +364,15 @@ A joke command to praise Favna
 **Aliases**: `.favna`
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with the joke text  
+**Category**: custom  
+<a name="module_kai"></a>
+
+## kai ⇒ <code>MessageEmbed</code>
+Custom Command exclusive to ChaosGamez server  
+A joke command to spite Kai  
+**Aliases**: `.kai`
+
+**Returns**: <code>MessageEmbed</code> - A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔  
 **Category**: custom  
 <a name="module_8ball"></a>
 
@@ -568,6 +572,14 @@ Gets the stats from a bot listed on DiscordBotList
 ```js
 discordbots 376520643862331396
 ```
+<a name="module_emotes"></a>
+
+## emotes ⇒ <code>MessageEmbed</code>
+Lists all emotes from the server  
+**Aliases**: `listemo`, `emolist`, `listemoji`, `emote`
+
+**Returns**: <code>MessageEmbed</code> - List of emotes  
+**Category**: info  
 <a name="module_invite"></a>
 
 ## invite ⇒ <code>MessageEmbed</code>

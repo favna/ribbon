@@ -45,7 +45,11 @@ module.exports = class favnaCommand extends commando.Command {
 			'description': 'Favna is my father',
 			'details': 'Custom commands can be made for your server too! Just join the support server (use the `stats` command) and request the command.',
 			'guildOnly': true,
-			'patterns': [/^\.favna$/im]
+			'patterns': [/^\.favna$/im],
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			}
 		});
 	}
 

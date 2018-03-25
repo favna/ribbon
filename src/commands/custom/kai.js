@@ -28,7 +28,7 @@
  * A joke command to spite Kai  
  * **Aliases**: `.kai`
  * @module
- * @category 
+ * @category custom
  * @name kai
  * @returns {MessageEmbed} A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔
  */
@@ -45,7 +45,11 @@ module.exports = class kaiCommand extends commando.Command {
 			'description': 'Kai get lost',
 			'details': 'Custom commands can be made for your server too! Just join the support server (use the `stats` command) and request the command.',
 			'guildOnly': true,
-			'patterns': [/^\.kai$/im]
+			'patterns': [/^\.kai$/im],
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			}
 		});
 	}
 
