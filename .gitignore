@@ -6,6 +6,8 @@ node_modules/
 
 # Files for personal use
 src/auth.json
+src/rauth.json
+src/sauth.json
 src/stripe-auth.json
 
 # Any logs created
