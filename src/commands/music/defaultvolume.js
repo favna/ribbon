@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Sets the server's default volume  
+ * **Aliases**: `defvol`
+ * @module
+ * @category music
+ * @name defaultvolume
+ * @example defaultvolume 2
+ * @param {number/"show"} VolumeToSet The volume to set or use "show" to show current default volume
+ * @returns {Message} Confirmation the setting was stored 
+ */
+
 const commando = require('discord.js-commando'),
 	path = require('path'),
 	{DEFAULT_VOLUME} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),

@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Transform some query into a LMGTFY (Let Me Google That For You) url  
+ * **Aliases**: `dumb`
+ * @module
+ * @category searches
+ * @name lmgtfy
+ * @example lmgtfy is it legal to kill an ant???
+ * @param {string} SearchQuery The dumb sh*t people need to use google for
+ * @returns {Message} lmgfty'ed url
+ */
+
 const commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 

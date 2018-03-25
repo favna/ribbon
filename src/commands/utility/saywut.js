@@ -23,6 +23,15 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Bust the last "say" user  
+ * **Aliases**: `saywat`, `saywot`
+ * @module
+ * @category utility
+ * @name saywut
+ * @returns {MessageEmbed} Info on who used the "say" command last
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),

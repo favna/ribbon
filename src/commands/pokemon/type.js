@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets the type matchup of any 1 or 2 types  
+ * **Aliases**: `matchup`, `weakness`, `advantage`
+ * @module
+ * @category pokémon
+ * @name type
+ * @example type dragon flying
+ * @param {string} Types One or two types to find the matchup for
+ * @returns {MessageEmbed} All weaknesses, advantages
+ */
+
 /* eslint-disable max-statements, complexity, block-scoped-var, vars-on-top, one-var, no-var, no-redeclare, max-depth, init-declarations */
 
 const {MessageEmbed} = require('discord.js'),

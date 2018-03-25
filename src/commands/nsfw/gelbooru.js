@@ -22,6 +22,19 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
+
+/**
+ * Gets a NSFW image from gelbooru  
+ * Can only be used in NSFW marked channels!  
+ * **Aliases**: `gel`, `booru`
+ * @module
+ * @category nsfw
+ * @name gelbooru
+ * @example gelbooru pyrrha_nikos
+ * @param {string} Query Something you want to find
+ * @returns {MessageEmbed} Score, Link and preview of the image
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	booru = require('booru'),
 	commando = require('discord.js-commando'), 

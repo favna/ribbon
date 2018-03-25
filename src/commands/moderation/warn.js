@@ -23,6 +23,20 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gives a member warning points  
+ * Please note that the bot will not auto ban when the member has a certain amount of points!
+ * **Aliases**: `warning`
+ * @module
+ * @category moderation
+ * @name warn
+ * @example warn Biscuit
+ * @param {member} AnyMember The member to give warning points
+ * @param {number} WarningPoints The amount of warning points to give
+ * @param {string} TheReason Reason for warning
+ * @returns {MessageEmbed} A MessageEmbed with a log of the warning
+ */
+
 const commando = require('discord.js-commando'),
 	fs = require('fs'),
 	moment = require('moment'),

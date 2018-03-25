@@ -23,6 +23,14 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Owner Only - lists all guilds the bot is in 	 
+ * @module
+ * @category owner
+ * @name checkguilds 
+ * @returns {Message} Amount and list of guilds in code blocks
+ */
+
 const commando = require('discord.js-commando'),
 	{stripIndents} = require('common-tags');
 

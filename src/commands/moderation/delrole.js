@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Delete the role of a member  
+ * **Aliases**: `deleterole`, `dr`, `remrole`, `removerole`
+ * @module
+ * @category moderation
+ * @name delrole
+ * @example delrole Favna Member
+ * @param {member} AnyMember The member to remove a role from
+ * @param {role} AnyRole The role to remove
+ * @returns {Message} Confirmation the role was removed
+ */
+
 const commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 

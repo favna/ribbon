@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets information about a game using Steam  
+ * **Aliases**: `valve`
+ * @module
+ * @category searches
+ * @name steam
+ * @example steam Tales of Berseria
+ * @param {string} GameName The name of any game that you want to find
+ * @returns {MessageEmbed} Information about the requested game
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	SteamAPI = require('steamapi'),
 	cheerio = require('cheerio'),

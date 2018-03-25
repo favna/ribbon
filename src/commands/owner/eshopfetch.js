@@ -23,6 +23,14 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Fetch the latest data for the eshop command  
+ * @module
+ * @category owner
+ * @name eshopfetch
+ * @returns {Message} Confirmation the data was fetched 
+ */
+
 const commando = require('discord.js-commando'),
 	eshop = require('nintendo-switch-eshop'),
 	fs = require('fs'),

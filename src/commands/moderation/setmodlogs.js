@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Sets the channel used for mod logs  
+ * **Aliases**: `setmod`
+ * @module
+ * @category moderation
+ * @name setmodlogs
+ * @example setmodlogs logs
+ * @param {channel} LogChannel The channel to use for mod logs
+ * @returns {Message} Confirmation the setting was stored
+ */
+
 const commando = require('discord.js-commando'),
 	{oneLine} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');

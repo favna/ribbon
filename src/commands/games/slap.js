@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Slap a dumb person💢!  
+ * **Aliases**: `bakaslap`
+ * @module
+ * @category games
+ * @name slap
+ * @example slap Cinder
+ * @param {member} [MemberToSlap] Name of the member you want to slap
+ * @returns {MessageEmbed} The slap and an image
+ */
+
 const commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 

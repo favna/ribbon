@@ -23,6 +23,16 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Find information about a movie using TheMovieDatabase  
+ * **Aliases**: `movie`
+ * @module
+ * @category searches
+ * @name tmdb
+ * @example tmdb Pokemon 2000
+ * @param {string} MovieName Name of the movie you want to find
+ * @returns {MessageEmbed} Information about the requested movie
+ */
 
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),

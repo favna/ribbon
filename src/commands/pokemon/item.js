@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets information about an item in Pokémon
+ * For item names existing of multiple words (for example `life orb`) you can either type it with or without the space  
+ * **Aliases**: `it`, `bag`
+ * @module
+ * @category pokemon
+ * @name item
+ * @example item assault vest
+ * @param {string} ItemName Name of the item to find
+ * @returns {MessageEmbed} Description and external links for the item
+ */
+
 /* eslint-disable sort-vars */
 const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),

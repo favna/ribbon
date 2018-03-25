@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Tags a member by ID  
+ * Primarily meant for mobile and when members have annoying untaggable names  
+ * @module
+ * @category owner
+ * @name tagmember
+ * @example tagmember ☜(⌒▽⌒)☞guy
+ * @param {member} AnyMember Member to make a mention to
+ * @returns {Message} Mention of the member wrapped between carets
+ */
+ 
 const commando = require('discord.js-commando');
 
 module.exports = class tagmemberCommand extends commando.Command {

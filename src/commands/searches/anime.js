@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets information about any anime from MyAnimeList  
+ * **Aliases**: `ani`, `mal`
+ * @module
+ * @category searches
+ * @name anime
+ * @example anime Yu-Gi-Oh Dual Monsters
+ * @param {string} AnyAnime anime to look up
+ * @returns {MessageEmbed} Information about the requested anime
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	maljs = require('maljs'),

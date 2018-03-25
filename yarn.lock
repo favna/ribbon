@@ -2117,11 +2117,12 @@ pngjs@^3.0.0, pngjs@^3.3.0:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.3.2.tgz#097c3c2a75feb223eadddea6bc9f0050cf830bc3"
 
-pornsearch@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/pornsearch/-/pornsearch-2.3.0.tgz#7e60739afc132427dd42049c9fde5c07aebbb4e4"
+pornsearch@2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/pornsearch/-/pornsearch-2.4.2.tgz#3834ee199290ccfcb7c8a13485b3d5713eb164c2"
   dependencies:
     axios "^0.15.3"
+    babel-runtime "^6.26.0"
     cheerio "^0.22.0"
 
 prebuild-install@~2.3.0:
@@ -2631,9 +2632,9 @@ stack-trace@0.0.x:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/stack-trace/-/stack-trace-0.0.10.tgz#547c70b347e8d32b4e108ea1a2a159e5fdde19c0"
 
-steamapi@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/steamapi/-/steamapi-2.0.0.tgz#71ac82cea53e7c743e0723d79d466f6b15000c4a"
+steamapi@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/steamapi/-/steamapi-2.0.2.tgz#28ba264613e902879425ded6363b91f0ac88396b"
 
 stream-to-buffer@^0.1.0:
   version "0.1.0"

@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets a NSFW video from pornhub
+ * Can only be used in NSFW marked channels!  
+ * **Aliases**: `porn`, `nsfwvids`
+ * @module
+ * @category nsfw
+ * @name pornvids
+ * @example pornvids babe
+ * @param {string} Query Something you want to find
+ * @returns {MessageEmbed} URL, duration and embedded thumbnail
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	Pornsearch = require('pornsearch'),
 	commando = require('discord.js-commando'),

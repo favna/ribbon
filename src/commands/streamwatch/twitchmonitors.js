@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Configure which streamers to monitor  
+ * **Aliases**: `monitors`, `monitor`, `twitchmonitor`
+ * @module
+ * @category streamwatch
+ * @name twitchmonitors
+ * @example twitchmonitors techagent favna
+ * @param {string} AnyMembers List of members to monitor space delimited
+ * @returns {Message} Confirmation the setting was stored
+ */
+
 const commando = require('discord.js-commando'),
 	{stripIndents} = require('common-tags'),
 	{deleteCommandMessages, userSearch} = require('../../util.js');

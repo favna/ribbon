@@ -23,6 +23,16 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Create zalgo-fied text from your input  
+ * @module
+ * @category utility
+ * @name zalgo
+ * @example zalgo HE COMES 
+ * @param {string} SomeText Your input to transform with Zalgo
+ * @returns {Message} Your text zalgo-fied
+ */
+
 const commando = require('discord.js-commando'),
 	zalgo = require('zalgotxt'),
 	{deleteCommandMessages} = require('../../util.js');

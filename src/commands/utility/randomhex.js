@@ -23,6 +23,15 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Generates a random color  
+ * **Aliases**: `randhex`, `rhex`, `randomcolor`, `randomcol`
+ * @module
+ * @category utility
+ * @name randomhex
+ * @returns {MessageEmbed} Color of embed matches generated color
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');

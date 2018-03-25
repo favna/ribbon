@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Give someone a hug ❤!  
+ * **Aliases**: `bearhug`, `embrace`
+ * @module
+ * @category games
+ * @name hug
+ * @example hug Pyrrha
+ * @param {member} [MemberToHug] Name of the member you want to give a hug
+ * @returns {MessageEmbed} The hug and a cute image ❤
+ */
+
 const commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 

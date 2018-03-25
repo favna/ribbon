@@ -23,6 +23,19 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets flavor text from a Pokémon  
+ * Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
+ * Due to message limit size it fetches as many entries possible starting with generation 7 going downwards  
+ * **Aliases**: `flavors`, `dexdata`, `dexentries`, `dextext`, `dextex`, `dexter`
+ * @module
+ * @category pokemon
+ * @name flavor
+ * @example flavor dragonite
+ * @param {string} PokemonName The name of the pokemon you want to get flavor text for
+ * @returns {MessageEmbed} Flavor texts for the pokemon
+ */
+
 /* eslint-disable sort-vars, max-statements */
 const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),

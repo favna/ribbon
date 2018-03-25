@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Find a video on YouTube  
+ * By default returns MessageEmbed. use `yts` to return just the URL and have in-client playback  
+ * **Aliases**: `yt`, `tube`, `yts`
+ * @module
+ * @category searches
+ * @name youtube
+ * @example youtube Voldemort Origins of the heir
+ * @param {string} VideoQuery Video to find on YouTube
+ * @returns {MessageEmbed} Title, Channel, Publication Date and Description of the video
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),

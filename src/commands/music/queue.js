@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Shows the current queue of songs  
+ * Songs are paginated in sets of 5  
+ * **Aliases**: `songs`, `song-list`, `list`, `listqueue`
+ * @module
+ * @category music
+ * @name queue
+ * @example queue 2
+ * @param {string} [Page] Page to show
+ * @returns {MessageEmbed} List of queued songs with their duration and total duration of the queue
+ */
+
 const commando = require('discord.js-commando'),
 	{oneLine, stripIndents} = require('common-tags'),
 	path = require('path'),

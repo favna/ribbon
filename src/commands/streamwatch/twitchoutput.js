@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Configures the channel in which twitch notifications are send  
+ * **Aliases**: `output`, `twitchout`, `twitchchannel`
+ * @module
+ * @category streamwatch
+ * @name twitchoutput
+ * @example twitchoutput #twitch-notifications
+ * @param {channel} AnyChannel Channel to output notifs to
+ * @returns {Message} Confirmation the setting was stored
+ */
+
 const commando = require('discord.js-commando'),
 	{oneLine} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');

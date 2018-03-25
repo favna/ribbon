@@ -23,6 +23,15 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Filps a coinm call heads or tails!  
+ * **Aliases**: `flip`, `coinflip`
+ * @module
+ * @category games
+ * @name coin
+ * @returns {MessageEmbed} The side the coin landed on
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	coin = require('flipacoin'),
 	commando = require('discord.js-commando'),

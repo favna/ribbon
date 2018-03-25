@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets information about any manga from MyAnimeList  
+ * **Aliases**: `cartoon`, `man`
+ * @module
+ * @category searches
+ * @name manga
+ * @example manga Yu-Gi-Oh
+ * @param {string} AnyManga manga to look up
+ * @returns {MessageEmbed} Information about the requested manga
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	maljs = require('maljs'),

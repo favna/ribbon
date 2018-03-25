@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Rolls a magic 8 ball using your input  
+ * **Aliases**: `eightball`
+ * @module
+ * @category games
+ * @name 8ball
+ * @example 8ball is Favna a genius coder?
+ * @param {string} question Question you want the 8 ball to answer
+ * @returns {MessageEmbed} Your question and its answer
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	predict = require('eightball'),

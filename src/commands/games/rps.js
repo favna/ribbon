@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Play Rock Paper Scissors against random.org randomization  
+ * **Aliases**: rockpaperscissors
+ * @module
+ * @category games
+ * @name rps
+ * @example rps Rock
+ * @param {string} HandToPlay The hand that you want to play
+ * @returns {MessageEmbed} Result of the conflict
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	random = require('node-random'),

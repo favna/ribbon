@@ -23,6 +23,16 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Give someone a kiss ❤!  
+ * @module
+ * @category games
+ * @name kiss
+ * @example kiss Pyrrha
+ * @param {member} [MemberToKiss] Name of the member you want to give a kiss
+ * @returns {MessageEmbed} The kiss and a cute image ❤
+ */
+
 const commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 

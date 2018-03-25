@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Unlock the channel  
+ * Only really useful if you previously locked the channel  
+ * Note that the bot does need to be able to be able to access this channel to unlock it (read permissions)  
+ * **Aliases**: `delock`, `ul`
+ * @module
+ * @category moderation
+ * @name unlock
+ * @returns {Message} Confirmation the channel is unlocked
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),

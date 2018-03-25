@@ -23,6 +23,23 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Starts playing music  
+ * You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it  
+ * If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
+ * There are 3 ways to queue songs  
+ * 1. Youtube Search Query  
+ * 2. Youtube URL  
+ * 3. Youtube video ID  
+ * **Aliases**: `add`, `enqueue`, `start`, `join`
+ * @module
+ * @category music
+ * @name play
+ * @example play
+ * @param {string} Video One of the options linking to a video to play
+ * @returns {MessageEmbed} Title, duration and thumbnail of the video
+ */
+
 const path = require('path'),
 	Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
 	YouTube = require('simple-youtube-api'), // eslint-disable-line sort-vars

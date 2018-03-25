@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Take the effort out of calculations and let the bot do it for you  
+ * **Aliases**: `calc`
+ * @module
+ * @category utility
+ * @name math
+ * @example math (PI - 1) * 3
+ * @param {string} Equation The equation to solve
+ * @returns {MessageEmbed} Your equation and its answer
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	scalc = require('scalc'),

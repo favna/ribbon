@@ -23,6 +23,15 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets the invite link for the bot  
+ * **Aliases**: `inv`, `links`, `shill`
+ * @module
+ * @category info
+ * @name invite
+ * @returns {MessageEmbed} Invite link along with other links
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');

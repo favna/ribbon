@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets a NSFW gif and webm from pornhub
+ * Can only be used in NSFW marked channels!  
+ * **Aliases**: `nsfwgifs`
+ * @module
+ * @category nsfw
+ * @name porngifs
+ * @example porngifs babe
+ * @param {string} Query Something you want to find
+ * @returns {MessageEmbed} Webm link and embeds gif
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	Pornsearch = require('pornsearch'),
 	commando = require('discord.js-commando'),

@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Rolls some dice with some sides. Great for the DnD players!  
+ * **Aliases**: `xdicey`, `roll`, `dicey`, `die`
+ * @module
+ * @category games
+ * @name dice
+ * @example dice 5 6
+ * @param {string} DiceSides The amount of sides the dice should have
+ * @param {string} AmountOfRolls The amount of dice to roll
+ * @returns {MessageEmbed} The eyes rolled for each dice as well as the total of all rolls
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	xdicey = require('xdicey'),

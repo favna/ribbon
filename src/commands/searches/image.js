@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets an image through Google Images  
+ * **Aliases**: `img`, `i`
+ * @module
+ * @category searches
+ * @name image
+ * @example image Pyrrha Nikos
+ * @param {string} ImageQuery Image to find on google images
+ * @returns {MessageEmbed} Embedded image and search query
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),

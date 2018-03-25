@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Get the current weather forecast in any city  
+ * Potentially you'll have to specify city if the city is in multiple countries, i.e. `weather amsterdam` will not be the same as `weather amsterdam missouri`  
+ * **Aliases**: `temp`, `forecast`, `fc`, `wth`
+ * @module
+ * @category utility
+ * @name weather
+ * @example weather Amsterdam
+ * @param {string} CityName Name of the city to get the weather forecast for
+ * @returns {MessageEmbed} Various statistics about the current forecast
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),

@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Repeats a message and deletes your message  
+ * **Aliases**: `sayd`, `repeat`
+ * @module
+ * @category utility
+ * @name say
+ * @example say Favna is a great coder!
+ * @param {string} Text Message you want to have repeated
+ * @returns {Message} Your message said by the bot
+ */
+
 const commando = require('discord.js-commando');
 
 module.exports = class sayCommand extends commando.Command {

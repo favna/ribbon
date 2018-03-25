@@ -23,6 +23,16 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets information on an ability in Pokémon  
+ * **Aliases**: `abilities`, `abi`
+ * @module
+ * @category pokémon
+ * @name ability
+ * @example ability multiscale
+ * @param {string} AbilityName The name of the ability you want to find
+ * @returns {MessageEmbed} Description and external links for the ability
+ */
 
 const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),

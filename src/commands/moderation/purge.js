@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Quickly delete a certain amount of messages  
+ * **Aliases**: `prune`, `delete`
+ * @module
+ * @category moderation
+ * @name purge
+ * @example purge 10
+ * @param {number} MessageAmount The amount of messages to delete, between 1 and 99
+ * @returns {Message} Confirmation of the amount of messages deleted - will self delete after 1 second.
+ */
+
 const commando = require('discord.js-commando');
 
 module.exports = class purgeCommand extends commando.Command {

@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Generates a QR code from text (like a URL)  
+ * **Aliases**: `qr`
+ * @module
+ * @category utility
+ * @name qrgen
+ * @example qrgen https://favna.xyz/ribbon
+ * @param {string} URL URL you want to encode into a QR image
+ * @returns {MessageEmbed} Embedded QR code and original image URL
+ */
+
 const commando = require('discord.js-commando'),
 	imgur = require('imgur'),
 	qr = require('qrcode'),

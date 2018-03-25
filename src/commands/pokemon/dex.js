@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets information about a Pokémon from Dexter  
+ * Note that different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
+ * **Aliases**: `pokedex`, `dexfind`, `df`, `rotom`
+ * @module
+ * @category pokemon
+ * @name dex
+ * @example dex dragonite
+ * @param {string} PokemonName The name of the pokemon you want to find
+ * @returns {MessageEmbed} Lots of information about the pokemon
+ */
+
 /* eslint-disable sort-vars, max-statements,complexity */
 const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),

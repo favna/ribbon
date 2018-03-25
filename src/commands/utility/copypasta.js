@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets one of the server's stored copypastas  
+ * Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!  
+ * **Aliases**: `cp`, `pasta`
+ * @module
+ * @category utility
+ * @name copypasta
+ * @example copypasta navy
+ * @param {string} PastaName Name of the copypasta to send
+ * @returns {MessageEmbed} Copypasta content. In a normal message if more than 1024 characters
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),

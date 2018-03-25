@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Get the info from a user  
+ * **Aliases**: `user`, `uinfo`
+ * @module
+ * @category info
+ * @name userinfo
+ * @example userinfo Favna
+ * @param {member} AnyMember Member you want to get info about
+ * @returns {MessageEmbed} Info about that member
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),

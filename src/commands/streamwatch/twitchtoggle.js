@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Killswitch for Twitch notifications  
+ * **Aliases**: 
+ * @module
+ * @category streamwatch
+ * @name twitchtoggle
+ * @example twitchtoggle enable
+ * @param {boolean} Option True or False
+ * @returns {Message} Confirmation the setting was stored
+ */
+
 const commando = require('discord.js-commando'),
 	{oneLine} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');

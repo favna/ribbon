@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets info from a package on Cydia, only supports default repositories  
+ * Also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
+ * **Aliases**: `cy`
+ * @module
+ * @category searches
+ * @name cydia
+ * @example cydia Anemone
+ * @param {string} TweakName Name of the tweak to find
+ * @returns {MessageEmbed} Information about the tweak
+ */
+
 const Fuse = require('fuse.js'),
 	{MessageEmbed} = require('discord.js'),
 	cheerio = require('cheerio'),

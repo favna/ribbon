@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.  
+ * **Aliases**: `combat`
+ * @module
+ * @category games
+ * @name fight
+ * @example fight Pyrrha Ruby
+ * @param {string} FighterOne The first combatant
+ * @param {string} FighterTwo The second combatant
+ * @returns {MessageEmbed} Result of the combat
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),

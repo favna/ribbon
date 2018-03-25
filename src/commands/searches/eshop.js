@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets information about a game in the Nintendo Switch eShop  
+ * **Aliases**: `shop`
+ * @module
+ * @category searches
+ * @name eshop
+ * @example eshop Breath of The Wild
+ * @param {string} GameName Game that you want to find in the eShop
+ * @returns {MessageEmbed} Information about the requested game
+ */
+
 const Fuse = require('fuse.js'),
 	commando = require('discord.js-commando'),
 	fs = require('fs'),

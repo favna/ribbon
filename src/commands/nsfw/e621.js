@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets a NSFW image from e621  
+ * Can only be used in NSFW marked channels!  
+ * **Aliases**: `eee`
+ * @module
+ * @category nsfw
+ * @name e621
+ * @example e621 pyrrha_nikos
+ * @param {string} Query Something you want to find
+ * @returns {MessageEmbed} Score, Link and preview of the image
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	booru = require('booru'),
 	commando = require('discord.js-commando'), 

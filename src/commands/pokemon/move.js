@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets information about a move in Pokémon  
+ * For move names existing of multiple words (for example `dragon dance`) you can either type it with or without the space  
+ * **Aliases**: `attack`
+ * @module
+ * @category pokémon
+ * @name move
+ * @example move dragon dance
+ * @param {string} MoveName The move you want to find
+ * @returns {MessageEmbed} Details about the move
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	Matcher = require('did-you-mean'),
 	commando = require('discord.js-commando'),

@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets the current time in any place  
+ * Uses Google's geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.  
+ * **Aliases**: `citytime`
+ * @module
+ * @category utility
+ * @name time
+ * @example time Amsterdam
+ * @param {string} Location Place where you want to get the current time for
+ * @returns {MessageEmbed} Current date, current time, country and DST offset
+ */
+
 const commando = require('discord.js-commando'),
 	request = require('snekfetch'),
 	{MessageEmbed} = require('discord.js'),

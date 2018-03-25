@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Adds a new copypasta for your server  
+ * **Aliases**: `cpadd`, `pastaadd`
+ * @module
+ * @category utility
+ * @name copypastaadd
+ * @example copypastaadd lipsum Lorem ipsum dolor sit amet. 
+ * @param {string} PasteName
+ * @param {string} PastaContent
+ * @returns {Message} Confirmation the copypasta was added
+ */
+
 const commando = require('discord.js-commando'),
 	fs = require('fs'),
 	moment = require('moment'),

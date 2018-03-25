@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Define a word using UrbanDictionary  
+ * **Aliases**: `ub`, `ud`
+ * @module
+ * @category searches
+ * @name urban
+ * @example urban Everclear
+ * @param {string} PhraseQuery Phrase that you want to define
+ * @returns {MessageEmbed} Top definition for the requested phrase
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	urban = require('urban'),

@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets information through google  
+ * Note: prioritizes Knowledge Graphs for better searching  
+ * **Aliases**: `search`, `g`
+ * @module
+ * @category searches
+ * @name google
+ * @example google Pyrrha Nikos
+ * @param {string} SearchQuery Thing to find on google
+ * @returns {Message} Result of your search
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	cheerio = require('cheerio'),
 	commando = require('discord.js-commando'),

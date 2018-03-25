@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets a NSFW image from paheal  
+ * Can only be used in NSFW marked channels!  
+ * **Aliases**: `pa`, `heal`
+ * @module
+ * @category nsfw
+ * @name paheal
+ * @example paheal pyrrha_nikos
+ * @param {string} Query Something you want to find
+ * @returns {MessageEmbed} Score, Link and preview of the image
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	booru = require('booru'),
 	commando = require('discord.js-commando'), 

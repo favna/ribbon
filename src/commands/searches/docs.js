@@ -25,6 +25,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Get an entry from the Discord.JS documentation  
+ * **Aliases**: `djsguide`, `guide`, `djs`
+ * @module
+ * @category searches
+ * @name docs
+ * @example docs ClientUser
+ * @param {string} DocEntry The entry from the docs you want to get info about
+ * @returns {MessageEmbed} Info about the entry from the library
+ */
+
 const {Command} = require('discord.js-commando'), 
 	{oneLineTrim} = require('common-tags'),
 	request = require('snekfetch'),

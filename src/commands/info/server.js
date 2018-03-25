@@ -23,6 +23,15 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets information about the current server  
+ * **Aliases**: `serverinfo`, `sinfo`
+ * @module
+ * @category info
+ * @name server
+ * @returns {MessageEmbed} Info about the server
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),

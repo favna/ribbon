@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel  
+ * **Aliases**: `togglemod` 
+ * @module
+ * @category moderation
+ * @name modlogs
+ * @example modlogs enable
+ * @param {boolean} Option True or False
+ * @returns {Message} Confirmation the setting was stored
+ */
+
 const commando = require('discord.js-commando'),
 	{oneLine} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');

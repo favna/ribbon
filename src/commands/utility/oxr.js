@@ -23,6 +23,21 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Convert one currency to another  
+ * Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC  
+ * For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)  
+ * **Aliases**: `money`, `rate`, `convert`
+ * @module
+ * @category utility
+ * @name oxr
+ * @example ox 1 EUR USD
+ * @param {number} MoneyAmount
+ * @param {string} OriginCurrency
+ * @param {string} TargetCurrency
+ * @returns {MessageEmbed} Input and output currency's and the amount your input is worth in both
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	currencySymbol = require('currency-symbol-map'),

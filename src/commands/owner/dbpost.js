@@ -23,6 +23,14 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Owners only - posts current guild count to discordbotlist  
+ * @module
+ * @category owner
+ * @name dbpost
+ * @returns {Message} Confirmation the update was made
+ */
+
 const auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	request = require('snekfetch');

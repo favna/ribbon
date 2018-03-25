@@ -15,6 +15,17 @@
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/**
+ * Define a word using glosbe  
+ * **Aliases**: `def`, `dict`
+ * @module
+ * @category searches
+ * @name define
+ * @example define Google
+ * @param {string} Word the word you want to define
+ * @returns {MessageEmbed} Possible definitions for that word
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	request = require('snekfetch'),

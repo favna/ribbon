@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets information about a game using IndieGamesDoneBad (IGDB)  
+ * **Aliases**: `game`, `moby`, `igdb`
+ * @module
+ * @category searches
+ * @name games
+ * @example games Tales of Berseria
+ * @param {string} GameName The name of any game that you want to find
+ * @returns {MessageEmbed} Information about the requested game
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	igdbapi = require('igdb-api-node').default,

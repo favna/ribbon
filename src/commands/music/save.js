@@ -23,6 +23,15 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * DMs the 10 upcoming songs from the queue to the user
+ * **Aliases**: `save-songs`, `save-song-list`, `ss`, `savequeue`
+ * @module
+ * @category music
+ * @name save
+ * @returns {MessageEmbed} Titles, durations and total queue duration sent in a DM
+ */
+
 const commando = require('discord.js-commando'),
 	path = require('path'),
 	Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars

@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Configure whether the bot should delete command messages  
+ * **Aliases**: `dcm`
+ * @module
+ * @category moderation
+ * @name deletecommandmessages
+ * @example deletecommandmessages enable
+ * @param {boolean} Option True or False
+ * @returns {Message} Confirmation the setting was stored
+ */
+
 const commando = require('discord.js-commando'),
 	{oneLine} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');
