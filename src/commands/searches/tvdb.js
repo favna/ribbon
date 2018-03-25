@@ -24,14 +24,14 @@
  */
 
 /**
- * Find information about a movie using TheMovieDatabase  
- * **Aliases**: `movie`
+ * Find information about a TV series using TheMovieDatabase  
+ * **Aliases**: `tv`, `show`, `serie`, `series`
  * @module
  * @category searches
- * @name tmdb
- * @example tmdb Pokemon 2000
- * @param {string} MovieName Name of the movie you want to find
- * @returns {MessageEmbed} Information about the requested movie
+ * @name tvdb
+ * @example tvdb Pokemon
+ * @param {string} SeriesName Name of the TV serie you want to find
+ * @returns {MessageEmbed} Information about the requested TV serie
  */
 
 const {MessageEmbed} = require('discord.js'),
@@ -41,16 +41,16 @@ const {MessageEmbed} = require('discord.js'),
 	{TheMovieDBV3ApiKey} = require('../../auth.json'),
 	{deleteCommandMessages} = require('../../util.js');
 
-module.exports = class movieCommand extends commando.Command {
+module.exports = class tvCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'tmdb',
-			'memberName': 'tmdb',
+			'name': 'tvdb',
+			'memberName': 'tvdb',
 			'group': 'searches',
-			'aliases': ['movie'],
-			'description': 'Finds movies on TheMovieDB',
+			'aliases': ['tv'],
+			'description': 'Finds TV shows on TheMovieDB',
 			'format': 'MovieName [release_year_movie]',
-			'examples': ['tmdb Ocean\'s Eleven 2001'],
+			'examples': ['tvdb Pokemon'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
@@ -59,7 +59,7 @@ module.exports = class movieCommand extends commando.Command {
 			'args': [
 				{
 					'key': 'name',
-					'prompt': 'What movie do you want to find?',
+					'prompt': 'What TV serie do you want to find?',
 					'type': 'string'
 				}
 			]
@@ -68,32 +68,29 @@ module.exports = class movieCommand extends commando.Command {
 
 	async run (msg, args) {
 		const embed = new MessageEmbed(),
-			search = await request.get('https://api.themoviedb.org/3/search/movie')
+			search = await request.get('https://api.themoviedb.org/3/search/tv')
 				.query('api_key', TheMovieDBV3ApiKey)
-				.query('query', args.name)
-				.query('include_adult', false);
+				.query('query', args.name);
 
-		if (search.ok && search.body.total_results > 0) {
-			const details = await request.get(`https://api.themoviedb.org/3/movie/${search.body.results[0].id}`)
+		if (search.ok && search.body.total_results) {
+			const details = await request.get(`https://api.themoviedb.org/3/tv/${search.body.results[0].id}`)
 				.query('api_key', TheMovieDBV3ApiKey);
 
 			if (details.ok) {
-				const movie = details.body;
+				const show = details.body;
 
 				embed
-					.setTitle(movie.title)
-					.setURL(`https://www.themoviedb.org/movie/${movie.id}`)
+					.setTitle(show.name)
+					.setURL(`https://www.themoviedb.org/tv/${show.id}`)
 					.setColor(msg.guild ? msg.member.displayHexColor : '#E24141')
-					.setImage(`https://image.tmdb.org/t/p/original${movie.backdrop_path}`)
-					.setThumbnail(`https://image.tmdb.org/t/p/original${movie.poster_path}`)
-					.setDescription(movie.overview)
-					.addField('Runtime', `${movie.runtime} minutes`, true)
-					.addField('User Score', movie.vote_average, true)
-					.addField('Status', movie.status, true)
-					.addField('Release Date', moment(movie.release_date).format('MMMM Do YYYY'), true)
-					.addField('Collection', movie.belongs_to_collection ? movie.belongs_to_collection.name : 'none', true)
-					.addField('IMDB Page', movie.imdb_id_id ? `[Click Here](http://www.imdb.com/title/${movie.imdb_id})` : 'none', true)
-					.addField('Genres', movie.genres.length ? movie.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB');
+					.setImage(`https://image.tmdb.org/t/p/original${show.backdrop_path}`)
+					.setThumbnail(`https://image.tmdb.org/t/p/original${show.poster_path}`)
+					.setDescription(show.overview)
+					.addField('Episode Runtime', `${show.episode_run_time} minutes`, true)
+					.addField('Popularity', `${Math.round(show.popularity * 100) / 100}%`, true)
+					.addField('Status', show.status, true)
+					.addField('First air Date', moment(show.first_air_date).format('MMMM Do YYYY'), true)
+					.addField('Genres', show.genres.length ? show.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB');
 
 				deleteCommandMessages(msg, this.client);
 

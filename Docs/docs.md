@@ -300,6 +300,9 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dt><a href="#module_tmdb">tmdb</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Find information about a movie using TheMovieDatabase<br><strong>Aliases</strong>: <code>movie</code></p>
 </dd>
+<dt><a href="#module_tvdb">tvdb</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Find information about a TV series using TheMovieDatabase<br><strong>Aliases</strong>: <code>tv</code>, <code>show</code>, <code>serie</code>, <code>series</code></p>
+</dd>
 <dt><a href="#module_urban">urban</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Define a word using UrbanDictionary<br><strong>Aliases</strong>: <code>ub</code>, <code>ud</code></p>
 </dd>
@@ -1566,6 +1569,23 @@ Find information about a movie using TheMovieDatabase
 **Example**  
 ```js
 tmdb Pokemon 2000
+```
+<a name="module_tvdb"></a>
+
+## tvdb ⇒ <code>MessageEmbed</code>
+Find information about a TV series using TheMovieDatabase  
+**Aliases**: `tv`, `show`, `serie`, `series`
+
+**Returns**: <code>MessageEmbed</code> - Information about the requested TV serie  
+**Category**: searches  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| SeriesName | <code>string</code> | Name of the TV serie you want to find |
+
+**Example**  
+```js
+tvdb Pokemon
 ```
 <a name="module_urban"></a>
 

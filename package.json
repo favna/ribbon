@@ -15,7 +15,7 @@
   },
   "scripts": {
     "prestart": "yarn install",
-    "docs": "jsdoc2md --template ./docs/template.hbs --files ./src/**/*.js > docs/docs.md",
+    "docs": "jsdoc2md --template ./docs/template.hbs --files ./src/**/*.js | tee docs/docs.md ../Ribbon.wiki/All-Commands.md > NUL",
     "lintfix": "./node_modules/.bin/eslint --fix **/*.js",
     "lint": "./node_modules/.bin/eslint **/*.js",
     "start": "node src/app.js",
