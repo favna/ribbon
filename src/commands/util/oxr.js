@@ -43,10 +43,10 @@ const {MessageEmbed} = require('discord.js'),
 	currencySymbol = require('currency-symbol-map'),
 	fx = require('money'),
 	moment = require('moment'),
-	oxr = require('open-exchange-rates'),
+	request = require('snekfetch'),
 	{deleteCommandMessages} = require('../../util.js'),
-	{oneLine} = require('common-tags'),
-	{oxrAppID} = require('../../auth.json');
+	{oxrAppID} = require('../../auth.json'),
+	{stripIndents} = require('common-tags');
 
 module.exports = class moneyCommand extends commando.Command {
 	constructor (client) {
@@ -94,40 +94,39 @@ module.exports = class moneyCommand extends commando.Command {
 	replaceAll (string, pattern, replacement) {
 		return string.replace(new RegExp(pattern, 'g'), replacement);
 	}
+	/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 
-	run (msg, args) {
-		oxr.set({'app_id': oxrAppID});
+	async run (msg, args) {
+		const rates = await request.get('https://openexchangerates.org/api/latest.json')
+			.query('app_id', oxrAppID)
+			.query('prettyprint', false)
+			.query('show_alternative', true);
 
-		oxr.latest(async () => {
-			try {
-				fx.rates = oxr.rates;
-				fx.base = oxr.base;
-				const convertedMoney = await this.converter(this.replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo),
-					oxrEmbed = new MessageEmbed();
+		if (rates.ok) {
+			fx.rates = rates.body.rates;
+			fx.base = rates.body.base;
 
-				oxrEmbed
-					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-					.setAuthor('🌐 Currency Converter')
-					.addField(args.curOne !== 'BTC'
-						? `:flag_${args.curOne.slice(0, 2).toLowerCase()}: Money in ${args.curOne}`
-						: '💰 Money in Bitcoin',
-					`${currencySymbol(args.curOne)}${this.replaceAll(args.value, /,/, '.')}`, true)
+			const convertedMoney = this.converter(this.replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo),
+				oxrEmbed = new MessageEmbed();
 
-					.addField(args.curTwo !== 'BTC'
-						? `:flag_${args.curTwo.slice(0, 2).toLowerCase()}: Money in ${args.curTwo}`
-						: '💰 Money in Bitcoin',
-					`${currencySymbol(args.curTwo)}${convertedMoney}`, true)
-					.setFooter(`Converted money from input using openexchangerates | converted on: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+			oxrEmbed
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+				.setAuthor('🌐 Currency Converter')
+				.addField(`:flag_${args.curOne.slice(0, 2).toLowerCase()}: Money in ${args.curOne}`, `${currencySymbol(args.curOne)}${this.replaceAll(args.value, /,/, '.')}`, true)
+				.addField(`:flag_${args.curTwo.slice(0, 2).toLowerCase()}: Money in ${args.curTwo}`, `${currencySymbol(args.curTwo)}${convertedMoney}`, true)
+				.setFooter(`Converted on ${moment.unix(rates.body.timestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
-				deleteCommandMessages(msg, this.client);
+			deleteCommandMessages(msg, this.client);
 
-				return msg.embed(oxrEmbed);
-			} catch (error) {
-				console.error(oneLine `An error occured in the oxr command on the ${msg.guild.name} (${msg.guild.id}) server. 
-				Command execute time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}. The error is: ${error}`);
+			return msg.embed(oxrEmbed);
+		}
 
-				return msg.reply('⚠️ An error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
-			}
-		});
+		console.error(`${stripIndents `An error occured on the oxr command!
+		Server: ${msg.guild.name} (${msg.guild.id})
+		Author: ${msg.author.tag} (${msg.author.id})
+		Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+		Error Message:`} ${rates.statusText}`);
+
+		return msg.reply('⚠️ an error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
 	}
 };

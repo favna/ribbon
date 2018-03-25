@@ -1175,12 +1175,6 @@ htmlparser2@^3.9.1:
     inherits "^2.0.1"
     readable-stream "^2.0.2"
 
-http-agent@*:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/http-agent/-/http-agent-0.1.2.tgz#aaacd633c87e5ab42ed4f90827a1a5f1e2bac4b8"
-  dependencies:
-    request "1.9.x"
-
 http-signature@~0.10.0:
   version "0.10.1"
   resolved "https://registry.yarnpkg.com/http-signature/-/http-signature-0.10.1.tgz#4fbdac132559aa8323121e540779c0a012b27e66"
@@ -1808,12 +1802,6 @@ onetime@^2.0.0:
   dependencies:
     mimic-fn "^1.0.0"
 
-open-exchange-rates@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/open-exchange-rates/-/open-exchange-rates-0.3.0.tgz#00a0f22e8a06945f60615c25656cd765fd48316b"
-  dependencies:
-    http-agent "*"
-
 optionator@^0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.8.2.tgz#364c5e409d3f4d6301d6c0b4c05bba50180aeb64"
@@ -2166,10 +2154,6 @@ ref@1:
 regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
-
-request@1.9.x:
-  version "1.9.9"
-  resolved "https://registry.yarnpkg.com/request/-/request-1.9.9.tgz#af231fe87e3725a5db46ff74833f3aa0ebfd9151"
 
 request@2.53.0:
   version "2.53.0"

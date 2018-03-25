@@ -3,7 +3,6 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "plugins": ["node"],
     "extends": ["eslint:recommended"],
     "parserOptions": {
         "sourceType": "module",
@@ -232,7 +231,6 @@ module.exports = {
         "no-warning-comments": "error",
         "no-whitespace-before-property": "error",
         "no-with": "error",
-        "node/exports-style": ["error", "module.exports"],
         "node/no-unpublished-require": "off",
         "nonblock-statement-body-position": "error",
         "object-curly-newline": "error",
