@@ -32,7 +32,6 @@ module.exports = class kaiCommand extends commando.Command {
 			'name': 'kiss',
 			'memberName': 'kiss',
 			'group': 'games',
-			'aliases': ['frenchkiss'],
 			'description': 'Give someone a kiss ❤',
 			'format': 'MemberToGiveAKiss',
 			'examples': ['kiss Favna'],

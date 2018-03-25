@@ -34,7 +34,7 @@ module.exports = class strawpollCommand extends commando.Command {
 			'name': 'strawpoll',
 			'memberName': 'strawpoll',
 			'group': 'games',
-			'aliases': ['poll', 'straw'],
+			'aliases': ['straw', 'poll'],
 			'description': 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
 			'format': 'TitleOfStrawpoll OptionA|OptionB|OptionC...',
 			'examples': ['strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"'],

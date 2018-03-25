@@ -37,6 +37,7 @@ module.exports = class fightCommand extends commando.Command {
 			'group': 'games',
 			'aliases': ['combat'],
 			'description': 'Pit two things against each other in a fight to the death',
+			'details': 'Winner is deteremined with random.org randomization',
 			'format': 'FirstFighter, SecondFighter',
 			'examples': ['fight Favna Chuck Norris'],
 			'guildOnly': false,

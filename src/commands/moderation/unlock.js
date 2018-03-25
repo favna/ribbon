@@ -76,10 +76,10 @@ module.exports = class unlockCommand extends commando.Command {
 
 				deleteCommandMessages(msg, this.client);
 
-				modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
+				modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.say(embed);
 			}
 
-			return msg.say(embed.description.slice(12));
+			return msg.say(embed);
 		}
 		deleteCommandMessages(msg, this.client);
 

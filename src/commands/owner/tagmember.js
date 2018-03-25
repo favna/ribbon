@@ -25,7 +25,6 @@
 
 const commando = require('discord.js-commando');
 
-
 module.exports = class tagmemberCommand extends commando.Command {
 	constructor (client) {
 		super(client, {

@@ -76,7 +76,7 @@ module.exports = class lockdownCommand extends commando.Command {
 
 				deleteCommandMessages(msg, this.client);
 
-				modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
+				modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);
 			}
 			
 			return msg.say(embed.description.slice(12));

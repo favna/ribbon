@@ -52,7 +52,7 @@ module.exports = class avatarCommand extends commando.Command {
 					'key': 'size',
 					'prompt': 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
 					'type': 'integer',
-					'default': 128,
+					'default': 1024,
 					'validate': (size) => {
 						const validSizes = ['128', '256', '512', '1024', '2048'];
 

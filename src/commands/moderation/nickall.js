@@ -105,11 +105,11 @@ module.exports = class nickallCommand extends commando.Command {
 
 			deleteCommandMessages(msg, this.client);
 
-			return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
+			return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.say(embed);
 		}
 
 		deleteCommandMessages(msg, this.client);
 
-		return msg.reply(embed.description.slice(12));
+		return msg.embed(embed);
 	}
 };

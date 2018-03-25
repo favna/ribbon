@@ -27,7 +27,7 @@ const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	predict = require('eightball'),
 	{deleteCommandMessages} = require('../../util.js');
-    
+	
 module.exports = class eightBallCommand extends commando.Command {
 	constructor (client) {
 		super(client, {

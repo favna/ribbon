@@ -40,7 +40,7 @@ module.exports = class flavorCommand extends commando.Command {
 			'name': 'flavor',
 			'memberName': 'flavor',
 			'group': 'pokemon',
-			'aliases': ['flavors', 'dexdata', 'dexentries', 'dextext', 'dextex', 'dexter'],
+			'aliases': ['flavors', 'dexentries', 'dextext', 'dextex'],
 			'description': 'Get all the available dex entries for a Pokémon',
 			'format': 'PokemonName',
 			'examples': ['flavor Dragonite'],

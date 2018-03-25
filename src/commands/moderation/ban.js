@@ -114,10 +114,10 @@ module.exports = class banCommand extends commando.Command {
 			}
 			deleteCommandMessages(msg, this.client);
 
-			return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
+			return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);
 		}
 		deleteCommandMessages(msg, this.client);
 
-		return null;
+		return msg.embed(embed);
 	}
 };
