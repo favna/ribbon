@@ -35,10 +35,10 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
 	request = require('snekfetch'),
+	{discordbotsAPIKey} = require('../../auth.json'),
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class discordBotsCommand extends commando.Command {
@@ -70,7 +70,7 @@ module.exports = class discordBotsCommand extends commando.Command {
 	async run (msg, args) {
 
 		const info = await request.get(`https://discordbots.org/api/bots/${args.bot}`)
-				.set('Authorization', auth.discordbotsAPIKey),
+				.set('Authorization', discordbotsAPIKey),
 			infoEmbed = new MessageEmbed();
 
 		if (info) {
