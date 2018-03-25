@@ -67,7 +67,6 @@
     "spotify-web-api-node": "3.0.0",
     "sqlite": "^2.8.0",
     "steamapi": "2.0.2",
-    "urban": "^0.3.1",
     "winston": "2.4.1",
     "xdicey": "2.0.3",
     "yahoo-weather": "^2.2.2",

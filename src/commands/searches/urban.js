@@ -36,7 +36,7 @@
 
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
-	urban = require('urban'),
+	request = require('snekfetch'), 
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class urbanCommand extends commando.Command {
@@ -64,25 +64,31 @@ module.exports = class urbanCommand extends commando.Command {
 		});
 	}
 
-	run (msg, args) {
-		urban(args.query).first((json) => {
-			if (!json) {
-				deleteCommandMessages(msg, this.client);
+	async run (msg, args) {
+		const urban = await request.get('https://api.urbandictionary.com/v0/define').query('term', args.query);
 
-				return msg.reply('⚠️ No Results Found!');
-			}
-			const urbanEmbed = new MessageEmbed(); // eslint-disable-line one-var
+		if (urban.ok) {
+			const embed = new MessageEmbed();
 
-			urbanEmbed
-				.setAuthor(`Urban Search - ${json.word}`, 'https://i.imgur.com/miYLsGw.jpg')
+			urban.body.list.sort((a, b) => b.thumbs_up - b.thumbs_down - (a.thumbs_up - a.thumbs_down));
+
+			embed
+				.setTitle(`Urban Search - ${urban.body.list[0].word}`)
+				.setURL(urban.body.list[0].permalink)
 				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-				.addField('Definition', json.definition.length <= 1024 ? json.definition : `Truncated due to exceeding maximum length\n${json.definition.slice(0, 970)}`, false)
-				.addField('Example', json.example.length <= 1024 ? json.example : `Truncated due to exceeding maximum length\n${json.example.slice(0, 970)}`, false)
-				.addField('Permalink', json.permalink, false);
+				.setDescription(urban.body.list[0].definition)
+				.addField('Example',
+					urban.body.list[0].example.length <= 1024
+						? urban.body.list[0].example
+						: `Truncated due to exceeding maximum length\n${urban.body.list[0].example.slice(0, 970)}`,
+					false);
 
 			deleteCommandMessages(msg, this.client);
 
-			return msg.embed(urbanEmbed);
-		});
+			return msg.embed(embed);
+		}
+		deleteCommandMessages(msg, this.client);
+
+		return msg.reply('no definitions found for that phrase');
 	}
 };

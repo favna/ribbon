@@ -431,7 +431,7 @@ combined-stream@~0.0.4, combined-stream@~0.0.5:
   dependencies:
     delayed-stream "0.0.5"
 
-commander@>=0.3.0, commander@^2.3.0, commander@^2.9.0:
+commander@^2.3.0, commander@^2.9.0:
   version "2.15.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
 
@@ -2693,12 +2693,6 @@ underscore@*, underscore@>1.4.4:
 unzip-response@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/unzip-response/-/unzip-response-1.0.2.tgz#b984f0877fc0a89c2c773cc1ef7b5b232b5b06fe"
-
-urban@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/urban/-/urban-0.3.1.tgz#993e46e8b30d73ad2d809248dc8ec44eb4ccad8a"
-  dependencies:
-    commander ">=0.3.0"
 
 util-deprecate@~1.0.1:
   version "1.0.2"
