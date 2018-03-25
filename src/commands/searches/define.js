@@ -50,7 +50,8 @@ module.exports = class defineCommand extends commando.Command {
 				{
 					'key': 'query',
 					'prompt': 'What word do you want to define?',
-					'type': 'string'
+					'type': 'string',
+					'parse': p => p.replace(/[^a-zA-Z]/g, '')
 				}
 			]
 		});
