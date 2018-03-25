@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Get the avatar from any member  
+ * **Aliases**: `ava`
+ * @module
+ * @category info
+ * @name avatar
+ * @example avatar Favna
+ * @param {member} MemberName Member to get the avatar from
+ * @param {member} [ImageSize] Optional: Size of the avatar to get. Defaults to 1024
+ * @returns {MessageEmbed} The avatar image and a direct link to it
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -52,7 +64,7 @@ module.exports = class avatarCommand extends commando.Command {
 					'key': 'size',
 					'prompt': 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
 					'type': 'integer',
-					'default': 128,
+					'default': 1024,
 					'validate': (size) => {
 						const validSizes = ['128', '256', '512', '1024', '2048'];
 

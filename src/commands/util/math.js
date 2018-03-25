@@ -1,0 +1,79 @@
+/*
+ *   This file is part of Ribbon
+ *   Copyright (C) 2017-2018 Favna
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, version 3 of the License
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *   Additional Terms 7.b and 7.c of GPLv3 apply to this file:
+ *       * Requiring preservation of specified reasonable legal notices or
+ *         author attributions in that material or in the Appropriate Legal
+ *         Notices displayed by works containing it.
+ *       * Prohibiting misrepresentation of the origin of that material,
+ *         or requiring that modified versions of such material be marked in
+ *         reasonable ways as different from the original version.
+ */
+
+/**
+ * Take the effort out of calculations and let the bot do it for you  
+ * **Aliases**: `calc`
+ * @module
+ * @category util
+ * @name math
+ * @example math (PI - 1) * 3
+ * @param {string} Equation The equation to solve
+ * @returns {MessageEmbed} Your equation and its answer
+ */
+
+const {MessageEmbed} = require('discord.js'),
+	commando = require('discord.js-commando'),
+	scalc = require('scalc'),
+	{deleteCommandMessages} = require('../../util.js');
+
+module.exports = class mathCommand extends commando.Command {
+	constructor (client) {
+		super(client, {
+			'name': 'math',
+			'memberName': 'math',
+			'group': 'util',
+			'aliases': ['calc'],
+			'description': 'Calculate anything',
+			'format': 'EquationToSolve',
+			'examples': ['math -10 - abs(-3) + 2^5'],
+			'guildOnly': false,
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			},
+			'args': [
+				{
+					'key': 'equation',
+					'prompt': 'What is the equation to solve?',
+					'type': 'string'
+				}
+			]
+		});
+	}
+
+	run (msg, args) {
+		const mathEmbed = new MessageEmbed();
+
+		mathEmbed
+			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+			.addField('Equation', args.equation.toString(), false)
+			.addField('Result', scalc(args.equation), false);
+
+		deleteCommandMessages(msg, this.client);
+
+		return msg.embed(mathEmbed);
+	}
+};

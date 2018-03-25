@@ -23,6 +23,19 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)  
+ * This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours  
+ * **Aliases**: `sb`, `sban`
+ * @module
+ * @category moderation
+ * @name softban
+ * @example softban ImmortalZypther
+ * @param {member} AnyMember The member to softban from the server
+ * @param {string} TheReason Reason for this softban.
+ * @returns {MessageEmbed} A MessageEmbed with a log of the softban
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),

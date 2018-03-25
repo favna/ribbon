@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Sets a default role that should be assigned to all new joining members  
+ * **Aliases**: `defrole`
+ * @module
+ * @category moderation
+ * @name defaultrole
+ * @example defaultrole Member
+ * @param {role} AnyRole Role to assign to all new joining members
+ * @returns {Message} Confirmation the setting was stored
+ */
+
 const commando = require('discord.js-commando'),
 	{oneLine} = require('common-tags'),
 	{deleteCommandMessages} = require('../../util.js');

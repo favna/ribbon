@@ -23,6 +23,16 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Custom Command exclusive to ChaosGamez server  
+ * A joke command to spite Kai  
+ * **Aliases**: `.kai`
+ * @module
+ * @category 
+ * @name kai
+ * @returns {MessageEmbed} A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔
+ */
+
 const commando = require('discord.js-commando'),
 	{stripIndents} = require('common-tags');
 

@@ -22,6 +22,15 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
+ 
+/**
+ * Gets status about the currently playing song  
+ * **Aliases**: `song`, `playing`, `current-song`, `now-playing`
+ * @module
+ * @category music
+ * @name status
+ * @returns {MessageEmbed} Title, URL of and progress into the song
+ */
 
 const commando = require('discord.js-commando'),
 	path = require('path'),

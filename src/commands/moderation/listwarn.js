@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Show the amount of warning points a member has  
+ * **Aliases**: `reqwarn`, `lw`, `rw`
+ * @module
+ * @category moderation
+ * @name listwarn
+ * @example listwarn Biscuit
+ * @param {member} AnyMember The member of whom to list the warning points
+ * @returns {MessageEmbed} The warnings that member has
+ */
+
 const Fuse = require('fuse.js'),
 	commando = require('discord.js-commando'),
 	fs = require('fs'),

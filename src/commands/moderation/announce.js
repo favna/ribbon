@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Make an announcement to a channel named "announcements" or "news"  
+ * **Aliases**: `news`
+ * @module
+ * @category moderation
+ * @name announce
+ * @example announce Pokemon Switch has released!
+ * @param {string} Announcement The announcement you want to make
+ * @returns {Message} Announcement you wrote in the announcement / news channel
+ */
+
 const commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 

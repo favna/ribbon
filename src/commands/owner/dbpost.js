@@ -23,6 +23,14 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Owners only - posts current guild count to discordbotlist  
+ * @module
+ * @category owner
+ * @name dbpost
+ * @returns {Message} Confirmation the update was made
+ */
+
 const auth = require('../../auth.json'),
 	commando = require('discord.js-commando'),
 	request = require('snekfetch');
@@ -47,7 +55,7 @@ module.exports = class DBPostCommand extends commando.Command {
 		if (post) {
 			return msg.reply('Updated discordbots.org stats.');
 		}
-		
+
 		return msg.reply('⚠️ An error occured updating discordbots.org stats.');
 	}
 };

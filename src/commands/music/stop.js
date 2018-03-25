@@ -23,6 +23,15 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Stops the current queue. Bot will automatically leave the channel after this command  
+ * **Aliases**: `kill`, `stfu`, `quit`, `leave`, `disconnect`
+ * @module
+ * @category music
+ * @name stop
+ * @returns {Message} Sad face about stopping the music
+ */
+
 const commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 

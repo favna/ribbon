@@ -23,6 +23,27 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Assign a nickname to every member on the server  
+ * Use `clear` to remove all nicknames  
+ * Use `prefix` to prefix all names with something  
+ * Use `append` to append all names with something  
+ * Note that if there are a lot of members on the server it will take a long time to nickname them all due to Discord limiting the amount of actions per minute  
+ * **Aliases**: `na`, `massnick`, `nickmass`, `allnick`
+ * @module
+ * @category moderation
+ * @name nickall
+ * @example nickall prefix ༼ つ ◕_◕ ༽つ  
+ * OR-  
+ * nickall append ( ͡° ͜ʖ ͡°)  
+ * -OR-  
+ * nickall clear  
+ * -OR-  
+ * nickall Ribbon
+ * @param {string} Nickname Nickname to assign
+ * @returns {MessageEmbed} Log of the nicknaming
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
@@ -105,11 +126,11 @@ module.exports = class nickallCommand extends commando.Command {
 
 			deleteCommandMessages(msg, this.client);
 
-			return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
+			return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.say(embed);
 		}
 
 		deleteCommandMessages(msg, this.client);
 
-		return msg.reply(embed.description.slice(12));
+		return msg.embed(embed);
 	}
 };

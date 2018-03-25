@@ -22,8 +22,23 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
-const booru = require('booru'),
-	commando = require('discord.js-commando'),
+
+/**
+ * Gets a NSFW image from gelbooru  
+ * Can only be used in NSFW marked channels!  
+ * **Aliases**: `gel`, `booru`
+ * @module
+ * @category nsfw
+ * @name gelbooru
+ * @example gelbooru pyrrha_nikos
+ * @param {string} Query Something you want to find
+ * @returns {MessageEmbed} Score, Link and preview of the image
+ */
+
+const {MessageEmbed} = require('discord.js'),
+	booru = require('booru'),
+	commando = require('discord.js-commando'), 
+	{stripIndents} = require('common-tags'), 
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class gelbooruCommand extends commando.Command {
@@ -46,31 +61,47 @@ module.exports = class gelbooruCommand extends commando.Command {
 				{
 					'key': 'nsfwtags',
 					'prompt': 'What do you want to find NSFW for?',
-					'type': 'string'
+					'type': 'string',
+					'parse': p => p.split(' ')
 				}
 			]
 		});
 	}
 
 	async run (msg, args) {
-		try {
-			const booruData = await booru.search('gelbooru', args.nsfwtags.split(' '), {
+		/* eslint-disable sort-vars*/
+		const search = await booru.search('gelbooru', args.nsfwtags, {
 				'limit': 1,
 				'random': true
-			}).then(booru.commonfy);
+			}),
+			common = await booru.commonfy(search);
+		/* eslint-enable sort-vars*/
 
-			if (booruData) {
-				deleteCommandMessages(msg, this.client);
+		if (common && common[0].common) {
+			console.log(common[0]);
+			const embed = new MessageEmbed(),
+				tags = [];
 
-				return msg.say(`Score: ${booruData[0].common.score}\nImage: ${booruData[0].common.file_url}`);
+			for (const tag in common[0].common.tags) {
+				tags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
 			}
+
+			embed
+				.setTitle(`gelbooru image for ${args.nsfwtags.join(', ')}`)
+				.setURL(common[0].common.file_url)
+				.setColor('#FFB6C1')
+				.setDescription(stripIndents `${tags.slice(0, 5).join(' ')}
+				
+				**Score**: ${common[0].common.score}`)
+				.setImage(common[0].common.file_url);
+
 			deleteCommandMessages(msg, this.client);
 
-			return msg.reply('⚠️ No juicy images found.');
-		} catch (BooruError) {
-			deleteCommandMessages(msg, this.client);
-
-			return msg.reply('⚠️ No juicy images found.');
+			return msg.embed(embed);
 		}
+
+		deleteCommandMessages(msg, this.client);
+
+		return msg.reply('⚠️ No juicy images found.');
 	}
 };

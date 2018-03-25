@@ -3,8 +3,7 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "plugins": ["node"],
-    "extends": ["eslint:recommended", "plugin:node/recommended"],
+    "extends": ["eslint:recommended"],
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 2017
@@ -232,7 +231,6 @@ module.exports = {
         "no-warning-comments": "error",
         "no-whitespace-before-property": "error",
         "no-with": "error",
-        "node/exports-style": ["error", "module.exports"],
         "node/no-unpublished-require": "off",
         "nonblock-statement-body-position": "error",
         "object-curly-newline": "error",

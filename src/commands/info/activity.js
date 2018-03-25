@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Gets the activity (presence) data from a member  
+ * **Aliases**: `act`, `presence`, `richpresence`
+ * @module
+ * @category info
+ * @name Activity
+ * @example activity Favna
+ * @param {member} member Member to get the activity for
+ * @returns {MessageEmbed} Activity from that member
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	Spotify = require('spotify-web-api-node'),
 	commando = require('discord.js-commando'),

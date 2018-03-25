@@ -23,6 +23,16 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Pauses the currently playing track  
+ * You need to be in a voice channel before you can use this command  
+ * **Aliases**: `shh`, `shhh`, `shhhh`, `shhhhh`, `hush`, `halt`
+ * @module
+ * @category music
+ * @name pause
+ * @returns {Message} Confirmation the music was paused
+ */
+
 const commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 

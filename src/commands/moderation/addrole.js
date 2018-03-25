@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Add a role to member  
+ * **Aliases**: `newrole`, `ar`
+ * @module
+ * @category moderation
+ * @name addrole
+ * @example addrole Favna Member
+ * @param {member} AnyMember Member to give a role
+ * @param {role} AnyRole Role to give
+ * @returns {Message} Confirmation the role was added
+ */
+
 const commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 

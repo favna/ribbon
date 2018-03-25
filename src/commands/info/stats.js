@@ -23,6 +23,15 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Statictics about Ribbon  
+ * **Aliases**: `botinfo`, `info`
+ * @module
+ * @category info
+ * @name stats
+ * @returns {MessageEmbed} Ribbon's statistics
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars

@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Kicks a somewhat bad member  
+ * **Aliases**: `k`
+ * @module
+ * @category moderation
+ * @name kick
+ * @example kick ThunderKai
+ * @param {member} AnyMember The member to kick from the server
+ * @param {string} TheReason Reason for this kick.
+ * @returns {MessageEmbed} Log of the kick
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),

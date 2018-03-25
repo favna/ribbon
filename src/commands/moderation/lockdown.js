@@ -23,6 +23,17 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Lockdown a channel  
+ * NOTE: Once locked it will be locked to the `@everyone` role and depending on your permissions setup it may be that only people with the `administrator` role will have access to the channel.
+ * This may also mean that the bot won't have access if it doesn't have administrator role so you cannot use the `unlock` command until you give it that permission!  
+ * **Aliases**: `lock`, `ld`
+ * @module
+ * @category moderation
+ * @name lockdown
+ * @returns {Message} Confirmation the channel was locked
+ */
+
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	moment = require('moment'),
@@ -76,7 +87,7 @@ module.exports = class lockdownCommand extends commando.Command {
 
 				deleteCommandMessages(msg, this.client);
 
-				modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
+				modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);
 			}
 			
 			return msg.say(embed.description.slice(12));

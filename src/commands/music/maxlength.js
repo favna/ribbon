@@ -23,6 +23,19 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Set the maximum length (in minutes) of a video  
+ * Give no argument to show current amount of maximum songs  
+ * Use "default" as argument to set it back to the bot default  
+ * **Aliases**: `max-duration`, `max-song-length`, `max-song-duration`
+ * @module
+ * @category music
+ * @name maxlength
+ * @example maxlength 10
+ * @param {number/"default"} [MaxVideoLength] New maximum length in minutes
+ * @returns {Message} Confirmation the setting was stored
+ */
+
 const commando = require('discord.js-commando'),
 	path = require('path'),
 	{MAX_LENGTH} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),

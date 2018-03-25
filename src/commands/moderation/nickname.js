@@ -23,6 +23,18 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Nickname a single member  
+ * **Aliases**: `nick`
+ * @module
+ * @category moderation
+ * @name nickname
+ * @example nick Muffin Cupcake
+ * @param {member} AnyMember Member to give a nickname
+ * @param {string} NewNickname Nickname to assign
+ * @returns {Message} Confirmation the nickname was assigned
+ */
+
 const commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 

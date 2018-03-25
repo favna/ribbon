@@ -23,6 +23,16 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Resumes the song after pausing it  
+ * You need to be in a voice channel before you can use this command  
+ * **Aliases**: `go`, `continue`, `ale`, `loss`, `res`
+ * @module
+ * @category music
+ * @name resume
+ * @returns {Message} Confirmation the song is resumed
+ */
+
 const commando = require('discord.js-commando'),
 	{deleteCommandMessages} = require('../../util.js');
 

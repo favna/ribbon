@@ -23,6 +23,16 @@
  *         reasonable ways as different from the original version.
  */
 
+/**
+ * Custom Command exclusive to ChaosGamez server  
+ * A joke command to praise Favna  
+ * **Aliases**: `.favna`
+ * @module
+ * @category custom
+ * @name favna
+ * @returns {MessageEmbed} A MessageEmbed with the joke text
+ */
+
 const commando = require('discord.js-commando'),
 	{oneLine, stripIndents} = require('common-tags');
 

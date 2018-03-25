@@ -23,13 +23,22 @@
  *         reasonable ways as different from the original version.
  */
 
-const {MessageEmbed} = require('discord.js'),
-	Pornsearch = require('pornsearch').default,
-	commando = require('discord.js-commando'),
-	random = require('node-random'),
-	{deleteCommandMessages} = require('../../util.js');
+/**
+ * Gets a NSFW gif and webm from pornhub
+ * Can only be used in NSFW marked channels!  
+ * **Aliases**: `nsfwgifs`
+ * @module
+ * @category nsfw
+ * @name porngifs
+ * @example porngifs babe
+ * @param {string} Query Something you want to find
+ * @returns {MessageEmbed} Webm link and embeds gif
+ */
 
-const pornEmbed = new MessageEmbed(); // eslint-disable-line one-var
+const {MessageEmbed} = require('discord.js'),
+	Pornsearch = require('pornsearch'),
+	commando = require('discord.js-commando'),
+	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class porngifsCommand extends commando.Command {
 	constructor (client) {
@@ -37,7 +46,7 @@ module.exports = class porngifsCommand extends commando.Command {
 			'name': 'porngifs',
 			'memberName': 'porngifs',
 			'group': 'nsfw',
-			'aliases': ['gifs', 'nsfwgifs'],
+			'aliases': ['nsfwgifs'],
 			'description': 'Search porn gifs',
 			'format': 'NSFWToLookUp',
 			'examples': ['porngifs babe'],
@@ -62,26 +71,20 @@ module.exports = class porngifsCommand extends commando.Command {
 			gifs = await search.gifs(); // eslint-disable-line sort-vars
 
 		if (gifs) {
-			random.integers({
-				'number': 1,
-				'minimum': 0,
-				'maximum': gifs.length - 1
-			}, (error, gif) => {
-				if (error) {
-					return msg.reply('⚠ An error occured while drawing a random number.');
-				}
-				pornEmbed
-					.setURL(gifs[gif].url)
-					.setTitle(gifs[gif].title)
-					.setImage(`${gifs[gif].url}`)
-					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-					.addField('Gif webm', `[Click Here](${gifs[gif].webm})`, true);
-				deleteCommandMessages(msg, this.client);
+			const pornEmbed = new MessageEmbed(),
+				random = Math.floor(Math.random() * gifs.length);
+			
+			pornEmbed
+				.setURL(gifs[random].url)
+				.setTitle(gifs[random].title)
+				.setImage(`${gifs[random].url}`)
+				.setColor('#FFB6C1')
+				.addField('Gif webm', `[Click Here](${gifs[random].webm})`, true);
+			deleteCommandMessages(msg, this.client);
 
-				return msg.embed(pornEmbed, gifs[gif].webm);
-			});
+			return msg.embed(pornEmbed, gifs[random].webm);
 		}
 
-
+		return msg.reply('nothing found for that input');
 	}
 };
