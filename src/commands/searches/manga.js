@@ -36,7 +36,7 @@
 
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
-	maljs = require('maljs'),
+	maljs = require('maljs'), 
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class mangaCommand extends commando.Command {
@@ -85,8 +85,16 @@ module.exports = class mangaCommand extends commando.Command {
 
 				deleteCommandMessages(msg, this.client);
 
-				msg.embed(manEmbed, `${manga.mal.url}${manga.path}`);
+				return msg.embed(manEmbed, `${manga.mal.url}${manga.path}`);
 			}
+			deleteCommandMessages(msg, this.client);
+			
+			return msg.reply(`no manga found for the input \`${args.query}\` `);
+
+
 		}
+		deleteCommandMessages(msg, this.client);
+		
+		return msg.reply(`no manga found for the input \`${args.query}\` `);
 	}
 };
