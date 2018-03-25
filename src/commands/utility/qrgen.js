@@ -34,7 +34,8 @@
  * @returns {MessageEmbed} Embedded QR code and original image URL
  */
 
-const commando = require('discord.js-commando'),
+const {MessageEmbed} = require('discord.js'),
+	commando = require('discord.js-commando'),
 	imgur = require('imgur'),
 	qr = require('qrcode'),
 	{deleteCommandMessages} = require('../../util.js');
@@ -71,9 +72,16 @@ module.exports = class qrgenCommand extends commando.Command {
 			const upload = await imgur.uploadBase64(base64.slice(22));
 
 			if (upload) {
+				const qrEmbed = new MessageEmbed();
+
+				qrEmbed
+					.setTitle(`QR code for ${args.url}`)
+					.setURL(upload.data.link)
+					.setImage(upload.data.link);
+
 				deleteCommandMessages(msg, this.client);
 
-				return msg.say(`QR Code for this URL: ${upload.data.link}`);
+				return msg.embed(qrEmbed);
 			}
 
 			return msg.reply('⚠️ An error occured uploading the QR code to imgur.');
