@@ -25,28 +25,47 @@
 
 /**
  * Generates a random color  
- * **Aliases**: `randhex`, `rhex`, `randomcolor`, `randomcol`
+ * **Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
  * @module
  * @category utility
- * @name randomhex
+ * @name randomcol
  * @returns {MessageEmbed} Color of embed matches generated color
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
+	commando = require('discord.js-commando'), 
+	{stripIndents} = require('common-tags'), 
 	{deleteCommandMessages} = require('../../util.js');
 
-module.exports = class RandomHexCommand extends commando.Command {
+module.exports = class RandomColCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'randomhex',
-			'memberName': 'randomhex',
+			'name': 'randomcol',
+			'memberName': 'randomcol',
 			'group': 'utility',
-			'aliases': ['randhex', 'rhex', 'randomcolor', 'randcol'],
-			'description': 'Generate a random hexadecimal color',
-			'examples': ['randomhex'],
-			'guildOnly': false
+			'aliases': ['randhex', 'rhex', 'randomcolor', 'randcol', 'randomhex'],
+			'description': 'Generate a random color',
+			'examples': ['randomcol'],
+			'guildOnly': false,
+			'throttling': {
+				'usages': 2,
+				'duration': 3
+			}
 		});
+	}
+
+	hextodec (color) {
+		return parseInt(color.replace('#', ''), 16);
+	}
+
+	hextorgb (color) {
+		const result = (/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})(?:[a-f\d])*$/i).exec(color);
+
+		return {
+			'r': parseInt(result[1], 16),
+			'g': parseInt(result[2], 16),
+			'b': parseInt(result[3], 16)
+		};
 	}
 
 	run (msg) {
@@ -55,7 +74,9 @@ module.exports = class RandomHexCommand extends commando.Command {
 
 		embed
 			.setColor(hex)
-			.setDescription(hex);
+			.setDescription(stripIndents `**hex**: ${hex}
+			**dec**: ${this.hextodec(hex)}
+			**rgb**: rgb(${this.hextorgb(hex).r}, ${this.hextorgb(hex).g}, ${this.hextorgb(hex).b})`);
 
 		deleteCommandMessages(msg, this.client);
 
