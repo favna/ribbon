@@ -4,7 +4,7 @@ The default prefix is `!` and you can always use `@ribbon#2325 prefix` to find y
 
 <a name="module_help"></a>
 
-## help ⇒ <code>MessagEmbed</code>
+## help ⇒ <code>MessageEmbed</code>
 Displays a list of available commands, or detailed information for a specified command  
 
 **Returns**: <code>[MessageEmbed]</code> - Multiple MessageEmbeds showing all commands  
@@ -188,8 +188,7 @@ There are 3 ways to queue songs  </p>
 <ol>
 <li>Youtube Search Query  </li>
 <li>Youtube URL  </li>
-<li>Youtube video ID
-<strong>Aliases</strong>: <code>add</code>, <code>enqueue</code>, <code>start</code>, <code>join</code></li>
+<li>Youtube video ID<br><strong>Aliases</strong>: <code>add</code>, <code>enqueue</code>, <code>start</code>, <code>join</code></li>
 </ol>
 </dd>
 <dt><a href="#module_queue">queue</a> ⇒ <code>MessageEmbed</code></dt>
@@ -269,7 +268,7 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dd><p>Gets information about any anime from MyAnimeList<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code></p>
 </dd>
 <dt><a href="#module_cydia">cydia</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets info from a package on Cydia, only supports default repositories<br>Also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the /r/jailbreak subreddit and <a href="https://discord.gg/jb">its discord server</a><br><strong>Aliases</strong>: <code>cy</code></p>
+<dd><p>Gets info from a package on Cydia, only supports default repositories<br>Also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak subreddit</a> and <a href="https://discord.gg/jb">its discord server</a><br><strong>Aliases</strong>: <code>cy</code></p>
 </dd>
 <dt><a href="#module_define">define</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Define a word using glosbe<br><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p>
@@ -1009,7 +1008,7 @@ If music is already playing this will add to the queue or otherwise it will join
 There are 3 ways to queue songs  
 1. Youtube Search Query  
 2. Youtube URL  
-3. Youtube video ID
+3. Youtube video ID  
 **Aliases**: `add`, `enqueue`, `start`, `join`
 
 **Returns**: <code>MessageEmbed</code> - Title, duration and thumbnail of the video  
@@ -1383,7 +1382,7 @@ anime Yu-Gi-Oh Dual Monsters
 
 ## cydia ⇒ <code>MessageEmbed</code>
 Gets info from a package on Cydia, only supports default repositories  
-Also listens to the pattern of `[[SomePackageName]]` as is custom on the /r/jailbreak subreddit and [its discord server](https://discord.gg/jb)  
+Also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
 **Aliases**: `cy`
 
 **Returns**: <code>MessageEmbed</code> - Information about the tweak  
@@ -1834,7 +1833,8 @@ zalgo HE COMES
 <a name="module_groups"></a>
 
 ## groups ⇒ <code>Message</code>
-Shows all command groups
+Shows all command groups  
+**Aliases**: `list-groups`, `show-groups`, `listgroups`, `showgroups`
 
 **Returns**: <code>Message</code> - Reply message list of groups  
 **Category**: Command-Management
