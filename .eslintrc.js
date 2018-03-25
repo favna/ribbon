@@ -4,7 +4,7 @@ module.exports = {
         "node": true
     },
     "plugins": ["node"],
-    "extends": ["eslint:recommended", "plugin:node/recommended"],
+    "extends": ["eslint:recommended"],
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 2017

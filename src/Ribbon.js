@@ -31,10 +31,7 @@ const Commando = require('discord.js-commando'),
 	request = require('snekfetch'),
 	sqlite = require('sqlite'),
 	{twitchclientid} = require(`${__dirname}/auth.json`),
-	{
-		oneLine,
-		stripIndents
-	} = require('common-tags');
+	{oneLine, stripIndents} = require('common-tags');
 /* eslint-enable sort-vars */
 
 class Ribbon {
@@ -260,17 +257,17 @@ class Ribbon {
 
 		this.client.registry
 			.registerGroups([
-				['custom', 'Custom commands for servers'],
-				['games', 'Games to play on the server'],
-				['info', 'Get Information on various things'],
-				['moderation', 'Moderate your server'],
-				['music', 'Jam out to music'],
-				['nsfw', 'Find NSFW content ( ͡° ͜ʖ ͡°)'],
-				['owner', 'Owner only commands'],
-				['pokemon', 'Get information from the PokéDex'],
-				['searches', 'Search the web'],
-				['streamwatch', 'Monitor live status for your favorite streamers!'],
-				['utility', 'The other commands that are just useful to have']
+				['games', 'Games - Play some games'],
+				['info', 'Info - Discord info at your fingertips'],
+				['music', 'Music - Let the DJ out'],
+				['searches', 'Searches - Browse the web and find results'],
+				['pokemon', 'Pokemon - Let Dexter answer your questions'],
+				['utility', 'Utility - The bot is a true utilitarian'],
+				['moderation', 'Moderation - Moderate with no effort'],
+				['streamwatch', 'Streamwatch - Spy on members and get notified when they go live'],
+				['custom', 'Custom - Server specific commnads'],
+				['nsfw', 'NSFW - For all you dirty minds ( ͡° ͜ʖ ͡°)'],
+				['owner', 'Owner - Exclusive to the bot owner(s)']
 			])
 			.registerDefaultGroups()
 			.registerDefaultTypes()
