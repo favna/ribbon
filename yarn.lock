@@ -627,16 +627,16 @@ dijkstrajs@^1.0.1:
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
 discord.js-commando@Favna/discord.js-commando#ribbon:
-  version "1.1.2-F-R.4"
-  resolved "https://codeload.github.com/Favna/discord.js-commando/tar.gz/6b1dd7845af43b63c4a2ec6ce48ae9c8a097a12e"
+  version "1.1.2-F-R.5"
+  resolved "https://codeload.github.com/Favna/discord.js-commando/tar.gz/7b64d9e1cebcc2b9542c7f407b0b1f0bc409a37a"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
     require-all "^2.0.0"
 
 discord.js@Favna/discord.js#active:
-  version "12.0.0-F.5"
-  resolved "https://codeload.github.com/Favna/discord.js/tar.gz/cd61ff8978a2846a7b316ffc114592d0b14e3147"
+  version "12.0.0-F.6"
+  resolved "https://codeload.github.com/Favna/discord.js/tar.gz/d86c031884240c9c22cbc1aac29e01ac245bb79b"
   dependencies:
     pako "^1.0.0"
     prism-media "^0.2.0"
