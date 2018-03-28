@@ -60,7 +60,8 @@ module.exports = class mathCommand extends commando.Command {
 				{
 					'key': 'equation',
 					'prompt': 'What is the equation to solve?',
-					'type': 'string'
+					'type': 'string',
+					'parse': p => p.toLowerCase()
 				}
 			]
 		});
