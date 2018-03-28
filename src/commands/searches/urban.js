@@ -67,7 +67,7 @@ module.exports = class urbanCommand extends commando.Command {
 	async run (msg, args) {
 		const urban = await request.get('https://api.urbandictionary.com/v0/define').query('term', args.query);
 
-		if (urban.ok) {
+		if (urban.ok && urban.body.result_type !== 'no_results') {
 			const embed = new MessageEmbed();
 
 			urban.body.list.sort((a, b) => b.thumbs_up - b.thumbs_down - (a.thumbs_up - a.thumbs_down));
