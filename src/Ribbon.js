@@ -41,6 +41,7 @@ class Ribbon {
 			'commandPrefix': '!',
 			'owner': '112001393140723712',
 			'selfbot': false,
+			'unknownCommandResponse': false,
 			'presence': {
 				'status': 'online',
 				'activity': {
@@ -211,7 +212,7 @@ class Ribbon {
 							**Stream Started At**${moment(streamData.body.streams[0].created_at).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
 								.setImage(streamData.body.streams[0].preview.large);
 						}
-						
+
 						if (twitchChannel) {
 							curGuild.channels.get(twitchChannel).send({'embed': twitchEmbed});
 						}
@@ -234,6 +235,20 @@ class Ribbon {
 		};
 	}
 
+	onUnknownCommand () {
+		return (msg) => {
+			if (this.client.provider.get(msg.guild, 'unknownmessages', true)) {
+				return msg.reply(stripIndents `${oneLine `That is not a registerd command.
+				Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\`
+				or @Ribbon#2325 help to view the list of all commands.`}
+				${oneLine `Server staff (those who can manage other's messages) can disable these replies by using
+				\`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}unknownmessages disable\``}`);
+			}
+			
+			return null;
+		};
+	}
+
 	init () {
 		this.client
 			.on('commandBlocked', this.onCmdBlock())
@@ -249,6 +264,7 @@ class Ribbon {
 			.on('presenceUpdate', this.onPresenceUpdate())
 			.on('ready', this.onReady())
 			.on('reconnecting', this.onReconnect())
+			.on('unknownCommand', this.onUnknownCommand())
 			.on('warn', console.warn);
 
 		this.client.setProvider(
