@@ -67,7 +67,7 @@ module.exports = class emotesCommand extends commando.Command {
 		embed
 			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
 			.setAuthor(`${staticEmotes.length + animEmotes.length} ${msg.guild.name} Emotes`, msg.guild.iconURL({'format': 'png'}))
-			.setFooter(`Emotes list from ${moment().format('MMMM Do YYY [at] HH:mm [utc]Z')}`);
+			.setFooter(`Emotes list from ${moment().format('MMMM Do YYYY [at] HH:mm [utc]Z')}`);
 
 		staticEmotes = staticEmotes.length !== 0 ? `__**${staticEmotes.length} Static Emotes**__\n${staticEmotes.join('')}` : '';
 		animEmotes = animEmotes.length !== 0 ? `\n\n__**${animEmotes.length} Animated Emotes**__\n${animEmotes.join('')}` : '';

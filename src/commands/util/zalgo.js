@@ -25,6 +25,8 @@
 
 /**
  * Create zalgo-fied text from your input  
+ * First banishes any existing zalgo to ensure proper result  
+ * **Aliases**: `trash`
  * @module
  * @category util
  * @name zalgo
@@ -33,8 +35,9 @@
  * @returns {Message} Your text zalgo-fied
  */
 
-const commando = require('discord.js-commando'),
-	zalgo = require('zalgotxt'),
+const banish = require('to-zalgo/banish'),
+	commando = require('discord.js-commando'),
+	zalgo = require('to-zalgo'),
 	{deleteCommandMessages} = require('../../util.js');
 
 module.exports = class zalgoCommand extends commando.Command {
@@ -43,6 +46,7 @@ module.exports = class zalgoCommand extends commando.Command {
 			'name': 'zalgo',
 			'memberName': 'zalgo',
 			'group': 'util',
+			'aliases': ['trash'],
 			'description': 'F*ck up text using Zalgo',
 			'format': 'ContentToTransform',
 			'examples': ['zalgo HE COMES'],
@@ -63,7 +67,7 @@ module.exports = class zalgoCommand extends commando.Command {
 
 	run (msg, args) {
 		deleteCommandMessages(msg, this.client);
-		
-		return msg.say(zalgo(args.txt));
+
+		return msg.say(zalgo(banish(args.txt)));
 	}
 };

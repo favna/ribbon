@@ -352,7 +352,7 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dd><p>Get the current weather forecast in any city<br>Potentially you&#39;ll have to specify city if the city is in multiple countries, i.e. <code>weather amsterdam</code> will not be the same as <code>weather amsterdam missouri</code><br><strong>Aliases</strong>: <code>temp</code>, <code>forecast</code>, <code>fc</code>, <code>wth</code></p>
 </dd>
 <dt><a href="#module_zalgo">zalgo</a> ⇒ <code>Message</code></dt>
-<dd><p>Create zalgo-fied text from your input</p>
+<dd><p>Create zalgo-fied text from your input<br>First banishes any existing zalgo to ensure proper result<br><strong>Aliases</strong>: <code>trash</code></p>
 </dd>
 </dl>
 
@@ -1848,7 +1848,9 @@ weather Amsterdam
 <a name="module_zalgo"></a>
 
 ## zalgo ⇒ <code>Message</code>
-Create zalgo-fied text from your input
+Create zalgo-fied text from your input  
+First banishes any existing zalgo to ensure proper result  
+**Aliases**: `trash`
 
 **Returns**: <code>Message</code> - Your text zalgo-fied  
 **Category**: util  

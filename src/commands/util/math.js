@@ -36,8 +36,10 @@
 
 const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
-	scalc = require('scalc'),
-	{deleteCommandMessages} = require('../../util.js');
+	moment = require('moment'),
+	scalc = require('scalc'), 
+	{deleteCommandMessages} = require('../../util.js'),
+	{oneLine, stripIndents} = require('common-tags');
 
 module.exports = class mathCommand extends commando.Command {
 	constructor (client) {
@@ -58,7 +60,8 @@ module.exports = class mathCommand extends commando.Command {
 				{
 					'key': 'equation',
 					'prompt': 'What is the equation to solve?',
-					'type': 'string'
+					'type': 'string',
+					'parse': p => p.toLowerCase()
 				}
 			]
 		});
@@ -67,13 +70,34 @@ module.exports = class mathCommand extends commando.Command {
 	run (msg, args) {
 		const mathEmbed = new MessageEmbed();
 
-		mathEmbed
-			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.addField('Equation', args.equation.toString(), false)
-			.addField('Result', scalc(args.equation), false);
+		let res = '';
+
+		try {
+			res = scalc(args.equation);
+		} catch (err) {
+			console.error(`	 ${stripIndents `An error occured on the mathh command!
+			Server: ${msg.guild.name} (${msg.guild.id})
+			Author: ${msg.author.tag} (${msg.author.id})
+			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+			Math input: ${args.equation.toString()}
+			Error Message:`} ${err}`);
+		}
+
+		if (res) {
+			mathEmbed
+				.setTitle('Calculator')
+				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+				.setDescription(oneLine `The answer to \`${args.equation.toString()}\` is \`${res}\``);
+
+			deleteCommandMessages(msg, this.client);
+
+			return msg.embed(mathEmbed);
+		}
 
 		deleteCommandMessages(msg, this.client);
 
-		return msg.embed(mathEmbed);
+		return msg.reply(oneLine `\`${args.equation.toString()}\` is is not a valid equation for me.
+				Check out this readme to see how to use the supported polish notation: https://github.com/dominhhai/calculator/blob/master/README.md`);
+
 	}
 };

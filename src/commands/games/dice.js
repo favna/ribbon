@@ -60,11 +60,15 @@ module.exports = class diceCommand extends commando.Command {
 				{
 					'key': 'sides',
 					'prompt': 'How many sides does your die have?',
-					'type': 'integer'
+					'type': 'integer',
+					'min': 4,
+					'max': 20
 				}, {
 					'key': 'rolls',
 					'prompt': 'How many times should the die be rolled?',
-					'type': 'integer'
+					'type': 'integer',
+					'min': 1,
+					'max': 40
 				}
 			]
 		});
@@ -77,13 +81,14 @@ module.exports = class diceCommand extends commando.Command {
 
 
 		for (const i in throwDice.individual) { // eslint-disable-line guard-for-in
-			res.push(`🎲: ${throwDice.individual[i]}`);
+			res.push(`${throwDice.individual[i]}`);
 		}
 
 
 		diceEmbed
 			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.addField('Dice result', res, false)
+			.setTitle('🎲 Dice Rolls 🎲')
+			.setDescription(`| ${res.join(' | ')} |`)
 			.addField('Total', throwDice.total, false);
 
 		deleteCommandMessages(msg, this.client);
