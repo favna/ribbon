@@ -166,6 +166,9 @@ This may also mean that the bot won&#39;t have access if it doesn&#39;t have adm
 <dt><a href="#module_softban">softban</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)<br>This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours<br><strong>Aliases</strong>: <code>sb</code>, <code>sban</code></p>
 </dd>
+<dt><a href="#module_unknownmessages">unknownmessages</a> ⇒ <code>Message</code></dt>
+<dd><p>Toggle Unkown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
+</dd>
 <dt><a href="#module_unlock">unlock</a> ⇒ <code>Message</code></dt>
 <dd><p>Unlock the channel<br>Only really useful if you previously locked the channel<br>Note that the bot does need to be able to be able to access this channel to unlock it (read permissions)<br><strong>Aliases</strong>: <code>delock</code>, <code>ul</code></p>
 </dd>
@@ -919,6 +922,23 @@ This is essentially a kick with the added effect of deleting all their past mess
 **Example**  
 ```js
 softban ImmortalZypther
+```
+<a name="module_unknownmessages"></a>
+
+## unknownmessages ⇒ <code>Message</code>
+Toggle Unkown Command messages on or off  
+**Aliases**: `unknowns`, `unkmsg`
+
+**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>boolean</code> | True or False |
+
+**Example**  
+```js
+unknownmessages enable
 ```
 <a name="module_unlock"></a>
 
