@@ -98,7 +98,10 @@ module.exports = class copypastaCommand extends commando.Command {
 						pastaContent = pastaContent.substring(0, pastaContent.indexOf(header) - 1) + pastaContent.substring(pastaContent.indexOf(ext) + ext.length);
 					}
 
-					cpEmbed.setDescription(pastaContent);
+					cpEmbed
+						.setDescription(pastaContent)
+						.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2');
+						
 					msg.delete();
 
 					return msg.embed(cpEmbed);
