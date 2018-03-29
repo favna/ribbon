@@ -40,7 +40,6 @@ const {splitMessage} = require('discord.js'),
 	{deleteCommandMessages} = require('../../util.js'), 
 	{stripIndents} = require('common-tags');
 
-
 module.exports = class CopyPastaListCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
