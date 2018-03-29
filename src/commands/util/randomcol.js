@@ -32,8 +32,10 @@
  * @returns {MessageEmbed} Color of embed matches generated color
  */
 
-const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'), 
+const {Canvas} = require('canvas-constructor'), 
+	{MessageEmbed} = require('discord.js'),
+	commando = require('discord.js-commando'),
+	imgur = require('imgur'),
 	{stripIndents} = require('common-tags'), 
 	{deleteCommandMessages} = require('../../util.js');
 
@@ -68,18 +70,33 @@ module.exports = class RandomColCommand extends commando.Command {
 		};
 	}
 
-	run (msg) {
+	async run (msg) {
 		const embed = new MessageEmbed(),
-			hex = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+			hex = `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+			canv = new Canvas(80, 60) // eslint-disable-line sort-vars
+				.setColor(hex)
+				.addRect(0, 0, 100, 60)
+				.toBuffer();
 
-		embed
-			.setColor(hex)
-			.setDescription(stripIndents `**hex**: ${hex}
-			**dec**: ${this.hextodec(hex)}
-			**rgb**: rgb(${this.hextorgb(hex).r}, ${this.hextorgb(hex).g}, ${this.hextorgb(hex).b})`);
+		if (canv.toString('base64')) {
+			const upload = await imgur.uploadBase64(canv.toString('base64'));
 
-		deleteCommandMessages(msg, this.client);
+			if (upload) {
+				embed
+					.setColor(hex)
+					.setThumbnail(upload.data.link)
+					.setDescription(stripIndents `**hex**: ${hex}
+				**dec**: ${this.hextodec(hex)}
+				**rgb**: rgb(${this.hextorgb(hex).r}, ${this.hextorgb(hex).g}, ${this.hextorgb(hex).b})`);
 
-		msg.embed(embed);
+				deleteCommandMessages(msg, this.client);
+
+				return msg.embed(embed);
+			}
+
+			return msg.reply('⚠️ An error occured uploading the canvas to imgur.');
+		}
+
+		return msg.reply('⚠️ An error occured getting a base64 for the canvas.');
 	}
 };

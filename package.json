@@ -34,7 +34,8 @@
   "dependencies": {
     "booru": "0.4.0",
     "bufferutil": "^3.0.3",
-    "canvas": "^1.6.10",
+    "canvas": "Automattic/node-canvas#v1.x",
+    "canvas-constructor": "^0.3.0",
     "cheerio": "^1.0.0-rc.2",
     "common-tags": "1.7.2",
     "countdown": "^2.6.0",
