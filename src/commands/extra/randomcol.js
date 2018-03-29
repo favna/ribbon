@@ -27,7 +27,7 @@
  * Generates a random color  
  * **Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
  * @module
- * @category util
+ * @category extra
  * @name randomcol
  * @returns {MessageEmbed} Color of embed matches generated color
  */
@@ -44,7 +44,7 @@ module.exports = class RandomColCommand extends commando.Command {
 		super(client, {
 			'name': 'randomcol',
 			'memberName': 'randomcol',
-			'group': 'util',
+			'group': 'extra',
 			'aliases': ['randhex', 'rhex', 'randomcolor', 'randcol', 'randomhex'],
 			'description': 'Generate a random color',
 			'examples': ['randomcol'],

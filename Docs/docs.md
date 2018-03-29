@@ -63,6 +63,39 @@ Checks the bot's ping to the Discord server
 <dt><a href="#module_kai">kai</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br><strong>Aliases</strong>: <code>.kai</code></p>
 </dd>
+<dt><a href="#module_copypasta">copypasta</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Gets one of the server&#39;s stored copypastas<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
+</dd>
+<dt><a href="#module_copypastaadd">copypastaadd</a> ⇒ <code>Message</code></dt>
+<dd><p>Adds a new copypasta for your server<br><strong>Aliases</strong>: <code>cpadd</code>, <code>pastaadd</code></p>
+</dd>
+<dt><a href="#module_math">math</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Take the effort out of calculations and let the bot do it for you<br><strong>Aliases</strong>: <code>calc</code></p>
+</dd>
+<dt><a href="#module_oxr">oxr</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Convert one currency to another<br>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC<br>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a><br><strong>Aliases</strong>: <code>money</code>, <code>rate</code>, <code>convert</code></p>
+</dd>
+<dt><a href="#module_qrgen">qrgen</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code></p>
+</dd>
+<dt><a href="#module_randomcol">randomcol</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Generates a random color<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
+</dd>
+<dt><a href="#module_say">say</a> ⇒ <code>Message</code></dt>
+<dd><p>Repeats a message and deletes your message<br><strong>Aliases</strong>: <code>sayd</code>, <code>repeat</code></p>
+</dd>
+<dt><a href="#module_saywut">saywut</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Bust the last &quot;say&quot; user<br><strong>Aliases</strong>: <code>saywat</code>, <code>saywot</code></p>
+</dd>
+<dt><a href="#module_time">time</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Gets the current time in any place<br>Uses Google&#39;s geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>citytime</code></p>
+</dd>
+<dt><a href="#module_weather">weather</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Get the current weather forecast in any city<br>Potentially you&#39;ll have to specify city if the city is in multiple countries, i.e. <code>weather amsterdam</code> will not be the same as <code>weather amsterdam missouri</code><br><strong>Aliases</strong>: <code>temp</code>, <code>forecast</code>, <code>fc</code>, <code>wth</code></p>
+</dd>
+<dt><a href="#module_zalgo">zalgo</a> ⇒ <code>Message</code></dt>
+<dd><p>Create zalgo-fied text from your input<br>First banishes any existing zalgo to ensure proper result<br><strong>Aliases</strong>: <code>trash</code></p>
+</dd>
 <dt><a href="#module_8ball">8ball</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Rolls a magic 8 ball using your input<br><strong>Aliases</strong>: <code>eightball</code></p>
 </dd>
@@ -324,39 +357,6 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dt><a href="#module_twitchtoggle">twitchtoggle</a> ⇒ <code>Message</code></dt>
 <dd><p>Killswitch for Twitch notifications<br><strong>Aliases</strong>:</p>
 </dd>
-<dt><a href="#module_copypasta">copypasta</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets one of the server&#39;s stored copypastas<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
-</dd>
-<dt><a href="#module_copypastaadd">copypastaadd</a> ⇒ <code>Message</code></dt>
-<dd><p>Adds a new copypasta for your server<br><strong>Aliases</strong>: <code>cpadd</code>, <code>pastaadd</code></p>
-</dd>
-<dt><a href="#module_math">math</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Take the effort out of calculations and let the bot do it for you<br><strong>Aliases</strong>: <code>calc</code></p>
-</dd>
-<dt><a href="#module_oxr">oxr</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Convert one currency to another<br>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC<br>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a><br><strong>Aliases</strong>: <code>money</code>, <code>rate</code>, <code>convert</code></p>
-</dd>
-<dt><a href="#module_qrgen">qrgen</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code></p>
-</dd>
-<dt><a href="#module_randomcol">randomcol</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Generates a random color<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
-</dd>
-<dt><a href="#module_say">say</a> ⇒ <code>Message</code></dt>
-<dd><p>Repeats a message and deletes your message<br><strong>Aliases</strong>: <code>sayd</code>, <code>repeat</code></p>
-</dd>
-<dt><a href="#module_saywut">saywut</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Bust the last &quot;say&quot; user<br><strong>Aliases</strong>: <code>saywat</code>, <code>saywot</code></p>
-</dd>
-<dt><a href="#module_time">time</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets the current time in any place<br>Uses Google&#39;s geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>citytime</code></p>
-</dd>
-<dt><a href="#module_weather">weather</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Get the current weather forecast in any city<br>Potentially you&#39;ll have to specify city if the city is in multiple countries, i.e. <code>weather amsterdam</code> will not be the same as <code>weather amsterdam missouri</code><br><strong>Aliases</strong>: <code>temp</code>, <code>forecast</code>, <code>fc</code>, <code>wth</code></p>
-</dd>
-<dt><a href="#module_zalgo">zalgo</a> ⇒ <code>Message</code></dt>
-<dd><p>Create zalgo-fied text from your input<br>First banishes any existing zalgo to ensure proper result<br><strong>Aliases</strong>: <code>trash</code></p>
-</dd>
 </dl>
 
 <a name="module_favna"></a>
@@ -377,6 +377,184 @@ A joke command to spite Kai
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔  
 **Category**: custom  
+<a name="module_copypasta"></a>
+
+## copypasta ⇒ <code>MessageEmbed</code>
+Gets one of the server's stored copypastas  
+Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!  
+**Aliases**: `cp`, `pasta`
+
+**Returns**: <code>MessageEmbed</code> - Copypasta content. In a normal message if more than 1024 characters  
+**Category**: extra  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| PastaName | <code>string</code> | Name of the copypasta to send |
+
+**Example**  
+```js
+copypasta navy
+```
+<a name="module_copypastaadd"></a>
+
+## copypastaadd ⇒ <code>Message</code>
+Adds a new copypasta for your server  
+**Aliases**: `cpadd`, `pastaadd`
+
+**Returns**: <code>Message</code> - Confirmation the copypasta was added  
+**Category**: extra  
+
+| Param | Type |
+| --- | --- |
+| PasteName | <code>string</code> | 
+| PastaContent | <code>string</code> | 
+
+**Example**  
+```js
+copypastaadd lipsum Lorem ipsum dolor sit amet. 
+```
+<a name="module_math"></a>
+
+## math ⇒ <code>MessageEmbed</code>
+Take the effort out of calculations and let the bot do it for you  
+**Aliases**: `calc`
+
+**Returns**: <code>MessageEmbed</code> - Your equation and its answer  
+**Category**: extra  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Equation | <code>string</code> | The equation to solve |
+
+**Example**  
+```js
+math (PI - 1) * 3
+```
+<a name="module_oxr"></a>
+
+## oxr ⇒ <code>MessageEmbed</code>
+Convert one currency to another  
+Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC  
+For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)  
+**Aliases**: `money`, `rate`, `convert`
+
+**Returns**: <code>MessageEmbed</code> - Input and output currency's and the amount your input is worth in both  
+**Category**: extra  
+
+| Param | Type |
+| --- | --- |
+| MoneyAmount | <code>number</code> | 
+| OriginCurrency | <code>string</code> | 
+| TargetCurrency | <code>string</code> | 
+
+**Example**  
+```js
+ox 1 EUR USD
+```
+<a name="module_qrgen"></a>
+
+## qrgen ⇒ <code>MessageEmbed</code>
+Generates a QR code from text (like a URL)  
+**Aliases**: `qr`
+
+**Returns**: <code>MessageEmbed</code> - Embedded QR code and original image URL  
+**Category**: extra  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| URL | <code>string</code> | URL you want to encode into a QR image |
+
+**Example**  
+```js
+qrgen https://favna.xyz/ribbon
+```
+<a name="module_randomcol"></a>
+
+## randomcol ⇒ <code>MessageEmbed</code>
+Generates a random color  
+**Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
+
+**Returns**: <code>MessageEmbed</code> - Color of embed matches generated color  
+**Category**: extra  
+<a name="module_say"></a>
+
+## say ⇒ <code>Message</code>
+Repeats a message and deletes your message  
+**Aliases**: `sayd`, `repeat`
+
+**Returns**: <code>Message</code> - Your message said by the bot  
+**Category**: extra  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Text | <code>string</code> | Message you want to have repeated |
+
+**Example**  
+```js
+say Favna is a great coder!
+```
+<a name="module_saywut"></a>
+
+## saywut ⇒ <code>MessageEmbed</code>
+Bust the last "say" user  
+**Aliases**: `saywat`, `saywot`
+
+**Returns**: <code>MessageEmbed</code> - Info on who used the "say" command last  
+**Category**: extra  
+<a name="module_time"></a>
+
+## time ⇒ <code>MessageEmbed</code>
+Gets the current time in any place  
+Uses Google's geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.  
+**Aliases**: `citytime`
+
+**Returns**: <code>MessageEmbed</code> - Current date, current time, country and DST offset  
+**Category**: extra  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Location | <code>string</code> | Place where you want to get the current time for |
+
+**Example**  
+```js
+time Amsterdam
+```
+<a name="module_weather"></a>
+
+## weather ⇒ <code>MessageEmbed</code>
+Get the current weather forecast in any city  
+Potentially you'll have to specify city if the city is in multiple countries, i.e. `weather amsterdam` will not be the same as `weather amsterdam missouri`  
+**Aliases**: `temp`, `forecast`, `fc`, `wth`
+
+**Returns**: <code>MessageEmbed</code> - Various statistics about the current forecast  
+**Category**: extra  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| CityName | <code>string</code> | Name of the city to get the weather forecast for |
+
+**Example**  
+```js
+weather Amsterdam
+```
+<a name="module_zalgo"></a>
+
+## zalgo ⇒ <code>Message</code>
+Create zalgo-fied text from your input  
+First banishes any existing zalgo to ensure proper result  
+**Aliases**: `trash`
+
+**Returns**: <code>Message</code> - Your text zalgo-fied  
+**Category**: extra  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| SomeText | <code>string</code> | Your input to transform with Zalgo |
+
+**Example**  
+```js
+zalgo HE COMES 
+```
 <a name="module_8ball"></a>
 
 ## 8ball ⇒ <code>MessageEmbed</code>
@@ -1704,184 +1882,6 @@ Killswitch for Twitch notifications
 **Example**  
 ```js
 twitchtoggle enable
-```
-<a name="module_copypasta"></a>
-
-## copypasta ⇒ <code>MessageEmbed</code>
-Gets one of the server's stored copypastas  
-Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!  
-**Aliases**: `cp`, `pasta`
-
-**Returns**: <code>MessageEmbed</code> - Copypasta content. In a normal message if more than 1024 characters  
-**Category**: util  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| PastaName | <code>string</code> | Name of the copypasta to send |
-
-**Example**  
-```js
-copypasta navy
-```
-<a name="module_copypastaadd"></a>
-
-## copypastaadd ⇒ <code>Message</code>
-Adds a new copypasta for your server  
-**Aliases**: `cpadd`, `pastaadd`
-
-**Returns**: <code>Message</code> - Confirmation the copypasta was added  
-**Category**: util  
-
-| Param | Type |
-| --- | --- |
-| PasteName | <code>string</code> | 
-| PastaContent | <code>string</code> | 
-
-**Example**  
-```js
-copypastaadd lipsum Lorem ipsum dolor sit amet. 
-```
-<a name="module_math"></a>
-
-## math ⇒ <code>MessageEmbed</code>
-Take the effort out of calculations and let the bot do it for you  
-**Aliases**: `calc`
-
-**Returns**: <code>MessageEmbed</code> - Your equation and its answer  
-**Category**: util  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| Equation | <code>string</code> | The equation to solve |
-
-**Example**  
-```js
-math (PI - 1) * 3
-```
-<a name="module_oxr"></a>
-
-## oxr ⇒ <code>MessageEmbed</code>
-Convert one currency to another  
-Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC  
-For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)  
-**Aliases**: `money`, `rate`, `convert`
-
-**Returns**: <code>MessageEmbed</code> - Input and output currency's and the amount your input is worth in both  
-**Category**: util  
-
-| Param | Type |
-| --- | --- |
-| MoneyAmount | <code>number</code> | 
-| OriginCurrency | <code>string</code> | 
-| TargetCurrency | <code>string</code> | 
-
-**Example**  
-```js
-ox 1 EUR USD
-```
-<a name="module_qrgen"></a>
-
-## qrgen ⇒ <code>MessageEmbed</code>
-Generates a QR code from text (like a URL)  
-**Aliases**: `qr`
-
-**Returns**: <code>MessageEmbed</code> - Embedded QR code and original image URL  
-**Category**: util  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| URL | <code>string</code> | URL you want to encode into a QR image |
-
-**Example**  
-```js
-qrgen https://favna.xyz/ribbon
-```
-<a name="module_randomcol"></a>
-
-## randomcol ⇒ <code>MessageEmbed</code>
-Generates a random color  
-**Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
-
-**Returns**: <code>MessageEmbed</code> - Color of embed matches generated color  
-**Category**: util  
-<a name="module_say"></a>
-
-## say ⇒ <code>Message</code>
-Repeats a message and deletes your message  
-**Aliases**: `sayd`, `repeat`
-
-**Returns**: <code>Message</code> - Your message said by the bot  
-**Category**: util  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| Text | <code>string</code> | Message you want to have repeated |
-
-**Example**  
-```js
-say Favna is a great coder!
-```
-<a name="module_saywut"></a>
-
-## saywut ⇒ <code>MessageEmbed</code>
-Bust the last "say" user  
-**Aliases**: `saywat`, `saywot`
-
-**Returns**: <code>MessageEmbed</code> - Info on who used the "say" command last  
-**Category**: util  
-<a name="module_time"></a>
-
-## time ⇒ <code>MessageEmbed</code>
-Gets the current time in any place  
-Uses Google's geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.  
-**Aliases**: `citytime`
-
-**Returns**: <code>MessageEmbed</code> - Current date, current time, country and DST offset  
-**Category**: util  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| Location | <code>string</code> | Place where you want to get the current time for |
-
-**Example**  
-```js
-time Amsterdam
-```
-<a name="module_weather"></a>
-
-## weather ⇒ <code>MessageEmbed</code>
-Get the current weather forecast in any city  
-Potentially you'll have to specify city if the city is in multiple countries, i.e. `weather amsterdam` will not be the same as `weather amsterdam missouri`  
-**Aliases**: `temp`, `forecast`, `fc`, `wth`
-
-**Returns**: <code>MessageEmbed</code> - Various statistics about the current forecast  
-**Category**: util  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| CityName | <code>string</code> | Name of the city to get the weather forecast for |
-
-**Example**  
-```js
-weather Amsterdam
-```
-<a name="module_zalgo"></a>
-
-## zalgo ⇒ <code>Message</code>
-Create zalgo-fied text from your input  
-First banishes any existing zalgo to ensure proper result  
-**Aliases**: `trash`
-
-**Returns**: <code>Message</code> - Your text zalgo-fied  
-**Category**: util  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| SomeText | <code>string</code> | Your input to transform with Zalgo |
-
-**Example**  
-```js
-zalgo HE COMES 
 ```
 
 <a name="module_groups"></a>

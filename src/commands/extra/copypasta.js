@@ -28,7 +28,7 @@
  * Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!  
  * **Aliases**: `cp`, `pasta`
  * @module
- * @category util
+ * @category extra
  * @name copypasta
  * @example copypasta navy
  * @param {string} PastaName Name of the copypasta to send
@@ -48,7 +48,7 @@ module.exports = class copypastaCommand extends commando.Command {
 		super(client, {
 			'name': 'copypasta',
 			'memberName': 'copypasta',
-			'group': 'util',
+			'group': 'extra',
 			'aliases': ['cp', 'pasta'],
 			'description': 'Sends contents of a copypasta file to the chat',
 			'format': 'CopypastaName',

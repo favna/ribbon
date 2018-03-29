@@ -24,32 +24,32 @@
  */
 
 /**
- * Create zalgo-fied text from your input  
- * First banishes any existing zalgo to ensure proper result  
- * **Aliases**: `trash`
+ * Generates a QR code from text (like a URL)  
+ * **Aliases**: `qr`
  * @module
- * @category util
- * @name zalgo
- * @example zalgo HE COMES 
- * @param {string} SomeText Your input to transform with Zalgo
- * @returns {Message} Your text zalgo-fied
+ * @category extra
+ * @name qrgen
+ * @example qrgen https://favna.xyz/ribbon
+ * @param {string} URL URL you want to encode into a QR image
+ * @returns {MessageEmbed} Embedded QR code and original image URL
  */
 
-const banish = require('to-zalgo/banish'),
+const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
-	zalgo = require('to-zalgo'),
+	imgur = require('imgur'),
+	qr = require('qrcode'),
 	{deleteCommandMessages} = require('../../util.js');
 
-module.exports = class zalgoCommand extends commando.Command {
+module.exports = class qrgenCommand extends commando.Command {
 	constructor (client) {
 		super(client, {
-			'name': 'zalgo',
-			'memberName': 'zalgo',
-			'group': 'util',
-			'aliases': ['trash'],
-			'description': 'F*ck up text using Zalgo',
-			'format': 'ContentToTransform',
-			'examples': ['zalgo HE COMES'],
+			'name': 'qrgen',
+			'memberName': 'qrgen',
+			'group': 'extra',
+			'aliases': ['qr'],
+			'description': 'Generates a QR code from a given string',
+			'format': 'URLToConvert',
+			'examples': ['qrgen https://github.com/Favna/Ribbon'],
 			'guildOnly': false,
 			'throttling': {
 				'usages': 2,
@@ -57,17 +57,36 @@ module.exports = class zalgoCommand extends commando.Command {
 			},
 			'args': [
 				{
-					'key': 'txt',
-					'prompt': 'What should I zalgolize?',
+					'key': 'url',
+					'prompt': 'String (URL) to make a QR code for?',
 					'type': 'string'
 				}
 			]
 		});
 	}
 
-	run (msg, args) {
-		deleteCommandMessages(msg, this.client);
+	async run (msg, args) {
+		const base64 = await qr.toDataURL(args.url, {'errorCorrectionLevel': 'M'});
 
-		return msg.say(zalgo(banish(args.txt)));
+		if (base64) {
+			const upload = await imgur.uploadBase64(base64.slice(22));
+
+			if (upload) {
+				const qrEmbed = new MessageEmbed();
+
+				qrEmbed
+					.setTitle(`QR code for ${args.url}`)
+					.setURL(upload.data.link)
+					.setImage(upload.data.link);
+
+				deleteCommandMessages(msg, this.client);
+
+				return msg.embed(qrEmbed);
+			}
+
+			return msg.reply('⚠️ An error occured uploading the QR code to imgur.');
+		}
+
+		return msg.reply('⚠️ An error occured getting a base64 image for that URL.');
 	}
 };

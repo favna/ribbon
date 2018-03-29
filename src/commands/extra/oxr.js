@@ -29,7 +29,7 @@
  * For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)  
  * **Aliases**: `money`, `rate`, `convert`
  * @module
- * @category util
+ * @category extra
  * @name oxr
  * @example ox 1 EUR USD
  * @param {number} MoneyAmount
@@ -53,7 +53,7 @@ module.exports = class moneyCommand extends commando.Command {
 		super(client, {
 			'name': 'oxr',
 			'memberName': 'oxr',
-			'group': 'util',
+			'group': 'extra',
 			'aliases': ['money', 'rate', 'convert'],
 			'description': 'Currency converter - makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
 			'format': 'CurrencyAmount FirstValuta SecondValuta',
