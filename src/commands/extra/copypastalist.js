@@ -32,10 +32,7 @@
  * @returns {MessageEmbed} List of all available copypastas
  */
 
-const {
-		MessageEmbed,
-		splitMessage
-	} = require('discord.js'),
+const {splitMessage} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	fs = require('fs'),
 	moment = require('moment'),

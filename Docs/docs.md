@@ -69,6 +69,9 @@ Checks the bot's ping to the Discord server
 <dt><a href="#module_copypastaadd">copypastaadd</a> ⇒ <code>Message</code></dt>
 <dd><p>Adds a new copypasta for your server<br><strong>Aliases</strong>: <code>cpadd</code>, <code>pastaadd</code></p>
 </dd>
+<dt><a href="#module_copypastalist">copypastalist</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Gets all copypastas available to the server<br><strong>Aliases</strong>: <code>cplist</code>, <code>copylist</code>, <code>pastalist</code></p>
+</dd>
 <dt><a href="#module_math">math</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Take the effort out of calculations and let the bot do it for you<br><strong>Aliases</strong>: <code>calc</code></p>
 </dd>
@@ -413,6 +416,14 @@ Adds a new copypasta for your server
 ```js
 copypastaadd lipsum Lorem ipsum dolor sit amet. 
 ```
+<a name="module_copypastalist"></a>
+
+## copypastalist ⇒ <code>MessageEmbed</code>
+Gets all copypastas available to the server  
+**Aliases**: `cplist`, `copylist`, `pastalist`
+
+**Returns**: <code>MessageEmbed</code> - List of all available copypastas  
+**Category**: extra  
 <a name="module_math"></a>
 
 ## math ⇒ <code>MessageEmbed</code>
