@@ -1017,7 +1017,7 @@ Note that if there are a lot of members on the server it will take a long time t
 **Example**  
 ```js
 nickall prefix ༼ つ ◕_◕ ༽つ  
-OR-  
+-OR-  
 nickall append ( ͡° ͜ʖ ͡°)  
 -OR-  
 nickall clear  

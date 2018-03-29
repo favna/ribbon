@@ -34,7 +34,7 @@
  * @category moderation
  * @name nickall
  * @example nickall prefix ༼ つ ◕_◕ ༽つ  
- * OR-  
+ * -OR-  
  * nickall append ( ͡° ͜ʖ ͡°)  
  * -OR-  
  * nickall clear  
