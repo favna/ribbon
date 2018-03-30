@@ -40,10 +40,7 @@ const {MessageEmbed} = require('discord.js'),
 	commando = require('discord.js-commando'),
 	request = require('snekfetch'), 
 	{deleteCommandMessages} = require('../../util.js'), 
-	{
-		googleapikey,
-		searchEngineKey
-	} = require('../../auth.json');
+	{googleapikey, searchEngineKey} = require('../../auth.json');
 
 module.exports = class googleCommand extends commando.Command {
 	constructor (client) {
