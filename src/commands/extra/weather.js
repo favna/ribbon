@@ -28,7 +28,7 @@
  * Potentially you'll have to specify city if the city is in multiple countries, i.e. `weather amsterdam` will not be the same as `weather amsterdam missouri`  
  * **Aliases**: `temp`, `forecast`, `fc`, `wth`
  * @module
- * @category util
+ * @category extra
  * @name weather
  * @example weather Amsterdam
  * @param {string} CityName Name of the city to get the weather forecast for
@@ -46,7 +46,7 @@ module.exports = class weatherCommand extends commando.Command {
 		super(client, {
 			'name': 'weather',
 			'memberName': 'weather',
-			'group': 'util',
+			'group': 'extra',
 			'aliases': ['temp', 'forecast', 'fc', 'wth'],
 			'description': 'Get the weather in a city',
 			'format': 'CityName',

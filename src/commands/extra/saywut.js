@@ -27,7 +27,7 @@
  * Bust the last "say" user  
  * **Aliases**: `saywat`, `saywot`
  * @module
- * @category util
+ * @category extra
  * @name saywut
  * @returns {MessageEmbed} Info on who used the "say" command last
  */
@@ -43,7 +43,7 @@ module.exports = class sayWutCommand extends commando.Command {
 		super(client, {
 			'name': 'saywut',
 			'memberName': 'saywut',
-			'group': 'util',
+			'group': 'extra',
 			'aliases': ['saywat', 'saywot'],
 			'description': 'Bust the last "say" user',
 			'examples': ['saywut'],

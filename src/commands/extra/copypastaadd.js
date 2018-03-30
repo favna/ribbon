@@ -27,7 +27,7 @@
  * Adds a new copypasta for your server  
  * **Aliases**: `cpadd`, `pastaadd`
  * @module
- * @category util
+ * @category extra
  * @name copypastaadd
  * @example copypastaadd lipsum Lorem ipsum dolor sit amet. 
  * @param {string} PasteName
@@ -46,7 +46,7 @@ module.exports = class copypastaAddCommand extends commando.Command {
 		super(client, {
 			'name': 'copypastaadd',
 			'memberName': 'copypastaadd',
-			'group': 'util',
+			'group': 'extra',
 			'aliases': ['cpadd', 'pastaadd'],
 			'description': 'Saves a copypasta to local file',
 			'format': 'CopypastaName CopypastaContent',
