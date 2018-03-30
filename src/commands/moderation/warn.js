@@ -86,11 +86,6 @@ module.exports = class warnCommand extends commando.Command {
   }
 
   run (msg, args) {
-
-    if (msg.author.id !== this.client.owners[0].id) {
-      return msg.reply('warnings are currently being worked on. Join the server if you want to add a warning, Favna can do it manually. This function will be back soon!)');
-    }
-
     const embed = new MessageEmbed(),
       modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
