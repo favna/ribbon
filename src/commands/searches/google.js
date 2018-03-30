@@ -36,41 +36,41 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	cheerio = require('cheerio'),
-	commando = require('discord.js-commando'),
-	request = require('snekfetch'), 
-	{deleteCommandMessages} = require('../../util.js'), 
-	{googleapikey, searchEngineKey} = require('../../auth.json');
+  cheerio = require('cheerio'),
+  commando = require('discord.js-commando'),
+  request = require('snekfetch'), 
+  {deleteCommandMessages} = require('../../util.js'), 
+  {googleapikey, searchEngineKey} = require('../../auth.json');
 
 module.exports = class googleCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'google',
-			'memberName': 'google',
-			'group': 'searches',
-			'aliases': ['search', 'g'],
-			'description': 'Finds anything on google',
-			'format': 'GoogleQuery',
-			'examples': ['google Pyrrha Nikos'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'query',
-					'prompt': 'What do you want to google?',
-					'type': 'string',
-					'parse': p => p.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
-						.split(' ')
-						.map(uriComponent => encodeURIComponent(uriComponent))
-						.join('+')
-				}
-			]
-		});
-	}
-	/* eslint-disable multiline-comment-style, lines-between-class-members, indent, lines-around-comment*/
+  constructor (client) {
+    super(client, {
+      'name': 'google',
+      'memberName': 'google',
+      'group': 'searches',
+      'aliases': ['search', 'g'],
+      'description': 'Finds anything on google',
+      'format': 'GoogleQuery',
+      'examples': ['google Pyrrha Nikos'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'query',
+          'prompt': 'What do you want to google?',
+          'type': 'string',
+          'parse': p => p.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
+            .split(' ')
+            .map(uriComponent => encodeURIComponent(uriComponent))
+            .join('+')
+        }
+      ]
+    });
+  }
+  /* eslint-disable multiline-comment-style, lines-between-class-members, indent, lines-around-comment*/
 	async run (msg, args) {
 		const knowledgeRes = await request.get('https://kgsearch.googleapis.com/v1/entities:search')
 			.query('key', googleapikey)

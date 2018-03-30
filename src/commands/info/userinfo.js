@@ -35,61 +35,61 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	{capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  moment = require('moment'),
+  {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class userInfoCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'userinfo',
-			'memberName': 'userinfo',
-			'group': 'info',
-			'aliases': ['user', 'uinfo'],
-			'description': 'Gets information about a user.',
-			'format': 'MemberID|MemberName(partial or full)',
-			'examples': ['uinfo Favna'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'member',
-					'prompt': 'What user would you like to snoop on?',
-					'type': 'member'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'userinfo',
+      'memberName': 'userinfo',
+      'group': 'info',
+      'aliases': ['user', 'uinfo'],
+      'description': 'Gets information about a user.',
+      'format': 'MemberID|MemberName(partial or full)',
+      'examples': ['uinfo Favna'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'member',
+          'prompt': 'What user would you like to snoop on?',
+          'type': 'member'
+        }
+      ]
+    });
+  }
 
-	run (msg, args) {
-		const uinfoEmbed = new MessageEmbed(),
-			vals = {
-				'member': args.member,
-				'user': args.member.user
-			};
+  run (msg, args) {
+    const uinfoEmbed = new MessageEmbed(),
+      vals = {
+        'member': args.member,
+        'user': args.member.user
+      };
 
-		uinfoEmbed
-			.setAuthor(vals.user.tag)
-			.setThumbnail(vals.user.displayAvatarURL())
-			.setColor(vals.member.displayHexColor)
-			.addField('ID', vals.user.id, true)
-			.addField('Name', vals.user.username, true)
-			.addField('Nickname', vals.member.nickname ? vals.member.nickname : 'No Nickname', true)
-			.addField('Status', vals.user.presence.status !== 'dnd' ? capitalizeFirstLetter(vals.user.presence.status) : 'Do Not Disturb', true)
-			.addField(vals.user.presence.activity !== null
-				? capitalizeFirstLetter(vals.user.presence.activity.type)
-				: 'Activity', vals.user.presence.activity !== null ? vals.user.presence.activity.name : 'Nothing', true)
-			.addField('Display Color', vals.member.displayHexColor, true)
-			.addField('Role(s)', vals.member.roles.size > 1 ? vals.member.roles.map(r => r.name).slice(1).join(' | ') : 'None', false) // eslint-disable-line newline-per-chained-call
-			.addField('Account created at', moment(vals.user.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
-			.addField('Joined server at', moment(vals.member.joinedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true);
-		vals.member.roles.size >= 1 ? uinfoEmbed.setFooter(`${vals.member.displayName} has ${vals.member.roles.size - 1} role(s)`) : uinfoEmbed.setFooter(`${vals.member.displayName} has 0 roles`);
+    uinfoEmbed
+      .setAuthor(vals.user.tag)
+      .setThumbnail(vals.user.displayAvatarURL())
+      .setColor(vals.member.displayHexColor)
+      .addField('ID', vals.user.id, true)
+      .addField('Name', vals.user.username, true)
+      .addField('Nickname', vals.member.nickname ? vals.member.nickname : 'No Nickname', true)
+      .addField('Status', vals.user.presence.status !== 'dnd' ? capitalizeFirstLetter(vals.user.presence.status) : 'Do Not Disturb', true)
+      .addField(vals.user.presence.activity !== null
+        ? capitalizeFirstLetter(vals.user.presence.activity.type)
+        : 'Activity', vals.user.presence.activity !== null ? vals.user.presence.activity.name : 'Nothing', true)
+      .addField('Display Color', vals.member.displayHexColor, true)
+      .addField('Role(s)', vals.member.roles.size > 1 ? vals.member.roles.map(r => r.name).slice(1).join(' | ') : 'None', false) // eslint-disable-line newline-per-chained-call
+      .addField('Account created at', moment(vals.user.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
+      .addField('Joined server at', moment(vals.member.joinedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true);
+    vals.member.roles.size >= 1 ? uinfoEmbed.setFooter(`${vals.member.displayName} has ${vals.member.roles.size - 1} role(s)`) : uinfoEmbed.setFooter(`${vals.member.displayName} has 0 roles`);
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		msg.embed(uinfoEmbed);
-	}
+    msg.embed(uinfoEmbed);
+  }
 };

@@ -36,72 +36,72 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	booru = require('booru'),
-	commando = require('discord.js-commando'), 
-	{stripIndents} = require('common-tags'), 
-	{deleteCommandMessages} = require('../../util.js');
+  booru = require('booru'),
+  commando = require('discord.js-commando'), 
+  {stripIndents} = require('common-tags'), 
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class pahealCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'paheal',
-			'memberName': 'paheal',
-			'group': 'nsfw',
-			'aliases': ['pa', 'heal'],
-			'description': 'Find NSFW Content on Rule34 - Paheal',
-			'format': 'NSFWToLookUp',
-			'examples': ['paheal Pyrrha Nikos'],
-			'guildOnly': false,
-			'nsfw': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'nsfwtags',
-					'prompt': 'What do you want to find NSFW for?',
-					'type': 'string',
-					'parse': p => p.split(' ')
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'paheal',
+      'memberName': 'paheal',
+      'group': 'nsfw',
+      'aliases': ['pa', 'heal'],
+      'description': 'Find NSFW Content on Rule34 - Paheal',
+      'format': 'NSFWToLookUp',
+      'examples': ['paheal Pyrrha Nikos'],
+      'guildOnly': false,
+      'nsfw': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'nsfwtags',
+          'prompt': 'What do you want to find NSFW for?',
+          'type': 'string',
+          'parse': p => p.split(' ')
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
-		/* eslint-disable sort-vars*/
-		const search = await booru.search('paheal', args.nsfwtags, {
-				'limit': 1,
-				'random': true
-			}),
-			common = await booru.commonfy(search);
-		/* eslint-enable sort-vars*/
+  async run (msg, args) {
+    /* eslint-disable sort-vars*/
+    const search = await booru.search('paheal', args.nsfwtags, {
+        'limit': 1,
+        'random': true
+      }),
+      common = await booru.commonfy(search);
+    /* eslint-enable sort-vars*/
 
-		if (common && common[0].common) {
-			console.log(common[0]);
-			const embed = new MessageEmbed(),
-				tags = [];
+    if (common && common[0].common) {
+      console.log(common[0]);
+      const embed = new MessageEmbed(),
+        tags = [];
 
-			for (const tag in common[0].common.tags) {
-				tags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
-			}
+      for (const tag in common[0].common.tags) {
+        tags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
+      }
 
-			embed
-				.setTitle(`paheal image for ${args.nsfwtags.join(', ')}`)
-				.setURL(common[0].common.file_url)
-				.setColor('#FFB6C1')
-				.setDescription(stripIndents `${tags.slice(0, 5).join(' ')}
+      embed
+        .setTitle(`paheal image for ${args.nsfwtags.join(', ')}`)
+        .setURL(common[0].common.file_url)
+        .setColor('#FFB6C1')
+        .setDescription(stripIndents `${tags.slice(0, 5).join(' ')}
 				
 				**Score**: ${common[0].common.score}`)
-				.setImage(common[0].common.file_url);
+        .setImage(common[0].common.file_url);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(embed);
-		}
+      return msg.embed(embed);
+    }
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply('⚠️ No juicy images found.');
-	}
+    return msg.reply('⚠️ No juicy images found.');
+  }
 };

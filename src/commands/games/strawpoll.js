@@ -36,79 +36,79 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	request = require('snekfetch'), 
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  request = require('snekfetch'), 
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class strawpollCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'strawpoll',
-			'memberName': 'strawpoll',
-			'group': 'games',
-			'aliases': ['straw', 'poll'],
-			'description': 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
-			'format': 'TitleOfStrawpoll OptionA|OptionB|OptionC...',
-			'examples': ['strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'title',
-					'prompt': 'Title of the strawpoll',
-					'type': 'string',
-					'wait': 60
-				},
-				{
-					'key': 'options',
-					'prompt': 'Options for the strawpoll?',
-					'type': 'string',
-					'wait': 60,
-					'validate': (opts) => {
-						if (/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~ ]*\|[a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~]*)*/.test(opts) &&
+  constructor (client) {
+    super(client, {
+      'name': 'strawpoll',
+      'memberName': 'strawpoll',
+      'group': 'games',
+      'aliases': ['straw', 'poll'],
+      'description': 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
+      'format': 'TitleOfStrawpoll OptionA|OptionB|OptionC...',
+      'examples': ['strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'title',
+          'prompt': 'Title of the strawpoll',
+          'type': 'string',
+          'wait': 60
+        },
+        {
+          'key': 'options',
+          'prompt': 'Options for the strawpoll?',
+          'type': 'string',
+          'wait': 60,
+          'validate': (opts) => {
+            if (/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~ ]*\|[a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~]*)*/.test(opts) &&
 							opts.split('|').length >= 2 && opts.split('|').length <= 30) {
-							return true;
-						}
+              return true;
+            }
 
-						return 'You need between 2 and 30 options and the valid format for the options is `Question 1|Question 2|Question 3 etc..`';
+            return 'You need between 2 and 30 options and the valid format for the options is `Question 1|Question 2|Question 3 etc..`';
 
-					}
-				}
-			]
-		});
-	}
+          }
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
-		const pollEmbed = new MessageEmbed(),
-			strawpoll = await request
-				.post('https://www.strawpoll.me/api/v2/polls')
-				.set('Content-Type', 'application/json')
-				.send({
-					'title': args.title,
-					'options': args.options.split('|'),
-					'multi': false,
-					'dupcheck': 'normal',
-					'captcha': true
-				});
+  async run (msg, args) {
+    const pollEmbed = new MessageEmbed(),
+      strawpoll = await request
+        .post('https://www.strawpoll.me/api/v2/polls')
+        .set('Content-Type', 'application/json')
+        .send({
+          'title': args.title,
+          'options': args.options.split('|'),
+          'multi': false,
+          'dupcheck': 'normal',
+          'captcha': true
+        });
 
-		if (strawpoll.ok) {
-			pollEmbed
-				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-				.setTitle(strawpoll.body.title)
-				.setURL(`http://www.strawpoll.me/${strawpoll.body.id}`)
-				.setImage(`http://www.strawpoll.me/images/poll-results/${strawpoll.body.id}.png`)
-				.setDescription(`Options on this poll: \`${strawpoll.body.options.join(', ')}\` `);
+    if (strawpoll.ok) {
+      pollEmbed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setTitle(strawpoll.body.title)
+        .setURL(`http://www.strawpoll.me/${strawpoll.body.id}`)
+        .setImage(`http://www.strawpoll.me/images/poll-results/${strawpoll.body.id}.png`)
+        .setDescription(`Options on this poll: \`${strawpoll.body.options.join(', ')}\` `);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(pollEmbed, `http://www.strawpoll.me/${strawpoll.body.id}`);
-		}
+      return msg.embed(pollEmbed, `http://www.strawpoll.me/${strawpoll.body.id}`);
+    }
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 		
-		return msg.reply('⚠️ an error occured creating the strawpoll');
-	}
+    return msg.reply('⚠️ an error occured creating the strawpoll');
+  }
 };

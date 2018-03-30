@@ -35,56 +35,56 @@
  */
 
 const commando = require('discord.js-commando'),
-	{stripIndents} = require('common-tags'),
-	{deleteCommandMessages, userSearch} = require('../../util.js');
+  {stripIndents} = require('common-tags'),
+  {deleteCommandMessages, userSearch} = require('../../util.js');
 
 module.exports = class TwitchMonitorsCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'twitchmonitors',
-			'memberName': 'twitchmonitors',
-			'group': 'streamwatch',
-			'aliases': ['monitors', 'monitor', 'twitchmonitor'],
-			'description': 'Configures which streamers to spy on',
-			'format': 'Member [Member Member Member]',
-			'examples': ['twitchmonitors Favna Techagent'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'members',
-					'prompt': 'Which members to monitor?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'twitchmonitors',
+      'memberName': 'twitchmonitors',
+      'group': 'streamwatch',
+      'aliases': ['monitors', 'monitor', 'twitchmonitor'],
+      'description': 'Configures which streamers to spy on',
+      'format': 'Member [Member Member Member]',
+      'examples': ['twitchmonitors Favna Techagent'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'members',
+          'prompt': 'Which members to monitor?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	async run (msg, args) {
-		const memberIDs = [],
-			memberNames = [];
+  async run (msg, args) {
+    const memberIDs = [],
+      memberNames = [];
 
-		args.members = msg.argString.slice(1).split(' ');
+    args.members = msg.argString.slice(1).split(' ');
 
-		for (const member in args.members) {
-			const thisMember = await userSearch(this.client, msg, args.members[member]);
+    for (const member in args.members) {
+      const thisMember = await userSearch(this.client, msg, args.members[member]);
 
-			memberIDs.push(thisMember.id);
-			memberNames.push(thisMember.displayName);
-		}
+      memberIDs.push(thisMember.id);
+      memberNames.push(thisMember.displayName);
+    }
 
-		this.client.provider.set(msg.guild.id, 'twitchmonitors', memberIDs);
-		deleteCommandMessages(msg, this.client);
+    this.client.provider.set(msg.guild.id, 'twitchmonitors', memberIDs);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(stripIndents `🕵 Started spying on the stream status of \`${memberNames.join(', ')}\`
+    return msg.reply(stripIndents `🕵 Started spying on the stream status of \`${memberNames.join(', ')}\`
         Use \`${msg.guild.commandPrefix}twitchtoggle\` to toggle twitch notifiers on or off
         Use \`${msg.guild.commandPrefix}twitchoutput\` to set the channel the notifiers should be sent to`);
-	}
+  }
 };

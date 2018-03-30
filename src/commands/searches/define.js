@@ -27,69 +27,69 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	request = require('snekfetch'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  request = require('snekfetch'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class defineCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'define',
-			'memberName': 'define',
-			'group': 'searches',
-			'aliases': ['def', 'dict'],
-			'description': 'Gets the definition on a word on glosbe',
-			'format': 'Word',
-			'examples': ['define pixel'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'query',
-					'prompt': 'What word do you want to define?',
-					'type': 'string',
-					'parse': p => p.replace(/[^a-zA-Z]/g, '')
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'define',
+      'memberName': 'define',
+      'group': 'searches',
+      'aliases': ['def', 'dict'],
+      'description': 'Gets the definition on a word on glosbe',
+      'format': 'Word',
+      'examples': ['define pixel'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'query',
+          'prompt': 'What word do you want to define?',
+          'type': 'string',
+          'parse': p => p.replace(/[^a-zA-Z]/g, '')
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
-		const defineEmbed = new MessageEmbed(),
-			word = await request.get('https://glosbe.com/gapi/translate')
-				.query('from', 'en')
-				.query('dest', 'en')
-				.query('format', 'json')
-				.query('phrase', args.query);
+  async run (msg, args) {
+    const defineEmbed = new MessageEmbed(),
+      word = await request.get('https://glosbe.com/gapi/translate')
+        .query('from', 'en')
+        .query('dest', 'en')
+        .query('format', 'json')
+        .query('phrase', args.query);
 
-		if (word.ok && word.body.tuc && word.body.tuc.length > 0) {
-			const final = [`**Definitions for __${args.query}__:**`];
+    if (word.ok && word.body.tuc && word.body.tuc.length > 0) {
+      const final = [`**Definitions for __${args.query}__:**`];
 
-			for (let [index, item] of Object.entries(word.body.tuc.filter(tuc => tuc.meanings)[0].meanings.slice(0, 5))) { // eslint-disable-line prefer-const
+      for (let [index, item] of Object.entries(word.body.tuc.filter(tuc => tuc.meanings)[0].meanings.slice(0, 5))) { // eslint-disable-line prefer-const
 
-				item = item.text
-					.replace(/\[(\w+)[^\]]*](.*?)\[\/\1]/g, '_')
-					.replace(/&quot;/g, '"')
-					.replace(/&#39;/g, '\'')
-					.replace(/<b>/g, '[')
-					.replace(/<\/b>/g, ']')
-					.replace(/<i>|<\/i>/g, '_');
-				final.push(`**${(parseInt(index, 10) + 1)}:** ${item}`);
-			}
-			defineEmbed
-				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-				.setDescription(final);
+        item = item.text
+          .replace(/\[(\w+)[^\]]*](.*?)\[\/\1]/g, '_')
+          .replace(/&quot;/g, '"')
+          .replace(/&#39;/g, '\'')
+          .replace(/<b>/g, '[')
+          .replace(/<\/b>/g, ']')
+          .replace(/<i>|<\/i>/g, '_');
+        final.push(`**${(parseInt(index, 10) + 1)}:** ${item}`);
+      }
+      defineEmbed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setDescription(final);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(defineEmbed);
-		}
+      return msg.embed(defineEmbed);
+    }
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(`⚠️ nothing found for \`${args.query}\`, maybe check your spelling?`);
-	}
+    return msg.reply(`⚠️ nothing found for \`${args.query}\`, maybe check your spelling?`);
+  }
 };

@@ -26,17 +26,17 @@
 const {googleapikey} = require('../../auth.json');
 
 const DEFAULT_VOLUME = 1, // eslint-disable-line one-var
-	GOOGLE_API = googleapikey,
-	MAX_LENGTH = 10,
-	MAX_SONGS = 3,
-	PAGINATED_ITEMS = 5,
-	PASSES = 3;
+  GOOGLE_API = googleapikey,
+  MAX_LENGTH = 10,
+  MAX_SONGS = 3,
+  PAGINATED_ITEMS = 5,
+  PASSES = 3;
 	
 module.exports = {
-	DEFAULT_VOLUME,
-	GOOGLE_API,
-	MAX_LENGTH,
-	MAX_SONGS,
-	PAGINATED_ITEMS,
-	PASSES
+  DEFAULT_VOLUME,
+  GOOGLE_API,
+  MAX_LENGTH,
+  MAX_SONGS,
+  PAGINATED_ITEMS,
+  PASSES
 };

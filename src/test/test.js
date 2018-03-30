@@ -24,23 +24,23 @@
  */
 
 const Ribbon = require('../Ribbon.js'),
-	test = require('tape'),
-	{token} = require('../auth.json');
+  test = require('tape'),
+  {token} = require('../auth.json');
 
 test('connect & disconnect', (timeout) => {
-	timeout.timeoutAfter(30000);
-	timeout.ok(token, 'discord token should be set');
+  timeout.timeoutAfter(30000);
+  timeout.ok(token, 'discord token should be set');
 
-	const bot = new Ribbon(token);
+  const bot = new Ribbon(token);
 
-	timeout.false(bot.isReady, 'bot should not be ready');
-	bot.init();
+  timeout.false(bot.isReady, 'bot should not be ready');
+  bot.init();
 
-	const si = setInterval(() => { // eslint-disable-line one-var
-		if (bot.isReady) {
-			bot.deinit();
-			clearInterval(si);
-			timeout.end();
-		}
-	}, 5000);
+  const si = setInterval(() => { // eslint-disable-line one-var
+    if (bot.isReady) {
+      bot.deinit();
+      clearInterval(si);
+      timeout.end();
+    }
+  }, 5000);
 });

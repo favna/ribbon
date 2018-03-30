@@ -34,56 +34,56 @@
  */
 
 const commando = require('discord.js-commando'),
-	{deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class ResumeSongCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'resume',
-			'memberName': 'resume',
-			'group': 'music',
-			'aliases': ['go', 'continue', 'ale', 'loss', 'res'],
-			'description': 'Resumes the currently playing song.',
-			'examples': ['resume'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'resume',
+      'memberName': 'resume',
+      'group': 'music',
+      'aliases': ['go', 'continue', 'ale', 'loss', 'res'],
+      'description': 'Resumes the currently playing song.',
+      'examples': ['resume'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	run (msg) {
-		const queue = this.queue.get(msg.guild.id);
+  run (msg) {
+    const queue = this.queue.get(msg.guild.id);
 
-		if (!queue) {
-			deleteCommandMessages(msg, this.client);
+    if (!queue) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('there isn\'t any music playing to resume, oh brilliant one.');
-		}
-		if (!queue.songs[0].dispatcher) {
-			deleteCommandMessages(msg, this.client);
+      return msg.reply('there isn\'t any music playing to resume, oh brilliant one.');
+    }
+    if (!queue.songs[0].dispatcher) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('pretty sure a song that hasn\'t actually begun playing yet could be considered "resumed".');
-		}
-		if (queue.songs[0].playing) {
-			deleteCommandMessages(msg, this.client);
+      return msg.reply('pretty sure a song that hasn\'t actually begun playing yet could be considered "resumed".');
+    }
+    if (queue.songs[0].playing) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('Resuming a song that isn\'t paused is a great move. Really fantastic.');
-		} // eslint-disable-line max-len
-		queue.songs[0].dispatcher.resume();
-		queue.songs[0].playing = true;
+      return msg.reply('Resuming a song that isn\'t paused is a great move. Really fantastic.');
+    } // eslint-disable-line max-len
+    queue.songs[0].dispatcher.resume();
+    queue.songs[0].playing = true;
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 		
-		return msg.reply('resumed the music. This party ain\'t over yet!');
-	}
+    return msg.reply('resumed the music. This party ain\'t over yet!');
+  }
 
-	get queue () {
-		if (!this._queue) {
-			this._queue = this.client.registry.resolveCommand('music:play').queue;
-		}
+  get queue () {
+    if (!this._queue) {
+      this._queue = this.client.registry.resolveCommand('music:play').queue;
+    }
 
-		return this._queue;
-	}
+    return this._queue;
+  }
 };

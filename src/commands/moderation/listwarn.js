@@ -35,78 +35,78 @@
  */
 
 const Fuse = require('fuse.js'),
-	commando = require('discord.js-commando'),
-	fs = require('fs'),
-	moment = require('moment'),
-	path = require('path'),
-	{MessageEmbed} = require('discord.js'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  fs = require('fs'),
+  moment = require('moment'),
+  path = require('path'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class listwarnCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'listwarn',
-			'memberName': 'listwarn',
-			'group': 'moderation',
-			'aliases': ['reqwarn', 'lw', 'rw'],
-			'description': 'Lists the warning points given to a member',
-			'format': 'MemberID|MemberName(partial or full)',
-			'examples': ['listwarn {member}'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'member',
-					'prompt': 'Which member should I show warning points for?',
-					'type': 'string',
-					'label': 'member name or ID'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'listwarn',
+      'memberName': 'listwarn',
+      'group': 'moderation',
+      'aliases': ['reqwarn', 'lw', 'rw'],
+      'description': 'Lists the warning points given to a member',
+      'format': 'MemberID|MemberName(partial or full)',
+      'examples': ['listwarn {member}'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'member',
+          'prompt': 'Which member should I show warning points for?',
+          'type': 'string',
+          'label': 'member name or ID'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg, args) {
+  run (msg, args) {
 
-		if (fs.existsSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`))) {
-			/* eslint-disable sort-vars*/
-			const embed = new MessageEmbed(),
-				fsoptions = {
-					'shouldSort': true,
-					'threshold': 0.6,
-					'location': 0,
-					'distance': 100,
-					'maxPatternLength': 32,
-					'minMatchCharLength': 1,
-					'keys': ['id', 'usertag']
-				},
-				warns = JSON.parse(fs.readFileSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`)), 'utf8'),
-				fuse = new Fuse(warns, fsoptions),
-				results = fuse.search(args.member);
-			/* eslint-enable sort-vars*/
+    if (fs.existsSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`))) {
+      /* eslint-disable sort-vars*/
+      const embed = new MessageEmbed(),
+        fsoptions = {
+          'shouldSort': true,
+          'threshold': 0.6,
+          'location': 0,
+          'distance': 100,
+          'maxPatternLength': 32,
+          'minMatchCharLength': 1,
+          'keys': ['id', 'usertag']
+        },
+        warns = JSON.parse(fs.readFileSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`)), 'utf8'),
+        fuse = new Fuse(warns, fsoptions),
+        results = fuse.search(args.member);
+      /* eslint-enable sort-vars*/
 
-			if (results.length) {
-				embed
-					.setColor('#ECECC9')
-					.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-					.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'))
-					.setDescription(`**Member:** ${results[0].usertag} (${results[0].id})\n` +
+      if (results.length) {
+        embed
+          .setColor('#ECECC9')
+          .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+          .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'))
+          .setDescription(`**Member:** ${results[0].usertag} (${results[0].id})\n` +
 						`**Current Warning Points:** ${results[0].points}`);
 
-				deleteCommandMessages(msg, this.client);
+        deleteCommandMessages(msg, this.client);
 
-				return msg.embed(embed);
-			}
+        return msg.embed(embed);
+      }
 
-			return msg.reply('⚠️ That user has no warning points yet');
-		}
+      return msg.reply('⚠️ That user has no warning points yet');
+    }
 
-		return msg.reply(`📘 No warnpoints log found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
-	}
+    return msg.reply(`📘 No warnpoints log found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
+  }
 };

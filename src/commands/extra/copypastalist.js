@@ -33,63 +33,63 @@
  */
 
 const {splitMessage} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	fs = require('fs'),
-	moment = require('moment'),
-	path = require('path'), 
-	{deleteCommandMessages} = require('../../util.js'), 
-	{stripIndents} = require('common-tags');
+  commando = require('discord.js-commando'),
+  fs = require('fs'),
+  moment = require('moment'),
+  path = require('path'), 
+  {deleteCommandMessages} = require('../../util.js'), 
+  {stripIndents} = require('common-tags');
 
 module.exports = class CopyPastaListCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'copypastalist',
-			'memberName': 'copypastalist',
-			'group': 'extra',
-			'aliases': ['cplist', 'copylist', 'pastalist'],
-			'description': 'Gets all copypastas available to the server',
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'copypastalist',
+      'memberName': 'copypastalist',
+      'group': 'extra',
+      'aliases': ['cplist', 'copylist', 'pastalist'],
+      'description': 'Gets all copypastas available to the server',
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	async run (msg) {
-		try {
-			const list = fs.readdirSync(path.join(__dirname, `../../data/pastas/${373826006651240450}`));
+  async run (msg) {
+    try {
+      const list = fs.readdirSync(path.join(__dirname, `../../data/pastas/${373826006651240450}`));
 
-			if (list && list.length) {
-				for (const entry in list) {
-					list[entry] = `- \`${list[entry].slice(0, -4)}\``;
-				}
+      if (list && list.length) {
+        for (const entry in list) {
+          list[entry] = `- \`${list[entry].slice(0, -4)}\``;
+        }
                 
-				const messages = [],
-					splitTotal = splitMessage(list.join('\n'));
+        const messages = [],
+          splitTotal = splitMessage(list.join('\n'));
                     
-				for (const part in splitTotal) {
-					messages.push(await msg.embed({
-						'title': 'Copypastass available on this server',
-						'description': splitTotal[part],
-						'color': msg.guild.me.displayColor
-					}));
-				}
+        for (const part in splitTotal) {
+          messages.push(await msg.embed({
+            'title': 'Copypastass available on this server',
+            'description': splitTotal[part],
+            'color': msg.guild.me.displayColor
+          }));
+        }
                 
-				deleteCommandMessages(msg, this.client);
+        deleteCommandMessages(msg, this.client);
 
-				return messages;
-			}
-		} catch (err) {
-			console.error(`	 ${stripIndents `An error occured on the CopypastaList command!
+        return messages;
+      }
+    } catch (err) {
+      console.error(`	 ${stripIndents `An error occured on the CopypastaList command!
 			Server: ${msg.guild.name} (${msg.guild.id})
 			Author: ${msg.author.tag} (${msg.author.id})
 			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
 			Error Message:`} ${err}`);
-		}
+    }
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(`no copypastas found for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd\`!`);
-	}
+    return msg.reply(`no copypastas found for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd\`!`);
+  }
 };

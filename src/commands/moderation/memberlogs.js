@@ -35,55 +35,55 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class memberlogsCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'memberlogs',
-			'memberName': 'memberlogs',
-			'group': 'moderation',
-			'aliases': ['tml', 'togglemember'],
-			'description': 'Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel',
-			'format': 'Enable|Disable',
-			'examples': ['memberlogs enable'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'option',
-					'prompt': 'Enable or disable memberlogs?',
-					'type': 'boolean',
-					'validate': (bool) => {
-						const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
+  constructor (client) {
+    super(client, {
+      'name': 'memberlogs',
+      'memberName': 'memberlogs',
+      'group': 'moderation',
+      'aliases': ['tml', 'togglemember'],
+      'description': 'Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel',
+      'format': 'Enable|Disable',
+      'examples': ['memberlogs enable'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'option',
+          'prompt': 'Enable or disable memberlogs?',
+          'type': 'boolean',
+          'validate': (bool) => {
+            const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 
-						if (validBools.includes(bool.toLowerCase())) {
-							return true;
-						}
+            if (validBools.includes(bool.toLowerCase())) {
+              return true;
+            }
 
-						return `Has to be one of ${validBools.join(', ')}`;
-					}
-				}
-			]
-		});
-	}
+            return `Has to be one of ${validBools.join(', ')}`;
+          }
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg, args) {
-		this.client.provider.set(msg.guild.id, 'memberlogs', args.option);
+  run (msg, args) {
+    this.client.provider.set(msg.guild.id, 'memberlogs', args.option);
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(oneLine `member logs have been
+    return msg.reply(oneLine `member logs have been
         ${args.option 
-		? 'enabled. Please ensure there is a channel named "member-logs" and that I have access to it!' 
-		: 'disabled. No need for a member-logs channel'}.`);
-	}
+    ? 'enabled. Please ensure there is a channel named "member-logs" and that I have access to it!' 
+    : 'disabled. No need for a member-logs channel'}.`);
+  }
 };

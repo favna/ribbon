@@ -35,58 +35,58 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class TwitchToggleCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'twitchtoggle',
-			'memberName': 'twitchtoggle',
-			'group': 'streamwatch',
-			'aliases': ['twitchon', 'twitchoff'],
-			'description': 'Configures whether Twitch Notifications are enabled',
-			'details': 'This is a killswitch for the entire module!',
-			'format': 'Enable|Disable',
-			'examples': ['twitchtoggle enable'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'option',
-					'prompt': 'Enable or disable modlogs?',
-					'type': 'boolean',
-					'validate': (bool) => {
-						const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
+  constructor (client) {
+    super(client, {
+      'name': 'twitchtoggle',
+      'memberName': 'twitchtoggle',
+      'group': 'streamwatch',
+      'aliases': ['twitchon', 'twitchoff'],
+      'description': 'Configures whether Twitch Notifications are enabled',
+      'details': 'This is a killswitch for the entire module!',
+      'format': 'Enable|Disable',
+      'examples': ['twitchtoggle enable'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'option',
+          'prompt': 'Enable or disable modlogs?',
+          'type': 'boolean',
+          'validate': (bool) => {
+            const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 
-						if (validBools.includes(bool.toLowerCase())) {
-							return true;
-						}
+            if (validBools.includes(bool.toLowerCase())) {
+              return true;
+            }
 
-						return `Has to be one of ${validBools.join(', ')}`;
-					}
-				}
-			]
-		});
-	}
+            return `Has to be one of ${validBools.join(', ')}`;
+          }
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg, args) {
-		this.client.provider.set(msg.guild.id, 'modlogs', args.option);
+  run (msg, args) {
+    this.client.provider.set(msg.guild.id, 'modlogs', args.option);
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(oneLine `Twitch Notifiers have been
+    return msg.reply(oneLine `Twitch Notifiers have been
     ${args.option 
-		? `enabled.
+    ? `enabled.
         Please make sure to set the output channel with \`${msg.guild.commandPrefix}twitchoutput\`
         and configure which users to monitor with \`${msg.guild.commandPrefix}twitchmonitors\` ` 
-		: 'disabled.'}.`);
-	}
+    : 'disabled.'}.`);
+  }
 };

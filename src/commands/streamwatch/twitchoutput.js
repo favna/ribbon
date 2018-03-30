@@ -35,42 +35,42 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class TwitchOutputCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'twitchoutput',
-			'memberName': 'twitchoutput',
-			'group': 'streamwatch',
-			'aliases': ['output', 'twitchout', 'twitchchannel'],
-			'description': 'Configures where Twitch Notifications are send to',
-			'format': 'ChannelID|ChannelName(partial or full)',
-			'examples': ['twitchoutput twitch'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'channel',
-					'prompt': 'What channel should I set for twitch notifications? (make sure to start with a # when going by name)',
-					'type': 'channel'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'twitchoutput',
+      'memberName': 'twitchoutput',
+      'group': 'streamwatch',
+      'aliases': ['output', 'twitchout', 'twitchchannel'],
+      'description': 'Configures where Twitch Notifications are send to',
+      'format': 'ChannelID|ChannelName(partial or full)',
+      'examples': ['twitchoutput twitch'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'channel',
+          'prompt': 'What channel should I set for twitch notifications? (make sure to start with a # when going by name)',
+          'type': 'channel'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg, args) {
-		this.client.provider.set(msg.guild.id, 'twitchchannel', args.channel.id);
-		deleteCommandMessages(msg, this.client);
+  run (msg, args) {
+    this.client.provider.set(msg.guild.id, 'twitchchannel', args.channel.id);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(oneLine `📹 the channel to use for the twitch notifications has been set to <#${args.channel.id}>`);
-	}
+    return msg.reply(oneLine `📹 the channel to use for the twitch notifications has been set to <#${args.channel.id}>`);
+  }
 };

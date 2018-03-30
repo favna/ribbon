@@ -35,42 +35,42 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class setModlogsCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'setmodlogs',
-			'memberName': 'setmodlogs',
-			'group': 'moderation',
-			'aliases': ['setmod'],
-			'description': 'Set the modlogs channel used for logging mod commands. Ensure to enable modlogs with the "modlogs" command.',
-			'format': 'ChannelID|ChannelName(partial or full)',
-			'examples': ['setmodlogs mod-logs'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'channel',
-					'prompt': 'What channel should I set for member logs? (make sure to start with a # when going by name)',
-					'type': 'channel'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'setmodlogs',
+      'memberName': 'setmodlogs',
+      'group': 'moderation',
+      'aliases': ['setmod'],
+      'description': 'Set the modlogs channel used for logging mod commands. Ensure to enable modlogs with the "modlogs" command.',
+      'format': 'ChannelID|ChannelName(partial or full)',
+      'examples': ['setmodlogs mod-logs'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'channel',
+          'prompt': 'What channel should I set for member logs? (make sure to start with a # when going by name)',
+          'type': 'channel'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg, args) {
-		this.client.provider.set(msg.guild.id, 'modlogchannel', args.channel.id);
-		deleteCommandMessages(msg, this.client);
+  run (msg, args) {
+    this.client.provider.set(msg.guild.id, 'modlogchannel', args.channel.id);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(oneLine `the channel to use for the moderation logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'modlogchannel')).name}`);
-	}
+    return msg.reply(oneLine `the channel to use for the moderation logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'modlogchannel')).name}`);
+  }
 };

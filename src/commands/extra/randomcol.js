@@ -33,70 +33,70 @@
  */
 
 const {Canvas} = require('canvas-constructor'), 
-	{MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	imgur = require('imgur'),
-	{stripIndents} = require('common-tags'), 
-	{deleteCommandMessages} = require('../../util.js');
+  {MessageEmbed} = require('discord.js'),
+  commando = require('discord.js-commando'),
+  imgur = require('imgur'),
+  {stripIndents} = require('common-tags'), 
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class RandomColCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'randomcol',
-			'memberName': 'randomcol',
-			'group': 'extra',
-			'aliases': ['randhex', 'rhex', 'randomcolor', 'randcol', 'randomhex'],
-			'description': 'Generate a random color',
-			'examples': ['randomcol'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'randomcol',
+      'memberName': 'randomcol',
+      'group': 'extra',
+      'aliases': ['randhex', 'rhex', 'randomcolor', 'randcol', 'randomhex'],
+      'description': 'Generate a random color',
+      'examples': ['randomcol'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	hextodec (color) {
-		return parseInt(color.replace('#', ''), 16);
-	}
+  hextodec (color) {
+    return parseInt(color.replace('#', ''), 16);
+  }
 
-	hextorgb (color) {
-		const result = (/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})(?:[a-f\d])*$/i).exec(color);
+  hextorgb (color) {
+    const result = (/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})(?:[a-f\d])*$/i).exec(color);
 
-		return {
-			'r': parseInt(result[1], 16),
-			'g': parseInt(result[2], 16),
-			'b': parseInt(result[3], 16)
-		};
-	}
+    return {
+      'r': parseInt(result[1], 16),
+      'g': parseInt(result[2], 16),
+      'b': parseInt(result[3], 16)
+    };
+  }
 
-	async run (msg) {
-		const embed = new MessageEmbed(),
-			hex = `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-			canv = new Canvas(80, 60) // eslint-disable-line sort-vars
-				.setColor(hex)
-				.addRect(0, 0, 100, 60)
-				.toBuffer();
+  async run (msg) {
+    const embed = new MessageEmbed(),
+      hex = `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+      canv = new Canvas(80, 60) // eslint-disable-line sort-vars
+        .setColor(hex)
+        .addRect(0, 0, 100, 60)
+        .toBuffer();
 
-		if (canv.toString('base64')) {
-			const upload = await imgur.uploadBase64(canv.toString('base64'));
+    if (canv.toString('base64')) {
+      const upload = await imgur.uploadBase64(canv.toString('base64'));
 
-			if (upload) {
-				embed
-					.setColor(hex)
-					.setThumbnail(upload.data.link)
-					.setDescription(stripIndents `**hex**: ${hex}
+      if (upload) {
+        embed
+          .setColor(hex)
+          .setThumbnail(upload.data.link)
+          .setDescription(stripIndents `**hex**: ${hex}
 				**dec**: ${this.hextodec(hex)}
 				**rgb**: rgb(${this.hextorgb(hex).r}, ${this.hextorgb(hex).g}, ${this.hextorgb(hex).b})`);
 
-				deleteCommandMessages(msg, this.client);
+        deleteCommandMessages(msg, this.client);
 
-				return msg.embed(embed);
-			}
+        return msg.embed(embed);
+      }
 
-			return msg.reply('⚠️ An error occured uploading the canvas to imgur.');
-		}
+      return msg.reply('⚠️ An error occured uploading the canvas to imgur.');
+    }
 
-		return msg.reply('⚠️ An error occured getting a base64 for the canvas.');
-	}
+    return msg.reply('⚠️ An error occured getting a base64 for the canvas.');
+  }
 };

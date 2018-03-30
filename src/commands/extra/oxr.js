@@ -39,94 +39,94 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	currencySymbol = require('currency-symbol-map'),
-	fx = require('money'),
-	moment = require('moment'),
-	request = require('snekfetch'),
-	{deleteCommandMessages} = require('../../util.js'),
-	{oxrAppID} = require('../../auth.json'),
-	{stripIndents} = require('common-tags');
+  commando = require('discord.js-commando'),
+  currencySymbol = require('currency-symbol-map'),
+  fx = require('money'),
+  moment = require('moment'),
+  request = require('snekfetch'),
+  {deleteCommandMessages} = require('../../util.js'),
+  {oxrAppID} = require('../../auth.json'),
+  {stripIndents} = require('common-tags');
 
 module.exports = class moneyCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'oxr',
-			'memberName': 'oxr',
-			'group': 'extra',
-			'aliases': ['money', 'rate', 'convert'],
-			'description': 'Currency converter - makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
-			'format': 'CurrencyAmount FirstValuta SecondValuta',
-			'examples': ['convert 50 USD EUR'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'value',
-					'prompt': 'Amount of money?',
-					'type': 'string'
-				},
-				{
-					'key': 'curOne',
-					'prompt': 'What is the valuta you want to convert **from**?',
-					'type': 'string'
-				},
-				{
-					'key': 'curTwo',
-					'prompt': 'What is the valuta you want to convert **to**?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'oxr',
+      'memberName': 'oxr',
+      'group': 'extra',
+      'aliases': ['money', 'rate', 'convert'],
+      'description': 'Currency converter - makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
+      'format': 'CurrencyAmount FirstValuta SecondValuta',
+      'examples': ['convert 50 USD EUR'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'value',
+          'prompt': 'Amount of money?',
+          'type': 'string'
+        },
+        {
+          'key': 'curOne',
+          'prompt': 'What is the valuta you want to convert **from**?',
+          'type': 'string'
+        },
+        {
+          'key': 'curTwo',
+          'prompt': 'What is the valuta you want to convert **to**?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
 
-	converter (value, curOne, curTwo) {
-		return fx.convert(value, {
-			'from': curOne,
-			'to': curTwo
-		});
-	}
+  converter (value, curOne, curTwo) {
+    return fx.convert(value, {
+      'from': curOne,
+      'to': curTwo
+    });
+  }
 
-	replaceAll (string, pattern, replacement) {
-		return string.replace(new RegExp(pattern, 'g'), replacement);
-	}
-	/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
+  replaceAll (string, pattern, replacement) {
+    return string.replace(new RegExp(pattern, 'g'), replacement);
+  }
+  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 
-	async run (msg, args) {
-		const rates = await request.get('https://openexchangerates.org/api/latest.json')
-			.query('app_id', oxrAppID)
-			.query('prettyprint', false)
-			.query('show_alternative', true);
+  async run (msg, args) {
+    const rates = await request.get('https://openexchangerates.org/api/latest.json')
+      .query('app_id', oxrAppID)
+      .query('prettyprint', false)
+      .query('show_alternative', true);
 
-		if (rates.ok) {
-			fx.rates = rates.body.rates;
-			fx.base = rates.body.base;
+    if (rates.ok) {
+      fx.rates = rates.body.rates;
+      fx.base = rates.body.base;
 
-			const convertedMoney = this.converter(this.replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo),
-				oxrEmbed = new MessageEmbed();
+      const convertedMoney = this.converter(this.replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo),
+        oxrEmbed = new MessageEmbed();
 
-			oxrEmbed
-				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-				.setAuthor('🌐 Currency Converter')
-				.addField(`:flag_${args.curOne.slice(0, 2).toLowerCase()}: Money in ${args.curOne}`, `${currencySymbol(args.curOne)}${this.replaceAll(args.value, /,/, '.')}`, true)
-				.addField(`:flag_${args.curTwo.slice(0, 2).toLowerCase()}: Money in ${args.curTwo}`, `${currencySymbol(args.curTwo)}${convertedMoney}`, true)
-				.setFooter(`Converted on ${moment.unix(rates.body.timestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+      oxrEmbed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setAuthor('🌐 Currency Converter')
+        .addField(`:flag_${args.curOne.slice(0, 2).toLowerCase()}: Money in ${args.curOne}`, `${currencySymbol(args.curOne)}${this.replaceAll(args.value, /,/, '.')}`, true)
+        .addField(`:flag_${args.curTwo.slice(0, 2).toLowerCase()}: Money in ${args.curTwo}`, `${currencySymbol(args.curTwo)}${convertedMoney}`, true)
+        .setFooter(`Converted on ${moment.unix(rates.body.timestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(oxrEmbed);
-		}
+      return msg.embed(oxrEmbed);
+    }
 
-		console.error(`${stripIndents `An error occured on the oxr command!
+    console.error(`${stripIndents `An error occured on the oxr command!
 		Server: ${msg.guild.name} (${msg.guild.id})
 		Author: ${msg.author.tag} (${msg.author.id})
 		Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
 		Error Message:`} ${rates.statusText}`);
 
-		return msg.reply('⚠️ an error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
-	}
+    return msg.reply('⚠️ an error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
+  }
 };

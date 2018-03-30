@@ -36,57 +36,57 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	Pornsearch = require('pornsearch'),
-	commando = require('discord.js-commando'),
-	{deleteCommandMessages} = require('../../util.js');
+  Pornsearch = require('pornsearch'),
+  commando = require('discord.js-commando'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class pornvidsCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'pornvids',
-			'memberName': 'pornvids',
-			'group': 'nsfw',
-			'aliases': ['porn', 'nsfwvids'],
-			'description': 'Search porn videos',
-			'format': 'NSFWToLookUp',
-			'examples': ['pornvids babe'],
-			'guildOnly': false,
-			'nsfw': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'pornInput',
-					'prompt': 'What pornography do you want to find?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'pornvids',
+      'memberName': 'pornvids',
+      'group': 'nsfw',
+      'aliases': ['porn', 'nsfwvids'],
+      'description': 'Search porn videos',
+      'format': 'NSFWToLookUp',
+      'examples': ['pornvids babe'],
+      'guildOnly': false,
+      'nsfw': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'pornInput',
+          'prompt': 'What pornography do you want to find?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
-		const search = new Pornsearch(args.pornInput),
-			vids = await search.videos();
+  async run (msg, args) {
+    const search = new Pornsearch(args.pornInput),
+      vids = await search.videos();
 
-		if (vids) {
-			const pornEmbed = new MessageEmbed(),
-				random = Math.floor(Math.random() * vids.length);
+    if (vids) {
+      const pornEmbed = new MessageEmbed(),
+        random = Math.floor(Math.random() * vids.length);
 
-			pornEmbed
-				.setURL(vids[random].url)
-				.setTitle(vids[random].title)
-				.setImage(vids[random].thumb)
-				.setColor('#FFB6C1')
-				.addField('Porn video URL', `[Click Here](${vids[random].url})`, true)
-				.addField('Porn video duration', vids[random].duration !== '' ? vids[random].duration : 'unknown', true);
+      pornEmbed
+        .setURL(vids[random].url)
+        .setTitle(vids[random].title)
+        .setImage(vids[random].thumb)
+        .setColor('#FFB6C1')
+        .addField('Porn video URL', `[Click Here](${vids[random].url})`, true)
+        .addField('Porn video duration', vids[random].duration !== '' ? vids[random].duration : 'unknown', true);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(pornEmbed, vids[random].url);
-		}
+      return msg.embed(pornEmbed, vids[random].url);
+    }
 		
-		return msg.reply('nothing found for that input');
-	}
+    return msg.reply('nothing found for that input');
+  }
 };

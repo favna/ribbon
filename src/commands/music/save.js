@@ -33,52 +33,52 @@
  */
 
 const commando = require('discord.js-commando'),
-	path = require('path'),
-	Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
-	{MessageEmbed} = require('discord.js'),
-	{deleteCommandMessages} = require('../../util.js'),
-	{oneLine, stripIndents} = require('common-tags');
+  path = require('path'),
+  Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages} = require('../../util.js'),
+  {oneLine, stripIndents} = require('common-tags');
 
 module.exports = class saveQueueCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'save',
-			'memberName': 'save',
-			'group': 'music',
-			'aliases': ['save-songs', 'save-song-list', 'ss', 'savequeue'],
-			'description': 'Saves the queued songs for later',
-			'examples': ['save'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
+  constructor (client) {
+    super(client, {
+      'name': 'save',
+      'memberName': 'save',
+      'group': 'music',
+      'aliases': ['save-songs', 'save-song-list', 'ss', 'savequeue'],
+      'description': 'Saves the queued songs for later',
+      'examples': ['save'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
 
-	}
+  }
 
-	run (msg) {
-		const queue = this.queue.get(msg.guild.id);
+  run (msg) {
+    const queue = this.queue.get(msg.guild.id);
 
-		if (!queue) {
-			deleteCommandMessages(msg, this.client);
+    if (!queue) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('there isn\'t any music playing right now. You should get on that.');
-		}
-		const currentSong = queue.songs[0], // eslint-disable-line one-var
-			currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0,
-			embed = new MessageEmbed(),
-			paginated = commando.util.paginate(queue.songs, 1, Math.floor(10));
+      return msg.reply('there isn\'t any music playing right now. You should get on that.');
+    }
+    const currentSong = queue.songs[0], // eslint-disable-line one-var
+      currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0,
+      embed = new MessageEmbed(),
+      paginated = commando.util.paginate(queue.songs, 1, Math.floor(10));
 
-		embed
-			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({'format': 'png'}))
-			.setImage(currentSong.thumbnail)
-			.setDescription(stripIndents `
+    embed
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({'format': 'png'}))
+      .setImage(currentSong.thumbnail)
+      .setDescription(stripIndents `
             __**First 10 songs in the queue**__
             ${paginated.items.map(song => `**-** ${!isNaN(song.id) 
-		? `${song.name} (${song.lengthString})` 
-		: `[${song.name}](${`https://www.youtube.com/watch?v=${song.id}`})`} (${song.lengthString})`).join('\n')}
+    ? `${song.name} (${song.lengthString})` 
+    : `[${song.name}](${`https://www.youtube.com/watch?v=${song.id}`})`} (${song.lengthString})`).join('\n')}
             ${paginated.maxPage > 1 ? `\nUse ${msg.usage()} to view a specific page.\n` : ''}
 
             **Now playing:** ${!isNaN(currentSong.id) ? `${currentSong.name}` : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`}
@@ -89,18 +89,18 @@ module.exports = class saveQueueCommand extends commando.Command {
                 (${currentSong.timeLeft(currentTime)} left)
             `}`);
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		msg.reply('✔ Check your inbox!');
+    msg.reply('✔ Check your inbox!');
 
-		return msg.direct('Your saved queue', {embed});
-	}
+    return msg.direct('Your saved queue', {embed});
+  }
 
-	get queue () {
-		if (!this._queue) {
-			this._queue = this.client.registry.resolveCommand('music:play').queue;
-		}
+  get queue () {
+    if (!this._queue) {
+      this._queue = this.client.registry.resolveCommand('music:play').queue;
+    }
 
-		return this._queue;
-	}
+    return this._queue;
+  }
 };

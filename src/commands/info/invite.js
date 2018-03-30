@@ -33,42 +33,42 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class inviteCommnad extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'invite',
-			'memberName': 'invite',
-			'group': 'info',
-			'aliases': ['inv', 'links', 'shill'],
-			'description': 'Gives you invitation links',
-			'examples': ['invite'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'invite',
+      'memberName': 'invite',
+      'group': 'info',
+      'aliases': ['inv', 'links', 'shill'],
+      'description': 'Gives you invitation links',
+      'examples': ['invite'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	run (msg) {
-		const inviteEmbed = new MessageEmbed();
+  run (msg) {
+    const inviteEmbed = new MessageEmbed();
 
-		inviteEmbed
-			.setAuthor('Ribbon Links')
-			.setThumbnail('https://favna.xyz/images/appIcons/ribbon.png')
-			.setURL('https://favna.xyz/ribbon')
-			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p8)\n' +
+    inviteEmbed
+      .setAuthor('Ribbon Links')
+      .setThumbnail('https://favna.xyz/images/appIcons/ribbon.png')
+      .setURL('https://favna.xyz/ribbon')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p8)\n' +
                 '[Join the Support Server](https://discord.gg/zdt5yQt)\n' +
                 '[Website](https://favna.xyz/ribbon)\n' +
                 '[GitHub](https://github.com/Favna/Ribbon)\n' +
                 '[Wiki](https://github.com/Favna/Ribbon/wiki)');
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 		
-		return msg.embed(inviteEmbed, 'Find information on the bot here: https://favna.xyz/ribbon');
-	}
+    return msg.embed(inviteEmbed, 'Find information on the bot here: https://favna.xyz/ribbon');
+  }
 };

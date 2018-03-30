@@ -35,52 +35,52 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class defaultroleCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'defaultrole',
-			'memberName': 'defaultrole',
-			'group': 'moderation',
-			'aliases': ['defrole'],
-			'description': 'Set a default role the bot will assign to any members joining after this command',
-			'details': 'Use "delete" to remove the default role',
-			'format': 'RoleID|RoleName(partial or full)',
-			'examples': ['defaultrole Member'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'role',
-					'prompt': 'Which role would you like to set as the default role?',
-					'type': 'role',
-					'default': 'delete'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'defaultrole',
+      'memberName': 'defaultrole',
+      'group': 'moderation',
+      'aliases': ['defrole'],
+      'description': 'Set a default role the bot will assign to any members joining after this command',
+      'details': 'Use "delete" to remove the default role',
+      'format': 'RoleID|RoleName(partial or full)',
+      'examples': ['defaultrole Member'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'role',
+          'prompt': 'Which role would you like to set as the default role?',
+          'type': 'role',
+          'default': 'delete'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg, args) {
-		if (args.role === 'delete') {
-			this.client.provider.remove(msg.guild.id, 'defaultRole');
-			deleteCommandMessages(msg, this.client);
+  run (msg, args) {
+    if (args.role === 'delete') {
+      this.client.provider.remove(msg.guild.id, 'defaultRole');
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('🔒 Default role has been removed');
-		}
+      return msg.reply('🔒 Default role has been removed');
+    }
 
-		this.client.provider.set(msg.guild.id, 'defaultRole', args.role.id);
-		deleteCommandMessages(msg, this.client);
+    this.client.provider.set(msg.guild.id, 'defaultRole', args.role.id);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(oneLine `🔓 \`${args.role.name}\` has been set as the default role for this server and will now be granted to all people joining.
+    return msg.reply(oneLine `🔓 \`${args.role.name}\` has been set as the default role for this server and will now be granted to all people joining.
         Use \`${msg.guild.commandPrefix}defaultrole delete\` to remove this setting.`);
-	}
+  }
 };

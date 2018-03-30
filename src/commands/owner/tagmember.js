@@ -37,27 +37,27 @@
 const commando = require('discord.js-commando');
 
 module.exports = class tagmemberCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'tagmember',
-			'memberName': 'tagmember',
-			'group': 'owner',
-			'description': 'Tag a member',
-			'format': 'MemberID|MemberName(partial or full)',
-			'examples': ['tagmember Favna'],
-			'guildOnly': false,
-			'ownerOnly': true,
-			'args': [
-				{
-					'key': 'member',
-					'prompt': 'What user would you like to snoop on?',
-					'type': 'member'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'tagmember',
+      'memberName': 'tagmember',
+      'group': 'owner',
+      'description': 'Tag a member',
+      'format': 'MemberID|MemberName(partial or full)',
+      'examples': ['tagmember Favna'],
+      'guildOnly': false,
+      'ownerOnly': true,
+      'args': [
+        {
+          'key': 'member',
+          'prompt': 'What user would you like to snoop on?',
+          'type': 'member'
+        }
+      ]
+    });
+  }
 
-	run (msg, args) {
-		msg.say(`^^^^ <@${args.member.id}> ^^^^`);
-	}
+  run (msg, args) {
+    msg.say(`^^^^ <@${args.member.id}> ^^^^`);
+  }
 };

@@ -35,57 +35,57 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class modlogsCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'modlogs',
-			'memberName': 'modlogs',
-			'group': 'moderation',
-			'aliases': ['togglemod'],
-			'description': 'Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel',
-			'format': 'Enable|Disable',
-			'examples': ['modlogs {option}', 'modlogs enable'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'option',
-					'prompt': 'Enable or disable modlogs?',
-					'type': 'boolean',
-					'validate': (bool) => {
-						const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
+  constructor (client) {
+    super(client, {
+      'name': 'modlogs',
+      'memberName': 'modlogs',
+      'group': 'moderation',
+      'aliases': ['togglemod'],
+      'description': 'Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel',
+      'format': 'Enable|Disable',
+      'examples': ['modlogs {option}', 'modlogs enable'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'option',
+          'prompt': 'Enable or disable modlogs?',
+          'type': 'boolean',
+          'validate': (bool) => {
+            const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 
-						if (validBools.includes(bool.toLowerCase())) {
-							return true;
-						}
+            if (validBools.includes(bool.toLowerCase())) {
+              return true;
+            }
 
-						return `Has to be one of ${validBools.join(', ')}`;
-					}
-				}
-			]
-		});
-	}
+            return `Has to be one of ${validBools.join(', ')}`;
+          }
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg, args) {
-		this.client.provider.set(msg.guild.id, 'modlogs', args.option);
+  run (msg, args) {
+    this.client.provider.set(msg.guild.id, 'modlogs', args.option);
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(oneLine `mod logs have been
+    return msg.reply(oneLine `mod logs have been
     ${args.option 
-		? `enabled. Please ensure there is a channel named ${this.client.provider.get(msg.guild.id, 'modlogchannel') 
-			? msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'modlogchannel')).name 
-			: 'mod-logs'} and that I have access to it!` 
-		: 'disabled. No need for a mod command logging channel'}.`);
-	}
+    ? `enabled. Please ensure there is a channel named ${this.client.provider.get(msg.guild.id, 'modlogchannel') 
+      ? msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'modlogchannel')).name 
+      : 'mod-logs'} and that I have access to it!` 
+    : 'disabled. No need for a mod command logging channel'}.`);
+  }
 };

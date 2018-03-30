@@ -35,94 +35,94 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	igdbapi = require('igdb-api-node').default,
-	moment = require('moment'),
-	{deleteCommandMessages} = require('../../util.js'),
-	{igdbAPIKey} = require('../../auth.json');
+  commando = require('discord.js-commando'),
+  igdbapi = require('igdb-api-node').default,
+  moment = require('moment'),
+  {deleteCommandMessages} = require('../../util.js'),
+  {igdbAPIKey} = require('../../auth.json');
 
 module.exports = class gameCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'games',
-			'memberName': 'games',
-			'group': 'searches',
-			'aliases': ['game', 'moby', 'igdb'],
-			'description': 'Finds info on a game on IGDB (IndieGamesDoneBad)',
-			'format': 'GameName',
-			'examples': ['games {gameName}', 'games Tales of Berseria'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'game',
-					'prompt': 'Which game do you want to look up on IGDB?',
-					'type': 'string',
-					'label': 'Game to look up'
-				}
-			]
+  constructor (client) {
+    super(client, {
+      'name': 'games',
+      'memberName': 'games',
+      'group': 'searches',
+      'aliases': ['game', 'moby', 'igdb'],
+      'description': 'Finds info on a game on IGDB (IndieGamesDoneBad)',
+      'format': 'GameName',
+      'examples': ['games {gameName}', 'games Tales of Berseria'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'game',
+          'prompt': 'Which game do you want to look up on IGDB?',
+          'type': 'string',
+          'label': 'Game to look up'
+        }
+      ]
 
-		});
-	}
+    });
+  }
 
-	extractNames (arr) {
-		let res = '';
+  extractNames (arr) {
+    let res = '';
 
-		for (let i = 0; i < arr.length; i += 1) {
-			if (i !== arr.length - 1) {
-				res += `${arr[i].name}, `;
-			} else {
-				res += `${arr[i].name}`;
-			}
-		}
+    for (let i = 0; i < arr.length; i += 1) {
+      if (i !== arr.length - 1) {
+        res += `${arr[i].name}, `;
+      } else {
+        res += `${arr[i].name}`;
+      }
+    }
 
-		return res;
-	}
+    return res;
+  }
 
-	async run (msg, args) {
-		/* eslint-disable sort-vars*/
-		const gameEmbed = new MessageEmbed(),
-			igdb = igdbapi(igdbAPIKey),
-			gameInfo = await igdb.games({
-				'search': args.game,
-				'fields': ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
-				'limit': 1,
-				'offset': 0
-			}),
-			coverImg = await gameInfo.body[0].cover.url.includes('http') ? gameInfo.body[0].cover.url : `https:${gameInfo.body[0].cover.url}`,
-			developerInfo = await igdb.companies({
-				'ids': gameInfo.body[0].developers,
-				'fields': ['name']
-			}),
-			genreInfo = await igdb.genres({
-				'ids': gameInfo.body[0].genres,
-				'fields': ['name']
-			}),
-			platformInfo = await igdb.platforms({
-				'ids': gameInfo.body[0].platforms,
-				'fields': ['name']
-			}),
-			releaseDate = moment(gameInfo.body[0].release_dates[0].date).format('MMMM Do YYYY');
-		/* eslint-enable sort-vars*/
+  async run (msg, args) {
+    /* eslint-disable sort-vars*/
+    const gameEmbed = new MessageEmbed(),
+      igdb = igdbapi(igdbAPIKey),
+      gameInfo = await igdb.games({
+        'search': args.game,
+        'fields': ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
+        'limit': 1,
+        'offset': 0
+      }),
+      coverImg = await gameInfo.body[0].cover.url.includes('http') ? gameInfo.body[0].cover.url : `https:${gameInfo.body[0].cover.url}`,
+      developerInfo = await igdb.companies({
+        'ids': gameInfo.body[0].developers,
+        'fields': ['name']
+      }),
+      genreInfo = await igdb.genres({
+        'ids': gameInfo.body[0].genres,
+        'fields': ['name']
+      }),
+      platformInfo = await igdb.platforms({
+        'ids': gameInfo.body[0].platforms,
+        'fields': ['name']
+      }),
+      releaseDate = moment(gameInfo.body[0].release_dates[0].date).format('MMMM Do YYYY');
+    /* eslint-enable sort-vars*/
 
-		gameEmbed
-			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.setTitle(gameInfo.body[0].name)
-			.setURL(gameInfo.body[0].url)
-			.setThumbnail(coverImg)
-			.addField('User Score', Math.round(gameInfo.body[0].rating * 10) / 10, true)
-			.addField(`${gameInfo.body[0].pegi ? 'PEGI' : 'ESRB'} rating`, gameInfo.body[0].pegi ? gameInfo.body[0].pegi.rating : gameInfo.body[0].esrb.rating, true)
-			.addField('Release Date', releaseDate, true)
-			.addField('Genres', this.extractNames(genreInfo.body), true)
-			.addField('Developer', developerInfo.body[0].name, true)
-			.addField('Platforms', this.extractNames(platformInfo.body), true)
-			.setDescription(gameInfo.body[0].summary);
+    gameEmbed
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setTitle(gameInfo.body[0].name)
+      .setURL(gameInfo.body[0].url)
+      .setThumbnail(coverImg)
+      .addField('User Score', Math.round(gameInfo.body[0].rating * 10) / 10, true)
+      .addField(`${gameInfo.body[0].pegi ? 'PEGI' : 'ESRB'} rating`, gameInfo.body[0].pegi ? gameInfo.body[0].pegi.rating : gameInfo.body[0].esrb.rating, true)
+      .addField('Release Date', releaseDate, true)
+      .addField('Genres', this.extractNames(genreInfo.body), true)
+      .addField('Developer', developerInfo.body[0].name, true)
+      .addField('Platforms', this.extractNames(platformInfo.body), true)
+      .setDescription(gameInfo.body[0].summary);
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.embed(gameEmbed);
-	}
+    return msg.embed(gameEmbed);
+  }
 };

@@ -34,46 +34,46 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine, stripIndents} = require('common-tags');
+  {oneLine, stripIndents} = require('common-tags');
 
 module.exports = class favnaCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'favna',
-			'memberName': 'favna',
-			'group': 'custom',
-			'description': 'Favna is my father',
-			'details': 'Custom commands can be made for your server too! Just join the support server (use the `stats` command) and request the command.',
-			'guildOnly': true,
-			'patterns': [/^\.favna$/im],
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'favna',
+      'memberName': 'favna',
+      'group': 'custom',
+      'description': 'Favna is my father',
+      'details': 'Custom commands can be made for your server too! Just join the support server (use the `stats` command) and request the command.',
+      'guildOnly': true,
+      'patterns': [/^\.favna$/im],
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	hasPermission (msg) {
-		if (this.client.isOwner(msg.author)) {
-			return true;
-		}
-		if (msg.guild.id !== '373826006651240450') {
-			return stripIndents `That command can only be used in the Chaos Gamez server, sorry 😦
+  hasPermission (msg) {
+    if (this.client.isOwner(msg.author)) {
+      return true;
+    }
+    if (msg.guild.id !== '373826006651240450') {
+      return stripIndents `That command can only be used in the Chaos Gamez server, sorry 😦
 			Want your own server specific custom commands? Join the support server (link in the \`${msg.guild.commandPrefix}stats\` command) and request the command.`;
-		}
+    }
 
-		return true;
-	}
+    return true;
+  }
 
-	run (msg) {
-		msg.delete();
-		msg.embed({
-			'image': {'url': 'https://favna.s-ul.eu/uIvAg3hi.gif'},
-			'color': msg.guild ? msg.guild.me.displayColor : 10610610,
-			'description': oneLine `Technically speaking my father, but to you he is your supreme leader and you will submit to him 
+  run (msg) {
+    msg.delete();
+    msg.embed({
+      'image': {'url': 'https://favna.s-ul.eu/uIvAg3hi.gif'},
+      'color': msg.guild ? msg.guild.me.displayColor : 10610610,
+      'description': oneLine `Technically speaking my father, but to you he is your supreme leader and you will submit to him 
             or I will infect every single human being you have ever met with a virus so terrible their lungs and intestines
              will instantly explode from their chests causing a gorey, bloody mess all over the floor and you 
              will be the only person held responsible for the death of hundreths if not millions of people.`
-		});
-	}
+    });
+  }
 };

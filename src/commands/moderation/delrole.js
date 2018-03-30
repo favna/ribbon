@@ -36,69 +36,69 @@
  */
 
 const {DiscordAPIError} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	moment = require('moment'), 
-	{deleteCommandMessages} = require('../../util.js'), 
-	{oneLine, stripIndents} = require('common-tags');
+  commando = require('discord.js-commando'),
+  moment = require('moment'), 
+  {deleteCommandMessages} = require('../../util.js'), 
+  {oneLine, stripIndents} = require('common-tags');
 
 module.exports = class delRoleCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'delrole',
-			'memberName': 'delrole',
-			'group': 'moderation',
-			'aliases': ['deleterole', 'dr', 'remrole', 'removerole'],
-			'description': 'Deletes a role from a member',
-			'format': 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
-			'examples': ['delrole {member} {role}'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'member',
-					'prompt': 'Which member should I remove a role from?',
-					'type': 'member'
-				},
-				{
-					'key': 'role',
-					'prompt': 'What role should I remove from that member?',
-					'type': 'role'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'delrole',
+      'memberName': 'delrole',
+      'group': 'moderation',
+      'aliases': ['deleterole', 'dr', 'remrole', 'removerole'],
+      'description': 'Deletes a role from a member',
+      'format': 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
+      'examples': ['delrole {member} {role}'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'member',
+          'prompt': 'Which member should I remove a role from?',
+          'type': 'member'
+        },
+        {
+          'key': 'role',
+          'prompt': 'What role should I remove from that member?',
+          'type': 'role'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
+  }
 
-	async run (msg, args) {
-		try {
-			const roleAdd = await args.member.roles.remove(args.role);
+  async run (msg, args) {
+    try {
+      const roleAdd = await args.member.roles.remove(args.role);
 
-			if (roleAdd) {
-				deleteCommandMessages(msg, this.client);
+      if (roleAdd) {
+        deleteCommandMessages(msg, this.client);
 
-				return msg.reply(`\`${args.role.name}\` remove from \`${args.member.displayName}\``);
-			}
-		} catch (e) {
-			if (e instanceof DiscordAPIError) {
-				console.error(`	 ${stripIndents `An error occured on the DeleteRole command!
+        return msg.reply(`\`${args.role.name}\` remove from \`${args.member.displayName}\``);
+      }
+    } catch (e) {
+      if (e instanceof DiscordAPIError) {
+        console.error(`	 ${stripIndents `An error occured on the DeleteRole command!
 				Server: ${msg.guild.name} (${msg.guild.id})
 				Author: ${msg.author.tag} (${msg.author.id})
 				Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
 				Role: ${args.role.name} (${args.role.id})
 				Error Message:`} ${e}`);
-			} else {
-				console.error('Unknown error occured in DeleteRole command');
-			}
-		}
-		deleteCommandMessages(msg, this.client);
+      } else {
+        console.error('Unknown error occured in DeleteRole command');
+      }
+    }
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(oneLine `an error occured removing the role \`${args.role.name}\` from \`${args.member.displayName}\`.
+    return msg.reply(oneLine `an error occured removing the role \`${args.role.name}\` from \`${args.member.displayName}\`.
 		Do I have \`Manage Roles\` permission and am I hierarchly high enough for modifying their roles?`);
-	}
+  }
 };

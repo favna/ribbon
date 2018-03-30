@@ -92,9 +92,7 @@ module.exports = {
         "id-blacklist": "error",
         "id-length": "off",
         "id-match": "error",
-        "indent": ["error", "tab", {
-            "SwitchCase": 1
-        }],
+        "indent": ["error", 2],
         "indent-legacy": "off",
         "init-declarations": "error",
         "jsx-quotes": "error",

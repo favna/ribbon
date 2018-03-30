@@ -33,38 +33,38 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	coin = require('flipacoin'),
-	commando = require('discord.js-commando'),
-	{deleteCommandMessages} = require('../../util.js');
+  coin = require('flipacoin'),
+  commando = require('discord.js-commando'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class coinCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'coin',
-			'memberName': 'coin',
-			'group': 'games',
-			'aliases': ['flip', 'coinflip'],
-			'description': 'Flips a coin',
-			'examples': ['coin'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'coin',
+      'memberName': 'coin',
+      'group': 'games',
+      'aliases': ['flip', 'coinflip'],
+      'description': 'Flips a coin',
+      'examples': ['coin'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	run (msg) {
-		const coinEmbed = new MessageEmbed(),
-			res = coin();
+  run (msg) {
+    const coinEmbed = new MessageEmbed(),
+      res = coin();
 
-		coinEmbed
-			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.setImage(res === 'head' ? 'https://favna.s-ul.eu/8ZKmpiKO.png' : 'https://favna.s-ul.eu/NTsDbSUo.png')
-			.setTitle(`Flipped ${res}s`);
+    coinEmbed
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setImage(res === 'head' ? 'https://favna.s-ul.eu/8ZKmpiKO.png' : 'https://favna.s-ul.eu/NTsDbSUo.png')
+      .setTitle(`Flipped ${res}s`);
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		msg.embed(coinEmbed);
-	}
+    msg.embed(coinEmbed);
+  }
 };
