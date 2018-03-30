@@ -57,7 +57,7 @@ module.exports = class TwitchToggleCommand extends commando.Command {
       'args': [
         {
           'key': 'option',
-          'prompt': 'Enable or disable modlogs?',
+          'prompt': 'Enable or disable twitchtoggles?',
           'type': 'boolean',
           'validate': (bool) => {
             const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
@@ -78,7 +78,7 @@ module.exports = class TwitchToggleCommand extends commando.Command {
   }
 
   run (msg, args) {
-    this.client.provider.set(msg.guild.id, 'modlogs', args.option);
+    this.client.provider.set(msg.guild.id, 'twitchnotifiers', args.option);
 
     deleteCommandMessages(msg, this.client);
 

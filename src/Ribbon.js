@@ -165,7 +165,7 @@ class Ribbon {
   onPresenceUpdate () {
     return async (oldMember, newMember) => {
       if (this.client.provider.get(newMember.guild, 'twitchmonitors', []).includes(newMember.id)) {
-        if (this.client.provider.get(newMember.guild, 'twitchnotifiersenabled', false)) {
+        if (this.client.provider.get(newMember.guild, 'twitchnotifiers', false)) {
           const curDisplayName = newMember.displayName,
             curGuild = newMember.guild,
             curUser = newMember.user;
