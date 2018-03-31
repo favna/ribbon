@@ -407,10 +407,10 @@ Adds a new copypasta for your server
 **Returns**: <code>Message</code> - Confirmation the copypasta was added  
 **Category**: extra  
 
-| Param | Type |
-| --- | --- |
-| PasteName | <code>string</code> | 
-| PastaContent | <code>string</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| PasteName | <code>string</code> | Name for the new pasta |
+| PastaContent | <code>string</code> | Content for the new pasta |
 
 **Example**  
 ```js
@@ -452,11 +452,11 @@ For a full list of supported currencies see [this url](https://docs.openexchange
 **Returns**: <code>MessageEmbed</code> - Input and output currency's and the amount your input is worth in both  
 **Category**: extra  
 
-| Param | Type |
-| --- | --- |
-| MoneyAmount | <code>number</code> | 
-| OriginCurrency | <code>string</code> | 
-| TargetCurrency | <code>string</code> | 
+| Param | Type | Description |
+| --- | --- | --- |
+| MoneyAmount | <code>number</code> | Amount of money to convert |
+| OriginCurrency | <code>string</code> | Currency to convert from |
+| TargetCurrency | <code>string</code> | Currency to convert to |
 
 **Example**  
 ```js
@@ -1291,6 +1291,11 @@ You need to be in a voice channel before you can use this command
 
 **Returns**: <code>Message</code> - Confirmation the song was skipped  
 **Category**: music  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [force] | <code>string</code> | Force the skip if you are the requester or a server moderator |
+
 **Example**  
 ```js
 skip  

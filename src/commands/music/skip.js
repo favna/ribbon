@@ -34,6 +34,7 @@
  * @example skip  
  * -OR-
  * skip force
+ * @param {string} [force] Force the skip if you are the requester or a server moderator
  * @returns {Message} Confirmation the song was skipped
  */
 

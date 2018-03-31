@@ -30,8 +30,8 @@
  * @category extra
  * @name copypastaadd
  * @example copypastaadd lipsum Lorem ipsum dolor sit amet. 
- * @param {string} PasteName
- * @param {string} PastaContent
+ * @param {string} PasteName Name for the new pasta
+ * @param {string} PastaContent Content for the new pasta
  * @returns {Message} Confirmation the copypasta was added
  */
 
