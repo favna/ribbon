@@ -12,7 +12,7 @@ Displays a list of available commands, or detailed information for a specified c
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [all]|[command] | <code>string</code> | use `all` to view all regardless of permissions or specify a command to get additional info on that command |
+| [all] \| [command] | <code>string</code> | use `all` to view all regardless of permissions or specify a command to get additional info on that command |
 
 **Example**  
 ```js
