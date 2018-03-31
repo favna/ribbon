@@ -37,63 +37,63 @@
  */
 
 const commando = require('discord.js-commando'),
-	path = require('path'),
-	{MAX_SONGS} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js'); 
+  path = require('path'),
+  {MAX_SONGS} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js'); 
 
 module.exports = class MaxSongsCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'maxsongs',
-			'memberName': 'maxsongs',
-			'group': 'music',
-			'aliases': ['songcap', 'songmax', 'maxsong'],
-			'description': 'Shows or sets the max songs per user.',
-			'details': oneLine `
+  constructor (client) {
+    super(client, {
+      'name': 'maxsongs',
+      'memberName': 'maxsongs',
+      'group': 'music',
+      'aliases': ['songcap', 'songmax', 'maxsong'],
+      'description': 'Shows or sets the max songs per user.',
+      'details': oneLine `
             This is the maximum number of songs a user may have in the queue.
             The default is ${MAX_SONGS}.
             Only administrators may change this setting.`,
-			'format': '[amount|"default"]',
-			'examples': ['maxsongs 3'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+      'format': '[amount|"default"]',
+      'examples': ['maxsongs 3'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg, args) {
-		if (!args) {
-			const maxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', MAX_SONGS);
+  run (msg, args) {
+    if (!args) {
+      const maxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', MAX_SONGS);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply(`the maximum songs a user may have in the queue at one time is ${maxSongs}.`);
-		}
+      return msg.reply(`the maximum songs a user may have in the queue at one time is ${maxSongs}.`);
+    }
 
-		if (args.toLowerCase() === 'default') {
-			this.client.provider.remove(msg.guild.id, 'maxSongs');
-			deleteCommandMessages(msg, this.client);
+    if (args.toLowerCase() === 'default') {
+      this.client.provider.remove(msg.guild.id, 'maxSongs');
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply(`set the maximum songs to the default (currently ${MAX_SONGS}).`);
-		}
+      return msg.reply(`set the maximum songs to the default (currently ${MAX_SONGS}).`);
+    }
 
-		const maxSongs = parseInt(args, 10);
+    const maxSongs = parseInt(args, 10);
 
-		if (isNaN(maxSongs) || maxSongs <= 0) {
+    if (isNaN(maxSongs) || maxSongs <= 0) {
 
-			return msg.reply('invalid number provided.');
-		}
+      return msg.reply('invalid number provided.');
+    }
 
-		this.client.provider.set(msg.guild.id, 'maxSongs', maxSongs);
-		deleteCommandMessages(msg, this.client);
+    this.client.provider.set(msg.guild.id, 'maxSongs', maxSongs);
+    deleteCommandMessages(msg, this.client);
 		
-		return msg.reply(`set the maximum songs to ${maxSongs}.`);
-	}
+    return msg.reply(`set the maximum songs to ${maxSongs}.`);
+  }
 };

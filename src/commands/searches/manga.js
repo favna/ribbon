@@ -35,66 +35,66 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	maljs = require('maljs'), 
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  maljs = require('maljs'), 
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class mangaCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'manga',
-			'memberName': 'manga',
-			'group': 'searches',
-			'aliases': ['cartoon', 'man'],
-			'description': 'Finds manga on MyAnimeList',
-			'format': 'MangaName',
-			'examples': ['manga Pokemon'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'query',
-					'prompt': 'What manga do you want to find?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'manga',
+      'memberName': 'manga',
+      'group': 'searches',
+      'aliases': ['cartoon', 'man'],
+      'description': 'Finds manga on MyAnimeList',
+      'format': 'MangaName',
+      'examples': ['manga Pokemon'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'query',
+          'prompt': 'What manga do you want to find?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
-		const manEmbed = new MessageEmbed(),
-			res = await maljs.quickSearch(args.query, 'manga');
+  async run (msg, args) {
+    const manEmbed = new MessageEmbed(),
+      res = await maljs.quickSearch(args.query, 'manga');
 
-		if (res) {
-			const manga = await res.manga[0].fetch();
+    if (res) {
+      const manga = await res.manga[0].fetch();
 
-			if (manga) {
+      if (manga) {
 
-				manEmbed
-					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-					.setTitle(manga.title)
-					.setImage(manga.cover)
-					.setDescription(manga.description)
-					.setURL(`${manga.mal.url}${manga.path}`)
-					.addField('Score', manga.score, true)
-					.addField('Popularity', manga.popularity, true)
-					.addField('Rank', manga.ranked, true);
+        manEmbed
+          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+          .setTitle(manga.title)
+          .setImage(manga.cover)
+          .setDescription(manga.description)
+          .setURL(`${manga.mal.url}${manga.path}`)
+          .addField('Score', manga.score, true)
+          .addField('Popularity', manga.popularity, true)
+          .addField('Rank', manga.ranked, true);
 
-				deleteCommandMessages(msg, this.client);
+        deleteCommandMessages(msg, this.client);
 
-				return msg.embed(manEmbed, `${manga.mal.url}${manga.path}`);
-			}
-			deleteCommandMessages(msg, this.client);
+        return msg.embed(manEmbed, `${manga.mal.url}${manga.path}`);
+      }
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply(`no manga found for the input \`${args.query}\` `);
+      return msg.reply(`no manga found for the input \`${args.query}\` `);
 
 
-		}
-		deleteCommandMessages(msg, this.client);
+    }
+    deleteCommandMessages(msg, this.client);
 		
-		return msg.reply(`no manga found for the input \`${args.query}\` `);
-	}
+    return msg.reply(`no manga found for the input \`${args.query}\` `);
+  }
 };

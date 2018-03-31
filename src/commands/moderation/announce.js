@@ -35,52 +35,52 @@
  */
 
 const commando = require('discord.js-commando'),
-	{deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class newsCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'announce',
-			'memberName': 'announce',
-			'group': 'moderation',
-			'aliases': ['news'],
-			'description': 'Make an announcement in the news channel',
-			'format': 'Announcement',
-			'examples': ['announce John Appleseed reads the news'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'body',
-					'prompt': 'What do you want me to announce?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'announce',
+      'memberName': 'announce',
+      'group': 'moderation',
+      'aliases': ['news'],
+      'description': 'Make an announcement in the news channel',
+      'format': 'Announcement',
+      'examples': ['announce John Appleseed reads the news'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'body',
+          'prompt': 'What do you want me to announce?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg, args) {
-		if (msg.guild.channels.exists('name', 'announcements') || msg.guild.channels.exists('name', 'news')) {
-			const newsChannel = msg.guild.channels.exists('name', 'announcements') ? msg.guild.channels.find('name', 'announcements') : msg.guild.channels.find('name', 'news');
+  run (msg, args) {
+    if (msg.guild.channels.exists('name', 'announcements') || msg.guild.channels.exists('name', 'news')) {
+      const newsChannel = msg.guild.channels.exists('name', 'announcements') ? msg.guild.channels.find('name', 'announcements') : msg.guild.channels.find('name', 'news');
 
-			let announce = args.body;
+      let announce = args.body;
 
-			announce.slice(0, 4) !== 'http' ? announce = `${args.body.slice(0, 1).toUpperCase()}${args.body.slice(1)}` : null;
-			msg.attachments.first() && msg.attachments.first().url ? announce += `\n${msg.attachments.first().url}` : null;
+      announce.slice(0, 4) !== 'http' ? announce = `${args.body.slice(0, 1).toUpperCase()}${args.body.slice(1)}` : null;
+      msg.attachments.first() && msg.attachments.first().url ? announce += `\n${msg.attachments.first().url}` : null;
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return newsChannel.send(announce);
-		}
-		deleteCommandMessages(msg, this.client);
+      return newsChannel.send(announce);
+    }
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply('To use the announce command you need a channel named \'news\' or \'announcements\'');
-	}
+    return msg.reply('To use the announce command you need a channel named \'news\' or \'announcements\'');
+  }
 };

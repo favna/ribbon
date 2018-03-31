@@ -37,62 +37,62 @@
  */
 
 const commando = require('discord.js-commando'),
-	path = require('path'),
-	{MAX_LENGTH} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js'); 
+  path = require('path'),
+  {MAX_LENGTH} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js'); 
 
 module.exports = class MaxLengthCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'maxlength',
-			'memberName': 'maxlength',
-			'group': 'music',
-			'aliases': ['max-duration', 'max-song-length', 'max-song-duration'],
-			'description': 'Shows or sets the max song length.',
-			'details': oneLine `
+  constructor (client) {
+    super(client, {
+      'name': 'maxlength',
+      'memberName': 'maxlength',
+      'group': 'music',
+      'aliases': ['max-duration', 'max-song-length', 'max-song-duration'],
+      'description': 'Shows or sets the max song length.',
+      'details': oneLine `
             This is the maximum length of a song that users may queue, in minutes.
             The default is ${MAX_LENGTH}.
             Only administrators may change this setting.`,
-			'format': '[minutes|"default"]',
-			'examples': ['maxlength 10'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+      'format': '[minutes|"default"]',
+      'examples': ['maxlength 10'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg, args) {
-		if (!args) {
-			const maxLength = this.client.provider.get(msg.guild.id, 'maxLength', MAX_LENGTH);
+  run (msg, args) {
+    if (!args) {
+      const maxLength = this.client.provider.get(msg.guild.id, 'maxLength', MAX_LENGTH);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply(`the maximum length of a song is ${maxLength} minutes.`);
-		}
+      return msg.reply(`the maximum length of a song is ${maxLength} minutes.`);
+    }
 
-		if (args.toLowerCase() === 'default') {
-			this.client.provider.remove(msg.guild.id, 'maxLength');
-			deleteCommandMessages(msg, this.client);
+    if (args.toLowerCase() === 'default') {
+      this.client.provider.remove(msg.guild.id, 'maxLength');
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply(`set the maximum song length to the default (currently ${MAX_LENGTH} minutes).`);
-		}
+      return msg.reply(`set the maximum song length to the default (currently ${MAX_LENGTH} minutes).`);
+    }
 
-		const maxLength = parseInt(args, 10);
+    const maxLength = parseInt(args, 10);
 
-		if (isNaN(maxLength) || maxLength <= 0) {
-			return msg.reply('invalid number provided.');
-		}
+    if (isNaN(maxLength) || maxLength <= 0) {
+      return msg.reply('invalid number provided.');
+    }
 
-		this.client.provider.set(msg.guild.id, 'maxLength', maxLength);
-		deleteCommandMessages(msg, this.client);
+    this.client.provider.set(msg.guild.id, 'maxLength', maxLength);
+    deleteCommandMessages(msg, this.client);
 		
-		return msg.reply(`set the maximum song length to ${maxLength} minutes.`);
-	}
+    return msg.reply(`set the maximum song length to ${maxLength} minutes.`);
+  }
 };

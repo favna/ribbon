@@ -35,69 +35,69 @@
  */
 
 const commando = require('discord.js-commando'),
-	path = require('path'),
-	{DEFAULT_VOLUME} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
-	{deleteCommandMessages} = require('../../util.js'); 
+  path = require('path'),
+  {DEFAULT_VOLUME} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
+  {deleteCommandMessages} = require('../../util.js'); 
 
 module.exports = class defaultVolumeCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'defaultvolume',
-			'memberName': 'defaultvolume',
-			'group': 'music',
-			'aliases': ['defvol'],
-			'description': 'Shows or sets the default volume level',
-			'format': 'VolumeToSet',
-			'examples': ['defaultvolume 2'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'volume',
-					'prompt': 'What is the default volume I should set? (\'default\' to reset)',
-					'type': 'string',
-					'default': 'show'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'defaultvolume',
+      'memberName': 'defaultvolume',
+      'group': 'music',
+      'aliases': ['defvol'],
+      'description': 'Shows or sets the default volume level',
+      'format': 'VolumeToSet',
+      'examples': ['defaultvolume 2'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'volume',
+          'prompt': 'What is the default volume I should set? (\'default\' to reset)',
+          'type': 'string',
+          'default': 'show'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
 
-	run (msg, args) {
-		if (args.volume === 'show') {
-			const defaultVolume = this.client.provider.get(msg.guild.id, 'defaultVolume', DEFAULT_VOLUME);
+  run (msg, args) {
+    if (args.volume === 'show') {
+      const defaultVolume = this.client.provider.get(msg.guild.id, 'defaultVolume', DEFAULT_VOLUME);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.reply(`the default volume level is ${defaultVolume}.`);
-		}
+      return msg.reply(`the default volume level is ${defaultVolume}.`);
+    }
 
-		if (args.volume === 'default') {
-			this.client.provider.remove(msg.guild.id, 'defaultVolume');
-			deleteCommandMessages(msg, this.client);
+    if (args.volume === 'default') {
+      this.client.provider.remove(msg.guild.id, 'defaultVolume');
+      deleteCommandMessages(msg, this.client);
 
-			return msg.reply(`set the default volume level to the bot's default (currently ${DEFAULT_VOLUME}).`);
-		}
+      return msg.reply(`set the default volume level to the bot's default (currently ${DEFAULT_VOLUME}).`);
+    }
 
-		const defaultVolume = parseInt(args.volume, 10);
+    const defaultVolume = parseInt(args.volume, 10);
 
-		if (isNaN(defaultVolume) || defaultVolume <= 0 || defaultVolume > 10) {
-			deleteCommandMessages(msg, this.client);
+    if (isNaN(defaultVolume) || defaultVolume <= 0 || defaultVolume > 10) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('invalid number provided. It must be in the range of 0-10.');
-		}
+      return msg.reply('invalid number provided. It must be in the range of 0-10.');
+    }
 
-		this.client.provider.set(msg.guild.id, 'defaultVolume', defaultVolume);
-		deleteCommandMessages(msg, this.client);
+    this.client.provider.set(msg.guild.id, 'defaultVolume', defaultVolume);
+    deleteCommandMessages(msg, this.client);
 		
-		return msg.reply(`set the default volume level to ${defaultVolume}.`);
+    return msg.reply(`set the default volume level to ${defaultVolume}.`);
 
-	}
+  }
 };

@@ -35,65 +35,65 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  moment = require('moment'),
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class unlockCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'unlock',
-			'memberName': 'unlock',
-			'group': 'moderation',
-			'aliases': ['delock', 'ul'],
-			'description': 'Unlocks the current channel',
-			'examples': ['unlock'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'unlock',
+      'memberName': 'unlock',
+      'group': 'moderation',
+      'aliases': ['delock', 'ul'],
+      'description': 'Unlocks the current channel',
+      'examples': ['unlock'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg) {
-		const embed = new MessageEmbed(),
-			modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
-				msg.guild.channels.exists('name', 'mod-logs')
-					? msg.guild.channels.find('name', 'mod-logs').id
-					: null),
-			overwrite = msg.channel.overwritePermissions(msg.guild.roles.find('name', '@everyone'), {'SEND_MESSAGES': true}, 'Channel Unlock');
+  run (msg) {
+    const embed = new MessageEmbed(),
+      modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
+        msg.guild.channels.exists('name', 'mod-logs')
+          ? msg.guild.channels.find('name', 'mod-logs').id
+          : null),
+      overwrite = msg.channel.overwritePermissions(msg.guild.roles.find('name', '@everyone'), {'SEND_MESSAGES': true}, 'Channel Unlock');
 
-		embed
-			.setColor('#359876')
-			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-			.setDescription(oneLine `**Action:** 🔓 unlocked the \`${msg.channel.name}\` channel. 
+    embed
+      .setColor('#359876')
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setDescription(oneLine `**Action:** 🔓 unlocked the \`${msg.channel.name}\` channel. 
 				This channel can now be used by everyone again. Use \`${msg.guild.commandPrefix}lockdown\` in this channel to (re)-lock it.`)
-			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+      .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
-		if (overwrite) {
-			if (this.client.provider.get(msg.guild, 'modlogs', true)) {
-				if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-					msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+    if (overwrite) {
+      if (this.client.provider.get(msg.guild, 'modlogs', true)) {
+        if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+          msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
                             (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
                             This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-					this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
-				}
+          this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+        }
 
-				deleteCommandMessages(msg, this.client);
+        deleteCommandMessages(msg, this.client);
 
-				modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.say(embed);
-			}
+        modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.say(embed);
+      }
 
-			return msg.say(embed);
-		}
-		deleteCommandMessages(msg, this.client);
+      return msg.say(embed);
+    }
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply('⚠️ An error occured unlocking this channel');
-	}
+    return msg.reply('⚠️ An error occured unlocking this channel');
+  }
 };

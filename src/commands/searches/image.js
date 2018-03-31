@@ -35,86 +35,86 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	cheerio = require('cheerio'),
-	commando = require('discord.js-commando'),
-	querystring = require('querystring'),
-	request = require('snekfetch'),
-	{deleteCommandMessages} = require('../../util.js'),
-	{googleapikey, imageEngineKey} = require('../../auth.json');
+  cheerio = require('cheerio'),
+  commando = require('discord.js-commando'),
+  request = require('snekfetch'), 
+  {deleteCommandMessages} = require('../../util.js'), 
+  {googleapikey, imageEngineKey} = require('../../auth.json');
 
 module.exports = class imageCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'image',
-			'memberName': 'image',
-			'group': 'searches',
-			'aliases': ['img', 'i'],
-			'description': 'Finds an image through google',
-			'format': 'ImageQuery',
-			'examples': ['image Pyrrha Nikos'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'query',
-					'prompt': 'What do you want to find images of?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'image',
+      'memberName': 'image',
+      'group': 'searches',
+      'aliases': ['img', 'i'],
+      'description': 'Finds an image through google',
+      'format': 'ImageQuery',
+      'examples': ['image Pyrrha Nikos'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'query',
+          'prompt': 'What do you want to find images of?',
+          'type': 'string',
+          'parse': p => p.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
+            .split(' ')
+            .map(x => encodeURIComponent(x))
+            .join('+')
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
-		const embed = new MessageEmbed(),
-			query = args.query
-				.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
-				.split(' ')
-				.map(x => encodeURIComponent(x))
-				.join('+'),
-			safe = msg.channel.nsfw ? 'medium' : 'off',
-			QUERY_PARAMS = { // eslint-disable-line sort-vars
-				'cx': imageEngineKey,
-				'key': googleapikey,
-				safe,
-				'searchType': 'image'
-			};
+  async run (msg, args) {
+    const embed = new MessageEmbed();
 
-		let res = await request.get(`https://www.googleapis.com/customsearch/v1?${querystring.stringify(QUERY_PARAMS)}&q=${encodeURI(query)}`);
+    let res = await request.get('https://www.googleapis.com/customsearch/v1')
+      .query('cx', imageEngineKey)
+      .query('key', googleapikey)
+      .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
+      .query('searchType', 'image')
+      .query('q', args.query);
 
-		if (res && res.body.items) {
-			embed
-				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-				.setImage(res.body.items[0].link)
-				.setFooter(`Search query: "${args.query}"`);
+    if (res && res.body.items) {
+      embed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setImage(res.body.items[0].link)
+        .setFooter(`Search query: "${args.query}"`);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(embed);
-		}
+      return msg.embed(embed);
+    }
 
-		if (!res) {
-			res = await request.get(`https://www.google.com/search?tbm=isch&gs_l=img&safe=${safe}&q=${encodeURI(query)}`);
+    if (!res) {
+      res = await request.get('https://www.google.com/search')
+        .query('tbm', 'isch')
+        .query('gs_l', 'img')
+        .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
+        .query('q', args.query);
 
-			const $ = cheerio.load(res.text),
-				result = $('.images_table').find('img')
-					.first()
-					.attr('src');
+      const $ = cheerio.load(res.text),
+        result = $('.images_table').find('img')
+          .first()
+          .attr('src');
 
-			embed
-				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-				.setImage(result)
-				.setFooter(`Search query: "${args.query}"`);
+      embed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setImage(result)
+        .setFooter(`Search query: "${args.query}"`);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(embed);
-		}
+      return msg.embed(embed);
+    }
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply('⚠️ ***nothing found***');
-	}
+    return msg.reply('⚠️ ***nothing found***');
+  }
 };

@@ -36,55 +36,55 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	Pornsearch = require('pornsearch'),
-	commando = require('discord.js-commando'),
-	{deleteCommandMessages} = require('../../util.js');
+  Pornsearch = require('pornsearch'),
+  commando = require('discord.js-commando'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class porngifsCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'porngifs',
-			'memberName': 'porngifs',
-			'group': 'nsfw',
-			'aliases': ['nsfwgifs'],
-			'description': 'Search porn gifs',
-			'format': 'NSFWToLookUp',
-			'examples': ['porngifs babe'],
-			'guildOnly': false,
-			'nsfw': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'pornInput',
-					'prompt': 'What pornography do you want to find?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'porngifs',
+      'memberName': 'porngifs',
+      'group': 'nsfw',
+      'aliases': ['nsfwgifs'],
+      'description': 'Search porn gifs',
+      'format': 'NSFWToLookUp',
+      'examples': ['porngifs babe'],
+      'guildOnly': false,
+      'nsfw': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'pornInput',
+          'prompt': 'What pornography do you want to find?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
-		const search = new Pornsearch(args.pornInput),
-			gifs = await search.gifs(); // eslint-disable-line sort-vars
+  async run (msg, args) {
+    const search = new Pornsearch(args.pornInput),
+      gifs = await search.gifs(); // eslint-disable-line sort-vars
 
-		if (gifs) {
-			const pornEmbed = new MessageEmbed(),
-				random = Math.floor(Math.random() * gifs.length);
+    if (gifs) {
+      const pornEmbed = new MessageEmbed(),
+        random = Math.floor(Math.random() * gifs.length);
 			
-			pornEmbed
-				.setURL(gifs[random].url)
-				.setTitle(gifs[random].title)
-				.setImage(`${gifs[random].url}`)
-				.setColor('#FFB6C1')
-				.addField('Gif webm', `[Click Here](${gifs[random].webm})`, true);
-			deleteCommandMessages(msg, this.client);
+      pornEmbed
+        .setURL(gifs[random].url)
+        .setTitle(gifs[random].title)
+        .setImage(`${gifs[random].url}`)
+        .setColor('#FFB6C1')
+        .addField('Gif webm', `[Click Here](${gifs[random].webm})`, true);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(pornEmbed, gifs[random].webm);
-		}
+      return msg.embed(pornEmbed, gifs[random].webm);
+    }
 
-		return msg.reply('nothing found for that input');
-	}
+    return msg.reply('nothing found for that input');
+  }
 };

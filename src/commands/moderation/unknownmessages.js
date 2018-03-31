@@ -35,53 +35,53 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class unknownmessagesCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'unknownmessages',
-			'memberName': 'unknownmessages',
-			'group': 'moderation',
-			'aliases': ['unkmsg', 'unknowns'],
-			'description': 'Toggle Unkown Command messages on or off',
-			'format': 'Enable|Disable',
-			'examples': ['unknownmessages {option}', 'unknownmessages enable'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'option',
-					'prompt': 'Enable or disable Unknown Command messages?',
-					'type': 'boolean',
-					'validate': (bool) => {
-						const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
+  constructor (client) {
+    super(client, {
+      'name': 'unknownmessages',
+      'memberName': 'unknownmessages',
+      'group': 'moderation',
+      'aliases': ['unkmsg', 'unknowns'],
+      'description': 'Toggle Unkown Command messages on or off',
+      'format': 'Enable|Disable',
+      'examples': ['unknownmessages {option}', 'unknownmessages enable'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'option',
+          'prompt': 'Enable or disable Unknown Command messages?',
+          'type': 'boolean',
+          'validate': (bool) => {
+            const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 
-						if (validBools.includes(bool.toLowerCase())) {
-							return true;
-						}
+            if (validBools.includes(bool.toLowerCase())) {
+              return true;
+            }
 
-						return `Has to be one of ${validBools.join(', ')}`;
-					}
-				}
-			]
-		});
-	}
+            return `Has to be one of ${validBools.join(', ')}`;
+          }
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
+  }
 
-	run (msg, args) {
-		this.client.provider.set(msg.guild.id, 'unknownmessages', args.option);
+  run (msg, args) {
+    this.client.provider.set(msg.guild.id, 'unknownmessages', args.option);
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(oneLine `Unknown Command messages have been
+    return msg.reply(oneLine `Unknown Command messages have been
                         ${args.option ? 'enabled. Get those commands!' : 'disabled. Peace and quiet when people spam the bot incorrectly achieved!'}`);
-	}
+  }
 };

@@ -35,45 +35,45 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	predict = require('eightball'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  predict = require('eightball'),
+  {deleteCommandMessages} = require('../../util.js');
 	
 module.exports = class eightBallCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': '8ball',
-			'memberName': '8ball',
-			'group': 'games',
-			'aliases': ['eightball'],
-			'description': 'Roll a magic 8ball',
-			'format': 'YourQuestion',
-			'examples': ['8ball is Favna a genius coder?'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'question',
-					'prompt': 'For what question should I roll a magic 8ball?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': '8ball',
+      'memberName': '8ball',
+      'group': 'games',
+      'aliases': ['eightball'],
+      'description': 'Roll a magic 8ball',
+      'format': 'YourQuestion',
+      'examples': ['8ball is Favna a genius coder?'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'question',
+          'prompt': 'For what question should I roll a magic 8ball?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	run (msg, args) {
-		const eightBallEmbed = new MessageEmbed();
+  run (msg, args) {
+    const eightBallEmbed = new MessageEmbed();
 
-		eightBallEmbed
-			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.addField(':question: Question', args.question, false)
-			.addField(':8ball: 8ball', predict(), false);
+    eightBallEmbed
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .addField(':question: Question', args.question, false)
+      .addField(':8ball: 8ball', predict(), false);
 		
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.embed(eightBallEmbed);
-	}
+    return msg.embed(eightBallEmbed);
+  }
 };

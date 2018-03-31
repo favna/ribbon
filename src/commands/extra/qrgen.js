@@ -27,7 +27,7 @@
  * Generates a QR code from text (like a URL)  
  * **Aliases**: `qr`
  * @module
- * @category util
+ * @category extra
  * @name qrgen
  * @example qrgen https://favna.xyz/ribbon
  * @param {string} URL URL you want to encode into a QR image
@@ -35,58 +35,58 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	imgur = require('imgur'),
-	qr = require('qrcode'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  imgur = require('imgur'),
+  qr = require('qrcode'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class qrgenCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'qrgen',
-			'memberName': 'qrgen',
-			'group': 'util',
-			'aliases': ['qr'],
-			'description': 'Generates a QR code from a given string',
-			'format': 'URLToConvert',
-			'examples': ['qrgen https://github.com/Favna/Ribbon'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'url',
-					'prompt': 'String (URL) to make a QR code for?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'qrgen',
+      'memberName': 'qrgen',
+      'group': 'extra',
+      'aliases': ['qr'],
+      'description': 'Generates a QR code from a given string',
+      'format': 'URLToConvert',
+      'examples': ['qrgen https://github.com/Favna/Ribbon'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'url',
+          'prompt': 'String (URL) to make a QR code for?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
-		const base64 = await qr.toDataURL(args.url, {'errorCorrectionLevel': 'M'});
+  async run (msg, args) {
+    const base64 = await qr.toDataURL(args.url, {'errorCorrectionLevel': 'M'});
 
-		if (base64) {
-			const upload = await imgur.uploadBase64(base64.slice(22));
+    if (base64) {
+      const upload = await imgur.uploadBase64(base64.slice(22));
 
-			if (upload) {
-				const qrEmbed = new MessageEmbed();
+      if (upload) {
+        const qrEmbed = new MessageEmbed();
 
-				qrEmbed
-					.setTitle(`QR code for ${args.url}`)
-					.setURL(upload.data.link)
-					.setImage(upload.data.link);
+        qrEmbed
+          .setTitle(`QR code for ${args.url}`)
+          .setURL(upload.data.link)
+          .setImage(upload.data.link);
 
-				deleteCommandMessages(msg, this.client);
+        deleteCommandMessages(msg, this.client);
 
-				return msg.embed(qrEmbed);
-			}
+        return msg.embed(qrEmbed);
+      }
 
-			return msg.reply('⚠️ An error occured uploading the QR code to imgur.');
-		}
+      return msg.reply('⚠️ An error occured uploading the QR code to imgur.');
+    }
 
-		return msg.reply('⚠️ An error occured getting a base64 image for that URL.');
-	}
+    return msg.reply('⚠️ An error occured getting a base64 image for that URL.');
+  }
 };

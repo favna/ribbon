@@ -36,72 +36,72 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	booru = require('booru'),
-	commando = require('discord.js-commando'), 
-	{stripIndents} = require('common-tags'), 
-	{deleteCommandMessages} = require('../../util.js');
+  booru = require('booru'),
+  commando = require('discord.js-commando'), 
+  {stripIndents} = require('common-tags'), 
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class rule34Command extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'rule34',
-			'memberName': 'rule34',
-			'group': 'nsfw',
-			'aliases': ['r34'],
-			'description': 'Find NSFW Content on Rule34',
-			'format': 'NSFWToLookUp',
-			'examples': ['rule34 Pyrrha Nikos'],
-			'guildOnly': false,
-			'nsfw': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'nsfwtags',
-					'prompt': 'What do you want to find NSFW for?',
-					'type': 'string',
-					'parse': p => p.split(' ')
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'rule34',
+      'memberName': 'rule34',
+      'group': 'nsfw',
+      'aliases': ['r34'],
+      'description': 'Find NSFW Content on Rule34',
+      'format': 'NSFWToLookUp',
+      'examples': ['rule34 Pyrrha Nikos'],
+      'guildOnly': false,
+      'nsfw': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'nsfwtags',
+          'prompt': 'What do you want to find NSFW for?',
+          'type': 'string',
+          'parse': p => p.split(' ')
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
-		/* eslint-disable sort-vars*/
-		const search = await booru.search('r34', args.nsfwtags, {
-				'limit': 1,
-				'random': true
-			}),
-			common = await booru.commonfy(search);
-		/* eslint-enable sort-vars*/
+  async run (msg, args) {
+    /* eslint-disable sort-vars*/
+    const search = await booru.search('r34', args.nsfwtags, {
+        'limit': 1,
+        'random': true
+      }),
+      common = await booru.commonfy(search);
+    /* eslint-enable sort-vars*/
 
-		if (common && common[0].common) {
-			console.log(common[0]);
-			const embed = new MessageEmbed(),
-				tags = [];
+    if (common && common[0].common) {
+      console.log(common[0]);
+      const embed = new MessageEmbed(),
+        tags = [];
 
-			for (const tag in common[0].common.tags) {
-				tags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
-			}
+      for (const tag in common[0].common.tags) {
+        tags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
+      }
 
-			embed
-				.setTitle(`Rule34 image for ${args.nsfwtags.join(', ')}`)
-				.setURL(common[0].common.file_url)
-				.setColor('#FFB6C1')
-				.setDescription(stripIndents `${tags.slice(0, 5).join(' ')}
+      embed
+        .setTitle(`Rule34 image for ${args.nsfwtags.join(', ')}`)
+        .setURL(common[0].common.file_url)
+        .setColor('#FFB6C1')
+        .setDescription(stripIndents `${tags.slice(0, 5).join(' ')}
 				
 				**Score**: ${common[0].common.score}`)
-				.setImage(common[0].common.file_url);
+        .setImage(common[0].common.file_url);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(embed);
-		}
+      return msg.embed(embed);
+    }
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply('⚠️ No juicy images found.');
-	}
+    return msg.reply('⚠️ No juicy images found.');
+  }
 };

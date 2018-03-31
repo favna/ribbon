@@ -35,83 +35,83 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	random = require('node-random'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  random = require('node-random'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class rpsCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'rps',
-			'memberName': 'rps',
-			'group': 'games',
-			'aliases': ['rockpaperscissors'],
-			'description': 'Play Rock Paper Scissors against random.org randomization',
-			'format': 'HandToPlay',
-			'examples': ['rps Rock'],
-			'guildOnly': false,
-			'args': [
-				{
-					'key': 'hand',
-					'prompt': 'Do you play rock, paper or scissors?',
-					'type': 'string',
-					'validate': (hand) => {
-						const validHands = ['rock', 'paper', 'scissors'];
+  constructor (client) {
+    super(client, {
+      'name': 'rps',
+      'memberName': 'rps',
+      'group': 'games',
+      'aliases': ['rockpaperscissors'],
+      'description': 'Play Rock Paper Scissors against random.org randomization',
+      'format': 'HandToPlay',
+      'examples': ['rps Rock'],
+      'guildOnly': false,
+      'args': [
+        {
+          'key': 'hand',
+          'prompt': 'Do you play rock, paper or scissors?',
+          'type': 'string',
+          'validate': (hand) => {
+            const validHands = ['rock', 'paper', 'scissors'];
 
-						if (validHands.includes(hand.toLowerCase())) {
-							return true;
-						}
+            if (validHands.includes(hand.toLowerCase())) {
+              return true;
+            }
 
-						return `Has to be one of ${validHands.join(', ')}`;
-					},
-					'parse': p => p.toLowerCase()
-				}
-			]
-		});
-	}
+            return `Has to be one of ${validHands.join(', ')}`;
+          },
+          'parse': p => p.toLowerCase()
+        }
+      ]
+    });
+  }
 
-	run (msg, args) {
-		random.integers({
-			'number': 1,
-			'minimum': 1,
-			'maximum': 3
-		}, (error, randoms) => { // eslint-disable-line complexity
-			if (!error) {
-				const rpsEmbed = new MessageEmbed();
+  run (msg, args) {
+    random.integers({
+      'number': 1,
+      'minimum': 1,
+      'maximum': 3
+    }, (error, randoms) => { // eslint-disable-line complexity
+      if (!error) {
+        const rpsEmbed = new MessageEmbed();
 
-				let resString = 'Woops something went wrong';
+        let resString = 'Woops something went wrong';
 
-				if (args.hand === 'rock' && randoms === 1) {
-					resString = 'It\'s a draw 😶! Both picked 🗿';
-				} else if (args.hand === 'rock' && randoms === 2) {
-					resString = 'I won 😃! My 📜 covered your 🗿';
-				} else if (args.hand === 'rock' && randoms === 3) {
-					resString = ' I lost 😞! Your 🗿 smashed my ️️️✂️ to pieces';
-				} else if (args.hand === 'paper' && randoms === 1) {
-					resString = 'I lost 😞! Your 📜 covered my 🗿';
-				} else if (args.hand === 'paper' && randoms === 2) {
-					resString = 'It\'s a draw 😶! Both picked 📜';
-				} else if (args.hand === 'paper' && randoms === 3) {
-					resString = 'I won 😃! My ✂️ cut your 📜 to shreds';
-				} else if (args.hand === 'scissor' && randoms === 1) {
-					resString = 'I won 😃! My 🗿 smashed your ✂️ to pieces';
-				} else if (args.hand === 'scissor' && randoms === 2) {
-					resString = 'I lost 😞! Your ✂️ cut my 📜 to shreds';
-				} else if (args.hand === 'scissor' && randoms === 3) {
-					resString = 'It\'s a draw 😶! Both picked ✂️';
-				}
+        if (args.hand === 'rock' && randoms === 1) {
+          resString = 'It\'s a draw 😶! Both picked 🗿';
+        } else if (args.hand === 'rock' && randoms === 2) {
+          resString = 'I won 😃! My 📜 covered your 🗿';
+        } else if (args.hand === 'rock' && randoms === 3) {
+          resString = ' I lost 😞! Your 🗿 smashed my ️️️✂️ to pieces';
+        } else if (args.hand === 'paper' && randoms === 1) {
+          resString = 'I lost 😞! Your 📜 covered my 🗿';
+        } else if (args.hand === 'paper' && randoms === 2) {
+          resString = 'It\'s a draw 😶! Both picked 📜';
+        } else if (args.hand === 'paper' && randoms === 3) {
+          resString = 'I won 😃! My ✂️ cut your 📜 to shreds';
+        } else if (args.hand === 'scissor' && randoms === 1) {
+          resString = 'I won 😃! My 🗿 smashed your ✂️ to pieces';
+        } else if (args.hand === 'scissor' && randoms === 2) {
+          resString = 'I lost 😞! Your ✂️ cut my 📜 to shreds';
+        } else if (args.hand === 'scissor' && randoms === 3) {
+          resString = 'It\'s a draw 😶! Both picked ✂️';
+        }
 
-				rpsEmbed
-					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-					.setTitle('Rock Paper Scissors')
-					.setDescription(resString);
+        rpsEmbed
+          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+          .setTitle('Rock Paper Scissors')
+          .setDescription(resString);
 
-				deleteCommandMessages(msg, this.client);
+        deleteCommandMessages(msg, this.client);
 
-				return msg.embed(rpsEmbed);
-			}
+        return msg.embed(rpsEmbed);
+      }
 
-			return msg.reply('⚠️ an error occured getting a random result and I\'m not going to rig this game.');
-		});
-	}
+      return msg.reply('⚠️ an error occured getting a random result and I\'m not going to rig this game.');
+    });
+  }
 };

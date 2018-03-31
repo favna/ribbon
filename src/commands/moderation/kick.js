@@ -36,88 +36,88 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  moment = require('moment'),
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class kickCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'kick',
-			'memberName': 'kick',
-			'group': 'moderation',
-			'aliases': ['k'],
-			'description': 'Kicks a member from the server',
-			'format': 'MemberID|MemberName(partial or full) [ReasonForKicking]',
-			'examples': ['kick JohnDoe annoying'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'member',
-					'prompt': 'Which member do you want me to kick?',
-					'type': 'member'
-				},
-				{
-					'key': 'reason',
-					'prompt': 'What is the reason for this kick?',
-					'type': 'string',
-					'default': ''
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'kick',
+      'memberName': 'kick',
+      'group': 'moderation',
+      'aliases': ['k'],
+      'description': 'Kicks a member from the server',
+      'format': 'MemberID|MemberName(partial or full) [ReasonForKicking]',
+      'examples': ['kick JohnDoe annoying'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'member',
+          'prompt': 'Which member do you want me to kick?',
+          'type': 'member'
+        },
+        {
+          'key': 'reason',
+          'prompt': 'What is the reason for this kick?',
+          'type': 'string',
+          'default': ''
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('KICK_MEMBERS');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('KICK_MEMBERS');
+  }
 
-	run (msg, args) {
-		if (args.member.id === msg.author.id) {
-			deleteCommandMessages(msg, this.client);
+  run (msg, args) {
+    if (args.member.id === msg.author.id) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('⚠️ I don\'t think you want to kick yourself.');
-		}
+      return msg.reply('⚠️ I don\'t think you want to kick yourself.');
+    }
 
-		if (!args.member.kickable) {
-			deleteCommandMessages(msg, this.client);
+    if (!args.member.kickable) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('⚠️ I cannot kick that member, their role is probably higher than my own!');
-		}
+      return msg.reply('⚠️ I cannot kick that member, their role is probably higher than my own!');
+    }
 
-		args.member.kick(args.reason !== '' ? args.reason : 'No reason given by staff');
-		const embed = new MessageEmbed(),
-			modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
-				msg.guild.channels.exists('name', 'mod-logs')
-					? msg.guild.channels.find('name', 'mod-logs').id
-					: null);
+    args.member.kick(args.reason !== '' ? args.reason : 'No reason given by staff');
+    const embed = new MessageEmbed(),
+      modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
+        msg.guild.channels.exists('name', 'mod-logs')
+          ? msg.guild.channels.find('name', 'mod-logs').id
+          : null);
 
-		embed
-			.setColor('#FF8300')
-			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
+    embed
+      .setColor('#FF8300')
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 				'**Action:** Kick\n' +
 				`**Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
-			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+      .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
-		if (this.client.provider.get(msg.guild, 'modlogs', true)) {
-			if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-				msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+    if (this.client.provider.get(msg.guild, 'modlogs', true)) {
+      if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+        msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-				this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
-			}
+        this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+      }
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
-		}
-		deleteCommandMessages(msg, this.client);
+      return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
+    }
+    deleteCommandMessages(msg, this.client);
 		
-		return null;
-	}
+    return null;
+  }
 };

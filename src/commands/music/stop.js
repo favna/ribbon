@@ -33,48 +33,48 @@
  */
 
 const commando = require('discord.js-commando'),
-	{deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class StopMusicCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'stop',
-			'memberName': 'stop',
-			'group': 'music',
-			'aliases': ['kill', 'stfu', 'quit', 'leave', 'disconnect'],
-			'description': 'Stops the music and wipes the queue.',
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'stop',
+      'memberName': 'stop',
+      'group': 'music',
+      'aliases': ['kill', 'stfu', 'quit', 'leave', 'disconnect'],
+      'description': 'Stops the music and wipes the queue.',
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	run (msg) {
-		const queue = this.queue.get(msg.guild.id);
+  run (msg) {
+    const queue = this.queue.get(msg.guild.id);
 
-		if (!queue) {
-			deleteCommandMessages(msg, this.client);
+    if (!queue) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('there isn\'t any music playing right now.');
-		}
-		const song = queue.songs[0]; // eslint-disable-line one-var
+      return msg.reply('there isn\'t any music playing right now.');
+    }
+    const song = queue.songs[0]; // eslint-disable-line one-var
 
-		queue.songs = [];
-		if (song.dispatcher) {
-			song.dispatcher.end();
-		}
-		deleteCommandMessages(msg, this.client);
+    queue.songs = [];
+    if (song.dispatcher) {
+      song.dispatcher.end();
+    }
+    deleteCommandMessages(msg, this.client);
 		
-		return msg.reply('you\'ve just killed the party. Congrats. 👏');
-	}
+    return msg.reply('you\'ve just killed the party. Congrats. 👏');
+  }
 
-	get queue () {
-		if (!this._queue) {
-			this._queue = this.client.registry.resolveCommand('music:play').queue;
-		}
+  get queue () {
+    if (!this._queue) {
+      this._queue = this.client.registry.resolveCommand('music:play').queue;
+    }
 
-		return this._queue;
-	}
+    return this._queue;
+  }
 };

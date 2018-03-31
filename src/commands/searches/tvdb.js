@@ -35,75 +35,75 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	request = require('snekfetch'),
-	{TheMovieDBV3ApiKey} = require('../../auth.json'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  moment = require('moment'),
+  request = require('snekfetch'),
+  {TheMovieDBV3ApiKey} = require('../../auth.json'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class tvCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'tvdb',
-			'memberName': 'tvdb',
-			'group': 'searches',
-			'aliases': ['tv'],
-			'description': 'Finds TV shows on TheMovieDB',
-			'format': 'MovieName [release_year_movie]',
-			'examples': ['tvdb Pokemon'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'name',
-					'prompt': 'What TV serie do you want to find?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'tvdb',
+      'memberName': 'tvdb',
+      'group': 'searches',
+      'aliases': ['tv'],
+      'description': 'Finds TV shows on TheMovieDB',
+      'format': 'MovieName [release_year_movie]',
+      'examples': ['tvdb Pokemon'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'name',
+          'prompt': 'What TV serie do you want to find?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
-		const embed = new MessageEmbed(),
-			search = await request.get('https://api.themoviedb.org/3/search/tv')
-				.query('api_key', TheMovieDBV3ApiKey)
-				.query('query', args.name);
+  async run (msg, args) {
+    const embed = new MessageEmbed(),
+      search = await request.get('https://api.themoviedb.org/3/search/tv')
+        .query('api_key', TheMovieDBV3ApiKey)
+        .query('query', args.name);
 
-		if (search.ok && search.body.total_results) {
-			const details = await request.get(`https://api.themoviedb.org/3/tv/${search.body.results[0].id}`)
-				.query('api_key', TheMovieDBV3ApiKey);
+    if (search.ok && search.body.total_results) {
+      const details = await request.get(`https://api.themoviedb.org/3/tv/${search.body.results[0].id}`)
+        .query('api_key', TheMovieDBV3ApiKey);
 
-			if (details.ok) {
-				const show = details.body;
+      if (details.ok) {
+        const show = details.body;
 
-				embed
-					.setTitle(show.name)
-					.setURL(`https://www.themoviedb.org/tv/${show.id}`)
-					.setColor(msg.guild ? msg.member.displayHexColor : '#E24141')
-					.setImage(`https://image.tmdb.org/t/p/original${show.backdrop_path}`)
-					.setThumbnail(`https://image.tmdb.org/t/p/original${show.poster_path}`)
-					.setDescription(show.overview)
-					.addField('Episode Runtime', `${show.episode_run_time} minutes`, true)
-					.addField('Popularity', `${Math.round(show.popularity * 100) / 100}%`, true)
-					.addField('Status', show.status, true)
-					.addField('First air Date', moment(show.first_air_date).format('MMMM Do YYYY'), true)
-					.addField('Genres', show.genres.length ? show.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB');
+        embed
+          .setTitle(show.name)
+          .setURL(`https://www.themoviedb.org/tv/${show.id}`)
+          .setColor(msg.guild ? msg.member.displayHexColor : '#E24141')
+          .setImage(`https://image.tmdb.org/t/p/original${show.backdrop_path}`)
+          .setThumbnail(`https://image.tmdb.org/t/p/original${show.poster_path}`)
+          .setDescription(show.overview)
+          .addField('Episode Runtime', `${show.episode_run_time} minutes`, true)
+          .addField('Popularity', `${Math.round(show.popularity * 100) / 100}%`, true)
+          .addField('Status', show.status, true)
+          .addField('First air Date', moment(show.first_air_date).format('MMMM Do YYYY'), true)
+          .addField('Genres', show.genres.length ? show.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB');
 
-				deleteCommandMessages(msg, this.client);
+        deleteCommandMessages(msg, this.client);
 
-				return msg.embed(embed);
-			}
+        return msg.embed(embed);
+      }
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply(`***Failed to fetch details for \`${args.name}\`***`);
-		}
+      return msg.reply(`***Failed to fetch details for \`${args.name}\`***`);
+    }
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(`***No movies found for \`${args.name}\`***`);
-	}
+    return msg.reply(`***No movies found for \`${args.name}\`***`);
+  }
 };

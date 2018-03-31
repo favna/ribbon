@@ -34,142 +34,143 @@
  * @example skip  
  * -OR-
  * skip force
+ * @param {string} [force] Force the skip if you are the requester or a server moderator
  * @returns {Message} Confirmation the song was skipped
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class SkipSongCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'skip',
-			'memberName': 'skip',
-			'group': 'music',
-			'description': 'Skips the song that is currently playing.',
-			'examples': ['skip'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-		this.votes = new Map();
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'skip',
+      'memberName': 'skip',
+      'group': 'music',
+      'description': 'Skips the song that is currently playing.',
+      'examples': ['skip'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+    this.votes = new Map();
+  }
 
-	run (msg, args) {
-		const queue = this.queue.get(msg.guild.id);
+  run (msg, args) {
+    const queue = this.queue.get(msg.guild.id);
 
-		if (!queue) {
-			deleteCommandMessages(msg, this.client);
+    if (!queue) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('there isn\'t a song playing right now, silly.');
-		}
-		if (!queue.voiceChannel.members.has(msg.author.id)) {
-			deleteCommandMessages(msg, this.client);
+      return msg.reply('there isn\'t a song playing right now, silly.');
+    }
+    if (!queue.voiceChannel.members.has(msg.author.id)) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
-		}
-		if (!queue.songs[0].dispatcher) {
-			deleteCommandMessages(msg, this.client);
+      return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
+    }
+    if (!queue.songs[0].dispatcher) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply('the song hasn\'t even begun playing yet. Why not give it a chance?');
-		}
+      return msg.reply('the song hasn\'t even begun playing yet. Why not give it a chance?');
+    }
 
-		const threshold = Math.ceil((queue.voiceChannel.members.size - 1) / 3), // eslint-disable-line one-var
-			force = threshold <= 1 || // eslint-disable-line sort-vars
+    const threshold = Math.ceil((queue.voiceChannel.members.size - 1) / 3), // eslint-disable-line one-var
+      force = threshold <= 1 || // eslint-disable-line sort-vars
 			queue.voiceChannel.members.size < threshold ||
 			queue.songs[0].member.id === msg.author.id ||
 			(msg.member.hasPermission('MANAGE_MESSAGES') && args.toLowerCase() === 'force'); // eslint-disable-line no-extra-parens
 
-		if (force) {
-			deleteCommandMessages(msg, this.client);
+    if (force) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.reply(this.skip(msg.guild, queue));
-		}
+      return msg.reply(this.skip(msg.guild, queue));
+    }
 
-		const vote = this.votes.get(msg.guild.id); // eslint-disable-line one-var
+    const vote = this.votes.get(msg.guild.id); // eslint-disable-line one-var
 
-		if (vote && vote.count >= 1) {
-			if (vote.users.some(user => user === msg.author.id)) {
-				deleteCommandMessages(msg, this.client);
+    if (vote && vote.count >= 1) {
+      if (vote.users.some(user => user === msg.author.id)) {
+        deleteCommandMessages(msg, this.client);
 				
-				return msg.reply('you\'ve already voted to skip the song.');
-			}
+        return msg.reply('you\'ve already voted to skip the song.');
+      }
 
-			vote.count += 1;
-			vote.users.push(msg.author.id);
-			if (vote.count >= threshold) {
-				deleteCommandMessages(msg, this.client);
+      vote.count += 1;
+      vote.users.push(msg.author.id);
+      if (vote.count >= threshold) {
+        deleteCommandMessages(msg, this.client);
 				
-				return msg.reply(this.skip(msg.guild, queue));
-			}
+        return msg.reply(this.skip(msg.guild, queue));
+      }
 
-			const remaining = threshold - vote.count,
-				time = this.setTimeout(vote);
+      const remaining = threshold - vote.count,
+        time = this.setTimeout(vote);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.say(oneLine `
+      return msg.say(oneLine `
 				${vote.count} vote${vote.count > 1 ? 's' : ''} received so far,
 				${remaining} more ${remaining > 1 ? 'are' : 'is'} needed to skip.
 				Five more seconds on the clock! The vote will end in ${time} seconds.
 			`);
-		}
-		const newVote = { // eslint-disable-line one-var            
-				'count': 1,
-				'users': [msg.author.id],
-				queue,
-				'guild': msg.guild.id,
-				'start': Date.now(),
-				'timeout': null
-			},
-			remaining = threshold - 1,
-			time = this.setTimeout(newVote);
+    }
+    const newVote = { // eslint-disable-line one-var            
+        'count': 1,
+        'users': [msg.author.id],
+        queue,
+        'guild': msg.guild.id,
+        'start': Date.now(),
+        'timeout': null
+      },
+      remaining = threshold - 1,
+      time = this.setTimeout(newVote);
 
-		this.votes.set(msg.guild.id, newVote);
+    this.votes.set(msg.guild.id, newVote);
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 		
-		return msg.say(oneLine `
+    return msg.say(oneLine `
 				Starting a voteskip.
 				${remaining} more vote${remaining > 1 ? 's are' : ' is'} required for the song to be skipped.
 				The vote will end in ${time} seconds.
 			`);
 
-	}
+  }
 
-	skip (guild, queue) {
-		if (this.votes.has(guild.id)) {
-			clearTimeout(this.votes.get(guild.id).timeout);
-			this.votes.delete(guild.id);
-		}
+  skip (guild, queue) {
+    if (this.votes.has(guild.id)) {
+      clearTimeout(this.votes.get(guild.id).timeout);
+      this.votes.delete(guild.id);
+    }
 
-		const song = queue.songs[0];
+    const song = queue.songs[0];
 
-		song.dispatcher.end();
+    song.dispatcher.end();
 
-		return `Skipped: **${song}**`;
-	}
+    return `Skipped: **${song}**`;
+  }
 
-	setTimeout (vote) {
+  setTimeout (vote) {
 		const time = vote.start + 15000 - Date.now() + (vote.count - 1) * 5000; // eslint-disable-line
 
-		clearTimeout(vote.timeout);
-		vote.timeout = setTimeout(() => {
-			this.votes.delete(vote.guild);
-			vote.queue.textChannel.send('The vote to skip the current song has ended. Get outta here, party poopers.');
-		}, time);
+    clearTimeout(vote.timeout);
+    vote.timeout = setTimeout(() => {
+      this.votes.delete(vote.guild);
+      vote.queue.textChannel.send('The vote to skip the current song has ended. Get outta here, party poopers.');
+    }, time);
 
-		return Math.round(time / 1000);
-	}
+    return Math.round(time / 1000);
+  }
 
-	get queue () {
-		if (!this._queue) {
-			this._queue = this.client.registry.resolveCommand('music:play').queue;
-		}
+  get queue () {
+    if (!this._queue) {
+      this._queue = this.client.registry.resolveCommand('music:play').queue;
+    }
 
-		return this._queue;
-	}
+    return this._queue;
+  }
 };

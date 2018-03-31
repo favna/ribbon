@@ -37,40 +37,40 @@
 const commando = require('discord.js-commando');
 
 module.exports = class purgeCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'purge',
-			'memberName': 'purge',
-			'group': 'moderation',
-			'aliases': ['prune', 'delete'],
-			'description': 'Purge a certain amount of messages',
-			'format': 'AmountOfMessages',
-			'examples': ['purge 5'],
-			'guildOnly': true,
-			'args': [
-				{
-					'key': 'amount',
-					'prompt': 'How many messages should I purge?',
-					'min': 1,
-					'max': 99,
-					'type': 'integer'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'purge',
+      'memberName': 'purge',
+      'group': 'moderation',
+      'aliases': ['prune', 'delete'],
+      'description': 'Purge a certain amount of messages',
+      'format': 'AmountOfMessages',
+      'examples': ['purge 5'],
+      'guildOnly': true,
+      'args': [
+        {
+          'key': 'amount',
+          'prompt': 'How many messages should I purge?',
+          'min': 1,
+          'max': 99,
+          'type': 'integer'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
+  }
 
-	async run (msg, args) {
-		msg.channel.bulkDelete(args.amount + 1, true);
+  async run (msg, args) {
+    msg.channel.bulkDelete(args.amount + 1, true);
 
-		const reply = await msg.say(`\`Deleted ${args.amount} messages\``);
+    const reply = await msg.say(`\`Deleted ${args.amount} messages\``);
 
-		return reply.delete({
-			'timeout': 1000,
-			'reason': 'Deleting own return message after purge'
-		});
-	}
+    return reply.delete({
+      'timeout': 1000,
+      'reason': 'Deleting own return message after purge'
+    });
+  }
 };

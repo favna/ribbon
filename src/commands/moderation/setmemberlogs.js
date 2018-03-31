@@ -35,42 +35,42 @@
  */
 
 const commando = require('discord.js-commando'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class setMemberlogsCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'setmemberlogs',
-			'memberName': 'setmemberlogs',
-			'group': 'moderation',
-			'aliases': ['setmember'],
-			'description': 'Set the memberlogs channel used for logging member logs (such as people joining and leaving). Ensure to enable memberlogs with the "memberlogs" command.',
-			'format': 'ChannelID|ChannelName(partial or full)',
-			'examples': ['setmemberlogs member-logs'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'channel',
-					'prompt': 'What channel should I set for member logs? (make sure to start with a # when going by name)',
-					'type': 'channel'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'setmemberlogs',
+      'memberName': 'setmemberlogs',
+      'group': 'moderation',
+      'aliases': ['setmember'],
+      'description': 'Set the memberlogs channel used for logging member logs (such as people joining and leaving). Ensure to enable memberlogs with the "memberlogs" command.',
+      'format': 'ChannelID|ChannelName(partial or full)',
+      'examples': ['setmemberlogs member-logs'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'channel',
+          'prompt': 'What channel should I set for member logs? (make sure to start with a # when going by name)',
+          'type': 'channel'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+  }
 
-	run (msg, args) {
-		this.client.provider.set(msg.guild.id, 'memberlogchannel', args.channel.id);
-		deleteCommandMessages(msg, this.client);
+  run (msg, args) {
+    this.client.provider.set(msg.guild.id, 'memberlogchannel', args.channel.id);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(oneLine `the channel to use for the member logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'memberlogchannel')).name}`);
-	}
+    return msg.reply(oneLine `the channel to use for the member logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'memberlogchannel')).name}`);
+  }
 };

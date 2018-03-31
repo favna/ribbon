@@ -36,63 +36,63 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	xdicey = require('xdicey'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  xdicey = require('xdicey'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class diceCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'dice',
-			'memberName': 'dice',
-			'group': 'games',
-			'aliases': ['xdicey', 'roll', 'dicey', 'die'],
-			'description': 'Sends contents of a copypasta file to the chat',
-			'format': 'SidesOfTheDice AmountOfRolls',
-			'examples': ['dice 6 5'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
+  constructor (client) {
+    super(client, {
+      'name': 'dice',
+      'memberName': 'dice',
+      'group': 'games',
+      'aliases': ['xdicey', 'roll', 'dicey', 'die'],
+      'description': 'Sends contents of a copypasta file to the chat',
+      'format': 'SidesOfTheDice AmountOfRolls',
+      'examples': ['dice 6 5'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
 
-			'args': [
-				{
-					'key': 'sides',
-					'prompt': 'How many sides does your die have?',
-					'type': 'integer',
-					'min': 4,
-					'max': 20
-				}, {
-					'key': 'rolls',
-					'prompt': 'How many times should the die be rolled?',
-					'type': 'integer',
-					'min': 1,
-					'max': 40
-				}
-			]
-		});
-	}
+      'args': [
+        {
+          'key': 'sides',
+          'prompt': 'How many sides does your die have?',
+          'type': 'integer',
+          'min': 4,
+          'max': 20
+        }, {
+          'key': 'rolls',
+          'prompt': 'How many times should the die be rolled?',
+          'type': 'integer',
+          'min': 1,
+          'max': 40
+        }
+      ]
+    });
+  }
 
-	run (msg, args) {
-		const diceEmbed = new MessageEmbed(),
-			res = [],
-			throwDice = xdicey(args.rolls, args.sides);
-
-
-		for (const i in throwDice.individual) { // eslint-disable-line guard-for-in
-			res.push(`${throwDice.individual[i]}`);
-		}
+  run (msg, args) {
+    const diceEmbed = new MessageEmbed(),
+      res = [],
+      throwDice = xdicey(args.rolls, args.sides);
 
 
-		diceEmbed
-			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.setTitle('🎲 Dice Rolls 🎲')
-			.setDescription(`| ${res.join(' | ')} |`)
-			.addField('Total', throwDice.total, false);
+    for (const i in throwDice.individual) { // eslint-disable-line guard-for-in
+      res.push(`${throwDice.individual[i]}`);
+    }
 
-		deleteCommandMessages(msg, this.client);
 
-		return msg.embed(diceEmbed);
-	}
+    diceEmbed
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setTitle('🎲 Dice Rolls 🎲')
+      .setDescription(`| ${res.join(' | ')} |`)
+      .addField('Total', throwDice.total, false);
+
+    deleteCommandMessages(msg, this.client);
+
+    return msg.embed(diceEmbed);
+  }
 };

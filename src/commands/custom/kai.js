@@ -34,57 +34,57 @@
  */
 
 const commando = require('discord.js-commando'),
-	{stripIndents} = require('common-tags');
+  {stripIndents} = require('common-tags');
 
 module.exports = class kaiCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'kai',
-			'memberName': 'kai',
-			'group': 'custom',
-			'description': 'Kai get lost',
-			'details': 'Custom commands can be made for your server too! Just join the support server (use the `stats` command) and request the command.',
-			'guildOnly': true,
-			'patterns': [/^\.kai$/im],
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'kai',
+      'memberName': 'kai',
+      'group': 'custom',
+      'description': 'Kai get lost',
+      'details': 'Custom commands can be made for your server too! Just join the support server (use the `stats` command) and request the command.',
+      'guildOnly': true,
+      'patterns': [/^\.kai$/im],
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	fetchImage () {
-		const images = [
-				'https://favna.s-ul.eu/Hmv6rsY6.png',
-				'https://favna.s-ul.eu/DerXT5C5.png',
-				'https://favna.s-ul.eu/8PvkavPo.png',
-				'https://favna.s-ul.eu/JKgRZkuq.png',
-				'https://favna.s-ul.eu/13UU9aOL.png',
-				'https://favna.s-ul.eu/auWaubvu.gif'
-			],
-			curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
+  fetchImage () {
+    const images = [
+        'https://favna.s-ul.eu/Hmv6rsY6.png',
+        'https://favna.s-ul.eu/DerXT5C5.png',
+        'https://favna.s-ul.eu/8PvkavPo.png',
+        'https://favna.s-ul.eu/JKgRZkuq.png',
+        'https://favna.s-ul.eu/13UU9aOL.png',
+        'https://favna.s-ul.eu/auWaubvu.gif'
+      ],
+      curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
 
-		return images[curImage];
-	}
+    return images[curImage];
+  }
 
-	hasPermission (msg) {
-		if (this.client.isOwner(msg.author)) {
-			return true;
-		}
-		if (msg.guild.id !== '373826006651240450') {
-			return stripIndents `That command can only be used in the Chaos Gamez server, sorry 😦
+  hasPermission (msg) {
+    if (this.client.isOwner(msg.author)) {
+      return true;
+    }
+    if (msg.guild.id !== '373826006651240450') {
+      return stripIndents `That command can only be used in the Chaos Gamez server, sorry 😦
 			Want your own server specific custom commands? Join the support server (link in the \`${msg.guild.commandPrefix}stats\` command) and request the command.`;
-		}
+    }
 
-		return true;
-	}
+    return true;
+  }
 
-	run (msg) {
-		msg.delete();
-		msg.embed({
-			'image': {'url': this.fetchImage()},
-			'color': msg.guild ? msg.guild.me.displayColor : 10610610
-		},
-		'Please <@418504046337589249> get lost');
-	}
+  run (msg) {
+    msg.delete();
+    msg.embed({
+      'image': {'url': this.fetchImage()},
+      'color': msg.guild ? msg.guild.me.displayColor : 10610610
+    },
+    'Please <@418504046337589249> get lost');
+  }
 };

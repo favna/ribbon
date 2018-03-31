@@ -28,7 +28,7 @@
  * First banishes any existing zalgo to ensure proper result  
  * **Aliases**: `trash`
  * @module
- * @category util
+ * @category extra
  * @name zalgo
  * @example zalgo HE COMES 
  * @param {string} SomeText Your input to transform with Zalgo
@@ -36,38 +36,38 @@
  */
 
 const banish = require('to-zalgo/banish'),
-	commando = require('discord.js-commando'),
-	zalgo = require('to-zalgo'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  zalgo = require('to-zalgo'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class zalgoCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'zalgo',
-			'memberName': 'zalgo',
-			'group': 'util',
-			'aliases': ['trash'],
-			'description': 'F*ck up text using Zalgo',
-			'format': 'ContentToTransform',
-			'examples': ['zalgo HE COMES'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'txt',
-					'prompt': 'What should I zalgolize?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'zalgo',
+      'memberName': 'zalgo',
+      'group': 'extra',
+      'aliases': ['trash'],
+      'description': 'F*ck up text using Zalgo',
+      'format': 'ContentToTransform',
+      'examples': ['zalgo HE COMES'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'txt',
+          'prompt': 'What should I zalgolize?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	run (msg, args) {
-		deleteCommandMessages(msg, this.client);
+  run (msg, args) {
+    deleteCommandMessages(msg, this.client);
 
-		return msg.say(zalgo(banish(args.txt)));
-	}
+    return msg.say(zalgo(banish(args.txt)));
+  }
 };

@@ -36,100 +36,100 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	moment = require('moment'), 
-	{oneLine} = require('common-tags'), 
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  moment = require('moment'), 
+  {oneLine} = require('common-tags'), 
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class banCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'ban',
-			'memberName': 'ban',
-			'group': 'moderation',
-			'aliases': ['b', 'banana'],
-			'description': 'Bans a member from the server',
-			'format': 'MemberID|MemberName(partial or full) [ReasonForBanning]',
-			'examples': ['ban JohnDoe annoying'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'member',
-					'prompt': 'Which member should I ban?',
-					'type': 'member'
-				},
-				{
-					'key': 'reason',
-					'prompt': 'What is the reason for this banishment?',
-					'type': 'string',
-					'default': ''
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'ban',
+      'memberName': 'ban',
+      'group': 'moderation',
+      'aliases': ['b', 'banana'],
+      'description': 'Bans a member from the server',
+      'format': 'MemberID|MemberName(partial or full) [ReasonForBanning]',
+      'examples': ['ban JohnDoe annoying'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'member',
+          'prompt': 'Which member should I ban?',
+          'type': 'member'
+        },
+        {
+          'key': 'reason',
+          'prompt': 'What is the reason for this banishment?',
+          'type': 'string',
+          'default': ''
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('BAN_MEMBERS');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('BAN_MEMBERS');
+  }
 
-	run (msg, args) {
-		if (args.member.id === msg.author.id) {
-			deleteCommandMessages(msg, this.client);
+  run (msg, args) {
+    if (args.member.id === msg.author.id) {
+      deleteCommandMessages(msg, this.client);
 
-			return msg.reply('⚠️ I don\'t think you want to ban yourself.');
-		}
+      return msg.reply('⚠️ I don\'t think you want to ban yourself.');
+    }
 
-		if (!args.member.bannable) {
-			deleteCommandMessages(msg, this.client);
+    if (!args.member.bannable) {
+      deleteCommandMessages(msg, this.client);
 
-			return msg.reply('⚠️ I cannot ban that member, their role is probably higher than my own!');
-		}
+      return msg.reply('⚠️ I cannot ban that member, their role is probably higher than my own!');
+    }
 
-		if (/--nodelete/im.test(msg.argString)) {
-			args.reason = args.reason.substring(0, args.reason.indexOf('--nodelete')) + args.reason.substring(args.reason.indexOf('--nodelete') + '--nodelete'.length + 1);
-			args.keepmessages = true;
-		}
+    if (/--nodelete/im.test(msg.argString)) {
+      args.reason = args.reason.substring(0, args.reason.indexOf('--nodelete')) + args.reason.substring(args.reason.indexOf('--nodelete') + '--nodelete'.length + 1);
+      args.keepmessages = true;
+    }
 		
-		args.member.ban({
-			'days': args.keepmessages ? 0 : 1,
-			'reason': args.reason !== '' ? args.reason : 'No reason given by staff'
-		});
+    args.member.ban({
+      'days': args.keepmessages ? 0 : 1,
+      'reason': args.reason !== '' ? args.reason : 'No reason given by staff'
+    });
 
-		const embed = new MessageEmbed(),
-			modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
-				msg.guild.channels.exists('name', 'mod-logs')
-					? msg.guild.channels.find('name', 'mod-logs').id
-					: null);
+    const embed = new MessageEmbed(),
+      modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
+        msg.guild.channels.exists('name', 'mod-logs')
+          ? msg.guild.channels.find('name', 'mod-logs').id
+          : null);
 
-		embed
-			.setColor('#FF1900')
-			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-			.setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
+    embed
+      .setColor('#FF1900')
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
 				'**Action:** Ban\n' +
 				`**Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
-			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+      .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
-		if (this.client.provider.get(msg.guild, 'modlogs', true)) {
-			if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-				msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+    if (this.client.provider.get(msg.guild, 'modlogs', true)) {
+      if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+        msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-				this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
-			}
+        this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+      }
 
-			if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-				msg.delete();
-			}
-			deleteCommandMessages(msg, this.client);
+      if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+        msg.delete();
+      }
+      deleteCommandMessages(msg, this.client);
 
-			return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);
-		}
-		deleteCommandMessages(msg, this.client);
+      return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);
+    }
+    deleteCommandMessages(msg, this.client);
 
-		return msg.embed(embed);
-	}
+    return msg.embed(embed);
+  }
 };

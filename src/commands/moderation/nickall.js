@@ -34,7 +34,7 @@
  * @category moderation
  * @name nickall
  * @example nickall prefix ༼ つ ◕_◕ ༽つ  
- * OR-  
+ * -OR-  
  * nickall append ( ͡° ͜ʖ ͡°)  
  * -OR-  
  * nickall clear  
@@ -45,92 +45,92 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	{oneLine, stripIndents} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  moment = require('moment'),
+  {oneLine, stripIndents} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class nickallCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'nickall',
-			'memberName': 'nickall',
-			'aliases': ['na', 'massnick', 'nickmass', 'allnick'],
-			'group': 'moderation',
-			'description': 'Modify the nickname for all guildmembers',
-			'details': stripIndents `${oneLine `Assign, remove, prefix/append with a nickname to all members. 
+  constructor (client) {
+    super(client, {
+      'name': 'nickall',
+      'memberName': 'nickall',
+      'aliases': ['na', 'massnick', 'nickmass', 'allnick'],
+      'group': 'moderation',
+      'description': 'Modify the nickname for all guildmembers',
+      'details': stripIndents `${oneLine `Assign, remove, prefix/append with a nickname to all members. 
                                 Use \`clear\` as argument to remove the nickname, 
                                 \`prefix\` to add a prefix to every member (takes their current nickname if they have one or their username if they do not), 
 								\`append\` to do the same but append it instead of prefix`}
 						**Please note that on larger servers this command can take a very long time to actually nickname all the members because Discord only allows a couple of actions per minute.**`,
-			'format': '[prefix|append] NewNickname|clear',
-			'examples': ['nickall AverageJoe', 'nickall prefix ༼ つ ◕_◕ ༽つ'],
-			'guildOnly': true,
-			'args': [
-				{
-					'key': 'data',
-					'prompt': 'What nickname to assign? Check the details through the `help nickall` command to see all options',
-					'type': 'string'
-				}
-			]
-		});
-	}
+      'format': '[prefix|append] NewNickname|clear',
+      'examples': ['nickall AverageJoe', 'nickall prefix ༼ つ ◕_◕ ༽つ'],
+      'guildOnly': true,
+      'args': [
+        {
+          'key': 'data',
+          'prompt': 'What nickname to assign? Check the details through the `help nickall` command to see all options',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_NICKNAMES');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_NICKNAMES');
+  }
 
-	run (msg, args) {
-		const allMembers = msg.guild.members.values(),
-			argData = args.data.split(' '),
-			embed = new MessageEmbed(),
-			modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
-				msg.guild.channels.exists('name', 'mod-logs')
-					? msg.guild.channels.find('name', 'mod-logs').id
-					: null);
+  run (msg, args) {
+    const allMembers = msg.guild.members.values(),
+      argData = args.data.split(' '),
+      embed = new MessageEmbed(),
+      modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
+        msg.guild.channels.exists('name', 'mod-logs')
+          ? msg.guild.channels.find('name', 'mod-logs').id
+          : null);
 
-		embed
-			.setColor('#355698')
-			.setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-			.setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+    embed
+      .setColor('#355698')
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
-		if (argData[0] === 'clear') {
-			for (const member of allMembers) {
-				member.setNickname('');
-			}
-			embed.setDescription('**Action:** Removed the nicknames from all members');
-		} else if (argData[0] === 'prefix') {
-			for (const member of allMembers) {
-				member.setNickname(`${argData.slice(1).join(' ')} ${member.displayName}`);
-			}
-			embed.setDescription(`**Action:** Prefix the name of every member with ${argData.slice(1).join(' ')}`);
-		} else if (argData[0] === 'append') {
-			for (const member of allMembers) {
-				member.setNickname(`${member.displayName} ${argData.slice(1).join(' ')}`);
-			}
-			embed.setDescription(`**Action:** Appended the name of every member with ${argData.slice(1).join(' ')}`);
-		} else {
-			for (const member of allMembers) {
-				member.setNickname(args.data);
-			}
-			embed.setDescription(`**Action:** Assigned the nickname ${args.data} to all members`);
-		}
+    if (argData[0] === 'clear') {
+      for (const member of allMembers) {
+        member.setNickname('');
+      }
+      embed.setDescription('**Action:** Removed the nicknames from all members');
+    } else if (argData[0] === 'prefix') {
+      for (const member of allMembers) {
+        member.setNickname(`${argData.slice(1).join(' ')} ${member.displayName}`);
+      }
+      embed.setDescription(`**Action:** Prefix the name of every member with ${argData.slice(1).join(' ')}`);
+    } else if (argData[0] === 'append') {
+      for (const member of allMembers) {
+        member.setNickname(`${member.displayName} ${argData.slice(1).join(' ')}`);
+      }
+      embed.setDescription(`**Action:** Appended the name of every member with ${argData.slice(1).join(' ')}`);
+    } else {
+      for (const member of allMembers) {
+        member.setNickname(args.data);
+      }
+      embed.setDescription(`**Action:** Assigned the nickname ${args.data} to all members`);
+    }
 
-		if (this.client.provider.get(msg.guild, 'modlogs', true)) {
-			if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-				msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+    if (this.client.provider.get(msg.guild, 'modlogs', true)) {
+      if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+        msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-				this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
-			}
+        this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+      }
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.say(embed);
-		}
+      return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.say(embed);
+    }
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.embed(embed);
-	}
+    return msg.embed(embed);
+  }
 };

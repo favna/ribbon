@@ -33,62 +33,62 @@
  */
 
 const commando = require('discord.js-commando'),
-	path = require('path'),
-	Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
-	{stripIndents} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  path = require('path'),
+  Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
+  {stripIndents} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class MusicStatusCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'status',
-			'memberName': 'status',
-			'group': 'music',
-			'aliases': ['song', 'playing', 'current-song', 'now-playing'],
-			'description': 'Shows the current status of the music.',
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'status',
+      'memberName': 'status',
+      'group': 'music',
+      'aliases': ['song', 'playing', 'current-song', 'now-playing'],
+      'description': 'Shows the current status of the music.',
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	run (msg) {
-		const queue = this.queue.get(msg.guild.id);
+  run (msg) {
+    const queue = this.queue.get(msg.guild.id);
 
-		if (!queue) {
-			deleteCommandMessages(msg, this.client);
+    if (!queue) {
+      deleteCommandMessages(msg, this.client);
 			
-			return msg.say('There isn\'t any music playing right now. You should get on that.');
-		}
-		const song = queue.songs[0], // eslint-disable-line one-var
-			currentTime = song.dispatcher ? song.dispatcher.streamTime / 1000 : 0, // eslint-disable-line sort-vars
-			embed = { // eslint-disable-line sort-vars
-				'color': 3447003,
-				'author': {
-					'name': `${song.username}`,
-					'icon_url': song.avatar
-				},
-				'description': stripIndents `
+      return msg.say('There isn\'t any music playing right now. You should get on that.');
+    }
+    const song = queue.songs[0], // eslint-disable-line one-var
+      currentTime = song.dispatcher ? song.dispatcher.streamTime / 1000 : 0, // eslint-disable-line sort-vars
+      embed = { // eslint-disable-line sort-vars
+        'color': 3447003,
+        'author': {
+          'name': `${song.username}`,
+          'icon_url': song.avatar
+        },
+        'description': stripIndents `
 				[${song}](${`${song.url}`})
 
 				We are ${Song.timeString(currentTime)} into the song, and have ${song.timeLeft(currentTime)} left.
 				${!song.playing ? 'The music is paused.' : ''}
 			`,
-				'image': {'url': song.thumbnail}
-			};
+        'image': {'url': song.thumbnail}
+      };
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 		
-		return msg.embed(embed);
-	}
+    return msg.embed(embed);
+  }
 
-	get queue () {
-		if (!this._queue) {
-			this._queue = this.client.registry.resolveCommand('music:play').queue;
-		}
+  get queue () {
+    if (!this._queue) {
+      this._queue = this.client.registry.resolveCommand('music:play').queue;
+    }
 
-		return this._queue;
-	}
+    return this._queue;
+  }
 };

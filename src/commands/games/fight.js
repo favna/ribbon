@@ -36,96 +36,96 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	random = require('node-random'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  moment = require('moment'),
+  random = require('node-random'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class fightCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'fight',
-			'memberName': 'fight',
-			'group': 'games',
-			'aliases': ['combat'],
-			'description': 'Pit two things against each other in a fight to the death',
-			'details': 'Winner is deteremined with random.org randomization',
-			'format': 'FirstFighter, SecondFighter',
-			'examples': ['fight Favna Chuck Norris'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'fighterOne',
-					'prompt': 'Who or what is the first fighter?',
-					'type': 'string'
-				},
-				{
-					'key': 'fighterTwo',
-					'prompt': 'What or what is the second fighter?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'fight',
+      'memberName': 'fight',
+      'group': 'games',
+      'aliases': ['combat'],
+      'description': 'Pit two things against each other in a fight to the death',
+      'details': 'Winner is deteremined with random.org randomization',
+      'format': 'FirstFighter, SecondFighter',
+      'examples': ['fight Favna Chuck Norris'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'fighterOne',
+          'prompt': 'Who or what is the first fighter?',
+          'type': 'string'
+        },
+        {
+          'key': 'fighterTwo',
+          'prompt': 'What or what is the second fighter?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	run (msg, args) {
-		const fighterEmbed = new MessageEmbed();
+  run (msg, args) {
+    const fighterEmbed = new MessageEmbed();
 
-		fighterEmbed
-			.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-			.setTitle('🥊 Fight Results 🥊')
-			.setThumbnail('http://i.imgur.com/LxPAE2f.png');
+    fighterEmbed
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setTitle('🥊 Fight Results 🥊')
+      .setThumbnail('http://i.imgur.com/LxPAE2f.png');
 
-		if (args.fighterOne.toLowerCase() === 'chuck norris' || args.fighterTwo.toLowerCase() === 'chuck norris') {
-			if (args.fighterOne.toLowerCase() === 'favna' || args.fighterTwo.toLowerCase() === 'favna') {
-				fighterEmbed
-					.addField('All right, you asked for it...', '***The universe was destroyed due to this battle between two unstoppable forces. Good Job.***')
-					.setImage('https://i.imgur.com/Witob4j.png');
-			} else {
-				fighterEmbed
-					.addField('You fokn wot m8', '***Chuck Norris cannot be beaten***')
-					.setImage('https://i.imgur.com/WCFyXRr.png');
-			}
+    if (args.fighterOne.toLowerCase() === 'chuck norris' || args.fighterTwo.toLowerCase() === 'chuck norris') {
+      if (args.fighterOne.toLowerCase() === 'favna' || args.fighterTwo.toLowerCase() === 'favna') {
+        fighterEmbed
+          .addField('All right, you asked for it...', '***The universe was destroyed due to this battle between two unstoppable forces. Good Job.***')
+          .setImage('https://i.imgur.com/Witob4j.png');
+      } else {
+        fighterEmbed
+          .addField('You fokn wot m8', '***Chuck Norris cannot be beaten***')
+          .setImage('https://i.imgur.com/WCFyXRr.png');
+      }
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(fighterEmbed);
-		}
-		if (args.fighterOne.toLowerCase() === 'favna' || args.fighterTwo.toLowerCase() === 'favna') {
-			fighterEmbed
-				.addField('You got mega rekt', '***Favna always wins***')
-				.setImage('https://favna.s-ul.eu/gifs/hsp6RS9O.gif');
+      return msg.embed(fighterEmbed);
+    }
+    if (args.fighterOne.toLowerCase() === 'favna' || args.fighterTwo.toLowerCase() === 'favna') {
+      fighterEmbed
+        .addField('You got mega rekt', '***Favna always wins***')
+        .setImage('https://favna.s-ul.eu/gifs/hsp6RS9O.gif');
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(fighterEmbed);
-		}
-		random.integers({'number': 2}, (error, data) => {
-			if (!error) {
-				const fighterOneChance = parseInt(data[0], 10),
-					fighterTwoChance = parseInt(data[1], 10),
-					loser = Math.min(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo,
-					winner = Math.max(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo;
+      return msg.embed(fighterEmbed);
+    }
+    random.integers({'number': 2}, (error, data) => {
+      if (!error) {
+        const fighterOneChance = parseInt(data[0], 10),
+          fighterTwoChance = parseInt(data[1], 10),
+          loser = Math.min(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo,
+          winner = Math.max(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo;
 
-				fighterEmbed
-					.addField('🇼 Winner', `**${winner}**`, true)
-					.addField('🇱 Loser', `**${loser}**`, true)
-					.setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+        fighterEmbed
+          .addField('🇼 Winner', `**${winner}**`, true)
+          .addField('🇱 Loser', `**${loser}**`, true)
+          .setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
-				deleteCommandMessages(msg, this.client);
+        deleteCommandMessages(msg, this.client);
 
-				return msg.embed(fighterEmbed);
-			}
+        return msg.embed(fighterEmbed);
+      }
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.reply('⚠️ an error occured pitting these combatants against each other 😦');
-		});
+      return msg.reply('⚠️ an error occured pitting these combatants against each other 😦');
+    });
 		
-		return null;
-	}
+    return null;
+  }
 };

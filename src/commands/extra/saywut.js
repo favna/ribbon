@@ -27,53 +27,53 @@
  * Bust the last "say" user  
  * **Aliases**: `saywat`, `saywot`
  * @module
- * @category util
+ * @category extra
  * @name saywut
  * @returns {MessageEmbed} Info on who used the "say" command last
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	{oneLine} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  moment = require('moment'),
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class sayWutCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'saywut',
-			'memberName': 'saywut',
-			'group': 'util',
-			'aliases': ['saywat', 'saywot'],
-			'description': 'Bust the last "say" user',
-			'examples': ['saywut'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			}
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'saywut',
+      'memberName': 'saywut',
+      'group': 'extra',
+      'aliases': ['saywat', 'saywot'],
+      'description': 'Bust the last "say" user',
+      'examples': ['saywut'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      }
+    });
+  }
 
-	run (msg) {
-		const saydata = this.client.provider.get(msg.guild.id, 'saydata', null),
-			wutEmbed = new MessageEmbed();
+  run (msg) {
+    const saydata = this.client.provider.get(msg.guild.id, 'saydata', null),
+      wutEmbed = new MessageEmbed();
 
-		if (saydata) {
-			wutEmbed
-				.setColor(saydata.memberHexColor)
-				.setTitle(`Last ${saydata.commandPrefix}say message author`)
-				.setAuthor(oneLine `${saydata.authorTag} (${saydata.authorID})`, saydata.avatarURL)
-				.setFooter(oneLine `${moment(saydata.messageDate).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.s-ul.eu/0wDHYIRn.png')
-				.setDescription(saydata.argString);
+    if (saydata) {
+      wutEmbed
+        .setColor(saydata.memberHexColor)
+        .setTitle(`Last ${saydata.commandPrefix}say message author`)
+        .setAuthor(oneLine `${saydata.authorTag} (${saydata.authorID})`, saydata.avatarURL)
+        .setFooter(oneLine `${moment(saydata.messageDate).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.s-ul.eu/0wDHYIRn.png')
+        .setDescription(saydata.argString);
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(wutEmbed);
-		}
+      return msg.embed(wutEmbed);
+    }
 
-		deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply(`couldn't fetch message for your server. Has anyone used the ${msg.guild.commandPrefix}say command before?`);
-	}
+    return msg.reply(`couldn't fetch message for your server. Has anyone used the ${msg.guild.commandPrefix}say command before?`);
+  }
 };

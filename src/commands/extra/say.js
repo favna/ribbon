@@ -27,7 +27,7 @@
  * Repeats a message and deletes your message  
  * **Aliases**: `sayd`, `repeat`
  * @module
- * @category util
+ * @category extra
  * @name say
  * @example say Favna is a great coder!
  * @param {string} Text Message you want to have repeated
@@ -37,57 +37,57 @@
 const commando = require('discord.js-commando');
 
 module.exports = class sayCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'say',
-			'memberName': 'say',
-			'group': 'util',
-			'aliases': ['sayd', 'repeat'],
-			'description': 'I will repeat your message',
-			'format': 'MesssageToSay',
-			'examples': ['say Favna is a great coder!'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'txt',
-					'prompt': 'What should I say?',
-					'type': 'string',
-					'validate': (rep, msg) => {
-						if (msg.content.toLowerCase().includes('@here') ||
+  constructor (client) {
+    super(client, {
+      'name': 'say',
+      'memberName': 'say',
+      'group': 'extra',
+      'aliases': ['sayd', 'repeat'],
+      'description': 'I will repeat your message',
+      'format': 'MesssageToSay',
+      'examples': ['say Favna is a great coder!'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'txt',
+          'prompt': 'What should I say?',
+          'type': 'string',
+          'validate': (rep, msg) => {
+            if (msg.content.toLowerCase().includes('@here') ||
 						msg.content.toLowerCase().includes('@everyone') ||
 						msg.cleanContent.toLowerCase().includes('@here') ||
 						msg.cleanContent.toLowerCase().includes('@everyone')) {
-							msg.delete();
+              msg.delete();
 
-							return 'You cannot make me mention `@here` or `@everyone`! Would you like me to say anything else?';
-						}
+              return 'You cannot make me mention `@here` or `@everyone`! Would you like me to say anything else?';
+            }
 
-						return true;
-					}
-				}
-			]
-		});
-	}
+            return true;
+          }
+        }
+      ]
+    });
+  }
 
-	run (msg, args) {
-		const saydata = {
-			'memberHexColor': msg.member.displayHexColor,
-			'commandPrefix': msg.guild.commandPrefix,
-			'authorTag': msg.author.tag,
-			'authorID': msg.author.id,
-			'avatarURL': msg.author.displayAvatarURL({'format': 'png'}),
-			'messageDate': msg.createdAt,
-			'argString': msg.argString.slice(1)
-		};
+  run (msg, args) {
+    const saydata = {
+      'memberHexColor': msg.member.displayHexColor,
+      'commandPrefix': msg.guild.commandPrefix,
+      'authorTag': msg.author.tag,
+      'authorID': msg.author.id,
+      'avatarURL': msg.author.displayAvatarURL({'format': 'png'}),
+      'messageDate': msg.createdAt,
+      'argString': msg.argString.slice(1)
+    };
 
-		this.client.provider.set(msg.guild.id, 'saydata', saydata);
+    this.client.provider.set(msg.guild.id, 'saydata', saydata);
 
-		msg.delete();
+    msg.delete();
 
-		return msg.say(args.txt);
-	}
+    return msg.say(args.txt);
+  }
 };

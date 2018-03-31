@@ -32,34 +32,34 @@
  */
 
 const commando = require('discord.js-commando'),
-	eshop = require('nintendo-switch-eshop'),
-	fs = require('fs'),
-	path = require('path'),
-	{deleteCommandMessages} = require('../../util.js');
+  eshop = require('nintendo-switch-eshop'),
+  fs = require('fs'),
+  path = require('path'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class EshopFetchCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'eshopfetch',
-			'memberName': 'eshopfetch',
-			'group': 'owner',
-			'aliases': ['efetch'],
-			'description': 'Fetches latest games list from the Nintendo Switch eShop',
-			'examples': ['eshopfetch'],
-			'guildOnly': false,
-			'ownerOnly': true
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'eshopfetch',
+      'memberName': 'eshopfetch',
+      'group': 'owner',
+      'aliases': ['efetch'],
+      'description': 'Fetches latest games list from the Nintendo Switch eShop',
+      'examples': ['eshopfetch'],
+      'guildOnly': false,
+      'ownerOnly': true
+    });
+  }
 
-	async run (msg) {
-		fs.writeFileSync(path.join(__dirname, '../../data/websearch/eshop.json'), JSON.stringify(await eshop.getGamesAmerica()), 'utf8');
+  async run (msg) {
+    fs.writeFileSync(path.join(__dirname, '../../data/websearch/eshop.json'), JSON.stringify(await eshop.getGamesAmerica()), 'utf8');
 
-		if (fs.existsSync(path.join(__dirname, '../../data/websearch/eshop.json'))) {
-			deleteCommandMessages(msg, this.client);
+    if (fs.existsSync(path.join(__dirname, '../../data/websearch/eshop.json'))) {
+      deleteCommandMessages(msg, this.client);
 
-			return msg.reply('Latest eshop data stored in file');
-		}
+      return msg.reply('Latest eshop data stored in file');
+    }
 
-		return msg.reply('An error occured fetching latest data!');
-	}
+    return msg.reply('An error occured fetching latest data!');
+  }
 };

@@ -35,67 +35,67 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	request = require('snekfetch'),
-	{discordbotsAPIKey} = require('../../auth.json'),
-	{deleteCommandMessages} = require('../../util.js');
+  commando = require('discord.js-commando'),
+  moment = require('moment'),
+  request = require('snekfetch'),
+  {discordbotsAPIKey} = require('../../auth.json'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class discordBotsCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'discordbots',
-			'memberName': 'discordbots',
-			'group': 'info',
-			'aliases': ['dbapi', 'db'],
-			'description': 'Gets the stats from a Discord Bot on DiscordBotList',
-			'format': 'DiscordBotID',
-			'examples': ['discordbots 376520643862331396'],
-			'guildOnly': false,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'bot',
-					'prompt': 'ID of the bot to get stats from?',
-					'type': 'string',
-					'default': '376520643862331396'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'discordbots',
+      'memberName': 'discordbots',
+      'group': 'info',
+      'aliases': ['dbapi', 'db'],
+      'description': 'Gets the stats from a Discord Bot on DiscordBotList',
+      'format': 'DiscordBotID',
+      'examples': ['discordbots 376520643862331396'],
+      'guildOnly': false,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'bot',
+          'prompt': 'ID of the bot to get stats from?',
+          'type': 'string',
+          'default': '376520643862331396'
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
+  async run (msg, args) {
 
-		const info = await request.get(`https://discordbots.org/api/bots/${args.bot}`)
-				.set('Authorization', discordbotsAPIKey),
-			infoEmbed = new MessageEmbed();
+    const info = await request.get(`https://discordbots.org/api/bots/${args.bot}`)
+        .set('Authorization', discordbotsAPIKey),
+      infoEmbed = new MessageEmbed();
 
-		if (info) {
-			const botinfo = JSON.parse(info.text);
+    if (info) {
+      const botinfo = JSON.parse(info.text);
 
-			infoEmbed
-				.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-				.setTitle(`Discord Bots Info for ${botinfo.username}#${botinfo.discriminator} (${botinfo.clientid})`)
-				.setURL(`https://discordbots.org/bot/${botinfo.clientid}`)
-				.setThumbnail(`https://images.discordapp.net/avatars/${botinfo.clientid}/${botinfo.avatar}.png`)
-				.setDescription(botinfo.shortdesc)
-				.setFooter(`${botinfo.username}#${botinfo.discriminator} was submitted at ${moment(botinfo.date).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
-				.addField('Default Prefix', botinfo.prefix, true)
-				.addField('Library', botinfo.lib, true)
-				.addField('Server Count', botinfo.server_count, true)
-				.addField('Shards Count', botinfo.shards.length, true)
-				.addField('Invite Link', `[Click Here](${botinfo.invite})`);
+      infoEmbed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setTitle(`Discord Bots Info for ${botinfo.username}#${botinfo.discriminator} (${botinfo.clientid})`)
+        .setURL(`https://discordbots.org/bot/${botinfo.clientid}`)
+        .setThumbnail(`https://images.discordapp.net/avatars/${botinfo.clientid}/${botinfo.avatar}.png`)
+        .setDescription(botinfo.shortdesc)
+        .setFooter(`${botinfo.username}#${botinfo.discriminator} was submitted at ${moment(botinfo.date).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+        .addField('Default Prefix', botinfo.prefix, true)
+        .addField('Library', botinfo.lib, true)
+        .addField('Server Count', botinfo.server_count, true)
+        .addField('Shards Count', botinfo.shards.length, true)
+        .addField('Invite Link', `[Click Here](${botinfo.invite})`);
 
 
-			deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-			return msg.embed(infoEmbed, `https://discordbots.org/bot/${botinfo.clientid}`);
-		}
-		deleteCommandMessages(msg, this.client);
+      return msg.embed(infoEmbed, `https://discordbots.org/bot/${botinfo.clientid}`);
+    }
+    deleteCommandMessages(msg, this.client);
 
-		return msg.reply('⚠️ An error occured getting info from that bot, are you sure it exists on the website?');
-	}
+    return msg.reply('⚠️ An error occured getting info from that bot, are you sure it exists on the website?');
+  }
 };

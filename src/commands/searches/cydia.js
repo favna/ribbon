@@ -36,113 +36,113 @@
  */
 
 const Fuse = require('fuse.js'),
-	{MessageEmbed} = require('discord.js'),
-	cheerio = require('cheerio'),
-	commando = require('discord.js-commando'),
-	moment = require('moment'),
-	request = require('snekfetch'),
-	{stripIndents} = require('common-tags'),
-	{deleteCommandMessages} = require('../../util.js');
+  {MessageEmbed} = require('discord.js'),
+  cheerio = require('cheerio'),
+  commando = require('discord.js-commando'),
+  moment = require('moment'),
+  request = require('snekfetch'),
+  {stripIndents} = require('common-tags'),
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class cydiaCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'cydia',
-			'memberName': 'cydia',
-			'group': 'searches',
-			'aliases': ['cy'],
-			'description': 'Finds info on a Cydia package',
-			'format': 'PackageName | [[PackageName]]',
-			'examples': ['cydia anemone'],
-			'guildOnly': false,
-			'patterns': [/\[\[[a-zA-Z0-9 ]+\]\]/im],
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'query',
-					'prompt': 'Please supply package name',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'cydia',
+      'memberName': 'cydia',
+      'group': 'searches',
+      'aliases': ['cy'],
+      'description': 'Finds info on a Cydia package',
+      'format': 'PackageName | [[PackageName]]',
+      'examples': ['cydia anemone'],
+      'guildOnly': false,
+      'patterns': [/\[\[[a-zA-Z0-9 ]+\]\]/im],
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'query',
+          'prompt': 'Please supply package name',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	async run (msg, args) {
-		if (msg.patternMatches) {
-			args.query = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
-		}
-		const baseURL = 'https://cydia.saurik.com/',
-			embed = new MessageEmbed(),
-			fsoptions = {
-				'shouldSort': true,
-				'threshold': 0.3,
-				'location': 0,
-				'distance': 100,
-				'maxPatternLength': 32,
-				'minMatchCharLength': 1,
-				'keys': ['display', 'name']
-			},
-			packages = await request.get(`${baseURL}api/macciti`).query('query', args.query);
+  async run (msg, args) {
+    if (msg.patternMatches) {
+      args.query = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
+    }
+    const baseURL = 'https://cydia.saurik.com/',
+      embed = new MessageEmbed(),
+      fsoptions = {
+        'shouldSort': true,
+        'threshold': 0.3,
+        'location': 0,
+        'distance': 100,
+        'maxPatternLength': 32,
+        'minMatchCharLength': 1,
+        'keys': ['display', 'name']
+      },
+      packages = await request.get(`${baseURL}api/macciti`).query('query', args.query);
 
-		if (packages.ok) {
-			const fuse = new Fuse(packages.body.results, fsoptions),
-				results = fuse.search(args.query);
+    if (packages.ok) {
+      const fuse = new Fuse(packages.body.results, fsoptions),
+        results = fuse.search(args.query);
 
-			if (results.length) {
-				const result = results[0];
+      if (results.length) {
+        const result = results[0];
 
-				embed
-					.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-					.setTitle(result.display)
-					.setDescription(result.summary)
-					.addField('Version', result.version, true)
-					.addField('Link', `[Click Here](${baseURL}package/${result.name})`, true);
+        embed
+          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+          .setTitle(result.display)
+          .setDescription(result.summary)
+          .addField('Version', result.version, true)
+          .addField('Link', `[Click Here](${baseURL}package/${result.name})`, true);
 
-				try {
-					const price = await request.get(`${baseURL}api/ibbignerd`).query('query', result.name),
-						site = await request.get(`${baseURL}package/${result.name}`);
+        try {
+          const price = await request.get(`${baseURL}api/ibbignerd`).query('query', result.name),
+            site = await request.get(`${baseURL}package/${result.name}`);
 
-					if (site.ok) {
-						const $ = cheerio.load(site.text);
+          if (site.ok) {
+            const $ = cheerio.load(site.text);
 
-						embed
-							.addField('Source', $('.source-name').html(), true)
-							.addField('Section', $('#section').html(), true)
-							.addField('Size', $('#extra').text(), true);
-					}
+            embed
+              .addField('Source', $('.source-name').html(), true)
+              .addField('Section', $('#section').html(), true)
+              .addField('Size', $('#extra').text(), true);
+          }
 
-					if (price.ok) {
-						embed.addField('Price', price.body ? `$${price.body.msrp}` : 'Free', true);
-					}
+          if (price.ok) {
+            embed.addField('Price', price.body ? `$${price.body.msrp}` : 'Free', true);
+          }
 
-					embed.addField('Package Name', result.name, false);
+          embed.addField('Package Name', result.name, false);
 
-					if (!msg.patternMatches) {
-						deleteCommandMessages(msg, this.client);
-					}
+          if (!msg.patternMatches) {
+            deleteCommandMessages(msg, this.client);
+          }
 
-					return msg.embed(embed);
-				} catch (e) {
-					console.error(`${stripIndents `An error occured on the cydia command!
+          return msg.embed(embed);
+        } catch (e) {
+          console.error(`${stripIndents `An error occured on the cydia command!
 					Server: ${msg.guild.name} (${msg.guild.id})
 					Author: ${msg.author.tag} (${msg.author.id})
 					Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
 					Error Message:`} ${e}`);
 
-					embed.addField('Package Name', result.name, false);
+          embed.addField('Package Name', result.name, false);
 
-					if (!msg.patternMatches) {
-						deleteCommandMessages(msg, this.client);
-					}
+          if (!msg.patternMatches) {
+            deleteCommandMessages(msg, this.client);
+          }
 
-					return msg.embed(embed);
-				}
-			}
-		}
+          return msg.embed(embed);
+        }
+      }
+    }
 
-		return msg.say(`**Tweak/Theme \`${args.query}\` not found!**`);
-	}
+    return msg.say(`**Tweak/Theme \`${args.query}\` not found!**`);
+  }
 };

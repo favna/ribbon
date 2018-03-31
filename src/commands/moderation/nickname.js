@@ -36,51 +36,51 @@
  */
 
 const commando = require('discord.js-commando'),
-	{deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class nickCommand extends commando.Command {
-	constructor (client) {
-		super(client, {
-			'name': 'nickname',
-			'memberName': 'nickname',
-			'group': 'moderation',
-			'aliases': ['nick'],
-			'description': 'Assigns a nickname to a member. Use "clear" to remove the nickname',
-			'format': 'MemberID|MemberName(partial or full) NewNickname|clear',
-			'examples': ['nick favna pyrrha nikos'],
-			'guildOnly': true,
-			'throttling': {
-				'usages': 2,
-				'duration': 3
-			},
-			'args': [
-				{
-					'key': 'member',
-					'prompt': 'Which member should I assign a nickname to?',
-					'type': 'member'
-				},
-				{
-					'key': 'nickname',
-					'prompt': 'What nickname should I assign?',
-					'type': 'string'
-				}
-			]
-		});
-	}
+  constructor (client) {
+    super(client, {
+      'name': 'nickname',
+      'memberName': 'nickname',
+      'group': 'moderation',
+      'aliases': ['nick'],
+      'description': 'Assigns a nickname to a member. Use "clear" to remove the nickname',
+      'format': 'MemberID|MemberName(partial or full) NewNickname|clear',
+      'examples': ['nick favna pyrrha nikos'],
+      'guildOnly': true,
+      'throttling': {
+        'usages': 2,
+        'duration': 3
+      },
+      'args': [
+        {
+          'key': 'member',
+          'prompt': 'Which member should I assign a nickname to?',
+          'type': 'member'
+        },
+        {
+          'key': 'nickname',
+          'prompt': 'What nickname should I assign?',
+          'type': 'string'
+        }
+      ]
+    });
+  }
 
-	hasPermission (msg) {
-		return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_NICKNAMES');
-	}
+  hasPermission (msg) {
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_NICKNAMES');
+  }
 
-	run (msg, args) {
-		deleteCommandMessages(msg, this.client);
+  run (msg, args) {
+    deleteCommandMessages(msg, this.client);
 
-		return args.nickname !== 'clear'
-			? args.member.setNickname(args.nickname)
-				.then(() => msg.say(`Nickname \`${args.nickname}\` has been assigned to \`${args.member.user.username}\``),
-					() => msg.reply('⚠️️ Failed to nickname member, do I have nickname managing permission?'))
-			: args.member.setNickname('')
-				.then(() => msg.say(`Nickname has been removed from \`${args.member.displayName}\``),
-					() => msg.reply('⚠️️ Failed to nickname member, do I have nickname managing permission?'));
-	}
+    return args.nickname !== 'clear'
+      ? args.member.setNickname(args.nickname)
+        .then(() => msg.say(`Nickname \`${args.nickname}\` has been assigned to \`${args.member.user.username}\``),
+          () => msg.reply('⚠️️ Failed to nickname member, do I have nickname managing permission?'))
+      : args.member.setNickname('')
+        .then(() => msg.say(`Nickname has been removed from \`${args.member.displayName}\``),
+          () => msg.reply('⚠️️ Failed to nickname member, do I have nickname managing permission?'));
+  }
 };
