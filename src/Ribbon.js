@@ -105,6 +105,15 @@ class Ribbon {
     };
   }
 
+  onError () {
+    return (e) => {
+      console.error(e);
+      console.error(`${stripIndents `A websocket error occured!
+      Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message:`} ${e}`);
+    };
+  }
+
   onGroupStatusChange () {
     return (guild, group, enabled) => {
       console.log(oneLine `
@@ -257,7 +266,7 @@ class Ribbon {
       .on('commandStatusChange', this.onCmdStatusChange())
       .on('debug', console.log)
       .on('disconnect', this.onDisconnect())
-      .on('error', console.error)
+      .on('error', this.onError())
       .on('groupStatusChange', this.onGroupStatusChange())
       .on('guildMemberAdd', this.onGuildMemberAdd())
       .on('guildMemberRemove', this.onGuildMemberRemove())
