@@ -76,24 +76,26 @@ module.exports = class addRoleCommand extends commando.Command {
   }
 
   async run (msg, args) {
-    try {
-      const roleAdd = await args.member.roles.add(args.role);
-
-      if (roleAdd) {
-        deleteCommandMessages(msg, this.client);
-
-        return msg.reply(`\`${args.role.name}\` assigned to \`${args.member.displayName}\``);
-      }
-    } catch (e) {
-      if (e instanceof DiscordAPIError) {
-        console.error(`	 ${stripIndents `An error occured on the AddRole command!
-				Server: ${msg.guild.name} (${msg.guild.id})
-				Author: ${msg.author.tag} (${msg.author.id})
-				Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-				Role: ${args.role.name} (${args.role.id})
-				Error Message:`} ${e}`);
-      } else {
-        console.error('Unknown error occured in AddRole command');
+    if (args.member.manageable) {
+      try {
+        const roleAdd = await args.member.roles.add(args.role);
+  
+        if (roleAdd) {
+          deleteCommandMessages(msg, this.client);
+  
+          return msg.reply(`\`${args.role.name}\` assigned to \`${args.member.displayName}\``);
+        }
+      } catch (e) {
+        if (e instanceof DiscordAPIError) {
+          console.error(`	 ${stripIndents `An error occured on the AddRole command!
+          Server: ${msg.guild.name} (${msg.guild.id})
+          Author: ${msg.author.tag} (${msg.author.id})
+          Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+          Role: ${args.role.name} (${args.role.id})
+          Error Message:`} ${e}`);
+        } else {
+          console.error('Unknown error occured in AddRole command');
+        }
       }
     }
     deleteCommandMessages(msg, this.client);

@@ -78,14 +78,10 @@ module.exports = class softbanCommand extends commando.Command {
 
   run (msg, args) {
     if (args.member.id === msg.author.id) {
-      deleteCommandMessages(msg, this.client);
-			
       return msg.reply('⚠️ I don\'t think you want to softban yourself.');
     }
 
     if (!args.member.bannable) {
-      deleteCommandMessages(msg, this.client);
-			
       return msg.reply('⚠️ I cannot softban that member, their role is probably higher than my own!');
     }
 
@@ -118,9 +114,6 @@ module.exports = class softbanCommand extends commando.Command {
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
       }
 
-      if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-        msg.delete();
-      }
       deleteCommandMessages(msg, this.client);
 			
       return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;

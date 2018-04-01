@@ -78,14 +78,10 @@ module.exports = class kickCommand extends commando.Command {
 
   run (msg, args) {
     if (args.member.id === msg.author.id) {
-      deleteCommandMessages(msg, this.client);
-			
       return msg.reply('⚠️ I don\'t think you want to kick yourself.');
     }
 
     if (!args.member.kickable) {
-      deleteCommandMessages(msg, this.client);
-			
       return msg.reply('⚠️ I cannot kick that member, their role is probably higher than my own!');
     }
 

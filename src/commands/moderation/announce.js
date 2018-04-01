@@ -35,7 +35,8 @@
  */
 
 const commando = require('discord.js-commando'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages} = require('../../util.js'),
+  {stripIndents} = require('common-tags');
 
 module.exports = class newsCommand extends commando.Command {
   constructor (client) {
@@ -70,6 +71,10 @@ module.exports = class newsCommand extends commando.Command {
     if (msg.guild.channels.exists('name', 'announcements') || msg.guild.channels.exists('name', 'news')) {
       const newsChannel = msg.guild.channels.exists('name', 'announcements') ? msg.guild.channels.find('name', 'announcements') : msg.guild.channels.find('name', 'news');
 
+      if (newsChannel.permissionsFor(msg.guild.me).has(['SEND_MESSAGES', 'VIEW_CHANNEL'])) {
+        return msg.reply('I do not have permission to send messages to that channel. Better go and fix that!');
+      }
+
       let announce = args.body;
 
       announce.slice(0, 4) !== 'http' ? announce = `${args.body.slice(0, 1).toUpperCase()}${args.body.slice(1)}` : null;
@@ -81,6 +86,10 @@ module.exports = class newsCommand extends commando.Command {
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('To use the announce command you need a channel named \'news\' or \'announcements\'');
+    return msg.reply(stripIndents `To use the announce command you need a channel named \'news\' or \'announcements\'.
+    Here is a backup of your message:
+    \`\`\`
+    ${args.body}
+    \`\`\``);
   }
 };

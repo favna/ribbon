@@ -78,14 +78,10 @@ module.exports = class banCommand extends commando.Command {
 
   run (msg, args) {
     if (args.member.id === msg.author.id) {
-      deleteCommandMessages(msg, this.client);
-
       return msg.reply('⚠️ I don\'t think you want to ban yourself.');
     }
 
     if (!args.member.bannable) {
-      deleteCommandMessages(msg, this.client);
-
       return msg.reply('⚠️ I cannot ban that member, their role is probably higher than my own!');
     }
 
@@ -121,9 +117,6 @@ module.exports = class banCommand extends commando.Command {
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
       }
 
-      if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-        msg.delete();
-      }
       deleteCommandMessages(msg, this.client);
 
       return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);
