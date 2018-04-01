@@ -37,10 +37,7 @@ const {MessageEmbed} = require('discord.js'),
   moment = require('moment'),
   path = require('path'),
   sql = require('sqlite'), 
-  {
-    oneLine,
-    stripIndents
-  } = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class BalanceCommand extends commando.Command {
@@ -104,7 +101,7 @@ module.exports = class BalanceCommand extends commando.Command {
 			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
 			Error Message:`} ${e}`);
 
-          return msg.reply(oneLine `Fatal SQL errored that was logged on Favna\'s system.
+          return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
               You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
         sql.run(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT)`).then(() => {
