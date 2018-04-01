@@ -57,6 +57,9 @@ Checks the bot's ping to the Discord server
 ## Modules
 
 <dl>
+<dt><a href="#module_balance">balance</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Retrieves your current balance for the casino<br><strong>Aliases</strong>: <code>bal</code>, <code>cash</code></p>
+</dd>
 <dt><a href="#module_favna">favna</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Custom Command exclusive to ChaosGamez server<br>A joke command to praise Favna<br><strong>Aliases</strong>: <code>.favna</code></p>
 </dd>
@@ -362,6 +365,14 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 </dd>
 </dl>
 
+<a name="module_balance"></a>
+
+## balance ⇒ <code>MessageEmbed</code>
+Retrieves your current balance for the casino  
+**Aliases**: `bal`, `cash`
+
+**Returns**: <code>MessageEmbed</code> - Information about your current balance  
+**Category**: casino  
 <a name="module_favna"></a>
 
 ## favna ⇒ <code>MessageEmbed</code>

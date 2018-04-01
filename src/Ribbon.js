@@ -277,12 +277,13 @@ class Ribbon {
       .on('warn', console.warn);
 
     this.client.setProvider(
-      sqlite.open(path.join(__dirname, 'settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
+      sqlite.open(path.join(__dirname, 'data/databases/settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
     ).catch(console.error);
 
     this.client.registry
       .registerGroups([
         ['games', 'Games - Play some games'],
+        ['casino', 'Casino - Gain and gamble points'],
         ['info', 'Info - Discord info at your fingertips'],
         ['music', 'Music - Let the DJ out'],
         ['searches', 'Searches - Browse the web and find results'],
