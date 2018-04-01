@@ -3,8 +3,8 @@
 
 
 "@types/node@*":
-  version "9.6.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.0.tgz#d3480ee666df9784b1001a1872a2f6ccefb6c2d7"
+  version "9.6.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.1.tgz#e2d374ef15b315b48e7efc308fa1a7cd51faa06c"
 
 abbrev@1:
   version "1.1.1"
@@ -485,8 +485,8 @@ copy-paste@^1.1.2:
     sync-exec "~0.6.x"
 
 core-js@^2.4.0:
-  version "2.5.3"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.4.tgz#f2c8bf181f2a80b92f360121429ce63a2f0aeae0"
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -636,17 +636,17 @@ dijkstrajs@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
-discord.js-commando@Favna/discord.js-commando#ribbon:
-  version "1.1.2-F-R.5"
-  resolved "https://codeload.github.com/Favna/discord.js-commando/tar.gz/7b64d9e1cebcc2b9542c7f407b0b1f0bc409a37a"
+discord.js-commando@Favna/Commando#ribbon:
+  version "0.10.0-dev"
+  resolved "https://codeload.github.com/Favna/Commando/tar.gz/b5fdadc3523aa1e2146fb08cf2a6c0e4f903a6c5"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
     require-all "^2.0.0"
 
-discord.js@Favna/discord.js#active:
-  version "12.0.0-F.6"
-  resolved "https://codeload.github.com/Favna/discord.js/tar.gz/d86c031884240c9c22cbc1aac29e01ac245bb79b"
+discord.js@favna/discord.js#main:
+  version "12.0.0-dev-F.1"
+  resolved "https://codeload.github.com/favna/discord.js/tar.gz/de06f247202c031c441c4fd895036a20df5b5937"
   dependencies:
     pako "^1.0.0"
     prism-media "^0.2.0"
@@ -2003,8 +2003,8 @@ pretty-ms@^3.0.0:
     plur "^2.1.2"
 
 prism-media@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/prism-media/-/prism-media-0.2.0.tgz#82c183da430c41c3025df3610a92a61b107b1918"
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/prism-media/-/prism-media-0.2.1.tgz#7968f2c7194588887c4c48081968d8c28e0d2469"
 
 process-nextick-args@~1.0.6:
   version "1.0.7"
@@ -2745,8 +2745,8 @@ verror@1.10.0:
     extsprintf "^1.2.0"
 
 whatwg-fetch@>=0.10.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.4.tgz#dde6a5df315f9d39991aa17621853d720b85566f"
 
 which-module@^2.0.0:
   version "2.0.0"
