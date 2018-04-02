@@ -922,10 +922,6 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flipacoin@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/flipacoin/-/flipacoin-1.0.0.tgz#16208adc007f768da180cd991d48c54a68442658"
-
 follow-redirects@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.0.0.tgz#8e34298cbd2e176f254effec75a1c78cc849fd37"

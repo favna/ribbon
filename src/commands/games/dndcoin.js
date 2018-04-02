@@ -24,26 +24,25 @@
  */
 
 /**
- * Filps a coinm call heads or tails!  
- * **Aliases**: `flip`, `coinflip`
+ * Filps a coin  
+ * **Aliases**: `coinflip`, `dndc`
  * @module
  * @category games
- * @name coin
- * @returns {MessageEmbed} The side the coin landed on
+ * @name dndc
+ * @returns {MessageEmbed} Side the coin landed on
  */
 
 const {MessageEmbed} = require('discord.js'),
-  coin = require('flipacoin'),
   commando = require('discord.js-commando'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class coinCommand extends commando.Command {
+module.exports = class DndCCommand extends commando.Command {
   constructor (client) {
     super(client, {
-      'name': 'coin',
-      'memberName': 'coin',
+      'name': 'dndcoin',
+      'memberName': 'dndcoin',
       'group': 'games',
-      'aliases': ['flip', 'coinflip'],
+      'aliases': ['coinflip', 'dndc'],
       'description': 'Flips a coin',
       'examples': ['coin'],
       'guildOnly': false,
@@ -56,12 +55,12 @@ module.exports = class coinCommand extends commando.Command {
 
   run (msg) {
     const coinEmbed = new MessageEmbed(),
-      res = coin();
+      flip = Math.round(Number(Math.random()));
 
     coinEmbed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-      .setImage(res === 'head' ? 'https://favna.xyz/images/ribbonhost/dndheads.png' : 'https://favna.xyz/images/ribbonhost/dndtails.png')
-      .setTitle(`Flipped ${res}s`);
+      .setImage(flip === 1 ? 'https://favna.xyz/images/ribbonhost/dndheads.png' : 'https://favna.xyz/images/ribbonhost/dndtails.png')
+      .setTitle(`Flipped ${flip === 1 ? 'heads' : 'tails'}`);
 
     deleteCommandMessages(msg, this.client);
 
