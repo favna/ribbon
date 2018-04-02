@@ -56,7 +56,7 @@ module.exports = class ChipsCommand extends commando.Command {
       }
     });
   }
-  
+
   run (msg) {
     const balEmbed = new MessageEmbed();
 

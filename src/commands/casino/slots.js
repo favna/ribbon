@@ -32,7 +32,7 @@
  * @returns {MessageEmbed} Outcome of the spin
  */
 
-const {MessageEmbed} = require('discord.js'),
+const {MessageEmbed} = require('discord.js'), 
   {SlotMachine, SlotSymbol} = require('slot-machine'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
@@ -77,10 +77,10 @@ module.exports = class SlotsCommand extends commando.Command {
 
     sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
       if (!rows) {
-        return msg.reply(`looks like you didn\'t get any chips yet. Run ${msg.guild.commandPrefix}chips to get your first 400`);
+        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
       }
       if (args.chips > rows.balance) {
-        return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some.');
+        return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');
       }
 
       const bar = new SlotSymbol('bar', {
@@ -124,7 +124,7 @@ module.exports = class SlotsCommand extends commando.Command {
         .setDescription(results.visualize());
 
       deleteCommandMessages(msg, this.client);
-  
+
       return msg.embed(slotEmbed);
     })
       .catch((e) => {
@@ -134,14 +134,14 @@ module.exports = class SlotsCommand extends commando.Command {
               Author: ${msg.author.tag} (${msg.author.id})
               Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
               Error Message:`} ${e}`);
-  
+
           return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
                 You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
-    
+
         deleteCommandMessages(msg, this.client);
-  
-        return msg.reply(`looks like you didn\'t get any chips yet. Run ${msg.guild.commandPrefix}chips to get your first 400`);
+
+        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
       });
   }
 };

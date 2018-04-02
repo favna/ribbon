@@ -55,7 +55,7 @@ module.exports = class DailyCommand extends commando.Command {
       }
     });
   }
-  
+
   run (msg) {
     const balEmbed = new MessageEmbed();
     let returnMsg = '';

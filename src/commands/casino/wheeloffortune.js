@@ -79,10 +79,10 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
 
     sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
       if (!rows) {
-        return msg.reply(`looks like you didn\'t get any chips yet. Run ${msg.guild.commandPrefix}chips to get your first 400`);
+        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
       }
       if (args.chips > rows.balance) {
-        return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some.');
+        return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');
       }
 
       const prevBal = rows.balance;
@@ -126,7 +126,7 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
 
         deleteCommandMessages(msg, this.client);
 
-        return msg.reply(`looks like you didn\'t get any chips yet. Run ${msg.guild.commandPrefix}chips to get your first 400`);
+        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
       });
   }
 };
