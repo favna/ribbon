@@ -72,6 +72,9 @@ Checks the bot's ping to the Discord server
 <dt><a href="#module_leaderboard">leaderboard</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Shows the top 5 ranking players for your server<br><strong>Aliases</strong>: <code>lb</code>, <code>casinolb</code>, <code>leaderboards</code></p>
 </dd>
+<dt><a href="#module_memberbalance">memberbalance</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Retrieves the amount of chips another member has for the casino<br><strong>Aliases</strong>: <code>mbal</code>, <code>mcash</code>, <code>mbalance</code>, <code>mchips</code></p>
+</dd>
 <dt><a href="#module_slots">slots</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Gamble your chips at the slot machine<br><strong>Aliases</strong>: <code>slot</code>, <code>fruits</code></p>
 </dd>
@@ -451,6 +454,23 @@ Shows the top 5 ranking players for your server
 
 **Returns**: <code>MessageEmbed</code> - List of top ranking players  
 **Category**: casino  
+<a name="module_memberbalance"></a>
+
+## memberbalance ⇒ <code>MessageEmbed</code>
+Retrieves the amount of chips another member has for the casino  
+**Aliases**: `mbal`, `mcash`, `mbalance`, `mchips`
+
+**Returns**: <code>MessageEmbed</code> - Information about the current balance of the member  
+**Category**: casino  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyMember | <code>Member</code> | Member to get the balance for |
+
+**Example**  
+```js
+mchips Sagiri
+```
 <a name="module_slots"></a>
 
 ## slots ⇒ <code>MessageEmbed</code>
