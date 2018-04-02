@@ -35,7 +35,7 @@
 const {Canvas} = require('canvas-constructor'), 
   {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  imgur = require('imgur'),
+  imgur = require('imgur'), 
   {stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 

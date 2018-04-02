@@ -78,14 +78,10 @@ module.exports = class banCommand extends commando.Command {
 
   run (msg, args) {
     if (args.member.id === msg.author.id) {
-      deleteCommandMessages(msg, this.client);
-
       return msg.reply('⚠️ I don\'t think you want to ban yourself.');
     }
 
     if (!args.member.bannable) {
-      deleteCommandMessages(msg, this.client);
-
       return msg.reply('⚠️ I cannot ban that member, their role is probably higher than my own!');
     }
 
@@ -93,7 +89,7 @@ module.exports = class banCommand extends commando.Command {
       args.reason = args.reason.substring(0, args.reason.indexOf('--nodelete')) + args.reason.substring(args.reason.indexOf('--nodelete') + '--nodelete'.length + 1);
       args.keepmessages = true;
     }
-		
+
     args.member.ban({
       'days': args.keepmessages ? 0 : 1,
       'reason': args.reason !== '' ? args.reason : 'No reason given by staff'
@@ -109,8 +105,8 @@ module.exports = class banCommand extends commando.Command {
       .setColor('#FF1900')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-				'**Action:** Ban\n' +
-				`**Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
+        '**Action:** Ban\n' +
+        `**Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
@@ -121,9 +117,6 @@ module.exports = class banCommand extends commando.Command {
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
       }
 
-      if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-        msg.delete();
-      }
       deleteCommandMessages(msg, this.client);
 
       return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);

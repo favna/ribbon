@@ -37,8 +37,8 @@
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
-  request = require('snekfetch'),
-  {TheMovieDBV3ApiKey} = require('../../auth.json'),
+  request = require('snekfetch'), 
+  {TheMovieDBV3ApiKey} = require('../../auth.json'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class movieCommand extends commando.Command {
@@ -101,7 +101,7 @@ module.exports = class movieCommand extends commando.Command {
       }
 
       deleteCommandMessages(msg, this.client);
-			
+
       return msg.reply(`***Failed to fetch details for \`${args.name}\`***`);
     }
 

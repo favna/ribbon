@@ -56,7 +56,7 @@ module.exports = class StopMusicCommand extends commando.Command {
 
     if (!queue) {
       deleteCommandMessages(msg, this.client);
-			
+
       return msg.reply('there isn\'t any music playing right now.');
     }
     const song = queue.songs[0]; // eslint-disable-line one-var
@@ -66,7 +66,7 @@ module.exports = class StopMusicCommand extends commando.Command {
       song.dispatcher.end();
     }
     deleteCommandMessages(msg, this.client);
-		
+
     return msg.reply('you\'ve just killed the party. Congrats. 👏');
   }
 

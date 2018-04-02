@@ -38,8 +38,8 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  moment = require('moment'),
-  {oneLine} = require('common-tags'),
+  moment = require('moment'), 
+  {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class softbanCommand extends commando.Command {
@@ -78,14 +78,10 @@ module.exports = class softbanCommand extends commando.Command {
 
   run (msg, args) {
     if (args.member.id === msg.author.id) {
-      deleteCommandMessages(msg, this.client);
-			
       return msg.reply('⚠️ I don\'t think you want to softban yourself.');
     }
 
     if (!args.member.bannable) {
-      deleteCommandMessages(msg, this.client);
-			
       return msg.reply('⚠️ I cannot softban that member, their role is probably higher than my own!');
     }
 
@@ -106,8 +102,8 @@ module.exports = class softbanCommand extends commando.Command {
       .setColor('#FF8300')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-				'**Action:** Softban\n' +
-				`**Reason:** ${args.reason}`)
+        '**Action:** Softban\n' +
+        `**Reason:** ${args.reason}`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
@@ -118,15 +114,12 @@ module.exports = class softbanCommand extends commando.Command {
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
       }
 
-      if (msg.deletable && this.client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-        msg.delete();
-      }
       deleteCommandMessages(msg, this.client);
-			
+
       return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
     }
     deleteCommandMessages(msg, this.client);
-		
+
     return null;
   }
 };

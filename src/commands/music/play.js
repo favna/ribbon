@@ -88,7 +88,7 @@ module.exports = class PlaySongCommand extends commando.Command {
     let voiceChannel; // eslint-disable-line init-declarations
 
     if (!queue) {
-			voiceChannel = msg.member.voiceChannel; // eslint-disable-line
+      voiceChannel = msg.member.voiceChannel; // eslint-disable-line
       if (!voiceChannel) {
         deleteCommandMessages(msg, this.client);
 
@@ -307,7 +307,7 @@ module.exports = class PlaySongCommand extends commando.Command {
       }
 
       if (songMaxSongs > 0 &&
-				queue.songs.reduce(songNumerator, 0) >= songMaxSongs) {
+        queue.songs.reduce(songNumerator, 0) >= songMaxSongs) {
         return `👎 you already have ${songMaxSongs} songs in the queue. Don't hog all the airtime!`;
       }
     }

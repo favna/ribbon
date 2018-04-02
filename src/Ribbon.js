@@ -105,6 +105,15 @@ class Ribbon {
     };
   }
 
+  onError () {
+    return (e) => {
+      console.error(e);
+      console.error(`${stripIndents `A websocket error occured!
+      Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message:`} ${e}`);
+    };
+  }
+
   onGroupStatusChange () {
     return (guild, group, enabled) => {
       console.log(oneLine `
@@ -244,7 +253,7 @@ class Ribbon {
 				${oneLine `Server staff (those who can manage other's messages) can disable these replies by using
 				\`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}unknownmessages disable\``}`);
       }
-			
+
       return null;
     };
   }
@@ -257,7 +266,7 @@ class Ribbon {
       .on('commandStatusChange', this.onCmdStatusChange())
       .on('debug', console.log)
       .on('disconnect', this.onDisconnect())
-      .on('error', console.error)
+      .on('error', this.onError())
       .on('groupStatusChange', this.onGroupStatusChange())
       .on('guildMemberAdd', this.onGuildMemberAdd())
       .on('guildMemberRemove', this.onGuildMemberRemove())
@@ -268,12 +277,13 @@ class Ribbon {
       .on('warn', console.warn);
 
     this.client.setProvider(
-      sqlite.open(path.join(__dirname, 'settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
+      sqlite.open(path.join(__dirname, 'data/databases/settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
     ).catch(console.error);
 
     this.client.registry
       .registerGroups([
         ['games', 'Games - Play some games'],
+        ['casino', 'Casino - Gain and gamble points'],
         ['info', 'Info - Discord info at your fingertips'],
         ['music', 'Music - Let the DJ out'],
         ['searches', 'Searches - Browse the web and find results'],

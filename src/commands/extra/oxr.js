@@ -43,9 +43,9 @@ const {MessageEmbed} = require('discord.js'),
   currencySymbol = require('currency-symbol-map'),
   fx = require('money'),
   moment = require('moment'),
-  request = require('snekfetch'),
-  {deleteCommandMessages} = require('../../util.js'),
-  {oxrAppID} = require('../../auth.json'),
+  request = require('snekfetch'), 
+  {deleteCommandMessages} = require('../../util.js'), 
+  {oxrAppID} = require('../../auth.json'), 
   {stripIndents} = require('common-tags');
 
 module.exports = class moneyCommand extends commando.Command {

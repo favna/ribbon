@@ -36,9 +36,9 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  predict = require('eightball'),
+  predict = require('eightball'), 
   {deleteCommandMessages} = require('../../util.js');
-	
+
 module.exports = class eightBallCommand extends commando.Command {
   constructor (client) {
     super(client, {
@@ -71,7 +71,7 @@ module.exports = class eightBallCommand extends commando.Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .addField(':question: Question', args.question, false)
       .addField(':8ball: 8ball', predict(), false);
-		
+
     deleteCommandMessages(msg, this.client);
 
     return msg.embed(eightBallEmbed);

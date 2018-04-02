@@ -22,7 +22,7 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
- 
+
 /**
  * Gets status about the currently playing song  
  * **Aliases**: `song`, `playing`, `current-song`, `now-playing`
@@ -59,7 +59,7 @@ module.exports = class MusicStatusCommand extends commando.Command {
 
     if (!queue) {
       deleteCommandMessages(msg, this.client);
-			
+
       return msg.say('There isn\'t any music playing right now. You should get on that.');
     }
     const song = queue.songs[0], // eslint-disable-line one-var
@@ -80,7 +80,7 @@ module.exports = class MusicStatusCommand extends commando.Command {
       };
 
     deleteCommandMessages(msg, this.client);
-		
+
     return msg.embed(embed);
   }
 

@@ -37,8 +37,8 @@
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
-  request = require('snekfetch'),
-  {discordbotsAPIKey} = require('../../auth.json'),
+  request = require('snekfetch'), 
+  {discordbotsAPIKey} = require('../../auth.json'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class discordBotsCommand extends commando.Command {

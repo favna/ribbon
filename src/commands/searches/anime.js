@@ -88,11 +88,11 @@ module.exports = class animeCommand extends commando.Command {
         return msg.embed(aniEmbed, `${anime.mal.url}${anime.path}`);
       }
       deleteCommandMessages(msg, this.client);
-			
+
       return msg.reply(`no anime found for the input \`${args.query}\` `);
     }
     deleteCommandMessages(msg, this.client);
-		
+
     return msg.reply(`no anime found for the input \`${args.query}\` `);
   }
 };

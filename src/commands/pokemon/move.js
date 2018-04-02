@@ -38,8 +38,8 @@
 const {MessageEmbed} = require('discord.js'),
   Matcher = require('did-you-mean'),
   commando = require('discord.js-commando'),
-  moves = require('../../data/dex/moves').BattleMovedex,
-  {oneLine} = require('common-tags'),
+  moves = require('../../data/dex/moves').BattleMovedex, 
+  {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class moveCommand extends commando.Command {
@@ -98,7 +98,7 @@ module.exports = class moveCommand extends commando.Command {
 
       moveEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-        .setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
         .addField('Description', descString)
         .addField('Type', move.type, true)
         .addField('Base Power', move.basePower, true)

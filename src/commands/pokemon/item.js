@@ -35,16 +35,14 @@
  * @returns {MessageEmbed} Description and external links for the item
  */
 
-/* eslint-disable sort-vars */
 const {MessageEmbed} = require('discord.js'),
   Matcher = require('did-you-mean'),
   commando = require('discord.js-commando'),
+  path = require('path'), 
   request = require('snekfetch'),
   requireFromURL = require('require-from-url/sync'),
-  path = require('path'),
-  {oneLine} = require('common-tags'),
+  {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
-/* eslint-enable sort-vars */
 
 module.exports = class itemCommand extends commando.Command {
   constructor (client) {
@@ -159,7 +157,7 @@ module.exports = class itemCommand extends commando.Command {
     if (Object.keys(item).length !== 0) {
       itemEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-        .setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
         .setAuthor(`${capitalizeFirstLetter(item.name)}`, imgURL)
         .addField('Description', item.desc)
         .addField('Generation Introduced', item.gen)

@@ -38,8 +38,8 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  typeMatchups = require('../../data/dex/typechart').BattleTypeChart,
-  {oneLine} = require('common-tags'),
+  typeMatchups = require('../../data/dex/typechart').BattleTypeChart, 
+  {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class typeCommand extends commando.Command {
@@ -297,7 +297,7 @@ module.exports = class typeCommand extends commando.Command {
 
     typeEmbed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-      .setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
+      .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
       .setAuthor(`Type effectiveness for ${displayTypes.join(', ')}`)
       .addField('Offense', atkVulnDisplay.join('\n\n'))
       .addField('Defense', vulnDisplay.join('\n\n'))

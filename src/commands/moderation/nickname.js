@@ -35,8 +35,11 @@
  * @returns {Message} Confirmation the nickname was assigned
  */
 
-const commando = require('discord.js-commando'),
-  {deleteCommandMessages} = require('../../util.js');
+const {DiscordAPIError} = require('discord.js'),
+  commando = require('discord.js-commando'),
+  moment = require('moment'), 
+  {deleteCommandMessages} = require('../../util.js'), 
+  {oneLine, stripIndents} = require('common-tags');
 
 module.exports = class nickCommand extends commando.Command {
   constructor (client) {
@@ -73,14 +76,29 @@ module.exports = class nickCommand extends commando.Command {
   }
 
   run (msg, args) {
+    if (args.member.manageable) {
+      try {
+        if (args.nickname === 'clear') {
+          args.member.setNickname('');
+        } else {
+          args.member.setNickname(args.nickname);
+        }
+      } catch (e) {
+        if (e instanceof DiscordAPIError) {
+          console.error(`	 ${stripIndents `An error occured on the AddRole command!
+          Server: ${msg.guild.name} (${msg.guild.id})
+          Author: ${msg.author.tag} (${msg.author.id})
+          Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+          Role: ${args.role.name} (${args.role.id})
+          Error Message:`} ${e}`);
+        } else {
+          console.error('Unknown error occured in AddRole command');
+        }
+      }
+    }
     deleteCommandMessages(msg, this.client);
 
-    return args.nickname !== 'clear'
-      ? args.member.setNickname(args.nickname)
-        .then(() => msg.say(`Nickname \`${args.nickname}\` has been assigned to \`${args.member.user.username}\``),
-          () => msg.reply('⚠️️ Failed to nickname member, do I have nickname managing permission?'))
-      : args.member.setNickname('')
-        .then(() => msg.say(`Nickname has been removed from \`${args.member.displayName}\``),
-          () => msg.reply('⚠️️ Failed to nickname member, do I have nickname managing permission?'));
+    return msg.reply(oneLine `failed to set nickname to that member.
+    Check that I have permission to set their nickname as well as the role hierarchy`);
   }
 };

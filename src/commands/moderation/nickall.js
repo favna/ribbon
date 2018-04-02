@@ -46,8 +46,8 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  moment = require('moment'),
-  {oneLine, stripIndents} = require('common-tags'),
+  moment = require('moment'), 
+  {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class nickallCommand extends commando.Command {
@@ -96,22 +96,30 @@ module.exports = class nickallCommand extends commando.Command {
 
     if (argData[0] === 'clear') {
       for (const member of allMembers) {
-        member.setNickname('');
+        if (member.manageable) {
+          member.setNickname('');
+        }
       }
       embed.setDescription('**Action:** Removed the nicknames from all members');
     } else if (argData[0] === 'prefix') {
       for (const member of allMembers) {
-        member.setNickname(`${argData.slice(1).join(' ')} ${member.displayName}`);
+        if (member.manageable) {
+          member.setNickname(`${argData.slice(1).join(' ')} ${member.displayName}`);
+        }
       }
       embed.setDescription(`**Action:** Prefix the name of every member with ${argData.slice(1).join(' ')}`);
     } else if (argData[0] === 'append') {
       for (const member of allMembers) {
-        member.setNickname(`${member.displayName} ${argData.slice(1).join(' ')}`);
+        if (member.manageable) {
+          member.setNickname(`${member.displayName} ${argData.slice(1).join(' ')}`);
+        }
       }
       embed.setDescription(`**Action:** Appended the name of every member with ${argData.slice(1).join(' ')}`);
     } else {
       for (const member of allMembers) {
-        member.setNickname(args.data);
+        if (member.manageable) {
+          member.setNickname(args.data);
+        }
       }
       embed.setDescription(`**Action:** Assigned the nickname ${args.data} to all members`);
     }

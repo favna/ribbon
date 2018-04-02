@@ -62,7 +62,7 @@ module.exports = class saveQueueCommand extends commando.Command {
 
     if (!queue) {
       deleteCommandMessages(msg, this.client);
-			
+
       return msg.reply('there isn\'t any music playing right now. You should get on that.');
     }
     const currentSong = queue.songs[0], // eslint-disable-line one-var

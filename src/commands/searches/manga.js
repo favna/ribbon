@@ -88,13 +88,13 @@ module.exports = class mangaCommand extends commando.Command {
         return msg.embed(manEmbed, `${manga.mal.url}${manga.path}`);
       }
       deleteCommandMessages(msg, this.client);
-			
+
       return msg.reply(`no manga found for the input \`${args.query}\` `);
 
 
     }
     deleteCommandMessages(msg, this.client);
-		
+
     return msg.reply(`no manga found for the input \`${args.query}\` `);
   }
 };

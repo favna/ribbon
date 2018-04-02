@@ -4,15 +4,15 @@ node_modules/
 # VS Code workspace settings
 .vscode/
 
-# Files for personal use
-src/auth.json
-src/rauth.json
-src/sauth.json
-src/stripe-auth.json
+# Key files
+src/*.json
 
 # Any logs created
 *.log
 
 # Files that shouldn't sync between my PC and RaspberryPi
-src/settings.sqlite3
+src/data/databases/*
 src/data/websearch/eshop.json
+
+# Keep gitkeep
+!**/*.gitkeep

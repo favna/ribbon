@@ -37,7 +37,7 @@
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   imgur = require('imgur'),
-  qr = require('qrcode'),
+  qr = require('qrcode'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class qrgenCommand extends commando.Command {

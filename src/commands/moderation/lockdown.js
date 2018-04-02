@@ -36,8 +36,8 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  moment = require('moment'),
-  {oneLine} = require('common-tags'),
+  moment = require('moment'), 
+  {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class lockdownCommand extends commando.Command {
@@ -89,7 +89,7 @@ module.exports = class lockdownCommand extends commando.Command {
 
         modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);
       }
-			
+
       return msg.say(embed.description.slice(12));
     }
     deleteCommandMessages(msg, this.client);

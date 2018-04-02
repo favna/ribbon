@@ -40,7 +40,7 @@ const commando = require('discord.js-commando'),
   path = require('path'),
   {MAX_LENGTH} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
   {oneLine} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js'); 
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class MaxLengthCommand extends commando.Command {
   constructor (client) {
@@ -73,14 +73,14 @@ module.exports = class MaxLengthCommand extends commando.Command {
       const maxLength = this.client.provider.get(msg.guild.id, 'maxLength', MAX_LENGTH);
 
       deleteCommandMessages(msg, this.client);
-			
+
       return msg.reply(`the maximum length of a song is ${maxLength} minutes.`);
     }
 
     if (args.toLowerCase() === 'default') {
       this.client.provider.remove(msg.guild.id, 'maxLength');
       deleteCommandMessages(msg, this.client);
-			
+
       return msg.reply(`set the maximum song length to the default (currently ${MAX_LENGTH} minutes).`);
     }
 
@@ -92,7 +92,7 @@ module.exports = class MaxLengthCommand extends commando.Command {
 
     this.client.provider.set(msg.guild.id, 'maxLength', maxLength);
     deleteCommandMessages(msg, this.client);
-		
+
     return msg.reply(`set the maximum song length to ${maxLength} minutes.`);
   }
 };
