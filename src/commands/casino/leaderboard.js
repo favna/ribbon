@@ -25,7 +25,7 @@
 
 /**
  * Shows the top 5 ranking players for your server  
- * **Aliases**: `lb`, `casinolb`
+ * **Aliases**: `lb`, `casinolb`, `leaderboards`
  * @module
  * @category casino
  * @name leaderboard
@@ -46,7 +46,7 @@ module.exports = class LeaderboardCommand extends commando.Command {
       'name': 'leaderboard',
       'memberName': 'leaderboard',
       'group': 'casino',
-      'aliases': ['lb', 'casinolb'],
+      'aliases': ['lb', 'casinolb', 'leaderboards'],
       'description': 'Shows the top 5 ranking players for your server',
       'guildOnly': true,
       'throttling': {

@@ -70,7 +70,7 @@ Checks the bot's ping to the Discord server
 <dd><p>Give another player some chips<br><strong>Aliases</strong>: <code>donate</code></p>
 </dd>
 <dt><a href="#module_leaderboard">leaderboard</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Shows the top 5 ranking players for your server<br><strong>Aliases</strong>: <code>lb</code>, <code>casinolb</code></p>
+<dd><p>Shows the top 5 ranking players for your server<br><strong>Aliases</strong>: <code>lb</code>, <code>casinolb</code>, <code>leaderboards</code></p>
 </dd>
 <dt><a href="#module_slots">slots</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Gamble your chips at the slot machine<br><strong>Aliases</strong>: <code>slot</code>, <code>fruits</code></p>
@@ -420,7 +420,7 @@ Give another player some chips
 
 ## leaderboard ⇒ <code>MessageEmbed</code>
 Shows the top 5 ranking players for your server  
-**Aliases**: `lb`, `casinolb`
+**Aliases**: `lb`, `casinolb`, `leaderboards`
 
 **Returns**: <code>MessageEmbed</code> - List of top ranking players  
 **Category**: casino  
