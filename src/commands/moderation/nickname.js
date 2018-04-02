@@ -85,14 +85,14 @@ module.exports = class nickCommand extends commando.Command {
         }
       } catch (e) {
         if (e instanceof DiscordAPIError) {
-          console.error(`	 ${stripIndents `An error occured on the AddRole command!
+          console.error(`	 ${stripIndents `An error occured on the Nickname command!
           Server: ${msg.guild.name} (${msg.guild.id})
           Author: ${msg.author.tag} (${msg.author.id})
           Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           Role: ${args.role.name} (${args.role.id})
           Error Message:`} ${e}`);
         } else {
-          console.error('Unknown error occured in AddRole command');
+          console.error('Unknown error occured in Nickname command');
         }
       }
     }
