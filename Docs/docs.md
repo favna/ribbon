@@ -57,8 +57,26 @@ Checks the bot's ping to the Discord server
 ## Modules
 
 <dl>
-<dt><a href="#module_balance">balance</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Retrieves your current balance for the casino<br><strong>Aliases</strong>: <code>bal</code>, <code>cash</code></p>
+<dt><a href="#module_chips">chips</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Retrieves your current amount of chips for the casino<br><strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p>
+</dd>
+<dt><a href="#module_coin">coin</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Gamble your chips in a coin flip<br>Payout is 1:2<br><strong>Aliases</strong>: <code>flip</code>, <code>cflip</code></p>
+</dd>
+<dt><a href="#module_daily">daily</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Recieve your daily 500 chips top up<br><strong>Aliases</strong>: <code>topup</code>, <code>bonus</code></p>
+</dd>
+<dt><a href="#module_give">give</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Give another player some chips<br><strong>Aliases</strong>: <code>donate</code></p>
+</dd>
+<dt><a href="#module_leaderboard">leaderboard</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Shows the top 5 ranking players for your server<br><strong>Aliases</strong>: <code>lb</code>, <code>casinolb</code></p>
+</dd>
+<dt><a href="#module_slots">slots</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Gamble your chips at the slot machine<br><strong>Aliases</strong>: <code>slot</code>, <code>fruits</code></p>
+</dd>
+<dt><a href="#module_wheeloffortune">wheeloffortune</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Gamble your chips at the wheel of fortune<br><strong>Aliases</strong>: <code>wheel</code>, <code>wof</code></p>
 </dd>
 <dt><a href="#module_favna">favna</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Custom Command exclusive to ChaosGamez server<br>A joke command to praise Favna<br><strong>Aliases</strong>: <code>.favna</code></p>
@@ -105,11 +123,11 @@ Checks the bot's ping to the Discord server
 <dt><a href="#module_8ball">8ball</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Rolls a magic 8 ball using your input<br><strong>Aliases</strong>: <code>eightball</code></p>
 </dd>
-<dt><a href="#module_coin">coin</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Filps a coinm call heads or tails!<br><strong>Aliases</strong>: <code>flip</code>, <code>coinflip</code></p>
-</dd>
 <dt><a href="#module_dice">dice</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Rolls some dice with some sides. Great for the DnD players!<br><strong>Aliases</strong>: <code>xdicey</code>, <code>roll</code>, <code>dicey</code>, <code>die</code></p>
+</dd>
+<dt><a href="#module_dndc">dndc</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Filps a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code></p>
 </dd>
 <dt><a href="#module_fight">fight</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.<br><strong>Aliases</strong>: <code>combat</code></p>
@@ -365,13 +383,62 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 </dd>
 </dl>
 
-<a name="module_balance"></a>
+<a name="module_chips"></a>
 
-## balance ⇒ <code>MessageEmbed</code>
-Retrieves your current balance for the casino  
-**Aliases**: `bal`, `cash`
+## chips ⇒ <code>MessageEmbed</code>
+Retrieves your current amount of chips for the casino  
+**Aliases**: `bal`, `cash`, `balance`
 
 **Returns**: <code>MessageEmbed</code> - Information about your current balance  
+**Category**: casino  
+<a name="module_coin"></a>
+
+## coin ⇒ <code>MessageEmbed</code>
+Gamble your chips in a coin flip  
+Payout is 1:2  
+**Aliases**: `flip`, `cflip`
+
+**Returns**: <code>MessageEmbed</code> - Outcome of the coin flip  
+**Category**: casino  
+<a name="module_daily"></a>
+
+## daily ⇒ <code>MessageEmbed</code>
+Recieve your daily 500 chips top up  
+**Aliases**: `topup`, `bonus`
+
+**Returns**: <code>MessageEmbed</code> - Your new balance  
+**Category**: casino  
+<a name="module_give"></a>
+
+## give ⇒ <code>MessageEmbed</code>
+Give another player some chips  
+**Aliases**: `donate`
+
+**Returns**: <code>MessageEmbed</code> - Changed balances of the two players  
+**Category**: casino  
+<a name="module_leaderboard"></a>
+
+## leaderboard ⇒ <code>MessageEmbed</code>
+Shows the top 5 ranking players for your server  
+**Aliases**: `lb`, `casinolb`
+
+**Returns**: <code>MessageEmbed</code> - List of top ranking players  
+**Category**: casino  
+<a name="module_slots"></a>
+
+## slots ⇒ <code>MessageEmbed</code>
+Gamble your chips at the slot machine  
+**Aliases**: `slot`, `fruits`
+
+**Returns**: <code>MessageEmbed</code> - Outcome of the spin  
+**Category**: casino  
+<a name="module_wheeloffortune"></a>
+
+## wheeloffortune ⇒ <code>MessageEmbed</code>
+Gamble your chips at the wheel of fortune  
+**Aliases**: `wheel`, `wof`
+
+**Returns**: <code>MessageEmbed</code> - Outcome of the game  
 **Category**: casino  
 <a name="module_favna"></a>
 
@@ -594,14 +661,6 @@ Rolls a magic 8 ball using your input
 ```js
 8ball is Favna a genius coder?
 ```
-<a name="module_coin"></a>
-
-## coin ⇒ <code>MessageEmbed</code>
-Filps a coinm call heads or tails!  
-**Aliases**: `flip`, `coinflip`
-
-**Returns**: <code>MessageEmbed</code> - The side the coin landed on  
-**Category**: games  
 <a name="module_dice"></a>
 
 ## dice ⇒ <code>MessageEmbed</code>
@@ -620,6 +679,14 @@ Rolls some dice with some sides. Great for the DnD players!
 ```js
 dice 5 6
 ```
+<a name="module_dndc"></a>
+
+## dndc ⇒ <code>MessageEmbed</code>
+Filps a coin  
+**Aliases**: `coinflip`, `dndc`
+
+**Returns**: <code>MessageEmbed</code> - Side the coin landed on  
+**Category**: games  
 <a name="module_fight"></a>
 
 ## fight ⇒ <code>MessageEmbed</code>
