@@ -24,29 +24,30 @@
  */
 
 /**
- * Retrieves your current balance for the casino  
- * **Aliases**: `bal`, `cash`
+ * Retrieves your current amount of chips for the casino  
+ * **Aliases**: `bal`, `cash`, `balance`
  * @module
  * @category casino
- * @name balance
+ * @name chips
  * @returns {MessageEmbed} Information about your current balance
  */
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
+  duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
   path = require('path'),
   sql = require('sqlite'), 
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class BalanceCommand extends commando.Command {
+module.exports = class ChipsCommand extends commando.Command {
   constructor (client) {
     super(client, {
-      'name': 'balance',
-      'memberName': 'balance',
+      'name': 'chips',
+      'memberName': 'chips',
       'group': 'casino',
-      'aliases': ['bal', 'cash'],
+      'aliases': ['bal', 'cash', 'balance'],
       'description': 'Retrieves your current balance for the casino',
       'guildOnly': true,
       'throttling': {
@@ -55,8 +56,7 @@ module.exports = class BalanceCommand extends commando.Command {
       }
     });
   }
-  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
-
+  
   run (msg) {
     const balEmbed = new MessageEmbed();
 
@@ -65,28 +65,25 @@ module.exports = class BalanceCommand extends commando.Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.s-ul.eu/ZMsznB7f.png');
 
-    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'));
+    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'), {'cached': true});
 
-    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}"`).then((rows) => {
+    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
       if (!rows) {
-        sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?)`, [msg.author.id, 500, moment().format('YYYY-MM-DD[T]HH:mm')]);
+        sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?);`, [msg.author.id, 500, moment().format('YYYY-MM-DD HH:mm')]);
         balEmbed.setDescription(stripIndents `
         **Balance**
         500
         **Daily Reset**
         in 24 hours`);
       } else {
-        /* eslint-disable sort-vars*/
+        console.log(rows);
         const topupdate = moment(rows.lasttopup).add(24, 'hours'),
-          duration = moment.duration(topupdate.diff()),
-          hours = parseInt(duration.asHours(), 10),
-          minutes = parseInt(duration.asMinutes(), 10) - (hours * 60);
-        /* eslint-enable sort-vars*/
+          dura = moment.duration(topupdate.diff()); // eslint-disable-line sort-vars
 
         balEmbed.setDescription(stripIndents `**Balance**
           ${rows.balance}
           **Daily Reset**
-          in ${hours} hour(s) and ${minutes} minute(s)`);
+          ${!(dura._milliseconds <= 0) ? dura.format('[in] HH[ hour(s) and ]mm[ minute(s)]') : 'Right now!'}`);
       }
 
       deleteCommandMessages(msg, this.client);
@@ -104,8 +101,8 @@ module.exports = class BalanceCommand extends commando.Command {
           return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
               You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
-        sql.run(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT)`).then(() => {
-          sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?)`, [msg.author.id, 500, moment().format('YYYY-MM-DD[T]HH:mm')]);
+        sql.run(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).then(() => {
+          sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?);`, [msg.author.id, 500, moment().format('YYYY-MM-DD HH:mm')]);
         });
 
         balEmbed.setDescription(stripIndents `
