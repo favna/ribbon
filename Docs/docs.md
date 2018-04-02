@@ -299,6 +299,9 @@ Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>por
 <dt><a href="#module_checkguilds">checkguilds</a> ⇒ <code>Message</code></dt>
 <dd><p>Owner Only - lists all guilds the bot is in</p>
 </dd>
+<dt><a href="#module_customtopup">customtopup</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Daniël Ocean doesn&#39;t give a crap about legality<br><strong>Aliases</strong>: <code>ctu</code></p>
+</dd>
 <dt><a href="#module_dbpost">dbpost</a> ⇒ <code>Message</code></dt>
 <dd><p>Owners only - posts current guild count to discordbotlist</p>
 </dd>
@@ -434,7 +437,7 @@ Give another player some chips
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>member</code> | The member you want to give some chips |
-| ChipsAmount | <code>numbeR</code> | The amount of chips you want to give |
+| ChipsAmount | <code>number</code> | The amount of chips you want to give |
 
 **Example**  
 ```js
@@ -1572,6 +1575,24 @@ Owner Only - lists all guilds the bot is in
 
 **Returns**: <code>Message</code> - Amount and list of guilds in code blocks  
 **Category**: owner  
+<a name="module_customtopup"></a>
+
+## customtopup ⇒ <code>MessageEmbed</code>
+Daniël Ocean doesn't give a crap about legality  
+**Aliases**: `ctu`
+
+**Returns**: <code>MessageEmbed</code> - New balance for the member  
+**Category**: owner  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyMember | <code>member</code> | The member you want to give some chips |
+| ChipsAmount | <code>number</code> | The amount of chips you want to give |
+
+**Example**  
+```js
+ctu Biscuit 1000
+```
 <a name="module_dbpost"></a>
 
 ## dbpost ⇒ <code>Message</code>

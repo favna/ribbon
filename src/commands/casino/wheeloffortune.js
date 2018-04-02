@@ -51,6 +51,7 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
       'aliases': ['wheel', 'wof'],
       'description': 'Gamble your chips iat the wheel of fortune',
       'format': 'AmountOfChips',
+      'examples': ['wof 50'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,

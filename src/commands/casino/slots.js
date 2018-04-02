@@ -52,6 +52,7 @@ module.exports = class SlotsCommand extends commando.Command {
       'aliases': ['slot', 'fruits'],
       'description': 'Gamble your chips at the slot machine',
       'format': 'AmountOfChips',
+      'examples': ['slots 50'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,

@@ -53,6 +53,7 @@ module.exports = class CoinCommand extends commando.Command {
       'aliases': ['flip', 'cflip'],
       'description': 'Gamble your chips in a coin flip',
       'format': 'AmountOfChips CoinSide',
+      'examples': ['coin 50 heads'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,

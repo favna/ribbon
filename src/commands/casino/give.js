@@ -31,7 +31,7 @@
  * @name give
  * @example give Favna 10
  * @param {member} AnyMember The member you want to give some chips
- * @param {numbeR} ChipsAmount The amount of chips you want to give
+ * @param {number} ChipsAmount The amount of chips you want to give
  * @returns {MessageEmbed} Changed balances of the two players
  */
 
@@ -51,6 +51,8 @@ module.exports = class GiveCommand extends commando.Command {
       'group': 'casino',
       'aliases': ['donate'],
       'description': 'Give another player some chips',
+      'format': 'AnyMember ChipsAmount',
+      'examples': ['give GuyInShroomSuit 50'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,
