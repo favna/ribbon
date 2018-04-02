@@ -63,7 +63,7 @@ module.exports = class ChipsCommand extends commando.Command {
     balEmbed
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-      .setThumbnail('https://favna.s-ul.eu/ZMsznB7f.png');
+      .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'), {'cached': true});
 
@@ -76,7 +76,6 @@ module.exports = class ChipsCommand extends commando.Command {
         **Daily Reset**
         in 24 hours`);
       } else {
-        console.log(rows);
         const topupdate = moment(rows.lasttopup).add(24, 'hours'),
           dura = moment.duration(topupdate.diff()); // eslint-disable-line sort-vars
 

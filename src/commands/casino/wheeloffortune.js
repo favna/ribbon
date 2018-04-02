@@ -24,43 +24,56 @@
  */
 
 /**
- * Recieve your daily 500 chips top up  
- * **Aliases**: `topup`, `bonus`
+ * Gamble your chips in a game of wheel of fortune  
+ * **Aliases**: `wheel`, `wof`
  * @module
  * @category casino
- * @name daily
- * @returns {MessageEmbed} Your new balance
+ * @name wheeloffortune
+ * @returns {MessageEmbed} Outcome of the game
  */
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
+  duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
   path = require('path'),
   sql = require('sqlite'), 
-  {oneLine, stripIndents} = require('common-tags'), 
+  {
+    oneLine,
+    stripIndents
+  } = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class DailyCommand extends commando.Command {
+module.exports = class WheelOfFortuneCommand extends commando.Command {
   constructor (client) {
     super(client, {
-      'name': 'daily',
-      'memberName': 'daily',
+      'name': 'wheeloffortune',
+      'memberName': 'wheeloffortune',
       'group': 'casino',
-      'aliases': ['topup', 'bonus'],
-      'description': 'Recieve your daily cash top up of 500 chips',
+      'aliases': ['wheel', 'wof'],
+      'description': 'Gamble your chips in a game of wheel of fortune',
       'guildOnly': true,
       'throttling': {
         'usages': 2,
         'duration': 3
-      }
+      },
+      'args': [
+        {
+          'key': 'chips',
+          'prompt': 'How many chips do you want to gamble?',
+          'type': 'integer'
+        }
+      ]
     });
   }
-  
-  run (msg) {
-    const balEmbed = new MessageEmbed();
-    let returnMsg = '';
 
-    balEmbed
+  run (msg, args) {
+    const arrowmojis = ['⬆', '↖', '⬅', '↙', '⬇', '↘', '➡', '↗'],
+      multipliers = ['0.1', '0.2', '0.3', '0.5', '1.2', '1.5', '1.7', '2.4'],
+      spin = Math.floor(Math.random() * multipliers.length),
+      wofEmbed = new MessageEmbed();
+
+    wofEmbed
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
@@ -69,66 +82,55 @@ module.exports = class DailyCommand extends commando.Command {
 
     sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
       if (!rows) {
-        sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?);`, [msg.author.id, 500, moment().format('YYYY-MM-DD HH:mm')]);
-        balEmbed.setDescription(stripIndents `
-        **New Balance**
-        500
-        **Daily Reset**
-        in 24 hours`);
-        returnMsg = 'You didn\'t have any chips yet so I added your very first';
-      } else {
-        console.log(rows);
-        const topupdate = moment(rows.lasttopup).add(24, 'hours'),
-          dura = moment.duration(topupdate.diff()); // eslint-disable-line sort-vars
-
-        let chipStr = '',
-          resetStr = '';
-
-        if (dura.asHours() <= 0) {
-          sql.run(`UPDATE "${msg.guild.id}" SET balance=?, lasttopup=? WHERE userID="${msg.author.id}";`, [rows.balance + 500, moment().format('YYYY-MM-DD HH:mm')]);
-          chipStr = `${rows.balance + 500}`;
-          resetStr = 'in 24 hours';
-          returnMsg = 'Topped up your balance with your daily 500 chips!';
-        } else {
-          chipStr = rows.balance;
-          resetStr = dura.format('[in] HH[ hour(s) and ]mm[ minute(s)]');
-          returnMsg = 'Sorry but you are not due to get your daily chips yet, here is your current balance';
-        }
-
-        balEmbed.setDescription(stripIndents `**Balance**
-          ${chipStr}
-          **Daily Reset**
-          ${resetStr}`);
+        return msg.reply(`looks like you didn\'t get any chips yet. Run ${msg.guild.commandPrefix}chips to get your first 400`);
       }
+      if (args.chips > rows.balance) {
+        return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some.');
+      }
+
+      const prevBal = rows.balance;
+
+      rows.balance -= args.chips;
+      rows.balance += args.chips * multipliers[spin];
+      rows.balance = Math.round(rows.balance);
+
+      sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
+
+      wofEmbed
+        .setTitle(`${msg.author.tag} ${multipliers[spin] < 1 ? `lost ${args.chips - (args.chips * multipliers[spin])}` : `won ${(args.chips * multipliers[spin]) - args.chips}`}`)
+        .addField('Previous Balance', prevBal, true)
+        .addField('New Balance', rows.balance, true)
+        .setDescription(`
+『${multipliers[1]}』   『${multipliers[0]}』   『${multipliers[7]}』
+
+『${multipliers[2]}』      ${arrowmojis[spin]}        『${multipliers[6]}』
+
+『${multipliers[3]}』   『${multipliers[4]}』   『${multipliers[5]}』
+    `);
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(balEmbed, returnMsg);
+      return msg.embed(wofEmbed);
     })
       .catch((e) => {
         if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured while getting someones balance!
+          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone spinning the Wheel of Fortune!
 			Server: ${msg.guild.name} (${msg.guild.id})
 			Author: ${msg.author.tag} (${msg.author.id})
-			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            Input: ${args.chips}
+            Spin: ${spin}
+            Multiplier: ${multipliers[spin]}
 			Error Message:`} ${e}`);
 
           return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
               You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
-        sql.run(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).then(() => {
-          sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?);`, [msg.author.id, 500, moment().format('YYYY-MM-DD HH:mm')]);
-        });
 
-        balEmbed.setDescription(stripIndents `
-              **Balance**
-              500
-              **Daily Reset**
-              in 24 hours`);
 
         deleteCommandMessages(msg, this.client);
 
-        return msg.embed(balEmbed);
+        return msg.reply(`looks like you didn\'t get any chips yet. Run ${msg.guild.commandPrefix}chips to get your first 400`);
       });
   }
 };
