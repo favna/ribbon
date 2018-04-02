@@ -68,11 +68,11 @@ module.exports = class CoinCommand extends commando.Command {
           'validate': (side) => {
             const validSides = ['heads', 'tails'];
 
-            if (validSides.includes(side)) {
+            if (validSides.includes(side.toLowerCase())) {
               return true;
             }
 
-            return `Has to be either \`${validSides[0]}\` or \`${validSides[0]}\``;
+            return `Has to be either \`${validSides[0]}\` or \`${validSides[1]}\``;
           }
         }
       ]

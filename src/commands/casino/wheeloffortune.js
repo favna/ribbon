@@ -94,7 +94,7 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
       sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
 
       wofEmbed
-        .setTitle(`${msg.author.tag} ${multipliers[spin] < 1 ? `lost ${args.chips - (args.chips * multipliers[spin])}` : `won ${(args.chips * multipliers[spin]) - args.chips}`} chips`)
+        .setTitle(`${msg.author.tag} ${multipliers[spin] < 1 ? `lost ${args.chips - (args.chips * multipliers[spin])}` : `won ${Math.round((args.chips * multipliers[spin]) - args.chips)}`} chips`)
         .addField('Previous Balance', prevBal, true)
         .addField('New Balance', rows.balance, true)
         .setDescription(`
