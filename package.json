@@ -62,6 +62,7 @@
     "require-from-url": "^3.1.2",
     "scalc": "^2.0.1",
     "simple-youtube-api": "5.0.1",
+    "slot-machine": "^2.1.0",
     "snekfetch": "3.6.4",
     "spotify-web-api-node": "3.0.0",
     "sqlite": "^2.8.0",
