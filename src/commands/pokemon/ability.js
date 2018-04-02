@@ -143,7 +143,7 @@ module.exports = class abilityCommand extends commando.Command {
     if (ability) {
       abilityEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-        .setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
         .addField('Description', ability.desc ? ability.desc : ability.shortDesc)
         .addField('External Resource', oneLine `
 			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(ability.name.replace(' ', '_'))}_(Ability\\))  

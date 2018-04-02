@@ -78,17 +78,17 @@ module.exports = class fightCommand extends commando.Command {
     fighterEmbed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setTitle('🥊 Fight Results 🥊')
-      .setThumbnail('http://i.imgur.com/LxPAE2f.png');
+      .setThumbnail('https://favna.xyz/images/ribbonhost/dbxlogo.png');
 
     if (args.fighterOne.toLowerCase() === 'chuck norris' || args.fighterTwo.toLowerCase() === 'chuck norris') {
       if (args.fighterOne.toLowerCase() === 'favna' || args.fighterTwo.toLowerCase() === 'favna') {
         fighterEmbed
           .addField('All right, you asked for it...', '***The universe was destroyed due to this battle between two unstoppable forces. Good Job.***')
-          .setImage('https://i.imgur.com/Witob4j.png');
+          .setImage('https://favna.xyz/images/ribbonhost/universeblast.png');
       } else {
         fighterEmbed
           .addField('You fokn wot m8', '***Chuck Norris cannot be beaten***')
-          .setImage('https://i.imgur.com/WCFyXRr.png');
+          .setImage('https://favna.xyz/images/ribbonhost/chucknorris.png');
       }
 
       deleteCommandMessages(msg, this.client);
@@ -98,7 +98,7 @@ module.exports = class fightCommand extends commando.Command {
     if (args.fighterOne.toLowerCase() === 'favna' || args.fighterTwo.toLowerCase() === 'favna') {
       fighterEmbed
         .addField('You got mega rekt', '***Favna always wins***')
-        .setImage('https://favna.s-ul.eu/gifs/hsp6RS9O.gif');
+        .setImage('https://favna.xyz/images/ribbonhost/pyrrhawins.gif');
 
       deleteCommandMessages(msg, this.client);
 

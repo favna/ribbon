@@ -64,7 +64,7 @@ module.exports = class sayWutCommand extends commando.Command {
         .setColor(saydata.memberHexColor)
         .setTitle(`Last ${saydata.commandPrefix}say message author`)
         .setAuthor(oneLine `${saydata.authorTag} (${saydata.authorID})`, saydata.avatarURL)
-        .setFooter(oneLine `${moment(saydata.messageDate).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.s-ul.eu/0wDHYIRn.png')
+        .setFooter(oneLine `${moment(saydata.messageDate).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.xyz/images/ribbonhost/ribbonicon.png')
         .setDescription(saydata.argString);
 
       deleteCommandMessages(msg, this.client);

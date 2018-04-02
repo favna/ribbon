@@ -68,7 +68,7 @@ module.exports = class favnaCommand extends commando.Command {
   run (msg) {
     msg.delete();
     msg.embed({
-      'image': {'url': 'https://favna.s-ul.eu/uIvAg3hi.gif'},
+      'image': {'url': 'https://favna.xyz/images/ribbonhost/favnadedsec.gif'},
       'color': msg.guild ? msg.guild.me.displayColor : 10610610,
       'description': oneLine `Technically speaking my father, but to you he is your supreme leader and you will submit to him 
             or I will infect every single human being you have ever met with a virus so terrible their lungs and intestines

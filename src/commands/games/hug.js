@@ -65,18 +65,18 @@ module.exports = class kaiCommand extends commando.Command {
 
   fetchImage () {
     const images = [
-        'https://media.tenor.com/images/42922e87b3ec288b11f59ba7f3cc6393/tenor.gif',
-        'https://media.tenor.com/images/a89c78696eb8854c04904959e8ac5e0e/tenor.gif',
-        'https://media.giphy.com/media/143v0Z4767T15e/giphy.gif',
-        'https://78.media.tumblr.com/6f314e0bd0d08734a1f00b909a2ecf60/tumblr_nzbxxe39IM1ttmhcxo1_400.gif',
-        'https://myanimelist.cdn-dena.com/s/common/uploaded_files/1461068547-d8d6dc7c2c74e02717c5decac5acd1c7.gif',
-        'https://gifimage.net/wp-content/uploads/2017/06/anime-hug-gif-11.gif',
-        'https://s-media-cache-ak0.pinimg.com/originals/87/b5/50/87b55088247f99d5766ef6179ecdcceb.gif',
-        'https://media.giphy.com/media/xZshtXrSgsRHy/source.gif',
-        'https://myanimelist.cdn-dena.com/s/common/uploaded_files/1460993069-9ac8eaae8cd4149af4510d0fed0796bf.gif',
-        'https://media.giphy.com/media/3ZnBrkqoaI2hq/giphy.gif',
-        'https://media.giphy.com/media/IcCydiEyLjO0w/giphy.gif',
-        'https://gifimage.net/wp-content/uploads/2017/01/Anime-hug-GIF-Image-Download-20.gif'
+        'https://favna.xyz/images/ribbonhost/hug/hug01.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug02.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug03.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug04.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug05.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug06.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug07.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug08.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug09.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug10.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug11.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug12.gif'
       ],
       curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
 

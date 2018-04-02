@@ -60,7 +60,7 @@ module.exports = class coinCommand extends commando.Command {
 
     coinEmbed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-      .setImage(res === 'head' ? 'https://favna.s-ul.eu/8ZKmpiKO.png' : 'https://favna.s-ul.eu/NTsDbSUo.png')
+      .setImage(res === 'head' ? 'https://favna.xyz/images/ribbonhost/dndheads.png' : 'https://favna.xyz/images/ribbonhost/dndtails.png')
       .setTitle(`Flipped ${res}s`);
 
     deleteCommandMessages(msg, this.client);

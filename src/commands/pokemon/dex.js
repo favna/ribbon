@@ -269,7 +269,7 @@ module.exports = class dexCommand extends commando.Command {
         .setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(poke)}`,
           `https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(' ', '_').toLowerCase()}.png`)
         .setImage(`https://play.pokemonshowdown.com/sprites/xyani/${poke.toLowerCase().replace(' ', '')}.gif`)
-        .setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
         .addField(typestring, pokeEntry.types.join(', '), true)
         .addField('Height', `${pokeEntry.heightm}m`, true)
         .addField('Gender Ratio', genderString, true)

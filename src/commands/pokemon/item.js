@@ -159,7 +159,7 @@ module.exports = class itemCommand extends commando.Command {
     if (Object.keys(item).length !== 0) {
       itemEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-        .setThumbnail('https://favna.s-ul.eu/LKL6cgin.png')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
         .setAuthor(`${capitalizeFirstLetter(item.name)}`, imgURL)
         .addField('Description', item.desc)
         .addField('Generation Introduced', item.gen)
