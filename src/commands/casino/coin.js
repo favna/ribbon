@@ -66,7 +66,7 @@ module.exports = class CoinCommand extends commando.Command {
           'prompt': 'What side will the coin land on?',
           'type': 'string',
           'validate': (side) => {
-            const validSides = ['heads', 'tails'];
+            const validSides = ['heads', 'head', 'tails', 'tail'];
 
             if (validSides.includes(side.toLowerCase())) {
               return true;
@@ -96,6 +96,9 @@ module.exports = class CoinCommand extends commando.Command {
       if (args.chips > rows.balance) {
         return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');
       }
+
+      if (args.side === 'head') args.side = 'heads'; // eslint-disable-line curly
+      if (args.side === 'tail') args.side = 'tails'; // eslint-disable-line curly
 
       const flip = Math.round(Number(Math.random())),
         prevBal = rows.balance,
