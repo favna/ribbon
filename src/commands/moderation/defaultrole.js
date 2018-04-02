@@ -73,7 +73,7 @@ module.exports = class defaultroleCommand extends commando.Command {
     if (args.role === 'delete') {
       this.client.provider.remove(msg.guild.id, 'defaultRole');
       deleteCommandMessages(msg, this.client);
-			
+
       return msg.reply('🔒 Default role has been removed');
     }
 

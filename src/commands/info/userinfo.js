@@ -36,7 +36,7 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  moment = require('moment'),
+  moment = require('moment'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class userInfoCommand extends commando.Command {

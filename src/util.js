@@ -12,14 +12,14 @@ const capitalizeFirstLetter = function (string) {
 
 const memberFilterExact = function (search) {
   return mem => mem.user.username.toLowerCase() === search ||
-        (mem.nickname && mem.nickname.toLowerCase() === search) ||
-        `${mem.user.username.toLowerCase()}#${mem.user.discriminator}` === search;
+    (mem.nickname && mem.nickname.toLowerCase() === search) ||
+    `${mem.user.username.toLowerCase()}#${mem.user.discriminator}` === search;
 };
 
 const memberFilterInexact = function (search) {
   return mem => mem.user.username.toLowerCase().includes(search) ||
-        (mem.nickname && mem.nickname.toLowerCase().includes(search)) ||
-        `${mem.user.username.toLowerCase()}#${mem.user.discriminator}`.includes(search);
+    (mem.nickname && mem.nickname.toLowerCase().includes(search)) ||
+    `${mem.user.username.toLowerCase()}#${mem.user.discriminator}`.includes(search);
 };
 
 const userSearch = async function (client, message, search) {
@@ -34,17 +34,17 @@ const userSearch = async function (client, message, search) {
     }
   }
   member = await message.guild.members.filterArray(memberFilterInexact(search));
-  if (member.length === 0) { 
+  if (member.length === 0) {
     return null;
   }
-  if (member.length === 1) { 
-    return member[0]; 
+  if (member.length === 1) {
+    return member[0];
   }
   member = member.filter(memberFilterExact(search));
-  if (member.length === 1) { 
-    return member[0]; 
+  if (member.length === 1) {
+    return member[0];
   }
-	
+
   return null;
 };
 

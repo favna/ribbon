@@ -37,7 +37,7 @@
 
 const {MessageEmbed} = require('discord.js'),
   Pornsearch = require('pornsearch'),
-  commando = require('discord.js-commando'),
+  commando = require('discord.js-commando'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class pornvidsCommand extends commando.Command {
@@ -86,7 +86,7 @@ module.exports = class pornvidsCommand extends commando.Command {
 
       return msg.embed(pornEmbed, vids[random].url);
     }
-		
+
     return msg.reply('nothing found for that input');
   }
 };

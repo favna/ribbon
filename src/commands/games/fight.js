@@ -38,7 +38,7 @@
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
-  random = require('node-random'),
+  random = require('node-random'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class fightCommand extends commando.Command {
@@ -125,7 +125,7 @@ module.exports = class fightCommand extends commando.Command {
 
       return msg.reply('⚠️ an error occured pitting these combatants against each other 😦');
     });
-		
+
     return null;
   }
 };

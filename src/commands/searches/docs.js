@@ -38,7 +38,7 @@
 
 const {Command} = require('discord.js-commando'), 
   {oneLineTrim} = require('common-tags'),
-  request = require('snekfetch'),
+  request = require('snekfetch'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class DocsCommand extends Command {
@@ -380,7 +380,7 @@ module.exports = class DocsCommand extends Command {
     };
 
     deleteCommandMessages(msg, this.client);
-		
+
     return msg.embed(embed);
   }
 };

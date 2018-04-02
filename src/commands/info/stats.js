@@ -35,9 +35,9 @@
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-  moment = require('moment'),
+  moment = require('moment'), 
   {oneLine} = require('common-tags'),
-  process = require('process'),
+  process = require('process'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class statsCommand extends commando.Command {

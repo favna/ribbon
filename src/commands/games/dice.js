@@ -37,7 +37,7 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  xdicey = require('xdicey'),
+  xdicey = require('xdicey'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class diceCommand extends commando.Command {

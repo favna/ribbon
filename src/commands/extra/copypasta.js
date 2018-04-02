@@ -39,8 +39,8 @@ const {MessageEmbed} = require('discord.js'),
   Matcher = require('did-you-mean'),
   commando = require('discord.js-commando'),
   fs = require('fs'),
-  path = require('path'),
-  {oneLine} = require('common-tags'),
+  path = require('path'), 
+  {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class copypastaCommand extends commando.Command {
@@ -101,7 +101,7 @@ module.exports = class copypastaCommand extends commando.Command {
           cpEmbed
             .setDescription(pastaContent)
             .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2');
-						
+
           msg.delete();
 
           return msg.embed(cpEmbed);
@@ -116,7 +116,7 @@ module.exports = class copypastaCommand extends commando.Command {
       return msg.reply(`⚠️ that copypata does not exist! ${dymString}`);
     }
     deleteCommandMessages(msg, this.client);
-		
+
     return msg.reply(`⚠️ that copypata does not exist! ${dymString}`);
   }
 };

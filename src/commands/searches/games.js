@@ -37,8 +37,8 @@
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   igdbapi = require('igdb-api-node').default,
-  moment = require('moment'),
-  {deleteCommandMessages} = require('../../util.js'),
+  moment = require('moment'), 
+  {deleteCommandMessages} = require('../../util.js'), 
   {igdbAPIKey} = require('../../auth.json');
 
 module.exports = class gameCommand extends commando.Command {

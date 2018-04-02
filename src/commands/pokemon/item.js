@@ -35,16 +35,14 @@
  * @returns {MessageEmbed} Description and external links for the item
  */
 
-/* eslint-disable sort-vars */
 const {MessageEmbed} = require('discord.js'),
   Matcher = require('did-you-mean'),
   commando = require('discord.js-commando'),
+  path = require('path'), 
   request = require('snekfetch'),
   requireFromURL = require('require-from-url/sync'),
-  path = require('path'),
-  {oneLine} = require('common-tags'),
+  {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
-/* eslint-enable sort-vars */
 
 module.exports = class itemCommand extends commando.Command {
   constructor (client) {

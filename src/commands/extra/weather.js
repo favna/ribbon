@@ -38,7 +38,7 @@
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
-  weather = require('yahoo-weather'),
+  weather = require('yahoo-weather'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class weatherCommand extends commando.Command {
@@ -140,7 +140,7 @@ module.exports = class weatherCommand extends commando.Command {
       return msg.embed(weatherEmbed);
     }
     deleteCommandMessages(msg, this.client);
-		
+
     return msg.reply('⚠️ an error occured getting weather info for that city');
   }
 };

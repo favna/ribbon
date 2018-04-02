@@ -69,7 +69,7 @@ module.exports = class strawpollCommand extends commando.Command {
           'wait': 60,
           'validate': (opts) => {
             if (/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~ ]*\|[a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~]*)*/.test(opts) &&
-							opts.split('|').length >= 2 && opts.split('|').length <= 30) {
+              opts.split('|').length >= 2 && opts.split('|').length <= 30) {
               return true;
             }
 
@@ -108,7 +108,7 @@ module.exports = class strawpollCommand extends commando.Command {
     }
 
     deleteCommandMessages(msg, this.client);
-		
+
     return msg.reply('⚠️ an error occured creating the strawpoll');
   }
 };

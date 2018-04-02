@@ -89,7 +89,7 @@ module.exports = class banCommand extends commando.Command {
       args.reason = args.reason.substring(0, args.reason.indexOf('--nodelete')) + args.reason.substring(args.reason.indexOf('--nodelete') + '--nodelete'.length + 1);
       args.keepmessages = true;
     }
-		
+
     args.member.ban({
       'days': args.keepmessages ? 0 : 1,
       'reason': args.reason !== '' ? args.reason : 'No reason given by staff'
@@ -105,8 +105,8 @@ module.exports = class banCommand extends commando.Command {
       .setColor('#FF1900')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-				'**Action:** Ban\n' +
-				`**Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
+        '**Action:** Ban\n' +
+        `**Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {

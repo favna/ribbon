@@ -58,9 +58,9 @@ module.exports = class sayCommand extends commando.Command {
           'type': 'string',
           'validate': (rep, msg) => {
             if (msg.content.toLowerCase().includes('@here') ||
-						msg.content.toLowerCase().includes('@everyone') ||
-						msg.cleanContent.toLowerCase().includes('@here') ||
-						msg.cleanContent.toLowerCase().includes('@everyone')) {
+            msg.content.toLowerCase().includes('@everyone') ||
+            msg.cleanContent.toLowerCase().includes('@here') ||
+            msg.cleanContent.toLowerCase().includes('@everyone')) {
               msg.delete();
 
               return 'You cannot make me mention `@here` or `@everyone`! Would you like me to say anything else?';

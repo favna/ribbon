@@ -119,7 +119,7 @@ module.exports = class warnCommand extends commando.Command {
     } else {
       msg.reply('📘 No warnpoints log found for this server, creating one and filling with the first warning data');
       fs.mkdirSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}`));
-			
+
       const warns = [warn];
 
       fs.writeFileSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`), JSON.stringify(warns), 'utf8');
@@ -130,10 +130,10 @@ module.exports = class warnCommand extends commando.Command {
         .setColor('#FFFF00')
         .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
         .setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-					'**Action:** Warn\n' +
-					`**Previous Warning Points:** ${warn.points - args.points}\n` +
-					`**Current Warning Points:** ${warn.points}\n` +
-					`**Reason:** ${args.reason !== '' ? args.reason : 'No reason has been added by the moderator'}`)
+          '**Action:** Warn\n' +
+          `**Previous Warning Points:** ${warn.points - args.points}\n` +
+          `**Current Warning Points:** ${warn.points}\n` +
+          `**Reason:** ${args.reason !== '' ? args.reason : 'No reason has been added by the moderator'}`)
         .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
       if (this.client.provider.get(msg.guild, 'modlogs', true)) {

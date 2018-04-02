@@ -64,10 +64,10 @@ module.exports = class CopyPastaListCommand extends commando.Command {
         for (const entry in list) {
           list[entry] = `- \`${list[entry].slice(0, -4)}\``;
         }
-                
+
         const messages = [],
           splitTotal = splitMessage(list.join('\n'));
-                    
+
         for (const part in splitTotal) {
           messages.push(await msg.embed({
             'title': 'Copypastass available on this server',
@@ -75,7 +75,7 @@ module.exports = class CopyPastaListCommand extends commando.Command {
             'color': msg.guild.me.displayColor
           }));
         }
-                
+
         deleteCommandMessages(msg, this.client);
 
         return messages;

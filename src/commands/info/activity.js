@@ -39,8 +39,8 @@ const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
-  request = require('snekfetch'),
-  {deleteCommandMessages} = require('../../util.js'),
+  request = require('snekfetch'), 
+  {deleteCommandMessages} = require('../../util.js'), 
   {spotifyID, spotifySecret} = require('../../auth.json');
 
 module.exports = class activityCommand extends commando.Command {
@@ -107,7 +107,7 @@ module.exports = class activityCommand extends commando.Command {
         if (spotTokenReq) {
           spotifyApi.setAccessToken(spotTokenReq.body.access_token);
 
-					const spotifyData = await spotifyApi.searchTracks(`track:${activity.details} artist:${typeof activity.state === 'object' ? activity.state[0] : activity.state.split(';')[0]}`); // eslint-disable-line
+          const spotifyData = await spotifyApi.searchTracks(`track:${activity.details} artist:${typeof activity.state === 'object' ? activity.state[0] : activity.state.split(';')[0]}`); // eslint-disable-line
 
           if (spotifyData) {
             spotify = spotifyData.body.tracks.items[0];

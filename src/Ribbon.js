@@ -253,7 +253,7 @@ class Ribbon {
 				${oneLine `Server staff (those who can manage other's messages) can disable these replies by using
 				\`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}unknownmessages disable\``}`);
       }
-			
+
       return null;
     };
   }
@@ -277,7 +277,7 @@ class Ribbon {
       .on('warn', console.warn);
 
     this.client.setProvider(
-      sqlite.open(path.join(__dirname, 'data/databases/settings.sqlite3')).then(db => new Commando.SQLiteProvider(db)) 
+      sqlite.open(path.join(__dirname, 'data/databases/settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
     ).catch(console.error);
 
     this.client.registry

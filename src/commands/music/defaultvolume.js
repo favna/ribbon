@@ -37,7 +37,7 @@
 const commando = require('discord.js-commando'),
   path = require('path'),
   {DEFAULT_VOLUME} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
-  {deleteCommandMessages} = require('../../util.js'); 
+  {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class defaultVolumeCommand extends commando.Command {
   constructor (client) {
@@ -90,13 +90,13 @@ module.exports = class defaultVolumeCommand extends commando.Command {
 
     if (isNaN(defaultVolume) || defaultVolume <= 0 || defaultVolume > 10) {
       deleteCommandMessages(msg, this.client);
-			
+
       return msg.reply('invalid number provided. It must be in the range of 0-10.');
     }
 
     this.client.provider.set(msg.guild.id, 'defaultVolume', defaultVolume);
     deleteCommandMessages(msg, this.client);
-		
+
     return msg.reply(`set the default volume level to ${defaultVolume}.`);
 
   }

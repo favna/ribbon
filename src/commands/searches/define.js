@@ -28,7 +28,7 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  request = require('snekfetch'),
+  request = require('snekfetch'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class defineCommand extends commando.Command {

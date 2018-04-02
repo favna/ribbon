@@ -38,8 +38,8 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  typeMatchups = require('../../data/dex/typechart').BattleTypeChart,
-  {oneLine} = require('common-tags'),
+  typeMatchups = require('../../data/dex/typechart').BattleTypeChart, 
+  {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class typeCommand extends commando.Command {

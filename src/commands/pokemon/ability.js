@@ -39,8 +39,8 @@ const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   path = require('path'),
   request = require('snekfetch'),
-  requireFromURL = require('require-from-url/sync'),
-  {oneLine} = require('common-tags'),
+  requireFromURL = require('require-from-url/sync'), 
+  {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class abilityCommand extends commando.Command {

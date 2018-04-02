@@ -79,10 +79,10 @@ module.exports = class addRoleCommand extends commando.Command {
     if (args.member.manageable) {
       try {
         const roleAdd = await args.member.roles.add(args.role);
-  
+
         if (roleAdd) {
           deleteCommandMessages(msg, this.client);
-  
+
           return msg.reply(`\`${args.role.name}\` assigned to \`${args.member.displayName}\``);
         }
       } catch (e) {

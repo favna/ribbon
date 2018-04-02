@@ -38,7 +38,7 @@ const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
   scalc = require('scalc'), 
-  {deleteCommandMessages} = require('../../util.js'),
+  {deleteCommandMessages} = require('../../util.js'), 
   {oneLine, stripIndents} = require('common-tags');
 
 module.exports = class mathCommand extends commando.Command {

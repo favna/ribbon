@@ -36,7 +36,7 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  random = require('node-random'),
+  random = require('node-random'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class rpsCommand extends commando.Command {

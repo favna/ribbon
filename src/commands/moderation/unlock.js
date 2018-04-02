@@ -36,8 +36,8 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  moment = require('moment'),
-  {oneLine} = require('common-tags'),
+  moment = require('moment'), 
+  {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class unlockCommand extends commando.Command {

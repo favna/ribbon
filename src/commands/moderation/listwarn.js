@@ -97,7 +97,7 @@ module.exports = class listwarnCommand extends commando.Command {
           .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
           .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'))
           .setDescription(`**Member:** ${results[0].usertag} (${results[0].id})\n` +
-						`**Current Warning Points:** ${results[0].points}`);
+            `**Current Warning Points:** ${results[0].points}`);
 
         deleteCommandMessages(msg, this.client);
 

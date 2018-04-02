@@ -38,8 +38,8 @@
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
-  request = require('snekfetch'),
-  {deleteCommandMessages} = require('../../util.js'),
+  request = require('snekfetch'), 
+  {deleteCommandMessages} = require('../../util.js'), 
   {googleapikey} = require('../../auth.json');
 
 module.exports = class youtubeCommand extends commando.Command {

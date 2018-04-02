@@ -38,8 +38,8 @@
 const {MessageEmbed} = require('discord.js'),
   Matcher = require('did-you-mean'),
   commando = require('discord.js-commando'),
-  moves = require('../../data/dex/moves').BattleMovedex,
-  {oneLine} = require('common-tags'),
+  moves = require('../../data/dex/moves').BattleMovedex, 
+  {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class moveCommand extends commando.Command {

@@ -39,8 +39,8 @@ const {MessageEmbed} = require('discord.js'),
   cheerio = require('cheerio'),
   commando = require('discord.js-commando'),
   currencySymbol = require('currency-symbol-map'),
-  request = require('snekfetch'),
-  {deleteCommandMessages} = require('../../util.js'),
+  request = require('snekfetch'), 
+  {deleteCommandMessages} = require('../../util.js'), 
   {steamAPIKey} = require('../../auth.json');
 
 module.exports = class steamCommand extends commando.Command {

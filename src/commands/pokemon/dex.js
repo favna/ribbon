@@ -42,8 +42,8 @@ const {MessageEmbed} = require('discord.js'),
   dexEntries = require('../../data/dex/flavorText.json'),
   request = require('snekfetch'),
   requireFromURL = require('require-from-url/sync'),
-  path = require('path'),
-  {oneLine} = require('common-tags'),
+  path = require('path'), 
+  {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 /* eslint-enable sort-vars */
 

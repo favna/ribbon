@@ -33,7 +33,7 @@
  * @param {member} AnyMember Member to make a mention to
  * @returns {Message} Mention of the member wrapped between carets
  */
- 
+
 const commando = require('discord.js-commando');
 
 module.exports = class tagmemberCommand extends commando.Command {

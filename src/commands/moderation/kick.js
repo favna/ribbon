@@ -37,8 +37,8 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  moment = require('moment'),
-  {oneLine} = require('common-tags'),
+  moment = require('moment'), 
+  {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class kickCommand extends commando.Command {
@@ -96,8 +96,8 @@ module.exports = class kickCommand extends commando.Command {
       .setColor('#FF8300')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-				'**Action:** Kick\n' +
-				`**Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
+        '**Action:** Kick\n' +
+        `**Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
@@ -113,7 +113,7 @@ module.exports = class kickCommand extends commando.Command {
       return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
     }
     deleteCommandMessages(msg, this.client);
-		
+
     return null;
   }
 };
