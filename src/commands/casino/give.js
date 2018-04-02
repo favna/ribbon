@@ -29,6 +29,9 @@
  * @module
  * @category casino
  * @name give
+ * @example give Favna 10
+ * @param {member} AnyMember The member you want to give some chips
+ * @param {numbeR} ChipsAmount The amount of chips you want to give
  * @returns {MessageEmbed} Changed balances of the two players
  */
 

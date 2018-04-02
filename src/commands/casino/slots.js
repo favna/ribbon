@@ -29,6 +29,8 @@
  * @module
  * @category casino
  * @name slots
+ * @example slots 5
+ * @param {number} ChipsAmount The amount of chips you want to gamble
  * @returns {MessageEmbed} Outcome of the spin
  */
 

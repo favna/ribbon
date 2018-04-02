@@ -29,6 +29,7 @@
  * @module
  * @category casino
  * @name chips
+ * @example chips
  * @returns {MessageEmbed} Information about your current balance
  */
 

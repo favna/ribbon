@@ -391,6 +391,10 @@ Retrieves your current amount of chips for the casino
 
 **Returns**: <code>MessageEmbed</code> - Information about your current balance  
 **Category**: casino  
+**Example**  
+```js
+chips
+```
 <a name="module_coin"></a>
 
 ## coin ⇒ <code>MessageEmbed</code>
@@ -400,6 +404,16 @@ Payout is 1:2
 
 **Returns**: <code>MessageEmbed</code> - Outcome of the coin flip  
 **Category**: casino  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AmountOfChips | <code>number</code> | Amount of chips you want to gamble |
+| CoinSide | <code>string</code> | The side of the coin you want to bet on |
+
+**Example**  
+```js
+coin 10 heads
+```
 <a name="module_daily"></a>
 
 ## daily ⇒ <code>MessageEmbed</code>
@@ -416,6 +430,16 @@ Give another player some chips
 
 **Returns**: <code>MessageEmbed</code> - Changed balances of the two players  
 **Category**: casino  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyMember | <code>member</code> | The member you want to give some chips |
+| ChipsAmount | <code>numbeR</code> | The amount of chips you want to give |
+
+**Example**  
+```js
+give Favna 10
+```
 <a name="module_leaderboard"></a>
 
 ## leaderboard ⇒ <code>MessageEmbed</code>
@@ -432,6 +456,15 @@ Gamble your chips at the slot machine
 
 **Returns**: <code>MessageEmbed</code> - Outcome of the spin  
 **Category**: casino  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ChipsAmount | <code>number</code> | The amount of chips you want to gamble |
+
+**Example**  
+```js
+slots 5
+```
 <a name="module_wheeloffortune"></a>
 
 ## wheeloffortune ⇒ <code>MessageEmbed</code>
@@ -440,6 +473,15 @@ Gamble your chips at the wheel of fortune
 
 **Returns**: <code>MessageEmbed</code> - Outcome of the game  
 **Category**: casino  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ChipsAmount | <code>number</code> | The amount of chips you want to gamble |
+
+**Example**  
+```js
+wof 5
+```
 <a name="module_favna"></a>
 
 ## favna ⇒ <code>MessageEmbed</code>
