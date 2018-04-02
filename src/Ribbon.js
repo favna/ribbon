@@ -277,7 +277,7 @@ class Ribbon {
       .on('warn', console.warn);
 
     this.client.setProvider(
-      sqlite.open(path.join(__dirname, 'data/databases/settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
+      sqlite.open(path.join(__dirname, 'data/databases/settings.sqlite3')).then(db => new Commando.SQLiteProvider(db)) 
     ).catch(console.error);
 
     this.client.registry
