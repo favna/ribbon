@@ -43,15 +43,16 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class CoinCommand extends commando.Command {
+module.exports = class CustomTopUpCommand extends commando.Command {
   constructor (client) {
     super(client, {
-      'name': 'coin',
-      'memberName': 'coin',
+      'name': 'customtopup',
+      'memberName': 'customtopup',
       'group': 'owner',
-      'aliases': ['flip', 'cflip'],
-      'description': 'Gamble your chips in a coin flip',
-      'format': 'AmountOfChips CoinSide',
+      'aliases': ['ctu'],
+      'description': 'Daniël Ocean doesn\'t give a crap about legality',
+      'format': 'AnyMember ChipsAmount',
+      'examples': ['ctu Biscuit 1000'],
       'guildOnly': false,
       'ownerOnly': true,
       'args': [
