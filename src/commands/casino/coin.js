@@ -123,7 +123,7 @@ module.exports = class CoinCommand extends commando.Command {
     })
       .catch((e) => {
         if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone spinning the Wheel of Fortune!
+          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone making a casino coinflip!
               Server: ${msg.guild.name} (${msg.guild.id})
               Author: ${msg.author.tag} (${msg.author.id})
               Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -132,7 +132,6 @@ module.exports = class CoinCommand extends commando.Command {
           return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
                 You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
-
 
         deleteCommandMessages(msg, this.client);
 

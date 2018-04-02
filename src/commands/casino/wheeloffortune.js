@@ -24,7 +24,7 @@
  */
 
 /**
- * Gamble your chips in a game of wheel of fortune  
+ * Gamble your chips at the wheel of fortune  
  * **Aliases**: `wheel`, `wof`
  * @module
  * @category casino
@@ -34,14 +34,10 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
   path = require('path'),
   sql = require('sqlite'), 
-  {
-    oneLine,
-    stripIndents
-  } = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class WheelOfFortuneCommand extends commando.Command {
@@ -51,7 +47,8 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
       'memberName': 'wheeloffortune',
       'group': 'casino',
       'aliases': ['wheel', 'wof'],
-      'description': 'Gamble your chips in a game of wheel of fortune',
+      'description': 'Gamble your chips iat the wheel of fortune',
+      'format': 'AmountOfChips',
       'guildOnly': true,
       'throttling': {
         'usages': 2,
@@ -97,7 +94,7 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
       sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
 
       wofEmbed
-        .setTitle(`${msg.author.tag} ${multipliers[spin] < 1 ? `lost ${args.chips - (args.chips * multipliers[spin])}` : `won ${(args.chips * multipliers[spin]) - args.chips}`}`)
+        .setTitle(`${msg.author.tag} ${multipliers[spin] < 1 ? `lost ${args.chips - (args.chips * multipliers[spin])}` : `won ${(args.chips * multipliers[spin]) - args.chips}`} chips`)
         .addField('Previous Balance', prevBal, true)
         .addField('New Balance', rows.balance, true)
         .setDescription(`
@@ -126,7 +123,6 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
           return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
               You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
-
 
         deleteCommandMessages(msg, this.client);
 
