@@ -128,7 +128,7 @@ module.exports = class SlotsCommand extends commando.Command {
       sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
 
       slotEmbed
-        .setTitle(`${msg.author.tag} ${results.totalPoints === 0 ? `lost ${args.chips}` : `won ${results.totalPoints - args.chips}`} chips`)
+        .setTitle(`${msg.author.tag} ${results.totalPoints === 0 ? `lost ${args.chips}` : `won ${(rows.balance - args.chips) + results.totalPoints}`} chips`)
         .addField('Previous Balance', prevBal, true)
         .addField('New Balance', rows.balance, true)
         .setDescription(results.visualize());
