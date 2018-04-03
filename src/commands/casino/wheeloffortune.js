@@ -88,8 +88,13 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
     sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'), {'cached': true});
 
     sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
-      if (!rows) {
+      if (!rows && global.casinoHasRan) {
         return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
+      } else if (!rows && !global.casinoHasRan) {
+        global.casinoHasRan = true;
+        
+        return msg.reply(oneLine `some stupid SQLite mistake occured after the bot was restarted.
+        Run that command again and it should work properly. No I cannot change this for as far as I know, don\'t ask`);
       }
       if (args.chips > rows.balance) {
         return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');

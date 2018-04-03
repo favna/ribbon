@@ -67,8 +67,13 @@ module.exports = class LeaderboardCommand extends commando.Command {
     sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'), {'cached': true});
 
     sql.all(`SELECT * FROM "${msg.guild.id}" ORDER BY balance DESC LIMIT 5;`).then((rows) => {
-      if (!rows) {
+      if (!rows && global.casinoHasRan) {
         return msg.reply(`looks like there are no players in this server yet. Run \`${msg.guild.commandPrefix}chips\` to be the first`);
+      } else if (!rows && !global.casinoHasRan) {
+        global.casinoHasRan = true;
+        
+        return msg.reply(oneLine `some stupid SQLite mistake occured after the bot was restarted.
+        Run that command again and it should work properly. No I cannot change this for as far as I know, don\'t ask`);
       }
 
       for (const player in rows) {

@@ -235,6 +235,7 @@ class Ribbon {
     return () => {
       console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
       this.isReady = true;
+      global.casinoHasRan = false;
     };
   }
 

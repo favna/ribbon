@@ -91,8 +91,13 @@ module.exports = class GiveCommand extends commando.Command {
     sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'), {'cached': true});
 
     sql.all(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}" OR userID = "${args.player.id}";`).then((rows) => {
-      if (!rows) {
+      if (!rows && global.casinoHasRan) {
         return msg.reply(`looks like there are no players in this server yet. Run \`${msg.guild.commandPrefix}chips\` to be the first`);
+      } else if (!rows && !global.casinoHasRan) {
+        global.casinoHasRan = true;
+        
+        return msg.reply(oneLine `some stupid SQLite mistake occured after the bot was restarted.
+        Run that command again and it should work properly. No I cannot change this for as far as I know, don\'t ask`);
       }
       if (rows.length !== 2) {
         return msg.reply(`looks like either you or the person you want to donate to has no balance yet. Use \`${msg.guild.commandPrefix}chips\` to get some`);

@@ -69,13 +69,19 @@ module.exports = class ChipsCommand extends commando.Command {
     sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'), {'cached': true});
 
     sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
-      if (!rows) {
+      if (!rows && global.casinoHasRan) {
         sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?);`, [msg.author.id, 500, moment().format('YYYY-MM-DD HH:mm')]);
         balEmbed.setDescription(stripIndents `
         **Balance**
         500
         **Daily Reset**
         in 24 hours`);
+
+      } else if (!rows && !global.casinoHasRan) {
+        global.casinoHasRan = true;
+        
+        return msg.reply(oneLine `some stupid SQLite mistake occured after the bot was restarted.
+        Run that command again and it should work properly. No I cannot change this for as far as I know, don\'t ask`);
       } else {
         const topupdate = moment(rows.lasttopup).add(24, 'hours'),
           dura = moment.duration(topupdate.diff()); // eslint-disable-line sort-vars
