@@ -24,8 +24,10 @@
  */
 
 /**
- * Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.  
+ * @file Games FightCommand - Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.  
  * **Aliases**: `combat`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category games
  * @name fight
@@ -41,7 +43,7 @@ const {MessageEmbed} = require('discord.js'),
   random = require('node-random'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class fightCommand extends commando.Command {
+module.exports = class FightCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'fight',

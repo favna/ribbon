@@ -24,8 +24,10 @@
  */
 
 /**
- * Daniël Ocean doesn't give a crap about legality  
+ * @file Owner CustomTopUpCommand - Daniël Ocean doesn't give a crap about legality  
  * **Aliases**: `ctu`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category owner
  * @name customtopup
@@ -66,7 +68,7 @@ module.exports = class CustomTopUpCommand extends commando.Command {
           'prompt': 'How many chips do you want to give?',
           'type': 'integer',
           'validate': (chips) => {
-            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 0 && chips < 1000000) {
+            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 1 && chips < 1000000) {
               return true;
             }
 

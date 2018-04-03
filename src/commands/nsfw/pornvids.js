@@ -24,9 +24,11 @@
  */
 
 /**
- * Gets a NSFW video from pornhub
+ * @file nsfw PornVidsCommand - Gets a NSFW video from pornhub  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `porn`, `nsfwvids`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category nsfw
  * @name pornvids
@@ -40,7 +42,7 @@ const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class pornvidsCommand extends commando.Command {
+module.exports = class PornVidsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'pornvids',

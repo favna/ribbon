@@ -24,9 +24,11 @@
  */
 
 /**
- * Gets information about an item in Pokémon
+ * @file Pokémon ItemCommand - Gets information about an item in Pokémon
  * For item names existing of multiple words (for example `life orb`) you can either type it with or without the space  
  * **Aliases**: `it`, `bag`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category pokemon
  * @name item
@@ -44,7 +46,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
-module.exports = class itemCommand extends commando.Command {
+module.exports = class ItemCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'item',

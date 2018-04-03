@@ -24,8 +24,10 @@
  */
 
 /**
- * Find information about a movie using TheMovieDatabase  
+ * @file Searches MovieCommand - Find information about a movie using TheMovieDatabase  
  * **Aliases**: `movie`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name tmdb
@@ -41,7 +43,7 @@ const {MessageEmbed} = require('discord.js'),
   {TheMovieDBV3ApiKey} = require('../../auth.json'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class movieCommand extends commando.Command {
+module.exports = class MovieCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'tmdb',

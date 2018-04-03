@@ -24,8 +24,10 @@
  */
 
 /**
- * Add a role to member  
+ * @file Moderation AddRoleCommand - Add a role to member  
  * **Aliases**: `newrole`, `ar`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name addrole
@@ -41,7 +43,7 @@ const {DiscordAPIError} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {oneLine, stripIndents} = require('common-tags');
 
-module.exports = class addRoleCommand extends commando.Command {
+module.exports = class AddRoleCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'addrole',

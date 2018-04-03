@@ -24,8 +24,10 @@
  */
 
 /**
- * Tags a member by ID  
+ * @file Owner TagMemberCommand - Tags a member by ID  
  * Primarily meant for mobile and when members have annoying untaggable names  
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category owner
  * @name tagmember
@@ -36,7 +38,7 @@
 
 const commando = require('discord.js-commando');
 
-module.exports = class tagmemberCommand extends commando.Command {
+module.exports = class TagMemberCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'tagmember',

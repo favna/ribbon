@@ -24,8 +24,10 @@
  */
 
 /**
- * Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel  
+ * @file Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel  
  * **Aliases**: `tml`, `togglememberlogs`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name memberlogs
@@ -38,7 +40,7 @@ const commando = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class memberlogsCommand extends commando.Command {
+module.exports = class MemberLogsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'memberlogs',

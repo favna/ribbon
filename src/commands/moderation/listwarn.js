@@ -24,8 +24,10 @@
  */
 
 /**
- * Show the amount of warning points a member has  
+ * @file Moderation ListWarnCommand - Show the amount of warning points a member has  
  * **Aliases**: `reqwarn`, `lw`, `rw`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name listwarn
@@ -42,7 +44,7 @@ const Fuse = require('fuse.js'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class listwarnCommand extends commando.Command {
+module.exports = class ListWarnCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'listwarn',

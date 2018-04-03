@@ -24,8 +24,10 @@
  */
 
 /**
- * Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel  
+ * @file Moderation ModLogsCommand - Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel  
  * **Aliases**: `togglemod` 
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name modlogs
@@ -38,7 +40,7 @@ const commando = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class modlogsCommand extends commando.Command {
+module.exports = class ModLogsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'modlogs',

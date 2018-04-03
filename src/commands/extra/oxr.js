@@ -24,10 +24,12 @@
  */
 
 /**
- * Convert one currency to another  
+ * @file Extra MoneyCommand - Convert one currency to another  
  * Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC  
  * For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)  
  * **Aliases**: `money`, `rate`, `convert`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name oxr
@@ -48,7 +50,7 @@ const {MessageEmbed} = require('discord.js'),
   {oxrAppID} = require('../../auth.json'), 
   {stripIndents} = require('common-tags');
 
-module.exports = class moneyCommand extends commando.Command {
+module.exports = class MoneyCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'oxr',

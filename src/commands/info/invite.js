@@ -24,8 +24,10 @@
  */
 
 /**
- * Gets the invite link for the bot  
+ * @file Info InviteCommnad - Gets the invite link for the bot  
  * **Aliases**: `inv`, `links`, `shill`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category info
  * @name invite
@@ -36,7 +38,7 @@ const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class inviteCommnad extends commando.Command {
+module.exports = class InviteCommnad extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'invite',

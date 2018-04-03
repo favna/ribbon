@@ -24,8 +24,10 @@
  */
 
 /**
- * Ban a bad member  
+ * @file Moderation BanCommand - Ban a bad member  
  * **Aliases**: `b`, `banana`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name ban

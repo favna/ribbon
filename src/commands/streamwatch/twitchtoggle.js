@@ -24,8 +24,10 @@
  */
 
 /**
- * Killswitch for Twitch notifications  
- * **Aliases**: 
+ * @file Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications  
+ * **Aliases**: `twitchcon`, `twitchoff`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category streamwatch
  * @name twitchtoggle

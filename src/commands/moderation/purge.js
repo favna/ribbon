@@ -24,8 +24,10 @@
  */
 
 /**
- * Quickly delete a certain amount of messages  
+ * @file Moderation PurgeCommand - Quickly delete a certain amount of messages  
  * **Aliases**: `prune`, `delete`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name purge
@@ -36,7 +38,7 @@
 
 const commando = require('discord.js-commando');
 
-module.exports = class purgeCommand extends commando.Command {
+module.exports = class PurgeCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'purge',

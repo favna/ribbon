@@ -26,8 +26,10 @@
  */
 
 /**
- * Get an entry from the Discord.JS documentation  
+ * @file Searches DocsCommand - Get an entry from the Discord.JS documentation  
  * **Aliases**: `djsguide`, `guide`, `djs`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name docs

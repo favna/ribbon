@@ -24,8 +24,10 @@
  */
 
 /**
- * Adds a new copypasta for your server  
+ * @file Extra CopyPastaAddCommand - Adds a new copypasta for your server  
  * **Aliases**: `cpadd`, `pastaadd`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name copypastaadd
@@ -41,7 +43,7 @@ const commando = require('discord.js-commando'),
   path = require('path'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class copypastaAddCommand extends commando.Command {
+module.exports = class CopyPastaAddCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'copypastaadd',

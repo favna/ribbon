@@ -24,8 +24,10 @@
  */
 
 /**
- * Retrieves your current amount of chips for the casino  
+ * @file Casino ChipsCommand - Retrieves your current amount of chips for the casino  
  * **Aliases**: `bal`, `cash`, `balance`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category casino
  * @name chips

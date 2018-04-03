@@ -24,8 +24,10 @@
  */
 
 /**
- * Sets the channel used for mod logs  
+ * @file Moderation SetModlogsCommand - Sets the channel used for mod logs  
  * **Aliases**: `setmod`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name setmodlogs
@@ -38,7 +40,7 @@ const commando = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class setModlogsCommand extends commando.Command {
+module.exports = class SetModlogsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'setmodlogs',

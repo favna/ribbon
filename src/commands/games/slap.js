@@ -24,8 +24,10 @@
  */
 
 /**
- * Slap a dumb person💢!  
+ * @file Games SlapCommand - Slap a dumb person💢!  
  * **Aliases**: `bakaslap`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category games
  * @name slap
@@ -37,7 +39,7 @@
 const commando = require('discord.js-commando'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class kaiCommand extends commando.Command {
+module.exports = class SlapCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'slap',

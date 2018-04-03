@@ -24,8 +24,10 @@
  */
 
 /**
- * Generates a random color  
+ * @file Extra RandomCol - Generates a random color  
  * **Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name randomcol

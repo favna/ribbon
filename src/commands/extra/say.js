@@ -24,8 +24,10 @@
  */
 
 /**
- * Repeats a message and deletes your message  
+ * @file Extra Say - Repeats a message and deletes your message  
  * **Aliases**: `sayd`, `repeat`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name say
@@ -36,7 +38,7 @@
 
 const commando = require('discord.js-commando');
 
-module.exports = class sayCommand extends commando.Command {
+module.exports = class SayCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'say',

@@ -24,9 +24,11 @@
  */
 
 /**
- * Gets information through google  
+ * @file Searches GoogleCommand - Gets information through google  
  * Note: prioritizes Knowledge Graphs for better searching  
  * **Aliases**: `search`, `g`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name google
@@ -42,7 +44,7 @@ const {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {googleapikey, searchEngineKey} = require('../../auth.json');
 
-module.exports = class googleCommand extends commando.Command {
+module.exports = class GoogleCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'google',

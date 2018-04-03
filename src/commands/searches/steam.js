@@ -24,8 +24,10 @@
  */
 
 /**
- * Gets information about a game using Steam  
+ * @file Searches SteamCommand - Gets information about a game using Steam  
  * **Aliases**: `valve`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name steam
@@ -43,7 +45,7 @@ const {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {steamAPIKey} = require('../../auth.json');
 
-module.exports = class steamCommand extends commando.Command {
+module.exports = class SteamCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'steam',

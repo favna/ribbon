@@ -24,8 +24,10 @@
  */
 
 /**
- * Gets the type matchup of any 1 or 2 types  
+ * @file Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types  
  * **Aliases**: `matchup`, `weakness`, `advantage`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category pokémon
  * @name type
@@ -34,15 +36,13 @@
  * @returns {MessageEmbed} All weaknesses, advantages
  */
 
-/* eslint-disable max-statements, complexity, block-scoped-var, vars-on-top, one-var, no-var, no-redeclare, max-depth, init-declarations */
-
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   typeMatchups = require('../../data/dex/typechart').BattleTypeChart, 
   {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
-module.exports = class typeCommand extends commando.Command {
+module.exports = class TypeCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'type',
@@ -67,6 +67,7 @@ module.exports = class typeCommand extends commando.Command {
     });
   }
 
+  /* eslint-disable max-statements, complexity, block-scoped-var, vars-on-top, one-var, no-var, no-redeclare, max-depth, init-declarations */
   run (msg, args) {
     const atkMulti = {
         'Bug': 1,

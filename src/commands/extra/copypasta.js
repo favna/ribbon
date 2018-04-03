@@ -24,9 +24,11 @@
  */
 
 /**
- * Gets one of the server's stored copypastas  
+ * @file Extra CopyPastaCommand - Gets one of the server's stored copypastas  
  * Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!  
  * **Aliases**: `cp`, `pasta`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name copypasta
@@ -43,7 +45,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class copypastaCommand extends commando.Command {
+module.exports = class CopyPastaCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'copypasta',

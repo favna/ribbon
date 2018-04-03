@@ -24,9 +24,11 @@
  */
 
 /**
- * Gets a NSFW image from rule34  
+ * @file nsfw Rule34Command - Gets a NSFW image from rule34  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `r34`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category nsfw
  * @name rule34
@@ -41,7 +43,7 @@ const {MessageEmbed} = require('discord.js'),
   {stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class rule34Command extends commando.Command {
+module.exports = class Rule34Command extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'rule34',

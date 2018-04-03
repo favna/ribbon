@@ -24,9 +24,11 @@
  */
 
 /**
- * Gets a NSFW image from paheal  
+ * @file nsfw PahealCommand - Gets a NSFW image from paheal  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `pa`, `heal`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category nsfw
  * @name paheal
@@ -41,7 +43,7 @@ const {MessageEmbed} = require('discord.js'),
   {stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class pahealCommand extends commando.Command {
+module.exports = class PahealCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'paheal',

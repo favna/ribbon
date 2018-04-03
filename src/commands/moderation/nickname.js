@@ -24,8 +24,10 @@
  */
 
 /**
- * Nickname a single member  
+ * @file Moderation NickCommand - Nickname a single member  
  * **Aliases**: `nick`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name nickname
@@ -41,7 +43,7 @@ const {DiscordAPIError} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {oneLine, stripIndents} = require('common-tags');
 
-module.exports = class nickCommand extends commando.Command {
+module.exports = class NickCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'nickname',

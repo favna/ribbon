@@ -24,7 +24,9 @@
  */
 
 /**
- * Give someone a kiss ❤!  
+ * @file Games KissCommand - Give someone a kiss ❤!  
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category games
  * @name kiss
@@ -36,7 +38,7 @@
 const commando = require('discord.js-commando'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class kaiCommand extends commando.Command {
+module.exports = class KissCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'kiss',

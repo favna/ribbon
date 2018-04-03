@@ -24,10 +24,12 @@
  */
 
 /**
- * Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue  
+ * @file Music SkipSongCommand - Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue  
  * A vote to skip is started if there are 4 or more people in the voice channel with `(amount of members) / 3` as required amount of votes (bot doesn't count as a member)  
  * Staff that can delete messages can force the skip by using `skip force`  
  * You need to be in a voice channel before you can use this command
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name skip

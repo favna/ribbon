@@ -24,8 +24,10 @@
  */
 
 /**
- * Transform some query into a LMGTFY (Let Me Google That For You) url  
+ * @file Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url  
  * **Aliases**: `dumb`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name lmgtfy
@@ -37,7 +39,7 @@
 const commando = require('discord.js-commando'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class lmgtfyCommand extends commando.Command {
+module.exports = class LmgtfyCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'lmgtfy',

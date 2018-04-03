@@ -24,8 +24,10 @@
  */
 
 /**
- * Generates a QR code from text (like a URL)  
+ * @file Extra QRGenCommand - Generates a QR code from text (like a URL)  
  * **Aliases**: `qr`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name qrgen
@@ -40,7 +42,7 @@ const {MessageEmbed} = require('discord.js'),
   qr = require('qrcode'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class qrgenCommand extends commando.Command {
+module.exports = class QRGenCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'qrgen',

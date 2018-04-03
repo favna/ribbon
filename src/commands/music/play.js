@@ -24,7 +24,7 @@
  */
 
 /**
- * Starts playing music  
+ * @file Music PlaySongCommand - Starts playing music  
  * You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it  
  * If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
  * There are 3 ways to queue songs  
@@ -32,6 +32,8 @@
  * 2. Youtube URL  
  * 3. Youtube video ID  
  * **Aliases**: `add`, `enqueue`, `start`, `join`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name play

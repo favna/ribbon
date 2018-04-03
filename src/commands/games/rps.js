@@ -24,8 +24,10 @@
  */
 
 /**
- * Play Rock Paper Scissors against random.org randomization  
+ * @file Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization  
  * **Aliases**: rockpaperscissors
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category games
  * @name rps
@@ -39,7 +41,7 @@ const {MessageEmbed} = require('discord.js'),
   random = require('node-random'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class rpsCommand extends commando.Command {
+module.exports = class RockPaperScissorCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'rps',

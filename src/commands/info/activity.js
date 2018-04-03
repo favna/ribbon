@@ -24,8 +24,10 @@
  */
 
 /**
- * Gets the activity (presence) data from a member  
+ * @file Info ActivityCommand - Gets the activity (presence) data from a member  
  * **Aliases**: `act`, `presence`, `richpresence`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category info
  * @name Activity
@@ -43,7 +45,7 @@ const {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {spotifyID, spotifySecret} = require('../../auth.json');
 
-module.exports = class activityCommand extends commando.Command {
+module.exports = class ActivityCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'activity',

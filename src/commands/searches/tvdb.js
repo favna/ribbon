@@ -24,8 +24,10 @@
  */
 
 /**
- * Find information about a TV series using TheMovieDatabase  
+ * @file Searches TVCommand - Find information about a TV series using TheMovieDatabase  
  * **Aliases**: `tv`, `show`, `serie`, `series`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name tvdb
@@ -41,7 +43,7 @@ const {MessageEmbed} = require('discord.js'),
   {TheMovieDBV3ApiKey} = require('../../auth.json'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class tvCommand extends commando.Command {
+module.exports = class TVCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'tvdb',

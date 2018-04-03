@@ -24,8 +24,10 @@
  */
 
 /**
- * Create a strawpoll and find out what people really think (hopefully)  
+ * @file Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)  
  * **Aliases**: `straw`, `poll`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category games
  * @name strawpoll
@@ -40,7 +42,7 @@ const {MessageEmbed} = require('discord.js'),
   request = require('snekfetch'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class strawpollCommand extends commando.Command {
+module.exports = class StrawpollCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'strawpoll',

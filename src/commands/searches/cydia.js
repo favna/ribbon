@@ -24,9 +24,11 @@
  */
 
 /**
- * Gets info from a package on Cydia, only supports default repositories  
+ * @file Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories  
  * Also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
  * **Aliases**: `cy`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name cydia
@@ -44,7 +46,7 @@ const Fuse = require('fuse.js'),
   {stripIndents} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class cydiaCommand extends commando.Command {
+module.exports = class CydiaCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'cydia',

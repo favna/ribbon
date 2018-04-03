@@ -24,10 +24,12 @@
  */
 
 /**
- * Gets flavor text from a Pokémon  
+ * @file Pokémon FlavorCommand - Gets flavor text from a Pokémon  
  * Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
  * Due to message limit size it fetches as many entries possible starting with generation 7 going downwards  
  * **Aliases**: `flavors`, `dexdata`, `dexentries`, `dextext`, `dextex`, `dexter`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category pokemon
  * @name flavor
@@ -36,18 +38,17 @@
  * @returns {MessageEmbed} Flavor texts for the pokemon
  */
 
-/* eslint-disable sort-vars, max-statements */
+/* eslint-disable max-statements */
 const {MessageEmbed} = require('discord.js'),
   Matcher = require('did-you-mean'),
   commando = require('discord.js-commando'),
   dexEntries = require('../../data/dex/flavorText.json'),
+  path = require('path'), 
   request = require('snekfetch'),
   requireFromURL = require('require-from-url/sync'),
-  path = require('path'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
-/* eslint-enable sort-vars */
 
-module.exports = class flavorCommand extends commando.Command {
+module.exports = class FlavorCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'flavor',

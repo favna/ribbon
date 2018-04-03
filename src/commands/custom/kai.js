@@ -24,9 +24,11 @@
  */
 
 /**
- * Custom Command exclusive to ChaosGamez server  
+ * @file Custom KaiCommand - Custom Command exclusive to ChaosGamez server  
  * A joke command to spite Kai  
  * **Aliases**: `.kai`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category custom
  * @name kai
@@ -36,7 +38,7 @@
 const commando = require('discord.js-commando'),
   {stripIndents} = require('common-tags');
 
-module.exports = class kaiCommand extends commando.Command {
+module.exports = class KaiCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'kai',

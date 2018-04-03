@@ -24,7 +24,9 @@
  */
 
 /**
- * Owner Only - lists all guilds the bot is in 	 
+ * @file Owner CheckGuildsCommand - Lists all guilds the bot is in  
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category owner
  * @name checkguilds 

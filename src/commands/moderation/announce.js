@@ -24,8 +24,10 @@
  */
 
 /**
- * Make an announcement to a channel named "announcements" or "news"  
+ * @file Moderation NewsCommand - Make an announcement to a channel named "announcements" or "news"  
  * **Aliases**: `news`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name announce
@@ -38,7 +40,7 @@ const commando = require('discord.js-commando'),
   {deleteCommandMessages} = require('../../util.js'),
   {stripIndents} = require('common-tags');
 
-module.exports = class newsCommand extends commando.Command {
+module.exports = class NewsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'announce',

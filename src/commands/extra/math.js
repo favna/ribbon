@@ -24,8 +24,10 @@
  */
 
 /**
- * Take the effort out of calculations and let the bot do it for you  
+ * @file Extra MathCommand - Take the effort out of calculations and let the bot do it for you  
  * **Aliases**: `calc`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name math
@@ -41,7 +43,7 @@ const {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {oneLine, stripIndents} = require('common-tags');
 
-module.exports = class mathCommand extends commando.Command {
+module.exports = class MathCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'math',

@@ -24,12 +24,14 @@
  */
 
 /**
- * Assign a nickname to every member on the server  
+ * @file Moderation NickallCommand - Assign a nickname to every member on the server  
  * Use `clear` to remove all nicknames  
  * Use `prefix` to prefix all names with something  
  * Use `append` to append all names with something  
  * Note that if there are a lot of members on the server it will take a long time to nickname them all due to Discord limiting the amount of actions per minute  
  * **Aliases**: `na`, `massnick`, `nickmass`, `allnick`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name nickall
@@ -50,7 +52,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class nickallCommand extends commando.Command {
+module.exports = class NickallCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'nickall',

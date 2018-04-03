@@ -24,8 +24,10 @@
  */
 
 /**
- * Sets a default role that should be assigned to all new joining members  
+ * @file Moderation defaultroleCommand - Sets a default role that should be assigned to all new joining members  
  * **Aliases**: `defrole`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name defaultrole

@@ -24,8 +24,10 @@
  */
 
 /**
- * Kicks a somewhat bad member  
+ * @file Moderation KickCommand - Kicks a somewhat bad member  
  * **Aliases**: `k`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name kick
@@ -41,7 +43,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class kickCommand extends commando.Command {
+module.exports = class KickCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'kick',

@@ -24,15 +24,16 @@
  */
 
 /**
- * Delete the role of a member  
- * **Aliases**: `deleterole`, `dr`, `remrole`, `removerole`
+ * @file Moderation DeleteRoleCommand - Delete the role of a member  
+ * **Aliases**: `deleterole`, `d
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name delrole
  * @example delrole Favna Member
  * @param {member} AnyMember The member to remove a role from
  * @param {role} AnyRole The role to remove
- * @returns {Message} Confirmation the role was removed
  */
 
 const {DiscordAPIError} = require('discord.js'),
@@ -41,7 +42,7 @@ const {DiscordAPIError} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {oneLine, stripIndents} = require('common-tags');
 
-module.exports = class delRoleCommand extends commando.Command {
+module.exports = class DeleteRoleCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'delrole',

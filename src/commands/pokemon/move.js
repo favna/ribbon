@@ -24,9 +24,11 @@
  */
 
 /**
- * Gets information about a move in Pokémon  
+ * @file Pokémon MoveCommand - Gets information about a move in Pokémon  
  * For move names existing of multiple words (for example `dragon dance`) you can either type it with or without the space  
  * **Aliases**: `attack`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category pokémon
  * @name move
@@ -42,7 +44,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
-module.exports = class moveCommand extends commando.Command {
+module.exports = class MoveCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'move',

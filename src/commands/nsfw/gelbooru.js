@@ -24,9 +24,11 @@
  */
 
 /**
- * Gets a NSFW image from gelbooru  
+ * @file nsfw GelbooruCommand - Gets a NSFW image from gelbooru  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `gel`, `booru`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category nsfw
  * @name gelbooru
@@ -41,7 +43,7 @@ const {MessageEmbed} = require('discord.js'),
   {stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class gelbooruCommand extends commando.Command {
+module.exports = class GelbooruCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'gelbooru',

@@ -24,10 +24,12 @@
  */
 
 /**
- * Lockdown a channel  
+ * @file Moderation LockdownCommand - Lockdown a channel  
  * NOTE: Once locked it will be locked to the `@everyone` role and depending on your permissions setup it may be that only people with the `administrator` role will have access to the channel.
  * This may also mean that the bot won't have access if it doesn't have administrator role so you cannot use the `unlock` command until you give it that permission!  
  * **Aliases**: `lock`, `ld`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name lockdown
@@ -40,7 +42,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class lockdownCommand extends commando.Command {
+module.exports = class LockdownCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'lockdown',

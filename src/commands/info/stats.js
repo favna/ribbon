@@ -24,8 +24,10 @@
  */
 
 /**
- * Statictics about Ribbon  
+ * @file Info RibbonStatsCommand - Statictics about Ribbon  
  * **Aliases**: `botinfo`, `info`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category info
  * @name stats
@@ -40,7 +42,7 @@ const {MessageEmbed} = require('discord.js'),
   process = require('process'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class statsCommand extends commando.Command {
+module.exports = class RibbonStatsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'stats',

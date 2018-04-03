@@ -24,8 +24,10 @@
  */
 
 /**
- * Sets the server's default volume  
+ * @file Music DefaultVolumeCommand - Sets the server's default volume  
  * **Aliases**: `defvol`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name defaultvolume
@@ -39,7 +41,7 @@ const commando = require('discord.js-commando'),
   {DEFAULT_VOLUME} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class defaultVolumeCommand extends commando.Command {
+module.exports = class DefaultVolumeCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'defaultvolume',

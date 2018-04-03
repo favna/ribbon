@@ -24,8 +24,10 @@
  */
 
 /**
- * Toggle Unkown Command messages on or off  
+ * @file Moderation UnknownMessagesCommand - Toggle Unkown Command messages on or off  
  * **Aliases**: `unknowns`, `unkmsg` 
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name unknownmessages
@@ -38,7 +40,7 @@ const commando = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class unknownmessagesCommand extends commando.Command {
+module.exports = class UnknownMessagesCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'unknownmessages',

@@ -24,9 +24,11 @@
  */
 
 /**
- * Pauses the currently playing track  
+ * @file Music PauseSongCommand - Pauses the currently playing track  
  * You need to be in a voice channel before you can use this command  
  * **Aliases**: `shh`, `shhh`, `shhhh`, `shhhhh`, `hush`, `halt`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name pause

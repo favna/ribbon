@@ -24,8 +24,10 @@
  */
 
 /**
- * Gets information about any anime from MyAnimeList  
+ * @file Searches AnimeCommand - Gets information about any anime from MyAnimeList  
  * **Aliases**: `ani`, `mal`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name anime
@@ -39,7 +41,7 @@ const {MessageEmbed} = require('discord.js'),
   maljs = require('maljs'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class animeCommand extends commando.Command {
+module.exports = class AnimeCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'anime',

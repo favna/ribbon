@@ -24,10 +24,12 @@
  */
 
 /**
- * Set the maximum length (in minutes) of a video  
+ * @file Music MaxLengthCommand - Set the maximum length (in minutes) of a video  
  * Give no argument to show current amount of maximum songs  
  * Use "default" as argument to set it back to the bot default  
  * **Aliases**: `max-duration`, `max-song-length`, `max-song-duration`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name maxlength

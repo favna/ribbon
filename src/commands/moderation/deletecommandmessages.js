@@ -24,8 +24,10 @@
  */
 
 /**
- * Configure whether the bot should delete command messages  
+ * @file Moderation deleteCommandMessagesCommand - Configure whether the bot should delete command messages  
  * **Aliases**: `dcm`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name deletecommandmessages

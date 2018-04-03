@@ -24,8 +24,10 @@
  */
 
 /**
- * Gets an image through Google Images  
+ * @file Searches ImageCommand - Gets an image through Google Images  
  * **Aliases**: `img`, `i`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name image
@@ -41,7 +43,7 @@ const {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {googleapikey, imageEngineKey} = require('../../auth.json');
 
-module.exports = class imageCommand extends commando.Command {
+module.exports = class ImageCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'image',

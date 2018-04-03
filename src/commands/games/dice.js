@@ -24,8 +24,10 @@
  */
 
 /**
- * Rolls some dice with some sides. Great for the DnD players!  
+ * @file Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!  
  * **Aliases**: `xdicey`, `roll`, `dicey`, `die`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category games
  * @name dice
@@ -40,7 +42,7 @@ const {MessageEmbed} = require('discord.js'),
   xdicey = require('xdicey'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class diceCommand extends commando.Command {
+module.exports = class DiceCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'dice',

@@ -5,10 +5,12 @@ The default prefix is `!` and you can always use `@ribbon#2325 prefix` to find y
 <a name="module_help"></a>
 
 ## help ⇒ <code>MessageEmbed</code>
-Displays a list of available commands, or detailed information for a specified command  
+Build-In HelpCommand - Displays a list of available commands, or detailed information for a specified command  
 
 **Returns**: <code>[MessageEmbed]</code> - Multiple MessageEmbeds showing all commands  
 **Category**: Build-In  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -26,12 +28,13 @@ help all
 <a name="module_prefix"></a>
 
 ## prefix ⇒ <code>Message</code>
-Shows or sets the command prefix  
-
+BuildIn PrefixCommand - Shows or sets the command prefix  
 Omitting the parameter will simply print your current one.
 
 **Returns**: <code>Message</code> - Message with the current or new prefix  
 **Category**: Build-In  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -49,207 +52,209 @@ prefix none
 <a name="module_ping"></a>
 
 ## ping ⇒ <code>Message</code>
-Checks the bot's ping to the Discord server
+Build-In PingCommand - Checks the bot's ping to the Discord server
 
 **Returns**: <code>Message</code> - Reply message with the bot's ping  
-**Category**: Build-In
+**Category**: Build-In  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 ## Modules
 
 <dl>
 <dt><a href="#module_chips">chips</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Retrieves your current amount of chips for the casino<br><strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p>
+<dd><p>Casino ChipsCommand - Retrieves your current amount of chips for the casino<br><strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p>
 </dd>
 <dt><a href="#module_coin">coin</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gamble your chips in a coin flip<br>Payout is 1:2<br><strong>Aliases</strong>: <code>flip</code>, <code>cflip</code></p>
+<dd><p>Casino CoinCommand - Gamble your chips in a coin flip<br>Payout is 1:2<br><strong>Aliases</strong>: <code>flip</code>, <code>cflip</code></p>
 </dd>
 <dt><a href="#module_daily">daily</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Recieve your daily 500 chips top up<br><strong>Aliases</strong>: <code>topup</code>, <code>bonus</code></p>
+<dd><p>Casino DailyCommand - Recieve your daily 500 chips top up<br><strong>Aliases</strong>: <code>topup</code>, <code>bonus</code></p>
 </dd>
 <dt><a href="#module_give">give</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Give another player some chips<br><strong>Aliases</strong>: <code>donate</code></p>
+<dd><p>Casino GiveCommand - Give another player some chips<br><strong>Aliases</strong>: <code>donate</code></p>
 </dd>
 <dt><a href="#module_leaderboard">leaderboard</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Shows the top 5 ranking players for your server<br><strong>Aliases</strong>: <code>lb</code>, <code>casinolb</code>, <code>leaderboards</code></p>
+<dd><p>Casino LeaderboardCommand - Shows the top 5 ranking players for your server<br><strong>Aliases</strong>: <code>lb</code>, <code>casinolb</code>, <code>leaderboards</code></p>
 </dd>
 <dt><a href="#module_memberbalance">memberbalance</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Retrieves the amount of chips another member has for the casino<br><strong>Aliases</strong>: <code>mbal</code>, <code>mcash</code>, <code>mbalance</code>, <code>mchips</code></p>
+<dd><p>Casino MemberBalanceCommand - Retrieves the amount of chips another member has for the casino<br><strong>Aliases</strong>: <code>mbal</code>, <code>mcash</code>, <code>mbalance</code>, <code>mchips</code></p>
 </dd>
 <dt><a href="#module_slots">slots</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gamble your chips at the slot machine<br><strong>Aliases</strong>: <code>slot</code>, <code>fruits</code></p>
+<dd><p>Casino SlotsCommand - Gamble your chips at the slot machine<br><strong>Aliases</strong>: <code>slot</code>, <code>fruits</code></p>
 </dd>
 <dt><a href="#module_wheeloffortune">wheeloffortune</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gamble your chips at the wheel of fortune<br><strong>Aliases</strong>: <code>wheel</code>, <code>wof</code></p>
+<dd><p>Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune<br><strong>Aliases</strong>: <code>wheel</code>, <code>wof</code></p>
 </dd>
 <dt><a href="#module_favna">favna</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Custom Command exclusive to ChaosGamez server<br>A joke command to praise Favna<br><strong>Aliases</strong>: <code>.favna</code></p>
+<dd><p>Custom FavnaCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to praise Favna<br><strong>Aliases</strong>: <code>.favna</code></p>
 </dd>
 <dt><a href="#module_kai">kai</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br><strong>Aliases</strong>: <code>.kai</code></p>
+<dd><p>Custom KaiCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br><strong>Aliases</strong>: <code>.kai</code></p>
 </dd>
 <dt><a href="#module_copypasta">copypasta</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets one of the server&#39;s stored copypastas<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
+<dd><p>Extra CopyPastaCommand - Gets one of the server&#39;s stored copypastas<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
 </dd>
 <dt><a href="#module_copypastaadd">copypastaadd</a> ⇒ <code>Message</code></dt>
-<dd><p>Adds a new copypasta for your server<br><strong>Aliases</strong>: <code>cpadd</code>, <code>pastaadd</code></p>
+<dd><p>Extra CopyPastaAddCommand - Adds a new copypasta for your server<br><strong>Aliases</strong>: <code>cpadd</code>, <code>pastaadd</code></p>
 </dd>
 <dt><a href="#module_copypastalist">copypastalist</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets all copypastas available to the server<br><strong>Aliases</strong>: <code>cplist</code>, <code>copylist</code>, <code>pastalist</code></p>
+<dd><p>Extra CopyPastaListCommand - Gets all copypastas available to the server<br><strong>Aliases</strong>: <code>cplist</code>, <code>copylist</code>, <code>pastalist</code></p>
 </dd>
 <dt><a href="#module_math">math</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Take the effort out of calculations and let the bot do it for you<br><strong>Aliases</strong>: <code>calc</code></p>
+<dd><p>Extra MathCommand - Take the effort out of calculations and let the bot do it for you<br><strong>Aliases</strong>: <code>calc</code></p>
 </dd>
 <dt><a href="#module_oxr">oxr</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Convert one currency to another<br>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC<br>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a><br><strong>Aliases</strong>: <code>money</code>, <code>rate</code>, <code>convert</code></p>
+<dd><p>Extra MoneyCommand - Convert one currency to another<br>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC<br>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a><br><strong>Aliases</strong>: <code>money</code>, <code>rate</code>, <code>convert</code></p>
 </dd>
 <dt><a href="#module_qrgen">qrgen</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code></p>
+<dd><p>Extra QRGenCommand - Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code></p>
 </dd>
 <dt><a href="#module_randomcol">randomcol</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Generates a random color<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
+<dd><p>Extra RandomCol - Generates a random color<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
 </dd>
 <dt><a href="#module_say">say</a> ⇒ <code>Message</code></dt>
-<dd><p>Repeats a message and deletes your message<br><strong>Aliases</strong>: <code>sayd</code>, <code>repeat</code></p>
+<dd><p>Extra Say - Repeats a message and deletes your message<br><strong>Aliases</strong>: <code>sayd</code>, <code>repeat</code></p>
 </dd>
 <dt><a href="#module_saywut">saywut</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Bust the last &quot;say&quot; user<br><strong>Aliases</strong>: <code>saywat</code>, <code>saywot</code></p>
+<dd><p>Extra SayWutCommand - Bust the last &quot;say&quot; user<br><strong>Aliases</strong>: <code>saywat</code>, <code>saywot</code></p>
 </dd>
 <dt><a href="#module_time">time</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets the current time in any place<br>Uses Google&#39;s geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>citytime</code></p>
+<dd><p>Extra Time - Gets the current time in any place<br>Uses Google&#39;s geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>citytime</code></p>
 </dd>
 <dt><a href="#module_weather">weather</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Get the current weather forecast in any city<br>Potentially you&#39;ll have to specify city if the city is in multiple countries, i.e. <code>weather amsterdam</code> will not be the same as <code>weather amsterdam missouri</code><br><strong>Aliases</strong>: <code>temp</code>, <code>forecast</code>, <code>fc</code>, <code>wth</code></p>
+<dd><p>Extra Weather - Get the current weather forecast in any city<br>Potentially you&#39;ll have to specify city if the city is in multiple countries, i.e. <code>weather amsterdam</code> will not be the same as <code>weather amsterdam missouri</code><br><strong>Aliases</strong>: <code>temp</code>, <code>forecast</code>, <code>fc</code>, <code>wth</code></p>
 </dd>
 <dt><a href="#module_zalgo">zalgo</a> ⇒ <code>Message</code></dt>
-<dd><p>Create zalgo-fied text from your input<br>First banishes any existing zalgo to ensure proper result<br><strong>Aliases</strong>: <code>trash</code></p>
+<dd><p>Extra Zalgo - Create zalgo-fied text from your input<br>First banishes any existing zalgo to ensure proper result<br><strong>Aliases</strong>: <code>trash</code></p>
 </dd>
 <dt><a href="#module_8ball">8ball</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Rolls a magic 8 ball using your input<br><strong>Aliases</strong>: <code>eightball</code></p>
+<dd><p>Games EightBallCommand - Rolls a magic 8 ball using your input<br><strong>Aliases</strong>: <code>eightball</code></p>
 </dd>
 <dt><a href="#module_dice">dice</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Rolls some dice with some sides. Great for the DnD players!<br><strong>Aliases</strong>: <code>xdicey</code>, <code>roll</code>, <code>dicey</code>, <code>die</code></p>
+<dd><p>Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!<br><strong>Aliases</strong>: <code>xdicey</code>, <code>roll</code>, <code>dicey</code>, <code>die</code></p>
 </dd>
 <dt><a href="#module_dndc">dndc</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Filps a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code></p>
+<dd><p>Games DndCCommand - Filps a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code></p>
 </dd>
 <dt><a href="#module_fight">fight</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.<br><strong>Aliases</strong>: <code>combat</code></p>
+<dd><p>Games FightCommand - Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.<br><strong>Aliases</strong>: <code>combat</code></p>
 </dd>
 <dt><a href="#module_hug">hug</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Give someone a hug ❤!<br><strong>Aliases</strong>: <code>bearhug</code>, <code>embrace</code></p>
+<dd><p>Games HugCommand - Give someone a hug ❤!<br><strong>Aliases</strong>: <code>bearhug</code>, <code>embrace</code></p>
 </dd>
 <dt><a href="#module_kiss">kiss</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Give someone a kiss ❤!</p>
+<dd><p>Games KissCommand - Give someone a kiss ❤!</p>
 </dd>
 <dt><a href="#module_rps">rps</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Play Rock Paper Scissors against random.org randomization<br><strong>Aliases</strong>: rockpaperscissors</p>
+<dd><p>Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization<br><strong>Aliases</strong>: rockpaperscissors</p>
 </dd>
 <dt><a href="#module_slap">slap</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Slap a dumb person💢!<br><strong>Aliases</strong>: <code>bakaslap</code></p>
+<dd><p>Games SlapCommand - Slap a dumb person💢!<br><strong>Aliases</strong>: <code>bakaslap</code></p>
 </dd>
 <dt><a href="#module_strawpoll">strawpoll</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Create a strawpoll and find out what people really think (hopefully)<br><strong>Aliases</strong>: <code>straw</code>, <code>poll</code></p>
+<dd><p>Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)<br><strong>Aliases</strong>: <code>straw</code>, <code>poll</code></p>
 </dd>
 <dt><a href="#module_Activity">Activity</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets the activity (presence) data from a member<br><strong>Aliases</strong>: <code>act</code>, <code>presence</code>, <code>richpresence</code></p>
+<dd><p>Info ActivityCommand - Gets the activity (presence) data from a member<br><strong>Aliases</strong>: <code>act</code>, <code>presence</code>, <code>richpresence</code></p>
 </dd>
 <dt><a href="#module_avatar">avatar</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Get the avatar from any member<br><strong>Aliases</strong>: <code>ava</code></p>
+<dd><p>Games AvatarCommand - Get the avatar from any member<br><strong>Aliases</strong>: <code>ava</code></p>
 </dd>
 <dt><a href="#module_discordbots">discordbots</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets the stats from a bot listed on DiscordBotList<br><strong>Aliases</strong>: <code>dbapi</code>, <code>db</code></p>
+<dd><p>Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList<br><strong>Aliases</strong>: <code>dbapi</code>, <code>db</code></p>
 </dd>
 <dt><a href="#module_emotes">emotes</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Lists all emotes from the server<br><strong>Aliases</strong>: <code>listemo</code>, <code>emolist</code>, <code>listemoji</code>, <code>emote</code></p>
+<dd><p>Info EmotesCommand - Lists all emotes from the server<br><strong>Aliases</strong>: <code>listemo</code>, <code>emolist</code>, <code>listemoji</code>, <code>emote</code></p>
 </dd>
 <dt><a href="#module_invite">invite</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets the invite link for the bot<br><strong>Aliases</strong>: <code>inv</code>, <code>links</code>, <code>shill</code></p>
+<dd><p>Info InviteCommnad - Gets the invite link for the bot<br><strong>Aliases</strong>: <code>inv</code>, <code>links</code>, <code>shill</code></p>
 </dd>
 <dt><a href="#module_server">server</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets information about the current server<br><strong>Aliases</strong>: <code>serverinfo</code>, <code>sinfo</code></p>
+<dd><p>Info ServerInfoCommand - Gets information about the current server<br><strong>Aliases</strong>: <code>serverinfo</code>, <code>sinfo</code></p>
 </dd>
 <dt><a href="#module_stats">stats</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Statictics about Ribbon<br><strong>Aliases</strong>: <code>botinfo</code>, <code>info</code></p>
+<dd><p>Info RibbonStatsCommand - Statictics about Ribbon<br><strong>Aliases</strong>: <code>botinfo</code>, <code>info</code></p>
 </dd>
 <dt><a href="#module_userinfo">userinfo</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Get the info from a user<br><strong>Aliases</strong>: <code>user</code>, <code>uinfo</code></p>
+<dd><p>Info UserInfoCommand - Get the info from a user<br><strong>Aliases</strong>: <code>user</code>, <code>uinfo</code></p>
 </dd>
 <dt><a href="#module_addrole">addrole</a> ⇒ <code>Message</code></dt>
-<dd><p>Add a role to member<br><strong>Aliases</strong>: <code>newrole</code>, <code>ar</code></p>
+<dd><p>Moderation AddRoleCommand - Add a role to member<br><strong>Aliases</strong>: <code>newrole</code>, <code>ar</code></p>
 </dd>
 <dt><a href="#module_announce">announce</a> ⇒ <code>Message</code></dt>
-<dd><p>Make an announcement to a channel named &quot;announcements&quot; or &quot;news&quot;<br><strong>Aliases</strong>: <code>news</code></p>
+<dd><p>Moderation NewsCommand - Make an announcement to a channel named &quot;announcements&quot; or &quot;news&quot;<br><strong>Aliases</strong>: <code>news</code></p>
 </dd>
 <dt><a href="#module_ban">ban</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Ban a bad member<br><strong>Aliases</strong>: <code>b</code>, <code>banana</code></p>
+<dd><p>Moderation BanCommand - Ban a bad member<br><strong>Aliases</strong>: <code>b</code>, <code>banana</code></p>
 </dd>
 <dt><a href="#module_defaultrole">defaultrole</a> ⇒ <code>Message</code></dt>
-<dd><p>Sets a default role that should be assigned to all new joining members<br><strong>Aliases</strong>: <code>defrole</code></p>
+<dd><p>Moderation defaultroleCommand - Sets a default role that should be assigned to all new joining members<br><strong>Aliases</strong>: <code>defrole</code></p>
 </dd>
 <dt><a href="#module_deletecommandmessages">deletecommandmessages</a> ⇒ <code>Message</code></dt>
-<dd><p>Configure whether the bot should delete command messages<br><strong>Aliases</strong>: <code>dcm</code></p>
+<dd><p>Moderation deleteCommandMessagesCommand - Configure whether the bot should delete command messages<br><strong>Aliases</strong>: <code>dcm</code></p>
 </dd>
-<dt><a href="#module_delrole">delrole</a> ⇒ <code>Message</code></dt>
-<dd><p>Delete the role of a member<br><strong>Aliases</strong>: <code>deleterole</code>, <code>dr</code>, <code>remrole</code>, <code>removerole</code></p>
+<dt><a href="#module_delrole">delrole</a></dt>
+<dd><p>Moderation DeleteRoleCommand - Delete the role of a member<br><strong>Aliases</strong>: <code>deleterole</code>, `d</p>
 </dd>
 <dt><a href="#module_kick">kick</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Kicks a somewhat bad member<br><strong>Aliases</strong>: <code>k</code></p>
+<dd><p>Moderation KickCommand - Kicks a somewhat bad member<br><strong>Aliases</strong>: <code>k</code></p>
 </dd>
 <dt><a href="#module_listwarn">listwarn</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Show the amount of warning points a member has<br><strong>Aliases</strong>: <code>reqwarn</code>, <code>lw</code>, <code>rw</code></p>
+<dd><p>Moderation ListWarnCommand - Show the amount of warning points a member has<br><strong>Aliases</strong>: <code>reqwarn</code>, <code>lw</code>, <code>rw</code></p>
 </dd>
 <dt><a href="#module_lockdown">lockdown</a> ⇒ <code>Message</code></dt>
-<dd><p>Lockdown a channel<br>NOTE: Once locked it will be locked to the <code>@everyone</code> role and depending on your permissions setup it may be that only people with the <code>administrator</code> role will have access to the channel.
+<dd><p>Moderation LockdownCommand - Lockdown a channel<br>NOTE: Once locked it will be locked to the <code>@everyone</code> role and depending on your permissions setup it may be that only people with the <code>administrator</code> role will have access to the channel.
 This may also mean that the bot won&#39;t have access if it doesn&#39;t have administrator role so you cannot use the <code>unlock</code> command until you give it that permission!<br><strong>Aliases</strong>: <code>lock</code>, <code>ld</code></p>
 </dd>
 <dt><a href="#module_memberlogs">memberlogs</a> ⇒ <code>Message</code></dt>
-<dd><p>Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel<br><strong>Aliases</strong>: <code>tml</code>, <code>togglememberlogs</code></p>
+<dd><p>Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel<br><strong>Aliases</strong>: <code>tml</code>, <code>togglememberlogs</code></p>
 </dd>
 <dt><a href="#module_modlogs">modlogs</a> ⇒ <code>Message</code></dt>
-<dd><p>Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel<br><strong>Aliases</strong>: <code>togglemod</code></p>
+<dd><p>Moderation ModLogsCommand - Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel<br><strong>Aliases</strong>: <code>togglemod</code></p>
 </dd>
 <dt><a href="#module_nickall">nickall</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Assign a nickname to every member on the server<br>Use <code>clear</code> to remove all nicknames<br>Use <code>prefix</code> to prefix all names with something<br>Use <code>append</code> to append all names with something<br>Note that if there are a lot of members on the server it will take a long time to nickname them all due to Discord limiting the amount of actions per minute<br><strong>Aliases</strong>: <code>na</code>, <code>massnick</code>, <code>nickmass</code>, <code>allnick</code></p>
+<dd><p>Moderation NickallCommand - Assign a nickname to every member on the server<br>Use <code>clear</code> to remove all nicknames<br>Use <code>prefix</code> to prefix all names with something<br>Use <code>append</code> to append all names with something<br>Note that if there are a lot of members on the server it will take a long time to nickname them all due to Discord limiting the amount of actions per minute<br><strong>Aliases</strong>: <code>na</code>, <code>massnick</code>, <code>nickmass</code>, <code>allnick</code></p>
 </dd>
 <dt><a href="#module_nickname">nickname</a> ⇒ <code>Message</code></dt>
-<dd><p>Nickname a single member<br><strong>Aliases</strong>: <code>nick</code></p>
+<dd><p>Moderation NickCommand - Nickname a single member<br><strong>Aliases</strong>: <code>nick</code></p>
 </dd>
 <dt><a href="#module_purge">purge</a> ⇒ <code>Message</code></dt>
-<dd><p>Quickly delete a certain amount of messages<br><strong>Aliases</strong>: <code>prune</code>, <code>delete</code></p>
+<dd><p>Moderation PurgeCommand - Quickly delete a certain amount of messages<br><strong>Aliases</strong>: <code>prune</code>, <code>delete</code></p>
 </dd>
 <dt><a href="#module_setmemberlogs">setmemberlogs</a> ⇒ <code>Message</code></dt>
-<dd><p>Sets the channel used for member logs<br><strong>Aliases</strong>: <code>setmember</code></p>
+<dd><p>Moderation SetMemberlogsCommand - Sets the channel used for member logs<br><strong>Aliases</strong>: <code>setmember</code></p>
 </dd>
 <dt><a href="#module_setmodlogs">setmodlogs</a> ⇒ <code>Message</code></dt>
-<dd><p>Sets the channel used for mod logs<br><strong>Aliases</strong>: <code>setmod</code></p>
+<dd><p>Moderation SetModlogsCommand - Sets the channel used for mod logs<br><strong>Aliases</strong>: <code>setmod</code></p>
 </dd>
 <dt><a href="#module_softban">softban</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)<br>This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours<br><strong>Aliases</strong>: <code>sb</code>, <code>sban</code></p>
+<dd><p>Moderation SoftbanCommand - Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)<br>This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours<br><strong>Aliases</strong>: <code>sb</code>, <code>sban</code></p>
 </dd>
 <dt><a href="#module_unknownmessages">unknownmessages</a> ⇒ <code>Message</code></dt>
-<dd><p>Toggle Unkown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
+<dd><p>Moderation UnknownMessagesCommand - Toggle Unkown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
 </dd>
 <dt><a href="#module_unlock">unlock</a> ⇒ <code>Message</code></dt>
-<dd><p>Unlock the channel<br>Only really useful if you previously locked the channel<br>Note that the bot does need to be able to be able to access this channel to unlock it (read permissions)<br><strong>Aliases</strong>: <code>delock</code>, <code>ul</code></p>
+<dd><p>Moderation UnlockCommand - Unlock the channel<br>Only really useful if you previously locked the channel<br>Note that the bot does need to be able to be able to access this channel to unlock it (read permissions)<br><strong>Aliases</strong>: <code>delock</code>, <code>ul</code></p>
 </dd>
 <dt><a href="#module_warn">warn</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gives a member warning points<br>Please note that the bot will not auto ban when the member has a certain amount of points!
+<dd><p>Moderation WarnCommand - Gives a member warning points<br>Please note that the bot will not auto ban when the member has a certain amount of points!
 <strong>Aliases</strong>: <code>warning</code></p>
 </dd>
 <dt><a href="#module_defaultvolume">defaultvolume</a> ⇒ <code>Message</code></dt>
-<dd><p>Sets the server&#39;s default volume<br><strong>Aliases</strong>: <code>defvol</code></p>
+<dd><p>Music DefaultVolumeCommand - Sets the server&#39;s default volume<br><strong>Aliases</strong>: <code>defvol</code></p>
 </dd>
 <dt><a href="#module_maxlength">maxlength</a> ⇒ <code>Message</code></dt>
-<dd><p>Set the maximum length (in minutes) of a video<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to the bot default<br><strong>Aliases</strong>: <code>max-duration</code>, <code>max-song-length</code>, <code>max-song-duration</code></p>
+<dd><p>Music MaxLengthCommand - Set the maximum length (in minutes) of a video<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to the bot default<br><strong>Aliases</strong>: <code>max-duration</code>, <code>max-song-length</code>, <code>max-song-duration</code></p>
 </dd>
 <dt><a href="#module_maxsongs">maxsongs</a> ⇒ <code>Message</code></dt>
-<dd><p>The maximum amount of songs any member can queue<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to the bot default<br><strong>Aliases</strong>: <code>songcap</code>, <code>songmax</code>, <code>maxsong</code></p>
+<dd><p>Music MaxSongsCommand- The maximum amount of songs any member can queue<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to the bot default<br><strong>Aliases</strong>: <code>songcap</code>, <code>songmax</code>, <code>maxsong</code></p>
 </dd>
 <dt><a href="#module_pause">pause</a> ⇒ <code>Message</code></dt>
-<dd><p>Pauses the currently playing track<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>shh</code>, <code>shhh</code>, <code>shhhh</code>, <code>shhhhh</code>, <code>hush</code>, <code>halt</code></p>
+<dd><p>Music PauseSongCommand - Pauses the currently playing track<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>shh</code>, <code>shhh</code>, <code>shhhh</code>, <code>shhhhh</code>, <code>hush</code>, <code>halt</code></p>
 </dd>
 <dt><a href="#module_play">play</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Starts playing music<br>You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it<br>If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
+<dd><p>Music PlaySongCommand - Starts playing music<br>You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it<br>If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
 There are 3 ways to queue songs  </p>
 <ol>
 <li>Youtube Search Query  </li>
@@ -258,145 +263,146 @@ There are 3 ways to queue songs  </p>
 </ol>
 </dd>
 <dt><a href="#module_queue">queue</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Shows the current queue of songs<br>Songs are paginated in sets of 5<br><strong>Aliases</strong>: <code>songs</code>, <code>song-list</code>, <code>list</code>, <code>listqueue</code></p>
+<dd><p>Music ViewQueueCommand - Shows the current queue of songs<br>Songs are paginated in sets of 5<br><strong>Aliases</strong>: <code>songs</code>, <code>song-list</code>, <code>list</code>, <code>listqueue</code>
+<strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p>
 </dd>
 <dt><a href="#module_resume">resume</a> ⇒ <code>Message</code></dt>
-<dd><p>Resumes the song after pausing it<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>go</code>, <code>continue</code>, <code>ale</code>, <code>loss</code>, <code>res</code></p>
+<dd><p>Music ResumeSongCommand - Resumes the song after pausing it<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>go</code>, <code>continue</code>, <code>ale</code>, <code>loss</code>, <code>res</code></p>
 </dd>
 <dt><a href="#module_save">save</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>DMs the 10 upcoming songs from the queue to the user
+<dd><p>Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user
 <strong>Aliases</strong>: <code>save-songs</code>, <code>save-song-list</code>, <code>ss</code>, <code>savequeue</code></p>
 </dd>
 <dt><a href="#module_skip">skip</a> ⇒ <code>Message</code></dt>
-<dd><p>Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue<br>A vote to skip is started if there are 4 or more people in the voice channel with <code>(amount of members) / 3</code> as required amount of votes (bot doesn&#39;t count as a member)<br>Staff that can delete messages can force the skip by using <code>skip force</code><br>You need to be in a voice channel before you can use this command</p>
+<dd><p>Music SkipSongCommand - Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue<br>A vote to skip is started if there are 4 or more people in the voice channel with <code>(amount of members) / 3</code> as required amount of votes (bot doesn&#39;t count as a member)<br>Staff that can delete messages can force the skip by using <code>skip force</code><br>You need to be in a voice channel before you can use this command</p>
 </dd>
 <dt><a href="#module_status">status</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets status about the currently playing song<br><strong>Aliases</strong>: <code>song</code>, <code>playing</code>, <code>current-song</code>, <code>now-playing</code></p>
+<dd><p>Music MusicStatusCommand - Gets status about the currently playing song<br><strong>Aliases</strong>: <code>song</code>, <code>playing</code>, <code>current-song</code>, <code>now-playing</code></p>
 </dd>
 <dt><a href="#module_stop">stop</a> ⇒ <code>Message</code></dt>
-<dd><p>Stops the current queue. Bot will automatically leave the channel after this command<br><strong>Aliases</strong>: <code>kill</code>, <code>stfu</code>, <code>quit</code>, <code>leave</code>, <code>disconnect</code></p>
+<dd><p>Music StopMusicCommand - Stops the current queue. Bot will automatically leave the channel after this command<br><strong>Aliases</strong>: <code>kill</code>, <code>stfu</code>, <code>quit</code>, <code>leave</code>, <code>disconnect</code></p>
 </dd>
 <dt><a href="#module_volume">volume</a> ⇒ <code>Message</code></dt>
-<dd><p>Changes the volume of the currently playing song<br>If you do not  give any parameter the bot will show the current volume<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>set-volume</code>, <code>set-vol</code>, <code>vol</code></p>
+<dd><p>Music ChangeVolumeCommand - Changes the volume of the currently playing song<br>If you do not  give any parameter the bot will show the current volume<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>set-volume</code>, <code>set-vol</code>, <code>vol</code></p>
 </dd>
 <dt><a href="#module_e621">e621</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets a NSFW image from e621<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>eee</code></p>
+<dd><p>nsfw e621Command - Gets a NSFW image from e621<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>eee</code></p>
 </dd>
 <dt><a href="#module_gelbooru">gelbooru</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets a NSFW image from gelbooru<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>gel</code>, <code>booru</code></p>
+<dd><p>nsfw GelbooruCommand - Gets a NSFW image from gelbooru<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>gel</code>, <code>booru</code></p>
 </dd>
 <dt><a href="#module_paheal">paheal</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets a NSFW image from paheal<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>pa</code>, <code>heal</code></p>
+<dd><p>nsfw PahealCommand - Gets a NSFW image from paheal<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>pa</code>, <code>heal</code></p>
 </dd>
 <dt><a href="#module_porngifs">porngifs</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets a NSFW gif and webm from pornhub
-Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>nsfwgifs</code></p>
+<dd><p>nsfw PornGifsCommand - Gets a NSFW gif and webm from pornhub<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>nsfwgifs</code></p>
 </dd>
 <dt><a href="#module_pornvids">pornvids</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets a NSFW video from pornhub
-Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>porn</code>, <code>nsfwvids</code></p>
+<dd><p>nsfw PornVidsCommand - Gets a NSFW video from pornhub<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>porn</code>, <code>nsfwvids</code></p>
 </dd>
 <dt><a href="#module_rule34">rule34</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets a NSFW image from rule34<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>r34</code></p>
+<dd><p>nsfw Rule34Command - Gets a NSFW image from rule34<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>r34</code></p>
 </dd>
 <dt><a href="#module_checkguilds">checkguilds</a> ⇒ <code>Message</code></dt>
-<dd><p>Owner Only - lists all guilds the bot is in</p>
+<dd><p>Owner CheckGuildsCommand - Lists all guilds the bot is in</p>
 </dd>
 <dt><a href="#module_customtopup">customtopup</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Daniël Ocean doesn&#39;t give a crap about legality<br><strong>Aliases</strong>: <code>ctu</code></p>
+<dd><p>Owner CustomTopUpCommand - Daniël Ocean doesn&#39;t give a crap about legality<br><strong>Aliases</strong>: <code>ctu</code></p>
 </dd>
 <dt><a href="#module_dbpost">dbpost</a> ⇒ <code>Message</code></dt>
-<dd><p>Owners only - posts current guild count to discordbotlist</p>
+<dd><p>Owner DBPostCommand - Posts current guild count to discordbotlist</p>
 </dd>
 <dt><a href="#module_eshopfetch">eshopfetch</a> ⇒ <code>Message</code></dt>
-<dd><p>Fetch the latest data for the eshop command</p>
+<dd><p>Owner EShopFetchCommand - Fetch the latest data for the eshop command<br><strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p>
 </dd>
 <dt><a href="#module_tagmember">tagmember</a> ⇒ <code>Message</code></dt>
-<dd><p>Tags a member by ID<br>Primarily meant for mobile and when members have annoying untaggable names</p>
+<dd><p>Owner TagMemberCommand - Tags a member by ID<br>Primarily meant for mobile and when members have annoying untaggable names</p>
 </dd>
 <dt><a href="#module_dex">dex</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets information about a Pokémon from Dexter<br>Note that different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br><strong>Aliases</strong>: <code>pokedex</code>, <code>dexfind</code>, <code>df</code>, <code>rotom</code></p>
+<dd><p>Pokémon DexCommand - Gets information about a Pokémon from Dexter<br>Note that different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br><strong>Aliases</strong>: <code>pokedex</code>, <code>dexfind</code>, <code>df</code>, <code>rotom</code></p>
 </dd>
 <dt><a href="#module_flavor">flavor</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets flavor text from a Pokémon<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>Due to message limit size it fetches as many entries possible starting with generation 7 going downwards<br><strong>Aliases</strong>: <code>flavors</code>, <code>dexdata</code>, <code>dexentries</code>, <code>dextext</code>, <code>dextex</code>, <code>dexter</code></p>
+<dd><p>Pokémon FlavorCommand - Gets flavor text from a Pokémon<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>Due to message limit size it fetches as many entries possible starting with generation 7 going downwards<br><strong>Aliases</strong>: <code>flavors</code>, <code>dexdata</code>, <code>dexentries</code>, <code>dextext</code>, <code>dextex</code>, <code>dexter</code></p>
 </dd>
 <dt><a href="#module_item">item</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets information about an item in Pokémon
+<dd><p>Pokémon ItemCommand - Gets information about an item in Pokémon
 For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p>
 </dd>
 <dt><a href="#module_ability">ability</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets information on an ability in Pokémon<br><strong>Aliases</strong>: <code>abilities</code>, <code>abi</code></p>
+<dd><p>Pokémon AbilityCommand - Gets information on an ability in Pokémon<br><strong>Aliases</strong>: <code>abilities</code>, <code>abi</code></p>
 </dd>
 <dt><a href="#module_move">move</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets information about a move in Pokémon<br>For move names existing of multiple words (for example <code>dragon dance</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>attack</code></p>
+<dd><p>Pokémon MoveCommand - Gets information about a move in Pokémon<br>For move names existing of multiple words (for example <code>dragon dance</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>attack</code></p>
 </dd>
 <dt><a href="#module_type">type</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets the type matchup of any 1 or 2 types<br><strong>Aliases</strong>: <code>matchup</code>, <code>weakness</code>, <code>advantage</code></p>
+<dd><p>Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types<br><strong>Aliases</strong>: <code>matchup</code>, <code>weakness</code>, <code>advantage</code></p>
 </dd>
 <dt><a href="#module_anime">anime</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets information about any anime from MyAnimeList<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code></p>
+<dd><p>Searches AnimeCommand - Gets information about any anime from MyAnimeList<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code></p>
 </dd>
 <dt><a href="#module_cydia">cydia</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets info from a package on Cydia, only supports default repositories<br>Also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak subreddit</a> and <a href="https://discord.gg/jb">its discord server</a><br><strong>Aliases</strong>: <code>cy</code></p>
+<dd><p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories<br>Also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak subreddit</a> and <a href="https://discord.gg/jb">its discord server</a><br><strong>Aliases</strong>: <code>cy</code></p>
 </dd>
 <dt><a href="#module_define">define</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Define a word using glosbe<br><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p>
+<dd><p>Searches DefineCommand - Define a word using glosbe<br><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p>
 </dd>
 <dt><a href="#module_docs">docs</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Get an entry from the Discord.JS documentation<br><strong>Aliases</strong>: <code>djsguide</code>, <code>guide</code>, <code>djs</code></p>
+<dd><p>Searches DocsCommand - Get an entry from the Discord.JS documentation<br><strong>Aliases</strong>: <code>djsguide</code>, <code>guide</code>, <code>djs</code></p>
 </dd>
 <dt><a href="#module_eshop">eshop</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets information about a game in the Nintendo Switch eShop<br><strong>Aliases</strong>: <code>shop</code></p>
+<dd><p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop<br><strong>Aliases</strong>: <code>shop</code></p>
 </dd>
 <dt><a href="#module_games">games</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets information about a game using IndieGamesDoneBad (IGDB)<br><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>igdb</code></p>
+<dd><p>Searches GamesCommand - Gets information about a game using IndieGamesDoneBad (IGDB)<br><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>igdb</code></p>
 </dd>
 <dt><a href="#module_google">google</a> ⇒ <code>Message</code></dt>
-<dd><p>Gets information through google<br>Note: prioritizes Knowledge Graphs for better searching<br><strong>Aliases</strong>: <code>search</code>, <code>g</code></p>
+<dd><p>Searches GoogleCommand - Gets information through google<br>Note: prioritizes Knowledge Graphs for better searching<br><strong>Aliases</strong>: <code>search</code>, <code>g</code></p>
 </dd>
 <dt><a href="#module_image">image</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets an image through Google Images<br><strong>Aliases</strong>: <code>img</code>, <code>i</code></p>
+<dd><p>Searches ImageCommand - Gets an image through Google Images<br><strong>Aliases</strong>: <code>img</code>, <code>i</code></p>
 </dd>
 <dt><a href="#module_lmgtfy">lmgtfy</a> ⇒ <code>Message</code></dt>
-<dd><p>Transform some query into a LMGTFY (Let Me Google That For You) url<br><strong>Aliases</strong>: <code>dumb</code></p>
+<dd><p>Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url<br><strong>Aliases</strong>: <code>dumb</code></p>
 </dd>
 <dt><a href="#module_manga">manga</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets information about any manga from MyAnimeList<br><strong>Aliases</strong>: <code>cartoon</code>, <code>man</code></p>
+<dd><p>Searches MangaCommand - Gets information about any manga from MyAnimeList<br><strong>Aliases</strong>: <code>cartoon</code>, <code>man</code></p>
 </dd>
 <dt><a href="#module_steam">steam</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Gets information about a game using Steam<br><strong>Aliases</strong>: <code>valve</code></p>
+<dd><p>Searches SteamCommand - Gets information about a game using Steam<br><strong>Aliases</strong>: <code>valve</code></p>
 </dd>
 <dt><a href="#module_tmdb">tmdb</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Find information about a movie using TheMovieDatabase<br><strong>Aliases</strong>: <code>movie</code></p>
+<dd><p>Searches MovieCommand - Find information about a movie using TheMovieDatabase<br><strong>Aliases</strong>: <code>movie</code></p>
 </dd>
 <dt><a href="#module_tvdb">tvdb</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Find information about a TV series using TheMovieDatabase<br><strong>Aliases</strong>: <code>tv</code>, <code>show</code>, <code>serie</code>, <code>series</code></p>
+<dd><p>Searches TVCommand - Find information about a TV series using TheMovieDatabase<br><strong>Aliases</strong>: <code>tv</code>, <code>show</code>, <code>serie</code>, <code>series</code></p>
 </dd>
 <dt><a href="#module_urban">urban</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Define a word using UrbanDictionary<br><strong>Aliases</strong>: <code>ub</code>, <code>ud</code></p>
+<dd><p>Searches UrbanCommand - Define a word using UrbanDictionary<br><strong>Aliases</strong>: <code>ub</code>, <code>ud</code></p>
 </dd>
 <dt><a href="#module_youtube">youtube</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Find a video on YouTube<br>By default returns MessageEmbed. use <code>yts</code> to return just the URL and have in-client playback<br><strong>Aliases</strong>: <code>yt</code>, <code>tube</code>, <code>yts</code></p>
+<dd><p>Searches YouTubeCommand - Find a video on YouTube<br>By default returns MessageEmbed. use <code>yts</code> to return just the URL and have in-client playback<br><strong>Aliases</strong>: <code>yt</code>, <code>tube</code>, <code>yts</code></p>
 </dd>
 <dt><a href="#module_twitchmonitors">twitchmonitors</a> ⇒ <code>Message</code></dt>
-<dd><p>Configure which streamers to monitor<br><strong>Aliases</strong>: <code>monitors</code>, <code>monitor</code>, <code>twitchmonitor</code></p>
+<dd><p>Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor<br><strong>Aliases</strong>: <code>monitors</code>, <code>monitor</code>, <code>twitchmonitor</code></p>
 </dd>
 <dt><a href="#module_twitchoutput">twitchoutput</a> ⇒ <code>Message</code></dt>
-<dd><p>Configures the channel in which twitch notifications are send<br><strong>Aliases</strong>: <code>output</code>, <code>twitchout</code>, <code>twitchchannel</code></p>
+<dd><p>Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send<br><strong>Aliases</strong>: <code>output</code>, <code>twitchout</code>, <code>twitchchannel</code></p>
 </dd>
 <dt><a href="#module_twitchtoggle">twitchtoggle</a> ⇒ <code>Message</code></dt>
-<dd><p>Killswitch for Twitch notifications<br><strong>Aliases</strong>:</p>
+<dd><p>Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications<br><strong>Aliases</strong>: <code>twitchcon</code>, <code>twitchoff</code></p>
 </dd>
 </dl>
 
 <a name="module_chips"></a>
 
 ## chips ⇒ <code>MessageEmbed</code>
-Retrieves your current amount of chips for the casino  
+Casino ChipsCommand - Retrieves your current amount of chips for the casino  
 **Aliases**: `bal`, `cash`, `balance`
 
 **Returns**: <code>MessageEmbed</code> - Information about your current balance  
 **Category**: casino  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 **Example**  
 ```js
 chips
@@ -404,12 +410,14 @@ chips
 <a name="module_coin"></a>
 
 ## coin ⇒ <code>MessageEmbed</code>
-Gamble your chips in a coin flip  
+Casino CoinCommand - Gamble your chips in a coin flip  
 Payout is 1:2  
 **Aliases**: `flip`, `cflip`
 
 **Returns**: <code>MessageEmbed</code> - Outcome of the coin flip  
 **Category**: casino  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -423,19 +431,23 @@ coin 10 heads
 <a name="module_daily"></a>
 
 ## daily ⇒ <code>MessageEmbed</code>
-Recieve your daily 500 chips top up  
+Casino DailyCommand - Recieve your daily 500 chips top up  
 **Aliases**: `topup`, `bonus`
 
 **Returns**: <code>MessageEmbed</code> - Your new balance  
 **Category**: casino  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_give"></a>
 
 ## give ⇒ <code>MessageEmbed</code>
-Give another player some chips  
+Casino GiveCommand - Give another player some chips  
 **Aliases**: `donate`
 
 **Returns**: <code>MessageEmbed</code> - Changed balances of the two players  
 **Category**: casino  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -449,19 +461,23 @@ give Favna 10
 <a name="module_leaderboard"></a>
 
 ## leaderboard ⇒ <code>MessageEmbed</code>
-Shows the top 5 ranking players for your server  
+Casino LeaderboardCommand - Shows the top 5 ranking players for your server  
 **Aliases**: `lb`, `casinolb`, `leaderboards`
 
 **Returns**: <code>MessageEmbed</code> - List of top ranking players  
 **Category**: casino  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_memberbalance"></a>
 
 ## memberbalance ⇒ <code>MessageEmbed</code>
-Retrieves the amount of chips another member has for the casino  
+Casino MemberBalanceCommand - Retrieves the amount of chips another member has for the casino  
 **Aliases**: `mbal`, `mcash`, `mbalance`, `mchips`
 
 **Returns**: <code>MessageEmbed</code> - Information about the current balance of the member  
 **Category**: casino  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -474,11 +490,13 @@ mchips Sagiri
 <a name="module_slots"></a>
 
 ## slots ⇒ <code>MessageEmbed</code>
-Gamble your chips at the slot machine  
+Casino SlotsCommand - Gamble your chips at the slot machine  
 **Aliases**: `slot`, `fruits`
 
 **Returns**: <code>MessageEmbed</code> - Outcome of the spin  
 **Category**: casino  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -491,11 +509,13 @@ slots 5
 <a name="module_wheeloffortune"></a>
 
 ## wheeloffortune ⇒ <code>MessageEmbed</code>
-Gamble your chips at the wheel of fortune  
+Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune  
 **Aliases**: `wheel`, `wof`
 
 **Returns**: <code>MessageEmbed</code> - Outcome of the game  
 **Category**: casino  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -508,30 +528,36 @@ wof 5
 <a name="module_favna"></a>
 
 ## favna ⇒ <code>MessageEmbed</code>
-Custom Command exclusive to ChaosGamez server  
+Custom FavnaCommand - Custom Command exclusive to ChaosGamez server  
 A joke command to praise Favna  
 **Aliases**: `.favna`
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with the joke text  
 **Category**: custom  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_kai"></a>
 
 ## kai ⇒ <code>MessageEmbed</code>
-Custom Command exclusive to ChaosGamez server  
+Custom KaiCommand - Custom Command exclusive to ChaosGamez server  
 A joke command to spite Kai  
 **Aliases**: `.kai`
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔  
 **Category**: custom  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_copypasta"></a>
 
 ## copypasta ⇒ <code>MessageEmbed</code>
-Gets one of the server's stored copypastas  
+Extra CopyPastaCommand - Gets one of the server's stored copypastas  
 Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!  
 **Aliases**: `cp`, `pasta`
 
 **Returns**: <code>MessageEmbed</code> - Copypasta content. In a normal message if more than 1024 characters  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -544,11 +570,13 @@ copypasta navy
 <a name="module_copypastaadd"></a>
 
 ## copypastaadd ⇒ <code>Message</code>
-Adds a new copypasta for your server  
+Extra CopyPastaAddCommand - Adds a new copypasta for your server  
 **Aliases**: `cpadd`, `pastaadd`
 
 **Returns**: <code>Message</code> - Confirmation the copypasta was added  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -562,19 +590,23 @@ copypastaadd lipsum Lorem ipsum dolor sit amet.
 <a name="module_copypastalist"></a>
 
 ## copypastalist ⇒ <code>MessageEmbed</code>
-Gets all copypastas available to the server  
+Extra CopyPastaListCommand - Gets all copypastas available to the server  
 **Aliases**: `cplist`, `copylist`, `pastalist`
 
 **Returns**: <code>MessageEmbed</code> - List of all available copypastas  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_math"></a>
 
 ## math ⇒ <code>MessageEmbed</code>
-Take the effort out of calculations and let the bot do it for you  
+Extra MathCommand - Take the effort out of calculations and let the bot do it for you  
 **Aliases**: `calc`
 
 **Returns**: <code>MessageEmbed</code> - Your equation and its answer  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -587,13 +619,15 @@ math (PI - 1) * 3
 <a name="module_oxr"></a>
 
 ## oxr ⇒ <code>MessageEmbed</code>
-Convert one currency to another  
+Extra MoneyCommand - Convert one currency to another  
 Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC  
 For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)  
 **Aliases**: `money`, `rate`, `convert`
 
 **Returns**: <code>MessageEmbed</code> - Input and output currency's and the amount your input is worth in both  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -608,11 +642,13 @@ ox 1 EUR USD
 <a name="module_qrgen"></a>
 
 ## qrgen ⇒ <code>MessageEmbed</code>
-Generates a QR code from text (like a URL)  
+Extra QRGenCommand - Generates a QR code from text (like a URL)  
 **Aliases**: `qr`
 
 **Returns**: <code>MessageEmbed</code> - Embedded QR code and original image URL  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -625,19 +661,23 @@ qrgen https://favna.xyz/ribbon
 <a name="module_randomcol"></a>
 
 ## randomcol ⇒ <code>MessageEmbed</code>
-Generates a random color  
+Extra RandomCol - Generates a random color  
 **Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
 
 **Returns**: <code>MessageEmbed</code> - Color of embed matches generated color  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_say"></a>
 
 ## say ⇒ <code>Message</code>
-Repeats a message and deletes your message  
+Extra Say - Repeats a message and deletes your message  
 **Aliases**: `sayd`, `repeat`
 
 **Returns**: <code>Message</code> - Your message said by the bot  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -650,20 +690,24 @@ say Favna is a great coder!
 <a name="module_saywut"></a>
 
 ## saywut ⇒ <code>MessageEmbed</code>
-Bust the last "say" user  
+Extra SayWutCommand - Bust the last "say" user  
 **Aliases**: `saywat`, `saywot`
 
 **Returns**: <code>MessageEmbed</code> - Info on who used the "say" command last  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_time"></a>
 
 ## time ⇒ <code>MessageEmbed</code>
-Gets the current time in any place  
+Extra Time - Gets the current time in any place  
 Uses Google's geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.  
 **Aliases**: `citytime`
 
 **Returns**: <code>MessageEmbed</code> - Current date, current time, country and DST offset  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -676,12 +720,14 @@ time Amsterdam
 <a name="module_weather"></a>
 
 ## weather ⇒ <code>MessageEmbed</code>
-Get the current weather forecast in any city  
+Extra Weather - Get the current weather forecast in any city  
 Potentially you'll have to specify city if the city is in multiple countries, i.e. `weather amsterdam` will not be the same as `weather amsterdam missouri`  
 **Aliases**: `temp`, `forecast`, `fc`, `wth`
 
 **Returns**: <code>MessageEmbed</code> - Various statistics about the current forecast  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -694,12 +740,14 @@ weather Amsterdam
 <a name="module_zalgo"></a>
 
 ## zalgo ⇒ <code>Message</code>
-Create zalgo-fied text from your input  
+Extra Zalgo - Create zalgo-fied text from your input  
 First banishes any existing zalgo to ensure proper result  
 **Aliases**: `trash`
 
 **Returns**: <code>Message</code> - Your text zalgo-fied  
 **Category**: extra  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -712,11 +760,13 @@ zalgo HE COMES
 <a name="module_8ball"></a>
 
 ## 8ball ⇒ <code>MessageEmbed</code>
-Rolls a magic 8 ball using your input  
+Games EightBallCommand - Rolls a magic 8 ball using your input  
 **Aliases**: `eightball`
 
 **Returns**: <code>MessageEmbed</code> - Your question and its answer  
 **Category**: games  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -729,11 +779,13 @@ Rolls a magic 8 ball using your input
 <a name="module_dice"></a>
 
 ## dice ⇒ <code>MessageEmbed</code>
-Rolls some dice with some sides. Great for the DnD players!  
+Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!  
 **Aliases**: `xdicey`, `roll`, `dicey`, `die`
 
 **Returns**: <code>MessageEmbed</code> - The eyes rolled for each dice as well as the total of all rolls  
 **Category**: games  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -747,19 +799,23 @@ dice 5 6
 <a name="module_dndc"></a>
 
 ## dndc ⇒ <code>MessageEmbed</code>
-Filps a coin  
+Games DndCCommand - Filps a coin  
 **Aliases**: `coinflip`, `dndc`
 
 **Returns**: <code>MessageEmbed</code> - Side the coin landed on  
 **Category**: games  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_fight"></a>
 
 ## fight ⇒ <code>MessageEmbed</code>
-Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.  
+Games FightCommand - Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.  
 **Aliases**: `combat`
 
 **Returns**: <code>MessageEmbed</code> - Result of the combat  
 **Category**: games  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -773,11 +829,13 @@ fight Pyrrha Ruby
 <a name="module_hug"></a>
 
 ## hug ⇒ <code>MessageEmbed</code>
-Give someone a hug ❤!  
+Games HugCommand - Give someone a hug ❤!  
 **Aliases**: `bearhug`, `embrace`
 
 **Returns**: <code>MessageEmbed</code> - The hug and a cute image ❤  
 **Category**: games  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -790,10 +848,12 @@ hug Pyrrha
 <a name="module_kiss"></a>
 
 ## kiss ⇒ <code>MessageEmbed</code>
-Give someone a kiss ❤!
+Games KissCommand - Give someone a kiss ❤!
 
 **Returns**: <code>MessageEmbed</code> - The kiss and a cute image ❤  
 **Category**: games  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -806,11 +866,13 @@ kiss Pyrrha
 <a name="module_rps"></a>
 
 ## rps ⇒ <code>MessageEmbed</code>
-Play Rock Paper Scissors against random.org randomization  
+Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization  
 **Aliases**: rockpaperscissors
 
 **Returns**: <code>MessageEmbed</code> - Result of the conflict  
 **Category**: games  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -823,11 +885,13 @@ rps Rock
 <a name="module_slap"></a>
 
 ## slap ⇒ <code>MessageEmbed</code>
-Slap a dumb person💢!  
+Games SlapCommand - Slap a dumb person💢!  
 **Aliases**: `bakaslap`
 
 **Returns**: <code>MessageEmbed</code> - The slap and an image  
 **Category**: games  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -840,11 +904,13 @@ slap Cinder
 <a name="module_strawpoll"></a>
 
 ## strawpoll ⇒ <code>MessageEmbed</code>
-Create a strawpoll and find out what people really think (hopefully)  
+Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)  
 **Aliases**: `straw`, `poll`
 
 **Returns**: <code>MessageEmbed</code> - Poll url, title, options and preview image  
 **Category**: games  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -858,11 +924,13 @@ strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"
 <a name="module_Activity"></a>
 
 ## Activity ⇒ <code>MessageEmbed</code>
-Gets the activity (presence) data from a member  
+Info ActivityCommand - Gets the activity (presence) data from a member  
 **Aliases**: `act`, `presence`, `richpresence`
 
 **Returns**: <code>MessageEmbed</code> - Activity from that member  
 **Category**: info  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -875,11 +943,13 @@ activity Favna
 <a name="module_avatar"></a>
 
 ## avatar ⇒ <code>MessageEmbed</code>
-Get the avatar from any member  
+Games AvatarCommand - Get the avatar from any member  
 **Aliases**: `ava`
 
 **Returns**: <code>MessageEmbed</code> - The avatar image and a direct link to it  
 **Category**: info  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -893,11 +963,13 @@ avatar Favna
 <a name="module_discordbots"></a>
 
 ## discordbots ⇒ <code>MessageEmbed</code>
-Gets the stats from a bot listed on DiscordBotList  
+Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList  
 **Aliases**: `dbapi`, `db`
 
 **Returns**: <code>MessageEmbed</code> - Info about a bot  
 **Category**: info  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -910,43 +982,53 @@ discordbots 376520643862331396
 <a name="module_emotes"></a>
 
 ## emotes ⇒ <code>MessageEmbed</code>
-Lists all emotes from the server  
+Info EmotesCommand - Lists all emotes from the server  
 **Aliases**: `listemo`, `emolist`, `listemoji`, `emote`
 
 **Returns**: <code>MessageEmbed</code> - List of emotes  
 **Category**: info  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_invite"></a>
 
 ## invite ⇒ <code>MessageEmbed</code>
-Gets the invite link for the bot  
+Info InviteCommnad - Gets the invite link for the bot  
 **Aliases**: `inv`, `links`, `shill`
 
 **Returns**: <code>MessageEmbed</code> - Invite link along with other links  
 **Category**: info  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_server"></a>
 
 ## server ⇒ <code>MessageEmbed</code>
-Gets information about the current server  
+Info ServerInfoCommand - Gets information about the current server  
 **Aliases**: `serverinfo`, `sinfo`
 
 **Returns**: <code>MessageEmbed</code> - Info about the server  
 **Category**: info  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_stats"></a>
 
 ## stats ⇒ <code>MessageEmbed</code>
-Statictics about Ribbon  
+Info RibbonStatsCommand - Statictics about Ribbon  
 **Aliases**: `botinfo`, `info`
 
 **Returns**: <code>MessageEmbed</code> - Ribbon's statistics  
 **Category**: info  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_userinfo"></a>
 
 ## userinfo ⇒ <code>MessageEmbed</code>
-Get the info from a user  
+Info UserInfoCommand - Get the info from a user  
 **Aliases**: `user`, `uinfo`
 
 **Returns**: <code>MessageEmbed</code> - Info about that member  
 **Category**: info  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -959,11 +1041,13 @@ userinfo Favna
 <a name="module_addrole"></a>
 
 ## addrole ⇒ <code>Message</code>
-Add a role to member  
+Moderation AddRoleCommand - Add a role to member  
 **Aliases**: `newrole`, `ar`
 
 **Returns**: <code>Message</code> - Confirmation the role was added  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -977,11 +1061,13 @@ addrole Favna Member
 <a name="module_announce"></a>
 
 ## announce ⇒ <code>Message</code>
-Make an announcement to a channel named "announcements" or "news"  
+Moderation NewsCommand - Make an announcement to a channel named "announcements" or "news"  
 **Aliases**: `news`
 
 **Returns**: <code>Message</code> - Announcement you wrote in the announcement / news channel  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -994,11 +1080,13 @@ announce Pokemon Switch has released!
 <a name="module_ban"></a>
 
 ## ban ⇒ <code>MessageEmbed</code>
-Ban a bad member  
+Moderation BanCommand - Ban a bad member  
 **Aliases**: `b`, `banana`
 
 **Returns**: <code>MessageEmbed</code> - Log of the ban  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1012,11 +1100,13 @@ ban MultiMegaMander
 <a name="module_defaultrole"></a>
 
 ## defaultrole ⇒ <code>Message</code>
-Sets a default role that should be assigned to all new joining members  
+Moderation defaultroleCommand - Sets a default role that should be assigned to all new joining members  
 **Aliases**: `defrole`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1029,11 +1119,13 @@ defaultrole Member
 <a name="module_deletecommandmessages"></a>
 
 ## deletecommandmessages ⇒ <code>Message</code>
-Configure whether the bot should delete command messages  
+Moderation deleteCommandMessagesCommand - Configure whether the bot should delete command messages  
 **Aliases**: `dcm`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1045,12 +1137,13 @@ deletecommandmessages enable
 ```
 <a name="module_delrole"></a>
 
-## delrole ⇒ <code>Message</code>
-Delete the role of a member  
-**Aliases**: `deleterole`, `dr`, `remrole`, `removerole`
+## delrole
+Moderation DeleteRoleCommand - Delete the role of a member  
+**Aliases**: `deleterole`, `d
 
-**Returns**: <code>Message</code> - Confirmation the role was removed  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1064,11 +1157,13 @@ delrole Favna Member
 <a name="module_kick"></a>
 
 ## kick ⇒ <code>MessageEmbed</code>
-Kicks a somewhat bad member  
+Moderation KickCommand - Kicks a somewhat bad member  
 **Aliases**: `k`
 
 **Returns**: <code>MessageEmbed</code> - Log of the kick  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1082,11 +1177,13 @@ kick ThunderKai
 <a name="module_listwarn"></a>
 
 ## listwarn ⇒ <code>MessageEmbed</code>
-Show the amount of warning points a member has  
+Moderation ListWarnCommand - Show the amount of warning points a member has  
 **Aliases**: `reqwarn`, `lw`, `rw`
 
 **Returns**: <code>MessageEmbed</code> - The warnings that member has  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1099,21 +1196,25 @@ listwarn Biscuit
 <a name="module_lockdown"></a>
 
 ## lockdown ⇒ <code>Message</code>
-Lockdown a channel  
+Moderation LockdownCommand - Lockdown a channel  
 NOTE: Once locked it will be locked to the `@everyone` role and depending on your permissions setup it may be that only people with the `administrator` role will have access to the channel.
 This may also mean that the bot won't have access if it doesn't have administrator role so you cannot use the `unlock` command until you give it that permission!  
 **Aliases**: `lock`, `ld`
 
 **Returns**: <code>Message</code> - Confirmation the channel was locked  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_memberlogs"></a>
 
 ## memberlogs ⇒ <code>Message</code>
-Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel  
+Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel  
 **Aliases**: `tml`, `togglememberlogs`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1126,11 +1227,13 @@ memberlogs enable
 <a name="module_modlogs"></a>
 
 ## modlogs ⇒ <code>Message</code>
-Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel  
+Moderation ModLogsCommand - Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel  
 **Aliases**: `togglemod`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1143,7 +1246,7 @@ modlogs enable
 <a name="module_nickall"></a>
 
 ## nickall ⇒ <code>MessageEmbed</code>
-Assign a nickname to every member on the server  
+Moderation NickallCommand - Assign a nickname to every member on the server  
 Use `clear` to remove all nicknames  
 Use `prefix` to prefix all names with something  
 Use `append` to append all names with something  
@@ -1152,6 +1255,8 @@ Note that if there are a lot of members on the server it will take a long time t
 
 **Returns**: <code>MessageEmbed</code> - Log of the nicknaming  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1170,11 +1275,13 @@ nickall Ribbon
 <a name="module_nickname"></a>
 
 ## nickname ⇒ <code>Message</code>
-Nickname a single member  
+Moderation NickCommand - Nickname a single member  
 **Aliases**: `nick`
 
 **Returns**: <code>Message</code> - Confirmation the nickname was assigned  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1188,11 +1295,13 @@ nick Muffin Cupcake
 <a name="module_purge"></a>
 
 ## purge ⇒ <code>Message</code>
-Quickly delete a certain amount of messages  
+Moderation PurgeCommand - Quickly delete a certain amount of messages  
 **Aliases**: `prune`, `delete`
 
 **Returns**: <code>Message</code> - Confirmation of the amount of messages deleted - will self delete after 1 second.  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1205,11 +1314,13 @@ purge 10
 <a name="module_setmemberlogs"></a>
 
 ## setmemberlogs ⇒ <code>Message</code>
-Sets the channel used for member logs  
+Moderation SetMemberlogsCommand - Sets the channel used for member logs  
 **Aliases**: `setmember`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1222,11 +1333,13 @@ setmemberlogs logs
 <a name="module_setmodlogs"></a>
 
 ## setmodlogs ⇒ <code>Message</code>
-Sets the channel used for mod logs  
+Moderation SetModlogsCommand - Sets the channel used for mod logs  
 **Aliases**: `setmod`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1239,12 +1352,14 @@ setmodlogs logs
 <a name="module_softban"></a>
 
 ## softban ⇒ <code>MessageEmbed</code>
-Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)  
+Moderation SoftbanCommand - Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)  
 This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours  
 **Aliases**: `sb`, `sban`
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a log of the softban  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1258,11 +1373,13 @@ softban ImmortalZypther
 <a name="module_unknownmessages"></a>
 
 ## unknownmessages ⇒ <code>Message</code>
-Toggle Unkown Command messages on or off  
+Moderation UnknownMessagesCommand - Toggle Unkown Command messages on or off  
 **Aliases**: `unknowns`, `unkmsg`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1275,22 +1392,26 @@ unknownmessages enable
 <a name="module_unlock"></a>
 
 ## unlock ⇒ <code>Message</code>
-Unlock the channel  
+Moderation UnlockCommand - Unlock the channel  
 Only really useful if you previously locked the channel  
 Note that the bot does need to be able to be able to access this channel to unlock it (read permissions)  
 **Aliases**: `delock`, `ul`
 
 **Returns**: <code>Message</code> - Confirmation the channel is unlocked  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_warn"></a>
 
 ## warn ⇒ <code>MessageEmbed</code>
-Gives a member warning points  
+Moderation WarnCommand - Gives a member warning points  
 Please note that the bot will not auto ban when the member has a certain amount of points!
 **Aliases**: `warning`
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a log of the warning  
 **Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1305,11 +1426,13 @@ warn Biscuit
 <a name="module_defaultvolume"></a>
 
 ## defaultvolume ⇒ <code>Message</code>
-Sets the server's default volume  
+Music DefaultVolumeCommand - Sets the server's default volume  
 **Aliases**: `defvol`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1322,13 +1445,15 @@ defaultvolume 2
 <a name="module_maxlength"></a>
 
 ## maxlength ⇒ <code>Message</code>
-Set the maximum length (in minutes) of a video  
+Music MaxLengthCommand - Set the maximum length (in minutes) of a video  
 Give no argument to show current amount of maximum songs  
 Use "default" as argument to set it back to the bot default  
 **Aliases**: `max-duration`, `max-song-length`, `max-song-duration`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1341,13 +1466,15 @@ maxlength 10
 <a name="module_maxsongs"></a>
 
 ## maxsongs ⇒ <code>Message</code>
-The maximum amount of songs any member can queue  
+Music MaxSongsCommand- The maximum amount of songs any member can queue  
 Give no argument to show current amount of maximum songs  
 Use "default" as argument to set it back to the bot default  
 **Aliases**: `songcap`, `songmax`, `maxsong`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1360,16 +1487,18 @@ maxsongs 2
 <a name="module_pause"></a>
 
 ## pause ⇒ <code>Message</code>
-Pauses the currently playing track  
+Music PauseSongCommand - Pauses the currently playing track  
 You need to be in a voice channel before you can use this command  
 **Aliases**: `shh`, `shhh`, `shhhh`, `shhhhh`, `hush`, `halt`
 
 **Returns**: <code>Message</code> - Confirmation the music was paused  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_play"></a>
 
 ## play ⇒ <code>MessageEmbed</code>
-Starts playing music  
+Music PlaySongCommand - Starts playing music  
 You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it  
 If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
 There are 3 ways to queue songs  
@@ -1380,6 +1509,8 @@ There are 3 ways to queue songs
 
 **Returns**: <code>MessageEmbed</code> - Title, duration and thumbnail of the video  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1392,12 +1523,15 @@ play
 <a name="module_queue"></a>
 
 ## queue ⇒ <code>MessageEmbed</code>
-Shows the current queue of songs  
+Music ViewQueueCommand - Shows the current queue of songs  
 Songs are paginated in sets of 5  
 **Aliases**: `songs`, `song-list`, `list`, `listqueue`
+**Aliases**: `bal`, `cash`, `balance`
 
 **Returns**: <code>MessageEmbed</code> - List of queued songs with their duration and total duration of the queue  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1410,30 +1544,36 @@ queue 2
 <a name="module_resume"></a>
 
 ## resume ⇒ <code>Message</code>
-Resumes the song after pausing it  
+Music ResumeSongCommand - Resumes the song after pausing it  
 You need to be in a voice channel before you can use this command  
 **Aliases**: `go`, `continue`, `ale`, `loss`, `res`
 
 **Returns**: <code>Message</code> - Confirmation the song is resumed  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_save"></a>
 
 ## save ⇒ <code>MessageEmbed</code>
-DMs the 10 upcoming songs from the queue to the user
+Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user
 **Aliases**: `save-songs`, `save-song-list`, `ss`, `savequeue`
 
 **Returns**: <code>MessageEmbed</code> - Titles, durations and total queue duration sent in a DM  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_skip"></a>
 
 ## skip ⇒ <code>Message</code>
-Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue  
+Music SkipSongCommand - Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue  
 A vote to skip is started if there are 4 or more people in the voice channel with `(amount of members) / 3` as required amount of votes (bot doesn't count as a member)  
 Staff that can delete messages can force the skip by using `skip force`  
 You need to be in a voice channel before you can use this command
 
 **Returns**: <code>Message</code> - Confirmation the song was skipped  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1448,29 +1588,35 @@ skip force
 <a name="module_status"></a>
 
 ## status ⇒ <code>MessageEmbed</code>
-Gets status about the currently playing song  
+Music MusicStatusCommand - Gets status about the currently playing song  
 **Aliases**: `song`, `playing`, `current-song`, `now-playing`
 
 **Returns**: <code>MessageEmbed</code> - Title, URL of and progress into the song  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_stop"></a>
 
 ## stop ⇒ <code>Message</code>
-Stops the current queue. Bot will automatically leave the channel after this command  
+Music StopMusicCommand - Stops the current queue. Bot will automatically leave the channel after this command  
 **Aliases**: `kill`, `stfu`, `quit`, `leave`, `disconnect`
 
 **Returns**: <code>Message</code> - Sad face about stopping the music  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_volume"></a>
 
 ## volume ⇒ <code>Message</code>
-Changes the volume of the currently playing song  
+Music ChangeVolumeCommand - Changes the volume of the currently playing song  
 If you do not  give any parameter the bot will show the current volume  
 You need to be in a voice channel before you can use this command  
 **Aliases**: `set-volume`, `set-vol`, `vol`
 
 **Returns**: <code>Message</code> - Confirmation of the change of volume  
 **Category**: music  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1483,12 +1629,14 @@ volume 2
 <a name="module_e621"></a>
 
 ## e621 ⇒ <code>MessageEmbed</code>
-Gets a NSFW image from e621  
+nsfw e621Command - Gets a NSFW image from e621  
 Can only be used in NSFW marked channels!  
 **Aliases**: `eee`
 
 **Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1501,12 +1649,14 @@ e621 pyrrha_nikos
 <a name="module_gelbooru"></a>
 
 ## gelbooru ⇒ <code>MessageEmbed</code>
-Gets a NSFW image from gelbooru  
+nsfw GelbooruCommand - Gets a NSFW image from gelbooru  
 Can only be used in NSFW marked channels!  
 **Aliases**: `gel`, `booru`
 
 **Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1519,12 +1669,14 @@ gelbooru pyrrha_nikos
 <a name="module_paheal"></a>
 
 ## paheal ⇒ <code>MessageEmbed</code>
-Gets a NSFW image from paheal  
+nsfw PahealCommand - Gets a NSFW image from paheal  
 Can only be used in NSFW marked channels!  
 **Aliases**: `pa`, `heal`
 
 **Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1537,12 +1689,14 @@ paheal pyrrha_nikos
 <a name="module_porngifs"></a>
 
 ## porngifs ⇒ <code>MessageEmbed</code>
-Gets a NSFW gif and webm from pornhub
+nsfw PornGifsCommand - Gets a NSFW gif and webm from pornhub  
 Can only be used in NSFW marked channels!  
 **Aliases**: `nsfwgifs`
 
 **Returns**: <code>MessageEmbed</code> - Webm link and embeds gif  
 **Category**: nsfw  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1555,12 +1709,14 @@ porngifs babe
 <a name="module_pornvids"></a>
 
 ## pornvids ⇒ <code>MessageEmbed</code>
-Gets a NSFW video from pornhub
+nsfw PornVidsCommand - Gets a NSFW video from pornhub  
 Can only be used in NSFW marked channels!  
 **Aliases**: `porn`, `nsfwvids`
 
 **Returns**: <code>MessageEmbed</code> - URL, duration and embedded thumbnail  
 **Category**: nsfw  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1573,12 +1729,14 @@ pornvids babe
 <a name="module_rule34"></a>
 
 ## rule34 ⇒ <code>MessageEmbed</code>
-Gets a NSFW image from rule34  
+nsfw Rule34Command - Gets a NSFW image from rule34  
 Can only be used in NSFW marked channels!  
 **Aliases**: `r34`
 
 **Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1591,18 +1749,22 @@ rule34 pyrrha_nikos
 <a name="module_checkguilds"></a>
 
 ## checkguilds ⇒ <code>Message</code>
-Owner Only - lists all guilds the bot is in
+Owner CheckGuildsCommand - Lists all guilds the bot is in
 
 **Returns**: <code>Message</code> - Amount and list of guilds in code blocks  
 **Category**: owner  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_customtopup"></a>
 
 ## customtopup ⇒ <code>MessageEmbed</code>
-Daniël Ocean doesn't give a crap about legality  
+Owner CustomTopUpCommand - Daniël Ocean doesn't give a crap about legality  
 **Aliases**: `ctu`
 
 **Returns**: <code>MessageEmbed</code> - New balance for the member  
 **Category**: owner  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1616,25 +1778,32 @@ ctu Biscuit 1000
 <a name="module_dbpost"></a>
 
 ## dbpost ⇒ <code>Message</code>
-Owners only - posts current guild count to discordbotlist
+Owner DBPostCommand - Posts current guild count to discordbotlist
 
 **Returns**: <code>Message</code> - Confirmation the update was made  
 **Category**: owner  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_eshopfetch"></a>
 
 ## eshopfetch ⇒ <code>Message</code>
-Fetch the latest data for the eshop command
+Owner EShopFetchCommand - Fetch the latest data for the eshop command  
+**Aliases**: `bal`, `cash`, `balance`
 
 **Returns**: <code>Message</code> - Confirmation the data was fetched  
 **Category**: owner  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 <a name="module_tagmember"></a>
 
 ## tagmember ⇒ <code>Message</code>
-Tags a member by ID  
+Owner TagMemberCommand - Tags a member by ID  
 Primarily meant for mobile and when members have annoying untaggable names
 
 **Returns**: <code>Message</code> - Mention of the member wrapped between carets  
 **Category**: owner  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1647,12 +1816,14 @@ tagmember ☜(⌒▽⌒)☞guy
 <a name="module_dex"></a>
 
 ## dex ⇒ <code>MessageEmbed</code>
-Gets information about a Pokémon from Dexter  
+Pokémon DexCommand - Gets information about a Pokémon from Dexter  
 Note that different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
 **Aliases**: `pokedex`, `dexfind`, `df`, `rotom`
 
 **Returns**: <code>MessageEmbed</code> - Lots of information about the pokemon  
 **Category**: pokemon  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1665,13 +1836,15 @@ dex dragonite
 <a name="module_flavor"></a>
 
 ## flavor ⇒ <code>MessageEmbed</code>
-Gets flavor text from a Pokémon  
+Pokémon FlavorCommand - Gets flavor text from a Pokémon  
 Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
 Due to message limit size it fetches as many entries possible starting with generation 7 going downwards  
 **Aliases**: `flavors`, `dexdata`, `dexentries`, `dextext`, `dextex`, `dexter`
 
 **Returns**: <code>MessageEmbed</code> - Flavor texts for the pokemon  
 **Category**: pokemon  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1684,12 +1857,14 @@ flavor dragonite
 <a name="module_item"></a>
 
 ## item ⇒ <code>MessageEmbed</code>
-Gets information about an item in Pokémon
+Pokémon ItemCommand - Gets information about an item in Pokémon
 For item names existing of multiple words (for example `life orb`) you can either type it with or without the space  
 **Aliases**: `it`, `bag`
 
 **Returns**: <code>MessageEmbed</code> - Description and external links for the item  
 **Category**: pokemon  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1702,11 +1877,13 @@ item assault vest
 <a name="module_ability"></a>
 
 ## ability ⇒ <code>MessageEmbed</code>
-Gets information on an ability in Pokémon  
+Pokémon AbilityCommand - Gets information on an ability in Pokémon  
 **Aliases**: `abilities`, `abi`
 
 **Returns**: <code>MessageEmbed</code> - Description and external links for the ability  
 **Category**: pokémon  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1719,12 +1896,14 @@ ability multiscale
 <a name="module_move"></a>
 
 ## move ⇒ <code>MessageEmbed</code>
-Gets information about a move in Pokémon  
+Pokémon MoveCommand - Gets information about a move in Pokémon  
 For move names existing of multiple words (for example `dragon dance`) you can either type it with or without the space  
 **Aliases**: `attack`
 
 **Returns**: <code>MessageEmbed</code> - Details about the move  
 **Category**: pokémon  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1737,11 +1916,13 @@ move dragon dance
 <a name="module_type"></a>
 
 ## type ⇒ <code>MessageEmbed</code>
-Gets the type matchup of any 1 or 2 types  
+Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types  
 **Aliases**: `matchup`, `weakness`, `advantage`
 
 **Returns**: <code>MessageEmbed</code> - All weaknesses, advantages  
 **Category**: pokémon  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1754,11 +1935,13 @@ type dragon flying
 <a name="module_anime"></a>
 
 ## anime ⇒ <code>MessageEmbed</code>
-Gets information about any anime from MyAnimeList  
+Searches AnimeCommand - Gets information about any anime from MyAnimeList  
 **Aliases**: `ani`, `mal`
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested anime  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1771,12 +1954,14 @@ anime Yu-Gi-Oh Dual Monsters
 <a name="module_cydia"></a>
 
 ## cydia ⇒ <code>MessageEmbed</code>
-Gets info from a package on Cydia, only supports default repositories  
+Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories  
 Also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
 **Aliases**: `cy`
 
 **Returns**: <code>MessageEmbed</code> - Information about the tweak  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1789,11 +1974,13 @@ cydia Anemone
 <a name="module_define"></a>
 
 ## define ⇒ <code>MessageEmbed</code>
-Define a word using glosbe  
+Searches DefineCommand - Define a word using glosbe  
 **Aliases**: `def`, `dict`
 
 **Returns**: <code>MessageEmbed</code> - Possible definitions for that word  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1806,11 +1993,13 @@ define Google
 <a name="module_docs"></a>
 
 ## docs ⇒ <code>MessageEmbed</code>
-Get an entry from the Discord.JS documentation  
+Searches DocsCommand - Get an entry from the Discord.JS documentation  
 **Aliases**: `djsguide`, `guide`, `djs`
 
 **Returns**: <code>MessageEmbed</code> - Info about the entry from the library  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1823,11 +2012,13 @@ docs ClientUser
 <a name="module_eshop"></a>
 
 ## eshop ⇒ <code>MessageEmbed</code>
-Gets information about a game in the Nintendo Switch eShop  
+Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop  
 **Aliases**: `shop`
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested game  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1840,11 +2031,13 @@ eshop Breath of The Wild
 <a name="module_games"></a>
 
 ## games ⇒ <code>MessageEmbed</code>
-Gets information about a game using IndieGamesDoneBad (IGDB)  
+Searches GamesCommand - Gets information about a game using IndieGamesDoneBad (IGDB)  
 **Aliases**: `game`, `moby`, `igdb`
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested game  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1857,12 +2050,14 @@ games Tales of Berseria
 <a name="module_google"></a>
 
 ## google ⇒ <code>Message</code>
-Gets information through google  
+Searches GoogleCommand - Gets information through google  
 Note: prioritizes Knowledge Graphs for better searching  
 **Aliases**: `search`, `g`
 
 **Returns**: <code>Message</code> - Result of your search  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1875,11 +2070,13 @@ google Pyrrha Nikos
 <a name="module_image"></a>
 
 ## image ⇒ <code>MessageEmbed</code>
-Gets an image through Google Images  
+Searches ImageCommand - Gets an image through Google Images  
 **Aliases**: `img`, `i`
 
 **Returns**: <code>MessageEmbed</code> - Embedded image and search query  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1892,11 +2089,13 @@ image Pyrrha Nikos
 <a name="module_lmgtfy"></a>
 
 ## lmgtfy ⇒ <code>Message</code>
-Transform some query into a LMGTFY (Let Me Google That For You) url  
+Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url  
 **Aliases**: `dumb`
 
 **Returns**: <code>Message</code> - lmgfty'ed url  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1909,11 +2108,13 @@ lmgtfy is it legal to kill an ant???
 <a name="module_manga"></a>
 
 ## manga ⇒ <code>MessageEmbed</code>
-Gets information about any manga from MyAnimeList  
+Searches MangaCommand - Gets information about any manga from MyAnimeList  
 **Aliases**: `cartoon`, `man`
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested manga  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1926,11 +2127,13 @@ manga Yu-Gi-Oh
 <a name="module_steam"></a>
 
 ## steam ⇒ <code>MessageEmbed</code>
-Gets information about a game using Steam  
+Searches SteamCommand - Gets information about a game using Steam  
 **Aliases**: `valve`
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested game  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1943,11 +2146,13 @@ steam Tales of Berseria
 <a name="module_tmdb"></a>
 
 ## tmdb ⇒ <code>MessageEmbed</code>
-Find information about a movie using TheMovieDatabase  
+Searches MovieCommand - Find information about a movie using TheMovieDatabase  
 **Aliases**: `movie`
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested movie  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1960,11 +2165,13 @@ tmdb Pokemon 2000
 <a name="module_tvdb"></a>
 
 ## tvdb ⇒ <code>MessageEmbed</code>
-Find information about a TV series using TheMovieDatabase  
+Searches TVCommand - Find information about a TV series using TheMovieDatabase  
 **Aliases**: `tv`, `show`, `serie`, `series`
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested TV serie  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1977,11 +2184,13 @@ tvdb Pokemon
 <a name="module_urban"></a>
 
 ## urban ⇒ <code>MessageEmbed</code>
-Define a word using UrbanDictionary  
+Searches UrbanCommand - Define a word using UrbanDictionary  
 **Aliases**: `ub`, `ud`
 
 **Returns**: <code>MessageEmbed</code> - Top definition for the requested phrase  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1994,12 +2203,14 @@ urban Everclear
 <a name="module_youtube"></a>
 
 ## youtube ⇒ <code>MessageEmbed</code>
-Find a video on YouTube  
+Searches YouTubeCommand - Find a video on YouTube  
 By default returns MessageEmbed. use `yts` to return just the URL and have in-client playback  
 **Aliases**: `yt`, `tube`, `yts`
 
 **Returns**: <code>MessageEmbed</code> - Title, Channel, Publication Date and Description of the video  
 **Category**: searches  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2012,11 +2223,13 @@ youtube Voldemort Origins of the heir
 <a name="module_twitchmonitors"></a>
 
 ## twitchmonitors ⇒ <code>Message</code>
-Configure which streamers to monitor  
+Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor  
 **Aliases**: `monitors`, `monitor`, `twitchmonitor`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: streamwatch  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2029,11 +2242,13 @@ twitchmonitors techagent favna
 <a name="module_twitchoutput"></a>
 
 ## twitchoutput ⇒ <code>Message</code>
-Configures the channel in which twitch notifications are send  
+Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send  
 **Aliases**: `output`, `twitchout`, `twitchchannel`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: streamwatch  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2046,11 +2261,13 @@ twitchoutput #twitch-notifications
 <a name="module_twitchtoggle"></a>
 
 ## twitchtoggle ⇒ <code>Message</code>
-Killswitch for Twitch notifications  
-**Aliases**:
+Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications  
+**Aliases**: `twitchcon`, `twitchoff`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: streamwatch  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2064,20 +2281,24 @@ twitchtoggle enable
 <a name="module_groups"></a>
 
 ## groups ⇒ <code>Message</code>
-Shows all command groups  
+Command-Management GroupsCommand - Shows all command groups  
 **Aliases**: `list-groups`, `show-groups`, `listgroups`, `showgroups`
 
 **Returns**: <code>Message</code> - Reply message list of groups  
-**Category**: Command-Management
+**Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 <a name="module_enable"></a>
 
 ## enable ⇒ <code>Message</code>
-Enables a command or command group  
+Command-Management EnableCommand - Enables a command or command group  
 **Aliases**: `enable-command`, `cmd-on`, `command-on`, `enablecommand`, `cmdon`, `commandon`
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2091,11 +2312,13 @@ enable userinfo
 <a name="module_disable"></a>
 
 ## disable ⇒ <code>Message</code>
-Disables a command or command group  
+Command-Management DisableCommand - Disables a command or command group  
 **Aliases**: `disable-command`, `cmd-off`, `command-off`, `disablecommand`, `cmdoff`, `commandoff`
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2109,11 +2332,13 @@ disable userinfo
 <a name="module_reload"></a>
 
 ## reload ⇒ <code>Message</code>
-Reloads a command or command group  
+Command-Management ReloadCommand - Reloads a command or command group  
 **Aliases**: `reload-command`, `reloadcommand`
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2127,11 +2352,13 @@ reload userinfo
 <a name="module_load"></a>
 
 ## load ⇒ <code>Message</code>
-Loads a new command  
+Command-Management LoadCommand - Loads a new command  
 **Aliases**: `load-command`, `loadcommand`
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2145,11 +2372,13 @@ load searches:github
 <a name="module_unload"></a>
 
 ## unload ⇒ <code>Message</code>
-Unloads a command  
+Command-Management UnloadCommand - Unloads a command  
 **Aliases**: `unload-command`, `unloadcommand`
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |

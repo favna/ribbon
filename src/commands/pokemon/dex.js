@@ -24,9 +24,11 @@
  */
 
 /**
- * Gets information about a Pokémon from Dexter  
+ * @file Pokémon DexCommand - Gets information about a Pokémon from Dexter  
  * Note that different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
  * **Aliases**: `pokedex`, `dexfind`, `df`, `rotom`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category pokemon
  * @name dex
@@ -35,19 +37,17 @@
  * @returns {MessageEmbed} Lots of information about the pokemon
  */
 
-/* eslint-disable sort-vars, max-statements,complexity */
 const {MessageEmbed} = require('discord.js'),
   Matcher = require('did-you-mean'),
   commando = require('discord.js-commando'),
   dexEntries = require('../../data/dex/flavorText.json'),
+  path = require('path'),
   request = require('snekfetch'),
-  requireFromURL = require('require-from-url/sync'),
-  path = require('path'), 
+  requireFromURL = require('require-from-url/sync'), 
   {oneLine} = require('common-tags'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
-/* eslint-enable sort-vars */
 
-module.exports = class dexCommand extends commando.Command {
+module.exports = class DexCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'dex',
@@ -149,6 +149,7 @@ module.exports = class dexCommand extends commando.Command {
     }
   }
 
+  /* eslint-disable max-statements, complexity */
   async run (msg, args) {
     const aliases = await this.fetchAliases(),
       dex = await this.fetchDex(),

@@ -24,7 +24,9 @@
  */
 
 /**
- * Owners only - posts current guild count to discordbotlist  
+ * @file Owner DBPostCommand - Posts current guild count to discordbotlist  
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category owner
  * @name dbpost

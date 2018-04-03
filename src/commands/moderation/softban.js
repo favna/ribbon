@@ -24,9 +24,11 @@
  */
 
 /**
- * Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)  
+ * @file Moderation SoftbanCommand - Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)  
  * This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours  
  * **Aliases**: `sb`, `sban`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name softban
@@ -42,7 +44,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class softbanCommand extends commando.Command {
+module.exports = class SoftbanCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'softban',

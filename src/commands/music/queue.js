@@ -24,9 +24,12 @@
  */
 
 /**
- * Shows the current queue of songs  
+ * @file Music ViewQueueCommand - Shows the current queue of songs  
  * Songs are paginated in sets of 5  
  * **Aliases**: `songs`, `song-list`, `list`, `listqueue`
+ * **Aliases**: `bal`, `cash`, `balance`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name queue

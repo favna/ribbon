@@ -24,9 +24,11 @@
  */
 
 /**
- * Get the current weather forecast in any city  
+ * @file Extra Weather - Get the current weather forecast in any city  
  * Potentially you'll have to specify city if the city is in multiple countries, i.e. `weather amsterdam` will not be the same as `weather amsterdam missouri`  
  * **Aliases**: `temp`, `forecast`, `fc`, `wth`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name weather
@@ -41,7 +43,7 @@ const {MessageEmbed} = require('discord.js'),
   weather = require('yahoo-weather'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class weatherCommand extends commando.Command {
+module.exports = class WeatherCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'weather',

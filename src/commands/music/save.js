@@ -24,8 +24,10 @@
  */
 
 /**
- * DMs the 10 upcoming songs from the queue to the user
+ * @file Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user
  * **Aliases**: `save-songs`, `save-song-list`, `ss`, `savequeue`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name save
@@ -39,7 +41,7 @@ const commando = require('discord.js-commando'),
   {deleteCommandMessages} = require('../../util.js'),
   {oneLine, stripIndents} = require('common-tags');
 
-module.exports = class saveQueueCommand extends commando.Command {
+module.exports = class SaveQueueCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'save',

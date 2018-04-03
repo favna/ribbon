@@ -24,9 +24,11 @@
  */
 
 /**
- * Create zalgo-fied text from your input  
+ * @file Extra Zalgo - Create zalgo-fied text from your input  
  * First banishes any existing zalgo to ensure proper result  
  * **Aliases**: `trash`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name zalgo

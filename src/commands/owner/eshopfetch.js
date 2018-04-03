@@ -24,7 +24,10 @@
  */
 
 /**
- * Fetch the latest data for the eshop command  
+ * @file Owner EShopFetchCommand - Fetch the latest data for the eshop command  
+ * **Aliases**: `bal`, `cash`, `balance`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category owner
  * @name eshopfetch
@@ -37,7 +40,7 @@ const commando = require('discord.js-commando'),
   path = require('path'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class EshopFetchCommand extends commando.Command {
+module.exports = class EShopFetchCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'eshopfetch',

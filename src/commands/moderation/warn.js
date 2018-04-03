@@ -24,9 +24,11 @@
  */
 
 /**
- * Gives a member warning points  
+ * @file Moderation WarnCommand - Gives a member warning points  
  * Please note that the bot will not auto ban when the member has a certain amount of points!
  * **Aliases**: `warning`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name warn
@@ -45,7 +47,7 @@ const commando = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class warnCommand extends commando.Command {
+module.exports = class WarnCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'warn',

@@ -24,8 +24,10 @@
  */
 
 /**
- * Gets information about the current server  
+ * @file Info ServerInfoCommand - Gets information about the current server  
  * **Aliases**: `serverinfo`, `sinfo`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @license GPL-3.0-or-later
  * @module
  * @category info
  * @name server
@@ -37,7 +39,7 @@ const {MessageEmbed} = require('discord.js'),
   moment = require('moment'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class serverInfoCommand extends commando.Command {
+module.exports = class ServerInfoCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'server',
