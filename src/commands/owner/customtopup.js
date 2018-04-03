@@ -85,7 +85,7 @@ module.exports = class CustomTopUpCommand extends commando.Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'), {'cached': true});
+    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
     sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${args.player.id}";`).then((rows) => {
       if (!rows) {
