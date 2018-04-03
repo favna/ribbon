@@ -34,12 +34,15 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
+  Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
-  path = require('path'),
-  sql = require('sqlite'), 
-  {oneLine, stripIndents} = require('common-tags'), 
+  path = require('path'), 
+  {
+    oneLine,
+    stripIndents
+  } = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class ChipsCommand extends commando.Command {
@@ -58,14 +61,48 @@ module.exports = class ChipsCommand extends commando.Command {
     });
   }
 
+  /* eslint-disable multiline-comment-style, lines-around-comment, one-var, quote-props*/
+
   run (msg) {
-    const balEmbed = new MessageEmbed();
+    const balEmbed = new MessageEmbed(),
+      conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3')),
+      query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?`).get(msg.author.id);
 
-    balEmbed
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-      .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
+    if (query) {
+      const topupdate = moment(query.lasttopup).add(24, 'hours'),
+        dura = moment.duration(topupdate.diff()); // eslint-disable-line sort-vars
 
+      balEmbed
+        .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png')
+        .setDescription(stripIndents `**Balance**
+          ${query.balance}
+          **Daily Reset**
+          ${!(dura._milliseconds <= 0) ? dura.format('[in] HH[ hour(s) and ]mm[ minute(s)]') : 'Right now!'}`);
+
+      deleteCommandMessages(msg, this.client);
+
+      return msg.embed(balEmbed);
+    }
+
+    try {
+      console.log('in the try');
+      const insert = conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date)`);
+
+      insert.run({
+        userid: msg.author.id,
+        balance: '500',
+        date: moment().format('YYYY-MM-DD HH:mm')
+      });
+      console.log('after run');
+    } catch (e) {
+      return console.error(e);
+    }
+
+    return msg.say('oops error');
+
+    /*
     sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
     sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
@@ -76,7 +113,6 @@ module.exports = class ChipsCommand extends commando.Command {
         500
         **Daily Reset**
         in 24 hours`);
-
       } else if (!rows && !global.casinoHasRan) {
         global.casinoHasRan = true;
         
@@ -120,6 +156,6 @@ module.exports = class ChipsCommand extends commando.Command {
         deleteCommandMessages(msg, this.client);
 
         return msg.embed(balEmbed);
-      });
+      });*/
   }
 };

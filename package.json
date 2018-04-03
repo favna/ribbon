@@ -33,6 +33,7 @@
     "node": ">=8.0.0 <9.0"
   },
   "dependencies": {
+    "better-sqlite3": "^4.1.0",
     "booru": "0.4.0",
     "bufferutil": "^3.0.3",
     "canvas": "Automattic/node-canvas#v1.x",
@@ -66,7 +67,7 @@
     "slot-machine": "^2.1.0",
     "snekfetch": "3.6.4",
     "spotify-web-api-node": "3.0.0",
-    "sqlite": "^2.8.0",
+    "sqlite": "^2.9.1",
     "steamapi": "2.0.2",
     "to-zalgo": "^1.0.1",
     "winston": "2.4.1",
@@ -78,6 +79,8 @@
   },
   "devDependencies": {
     "eslint": "4.19.1",
+    "node-gyp": "^3.6.2",
+    "node-pre-gyp": "^0.9.0",
     "tap-summary": "^4.0.0",
     "tape": "4.9.0"
   }

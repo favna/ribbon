@@ -24,19 +24,18 @@
  */
 
 /**
- * Gamble your chips in a coin flip  
- * Payout is 1:2  
- * **Aliases**: `flip`, `cflip`
+ * Gamble your chips at the slot machine  
+ * **Aliases**: `slot`, `fruits`
  * @module
  * @category casino
- * @name coin
- * @example coin 10 heads
- * @param {number} AmountOfChips Amount of chips you want to gamble
- * @param {string} CoinSide The side of the coin you want to bet on
- * @returns {MessageEmbed} Outcome of the coin flip
+ * @name slots
+ * @example slots 5
+ * @param {number} ChipsAmount The amount of chips you want to gamble
+ * @returns {MessageEmbed} Outcome of the spin
  */
 
-const {MessageEmbed} = require('discord.js'),
+const {MessageEmbed} = require('discord.js'), 
+  {SlotMachine, SlotSymbol} = require('slot-machine'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
   path = require('path'),
@@ -44,16 +43,16 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class CoinCommand extends commando.Command {
+module.exports = class SlotsCommand extends commando.Command {
   constructor (client) {
     super(client, {
-      'name': 'coin',
-      'memberName': 'coin',
+      'name': 'slots',
+      'memberName': 'slots',
       'group': 'casino',
-      'aliases': ['flip', 'cflip'],
-      'description': 'Gamble your chips in a coin flip',
-      'format': 'AmountOfChips CoinSide',
-      'examples': ['coin 50 heads'],
+      'aliases': ['slot', 'fruits'],
+      'description': 'Gamble your chips at the slot machine',
+      'format': 'AmountOfChips',
+      'examples': ['slots 50'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,
@@ -65,25 +64,11 @@ module.exports = class CoinCommand extends commando.Command {
           'prompt': 'How many chips do you want to gamble?',
           'type': 'integer',
           'validate': (chips) => {
-            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 0 && chips < 10000) {
+            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 1 && chips < 10000) {
               return true;
             }
 
-            return 'Chips amount has to be a number between 1 and 10000';
-          }
-        },
-        {
-          'key': 'side',
-          'prompt': 'What side will the coin land on?',
-          'type': 'string',
-          'validate': (side) => {
-            const validSides = ['heads', 'head', 'tails', 'tail'];
-
-            if (validSides.includes(side.toLowerCase())) {
-              return true;
-            }
-
-            return `Has to be either \`${validSides[0]}\` or \`${validSides[1]}\``;
+            return 'Reply with a chips amount has to be a number between 1 and 10000. Example: `10`';
           }
         }
       ]
@@ -91,9 +76,9 @@ module.exports = class CoinCommand extends commando.Command {
   }
 
   run (msg, args) {
-    const coinEmbed = new MessageEmbed();
+    const slotEmbed = new MessageEmbed();
 
-    coinEmbed
+    slotEmbed
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
@@ -113,36 +98,59 @@ module.exports = class CoinCommand extends commando.Command {
         return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');
       }
 
-      if (args.side === 'head') args.side = 'heads'; // eslint-disable-line curly
-      if (args.side === 'tail') args.side = 'tails'; // eslint-disable-line curly
+      const bar = new SlotSymbol('bar', {
+          'display': '<:bar:430366693630672916>',
+          'points': 100,
+          'weight': 30
+        }),
+        cherry = new SlotSymbol('cherry', {
+          'display': '<:cherry:430366794230923266>',
+          'points': 8,
+          'weight': 100
+        }),
+        diamond = new SlotSymbol('diamond', {
+          'display': '<:diamond:430366803789873162>',
+          'points': 30,
+          'weight': 40
+        }),
+        lemon = new SlotSymbol('lemon', {
+          'display': '<:lemon:430366830784413727>',
+          'points': 15,
+          'weight': 80
+        }),
+        seven = new SlotSymbol('seven', {
+          'display': '<:seven:430366839735058443>',
+          'points': 300,
+          'weight': 15
+        });
 
-      const flip = Math.round(Number(Math.random())),
+      const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven]), // eslint-disable-line one-var
         prevBal = rows.balance,
-        side = args.side === 'heads' ? 0 : 1;
+        results = machine.play();
 
-      rows.balance -= args.chips;
+      results.totalPoints !== 0 ? rows.balance += results.totalPoints - args.chips : rows.balance -= args.chips;
 
-      if (flip === side) {
-        rows.balance += args.chips * 2;
-      }
-
-      rows.balance = Math.round(rows.balance);
+      console.log(stripIndents `Slots has a winner!
+      Server: ${msg.guild.name} (${msg.guild.id})
+      Author: ${msg.author.tag} (${msg.author.id})
+      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Total Points won: ${results.totalPoints}`);
 
       sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
 
-      coinEmbed
-        .setTitle(`${msg.author.tag} ${flip === side ? 'won' : 'lost'} ${args.chips} chips`)
+      slotEmbed
+        .setTitle(`${msg.author.tag} ${results.totalPoints === 0 ? `lost ${args.chips}` : `won ${(rows.balance - args.chips) + results.totalPoints}`} chips`)
         .addField('Previous Balance', prevBal, true)
         .addField('New Balance', rows.balance, true)
-        .setImage(flip === 0 ? 'https://favna.xyz/images/ribbonhost/coinheads.png' : 'https://favna.xyz/images/ribbonhost/cointails.png');
+        .setDescription(results.visualize());
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(coinEmbed);
+      return msg.embed(slotEmbed);
     })
       .catch((e) => {
         if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone making a casino coinflip!
+          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone playing the slot machine!
               Server: ${msg.guild.name} (${msg.guild.id})
               Author: ${msg.author.tag} (${msg.author.id})
               Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}

@@ -24,15 +24,16 @@
  */
 
 /**
- * Give another player some chips  
- * **Aliases**: `donate`
+ * Gamble your chips in a coin flip  
+ * Payout is 1:2  
+ * **Aliases**: `flip`, `cflip`
  * @module
  * @category casino
- * @name give
- * @example give Favna 10
- * @param {member} AnyMember The member you want to give some chips
- * @param {number} ChipsAmount The amount of chips you want to give
- * @returns {MessageEmbed} Changed balances of the two players
+ * @name coin
+ * @example coin 10 heads
+ * @param {number} AmountOfChips Amount of chips you want to gamble
+ * @param {string} CoinSide The side of the coin you want to bet on
+ * @returns {MessageEmbed} Outcome of the coin flip
  */
 
 const {MessageEmbed} = require('discord.js'),
@@ -43,16 +44,16 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class GiveCommand extends commando.Command {
+module.exports = class CoinCommand extends commando.Command {
   constructor (client) {
     super(client, {
-      'name': 'give',
-      'memberName': 'give',
+      'name': 'coin',
+      'memberName': 'coin',
       'group': 'casino',
-      'aliases': ['donate'],
-      'description': 'Give another player some chips',
-      'format': 'AnyMember ChipsAmount',
-      'examples': ['give GuyInShroomSuit 50'],
+      'aliases': ['flip', 'cflip'],
+      'description': 'Gamble your chips in a coin flip',
+      'format': 'AmountOfChips CoinSide',
+      'examples': ['coin 50 heads'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,
@@ -60,20 +61,29 @@ module.exports = class GiveCommand extends commando.Command {
       },
       'args': [
         {
-          'key': 'player',
-          'prompt': 'Which player should I give them to?',
-          'type': 'member'
-        },
-        {
           'key': 'chips',
-          'prompt': 'How many chips do you want to give?',
+          'prompt': 'How many chips do you want to gamble?',
           'type': 'integer',
           'validate': (chips) => {
-            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 0 && chips < 10000) {
+            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 1 && chips < 10000) {
               return true;
             }
 
             return 'Chips amount has to be a number between 1 and 10000';
+          }
+        },
+        {
+          'key': 'side',
+          'prompt': 'What side will the coin land on?',
+          'type': 'string',
+          'validate': (side) => {
+            const validSides = ['heads', 'head', 'tails', 'tail'];
+
+            if (validSides.includes(side.toLowerCase())) {
+              return true;
+            }
+
+            return `Has to be either \`${validSides[0]}\` or \`${validSides[1]}\``;
           }
         }
       ]
@@ -81,65 +91,61 @@ module.exports = class GiveCommand extends commando.Command {
   }
 
   run (msg, args) {
-    const giveEmbed = new MessageEmbed();
+    const coinEmbed = new MessageEmbed();
 
-    giveEmbed
-      .setTitle('Transaction Log')
+    coinEmbed
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
-    sql.all(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}" OR userID = "${args.player.id}";`).then((rows) => {
+    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
       if (!rows && global.casinoHasRan) {
-        return msg.reply(`looks like there are no players in this server yet. Run \`${msg.guild.commandPrefix}chips\` to be the first`);
+        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
       } else if (!rows && !global.casinoHasRan) {
         global.casinoHasRan = true;
         
         return msg.reply(oneLine `some stupid SQLite mistake occured after the bot was restarted.
         Run that command again and it should work properly. No I cannot change this for as far as I know, don\'t ask`);
       }
-      if (rows.length !== 2) {
-        return msg.reply(`looks like either you or the person you want to donate to has no balance yet. Use \`${msg.guild.commandPrefix}chips\` to get some`);
+      if (args.chips > rows.balance) {
+        return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');
       }
 
-      let giverEntry = 0,
-        recieverEntry = 0;
+      if (args.side === 'head') args.side = 'heads'; // eslint-disable-line curly
+      if (args.side === 'tail') args.side = 'tails'; // eslint-disable-line curly
 
-      for (const row in rows) {
-        if (rows[row].userID === msg.author.id) {
-          giverEntry = row;
-        }
-        if (rows[row].userID === args.player.id) {
-          recieverEntry = row;
-        }
+      const flip = Math.round(Number(Math.random())),
+        prevBal = rows.balance,
+        side = args.side === 'heads' ? 0 : 1;
+
+      rows.balance -= args.chips;
+
+      if (flip === side) {
+        rows.balance += args.chips * 2;
       }
 
-      const oldGiverBalance = rows[giverEntry].balance,
-        oldRecieverEntry = rows[recieverEntry].balance;
+      rows.balance = Math.round(rows.balance);
 
-      rows[giverEntry].balance -= args.chips;
-      rows[recieverEntry].balance += args.chips;
+      sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
 
-      sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${rows[giverEntry].userID}";`, [rows[giverEntry].balance]);
-      sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${rows[recieverEntry].userID}";`, [rows[recieverEntry].balance]);
-
-      giveEmbed
-        .addField(msg.member.displayName, `${oldGiverBalance} ➡ ${rows[giverEntry].balance}`)
-        .addField(args.player.displayName, `${oldRecieverEntry} ➡ ${rows[recieverEntry].balance}`);
+      coinEmbed
+        .setTitle(`${msg.author.tag} ${flip === side ? 'won' : 'lost'} ${args.chips} chips`)
+        .addField('Previous Balance', prevBal, true)
+        .addField('New Balance', rows.balance, true)
+        .setImage(flip === 0 ? 'https://favna.xyz/images/ribbonhost/coinheads.png' : 'https://favna.xyz/images/ribbonhost/cointails.png');
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(giveEmbed);
+      return msg.embed(coinEmbed);
     })
       .catch((e) => {
         if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured while someone was trying to donate some chips!
+          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone making a casino coinflip!
               Server: ${msg.guild.name} (${msg.guild.id})
               Author: ${msg.author.tag} (${msg.author.id})
               Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-              Amount of chips: ${args.chips}
-              Target member: ${args.player.user.tag} (${args.player.id})
               Error Message:`} ${e}`);
 
           return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.

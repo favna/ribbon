@@ -24,14 +24,15 @@
  */
 
 /**
- * Gamble your chips at the wheel of fortune  
- * **Aliases**: `wheel`, `wof`
+ * Give another player some chips  
+ * **Aliases**: `donate`
  * @module
  * @category casino
- * @name wheeloffortune
- * @example wof 5
- * @param {number} ChipsAmount The amount of chips you want to gamble
- * @returns {MessageEmbed} Outcome of the game
+ * @name give
+ * @example give Favna 10
+ * @param {member} AnyMember The member you want to give some chips
+ * @param {number} ChipsAmount The amount of chips you want to give
+ * @returns {MessageEmbed} Changed balances of the two players
  */
 
 const {MessageEmbed} = require('discord.js'),
@@ -42,16 +43,16 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class WheelOfFortuneCommand extends commando.Command {
+module.exports = class GiveCommand extends commando.Command {
   constructor (client) {
     super(client, {
-      'name': 'wheeloffortune',
-      'memberName': 'wheeloffortune',
+      'name': 'give',
+      'memberName': 'give',
       'group': 'casino',
-      'aliases': ['wheel', 'wof'],
-      'description': 'Gamble your chips iat the wheel of fortune',
-      'format': 'AmountOfChips',
-      'examples': ['wof 50'],
+      'aliases': ['donate'],
+      'description': 'Give another player some chips',
+      'format': 'AnyMember ChipsAmount',
+      'examples': ['give GuyInShroomSuit 50'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,
@@ -59,11 +60,16 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
       },
       'args': [
         {
+          'key': 'player',
+          'prompt': 'Which player should I give them to?',
+          'type': 'member'
+        },
+        {
           'key': 'chips',
-          'prompt': 'How many chips do you want to gamble?',
+          'prompt': 'How many chips do you want to give?',
           'type': 'integer',
           'validate': (chips) => {
-            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 0 && chips < 10000) {
+            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 1 && chips < 10000) {
               return true;
             }
 
@@ -75,68 +81,69 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
   }
 
   run (msg, args) {
-    const arrowmojis = ['⬆', '↖', '⬅', '↙', '⬇', '↘', '➡', '↗'],
-      multipliers = ['0.1', '0.2', '0.3', '0.5', '1.2', '1.5', '1.7', '2.4'],
-      spin = Math.floor(Math.random() * multipliers.length),
-      wofEmbed = new MessageEmbed();
+    const giveEmbed = new MessageEmbed();
 
-    wofEmbed
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
+    giveEmbed
+      .setTitle('Transaction Log')
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
-    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
+    sql.all(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}" OR userID = "${args.player.id}";`).then((rows) => {
       if (!rows && global.casinoHasRan) {
-        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
+        return msg.reply(`looks like there are no players in this server yet. Run \`${msg.guild.commandPrefix}chips\` to be the first`);
       } else if (!rows && !global.casinoHasRan) {
         global.casinoHasRan = true;
         
         return msg.reply(oneLine `some stupid SQLite mistake occured after the bot was restarted.
         Run that command again and it should work properly. No I cannot change this for as far as I know, don\'t ask`);
       }
-      if (args.chips > rows.balance) {
-        return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');
+      if (rows.length !== 2) {
+        return msg.reply(`looks like either you or the person you want to donate to has no balance yet. Use \`${msg.guild.commandPrefix}chips\` to get some`);
       }
 
-      const prevBal = rows.balance;
+      let giverEntry = 0,
+        recieverEntry = 0;
 
-      rows.balance -= args.chips;
-      rows.balance += args.chips * multipliers[spin];
-      rows.balance = Math.round(rows.balance);
+      for (const row in rows) {
+        if (rows[row].userID === msg.author.id) {
+          giverEntry = row;
+        }
+        if (rows[row].userID === args.player.id) {
+          recieverEntry = row;
+        }
+      }
 
-      sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
+      const oldGiverBalance = rows[giverEntry].balance,
+        oldRecieverEntry = rows[recieverEntry].balance;
 
-      wofEmbed
-        .setTitle(`${msg.author.tag} ${multipliers[spin] < 1 ? `lost ${args.chips - (args.chips * multipliers[spin])}` : `won ${Math.round((args.chips * multipliers[spin]) - args.chips)}`} chips`)
-        .addField('Previous Balance', prevBal, true)
-        .addField('New Balance', rows.balance, true)
-        .setDescription(`
-『${multipliers[1]}』   『${multipliers[0]}』   『${multipliers[7]}』
+      rows[giverEntry].balance -= args.chips;
+      rows[recieverEntry].balance += args.chips;
 
-『${multipliers[2]}』      ${arrowmojis[spin]}        『${multipliers[6]}』
+      sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${rows[giverEntry].userID}";`, [rows[giverEntry].balance]);
+      sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${rows[recieverEntry].userID}";`, [rows[recieverEntry].balance]);
 
-『${multipliers[3]}』   『${multipliers[4]}』   『${multipliers[5]}』
-    `);
+      giveEmbed
+        .addField(msg.member.displayName, `${oldGiverBalance} ➡ ${rows[giverEntry].balance}`)
+        .addField(args.player.displayName, `${oldRecieverEntry} ➡ ${rows[recieverEntry].balance}`);
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(wofEmbed);
+      return msg.embed(giveEmbed);
     })
       .catch((e) => {
         if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone spinning the Wheel of Fortune!
-			Server: ${msg.guild.name} (${msg.guild.id})
-			Author: ${msg.author.tag} (${msg.author.id})
-            Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-            Input: ${args.chips}
-            Spin: ${spin}
-            Multiplier: ${multipliers[spin]}
-			Error Message:`} ${e}`);
+          console.error(`	 ${stripIndents `Fatal SQL Error occured while someone was trying to donate some chips!
+              Server: ${msg.guild.name} (${msg.guild.id})
+              Author: ${msg.author.tag} (${msg.author.id})
+              Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+              Amount of chips: ${args.chips}
+              Target member: ${args.player.user.tag} (${args.player.id})
+              Error Message:`} ${e}`);
 
           return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+                You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
 
         deleteCommandMessages(msg, this.client);
