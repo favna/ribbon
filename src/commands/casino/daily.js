@@ -33,10 +33,10 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
+  Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
   path = require('path'),
-  sql = require('sqlite'), 
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
@@ -57,7 +57,9 @@ module.exports = class DailyCommand extends commando.Command {
   }
 
   run (msg) {
-    const balEmbed = new MessageEmbed();
+    const balEmbed = new MessageEmbed(),
+      conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
+    
     let returnMsg = '';
 
     balEmbed
@@ -65,75 +67,74 @@ module.exports = class DailyCommand extends commando.Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'));
+    try {
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?`).get(msg.author.id);
 
-    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
-      if (!rows && global.casinoHasRan) {
-        sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?);`, [msg.author.id, 500, moment().format('YYYY-MM-DD HH:mm')]);
-        balEmbed.setDescription(stripIndents `
-        **New Balance**
-        500
-        **Daily Reset**
-        in 24 hours`);
-        returnMsg = 'You didn\'t have any chips yet so I added your very first';
-      } else if (!rows && !global.casinoHasRan) {
-        global.casinoHasRan = true;
-        
-        return msg.reply(oneLine `some stupid SQLite mistake occured after the bot was restarted.
-        Run that command again and it should work properly. No I cannot change this for as far as I know, don\'t ask`);
-      } else {
-        console.log(rows);
-        const topupdate = moment(rows.lasttopup).add(24, 'hours'),
+      if (query) {
+        const topupdate = moment(query.lasttopup).add(24, 'hours'),
           dura = moment.duration(topupdate.diff()); // eslint-disable-line sort-vars
 
         let chipStr = '',
           resetStr = '';
 
         if (dura.asHours() <= 0) {
-          sql.run(`UPDATE "${msg.guild.id}" SET balance=?, lasttopup=? WHERE userID="${msg.author.id}";`, [rows.balance + 500, moment().format('YYYY-MM-DD HH:mm')]);
-          chipStr = `${rows.balance + 500}`;
+          conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance, lasttopup=$date WHERE userID="${msg.author.id}";`).run({
+            'balance': query.balance + 500,
+            'date': moment().format('YYYY-MM-DD HH:mm')
+          });
+
+          chipStr = `${query.balance + 500}`;
           resetStr = 'in 24 hours';
           returnMsg = 'Topped up your balance with your daily 500 chips!';
         } else {
-          chipStr = rows.balance;
+          chipStr = query.balance;
           resetStr = dura.format('[in] HH[ hour(s) and ]mm[ minute(s)]');
           returnMsg = 'Sorry but you are not due to get your daily chips yet, here is your current balance';
         }
 
         balEmbed.setDescription(stripIndents `**Balance**
-          ${chipStr}
-          **Daily Reset**
-          ${resetStr}`);
-      }
-
-      deleteCommandMessages(msg, this.client);
-
-      return msg.embed(balEmbed, returnMsg);
-    })
-      .catch((e) => {
-        if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured while getting someones balance!
-			Server: ${msg.guild.name} (${msg.guild.id})
-			Author: ${msg.author.tag} (${msg.author.id})
-			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-			Error Message:`} ${e}`);
-
-          return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
-        }
-        sql.run(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).then(() => {
-          sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?);`, [msg.author.id, 500, moment().format('YYYY-MM-DD HH:mm')]);
-        });
-
-        balEmbed.setDescription(stripIndents `
-              **Balance**
-              500
-              **Daily Reset**
-              in 24 hours`);
+        ${chipStr}
+        **Daily Reset**
+        ${resetStr}`);
 
         deleteCommandMessages(msg, this.client);
 
-        return msg.embed(balEmbed);
+        return msg.embed(balEmbed, returnMsg);
+      }
+      conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date)`).run({
+        'userid': msg.author.id,
+        'balance': '500',
+        'date': moment().format('YYYY-MM-DD HH:mm')
       });
+    } catch (e) {
+      if (/(?:no such table)/i.test(e.toString())) {
+        conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
+
+        conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date)`).run({
+          'userid': msg.author.id,
+          'balance': '500',
+          'date': moment().format('YYYY-MM-DD HH:mm')
+        });
+      } else {
+        console.error(`	 ${stripIndents `Fatal SQL Error occured while topping up someones balance!
+        Server: ${msg.guild.name} (${msg.guild.id})
+        Author: ${msg.author.tag} (${msg.author.id})
+        Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        Error Message:`} ${e}`);
+
+        return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
+                You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+      }
+    }
+
+    balEmbed.setDescription(stripIndents `
+    **Balance**
+    500
+    **Daily Reset**
+    in 24 hours`);
+
+    deleteCommandMessages(msg, this.client);
+
+    return msg.embed(balEmbed, 'You didn\'t have any chips yet so here\'s your first 500. Spend them wisely!');
   }
 };

@@ -284,6 +284,7 @@ class Ribbon {
     this.client.registry
       .registerGroups([
         ['games', 'Games - Play some games'],
+        ['casino', 'Casino - Gain and gamble points'], 
         ['info', 'Info - Discord info at your fingertips'],
         ['music', 'Music - Let the DJ out'],
         ['searches', 'Searches - Browse the web and find results'],
