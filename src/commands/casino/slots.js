@@ -62,7 +62,14 @@ module.exports = class SlotsCommand extends commando.Command {
         {
           'key': 'chips',
           'prompt': 'How many chips do you want to gamble?',
-          'type': 'integer'
+          'type': 'integer',
+          'validate': (chips) => {
+            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 0 && chips < 10000) {
+              return true;
+            }
+
+            return 'Chips amount has to be a number between 1 and 10000';
+          }
         }
       ]
     });
