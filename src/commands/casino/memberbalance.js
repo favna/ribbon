@@ -71,6 +71,10 @@ module.exports = class MemberBalanceCommand extends commando.Command {
     });
   }
 
+  /**
+ * @todo Rework Casino MemberBalance
+ * @body Casino MemberBalance needs to be reworked to use [better-sqlite3](https://github.com/JoshuaWise/better-sqlite3) instead of [node-sqlite](https://github.com/kriasoft/node-sqlite)
+ */
   run (msg, args) {
     return msg.reply('Casino MemberBalance is currently disabled while being reworked. Please standby');
 
