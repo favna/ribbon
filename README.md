@@ -1,7 +1,6 @@
 # Ribbon
 
-[![license](https://img.shields.io/github/license/Favna/Ribbon.svg?style=flat-square)](https://github.com/Favna/Ribbon/blob/master/LICENCE.md) [![CircleCI](https://circleci.com/gh/Favna/Ribbon.svg?style=shield&circle-token=d323db075442300cd78f0b28cd57fa5c3efced21)](https://circleci.com/gh/Favna/Ribbon/tree/master) [![NodeV](https://img.shields.io/badge/Node-v8.9.0-FF0000.svg?style=flat-square)](https://nodejs.org/en/download/LTS/) [![Donate](https://img.shields.io/badge/Donate-PayPal-547ab8.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GY3CFCL25HQNJ) [![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](https://twitter.com/Favna_)
-
+[![status](https://discordbots.org/api/widget/status/376520643862331396.svg)](https://discord.now.sh/376520643862331396?p8) [![license](https://img.shields.io/github/license/Favna/Ribbon.svg?style=flat-square)](https://github.com/Favna/Ribbon/blob/master/LICENCE.md) [![CircleCI](https://circleci.com/gh/Favna/Ribbon.svg?style=shield&circle-token=d323db075442300cd78f0b28cd57fa5c3efced21)](https://circleci.com/gh/Favna/Ribbon/tree/master) [![NodeV](https://img.shields.io/badge/Node-v8.11.1-FF0000.svg?style=flat-square)](https://nodejs.org/en/download/LTS/) [![Donate](https://img.shields.io/badge/Donate-PayPal-547ab8.svg?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=GY3CFCL25HQNJ) [![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](https://twitter.com/Favna_)
 
 This it the source for Ribbon, a discord bot created by Favna. If you have any questions or concerns please join my server:
 
@@ -47,3 +46,6 @@ I accept donations through PayPal, BitCoin, Ethereum and LiteCoin. You can use t
 <img src="https://favna.xyz/images/ribbonhost/bitcoindonate.png">|<img src="https://favna.xyz/images/ribbonhost/bitcoinqr.png" width="128">|<a href="bitcoin:1E643TNif2MTh75rugepmXuq35Tck4TnE5?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot">1E643TNif2MTh75rugepmXuq35Tck4TnE5</a>|
 <img src="https://favna.xyz/images/ribbonhost/ethereumdonate.png">|<img src="https://favna.xyz/images/ribbonhost/ethereumqr.png" width="128">|<a href="ethereum:0xF653F666903cd8739030D2721bF01095896F5D6E?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot">0xF653F666903cd8739030D2721bF01095896F5D6E</a>|
 <img src="https://favna.xyz/images/ribbonhost/litecoindonate.png">|<img src="https://favna.xyz/images/ribbonhost/litecoinqr.png" width="128">|<a href="litecoin:LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6?amount=0.01&label=Favna%27%20Ribbon%20Discord%20Bot">LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6</a>|
+
+
+[![discordbot](https://discordbots.org/api/widget/376520643862331396.svg)](https://discordbots.org/bot/376520643862331396) 
