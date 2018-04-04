@@ -23,8 +23,6 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position, no-unused-vars*/
-
 /**
  * @file Casino SlotsCommand - Gamble your chips at the slot machine  
  * **Aliases**: `slot`, `fruits`
@@ -39,10 +37,10 @@
 
 const {MessageEmbed} = require('discord.js'), 
   {SlotMachine, SlotSymbol} = require('slot-machine'),
+  Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
   path = require('path'),
-  sql = require('sqlite'), 
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
@@ -78,100 +76,78 @@ module.exports = class SlotsCommand extends commando.Command {
     });
   }
 
-  /**
-   * @todo Rework Casino Slots
-   * @body Casino Slots needs to be reworked to use [better-sqlite3](https://github.com/JoshuaWise/better-sqlite3) instead of [node-sqlite](https://github.com/kriasoft/node-sqlite)
-   */
   run (msg, args) {
-    return msg.reply('Casino Slots is currently disabled while being reworked. Please standby');
+    const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3')),
+      slotEmbed = new MessageEmbed();
 
-    /*   const slotEmbed = new MessageEmbed();
+    slotEmbed
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-       slotEmbed
-         .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
-         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-         .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
+    try {
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?`).get(msg.author.id);
 
-       sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'));
+      if (query) {
+        if (args.chips > query.balance) {
+          return msg.reply(`you don\'t have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
+        }
 
-       sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
-         if (!rows && global.casinoHasRan) {
-           return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
-         } else if (!rows && !global.casinoHasRan) {
-           global.casinoHasRan = true;
-           
-           return msg.reply(oneLine `some stupid SQLite mistake occured after the bot was restarted.
-           Run that command again and it should work properly. No I cannot change this for as far as I know, don\'t ask`);
-         }
-         if (args.chips > rows.balance) {
-           return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');
-         }
+        const bar = new SlotSymbol('bar', {
+            'display': '<:bar:430366693630672916>',
+            'points': 100,
+            'weight': 30
+          }),
+          cherry = new SlotSymbol('cherry', {
+            'display': '<:cherry:430366794230923266>',
+            'points': 8,
+            'weight': 100
+          }),
+          diamond = new SlotSymbol('diamond', {
+            'display': '<:diamond:430366803789873162>',
+            'points': 30,
+            'weight': 40
+          }),
+          lemon = new SlotSymbol('lemon', {
+            'display': '<:lemon:430366830784413727>',
+            'points': 15,
+            'weight': 80
+          }),
+          seven = new SlotSymbol('seven', {
+            'display': '<:seven:430366839735058443>',
+            'points': 300,
+            'weight': 15
+          });
 
-         const bar = new SlotSymbol('bar', {
-             'display': '<:bar:430366693630672916>',
-             'points': 100,
-             'weight': 30
-           }),
-           cherry = new SlotSymbol('cherry', {
-             'display': '<:cherry:430366794230923266>',
-             'points': 8,
-             'weight': 100
-           }),
-           diamond = new SlotSymbol('diamond', {
-             'display': '<:diamond:430366803789873162>',
-             'points': 30,
-             'weight': 40
-           }),
-           lemon = new SlotSymbol('lemon', {
-             'display': '<:lemon:430366830784413727>',
-             'points': 15,
-             'weight': 80
-           }),
-           seven = new SlotSymbol('seven', {
-             'display': '<:seven:430366839735058443>',
-             'points': 300,
-             'weight': 15
-           });
+        const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven]), // eslint-disable-line one-var
+          prevBal = query.balance,
+          results = machine.play();
 
-         const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven]), // eslint-disable-line one-var
-           prevBal = rows.balance,
-           results = machine.play();
+        results.totalPoints !== 0 ? query.balance += results.totalPoints - args.chips : query.balance -= args.chips;
 
-         results.totalPoints !== 0 ? rows.balance += results.totalPoints - args.chips : rows.balance -= args.chips;
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
 
-         console.log(stripIndents `Slots has a winner!
-         Server: ${msg.guild.name} (${msg.guild.id})
-         Author: ${msg.author.tag} (${msg.author.id})
-         Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-         Total Points won: ${results.totalPoints}`);
+        slotEmbed
+          .setTitle(`${msg.author.tag} ${results.totalPoints === 0 ? `lost ${args.chips}` : `won ${(query.balance - args.chips) + results.totalPoints}`} chips`)
+          .addField('Previous Balance', prevBal, true)
+          .addField('New Balance', query.balance, true)
+          .setDescription(results.visualize());
 
-         sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
+        deleteCommandMessages(msg, this.client);
 
-         slotEmbed
-           .setTitle(`${msg.author.tag} ${results.totalPoints === 0 ? `lost ${args.chips}` : `won ${(rows.balance - args.chips) + results.totalPoints}`} chips`)
-           .addField('Previous Balance', prevBal, true)
-           .addField('New Balance', rows.balance, true)
-           .setDescription(results.visualize());
+        return msg.embed(slotEmbed);
+      }
+      
+      return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
+    } catch (e) {
+      console.error(`	 ${stripIndents `Fatal SQL Error occured for someone playing the slot machine!
+      Server: ${msg.guild.name} (${msg.guild.id})
+      Author: ${msg.author.tag} (${msg.author.id})
+      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message:`} ${e}`);
 
-         deleteCommandMessages(msg, this.client);
-
-         return msg.embed(slotEmbed);
-       })
-         .catch((e) => {
-           if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-             console.error(`	 ${stripIndents `Fatal SQL Error occured for someone playing the slot machine!
-                 Server: ${msg.guild.name} (${msg.guild.id})
-                 Author: ${msg.author.tag} (${msg.author.id})
-                 Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-                 Error Message:`} ${e}`);
-
-             return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-                   You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
-           }
-
-           deleteCommandMessages(msg, this.client);
-
-           return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
-         });*/
+      return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
+              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+    }
   }
 };
