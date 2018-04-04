@@ -70,11 +70,11 @@ module.exports = class GiveCommand extends commando.Command {
           'prompt': 'How many chips do you want to give?',
           'type': 'integer',
           'validate': (chips) => {
-            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 1 && chips < 10000) {
+            if (/^[+]?\d+$/.test(chips) && chips >= 1 && chips <= 10000) {
               return true;
             }
 
-            return 'Chips amount has to be a number between 1 and 10000';
+            return 'Reply with a chips amount has to be a full number (no decimals) between 1 and 10000. Example: `10`';
           }
         }
       ]
@@ -118,8 +118,8 @@ module.exports = class GiveCommand extends commando.Command {
       query[giverEntry].balance -= args.chips;
       query[recieverEntry].balance += args.chips;
 
-      conn.prepare(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID=?`).run(query[giverEntry].balance, query[giverEntry].userID);
-      conn.prepare(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID=?`).run(query[recieverEntry].balance, query[recieverEntry].userID);
+      conn.prepare(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID=?;`).run(query[giverEntry].balance, query[giverEntry].userID);
+      conn.prepare(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID=?;`).run(query[recieverEntry].balance, query[recieverEntry].userID);
 
       giveEmbed
         .addField(msg.member.displayName, `${oldGiverBalance} ➡ ${query[giverEntry].balance}`)

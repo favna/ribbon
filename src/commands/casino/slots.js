@@ -65,11 +65,11 @@ module.exports = class SlotsCommand extends commando.Command {
           'prompt': 'How many chips do you want to gamble?',
           'type': 'integer',
           'validate': (chips) => {
-            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 1 && chips < 10000) {
+            if (/^[+]?\d+$/.test(chips) && chips >= 1 && chips <= 10000) {
               return true;
             }
 
-            return 'Reply with a chips amount has to be a number between 1 and 10000. Example: `10`';
+            return 'Reply with a chips amount has to be a full number (no decimals) between 1 and 10000. Example: `10`';
           }
         }
       ]
@@ -86,7 +86,7 @@ module.exports = class SlotsCommand extends commando.Command {
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {
-      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?`).get(msg.author.id);
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (query) {
         if (args.chips > query.balance) {
@@ -138,7 +138,7 @@ module.exports = class SlotsCommand extends commando.Command {
         return msg.embed(slotEmbed);
       }
       
-      return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
+      return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
     } catch (e) {
       console.error(`	 ${stripIndents `Fatal SQL Error occured for someone playing the slot machine!
       Server: ${msg.guild.name} (${msg.guild.id})

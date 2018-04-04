@@ -23,8 +23,6 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position, no-unused-vars*/
-
 /**
  * @file Casino MemberBalanceCommand - Retrieves the amount of chips another member has for the casino  
  * **Aliases**: `mbal`, `mcash`, `mbalance`, `mchips`
@@ -80,7 +78,7 @@ module.exports = class MemberBalanceCommand extends commando.Command {
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {
-      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?`).get(args.player.id);
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(args.player.id);
 
       if (query) {
         mbalEmbed.setDescription(stripIndents `

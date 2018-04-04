@@ -68,7 +68,7 @@ module.exports = class ChipsCommand extends commando.Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
     try {
-      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?`).get(msg.author.id);
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (query) {
         const topupdate = moment(query.lasttopup).add(24, 'hours'),
@@ -84,7 +84,7 @@ module.exports = class ChipsCommand extends commando.Command {
 
         return msg.embed(balEmbed);
       }
-      conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date)`).run({
+      conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
         'userid': msg.author.id,
         'balance': '500',
         'date': moment().format('YYYY-MM-DD HH:mm')
@@ -93,7 +93,7 @@ module.exports = class ChipsCommand extends commando.Command {
       if (/(?:no such table)/i.test(e.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
 
-        conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date)`).run({
+        conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
           'userid': msg.author.id,
           'balance': '500',
           'date': moment().format('YYYY-MM-DD HH:mm')

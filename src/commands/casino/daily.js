@@ -69,7 +69,7 @@ module.exports = class DailyCommand extends commando.Command {
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {
-      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?`).get(msg.author.id);
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (query) {
         const topupdate = moment(query.lasttopup).add(24, 'hours'),
@@ -84,7 +84,7 @@ module.exports = class DailyCommand extends commando.Command {
             'date': moment().format('YYYY-MM-DD HH:mm')
           });
 
-          chipStr = `${query.balance + 500}`;
+          chipStr = `${query.balance} ➡ ${query.balance + 500}`;
           resetStr = 'in 24 hours';
           returnMsg = 'Topped up your balance with your daily 500 chips!';
         } else {
@@ -93,7 +93,8 @@ module.exports = class DailyCommand extends commando.Command {
           returnMsg = 'Sorry but you are not due to get your daily chips yet, here is your current balance';
         }
 
-        balEmbed.setDescription(stripIndents `**Balance**
+        balEmbed.setDescription(stripIndents `
+        **Balance**
         ${chipStr}
         **Daily Reset**
         ${resetStr}`);
@@ -102,7 +103,7 @@ module.exports = class DailyCommand extends commando.Command {
 
         return msg.embed(balEmbed, returnMsg);
       }
-      conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date)`).run({
+      conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
         'userid': msg.author.id,
         'balance': '500',
         'date': moment().format('YYYY-MM-DD HH:mm')
@@ -111,7 +112,7 @@ module.exports = class DailyCommand extends commando.Command {
       if (/(?:no such table)/i.test(e.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
 
-        conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date)`).run({
+        conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
           'userid': msg.author.id,
           'balance': '500',
           'date': moment().format('YYYY-MM-DD HH:mm')

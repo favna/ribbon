@@ -67,11 +67,11 @@ module.exports = class CustomTopUpCommand extends commando.Command {
           'prompt': 'How many chips do you want to give?',
           'type': 'integer',
           'validate': (chips) => {
-            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips > 1 && chips < 1000000) {
+            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips >= 1 && chips <= 1000000) {
               return true;
             }
 
-            return 'Chips amount has to be a number between 1 and 10000';
+            return 'Reply with a chips amount has to be a full number (no decimals) between 1 and 10000. Example: `10`';
           }
         }
       ]
