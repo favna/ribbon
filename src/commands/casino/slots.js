@@ -36,12 +36,18 @@
  */
 
 const {MessageEmbed} = require('discord.js'), 
-  {SlotMachine, SlotSymbol} = require('slot-machine'),
+  {
+    SlotMachine,
+    SlotSymbol
+  } = require('slot-machine'),
   Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
-  path = require('path'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  path = require('path'), 
+  {
+    oneLine,
+    stripIndents
+  } = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class SlotsCommand extends commando.Command {
@@ -121,23 +127,34 @@ module.exports = class SlotsCommand extends commando.Command {
 
         const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven]), // eslint-disable-line one-var
           prevBal = query.balance,
-          results = machine.play();
+          result = machine.play();
 
-        results.totalPoints !== 0 ? query.balance += results.totalPoints - args.chips : query.balance -= args.chips;
+        let titleString = '';
+
+        result.totalPoints !== 0 ? query.balance += result.totalPoints - args.chips : query.balance -= args.chips;
 
         conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
 
+
+        if (args.chips === result.totalPoints) {
+          titleString = 'won back their exact input';
+        } else if (args.chips > result.totalPoints) {
+          titleString = `lost ${args.chips - result.totalPoints} chips ${result.totalPoints !== 0 ? `(slots gave back ${result.totalPoints})` : ''}`;
+        } else {
+          titleString = `won ${query.balance - prevBal} chips`;
+        }
+
         slotEmbed
-          .setTitle(`${msg.author.tag} ${results.totalPoints === 0 ? `lost ${args.chips}` : `won ${(query.balance - args.chips) + results.totalPoints}`} chips`)
+          .setTitle(`${msg.author.tag} ${titleString}`)
           .addField('Previous Balance', prevBal, true)
           .addField('New Balance', query.balance, true)
-          .setDescription(results.visualize());
+          .setDescription(result.visualize());
 
         deleteCommandMessages(msg, this.client);
 
         return msg.embed(slotEmbed);
       }
-      
+
       return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
     } catch (e) {
       console.error(`	 ${stripIndents `Fatal SQL Error occured for someone playing the slot machine!
