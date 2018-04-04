@@ -97,6 +97,11 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
 
         const prevBal = query.balance;
 
+        /**
+         * @todo Verify WheelOfFortune multiplier
+         * @body Apparently something is wrong with the multiplier of the WheelOfFortune so that'll have to be verified and patched
+         */
+
         query.balance -= args.chips;
         query.balance += args.chips * multipliers[spin];
         query.balance = Math.round(query.balance);
