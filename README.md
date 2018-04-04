@@ -10,7 +10,7 @@ This it the source for Ribbon, a discord bot created by Favna. If you have any q
 
 ## Features
 
-- Many web searches, such as google, google image, myanimelist and youtube
+- Many web searches, such as google, google image, myanimelist, youtube, steam and many more
 
 - Looking up data in the PokéDex
 
