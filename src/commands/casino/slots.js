@@ -125,6 +125,12 @@ module.exports = class SlotsCommand extends commando.Command {
 
         let titleString = '';
 
+        /**
+         * @todo Slot points formula
+         * @body The amount of chips given by the slot total points should be relative to the amount of chips used.  
+         * First thought is either logarithmic or exponential. This will need research. 
+         */
+
         result.totalPoints !== 0 ? query.balance += result.totalPoints - args.chips : query.balance -= args.chips;
 
         conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
