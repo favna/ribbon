@@ -78,10 +78,6 @@ module.exports = class SlotsCommand extends commando.Command {
     });
   }
 
-  /**
-   * @todo Rework Casino Slots
-   * @body Casino Slots needs to be reworked to use [better-sqlite3](https://github.com/JoshuaWise/better-sqlite3) instead of [node-sqlite](https://github.com/kriasoft/node-sqlite)
-   */
   run (msg, args) {
     return msg.reply('Casino Slots is currently disabled while being reworked. Please standby');
 

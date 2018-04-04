@@ -59,10 +59,6 @@ module.exports = class LeaderboardCommand extends commando.Command {
     });
   }
 
-  /**
- * @todo Rework Casino Leaderboard
- * @body Casino leaderboard needs to be reworked to use [better-sqlite3](https://github.com/JoshuaWise/better-sqlite3) instead of [node-sqlite](https://github.com/kriasoft/node-sqlite)
- */
   run (msg) {
     return msg.reply('Casino leaderboard is currently disabled while being reworked. Please standby');
 
