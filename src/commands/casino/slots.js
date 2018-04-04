@@ -36,18 +36,12 @@
  */
 
 const {MessageEmbed} = require('discord.js'), 
-  {
-    SlotMachine,
-    SlotSymbol
-  } = require('slot-machine'),
+  {SlotMachine, SlotSymbol} = require('slot-machine'),
   Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
   path = require('path'), 
-  {
-    oneLine,
-    stripIndents
-  } = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
 module.exports = class SlotsCommand extends commando.Command {
@@ -63,7 +57,7 @@ module.exports = class SlotsCommand extends commando.Command {
       'guildOnly': true,
       'throttling': {
         'usages': 2,
-        'duration': 3
+        'duration': 5
       },
       'args': [
         {

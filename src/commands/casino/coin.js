@@ -58,7 +58,7 @@ module.exports = class CoinCommand extends commando.Command {
       'guildOnly': true,
       'throttling': {
         'usages': 2,
-        'duration': 3
+        'duration': 5
       },
       'args': [
         {
