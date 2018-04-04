@@ -37,10 +37,10 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
+  Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
-  path = require('path'),
-  sql = require('sqlite'), 
+  path = require('path'), 
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
@@ -79,50 +79,43 @@ module.exports = class CustomTopUpCommand extends commando.Command {
   }
 
   run (msg, args) {
-    const coinEmbed = new MessageEmbed();
+    const coinEmbed = new MessageEmbed(),
+      conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
     coinEmbed
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'));
+    try {
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(args.player.id);
 
-    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${args.player.id}";`).then((rows) => {
-      if (!rows) {
-        return msg.reply('looks like they didn\'t get any chips yet.');
-      }
+      if (query) {
+        const prevBal = query.balance;
 
-      const prevBal = rows.balance;
+        query.balance += args.chips;
 
-      rows.balance += args.chips;
-
-      sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${args.player.id}";`, [rows.balance]);
-
-      coinEmbed
-        .setTitle('Daniël Ocean has stolen chips from Benedict for you')
-        .addField('Previous Balance', prevBal, true)
-        .addField('New Balance', rows.balance, true);
-
-      deleteCommandMessages(msg, this.client);
-
-      return msg.embed(coinEmbed);
-    })
-      .catch((e) => {
-        if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured during the custom top up!
-              Server: ${msg.guild.name} (${msg.guild.id})
-              Author: ${msg.author.tag} (${msg.author.id})
-              Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-              Error Message:`} ${e}`);
-
-          return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-                You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
-        }
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${args.player.id}";`).run({'balance': query.balance});
+        coinEmbed
+          .setTitle('Daniël Ocean has stolen chips from Benedict for you')
+          .addField('Previous Balance', prevBal, true)
+          .addField('New Balance', query.balance, true);
 
         deleteCommandMessages(msg, this.client);
 
-        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
-      });
+        return msg.embed(coinEmbed);
+      }
+
+      return msg.reply('looks like that member has no chips yet');
+    } catch (e) {
+      console.error(`	 ${stripIndents `Fatal SQL Error occured during the custom top up!
+      Server: ${msg.guild.name} (${msg.guild.id})
+      Author: ${msg.author.tag} (${msg.author.id})
+      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message:`} ${e}`);
+
+      return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
+              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+    }
   }
 };
