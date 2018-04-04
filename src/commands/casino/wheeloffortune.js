@@ -38,10 +38,10 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
+  Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
-  path = require('path'),
-  sql = require('sqlite'), 
+  path = require('path'), 
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
@@ -77,15 +77,9 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
     });
   }
 
-  /**
-   * @todo Rework Casino Wheel of Fortune
-   * @body Casino Wheel of Fortune needs to be reworked to use [better-sqlite3](https://github.com/JoshuaWise/better-sqlite3) instead of [node-sqlite](https://github.com/kriasoft/node-sqlite)
-   */
   run (msg, args) {
-    return msg.reply('Casino Slots is currently disabled while being reworked. Please standby');
-
-    /*
     const arrowmojis = ['⬆', '↖', '⬅', '↙', '⬇', '↘', '➡', '↗'],
+      conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3')),
       multipliers = ['0.1', '0.2', '0.3', '0.5', '1.2', '1.5', '1.7', '2.4'],
       spin = Math.floor(Math.random() * multipliers.length),
       wofEmbed = new MessageEmbed();
@@ -95,63 +89,51 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
-    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
-      if (!rows && global.casinoHasRan) {
-        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
-      } else if (!rows && !global.casinoHasRan) {
-        global.casinoHasRan = true;
-        
-        return msg.reply(oneLine `some stupid SQLite mistake occured after the bot was restarted.
-        Run that command again and it should work properly. No I cannot change this for as far as I know, don\'t ask`);
-      }
-      if (args.chips > rows.balance) {
-        return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');
-      }
+    try {
 
-      const prevBal = rows.balance;
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?`).get(msg.author.id);
 
-      rows.balance -= args.chips;
-      rows.balance += args.chips * multipliers[spin];
-      rows.balance = Math.round(rows.balance);
-
-      sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
-
-      wofEmbed
-        .setTitle(`${msg.author.tag} ${multipliers[spin] < 1 ? `lost ${args.chips - (args.chips * multipliers[spin])}` : `won ${Math.round((args.chips * multipliers[spin]) - args.chips)}`} chips`)
-        .addField('Previous Balance', prevBal, true)
-        .addField('New Balance', rows.balance, true)
-        .setDescription(`
-『${multipliers[1]}』   『${multipliers[0]}』   『${multipliers[7]}』
-
-『${multipliers[2]}』      ${arrowmojis[spin]}        『${multipliers[6]}』
-
-『${multipliers[3]}』   『${multipliers[4]}』   『${multipliers[5]}』
-    `);
-
-      deleteCommandMessages(msg, this.client);
-
-      return msg.embed(wofEmbed);
-    })
-      .catch((e) => {
-        if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone spinning the Wheel of Fortune!
-			Server: ${msg.guild.name} (${msg.guild.id})
-			Author: ${msg.author.tag} (${msg.author.id})
-            Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-            Input: ${args.chips}
-            Spin: ${spin}
-            Multiplier: ${multipliers[spin]}
-			Error Message:`} ${e}`);
-
-          return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+      if (query) {
+        if (args.chips > query.balance) {
+          return msg.reply(`you don\'t have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
         }
+
+        const prevBal = query.balance;
+
+        query.balance -= args.chips;
+        query.balance += args.chips * multipliers[spin];
+        query.balance = Math.round(query.balance);
+
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
+
+        wofEmbed
+          .setTitle(`${msg.author.tag} ${multipliers[spin] < 1 ? `lost ${args.chips - (args.chips * multipliers[spin])}` : `won ${Math.round((args.chips * multipliers[spin]) - args.chips)}`} chips`)
+          .addField('Previous Balance', prevBal, true)
+          .addField('New Balance', query.balance, true)
+          .setDescription(`
+  『${multipliers[1]}』   『${multipliers[0]}』   『${multipliers[7]}』
+  
+  『${multipliers[2]}』      ${arrowmojis[spin]}        『${multipliers[6]}』
+  
+  『${multipliers[3]}』   『${multipliers[4]}』   『${multipliers[5]}』
+      `);
 
         deleteCommandMessages(msg, this.client);
 
-        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
-      });*/
+        return msg.embed(wofEmbed);
+      }
+
+      return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
+    } catch (e) {
+      console.error(`	 ${stripIndents `Fatal SQL Error occured for someone spinning the Wheel of Fortune!
+      Server: ${msg.guild.name} (${msg.guild.id})
+      Author: ${msg.author.tag} (${msg.author.id})
+      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message:`} ${e}`);
+
+      return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
+              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+    }
   }
 };
