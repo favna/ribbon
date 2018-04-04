@@ -27,7 +27,6 @@
  * @file Searches GamesCommand - Gets information about a game using IndieGamesDoneBad (IGDB)  
  * **Aliases**: `game`, `moby`, `igdb`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name games

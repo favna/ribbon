@@ -19,7 +19,6 @@
  * @file Searches DefineCommand - Define a word using glosbe  
  * **Aliases**: `def`, `dict`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name define

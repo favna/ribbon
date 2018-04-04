@@ -27,7 +27,6 @@
  * @file Info EmotesCommand - Lists all emotes from the server  
  * **Aliases**: `listemo`, `emolist`, `listemoji`, `emote`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category info
  * @name emotes

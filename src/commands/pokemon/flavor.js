@@ -29,7 +29,6 @@
  * Due to message limit size it fetches as many entries possible starting with generation 7 going downwards  
  * **Aliases**: `flavors`, `dexdata`, `dexentries`, `dextext`, `dextex`, `dexter`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category pokemon
  * @name flavor

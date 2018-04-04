@@ -27,7 +27,6 @@
  * @file Games SlapCommand - Slap a dumb person💢!  
  * **Aliases**: `bakaslap`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category games
  * @name slap

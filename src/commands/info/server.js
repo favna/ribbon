@@ -27,7 +27,6 @@
  * @file Info ServerInfoCommand - Gets information about the current server  
  * **Aliases**: `serverinfo`, `sinfo`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category info
  * @name server

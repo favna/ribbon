@@ -28,7 +28,6 @@
  * A joke command to spite Kai  
  * **Aliases**: `.kai`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category custom
  * @name kai

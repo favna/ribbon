@@ -27,7 +27,6 @@
  * @file Owner CustomTopUpCommand - Daniël Ocean doesn't give a crap about legality  
  * **Aliases**: `ctu`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category owner
  * @name customtopup

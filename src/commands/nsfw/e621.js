@@ -28,7 +28,6 @@
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `eee`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category nsfw
  * @name e621

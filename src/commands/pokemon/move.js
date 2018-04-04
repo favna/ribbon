@@ -28,7 +28,6 @@
  * For move names existing of multiple words (for example `dragon dance`) you can either type it with or without the space  
  * **Aliases**: `attack`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category pokémon
  * @name move

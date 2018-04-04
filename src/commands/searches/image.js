@@ -27,7 +27,6 @@
  * @file Searches ImageCommand - Gets an image through Google Images  
  * **Aliases**: `img`, `i`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name image

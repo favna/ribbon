@@ -27,7 +27,6 @@
  * @file Games DndCCommand - Filps a coin  
  * **Aliases**: `coinflip`, `dndc`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category games
  * @name dndc

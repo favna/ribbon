@@ -28,7 +28,6 @@
  * Please note that the bot will not auto ban when the member has a certain amount of points!
  * **Aliases**: `warning`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name warn

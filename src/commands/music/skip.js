@@ -29,7 +29,6 @@
  * Staff that can delete messages can force the skip by using `skip force`  
  * You need to be in a voice channel before you can use this command
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name skip

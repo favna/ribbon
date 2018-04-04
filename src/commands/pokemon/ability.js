@@ -27,7 +27,6 @@
  * @file Pokémon AbilityCommand - Gets information on an ability in Pokémon  
  * **Aliases**: `abilities`, `abi`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category pokémon
  * @name ability

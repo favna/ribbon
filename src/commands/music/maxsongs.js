@@ -29,7 +29,6 @@
  * Use "default" as argument to set it back to the bot default  
  * **Aliases**: `songcap`, `songmax`, `maxsong`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name maxsongs

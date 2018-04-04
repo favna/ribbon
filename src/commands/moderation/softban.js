@@ -28,7 +28,6 @@
  * This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours  
  * **Aliases**: `sb`, `sban`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name softban

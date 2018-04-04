@@ -28,7 +28,6 @@
  * By default returns MessageEmbed. use `yts` to return just the URL and have in-client playback  
  * **Aliases**: `yt`, `tube`, `yts`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name youtube

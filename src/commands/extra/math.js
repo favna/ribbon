@@ -27,7 +27,6 @@
  * @file Extra MathCommand - Take the effort out of calculations and let the bot do it for you  
  * **Aliases**: `calc`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name math

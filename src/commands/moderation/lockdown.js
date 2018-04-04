@@ -29,7 +29,6 @@
  * This may also mean that the bot won't have access if it doesn't have administrator role so you cannot use the `unlock` command until you give it that permission!  
  * **Aliases**: `lock`, `ld`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name lockdown

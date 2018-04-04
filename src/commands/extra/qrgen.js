@@ -27,7 +27,6 @@
  * @file Extra QRGenCommand - Generates a QR code from text (like a URL)  
  * **Aliases**: `qr`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name qrgen

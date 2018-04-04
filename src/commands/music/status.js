@@ -27,7 +27,6 @@
  * @file Music MusicStatusCommand - Gets status about the currently playing song  
  * **Aliases**: `song`, `playing`, `current-song`, `now-playing`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name status

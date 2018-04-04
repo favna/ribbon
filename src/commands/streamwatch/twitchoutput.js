@@ -27,7 +27,6 @@
  * @file Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send  
  * **Aliases**: `output`, `twitchout`, `twitchchannel`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category streamwatch
  * @name twitchoutput

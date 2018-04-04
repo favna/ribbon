@@ -27,7 +27,6 @@
  * @file Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor  
  * **Aliases**: `monitors`, `monitor`, `twitchmonitor`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category streamwatch
  * @name twitchmonitors

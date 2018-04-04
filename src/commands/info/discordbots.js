@@ -27,7 +27,6 @@
  * @file Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList  
  * **Aliases**: `dbapi`, `db`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category info
  * @name discordbots

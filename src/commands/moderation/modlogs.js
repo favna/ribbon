@@ -27,7 +27,6 @@
  * @file Moderation ModLogsCommand - Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel  
  * **Aliases**: `togglemod` 
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name modlogs

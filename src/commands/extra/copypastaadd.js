@@ -27,7 +27,6 @@
  * @file Extra CopyPastaAddCommand - Adds a new copypasta for your server  
  * **Aliases**: `cpadd`, `pastaadd`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name copypastaadd

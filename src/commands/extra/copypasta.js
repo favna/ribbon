@@ -28,7 +28,6 @@
  * Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!  
  * **Aliases**: `cp`, `pasta`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name copypasta

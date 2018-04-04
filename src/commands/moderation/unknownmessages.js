@@ -27,7 +27,6 @@
  * @file Moderation UnknownMessagesCommand - Toggle Unkown Command messages on or off  
  * **Aliases**: `unknowns`, `unkmsg` 
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name unknownmessages

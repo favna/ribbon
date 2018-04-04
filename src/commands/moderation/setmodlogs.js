@@ -27,7 +27,6 @@
  * @file Moderation SetModlogsCommand - Sets the channel used for mod logs  
  * **Aliases**: `setmod`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name setmodlogs

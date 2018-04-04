@@ -33,7 +33,6 @@
  * 3. Youtube video ID  
  * **Aliases**: `add`, `enqueue`, `start`, `join`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name play

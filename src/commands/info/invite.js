@@ -27,7 +27,6 @@
  * @file Info InviteCommnad - Gets the invite link for the bot  
  * **Aliases**: `inv`, `links`, `shill`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category info
  * @name invite

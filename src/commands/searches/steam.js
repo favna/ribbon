@@ -27,7 +27,6 @@
  * @file Searches SteamCommand - Gets information about a game using Steam  
  * **Aliases**: `valve`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category searches
  * @name steam

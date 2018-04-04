@@ -27,7 +27,6 @@
  * @file Music DefaultVolumeCommand - Sets the server's default volume  
  * **Aliases**: `defvol`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name defaultvolume

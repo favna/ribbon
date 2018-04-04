@@ -27,7 +27,6 @@
  * @file Games EightBallCommand - Rolls a magic 8 ball using your input  
  * **Aliases**: `eightball`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category games
  * @name 8ball

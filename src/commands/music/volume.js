@@ -29,7 +29,6 @@
  * You need to be in a voice channel before you can use this command  
  * **Aliases**: `set-volume`, `set-vol`, `vol`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name volume

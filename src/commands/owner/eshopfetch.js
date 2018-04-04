@@ -27,7 +27,6 @@
  * @file Owner EShopFetchCommand - Fetch the latest data for the eshop command  
  * **Aliases**: `bal`, `cash`, `balance`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category owner
  * @name eshopfetch

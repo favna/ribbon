@@ -28,7 +28,6 @@
  * Note that different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
  * **Aliases**: `pokedex`, `dexfind`, `df`, `rotom`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category pokemon
  * @name dex

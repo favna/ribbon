@@ -27,7 +27,6 @@
  * @file Moderation AddRoleCommand - Add a role to member  
  * **Aliases**: `newrole`, `ar`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category moderation
  * @name addrole

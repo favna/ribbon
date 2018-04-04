@@ -28,7 +28,6 @@
  * Potentially you'll have to specify city if the city is in multiple countries, i.e. `weather amsterdam` will not be the same as `weather amsterdam missouri`  
  * **Aliases**: `temp`, `forecast`, `fc`, `wth`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name weather

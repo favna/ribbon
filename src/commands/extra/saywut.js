@@ -27,7 +27,6 @@
  * @file Extra SayWutCommand - Bust the last "say" user  
  * **Aliases**: `saywat`, `saywot`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name saywut

@@ -29,7 +29,6 @@
  * For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)  
  * **Aliases**: `money`, `rate`, `convert`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category extra
  * @name oxr

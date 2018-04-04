@@ -28,7 +28,6 @@
  * For item names existing of multiple words (for example `life orb`) you can either type it with or without the space  
  * **Aliases**: `it`, `bag`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category pokemon
  * @name item

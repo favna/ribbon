@@ -27,7 +27,6 @@
  * @file Music StopMusicCommand - Stops the current queue. Bot will automatically leave the channel after this command  
  * **Aliases**: `kill`, `stfu`, `quit`, `leave`, `disconnect`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
- * @license GPL-3.0-or-later
  * @module
  * @category music
  * @name stop
