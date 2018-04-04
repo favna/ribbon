@@ -23,19 +23,21 @@
  *         reasonable ways as different from the original version.
  */
 
+/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position, no-unused-vars*/
+
 /**
- * Gamble your chips at the slot machine  
- * **Aliases**: `slot`, `fruits`
+ * @file Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune  
+ * **Aliases**: `wheel`, `wof`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category casino
- * @name slots
- * @example slots 5
+ * @name wheeloffortune
+ * @example wof 5
  * @param {number} ChipsAmount The amount of chips you want to gamble
- * @returns {MessageEmbed} Outcome of the spin
+ * @returns {MessageEmbed} Outcome of the game
  */
 
-const {MessageEmbed} = require('discord.js'), 
-  {SlotMachine, SlotSymbol} = require('slot-machine'),
+const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
   path = require('path'),
@@ -43,16 +45,16 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class SlotsCommand extends commando.Command {
+module.exports = class WheelOfFortuneCommand extends commando.Command {
   constructor (client) {
     super(client, {
-      'name': 'slots',
-      'memberName': 'slots',
+      'name': 'wheeloffortune',
+      'memberName': 'wheeloffortune',
       'group': 'casino',
-      'aliases': ['slot', 'fruits'],
-      'description': 'Gamble your chips at the slot machine',
+      'aliases': ['wheel', 'wof'],
+      'description': 'Gamble your chips iat the wheel of fortune',
       'format': 'AmountOfChips',
-      'examples': ['slots 50'],
+      'examples': ['wof 50'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,
@@ -68,17 +70,27 @@ module.exports = class SlotsCommand extends commando.Command {
               return true;
             }
 
-            return 'Reply with a chips amount has to be a number between 1 and 10000. Example: `10`';
+            return 'Chips amount has to be a number between 1 and 10000';
           }
         }
       ]
     });
   }
 
+  /**
+   * @todo Rework Casino Slots
+   * @body Casino Slots needs to be reworked to use [better-sqlite3](https://github.com/JoshuaWise/better-sqlite3) instead of [node-sqlite](https://github.com/kriasoft/node-sqlite)
+   */
   run (msg, args) {
-    const slotEmbed = new MessageEmbed();
+    return msg.reply('Casino Slots is currently disabled while being reworked. Please standby');
 
-    slotEmbed
+    /*
+    const arrowmojis = ['⬆', '↖', '⬅', '↙', '⬇', '↘', '➡', '↗'],
+      multipliers = ['0.1', '0.2', '0.3', '0.5', '1.2', '1.5', '1.7', '2.4'],
+      spin = Math.floor(Math.random() * multipliers.length),
+      wofEmbed = new MessageEmbed();
+
+    wofEmbed
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
@@ -98,71 +110,48 @@ module.exports = class SlotsCommand extends commando.Command {
         return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');
       }
 
-      const bar = new SlotSymbol('bar', {
-          'display': '<:bar:430366693630672916>',
-          'points': 100,
-          'weight': 30
-        }),
-        cherry = new SlotSymbol('cherry', {
-          'display': '<:cherry:430366794230923266>',
-          'points': 8,
-          'weight': 100
-        }),
-        diamond = new SlotSymbol('diamond', {
-          'display': '<:diamond:430366803789873162>',
-          'points': 30,
-          'weight': 40
-        }),
-        lemon = new SlotSymbol('lemon', {
-          'display': '<:lemon:430366830784413727>',
-          'points': 15,
-          'weight': 80
-        }),
-        seven = new SlotSymbol('seven', {
-          'display': '<:seven:430366839735058443>',
-          'points': 300,
-          'weight': 15
-        });
+      const prevBal = rows.balance;
 
-      const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven]), // eslint-disable-line one-var
-        prevBal = rows.balance,
-        results = machine.play();
-
-      results.totalPoints !== 0 ? rows.balance += results.totalPoints - args.chips : rows.balance -= args.chips;
-
-      console.log(stripIndents `Slots has a winner!
-      Server: ${msg.guild.name} (${msg.guild.id})
-      Author: ${msg.author.tag} (${msg.author.id})
-      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      Total Points won: ${results.totalPoints}`);
+      rows.balance -= args.chips;
+      rows.balance += args.chips * multipliers[spin];
+      rows.balance = Math.round(rows.balance);
 
       sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
 
-      slotEmbed
-        .setTitle(`${msg.author.tag} ${results.totalPoints === 0 ? `lost ${args.chips}` : `won ${(rows.balance - args.chips) + results.totalPoints}`} chips`)
+      wofEmbed
+        .setTitle(`${msg.author.tag} ${multipliers[spin] < 1 ? `lost ${args.chips - (args.chips * multipliers[spin])}` : `won ${Math.round((args.chips * multipliers[spin]) - args.chips)}`} chips`)
         .addField('Previous Balance', prevBal, true)
         .addField('New Balance', rows.balance, true)
-        .setDescription(results.visualize());
+        .setDescription(`
+『${multipliers[1]}』   『${multipliers[0]}』   『${multipliers[7]}』
+
+『${multipliers[2]}』      ${arrowmojis[spin]}        『${multipliers[6]}』
+
+『${multipliers[3]}』   『${multipliers[4]}』   『${multipliers[5]}』
+    `);
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(slotEmbed);
+      return msg.embed(wofEmbed);
     })
       .catch((e) => {
         if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone playing the slot machine!
-              Server: ${msg.guild.name} (${msg.guild.id})
-              Author: ${msg.author.tag} (${msg.author.id})
-              Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-              Error Message:`} ${e}`);
+          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone spinning the Wheel of Fortune!
+			Server: ${msg.guild.name} (${msg.guild.id})
+			Author: ${msg.author.tag} (${msg.author.id})
+            Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            Input: ${args.chips}
+            Spin: ${spin}
+            Multiplier: ${multipliers[spin]}
+			Error Message:`} ${e}`);
 
           return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-                You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
 
         deleteCommandMessages(msg, this.client);
 
         return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
-      });
+      });*/
   }
 };

@@ -23,64 +23,61 @@
  *         reasonable ways as different from the original version.
  */
 
+/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position, no-unused-vars*/
+
 /**
- * Retrieves the amount of chips another member has for the casino  
- * **Aliases**: `mbal`, `mcash`, `mbalance`, `mchips`
+ * @file Casino LeaderboardCommand - Shows the top 5 ranking players for your server  
+ * **Aliases**: `lb`, `casinolb`, `leaderboards`
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category casino
- * @name memberbalance
- * @example mchips Sagiri
- * @param {Member} AnyMember Member to get the balance for
- * @returns {MessageEmbed} Information about the current balance of the member
+ * @name leaderboard
+ * @returns {MessageEmbed} List of top ranking players
  */
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
-  duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
   path = require('path'),
   sql = require('sqlite'), 
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class MemberBalanceCommand extends commando.Command {
+module.exports = class LeaderboardCommand extends commando.Command {
   constructor (client) {
     super(client, {
-      'name': 'memberbalance',
-      'memberName': 'memberbalance',
+      'name': 'leaderboard',
+      'memberName': 'leaderboard',
       'group': 'casino',
-      'aliases': ['mbal', 'mcash', 'mbalance', 'mchips'],
-      'description': 'Retrieves the amount of chips another member has for the casino',
-      'format': 'MemberID|MemberName(partial or full)',
-      'examples': ['memberbalance Sagiri'],
+      'aliases': ['lb', 'casinolb', 'leaderboards'],
+      'description': 'Shows the top 5 ranking players for your server',
       'guildOnly': true,
       'throttling': {
         'usages': 2,
         'duration': 3
-      },
-      'args': [
-        {
-          'key': 'player',
-          'prompt': 'Which player should I give them to?',
-          'type': 'member'
-        }
-      ]
+      }
     });
   }
 
-  run (msg, args) {
-    const mbalEmbed = new MessageEmbed();
+  /**
+ * @todo Rework Casino Leaderboard
+ * @body Casino leaderboard needs to be reworked to use [better-sqlite3](https://github.com/JoshuaWise/better-sqlite3) instead of [node-sqlite](https://github.com/kriasoft/node-sqlite)
+ */
+  run (msg) {
+    return msg.reply('Casino leaderboard is currently disabled while being reworked. Please standby');
 
-    mbalEmbed
-      .setAuthor(args.player.displayName, args.player.user.displayAvatarURL({'format': 'png'}))
+  /*  const lbEmbed = new MessageEmbed();
+
+    lbEmbed
+      .setTitle('Top 5 players')
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
-    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${args.player.id}";`).then((rows) => {
+    sql.all(`SELECT * FROM "${msg.guild.id}" ORDER BY balance DESC LIMIT 5;`).then((rows) => {
       if (!rows && global.casinoHasRan) {
-        return msg.reply('looks like there that member has no chips yet!');
+        return msg.reply(`looks like there are no players in this server yet. Run \`${msg.guild.commandPrefix}chips\` to be the first`);
       } else if (!rows && !global.casinoHasRan) {
         global.casinoHasRan = true;
         
@@ -88,38 +85,29 @@ module.exports = class MemberBalanceCommand extends commando.Command {
         Run that command again and it should work properly. No I cannot change this for as far as I know, don\'t ask`);
       }
 
-      mbalEmbed.setDescription(stripIndents `
-            **Balance**
-            ${rows.balance}`);
+      for (const player in rows) {
+        lbEmbed.addField(`#${parseInt(player, 10) + 1} ${msg.guild.members.get(rows[player].userID).displayName}`, `Chips: ${rows[player].balance}`);
+      }
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(mbalEmbed);
+      return msg.embed(lbEmbed);
     })
       .catch((e) => {
         if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured while getting someones balance!
-			Server: ${msg.guild.name} (${msg.guild.id})
-			Author: ${msg.author.tag} (${msg.author.id})
-			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-			Error Message:`} ${e}`);
+          console.error(`	 ${stripIndents `Fatal SQL Error occured while retrieving the leaderboard!
+              Server: ${msg.guild.name} (${msg.guild.id})
+              Author: ${msg.author.tag} (${msg.author.id})
+              Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+              Error Message:`} ${e}`);
 
           return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+                You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
-        sql.run(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).then(() => {
-          sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?);`, [msg.author.id, 500, moment().format('YYYY-MM-DD HH:mm')]);
-        });
-
-        mbalEmbed.setDescription(stripIndents `
-              **Balance**
-              500
-              **Daily Reset**
-              in 24 hours`);
 
         deleteCommandMessages(msg, this.client);
 
-        return msg.embed(mbalEmbed);
-      });
+        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
+      });*/
   }
 };
