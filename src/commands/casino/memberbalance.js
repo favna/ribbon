@@ -38,11 +38,10 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
+  Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
-  duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
-  path = require('path'),
-  sql = require('sqlite'), 
+  path = require('path'), 
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
@@ -71,65 +70,38 @@ module.exports = class MemberBalanceCommand extends commando.Command {
     });
   }
 
-  /**
- * @todo Rework Casino MemberBalance
- * @body Casino MemberBalance needs to be reworked to use [better-sqlite3](https://github.com/JoshuaWise/better-sqlite3) instead of [node-sqlite](https://github.com/kriasoft/node-sqlite)
- */
   run (msg, args) {
-    return msg.reply('Casino MemberBalance is currently disabled while being reworked. Please standby');
-
-    /*
-    const mbalEmbed = new MessageEmbed();
+    const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3')),
+      mbalEmbed = new MessageEmbed();
 
     mbalEmbed
       .setAuthor(args.player.displayName, args.player.user.displayAvatarURL({'format': 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'));
+    try {
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?`).get(args.player.id);
 
-    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${args.player.id}";`).then((rows) => {
-      if (!rows && global.casinoHasRan) {
-        return msg.reply('looks like there that member has no chips yet!');
-      } else if (!rows && !global.casinoHasRan) {
-        global.casinoHasRan = true;
-        
-        return msg.reply(oneLine `some stupid SQLite mistake occured after the bot was restarted.
-        Run that command again and it should work properly. No I cannot change this for as far as I know, don\'t ask`);
-      }
-
-      mbalEmbed.setDescription(stripIndents `
-            **Balance**
-            ${rows.balance}`);
-
-      deleteCommandMessages(msg, this.client);
-
-      return msg.embed(mbalEmbed);
-    })
-      .catch((e) => {
-        if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured while getting someones balance!
-			Server: ${msg.guild.name} (${msg.guild.id})
-			Author: ${msg.author.tag} (${msg.author.id})
-			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-			Error Message:`} ${e}`);
-
-          return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
-        }
-        sql.run(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).then(() => {
-          sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?);`, [msg.author.id, 500, moment().format('YYYY-MM-DD HH:mm')]);
-        });
-
+      if (query) {
         mbalEmbed.setDescription(stripIndents `
-              **Balance**
-              500
-              **Daily Reset**
-              in 24 hours`);
+        **Balance**
+        ${query.balance}`);
 
         deleteCommandMessages(msg, this.client);
 
         return msg.embed(mbalEmbed);
-      });*/
+      }
+
+      return msg.reply(`looks like ${args.player.displayName} doesn\'t have any chips yet. When they run \`${msg.guild.commandPrefix}chips\` they will get their first 500`);
+    } catch (e) {
+      console.error(`	 ${stripIndents `Fatal SQL Error occured while getting another person's balance (memberbalance)!
+      Server: ${msg.guild.name} (${msg.guild.id})
+      Author: ${msg.author.tag} (${msg.author.id})
+      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message:`} ${e}`);
+
+      return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
+              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+    }
   }
 };
