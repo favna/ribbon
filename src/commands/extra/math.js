@@ -84,7 +84,7 @@ module.exports = class MathCommand extends commando.Command {
 			Error Message:`} ${err}`);
     }
 
-    if (res) {
+    if (res || res === 0) {
       mathEmbed
         .setTitle('Calculator')
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
