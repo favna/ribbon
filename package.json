@@ -1,6 +1,6 @@
 {
   "name": "ribbon",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "Ribbon - A discord bot for your server",
   "author": "Favna",
   "license": "GPL-3.0",
@@ -20,7 +20,7 @@
     "lintfix": "./node_modules/.bin/eslint --fix **/*.js",
     "lint": "./node_modules/.bin/eslint **/*.js",
     "start": "node src/app.js",
-    "test": "node src/test/test.js | tap-summary"
+    "test": "yarn lint && node src/test/test.js | tap-summary"
   },
   "keywords": [
     "discord",
