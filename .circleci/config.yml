@@ -17,14 +17,6 @@ general:
   branches:
     only:
       - master
-  notify:
-    webhooks:
-      - url: https://skyhook.glitch.me/api/webhooks/431587377799233537/_kvV2bj5VcFeDX7gf5LmdwQIdVF_bA0xG_zYg-06-LPz8uZbiWLj2oH-1DX_vj1SsrSQ/circleci
-  experimental:
-    notify:
-      branches:
-        only:
-        - master
 jobs:
   build:
     docker:
@@ -49,3 +41,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn test
+notify:
+  webhooks:
+    - url: https://skyhook.glitch.me/api/webhooks/431587377799233537/_kvV2bj5VcFeDX7gf5LmdwQIdVF_bA0xG_zYg-06-LPz8uZbiWLj2oH-1DX_vj1SsrSQ/circleci
