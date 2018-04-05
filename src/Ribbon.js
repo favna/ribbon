@@ -189,6 +189,7 @@ class Ribbon {
             newActivity = {'url': 'placeholder'};
           }
           if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
+
             /* eslint-disable sort-vars*/
             const userData = await request.get('https://api.twitch.tv/kraken/users')
                 .set('Accept', 'application/vnd.twitchtv.v5+json')
@@ -201,6 +202,22 @@ class Ribbon {
               twitchChannel = this.client.provider.get(curGuild, 'twitchchannel', null),
               twitchEmbed = new MessageEmbed();
             /* eslint-enable sort-vars*/
+
+            console.info(`	 ${stripIndents `Logging a twitch live message for debugging
+            Server: ${newMember.guild.name} (${newMember.guild.id})
+            Author: ${newMember.user.tag} (${newMember.user.id})
+            Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            Login queryparam: ${newActivity.url.split('/')[3]}
+            Login querystring: ${newActivity.url.split('/')}
+            userData status: ${userData.ok ? 'userData res is ok' : 'userData res failed'}
+            streamData status: ${streamData.ok ? 'streamData res is ok' : 'streamData res failed'}
+            userData users: ${userData.ok ? userData.body.users : 'userData res failed'}
+            userData logo: ${userData.ok ? userData.body.users[0].logo : 'userData res failed'}
+            userData Display Name: ${userData.ok ? userData.body.users[0].display_name : 'userData res failed'}
+            streamData streams: ${streamData.ok ? streamData.body.streams : 'streamData res failed'}
+            streamData createdAt: ${streamData.ok ? streamData.body.streams[0].created_at : 'streamData res failed'}
+            streamData largePreview: ${streamData.ok ? streamData.body.streams[0].preview.large : 'streamData res failed'}
+            `}`);
 
             twitchEmbed
               .setThumbnail(curUser.displayAvatarURL())
