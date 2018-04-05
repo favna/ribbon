@@ -112,7 +112,7 @@ module.exports = class RockPaperScissorCommand extends commando.Command {
         return msg.embed(rpsEmbed);
       }
 
-      return msg.reply('⚠️ an error occured getting a random result and I\'m not going to rig this game.');
+      return msg.reply('⚠️ an error occurred getting a random result and I\'m not going to rig this game.');
     });
   }
 };

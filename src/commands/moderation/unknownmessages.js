@@ -24,7 +24,7 @@
  */
 
 /**
- * @file Moderation UnknownMessagesCommand - Toggle Unkown Command messages on or off  
+ * @file Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off  
  * **Aliases**: `unknowns`, `unkmsg` 
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
@@ -46,7 +46,7 @@ module.exports = class UnknownMessagesCommand extends commando.Command {
       'memberName': 'unknownmessages',
       'group': 'moderation',
       'aliases': ['unkmsg', 'unknowns'],
-      'description': 'Toggle Unkown Command messages on or off',
+      'description': 'Toggle Unknown Command messages on or off',
       'format': 'Enable|Disable',
       'examples': ['unknownmessages {option}', 'unknownmessages enable'],
       'guildOnly': true,

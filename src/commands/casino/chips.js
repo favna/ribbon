@@ -99,13 +99,13 @@ module.exports = class ChipsCommand extends commando.Command {
           'date': moment().format('YYYY-MM-DD HH:mm')
         });
       } else {
-        console.error(`	 ${stripIndents `Fatal SQL Error occured while getting someones balance!
+        console.error(`	 ${stripIndents `Fatal SQL Error occurred while getting someones balance!
         Server: ${msg.guild.name} (${msg.guild.id})
         Author: ${msg.author.tag} (${msg.author.id})
         Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         Error Message:`} ${e}`);
 
-        return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
+        return msg.reply(oneLine `Fatal Error occurred that was logged on Favna\'s system.
                 You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
       }
     }

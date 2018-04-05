@@ -108,7 +108,7 @@ class Ribbon {
   onError () {
     return (e) => {
       console.error(e);
-      console.error(`${stripIndents `A websocket error occured!
+      console.error(`${stripIndents `A websocket error occurred!
       Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       Error Message:`} ${e}`);
     };
@@ -248,7 +248,7 @@ class Ribbon {
   onUnknownCommand () {
     return (msg) => {
       if (this.client.provider.get(msg.guild, 'unknownmessages', true)) {
-        return msg.reply(stripIndents `${oneLine `That is not a registerd command.
+        return msg.reply(stripIndents `${oneLine `That is not a registered command.
 				Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\`
 				or @Ribbon#2325 help to view the list of all commands.`}
 				${oneLine `Server staff (those who can manage other's messages) can disable these replies by using
@@ -292,7 +292,7 @@ class Ribbon {
         ['extra', 'Extra - Extra! Extra! Read All About It! Only Two Cents!'],
         ['moderation', 'Moderation - Moderate with no effort'],
         ['streamwatch', 'Streamwatch - Spy on members and get notified when they go live'],
-        ['custom', 'Custom - Server specific commnads'],
+        ['custom', 'Custom - Server specific commands'],
         ['nsfw', 'NSFW - For all you dirty minds ( ͡° ͜ʖ ͡°)'],
         ['owner', 'Owner - Exclusive to the bot owner(s)']
       ])

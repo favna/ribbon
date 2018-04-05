@@ -127,7 +127,7 @@ module.exports = class CydiaCommand extends commando.Command {
 
           return msg.embed(embed);
         } catch (e) {
-          console.error(`${stripIndents `An error occured on the cydia command!
+          console.error(`${stripIndents `An error occurred on the cydia command!
 					Server: ${msg.guild.name} (${msg.guild.id})
 					Author: ${msg.author.tag} (${msg.author.id})
 					Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}

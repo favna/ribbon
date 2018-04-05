@@ -110,6 +110,6 @@ module.exports = class StrawpollCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ an error occured creating the strawpoll');
+    return msg.reply('⚠️ an error occurred creating the strawpoll');
   }
 };

@@ -25,7 +25,7 @@
 
 /**
  * @file Extra Time - Gets the current time in any place  
- * Uses Google's geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.  
+ * Uses Google's Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.  
  * **Aliases**: `citytime`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module

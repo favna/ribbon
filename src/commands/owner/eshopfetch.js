@@ -24,8 +24,8 @@
  */
 
 /**
- * @file Owner EShopFetchCommand - Fetch the latest data for the eshop command  
- * **Aliases**: `bal`, `cash`, `balance`
+ * @file Owner EShopFetchCommand - Fetch the latest data for the eShop command  
+ * **Aliases**: `efetch`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category owner
@@ -59,9 +59,9 @@ module.exports = class EShopFetchCommand extends commando.Command {
     if (fs.existsSync(path.join(__dirname, '../../data/websearch/eshop.json'))) {
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply('Latest eshop data stored in file');
+      return msg.reply('Latest eShop data stored in file');
     }
 
-    return msg.reply('An error occured fetching latest data!');
+    return msg.reply('An error occurred fetching latest data!');
   }
 };

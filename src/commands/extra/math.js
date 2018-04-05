@@ -76,7 +76,7 @@ module.exports = class MathCommand extends commando.Command {
     try {
       res = scalc(args.equation);
     } catch (err) {
-      console.error(`	 ${stripIndents `An error occured on the mathh command!
+      console.error(`	 ${stripIndents `An error occurred on the math command!
 			Server: ${msg.guild.name} (${msg.guild.id})
 			Author: ${msg.author.tag} (${msg.author.id})
 			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}

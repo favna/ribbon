@@ -69,7 +69,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Casino CoinCommand - Gamble your chips in a coin flip<br>Payout is 1:2<br><strong>Aliases</strong>: <code>flip</code>, <code>cflip</code></p>
 </dd>
 <dt><a href="#module_daily">daily</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Casino DailyCommand - Recieve your daily 500 chips top up<br><strong>Aliases</strong>: <code>topup</code>, <code>bonus</code></p>
+<dd><p>Casino DailyCommand - Receive your daily 500 chips top up<br><strong>Aliases</strong>: <code>topup</code>, <code>bonus</code></p>
 </dd>
 <dt><a href="#module_give">give</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Casino GiveCommand - Give another player some chips<br><strong>Aliases</strong>: <code>donate</code></p>
@@ -120,7 +120,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Extra SayWutCommand - Bust the last &quot;say&quot; user<br><strong>Aliases</strong>: <code>saywat</code>, <code>saywot</code></p>
 </dd>
 <dt><a href="#module_time">time</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra Time - Gets the current time in any place<br>Uses Google&#39;s geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>citytime</code></p>
+<dd><p>Extra Time - Gets the current time in any place<br>Uses Google&#39;s Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>citytime</code></p>
 </dd>
 <dt><a href="#module_weather">weather</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Extra Weather - Get the current weather forecast in any city<br>Potentially you&#39;ll have to specify city if the city is in multiple countries, i.e. <code>weather amsterdam</code> will not be the same as <code>weather amsterdam missouri</code><br><strong>Aliases</strong>: <code>temp</code>, <code>forecast</code>, <code>fc</code>, <code>wth</code></p>
@@ -135,7 +135,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!<br><strong>Aliases</strong>: <code>xdicey</code>, <code>roll</code>, <code>dicey</code>, <code>die</code></p>
 </dd>
 <dt><a href="#module_dndc">dndc</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games DndCCommand - Filps a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code></p>
+<dd><p>Games DndCCommand - Flips a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code></p>
 </dd>
 <dt><a href="#module_fight">fight</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games FightCommand - Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.<br><strong>Aliases</strong>: <code>combat</code></p>
@@ -168,13 +168,13 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Info EmotesCommand - Lists all emotes from the server<br><strong>Aliases</strong>: <code>listemo</code>, <code>emolist</code>, <code>listemoji</code>, <code>emote</code></p>
 </dd>
 <dt><a href="#module_invite">invite</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info InviteCommnad - Gets the invite link for the bot<br><strong>Aliases</strong>: <code>inv</code>, <code>links</code>, <code>shill</code></p>
+<dd><p>Info InviteCommand - Gets the invite link for the bot<br><strong>Aliases</strong>: <code>inv</code>, <code>links</code>, <code>shill</code></p>
 </dd>
 <dt><a href="#module_server">server</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info ServerInfoCommand - Gets information about the current server<br><strong>Aliases</strong>: <code>serverinfo</code>, <code>sinfo</code></p>
 </dd>
 <dt><a href="#module_stats">stats</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info RibbonStatsCommand - Statictics about Ribbon<br><strong>Aliases</strong>: <code>botinfo</code>, <code>info</code></p>
+<dd><p>Info RibbonStatsCommand - Statistics about Ribbon<br><strong>Aliases</strong>: <code>botinfo</code>, <code>info</code></p>
 </dd>
 <dt><a href="#module_userinfo">userinfo</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info UserInfoCommand - Get the info from a user<br><strong>Aliases</strong>: <code>user</code>, <code>uinfo</code></p>
@@ -232,7 +232,7 @@ This may also mean that the bot won&#39;t have access if it doesn&#39;t have adm
 <dd><p>Moderation SoftbanCommand - Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)<br>This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours<br><strong>Aliases</strong>: <code>sb</code>, <code>sban</code></p>
 </dd>
 <dt><a href="#module_unknownmessages">unknownmessages</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation UnknownMessagesCommand - Toggle Unkown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
+<dd><p>Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
 </dd>
 <dt><a href="#module_unlock">unlock</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation UnlockCommand - Unlock the channel<br>Only really useful if you previously locked the channel<br>Note that the bot does need to be able to be able to access this channel to unlock it (read permissions)<br><strong>Aliases</strong>: <code>delock</code>, <code>ul</code></p>
@@ -313,7 +313,7 @@ There are 3 ways to queue songs  </p>
 <dd><p>Owner DBPostCommand - Posts current guild count to discordbotlist</p>
 </dd>
 <dt><a href="#module_eshopfetch">eshopfetch</a> ⇒ <code>Message</code></dt>
-<dd><p>Owner EShopFetchCommand - Fetch the latest data for the eshop command<br><strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p>
+<dd><p>Owner EShopFetchCommand - Fetch the latest data for the eShop command<br><strong>Aliases</strong>: <code>efetch</code></p>
 </dd>
 <dt><a href="#module_tagmember">tagmember</a> ⇒ <code>Message</code></dt>
 <dd><p>Owner TagMemberCommand - Tags a member by ID<br>Primarily meant for mobile and when members have annoying untaggable names</p>
@@ -429,7 +429,7 @@ coin 10 heads
 <a name="module_daily"></a>
 
 ## daily ⇒ <code>MessageEmbed</code>
-Casino DailyCommand - Recieve your daily 500 chips top up  
+Casino DailyCommand - Receive your daily 500 chips top up  
 **Aliases**: `topup`, `bonus`
 
 **Returns**: <code>MessageEmbed</code> - Your new balance  
@@ -682,7 +682,7 @@ Extra SayWutCommand - Bust the last "say" user
 
 ## time ⇒ <code>MessageEmbed</code>
 Extra Time - Gets the current time in any place  
-Uses Google's geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.  
+Uses Google's Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.  
 **Aliases**: `citytime`
 
 **Returns**: <code>MessageEmbed</code> - Current date, current time, country and DST offset  
@@ -775,7 +775,7 @@ dice 5 6
 <a name="module_dndc"></a>
 
 ## dndc ⇒ <code>MessageEmbed</code>
-Games DndCCommand - Filps a coin  
+Games DndCCommand - Flips a coin  
 **Aliases**: `coinflip`, `dndc`
 
 **Returns**: <code>MessageEmbed</code> - Side the coin landed on  
@@ -957,7 +957,7 @@ Info EmotesCommand - Lists all emotes from the server
 <a name="module_invite"></a>
 
 ## invite ⇒ <code>MessageEmbed</code>
-Info InviteCommnad - Gets the invite link for the bot  
+Info InviteCommand - Gets the invite link for the bot  
 **Aliases**: `inv`, `links`, `shill`
 
 **Returns**: <code>MessageEmbed</code> - Invite link along with other links  
@@ -975,7 +975,7 @@ Info ServerInfoCommand - Gets information about the current server
 <a name="module_stats"></a>
 
 ## stats ⇒ <code>MessageEmbed</code>
-Info RibbonStatsCommand - Statictics about Ribbon  
+Info RibbonStatsCommand - Statistics about Ribbon  
 **Aliases**: `botinfo`, `info`
 
 **Returns**: <code>MessageEmbed</code> - Ribbon's statistics  
@@ -1317,7 +1317,7 @@ softban ImmortalZypther
 <a name="module_unknownmessages"></a>
 
 ## unknownmessages ⇒ <code>Message</code>
-Moderation UnknownMessagesCommand - Toggle Unkown Command messages on or off  
+Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off  
 **Aliases**: `unknowns`, `unkmsg`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
@@ -1707,8 +1707,8 @@ Owner DBPostCommand - Posts current guild count to discordbotlist
 <a name="module_eshopfetch"></a>
 
 ## eshopfetch ⇒ <code>Message</code>
-Owner EShopFetchCommand - Fetch the latest data for the eshop command  
-**Aliases**: `bal`, `cash`, `balance`
+Owner EShopFetchCommand - Fetch the latest data for the eShop command  
+**Aliases**: `efetch`
 
 **Returns**: <code>Message</code> - Confirmation the data was fetched  
 **Category**: owner  
@@ -1996,7 +1996,7 @@ image Pyrrha Nikos
 Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url  
 **Aliases**: `dumb`
 
-**Returns**: <code>Message</code> - lmgfty'ed url  
+**Returns**: <code>Message</code> - LMGTFY url  
 **Category**: searches  
 **Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 

@@ -58,7 +58,7 @@ module.exports = class NickallCommand extends commando.Command {
       'memberName': 'nickall',
       'aliases': ['na', 'massnick', 'nickmass', 'allnick'],
       'group': 'moderation',
-      'description': 'Modify the nickname for all guildmembers',
+      'description': 'Modify the nickname for all members of the guild',
       'details': stripIndents `${oneLine `Assign, remove, prefix/append with a nickname to all members. 
                                 Use \`clear\` as argument to remove the nickname, 
                                 \`prefix\` to add a prefix to every member (takes their current nickname if they have one or their username if they do not), 

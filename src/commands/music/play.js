@@ -93,7 +93,7 @@ module.exports = class PlaySongCommand extends commando.Command {
       if (!voiceChannel) {
         deleteCommandMessages(msg, this.client);
 
-        return msg.reply('Please join a voice channel before issueing this command.');
+        return msg.reply('Please join a voice channel before issuing this command.');
       }
 
       const permissions = voiceChannel.permissionsFor(msg.client.user);
@@ -101,17 +101,17 @@ module.exports = class PlaySongCommand extends commando.Command {
       if (!permissions.has('CONNECT')) {
         deleteCommandMessages(msg, this.client);
 
-        return msg.reply('I don\'t have permission to join your voice channel. Fix your server\'s permisions');
+        return msg.reply('I don\'t have permission to join your voice channel. Fix your server\'s permissions');
       }
       if (!permissions.has('SPEAK')) {
         deleteCommandMessages(msg, this.client);
 
-        return msg.reply('I don\'t have permission to speak in your voice channel. Fix your server\'s permisions');
+        return msg.reply('I don\'t have permission to speak in your voice channel. Fix your server\'s permissions');
       }
     } else if (!queue.voiceChannel.members.has(msg.author.id)) {
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply('Please join a voice channel before issueing this command.');
+      return msg.reply('Please join a voice channel before issuing this command.');
     }
 
     const statusMsg = await msg.reply('obtaining video details...'); // eslint-disable-line one-var

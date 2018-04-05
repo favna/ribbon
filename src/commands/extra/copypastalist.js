@@ -71,7 +71,7 @@ module.exports = class CopyPastaListCommand extends commando.Command {
 
         for (const part in splitTotal) {
           messages.push(await msg.embed({
-            'title': 'Copypastass available on this server',
+            'title': 'Copypastas available on this server',
             'description': splitTotal[part],
             'color': msg.guild.me.displayColor
           }));
@@ -82,7 +82,7 @@ module.exports = class CopyPastaListCommand extends commando.Command {
         return messages;
       }
     } catch (err) {
-      console.error(`	 ${stripIndents `An error occured on the CopypastaList command!
+      console.error(`	 ${stripIndents `An error occurred on the CopypastaList command!
 			Server: ${msg.guild.name} (${msg.guild.id})
 			Author: ${msg.author.tag} (${msg.author.id})
 			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}

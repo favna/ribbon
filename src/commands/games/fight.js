@@ -50,7 +50,7 @@ module.exports = class FightCommand extends commando.Command {
       'group': 'games',
       'aliases': ['combat'],
       'description': 'Pit two things against each other in a fight to the death',
-      'details': 'Winner is deteremined with random.org randomization',
+      'details': 'Winner is determined with random.org randomization',
       'format': 'FirstFighter, SecondFighter',
       'examples': ['fight Favna Chuck Norris'],
       'guildOnly': false,
@@ -124,7 +124,7 @@ module.exports = class FightCommand extends commando.Command {
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply('⚠️ an error occured pitting these combatants against each other 😦');
+      return msg.reply('⚠️ an error occurred pitting these combatants against each other 😦');
     });
 
     return null;

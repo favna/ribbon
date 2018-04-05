@@ -57,6 +57,6 @@ module.exports = class DBPostCommand extends commando.Command {
       return msg.reply('Updated discordbots.org stats.');
     }
 
-    return msg.reply('⚠️ An error occured updating discordbots.org stats.');
+    return msg.reply('⚠️ An error occurred updating discordbots.org stats.');
   }
 };

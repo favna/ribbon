@@ -24,7 +24,7 @@
  */
 
 /**
- * @file Games DndCCommand - Filps a coin  
+ * @file Games DndCCommand - Flips a coin  
  * **Aliases**: `coinflip`, `dndc`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module

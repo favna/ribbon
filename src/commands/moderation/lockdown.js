@@ -95,6 +95,6 @@ module.exports = class LockdownCommand extends commando.Command {
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ An error occured locking this channel');
+    return msg.reply('⚠️ An error occurred locking this channel');
   }
 };

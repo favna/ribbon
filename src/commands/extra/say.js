@@ -45,7 +45,7 @@ module.exports = class SayCommand extends commando.Command {
       'group': 'extra',
       'aliases': ['sayd', 'repeat'],
       'description': 'I will repeat your message',
-      'format': 'MesssageToSay',
+      'format': 'MessageToSay',
       'examples': ['say Favna is a great coder!'],
       'guildOnly': false,
       'throttling': {

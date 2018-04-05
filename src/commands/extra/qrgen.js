@@ -85,9 +85,9 @@ module.exports = class QRGenCommand extends commando.Command {
         return msg.embed(qrEmbed);
       }
 
-      return msg.reply('⚠️ An error occured uploading the QR code to imgur.');
+      return msg.reply('⚠️ An error occurred uploading the QR code to imgur.');
     }
 
-    return msg.reply('⚠️ An error occured getting a base64 image for that URL.');
+    return msg.reply('⚠️ An error occurred getting a base64 image for that URL.');
   }
 };

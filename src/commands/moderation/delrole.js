@@ -87,20 +87,20 @@ module.exports = class DeleteRoleCommand extends commando.Command {
         }
       } catch (e) {
         if (e instanceof DiscordAPIError) {
-          console.error(`	 ${stripIndents `An error occured on the DeleteRole command!
+          console.error(`	 ${stripIndents `An error occurred on the DeleteRole command!
 				Server: ${msg.guild.name} (${msg.guild.id})
 				Author: ${msg.author.tag} (${msg.author.id})
 				Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
 				Role: ${args.role.name} (${args.role.id})
 				Error Message:`} ${e}`);
         } else {
-          console.error('Unknown error occured in DeleteRole command');
+          console.error('Unknown error occurred in DeleteRole command');
         }
       }
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `an error occured removing the role \`${args.role.name}\` from \`${args.member.displayName}\`.
-		Do I have \`Manage Roles\` permission and am I hierarchly high enough for modifying their roles?`);
+    return msg.reply(oneLine `an error occurred removing the role \`${args.role.name}\` from \`${args.member.displayName}\`.
+		Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
   }
 };

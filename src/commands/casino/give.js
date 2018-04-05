@@ -101,42 +101,42 @@ module.exports = class GiveCommand extends commando.Command {
       }
 
       let giverEntry = 0,
-        recieverEntry = 0;
+        receiverEntry = 0;
 
       for (const row in query) {
         if (query[row].userID === msg.author.id) {
           giverEntry = row;
         }
         if (query[row].userID === args.player.id) {
-          recieverEntry = row;
+          receiverEntry = row;
         }
       }
 
       const oldGiverBalance = query[giverEntry].balance, // eslint-disable-line one-var
-        oldRecieverEntry = query[recieverEntry].balance;
+        oldReceiverEntry = query[receiverEntry].balance;
 
       query[giverEntry].balance -= args.chips;
-      query[recieverEntry].balance += args.chips;
+      query[receiverEntry].balance += args.chips;
 
       conn.prepare(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID=?;`).run(query[giverEntry].balance, query[giverEntry].userID);
-      conn.prepare(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID=?;`).run(query[recieverEntry].balance, query[recieverEntry].userID);
+      conn.prepare(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID=?;`).run(query[receiverEntry].balance, query[receiverEntry].userID);
 
       giveEmbed
         .addField(msg.member.displayName, `${oldGiverBalance} ➡ ${query[giverEntry].balance}`)
-        .addField(args.player.displayName, `${oldRecieverEntry} ➡ ${query[recieverEntry].balance}`);
+        .addField(args.player.displayName, `${oldReceiverEntry} ➡ ${query[receiverEntry].balance}`);
 
       deleteCommandMessages(msg, this.client);
 
       return msg.embed(giveEmbed);
 
     } catch (e) {
-      console.error(`	 ${stripIndents `Fatal SQL Error occured while a chips donation was running!
+      console.error(`	 ${stripIndents `Fatal SQL Error occurred while a chips donation was running!
       Server: ${msg.guild.name} (${msg.guild.id})
       Author: ${msg.author.tag} (${msg.author.id})
       Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       Error Message:`} ${e}`);
 
-      return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
+      return msg.reply(oneLine `Fatal Error occurred that was logged on Favna\'s system.
               You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
     }
   }

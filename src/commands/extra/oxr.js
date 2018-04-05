@@ -122,7 +122,7 @@ module.exports = class MoneyCommand extends commando.Command {
       return msg.embed(oxrEmbed);
     }
 
-    console.error(`${stripIndents `An error occured on the oxr command!
+    console.error(`${stripIndents `An error occurred on the oxr command!
 		Server: ${msg.guild.name} (${msg.guild.id})
 		Author: ${msg.author.tag} (${msg.author.id})
 		Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}

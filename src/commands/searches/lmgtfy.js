@@ -32,7 +32,7 @@
  * @name lmgtfy
  * @example lmgtfy is it legal to kill an ant???
  * @param {string} SearchQuery The dumb sh*t people need to use google for
- * @returns {Message} lmgfty'ed url
+ * @returns {Message} LMGTFY url
  */
 
 const commando = require('discord.js-commando'),
