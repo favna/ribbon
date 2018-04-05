@@ -40,7 +40,7 @@ const {MessageEmbed} = require('discord.js'),
   Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
-  path = require('path'), 
+  path = require('path'),
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
@@ -65,11 +65,15 @@ module.exports = class SlotsCommand extends commando.Command {
           'prompt': 'How many chips do you want to gamble?',
           'type': 'integer',
           'validate': (chips) => {
-            if (/^[+]?\d+$/.test(chips) && chips >= 1 && chips <= 10000) {
+            if (/^[+]?\d+$/.test(chips) && chips >= 1 && chips <= 3) {
               return true;
             }
 
-            return 'Reply with a chips amount has to be a full number (no decimals) between 1 and 10000. Example: `10`';
+            return stripIndents `Reply with a chips amount
+                            Has to be either 1, 2 or 3
+                            1 to just win on the middle horizontal line
+                            2 to win on all horizontal lines
+                            3 to win on all horizontal lines **and** the two diagonal lines`;
           }
         }
       ]
@@ -95,51 +99,67 @@ module.exports = class SlotsCommand extends commando.Command {
 
         const bar = new SlotSymbol('bar', {
             'display': '<:bar:430366693630672916>',
-            'points': 100,
-            'weight': 30
+            'points': 50,
+            'weight': 20
           }),
           cherry = new SlotSymbol('cherry', {
             'display': '<:cherry:430366794230923266>',
-            'points': 8,
+            'points': 6,
             'weight': 100
           }),
           diamond = new SlotSymbol('diamond', {
             'display': '<:diamond:430366803789873162>',
-            'points': 30,
+            'points': 15,
             'weight': 40
           }),
           lemon = new SlotSymbol('lemon', {
             'display': '<:lemon:430366830784413727>',
-            'points': 15,
+            'points': 8,
             'weight': 80
           }),
           seven = new SlotSymbol('seven', {
             'display': '<:seven:430366839735058443>',
             'points': 300,
-            'weight': 15
+            'weight': 10
+          }),
+          watermelon = new SlotSymbol('watermelon', {
+            'display': '<:watermelon:430366848710737920>',
+            'points': 10,
+            'weight': 60
           });
 
-        const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven]), // eslint-disable-line one-var
+        const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven, watermelon]), // eslint-disable-line one-var
           prevBal = query.balance,
           result = machine.play();
 
-        let titleString = '';
+        let titleString = '',
+          winningPoints = 0;
 
-        /**
-         * @todo Slot points formula
-         * @body The amount of chips given by the slot total points should be relative to the amount of chips used.  
-         * First thought is either logarithmic or exponential. This will need research. 
-         */
+        /* eslint max-depth: ["error", 6]*/
+        if (args.chips === 1 && result.lines[1].isWon) {
+          winningPoints += result.lines[1].points;
+        } else if (args.chips === 2) {
+          for (let i = 0; i <= 2; i += 1) {
+            if (result.lines[i].isWon) {
+              winningPoints += result.lines[i].points;
+            }
+          }
+        } else if (args.chips === 3) {
+          for (let i = 0; i < result.lines.length; i += 1) {
+            if (result.lines[i].isWon) {
+              winningPoints += result.lines[i].points;
+            }
+          }
+        }
 
-        result.totalPoints !== 0 ? query.balance += result.totalPoints - args.chips : query.balance -= args.chips;
+        winningPoints !== 0 ? query.balance += winningPoints - args.chips : query.balance -= args.chips;
 
         conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
 
-
-        if (args.chips === result.totalPoints) {
+        if (args.chips === winningPoints) {
           titleString = 'won back their exact input';
-        } else if (args.chips > result.totalPoints) {
-          titleString = `lost ${args.chips - result.totalPoints} chips ${result.totalPoints !== 0 ? `(slots gave back ${result.totalPoints})` : ''}`;
+        } else if (args.chips > winningPoints) {
+          titleString = `lost ${args.chips - winningPoints} chips ${winningPoints !== 0 ? `(slots gave back ${winningPoints})` : ''}`;
         } else {
           titleString = `won ${query.balance - prevBal} chips`;
         }
