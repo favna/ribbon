@@ -252,7 +252,17 @@ class Ribbon {
     return () => {
       console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
       this.isReady = true;
-      global.casinoHasRan = false;
+
+      /**
+       * @todo Periodic Casino Lottery
+       * @body Every 24 hours check which guilds are in Casino database then which members are in those guild. Pick a random one to give free 1000 chips
+       */
+
+      /**
+       * @todo RemindMe system
+       * @body let people store reminders on the bot. Store in SQL Database `reminders.sqlite`.  
+       * First onReady store the timestamps in object then on interval check the object of timestamps and if any has passed remind that person with their text
+       */
     };
   }
 
