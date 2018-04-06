@@ -1,9 +1,6 @@
 # Node modules need to be installed through yarn
 node_modules/
 
-# VS Code workspace settings
-.vscode/
-
 # Key files
 src/*.json
 
