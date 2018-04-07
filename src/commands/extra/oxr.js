@@ -86,12 +86,13 @@ module.exports = class MoneyCommand extends commando.Command {
               'XAU', 'XCD', 'XDR', 'XMR', 'XOF', 'XPD', 'XPF', 'XPM', 'XPT', 'XRP', 'YER', 'ZAR', 'ZMW', 'ZWL' 
             ];
 
-            if (validCurs.includes(curs.toLowerCase())) {
+            if (validCurs.includes(curs.toUpperCase())) {
               return true;
             }
 
             return 'Respond with a supported currency. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>';
-          }
+          },
+          'parse': p => p.toUpperCase()
         },
         {
           'key': 'curTwo',
@@ -109,12 +110,13 @@ module.exports = class MoneyCommand extends commando.Command {
               'XAU', 'XCD', 'XDR', 'XMR', 'XOF', 'XPD', 'XPF', 'XPM', 'XPT', 'XRP', 'YER', 'ZAR', 'ZMW', 'ZWL' 
             ];
 
-            if (validCurs.includes(curs.toLowerCase())) {
+            if (validCurs.includes(curs.toUpperCase())) {
               return true;
             }
 
             return 'Respond with a supported currency. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>';
-          }
+          },
+          'parse': p => p.toUpperCase()
         }
       ]
     });
