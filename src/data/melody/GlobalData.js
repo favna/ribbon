@@ -30,7 +30,7 @@ const DEFAULT_VOLUME = 1, // eslint-disable-line one-var
   MAX_LENGTH = 10,
   MAX_SONGS = 3,
   PAGINATED_ITEMS = 5,
-  PASSES = 3;
+  PASSES = 5;
 	
 module.exports = {
   DEFAULT_VOLUME,
