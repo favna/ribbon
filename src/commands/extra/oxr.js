@@ -133,7 +133,6 @@ module.exports = class MoneyCommand extends commando.Command {
   replaceAll (string, pattern, replacement) {
     return string.replace(new RegExp(pattern, 'g'), replacement);
   }
-  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 
   async run (msg, args) {
     const rates = await request.get('https://openexchangerates.org/api/latest.json')

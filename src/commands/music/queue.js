@@ -90,7 +90,7 @@ module.exports = class ViewQueueCommand extends commando.Command {
       'color': msg.guild ? msg.guild.me.displayColor : 10610610,
       'author': {
         'name': `${msg.author.tag} (${msg.author.id})`,
-        'icon_url': msg.author.displayAvatarURL({'format': 'png'}) // eslint-disable-line camelcase
+        'icon_url': msg.author.displayAvatarURL({'format': 'png'})
       },
       /* eslint-disable max-len */
       'description': stripIndents`

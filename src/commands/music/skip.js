@@ -156,7 +156,7 @@ module.exports = class SkipSongCommand extends commando.Command {
   }
 
   setTimeout (vote) {
-    const time = vote.start + 15000 - Date.now() + (vote.count - 1) * 5000; // eslint-disable-line
+    const time = vote.start + 15000 - Date.now() + (vote.count - 1) * 5000;
 
     clearTimeout(vote.timeout);
     vote.timeout = setTimeout(() => {
