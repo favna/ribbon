@@ -73,14 +73,14 @@ module.exports = class LockdownCommand extends commando.Command {
     embed
       .setColor('#983553')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-      .setDescription(oneLine `**Action:** 🔒 locked the \`${msg.channel.name}\` channel. 
+      .setDescription(oneLine`**Action:** 🔒 locked the \`${msg.channel.name}\` channel. 
 				Only staff can now access this channel. Use \`${msg.guild.commandPrefix}unlock\` in this channel to unlock the channel`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
     if (overwrite) {
       if (this.client.provider.get(msg.guild, 'modlogs', true)) {
         if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-          msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+          msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
                             (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
                             This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
           this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);

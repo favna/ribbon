@@ -82,7 +82,7 @@ module.exports = class MemberLogsCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `member logs have been
+    return msg.reply(oneLine`member logs have been
         ${args.option 
     ? 'enabled. Please ensure there is a channel named "member-logs" and that I have access to it!' 
     : 'disabled. No need for a member-logs channel'}.`);

@@ -139,7 +139,7 @@ module.exports = class WarnCommand extends commando.Command {
 
       if (this.client.provider.get(msg.guild, 'modlogs', true)) {
         if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-          msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+          msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 							(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 							Alternatively use the ${msg.guild.commandPrefix}listwarn command to view the current warning points for a given member.
 							This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
@@ -156,7 +156,7 @@ module.exports = class WarnCommand extends commando.Command {
       return msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`);
     }
 
-    return msg.reply(oneLine `⚠️ An error occurred writing the warning to disc.
+    return msg.reply(oneLine`⚠️ An error occurred writing the warning to disc.
 							You can contact my developer on his server. Use \`${msg.guild.commandPrefix}invite\` to get an invite to his server.`);
   }
 };

@@ -162,7 +162,7 @@ module.exports = class ItemCommand extends commando.Command {
         .setAuthor(`${capitalizeFirstLetter(item.name)}`, imgURL)
         .addField('Description', item.desc)
         .addField('Generation Introduced', item.gen)
-        .addField('External Resources', oneLine `
+        .addField('External Resources', oneLine`
 			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(item.name.replace(' ', '_').replace('\'', ''))})  
 			|  [Smogon](http://www.smogon.com/dex/sm/items/${item.name.toLowerCase().replace(' ', '_')
     .replace('\'', '')})  

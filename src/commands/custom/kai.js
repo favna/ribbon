@@ -75,7 +75,7 @@ module.exports = class KaiCommand extends commando.Command {
       return true;
     }
     if (msg.guild.id !== '373826006651240450') {
-      return stripIndents `That command can only be used in the Chaos Gamez server, sorry 😦
+      return stripIndents`That command can only be used in the Chaos Gamez server, sorry 😦
 			Want your own server specific custom commands? Join the support server (link in the \`${msg.guild.commandPrefix}stats\` command) and request the command.`;
     }
 

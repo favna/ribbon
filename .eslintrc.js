@@ -289,10 +289,7 @@ module.exports = {
             "error",
             "never"
         ],
-        "template-tag-spacing": [
-            "error",
-            "always"
-        ],
+        "template-tag-spacing": ["error", "never"],
         "unicode-bom": [
             "error",
             "never"

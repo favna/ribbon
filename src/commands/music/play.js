@@ -271,7 +271,7 @@ module.exports = class PlaySongCommand extends commando.Command {
           'name': `${msg.author.tag} (${msg.author.id})`,
           'icon_url': msg.author.displayAvatarURL({'format': 'png'}) // eslint-disable-line camelcase
         },
-        'description': stripIndents `
+        'description': stripIndents`
                         Playlist: [${playlist.title}](https://www.youtube.com/playlist?list=${playlist.id}) added to the queue!
     
                         Check what's been added with: \`${msg.guild.commandPrefix}queue\` or \`@Ribbon#2325 queue\`!
@@ -297,7 +297,7 @@ module.exports = class PlaySongCommand extends commando.Command {
         songMaxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', MAX_SONGS);
 
       if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
-        return oneLine `
+        return oneLine`
 					👎 ${escapeMarkdown(video.title)}
 					(${Song.timeString(video.durationSeconds)})
 					is too long. No songs longer than ${songMaxLength} minutes!
@@ -322,7 +322,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 
     queue.songs.push(song);
 
-    return oneLine `
+    return oneLine`
                 👍 ${`[${song}](${`${song.url}`})`}
             `;
   }

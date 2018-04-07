@@ -77,8 +77,8 @@ module.exports = class CopyPastaCommand extends commando.Command {
 
     const dym = match.get(`${args.name}.txt`), // eslint-disable-line one-var
       dymString = dym !== null
-        ? oneLine `Did you mean \`${dym}\`?`
-        : oneLine `You can save it with \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
+        ? oneLine`Did you mean \`${dym}\`?`
+        : oneLine`You can save it with \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
 
     try {
       let pastaContent = fs.readFileSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}/${args.name}.txt`), 'utf8');

@@ -81,7 +81,7 @@ module.exports = class MemberBalanceCommand extends commando.Command {
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(args.player.id);
 
       if (query) {
-        mbalEmbed.setDescription(stripIndents `
+        mbalEmbed.setDescription(stripIndents`
         **Balance**
         ${query.balance}`);
 
@@ -92,13 +92,13 @@ module.exports = class MemberBalanceCommand extends commando.Command {
 
       return msg.reply(`looks like ${args.player.displayName} doesn\'t have any chips yet. When they run \`${msg.guild.commandPrefix}chips\` they will get their first 500`);
     } catch (e) {
-      console.error(`	 ${stripIndents `Fatal SQL Error occurred while getting another person's balance (memberbalance)!
+      console.error(`	 ${stripIndents`Fatal SQL Error occurred while getting another person's balance (memberbalance)!
       Server: ${msg.guild.name} (${msg.guild.id})
       Author: ${msg.author.tag} (${msg.author.id})
       Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       Error Message:`} ${e}`);
 
-      return msg.reply(oneLine `Fatal Error occurred that was logged on Favna\'s system.
+      return msg.reply(oneLine`Fatal Error occurred that was logged on Favna\'s system.
               You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
     }
   }

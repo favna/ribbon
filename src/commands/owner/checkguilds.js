@@ -48,7 +48,7 @@ module.exports = class CheckGuildsCommand extends commando.Command {
   }
 
   run (msg) {
-    msg.say(stripIndents `\`\`\`The current guild count: ${this.client.guilds.size}
+    msg.say(stripIndents`\`\`\`The current guild count: ${this.client.guilds.size}
         
         Guild list:
         ${this.client.guilds.map(m => m.name).join('\n')}\`\`\``, {'split': true});

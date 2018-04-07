@@ -108,7 +108,7 @@ module.exports = class EShopCommand extends commando.Command {
       return msg.reply(`No titles found for \`${args.game}\``);
     }
 
-    return msg.reply(oneLine `eshop data was not found!!
+    return msg.reply(oneLine`eshop data was not found!!
 		Ask <@${this.client.owners[0].id}> to generate it`);
   }
 };

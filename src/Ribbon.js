@@ -64,7 +64,7 @@ class Ribbon {
 
   onCmdBlock () {
     return (msg, reason) => {
-      console.log(oneLine `
+      console.log(oneLine`
 		Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
 		blocked; ${reason}
 	`);
@@ -82,7 +82,7 @@ class Ribbon {
 
   onCommandPrefixChange () {
     return (guild, prefix) => {
-      console.log(oneLine ` 
+      console.log(oneLine` 
 			Prefix ${prefix === '' ? 'removed' : `changed to ${prefix || 'the default'}`}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`);
@@ -91,7 +91,7 @@ class Ribbon {
 
   onCmdStatusChange () {
     return (guild, command, enabled) => {
-      console.log(oneLine `
+      console.log(oneLine`
             Command ${command.groupID}:${command.memberName}
             ${enabled ? 'enabled' : 'disabled'}
             ${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
@@ -108,7 +108,7 @@ class Ribbon {
   onError () {
     return (e) => {
       console.error(e);
-      console.error(`${stripIndents `A websocket error occurred!
+      console.error(`${stripIndents`A websocket error occurred!
       Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       Error Message:`} ${e}`);
     };
@@ -116,7 +116,7 @@ class Ribbon {
 
   onGroupStatusChange () {
     return (guild, group, enabled) => {
-      console.log(oneLine `
+      console.log(oneLine`
             Group ${group.id}
             ${enabled ? 'enabled' : 'disabled'}
             ${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
@@ -203,7 +203,7 @@ class Ribbon {
               twitchEmbed = new MessageEmbed();
             /* eslint-enable sort-vars*/
 
-            console.info(`	 ${stripIndents `Logging a twitch live message for debugging
+            console.info(`	 ${stripIndents`Logging a twitch live message for debugging
             Server: ${newMember.guild.name} (${newMember.guild.id})
             Author: ${newMember.user.tag} (${newMember.user.id})
             Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -224,17 +224,17 @@ class Ribbon {
               .setURL(newActivity.url)
               .setColor('#6441A4')
               .setTitle(`${curDisplayName} just went live!`)
-              .setDescription(stripIndents `streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
+              .setDescription(stripIndents`streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
 
             if (userData.ok && userData.body._total > 0) {
               twitchEmbed
                 .setThumbnail(userData.body.users[0].logo)
                 .setTitle(`${userData.body.users[0].display_name} just went live!`)
-                .setDescription(stripIndents `${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
+                .setDescription(stripIndents`${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
             }
 
             if (streamData.ok && streamData.body._total > 0) {
-              twitchEmbed.setDescription(stripIndents `${twitchEmbed.description}\n
+              twitchEmbed.setDescription(stripIndents`${twitchEmbed.description}\n
 							**Stream Started At**${moment(streamData.body.streams[0].created_at).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
                 .setImage(streamData.body.streams[0].preview.large);
             }
@@ -275,10 +275,10 @@ class Ribbon {
   onUnknownCommand () {
     return (msg) => {
       if (this.client.provider.get(msg.guild, 'unknownmessages', true)) {
-        return msg.reply(stripIndents `${oneLine `That is not a registered command.
+        return msg.reply(stripIndents`${oneLine`That is not a registered command.
 				Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\`
 				or @Ribbon#2325 help to view the list of all commands.`}
-				${oneLine `Server staff (those who can manage other's messages) can disable these replies by using
+				${oneLine`Server staff (those who can manage other's messages) can disable these replies by using
 				\`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}unknownmessages disable\``}`);
       }
 

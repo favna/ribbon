@@ -69,7 +69,7 @@ module.exports = class SlotsCommand extends commando.Command {
               return true;
             }
 
-            return stripIndents `Reply with a chips amount
+            return stripIndents`Reply with a chips amount
                             Has to be either 1, 2 or 3
                             1 to just win on the middle horizontal line
                             2 to win on all horizontal lines
@@ -177,13 +177,13 @@ module.exports = class SlotsCommand extends commando.Command {
 
       return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
     } catch (e) {
-      console.error(`	 ${stripIndents `Fatal SQL Error occurred for someone playing the slot machine!
+      console.error(`	 ${stripIndents`Fatal SQL Error occurred for someone playing the slot machine!
       Server: ${msg.guild.name} (${msg.guild.id})
       Author: ${msg.author.tag} (${msg.author.id})
       Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       Error Message:`} ${e}`);
 
-      return msg.reply(oneLine `Fatal Error occurred that was logged on Favna\'s system.
+      return msg.reply(oneLine`Fatal Error occurred that was logged on Favna\'s system.
               You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
     }
   }

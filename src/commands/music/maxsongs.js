@@ -51,7 +51,7 @@ module.exports = class MaxSongsCommand extends commando.Command {
       'group': 'music',
       'aliases': ['songcap', 'songmax', 'maxsong'],
       'description': 'Shows or sets the max songs per user.',
-      'details': oneLine `
+      'details': oneLine`
             This is the maximum number of songs a user may have in the queue.
             The default is ${MAX_SONGS}.
             Only administrators may change this setting.`,

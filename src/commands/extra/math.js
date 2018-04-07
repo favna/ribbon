@@ -76,7 +76,7 @@ module.exports = class MathCommand extends commando.Command {
     try {
       res = scalc(args.equation);
     } catch (err) {
-      console.error(`	 ${stripIndents `An error occurred on the math command!
+      console.error(`	 ${stripIndents`An error occurred on the math command!
 			Server: ${msg.guild.name} (${msg.guild.id})
 			Author: ${msg.author.tag} (${msg.author.id})
 			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -88,7 +88,7 @@ module.exports = class MathCommand extends commando.Command {
       mathEmbed
         .setTitle('Calculator')
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-        .setDescription(oneLine `The answer to \`${args.equation.toString()}\` is \`${res}\``);
+        .setDescription(oneLine`The answer to \`${args.equation.toString()}\` is \`${res}\``);
 
       deleteCommandMessages(msg, this.client);
 
@@ -97,7 +97,7 @@ module.exports = class MathCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `\`${args.equation.toString()}\` is is not a valid equation for me.
+    return msg.reply(oneLine`\`${args.equation.toString()}\` is is not a valid equation for me.
 				Check out this readme to see how to use the supported polish notation: https://github.com/dominhhai/calculator/blob/master/README.md`);
 
   }

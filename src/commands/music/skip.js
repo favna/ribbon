@@ -113,7 +113,7 @@ module.exports = class SkipSongCommand extends commando.Command {
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.say(oneLine `
+      return msg.say(oneLine`
 				${vote.count} vote${vote.count > 1 ? 's' : ''} received so far,
 				${remaining} more ${remaining > 1 ? 'are' : 'is'} needed to skip.
 				Five more seconds on the clock! The vote will end in ${time} seconds.
@@ -134,7 +134,7 @@ module.exports = class SkipSongCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.say(oneLine `
+    return msg.say(oneLine`
 				Starting a voteskip.
 				${remaining} more vote${remaining > 1 ? 's are' : ' is'} required for the song to be skipped.
 				The vote will end in ${time} seconds.

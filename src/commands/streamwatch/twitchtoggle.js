@@ -83,7 +83,7 @@ module.exports = class TwitchToggleCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `Twitch Notifiers have been
+    return msg.reply(oneLine`Twitch Notifiers have been
     ${args.option 
     ? `enabled.
         Please make sure to set the output channel with \`${msg.guild.commandPrefix}twitchoutput\`

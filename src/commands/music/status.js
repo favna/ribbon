@@ -71,7 +71,7 @@ module.exports = class MusicStatusCommand extends commando.Command {
           'name': `${song.username}`,
           'icon_url': song.avatar
         },
-        'description': stripIndents `
+        'description': stripIndents`
 				[${song}](${`${song.url}`})
 
 				We are ${Song.timeString(currentTime)} into the song, and have ${song.timeLeft(currentTime)} left.

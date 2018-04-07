@@ -110,7 +110,7 @@ module.exports = class MoveCommand extends commando.Command {
         .addField('Target', targetString, true)
         .addField('Contest Condition', move.contestType, true)
         .addField('Z-Crystal', crystalString, true)
-        .addField('External Resources', oneLine `
+        .addField('External Resources', oneLine`
 			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${move.name.replace(' ', '_')}_(move\\))  
 			|  [Smogon](http://www.smogon.com/dex/sm/moves/${move.name.replace(' ', '_')})  
 			|  [PokémonDB](http://pokemondb.net/move/${move.name.replace(' ', '-')})`);

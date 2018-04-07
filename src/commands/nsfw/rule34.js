@@ -91,7 +91,7 @@ module.exports = class Rule34Command extends commando.Command {
         .setTitle(`Rule34 image for ${args.nsfwtags.join(', ')}`)
         .setURL(common[0].common.file_url)
         .setColor('#FFB6C1')
-        .setDescription(stripIndents `${tags.slice(0, 5).join(' ')}
+        .setDescription(stripIndents`${tags.slice(0, 5).join(' ')}
 				
 				**Score**: ${common[0].common.score}`)
         .setImage(common[0].common.file_url);

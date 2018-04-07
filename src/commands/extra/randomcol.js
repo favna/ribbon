@@ -116,7 +116,7 @@ module.exports = class RandomColCommand extends commando.Command {
         embed
           .setColor(hex)
           .setThumbnail(upload.data.link)
-          .setDescription(stripIndents `**hex**: ${hex}
+          .setDescription(stripIndents`**hex**: ${hex}
 				**dec**: ${this.hextodec(hex)}
 				**rgb**: rgb(${this.hextorgb(hex).r}, ${this.hextorgb(hex).g}, ${this.hextorgb(hex).b})`);
 

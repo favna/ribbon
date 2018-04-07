@@ -146,7 +146,7 @@ module.exports = class AbilityCommand extends commando.Command {
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
         .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
         .addField('Description', ability.desc ? ability.desc : ability.shortDesc)
-        .addField('External Resource', oneLine `
+        .addField('External Resource', oneLine`
 			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(ability.name.replace(' ', '_'))}_(Ability\\))  
 			|  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(' ', '_')})  
 			|  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(' ', '-')})`);

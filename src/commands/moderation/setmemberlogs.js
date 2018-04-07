@@ -72,6 +72,6 @@ module.exports = class SetMemberlogsCommand extends commando.Command {
     this.client.provider.set(msg.guild.id, 'memberlogchannel', args.channel.id);
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `the channel to use for the member logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'memberlogchannel')).name}`);
+    return msg.reply(oneLine`the channel to use for the member logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'memberlogchannel')).name}`);
   }
 };

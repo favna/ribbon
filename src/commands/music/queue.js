@@ -93,13 +93,13 @@ module.exports = class ViewQueueCommand extends commando.Command {
         'icon_url': msg.author.displayAvatarURL({'format': 'png'}) // eslint-disable-line camelcase
       },
       /* eslint-disable max-len */
-      'description': stripIndents `
+      'description': stripIndents`
                     __**Song queue, page ${paginated.page}**__
                     ${paginated.items.map(song => `**-** ${!isNaN(song.id) ? `${song.name} (${song.lengthString})` : `[${song.name}](${`https://www.youtube.com/watch?v=${song.id}`})`} (${song.lengthString})`).join('\n')}
                     ${paginated.maxPage > 1 ? `\nUse ${msg.usage()} to view a specific page.\n` : ''}
     
                     **Now playing:** ${!isNaN(currentSong.id) ? `${currentSong.name}` : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`}
-                    ${oneLine `
+                    ${oneLine`
                         **Progress:**
                         ${!currentSong.playing ? 'Paused: ' : ''}${Song.timeString(currentTime)} /
                         ${currentSong.lengthString}

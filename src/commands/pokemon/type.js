@@ -301,7 +301,7 @@ module.exports = class TypeCommand extends commando.Command {
       .setAuthor(`Type effectiveness for ${displayTypes.join(', ')}`)
       .addField('Offense', atkVulnDisplay.join('\n\n'))
       .addField('Defense', vulnDisplay.join('\n\n'))
-      .addField('External Resources', oneLine `
+      .addField('External Resources', oneLine`
 		[Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/${args.type.split(' ')[0]}_(type\\))  
 		|  [Smogon](http://www.smogon.com/dex/sm/types/${args.type.split(' ')[0]})
 		|  [PokémonDB](http://pokemondb.net/type/${args.type.split(' ')[0]})`);

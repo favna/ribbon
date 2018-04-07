@@ -75,7 +75,7 @@ module.exports = class SaveQueueCommand extends commando.Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({'format': 'png'}))
       .setImage(currentSong.thumbnail)
-      .setDescription(stripIndents `
+      .setDescription(stripIndents`
             __**First 10 songs in the queue**__
             ${paginated.items.map(song => `**-** ${!isNaN(song.id) 
     ? `${song.name} (${song.lengthString})` 
@@ -83,7 +83,7 @@ module.exports = class SaveQueueCommand extends commando.Command {
             ${paginated.maxPage > 1 ? `\nUse ${msg.usage()} to view a specific page.\n` : ''}
 
             **Now playing:** ${!isNaN(currentSong.id) ? `${currentSong.name}` : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`}
-            ${oneLine `
+            ${oneLine`
                 **Progress:**
                 ${!currentSong.playing ? 'Paused: ' : ''}${Song.timeString(currentTime)} /
                 ${currentSong.lengthString}

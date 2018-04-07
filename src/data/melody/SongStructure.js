@@ -49,7 +49,7 @@ module.exports = class Song {
     const hours = Math.floor(seconds / 3600),
       minutes = Math.floor(seconds % 3600 / 60);
 
-    return oneLineTrim `
+    return oneLineTrim`
 			${forceHours || hours >= 1 ? `${hours}:` : ''}
 			${hours >= 1 ? `0${minutes}`.slice(-2) : minutes}:
 			${`0${Math.floor(seconds % 60)}`.slice(-2)}

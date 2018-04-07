@@ -59,7 +59,7 @@ module.exports = class NickallCommand extends commando.Command {
       'aliases': ['na', 'massnick', 'nickmass', 'allnick'],
       'group': 'moderation',
       'description': 'Modify the nickname for all members of the guild',
-      'details': stripIndents `${oneLine `Assign, remove, prefix/append with a nickname to all members. 
+      'details': stripIndents`${oneLine`Assign, remove, prefix/append with a nickname to all members. 
                                 Use \`clear\` as argument to remove the nickname, 
                                 \`prefix\` to add a prefix to every member (takes their current nickname if they have one or their username if they do not), 
 								\`append\` to do the same but append it instead of prefix`}
@@ -127,7 +127,7 @@ module.exports = class NickallCommand extends commando.Command {
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
       if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-        msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+        msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);

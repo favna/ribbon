@@ -82,7 +82,7 @@ module.exports = class UnknownMessagesCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `Unknown Command messages have been
+    return msg.reply(oneLine`Unknown Command messages have been
                         ${args.option ? 'enabled. Get those commands!' : 'disabled. Peace and quiet when people spam the bot incorrectly achieved!'}`);
   }
 };

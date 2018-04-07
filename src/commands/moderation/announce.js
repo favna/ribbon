@@ -87,7 +87,7 @@ module.exports = class NewsCommand extends commando.Command {
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(stripIndents `To use the announce command you need a channel named \'news\' or \'announcements\'.
+    return msg.reply(stripIndents`To use the announce command you need a channel named \'news\' or \'announcements\'.
     Here is a backup of your message:
     \`\`\`
     ${args.body}

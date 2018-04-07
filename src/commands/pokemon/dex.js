@@ -282,7 +282,7 @@ module.exports = class DexCommand extends commando.Command {
         .addField('Base Stats', Object.keys(pokeEntry.baseStats).map(index => `${index.toUpperCase()}: **${pokeEntry.baseStats[index]}**`)
           .join(', '))
         .addField('PokéDex Data', pokedexEntry)
-        .addField('External Resource', oneLine `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(poke).replace(' ', '_')}_(Pokémon\\))  
+        .addField('External Resource', oneLine`[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(poke).replace(' ', '_')}_(Pokémon\\))  
 			  |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${poke.replace(' ', '_')})  
 			  |  [PokémonDB](http://pokemondb.net/pokedex/${poke.replace(' ', '-')})`);
 

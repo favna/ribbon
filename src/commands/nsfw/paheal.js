@@ -91,7 +91,7 @@ module.exports = class PahealCommand extends commando.Command {
         .setTitle(`paheal image for ${args.nsfwtags.join(', ')}`)
         .setURL(common[0].common.file_url)
         .setColor('#FFB6C1')
-        .setDescription(stripIndents `${tags.slice(0, 5).join(' ')}
+        .setDescription(stripIndents`${tags.slice(0, 5).join(' ')}
 				
 				**Score**: ${common[0].common.score}`)
         .setImage(common[0].common.file_url);

@@ -183,7 +183,7 @@ module.exports = class DocsCommand extends Command {
   }
 
   makeLink (main, member, version) {
-    return oneLineTrim `
+    return oneLineTrim`
 			${this.getLink(version)}
 			${main.category === 'classes' ? 'class' : 'typedef'}/${main.item.name}
 			?scrollTo=${member.item.scope === 'static' ? 's-' : ''}${member.item.name}
@@ -200,7 +200,7 @@ module.exports = class DocsCommand extends Command {
       embed.description += ` (extends ${main.item.extends[0]})`;
     }
 
-    embed.description += oneLineTrim `
+    embed.description += oneLineTrim`
 			](${this.getLink(version)}
 			${main.category === 'classes' ? 'class' : 'typedef'}/${main.item.name})**__
 		`;
@@ -238,7 +238,7 @@ module.exports = class DocsCommand extends Command {
 
   formatProp (main, member, version) {
     const embed = {
-      'description': oneLineTrim `
+      'description': oneLineTrim`
 				__**[${main.item.name}${member.item.scope === 'static' ? '.' : '#'}${member.item.name}]
 				(${this.makeLink(main, member, version)})**__
 			`,
@@ -269,7 +269,7 @@ module.exports = class DocsCommand extends Command {
 
   formatMethod (main, member, version) {
     const embed = {
-      'description': oneLineTrim `
+      'description': oneLineTrim`
 				__**[${main.item.name}${member.item.scope === 'static' ? '.' : '#'}${member.item.name}()]
 				(${this.makeLink(main, member, version)})**__
 			`,

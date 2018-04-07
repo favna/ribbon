@@ -97,7 +97,7 @@ module.exports = class TimeCommand extends commando.Command {
 
         timeEmbed
           .setTitle(`:flag_${time.body.countryCode.toLowerCase()}: ${args.city}`)
-          .setDescription(stripIndents `**Current Time:** ${timeArr[1]}
+          .setDescription(stripIndents`**Current Time:** ${timeArr[1]}
 					**Current Date:** ${timeArr[0]}
 					**Country:** ${time.body.countryName}
 					**DST:** ${time.body.dst}`)
@@ -109,12 +109,12 @@ module.exports = class TimeCommand extends commando.Command {
       }
     }
 
-    console.error(stripIndents `Time fetching command failed due to mismatched city
+    console.error(stripIndents`Time fetching command failed due to mismatched city
 						City: ${args.city}
 						Server: ${msg.guild.name} (${msg.guild.id})
 						Author: ${msg.author.tag} (${msg.author.id})`);
 
-    return msg.reply(oneLine `Couldn\'t find that city, are you sure you spelled it correctly?
+    return msg.reply(oneLine`Couldn\'t find that city, are you sure you spelled it correctly?
 		A log has been made for Favna so if you want to you can notify him on his server.
 		Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}invite\` to get a link to the support server.`);
   }

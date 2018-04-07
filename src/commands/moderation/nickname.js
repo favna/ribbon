@@ -86,7 +86,7 @@ module.exports = class NickCommand extends commando.Command {
         }
       } catch (e) {
         if (e instanceof DiscordAPIError) {
-          console.error(`	 ${stripIndents `An error occurred on the Nickname command!
+          console.error(`	 ${stripIndents`An error occurred on the Nickname command!
           Server: ${msg.guild.name} (${msg.guild.id})
           Author: ${msg.author.tag} (${msg.author.id})
           Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -99,7 +99,7 @@ module.exports = class NickCommand extends commando.Command {
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `failed to set nickname to that member.
+    return msg.reply(oneLine`failed to set nickname to that member.
     Check that I have permission to set their nickname as well as the role hierarchy`);
   }
 };

@@ -72,6 +72,6 @@ module.exports = class SetModlogsCommand extends commando.Command {
     this.client.provider.set(msg.guild.id, 'modlogchannel', args.channel.id);
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `the channel to use for the moderation logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'modlogchannel')).name}`);
+    return msg.reply(oneLine`the channel to use for the moderation logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'modlogchannel')).name}`);
   }
 };
