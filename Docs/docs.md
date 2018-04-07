@@ -111,7 +111,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Extra QRGenCommand - Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code></p>
 </dd>
 <dt><a href="#module_randomcol">randomcol</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra RandomCol - Generates a random color<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
+<dd><p>Extra RandomCol - Generates a random color<br>Providing a color hex will display that color, providing none will generate a random one<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
 </dd>
 <dt><a href="#module_say">say</a> ⇒ <code>Message</code></dt>
 <dd><p>Extra Say - Repeats a message and deletes your message<br><strong>Aliases</strong>: <code>sayd</code>, <code>repeat</code></p>
@@ -646,11 +646,25 @@ qrgen https://favna.xyz/ribbon
 
 ## randomcol ⇒ <code>MessageEmbed</code>
 Extra RandomCol - Generates a random color  
+Providing a color hex will display that color, providing none will generate a random one  
 **Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
 
 **Returns**: <code>MessageEmbed</code> - Color of embed matches generated color  
 **Category**: extra  
 **Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [hex] | <code>string</code> | Optional: Color hex to display |
+
+**Example**  
+```js
+randomcol  
+-OR-  
+randomcol #990000  
+-OR-  
+randomcol 36B56e
+```
 <a name="module_say"></a>
 
 ## say ⇒ <code>Message</code>
