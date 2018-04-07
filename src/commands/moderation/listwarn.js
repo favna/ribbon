@@ -105,7 +105,7 @@ module.exports = class ListWarnCommand extends commando.Command {
         return msg.embed(embed);
       }
 
-      return msg.reply('⚠️ That user has no warning points yet');
+      return msg.reply('that user has no warning points yet');
     }
 
     return msg.reply(`📘 No warnpoints log found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);

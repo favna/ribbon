@@ -116,6 +116,6 @@ module.exports = class ImageCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ ***nothing found***');
+    return msg.reply('***nothing found***');
   }
 };

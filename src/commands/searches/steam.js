@@ -127,11 +127,11 @@ module.exports = class SteamCommand extends commando.Command {
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply('⚠️ Steam API error');
+      return msg.reply('Steam API error');
     }
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ ***nothing found***');
+    return msg.reply('***nothing found***');
   }
 };

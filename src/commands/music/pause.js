@@ -70,7 +70,7 @@ module.exports = class PauseSongCommand extends commando.Command {
     if (!queue.songs[0].playing) {
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply('Pauseception is not possible 🤔');
+      return msg.reply('pauseception is not possible 🤔');
     }
     queue.songs[0].dispatcher.pause();
     queue.songs[0].playing = false;

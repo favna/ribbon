@@ -124,7 +124,7 @@ module.exports = class FightCommand extends commando.Command {
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply('⚠️ an error occurred pitting these combatants against each other 😦');
+      return msg.reply('an error occurred pitting these combatants against each other 😦');
     });
 
     return null;

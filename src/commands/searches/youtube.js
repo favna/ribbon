@@ -99,6 +99,6 @@ module.exports = class YouTubeCommand extends commando.Command {
       return msg.embed(embed, `https://www.youtube.com/watch?v=${video.id.videoId}`);
     }
 
-    return msg.reply('⚠️ ***nothing found***');
+    return msg.reply('***nothing found***');
   }
 };

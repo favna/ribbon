@@ -114,10 +114,10 @@ module.exports = class CopyPastaCommand extends commando.Command {
     } catch (err) {
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply(`⚠️ that copypasta does not exist! ${dymString}`);
+      return msg.reply(`that copypasta does not exist! ${dymString}`);
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(`⚠️ that copypasta does not exist! ${dymString}`);
+    return msg.reply(`that copypasta does not exist! ${dymString}`);
   }
 };

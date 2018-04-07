@@ -160,6 +160,6 @@ module.exports = class AbilityCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(`⚠️ Ability not found! ${dymString}`);
+    return msg.reply(`Ability not found! ${dymString}`);
   }
 };

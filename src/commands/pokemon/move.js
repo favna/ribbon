@@ -124,6 +124,6 @@ module.exports = class MoveCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.channel.send(`⚠️ Move not found! ${dymString}`);
+    return msg.channel.send(`Move not found! ${dymString}`);
   }
 };

@@ -128,7 +128,7 @@ module.exports = class GoogleCommand extends commando.Command {
 				.attr('href');
 
 			if (!href) {
-				return msg.reply('⚠️ ***nothing found***');
+				return msg.reply('***nothing found***');
 			}
 
 			deleteCommandMessages(msg, this.client);
@@ -136,6 +136,6 @@ module.exports = class GoogleCommand extends commando.Command {
 			return msg.say(href.replace('/url?q=', '').split('&')[0]);
 		}
 
-		return msg.reply('⚠️ ***nothing found***');
+		return msg.reply('***nothing found***');
 	}
 };

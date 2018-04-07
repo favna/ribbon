@@ -87,7 +87,7 @@ module.exports = class ServerInfoCommand extends commando.Command {
 
   run (msg, args) {
     if (msg.channel.type !== 'text' && args.server === 'current') {
-      return msg.reply('An argument of server name (partial or full) or server ID is required when talking outside of a server');
+      return msg.reply('an argument of server name (partial or full) or server ID is required when talking outside of a server');
     }
 
     const channels = msg.guild.channels.map(ty => ty.type), // eslint-disable-line sort-vars

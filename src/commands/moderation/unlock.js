@@ -95,6 +95,6 @@ module.exports = class UnlockCommand extends commando.Command {
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ An error occurred unlocking this channel');
+    return msg.reply('an error occurred unlocking this channel');
   }
 };

@@ -79,11 +79,11 @@ module.exports = class SoftbanCommand extends commando.Command {
 
   run (msg, args) {
     if (args.member.id === msg.author.id) {
-      return msg.reply('⚠️ I don\'t think you want to softban yourself.');
+      return msg.reply('I don\'t think you want to softban yourself.');
     }
 
     if (!args.member.bannable) {
-      return msg.reply('⚠️ I cannot softban that member, their role is probably higher than my own!');
+      return msg.reply('I cannot softban that member, their role is probably higher than my own!');
     }
 
     args.member.ban({

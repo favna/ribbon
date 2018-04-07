@@ -91,6 +91,6 @@ module.exports = class DefineCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(`⚠️ nothing found for \`${args.query}\`, maybe check your spelling?`);
+    return msg.reply(`nothing found for \`${args.query}\`, maybe check your spelling?`);
   }
 };

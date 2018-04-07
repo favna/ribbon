@@ -125,9 +125,9 @@ module.exports = class RandomColCommand extends commando.Command {
         return msg.embed(embed);
       }
 
-      return msg.reply('⚠️ An error occurred uploading the canvas to imgur.');
+      return msg.reply('an error occurred uploading the canvas to imgur.');
     }
 
-    return msg.reply('⚠️ An error occurred getting a base64 for the canvas.');
+    return msg.reply('an error occurred getting a base64 for the canvas.');
   }
 };

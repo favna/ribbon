@@ -103,6 +103,6 @@ module.exports = class e621Command extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ No juicy images found.');
+    return msg.reply('no juicy images found.');
   }
 };

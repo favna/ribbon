@@ -142,6 +142,6 @@ module.exports = class WeatherCommand extends commando.Command {
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ an error occurred getting weather info for that city');
+    return msg.reply('an error occurred getting weather info for that city');
   }
 };

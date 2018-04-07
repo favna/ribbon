@@ -97,6 +97,6 @@ module.exports = class DiscordBotsCommand extends commando.Command {
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ An error occurred getting info from that bot, are you sure it exists on the website?');
+    return msg.reply('an error occurred getting info from that bot, are you sure it exists on the website?');
   }
 };

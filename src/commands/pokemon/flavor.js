@@ -241,6 +241,6 @@ module.exports = class FlavorCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(`⚠️ Dex entry not found! ${dymString}`);
+    return msg.reply(`Dex entry not found! ${dymString}`);
   }
 };

@@ -183,7 +183,7 @@ module.exports = class ItemCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(`⚠️ Item not found! ${dymString}`);
+    return msg.reply(`Item not found! ${dymString}`);
 
   }
 };

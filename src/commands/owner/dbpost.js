@@ -54,9 +54,9 @@ module.exports = class DBPostCommand extends commando.Command {
       .send({'server_count': this.client.guilds.size});
 
     if (post) {
-      return msg.reply('Updated discordbots.org stats.');
+      return msg.reply('updated discordbots.org stats.');
     }
 
-    return msg.reply('⚠️ An error occurred updating discordbots.org stats.');
+    return msg.reply('an error occurred updating discordbots.org stats.');
   }
 };
