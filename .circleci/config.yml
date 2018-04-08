@@ -32,11 +32,10 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
-      - run: sudo apt-get update -y && sudo apt-get upgrade -y
-      - run: sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++ python3.4
       - run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
       - run: echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-      - run: sudo apt-get update && sudo apt-get install yarn
+      - run: sudo apt-get update -y && sudo apt-get upgrade -y
+      - run: sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++ python3.4 yarn
       - run: sudo npm install -g node-pre-gyp node-gyp yarn
       - run: sudo echo "alias python=python3" >> .bashrc
       - run: source .bashrc
