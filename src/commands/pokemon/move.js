@@ -36,11 +36,14 @@
  * @returns {MessageEmbed} Details about the move
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Matcher = require('did-you-mean'),
+const Matcher = require('did-you-mean'),
   commando = require('discord.js-commando'),
-  moves = require('../../data/dex/moves').BattleMovedex, 
-  {oneLine} = require('common-tags'), 
+  path = require('path'),
+  underscore = require('underscore'),
+  {MessageEmbed} = require('discord.js'),
+  {BattleMovedex} = require(path.join(__dirname, '../../data/dex/moves')),
+  {BattleAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
+  {oneLine} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class MoveCommand extends commando.Command {
@@ -62,64 +65,60 @@ module.exports = class MoveCommand extends commando.Command {
         {
           'key': 'move',
           'prompt': 'Get info on which move?',
-          'type': 'string'
+          'type': 'string',
+          'parse': p => p.toLowerCase()
         }
       ]
     });
+
+    this.match = [];
   }
 
   run (msg, args) {
-    const match = new Matcher(Object.keys(moves).join(' ')),
-      moveEmbed = new MessageEmbed();
+    const moveEmbed = new MessageEmbed();
 
-    let move = moves[args.move.toLowerCase()];
+    let moveEntry = {};
 
-    if (!move) {
-      for (let index = 0; index < Object.keys(moves).length; index += 1) {
-        if (moves[Object.keys(moves)[index]].num === args.move.toLowerCase()) {
-          move = moves[Object.keys(moves)[index]];
-          break;
-        }
+    if (BattleAliases[args.move]) {
+      args.item = BattleAliases[args.item];
+      this.match = new Matcher(Object.keys(BattleAliases).join(' '));
+    } else {
+      this.match = new Matcher(Object.keys(BattleMovedex).join(' '));
+    }
+
+    moveEntry = BattleMovedex[args.move];
+
+    for (const move in BattleMovedex) {
+      if (BattleMovedex[move].id.toLowerCase() === args.move.toLowerCase() || BattleMovedex[move].name.toLowerCase() === args.move.toLowerCase() || BattleMovedex[move].num.toString() === args.move) {
+        moveEntry = BattleMovedex[move];
+        break;
       }
     }
-    if (!move) {
-      for (let index = 0; index < Object.keys(moves).length; index += 1) {
-        if (moves[Object.keys(moves)[index]].name.toLowerCase() === args.move.toLowerCase()) {
-          move = moves[Object.keys(moves)[index]];
-          break;
-        }
-      }
-    }
-    if (move) {
 
-      const accuracyString = move.accuracy ? 'Certain Success' : move.accuracy,
-        crystalString = move.isZ ? `${capitalizeFirstLetter(move.isZ.substring(0, move.isZ.length - 1))}Z` : 'None',
-        descString = move.desc ? move.desc : move.shortDesc,
-        targetString = move.target === 'normal' ? 'One Enemy' : capitalizeFirstLetter(move.target.replace(/([A-Z])/g, ' $1'));
-
+    if (!underscore.isEmpty(moveEntry)) {
       moveEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-        .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
-        .addField('Description', descString)
-        .addField('Type', move.type, true)
-        .addField('Base Power', move.basePower, true)
-        .addField('PP', move.pp, true)
-        .addField('Category', move.category, true)
-        .addField('Accuracy', accuracyString, true)
-        .addField('Priority', move.priority, true)
-        .addField('Target', targetString, true)
-        .addField('Contest Condition', move.contestType, true)
-        .addField('Z-Crystal', crystalString, true)
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
+        .addField('Description', moveEntry.desc ? moveEntry.desc : moveEntry.shortDesc)
+        .addField('Type', moveEntry.type, true)
+        .addField('Base Power', moveEntry.basePower, true)
+        .addField('PP', moveEntry.pp, true)
+        .addField('Category', moveEntry.category, true)
+        .addField('Accuracy', moveEntry.accuracy ? 'Certain Success' : moveEntry.accuracy, true)
+        .addField('Priority', moveEntry.priority, true)
+        .addField('Target', moveEntry.target === 'normal' ? 'One Enemy' : capitalizeFirstLetter(moveEntry.target.replace(/([A-Z])/g, ' $1')), true)
+        .addField('Contest Condition', moveEntry.contestType, true)
+        .addField('Z-Crystal', moveEntry.isZ ? `${capitalizeFirstLetter(moveEntry.isZ.substring(0, moveEntry.isZ.length - 1))}Z` : 'None', true)
         .addField('External Resources', oneLine`
-			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${move.name.replace(' ', '_')}_(move\\))  
-			|  [Smogon](http://www.smogon.com/dex/sm/moves/${move.name.replace(' ', '_')})  
-			|  [PokémonDB](http://pokemondb.net/move/${move.name.replace(' ', '-')})`);
+			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${moveEntry.name.replace(' ', '_')}_(move\\))  
+			|  [Smogon](http://www.smogon.com/dex/sm/moves/${moveEntry.name.replace(' ', '_')})  
+			|  [PokémonDB](http://pokemondb.net/move/${moveEntry.name.replace(' ', '-')})`);
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(moveEmbed, `**${capitalizeFirstLetter(move.name)}**`);
+      return msg.embed(moveEmbed, `**${capitalizeFirstLetter(moveEntry.name)}**`);
     }
-    const dym = match.get(args.move), // eslint-disable-line one-var
+    const dym = this.match.get(args.move), // eslint-disable-line one-var
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the move name?';
 
     deleteCommandMessages(msg, this.client);

@@ -35,10 +35,11 @@
  * @returns {MessageEmbed} All weaknesses, advantages
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  typeMatchups = require('../../data/dex/typechart').BattleTypeChart, 
-  {oneLine} = require('common-tags'), 
+const commando = require('discord.js-commando'),
+  path = require('path'),
+  {MessageEmbed} = require('discord.js'),
+  {BattleTypeChart} = require(path.join(__dirname, '../../data/dex/typechart')),
+  {oneLine} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class TypeCommand extends commando.Command {
@@ -66,7 +67,7 @@ module.exports = class TypeCommand extends commando.Command {
     });
   }
 
-  /* eslint-disable max-statements, complexity, block-scoped-var, vars-on-top, one-var, no-var, no-redeclare, max-depth, init-declarations */
+  /* eslint-disable max-statements, complexity */
   run (msg, args) {
     const atkMulti = {
         'Bug': 1,
@@ -141,163 +142,127 @@ module.exports = class TypeCommand extends commando.Command {
     for (let z = 0; z < args.type.split(' ').length; z += 1) {
       const argsSplit = args.type.split(' ')[z];
 
-      if (Object.keys(typeMatchups).map(c => c.toLowerCase())
+      if (Object.keys(BattleTypeChart).map(c => c.toLowerCase())
         .indexOf(argsSplit.toLowerCase()) !== -1) {
-        const toType = capitalizeFirstLetter(argsSplit);
+
+        const toType = capitalizeFirstLetter(argsSplit),
+          dTaken = BattleTypeChart[toType].damageTaken; // eslint-disable-line sort-vars
 
         displayTypes.push(toType);
-        const dTaken = typeMatchups[toType].damageTaken;
-        var toMatch;
 
-        for (toMatch in dTaken) {
-          if (defMulti[toMatch]) {
-            if (dTaken[toMatch] === 1) {
-              defMulti[toMatch] *= 2;
-            } else if (dTaken[toMatch] === 2) {
-              defMulti[toMatch] *= 0.5;
-            } else if (dTaken[toMatch] === 3) {
-              defMulti[toMatch] = 0;
-            }
+        for (const toMatch in dTaken) {
+          if (defMulti[toMatch] && dTaken[toMatch] === 1) {
+            defMulti[toMatch] *= 2;
+          } else if (defMulti[toMatch] && dTaken[toMatch] === 2) {
+            defMulti[toMatch] *= 0.5;
+          } else if (defMulti[toMatch] && dTaken[toMatch] === 3) {
+            defMulti[toMatch] = 0;
           }
         }
-        for (toMatch in typeMatchups) {
+
+        for (const toMatch in BattleTypeChart) {
           if (atkMulti[toMatch]) {
-            if (typeMatchups[toMatch].damageTaken[toType] === 1) {
+            if (BattleTypeChart[toMatch].damageTaken[toType] === 1) {
               atkMulti[toMatch] *= 2;
-            } else if (typeMatchups[toMatch].damageTaken[toType] === 2) {
+            } else if (BattleTypeChart[toMatch].damageTaken[toType] === 2) {
               atkMulti[toMatch] *= 0.5;
-            } else if (typeMatchups[toMatch].damageTaken[toType] === 3) {
+            } else if (BattleTypeChart[toMatch].damageTaken[toType] === 3) {
               atkMulti[toMatch] *= 0;
             }
           }
         }
-        for (var i = 0; i < Object.keys(defMulti).length; i += 1) {
-          if (defMulti[Object.keys(defMulti)[i]] > 1) {
-            vulnCheck = true;
-            break;
-          }
+      }
+
+      for (const def in defMulti) {
+        if (defMulti[def] > 1) {
+          vulnCheck = true;
         }
-        for (var i = 0; i < Object.keys(defMulti).length; i += 1) {
-          if (defMulti[Object.keys(defMulti)[i]] === 1) {
-            normalCheck = true;
-            break;
-          }
+        if (defMulti[def] === 1) {
+          normalCheck = true;
         }
-        for (var i = 0; i < Object.keys(defMulti).length; i += 1) {
-          if (defMulti[Object.keys(defMulti)[i]] > 0 && defMulti[Object.keys(defMulti)[i]] < 1) {
-            resistCheck = true;
-            break;
-          }
+        if (defMulti[def] > 0 && defMulti[def] < 1) {
+          resistCheck = true;
         }
-        for (var i = 0; i < Object.keys(defMulti).length; i += 1) {
-          if (defMulti[Object.keys(defMulti)[i]] === 0) {
-            noCheck = true;
-            break;
-          }
-        }
-        for (var i = 0; i < Object.keys(atkMulti).length; i += 1) {
-          if (atkMulti[Object.keys(atkMulti)[i]] > 1) {
-            atkVulnCheck = true;
-            break;
-          }
-        }
-        for (var i = 0; i < Object.keys(atkMulti).length; i += 1) {
-          if (atkMulti[Object.keys(atkMulti)[i]] === 1) {
-            atkNormalCheck = true;
-            break;
-          }
-        }
-        for (var i = 0; i < Object.keys(atkMulti).length; i += 1) {
-          if (atkMulti[Object.keys(atkMulti)[i]] > 0 && atkMulti[Object.keys(atkMulti)[i]] < 1) {
-            atkResistCheck = true;
-            break;
-          }
-        }
-        for (var i = 0; i < Object.keys(atkMulti).length; i += 1) {
-          if (atkMulti[Object.keys(atkMulti)[i]] === 0) {
-            atkNoCheck = true;
-            break;
-          }
+        if (defMulti[def] === 0) {
+          noCheck = true;
         }
       }
-    }
-    if (vulnCheck) {
-      for (var i = 0; i < Object.keys(defMulti).length; i += 1) {
-        if (defMulti[Object.keys(defMulti)[i]] > 1 && vulnRaw.indexOf(Object.keys(defMulti)[i]) === -1) {
-          vulnTypes.push(`${Object.keys(defMulti)[i]} (x${defMulti[Object.keys(defMulti)[i]]})`);
-          vulnRaw.push(Object.keys(defMulti)[i]);
+
+      for (const atk in atkMulti) {
+        if (atkMulti[atk] > 1) {
+          atkVulnCheck = true;
+        }
+        if (atkMulti[atk] === 1) {
+          atkNormalCheck = true;
+        }
+        if (atkMulti[atk] > 0 && atkMulti[atk] < 1) {
+          atkResistCheck = true;
+        }
+        if (atkMulti[atk] === 0) {
+          atkNoCheck = true;
         }
       }
-      vulnDisplay[0] = `Vulnerable to: ${vulnTypes.join(', ')}`;
-    }
-    if (normalCheck) {
-      for (var i = 0; i < Object.keys(defMulti).length; i += 1) {
-        if (defMulti[Object.keys(defMulti)[i]] === 1 && normalRaw.indexOf(Object.keys(defMulti)[i]) === -1) {
-          normalTypes.push(Object.keys(defMulti)[i]);
-          normalRaw.push(Object.keys(defMulti)[i]);
-        }
-      }
-      vulnDisplay[1] = `Takes normal damage from: ${normalTypes.join(', ')}`;
-    }
-    if (resistCheck) {
-      for (var i = 0; i < Object.keys(defMulti).length; i += 1) {
-        if (defMulti[Object.keys(defMulti)[i]] > 0 && defMulti[Object.keys(defMulti)[i]] < 1 && resistRaw.indexOf(Object.keys(defMulti)[i]) === -1) {
-          resistTypes.push(`${Object.keys(defMulti)[i]} (x${defMulti[Object.keys(defMulti)[i]]})`);
-          resistRaw.push(Object.keys(defMulti)[i]);
-        }
-      }
-      vulnDisplay[2] = `Resists: ${resistTypes.join(', ')}`;
-    }
-    if (noCheck) {
-      for (var i = 0; i < Object.keys(defMulti).length; i += 1) {
-        if (defMulti[Object.keys(defMulti)[i]] === 0 && noRaw.indexOf(Object.keys(defMulti)[i]) === -1) {
-          noTypes.push(Object.keys(defMulti)[i]);
-          noRaw.push(Object.keys(defMulti)[i]);
-        }
-      }
-      vulnDisplay[3] = `Not affected by: ${noTypes.join(', ')}`;
     }
 
-    if (atkVulnCheck) {
-      for (var i = 0; i < Object.keys(atkMulti).length; i += 1) {
-        if (atkMulti[Object.keys(atkMulti)[i]] > 1 && atkVulnRaw.indexOf(Object.keys(atkMulti)[i]) === -1) {
-          atkVulnTypes.push(`${Object.keys(atkMulti)[i]} (x${atkMulti[Object.keys(atkMulti)[i]]})`);
-          atkVulnRaw.push(Object.keys(atkMulti)[i]);
-        }
+    for (const defense in defMulti) {
+      if (vulnCheck && defMulti[defense] > 1 && vulnRaw.indexOf(defMulti[defense]) === -1) {
+        vulnTypes.push(`${defense} (x${defMulti[defense]})`);
+        vulnRaw.push(defMulti[defense]);
+        vulnDisplay[0] = `Vulnerable to: ${vulnTypes.join(', ')}`;
       }
-      atkVulnDisplay[0] = `Supereffective against: ${atkVulnTypes.join(', ')}`;
+
+      if (normalCheck && defMulti[defense] === 1 && normalRaw.indexOf(defMulti[defense]) === -1) {
+        normalTypes.push(defense);
+        normalRaw.push(defense);
+
+        vulnDisplay[1] = `Takes normal damage from: ${normalTypes.join(', ')}`;
+      }
+
+      if (resistCheck && defMulti[defense] > 0 && defMulti[defense] < 1 && resistRaw.indexOf(defMulti[defense]) === -1) {
+        resistTypes.push(`${defense} (x${defMulti[defense]})`);
+        resistRaw.push(defMulti[defense]);
+
+        vulnDisplay[2] = `Resists: ${resistTypes.join(', ')}`;
+      }
+
+      if (noCheck && defMulti[defense] === 0 && noRaw.indexOf(defMulti[defense]) === -1) {
+        noTypes.push(defense);
+        noRaw.push(defense);
+        vulnDisplay[3] = `Not affected by: ${noTypes.join(', ')}`;
+      }
     }
-    if (atkNormalCheck) {
-      for (var i = 0; i < Object.keys(atkMulti).length; i += 1) {
-        if (atkMulti[Object.keys(atkMulti)[i]] === 1 && atkNormalRaw.indexOf(Object.keys(atkMulti)[i]) === -1) {
-          atkNormalTypes.push(Object.keys(atkMulti)[i]);
-          atkNormalRaw.push(Object.keys(atkMulti)[i]);
-        }
+
+    for (const attack in atkMulti) {
+      if (atkVulnCheck && atkMulti[attack] > 1 && atkVulnRaw.indexOf(atkMulti[attack]) === -1) {
+        atkVulnTypes.push(`${attack} (x${atkMulti[attack]})`);
+        atkVulnRaw.push(atkMulti[attack]);
+        atkVulnDisplay[0] = `Supereffective against: ${atkVulnTypes.join(', ')}`;
       }
-      atkVulnDisplay[1] = `Deals normal damage to: ${atkNormalTypes.join(', ')}`;
-    }
-    if (atkResistCheck) {
-      for (var i = 0; i < Object.keys(atkMulti).length; i += 1) {
-        if (atkMulti[Object.keys(atkMulti)[i]] > 0 && atkMulti[Object.keys(atkMulti)[i]] < 1 && atkResistRaw.indexOf(Object.keys(atkMulti)[i]) === -1) {
-          atkResistTypes.push(`${Object.keys(atkMulti)[i]} (x${atkMulti[Object.keys(atkMulti)[i]]})`);
-          atkResistRaw.push(Object.keys(atkMulti)[i]);
-        }
+
+      if (atkNormalCheck && atkMulti[attack] === 1 && atkNormalRaw.indexOf(atkMulti[attack]) === -1) {
+        atkNormalTypes.push(attack);
+        atkNormalRaw.push(attack);
+
+        atkVulnDisplay[1] = `Deals normal damage to: ${atkNormalTypes.join(', ')}`;
       }
-      atkVulnDisplay[2] = `Not very effective against: ${atkResistTypes.join(', ')}`;
-    }
-    if (atkNoCheck) {
-      for (var i = 0; i < Object.keys(atkMulti).length; i += 1) {
-        if (atkMulti[Object.keys(atkMulti)[i]] === 0 && atkNoRaw.indexOf(Object.keys(atkMulti)[i]) === -1) {
-          atkNoTypes.push(Object.keys(atkMulti)[i]);
-          atkNoRaw.push(Object.keys(atkMulti)[i]);
-        }
+
+      if (atkResistCheck && atkMulti[attack] > 0 && atkMulti[attack] < 1 && atkResistRaw.indexOf(atkMulti[attack]) === -1) {
+        atkResistTypes.push(`${attack} (x${atkMulti[attack]})`);
+        atkResistRaw.push(atkMulti[attack]);
+
+        atkVulnDisplay[2] = `Not very effective against: ${atkResistTypes.join(', ')}`;
       }
-      atkVulnDisplay[3] = `Doesn't affect: ${atkNoTypes.join(', ')}`;
+
+      if (atkNoCheck && atkMulti[attack] === 0 && atkNoRaw.indexOf(atkMulti[attack]) === -1) {
+        atkNoTypes.push(attack);
+        atkNoRaw.push(attack);
+        atkVulnDisplay[3] = `Doesn't affect: ${atkNoTypes.join(', ')}`;
+      }
     }
 
     typeEmbed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-      .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
+      .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
       .setAuthor(`Type effectiveness for ${displayTypes.join(', ')}`)
       .addField('Offense', atkVulnDisplay.join('\n\n'))
       .addField('Defense', vulnDisplay.join('\n\n'))

@@ -319,10 +319,10 @@ There are 3 ways to queue songs  </p>
 <dd><p>Owner TagMemberCommand - Tags a member by ID<br>Primarily meant for mobile and when members have annoying untaggable names</p>
 </dd>
 <dt><a href="#module_dex">dex</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokémon DexCommand - Gets information about a Pokémon from Dexter<br>Note that different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br><strong>Aliases</strong>: <code>pokedex</code>, <code>dexfind</code>, <code>df</code>, <code>rotom</code></p>
+<dd><p>Pokémon DexCommand - Gets information about a Pokémon from Dexter<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>pokedex</code>, <code>dexfind</code>, <code>df</code>, <code>rotom</code></p>
 </dd>
 <dt><a href="#module_flavor">flavor</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokémon FlavorCommand - Gets flavor text from a Pokémon<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>Due to message limit size it fetches as many entries possible starting with generation 7 going downwards<br><strong>Aliases</strong>: <code>flavors</code>, <code>dexdata</code>, <code>dexentries</code>, <code>dextext</code>, <code>dextex</code>, <code>dexter</code></p>
+<dd><p>Pokémon FlavorCommand - Gets flavor text from a Pokémon<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>Due to message limit size it fetches as many entries possible starting with generation 7 going downwards<br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>flavors</code>, <code>dexdata</code>, <code>dexentries</code>, <code>dextext</code>, <code>dextex</code>, <code>dexter</code></p>
 </dd>
 <dt><a href="#module_item">item</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pokémon ItemCommand - Gets information about an item in Pokémon
@@ -1749,7 +1749,8 @@ tagmember ☜(⌒▽⌒)☞guy
 
 ## dex ⇒ <code>MessageEmbed</code>
 Pokémon DexCommand - Gets information about a Pokémon from Dexter  
-Note that different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
+Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
+If you want to get the shiny sprite displayed add the `--shiny` at the end of the search  
 **Aliases**: `pokedex`, `dexfind`, `df`, `rotom`
 
 **Returns**: <code>MessageEmbed</code> - Lots of information about the pokemon  
@@ -1770,6 +1771,7 @@ dex dragonite
 Pokémon FlavorCommand - Gets flavor text from a Pokémon  
 Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
 Due to message limit size it fetches as many entries possible starting with generation 7 going downwards  
+If you want to get the shiny sprite displayed add the `--shiny` at the end of the search  
 **Aliases**: `flavors`, `dexdata`, `dexentries`, `dextext`, `dextex`, `dexter`
 
 **Returns**: <code>MessageEmbed</code> - Flavor texts for the pokemon  
@@ -1815,7 +1817,7 @@ Pokémon AbilityCommand - Gets information on an ability in Pokémon
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AbilityName | <code>string</code> | The name of the ability you want to find |
+| AbilityName | <code>string</code> | The name of the ability you  want to find |
 
 **Example**  
 ```js

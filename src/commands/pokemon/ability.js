@@ -31,17 +31,18 @@
  * @category pokémon
  * @name ability
  * @example ability multiscale
- * @param {string} AbilityName The name of the ability you want to find
+ * @param {string} AbilityName The name of the ability you  want to find
  * @returns {MessageEmbed} Description and external links for the ability
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Matcher = require('did-you-mean'),
+const Matcher = require('did-you-mean'),
   commando = require('discord.js-commando'),
   path = require('path'),
-  request = require('snekfetch'),
-  requireFromURL = require('require-from-url/sync'), 
-  {oneLine} = require('common-tags'), 
+  underscore = require('underscore'),
+  {MessageEmbed} = require('discord.js'),
+  {BattleAbilities} = require(path.join(__dirname, '../../data/dex/abilities')),
+  {BattleAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
+  {oneLine} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class AbilityCommand extends commando.Command {
@@ -63,103 +64,54 @@ module.exports = class AbilityCommand extends commando.Command {
         {
           'key': 'ability',
           'prompt': 'Get info on which ability?',
-          'type': 'string'
+          'type': 'string',
+          'parse': p => p.toLowerCase()
         }
       ]
     });
 
-    this.abilities = {};
-    this.pokeAliases = {};
     this.match = [];
   }
 
-  async fetchAbilities () {
-    if (Object.keys(this.abilities).length !== 0) {
-      return this.abilities;
-    }
+  run (msg, args) {
+    const abilityEmbed = new MessageEmbed();
 
-    const abilityData = await request.get(this.fetchLinks('abilities'));
+    let abilityEntry = {};
 
-    if (abilityData) {
-      this.abilities = requireFromURL(this.fetchLinks('abilities')).BattleAbilities;
+    if (BattleAliases[args.ability]) {
+      args.ability = BattleAliases[args.ability];
+      this.match = new Matcher(Object.keys(BattleAliases).join(' '));
     } else {
-      this.abilities = require(path.join(__dirname, '../../data/dex/abilities')).BattleAbilities; // eslint-disable-line global-require
-    }
-    this.match = new Matcher(Object.keys(this.abilities).join(' ')); // eslint-disable-line one-var
-
-    return this.abilities;
-  }
-
-  async fetchAliases () {
-    if (Object.keys(this.pokeAliases).length !== 0) {
-      return this.pokeAliases;
+      args.ability = args.ability;
+      this.match = new Matcher(Object.keys(BattleAbilities).join(' '));
     }
 
-    const dexData = await request.get(this.fetchLinks('aliases'));
-
-    if (dexData) {
-      this.pokeAliases = requireFromURL(this.fetchLinks('aliases')).BattleAliases;
-    } else {
-      this.pokeAliases = require(path.join(__dirname, '../../data/dex/aliases')).BattlePokedex; // eslint-disable-line global-require
-    }
-    this.match = new Matcher(Object.keys(this.pokeAliases).join(' ')); // eslint-disable-line one-var
-
-    return this.pokeAliases;
-  }
-
-  fetchLinks (type) {
-    switch (type) {
-    case 'abilities':
-      return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/abilities.js';
-    case 'aliases':
-      return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/aliases.js';
-    default:
-      return 'error';
-    }
-  }
-
-  async run (msg, args) {
-
-    const abilities = await this.fetchAbilities(),
-      abilityEmbed = new MessageEmbed(),
-      aliases = await this.fetchAliases();
-
-    let ability = {},
-      abilityName = args.ability.toLowerCase();
-
-    if (aliases[abilityName]) {
-      abilityName = aliases[abilityName];
-    }
-
-    abilityName = abilityName.toLowerCase();
-
-    for (let i = 0; i < Object.keys(abilities).length; i += 1) {
-      if (abilities[Object.keys(abilities)[i]].name.toLowerCase() === abilityName) {
-        ability = abilities[Object.keys(abilities)[i]];
-
+    for (const ability in BattleAbilities) {
+      if (BattleAbilities[ability].name.toLowerCase() === args.ability.toLowerCase()) {
+        abilityEntry = BattleAbilities[ability];
         break;
       }
     }
 
-    if (ability) {
+    if (!underscore.isEmpty(abilityEntry)) {
       abilityEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-        .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
-        .addField('Description', ability.desc ? ability.desc : ability.shortDesc)
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
+        .addField('Description', abilityEntry.desc ? abilityEntry.desc : abilityEntry.shortDesc)
         .addField('External Resource', oneLine`
-			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(ability.name.replace(' ', '_'))}_(Ability\\))  
-			|  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(' ', '_')})  
-			|  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(' ', '-')})`);
+			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(abilityEntry.name.replace(' ', '_'))}_(Ability\\))  
+			|  [Smogon](http://www.smogon.com/dex/sm/abilities/${abilityEntry.name.toLowerCase().replace(' ', '_')})  
+			|  [PokémonDB](http://pokemondb.net/ability/${abilityEntry.name.toLowerCase().replace(' ', '-')})`);
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(abilityEmbed, `**${capitalizeFirstLetter(ability.name)}**`);
+      return msg.embed(abilityEmbed, `**${capitalizeFirstLetter(abilityEntry.name)}**`);
     }
     const dym = this.match.get(args.ability), // eslint-disable-line one-var
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the ability?';
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(`Ability not found! ${dymString}`);
+    return msg.reply(`ability not found! ${dymString}`);
   }
 };

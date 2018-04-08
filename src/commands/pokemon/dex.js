@@ -25,7 +25,8 @@
 
 /**
  * @file Pokémon DexCommand - Gets information about a Pokémon from Dexter  
- * Note that different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
+ * Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
+ * If you want to get the shiny sprite displayed add the `--shiny` at the end of the search  
  * **Aliases**: `pokedex`, `dexfind`, `df`, `rotom`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
@@ -36,14 +37,15 @@
  * @returns {MessageEmbed} Lots of information about the pokemon
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Matcher = require('did-you-mean'),
+const Matcher = require('did-you-mean'),
   commando = require('discord.js-commando'),
   dexEntries = require('../../data/dex/flavorText.json'),
   path = require('path'),
-  request = require('snekfetch'),
-  requireFromURL = require('require-from-url/sync'), 
-  {oneLine} = require('common-tags'), 
+  underscore = require('underscore'),
+  {MessageEmbed} = require('discord.js'),
+  {BattleAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
+  {BattlePokedex} = require(path.join(__dirname, '../../data/dex/pokedex')),
+  {oneLine} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class DexCommand extends commando.Command {
@@ -65,13 +67,12 @@ module.exports = class DexCommand extends commando.Command {
         {
           'key': 'pokemon',
           'prompt': 'Get info from which Pokémon?',
-          'type': 'string'
+          'type': 'string',
+          'parse': p => p.toLowerCase()
         }
       ]
     });
 
-    this.pokedex = {};
-    this.pokeAliases = {};
     this.match = [];
   }
 
@@ -102,189 +103,128 @@ module.exports = class DexCommand extends commando.Command {
     }
   }
 
-  async fetchDex () {
-    if (Object.keys(this.pokedex).length !== 0) {
-      return this.pokedex;
-    }
-
-    const dexData = await request.get(this.fetchLinks('dex'));
-
-    if (dexData) {
-      this.pokedex = requireFromURL(this.fetchLinks('dex')).BattlePokedex;
-    } else {
-      this.pokedex = require(path.join(__dirname, '../../data/dex/pokedex')).BattlePokedex; // eslint-disable-line global-require
-    }
-
-    this.match = new Matcher(Object.keys(this.pokedex).join(' ')); // eslint-disable-line one-var
-
-    return this.pokedex;
-  }
-
-  async fetchAliases () {
-    if (Object.keys(this.pokeAliases).length !== 0) {
-      return this.pokeAliases;
-    }
-
-    const dexData = await request.get(this.fetchLinks('aliases'));
-
-    if (dexData) {
-      this.pokeAliases = requireFromURL(this.fetchLinks('aliases')).BattleAliases;
-    } else {
-      this.pokeAliases = require(path.join(__dirname, '../../data/dex/aliases')).BattlePokedex; // eslint-disable-line global-require
-    }
-    this.match = new Matcher(Object.keys(this.pokeAliases).join(' ')); // eslint-disable-line one-var
-
-    return this.pokeAliases;
-  }
-
-  fetchLinks (type) {
-    switch (type) {
-    case 'aliases':
-      return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/aliases.js';
-    case 'dex':
-      return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/pokedex.js';
-    default:
-      return 'error';
-    }
-  }
-
   /* eslint-disable max-statements, complexity */
-  async run (msg, args) {
-    const aliases = await this.fetchAliases(),
-      dex = await this.fetchDex(),
-      dexEmbed = new MessageEmbed();
+  run (msg, args) {
+    const dexEmbed = new MessageEmbed();
+    let pokeEntry = {};
 
-    let abilityString = '',
-      evos = '',
-      genderString = 'Not stored in PokéDex',
-      poke = args.pokemon.toLowerCase(),
-      pokedexEntry = 'Not stored in PokéDex',
-      typestring = 'Not stored in PokéDex';
-
-    if (aliases[poke]) {
-      poke = aliases[poke];
+    if (BattleAliases[args.pokemon]) {
+      args.pokemon = BattleAliases[args.pokemon];
+      this.match = new Matcher(Object.keys(BattleAliases).join(' '));
+    } else {
+      this.match = new Matcher(Object.keys(BattlePokedex).join(' '));
     }
 
-    poke = poke.toLowerCase();
-    if (poke.split(' ')[0] === 'mega') {
-      poke = `${poke.substring(poke.split(' ')[0].length + 1)}mega`;
+    if (args.pokemon.split(' ')[0] === 'mega') {
+      args.pokemon = `${args.pokemon.substring(args.pokemon.split(' ')[0].length + 1)}mega`;
     }
-    let pokeEntry = dex[poke]; // eslint-disable-line one-var
 
-    if (!pokeEntry) {
-      for (let index = 0; index < Object.keys(dex).length; index += 1) {
-        if (dex[Object.keys(dex)[index]].num === Number(poke)) {
-          poke = dex[Object.keys(dex)[index]].species.toLowerCase();
-          pokeEntry = dex[poke];
-          break;
-        }
+    if (/(?:--shiny)/i.test(args.pokemon)) {
+      args.pokemon = (args.pokemon.substring(0, args.pokemon.indexOf('--shiny')) + args.pokemon.substring(args.pokemon.indexOf('--shiny') + '--shiny'.length)).replace(/ /g, '');
+      args.shines = true;
+    }
+
+    pokeEntry = BattlePokedex[args.pokemon];
+
+    for (const pokemon in BattlePokedex) {
+      if (BattlePokedex[pokemon].num === parseInt(args.pokemon, 10) || BattlePokedex[pokemon].species.toLowerCase() === args.pokemon.toLowerCase()) {
+        pokeEntry = BattlePokedex[pokemon];
+        break;
       }
     }
-    if (!pokeEntry) {
-      for (let index = 0; index < Object.keys(dex).length; index += 1) {
-        if (dex[Object.keys(dex)[index]].species.toLowerCase() === poke) {
-          pokeEntry = dex[Object.keys(dex)[index]];
-          break;
-        }
-      }
-    }
-    if (pokeEntry) {
-      poke = pokeEntry.species;
-      let evoLine = `**${capitalizeFirstLetter(poke)}**`,
-        preEvos = '';
+
+    if (!underscore.isEmpty(pokeEntry)) {
+      const pokemon = {
+        'abilities': '',
+        'evos': `**${capitalizeFirstLetter(pokeEntry.species)}**`,
+        'flavors': '*PokéDex data not found for this Pokémon*',
+        'genders': ''
+      };
 
       if (pokeEntry.prevo) {
-        preEvos = `${preEvos + capitalizeFirstLetter(pokeEntry.prevo)} > `;
-        const preEntry = dex[pokeEntry.prevo];
+        pokemon.evos = `${capitalizeFirstLetter(pokeEntry.prevo)} > ${pokemon.evos}`;
 
-        if (preEntry.prevo) {
-          preEvos = `${capitalizeFirstLetter(preEntry.prevo)} > ${preEvos}`;
+        if (BattlePokedex[pokeEntry.prevo].prevo) {
+          pokemon.evos = `${capitalizeFirstLetter(BattlePokedex[pokeEntry.prevo].prevo)} > ${pokemon.evos}`;
         }
-        evoLine = preEvos + evoLine;
       }
-      evos = '';
 
       if (pokeEntry.evos) {
-        evos = `${evos} > ${pokeEntry.evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
-        if (pokeEntry.evos.length < 2) {
-          const evoEntry = dex[pokeEntry.evos[0]];
+        pokemon.evos = `${pokemon.evos} > ${pokeEntry.evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
 
-          if (evoEntry.evos) {
-            evos = `${evos} > ${evoEntry.evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
+        if (pokeEntry.evos.length === 1) {
+          if (BattlePokedex[pokeEntry.evos[0]].evos) {
+            pokemon.evos = `${pokemon.evos} > ${BattlePokedex[pokeEntry.evos[0]].evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
           }
         }
-        evoLine += evos;
       }
+
       if (!pokeEntry.prevo && !pokeEntry.evos) {
-        evoLine += ' (No Evolutions)';
+        pokemon.evos += ' (No Evolutions)';
       }
-      typestring = 'Type';
 
-      if (pokeEntry.types.length > 1) {
-        typestring += 's';
-      }
-      abilityString = pokeEntry.abilities[0];
-
-      for (let index = 1; index < Object.keys(pokeEntry.abilities).length; index += 1) {
-        if (Object.keys(pokeEntry.abilities)[index] === 'H') {
-          abilityString = `${abilityString}, *${pokeEntry.abilities.H}*`;
+      for (const ability in pokeEntry.abilities) {
+        if (ability === '0') {
+          pokemon.abilities += `${pokeEntry.abilities[ability]}`;
+        } else if (ability === 'H') {
+          pokemon.abilities += `, *${pokeEntry.abilities[ability]}*`;
         } else {
-          abilityString = `${abilityString}, ${pokeEntry.abilities[index]}`;
+          pokemon.abilities += `, ${pokeEntry.abilities[ability]}`;
         }
       }
 
-      if (pokeEntry.gender) {
-        switch (pokeEntry.gender) {
-        case 'N':
-          genderString = 'None';
-          break;
-        case 'M':
-          genderString = '100% Male';
-          break;
-        case 'F':
-          genderString = '100% Female';
-          break;
-        default:
-          genderString = '';
-          break;
-        }
+      switch (pokeEntry.gender) {
+      case 'N':
+        pokemon.genders = 'None';
+        break;
+      case 'M':
+        pokemon.genders = '100% Male';
+        break;
+      case 'F':
+        pokemon.genders = '100% Female';
+        break;
+      default:
+        pokemon.genders = '50% Male | 50% Female';
+        break;
       }
 
       if (pokeEntry.genderRatio) {
-        genderString = `${pokeEntry.genderRatio.M * 100}% Male | ${pokeEntry.genderRatio.F * 100}% Female`;
+        pokemon.genders = `${pokeEntry.genderRatio.M * 100}% Male | ${pokeEntry.genderRatio.F * 100}% Female`;
       }
 
-      if (pokeEntry.forme) {
-        pokedexEntry = dexEntries[`${pokeEntry.num}${pokeEntry.forme.toLowerCase()}`][dexEntries[`${pokeEntry.num}${pokeEntry.forme.toLowerCase()}`].length - 1].flavor_text;
-      } else {
-        pokedexEntry = dexEntries[pokeEntry.num][dexEntries[pokeEntry.num].length - 1].flavor_text;
-      }
-
-      if (!pokedexEntry) {
-        pokedexEntry = '*PokéDex data not found for this Pokémon*';
+      if (pokeEntry.num >= 0) {
+        if (pokeEntry.forme && dexEntries[`${pokeEntry.num}${pokeEntry.forme.toLowerCase()}`]) {
+          pokemon.flavors = dexEntries[`${pokeEntry.num}${pokeEntry.forme.toLowerCase()}`][dexEntries[`${pokeEntry.num}${pokeEntry.forme.toLowerCase()}`].length - 1].flavor_text;
+        } else {
+          pokemon.flavors = dexEntries[pokeEntry.num][dexEntries[pokeEntry.num].length - 1].flavor_text;
+        }
       }
 
       dexEmbed
         .setColor(this.fetchColor(pokeEntry.color))
-        .setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(poke)}`,
-          `https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${poke.replace(' ', '_').toLowerCase()}.png`)
-        .setImage(`https://play.pokemonshowdown.com/sprites/xyani/${poke.toLowerCase().replace(' ', '')}.gif`)
-        .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
-        .addField(typestring, pokeEntry.types.join(', '), true)
+        .setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(pokeEntry.species)}`, pokeEntry.num >= 1
+          ? `https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${pokeEntry.species.replace(' ', '_').toLowerCase()}.png` : null)
+        .setImage(pokeEntry.num === 0
+          ? 'https://favna.xyz/images/ribbonhost/missingno.png'
+          : `https://play.pokemonshowdown.com/sprites/${args.shines ? 'xyani-shiny' : 'xyani'}/${pokeEntry.species.toLowerCase().replace(' ', '')}.gif`)
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
+        .addField('Type(s)', pokeEntry.types.join(', '), true)
         .addField('Height', `${pokeEntry.heightm}m`, true)
-        .addField('Gender Ratio', genderString, true)
+        .addField('Gender Ratio', pokemon.genders, true)
         .addField('Weight', `${pokeEntry.weightkg}kg`, true)
         .addField('Egg Groups', pokeEntry.eggGroups.join(', '), true)
-        .addField('Abilities', abilityString, true);
+        .addField('Abilities', pokemon.abilities, true);
       pokeEntry.otherFormes ? dexEmbed.addField('Other Formes', pokeEntry.otherFormes.join(', '), true) : null;
       dexEmbed
-        .addField('Evolutionary Line', evoLine, false)
+        .addField('Evolutionary Line', pokemon.evos, false)
         .addField('Base Stats', Object.keys(pokeEntry.baseStats).map(index => `${index.toUpperCase()}: **${pokeEntry.baseStats[index]}**`)
           .join(', '))
-        .addField('PokéDex Data', pokedexEntry)
-        .addField('External Resource', oneLine`[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(poke).replace(' ', '_')}_(Pokémon\\))  
-			  |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${poke.replace(' ', '_')})  
-			  |  [PokémonDB](http://pokemondb.net/pokedex/${poke.replace(' ', '-')})`);
+        .addField('PokéDex Data', pokemon.flavors)
+        .addField('External Resource', oneLine`${pokeEntry.num >= 0 ? `
+        [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(pokeEntry.species).replace(' ', '_')}_(Pokémon\\))`
+          : '*Fan made Pokémon*'}
+          ${pokeEntry.num >= 1 ? `  |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${pokeEntry.species.replace(' ', '_')})  
+          |  [PokémonDB](http://pokemondb.net/pokedex/${pokeEntry.species.replace(' ', '-')})` : ''}`);
 
       deleteCommandMessages(msg, this.client);
 
