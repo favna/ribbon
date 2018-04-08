@@ -164,6 +164,11 @@ class Ribbon {
               ? member.guild.channels.find('name', 'member-logs').id
               : null);
 
+        /**
+         * @todo Fix author images in onGuildMemberRemove
+         * @body For some reason they are not working. Will have to look into why.
+         */
+
         embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
           .setFooter(`User left | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
           .setColor('#F4BF42');
