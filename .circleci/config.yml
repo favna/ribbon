@@ -1,7 +1,7 @@
 version: 2
 machine:
   environment:
-    PATH: "${PATH}:${HOME}/${Ribbon}/node_modules/.bin"
+    PATH: "/opt/yarn/yarn-v1.5.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}:${HOME}/${Ribbon}/node_modules/.bin"
     NODE_ENV: test
   node:
     version: 8.11.1
