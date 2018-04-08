@@ -1,14 +1,6 @@
 {
 	"0": [{
-			"version_id": "Red",
-			"flavor_text": "A dual-type Bird/Normal Glitch POKéMON exclusive to the first generation"
-		},
-		{
-			"version_id": "Blue",
-			"flavor_text": "A dual-type Bird/Normal Glitch POKéMON exclusive to the first generation"
-		},
-		{
-			"version_id": "Yellow",
+			"version_id": "Generation 1",
 			"flavor_text": "A dual-type Bird/Normal Glitch POKéMON exclusive to the first generation"
 		}
 	],

@@ -44,6 +44,7 @@ const Matcher = require('did-you-mean'),
   dexEntries = require('../../data/dex/flavorText.json'),
   path = require('path'),
   underscore = require('underscore'),
+  zalgo = require('to-zalgo'),
   {MessageEmbed} = require('discord.js'),
   {BattleAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {BattlePokedex} = require(path.join(__dirname, '../../data/dex/pokedex')),
@@ -74,8 +75,6 @@ module.exports = class FlavorCommand extends commando.Command {
       ]
     });
 
-    this.pokedex = {};
-    this.pokeAliases = {};
     this.match = [];
   }
 
@@ -106,12 +105,18 @@ module.exports = class FlavorCommand extends commando.Command {
     }
   }
 
+  /* eslint-disable complexity*/
   run (msg, args) {
     const dataEmbed = new MessageEmbed(),
       pokedexEntries = [];
 
     let pokeEntry = {},
-      totalEntriesLength = 0; 
+      totalEntriesLength = 0;
+
+    if (/(?:--shiny)/i.test(args.pokemon)) {
+      args.pokemon = (args.pokemon.substring(0, args.pokemon.indexOf('--shiny')) + args.pokemon.substring(args.pokemon.indexOf('--shiny') + '--shiny'.length)).replace(/ /g, '');
+      args.shines = true;
+    }
 
     if (BattleAliases[args.pokemon]) {
       args.pokemon = BattleAliases[args.pokemon];
@@ -119,25 +124,20 @@ module.exports = class FlavorCommand extends commando.Command {
     } else {
       this.match = new Matcher(Object.keys(BattlePokedex).join(' '));
     }
-  
+
     if (args.pokemon.split(' ')[0] === 'mega') {
       args.pokemon = `${args.pokemon.substring(args.pokemon.split(' ')[0].length + 1)}mega`;
     }
-  
-    if (/(?:--shiny)/i.test(args.pokemon)) {
-      args.pokemon = (args.pokemon.substring(0, args.pokemon.indexOf('--shiny')) + args.pokemon.substring(args.pokemon.indexOf('--shiny') + '--shiny'.length)).replace(/ /g, '');
-      args.shines = true;
-    }
-  
+
     pokeEntry = BattlePokedex[args.pokemon];
-  
+
     for (const pokemon in BattlePokedex) {
       if (BattlePokedex[pokemon].num === parseInt(args.pokemon, 10) || BattlePokedex[pokemon].species.toLowerCase() === args.pokemon.toLowerCase()) {
         pokeEntry = BattlePokedex[pokemon];
         break;
       }
     }
-      
+
     if (!underscore.isEmpty(pokeEntry)) {
       if (pokeEntry.forme) {
         for (let i = 0; i < dexEntries[`${pokeEntry.num}${pokeEntry.forme.toLowerCase()}`].length; i += 1) {
@@ -174,15 +174,36 @@ module.exports = class FlavorCommand extends commando.Command {
         i -= 1;
       } while (i !== -1);
 
+      if (pokeEntry.num < 0) {
+        pokeEntry.sprite = 'https://favna.xyz/images/ribbonhost/pokesprites/unknown.png';
+      } else if (args.shines) {
+        pokeEntry.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${pokeEntry.species.replace(' ', '_').toLowerCase()}.png`;
+      } else {
+        pokeEntry.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${pokeEntry.species.replace(' ', '_').toLowerCase()}.png`;
+      }
+
       dataEmbed
         .setColor(this.fetchColor(pokeEntry.color))
-        .setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(pokeEntry.species)}`, pokeEntry.num >= 1
-          ? `https://cdn.rawgit.com/msikma/pokesprite/master/icons/pokemon/regular/${pokeEntry.species.replace(' ', '_').toLowerCase()}.png` : null)
-        .setImage(pokeEntry.num === 0
-          ? 'https://favna.xyz/images/ribbonhost/missingno.png'
-          : `https://play.pokemonshowdown.com/sprites/${args.shines ? 'xyani-shiny' : 'xyani'}/${pokeEntry.species.toLowerCase().replace(' ', '')}.gif`)
+        .setAuthor(`#${pokeEntry.num} - ${capitalizeFirstLetter(pokeEntry.species)}`, pokeEntry.sprite)
+        .setImage(`https://play.pokemonshowdown.com/sprites/${args.shines ? 'xyani-shiny' : 'xyani'}/${pokeEntry.species.toLowerCase().replace(' ', '')}.gif`)
         .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
         .setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.');
+
+      if (pokeEntry.num === 0) {
+        const fields = [];
+
+        for (const field in dataEmbed.fields) {
+          fields.push({
+            'name': zalgo(dataEmbed.fields[field].name),
+            'value': zalgo(dataEmbed.fields[field].value),
+            'inline': dataEmbed.fields[field].inline
+          });
+        }
+
+        dataEmbed.description = zalgo(dataEmbed.description);
+        dataEmbed.author.name = zalgo(dataEmbed.author.name);
+        dataEmbed.setImage('https://favna.xyz/images/ribbonhost/missingno.png');
+      }
 
       deleteCommandMessages(msg, this.client);
 
