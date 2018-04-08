@@ -64,7 +64,8 @@ module.exports = class KaiCommand extends commando.Command {
         'https://favna.xyz/images/ribbonhost/kai/antikai05.png',
         'https://favna.xyz/images/ribbonhost/kai/antikai06.gif',
         'https://favna.xyz/images/ribbonhost/kai/antikai07.png',
-        'https://favna.xyz/images/ribbonhost/kai/antikai08.png'
+        'https://favna.xyz/images/ribbonhost/kai/antikai08.png',
+        'https://favna.xyz/images/ribbonhost/kai/antikai09.png'
       ],
       curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
 
