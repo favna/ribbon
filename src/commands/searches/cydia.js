@@ -26,6 +26,7 @@
 /**
  * @file Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories  
  * Also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
+ * Server admins can disable the `[[]]` matching by using the `rmt off` command  
  * **Aliases**: `cy`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
@@ -72,6 +73,9 @@ module.exports = class CydiaCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    if (!this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
+      return null;
+    }
     if (msg.patternMatches) {
       args.query = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
     }

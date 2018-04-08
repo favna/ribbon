@@ -24,13 +24,13 @@
  */
 
 /**
- * @file Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel  
- * **Aliases**: `tml`, `togglemember`, `togglememberlogs`
+ * @file Moderation RegexMatchToggleCommand - Toggle Toggle commands matching on regex for this server  
+ * **Aliases**: `rmt`, `regexmatch`
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
- * @name memberlogs
- * @example memberlogs enable
+ * @name regexmatchtoggle
+ * @example regexmatchtoggle enable
  * @param {boolean} Option True or False
  * @returns {Message} Confirmation the setting was stored
  */
@@ -39,16 +39,16 @@ const commando = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class MemberLogsCommand extends commando.Command {
+module.exports = class RegexMatchToggleCommand extends commando.Command {
   constructor (client) {
     super(client, {
-      'name': 'memberlogs',
-      'memberName': 'memberlogs',
+      'name': 'regexmatchtoggle',
+      'memberName': 'regexmatchtoggle',
       'group': 'moderation',
-      'aliases': ['tml', 'togglemember', 'togglememberlogs'],
-      'description': 'Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel',
+      'aliases': ['rmt', 'regexmatch'],
+      'description': 'Toggle Toggle commands matching on regex for this server',
       'format': 'Enable|Disable',
-      'examples': ['memberlogs enable'],
+      'examples': ['regexmatchtoggle enable'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,
@@ -78,13 +78,10 @@ module.exports = class MemberLogsCommand extends commando.Command {
   }
 
   run (msg, args) {
-    this.client.provider.set(msg.guild.id, 'memberlogs', args.option);
+    this.client.provider.set(msg.guild.id, 'regexmatches', args.option);
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine`member logs have been
-        ${args.option 
-    ? 'enabled. Please ensure there is a channel named "member-logs" and that I have access to it!' 
-    : 'disabled. No need for a member-logs channel'}.`);
+    return msg.reply(oneLine`RegEx Matches have been ${args.option ? 'enabled' : 'disabled'}.`);
   }
 };

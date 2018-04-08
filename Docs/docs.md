@@ -87,10 +87,10 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune<br><strong>Aliases</strong>: <code>wheel</code>, <code>wof</code></p>
 </dd>
 <dt><a href="#module_favna">favna</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Custom FavnaCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to praise Favna<br><strong>Aliases</strong>: <code>.favna</code></p>
+<dd><p>Custom FavnaCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to praise Favna<br>Server admins can disable this command entirely by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>.favna</code></p>
 </dd>
 <dt><a href="#module_kai">kai</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Custom KaiCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br><strong>Aliases</strong>: <code>.kai</code></p>
+<dd><p>Custom KaiCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br>Server admins can disable this command entirely by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>.kai</code></p>
 </dd>
 <dt><a href="#module_copypasta">copypasta</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Extra CopyPastaCommand - Gets one of the server&#39;s stored copypastas<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
@@ -208,7 +208,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 This may also mean that the bot won&#39;t have access if it doesn&#39;t have administrator role so you cannot use the <code>unlock</code> command until you give it that permission!<br><strong>Aliases</strong>: <code>lock</code>, <code>ld</code></p>
 </dd>
 <dt><a href="#module_memberlogs">memberlogs</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel<br><strong>Aliases</strong>: <code>tml</code>, <code>togglememberlogs</code></p>
+<dd><p>Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel<br><strong>Aliases</strong>: <code>tml</code>, <code>togglemember</code>, <code>togglememberlogs</code></p>
 </dd>
 <dt><a href="#module_modlogs">modlogs</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation ModLogsCommand - Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel<br><strong>Aliases</strong>: <code>togglemod</code></p>
@@ -221,6 +221,9 @@ This may also mean that the bot won&#39;t have access if it doesn&#39;t have adm
 </dd>
 <dt><a href="#module_purge">purge</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation PurgeCommand - Quickly delete a certain amount of messages<br><strong>Aliases</strong>: <code>prune</code>, <code>delete</code></p>
+</dd>
+<dt><a href="#module_regexmatchtoggle">regexmatchtoggle</a> ⇒ <code>Message</code></dt>
+<dd><p>Moderation RegexMatchToggleCommand - Toggle Toggle commands matching on regex for this server<br><strong>Aliases</strong>: <code>rmt</code>, <code>regexmatch</code></p>
 </dd>
 <dt><a href="#module_setmemberlogs">setmemberlogs</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation SetMemberlogsCommand - Sets the channel used for member logs<br><strong>Aliases</strong>: <code>setmember</code></p>
@@ -341,7 +344,7 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dd><p>Searches AnimeCommand - Gets information about any anime from MyAnimeList<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code></p>
 </dd>
 <dt><a href="#module_cydia">cydia</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories<br>Also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak subreddit</a> and <a href="https://discord.gg/jb">its discord server</a><br><strong>Aliases</strong>: <code>cy</code></p>
+<dd><p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories<br>Also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak subreddit</a> and <a href="https://discord.gg/jb">its discord server</a><br>Server admins can disable the <code>[[]]</code> matching by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>cy</code></p>
 </dd>
 <dt><a href="#module_define">define</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Searches DefineCommand - Define a word using glosbe<br><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p>
@@ -522,6 +525,7 @@ wof 5
 ## favna ⇒ <code>MessageEmbed</code>
 Custom FavnaCommand - Custom Command exclusive to ChaosGamez server  
 A joke command to praise Favna  
+Server admins can disable this command entirely by using the `rmt off` command  
 **Aliases**: `.favna`
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with the joke text  
@@ -532,6 +536,7 @@ A joke command to praise Favna
 ## kai ⇒ <code>MessageEmbed</code>
 Custom KaiCommand - Custom Command exclusive to ChaosGamez server  
 A joke command to spite Kai  
+Server admins can disable this command entirely by using the `rmt off` command  
 **Aliases**: `.kai`
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔  
@@ -1175,7 +1180,7 @@ This may also mean that the bot won't have access if it doesn't have administrat
 
 ## memberlogs ⇒ <code>Message</code>
 Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel  
-**Aliases**: `tml`, `togglememberlogs`
+**Aliases**: `tml`, `togglemember`, `togglememberlogs`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
@@ -1271,6 +1276,24 @@ Moderation PurgeCommand - Quickly delete a certain amount of messages
 **Example**  
 ```js
 purge 10
+```
+<a name="module_regexmatchtoggle"></a>
+
+## regexmatchtoggle ⇒ <code>Message</code>
+Moderation RegexMatchToggleCommand - Toggle Toggle commands matching on regex for this server  
+**Aliases**: `rmt`, `regexmatch`
+
+**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Category**: moderation  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>boolean</code> | True or False |
+
+**Example**  
+```js
+regexmatchtoggle enable
 ```
 <a name="module_setmemberlogs"></a>
 
@@ -1883,6 +1906,7 @@ anime Yu-Gi-Oh Dual Monsters
 ## cydia ⇒ <code>MessageEmbed</code>
 Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories  
 Also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
+Server admins can disable the `[[]]` matching by using the `rmt off` command  
 **Aliases**: `cy`
 
 **Returns**: <code>MessageEmbed</code> - Information about the tweak  
