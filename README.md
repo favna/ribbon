@@ -4,7 +4,7 @@
 
 This it the source for Ribbon, a discord bot created by Favna. If you have any questions or concerns please join my server:
 
-[![discordbot](https://discordbots.org/api/widget/376520643862331396.svg)](https://discordbots.org/bot/376520643862331396)  [![Discord Server](https://canary.discordapp.com/api/guilds/246821351585742851/widget.png?style=banner3)](https://discord.gg/zdt5yQt)
+[![discordbot](https://discordbots.org/api/widget/376520643862331396.svg)](https://discordbots.org/bot/376520643862331396)  [![Discord Server](https://canary.discordapp.com/api/guilds/246821351585742851/widget.png?style=banner1)](https://discord.gg/zdt5yQt)
 
 ### [**list of all commands.**](https://github.com/Favna/Ribbon/wiki)
 
