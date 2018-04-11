@@ -83,7 +83,9 @@ module.exports = class ShowdownCommand extends commando.Command {
       results = fuse.search(args.tier),
       showdownEmbed = new MessageEmbed();
 
-    showdownEmbed.setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2').setThumbnail('https://img8.androidappsapk.co/300/d/3/f/game.pokemonshowdown.png');
+    showdownEmbed
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setThumbnail('https://img8.androidappsapk.co/300/d/3/f/game.pokemonshowdown.png');
 
     if (results.length) {
       const board = await request.get(`https://pokemonshowdown.com/ladder/${results[0].tier}.json`),
@@ -91,7 +93,7 @@ module.exports = class ShowdownCommand extends commando.Command {
           'usernames': board.body.toplist.map(u => u.username).slice(0, 10),
           'wins': board.body.toplist.map(w => w.w).slice(0, 10),
           'losses': board.body.toplist.map(l => l.l).slice(0, 10),
-          'elo': board.body.toplist.map(e => e.elo).slice(0, 10)
+          'elo': board.body.toplist.map(e => Math.round(e.elo)).slice(0, 10)
         };
 
       for (const rank in data.usernames) {
