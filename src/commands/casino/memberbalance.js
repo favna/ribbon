@@ -26,7 +26,6 @@
 /**
  * @file Casino MemberBalanceCommand - Retrieves the amount of chips another member has for the casino  
  * **Aliases**: `mbal`, `mcash`, `mbalance`, `mchips`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category casino
  * @name memberbalance

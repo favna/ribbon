@@ -26,7 +26,6 @@
 /**
  * @file Casino DailyCommand - Receive your daily 500 chips top up  
  * **Aliases**: `topup`, `bonus`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category casino
  * @name daily

@@ -26,7 +26,6 @@
 /**
  * @file Moderation KickCommand - Kicks a somewhat bad member  
  * **Aliases**: `k`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name kick

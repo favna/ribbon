@@ -26,7 +26,6 @@
 /**
  * @file Searches AnimeCommand - Gets information about any anime from MyAnimeList  
  * **Aliases**: `ani`, `mal`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category searches
  * @name anime

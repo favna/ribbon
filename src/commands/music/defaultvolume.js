@@ -26,7 +26,6 @@
 /**
  * @file Music DefaultVolumeCommand - Sets the server's default volume  
  * **Aliases**: `defvol`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category music
  * @name defaultvolume

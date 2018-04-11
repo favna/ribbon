@@ -26,7 +26,6 @@
 /**
  * @file Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!  
  * **Aliases**: `xdicey`, `roll`, `dicey`, `die`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category games
  * @name dice

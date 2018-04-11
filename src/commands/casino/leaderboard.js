@@ -26,7 +26,6 @@
 /**
  * @file Casino LeaderboardCommand - Shows the top 5 ranking players for your server  
  * **Aliases**: `lb`, `casinolb`, `leaderboards`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category casino
  * @name leaderboard

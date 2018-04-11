@@ -26,7 +26,6 @@
 /**
  * @file Owner EShopFetchCommand - Fetch the latest data for the eShop command  
  * **Aliases**: `efetch`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category owner
  * @name eshopfetch

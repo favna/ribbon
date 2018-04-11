@@ -27,7 +27,6 @@
  * @file nsfw e621Command - Gets a NSFW image from e621  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `eee`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category nsfw
  * @name e621

@@ -27,7 +27,6 @@
  * @file nsfw Rule34Command - Gets a NSFW image from rule34  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `r34`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category nsfw
  * @name rule34

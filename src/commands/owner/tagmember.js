@@ -26,7 +26,6 @@
 /**
  * @file Owner TagMemberCommand - Tags a member by ID  
  * Primarily meant for mobile and when members have annoying untaggable names  
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category owner
  * @name tagmember

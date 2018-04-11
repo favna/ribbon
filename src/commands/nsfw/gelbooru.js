@@ -27,7 +27,6 @@
  * @file nsfw GelbooruCommand - Gets a NSFW image from gelbooru  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `gel`, `booru`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category nsfw
  * @name gelbooru

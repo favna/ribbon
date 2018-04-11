@@ -26,7 +26,6 @@
 /**
  * @file Moderation ListWarnCommand - Show the amount of warning points a member has  
  * **Aliases**: `reqwarn`, `lw`, `rw`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name listwarn

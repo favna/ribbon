@@ -30,7 +30,6 @@
  * Use `append` to append all names with something  
  * Note that if there are a lot of members on the server it will take a long time to nickname them all due to Discord limiting the amount of actions per minute  
  * **Aliases**: `na`, `massnick`, `nickmass`, `allnick`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name nickall

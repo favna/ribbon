@@ -28,7 +28,6 @@
  * A joke command to spite Kai  
  * Server admins can disable this command entirely by using the `rmt off` command  
  * **Aliases**: `.kai`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category custom
  * @name kai

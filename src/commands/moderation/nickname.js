@@ -26,7 +26,6 @@
 /**
  * @file Moderation NickCommand - Nickname a single member  
  * **Aliases**: `nick`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name nickname

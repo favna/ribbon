@@ -26,7 +26,6 @@
 /**
  * @file Extra Say - Repeats a message and deletes your message  
  * **Aliases**: `sayd`, `repeat`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category extra
  * @name say

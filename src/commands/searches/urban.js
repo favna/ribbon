@@ -26,7 +26,6 @@
 /**
  * @file Searches UrbanCommand - Define a word using UrbanDictionary  
  * **Aliases**: `ub`, `ud`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category searches
  * @name urban

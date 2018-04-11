@@ -26,7 +26,6 @@
 /**
  * @file Moderation DeleteRoleCommand - Delete the role of a member  
  * **Aliases**: `deleterole`, `d
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name delrole

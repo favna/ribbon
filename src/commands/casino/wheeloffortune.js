@@ -26,7 +26,6 @@
 /**
  * @file Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune  
  * **Aliases**: `wheel`, `wof`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category casino
  * @name wheeloffortune

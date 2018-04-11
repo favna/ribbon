@@ -26,7 +26,6 @@
 /**
  * @file Moderation SetMemberlogsCommand - Sets the channel used for member logs  
  * **Aliases**: `setmember`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name setmemberlogs

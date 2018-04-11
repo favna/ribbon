@@ -26,7 +26,6 @@
 /**
  * @file Casino SlotsCommand - Gamble your chips at the slot machine  
  * **Aliases**: `slot`, `fruits`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category casino
  * @name slots

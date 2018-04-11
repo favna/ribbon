@@ -26,7 +26,6 @@
 /**
  * @file Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel  
  * **Aliases**: `tml`, `togglemember`, `togglememberlogs`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name memberlogs

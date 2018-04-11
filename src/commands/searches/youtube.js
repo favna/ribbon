@@ -27,7 +27,6 @@
  * @file Searches YouTubeCommand - Find a video on YouTube  
  * By default returns MessageEmbed. use `yts` to return just the URL and have in-client playback  
  * **Aliases**: `yt`, `tube`, `yts`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category searches
  * @name youtube

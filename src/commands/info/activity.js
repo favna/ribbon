@@ -26,7 +26,6 @@
 /**
  * @file Info ActivityCommand - Gets the activity (presence) data from a member  
  * **Aliases**: `act`, `presence`, `richpresence`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category info
  * @name Activity

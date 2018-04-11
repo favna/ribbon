@@ -26,7 +26,6 @@
 /**
  * @file Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)  
  * **Aliases**: `straw`, `poll`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category games
  * @name strawpoll

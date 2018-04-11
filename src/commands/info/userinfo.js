@@ -26,7 +26,6 @@
 /**
  * @file Info UserInfoCommand - Get the info from a user  
  * **Aliases**: `user`, `uinfo`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category info
  * @name userinfo

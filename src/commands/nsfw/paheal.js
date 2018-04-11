@@ -27,7 +27,6 @@
  * @file nsfw PahealCommand - Gets a NSFW image from paheal  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `pa`, `heal`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category nsfw
  * @name paheal

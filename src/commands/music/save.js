@@ -26,7 +26,6 @@
 /**
  * @file Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user
  * **Aliases**: `save-songs`, `save-song-list`, `ss`, `savequeue`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category music
  * @name save

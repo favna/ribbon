@@ -27,7 +27,6 @@
  * @file Searches GoogleCommand - Gets information through google  
  * Note: prioritizes Knowledge Graphs for better searching  
  * **Aliases**: `search`, `g`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category searches
  * @name google

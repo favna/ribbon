@@ -26,7 +26,6 @@
 /**
  * @file Info InviteCommand - Gets the invite link for the bot  
  * **Aliases**: `inv`, `links`, `shill`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category info
  * @name invite

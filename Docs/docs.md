@@ -404,7 +404,6 @@ Casino ChipsCommand - Retrieves your current amount of chips for the casino
 
 **Returns**: <code>MessageEmbed</code> - Information about your current balance  
 **Category**: casino  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 **Example**  
 ```js
 chips
@@ -418,7 +417,6 @@ Payout is 1:2
 
 **Returns**: <code>MessageEmbed</code> - Outcome of the coin flip  
 **Category**: casino  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -437,7 +435,6 @@ Casino DailyCommand - Receive your daily 500 chips top up
 
 **Returns**: <code>MessageEmbed</code> - Your new balance  
 **Category**: casino  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_give"></a>
 
 ## give ⇒ <code>MessageEmbed</code>
@@ -446,7 +443,6 @@ Casino GiveCommand - Give another player some chips
 
 **Returns**: <code>MessageEmbed</code> - Changed balances of the two players  
 **Category**: casino  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -465,7 +461,6 @@ Casino LeaderboardCommand - Shows the top 5 ranking players for your server
 
 **Returns**: <code>MessageEmbed</code> - List of top ranking players  
 **Category**: casino  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_memberbalance"></a>
 
 ## memberbalance ⇒ <code>MessageEmbed</code>
@@ -474,7 +469,6 @@ Casino MemberBalanceCommand - Retrieves the amount of chips another member has f
 
 **Returns**: <code>MessageEmbed</code> - Information about the current balance of the member  
 **Category**: casino  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -492,7 +486,6 @@ Casino SlotsCommand - Gamble your chips at the slot machine
 
 **Returns**: <code>MessageEmbed</code> - Outcome of the spin  
 **Category**: casino  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -510,7 +503,6 @@ Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune
 
 **Returns**: <code>MessageEmbed</code> - Outcome of the game  
 **Category**: casino  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -530,7 +522,6 @@ Server admins can disable this command entirely by using the `rmt off` command
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with the joke text  
 **Category**: custom  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_kai"></a>
 
 ## kai ⇒ <code>MessageEmbed</code>
@@ -541,7 +532,6 @@ Server admins can disable this command entirely by using the `rmt off` command
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔  
 **Category**: custom  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_copypasta"></a>
 
 ## copypasta ⇒ <code>MessageEmbed</code>
@@ -551,7 +541,6 @@ Note: It is possible to get copypastas with more than 2000 characters. Ask me to
 
 **Returns**: <code>MessageEmbed</code> - Copypasta content. In a normal message if more than 1024 characters  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -569,7 +558,6 @@ Extra CopyPastaAddCommand - Adds a new copypasta for your server
 
 **Returns**: <code>Message</code> - Confirmation the copypasta was added  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -588,7 +576,6 @@ Extra CopyPastaListCommand - Gets all copypastas available to the server
 
 **Returns**: <code>MessageEmbed</code> - List of all available copypastas  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_math"></a>
 
 ## math ⇒ <code>MessageEmbed</code>
@@ -597,7 +584,6 @@ Extra MathCommand - Take the effort out of calculations and let the bot do it fo
 
 **Returns**: <code>MessageEmbed</code> - Your equation and its answer  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -617,7 +603,6 @@ For a full list of supported currencies see [this url](https://docs.openexchange
 
 **Returns**: <code>MessageEmbed</code> - Input and output currency's and the amount your input is worth in both  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -637,7 +622,6 @@ Extra QRGenCommand - Generates a QR code from text (like a URL)
 
 **Returns**: <code>MessageEmbed</code> - Embedded QR code and original image URL  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -656,7 +640,6 @@ Providing a color hex will display that color, providing none will generate a ra
 
 **Returns**: <code>MessageEmbed</code> - Color of embed matches generated color  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -678,7 +661,6 @@ Extra Say - Repeats a message and deletes your message
 
 **Returns**: <code>Message</code> - Your message said by the bot  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -696,7 +678,6 @@ Extra SayWutCommand - Bust the last "say" user
 
 **Returns**: <code>MessageEmbed</code> - Info on who used the "say" command last  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_time"></a>
 
 ## time ⇒ <code>MessageEmbed</code>
@@ -706,7 +687,6 @@ Uses Google's Geocoding to determine the correct location therefore supports any
 
 **Returns**: <code>MessageEmbed</code> - Current date, current time, country and DST offset  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -725,7 +705,6 @@ Potentially you'll have to specify city if the city is in multiple countries, i.
 
 **Returns**: <code>MessageEmbed</code> - Various statistics about the current forecast  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -744,7 +723,6 @@ First banishes any existing zalgo to ensure proper result
 
 **Returns**: <code>Message</code> - Your text zalgo-fied  
 **Category**: extra  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -762,7 +740,6 @@ Games EightBallCommand - Rolls a magic 8 ball using your input
 
 **Returns**: <code>MessageEmbed</code> - Your question and its answer  
 **Category**: games  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -780,7 +757,6 @@ Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!
 
 **Returns**: <code>MessageEmbed</code> - The eyes rolled for each dice as well as the total of all rolls  
 **Category**: games  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -799,7 +775,6 @@ Games DndCCommand - Flips a coin
 
 **Returns**: <code>MessageEmbed</code> - Side the coin landed on  
 **Category**: games  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_fight"></a>
 
 ## fight ⇒ <code>MessageEmbed</code>
@@ -808,7 +783,6 @@ Games FightCommand - Pit two things against each other in a fight to the death. 
 
 **Returns**: <code>MessageEmbed</code> - Result of the combat  
 **Category**: games  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -827,7 +801,6 @@ Games HugCommand - Give someone a hug ❤!
 
 **Returns**: <code>MessageEmbed</code> - The hug and a cute image ❤  
 **Category**: games  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -844,7 +817,6 @@ Games KissCommand - Give someone a kiss ❤!
 
 **Returns**: <code>MessageEmbed</code> - The kiss and a cute image ❤  
 **Category**: games  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -862,7 +834,6 @@ Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org rand
 
 **Returns**: <code>MessageEmbed</code> - Result of the conflict  
 **Category**: games  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -880,7 +851,6 @@ Games SlapCommand - Slap a dumb person💢!
 
 **Returns**: <code>MessageEmbed</code> - The slap and an image  
 **Category**: games  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -898,7 +868,6 @@ Games StrawpollCommand - Create a strawpoll and find out what people really thin
 
 **Returns**: <code>MessageEmbed</code> - Poll url, title, options and preview image  
 **Category**: games  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -917,7 +886,6 @@ Info ActivityCommand - Gets the activity (presence) data from a member
 
 **Returns**: <code>MessageEmbed</code> - Activity from that member  
 **Category**: info  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -935,7 +903,6 @@ Games AvatarCommand - Get the avatar from any member
 
 **Returns**: <code>MessageEmbed</code> - The avatar image and a direct link to it  
 **Category**: info  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -954,7 +921,6 @@ Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList
 
 **Returns**: <code>MessageEmbed</code> - Info about a bot  
 **Category**: info  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -972,7 +938,6 @@ Info EmotesCommand - Lists all emotes from the server
 
 **Returns**: <code>MessageEmbed</code> - List of emotes  
 **Category**: info  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_invite"></a>
 
 ## invite ⇒ <code>MessageEmbed</code>
@@ -981,7 +946,6 @@ Info InviteCommand - Gets the invite link for the bot
 
 **Returns**: <code>MessageEmbed</code> - Invite link along with other links  
 **Category**: info  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_server"></a>
 
 ## server ⇒ <code>MessageEmbed</code>
@@ -990,7 +954,6 @@ Info ServerInfoCommand - Gets information about the current server
 
 **Returns**: <code>MessageEmbed</code> - Info about the server  
 **Category**: info  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_stats"></a>
 
 ## stats ⇒ <code>MessageEmbed</code>
@@ -999,7 +962,6 @@ Info RibbonStatsCommand - Statistics about Ribbon
 
 **Returns**: <code>MessageEmbed</code> - Ribbon's statistics  
 **Category**: info  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_userinfo"></a>
 
 ## userinfo ⇒ <code>MessageEmbed</code>
@@ -1008,7 +970,6 @@ Info UserInfoCommand - Get the info from a user
 
 **Returns**: <code>MessageEmbed</code> - Info about that member  
 **Category**: info  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1026,7 +987,6 @@ Moderation AddRoleCommand - Add a role to member
 
 **Returns**: <code>Message</code> - Confirmation the role was added  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1045,7 +1005,6 @@ Moderation NewsCommand - Make an announcement to a channel named "announcements"
 
 **Returns**: <code>Message</code> - Announcement you wrote in the announcement / news channel  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1063,7 +1022,6 @@ Moderation BanCommand - Ban a bad member
 
 **Returns**: <code>MessageEmbed</code> - Log of the ban  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1082,7 +1040,6 @@ Moderation defaultroleCommand - Sets a default role that should be assigned to a
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1100,7 +1057,6 @@ Moderation deleteCommandMessagesCommand - Configure whether the bot should delet
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1117,7 +1073,6 @@ Moderation DeleteRoleCommand - Delete the role of a member
 **Aliases**: `deleterole`, `d
 
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1136,7 +1091,6 @@ Moderation KickCommand - Kicks a somewhat bad member
 
 **Returns**: <code>MessageEmbed</code> - Log of the kick  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1155,7 +1109,6 @@ Moderation ListWarnCommand - Show the amount of warning points a member has
 
 **Returns**: <code>MessageEmbed</code> - The warnings that member has  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1175,7 +1128,6 @@ This may also mean that the bot won't have access if it doesn't have administrat
 
 **Returns**: <code>Message</code> - Confirmation the channel was locked  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_memberlogs"></a>
 
 ## memberlogs ⇒ <code>Message</code>
@@ -1184,7 +1136,6 @@ Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you 
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1202,7 +1153,6 @@ Moderation ModLogsCommand - Toggle mod logs in the mod-logs (or by you configure
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1224,7 +1174,6 @@ Note that if there are a lot of members on the server it will take a long time t
 
 **Returns**: <code>MessageEmbed</code> - Log of the nicknaming  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1248,7 +1197,6 @@ Moderation NickCommand - Nickname a single member
 
 **Returns**: <code>Message</code> - Confirmation the nickname was assigned  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1267,7 +1215,6 @@ Moderation PurgeCommand - Quickly delete a certain amount of messages
 
 **Returns**: <code>Message</code> - Confirmation of the amount of messages deleted - will self delete after 1 second.  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1285,7 +1232,6 @@ Moderation RegexMatchToggleCommand - Toggle Toggle commands matching on regex fo
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1303,7 +1249,6 @@ Moderation SetMemberlogsCommand - Sets the channel used for member logs
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1321,7 +1266,6 @@ Moderation SetModlogsCommand - Sets the channel used for mod logs
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1340,7 +1284,6 @@ This is essentially a kick with the added effect of deleting all their past mess
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a log of the softban  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1359,7 +1302,6 @@ Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1379,7 +1321,6 @@ Note that the bot does need to be able to be able to access this channel to unlo
 
 **Returns**: <code>Message</code> - Confirmation the channel is unlocked  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_warn"></a>
 
 ## warn ⇒ <code>MessageEmbed</code>
@@ -1389,7 +1330,6 @@ Please note that the bot will not auto ban when the member has a certain amount 
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a log of the warning  
 **Category**: moderation  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1409,7 +1349,6 @@ Music DefaultVolumeCommand - Sets the server's default volume
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1429,7 +1368,6 @@ Use "default" as argument to set it back to the bot default
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1449,7 +1387,6 @@ Use "default" as argument to set it back to the bot default
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1468,7 +1405,6 @@ You need to be in a voice channel before you can use this command
 
 **Returns**: <code>Message</code> - Confirmation the music was paused  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_play"></a>
 
 ## play ⇒ <code>MessageEmbed</code>
@@ -1483,7 +1419,6 @@ There are 3 ways to queue songs
 
 **Returns**: <code>MessageEmbed</code> - Title, duration and thumbnail of the video  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1503,7 +1438,6 @@ Songs are paginated in sets of 5
 
 **Returns**: <code>MessageEmbed</code> - List of queued songs with their duration and total duration of the queue  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1522,7 +1456,6 @@ You need to be in a voice channel before you can use this command
 
 **Returns**: <code>Message</code> - Confirmation the song is resumed  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_save"></a>
 
 ## save ⇒ <code>MessageEmbed</code>
@@ -1531,7 +1464,6 @@ Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user
 
 **Returns**: <code>MessageEmbed</code> - Titles, durations and total queue duration sent in a DM  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_skip"></a>
 
 ## skip ⇒ <code>Message</code>
@@ -1542,7 +1474,6 @@ You need to be in a voice channel before you can use this command
 
 **Returns**: <code>Message</code> - Confirmation the song was skipped  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1562,7 +1493,6 @@ Music MusicStatusCommand - Gets status about the currently playing song
 
 **Returns**: <code>MessageEmbed</code> - Title, URL of and progress into the song  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_stop"></a>
 
 ## stop ⇒ <code>Message</code>
@@ -1571,7 +1501,6 @@ Music StopMusicCommand - Stops the current queue. Bot will automatically leave t
 
 **Returns**: <code>Message</code> - Sad face about stopping the music  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_volume"></a>
 
 ## volume ⇒ <code>Message</code>
@@ -1582,7 +1511,6 @@ You need to be in a voice channel before you can use this command
 
 **Returns**: <code>Message</code> - Confirmation of the change of volume  
 **Category**: music  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1601,7 +1529,6 @@ Can only be used in NSFW marked channels!
 
 **Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1620,7 +1547,6 @@ Can only be used in NSFW marked channels!
 
 **Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1639,7 +1565,6 @@ Can only be used in NSFW marked channels!
 
 **Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1658,7 +1583,6 @@ Can only be used in NSFW marked channels!
 
 **Returns**: <code>MessageEmbed</code> - Webm link and embeds gif  
 **Category**: nsfw  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1677,7 +1601,6 @@ Can only be used in NSFW marked channels!
 
 **Returns**: <code>MessageEmbed</code> - URL, duration and embedded thumbnail  
 **Category**: nsfw  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1696,7 +1619,6 @@ Can only be used in NSFW marked channels!
 
 **Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1713,7 +1635,6 @@ Owner CheckGuildsCommand - Lists all guilds the bot is in
 
 **Returns**: <code>Message</code> - Amount and list of guilds in code blocks  
 **Category**: owner  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_customtopup"></a>
 
 ## customtopup ⇒ <code>MessageEmbed</code>
@@ -1722,7 +1643,6 @@ Owner CustomTopUpCommand - Daniël Ocean doesn't give a crap about legality
 
 **Returns**: <code>MessageEmbed</code> - New balance for the member  
 **Category**: owner  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1740,7 +1660,6 @@ Owner DBPostCommand - Posts current guild count to discordbotlist
 
 **Returns**: <code>Message</code> - Confirmation the update was made  
 **Category**: owner  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_eshopfetch"></a>
 
 ## eshopfetch ⇒ <code>Message</code>
@@ -1749,7 +1668,6 @@ Owner EShopFetchCommand - Fetch the latest data for the eShop command
 
 **Returns**: <code>Message</code> - Confirmation the data was fetched  
 **Category**: owner  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 <a name="module_tagmember"></a>
 
 ## tagmember ⇒ <code>Message</code>
@@ -1758,7 +1676,6 @@ Primarily meant for mobile and when members have annoying untaggable names
 
 **Returns**: <code>Message</code> - Mention of the member wrapped between carets  
 **Category**: owner  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1778,7 +1695,6 @@ If you want to get the shiny sprite displayed add the `--shiny` at the end of th
 
 **Returns**: <code>MessageEmbed</code> - Lots of information about the pokemon  
 **Category**: pokemon  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1799,7 +1715,6 @@ If you want to get the shiny sprite displayed add the `--shiny` at the end of th
 
 **Returns**: <code>MessageEmbed</code> - Flavor texts for the pokemon  
 **Category**: pokemon  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1818,7 +1733,6 @@ For item names existing of multiple words (for example `life orb`) you can eithe
 
 **Returns**: <code>MessageEmbed</code> - Description and external links for the item  
 **Category**: pokemon  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1836,7 +1750,6 @@ Pokémon AbilityCommand - Gets information on an ability in Pokémon
 
 **Returns**: <code>MessageEmbed</code> - Description and external links for the ability  
 **Category**: pokémon  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1855,7 +1768,6 @@ For move names existing of multiple words (for example `dragon dance`) you can e
 
 **Returns**: <code>MessageEmbed</code> - Details about the move  
 **Category**: pokémon  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1873,7 +1785,6 @@ Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types
 
 **Returns**: <code>MessageEmbed</code> - All weaknesses, advantages  
 **Category**: pokémon  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1891,7 +1802,6 @@ Searches AnimeCommand - Gets information about any anime from MyAnimeList
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested anime  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1911,7 +1821,6 @@ Server admins can disable the `[[]]` matching by using the `rmt off` command
 
 **Returns**: <code>MessageEmbed</code> - Information about the tweak  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1929,7 +1838,6 @@ Searches DefineCommand - Define a word using glosbe
 
 **Returns**: <code>MessageEmbed</code> - Possible definitions for that word  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1947,7 +1855,6 @@ Searches DocsCommand - Get an entry from the Discord.JS documentation
 
 **Returns**: <code>MessageEmbed</code> - Info about the entry from the library  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1965,7 +1872,6 @@ Searches EShopCommand - Gets information about a game in the Nintendo Switch eSh
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested game  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1983,7 +1889,6 @@ Searches GamesCommand - Gets information about a game using IndieGamesDoneBad (I
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested game  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2002,7 +1907,6 @@ Note: prioritizes Knowledge Graphs for better searching
 
 **Returns**: <code>Message</code> - Result of your search  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2020,7 +1924,6 @@ Searches ImageCommand - Gets an image through Google Images
 
 **Returns**: <code>MessageEmbed</code> - Embedded image and search query  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2038,7 +1941,6 @@ Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That 
 
 **Returns**: <code>Message</code> - LMGTFY url  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2056,7 +1958,6 @@ Searches MangaCommand - Gets information about any manga from MyAnimeList
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested manga  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2074,7 +1975,6 @@ Searches SteamCommand - Gets information about a game using Steam
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested game  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2092,7 +1992,6 @@ Searches MovieCommand - Find information about a movie using TheMovieDatabase
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested movie  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2110,7 +2009,6 @@ Searches TVCommand - Find information about a TV series using TheMovieDatabase
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested TV serie  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2128,7 +2026,6 @@ Searches UrbanCommand - Define a word using UrbanDictionary
 
 **Returns**: <code>MessageEmbed</code> - Top definition for the requested phrase  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2147,7 +2044,6 @@ By default returns MessageEmbed. use `yts` to return just the URL and have in-cl
 
 **Returns**: <code>MessageEmbed</code> - Title, Channel, Publication Date and Description of the video  
 **Category**: searches  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2165,7 +2061,6 @@ Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: streamwatch  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2183,7 +2078,6 @@ Streamwatch TwitchOutputCommand - Configures the channel in which twitch notific
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: streamwatch  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2201,7 +2095,6 @@ Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: streamwatch  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |

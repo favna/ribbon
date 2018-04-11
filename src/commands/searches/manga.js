@@ -26,7 +26,6 @@
 /**
  * @file Searches MangaCommand - Gets information about any manga from MyAnimeList  
  * **Aliases**: `cartoon`, `man`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category searches
  * @name manga

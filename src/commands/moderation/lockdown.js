@@ -28,7 +28,6 @@
  * NOTE: Once locked it will be locked to the `@everyone` role and depending on your permissions setup it may be that only people with the `administrator` role will have access to the channel.
  * This may also mean that the bot won't have access if it doesn't have administrator role so you cannot use the `unlock` command until you give it that permission!  
  * **Aliases**: `lock`, `ld`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name lockdown

@@ -26,7 +26,6 @@
 /**
  * @file Moderation PurgeCommand - Quickly delete a certain amount of messages  
  * **Aliases**: `prune`, `delete`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name purge

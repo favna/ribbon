@@ -26,7 +26,6 @@
 /**
  * @file Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url  
  * **Aliases**: `dumb`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category searches
  * @name lmgtfy

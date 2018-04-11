@@ -26,7 +26,6 @@
 /**
  * @file Games SlapCommand - Slap a dumb person💢!  
  * **Aliases**: `bakaslap`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category games
  * @name slap

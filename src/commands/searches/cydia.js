@@ -28,7 +28,6 @@
  * Also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
  * Server admins can disable the `[[]]` matching by using the `rmt off` command  
  * **Aliases**: `cy`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category searches
  * @name cydia

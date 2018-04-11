@@ -28,7 +28,6 @@
  * Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC  
  * For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)  
  * **Aliases**: `money`, `rate`, `convert`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category extra
  * @name oxr

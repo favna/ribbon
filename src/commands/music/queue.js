@@ -28,7 +28,6 @@
  * Songs are paginated in sets of 5  
  * **Aliases**: `songs`, `song-list`, `list`, `listqueue`
  * **Aliases**: `bal`, `cash`, `balance`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category music
  * @name queue

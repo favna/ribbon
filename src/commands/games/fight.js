@@ -26,7 +26,6 @@
 /**
  * @file Games FightCommand - Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.  
  * **Aliases**: `combat`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category games
  * @name fight

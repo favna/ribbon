@@ -28,7 +28,6 @@
  * A vote to skip is started if there are 4 or more people in the voice channel with `(amount of members) / 3` as required amount of votes (bot doesn't count as a member)  
  * Staff that can delete messages can force the skip by using `skip force`  
  * You need to be in a voice channel before you can use this command
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category music
  * @name skip

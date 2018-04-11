@@ -28,7 +28,6 @@
  * Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
  * If you want to get the shiny sprite displayed add the `--shiny` at the end of the search  
  * **Aliases**: `pokedex`, `dexfind`, `df`, `rotom`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category pokemon
  * @name dex

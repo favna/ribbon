@@ -28,7 +28,6 @@
  * If you do not  give any parameter the bot will show the current volume  
  * You need to be in a voice channel before you can use this command  
  * **Aliases**: `set-volume`, `set-vol`, `vol`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category music
  * @name volume

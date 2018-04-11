@@ -25,7 +25,6 @@
 
 /**
  * @file Owner CheckGuildsCommand - Lists all guilds the bot is in  
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category owner
  * @name checkguilds 

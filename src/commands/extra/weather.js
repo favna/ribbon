@@ -27,7 +27,6 @@
  * @file Extra Weather - Get the current weather forecast in any city  
  * Potentially you'll have to specify city if the city is in multiple countries, i.e. `weather amsterdam` will not be the same as `weather amsterdam missouri`  
  * **Aliases**: `temp`, `forecast`, `fc`, `wth`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category extra
  * @name weather

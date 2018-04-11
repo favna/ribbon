@@ -26,7 +26,6 @@
 /**
  * @file Moderation NewsCommand - Make an announcement to a channel named "announcements" or "news"  
  * **Aliases**: `news`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name announce

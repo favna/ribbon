@@ -26,7 +26,6 @@
 /**
  * @file Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization  
  * **Aliases**: rockpaperscissors
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category games
  * @name rps

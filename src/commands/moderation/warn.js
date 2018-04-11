@@ -27,7 +27,6 @@
  * @file Moderation WarnCommand - Gives a member warning points  
  * Please note that the bot will not auto ban when the member has a certain amount of points!
  * **Aliases**: `warning`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name warn

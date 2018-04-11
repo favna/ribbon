@@ -26,7 +26,6 @@
 /**
  * @file Extra MathCommand - Take the effort out of calculations and let the bot do it for you  
  * **Aliases**: `calc`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category extra
  * @name math

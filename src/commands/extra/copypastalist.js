@@ -26,7 +26,6 @@
 /**
  * @file Extra CopyPastaListCommand - Gets all copypastas available to the server  
  * **Aliases**: `cplist`, `copylist`, `pastalist`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category extra
  * @name copypastalist

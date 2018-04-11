@@ -28,7 +28,6 @@
  * Give no argument to show current amount of maximum songs  
  * Use "default" as argument to set it back to the bot default  
  * **Aliases**: `max-duration`, `max-song-length`, `max-song-duration`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category music
  * @name maxlength

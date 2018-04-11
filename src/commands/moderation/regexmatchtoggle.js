@@ -26,7 +26,6 @@
 /**
  * @file Moderation RegexMatchToggleCommand - Toggle Toggle commands matching on regex for this server  
  * **Aliases**: `rmt`, `regexmatch`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name regexmatchtoggle

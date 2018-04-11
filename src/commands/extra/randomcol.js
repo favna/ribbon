@@ -27,7 +27,6 @@
  * @file Extra RandomCol - Generates a random color  
  * Providing a color hex will display that color, providing none will generate a random one  
  * **Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category extra
  * @name randomcol

@@ -26,7 +26,6 @@
 /**
  * @file Games AvatarCommand - Get the avatar from any member  
  * **Aliases**: `ava`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category info
  * @name avatar

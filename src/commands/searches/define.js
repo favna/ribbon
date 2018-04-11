@@ -18,7 +18,6 @@
 /**
  * @file Searches DefineCommand - Define a word using glosbe  
  * **Aliases**: `def`, `dict`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category searches
  * @name define

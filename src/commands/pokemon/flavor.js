@@ -29,7 +29,6 @@
  * Due to message limit size it fetches as many entries possible starting with generation 7 going downwards  
  * If you want to get the shiny sprite displayed add the `--shiny` at the end of the search  
  * **Aliases**: `flavors`, `dexdata`, `dexentries`, `dextext`, `dextex`, `dexter`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category pokemon
  * @name flavor

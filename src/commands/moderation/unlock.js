@@ -28,7 +28,6 @@
  * Only really useful if you previously locked the channel  
  * Note that the bot does need to be able to be able to access this channel to unlock it (read permissions)  
  * **Aliases**: `delock`, `ul`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name unlock

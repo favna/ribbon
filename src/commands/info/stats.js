@@ -26,7 +26,6 @@
 /**
  * @file Info RibbonStatsCommand - Statistics about Ribbon  
  * **Aliases**: `botinfo`, `info`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category info
  * @name stats

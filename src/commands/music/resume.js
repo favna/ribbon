@@ -27,7 +27,6 @@
  * @file Music ResumeSongCommand - Resumes the song after pausing it  
  * You need to be in a voice channel before you can use this command  
  * **Aliases**: `go`, `continue`, `ale`, `loss`, `res`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category music
  * @name resume

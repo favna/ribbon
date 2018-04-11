@@ -26,7 +26,6 @@
 /**
  * @file Searches MovieCommand - Find information about a movie using TheMovieDatabase  
  * **Aliases**: `movie`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category searches
  * @name tmdb

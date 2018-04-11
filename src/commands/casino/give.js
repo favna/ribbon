@@ -26,7 +26,6 @@
 /**
  * @file Casino GiveCommand - Give another player some chips  
  * **Aliases**: `donate`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category casino
  * @name give

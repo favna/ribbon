@@ -27,7 +27,6 @@
  * @file Casino CoinCommand - Gamble your chips in a coin flip  
  * Payout is 1:2  
  * **Aliases**: `flip`, `cflip`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category casino
  * @name coin

@@ -27,7 +27,6 @@
  * @file Pokémon MoveCommand - Gets information about a move in Pokémon  
  * For move names existing of multiple words (for example `dragon dance`) you can either type it with or without the space  
  * **Aliases**: `attack`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category pokémon
  * @name move

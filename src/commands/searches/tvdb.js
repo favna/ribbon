@@ -26,7 +26,6 @@
 /**
  * @file Searches TVCommand - Find information about a TV series using TheMovieDatabase  
  * **Aliases**: `tv`, `show`, `serie`, `series`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category searches
  * @name tvdb

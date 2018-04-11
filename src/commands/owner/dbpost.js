@@ -25,7 +25,6 @@
 
 /**
  * @file Owner DBPostCommand - Posts current guild count to discordbotlist  
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category owner
  * @name dbpost

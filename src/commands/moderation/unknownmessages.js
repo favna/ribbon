@@ -26,7 +26,6 @@
 /**
  * @file Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off  
  * **Aliases**: `unknowns`, `unkmsg` 
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name unknownmessages

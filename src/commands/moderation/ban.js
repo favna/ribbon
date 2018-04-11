@@ -26,7 +26,6 @@
 /**
  * @file Moderation BanCommand - Ban a bad member  
  * **Aliases**: `b`, `banana`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category moderation
  * @name ban

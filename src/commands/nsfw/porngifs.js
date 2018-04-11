@@ -27,7 +27,6 @@
  * @file nsfw PornGifsCommand - Gets a NSFW gif and webm from pornhub  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `nsfwgifs`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category nsfw
  * @name porngifs

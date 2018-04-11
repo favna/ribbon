@@ -25,7 +25,6 @@
 
 /**
  * @file Games KissCommand - Give someone a kiss ❤!  
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category games
  * @name kiss

@@ -32,7 +32,6 @@
  * 2. Youtube URL  
  * 3. Youtube video ID  
  * **Aliases**: `add`, `enqueue`, `start`, `join`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category music
  * @name play

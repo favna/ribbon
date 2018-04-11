@@ -27,7 +27,6 @@
  * @file nsfw PornVidsCommand - Gets a NSFW video from pornhub  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `porn`, `nsfwvids`
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @module
  * @category nsfw
  * @name pornvids
