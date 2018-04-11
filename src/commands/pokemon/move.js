@@ -41,7 +41,7 @@ const Matcher = require('did-you-mean'),
   underscore = require('underscore'),
   {MessageEmbed} = require('discord.js'),
   {BattleMovedex} = require(path.join(__dirname, '../../data/dex/moves')),
-  {BattleAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
+  {MoveAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {oneLine} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
@@ -78,9 +78,9 @@ module.exports = class MoveCommand extends commando.Command {
 
     let moveEntry = {};
 
-    if (BattleAliases[args.move]) {
-      args.item = BattleAliases[args.item];
-      this.match = new Matcher(Object.keys(BattleAliases).join(' '));
+    if (MoveAliases[args.move]) {
+      args.item = MoveAliases[args.item];
+      this.match = new Matcher(Object.keys(MoveAliases).join(' '));
     } else {
       this.match = new Matcher(Object.keys(BattleMovedex).join(' '));
     }
@@ -117,6 +117,7 @@ module.exports = class MoveCommand extends commando.Command {
 
       return msg.embed(moveEmbed, `**${capitalizeFirstLetter(moveEntry.name)}**`);
     }
+    this.match.setThreshold(4);
     const dym = this.match.get(args.move), // eslint-disable-line one-var
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the move name?';
 

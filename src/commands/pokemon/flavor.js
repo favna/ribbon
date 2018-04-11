@@ -45,7 +45,7 @@ const Matcher = require('did-you-mean'),
   underscore = require('underscore'),
   zalgo = require('to-zalgo'),
   {MessageEmbed} = require('discord.js'),
-  {BattleAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
+  {PokeAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {BattlePokedex} = require(path.join(__dirname, '../../data/dex/pokedex')),
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
@@ -117,9 +117,9 @@ module.exports = class FlavorCommand extends commando.Command {
       args.shines = true;
     }
 
-    if (BattleAliases[args.pokemon]) {
-      args.pokemon = BattleAliases[args.pokemon];
-      this.match = new Matcher(Object.keys(BattleAliases).join(' '));
+    if (PokeAliases[args.pokemon]) {
+      args.pokemon = PokeAliases[args.pokemon];
+      this.match = new Matcher(Object.keys(PokeAliases));
     } else {
       this.match = new Matcher(Object.keys(BattlePokedex).join(' '));
     }
@@ -208,6 +208,7 @@ module.exports = class FlavorCommand extends commando.Command {
 
       return msg.embed(dataEmbed);
     }
+    this.match.setThreshold(4);
     const dym = this.match.get(args.pokemon), // eslint-disable-line one-var
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
 

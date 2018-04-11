@@ -40,7 +40,7 @@ const Matcher = require('did-you-mean'),
   underscore = require('underscore'),
   {MessageEmbed} = require('discord.js'),
   {BattleAbilities} = require(path.join(__dirname, '../../data/dex/abilities')),
-  {BattleAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
+  {AbilityAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {oneLine} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
@@ -77,11 +77,10 @@ module.exports = class AbilityCommand extends commando.Command {
 
     let abilityEntry = {};
 
-    if (BattleAliases[args.ability]) {
-      args.ability = BattleAliases[args.ability];
-      this.match = new Matcher(Object.keys(BattleAliases).join(' '));
+    if (AbilityAliases[args.ability]) {
+      args.ability = AbilityAliases[args.ability];
+      this.match = new Matcher(Object.keys(AbilityAliases).join(' '));
     } else {
-      args.ability = args.ability;
       this.match = new Matcher(Object.keys(BattleAbilities).join(' '));
     }
 
@@ -106,6 +105,7 @@ module.exports = class AbilityCommand extends commando.Command {
 
       return msg.embed(abilityEmbed, `**${capitalizeFirstLetter(abilityEntry.name)}**`);
     }
+    this.match.setThreshold(4);
     const dym = this.match.get(args.ability), // eslint-disable-line one-var
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the ability?';
 

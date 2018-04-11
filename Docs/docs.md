@@ -332,6 +332,9 @@ There are 3 ways to queue songs  </p>
 For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p>
 </dd>
 <dt><a href="#module_ability">ability</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice<br><strong>Aliases</strong>: <code>showdownlb</code>, <code>pokelb</code></p>
+</dd>
+<dt><a href="#module_ability">ability</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pokémon AbilityCommand - Gets information on an ability in Pokémon<br><strong>Aliases</strong>: <code>abilities</code>, <code>abi</code></p>
 </dd>
 <dt><a href="#module_move">move</a> ⇒ <code>MessageEmbed</code></dt>
@@ -1741,6 +1744,23 @@ For item names existing of multiple words (for example `life orb`) you can eithe
 **Example**  
 ```js
 item assault vest
+```
+<a name="module_ability"></a>
+
+## ability ⇒ <code>MessageEmbed</code>
+Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice  
+**Aliases**: `showdownlb`, `pokelb`
+
+**Returns**: <code>MessageEmbed</code> - Description and external links for the ability  
+**Category**: pokémon  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AbilityName | <code>string</code> | The name of the ability you  want to find |
+
+**Example**  
+```js
+ability multiscale
 ```
 <a name="module_ability"></a>
 

@@ -41,7 +41,7 @@ const Matcher = require('did-you-mean'),
   underscore = require('underscore'),
   {MessageEmbed} = require('discord.js'),
   {BattleItems} = require(path.join(__dirname, '../../data/dex/items')),
-  {BattleAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
+  {ItemAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {oneLine} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
@@ -78,9 +78,9 @@ module.exports = class ItemCommand extends commando.Command {
 
     let itemEntry = {};
 
-    if (BattleAliases[args.item]) {
-      args.item = BattleAliases[args.item];
-      this.match = new Matcher(Object.keys(BattleAliases).join(' '));
+    if (ItemAliases[args.item]) {
+      args.item = ItemAliases[args.item];
+      this.match = new Matcher(Object.keys(ItemAliases).join(' '));
     } else {
       this.match = new Matcher(Object.keys(BattleItems).join(' '));
     }
@@ -97,7 +97,7 @@ module.exports = class ItemCommand extends commando.Command {
     if (!underscore.isEmpty(itemEntry)) {
       itemEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadex.png')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
         .setAuthor(`${capitalizeFirstLetter(itemEntry.name)}`, `https://play.pokemonshowdown.com/sprites/itemicons/${itemEntry.name.toLowerCase().replace(/ /g, '-')}.png`)
         .addField('Description', itemEntry.desc)
         .addField('Generation Introduced', itemEntry.gen)
@@ -112,6 +112,7 @@ module.exports = class ItemCommand extends commando.Command {
 
       return msg.embed(itemEmbed, `**${capitalizeFirstLetter(itemEntry.name)}**`);
     }
+    this.match.setThreshold(4);
     const dym = this.match.get(args.item), // eslint-disable-line one-var
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the item name?';
 
