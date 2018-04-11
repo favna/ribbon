@@ -210,19 +210,18 @@ class Ribbon {
               .setTitle(`${curDisplayName} just went live!`)
               .setDescription(stripIndents`streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
 
-            if (userData.ok && userData.body._total > 0) {
+            if (userData.ok && userData.body._total > 0 && userData.body.users[0]) {
               twitchEmbed
                 .setThumbnail(userData.body.users[0].logo)
                 .setTitle(`${userData.body.users[0].display_name} just went live!`)
                 .setDescription(stripIndents`${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
             }
 
-            if (streamData.ok && streamData.body._total > 0) {
+            if (streamData.ok && streamData.body._total > 0 && streamData.body.streams[0]) {
               twitchEmbed.setDescription(stripIndents`${twitchEmbed.description}\n
-							**Stream Started At**${moment(streamData.body.streams[0].created_at).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+                **Stream Started At**${moment(streamData.body.streams[0].created_at).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
                 .setImage(streamData.body.streams[0].preview.large);
             }
-
             if (twitchChannel) {
               curGuild.channels.get(twitchChannel).send({'embed': twitchEmbed});
             }
@@ -295,7 +294,7 @@ class Ribbon {
     this.client.registry
       .registerGroups([
         ['games', 'Games - Play some games'],
-        ['casino', 'Casino - Gain and gamble points'], 
+        ['casino', 'Casino - Gain and gamble points'],
         ['info', 'Info - Discord info at your fingertips'],
         ['music', 'Music - Let the DJ out'],
         ['searches', 'Searches - Browse the web and find results'],
