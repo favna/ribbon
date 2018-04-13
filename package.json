@@ -14,7 +14,7 @@
     "url": "https://github.com/Favna/Ribbon/issues"
   },
   "scripts": {
-    "docs": "jsdoc2md --template ./docs/template.hbs --files ./src/**/*.js | tee docs/docs.md ../Ribbon.wiki/All-Commands.md ../favna.xyz/public/markdown/docs.md > NUL",
+    "docs": "jsdoc2md --template ./docs/template.hbs --files ./src/**/*.js | tee docs/index.md ../Ribbon.wiki/All-Commands.md ../favna.xyz/public/markdown/docs.md > NUL",
     "deploydocs": "yarn run docs && git commit -am documentation && git push && cd ../Ribbon.wiki/ && git commit -am documentation && git push && cd ../favna.xyz/ && git commit -am documentation && git push",
     "lintfix": "./node_modules/.bin/eslint --fix **/*.js",
     "lint": "./node_modules/.bin/eslint **/*.js",
