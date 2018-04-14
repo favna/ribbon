@@ -179,6 +179,15 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_userinfo">userinfo</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info UserInfoCommand - Get the info from a user<br><strong>Aliases</strong>: <code>user</code>, <code>uinfo</code></p>
 </dd>
+<dt><a href="#module_osu">osu</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Leaderboards OsuCommand - Shows Player Stats for a given OSU player<br><strong>Aliases</strong>: <code>osustats</code></p>
+</dd>
+<dt><a href="#module_overwatch">overwatch</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Leaderboards Overwatch - Shows Player Stats for a given BattleNet BattleTag<br><strong>Aliases</strong>: <code>owstats</code></p>
+</dd>
+<dt><a href="#module_showdown">showdown</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice<br><strong>Aliases</strong>: <code>showdownlb</code>, <code>pokelb</code></p>
+</dd>
 <dt><a href="#module_addrole">addrole</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation AddRoleCommand - Add a role to member<br><strong>Aliases</strong>: <code>newrole</code>, <code>ar</code></p>
 </dd>
@@ -330,9 +339,6 @@ There are 3 ways to queue songs  </p>
 <dt><a href="#module_item">item</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pokémon ItemCommand - Gets information about an item in Pokémon
 For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p>
-</dd>
-<dt><a href="#module_ability">ability</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice<br><strong>Aliases</strong>: <code>showdownlb</code>, <code>pokelb</code></p>
 </dd>
 <dt><a href="#module_ability">ability</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pokémon AbilityCommand - Gets information on an ability in Pokémon<br><strong>Aliases</strong>: <code>abilities</code>, <code>abi</code></p>
@@ -981,6 +987,57 @@ Info UserInfoCommand - Get the info from a user
 **Example**  
 ```js
 userinfo Favna
+```
+<a name="module_osu"></a>
+
+## osu ⇒ <code>MessageEmbed</code>
+Leaderboards OsuCommand - Shows Player Stats for a given OSU player  
+**Aliases**: `osustats`
+
+**Returns**: <code>MessageEmbed</code> - Stats of the player  
+**Category**: leaderboards  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| PlayerName | <code>string</code> | Name of the OSU player |
+
+**Example**  
+```js
+osu WubWoofWolf
+```
+<a name="module_overwatch"></a>
+
+## overwatch ⇒ <code>MessageEmbed</code>
+Leaderboards Overwatch - Shows Player Stats for a given BattleNet BattleTag  
+**Aliases**: `owstats`
+
+**Returns**: <code>MessageEmbed</code> - Stats of the player  
+**Category**: leaderboards  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| BattleTag | <code>string</code> | BattleTag for that overwatch player |
+
+**Example**  
+```js
+overwatch cat#11481
+```
+<a name="module_showdown"></a>
+
+## showdown ⇒ <code>MessageEmbed</code>
+Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice  
+**Aliases**: `showdownlb`, `pokelb`
+
+**Returns**: <code>MessageEmbed</code> - List of top 10 ranking players in given tier  
+**Category**: leaderboards  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| TierName | <code>string</code> | Name of the tier to view the leaderboard for |
+
+**Example**  
+```js
+showdown ou
 ```
 <a name="module_addrole"></a>
 
@@ -1744,23 +1801,6 @@ For item names existing of multiple words (for example `life orb`) you can eithe
 **Example**  
 ```js
 item assault vest
-```
-<a name="module_ability"></a>
-
-## ability ⇒ <code>MessageEmbed</code>
-Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice  
-**Aliases**: `showdownlb`, `pokelb`
-
-**Returns**: <code>MessageEmbed</code> - Description and external links for the ability  
-**Category**: pokémon  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| AbilityName | <code>string</code> | The name of the ability you  want to find |
-
-**Example**  
-```js
-ability multiscale
 ```
 <a name="module_ability"></a>
 

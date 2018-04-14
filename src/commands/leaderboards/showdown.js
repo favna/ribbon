@@ -27,11 +27,11 @@
  * @file Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice  
  * **Aliases**: `showdownlb`, `pokelb`
  * @module
- * @category pokémon
- * @name ability
- * @example ability multiscale
- * @param {string} AbilityName The name of the ability you  want to find
- * @returns {MessageEmbed} Description and external links for the ability
+ * @category leaderboards
+ * @name showdown
+ * @example showdown ou
+ * @param {string} TierName Name of the tier to view the leaderboard for
+ * @returns {MessageEmbed} List of top 10 ranking players in given tier
  */
 
 const Fuse = require('fuse.js'),
@@ -50,7 +50,7 @@ module.exports = class ShowdownCommand extends commando.Command {
       'memberName': 'showdown',
       'group': 'leaderboards',
       'aliases': ['showdownlb', 'pokelb'],
-      'description': 'show the top ranking players in your tier of choice',
+      'description': 'Show the top ranking players in your tier of choice',
       'format': 'TierName',
       'examples': ['showdown ou'],
       'guildOnly': false,
