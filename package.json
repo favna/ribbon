@@ -3,7 +3,7 @@
   "version": "5.0.3",
   "description": "Ribbon - A discord bot for your server",
   "author": "Favna",
-  "license": "GPL-3.0",
+  "license": "GPL-3.0-or-later",
   "main": "src/app.js",
   "homepage": "https://favna.xyz/ribbon",
   "repository": {
