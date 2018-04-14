@@ -51,6 +51,11 @@ module.exports = class StopMusicCommand extends commando.Command {
     });
   }
 
+  /**
+   * @todo Vote Stop, Force and Song Issuer for Music:Stop
+   * @body Enhance Stop so not anyone can stop a queue but it is instead handled the same was as skip
+   */
+
   run (msg) {
     const queue = this.queue.get(msg.guild.id);
 
