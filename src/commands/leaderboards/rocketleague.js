@@ -26,30 +26,30 @@
 /* eslint-disable no-unused-vars */
 
 /**
- * @file Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleTag  
- * **Aliases**: `owstats`
+ * @file Leaderboards RocketLeagueCommand - Shows Player Stats / Leaderboard from Rocket League    
+ * **Aliases**: `rlstats`, `rocketstats`
  * @module
  * @category leaderboards
- * @name overwatch
- * @example overwatch cat#11481
- * @param {string} BattleTag BattleTag for that overwatch player
- * @returns {MessageEmbed} Stats of the player
+ * @name rocketleague
+ * @example T.B.D
+ * @param {string} T.B.D. Will be added later
+ * @returns {MessageEmbed} T.B.D. - Will be added later
  */
 
 const commando = require('discord.js-commando'),
   request = require('snekfetch'),
   {MessageEmbed} = require('discord.js');
 
-module.exports = class OverwatchCommand extends commando.Command {
+module.exports = class RocketLeagueCommand extends commando.Command {
   constructor (client) {
     super(client, {
-      'name': 'overwatch',
-      'memberName': 'overwatch',
+      'name': 'rocketleague',
+      'memberName': 'rocketleague',
       'group': 'leaderboards',
-      'aliases': ['owstats'],
-      'description': 'Shows Player Stats for a given Overwatch player',
+      'aliases': ['rlstats'],
+      'description': 'Shows Player Stats / Leaderboard from Rocket League',
       'format': 'BattleTag',
-      'examples': ['overwatch cat#11481'],
+      'examples': ['rocketleague'],
       'guildOnly': false,
       'ownerOnly': true,
       'throttling': {
@@ -61,7 +61,7 @@ module.exports = class OverwatchCommand extends commando.Command {
           'key': 'player',
           'prompt': 'Respond with the player\'s BattleTag',
           'type': 'string',
-          'parse': tag => tag.replace(/#/g, '-').toLowerCase()
+          'parse': p => p.toLowerCase()
         }
       ]
     });
@@ -70,8 +70,9 @@ module.exports = class OverwatchCommand extends commando.Command {
   run (msg, args) {
 
     /**
-     * @todo Implement Overwatch Player Stats
-     * @body Will use API endpoints: https://ow-api.com/docs/
+     * @todo Implement Rocket League Leaderboard
+     * @body Requires access to the Rocket League API which is pending.  
+     * API is currently closed beta and requires granted access from Rocket League so hopefully I will be allowed access
      */
 
     return null;
