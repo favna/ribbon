@@ -183,7 +183,10 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Leaderboards OsuCommand - Shows Player Stats for a given OSU player<br><strong>Aliases</strong>: <code>osustats</code></p>
 </dd>
 <dt><a href="#module_overwatch">overwatch</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Leaderboards Overwatch - Shows Player Stats for a given BattleNet BattleTag<br><strong>Aliases</strong>: <code>owstats</code></p>
+<dd><p>Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleTag<br><strong>Aliases</strong>: <code>owstats</code></p>
+</dd>
+<dt><a href="#module_rocketleague">rocketleague</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Leaderboards RocketLeagueCommand - Shows Player Stats / Leaderboard from Rocket League<br><strong>Aliases</strong>: <code>rlstats</code>, <code>rocketstats</code></p>
 </dd>
 <dt><a href="#module_showdown">showdown</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice<br><strong>Aliases</strong>: <code>showdownlb</code>, <code>pokelb</code></p>
@@ -1008,7 +1011,7 @@ osu WubWoofWolf
 <a name="module_overwatch"></a>
 
 ## overwatch ⇒ <code>MessageEmbed</code>
-Leaderboards Overwatch - Shows Player Stats for a given BattleNet BattleTag  
+Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleTag  
 **Aliases**: `owstats`
 
 **Returns**: <code>MessageEmbed</code> - Stats of the player  
@@ -1021,6 +1024,23 @@ Leaderboards Overwatch - Shows Player Stats for a given BattleNet BattleTag
 **Example**  
 ```js
 overwatch cat#11481
+```
+<a name="module_rocketleague"></a>
+
+## rocketleague ⇒ <code>MessageEmbed</code>
+Leaderboards RocketLeagueCommand - Shows Player Stats / Leaderboard from Rocket League    
+**Aliases**: `rlstats`, `rocketstats`
+
+**Returns**: <code>MessageEmbed</code> - T.B.D. - Will be added later  
+**Category**: leaderboards  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| T.B.D. | <code>string</code> | Will be added later |
+
+**Example**  
+```js
+T.B.D
 ```
 <a name="module_showdown"></a>
 
