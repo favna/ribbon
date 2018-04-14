@@ -24,7 +24,7 @@
  */
 
 /**
- * Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.  
+ * @file Games FightCommand - Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.  
  * **Aliases**: `combat`
  * @module
  * @category games
@@ -41,7 +41,7 @@ const {MessageEmbed} = require('discord.js'),
   random = require('node-random'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class fightCommand extends commando.Command {
+module.exports = class FightCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'fight',
@@ -49,7 +49,7 @@ module.exports = class fightCommand extends commando.Command {
       'group': 'games',
       'aliases': ['combat'],
       'description': 'Pit two things against each other in a fight to the death',
-      'details': 'Winner is deteremined with random.org randomization',
+      'details': 'Winner is determined with random.org randomization',
       'format': 'FirstFighter, SecondFighter',
       'examples': ['fight Favna Chuck Norris'],
       'guildOnly': false,
@@ -123,7 +123,7 @@ module.exports = class fightCommand extends commando.Command {
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply('⚠️ an error occured pitting these combatants against each other 😦');
+      return msg.reply('an error occurred pitting these combatants against each other 😦');
     });
 
     return null;

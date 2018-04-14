@@ -24,7 +24,7 @@
  */
 
 /**
- * Sets the channel used for member logs  
+ * @file Moderation SetMemberlogsCommand - Sets the channel used for member logs  
  * **Aliases**: `setmember`
  * @module
  * @category moderation
@@ -38,7 +38,7 @@ const commando = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class setMemberlogsCommand extends commando.Command {
+module.exports = class SetMemberlogsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'setmemberlogs',
@@ -71,6 +71,6 @@ module.exports = class setMemberlogsCommand extends commando.Command {
     this.client.provider.set(msg.guild.id, 'memberlogchannel', args.channel.id);
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `the channel to use for the member logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'memberlogchannel')).name}`);
+    return msg.reply(oneLine`the channel to use for the member logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'memberlogchannel')).name}`);
   }
 };

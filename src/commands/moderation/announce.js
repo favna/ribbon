@@ -24,7 +24,7 @@
  */
 
 /**
- * Make an announcement to a channel named "announcements" or "news"  
+ * @file Moderation NewsCommand - Make an announcement to a channel named "announcements" or "news"  
  * **Aliases**: `news`
  * @module
  * @category moderation
@@ -38,7 +38,7 @@ const commando = require('discord.js-commando'),
   {deleteCommandMessages} = require('../../util.js'),
   {stripIndents} = require('common-tags');
 
-module.exports = class newsCommand extends commando.Command {
+module.exports = class NewsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'announce',
@@ -86,7 +86,7 @@ module.exports = class newsCommand extends commando.Command {
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(stripIndents `To use the announce command you need a channel named \'news\' or \'announcements\'.
+    return msg.reply(stripIndents`To use the announce command you need a channel named \'news\' or \'announcements\'.
     Here is a backup of your message:
     \`\`\`
     ${args.body}

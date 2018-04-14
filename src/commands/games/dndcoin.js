@@ -24,7 +24,7 @@
  */
 
 /**
- * Filps a coin  
+ * @file Games DndCCommand - Flips a coin  
  * **Aliases**: `coinflip`, `dndc`
  * @module
  * @category games

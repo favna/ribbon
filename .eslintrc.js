@@ -169,7 +169,7 @@ module.exports = {
         "no-lonely-if": "error",
         "no-loop-func": "error",
         "no-magic-numbers": "off",
-        "no-mixed-operators": "error",
+        "no-mixed-operators": "off",
         "no-mixed-requires": "error",
         "no-multi-assign": "error",
         "no-multi-spaces": "error",
@@ -289,10 +289,7 @@ module.exports = {
             "error",
             "never"
         ],
-        "template-tag-spacing": [
-            "error",
-            "always"
-        ],
+        "template-tag-spacing": ["error", "never"],
         "unicode-bom": [
             "error",
             "never"

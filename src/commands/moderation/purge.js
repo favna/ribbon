@@ -24,7 +24,7 @@
  */
 
 /**
- * Quickly delete a certain amount of messages  
+ * @file Moderation PurgeCommand - Quickly delete a certain amount of messages  
  * **Aliases**: `prune`, `delete`
  * @module
  * @category moderation
@@ -36,7 +36,7 @@
 
 const commando = require('discord.js-commando');
 
-module.exports = class purgeCommand extends commando.Command {
+module.exports = class PurgeCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'purge',
@@ -64,10 +64,10 @@ module.exports = class purgeCommand extends commando.Command {
   }
 
   async run (msg, args) {
-    if (msg.channel.permissionsFor(msg.guild.me).has('MANAGE_MESSAGES')) {
+    if (!msg.channel.permissionsFor(msg.guild.me).has('MANAGE_MESSAGES')) {
       return msg.reply('I do not have permission to delete messages from this channel. Better go and fix that!');
     }
-
+    
     msg.channel.bulkDelete(args.amount + 1, true);
 
     const reply = await msg.say(`\`Deleted ${args.amount} messages\``);

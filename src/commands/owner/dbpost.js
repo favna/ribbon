@@ -24,7 +24,7 @@
  */
 
 /**
- * Owners only - posts current guild count to discordbotlist  
+ * @file Owner DBPostCommand - Posts current guild count to discordbotlist  
  * @module
  * @category owner
  * @name dbpost
@@ -53,9 +53,9 @@ module.exports = class DBPostCommand extends commando.Command {
       .send({'server_count': this.client.guilds.size});
 
     if (post) {
-      return msg.reply('Updated discordbots.org stats.');
+      return msg.reply('updated discordbots.org stats.');
     }
 
-    return msg.reply('⚠️ An error occured updating discordbots.org stats.');
+    return msg.reply('an error occurred updating discordbots.org stats.');
   }
 };

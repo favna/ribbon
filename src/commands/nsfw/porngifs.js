@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets a NSFW gif and webm from pornhub
+ * @file nsfw PornGifsCommand - Gets a NSFW gif and webm from pornhub  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `nsfwgifs`
  * @module
@@ -40,7 +40,7 @@ const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class porngifsCommand extends commando.Command {
+module.exports = class PornGifsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'porngifs',

@@ -24,7 +24,7 @@
  */
 
 /**
- * Nickname a single member  
+ * @file Moderation NickCommand - Nickname a single member  
  * **Aliases**: `nick`
  * @module
  * @category moderation
@@ -41,7 +41,7 @@ const {DiscordAPIError} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {oneLine, stripIndents} = require('common-tags');
 
-module.exports = class nickCommand extends commando.Command {
+module.exports = class NickCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'nickname',
@@ -85,20 +85,20 @@ module.exports = class nickCommand extends commando.Command {
         }
       } catch (e) {
         if (e instanceof DiscordAPIError) {
-          console.error(`	 ${stripIndents `An error occured on the AddRole command!
+          console.error(`	 ${stripIndents`An error occurred on the Nickname command!
           Server: ${msg.guild.name} (${msg.guild.id})
           Author: ${msg.author.tag} (${msg.author.id})
           Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           Role: ${args.role.name} (${args.role.id})
           Error Message:`} ${e}`);
         } else {
-          console.error('Unknown error occured in AddRole command');
+          console.error('Unknown error occurred in Nickname command');
         }
       }
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `failed to set nickname to that member.
+    return msg.reply(oneLine`failed to set nickname to that member.
     Check that I have permission to set their nickname as well as the role hierarchy`);
   }
 };

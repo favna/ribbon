@@ -24,20 +24,21 @@
  */
 
 /**
- * Retrieves your current amount of chips for the casino  
+ * @file Casino ChipsCommand - Retrieves your current amount of chips for the casino  
  * **Aliases**: `bal`, `cash`, `balance`
  * @module
  * @category casino
  * @name chips
+ * @example chips
  * @returns {MessageEmbed} Information about your current balance
  */
 
 const {MessageEmbed} = require('discord.js'),
+  Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
-  path = require('path'),
-  sql = require('sqlite'), 
+  path = require('path'), 
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
@@ -58,61 +59,64 @@ module.exports = class ChipsCommand extends commando.Command {
   }
 
   run (msg) {
-    const balEmbed = new MessageEmbed();
+    const balEmbed = new MessageEmbed(),
+      conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
     balEmbed
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
+    try {
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
-    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'), {'cached': true});
-
-    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
-      if (!rows) {
-        sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?);`, [msg.author.id, 500, moment().format('YYYY-MM-DD HH:mm')]);
-        balEmbed.setDescription(stripIndents `
-        **Balance**
-        500
-        **Daily Reset**
-        in 24 hours`);
-      } else {
-        const topupdate = moment(rows.lasttopup).add(24, 'hours'),
+      if (query) {
+        const topupdate = moment(query.lasttopup).add(24, 'hours'),
           dura = moment.duration(topupdate.diff()); // eslint-disable-line sort-vars
 
-        balEmbed.setDescription(stripIndents `**Balance**
-          ${rows.balance}
+        balEmbed
+          .setDescription(stripIndents`**Balance**
+          ${query.balance}
           **Daily Reset**
           ${!(dura._milliseconds <= 0) ? dura.format('[in] HH[ hour(s) and ]mm[ minute(s)]') : 'Right now!'}`);
-      }
-
-      deleteCommandMessages(msg, this.client);
-
-      return msg.embed(balEmbed);
-    })
-      .catch((e) => {
-        if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured while getting someones balance!
-			Server: ${msg.guild.name} (${msg.guild.id})
-			Author: ${msg.author.tag} (${msg.author.id})
-			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-			Error Message:`} ${e}`);
-
-          return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
-        }
-        sql.run(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).then(() => {
-          sql.run(`INSERT INTO "${msg.guild.id}" (userID, balance, lasttopup) VALUES (?, ?, ?);`, [msg.author.id, 500, moment().format('YYYY-MM-DD HH:mm')]);
-        });
-
-        balEmbed.setDescription(stripIndents `
-              **Balance**
-              500
-              **Daily Reset**
-              in 24 hours`);
 
         deleteCommandMessages(msg, this.client);
 
         return msg.embed(balEmbed);
+      }
+      conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
+        'userid': msg.author.id,
+        'balance': '500',
+        'date': moment().format('YYYY-MM-DD HH:mm')
       });
+    } catch (e) {
+      if (/(?:no such table)/i.test(e.toString())) {
+        conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
+
+        conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
+          'userid': msg.author.id,
+          'balance': '500',
+          'date': moment().format('YYYY-MM-DD HH:mm')
+        });
+      } else {
+        console.error(`	 ${stripIndents`Fatal SQL Error occurred while getting someones balance!
+        Server: ${msg.guild.name} (${msg.guild.id})
+        Author: ${msg.author.tag} (${msg.author.id})
+        Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        Error Message:`} ${e}`);
+
+        return msg.reply(oneLine`Fatal Error occurred that was logged on Favna\'s system.
+                You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+      }
+    }
+
+    balEmbed.setDescription(stripIndents`
+    **Balance**
+    500
+    **Daily Reset**
+    in 24 hours`);
+
+    deleteCommandMessages(msg, this.client);
+
+    return msg.embed(balEmbed);
   }
 };

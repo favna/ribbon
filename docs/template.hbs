@@ -5,10 +5,12 @@ The default prefix is `!` and you can always use `@ribbon#2325 prefix` to find y
 <a name="module_help"></a>
 
 ## help ⇒ <code>MessageEmbed</code>
-Displays a list of available commands, or detailed information for a specified command  
+Build-In HelpCommand - Displays a list of available commands, or detailed information for a specified command  
 
 **Returns**: <code>[MessageEmbed]</code> - Multiple MessageEmbeds showing all commands  
 **Category**: Build-In  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -26,12 +28,13 @@ help all
 <a name="module_prefix"></a>
 
 ## prefix ⇒ <code>Message</code>
-Shows or sets the command prefix  
-
+BuildIn PrefixCommand - Shows or sets the command prefix  
 Omitting the parameter will simply print your current one.
 
 **Returns**: <code>Message</code> - Message with the current or new prefix  
 **Category**: Build-In  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -49,30 +52,36 @@ prefix none
 <a name="module_ping"></a>
 
 ## ping ⇒ <code>Message</code>
-Checks the bot's ping to the Discord server
+Build-In PingCommand - Checks the bot's ping to the Discord server
 
 **Returns**: <code>Message</code> - Reply message with the bot's ping  
-**Category**: Build-In
+**Category**: Build-In  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 {{>main}}
 
 <a name="module_groups"></a>
 
 ## groups ⇒ <code>Message</code>
-Shows all command groups  
+Command-Management GroupsCommand - Shows all command groups  
 **Aliases**: `list-groups`, `show-groups`, `listgroups`, `showgroups`
 
 **Returns**: <code>Message</code> - Reply message list of groups  
-**Category**: Command-Management
+**Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 <a name="module_enable"></a>
 
 ## enable ⇒ <code>Message</code>
-Enables a command or command group  
+Command-Management EnableCommand - Enables a command or command group  
 **Aliases**: `enable-command`, `cmd-on`, `command-on`, `enablecommand`, `cmdon`, `commandon`
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -86,11 +95,13 @@ enable userinfo
 <a name="module_disable"></a>
 
 ## disable ⇒ <code>Message</code>
-Disables a command or command group  
+Command-Management DisableCommand - Disables a command or command group  
 **Aliases**: `disable-command`, `cmd-off`, `command-off`, `disablecommand`, `cmdoff`, `commandoff`
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -104,11 +115,13 @@ disable userinfo
 <a name="module_reload"></a>
 
 ## reload ⇒ <code>Message</code>
-Reloads a command or command group  
+Command-Management ReloadCommand - Reloads a command or command group  
 **Aliases**: `reload-command`, `reloadcommand`
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -122,11 +135,13 @@ reload userinfo
 <a name="module_load"></a>
 
 ## load ⇒ <code>Message</code>
-Loads a new command  
+Command-Management LoadCommand - Loads a new command  
 **Aliases**: `load-command`, `loadcommand`
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -140,11 +155,13 @@ load searches:github
 <a name="module_unload"></a>
 
 ## unload ⇒ <code>Message</code>
-Unloads a command  
+Command-Management UnloadCommand - Unloads a command  
 **Aliases**: `unload-command`, `unloadcommand`
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
+**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
+**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -24,7 +24,7 @@
  */
 
 /**
- * Adds a new copypasta for your server  
+ * @file Extra CopyPastaAddCommand - Adds a new copypasta for your server  
  * **Aliases**: `cpadd`, `pastaadd`
  * @module
  * @category extra
@@ -41,7 +41,7 @@ const commando = require('discord.js-commando'),
   path = require('path'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class copypastaAddCommand extends commando.Command {
+module.exports = class CopyPastaAddCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'copypastaadd',
@@ -87,6 +87,6 @@ module.exports = class copypastaAddCommand extends commando.Command {
       return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with ${msg.guild.commandPrefix}copypasta ${args.name}`);
     }
 
-    return msg.reply('⚠️ An error occured and your pasta was not saved.');
+    return msg.reply('an error occurred and your pasta was not saved.');
   }
 };

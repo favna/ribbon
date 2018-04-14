@@ -24,7 +24,7 @@
  */
 
 /**
- * Add a role to member  
+ * @file Moderation AddRoleCommand - Add a role to member  
  * **Aliases**: `newrole`, `ar`
  * @module
  * @category moderation
@@ -41,7 +41,7 @@ const {DiscordAPIError} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {oneLine, stripIndents} = require('common-tags');
 
-module.exports = class addRoleCommand extends commando.Command {
+module.exports = class AddRoleCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'addrole',
@@ -87,20 +87,20 @@ module.exports = class addRoleCommand extends commando.Command {
         }
       } catch (e) {
         if (e instanceof DiscordAPIError) {
-          console.error(`	 ${stripIndents `An error occured on the AddRole command!
+          console.error(`	 ${stripIndents`An error occurred on the AddRole command!
           Server: ${msg.guild.name} (${msg.guild.id})
           Author: ${msg.author.tag} (${msg.author.id})
           Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           Role: ${args.role.name} (${args.role.id})
           Error Message:`} ${e}`);
         } else {
-          console.error('Unknown error occured in AddRole command');
+          console.error('Unknown error occurred in AddRole command');
         }
       }
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `an error occured adding the role \`${args.role.name}\` to \`${args.member.displayName}\`.
-		Do I have \`Manage Roles\` permission and am I hierarchly high enough for modifying their roles?`);
+    return msg.reply(oneLine`an error occurred adding the role \`${args.role.name}\` to \`${args.member.displayName}\`.
+		Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
   }
 };

@@ -24,7 +24,7 @@
  */
 
 /**
- * Create a strawpoll and find out what people really think (hopefully)  
+ * @file Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)  
  * **Aliases**: `straw`, `poll`
  * @module
  * @category games
@@ -40,7 +40,7 @@ const {MessageEmbed} = require('discord.js'),
   request = require('snekfetch'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class strawpollCommand extends commando.Command {
+module.exports = class StrawpollCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'strawpoll',
@@ -109,6 +109,6 @@ module.exports = class strawpollCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ an error occured creating the strawpoll');
+    return msg.reply('an error occurred creating the strawpoll');
   }
 };

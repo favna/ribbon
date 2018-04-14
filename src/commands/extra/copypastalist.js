@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets all copypastas available to the server  
+ * @file Extra CopyPastaListCommand - Gets all copypastas available to the server  
  * **Aliases**: `cplist`, `copylist`, `pastalist`
  * @module
  * @category extra
@@ -58,30 +58,39 @@ module.exports = class CopyPastaListCommand extends commando.Command {
 
   async run (msg) {
     try {
-      const list = fs.readdirSync(path.join(__dirname, `../../data/pastas/${373826006651240450}`));
+      const list = fs.readdirSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`));
 
       if (list && list.length) {
         for (const entry in list) {
           list[entry] = `- \`${list[entry].slice(0, -4)}\``;
         }
+      }
 
+      deleteCommandMessages(msg, this.client);
+
+      if (list.join('\n').length >= 2000) {
         const messages = [],
-          splitTotal = splitMessage(list.join('\n'));
+          splitTotal = splitMessage(stripIndents`${list.join('\n')}`);
 
         for (const part in splitTotal) {
           messages.push(await msg.embed({
-            'title': 'Copypastass available on this server',
+            'title': 'Copypastas available on this server',
             'description': splitTotal[part],
             'color': msg.guild.me.displayColor
           }));
         }
 
-        deleteCommandMessages(msg, this.client);
-
         return messages;
       }
+
+      return msg.embed({
+        'title': 'Copypastas available on this server',
+        'description': list.join('\n'),
+        'color': msg.guild.me.displayColor
+      });
+
     } catch (err) {
-      console.error(`	 ${stripIndents `An error occured on the CopypastaList command!
+      console.error(`	 ${stripIndents`An error occurred on the CopypastaList command!
 			Server: ${msg.guild.name} (${msg.guild.id})
 			Author: ${msg.author.tag} (${msg.author.id})
 			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}

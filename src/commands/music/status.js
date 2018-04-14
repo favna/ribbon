@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets status about the currently playing song  
+ * @file Music MusicStatusCommand - Gets status about the currently playing song  
  * **Aliases**: `song`, `playing`, `current-song`, `now-playing`
  * @module
  * @category music
@@ -70,7 +70,7 @@ module.exports = class MusicStatusCommand extends commando.Command {
           'name': `${song.username}`,
           'icon_url': song.avatar
         },
-        'description': stripIndents `
+        'description': stripIndents`
 				[${song}](${`${song.url}`})
 
 				We are ${Song.timeString(currentTime)} into the song, and have ${song.timeLeft(currentTime)} left.

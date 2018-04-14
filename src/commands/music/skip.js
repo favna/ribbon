@@ -24,7 +24,7 @@
  */
 
 /**
- * Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue  
+ * @file Music SkipSongCommand - Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue  
  * A vote to skip is started if there are 4 or more people in the voice channel with `(amount of members) / 3` as required amount of votes (bot doesn't count as a member)  
  * Staff that can delete messages can force the skip by using `skip force`  
  * You need to be in a voice channel before you can use this command
@@ -112,7 +112,7 @@ module.exports = class SkipSongCommand extends commando.Command {
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.say(oneLine `
+      return msg.say(oneLine`
 				${vote.count} vote${vote.count > 1 ? 's' : ''} received so far,
 				${remaining} more ${remaining > 1 ? 'are' : 'is'} needed to skip.
 				Five more seconds on the clock! The vote will end in ${time} seconds.
@@ -133,7 +133,7 @@ module.exports = class SkipSongCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.say(oneLine `
+    return msg.say(oneLine`
 				Starting a voteskip.
 				${remaining} more vote${remaining > 1 ? 's are' : ' is'} required for the song to be skipped.
 				The vote will end in ${time} seconds.
@@ -155,7 +155,7 @@ module.exports = class SkipSongCommand extends commando.Command {
   }
 
   setTimeout (vote) {
-    const time = vote.start + 15000 - Date.now() + (vote.count - 1) * 5000; // eslint-disable-line
+    const time = vote.start + 15000 - Date.now() + (vote.count - 1) * 5000;
 
     clearTimeout(vote.timeout);
     vote.timeout = setTimeout(() => {

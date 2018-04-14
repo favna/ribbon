@@ -24,7 +24,7 @@
  */
 
 /**
- * Repeats a message and deletes your message  
+ * @file Extra Say - Repeats a message and deletes your message  
  * **Aliases**: `sayd`, `repeat`
  * @module
  * @category extra
@@ -36,7 +36,7 @@
 
 const commando = require('discord.js-commando');
 
-module.exports = class sayCommand extends commando.Command {
+module.exports = class SayCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'say',
@@ -44,7 +44,7 @@ module.exports = class sayCommand extends commando.Command {
       'group': 'extra',
       'aliases': ['sayd', 'repeat'],
       'description': 'I will repeat your message',
-      'format': 'MesssageToSay',
+      'format': 'MessageToSay',
       'examples': ['say Favna is a great coder!'],
       'guildOnly': false,
       'throttling': {

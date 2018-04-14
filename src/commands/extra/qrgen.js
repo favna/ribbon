@@ -24,7 +24,7 @@
  */
 
 /**
- * Generates a QR code from text (like a URL)  
+ * @file Extra QRGenCommand - Generates a QR code from text (like a URL)  
  * **Aliases**: `qr`
  * @module
  * @category extra
@@ -40,7 +40,7 @@ const {MessageEmbed} = require('discord.js'),
   qr = require('qrcode'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class qrgenCommand extends commando.Command {
+module.exports = class QRGenCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'qrgen',
@@ -84,9 +84,9 @@ module.exports = class qrgenCommand extends commando.Command {
         return msg.embed(qrEmbed);
       }
 
-      return msg.reply('⚠️ An error occured uploading the QR code to imgur.');
+      return msg.reply('an error occurred uploading the QR code to imgur.');
     }
 
-    return msg.reply('⚠️ An error occured getting a base64 image for that URL.');
+    return msg.reply('an error occurred getting a base64 image for that URL.');
   }
 };

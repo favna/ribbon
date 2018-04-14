@@ -24,8 +24,8 @@
  */
 
 /**
- * Shows the top 5 ranking players for your server  
- * **Aliases**: `lb`, `casinolb`
+ * @file Casino LeaderboardCommand - Shows the top 5 ranking players for your server  
+ * **Aliases**: `lb`, `casinolb`, `leaderboards`
  * @module
  * @category casino
  * @name leaderboard
@@ -33,10 +33,10 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
+  Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
-  path = require('path'),
-  sql = require('sqlite'), 
+  path = require('path'), 
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
@@ -46,7 +46,7 @@ module.exports = class LeaderboardCommand extends commando.Command {
       'name': 'leaderboard',
       'memberName': 'leaderboard',
       'group': 'casino',
-      'aliases': ['lb', 'casinolb'],
+      'aliases': ['lb', 'casinolb', 'leaderboards'],
       'description': 'Shows the top 5 ranking players for your server',
       'guildOnly': true,
       'throttling': {
@@ -57,43 +57,37 @@ module.exports = class LeaderboardCommand extends commando.Command {
   }
 
   run (msg) {
-    const lbEmbed = new MessageEmbed();
+    const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3')),
+      lbEmbed = new MessageEmbed();
 
     lbEmbed
       .setTitle('Top 5 players')
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'), {'cached': true});
+    try {
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" ORDER BY balance DESC LIMIT 5;`).all();
 
-    sql.all(`SELECT * FROM "${msg.guild.id}" ORDER BY balance DESC LIMIT 5;`).then((rows) => {
-      if (!rows) {
-        return msg.reply(`looks like there are no players in this server yet. Run \`${msg.guild.commandPrefix}chips\` to be the first`);
-      }
-
-      for (const player in rows) {
-        lbEmbed.addField(`#${parseInt(player, 10) + 1} ${msg.guild.members.get(rows[player].userID).displayName}`, `Chips: ${rows[player].balance}`);
-      }
-
-      deleteCommandMessages(msg, this.client);
-
-      return msg.embed(lbEmbed);
-    })
-      .catch((e) => {
-        if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured while retrieving the leaderboard!
-              Server: ${msg.guild.name} (${msg.guild.id})
-              Author: ${msg.author.tag} (${msg.author.id})
-              Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-              Error Message:`} ${e}`);
-
-          return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-                You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+      if (query) {
+        for (const player in query) {
+          lbEmbed.addField(`#${parseInt(player, 10) + 1} ${msg.guild.members.get(query[player].userID).displayName}`, `Chips: ${query[player].balance}`);
         }
 
         deleteCommandMessages(msg, this.client);
 
-        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
-      });
+        return msg.embed(lbEmbed);
+      }
+
+      return msg.reply(`looks like there aren't any people with chips yet on this server. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
+    } catch (e) {
+      console.error(`	 ${stripIndents`Fatal SQL Error occurred while retrieving the leaderboard!
+      Server: ${msg.guild.name} (${msg.guild.id})
+      Author: ${msg.author.tag} (${msg.author.id})
+      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message:`} ${e}`);
+
+      return msg.reply(oneLine`Fatal Error occurred that was logged on Favna\'s system.
+              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+    }
   }
 };

@@ -24,7 +24,7 @@
  */
 
 /**
- * Lockdown a channel  
+ * @file Moderation LockdownCommand - Lockdown a channel  
  * NOTE: Once locked it will be locked to the `@everyone` role and depending on your permissions setup it may be that only people with the `administrator` role will have access to the channel.
  * This may also mean that the bot won't have access if it doesn't have administrator role so you cannot use the `unlock` command until you give it that permission!  
  * **Aliases**: `lock`, `ld`
@@ -40,7 +40,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class lockdownCommand extends commando.Command {
+module.exports = class LockdownCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'lockdown',
@@ -61,6 +61,12 @@ module.exports = class lockdownCommand extends commando.Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
+  /**
+   * @todo Enhance Lockdown
+   * @body Should enhance lockdown to make it configurable on which role the lockdown is applied instead of defaulting to `@everyone`.  
+   * Furthermore make it so if the issues doesn't have admin an overwrite for their highest role is added so they can lift the lockdown
+   */
+
   run (msg) {
     const embed = new MessageEmbed(),
       modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
@@ -72,14 +78,14 @@ module.exports = class lockdownCommand extends commando.Command {
     embed
       .setColor('#983553')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-      .setDescription(oneLine `**Action:** 🔒 locked the \`${msg.channel.name}\` channel. 
+      .setDescription(oneLine`**Action:** 🔒 locked the \`${msg.channel.name}\` channel. 
 				Only staff can now access this channel. Use \`${msg.guild.commandPrefix}unlock\` in this channel to unlock the channel`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
     if (overwrite) {
       if (this.client.provider.get(msg.guild, 'modlogs', true)) {
         if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-          msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+          msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
                             (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
                             This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
           this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
@@ -94,6 +100,6 @@ module.exports = class lockdownCommand extends commando.Command {
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ An error occured locking this channel');
+    return msg.reply('an error occurred locking this channel');
   }
 };

@@ -24,7 +24,7 @@
  */
 
 /**
- * Define a word using UrbanDictionary  
+ * @file Searches UrbanCommand - Define a word using UrbanDictionary  
  * **Aliases**: `ub`, `ud`
  * @module
  * @category searches
@@ -39,7 +39,7 @@ const {MessageEmbed} = require('discord.js'),
   request = require('snekfetch'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class urbanCommand extends commando.Command {
+module.exports = class UrbanCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'urban',

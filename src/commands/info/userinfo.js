@@ -24,7 +24,7 @@
  */
 
 /**
- * Get the info from a user  
+ * @file Info UserInfoCommand - Get the info from a user  
  * **Aliases**: `user`, `uinfo`
  * @module
  * @category info
@@ -39,7 +39,7 @@ const {MessageEmbed} = require('discord.js'),
   moment = require('moment'), 
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
-module.exports = class userInfoCommand extends commando.Command {
+module.exports = class UserInfoCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'userinfo',

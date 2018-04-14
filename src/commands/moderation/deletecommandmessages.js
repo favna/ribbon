@@ -24,7 +24,7 @@
  */
 
 /**
- * Configure whether the bot should delete command messages  
+ * @file Moderation deleteCommandMessagesCommand - Configure whether the bot should delete command messages  
  * **Aliases**: `dcm`
  * @module
  * @category moderation
@@ -81,6 +81,6 @@ module.exports = class deleteCommandMessagesCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `command messages will now be ${args.option ? 'deleted' : 'kept'}.`);
+    return msg.reply(oneLine`command messages will now be ${args.option ? 'deleted' : 'kept'}.`);
   }
 };

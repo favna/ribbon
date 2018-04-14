@@ -24,7 +24,7 @@
  */
 
 /**
- * Assign a nickname to every member on the server  
+ * @file Moderation NickallCommand - Assign a nickname to every member on the server  
  * Use `clear` to remove all nicknames  
  * Use `prefix` to prefix all names with something  
  * Use `append` to append all names with something  
@@ -50,15 +50,15 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class nickallCommand extends commando.Command {
+module.exports = class NickallCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'nickall',
       'memberName': 'nickall',
       'aliases': ['na', 'massnick', 'nickmass', 'allnick'],
       'group': 'moderation',
-      'description': 'Modify the nickname for all guildmembers',
-      'details': stripIndents `${oneLine `Assign, remove, prefix/append with a nickname to all members. 
+      'description': 'Modify the nickname for all members of the guild',
+      'details': stripIndents`${oneLine`Assign, remove, prefix/append with a nickname to all members. 
                                 Use \`clear\` as argument to remove the nickname, 
                                 \`prefix\` to add a prefix to every member (takes their current nickname if they have one or their username if they do not), 
 								\`append\` to do the same but append it instead of prefix`}
@@ -126,7 +126,7 @@ module.exports = class nickallCommand extends commando.Command {
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
       if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-        msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+        msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);

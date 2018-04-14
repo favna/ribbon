@@ -24,7 +24,7 @@
  */
 
 /**
- * Give someone a kiss ❤!  
+ * @file Games KissCommand - Give someone a kiss ❤!  
  * @module
  * @category games
  * @name kiss
@@ -36,7 +36,7 @@
 const commando = require('discord.js-commando'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class kaiCommand extends commando.Command {
+module.exports = class KissCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'kiss',

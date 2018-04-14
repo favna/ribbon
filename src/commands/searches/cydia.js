@@ -24,8 +24,9 @@
  */
 
 /**
- * Gets info from a package on Cydia, only supports default repositories  
+ * @file Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories  
  * Also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
+ * Server admins can disable the `[[]]` matching by using the `rmt off` command  
  * **Aliases**: `cy`
  * @module
  * @category searches
@@ -44,7 +45,7 @@ const Fuse = require('fuse.js'),
   {stripIndents} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class cydiaCommand extends commando.Command {
+module.exports = class CydiaCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'cydia',
@@ -71,6 +72,9 @@ module.exports = class cydiaCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    if (!this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
+      return null;
+    }
     if (msg.patternMatches) {
       args.query = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
     }
@@ -126,7 +130,7 @@ module.exports = class cydiaCommand extends commando.Command {
 
           return msg.embed(embed);
         } catch (e) {
-          console.error(`${stripIndents `An error occured on the cydia command!
+          console.error(`${stripIndents`An error occurred on the cydia command!
 					Server: ${msg.guild.name} (${msg.guild.id})
 					Author: ${msg.author.tag} (${msg.author.id})
 					Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}

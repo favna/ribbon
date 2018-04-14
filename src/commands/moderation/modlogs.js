@@ -24,7 +24,7 @@
  */
 
 /**
- * Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel  
+ * @file Moderation ModLogsCommand - Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel  
  * **Aliases**: `togglemod` 
  * @module
  * @category moderation
@@ -38,7 +38,7 @@ const commando = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class modlogsCommand extends commando.Command {
+module.exports = class ModLogsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'modlogs',
@@ -81,7 +81,7 @@ module.exports = class modlogsCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `mod logs have been
+    return msg.reply(oneLine`mod logs have been
     ${args.option 
     ? `enabled. Please ensure there is a channel named ${this.client.provider.get(msg.guild.id, 'modlogchannel') 
       ? msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'modlogchannel')).name 

@@ -24,15 +24,14 @@
  */
 
 /**
- * Delete the role of a member  
- * **Aliases**: `deleterole`, `dr`, `remrole`, `removerole`
+ * @file Moderation DeleteRoleCommand - Delete the role of a member  
+ * **Aliases**: `deleterole`, `d
  * @module
  * @category moderation
  * @name delrole
  * @example delrole Favna Member
  * @param {member} AnyMember The member to remove a role from
  * @param {role} AnyRole The role to remove
- * @returns {Message} Confirmation the role was removed
  */
 
 const {DiscordAPIError} = require('discord.js'),
@@ -41,7 +40,7 @@ const {DiscordAPIError} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {oneLine, stripIndents} = require('common-tags');
 
-module.exports = class delRoleCommand extends commando.Command {
+module.exports = class DeleteRoleCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'delrole',
@@ -87,20 +86,20 @@ module.exports = class delRoleCommand extends commando.Command {
         }
       } catch (e) {
         if (e instanceof DiscordAPIError) {
-          console.error(`	 ${stripIndents `An error occured on the DeleteRole command!
+          console.error(`	 ${stripIndents`An error occurred on the DeleteRole command!
 				Server: ${msg.guild.name} (${msg.guild.id})
 				Author: ${msg.author.tag} (${msg.author.id})
 				Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
 				Role: ${args.role.name} (${args.role.id})
 				Error Message:`} ${e}`);
         } else {
-          console.error('Unknown error occured in DeleteRole command');
+          console.error('Unknown error occurred in DeleteRole command');
         }
       }
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `an error occured removing the role \`${args.role.name}\` from \`${args.member.displayName}\`.
-		Do I have \`Manage Roles\` permission and am I hierarchly high enough for modifying their roles?`);
+    return msg.reply(oneLine`an error occurred removing the role \`${args.role.name}\` from \`${args.member.displayName}\`.
+		Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
   }
 };

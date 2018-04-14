@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets information about any anime from MyAnimeList  
+ * @file Searches AnimeCommand - Gets information about any anime from MyAnimeList  
  * **Aliases**: `ani`, `mal`
  * @module
  * @category searches
@@ -39,7 +39,7 @@ const {MessageEmbed} = require('discord.js'),
   maljs = require('maljs'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class animeCommand extends commando.Command {
+module.exports = class AnimeCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'anime',

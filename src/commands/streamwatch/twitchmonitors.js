@@ -24,7 +24,7 @@
  */
 
 /**
- * Configure which streamers to monitor  
+ * @file Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor  
  * **Aliases**: `monitors`, `monitor`, `twitchmonitor`
  * @module
  * @category streamwatch
@@ -83,7 +83,7 @@ module.exports = class TwitchMonitorsCommand extends commando.Command {
     this.client.provider.set(msg.guild.id, 'twitchmonitors', memberIDs);
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(stripIndents `🕵 Started spying on the stream status of \`${memberNames.join(', ')}\`
+    return msg.reply(stripIndents`🕵 Started spying on the stream status of \`${memberNames.join(', ')}\`
         Use \`${msg.guild.commandPrefix}twitchtoggle\` to toggle twitch notifiers on or off
         Use \`${msg.guild.commandPrefix}twitchoutput\` to set the channel the notifiers should be sent to`);
   }

@@ -24,7 +24,7 @@
  */
 
 /**
- * Find a video on YouTube  
+ * @file Searches YouTubeCommand - Find a video on YouTube  
  * By default returns MessageEmbed. use `yts` to return just the URL and have in-client playback  
  * **Aliases**: `yt`, `tube`, `yts`
  * @module
@@ -42,7 +42,7 @@ const {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {googleapikey} = require('../../auth.json');
 
-module.exports = class youtubeCommand extends commando.Command {
+module.exports = class YouTubeCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'youtube',
@@ -98,6 +98,6 @@ module.exports = class youtubeCommand extends commando.Command {
       return msg.embed(embed, `https://www.youtube.com/watch?v=${video.id.videoId}`);
     }
 
-    return msg.reply('⚠️ ***nothing found***');
+    return msg.reply('***nothing found***');
   }
 };

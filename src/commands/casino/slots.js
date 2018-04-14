@@ -24,20 +24,22 @@
  */
 
 /**
- * Gamble your chips at the slot machine  
+ * @file Casino SlotsCommand - Gamble your chips at the slot machine  
  * **Aliases**: `slot`, `fruits`
  * @module
  * @category casino
  * @name slots
+ * @example slots 5
+ * @param {number} ChipsAmount The amount of chips you want to gamble
  * @returns {MessageEmbed} Outcome of the spin
  */
 
 const {MessageEmbed} = require('discord.js'), 
   {SlotMachine, SlotSymbol} = require('slot-machine'),
+  Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
   path = require('path'),
-  sql = require('sqlite'), 
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
@@ -50,98 +52,138 @@ module.exports = class SlotsCommand extends commando.Command {
       'aliases': ['slot', 'fruits'],
       'description': 'Gamble your chips at the slot machine',
       'format': 'AmountOfChips',
+      'examples': ['slots 50'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,
-        'duration': 3
+        'duration': 5
       },
       'args': [
         {
           'key': 'chips',
           'prompt': 'How many chips do you want to gamble?',
-          'type': 'integer'
+          'type': 'integer',
+          'validate': (chips) => {
+            if (/^[+]?\d+$/.test(chips) && chips >= 1 && chips <= 3) {
+              return true;
+            }
+
+            return stripIndents`Reply with a chips amount
+                            Has to be either 1, 2 or 3
+                            1 to just win on the middle horizontal line
+                            2 to win on all horizontal lines
+                            3 to win on all horizontal lines **and** the two diagonal lines`;
+          }
         }
       ]
     });
   }
 
   run (msg, args) {
-    const slotEmbed = new MessageEmbed();
+    const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3')),
+      slotEmbed = new MessageEmbed();
 
     slotEmbed
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'), {'cached': true});
+    try {
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
-    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
-      if (!rows) {
-        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
-      }
-      if (args.chips > rows.balance) {
-        return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');
-      }
-
-      const bar = new SlotSymbol('bar', {
-          'display': '<:bar:430366693630672916>',
-          'points': 100,
-          'weight': 30
-        }),
-        cherry = new SlotSymbol('cherry', {
-          'display': '<:cherry:430366794230923266>',
-          'points': 8,
-          'weight': 100
-        }),
-        diamond = new SlotSymbol('diamond', {
-          'display': '<:diamond:430366803789873162>',
-          'points': 30,
-          'weight': 40
-        }),
-        lemon = new SlotSymbol('lemon', {
-          'display': '<:lemon:430366830784413727>',
-          'points': 15,
-          'weight': 80
-        }),
-        seven = new SlotSymbol('seven', {
-          'display': '<:seven:430366839735058443>',
-          'points': 300,
-          'weight': 15
-        });
-
-      const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven]), // eslint-disable-line one-var
-        prevBal = rows.balance,
-        results = machine.play();
-
-      results.totalPoints !== 0 ? rows.balance += results.totalPoints - args.chips : rows.balance -= args.chips;
-
-      sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
-
-      slotEmbed
-        .setTitle(`${msg.author.tag} ${results.totalPoints === 0 ? `lost ${args.chips}` : `won ${results.totalPoints - args.chips}`} chips`)
-        .addField('Previous Balance', prevBal, true)
-        .addField('New Balance', rows.balance, true)
-        .setDescription(results.visualize());
-
-      deleteCommandMessages(msg, this.client);
-
-      return msg.embed(slotEmbed);
-    })
-      .catch((e) => {
-        if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone playing the slot machine!
-              Server: ${msg.guild.name} (${msg.guild.id})
-              Author: ${msg.author.tag} (${msg.author.id})
-              Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-              Error Message:`} ${e}`);
-
-          return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-                You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+      if (query) {
+        if (args.chips > query.balance) {
+          return msg.reply(`you don\'t have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
         }
+
+        const bar = new SlotSymbol('bar', {
+            'display': '<:bar:430366693630672916>',
+            'points': 50,
+            'weight': 20
+          }),
+          cherry = new SlotSymbol('cherry', {
+            'display': '<:cherry:430366794230923266>',
+            'points': 6,
+            'weight': 100
+          }),
+          diamond = new SlotSymbol('diamond', {
+            'display': '<:diamond:430366803789873162>',
+            'points': 15,
+            'weight': 40
+          }),
+          lemon = new SlotSymbol('lemon', {
+            'display': '<:lemon:430366830784413727>',
+            'points': 8,
+            'weight': 80
+          }),
+          seven = new SlotSymbol('seven', {
+            'display': '<:seven:430366839735058443>',
+            'points': 300,
+            'weight': 10
+          }),
+          watermelon = new SlotSymbol('watermelon', {
+            'display': '<:watermelon:430366848710737920>',
+            'points': 10,
+            'weight': 60
+          });
+
+        const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven, watermelon]), // eslint-disable-line one-var
+          prevBal = query.balance,
+          result = machine.play();
+
+        let titleString = '',
+          winningPoints = 0;
+
+        /* eslint max-depth: ["error", 6]*/
+        if (args.chips === 1 && result.lines[1].isWon) {
+          winningPoints += result.lines[1].points;
+        } else if (args.chips === 2) {
+          for (let i = 0; i <= 2; i += 1) {
+            if (result.lines[i].isWon) {
+              winningPoints += result.lines[i].points;
+            }
+          }
+        } else if (args.chips === 3) {
+          for (let i = 0; i < result.lines.length; i += 1) {
+            if (result.lines[i].isWon) {
+              winningPoints += result.lines[i].points;
+            }
+          }
+        }
+
+        winningPoints !== 0 ? query.balance += winningPoints - args.chips : query.balance -= args.chips;
+
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
+
+        if (args.chips === winningPoints) {
+          titleString = 'won back their exact input';
+        } else if (args.chips > winningPoints) {
+          titleString = `lost ${args.chips - winningPoints} chips ${winningPoints !== 0 ? `(slots gave back ${winningPoints})` : ''}`;
+        } else {
+          titleString = `won ${query.balance - prevBal} chips`;
+        }
+
+        slotEmbed
+          .setTitle(`${msg.author.tag} ${titleString}`)
+          .addField('Previous Balance', prevBal, true)
+          .addField('New Balance', query.balance, true)
+          .setDescription(result.visualize());
 
         deleteCommandMessages(msg, this.client);
 
-        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
-      });
+        return msg.embed(slotEmbed);
+      }
+
+      return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
+    } catch (e) {
+      console.error(`	 ${stripIndents`Fatal SQL Error occurred for someone playing the slot machine!
+      Server: ${msg.guild.name} (${msg.guild.id})
+      Author: ${msg.author.tag} (${msg.author.id})
+      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message:`} ${e}`);
+
+      return msg.reply(oneLine`Fatal Error occurred that was logged on Favna\'s system.
+              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+    }
   }
 };

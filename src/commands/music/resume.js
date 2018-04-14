@@ -24,7 +24,7 @@
  */
 
 /**
- * Resumes the song after pausing it  
+ * @file Music ResumeSongCommand - Resumes the song after pausing it  
  * You need to be in a voice channel before you can use this command  
  * **Aliases**: `go`, `continue`, `ale`, `loss`, `res`
  * @module
@@ -69,8 +69,8 @@ module.exports = class ResumeSongCommand extends commando.Command {
     if (queue.songs[0].playing) {
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply('Resuming a song that isn\'t paused is a great move. Really fantastic.');
-    } // eslint-disable-line max-len
+      return msg.reply('resuming a song that isn\'t paused is a great move. Really fantastic.');
+    }
     queue.songs[0].dispatcher.resume();
     queue.songs[0].playing = true;
 

@@ -24,7 +24,7 @@
  */
 
 /**
- * Set the maximum length (in minutes) of a video  
+ * @file Music MaxLengthCommand - Set the maximum length (in minutes) of a video  
  * Give no argument to show current amount of maximum songs  
  * Use "default" as argument to set it back to the bot default  
  * **Aliases**: `max-duration`, `max-song-length`, `max-song-duration`
@@ -50,7 +50,7 @@ module.exports = class MaxLengthCommand extends commando.Command {
       'group': 'music',
       'aliases': ['max-duration', 'max-song-length', 'max-song-duration'],
       'description': 'Shows or sets the max song length.',
-      'details': oneLine `
+      'details': oneLine`
             This is the maximum length of a song that users may queue, in minutes.
             The default is ${MAX_LENGTH}.
             Only administrators may change this setting.`,

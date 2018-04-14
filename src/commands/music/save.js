@@ -24,7 +24,7 @@
  */
 
 /**
- * DMs the 10 upcoming songs from the queue to the user
+ * @file Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user
  * **Aliases**: `save-songs`, `save-song-list`, `ss`, `savequeue`
  * @module
  * @category music
@@ -39,7 +39,7 @@ const commando = require('discord.js-commando'),
   {deleteCommandMessages} = require('../../util.js'),
   {oneLine, stripIndents} = require('common-tags');
 
-module.exports = class saveQueueCommand extends commando.Command {
+module.exports = class SaveQueueCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'save',
@@ -74,7 +74,7 @@ module.exports = class saveQueueCommand extends commando.Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({'format': 'png'}))
       .setImage(currentSong.thumbnail)
-      .setDescription(stripIndents `
+      .setDescription(stripIndents`
             __**First 10 songs in the queue**__
             ${paginated.items.map(song => `**-** ${!isNaN(song.id) 
     ? `${song.name} (${song.lengthString})` 
@@ -82,7 +82,7 @@ module.exports = class saveQueueCommand extends commando.Command {
             ${paginated.maxPage > 1 ? `\nUse ${msg.usage()} to view a specific page.\n` : ''}
 
             **Now playing:** ${!isNaN(currentSong.id) ? `${currentSong.name}` : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`}
-            ${oneLine `
+            ${oneLine`
                 **Progress:**
                 ${!currentSong.playing ? 'Paused: ' : ''}${Song.timeString(currentTime)} /
                 ${currentSong.lengthString}

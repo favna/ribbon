@@ -1,11 +1,12 @@
 version: 2
 machine:
   environment:
-    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+    PATH: "/opt/yarn/yarn-v1.5.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}:${HOME}/${Ribbon}/node_modules/.bin"
+    NODE_ENV: test
   node:
-    version: 8.9.4
+    version: 8.11.1
   npm:
-    version: 5.6.0
+    version: 5.7.1
 dependencies:
   pre:
     - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -17,6 +18,9 @@ general:
   branches:
     only:
       - master
+test:
+  override:
+    - yarn test
 jobs:
   build:
     docker:
@@ -40,6 +44,7 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn lintfix
-      - run: yarn lint
       - run: yarn test
+notify:
+  webhooks:
+    - url: https://skyhook.glitch.me/api/webhooks/431587377799233537/_kvV2bj5VcFeDX7gf5LmdwQIdVF_bA0xG_zYg-06-LPz8uZbiWLj2oH-1DX_vj1SsrSQ/circleci

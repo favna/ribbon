@@ -24,8 +24,9 @@
  */
 
 /**
- * Custom Command exclusive to ChaosGamez server  
+ * @file Custom KaiCommand - Custom Command exclusive to ChaosGamez server  
  * A joke command to spite Kai  
+ * Server admins can disable this command entirely by using the `rmt off` command  
  * **Aliases**: `.kai`
  * @module
  * @category custom
@@ -36,7 +37,7 @@
 const commando = require('discord.js-commando'),
   {stripIndents} = require('common-tags');
 
-module.exports = class kaiCommand extends commando.Command {
+module.exports = class KaiCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'kai',
@@ -62,7 +63,8 @@ module.exports = class kaiCommand extends commando.Command {
         'https://favna.xyz/images/ribbonhost/kai/antikai05.png',
         'https://favna.xyz/images/ribbonhost/kai/antikai06.gif',
         'https://favna.xyz/images/ribbonhost/kai/antikai07.png',
-        'https://favna.xyz/images/ribbonhost/kai/antikai08.png'
+        'https://favna.xyz/images/ribbonhost/kai/antikai08.png',
+        'https://favna.xyz/images/ribbonhost/kai/antikai09.png'
       ],
       curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
 
@@ -73,8 +75,9 @@ module.exports = class kaiCommand extends commando.Command {
     if (this.client.isOwner(msg.author)) {
       return true;
     }
-    if (msg.guild.id !== '373826006651240450') {
-      return stripIndents `That command can only be used in the Chaos Gamez server, sorry 😦
+
+    if (msg.guild.id !== '373826006651240450' && this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
+      return stripIndents`That command can only be used in the Chaos Gamez server, sorry 😦
 			Want your own server specific custom commands? Join the support server (link in the \`${msg.guild.commandPrefix}stats\` command) and request the command.`;
     }
 
@@ -82,11 +85,13 @@ module.exports = class kaiCommand extends commando.Command {
   }
 
   run (msg) {
-    msg.delete();
-    msg.embed({
-      'image': {'url': this.fetchImage()},
-      'color': msg.guild ? msg.guild.me.displayColor : 10610610
-    },
-    'Please <@418504046337589249> get lost');
+    if (this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
+      msg.delete();
+      msg.embed({
+        'image': {'url': this.fetchImage()},
+        'color': msg.guild ? msg.guild.me.displayColor : 10610610
+      },
+      'Please <@418504046337589249> get lost');
+    }
   }
 };

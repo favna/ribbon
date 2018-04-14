@@ -24,7 +24,7 @@
  */
 
 /**
- * Owner Only - lists all guilds the bot is in 	 
+ * @file Owner CheckGuildsCommand - Lists all guilds the bot is in  
  * @module
  * @category owner
  * @name checkguilds 
@@ -47,7 +47,7 @@ module.exports = class CheckGuildsCommand extends commando.Command {
   }
 
   run (msg) {
-    msg.say(stripIndents `\`\`\`The current guild count: ${this.client.guilds.size}
+    msg.say(stripIndents`\`\`\`The current guild count: ${this.client.guilds.size}
         
         Guild list:
         ${this.client.guilds.map(m => m.name).join('\n')}\`\`\``, {'split': true});

@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets the stats from a bot listed on DiscordBotList  
+ * @file Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList  
  * **Aliases**: `dbapi`, `db`
  * @module
  * @category info
@@ -41,7 +41,7 @@ const {MessageEmbed} = require('discord.js'),
   {discordbotsAPIKey} = require('../../auth.json'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class discordBotsCommand extends commando.Command {
+module.exports = class DiscordBotsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'discordbots',
@@ -96,6 +96,6 @@ module.exports = class discordBotsCommand extends commando.Command {
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ An error occured getting info from that bot, are you sure it exists on the website?');
+    return msg.reply('an error occurred getting info from that bot, are you sure it exists on the website?');
   }
 };

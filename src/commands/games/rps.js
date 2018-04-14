@@ -24,7 +24,7 @@
  */
 
 /**
- * Play Rock Paper Scissors against random.org randomization  
+ * @file Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization  
  * **Aliases**: rockpaperscissors
  * @module
  * @category games
@@ -39,7 +39,7 @@ const {MessageEmbed} = require('discord.js'),
   random = require('node-random'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class rpsCommand extends commando.Command {
+module.exports = class RockPaperScissorCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'rps',
@@ -111,7 +111,7 @@ module.exports = class rpsCommand extends commando.Command {
         return msg.embed(rpsEmbed);
       }
 
-      return msg.reply('⚠️ an error occured getting a random result and I\'m not going to rig this game.');
+      return msg.reply('an error occurred getting a random result and I\'m not going to rig this game.');
     });
   }
 };

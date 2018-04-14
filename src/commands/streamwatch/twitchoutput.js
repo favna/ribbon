@@ -24,7 +24,7 @@
  */
 
 /**
- * Configures the channel in which twitch notifications are send  
+ * @file Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send  
  * **Aliases**: `output`, `twitchout`, `twitchchannel`
  * @module
  * @category streamwatch
@@ -71,6 +71,6 @@ module.exports = class TwitchOutputCommand extends commando.Command {
     this.client.provider.set(msg.guild.id, 'twitchchannel', args.channel.id);
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `📹 the channel to use for the twitch notifications has been set to <#${args.channel.id}>`);
+    return msg.reply(oneLine`📹 the channel to use for the twitch notifications has been set to <#${args.channel.id}>`);
   }
 };

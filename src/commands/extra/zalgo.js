@@ -24,7 +24,7 @@
  */
 
 /**
- * Create zalgo-fied text from your input  
+ * @file Extra Zalgo - Create zalgo-fied text from your input  
  * First banishes any existing zalgo to ensure proper result  
  * **Aliases**: `trash`
  * @module

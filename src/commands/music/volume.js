@@ -24,7 +24,7 @@
  */
 
 /**
- * Changes the volume of the currently playing song  
+ * @file Music ChangeVolumeCommand - Changes the volume of the currently playing song  
  * If you do not  give any parameter the bot will show the current volume  
  * You need to be in a voice channel before you can use this command  
  * **Aliases**: `set-volume`, `set-vol`, `vol`

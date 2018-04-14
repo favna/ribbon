@@ -24,7 +24,8 @@
  */
 
 /**
- * Fetch the latest data for the eshop command  
+ * @file Owner EShopFetchCommand - Fetch the latest data for the eShop command  
+ * **Aliases**: `efetch`
  * @module
  * @category owner
  * @name eshopfetch
@@ -37,7 +38,7 @@ const commando = require('discord.js-commando'),
   path = require('path'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class EshopFetchCommand extends commando.Command {
+module.exports = class EShopFetchCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'eshopfetch',
@@ -57,9 +58,9 @@ module.exports = class EshopFetchCommand extends commando.Command {
     if (fs.existsSync(path.join(__dirname, '../../data/websearch/eshop.json'))) {
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply('Latest eshop data stored in file');
+      return msg.reply('latest eShop data stored in file');
     }
 
-    return msg.reply('An error occured fetching latest data!');
+    return msg.reply('an error occurred fetching latest data!');
   }
 };

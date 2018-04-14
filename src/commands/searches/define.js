@@ -16,7 +16,7 @@
  */
 
 /**
- * Define a word using glosbe  
+ * @file Searches DefineCommand - Define a word using glosbe  
  * **Aliases**: `def`, `dict`
  * @module
  * @category searches
@@ -31,7 +31,7 @@ const {MessageEmbed} = require('discord.js'),
   request = require('snekfetch'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class defineCommand extends commando.Command {
+module.exports = class DefineCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'define',
@@ -90,6 +90,6 @@ module.exports = class defineCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(`⚠️ nothing found for \`${args.query}\`, maybe check your spelling?`);
+    return msg.reply(`nothing found for \`${args.query}\`, maybe check your spelling?`);
   }
 };

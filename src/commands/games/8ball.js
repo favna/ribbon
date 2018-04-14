@@ -24,7 +24,7 @@
  */
 
 /**
- * Rolls a magic 8 ball using your input  
+ * @file Games EightBallCommand - Rolls a magic 8 ball using your input  
  * **Aliases**: `eightball`
  * @module
  * @category games
@@ -39,7 +39,7 @@ const {MessageEmbed} = require('discord.js'),
   predict = require('eightball'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class eightBallCommand extends commando.Command {
+module.exports = class EightBallCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': '8ball',

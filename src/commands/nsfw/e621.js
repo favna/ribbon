@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets a NSFW image from e621  
+ * @file nsfw e621Command - Gets a NSFW image from e621  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `eee`
  * @module
@@ -90,7 +90,7 @@ module.exports = class e621Command extends commando.Command {
         .setTitle(`e621 image for ${args.nsfwtags.join(', ')}`)
         .setURL(common[0].common.file_url)
         .setColor('#FFB6C1')
-        .setDescription(stripIndents `${tags.slice(0, 5).join(' ')}
+        .setDescription(stripIndents`${tags.slice(0, 5).join(' ')}
 				
 				**Score**: ${common[0].common.score}`)
         .setImage(common[0].common.file_url);
@@ -102,6 +102,6 @@ module.exports = class e621Command extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ No juicy images found.');
+    return msg.reply('no juicy images found.');
   }
 };

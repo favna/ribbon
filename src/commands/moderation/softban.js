@@ -24,7 +24,7 @@
  */
 
 /**
- * Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)  
+ * @file Moderation SoftbanCommand - Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)  
  * This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours  
  * **Aliases**: `sb`, `sban`
  * @module
@@ -42,7 +42,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class softbanCommand extends commando.Command {
+module.exports = class SoftbanCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'softban',
@@ -78,11 +78,11 @@ module.exports = class softbanCommand extends commando.Command {
 
   run (msg, args) {
     if (args.member.id === msg.author.id) {
-      return msg.reply('⚠️ I don\'t think you want to softban yourself.');
+      return msg.reply('I don\'t think you want to softban yourself.');
     }
 
     if (!args.member.bannable) {
-      return msg.reply('⚠️ I cannot softban that member, their role is probably higher than my own!');
+      return msg.reply('I cannot softban that member, their role is probably higher than my own!');
     }
 
     args.member.ban({
@@ -108,7 +108,7 @@ module.exports = class softbanCommand extends commando.Command {
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
       if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-        msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+        msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);

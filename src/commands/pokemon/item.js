@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets information about an item in Pokémon
+ * @file Pokémon ItemCommand - Gets information about an item in Pokémon
  * For item names existing of multiple words (for example `life orb`) you can either type it with or without the space  
  * **Aliases**: `it`, `bag`
  * @module
@@ -35,16 +35,17 @@
  * @returns {MessageEmbed} Description and external links for the item
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Matcher = require('did-you-mean'),
+const Matcher = require('did-you-mean'),
   commando = require('discord.js-commando'),
-  path = require('path'), 
-  request = require('snekfetch'),
-  requireFromURL = require('require-from-url/sync'),
-  {oneLine} = require('common-tags'), 
+  path = require('path'),
+  underscore = require('underscore'),
+  {MessageEmbed} = require('discord.js'),
+  {BattleItems} = require(path.join(__dirname, '../../data/dex/items')),
+  {ItemAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
+  {oneLine} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
-module.exports = class itemCommand extends commando.Command {
+module.exports = class ItemCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'item',
@@ -63,126 +64,61 @@ module.exports = class itemCommand extends commando.Command {
         {
           'key': 'item',
           'prompt': 'Get info on which item?',
-          'type': 'string'
+          'type': 'string',
+          'parse': p => p.toLowerCase().replace(/ /g, '')
         }
       ]
     });
 
-    this.items = {};
-    this.pokeAliases = {};
     this.match = [];
   }
 
-  async fetchItems () {
-    if (Object.keys(this.items).length !== 0) {
-      return this.items;
-    }
+  run (msg, args) {
+    const itemEmbed = new MessageEmbed();
 
-    const abilityData = await request.get(this.fetchLinks('items'));
+    let itemEntry = {};
 
-    if (abilityData) {
-      this.items = requireFromURL(this.fetchLinks('items')).BattleItems;
+    if (ItemAliases[args.item]) {
+      args.item = ItemAliases[args.item];
+      this.match = new Matcher(Object.keys(ItemAliases).join(' '));
     } else {
-      this.items = require(path.join(__dirname, '../../data/dex/items')).BattleItems; // eslint-disable-line global-require
+      this.match = new Matcher(Object.keys(BattleItems).join(' '));
     }
 
-    this.match = new Matcher(Object.keys(this.items).join(' ')); // eslint-disable-line one-var
+    itemEntry = BattleItems[args.item];
 
-    return this.items;
-  }
-
-  async fetchAliases () {
-    if (Object.keys(this.pokeAliases).length !== 0) {
-      return this.pokeAliases;
-    }
-
-    const dexData = await request.get(this.fetchLinks('aliases'));
-
-    if (dexData) {
-      this.pokeAliases = requireFromURL(this.fetchLinks('aliases')).BattleAliases;
-    } else {
-      this.pokeAliases = require(path.join(__dirname, '../../data/dex/aliases')).BattlePokedex; // eslint-disable-line global-require
-    }
-
-    this.match = new Matcher(Object.keys(this.pokeAliases).join(' ')); // eslint-disable-line one-var
-
-    return this.pokeAliases;
-  }
-
-  async fetchImage (item) {
-
-    try {
-      await request.get(`https://raw.githubusercontent.com/110Percent/beheeyem-data/master/sprites/items/${item.name.toLowerCase().replace(' ', '_')}.png`);
-    } catch (err) {
-      return `https://play.pokemonshowdown.com/sprites/itemicons/${item.name.toLowerCase().replace(' ', '-')}.png`;
-    }
-
-    return `https://raw.githubusercontent.com/110Percent/beheeyem-data/master/sprites/items/${item.name.toLowerCase().replace(' ', '_')}.png`;
-  }
-
-  fetchLinks (type) {
-    switch (type) {
-    case 'aliases':
-      return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/aliases.js';
-    case 'items':
-      return 'https://raw.githubusercontent.com/Zarel/Pokemon-Showdown/master/data/items.js';
-    default:
-      return 'error';
-    }
-  }
-
-  async run (msg, args) {
-    const aliases = await this.fetchAliases(),
-      itemEmbed = new MessageEmbed(),
-      items = await this.fetchItems();
-
-
-    let item = {},
-      itemName = args.item.toLowerCase();
-
-    if (aliases[itemName]) {
-      itemName = aliases[itemName];
-    }
-    itemName = itemName.toLowerCase();
-
-    for (let i = 0; i < Object.keys(items).length; i += 1) {
-      if (items[Object.keys(items)[i]].id.toLowerCase() === itemName.replace(' ', '').replace('\'', '')) {
-        item = items[Object.keys(items)[i]];
+    for (const item in BattleItems) {
+      if (BattleItems[item].id.toLowerCase() === args.item.toLowerCase() || BattleItems[item].name.toLowerCase() === args.item.toLowerCase()) {
+        itemEntry = BattleItems[item];
         break;
       }
     }
 
-    const imgURL = await this.fetchImage(item); // eslint-disable-line one-var
-
-    if (Object.keys(item).length !== 0) {
+    if (!underscore.isEmpty(itemEntry)) {
       itemEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-        .setThumbnail('https://favna.xyz/images/ribbonhost/kalosdex.png')
-        .setAuthor(`${capitalizeFirstLetter(item.name)}`, imgURL)
-        .addField('Description', item.desc)
-        .addField('Generation Introduced', item.gen)
-        .addField('External Resources', oneLine `
-			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(item.name.replace(' ', '_').replace('\'', ''))})  
-			|  [Smogon](http://www.smogon.com/dex/sm/items/${item.name.toLowerCase().replace(' ', '_')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
+        .setAuthor(`${capitalizeFirstLetter(itemEntry.name)}`, `https://play.pokemonshowdown.com/sprites/itemicons/${itemEntry.name.toLowerCase().replace(/ /g, '-')}.png`)
+        .addField('Description', itemEntry.desc)
+        .addField('Generation Introduced', itemEntry.gen)
+        .addField('External Resources', oneLine`
+			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(itemEntry.name.replace(' ', '_').replace('\'', ''))})  
+			|  [Smogon](http://www.smogon.com/dex/sm/items/${itemEntry.name.toLowerCase().replace(' ', '_')
     .replace('\'', '')})  
-			|  [PokémonDB](http://pokemondb.net/item/${item.name.toLowerCase().replace(' ', '-')
+			|  [PokémonDB](http://pokemondb.net/item/${itemEntry.name.toLowerCase().replace(' ', '-')
     .replace('\'', '')})`);
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(itemEmbed, `**${capitalizeFirstLetter(item.name)}**`);
+      return msg.embed(itemEmbed, `**${capitalizeFirstLetter(itemEntry.name)}**`);
     }
-
-    /* eslint-disable one-var */
-
-    const dym = this.match.get(args.item),
+    this.match.setThreshold(4);
+    const dym = this.match.get(args.item), // eslint-disable-line one-var
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the item name?';
-
-    /* eslint-enable one-var */
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(`⚠️ Item not found! ${dymString}`);
+    return msg.reply(`Item not found! ${dymString}`);
 
   }
 };

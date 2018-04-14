@@ -24,20 +24,20 @@
  */
 
 /**
- * Transform some query into a LMGTFY (Let Me Google That For You) url  
+ * @file Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url  
  * **Aliases**: `dumb`
  * @module
  * @category searches
  * @name lmgtfy
  * @example lmgtfy is it legal to kill an ant???
  * @param {string} SearchQuery The dumb sh*t people need to use google for
- * @returns {Message} lmgfty'ed url
+ * @returns {Message} LMGTFY url
  */
 
 const commando = require('discord.js-commando'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class lmgtfyCommand extends commando.Command {
+module.exports = class LmgtfyCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'lmgtfy',

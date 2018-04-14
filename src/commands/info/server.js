@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets information about the current server  
+ * @file Info ServerInfoCommand - Gets information about the current server  
  * **Aliases**: `serverinfo`, `sinfo`
  * @module
  * @category info
@@ -37,7 +37,7 @@ const {MessageEmbed} = require('discord.js'),
   moment = require('moment'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class serverInfoCommand extends commando.Command {
+module.exports = class ServerInfoCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'server',
@@ -45,7 +45,7 @@ module.exports = class serverInfoCommand extends commando.Command {
       'group': 'info',
       'aliases': ['serverinfo', 'sinfo'],
       'description': 'Gets information about the server.',
-      'examples': ['server {serverName ID (partial or full)}', 'server Favna\'s Selfbot'],
+      'examples': ['server'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,
@@ -86,7 +86,7 @@ module.exports = class serverInfoCommand extends commando.Command {
 
   run (msg, args) {
     if (msg.channel.type !== 'text' && args.server === 'current') {
-      return msg.reply('An argument of server name (partial or full) or server ID is required when talking outside of a server');
+      return msg.reply('an argument of server name (partial or full) or server ID is required when talking outside of a server');
     }
 
     const channels = msg.guild.channels.map(ty => ty.type), // eslint-disable-line sort-vars

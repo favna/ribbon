@@ -24,7 +24,7 @@
  */
 
 /**
- * Kicks a somewhat bad member  
+ * @file Moderation KickCommand - Kicks a somewhat bad member  
  * **Aliases**: `k`
  * @module
  * @category moderation
@@ -41,7 +41,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class kickCommand extends commando.Command {
+module.exports = class KickCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'kick',
@@ -78,11 +78,11 @@ module.exports = class kickCommand extends commando.Command {
 
   run (msg, args) {
     if (args.member.id === msg.author.id) {
-      return msg.reply('⚠️ I don\'t think you want to kick yourself.');
+      return msg.reply('I don\'t think you want to kick yourself.');
     }
 
     if (!args.member.kickable) {
-      return msg.reply('⚠️ I cannot kick that member, their role is probably higher than my own!');
+      return msg.reply('I cannot kick that member, their role is probably higher than my own!');
     }
 
     args.member.kick(args.reason !== '' ? args.reason : 'No reason given by staff');
@@ -102,7 +102,7 @@ module.exports = class kickCommand extends commando.Command {
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
       if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-        msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+        msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);

@@ -24,7 +24,7 @@
  */
 
 /**
- * Lists all emotes from the server  
+ * @file Info EmotesCommand - Lists all emotes from the server  
  * **Aliases**: `listemo`, `emolist`, `listemoji`, `emote`
  * @module
  * @category info
@@ -37,7 +37,7 @@ const {MessageEmbed} = require('discord.js'),
   moment = require('moment'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class emotesCommand extends commando.Command {
+module.exports = class EmotesCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'emotes',

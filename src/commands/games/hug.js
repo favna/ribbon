@@ -24,7 +24,7 @@
  */
 
 /**
- * Give someone a hug ❤!  
+ * @file Games HugCommand - Give someone a hug ❤!  
  * **Aliases**: `bearhug`, `embrace`
  * @module
  * @category games
@@ -37,7 +37,7 @@
 const commando = require('discord.js-commando'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class kaiCommand extends commando.Command {
+module.exports = class HugCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'hug',

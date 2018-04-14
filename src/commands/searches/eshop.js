@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets information about a game in the Nintendo Switch eShop  
+ * @file Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop  
  * **Aliases**: `shop`
  * @module
  * @category searches
@@ -42,7 +42,7 @@ const Fuse = require('fuse.js'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class EshopCommand extends commando.Command {
+module.exports = class EShopCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'eshop',
@@ -107,7 +107,7 @@ module.exports = class EshopCommand extends commando.Command {
       return msg.reply(`No titles found for \`${args.game}\``);
     }
 
-    return msg.reply(oneLine `ehsop data was not found!!
+    return msg.reply(oneLine`eshop data was not found!!
 		Ask <@${this.client.owners[0].id}> to generate it`);
   }
 };

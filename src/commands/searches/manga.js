@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets information about any manga from MyAnimeList  
+ * @file Searches MangaCommand - Gets information about any manga from MyAnimeList  
  * **Aliases**: `cartoon`, `man`
  * @module
  * @category searches
@@ -39,7 +39,7 @@ const {MessageEmbed} = require('discord.js'),
   maljs = require('maljs'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class mangaCommand extends commando.Command {
+module.exports = class MangaCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'manga',

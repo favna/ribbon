@@ -24,20 +24,23 @@
  */
 
 /**
- * Gamble your chips in a coin flip  
+ * @file Casino CoinCommand - Gamble your chips in a coin flip  
  * Payout is 1:2  
  * **Aliases**: `flip`, `cflip`
  * @module
  * @category casino
  * @name coin
+ * @example coin 10 heads
+ * @param {number} AmountOfChips Amount of chips you want to gamble
+ * @param {string} CoinSide The side of the coin you want to bet on
  * @returns {MessageEmbed} Outcome of the coin flip
  */
 
 const {MessageEmbed} = require('discord.js'),
+  Database = require('better-sqlite3'),
   commando = require('discord.js-commando'),
   moment = require('moment'),
   path = require('path'),
-  sql = require('sqlite'), 
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
@@ -50,29 +53,37 @@ module.exports = class CoinCommand extends commando.Command {
       'aliases': ['flip', 'cflip'],
       'description': 'Gamble your chips in a coin flip',
       'format': 'AmountOfChips CoinSide',
+      'examples': ['coin 50 heads'],
       'guildOnly': true,
       'throttling': {
         'usages': 2,
-        'duration': 3
+        'duration': 5
       },
       'args': [
         {
           'key': 'chips',
           'prompt': 'How many chips do you want to gamble?',
-          'type': 'integer'
+          'type': 'integer',
+          'validate': (chips) => {
+            if (/^[+]?\d+$/.test(chips) && chips >= 1 && chips <= 10000) {
+              return true;
+            }
+
+            return 'Reply with a chips amount has to be a full number (no decimals) between 1 and 10000. Example: `10`';
+          }
         },
         {
           'key': 'side',
           'prompt': 'What side will the coin land on?',
           'type': 'string',
           'validate': (side) => {
-            const validSides = ['heads', 'tails'];
+            const validSides = ['heads', 'head', 'tails', 'tail'];
 
-            if (validSides.includes(side)) {
+            if (validSides.includes(side.toLowerCase())) {
               return true;
             }
 
-            return `Has to be either \`${validSides[0]}\` or \`${validSides[0]}\``;
+            return `Has to be either \`${validSides[0]}\` or \`${validSides[1]}\``;
           }
         }
       ]
@@ -80,62 +91,58 @@ module.exports = class CoinCommand extends commando.Command {
   }
 
   run (msg, args) {
-    const coinEmbed = new MessageEmbed();
+    const coinEmbed = new MessageEmbed(),
+      conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
     coinEmbed
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    sql.open(path.join(__dirname, '../../data/databases/casino.sqlite3'), {'cached': true});
+    try {
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
-    sql.get(`SELECT * FROM "${msg.guild.id}" WHERE userID = "${msg.author.id}";`).then((rows) => {
-      if (!rows) {
-        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
-      }
-      if (args.chips > rows.balance) {
-        return msg.reply('you don\'t have enough chips to make that bet, wait for your next daily topup or ask someone to give you some');
-      }
-
-      const flip = Math.round(Number(Math.random())),
-        prevBal = rows.balance,
-        side = args.side === 'heads' ? 0 : 1;
-
-      rows.balance -= args.chips;
-
-      if (flip === side) {
-        rows.balance += args.chips * 2;
-      }
-
-      rows.balance = Math.round(rows.balance);
-
-      sql.run(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID="${msg.author.id}";`, [rows.balance]);
-
-      coinEmbed
-        .setTitle(`${msg.author.tag} ${flip === side ? 'won' : 'lost'} ${args.chips} chips`)
-        .addField('Previous Balance', prevBal, true)
-        .addField('New Balance', rows.balance, true)
-        .setImage(flip === 0 ? 'https://favna.xyz/images/ribbonhost/coinheads.png' : 'https://favna.xyz/images/ribbonhost/cointails.png');
-
-      deleteCommandMessages(msg, this.client);
-
-      return msg.embed(coinEmbed);
-    })
-      .catch((e) => {
-        if (!e.toString().includes(msg.guild.id) && !e.toString().includes(msg.author.id)) {
-          console.error(`	 ${stripIndents `Fatal SQL Error occured for someone making a casino coinflip!
-              Server: ${msg.guild.name} (${msg.guild.id})
-              Author: ${msg.author.tag} (${msg.author.id})
-              Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-              Error Message:`} ${e}`);
-
-          return msg.reply(oneLine `Fatal Error occured that was logged on Favna\'s system.
-                You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+      if (query) {
+        if (args.chips > query.balance) {
+          return msg.reply(`you don\'t have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
         }
+
+        if (args.side === 'head') args.side = 'heads'; // eslint-disable-line curly
+        if (args.side === 'tail') args.side = 'tails'; // eslint-disable-line curly
+
+        const flip = Math.round(Number(Math.random())),
+          prevBal = query.balance,
+          side = args.side === 'heads' ? 0 : 1;
+
+        query.balance -= args.chips;
+
+        if (flip === side) query.balance += args.chips * 2; // eslint-disable-line curly
+
+        query.balance = Math.round(query.balance);
+
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
+
+        coinEmbed
+          .setTitle(`${msg.author.tag} ${flip === side ? 'won' : 'lost'} ${args.chips} chips`)
+          .addField('Previous Balance', prevBal, true)
+          .addField('New Balance', query.balance, true)
+          .setImage(flip === 0 ? 'https://favna.xyz/images/ribbonhost/coinheads.png' : 'https://favna.xyz/images/ribbonhost/cointails.png');
 
         deleteCommandMessages(msg, this.client);
 
-        return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 400`);
-      });
+        return msg.embed(coinEmbed);
+      }
+
+      return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
+    } catch (e) {
+      console.error(`	 ${stripIndents`Fatal SQL Error occurred while topping up someones balance!
+      Server: ${msg.guild.name} (${msg.guild.id})
+      Author: ${msg.author.tag} (${msg.author.id})
+      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message:`} ${e}`);
+
+      return msg.reply(oneLine`Fatal Error occurred that was logged on Favna\'s system.
+              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+    }
   }
 };

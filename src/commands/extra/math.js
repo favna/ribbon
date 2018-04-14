@@ -24,7 +24,7 @@
  */
 
 /**
- * Take the effort out of calculations and let the bot do it for you  
+ * @file Extra MathCommand - Take the effort out of calculations and let the bot do it for you  
  * **Aliases**: `calc`
  * @module
  * @category extra
@@ -41,7 +41,7 @@ const {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {oneLine, stripIndents} = require('common-tags');
 
-module.exports = class mathCommand extends commando.Command {
+module.exports = class MathCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'math',
@@ -75,7 +75,7 @@ module.exports = class mathCommand extends commando.Command {
     try {
       res = scalc(args.equation);
     } catch (err) {
-      console.error(`	 ${stripIndents `An error occured on the mathh command!
+      console.error(`	 ${stripIndents`An error occurred on the math command!
 			Server: ${msg.guild.name} (${msg.guild.id})
 			Author: ${msg.author.tag} (${msg.author.id})
 			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -83,11 +83,11 @@ module.exports = class mathCommand extends commando.Command {
 			Error Message:`} ${err}`);
     }
 
-    if (res) {
+    if (res || res === 0) {
       mathEmbed
         .setTitle('Calculator')
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-        .setDescription(oneLine `The answer to \`${args.equation.toString()}\` is \`${res}\``);
+        .setDescription(oneLine`The answer to \`${args.equation.toString()}\` is \`${res}\``);
 
       deleteCommandMessages(msg, this.client);
 
@@ -96,7 +96,7 @@ module.exports = class mathCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `\`${args.equation.toString()}\` is is not a valid equation for me.
+    return msg.reply(oneLine`\`${args.equation.toString()}\` is is not a valid equation for me.
 				Check out this readme to see how to use the supported polish notation: https://github.com/dominhhai/calculator/blob/master/README.md`);
 
   }

@@ -217,7 +217,7 @@ const BattlePokedex = {
   },
   'charizardmegax': {
     'num': 6,
-    'species': 'Charizard-Mega-X',
+    'species': 'Charizard-MegaX',
     'baseSpecies': 'Charizard',
     'forme': 'Mega-X',
     'formeLetter': 'M',
@@ -242,7 +242,7 @@ const BattlePokedex = {
   },
   'charizardmegay': {
     'num': 6,
-    'species': 'Charizard-Mega-Y',
+    'species': 'Charizard-MegaY',
     'baseSpecies': 'Charizard',
     'forme': 'Mega-Y',
     'formeLetter': 'M',
@@ -23159,7 +23159,7 @@ const BattlePokedex = {
   },
   'necrozmaduskmane': {
     'num': 800,
-    'species': 'Necrozma-Dusk-Mane',
+    'species': 'Necrozma-DuskMane',
     'baseSpecies': 'Necrozma',
     'forme': 'Dusk-Mane',
     'formeLetter': 'D',
@@ -23181,7 +23181,7 @@ const BattlePokedex = {
   },
   'necrozmadawnwings': {
     'num': 800,
-    'species': 'Necrozma-Dawn-Wings',
+    'species': 'Necrozma-DawnWings',
     'baseSpecies': 'Necrozma',
     'forme': 'Dawn-Wings',
     'formeLetter': 'D',
@@ -23394,7 +23394,7 @@ const BattlePokedex = {
       'spd': 6,
       'spe': 29
     },
-    'abilities': {'0': ''},
+    'abilities': {'0': 'Breaking Your Game'},
     'heightm': 3,
     'weightkg': 1590.8,
     'color': 'Gray',

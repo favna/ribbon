@@ -24,7 +24,7 @@
  */
 
 /**
- * Bust the last "say" user  
+ * @file Extra SayWutCommand - Bust the last "say" user  
  * **Aliases**: `saywat`, `saywot`
  * @module
  * @category extra
@@ -38,7 +38,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class sayWutCommand extends commando.Command {
+module.exports = class SayWutCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'saywut',
@@ -63,8 +63,8 @@ module.exports = class sayWutCommand extends commando.Command {
       wutEmbed
         .setColor(saydata.memberHexColor)
         .setTitle(`Last ${saydata.commandPrefix}say message author`)
-        .setAuthor(oneLine `${saydata.authorTag} (${saydata.authorID})`, saydata.avatarURL)
-        .setFooter(oneLine `${moment(saydata.messageDate).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.xyz/images/ribbonhost/ribbonicon.png')
+        .setAuthor(oneLine`${saydata.authorTag} (${saydata.authorID})`, saydata.avatarURL)
+        .setFooter(oneLine`${moment(saydata.messageDate).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.xyz/images/ribbonhost/ribbonicon.png')
         .setDescription(saydata.argString);
 
       deleteCommandMessages(msg, this.client);

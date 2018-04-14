@@ -24,7 +24,7 @@
  */
 
 /**
- * Show the amount of warning points a member has  
+ * @file Moderation ListWarnCommand - Show the amount of warning points a member has  
  * **Aliases**: `reqwarn`, `lw`, `rw`
  * @module
  * @category moderation
@@ -42,7 +42,7 @@ const Fuse = require('fuse.js'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class listwarnCommand extends commando.Command {
+module.exports = class ListWarnCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'listwarn',
@@ -104,7 +104,7 @@ module.exports = class listwarnCommand extends commando.Command {
         return msg.embed(embed);
       }
 
-      return msg.reply('⚠️ That user has no warning points yet');
+      return msg.reply('that user has no warning points yet');
     }
 
     return msg.reply(`📘 No warnpoints log found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);

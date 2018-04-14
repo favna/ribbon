@@ -24,7 +24,7 @@
  */
 
 /**
- * Ban a bad member  
+ * @file Moderation BanCommand - Ban a bad member  
  * **Aliases**: `b`, `banana`
  * @module
  * @category moderation
@@ -78,11 +78,11 @@ module.exports = class banCommand extends commando.Command {
 
   run (msg, args) {
     if (args.member.id === msg.author.id) {
-      return msg.reply('⚠️ I don\'t think you want to ban yourself.');
+      return msg.reply('I don\'t think you want to ban yourself.');
     }
 
     if (!args.member.bannable) {
-      return msg.reply('⚠️ I cannot ban that member, their role is probably higher than my own!');
+      return msg.reply('I cannot ban that member, their role is probably higher than my own!');
     }
 
     if (/--nodelete/im.test(msg.argString)) {
@@ -111,7 +111,7 @@ module.exports = class banCommand extends commando.Command {
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
       if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-        msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+        msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);

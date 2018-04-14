@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets information about a game using IndieGamesDoneBad (IGDB)  
+ * @file Searches GamesCommand - Gets information about a game using IndieGamesDoneBad (IGDB)  
  * **Aliases**: `game`, `moby`, `igdb`
  * @module
  * @category searches
@@ -41,7 +41,7 @@ const {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {igdbAPIKey} = require('../../auth.json');
 
-module.exports = class gameCommand extends commando.Command {
+module.exports = class GamesCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'games',

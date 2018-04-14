@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets information about a game using Steam  
+ * @file Searches SteamCommand - Gets information about a game using Steam  
  * **Aliases**: `valve`
  * @module
  * @category searches
@@ -43,7 +43,7 @@ const {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {steamAPIKey} = require('../../auth.json');
 
-module.exports = class steamCommand extends commando.Command {
+module.exports = class SteamCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'steam',
@@ -126,11 +126,11 @@ module.exports = class steamCommand extends commando.Command {
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply('⚠️ Steam API error');
+      return msg.reply('Steam API error');
     }
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ ***nothing found***');
+    return msg.reply('***nothing found***');
   }
 };

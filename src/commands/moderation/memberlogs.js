@@ -24,8 +24,8 @@
  */
 
 /**
- * Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel  
- * **Aliases**: `tml`, `togglememberlogs`
+ * @file Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel  
+ * **Aliases**: `tml`, `togglemember`, `togglememberlogs`
  * @module
  * @category moderation
  * @name memberlogs
@@ -38,13 +38,13 @@ const commando = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class memberlogsCommand extends commando.Command {
+module.exports = class MemberLogsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'memberlogs',
       'memberName': 'memberlogs',
       'group': 'moderation',
-      'aliases': ['tml', 'togglemember'],
+      'aliases': ['tml', 'togglemember', 'togglememberlogs'],
       'description': 'Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel',
       'format': 'Enable|Disable',
       'examples': ['memberlogs enable'],
@@ -81,7 +81,7 @@ module.exports = class memberlogsCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `member logs have been
+    return msg.reply(oneLine`member logs have been
         ${args.option 
     ? 'enabled. Please ensure there is a channel named "member-logs" and that I have access to it!' 
     : 'disabled. No need for a member-logs channel'}.`);

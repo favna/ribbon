@@ -24,7 +24,7 @@
  */
 
 /**
- * Sets a default role that should be assigned to all new joining members  
+ * @file Moderation defaultroleCommand - Sets a default role that should be assigned to all new joining members  
  * **Aliases**: `defrole`
  * @module
  * @category moderation
@@ -80,7 +80,7 @@ module.exports = class defaultroleCommand extends commando.Command {
     this.client.provider.set(msg.guild.id, 'defaultRole', args.role.id);
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply(oneLine `🔓 \`${args.role.name}\` has been set as the default role for this server and will now be granted to all people joining.
+    return msg.reply(oneLine`🔓 \`${args.role.name}\` has been set as the default role for this server and will now be granted to all people joining.
         Use \`${msg.guild.commandPrefix}defaultrole delete\` to remove this setting.`);
   }
 };

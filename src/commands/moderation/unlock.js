@@ -24,7 +24,7 @@
  */
 
 /**
- * Unlock the channel  
+ * @file Moderation UnlockCommand - Unlock the channel  
  * Only really useful if you previously locked the channel  
  * Note that the bot does need to be able to be able to access this channel to unlock it (read permissions)  
  * **Aliases**: `delock`, `ul`
@@ -40,7 +40,7 @@ const {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class unlockCommand extends commando.Command {
+module.exports = class UnlockCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'unlock',
@@ -72,14 +72,14 @@ module.exports = class unlockCommand extends commando.Command {
     embed
       .setColor('#359876')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-      .setDescription(oneLine `**Action:** 🔓 unlocked the \`${msg.channel.name}\` channel. 
+      .setDescription(oneLine`**Action:** 🔓 unlocked the \`${msg.channel.name}\` channel. 
 				This channel can now be used by everyone again. Use \`${msg.guild.commandPrefix}lockdown\` in this channel to (re)-lock it.`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
     if (overwrite) {
       if (this.client.provider.get(msg.guild, 'modlogs', true)) {
         if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
-          msg.reply(oneLine `📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+          msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
                             (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
                             This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
           this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
@@ -94,6 +94,6 @@ module.exports = class unlockCommand extends commando.Command {
     }
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ An error occured unlocking this channel');
+    return msg.reply('an error occurred unlocking this channel');
   }
 };

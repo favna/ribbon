@@ -64,7 +64,7 @@ class Ribbon {
 
   onCmdBlock () {
     return (msg, reason) => {
-      console.log(oneLine `
+      console.log(oneLine`
 		Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
 		blocked; ${reason}
 	`);
@@ -82,7 +82,7 @@ class Ribbon {
 
   onCommandPrefixChange () {
     return (guild, prefix) => {
-      console.log(oneLine ` 
+      console.log(oneLine` 
 			Prefix ${prefix === '' ? 'removed' : `changed to ${prefix || 'the default'}`}
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`);
@@ -91,7 +91,7 @@ class Ribbon {
 
   onCmdStatusChange () {
     return (guild, command, enabled) => {
-      console.log(oneLine `
+      console.log(oneLine`
             Command ${command.groupID}:${command.memberName}
             ${enabled ? 'enabled' : 'disabled'}
             ${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
@@ -108,7 +108,7 @@ class Ribbon {
   onError () {
     return (e) => {
       console.error(e);
-      console.error(`${stripIndents `A websocket error occured!
+      console.error(`${stripIndents`A websocket error occurred!
       Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       Error Message:`} ${e}`);
     };
@@ -116,7 +116,7 @@ class Ribbon {
 
   onGroupStatusChange () {
     return (guild, group, enabled) => {
-      console.log(oneLine `
+      console.log(oneLine`
             Group ${group.id}
             ${enabled ? 'enabled' : 'disabled'}
             ${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
@@ -189,6 +189,7 @@ class Ribbon {
             newActivity = {'url': 'placeholder'};
           }
           if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
+
             /* eslint-disable sort-vars*/
             const userData = await request.get('https://api.twitch.tv/kraken/users')
                 .set('Accept', 'application/vnd.twitchtv.v5+json')
@@ -207,21 +208,20 @@ class Ribbon {
               .setURL(newActivity.url)
               .setColor('#6441A4')
               .setTitle(`${curDisplayName} just went live!`)
-              .setDescription(stripIndents `streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
+              .setDescription(stripIndents`streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
 
-            if (userData.ok && userData.body._total > 0) {
+            if (userData.ok && userData.body._total > 0 && userData.body.users[0]) {
               twitchEmbed
                 .setThumbnail(userData.body.users[0].logo)
                 .setTitle(`${userData.body.users[0].display_name} just went live!`)
-                .setDescription(stripIndents `${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
+                .setDescription(stripIndents`${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
             }
 
-            if (streamData.ok && streamData.body._total > 0) {
-              twitchEmbed.setDescription(stripIndents `${twitchEmbed.description}\n
-							**Stream Started At**${moment(streamData.body.streams[0].created_at).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+            if (streamData.ok && streamData.body._total > 0 && streamData.body.streams[0]) {
+              twitchEmbed.setDescription(stripIndents`${twitchEmbed.description}\n
+                **Stream Started At**${moment(streamData.body.streams[0].created_at).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
                 .setImage(streamData.body.streams[0].preview.large);
             }
-
             if (twitchChannel) {
               curGuild.channels.get(twitchChannel).send({'embed': twitchEmbed});
             }
@@ -235,6 +235,17 @@ class Ribbon {
     return () => {
       console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
       this.isReady = true;
+
+      /**
+       * @todo Periodic Casino Lottery
+       * @body Every 24 hours check which guilds are in Casino database then which members are in those guild. Pick a random one to give free 1000 chips
+       */
+
+      /**
+       * @todo RemindMe system
+       * @body let people store reminders on the bot. Store in SQL Database `reminders.sqlite`.  
+       * First onReady store the timestamps in object then on interval check the object of timestamps and if any has passed remind that person with their text
+       */
     };
   }
 
@@ -247,10 +258,10 @@ class Ribbon {
   onUnknownCommand () {
     return (msg) => {
       if (this.client.provider.get(msg.guild, 'unknownmessages', true)) {
-        return msg.reply(stripIndents `${oneLine `That is not a registerd command.
+        return msg.reply(stripIndents`${oneLine`That is not a registered command.
 				Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\`
 				or @Ribbon#2325 help to view the list of all commands.`}
-				${oneLine `Server staff (those who can manage other's messages) can disable these replies by using
+				${oneLine`Server staff (those who can manage other's messages) can disable these replies by using
 				\`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}unknownmessages disable\``}`);
       }
 
@@ -287,11 +298,12 @@ class Ribbon {
         ['info', 'Info - Discord info at your fingertips'],
         ['music', 'Music - Let the DJ out'],
         ['searches', 'Searches - Browse the web and find results'],
+        ['leaderboards', 'Leaderboards - View leaderboards from various games'],
         ['pokemon', 'Pokemon - Let Dexter answer your questions'],
         ['extra', 'Extra - Extra! Extra! Read All About It! Only Two Cents!'],
         ['moderation', 'Moderation - Moderate with no effort'],
         ['streamwatch', 'Streamwatch - Spy on members and get notified when they go live'],
-        ['custom', 'Custom - Server specific commnads'],
+        ['custom', 'Custom - Server specific commands'],
         ['nsfw', 'NSFW - For all you dirty minds ( ͡° ͜ʖ ͡°)'],
         ['owner', 'Owner - Exclusive to the bot owner(s)']
       ])

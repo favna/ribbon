@@ -24,7 +24,7 @@
  */
 
 /**
- * Pauses the currently playing track  
+ * @file Music PauseSongCommand - Pauses the currently playing track  
  * You need to be in a voice channel before you can use this command  
  * **Aliases**: `shh`, `shhh`, `shhhh`, `shhhhh`, `hush`, `halt`
  * @module
@@ -69,7 +69,7 @@ module.exports = class PauseSongCommand extends commando.Command {
     if (!queue.songs[0].playing) {
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply('Pauseception is not possible 🤔');
+      return msg.reply('pauseception is not possible 🤔');
     }
     queue.songs[0].dispatcher.pause();
     queue.songs[0].playing = false;

@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets information through google  
+ * @file Searches GoogleCommand - Gets information through google  
  * Note: prioritizes Knowledge Graphs for better searching  
  * **Aliases**: `search`, `g`
  * @module
@@ -42,7 +42,7 @@ const {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'), 
   {googleapikey, searchEngineKey} = require('../../auth.json');
 
-module.exports = class googleCommand extends commando.Command {
+module.exports = class GoogleCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'google',
@@ -127,7 +127,7 @@ module.exports = class googleCommand extends commando.Command {
 				.attr('href');
 
 			if (!href) {
-				return msg.reply('⚠️ ***nothing found***');
+				return msg.reply('***nothing found***');
 			}
 
 			deleteCommandMessages(msg, this.client);
@@ -135,6 +135,6 @@ module.exports = class googleCommand extends commando.Command {
 			return msg.say(href.replace('/url?q=', '').split('&')[0]);
 		}
 
-		return msg.reply('⚠️ ***nothing found***');
+		return msg.reply('***nothing found***');
 	}
 };

@@ -24,7 +24,7 @@
  */
 
 /**
- * Gets a NSFW image from gelbooru  
+ * @file nsfw GelbooruCommand - Gets a NSFW image from gelbooru  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `gel`, `booru`
  * @module
@@ -41,7 +41,7 @@ const {MessageEmbed} = require('discord.js'),
   {stripIndents} = require('common-tags'), 
   {deleteCommandMessages} = require('../../util.js');
 
-module.exports = class gelbooruCommand extends commando.Command {
+module.exports = class GelbooruCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'gelbooru',
@@ -90,7 +90,7 @@ module.exports = class gelbooruCommand extends commando.Command {
         .setTitle(`gelbooru image for ${args.nsfwtags.join(', ')}`)
         .setURL(common[0].common.file_url)
         .setColor('#FFB6C1')
-        .setDescription(stripIndents `${tags.slice(0, 5).join(' ')}
+        .setDescription(stripIndents`${tags.slice(0, 5).join(' ')}
 				
 				**Score**: ${common[0].common.score}`)
         .setImage(common[0].common.file_url);
@@ -102,6 +102,6 @@ module.exports = class gelbooruCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.reply('⚠️ No juicy images found.');
+    return msg.reply('no juicy images found.');
   }
 };
