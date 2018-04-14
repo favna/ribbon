@@ -13,3 +13,5 @@ src/data/websearch/eshop.json
 
 # Keep gitkeep
 !**/*.gitkeep
+
+# VSCode settings
