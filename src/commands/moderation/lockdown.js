@@ -61,6 +61,12 @@ module.exports = class LockdownCommand extends commando.Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
+  /**
+   * @todo Enhance Lockdown
+   * @body Should enhance lockdown to make it configurable on which role the lockdown is applied instead of defaulting to `@everyone`.  
+   * Furthermore make it so if the issues doesn't have admin an overwrite for their highest role is added so they can lift the lockdown
+   */
+
   run (msg) {
     const embed = new MessageEmbed(),
       modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
