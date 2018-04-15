@@ -34,6 +34,9 @@
  * @example dex dragonite
  * @param {string} PokemonName The name of the pokemon you want to find
  * @returns {MessageEmbed} Lots of information about the pokemon
+ *
+ * @todo Implement FuseJS in Pokedex
+ * @body FuseJS will take away the need to use matcher and allow for far more consistent results
  */
 
 const Matcher = require('did-you-mean'),

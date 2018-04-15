@@ -33,6 +33,9 @@
  * @example move dragon dance
  * @param {string} MoveName The move you want to find
  * @returns {MessageEmbed} Details about the move
+ *
+ * @todo Implement FuseJS in Move
+ * @body FuseJS will take away the need to use matcher and allow for far more consistent results
  */
 
 const Matcher = require('did-you-mean'),

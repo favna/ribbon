@@ -32,6 +32,9 @@
  * @example ability multiscale
  * @param {string} AbilityName The name of the ability you  want to find
  * @returns {MessageEmbed} Description and external links for the ability
+ *
+ * @todo Implement FuseJS in Ability
+ * @body FuseJS will take away the need to use matcher and allow for far more consistent results
  */
 
 const Matcher = require('did-you-mean'),

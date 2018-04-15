@@ -35,6 +35,9 @@
  * @example flavor dragonite
  * @param {string} PokemonName The name of the pokemon you want to get flavor text for
  * @returns {MessageEmbed} Flavor texts for the pokemon
+ *
+ * @todo Implement FuseJS in Flavor
+ * @body FuseJS will take away the need to use matcher and allow for far more consistent results
  */
 
 /* eslint-disable max-statements */
