@@ -32,14 +32,14 @@ test('connect & disconnect', (timeout) => {
   timeout.timeoutAfter(30000);
   timeout.ok(token, 'discord token should be set');
 
-  const bot = new Ribbon(token);
+  const client = new Ribbon(token, true);
 
-  timeout.false(bot.isReady, 'bot should not be ready');
-  bot.init();
+  timeout.false(client.isReady, 'bot should not be ready');
+  client.init();
 
   const si = setInterval(() => { // eslint-disable-line one-var
-    if (bot.isReady) {
-      bot.deinit();
+    if (client.isReady) {
+      client.deinit();
       clearInterval(si);
       timeout.end();
     }

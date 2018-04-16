@@ -24,7 +24,6 @@
  */
 
 /* eslint-disable sort-vars */
-/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 const Commando = require('discord.js-commando'),
   Database = require('better-sqlite3'),
   moment = require('moment'),
@@ -37,7 +36,7 @@ const Commando = require('discord.js-commando'),
 /* eslint-enable sort-vars */
 
 class Ribbon {
-  constructor (token) {
+  constructor (token, test) {
     this.token = token;
     this.client = new Commando.Client({
       'commandPrefix': '!',
@@ -62,9 +61,10 @@ class Ribbon {
       }
     });
     this.isReady = false;
+    this.testrun = test ? test : false;
   }
 
-  async checkReminders () {
+  checkReminders () {
     const conn = new Database(path.join(__dirname, 'data/databases/reminders.sqlite3'));
 
     try {
@@ -75,7 +75,7 @@ class Ribbon {
           dura = moment.duration(remindTime.diff()); // eslint-disable-line sort-vars
 
         if (dura.asMinutes() <= 0) {
-          await this.client.users.fetch(query[row].userID).send({
+          this.client.users.resolve(query[row].userID).send({
             'embed': {
               'color': 10610610,
               'description': query[row].remindText,
@@ -99,7 +99,7 @@ class Ribbon {
     }
   }
 
-  jackpot () {
+  lotto () {
     const conn = new Database(path.join(__dirname, 'data/databases/casino.sqlite3'));
 
     try {
@@ -110,7 +110,7 @@ class Ribbon {
           winner = Math.floor(Math.random() * guildData.length),
           prevBal = guildData[winner].balance; // eslint-disable-line sort-vars
 
-        guildData[winner].balance += 1000;
+        guildData[winner].balance += 2000;
 
         conn.prepare(`UPDATE "${tables[row].name}" SET balance=$balance WHERE userID="${guildData[winner].userID}"`).run({'balance': guildData[winner].balance});
 
@@ -136,7 +136,9 @@ class Ribbon {
         }
       }
     } catch (err) {
-      console.error(err);
+      console.error(`	 ${stripIndents`An error occurred giving someone their lotto winnings!
+      Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message:`} ${err}`);
     }
   }
 
@@ -313,15 +315,17 @@ class Ribbon {
       console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
       this.isReady = true;
 
-      const bot = this;
+      if (!this.testrun) {
+        const bot = this;
 
-      setInterval(() => {
-        bot.checkReminders();
-      }, 300000);
+        setInterval(() => {
+          bot.checkReminders();
+        }, 300000);
 
-      setInterval(() => {
-        bot.jackpot();
-      }, 86400000);
+        setInterval(() => {
+          bot.lotto();
+        }, 86400000);
+      }
     };
   }
 
