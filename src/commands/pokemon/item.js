@@ -33,6 +33,9 @@
  * @example item assault vest
  * @param {string} ItemName Name of the item to find
  * @returns {MessageEmbed} Description and external links for the item
+ *
+ * @todo Implement FuseJS in Item
+ * @body FuseJS will take away the need to use matcher and allow for far more consistent results
  */
 
 const Matcher = require('did-you-mean'),

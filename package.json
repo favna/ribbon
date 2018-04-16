@@ -20,7 +20,7 @@
     "lintfix": "./node_modules/.bin/eslint --fix **/*.js",
     "lint": "./node_modules/.bin/eslint **/*.js",
     "start": "node src/app.js",
-    "test": "yarn lint && node src/test/test.js | tap-summary"
+    "test": "yarn run lintfix && yarn lint && node src/test/test.js | tap-summary"
   },
   "keywords": [
     "discord",
