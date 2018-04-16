@@ -24,6 +24,7 @@
  */
 
 /* eslint-disable sort-vars */
+/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 const Commando = require('discord.js-commando'),
   Database = require('better-sqlite3'),
   moment = require('moment'),
@@ -95,6 +96,47 @@ class Ribbon {
       console.error(`	 ${stripIndents`An error occurred sending someone their reminder!
       Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       Error Message:`} ${err}`);
+    }
+  }
+
+  jackpot () {
+    const conn = new Database(path.join(__dirname, 'data/databases/casino.sqlite3'));
+
+    try {
+      const tables = conn.prepare('SELECT name FROM sqlite_master WHERE type=\'table\'').all();
+
+      for (const row in tables) {
+        const guildData = conn.prepare(`SELECT * FROM "${tables[row].name}"`).all(),
+          winner = Math.floor(Math.random() * guildData.length),
+          prevBal = guildData[winner].balance; // eslint-disable-line sort-vars
+
+        guildData[winner].balance += 1000;
+
+        conn.prepare(`UPDATE "${tables[row].name}" SET balance=$balance WHERE userID="${guildData[winner].userID}"`).run({'balance': guildData[winner].balance});
+
+        // eslint-disable-next-line one-var
+        const defaultChannel = this.client.guilds.resolve(tables[row].name).systemChannel,
+          winnerEmbed = new MessageEmbed(),
+          winnerLastMessage = this.client.guilds.resolve(tables[row].name).members.get('112001393140723712').lastMessageChannelID,
+          winnerLastMessageChannel = winnerLastMessage ? this.client.guilds.resolve(tables[row].name).channels.get(winnerLastMessage) : null,
+          winnerLastMessageChannelPermitted = winnerLastMessageChannel ? winnerLastMessageChannel.permissionsFor(this.client.user).has('SEND_MESSAGES') : false;
+
+        winnerEmbed
+          .setColor('#A1E7B2')
+          .setDescription(`Congratulations <@${guildData[winner].userID}>! You won today's random lotto and were granted a 1000 chips 🎉!`)
+          .setAuthor(this.client.guilds.resolve(tables[row].name).members.get(guildData[winner].userID).displayName,
+            this.client.guilds.resolve(tables[row].name).members.get(guildData[winner].userID).user.displayAvatarURL({'format': 'png'}))
+          .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png')
+          .addField('Balance', `${prevBal} ➡ ${guildData[winner].balance}`);
+
+        if (winnerLastMessageChannelPermitted) {
+          winnerLastMessageChannel.send(`<@${guildData[winner].userID}>`, {'embed': winnerEmbed});
+        } else if (defaultChannel) {
+          defaultChannel.send(`<@${guildData[winner].userID}>`, {'embed': winnerEmbed});
+        }
+      }
+    } catch (err) {
+      console.error(err);
     }
   }
 
@@ -276,10 +318,10 @@ class Ribbon {
       setInterval(() => {
         bot.checkReminders();
       }, 300000);
-      /**
-       * @todo Periodic Casino Lottery
-       * @body Every 24 hours check which guilds are in Casino database then which members are in those guild. Pick a random one to give free 1000 chips
-       */
+
+      setInterval(() => {
+        bot.jackpot();
+      }, 86400000);
     };
   }
 
