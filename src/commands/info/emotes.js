@@ -76,6 +76,6 @@ module.exports = class EmotesCommand extends commando.Command {
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.channel.send(embed);
+    return msg.embed(embed);
   }
 };
