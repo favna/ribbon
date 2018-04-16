@@ -113,6 +113,9 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_randomcol">randomcol</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Extra RandomCol - Generates a random color<br>Providing a color hex will display that color, providing none will generate a random one<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
 </dd>
+<dt><a href="#module_remind">remind</a> ⇒ <code>Message</code></dt>
+<dd><p>Extra RemindCommand - Set a reminder and the bot will remind you<br>Works by reminding you after a given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>remindme</code>, <code>reminder</code></p>
+</dd>
 <dt><a href="#module_say">say</a> ⇒ <code>Message</code></dt>
 <dd><p>Extra Say - Repeats a message and deletes your message<br><strong>Aliases</strong>: <code>sayd</code>, <code>repeat</code></p>
 </dd>
@@ -664,6 +667,25 @@ randomcol
 randomcol #990000  
 -OR-  
 randomcol 36B56e
+```
+<a name="module_remind"></a>
+
+## remind ⇒ <code>Message</code>
+Extra RemindCommand - Set a reminder and the bot will remind you  
+Works by reminding you after a given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`  
+**Aliases**: `remindme`, `reminder`
+
+**Returns**: <code>Message</code> - Confirmation the reminder was stored  
+**Category**: extra  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Time | <code>string</code> | Amount of time you want to be reminded in |
+| Reminder | <code>string</code> | Thing you want the bot to remind you of |
+
+**Example**  
+```js
+remind 1h To continue developing Ribbon
 ```
 <a name="module_say"></a>
 

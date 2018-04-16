@@ -25,11 +25,12 @@
 
 /* eslint-disable sort-vars */
 const Commando = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
+  Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
   request = require('snekfetch'),
   sqlite = require('sqlite'),
+  {MessageEmbed} = require('discord.js'),
   {twitchclientid} = require(`${__dirname}/auth.json`),
   {oneLine, stripIndents} = require('common-tags');
 /* eslint-enable sort-vars */
@@ -62,12 +63,46 @@ class Ribbon {
     this.isReady = false;
   }
 
+  async checkReminders () {
+    const conn = new Database(path.join(__dirname, 'data/databases/reminders.sqlite3'));
+
+    try {
+      const query = conn.prepare('SELECT * FROM "reminders"').all();
+
+      for (const row in query) {
+        const remindTime = moment(query[row].remindTime),
+          dura = moment.duration(remindTime.diff()); // eslint-disable-line sort-vars
+
+        if (dura.asMinutes() <= 0) {
+          await this.client.users.fetch(query[row].userID).send({
+            'embed': {
+              'color': 10610610,
+              'description': query[row].remindText,
+              'author': {
+                'name': 'Ribbon Reminders',
+                'icon_url': this.client.user.displayAvatarURL({'format': 'png'})
+              },
+              'thumbnail': {'url': 'https://favna.xyz/images/ribbonhost/reminders.png'}
+            }
+          });
+          conn.prepare('DELETE FROM "reminders" WHERE userID = $userid AND remindTime = $remindTime').run({
+            'userid': query[row].userID,
+            'remindTime': query[row].remindTime
+          });
+        }
+      }
+    } catch (err) {
+      console.error(`	 ${stripIndents`An error occurred sending someone their reminder!
+      Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message:`} ${err}`);
+    }
+  }
+
   onCmdBlock () {
     return (msg, reason) => {
       console.log(oneLine`
 		Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
-		blocked; ${reason}
-	`);
+		blocked; ${reason}`);
     };
   }
 
@@ -236,15 +271,14 @@ class Ribbon {
       console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
       this.isReady = true;
 
+      const bot = this;
+
+      setInterval(() => {
+        bot.checkReminders();
+      }, 300000);
       /**
        * @todo Periodic Casino Lottery
        * @body Every 24 hours check which guilds are in Casino database then which members are in those guild. Pick a random one to give free 1000 chips
-       */
-
-      /**
-       * @todo RemindMe system
-       * @body let people store reminders on the bot. Store in SQL Database `reminders.sqlite`.  
-       * First onReady store the timestamps in object then on interval check the object of timestamps and if any has passed remind that person with their text
        */
     };
   }
