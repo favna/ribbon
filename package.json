@@ -14,8 +14,9 @@
     "url": "https://github.com/Favna/Ribbon/issues"
   },
   "scripts": {
-    "docs": "jsdoc2md --template ./docs/template.hbs --files ./src/**/*.js | tee docs/index.md ../Ribbon.wiki/All-Commands.md ../favna.xyz/public/markdown/docs.md > NUL",
-    "deploydocs": "yarn run docs && git commit -am documentation && git push && cd ../Ribbon.wiki/ && git commit -am documentation && git push && cd ../favna.xyz/ && git commit -am documentation && git push",
+    "docs": "jsdoc2md --template ./docs/template.hbs --files ./src/**/*.js | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
+    "jsondocs": "jsdoc --template ./node_modules/jsdoc-json --destination ../favna.xyz/public/dist/ribbondocs.json --recurse ./src/commands",
+    "deploydocs": "yarn run docs && yarn run jsondocs && git commit -am documentation && git push && cd ../Ribbon.wiki/ && git commit -am documentation && git push && cd ../favna.xyz/ && git commit -am documentation && git push",
     "lintfix": "./node_modules/.bin/eslint --fix **/*.js",
     "lint": "./node_modules/.bin/eslint **/*.js",
     "start": "node src/app.js",
@@ -78,6 +79,7 @@
   },
   "devDependencies": {
     "eslint": "4.19.1",
+    "jsdoc-json": "^2.0.2",
     "node-gyp": "^3.6.2",
     "node-pre-gyp": "^0.9.0",
     "tap-summary": "^4.0.0",
