@@ -85,7 +85,7 @@ module.exports = class ShowdownCommand extends commando.Command {
 
     showdownEmbed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-      .setThumbnail('https://img8.androidappsapk.co/300/d/3/f/game.pokemonshowdown.png');
+      .setThumbnail('https://favna.xyz/images/ribbonhost/showdown.png');
 
     if (results.length) {
       const board = await request.get(`https://pokemonshowdown.com/ladder/${results[0].tier}.json`),
