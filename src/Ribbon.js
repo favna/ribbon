@@ -123,7 +123,7 @@ class Ribbon {
 
         winnerEmbed
           .setColor('#A1E7B2')
-          .setDescription(`Congratulations <@${guildData[winner].userID}>! You won today's random lotto and were granted a 1000 chips 🎉!`)
+          .setDescription(`Congratulations <@${guildData[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
           .setAuthor(this.client.guilds.resolve(tables[row].name).members.get(guildData[winner].userID).displayName,
             this.client.guilds.resolve(tables[row].name).members.get(guildData[winner].userID).user.displayAvatarURL({'format': 'png'}))
           .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png')
