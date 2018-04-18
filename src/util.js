@@ -1,6 +1,7 @@
 /* eslint-disable one-var */
 
 const deleteCommandMessages = function (msg, client) { // eslint-disable-line consistent-return
+  msg.channel.stopTyping(true);
   if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) {
     return msg.delete();
   }
