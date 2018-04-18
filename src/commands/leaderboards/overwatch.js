@@ -35,11 +35,13 @@
  */
 
 const commando = require('discord.js-commando'),
+  duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
+  ms = require('ms'),
   request = require('snekfetch'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
 
 module.exports = class OverwatchCommand extends commando.Command {
   constructor (client) {
@@ -103,8 +105,10 @@ module.exports = class OverwatchCommand extends commando.Command {
     });
   }
 
+  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position, one-var*/
   async run (msg, args) {
     try {
+      msg.channel.startTyping();
       const owEmbed = new MessageEmbed();
       let owData = await request.get(`https://ow-api.com/v1/stats/${args.platform}/${args.region}/${args.player}/complete`).set('Content-Type', 'application/json');
 
@@ -117,18 +121,32 @@ module.exports = class OverwatchCommand extends commando.Command {
       if (owData.error) {
         return msg.reply('No player found by that name. Check the platform (`pc`, `psn` or `xbl`) and region (`us`, `eu` or `asia`)');
       }
+
+      const topCompetitiveHeroes = Object.keys(owData.competitiveStats.topHeroes).map(r => ({
+          'hero': r,
+          'time': ms(owData.competitiveStats.topHeroes[r].timePlayed)
+        }))
+          .sort((a, b) => a.time > b.time)
+          .reverse(),
+        topQuickPlayHeroes = Object.keys(owData.quickPlayStats.topHeroes).map(r => ({
+          'hero': r,
+          'time': ms(owData.quickPlayStats.topHeroes[r].timePlayed)
+        }))
+          .sort((a, b) => a.time > b.time)
+          .reverse();
+
       owEmbed
         .setAuthor('Overwatch Player Statistics', 'https://favna.xyz/images/ribbonhost/overwatch.png')
         .setURL(`https://playoverwatch.com/en-us/career/${args.platform}/${args.player}`)
         .setThumbnail(owData.icon)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
-        .addField('Account Statistics', stripIndents`
+        .addField('Account Stats', stripIndents`
           Level: **${owData.level}**
           Rank: **${owData.rating ? owData.rating : 'Unknown Rating'}${owData.ratingName ? ` (${owData.ratingName})` : null}**
           Total Games Won: **${owData.gamesWon ? owData.gamesWon : 'No games won'}**
           `, true)
         .addBlankField(true)
-        .addField('Quickplay', stripIndents`
+        .addField('Quickplay Stats', stripIndents`
           Final Blows: **${owData.quickPlayStats.careerStats.allHeroes.combat.finalBlows}**
           Deaths: **${owData.quickPlayStats.careerStats.allHeroes.combat.deaths}**
           Damage Dealt: **${owData.quickPlayStats.careerStats.allHeroes.combat.damageDone}**
@@ -141,7 +159,7 @@ module.exports = class OverwatchCommand extends commando.Command {
           Silver Medals: **${owData.quickPlayStats.awards.medalsSilver}**
           Bronze Medals: **${owData.quickPlayStats.awards.medalsBronze}**
           `, true)
-        .addField('Competitive', stripIndents`
+        .addField('Competitive Stats', stripIndents`
         Final Blows: **${owData.competitiveStats.careerStats.allHeroes.combat.finalBlows}**
         Deaths: **${owData.competitiveStats.careerStats.allHeroes.combat.deaths}**
         Damage Dealt: **${owData.competitiveStats.careerStats.allHeroes.combat.damageDone}**
@@ -153,7 +171,17 @@ module.exports = class OverwatchCommand extends commando.Command {
         Golden Medals: **${owData.competitiveStats.awards.medalsGold}**
         Silver Medals: **${owData.competitiveStats.awards.medalsSilver}**
         Bronze Medals: **${owData.competitiveStats.awards.medalsBronze}**
-          `, true);
+          `, true)
+        .addField('top Heroes Quick Play', stripIndents`
+        **${capitalizeFirstLetter(topQuickPlayHeroes[0].hero)}** (${moment.duration(topQuickPlayHeroes[0].time, "milliseconds").format('H [hours]', 2)})
+        **${capitalizeFirstLetter(topQuickPlayHeroes[1].hero)}** (${moment.duration(topQuickPlayHeroes[1].time, "milliseconds").format('H [hours]', 2)})
+        **${capitalizeFirstLetter(topQuickPlayHeroes[2].hero)}** (${moment.duration(topQuickPlayHeroes[2].time, "milliseconds").format('H [hours]', 2)})
+            `, true)
+        .addField('Top Heroes Competitive', stripIndents`
+        **${capitalizeFirstLetter(topCompetitiveHeroes[0].hero)}** (${moment.duration(topCompetitiveHeroes[0].time, "milliseconds").format('H [hours]', 2)})
+        **${capitalizeFirstLetter(topCompetitiveHeroes[1].hero)}** (${moment.duration(topCompetitiveHeroes[1].time, "milliseconds").format('H [hours]', 2)})
+        **${capitalizeFirstLetter(topCompetitiveHeroes[2].hero)}** (${moment.duration(topCompetitiveHeroes[2].time, "milliseconds").format('H [hours]', 2)})
+              `, true);
 
       deleteCommandMessages(msg, this.client);
 
