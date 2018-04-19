@@ -79,7 +79,7 @@ module.exports = class RibbonStatsCommand extends commando.Command {
       .addField('Users', this.client.users.size, true)
       .addField('Owner', this.client.owners[0].tag, true)
       .addField('License', 'GPL-3.0 + 7b & 7c', true)
-      .addField('MessageEmbedJS', '12.0', true)
+      .addField('DiscordJS', 'master', true)
       .addField('NodeJS', process.version, true)
       .addField('Platform', this.fetchPlatform(process.platform.toLowerCase()), true)
       .addField('Memory Usage', `${Math.round(process.memoryUsage().heapUsed / 10485.76) / 100} MB`, true)
