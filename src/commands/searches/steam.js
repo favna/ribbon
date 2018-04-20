@@ -98,7 +98,7 @@ module.exports = class SteamCommand extends commando.Command {
         }
 
         steamEmbed
-          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
           .setTitle(steamData.name)
           .setURL(`http://store.steampowered.com/app/${steamData.steam_appid}/`)
           .setImage(steamData.header_image)

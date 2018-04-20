@@ -99,7 +99,7 @@ module.exports = class ItemCommand extends commando.Command {
 
     if (!underscore.isEmpty(itemEntry)) {
       itemEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
         .setAuthor(`${capitalizeFirstLetter(itemEntry.name)}`, `https://play.pokemonshowdown.com/sprites/itemicons/${itemEntry.name.toLowerCase().replace(/ /g, '-')}.png`)
         .addField('Description', itemEntry.desc)

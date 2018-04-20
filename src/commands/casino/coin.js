@@ -96,7 +96,7 @@ module.exports = class CoinCommand extends commando.Command {
 
     coinEmbed
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {

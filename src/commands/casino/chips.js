@@ -64,7 +64,7 @@ module.exports = class ChipsCommand extends commando.Command {
 
     balEmbed
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
     try {
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);

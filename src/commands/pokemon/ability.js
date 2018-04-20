@@ -96,7 +96,7 @@ module.exports = class AbilityCommand extends commando.Command {
 
     if (!underscore.isEmpty(abilityEntry)) {
       abilityEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
         .addField('Description', abilityEntry.desc ? abilityEntry.desc : abilityEntry.shortDesc)
         .addField('External Resource', oneLine`

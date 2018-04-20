@@ -77,7 +77,7 @@ module.exports = class DiscordBotsCommand extends commando.Command {
       const botinfo = JSON.parse(info.text);
 
       infoEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setTitle(`Discord Bots Info for ${botinfo.username}#${botinfo.discriminator} (${botinfo.clientid})`)
         .setURL(`https://discordbots.org/bot/${botinfo.clientid}`)
         .setThumbnail(`https://images.discordapp.net/avatars/${botinfo.clientid}/${botinfo.avatar}.png`)

@@ -74,7 +74,7 @@ module.exports = class AnimeCommand extends commando.Command {
       if (anime) {
 
         aniEmbed
-          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
           .setTitle(anime.title)
           .setImage(anime.cover)
           .setDescription(anime.description)

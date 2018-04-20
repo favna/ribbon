@@ -100,7 +100,7 @@ module.exports = class CopyPastaCommand extends commando.Command {
 
           cpEmbed
             .setDescription(pastaContent)
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE');
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00');
 
           msg.delete();
 

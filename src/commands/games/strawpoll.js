@@ -96,7 +96,7 @@ module.exports = class StrawpollCommand extends commando.Command {
 
     if (strawpoll.ok) {
       pollEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setTitle(strawpoll.body.title)
         .setURL(`http://www.strawpoll.me/${strawpoll.body.id}`)
         .setImage(`http://www.strawpoll.me/images/poll-results/${strawpoll.body.id}.png`)

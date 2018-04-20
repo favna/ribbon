@@ -62,7 +62,7 @@ module.exports = class LeaderboardCommand extends commando.Command {
 
     lbEmbed
       .setTitle('Top 5 players')
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {

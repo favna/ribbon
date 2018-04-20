@@ -86,7 +86,7 @@ module.exports = class GiveCommand extends commando.Command {
 
     giveEmbed
       .setTitle('Transaction Log')
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {

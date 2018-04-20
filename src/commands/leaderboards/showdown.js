@@ -84,7 +84,7 @@ module.exports = class ShowdownCommand extends commando.Command {
       showdownEmbed = new MessageEmbed();
 
     showdownEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/showdown.png');
 
     if (results.length) {

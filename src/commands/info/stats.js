@@ -72,7 +72,7 @@ module.exports = class RibbonStatsCommand extends commando.Command {
     const statsEmbed = new MessageEmbed();
 
     statsEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setAuthor('Ribbon Bot Stats', 'https://favna.xyz/images/appIcons/ribbon.png')
       .addField('Guilds', this.client.guilds.size, true)
       .addField('Channels', this.client.channels.size, true)

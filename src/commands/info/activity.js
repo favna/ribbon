@@ -91,7 +91,7 @@ module.exports = class ActivityCommand extends commando.Command {
       });
 
     embed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setAuthor(args.member.user.tag, ava, `${ava}?size2048`)
       .setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
 

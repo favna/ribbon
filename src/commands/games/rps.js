@@ -102,7 +102,7 @@ module.exports = class RockPaperScissorCommand extends commando.Command {
         }
 
         rpsEmbed
-          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
           .setTitle('Rock Paper Scissors')
           .setDescription(resString);
 

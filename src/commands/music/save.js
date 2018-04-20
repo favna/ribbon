@@ -71,7 +71,7 @@ module.exports = class SaveQueueCommand extends commando.Command {
       paginated = commando.util.paginate(queue.songs, 1, Math.floor(10));
 
     embed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({'format': 'png'}))
       .setImage(currentSong.thumbnail)
       .setDescription(stripIndents`

@@ -65,7 +65,7 @@ module.exports = class EmotesCommand extends commando.Command {
     });
 
     embed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setAuthor(`${staticEmotes.length + animEmotes.length} ${msg.guild.name} Emotes`, msg.guild.iconURL({'format': 'png'}))
       .setFooter(`Emotes list from ${moment().format('MMMM Do YYYY [at] HH:mm [utc]Z')}`);
 

@@ -118,7 +118,7 @@ module.exports = class RemindCommand extends Command {
 
       remindEmbed
         .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setThumbnail('https://favna.xyz/images/ribbonhost/reminders.png')
         .setTitle('Your reminder was stored!')
         .setDescription(args.reminder)

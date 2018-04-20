@@ -66,7 +66,7 @@ module.exports = class xkcdCommand extends commando.Command {
         
       xkcdEmbed
         .setTitle(randomImage.body.safe_title)
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setDescription(randomImage.body.alt)
         .setImage(randomImage.body.img)
         .setURL(`https://xkcd.com/${randomNum}/`);
