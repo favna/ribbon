@@ -48,17 +48,8 @@ const path = require('path'),
   ytdl = require('ytdl-core'),
   {escapeMarkdown} = require('discord.js'),
   {deleteCommandMessages} = require('../../util.js'),
-  {
-    oneLine,
-    stripIndents
-  } = require('common-tags'),
-  {
-    DEFAULT_VOLUME,
-    GOOGLE_API,
-    MAX_LENGTH,
-    MAX_SONGS,
-    PASSES
-  } = require(path.join(__dirname, '../../data/melody/GlobalData'));
+  {oneLine} = require('common-tags'),
+  {DEFAULT_VOLUME, GOOGLE_API, MAX_LENGTH, MAX_SONGS, PASSES} = require(path.join(__dirname, '../../data/melody/GlobalData'));
 
 module.exports = class PlaySongCommand extends commando.Command {
   constructor (client) {

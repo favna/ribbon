@@ -23,6 +23,21 @@ const memberFilterInexact = function (search) {
     `${mem.user.username.toLowerCase()}#${mem.user.discriminator}`.includes(search);
 };
 
+const roundNumber = function (num, scale = 2) {
+  if (!String(num).includes('e')) {
+    return Number(`${Math.round(`${num}e+${scale}`)}e-${scale}`);
+  }
+  const arr = `${num}`.split('e');
+  let sig = '';
+
+  if (Number(arr[1]) + scale > 0) {
+    sig = '+';
+  }
+
+  return Number(`${Math.round(`${Number(arr[0])}e${sig}${Number(arr[1]) + scale}`)}e-${scale}`);
+
+};
+
 const userSearch = async function (client, message, search) {
   let member = '';
   const matches = search.match(/^(?:<@!?)?([0-9]+)>?$/);
@@ -52,5 +67,6 @@ const userSearch = async function (client, message, search) {
 module.exports = {
   capitalizeFirstLetter,
   deleteCommandMessages,
+  roundNumber,
   userSearch
 };

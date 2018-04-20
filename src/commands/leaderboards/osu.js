@@ -23,8 +23,6 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-unused-vars */
-
 /**
  * @file Leaderboards OsuCommand - Shows Player Stats for a given OSU player  
  * **Aliases**: `osustats`
@@ -38,7 +36,9 @@
 
 const commando = require('discord.js-commando'),
   request = require('snekfetch'),
-  {MessageEmbed} = require('discord.js');
+  {MessageEmbed} = require('discord.js'),
+  {osuapikey} = require('../../auth.json'),
+  {deleteCommandMessages, roundNumber} = require('../../util.js');
 
 module.exports = class OsuCommand extends commando.Command {
   constructor (client) {
@@ -51,7 +51,6 @@ module.exports = class OsuCommand extends commando.Command {
       'format': 'PlayerName',
       'examples': ['osu WubWoofWolf'],
       'guildOnly': false,
-      'ownerOnly': true,
       'throttling': {
         'usages': 2,
         'duration': 3
@@ -67,13 +66,34 @@ module.exports = class OsuCommand extends commando.Command {
     });
   }
 
-  run (msg, args) {
+  async run (msg, args) {
+    try {
+      const osuData = await request.get('https://osu.ppy.sh/api/get_user')
+          .query('k', osuapikey)
+          .query('u', args.player)
+          .query('type', 'string')
+          .set('Content-Type', 'application/json'),
+        osuEmbed = new MessageEmbed();
 
-    /**
-     * @todo Implement Osu Player Stats
-     * @body Will use official API endpoints: https://github.com/ppy/osu-api/wiki
-     */
+      osuEmbed
+        .setTitle(`OSU! Player Stats for ${osuData.body[0].username} (${osuData.body[0].user_id})`)
+        .setURL(`https://new.ppy.sh/u/${osuData.body[0].username}`)
+        .setThumbnail('https://favna.xyz/images/ribbonhost/osulogo.png')
+        .setImage(`http://lemmmy.pw/osusig/sig.php?colour=hexA1E7B2&uname=${osuData.body[0].username}&flagshadow&darktriangles&avatarrounding=4&onlineindicator=undefined&xpbar&xpbarhex`)
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .addField('Perfects', osuData.body[0].count300, true)
+        .addField('Greats', osuData.body[0].count100, true)
+        .addField('Poors', osuData.body[0].count50, true)
+        .addField('Total Plays', osuData.body[0].playcount, true)
+        .addField('Level', Math.round(osuData.body[0].level), true)
+        .addField('Accuracy', `${roundNumber(osuData.body[0].accuracy)}%`, true);
 
-    return null;
+      deleteCommandMessages(msg, this.client);
+
+      return msg.embed(osuEmbed);
+
+    } catch (err) {
+      return msg.reply('no used found with that username');
+    }
   }
 };
