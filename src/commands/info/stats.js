@@ -38,7 +38,7 @@ const {MessageEmbed} = require('discord.js'),
   moment = require('moment'), 
   {oneLine} = require('common-tags'),
   process = require('process'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, roundNumber} = require('../../util.js');
 
 module.exports = class RibbonStatsCommand extends commando.Command {
   constructor (client) {
@@ -82,7 +82,7 @@ module.exports = class RibbonStatsCommand extends commando.Command {
       .addField('DiscordJS', 'master', true)
       .addField('NodeJS', process.version, true)
       .addField('Platform', this.fetchPlatform(process.platform.toLowerCase()), true)
-      .addField('Memory Usage', `${Math.round(process.memoryUsage().heapUsed / 10485.76) / 100} MB`, true)
+      .addField('Memory Usage', `${roundNumber(process.memoryUsage().heapUsed / 10485.76) / 100} MB`, true)
       .addField('Invite Me', '[Click Here](https://discord.now.sh/376520643862331396?p8)', true)
       .addField('Source', '[Available on GitHub](https://github.com/favna/ribbon)', true)
       .addField('Support', '[Server Invite](https://discord.gg/zdt5yQt)', true)

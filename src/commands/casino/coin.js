@@ -42,7 +42,7 @@ const {MessageEmbed} = require('discord.js'),
   moment = require('moment'),
   path = require('path'),
   {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, roundNumber} = require('../../util.js');
 
 module.exports = class CoinCommand extends commando.Command {
   constructor (client) {
@@ -110,7 +110,7 @@ module.exports = class CoinCommand extends commando.Command {
         if (args.side === 'head') args.side = 'heads'; // eslint-disable-line curly
         if (args.side === 'tail') args.side = 'tails'; // eslint-disable-line curly
 
-        const flip = Math.round(Number(Math.random())),
+        const flip = roundNumber(Math.random()),
           prevBal = query.balance,
           side = args.side === 'heads' ? 0 : 1;
 
@@ -118,7 +118,7 @@ module.exports = class CoinCommand extends commando.Command {
 
         if (flip === side) query.balance += args.chips * 2; // eslint-disable-line curly
 
-        query.balance = Math.round(query.balance);
+        query.balance = roundNumber(query.balance);
 
         conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
 

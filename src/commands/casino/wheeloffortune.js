@@ -40,7 +40,7 @@ const {MessageEmbed} = require('discord.js'),
   moment = require('moment'),
   path = require('path'), 
   {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, roundNumber} = require('../../util.js');
 
 module.exports = class WheelOfFortuneCommand extends commando.Command {
   constructor (client) {
@@ -98,14 +98,14 @@ module.exports = class WheelOfFortuneCommand extends commando.Command {
 
         query.balance -= args.chips;
         query.balance += args.chips * multipliers[spin];
-        query.balance = Math.round(query.balance);
+        query.balance = roundNumber(query.balance);
 
         conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
 
         wofEmbed
           .setTitle(`${msg.author.tag} ${multipliers[spin] < 1
-            ? `lost ${Math.round(args.chips - (args.chips * multipliers[spin]))}` 
-            : `won ${Math.round((args.chips * multipliers[spin]) - args.chips)}`} chips`)
+            ? `lost ${roundNumber(args.chips - (args.chips * multipliers[spin]))}` 
+            : `won ${roundNumber((args.chips * multipliers[spin]) - args.chips)}`} chips`)
           .addField('Previous Balance', prevBal, true)
           .addField('New Balance', query.balance, true)
           .setDescription(`

@@ -23,7 +23,7 @@ const memberFilterInexact = function (search) {
     `${mem.user.username.toLowerCase()}#${mem.user.discriminator}`.includes(search);
 };
 
-const roundNumber = function (num, scale = 2) {
+const roundNumber = function (num, scale = 0) {
   if (!String(num).includes('e')) {
     return Number(`${Math.round(`${num}e+${scale}`)}e-${scale}`);
   }

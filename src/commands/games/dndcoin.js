@@ -34,7 +34,7 @@
 
 const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, roundNumber} = require('../../util.js');
 
 module.exports = class DndCCommand extends commando.Command {
   constructor (client) {
@@ -55,7 +55,7 @@ module.exports = class DndCCommand extends commando.Command {
 
   run (msg) {
     const coinEmbed = new MessageEmbed(),
-      flip = Math.round(Number(Math.random()));
+      flip = roundNumber(Math.random());
 
     coinEmbed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')

@@ -41,7 +41,7 @@ const Fuse = require('fuse.js'),
   {MessageEmbed} = require('discord.js'),
   {TierAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {stripIndents} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, roundNumber} = require('../../util.js');
 
 module.exports = class ShowdownCommand extends commando.Command {
   constructor (client) {
@@ -93,7 +93,7 @@ module.exports = class ShowdownCommand extends commando.Command {
           'usernames': board.body.toplist.map(u => u.username).slice(0, 10),
           'wins': board.body.toplist.map(w => w.w).slice(0, 10),
           'losses': board.body.toplist.map(l => l.l).slice(0, 10),
-          'elo': board.body.toplist.map(e => Math.round(e.elo)).slice(0, 10)
+          'elo': board.body.toplist.map(e => roundNumber(e.elo)).slice(0, 10)
         };
 
       for (const rank in data.usernames) {

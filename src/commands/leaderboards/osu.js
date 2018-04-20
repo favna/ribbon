@@ -85,8 +85,8 @@ module.exports = class OsuCommand extends commando.Command {
         .addField('Greats', osuData.body[0].count100, true)
         .addField('Poors', osuData.body[0].count50, true)
         .addField('Total Plays', osuData.body[0].playcount, true)
-        .addField('Level', Math.round(osuData.body[0].level), true)
-        .addField('Accuracy', `${roundNumber(osuData.body[0].accuracy)}%`, true);
+        .addField('Level', roundNumber(osuData.body[0].level), true)
+        .addField('Accuracy', `${roundNumber(osuData.body[0].accuracy, 2)}%`, true);
 
       deleteCommandMessages(msg, this.client);
 

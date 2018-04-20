@@ -39,7 +39,7 @@ const {MessageEmbed} = require('discord.js'),
   moment = require('moment'),
   request = require('snekfetch'), 
   {TheMovieDBV3ApiKey} = require('../../auth.json'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, roundNumber} = require('../../util.js');
 
 module.exports = class TVCommand extends commando.Command {
   constructor (client) {
@@ -87,7 +87,7 @@ module.exports = class TVCommand extends commando.Command {
           .setThumbnail(`https://image.tmdb.org/t/p/original${show.poster_path}`)
           .setDescription(show.overview)
           .addField('Episode Runtime', `${show.episode_run_time} minutes`, true)
-          .addField('Popularity', `${Math.round(show.popularity * 100) / 100}%`, true)
+          .addField('Popularity', `${roundNumber(show.popularity, 2)}%`, true)
           .addField('Status', show.status, true)
           .addField('First air Date', moment(show.first_air_date).format('MMMM Do YYYY'), true)
           .addField('Genres', show.genres.length ? show.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB');

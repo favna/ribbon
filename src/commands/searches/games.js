@@ -38,7 +38,7 @@ const {MessageEmbed} = require('discord.js'),
   commando = require('discord.js-commando'),
   igdbapi = require('igdb-api-node').default,
   moment = require('moment'), 
-  {deleteCommandMessages} = require('../../util.js'), 
+  {deleteCommandMessages, roundNumber} = require('../../util.js'), 
   {igdbAPIKey} = require('../../auth.json');
 
 module.exports = class GamesCommand extends commando.Command {
@@ -113,7 +113,7 @@ module.exports = class GamesCommand extends commando.Command {
       .setTitle(gameInfo.body[0].name)
       .setURL(gameInfo.body[0].url)
       .setThumbnail(coverImg)
-      .addField('User Score', Math.round(gameInfo.body[0].rating * 10) / 10, true)
+      .addField('User Score', roundNumber(gameInfo.body[0].rating, 1), true)
       .addField(`${gameInfo.body[0].pegi ? 'PEGI' : 'ESRB'} rating`, gameInfo.body[0].pegi ? gameInfo.body[0].pegi.rating : gameInfo.body[0].esrb.rating, true)
       .addField('Release Date', releaseDate, true)
       .addField('Genres', this.extractNames(genreInfo.body), true)

@@ -40,7 +40,7 @@
 
 const commando = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, roundNumber} = require('../../util.js');
 
 module.exports = class SkipSongCommand extends commando.Command {
   constructor (client) {
@@ -163,7 +163,7 @@ module.exports = class SkipSongCommand extends commando.Command {
       vote.queue.textChannel.send('The vote to skip the current song has ended. Get outta here, party poopers.');
     }, time);
 
-    return Math.round(time / 1000);
+    return roundNumber(time / 1000);
   }
 
   get queue () {
