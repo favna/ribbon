@@ -147,7 +147,7 @@ module.exports = class MoneyCommand extends commando.Command {
         oxrEmbed = new MessageEmbed();
 
       oxrEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
         .setAuthor('🌐 Currency Converter')
         .addField(`:flag_${args.curOne.slice(0, 2).toLowerCase()}: Money in ${args.curOne}`, `${currencySymbol(args.curOne)}${this.replaceAll(args.value, /,/, '.')}`, true)
         .addField(`:flag_${args.curTwo.slice(0, 2).toLowerCase()}: Money in ${args.curTwo}`, `${currencySymbol(args.curTwo)}${convertedMoney}`, true)

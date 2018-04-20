@@ -122,7 +122,7 @@ class Ribbon {
           winnerLastMessageChannelPermitted = winnerLastMessageChannel ? winnerLastMessageChannel.permissionsFor(this.client.user).has('SEND_MESSAGES') : false;
 
         winnerEmbed
-          .setColor('#A1E7B2')
+          .setColor('#2255EE')
           .setDescription(`Congratulations <@${guildData[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
           .setAuthor(this.client.guilds.resolve(tables[row].name).members.get(guildData[winner].userID).displayName,
             this.client.guilds.resolve(tables[row].name).members.get(guildData[winner].userID).user.displayAvatarURL({'format': 'png'}))

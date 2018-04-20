@@ -82,7 +82,7 @@ module.exports = class ImageCommand extends commando.Command {
 
     if (res && res.body.items) {
       embed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
         .setImage(res.body.items[0].link)
         .setFooter(`Search query: "${args.query}"`);
 
@@ -104,7 +104,7 @@ module.exports = class ImageCommand extends commando.Command {
           .attr('src');
 
       embed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
         .setImage(result)
         .setFooter(`Search query: "${args.query}"`);
 

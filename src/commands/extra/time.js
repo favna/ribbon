@@ -100,7 +100,7 @@ module.exports = class TimeCommand extends commando.Command {
 					**Current Date:** ${timeArr[0]}
 					**Country:** ${time.body.countryName}
 					**DST:** ${time.body.dst}`)
-          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2');
+          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE');
 
         deleteCommandMessages(msg, this.client);
 

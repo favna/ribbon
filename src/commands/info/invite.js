@@ -60,7 +60,7 @@ module.exports = class InviteCommand extends commando.Command {
       .setAuthor('Ribbon Links')
       .setThumbnail('https://favna.xyz/images/appIcons/ribbon.png')
       .setURL('https://favna.xyz/ribbon')
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
       .addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p8)\n' +
         '[Join the Support Server](https://discord.gg/zdt5yQt)\n' +
         '[Website](https://favna.xyz/ribbon)\n' +

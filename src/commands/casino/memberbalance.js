@@ -73,7 +73,7 @@ module.exports = class MemberBalanceCommand extends commando.Command {
 
     mbalEmbed
       .setAuthor(args.player.displayName, args.player.user.displayAvatarURL({'format': 'png'}))
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {

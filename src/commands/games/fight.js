@@ -76,7 +76,7 @@ module.exports = class FightCommand extends commando.Command {
     const fighterEmbed = new MessageEmbed();
 
     fighterEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
       .setTitle('🥊 Fight Results 🥊')
       .setThumbnail('https://favna.xyz/images/ribbonhost/dbxlogo.png');
 

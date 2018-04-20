@@ -99,7 +99,7 @@ module.exports = class MoveCommand extends commando.Command {
 
     if (!underscore.isEmpty(moveEntry)) {
       moveEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
         .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
         .addField('Description', moveEntry.desc ? moveEntry.desc : moveEntry.shortDesc)
         .addField('Type', moveEntry.type, true)

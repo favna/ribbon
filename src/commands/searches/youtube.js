@@ -87,7 +87,7 @@ module.exports = class YouTubeCommand extends commando.Command {
       embed
         .setTitle(`Youtube Search Result ${args.query}`)
         .setURL(`https://www.youtube.com/watch?v=${video.id.videoId}`)
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
         .setImage(video.snippet.thumbnails.high.url)
         .addField('Title', video.snippet.title, true)
         .addField('URL', `[Click Here](https://www.youtube.com/watch?v=${video.id.videoId})`, true)

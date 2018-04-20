@@ -108,7 +108,7 @@ module.exports = class ServerInfoCommand extends commando.Command {
     }
 
     serverEmbed
-      .setColor(msg.guild.owner ? msg.guild.owner.displayHexColor : '#A1E7B2')
+      .setColor(msg.guild.owner ? msg.guild.owner.displayHexColor : '#2255EE')
       .setAuthor('Server Info', 'https://favna.xyz/images/ribbonhost/discordlogo.png')
       .setThumbnail(msg.guild.iconURL({'format': 'png'}))
       .setFooter(`Server ID: ${msg.guild.id}`)

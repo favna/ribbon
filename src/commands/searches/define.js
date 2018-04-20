@@ -80,7 +80,7 @@ module.exports = class DefineCommand extends commando.Command {
         final.push(`**${(parseInt(index, 10) + 1)}:** ${item}`);
       }
       defineEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
         .setDescription(final);
 
       deleteCommandMessages(msg, this.client);

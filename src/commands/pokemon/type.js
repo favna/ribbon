@@ -260,7 +260,7 @@ module.exports = class TypeCommand extends commando.Command {
     }
 
     typeEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
       .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
       .setAuthor(`Type effectiveness for ${displayTypes.join(', ')}`)
       .addField('Offense', atkVulnDisplay.join('\n\n'))

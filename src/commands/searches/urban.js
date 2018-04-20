@@ -75,7 +75,7 @@ module.exports = class UrbanCommand extends commando.Command {
       embed
         .setTitle(`Urban Search - ${urban.body.list[0].word}`)
         .setURL(urban.body.list[0].permalink)
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
         .setDescription(urban.body.list[0].definition)
         .addField('Example',
           urban.body.list[0].example.length <= 1024

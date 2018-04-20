@@ -58,7 +58,7 @@ module.exports = class DndCCommand extends commando.Command {
       flip = roundNumber(Math.random());
 
     coinEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
       .setImage(flip === 1 ? 'https://favna.xyz/images/ribbonhost/dndheads.png' : 'https://favna.xyz/images/ribbonhost/dndtails.png')
       .setTitle(`Flipped ${flip === 1 ? 'heads' : 'tails'}`);
 

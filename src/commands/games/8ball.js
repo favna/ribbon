@@ -68,7 +68,7 @@ module.exports = class EightBallCommand extends commando.Command {
     const eightBallEmbed = new MessageEmbed();
 
     eightBallEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
       .addField(':question: Question', args.question, false)
       .addField(':8ball: 8ball', predict(), false);
 

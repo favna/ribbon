@@ -86,7 +86,7 @@ module.exports = class DiceCommand extends commando.Command {
 
 
     diceEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
       .setTitle('🎲 Dice Rolls 🎲')
       .setDescription(`| ${res.join(' | ')} |`)
       .addField('Total', throwDice.total, false);

@@ -86,7 +86,7 @@ module.exports = class MathCommand extends commando.Command {
     if (res || res === 0) {
       mathEmbed
         .setTitle('Calculator')
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
         .setDescription(oneLine`The answer to \`${args.equation.toString()}\` is \`${res}\``);
 
       deleteCommandMessages(msg, this.client);

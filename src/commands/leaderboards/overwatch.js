@@ -137,7 +137,7 @@ module.exports = class OverwatchCommand extends commando.Command {
         .setAuthor('Overwatch Player Statistics', 'https://favna.xyz/images/ribbonhost/overwatch.png')
         .setURL(`https://playoverwatch.com/en-us/career/${args.platform}/${args.player}`)
         .setThumbnail(owData.icon)
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
         .addField('Account Stats', stripIndents`
           Level: **${owData.level}**
           Rank: **${owData.rating ? owData.rating : 'Unknown Rating'}${owData.ratingName ? ` (${owData.ratingName})` : null}**

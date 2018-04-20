@@ -99,7 +99,7 @@ module.exports = class CydiaCommand extends commando.Command {
         const result = results[0];
 
         embed
-          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#A1E7B2')
+          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#2255EE')
           .setTitle(result.display)
           .setDescription(result.summary)
           .addField('Version', result.version, true)
