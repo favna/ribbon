@@ -29,7 +29,7 @@
  * @module
  * @category leaderboards
  * @name overwatch
- * @example overwatch cat#11481
+ * @example overwatch Camoflouge#1267
  * @param {string} BattleTag BattleTag for that overwatch player
  * @returns {MessageEmbed} Stats of the player
  */
@@ -52,9 +52,8 @@ module.exports = class OverwatchCommand extends commando.Command {
       'aliases': ['owstats'],
       'description': 'Shows Player Stats for a given Overwatch player',
       'format': 'BattleTag',
-      'examples': ['overwatch cat#11481'],
+      'examples': ['overwatch Camoflouge#1267'],
       'guildOnly': false,
-      'ownerOnly': true,
       'throttling': {
         'usages': 2,
         'duration': 3
@@ -89,7 +88,7 @@ module.exports = class OverwatchCommand extends commando.Command {
         },
         {
           'key': 'region',
-          'prompt': 'Respond wit hthe region that player is playing in',
+          'prompt': 'Respond with the region that player is playing in',
           'type': 'string',
           'validate': (reg) => {
             if (/(?:us|eu|asia)/.test(reg)) {
@@ -105,7 +104,6 @@ module.exports = class OverwatchCommand extends commando.Command {
     });
   }
 
-  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position, one-var*/
   async run (msg, args) {
     try {
       msg.channel.startTyping();
@@ -122,7 +120,7 @@ module.exports = class OverwatchCommand extends commando.Command {
         return msg.reply('No player found by that name. Check the platform (`pc`, `psn` or `xbl`) and region (`us`, `eu` or `asia`)');
       }
 
-      const topCompetitiveHeroes = Object.keys(owData.competitiveStats.topHeroes).map(r => ({
+      const topCompetitiveHeroes = Object.keys(owData.competitiveStats.topHeroes).map(r => ({ // eslint-disable-line one-var
           'hero': r,
           'time': ms(owData.competitiveStats.topHeroes[r].timePlayed)
         }))
@@ -173,14 +171,14 @@ module.exports = class OverwatchCommand extends commando.Command {
         Bronze Medals: **${owData.competitiveStats.awards.medalsBronze}**
           `, true)
         .addField('top Heroes Quick Play', stripIndents`
-        **${capitalizeFirstLetter(topQuickPlayHeroes[0].hero)}** (${moment.duration(topQuickPlayHeroes[0].time, "milliseconds").format('H [hours]', 2)})
-        **${capitalizeFirstLetter(topQuickPlayHeroes[1].hero)}** (${moment.duration(topQuickPlayHeroes[1].time, "milliseconds").format('H [hours]', 2)})
-        **${capitalizeFirstLetter(topQuickPlayHeroes[2].hero)}** (${moment.duration(topQuickPlayHeroes[2].time, "milliseconds").format('H [hours]', 2)})
+        **${capitalizeFirstLetter(topQuickPlayHeroes[0].hero)}** (${moment.duration(topQuickPlayHeroes[0].time, 'milliseconds').format('H [hours]', 2)})
+        **${capitalizeFirstLetter(topQuickPlayHeroes[1].hero)}** (${moment.duration(topQuickPlayHeroes[1].time, 'milliseconds').format('H [hours]', 2)})
+        **${capitalizeFirstLetter(topQuickPlayHeroes[2].hero)}** (${moment.duration(topQuickPlayHeroes[2].time, 'milliseconds').format('H [hours]', 2)})
             `, true)
         .addField('Top Heroes Competitive', stripIndents`
-        **${capitalizeFirstLetter(topCompetitiveHeroes[0].hero)}** (${moment.duration(topCompetitiveHeroes[0].time, "milliseconds").format('H [hours]', 2)})
-        **${capitalizeFirstLetter(topCompetitiveHeroes[1].hero)}** (${moment.duration(topCompetitiveHeroes[1].time, "milliseconds").format('H [hours]', 2)})
-        **${capitalizeFirstLetter(topCompetitiveHeroes[2].hero)}** (${moment.duration(topCompetitiveHeroes[2].time, "milliseconds").format('H [hours]', 2)})
+        **${capitalizeFirstLetter(topCompetitiveHeroes[0].hero)}** (${moment.duration(topCompetitiveHeroes[0].time, 'milliseconds').format('H [hours]', 2)})
+        **${capitalizeFirstLetter(topCompetitiveHeroes[1].hero)}** (${moment.duration(topCompetitiveHeroes[1].time, 'milliseconds').format('H [hours]', 2)})
+        **${capitalizeFirstLetter(topCompetitiveHeroes[2].hero)}** (${moment.duration(topCompetitiveHeroes[2].time, 'milliseconds').format('H [hours]', 2)})
               `, true);
 
       deleteCommandMessages(msg, this.client);

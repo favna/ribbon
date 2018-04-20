@@ -128,6 +128,9 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_weather">weather</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Extra Weather - Get the current weather forecast in any city<br>Potentially you&#39;ll have to specify city if the city is in multiple countries, i.e. <code>weather amsterdam</code> will not be the same as <code>weather amsterdam missouri</code><br><strong>Aliases</strong>: <code>temp</code>, <code>forecast</code>, <code>fc</code>, <code>wth</code></p>
 </dd>
+<dt><a href="#module_xkcd">xkcd</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Extra xkcdCommand - Gets a random image from xkcd<br><strong>Aliases</strong>: <code>devjoke</code>, <code>comicjoke</code></p>
+</dd>
 <dt><a href="#module_zalgo">zalgo</a> ⇒ <code>Message</code></dt>
 <dd><p>Extra Zalgo - Create zalgo-fied text from your input<br>First banishes any existing zalgo to ensure proper result<br><strong>Aliases</strong>: <code>trash</code></p>
 </dd>
@@ -748,6 +751,14 @@ Potentially you'll have to specify city if the city is in multiple countries, i.
 ```js
 weather Amsterdam
 ```
+<a name="module_xkcd"></a>
+
+## xkcd ⇒ <code>MessageEmbed</code>
+Extra xkcdCommand - Gets a random image from xkcd  
+**Aliases**: `devjoke`, `comicjoke`
+
+**Returns**: <code>MessageEmbed</code> - Embedded image and info about it  
+**Category**: extra  
 <a name="module_zalgo"></a>
 
 ## zalgo ⇒ <code>Message</code>
@@ -1045,7 +1056,7 @@ Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleT
 
 **Example**  
 ```js
-overwatch cat#11481
+overwatch Camoflouge#1267
 ```
 <a name="module_rocketleague"></a>
 
