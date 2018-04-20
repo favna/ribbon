@@ -59,7 +59,7 @@ module.exports = class xkcdCommand extends commando.Command {
     try {
       /* eslint-disable sort-vars */
       const totalImages = await request.get('https://xkcd.com/info.0.json'),
-        randomNum = Math.floor(Math.random() * totalImages.body.num),
+        randomNum = Math.floor(Math.random() * totalImages.body.num) + 1,
         randomImage = await request.get(`https://xkcd.com/${randomNum}/info.0.json`),
         xkcdEmbed = new MessageEmbed();
       /* eslint-enable sort-vars */
