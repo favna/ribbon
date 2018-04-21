@@ -36,11 +36,12 @@
  * @returns {MessageEmbed} T.B.D. - Will be added later
  */
 
-const commando = require('discord.js-commando'),
-  request = require('snekfetch'),
-  {MessageEmbed} = require('discord.js');
+const request = require('snekfetch'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class RocketLeagueCommand extends commando.Command {
+module.exports = class RocketLeagueCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'rocketleague',
@@ -61,20 +62,25 @@ module.exports = class RocketLeagueCommand extends commando.Command {
           'key': 'player',
           'prompt': 'Respond with the player\'s BattleTag',
           'type': 'string',
-          'parse': p => p.toLowerCase()
+          'parse': p => p.toLowerCase(),
+          'default': 'Favna'
         }
       ]
     });
   }
 
   run (msg, args) {
+    startTyping(msg);
 
     /**
      * @todo Implement Rocket League Leaderboard
      * @body Requires access to the Rocket League API which is pending.  
      * API is currently closed beta and requires granted access from Rocket League so hopefully I will be allowed access
      */
-
-    return null;
+    
+    deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
+    
+    return msg.reply('not yet implemented');
   }
 };

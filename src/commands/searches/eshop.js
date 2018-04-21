@@ -35,14 +35,14 @@
  */
 
 const Fuse = require('fuse.js'),
-  commando = require('discord.js-commando'),
   fs = require('fs'),
   path = require('path'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class EShopCommand extends commando.Command {
+module.exports = class EShopCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'eshop',
@@ -64,6 +64,7 @@ module.exports = class EShopCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     if (fs.existsSync(path.join(__dirname, '../../data/websearch/eshop.json'))) {
 
       /* eslint-disable sort-vars, no-var, vars-on-top, one-var*/
@@ -98,15 +99,19 @@ module.exports = class EShopCommand extends commando.Command {
           .addField('Categories', typeof results[0].categories.category === 'object' ? results[0].categories.category.join(', ') : results[0].categories.category, true);
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(embed);
       }
 
       deleteCommandMessages(msg, this.client);
-
+      stopTyping(msg);
+      
       return msg.reply(`No titles found for \`${args.game}\``);
     }
-
+    deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
+    
     return msg.reply(oneLine`eshop data was not found!!
 		Ask <@${this.client.owners[0].id}> to generate it`);
   }

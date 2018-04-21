@@ -36,15 +36,15 @@
  * @returns {MessageEmbed} Outcome of the coin flip
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Database = require('better-sqlite3'),
-  commando = require('discord.js-commando'),
+const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages, roundNumber} = require('../../util.js');
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class CoinCommand extends commando.Command {
+module.exports = class CoinCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'coin',
@@ -100,6 +100,7 @@ module.exports = class CoinCommand extends commando.Command {
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {
+      startTyping(msg);
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (query) {
@@ -129,12 +130,15 @@ module.exports = class CoinCommand extends commando.Command {
           .setImage(flip === 0 ? 'https://favna.xyz/images/ribbonhost/coinheads.png' : 'https://favna.xyz/images/ribbonhost/cointails.png');
 
         deleteCommandMessages(msg, this.client);
-
+        stopTyping(msg);
+        
         return msg.embed(coinEmbed);
       }
-
+      stopTyping(msg);
+      
       return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
     } catch (e) {
+      stopTyping(msg);
       console.error(`	 ${stripIndents`Fatal SQL Error occurred while topping up someones balance!
       Server: ${msg.guild.name} (${msg.guild.id})
       Author: ${msg.author.tag} (${msg.author.id})

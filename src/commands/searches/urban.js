@@ -34,12 +34,12 @@
  * @returns {MessageEmbed} Top definition for the requested phrase
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  request = require('snekfetch'), 
-  {deleteCommandMessages} = require('../../util.js');
+const request = require('snekfetch'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class UrbanCommand extends commando.Command {
+module.exports = class UrbanCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'urban',
@@ -65,6 +65,7 @@ module.exports = class UrbanCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     const urban = await request.get('https://api.urbandictionary.com/v0/define').query('term', args.query);
 
     if (urban.ok && urban.body.result_type !== 'no_results') {
@@ -84,11 +85,13 @@ module.exports = class UrbanCommand extends commando.Command {
           false);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(embed);
     }
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
-    return msg.reply('no definitions found for that phrase');
+    return msg.reply(`no definitions found for \`${args.query}\``);
   }
 };

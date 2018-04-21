@@ -32,10 +32,10 @@
  * @returns {Message} Sad face about stopping the music
  */
 
-const commando = require('discord.js-commando'),
-  {deleteCommandMessages} = require('../../util.js');
+const {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class StopMusicCommand extends commando.Command {
+module.exports = class StopMusicCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'stop',
@@ -57,10 +57,12 @@ module.exports = class StopMusicCommand extends commando.Command {
    */
 
   run (msg) {
+    startTyping(msg);
     const queue = this.queue.get(msg.guild.id);
 
     if (!queue) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('there isn\'t any music playing right now.');
     }
@@ -71,6 +73,7 @@ module.exports = class StopMusicCommand extends commando.Command {
       song.dispatcher.end();
     }
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply('you\'ve just killed the party. Congrats. 👏');
   }

@@ -34,11 +34,11 @@
  * @returns {Message} Confirmation the setting was stored
  */
 
-const commando = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class MemberLogsCommand extends commando.Command {
+module.exports = class MemberLogsCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'memberlogs',
@@ -77,9 +77,11 @@ module.exports = class MemberLogsCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     this.client.provider.set(msg.guild.id, 'memberlogs', args.option);
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(oneLine`member logs have been
         ${args.option 

@@ -24,21 +24,21 @@
  */
 
 /* eslint-disable sort-vars */
-const Commando = require('discord.js-commando'),
-  Database = require('better-sqlite3'),
+const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
   request = require('snekfetch'),
   sqlite = require('sqlite'),
+  {Client, FriendlyError, SQLiteProvider} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {twitchclientid} = require(`${__dirname}/auth.json`),
-  {oneLine, stripIndents} = require('common-tags');
+  {oneLine, stripIndents} = require('common-tags'),
+  {twitchclientid} = require(path.join(__dirname, 'auth.json'));
 /* eslint-enable sort-vars */
 
 class Ribbon {
   constructor (token, test) {
     this.token = token;
-    this.client = new Commando.Client({
+    this.client = new Client({
       'commandPrefix': '!',
       'owner': '112001393140723712',
       'selfbot': false,
@@ -142,6 +142,19 @@ class Ribbon {
     }
   }
 
+  forceStopTyping () {
+    const allChannels = this.client.channels;
+
+    for (const channel of allChannels.values()) {
+      if (channel.type === 'text' || channel.type === 'dm' || channel.type === 'group') {
+        if (this.client.user.typingDurationIn(channel) > 10000) {
+          channel.stopTyping(true);
+        }
+      }
+    }
+  }
+
+
   onCmdBlock () {
     return (msg, reason) => {
       console.log(oneLine`
@@ -152,7 +165,7 @@ class Ribbon {
 
   onCmdErr () {
     return (cmd, err) => {
-      if (err instanceof Commando.FriendlyError) {
+      if (err instanceof FriendlyError) {
         return;
       }
       console.error(`Error in command ${cmd.groupID}:${cmd.memberName}`, err);
@@ -319,6 +332,10 @@ class Ribbon {
         const bot = this;
 
         setInterval(() => {
+          bot.forceStopTyping();
+        }, 180000);
+
+        setInterval(() => {
           bot.checkReminders();
         }, 300000);
 
@@ -368,7 +385,7 @@ class Ribbon {
       .on('warn', console.warn);
 
     this.client.setProvider(
-      sqlite.open(path.join(__dirname, 'data/databases/settings.sqlite3')).then(db => new Commando.SQLiteProvider(db))
+      sqlite.open(path.join(__dirname, 'data/databases/settings.sqlite3')).then(db => new SQLiteProvider(db))
     ).catch(console.error);
 
     this.client.registry

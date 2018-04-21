@@ -34,16 +34,16 @@
  * @returns {MessageEmbed} Activity from that member
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Spotify = require('spotify-web-api-node'),
-  commando = require('discord.js-commando'),
+const Spotify = require('spotify-web-api-node'),
   duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
   request = require('snekfetch'), 
-  {deleteCommandMessages} = require('../../util.js'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js'), 
   {spotifyID, spotifySecret} = require('../../auth.json');
 
-module.exports = class ActivityCommand extends commando.Command {
+module.exports = class ActivityCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'activity',
@@ -79,7 +79,7 @@ module.exports = class ActivityCommand extends commando.Command {
   /* eslint complexity: ["error", 45], max-statements: ["error", 35]*/
   /* eslint-disable no-nested-ternary*/
   async run (msg, args) {
-
+    startTyping(msg);
     const activity = args.member.presence.activity,
       ava = args.member.user.displayAvatarURL(),
       embed = new MessageEmbed(),
@@ -170,11 +170,13 @@ module.exports = class ActivityCommand extends commando.Command {
       activity.appID ? embed.addField('Application ID', activity.appID, true) : null;
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(embed);
     }
     embed.addField('Activity', 'Nothing', true);
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.embed(embed);
   }

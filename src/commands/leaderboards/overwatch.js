@@ -34,16 +34,16 @@
  * @returns {MessageEmbed} Stats of the player
  */
 
-const commando = require('discord.js-commando'),
-  duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
+const duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
   ms = require('ms'),
   request = require('snekfetch'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class OverwatchCommand extends commando.Command {
+module.exports = class OverwatchCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'overwatch',
@@ -106,7 +106,7 @@ module.exports = class OverwatchCommand extends commando.Command {
 
   async run (msg, args) {
     try {
-      msg.channel.startTyping();
+      startTyping(msg);
       const owEmbed = new MessageEmbed();
       let owData = await request.get(`https://ow-api.com/v1/stats/${args.platform}/${args.region}/${args.player}/complete`).set('Content-Type', 'application/json');
 
@@ -117,6 +117,8 @@ module.exports = class OverwatchCommand extends commando.Command {
       }
 
       if (owData.error) {
+        stopTyping(msg);
+        
         return msg.reply('No player found by that name. Check the platform (`pc`, `psn` or `xbl`) and region (`us`, `eu` or `asia`)');
       }
 
@@ -140,6 +142,7 @@ module.exports = class OverwatchCommand extends commando.Command {
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .addField('Account Stats', stripIndents`
           Level: **${owData.level}**
+          Prestige level: **${owData.level + (owData.prestige * 100)}**
           Rank: **${owData.rating ? owData.rating : 'Unknown Rating'}${owData.ratingName ? ` (${owData.ratingName})` : null}**
           Total Games Won: **${owData.gamesWon ? owData.gamesWon : 'No games won'}**
           `, true)
@@ -182,6 +185,7 @@ module.exports = class OverwatchCommand extends commando.Command {
               `, true);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(owEmbed);
     } catch (e) {
@@ -193,6 +197,7 @@ module.exports = class OverwatchCommand extends commando.Command {
       Platform: ${args.platform}
       Region: ${args.region}
       Error Message:`} ${e}`);
+      stopTyping(msg);
 
       return msg.reply(oneLine`Error occurred that was logged on Favna\'s system.
               You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);

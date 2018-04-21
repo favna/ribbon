@@ -33,10 +33,10 @@
  */
 
 const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {Command} = require('discord.js-commando'), 
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class InviteCommand extends commando.Command {
+module.exports = class InviteCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'invite',
@@ -54,6 +54,7 @@ module.exports = class InviteCommand extends commando.Command {
   }
 
   run (msg) {
+    startTyping(msg);
     const inviteEmbed = new MessageEmbed();
 
     inviteEmbed
@@ -68,6 +69,7 @@ module.exports = class InviteCommand extends commando.Command {
         '[Wiki](https://github.com/Favna/Ribbon/wiki)');
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.embed(inviteEmbed, 'Find information on the bot here: https://favna.xyz/ribbon');
   }

@@ -43,15 +43,15 @@
 const path = require('path'),
   Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
   YouTube = require('simple-youtube-api'), // eslint-disable-line sort-vars
-  commando = require('discord.js-commando'), // eslint-disable-line sort-vars
   winston = require('winston'),
   ytdl = require('ytdl-core'),
+  {Command} = require('discord.js-commando'), // eslint-disable-line sort-vars
   {escapeMarkdown} = require('discord.js'),
-  {deleteCommandMessages} = require('../../util.js'),
   {oneLine} = require('common-tags'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js'),
   {DEFAULT_VOLUME, GOOGLE_API, MAX_LENGTH, MAX_SONGS, PASSES} = require(path.join(__dirname, '../../data/melody/GlobalData'));
 
-module.exports = class PlaySongCommand extends commando.Command {
+module.exports = class PlaySongCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'play',
@@ -79,7 +79,10 @@ module.exports = class PlaySongCommand extends commando.Command {
     this.youtube = new YouTube(GOOGLE_API);
   }
 
+  /* eslint-disable max-statements*/
+
   async run (msg, args) {
+    startTyping(msg);
     const url = args.url.replace(/<(.+)>/g, '$1'),
       queue = this.queue.get(msg.guild.id); // eslint-disable-line sort-vars
 
@@ -89,6 +92,7 @@ module.exports = class PlaySongCommand extends commando.Command {
       voiceChannel = msg.member.voiceChannel; // eslint-disable-line
       if (!voiceChannel) {
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.reply('please join a voice channel before issuing this command.');
       }
@@ -97,16 +101,19 @@ module.exports = class PlaySongCommand extends commando.Command {
 
       if (!permissions.has('CONNECT')) {
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.reply('I don\'t have permission to join your voice channel. Fix your server\'s permissions');
       }
       if (!permissions.has('SPEAK')) {
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.reply('I don\'t have permission to speak in your voice channel. Fix your server\'s permissions');
       }
     } else if (!queue.voiceChannel.members.has(msg.author.id)) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('please join a voice channel before issuing this command.');
     }
@@ -115,7 +122,7 @@ module.exports = class PlaySongCommand extends commando.Command {
 
     if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
       deleteCommandMessages(msg, this.client);
-
+      stopTyping(msg);
 
       return statusMsg.edit(`<@${msg.author.id}>, sorry youtube playlists are not supported due to big lists causing queueing loop issues. Please queue the individual tracks`);
     }
@@ -123,6 +130,7 @@ module.exports = class PlaySongCommand extends commando.Command {
       const video = await this.youtube.getVideo(url);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
     } catch (error) {
@@ -137,6 +145,7 @@ module.exports = class PlaySongCommand extends commando.Command {
       } catch (err) {
         winston.error(err);
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return statusMsg.edit(`${msg.author}, couldn't obtain the search result video's details.`);
       }
@@ -147,6 +156,7 @@ module.exports = class PlaySongCommand extends commando.Command {
   async handleVideo (video, queue, voiceChannel, msg, statusMsg) {
     if (video.durationSeconds === 0) {
       statusMsg.edit(`${msg.author}, you can't play live streams.`);
+      stopTyping(msg);
 
       return null;
     }
@@ -175,10 +185,10 @@ module.exports = class PlaySongCommand extends commando.Command {
       if (!result.startsWith('👍')) {
         this.queue.delete(msg.guild.id);
         statusMsg.edit('', {'embed': resultMessage});
+        stopTyping(msg);
 
         return null;
       }
-
 
       statusMsg.edit(`${msg.author}, joining your voice channel...`);
       try {
@@ -187,12 +197,14 @@ module.exports = class PlaySongCommand extends commando.Command {
         queue.connection = connection;
         this.play(msg.guild, queue.songs[0]);
         statusMsg.delete();
+        stopTyping(msg);
 
         return null;
       } catch (error) {
         winston.error('Error occurred when joining voice channel.', error);
         this.queue.delete(msg.guild.id);
         statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
+        stopTyping(msg);
 
         return null;
       }
@@ -208,6 +220,7 @@ module.exports = class PlaySongCommand extends commando.Command {
         };
 
       statusMsg.edit('', {'embed': resultMessage});
+      stopTyping(msg);
 
       return null;
     }

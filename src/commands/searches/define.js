@@ -26,12 +26,12 @@
  * @returns {MessageEmbed} Possible definitions for that word
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  request = require('snekfetch'), 
-  {deleteCommandMessages} = require('../../util.js');
+const request = require('snekfetch'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class DefineCommand extends commando.Command {
+module.exports = class DefineCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'define',
@@ -58,6 +58,7 @@ module.exports = class DefineCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     const defineEmbed = new MessageEmbed(),
       word = await request.get('https://glosbe.com/gapi/translate')
         .query('from', 'en')
@@ -84,11 +85,13 @@ module.exports = class DefineCommand extends commando.Command {
         .setDescription(final);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(defineEmbed);
     }
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`nothing found for \`${args.query}\`, maybe check your spelling?`);
   }

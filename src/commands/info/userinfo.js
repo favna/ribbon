@@ -34,12 +34,12 @@
  * @returns {MessageEmbed} Info about that member
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'), 
-  {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
+const moment = require('moment'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class UserInfoCommand extends commando.Command {
+module.exports = class UserInfoCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'userinfo',
@@ -65,6 +65,7 @@ module.exports = class UserInfoCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const uinfoEmbed = new MessageEmbed(),
       vals = {
         'member': args.member,
@@ -89,6 +90,7 @@ module.exports = class UserInfoCommand extends commando.Command {
     vals.member.roles.size >= 1 ? uinfoEmbed.setFooter(`${vals.member.displayName} has ${vals.member.roles.size - 1} role(s)`) : uinfoEmbed.setFooter(`${vals.member.displayName} has 0 roles`);
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     msg.embed(uinfoEmbed);
   }

@@ -42,17 +42,17 @@
 
 /* eslint-disable max-statements */
 const Matcher = require('did-you-mean'),
-  commando = require('discord.js-commando'),
   dexEntries = require('../../data/dex/flavorText.json'),
   path = require('path'),
   underscore = require('underscore'),
   zalgo = require('to-zalgo'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {PokeAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {BattlePokedex} = require(path.join(__dirname, '../../data/dex/pokedex')),
-  {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class FlavorCommand extends commando.Command {
+module.exports = class FlavorCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'flavor',
@@ -109,6 +109,7 @@ module.exports = class FlavorCommand extends commando.Command {
 
   /* eslint-disable complexity*/
   run (msg, args) {
+    startTyping(msg);
     const dataEmbed = new MessageEmbed(),
       pokedexEntries = [];
 
@@ -208,6 +209,7 @@ module.exports = class FlavorCommand extends commando.Command {
       }
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(dataEmbed);
     }
@@ -216,6 +218,7 @@ module.exports = class FlavorCommand extends commando.Command {
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`Dex entry not found! ${dymString}`);
   }

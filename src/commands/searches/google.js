@@ -35,14 +35,14 @@
  * @returns {Message} Result of your search
  */
 
-const {MessageEmbed} = require('discord.js'),
-  cheerio = require('cheerio'),
-  commando = require('discord.js-commando'),
-  request = require('snekfetch'), 
-  {deleteCommandMessages} = require('../../util.js'), 
+const cheerio = require('cheerio'),
+  request = require('snekfetch'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js'),
   {googleapikey, searchEngineKey} = require('../../auth.json');
 
-module.exports = class GoogleCommand extends commando.Command {
+module.exports = class GoogleCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'google',
@@ -72,6 +72,7 @@ module.exports = class GoogleCommand extends commando.Command {
   }
   /* eslint-disable multiline-comment-style, lines-between-class-members, indent, lines-around-comment*/
 	async run (msg, args) {
+		startTyping(msg);
 		const knowledgeRes = await request.get('https://kgsearch.googleapis.com/v1/entities:search')
 			.query('key', googleapikey)
 			.query('limit', 1)
@@ -99,6 +100,7 @@ module.exports = class GoogleCommand extends commando.Command {
 				.setDescription(`${result.detailedDescription.articleBody} [Learn More...](${result.detailedDescription.url.replace(/\(/, '%28').replace(/\)/, '%29')})`);
 
 			deleteCommandMessages(msg, this.client);
+			stopTyping(msg);
 
 			return msg.embed(knowledgeGraphEmbed);
 		}
@@ -111,6 +113,7 @@ module.exports = class GoogleCommand extends commando.Command {
 
 		if (normalRes && normalRes.body.queries.request[0].totalResults === '0') {
 			deleteCommandMessages(msg, this.client);
+			stopTyping(msg);
 
 			return msg.say(normalRes.body.items[0].link);
 		}
@@ -131,10 +134,13 @@ module.exports = class GoogleCommand extends commando.Command {
 			}
 
 			deleteCommandMessages(msg, this.client);
+			stopTyping(msg);
 
 			return msg.say(href.replace('/url?q=', '').split('&')[0]);
 		}
+		deleteCommandMessages(msg, this.client);
+		stopTyping(msg);
 
-		return msg.reply('***nothing found***');
+		return msg.reply(`nothing found for \`${args.query}\``);
 	}
 };

@@ -32,12 +32,12 @@
  * @returns {MessageEmbed} List of emotes
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'), 
-  {deleteCommandMessages} = require('../../util.js');
+const moment = require('moment'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class EmotesCommand extends commando.Command {
+module.exports = class EmotesCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'emotes',
@@ -55,6 +55,7 @@ module.exports = class EmotesCommand extends commando.Command {
   }
 
   run (msg) {
+    startTyping(msg);
     const embed = new MessageEmbed();
 
     let animEmotes = [],
@@ -75,6 +76,7 @@ module.exports = class EmotesCommand extends commando.Command {
     embed.setDescription(staticEmotes + animEmotes);
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.embed(embed);
   }

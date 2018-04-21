@@ -33,10 +33,10 @@
  * @returns {Message} Confirmation the song is resumed
  */
 
-const commando = require('discord.js-commando'),
-  {deleteCommandMessages} = require('../../util.js');
+const {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class ResumeSongCommand extends commando.Command {
+module.exports = class ResumeSongCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'resume',
@@ -54,20 +54,24 @@ module.exports = class ResumeSongCommand extends commando.Command {
   }
 
   run (msg) {
+    startTyping(msg);
     const queue = this.queue.get(msg.guild.id);
 
     if (!queue) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('there isn\'t any music playing to resume, oh brilliant one.');
     }
     if (!queue.songs[0].dispatcher) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('pretty sure a song that hasn\'t actually begun playing yet could be considered "resumed".');
     }
     if (queue.songs[0].playing) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('resuming a song that isn\'t paused is a great move. Really fantastic.');
     }
@@ -75,6 +79,7 @@ module.exports = class ResumeSongCommand extends commando.Command {
     queue.songs[0].playing = true;
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply('resumed the music. This party ain\'t over yet!');
   }

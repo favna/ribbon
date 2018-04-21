@@ -38,17 +38,17 @@
  * @returns {MessageEmbed} Input and output currency's and the amount your input is worth in both
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  currencySymbol = require('currency-symbol-map'),
+const currencySymbol = require('currency-symbol-map'),
   fx = require('money'),
   moment = require('moment'),
   request = require('snekfetch'), 
-  {deleteCommandMessages} = require('../../util.js'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oxrAppID} = require('../../auth.json'), 
-  {stripIndents} = require('common-tags');
+  {stripIndents} = require('common-tags'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class MoneyCommand extends commando.Command {
+module.exports = class MoneyCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'oxr',
@@ -134,6 +134,7 @@ module.exports = class MoneyCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     const rates = await request.get('https://openexchangerates.org/api/latest.json')
       .query('app_id', oxrAppID)
       .query('prettyprint', false)
@@ -154,6 +155,7 @@ module.exports = class MoneyCommand extends commando.Command {
         .setFooter(`Converted on ${moment.unix(rates.body.timestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(oxrEmbed);
     }
@@ -164,6 +166,8 @@ module.exports = class MoneyCommand extends commando.Command {
 		Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
 		Error Message:`} ${rates.statusText}`);
 
+    stopTyping(msg);
+    
     return msg.reply('an error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
   }
 };

@@ -35,13 +35,13 @@
  * @returns {Message} Confirmation the copypasta was added
  */
 
-const commando = require('discord.js-commando'),
-  fs = require('fs'),
+const fs = require('fs'),
   moment = require('moment'),
   path = require('path'),
-  {deleteCommandMessages} = require('../../util.js');
+  {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class CopyPastaAddCommand extends commando.Command {
+module.exports = class CopyPastaAddCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'copypastaadd',
@@ -74,6 +74,7 @@ module.exports = class CopyPastaAddCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     if (!fs.existsSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`))) {
       console.log(`Creating guild dir for guild ${msg.guild.name}(${msg.guild.id}) at ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
       fs.mkdirSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`));
@@ -83,10 +84,12 @@ module.exports = class CopyPastaAddCommand extends commando.Command {
 
     if (fs.existsSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}/${args.name}.txt`))) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with ${msg.guild.commandPrefix}copypasta ${args.name}`);
     }
-
+    stopTyping(msg);
+    
     return msg.reply('an error occurred and your pasta was not saved.');
   }
 };

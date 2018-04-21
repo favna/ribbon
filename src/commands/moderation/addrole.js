@@ -35,13 +35,13 @@
  * @returns {Message} Confirmation the role was added
  */
 
-const {DiscordAPIError} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'), 
-  {deleteCommandMessages} = require('../../util.js'), 
-  {oneLine, stripIndents} = require('common-tags');
+const moment = require('moment'), 
+  {Command} = require('discord.js-commando'),
+  {DiscordAPIError} = require('discord.js'),
+  {oneLine, stripIndents} = require('common-tags'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class AddRoleCommand extends commando.Command {
+module.exports = class AddRoleCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'addrole',
@@ -76,12 +76,14 @@ module.exports = class AddRoleCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     if (args.member.manageable) {
       try {
         const roleAdd = await args.member.roles.add(args.role);
 
         if (roleAdd) {
           deleteCommandMessages(msg, this.client);
+          stopTyping(msg);
 
           return msg.reply(`\`${args.role.name}\` assigned to \`${args.member.displayName}\``);
         }
@@ -99,6 +101,7 @@ module.exports = class AddRoleCommand extends commando.Command {
       }
     }
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(oneLine`an error occurred adding the role \`${args.role.name}\` to \`${args.member.displayName}\`.
 		Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);

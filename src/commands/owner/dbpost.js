@@ -32,10 +32,11 @@
  */
 
 const auth = require('../../auth.json'),
-  commando = require('discord.js-commando'),
-  request = require('snekfetch');
+  request = require('snekfetch'),
+  {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class DBPostCommand extends commando.Command {
+module.exports = class DBPostCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'dbpost',
@@ -48,14 +49,20 @@ module.exports = class DBPostCommand extends commando.Command {
   }
 
   async run (msg) {
+    startTyping(msg);
     const post = await request.post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
       .set('Authorization', auth.discordbotsAPIKey)
       .send({'server_count': this.client.guilds.size});
 
     if (post) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+      
       return msg.reply('updated discordbots.org stats.');
     }
-
+    deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
+    
     return msg.reply('an error occurred updating discordbots.org stats.');
   }
 };

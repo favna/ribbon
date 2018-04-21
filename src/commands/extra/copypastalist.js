@@ -32,15 +32,15 @@
  * @returns {MessageEmbed} List of all available copypastas
  */
 
-const {splitMessage} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  fs = require('fs'),
+const fs = require('fs'),
   moment = require('moment'),
   path = require('path'), 
-  {deleteCommandMessages} = require('../../util.js'), 
-  {stripIndents} = require('common-tags');
+  {Command} = require('discord.js-commando'),
+  {splitMessage} = require('discord.js'),
+  {stripIndents} = require('common-tags'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class CopyPastaListCommand extends commando.Command {
+module.exports = class CopyPastaListCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'copypastalist',
@@ -58,6 +58,7 @@ module.exports = class CopyPastaListCommand extends commando.Command {
 
   async run (msg) {
     try {
+      startTyping(msg);
       const list = fs.readdirSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`));
 
       if (list && list.length) {
@@ -79,10 +80,13 @@ module.exports = class CopyPastaListCommand extends commando.Command {
             'color': msg.guild.me.displayColor
           }));
         }
-
+        stopTyping(msg);
+        
         return messages;
       }
 
+      stopTyping(msg);
+      
       return msg.embed({
         'title': 'Copypastas available on this server',
         'description': list.join('\n'),
@@ -98,6 +102,7 @@ module.exports = class CopyPastaListCommand extends commando.Command {
     }
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`no copypastas found for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd\`!`);
   }

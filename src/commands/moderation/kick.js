@@ -35,13 +35,13 @@
  * @returns {MessageEmbed} Log of the kick
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'), 
+const moment = require('moment'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class KickCommand extends commando.Command {
+module.exports = class KickCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'kick',
@@ -77,11 +77,17 @@ module.exports = class KickCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
+
     if (args.member.id === msg.author.id) {
+      stopTyping(msg);
+      
       return msg.reply('I don\'t think you want to kick yourself.');
     }
 
     if (!args.member.kickable) {
+      stopTyping(msg);
+      
       return msg.reply('I cannot kick that member, their role is probably higher than my own!');
     }
 
@@ -109,10 +115,12 @@ module.exports = class KickCommand extends commando.Command {
       }
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
     }
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return null;
   }

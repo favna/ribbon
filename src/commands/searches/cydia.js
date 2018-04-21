@@ -37,15 +37,15 @@
  */
 
 const Fuse = require('fuse.js'),
-  {MessageEmbed} = require('discord.js'),
   cheerio = require('cheerio'),
-  commando = require('discord.js-commando'),
   moment = require('moment'),
   request = require('snekfetch'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {stripIndents} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class CydiaCommand extends commando.Command {
+module.exports = class CydiaCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'cydia',
@@ -75,6 +75,7 @@ module.exports = class CydiaCommand extends commando.Command {
     if (!this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
       return null;
     }
+    startTyping(msg);
     if (msg.patternMatches) {
       args.query = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
     }
@@ -127,7 +128,8 @@ module.exports = class CydiaCommand extends commando.Command {
           if (!msg.patternMatches) {
             deleteCommandMessages(msg, this.client);
           }
-
+          startTyping(msg);
+          
           return msg.embed(embed);
         } catch (e) {
           console.error(`${stripIndents`An error occurred on the cydia command!
@@ -141,7 +143,8 @@ module.exports = class CydiaCommand extends commando.Command {
           if (!msg.patternMatches) {
             deleteCommandMessages(msg, this.client);
           }
-
+          stopTyping(msg);
+          
           return msg.embed(embed);
         }
       }

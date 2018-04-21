@@ -34,13 +34,13 @@
  * @returns {MessageEmbed} Embedded QR code and original image URL
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  imgur = require('imgur'),
+const imgur = require('imgur'),
   qr = require('qrcode'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class QRGenCommand extends commando.Command {
+module.exports = class QRGenCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'qrgen',
@@ -65,7 +65,8 @@ module.exports = class QRGenCommand extends commando.Command {
     });
   }
 
-  async run (msg, args) {
+  async run (msg, args) { 
+    startTyping(msg);
     const base64 = await qr.toDataURL(args.url, {'errorCorrectionLevel': 'M'});
 
     if (base64) {
@@ -80,13 +81,16 @@ module.exports = class QRGenCommand extends commando.Command {
           .setImage(upload.data.link);
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(qrEmbed);
       }
-
+      stopTyping(msg);
+      
       return msg.reply('an error occurred uploading the QR code to imgur.');
     }
-
+    stopTyping(msg);
+    
     return msg.reply('an error occurred getting a base64 image for that URL.');
   }
 };

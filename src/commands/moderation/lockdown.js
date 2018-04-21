@@ -34,13 +34,13 @@
  * @returns {Message} Confirmation the channel was locked
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'), 
+const moment = require('moment'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class LockdownCommand extends commando.Command {
+module.exports = class LockdownCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'lockdown',
@@ -68,6 +68,7 @@ module.exports = class LockdownCommand extends commando.Command {
    */
 
   run (msg) {
+    startTyping(msg);
     const embed = new MessageEmbed(),
       modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
@@ -95,10 +96,12 @@ module.exports = class LockdownCommand extends commando.Command {
 
         modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);
       }
-
+      stopTyping(msg);
+      
       return msg.say(embed.description.slice(12));
     }
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply('an error occurred locking this channel');
   }

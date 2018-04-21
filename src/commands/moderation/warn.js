@@ -37,15 +37,15 @@
  * @returns {MessageEmbed} A MessageEmbed with a log of the warning
  */
 
-const commando = require('discord.js-commando'),
-  fs = require('fs'),
+const fs = require('fs'),
   moment = require('moment'),
   path = require('path'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class WarnCommand extends commando.Command {
+module.exports = class WarnCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'warn',
@@ -86,6 +86,7 @@ module.exports = class WarnCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const embed = new MessageEmbed(),
       modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
@@ -146,15 +147,18 @@ module.exports = class WarnCommand extends commando.Command {
         }
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return modLogs
           ? msg.guild.channels.get(modLogs).send({embed}) && msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`)
           : msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`);
       }
-
+      stopTyping(msg);
+      
       return msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`);
     }
-
+    stopTyping(msg);
+    
     return msg.reply(oneLine`An error occurred writing the warning to disc.
 							You can contact my developer on his server. Use \`${msg.guild.commandPrefix}invite\` to get an invite to his server.`);
   }

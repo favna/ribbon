@@ -35,12 +35,12 @@
  * @returns {MessageEmbed} The eyes rolled for each dice as well as the total of all rolls
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  xdicey = require('xdicey'), 
-  {deleteCommandMessages} = require('../../util.js');
+const xdicey = require('xdicey'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class DiceCommand extends commando.Command {
+module.exports = class DiceCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'dice',
@@ -75,6 +75,7 @@ module.exports = class DiceCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const diceEmbed = new MessageEmbed(),
       res = [],
       throwDice = xdicey(args.rolls, args.sides);
@@ -92,6 +93,7 @@ module.exports = class DiceCommand extends commando.Command {
       .addField('Total', throwDice.total, false);
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.embed(diceEmbed);
   }

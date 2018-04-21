@@ -40,18 +40,18 @@
  */
 
 const Matcher = require('did-you-mean'),
-  commando = require('discord.js-commando'),
   dexEntries = require('../../data/dex/flavorText.json'),
   path = require('path'),
   underscore = require('underscore'),
   zalgo = require('to-zalgo'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {PokeAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {BattlePokedex} = require(path.join(__dirname, '../../data/dex/pokedex')),
   {oneLine} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class DexCommand extends commando.Command {
+module.exports = class DexCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'dex',
@@ -108,6 +108,7 @@ module.exports = class DexCommand extends commando.Command {
 
   /* eslint-disable max-statements, complexity */
   run (msg, args) {
+    startTyping(msg);
     const dexEmbed = new MessageEmbed();
     let pokeEntry = {};
 
@@ -254,6 +255,7 @@ module.exports = class DexCommand extends commando.Command {
       }
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(dexEmbed);
     }
@@ -262,6 +264,7 @@ module.exports = class DexCommand extends commando.Command {
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the Pokémon\'s name?';
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`Dex entry not found! ${dymString}`);
   }

@@ -34,10 +34,10 @@
  * @returns {MessageEmbed} The hug and a cute image ❤
  */
 
-const commando = require('discord.js-commando'),
-  {deleteCommandMessages} = require('../../util.js');
+const {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class HugCommand extends commando.Command {
+module.exports = class HugCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'hug',
@@ -84,6 +84,7 @@ module.exports = class HugCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     deleteCommandMessages(msg, this.client);
     msg.embed({
       'description': args.member !== ''
@@ -92,5 +93,7 @@ module.exports = class HugCommand extends commando.Command {
       'image': {'url': args.member !== '' ? this.fetchImage() : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
       'color': msg.guild ? msg.guild.me.displayColor : 10610610
     });
+
+    return stopTyping(msg);
   }
 };

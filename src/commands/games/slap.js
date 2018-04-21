@@ -34,10 +34,10 @@
  * @returns {MessageEmbed} The slap and an image
  */
 
-const commando = require('discord.js-commando'),
-  {deleteCommandMessages} = require('../../util.js');
+const {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class SlapCommand extends commando.Command {
+module.exports = class SlapCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'slap',
@@ -84,6 +84,7 @@ module.exports = class SlapCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     deleteCommandMessages(msg, this.client);
     msg.embed({
       'description': args.member !== ''
@@ -92,5 +93,7 @@ module.exports = class SlapCommand extends commando.Command {
       'image': {'url': args.member !== '' ? this.fetchImage() : 'http://cdn.awwni.me/mz98.gif'},
       'color': msg.guild ? msg.guild.me.displayColor : 10610610
     });
+
+    return stopTyping(msg);
   }
 };

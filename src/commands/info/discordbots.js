@@ -34,14 +34,14 @@
  * @returns {MessageEmbed} Info about a bot
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'),
+const moment = require('moment'),
   request = require('snekfetch'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {discordbotsAPIKey} = require('../../auth.json'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class DiscordBotsCommand extends commando.Command {
+module.exports = class DiscordBotsCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'discordbots',
@@ -68,7 +68,7 @@ module.exports = class DiscordBotsCommand extends commando.Command {
   }
 
   async run (msg, args) {
-
+    startTyping(msg);
     const info = await request.get(`https://discordbots.org/api/bots/${args.bot}`)
         .set('Authorization', discordbotsAPIKey),
       infoEmbed = new MessageEmbed();
@@ -91,10 +91,12 @@ module.exports = class DiscordBotsCommand extends commando.Command {
 
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(infoEmbed, `https://discordbots.org/bot/${botinfo.clientid}`);
     }
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply('an error occurred getting info from that bot, are you sure it exists on the website?');
   }

@@ -35,14 +35,14 @@
  */
 
 const Fuse = require('fuse.js'),
-  commando = require('discord.js-commando'),
   fs = require('fs'),
   moment = require('moment'),
   path = require('path'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class ListWarnCommand extends commando.Command {
+module.exports = class ListWarnCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'listwarn',
@@ -73,7 +73,7 @@ module.exports = class ListWarnCommand extends commando.Command {
   }
 
   run (msg, args) {
-
+    startTyping(msg);
     if (fs.existsSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`))) {
       /* eslint-disable sort-vars*/
       const embed = new MessageEmbed(),
@@ -100,13 +100,16 @@ module.exports = class ListWarnCommand extends commando.Command {
             `**Current Warning Points:** ${results[0].points}`);
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(embed);
       }
-
+      stopTyping(msg);
+      
       return msg.reply('that user has no warning points yet');
     }
-
+    stopTyping(msg);
+    
     return msg.reply(`📘 No warnpoints log found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
   }
 };

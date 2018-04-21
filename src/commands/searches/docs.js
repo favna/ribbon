@@ -36,10 +36,10 @@
  * @returns {MessageEmbed} Info about the entry from the library
  */
 
-const {Command} = require('discord.js-commando'), 
+const request = require('snekfetch'), 
+  {Command} = require('discord.js-commando'), 
   {oneLineTrim} = require('common-tags'),
-  request = require('snekfetch'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class DocsCommand extends Command {
   constructor (client) {
@@ -355,10 +355,8 @@ module.exports = class DocsCommand extends Command {
     return embed;
   }
 
-  async run (msg, {
-    query,
-    version
-  }) {
+  async run (msg, {query, version}) {
+    startTyping(msg);
     const docs = await this.fetchDocs(version);
     const [main, member] = this.search(docs, query); // eslint-disable-line one-var
 
@@ -380,6 +378,7 @@ module.exports = class DocsCommand extends Command {
     };
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.embed(embed);
   }

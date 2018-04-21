@@ -33,10 +33,10 @@
  * @returns {MessageEmbed} The kiss and a cute image ❤
  */
 
-const commando = require('discord.js-commando'),
-  {deleteCommandMessages} = require('../../util.js');
+const {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class KissCommand extends commando.Command {
+module.exports = class KissCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'kiss',
@@ -81,6 +81,7 @@ module.exports = class KissCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     deleteCommandMessages(msg, this.client);
     msg.embed({
       'description': args.member !== ''
@@ -89,5 +90,7 @@ module.exports = class KissCommand extends commando.Command {
       'image': {'url': args.member !== '' ? this.fetchImage() : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
       'color': msg.guild ? msg.guild.me.displayColor : 10610610
     });
+    
+    return stopTyping(msg);
   }
 };

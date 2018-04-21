@@ -34,10 +34,11 @@
  * @returns {MessageEmbed} A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔
  */
 
-const commando = require('discord.js-commando'),
-  {stripIndents} = require('common-tags');
+const {Command} = require('discord.js-commando'),
+  {stripIndents} = require('common-tags'),
+  {stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class KaiCommand extends commando.Command {
+module.exports = class KaiCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'kai',
@@ -86,12 +87,14 @@ module.exports = class KaiCommand extends commando.Command {
 
   run (msg) {
     if (this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
+      startTyping(msg);
       msg.delete();
       msg.embed({
         'image': {'url': this.fetchImage()},
         'color': msg.guild ? msg.guild.me.displayColor : 10610610
       },
       'Please <@418504046337589249> get lost');
+      stopTyping(msg);
     }
   }
 };

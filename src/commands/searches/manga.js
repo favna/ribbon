@@ -34,12 +34,12 @@
  * @returns {MessageEmbed} Information about the requested manga
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  maljs = require('maljs'), 
-  {deleteCommandMessages} = require('../../util.js');
+const maljs = require('maljs'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class MangaCommand extends commando.Command {
+module.exports = class MangaCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'manga',
@@ -65,6 +65,7 @@ module.exports = class MangaCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     const manEmbed = new MessageEmbed(),
       res = await maljs.quickSearch(args.query, 'manga');
 
@@ -84,16 +85,17 @@ module.exports = class MangaCommand extends commando.Command {
           .addField('Rank', manga.ranked, true);
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(manEmbed, `${manga.mal.url}${manga.path}`);
       }
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply(`no manga found for the input \`${args.query}\` `);
-
-
     }
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`no manga found for the input \`${args.query}\` `);
   }

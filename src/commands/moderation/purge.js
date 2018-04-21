@@ -34,9 +34,10 @@
  * @returns {Message} Confirmation of the amount of messages deleted - will self delete after 1 second.
  */
 
-const commando = require('discord.js-commando');
+const {Command} = require('discord.js-commando'),
+  {stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class PurgeCommand extends commando.Command {
+module.exports = class PurgeCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'purge',
@@ -64,7 +65,10 @@ module.exports = class PurgeCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     if (!msg.channel.permissionsFor(msg.guild.me).has('MANAGE_MESSAGES')) {
+      stopTyping(msg);
+      
       return msg.reply('I do not have permission to delete messages from this channel. Better go and fix that!');
     }
     
@@ -72,6 +76,8 @@ module.exports = class PurgeCommand extends commando.Command {
 
     const reply = await msg.say(`\`Deleted ${args.amount} messages\``);
 
+    stopTyping(msg);
+    
     return reply.delete({
       'timeout': 1000,
       'reason': 'Deleting own return message after purge'

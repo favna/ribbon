@@ -34,9 +34,10 @@
  * @returns {Message} Your message said by the bot
  */
 
-const commando = require('discord.js-commando');
+const {Command} = require('discord.js-commando'),
+  {stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class SayCommand extends commando.Command {
+module.exports = class SayCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'say',
@@ -74,6 +75,7 @@ module.exports = class SayCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const saydata = {
       'memberHexColor': msg.member.displayHexColor,
       'commandPrefix': msg.guild.commandPrefix,
@@ -85,9 +87,9 @@ module.exports = class SayCommand extends commando.Command {
     };
 
     this.client.provider.set(msg.guild.id, 'saydata', saydata);
-
     msg.delete();
-
-    return msg.say(args.txt);
+    msg.say(args.txt);
+    
+    return stopTyping(msg);
   }
 };

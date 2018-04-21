@@ -35,12 +35,12 @@
  * @returns {MessageEmbed} Poll url, title, options and preview image
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  request = require('snekfetch'), 
-  {deleteCommandMessages} = require('../../util.js');
+const request = require('snekfetch'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class StrawpollCommand extends commando.Command {
+module.exports = class StrawpollCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'strawpoll',
@@ -82,6 +82,7 @@ module.exports = class StrawpollCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     const pollEmbed = new MessageEmbed(),
       strawpoll = await request
         .post('https://www.strawpoll.me/api/v2/polls')
@@ -103,11 +104,13 @@ module.exports = class StrawpollCommand extends commando.Command {
         .setDescription(`Options on this poll: \`${strawpoll.body.options.join(', ')}\` `);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(pollEmbed, `http://www.strawpoll.me/${strawpoll.body.id}`);
     }
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply('an error occurred creating the strawpoll');
   }

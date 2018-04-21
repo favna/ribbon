@@ -39,14 +39,14 @@
  * @returns {MessageEmbed} Color of embed matches generated color
  */
 
-const {Canvas} = require('canvas-constructor'), 
+const imgur = require('imgur'), 
+  {Canvas} = require('canvas-constructor'), 
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  imgur = require('imgur'), 
   {stripIndents} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class RandomColCommand extends commando.Command {
+module.exports = class RandomColCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'randomcol',
@@ -100,7 +100,8 @@ module.exports = class RandomColCommand extends commando.Command {
     };
   }
 
-  async run (msg, args) {
+  async run (msg, args) { 
+    startTyping(msg);
     const embed = new MessageEmbed(),
       hex = args.col !== 'random' ? args.col : `#${Math.floor(Math.random() * 16777215).toString(16)}`,
       canv = new Canvas(80, 60) // eslint-disable-line sort-vars
@@ -120,13 +121,16 @@ module.exports = class RandomColCommand extends commando.Command {
 				**rgb**: rgb(${this.hextorgb(hex).r}, ${this.hextorgb(hex).g}, ${this.hextorgb(hex).b})`);
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(embed);
       }
-
+      stopTyping(msg);
+      
       return msg.reply('an error occurred uploading the canvas to imgur.');
     }
-
+    stopTyping(msg);
+    
     return msg.reply('an error occurred getting a base64 for the canvas.');
   }
 };

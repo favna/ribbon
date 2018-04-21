@@ -32,15 +32,15 @@
  * @returns {MessageEmbed} Your new balance
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Database = require('better-sqlite3'),
-  commando = require('discord.js-commando'),
+const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class DailyCommand extends commando.Command {
+module.exports = class DailyCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'daily',
@@ -68,6 +68,7 @@ module.exports = class DailyCommand extends commando.Command {
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {
+      startTyping(msg);
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (query) {
@@ -99,15 +100,18 @@ module.exports = class DailyCommand extends commando.Command {
         ${resetStr}`);
 
         deleteCommandMessages(msg, this.client);
-
+        stopTyping(msg);
+        
         return msg.embed(balEmbed, returnMsg);
       }
+      stopTyping(msg);
       conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
         'userid': msg.author.id,
         'balance': '500',
         'date': moment().format('YYYY-MM-DD HH:mm')
       });
     } catch (e) {
+      stopTyping(msg);
       if (/(?:no such table)/i.test(e.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
 

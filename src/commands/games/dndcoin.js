@@ -25,24 +25,24 @@
 
 /**
  * @file Games DndCCommand - Flips a coin  
- * **Aliases**: `coinflip`, `dndc`
+ * **Aliases**: `coinflip`, `dndc`, `dcoin`
  * @module
  * @category games
  * @name dndc
  * @returns {MessageEmbed} Side the coin landed on
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'), 
-  {deleteCommandMessages, roundNumber} = require('../../util.js');
+const {Command} = require('discord.js-commando'), 
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class DndCCommand extends commando.Command {
+module.exports = class DndCCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'dndcoin',
       'memberName': 'dndcoin',
       'group': 'games',
-      'aliases': ['coinflip', 'dndc'],
+      'aliases': ['coinflip', 'dndc', 'dcoin'],
       'description': 'Flips a coin',
       'examples': ['coin'],
       'guildOnly': false,
@@ -54,6 +54,7 @@ module.exports = class DndCCommand extends commando.Command {
   }
 
   run (msg) {
+    startTyping(msg);
     const coinEmbed = new MessageEmbed(),
       flip = roundNumber(Math.random());
 
@@ -63,7 +64,8 @@ module.exports = class DndCCommand extends commando.Command {
       .setTitle(`Flipped ${flip === 1 ? 'heads' : 'tails'}`);
 
     deleteCommandMessages(msg, this.client);
-
     msg.embed(coinEmbed);
+
+    return stopTyping(msg);
   }
 };

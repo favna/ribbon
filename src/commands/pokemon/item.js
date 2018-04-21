@@ -39,16 +39,16 @@
  */
 
 const Matcher = require('did-you-mean'),
-  commando = require('discord.js-commando'),
   path = require('path'),
   underscore = require('underscore'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {BattleItems} = require(path.join(__dirname, '../../data/dex/items')),
   {ItemAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {oneLine} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class ItemCommand extends commando.Command {
+module.exports = class ItemCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'item',
@@ -77,6 +77,7 @@ module.exports = class ItemCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const itemEmbed = new MessageEmbed();
 
     let itemEntry = {};
@@ -112,6 +113,7 @@ module.exports = class ItemCommand extends commando.Command {
     .replace('\'', '')})`);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(itemEmbed, `**${capitalizeFirstLetter(itemEntry.name)}**`);
     }
@@ -120,6 +122,7 @@ module.exports = class ItemCommand extends commando.Command {
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the item name?';
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`Item not found! ${dymString}`);
 

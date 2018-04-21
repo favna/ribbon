@@ -35,13 +35,13 @@
  * @returns {Message} Confirmation the nickname was assigned
  */
 
-const {DiscordAPIError} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'), 
-  {deleteCommandMessages} = require('../../util.js'), 
-  {oneLine, stripIndents} = require('common-tags');
+const moment = require('moment'), 
+  {Command} = require('discord.js-commando'),
+  {DiscordAPIError} = require('discord.js'),
+  {oneLine, stripIndents} = require('common-tags'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class NickCommand extends commando.Command {
+module.exports = class NickCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'nickname',
@@ -76,6 +76,7 @@ module.exports = class NickCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     if (args.member.manageable) {
       try {
         if (args.nickname === 'clear') {
@@ -83,6 +84,9 @@ module.exports = class NickCommand extends commando.Command {
         } else {
           args.member.setNickname(args.nickname);
         }
+        stopTyping(msg);
+        
+        return msg.reply(`${args.nickname === 'clear' ? `removed <@${args.member.id}>'s nickname` : `assigned \`${args.nickname}\` as nickname to <@${args.member.id}>`}`);
       } catch (e) {
         if (e instanceof DiscordAPIError) {
           console.error(`	 ${stripIndents`An error occurred on the Nickname command!
@@ -97,7 +101,8 @@ module.exports = class NickCommand extends commando.Command {
       }
     }
     deleteCommandMessages(msg, this.client);
-
+    stopTyping(msg);
+    
     return msg.reply(oneLine`failed to set nickname to that member.
     Check that I have permission to set their nickname as well as the role hierarchy`);
   }

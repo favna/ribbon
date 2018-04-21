@@ -38,16 +38,16 @@
  */
 
 const Matcher = require('did-you-mean'),
-  commando = require('discord.js-commando'),
   path = require('path'),
   underscore = require('underscore'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {BattleAbilities} = require(path.join(__dirname, '../../data/dex/abilities')),
   {AbilityAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {oneLine} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class AbilityCommand extends commando.Command {
+module.exports = class AbilityCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'ability',
@@ -76,6 +76,7 @@ module.exports = class AbilityCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const abilityEmbed = new MessageEmbed();
 
     let abilityEntry = {};
@@ -105,6 +106,7 @@ module.exports = class AbilityCommand extends commando.Command {
 			|  [PokémonDB](http://pokemondb.net/ability/${abilityEntry.name.toLowerCase().replace(' ', '-')})`);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(abilityEmbed, `**${capitalizeFirstLetter(abilityEntry.name)}**`);
     }
@@ -113,6 +115,7 @@ module.exports = class AbilityCommand extends commando.Command {
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the ability?';
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`ability not found! ${dymString}`);
   }

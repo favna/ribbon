@@ -34,16 +34,16 @@
  * @returns {MessageEmbed} Information about the requested game
  */
 
-const {MessageEmbed} = require('discord.js'),
-  SteamAPI = require('steamapi'),
+const SteamAPI = require('steamapi'),
   cheerio = require('cheerio'),
-  commando = require('discord.js-commando'),
   currencySymbol = require('currency-symbol-map'),
-  request = require('snekfetch'), 
-  {deleteCommandMessages} = require('../../util.js'), 
-  {steamAPIKey} = require('../../auth.json');
+  request = require('snekfetch'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {steamAPIKey} = require('../../auth.json'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class SteamCommand extends commando.Command {
+module.exports = class SteamCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'steam',
@@ -74,7 +74,7 @@ module.exports = class SteamCommand extends commando.Command {
   }
 
   async run (msg, args) {
-
+    startTyping(msg);
     const steam = new SteamAPI(steamAPIKey),
       steamEmbed = new MessageEmbed(),
       steamSearch = await request.get(`http://store.steampowered.com/search/?term=${args.game}`);
@@ -120,17 +120,18 @@ module.exports = class SteamCommand extends commando.Command {
           .addField('Steam Store Link', `http://store.steampowered.com/app/${steamData.steam_appid}/`, false);
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(steamEmbed, `http://store.steampowered.com/app/${steamData.steam_appid}/`);
       }
-
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('Steam API error');
     }
-
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
-    return msg.reply('***nothing found***');
+    return msg.reply(`nothing found for \`${args.game}\``);
   }
 };

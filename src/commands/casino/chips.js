@@ -33,16 +33,16 @@
  * @returns {MessageEmbed} Information about your current balance
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Database = require('better-sqlite3'),
-  commando = require('discord.js-commando'),
+const Database = require('better-sqlite3'),
   duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
   path = require('path'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class ChipsCommand extends commando.Command {
+module.exports = class ChipsCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'chips',
@@ -67,6 +67,7 @@ module.exports = class ChipsCommand extends commando.Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
     try {
+      startTyping(msg);
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (query) {
@@ -80,6 +81,7 @@ module.exports = class ChipsCommand extends commando.Command {
           ${!(dura._milliseconds <= 0) ? dura.format('[in] HH[ hour(s) and ]mm[ minute(s)]') : 'Right now!'}`);
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(balEmbed);
       }
@@ -88,7 +90,9 @@ module.exports = class ChipsCommand extends commando.Command {
         'balance': '500',
         'date': moment().format('YYYY-MM-DD HH:mm')
       });
+      stopTyping(msg);
     } catch (e) {
+      stopTyping(msg);
       if (/(?:no such table)/i.test(e.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
 

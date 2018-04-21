@@ -34,10 +34,10 @@
  * @returns {Message} LMGTFY url
  */
 
-const commando = require('discord.js-commando'),
-  {deleteCommandMessages} = require('../../util.js');
+const {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class LmgtfyCommand extends commando.Command {
+module.exports = class LmgtfyCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'lmgtfy',
@@ -64,7 +64,9 @@ module.exports = class LmgtfyCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.say(`<https://lmgtfy.com/?q=${args.question}>`);
   }

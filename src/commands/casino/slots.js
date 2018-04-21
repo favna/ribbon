@@ -34,16 +34,16 @@
  * @returns {MessageEmbed} Outcome of the spin
  */
 
-const {MessageEmbed} = require('discord.js'), 
-  {SlotMachine, SlotSymbol} = require('slot-machine'),
-  Database = require('better-sqlite3'),
-  commando = require('discord.js-commando'),
+const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'), 
+  {SlotMachine, SlotSymbol} = require('slot-machine'),
   {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class SlotsCommand extends commando.Command {
+module.exports = class SlotsCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'slots',
@@ -89,6 +89,7 @@ module.exports = class SlotsCommand extends commando.Command {
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {
+      startTyping(msg);
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (query) {
@@ -170,12 +171,15 @@ module.exports = class SlotsCommand extends commando.Command {
           .setDescription(result.visualize());
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(slotEmbed);
       }
-
+      stopTyping(msg);
+      
       return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
-    } catch (e) {
+    } catch (e) { 
+      stopTyping(msg);
       console.error(`	 ${stripIndents`Fatal SQL Error occurred for someone playing the slot machine!
       Server: ${msg.guild.name} (${msg.guild.id})
       Author: ${msg.author.tag} (${msg.author.id})

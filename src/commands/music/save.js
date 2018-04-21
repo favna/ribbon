@@ -32,14 +32,14 @@
  * @returns {MessageEmbed} Titles, durations and total queue duration sent in a DM
  */
 
-const commando = require('discord.js-commando'),
-  path = require('path'),
+const path = require('path'),
   Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
+  {Command, util} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages} = require('../../util.js'),
-  {oneLine, stripIndents} = require('common-tags');
+  {oneLine, stripIndents} = require('common-tags'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class SaveQueueCommand extends commando.Command {
+module.exports = class SaveQueueCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'save',
@@ -58,17 +58,19 @@ module.exports = class SaveQueueCommand extends commando.Command {
   }
 
   run (msg) {
+    startTyping(msg);
     const queue = this.queue.get(msg.guild.id);
 
     if (!queue) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('there isn\'t any music playing right now. You should get on that.');
     }
     const currentSong = queue.songs[0], // eslint-disable-line one-var
       currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0,
       embed = new MessageEmbed(),
-      paginated = commando.util.paginate(queue.songs, 1, Math.floor(10));
+      paginated = util.paginate(queue.songs, 1, Math.floor(10));
 
     embed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
@@ -89,9 +91,9 @@ module.exports = class SaveQueueCommand extends commando.Command {
                 (${currentSong.timeLeft(currentTime)} left)
             `}`);
 
-    deleteCommandMessages(msg, this.client);
-
     msg.reply('✔ Check your inbox!');
+    deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.direct('Your saved queue', {embed});
   }

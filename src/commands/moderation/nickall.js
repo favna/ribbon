@@ -44,13 +44,13 @@
  * @returns {MessageEmbed} Log of the nicknaming
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'), 
+const moment = require('moment'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class NickallCommand extends commando.Command {
+module.exports = class NickallCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'nickall',
@@ -81,6 +81,7 @@ module.exports = class NickallCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const allMembers = msg.guild.members.values(),
       argData = args.data.split(' '),
       embed = new MessageEmbed(),
@@ -133,12 +134,14 @@ module.exports = class NickallCommand extends commando.Command {
       }
 
       deleteCommandMessages(msg, this.client);
-
+      stopTyping(msg);
+      
       return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.say(embed);
     }
 
     deleteCommandMessages(msg, this.client);
-
+    stopTyping(msg);
+    
     return msg.embed(embed);
   }
 };

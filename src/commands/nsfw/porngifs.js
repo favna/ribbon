@@ -35,12 +35,12 @@
  * @returns {MessageEmbed} Webm link and embeds gif
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Pornsearch = require('pornsearch'),
-  commando = require('discord.js-commando'), 
-  {deleteCommandMessages} = require('../../util.js');
+const Pornsearch = require('pornsearch'),
+  {Command} = require('discord.js-commando'), 
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class PornGifsCommand extends commando.Command {
+module.exports = class PornGifsCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'porngifs',
@@ -58,7 +58,7 @@ module.exports = class PornGifsCommand extends commando.Command {
       },
       'args': [
         {
-          'key': 'pornInput',
+          'key': 'porn',
           'prompt': 'What pornography do you want to find?',
           'type': 'string'
         }
@@ -67,7 +67,8 @@ module.exports = class PornGifsCommand extends commando.Command {
   }
 
   async run (msg, args) {
-    const search = new Pornsearch(args.pornInput),
+    startTyping(msg);
+    const search = new Pornsearch(args.porn),
       gifs = await search.gifs(); // eslint-disable-line sort-vars
 
     if (gifs) {
@@ -81,10 +82,13 @@ module.exports = class PornGifsCommand extends commando.Command {
         .setColor('#FFB6C1')
         .addField('Gif webm', `[Click Here](${gifs[random].webm})`, true);
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(pornEmbed, gifs[random].webm);
     }
-
-    return msg.reply('nothing found for that input');
+    deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
+    
+    return msg.reply(`nothing found for \`${args.porn}\``);
   }
 };

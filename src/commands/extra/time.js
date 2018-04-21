@@ -35,14 +35,14 @@
  * @returns {MessageEmbed} Current date, current time, country and DST offset
  */
 
-const commando = require('discord.js-commando'),
-  request = require('snekfetch'),
+const request = require('snekfetch'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js'),
   {timezonedbkey, googleapikey} = require('../../auth.json');
 
-module.exports = class TimeCommand extends commando.Command {
+module.exports = class TimeCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'time',
@@ -80,6 +80,7 @@ module.exports = class TimeCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     const cords = await this.getCords(args.city);
 
     if (cords) {
@@ -103,11 +104,12 @@ module.exports = class TimeCommand extends commando.Command {
           .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00');
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(timeEmbed);
       }
     }
-
+    stopTyping(msg);
     console.error(stripIndents`Time fetching command failed due to mismatched city
 						City: ${args.city}
 						Server: ${msg.guild.name} (${msg.guild.id})

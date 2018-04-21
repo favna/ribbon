@@ -32,13 +32,13 @@
  * @returns {MessageEmbed} Title, URL of and progress into the song
  */
 
-const commando = require('discord.js-commando'),
-  path = require('path'),
+const path = require('path'),
   Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
+  {Command} = require('discord.js-commando'),
   {stripIndents} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class MusicStatusCommand extends commando.Command {
+module.exports = class MusicStatusCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'status',
@@ -55,10 +55,12 @@ module.exports = class MusicStatusCommand extends commando.Command {
   }
 
   run (msg) {
+    startTyping(msg);
     const queue = this.queue.get(msg.guild.id);
 
     if (!queue) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.say('There isn\'t any music playing right now. You should get on that.');
     }
@@ -80,6 +82,7 @@ module.exports = class MusicStatusCommand extends commando.Command {
       };
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.embed(embed);
   }

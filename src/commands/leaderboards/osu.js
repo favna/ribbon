@@ -35,16 +35,13 @@
  */
 
 const _ = require('underscore'),
-  commando = require('discord.js-commando'),
   request = require('snekfetch'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {osuapikey} = require('../../auth.json'),
-  {
-    deleteCommandMessages,
-    roundNumber
-  } = require('../../util.js');
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class OsuCommand extends commando.Command {
+module.exports = class OsuCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'osu',
@@ -72,6 +69,7 @@ module.exports = class OsuCommand extends commando.Command {
 
   async run (msg, args) {
     try {
+      startTyping(msg);
       const osuData = await request.get('https://osu.ppy.sh/api/get_user')
           .query('k', osuapikey)
           .query('u', args.player)
@@ -97,9 +95,12 @@ module.exports = class OsuCommand extends commando.Command {
         .addField('Accuracy', `${roundNumber(osuData.body[0].accuracy, 2)}%`, true);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(osuEmbed);
     } catch (err) {
+      stopTyping(msg);
+      
       return msg.reply(`no user found with username ${args.player}`);
     }
   }

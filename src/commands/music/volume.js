@@ -36,10 +36,10 @@
  * @returns {Message} Confirmation of the change of volume
  */
 
-const commando = require('discord.js-commando'),
-  {deleteCommandMessages} = require('../../util.js');
+const {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class ChangeVolumeCommand extends commando.Command {
+module.exports = class ChangeVolumeCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'volume',
@@ -59,20 +59,24 @@ module.exports = class ChangeVolumeCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const queue = this.queue.get(msg.guild.id);
 
     if (!queue) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('there isn\'t any music playing to change the volume of. Better queue some up!');
     }
     if (!args) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply(`the dial is currently set to ${queue.volume}.`);
     }
     if (!queue.voiceChannel.members.has(msg.author.id)) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
     }
@@ -87,6 +91,7 @@ module.exports = class ChangeVolumeCommand extends commando.Command {
         volume = queue.volume - 2;
       } else {
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.reply('invalid volume level. The dial goes from 0-10, baby.');
       }
@@ -100,8 +105,8 @@ module.exports = class ChangeVolumeCommand extends commando.Command {
     if (queue.songs[0].dispatcher) {
       queue.songs[0].dispatcher.setVolumeLogarithmic(queue.volume / 5);
     }
-
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`${volume === 11 ? 'this one goes to 11!' : `set the dial to ${volume}.`}`);
   }

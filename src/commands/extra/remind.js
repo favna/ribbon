@@ -42,7 +42,7 @@ const Database = require('better-sqlite3'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class RemindCommand extends Command {
   constructor (client) {
@@ -108,6 +108,7 @@ module.exports = class RemindCommand extends Command {
       remindEmbed = new MessageEmbed();
 
     try {
+      startTyping(msg);
       conn.prepare('CREATE TABLE IF NOT EXISTS "reminders" (userID TEXT, remindTime TEXT, remindText TEXT);').run();
       conn.prepare('INSERT INTO "reminders" VALUES ($userid, $remindtime, $remindtext);').run({
         'userid': msg.author.id,
@@ -126,9 +127,11 @@ module.exports = class RemindCommand extends Command {
         .setTimestamp(moment().add(args.time, 'minutes')._d);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(remindEmbed);
     } catch (e) {
+      stopTyping(msg);
       console.error(`	 ${stripIndents`Fatal SQL Error occurred while setting someone's reminder!
         Server: ${msg.guild.name} (${msg.guild.id})
         Author: ${msg.author.tag} (${msg.author.id})

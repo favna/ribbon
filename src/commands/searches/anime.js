@@ -34,12 +34,12 @@
  * @returns {MessageEmbed} Information about the requested anime
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  maljs = require('maljs'), 
-  {deleteCommandMessages} = require('../../util.js');
+const maljs = require('maljs'), 
+  {MessageEmbed} = require('discord.js'),
+  {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class AnimeCommand extends commando.Command {
+module.exports = class AnimeCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'anime',
@@ -65,6 +65,7 @@ module.exports = class AnimeCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     const aniEmbed = new MessageEmbed(),
       res = await maljs.quickSearch(args.query, 'anime');
 
@@ -84,14 +85,17 @@ module.exports = class AnimeCommand extends commando.Command {
           .addField('Rank', anime.ranked, true);
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(aniEmbed, `${anime.mal.url}${anime.path}`);
       }
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply(`no anime found for the input \`${args.query}\` `);
     }
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`no anime found for the input \`${args.query}\` `);
   }

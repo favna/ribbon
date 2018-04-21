@@ -35,13 +35,13 @@
  * @returns {MessageEmbed} Result of the combat
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'),
+const moment = require('moment'),
   random = require('node-random'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class FightCommand extends commando.Command {
+module.exports = class FightCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'fight',
@@ -73,6 +73,7 @@ module.exports = class FightCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const fighterEmbed = new MessageEmbed();
 
     fighterEmbed
@@ -92,6 +93,7 @@ module.exports = class FightCommand extends commando.Command {
       }
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(fighterEmbed);
     }
@@ -101,6 +103,7 @@ module.exports = class FightCommand extends commando.Command {
         .setImage('https://favna.xyz/images/ribbonhost/pyrrhawins.gif');
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(fighterEmbed);
     }
@@ -117,15 +120,18 @@ module.exports = class FightCommand extends commando.Command {
           .setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(fighterEmbed);
       }
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('an error occurred pitting these combatants against each other 😦');
     });
-
+    stopTyping(msg);
+    
     return null;
   }
 };

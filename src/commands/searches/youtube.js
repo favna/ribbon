@@ -35,14 +35,14 @@
  * @returns {MessageEmbed} Title, Channel, Publication Date and Description of the video
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'),
+const moment = require('moment'),
   request = require('snekfetch'), 
-  {deleteCommandMessages} = require('../../util.js'), 
-  {googleapikey} = require('../../auth.json');
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {googleapikey} = require('../../auth.json'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class YouTubeCommand extends commando.Command {
+module.exports = class YouTubeCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'youtube',
@@ -68,6 +68,7 @@ module.exports = class YouTubeCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     const res = await request.get('https://www.googleapis.com/youtube/v3/search')
       .query('key', googleapikey)
       .query('part', 'snippet')
@@ -81,6 +82,8 @@ module.exports = class YouTubeCommand extends commando.Command {
 
       deleteCommandMessages(msg, this.client);
       if (msg.content.split(' ')[0].slice(msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length) === 'yts') {
+        stopTyping(msg);
+        
         return msg.say(`https://www.youtube.com/watch?v=${video.id.videoId}`);
       }
 
@@ -94,10 +97,12 @@ module.exports = class YouTubeCommand extends commando.Command {
         .addField('Channel', `[${video.snippet.channelTitle}](https://www.youtube.com/channel/${video.snippet.channelId})`, true)
         .addField('Published At', moment(video.snippet.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
         .addField('Description', video.snippet.description ? video.snippet.description : 'No Description', false);
-
+      stopTyping(msg);
+      
       return msg.embed(embed, `https://www.youtube.com/watch?v=${video.id.videoId}`);
     }
-
-    return msg.reply('***nothing found***');
+    stopTyping(msg);
+    
+    return msg.reply(`no videos found for \`${args.query}\``);
   }
 };

@@ -36,13 +36,13 @@
  * @returns {MessageEmbed} A MessageEmbed with a log of the softban
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'), 
+const moment = require('moment'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class SoftbanCommand extends commando.Command {
+module.exports = class SoftbanCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'softban',
@@ -77,11 +77,16 @@ module.exports = class SoftbanCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     if (args.member.id === msg.author.id) {
+      stopTyping(msg);
+      
       return msg.reply('I don\'t think you want to softban yourself.');
     }
 
     if (!args.member.bannable) {
+      stopTyping(msg);
+      
       return msg.reply('I cannot softban that member, their role is probably higher than my own!');
     }
 
@@ -115,10 +120,12 @@ module.exports = class SoftbanCommand extends commando.Command {
       }
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
     }
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return null;
   }

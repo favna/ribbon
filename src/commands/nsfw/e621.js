@@ -35,13 +35,13 @@
  * @returns {MessageEmbed} Score, Link and preview of the image
  */
 
-const {MessageEmbed} = require('discord.js'),
-  booru = require('booru'),
-  commando = require('discord.js-commando'), 
+const booru = require('booru'),
+  {Command} = require('discord.js-commando'), 
+  {MessageEmbed} = require('discord.js'),
   {stripIndents} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class e621Command extends commando.Command {
+module.exports = class e621Command extends Command {
   constructor (client) {
     super(client, {
       'name': 'e621',
@@ -59,7 +59,7 @@ module.exports = class e621Command extends commando.Command {
       },
       'args': [
         {
-          'key': 'nsfwtags',
+          'key': 'tags',
           'prompt': 'What do you want to find NSFW for?',
           'type': 'string',
           'parse': p => p.split(' ')
@@ -69,8 +69,9 @@ module.exports = class e621Command extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     /* eslint-disable sort-vars*/
-    const search = await booru.search('e621', args.nsfwtags, {
+    const search = await booru.search('e621', args.tags, {
         'limit': 1,
         'random': true
       }),
@@ -87,7 +88,7 @@ module.exports = class e621Command extends commando.Command {
       }
 
       embed
-        .setTitle(`e621 image for ${args.nsfwtags.join(', ')}`)
+        .setTitle(`e621 image for ${args.tags.join(', ')}`)
         .setURL(common[0].common.file_url)
         .setColor('#FFB6C1')
         .setDescription(stripIndents`${tags.slice(0, 5).join(' ')}
@@ -96,12 +97,13 @@ module.exports = class e621Command extends commando.Command {
         .setImage(common[0].common.file_url);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(embed);
     }
-
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
-    return msg.reply('no juicy images found.');
+    return msg.reply(`no juicy images found for ${args.tags}`);
   }
 };

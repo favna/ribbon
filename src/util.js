@@ -1,7 +1,6 @@
 /* eslint-disable one-var */
 
 const deleteCommandMessages = function (msg, client) { // eslint-disable-line consistent-return
-  msg.channel.stopTyping(true);
   if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) {
     return msg.delete();
   }
@@ -35,7 +34,14 @@ const roundNumber = function (num, scale = 0) {
   }
 
   return Number(`${Math.round(`${Number(arr[0])}e${sig}${Number(arr[1]) + scale}`)}e-${scale}`);
+};
 
+const stopTyping = function (msg) {
+  msg.channel.stopTyping(true);
+};
+
+const startTyping = function (msg) {
+  msg.channel.startTyping(1);
 };
 
 const userSearch = async function (client, message, search) {
@@ -68,5 +74,7 @@ module.exports = {
   capitalizeFirstLetter,
   deleteCommandMessages,
   roundNumber,
+  stopTyping,
+  startTyping,
   userSearch
 };

@@ -32,15 +32,15 @@
  * @returns {MessageEmbed} Ribbon's statistics
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
+const duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'), 
-  {oneLine} = require('common-tags'),
   process = require('process'), 
-  {deleteCommandMessages, roundNumber} = require('../../util.js');
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {oneLine} = require('common-tags'),
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class RibbonStatsCommand extends commando.Command {
+module.exports = class RibbonStatsCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'stats',
@@ -69,6 +69,7 @@ module.exports = class RibbonStatsCommand extends commando.Command {
   }
 
   run (msg) {
+    startTyping(msg);
     const statsEmbed = new MessageEmbed();
 
     statsEmbed
@@ -94,6 +95,7 @@ module.exports = class RibbonStatsCommand extends commando.Command {
       .setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.xyz/images/appIcons/ribbon.png');
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.embed(statsEmbed);
   }

@@ -34,12 +34,12 @@
  * @returns {MessageEmbed} Result of the conflict
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  random = require('node-random'), 
-  {deleteCommandMessages} = require('../../util.js');
+const random = require('node-random'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class RockPaperScissorCommand extends commando.Command {
+module.exports = class RockPaperScissorCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'rps',
@@ -71,6 +71,7 @@ module.exports = class RockPaperScissorCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     random.integers({
       'number': 1,
       'minimum': 1,
@@ -107,10 +108,12 @@ module.exports = class RockPaperScissorCommand extends commando.Command {
           .setDescription(resString);
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(rpsEmbed);
       }
-
+      stopTyping(msg);
+      
       return msg.reply('an error occurred getting a random result and I\'m not going to rig this game.');
     });
   }

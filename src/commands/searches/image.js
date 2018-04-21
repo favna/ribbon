@@ -34,14 +34,14 @@
  * @returns {MessageEmbed} Embedded image and search query
  */
 
-const {MessageEmbed} = require('discord.js'),
-  cheerio = require('cheerio'),
-  commando = require('discord.js-commando'),
-  request = require('snekfetch'), 
-  {deleteCommandMessages} = require('../../util.js'), 
-  {googleapikey, imageEngineKey} = require('../../auth.json');
+const cheerio = require('cheerio'),
+  request = require('snekfetch'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {googleapikey, imageEngineKey} = require('../../auth.json'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class ImageCommand extends commando.Command {
+module.exports = class ImageCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'image',
@@ -71,6 +71,7 @@ module.exports = class ImageCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     const embed = new MessageEmbed();
 
     let res = await request.get('https://www.googleapis.com/customsearch/v1')
@@ -87,6 +88,7 @@ module.exports = class ImageCommand extends commando.Command {
         .setFooter(`Search query: "${args.query}"`);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(embed);
     }
@@ -109,12 +111,13 @@ module.exports = class ImageCommand extends commando.Command {
         .setFooter(`Search query: "${args.query}"`);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(embed);
     }
-
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
-    return msg.reply('***nothing found***');
+    return msg.reply(`nothing found for \`${args.query}\``);
   }
 };

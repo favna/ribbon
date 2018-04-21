@@ -35,15 +35,15 @@
  * @returns {MessageEmbed} Copypasta content. In a normal message if more than 1024 characters
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Matcher = require('did-you-mean'),
-  commando = require('discord.js-commando'),
+const Matcher = require('did-you-mean'),
   fs = require('fs'),
   path = require('path'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class CopyPastaCommand extends commando.Command {
+module.exports = class CopyPastaCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'copypasta',
@@ -70,6 +70,7 @@ module.exports = class CopyPastaCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const match = new Matcher();
 
     match.values = fs.readdirSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`));
@@ -103,19 +104,23 @@ module.exports = class CopyPastaCommand extends commando.Command {
             .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00');
 
           msg.delete();
+          stopTyping(msg);
 
           return msg.embed(cpEmbed);
         }
         msg.delete();
+        stopTyping(msg);
 
         return msg.say(pastaContent, {'split': true});
       }
     } catch (err) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply(`that copypasta does not exist! ${dymString}`);
     }
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`that copypasta does not exist! ${dymString}`);
   }

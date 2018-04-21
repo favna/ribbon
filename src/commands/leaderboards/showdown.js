@@ -35,15 +35,15 @@
  */
 
 const Fuse = require('fuse.js'),
-  commando = require('discord.js-commando'),
   path = require('path'),
   request = require('snekfetch'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {TierAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {stripIndents} = require('common-tags'),
-  {deleteCommandMessages, roundNumber} = require('../../util.js');
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class ShowdownCommand extends commando.Command {
+module.exports = class ShowdownCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'showdown',
@@ -70,6 +70,7 @@ module.exports = class ShowdownCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     const fsoptions = {
         'shouldSort': true,
         'threshold': 0.6,
@@ -107,12 +108,10 @@ module.exports = class ShowdownCommand extends commando.Command {
       showdownEmbed.setTitle(`Pokemon Showdown ${results[0].tier} Leaderboard`);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(showdownEmbed);
     }
-
-    deleteCommandMessages(msg, this.client);
-
     showdownEmbed
       .setTitle('Unknown tier, has to be one of the following')
       .setDescription(stripIndents`\`\`\`    
@@ -130,7 +129,10 @@ module.exports = class ShowdownCommand extends commando.Command {
     ║ mega           │ aaa      │ anyability ║
     ╚════════════════╧══════════╧════════════╝
     \`\`\``);
-
+    
+    deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
+    
     return msg.embed(showdownEmbed);
   }
 };

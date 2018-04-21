@@ -36,14 +36,14 @@
  * @returns {MessageEmbed} List of queued songs with their duration and total duration of the queue
  */
 
-const commando = require('discord.js-commando'),
-  {oneLine, stripIndents} = require('common-tags'),
-  path = require('path'),
+const path = require('path'),
   Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
+  {Command, util} = require('discord.js-commando'),
   {PAGINATED_ITEMS} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
-  {deleteCommandMessages} = require('../../util.js');
+  {oneLine, stripIndents} = require('common-tags'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class ViewQueueCommand extends commando.Command {
+module.exports = class ViewQueueCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'queue',
@@ -70,20 +70,23 @@ module.exports = class ViewQueueCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const queue = this.queue.get(msg.guild.id);
 
     if (!queue) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('there are no songs in the queue. Why not put something in my jukebox?');
     }
 
     const currentSong = queue.songs[0], // eslint-disable-line one-var
       currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0,
-      paginated = commando.util.paginate(queue.songs, args.page, Math.floor(PAGINATED_ITEMS)),
+      paginated = util.paginate(queue.songs, args.page, Math.floor(PAGINATED_ITEMS)),
       totalLength = queue.songs.reduce((prev, song) => prev + song.length, 0);
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.embed({
       'color': msg.guild ? msg.guild.me.displayColor : 10610610,

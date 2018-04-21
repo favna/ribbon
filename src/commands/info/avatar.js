@@ -35,11 +35,11 @@
  * @returns {MessageEmbed} The avatar image and a direct link to it
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'), 
-  {deleteCommandMessages} = require('../../util.js');
+const {Command} = require('discord.js-commando'), 
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class AvatarCommand extends commando.Command {
+module.exports = class AvatarCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'avatar',
@@ -84,6 +84,7 @@ module.exports = class AvatarCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const ava = args.member.user.displayAvatarURL({'size': args.size}),
       embed = new MessageEmbed(),
       ext = this.fetchExt(ava);
@@ -96,6 +97,7 @@ module.exports = class AvatarCommand extends commando.Command {
       .setDescription(`[Direct Link](${ava})`);
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.embed(embed);
   }

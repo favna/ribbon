@@ -32,12 +32,12 @@
  * @returns {MessageEmbed} Embedded image and info about it
  */
 
-const commando = require('discord.js-commando'),
-  request = require('snekfetch'),
+const request = require('snekfetch'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class xkcdCommand extends commando.Command {
+module.exports = class xkcdCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'xkcd',
@@ -55,7 +55,7 @@ module.exports = class xkcdCommand extends commando.Command {
   }
 
   async run (msg) {
-    msg.channel.startTyping(1);
+    startTyping(msg);
     try {
       /* eslint-disable sort-vars */
       const totalImages = await request.get('https://xkcd.com/info.0.json'),
@@ -72,11 +72,12 @@ module.exports = class xkcdCommand extends commando.Command {
         .setURL(`https://xkcd.com/${randomNum}/`);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
       
       return msg.embed(xkcdEmbed);
     } catch (err) {
-      msg.channel.stopTyping();
-
+      stopTyping(msg);
+      
       return msg.reply('woops, couldn\'t get a random xkcd image. Have a 🎀 instead!');
     }
   }

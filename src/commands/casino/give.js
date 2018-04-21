@@ -35,15 +35,15 @@
  * @returns {MessageEmbed} Changed balances of the two players
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Database = require('better-sqlite3'),
-  commando = require('discord.js-commando'),
+const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class GiveCommand extends commando.Command {
+module.exports = class GiveCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'give',
@@ -89,7 +89,8 @@ module.exports = class GiveCommand extends commando.Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    try {
+    try { 
+      startTyping(msg);
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = $authorid OR userID = $playerid;`).all({
         'authorid': msg.author.id,
         'playerid': args.player.id
@@ -125,10 +126,12 @@ module.exports = class GiveCommand extends commando.Command {
         .addField(args.player.displayName, `${oldReceiverEntry} ➡ ${query[receiverEntry].balance}`);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(giveEmbed);
 
     } catch (e) {
+      stopTyping(msg);
       console.error(`	 ${stripIndents`Fatal SQL Error occurred while a chips donation was running!
       Server: ${msg.guild.name} (${msg.guild.id})
       Author: ${msg.author.tag} (${msg.author.id})

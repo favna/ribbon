@@ -36,13 +36,13 @@
  * @returns {Message} Confirmation the setting was stored
  */
 
-const commando = require('discord.js-commando'),
-  path = require('path'),
+const path = require('path'),
   {MAX_SONGS} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
+  {Command} = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class MaxSongsCommand extends commando.Command {
+module.exports = class MaxSongsCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'maxsongs',
@@ -69,10 +69,12 @@ module.exports = class MaxSongsCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     if (!args) {
       const maxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', MAX_SONGS);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply(`the maximum songs a user may have in the queue at one time is ${maxSongs}.`);
     }
@@ -80,6 +82,7 @@ module.exports = class MaxSongsCommand extends commando.Command {
     if (args.toLowerCase() === 'default') {
       this.client.provider.remove(msg.guild.id, 'maxSongs');
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply(`set the maximum songs to the default (currently ${MAX_SONGS}).`);
     }
@@ -87,12 +90,14 @@ module.exports = class MaxSongsCommand extends commando.Command {
     const maxSongs = parseInt(args, 10);
 
     if (isNaN(maxSongs) || maxSongs <= 0) {
-
+      stopTyping(msg);
+      
       return msg.reply('invalid number provided.');
     }
 
     this.client.provider.set(msg.guild.id, 'maxSongs', maxSongs);
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`set the maximum songs to ${maxSongs}.`);
   }

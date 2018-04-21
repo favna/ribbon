@@ -34,14 +34,19 @@
  * @returns {MessageEmbed} Information about the requested game
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  igdbapi = require('igdb-api-node').default,
-  moment = require('moment'), 
-  {deleteCommandMessages, roundNumber} = require('../../util.js'), 
-  {igdbAPIKey} = require('../../auth.json');
+const igdbapi = require('igdb-api-node').default,
+  moment = require('moment'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {igdbAPIKey} = require('../../auth.json'),
+  {
+    deleteCommandMessages,
+    roundNumber,
+    stopTyping,
+    startTyping
+  } = require('../../util.js');
 
-module.exports = class GamesCommand extends commando.Command {
+module.exports = class GamesCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'games',
@@ -83,46 +88,55 @@ module.exports = class GamesCommand extends commando.Command {
   }
 
   async run (msg, args) {
-    /* eslint-disable sort-vars*/
-    const gameEmbed = new MessageEmbed(),
-      igdb = igdbapi(igdbAPIKey),
-      gameInfo = await igdb.games({
-        'search': args.game,
-        'fields': ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
-        'limit': 1,
-        'offset': 0
-      }),
-      coverImg = await gameInfo.body[0].cover.url.includes('http') ? gameInfo.body[0].cover.url : `https:${gameInfo.body[0].cover.url}`,
-      developerInfo = await igdb.companies({
-        'ids': gameInfo.body[0].developers,
-        'fields': ['name']
-      }),
-      genreInfo = await igdb.genres({
-        'ids': gameInfo.body[0].genres,
-        'fields': ['name']
-      }),
-      platformInfo = await igdb.platforms({
-        'ids': gameInfo.body[0].platforms,
-        'fields': ['name']
-      }),
-      releaseDate = moment(gameInfo.body[0].release_dates[0].date).format('MMMM Do YYYY');
-    /* eslint-enable sort-vars*/
+    startTyping(msg);
+    try {
+      /* eslint-disable sort-vars*/
+      const gameEmbed = new MessageEmbed(),
+        igdb = igdbapi(igdbAPIKey),
+        gameInfo = await igdb.games({
+          'search': args.game,
+          'fields': ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
+          'limit': 1,
+          'offset': 0
+        }),
+        coverImg = await gameInfo.body[0].cover.url.includes('http') ? gameInfo.body[0].cover.url : `https:${gameInfo.body[0].cover.url}`,
+        developerInfo = await igdb.companies({
+          'ids': gameInfo.body[0].developers,
+          'fields': ['name']
+        }),
+        genreInfo = await igdb.genres({
+          'ids': gameInfo.body[0].genres,
+          'fields': ['name']
+        }),
+        platformInfo = await igdb.platforms({
+          'ids': gameInfo.body[0].platforms,
+          'fields': ['name']
+        }),
+        releaseDate = moment(gameInfo.body[0].release_dates[0].date).format('MMMM Do YYYY');
+      /* eslint-enable sort-vars*/
 
-    gameEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .setTitle(gameInfo.body[0].name)
-      .setURL(gameInfo.body[0].url)
-      .setThumbnail(coverImg)
-      .addField('User Score', roundNumber(gameInfo.body[0].rating, 1), true)
-      .addField(`${gameInfo.body[0].pegi ? 'PEGI' : 'ESRB'} rating`, gameInfo.body[0].pegi ? gameInfo.body[0].pegi.rating : gameInfo.body[0].esrb.rating, true)
-      .addField('Release Date', releaseDate, true)
-      .addField('Genres', this.extractNames(genreInfo.body), true)
-      .addField('Developer', developerInfo.body[0].name, true)
-      .addField('Platforms', this.extractNames(platformInfo.body), true)
-      .setDescription(gameInfo.body[0].summary);
+      gameEmbed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+        .setTitle(gameInfo.body[0].name)
+        .setURL(gameInfo.body[0].url)
+        .setThumbnail(coverImg)
+        .addField('User Score', roundNumber(gameInfo.body[0].rating, 1), true)
+        .addField(`${gameInfo.body[0].pegi ? 'PEGI' : 'ESRB'} rating`, gameInfo.body[0].pegi ? gameInfo.body[0].pegi.rating : gameInfo.body[0].esrb.rating, true)
+        .addField('Release Date', releaseDate, true)
+        .addField('Genres', this.extractNames(genreInfo.body), true)
+        .addField('Developer', developerInfo.body[0].name, true)
+        .addField('Platforms', this.extractNames(platformInfo.body), true)
+        .setDescription(gameInfo.body[0].summary);
 
-    deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.embed(gameEmbed);
+      return msg.embed(gameEmbed);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+
+      return msg.reply(`nothing found for \`${args.game}\``);
+    }
   }
 };

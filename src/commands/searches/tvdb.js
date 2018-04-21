@@ -34,14 +34,14 @@
  * @returns {MessageEmbed} Information about the requested TV serie
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'),
+const moment = require('moment'),
   request = require('snekfetch'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {TheMovieDBV3ApiKey} = require('../../auth.json'), 
-  {deleteCommandMessages, roundNumber} = require('../../util.js');
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class TVCommand extends commando.Command {
+module.exports = class TVCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'tvdb',
@@ -67,6 +67,7 @@ module.exports = class TVCommand extends commando.Command {
   }
 
   async run (msg, args) {
+    startTyping(msg);
     const embed = new MessageEmbed(),
       search = await request.get('https://api.themoviedb.org/3/search/tv')
         .query('api_key', TheMovieDBV3ApiKey)
@@ -93,17 +94,18 @@ module.exports = class TVCommand extends commando.Command {
           .addField('Genres', show.genres.length ? show.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB');
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(embed);
       }
-
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-      return msg.reply(`***Failed to fetch details for \`${args.name}\`***`);
+      return msg.reply(`failed to fetch details for \`${args.name}\``);
     }
-
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
-    return msg.reply(`***No movies found for \`${args.name}\`***`);
+    return msg.reply(`no movies found for \`${args.name}\``);
   }
 };

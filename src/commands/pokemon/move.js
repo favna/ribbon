@@ -39,16 +39,16 @@
  */
 
 const Matcher = require('did-you-mean'),
-  commando = require('discord.js-commando'),
   path = require('path'),
   underscore = require('underscore'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {BattleMovedex} = require(path.join(__dirname, '../../data/dex/moves')),
   {MoveAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {oneLine} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class MoveCommand extends commando.Command {
+module.exports = class MoveCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'move',
@@ -77,6 +77,7 @@ module.exports = class MoveCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const moveEmbed = new MessageEmbed();
 
     let moveEntry = {};
@@ -117,6 +118,7 @@ module.exports = class MoveCommand extends commando.Command {
 			|  [PokémonDB](http://pokemondb.net/move/${moveEntry.name.replace(' ', '-')})`);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(moveEmbed, `**${capitalizeFirstLetter(moveEntry.name)}**`);
     }
@@ -125,6 +127,7 @@ module.exports = class MoveCommand extends commando.Command {
       dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the move name?';
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.channel.send(`Move not found! ${dymString}`);
   }

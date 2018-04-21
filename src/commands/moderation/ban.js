@@ -35,13 +35,13 @@
  * @returns {MessageEmbed} Log of the ban
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'), 
+const moment = require('moment'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class banCommand extends commando.Command {
+module.exports = class banCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'ban',
@@ -77,11 +77,16 @@ module.exports = class banCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     if (args.member.id === msg.author.id) {
+      stopTyping(msg);
+      
       return msg.reply('I don\'t think you want to ban yourself.');
     }
 
     if (!args.member.bannable) {
+      stopTyping(msg);
+      
       return msg.reply('I cannot ban that member, their role is probably higher than my own!');
     }
 
@@ -118,11 +123,13 @@ module.exports = class banCommand extends commando.Command {
       }
 
       deleteCommandMessages(msg, this.client);
-
+      stopTyping(msg);
+      
       return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);
     }
     deleteCommandMessages(msg, this.client);
-
+    stopTyping(msg);
+    
     return msg.embed(embed);
   }
 };

@@ -32,13 +32,13 @@
  * @returns {MessageEmbed} Info on who used the "say" command last
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'), 
+const moment = require('moment'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class SayWutCommand extends commando.Command {
+module.exports = class SayWutCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'saywut',
@@ -56,6 +56,7 @@ module.exports = class SayWutCommand extends commando.Command {
   }
 
   run (msg) {
+    startTyping(msg);
     const saydata = this.client.provider.get(msg.guild.id, 'saydata', null),
       wutEmbed = new MessageEmbed();
 
@@ -68,11 +69,12 @@ module.exports = class SayWutCommand extends commando.Command {
         .setDescription(saydata.argString);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(wutEmbed);
     }
-
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`couldn't fetch message for your server. Has anyone used the ${msg.guild.commandPrefix}say command before?`);
   }

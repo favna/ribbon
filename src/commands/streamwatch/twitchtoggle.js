@@ -34,11 +34,11 @@
  * @returns {Message} Confirmation the setting was stored
  */
 
-const commando = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class TwitchToggleCommand extends commando.Command {
+module.exports = class TwitchToggleCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'twitchtoggle',
@@ -78,9 +78,11 @@ module.exports = class TwitchToggleCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     this.client.provider.set(msg.guild.id, 'twitchnotifiers', args.option);
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(oneLine`Twitch Notifiers have been
     ${args.option 

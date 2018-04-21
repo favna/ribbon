@@ -34,11 +34,11 @@
  * @returns {Message} Confirmation the setting was stored
  */
 
-const commando = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class SetModlogsCommand extends commando.Command {
+module.exports = class SetModlogsCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'setmodlogs',
@@ -68,8 +68,10 @@ module.exports = class SetModlogsCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     this.client.provider.set(msg.guild.id, 'modlogchannel', args.channel.id);
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(oneLine`the channel to use for the moderation logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'modlogchannel')).name}`);
   }

@@ -34,14 +34,14 @@
  * @returns {MessageEmbed} Your equation and its answer
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  moment = require('moment'),
+const moment = require('moment'),
   scalc = require('scalc'), 
-  {deleteCommandMessages} = require('../../util.js'), 
-  {oneLine, stripIndents} = require('common-tags');
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {oneLine, stripIndents} = require('common-tags'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class MathCommand extends commando.Command {
+module.exports = class MathCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'math',
@@ -68,6 +68,7 @@ module.exports = class MathCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const mathEmbed = new MessageEmbed();
 
     let res = '';
@@ -90,11 +91,13 @@ module.exports = class MathCommand extends commando.Command {
         .setDescription(oneLine`The answer to \`${args.equation.toString()}\` is \`${res}\``);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.embed(mathEmbed);
     }
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(oneLine`\`${args.equation.toString()}\` is is not a valid equation for me.
 				Check out this readme to see how to use the supported polish notation: https://github.com/dominhhai/calculator/blob/master/README.md`);

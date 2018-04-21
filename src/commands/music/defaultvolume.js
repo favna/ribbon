@@ -34,12 +34,12 @@
  * @returns {Message} Confirmation the setting was stored 
  */
 
-const commando = require('discord.js-commando'),
-  path = require('path'),
+const path = require('path'),
   {DEFAULT_VOLUME} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
-  {deleteCommandMessages} = require('../../util.js');
+  {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class DefaultVolumeCommand extends commando.Command {
+module.exports = class DefaultVolumeCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'defaultvolume',
@@ -71,10 +71,12 @@ module.exports = class DefaultVolumeCommand extends commando.Command {
 
 
   run (msg, args) {
+    startTyping(msg);
     if (args.volume === 'show') {
       const defaultVolume = this.client.provider.get(msg.guild.id, 'defaultVolume', DEFAULT_VOLUME);
 
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply(`the default volume level is ${defaultVolume}.`);
     }
@@ -82,6 +84,7 @@ module.exports = class DefaultVolumeCommand extends commando.Command {
     if (args.volume === 'default') {
       this.client.provider.remove(msg.guild.id, 'defaultVolume');
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply(`set the default volume level to the bot's default (currently ${DEFAULT_VOLUME}).`);
     }
@@ -90,12 +93,14 @@ module.exports = class DefaultVolumeCommand extends commando.Command {
 
     if (isNaN(defaultVolume) || defaultVolume <= 0 || defaultVolume > 10) {
       deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
       return msg.reply('invalid number provided. It must be in the range of 0-10.');
     }
 
     this.client.provider.set(msg.guild.id, 'defaultVolume', defaultVolume);
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.reply(`set the default volume level to ${defaultVolume}.`);
 

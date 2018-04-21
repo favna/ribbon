@@ -35,15 +35,15 @@
  * @returns {MessageEmbed} New balance for the member
  */
 
-const {MessageEmbed} = require('discord.js'),
-  Database = require('better-sqlite3'),
-  commando = require('discord.js-commando'),
+const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class CustomTopUpCommand extends commando.Command {
+module.exports = class CustomTopUpCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'customtopup',
@@ -78,6 +78,7 @@ module.exports = class CustomTopUpCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const coinEmbed = new MessageEmbed(),
       conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
@@ -101,12 +102,16 @@ module.exports = class CustomTopUpCommand extends commando.Command {
           .addField('New Balance', query.balance, true);
 
         deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
 
         return msg.embed(coinEmbed);
       }
 
+      stopTyping(msg);
+      
       return msg.reply('looks like that member has no chips yet');
     } catch (e) {
+      stopTyping(msg);
       console.error(`	 ${stripIndents`Fatal SQL Error occurred during the custom top up!
       Server: ${msg.guild.name} (${msg.guild.id})
       Author: ${msg.author.tag} (${msg.author.id})

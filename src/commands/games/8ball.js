@@ -34,12 +34,12 @@
  * @returns {MessageEmbed} Your question and its answer
  */
 
-const {MessageEmbed} = require('discord.js'),
-  commando = require('discord.js-commando'),
-  predict = require('eightball'), 
-  {deleteCommandMessages} = require('../../util.js');
+const predict = require('eightball'), 
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class EightBallCommand extends commando.Command {
+module.exports = class EightBallCommand extends Command {
   constructor (client) {
     super(client, {
       'name': '8ball',
@@ -65,6 +65,7 @@ module.exports = class EightBallCommand extends commando.Command {
   }
 
   run (msg, args) {
+    startTyping(msg);
     const eightBallEmbed = new MessageEmbed();
 
     eightBallEmbed
@@ -73,6 +74,7 @@ module.exports = class EightBallCommand extends commando.Command {
       .addField(':8ball: 8ball', predict(), false);
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.embed(eightBallEmbed);
   }

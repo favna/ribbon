@@ -32,13 +32,13 @@
  * @returns {Message} Confirmation the data was fetched 
  */
 
-const commando = require('discord.js-commando'),
-  eshop = require('nintendo-switch-eshop'),
+const eshop = require('nintendo-switch-eshop'),
   fs = require('fs'),
   path = require('path'),
-  {deleteCommandMessages} = require('../../util.js');
+  {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class EShopFetchCommand extends commando.Command {
+module.exports = class EShopFetchCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'eshopfetch',
@@ -53,14 +53,18 @@ module.exports = class EShopFetchCommand extends commando.Command {
   }
 
   async run (msg) {
+    startTyping(msg);
     fs.writeFileSync(path.join(__dirname, '../../data/websearch/eshop.json'), JSON.stringify(await eshop.getGamesAmerica()), 'utf8');
 
     if (fs.existsSync(path.join(__dirname, '../../data/websearch/eshop.json'))) {
       deleteCommandMessages(msg, this.client);
-
+      stopTyping(msg);
+      
       return msg.reply('latest eShop data stored in file');
     }
-
+    deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
+    
     return msg.reply('an error occurred fetching latest data!');
   }
 };

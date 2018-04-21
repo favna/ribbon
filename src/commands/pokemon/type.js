@@ -34,14 +34,14 @@
  * @returns {MessageEmbed} All weaknesses, advantages
  */
 
-const commando = require('discord.js-commando'),
-  path = require('path'),
+const path = require('path'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {BattleTypeChart} = require(path.join(__dirname, '../../data/dex/typechart')),
   {oneLine} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
-module.exports = class TypeCommand extends commando.Command {
+module.exports = class TypeCommand extends Command {
   constructor (client) {
     super(client, {
       'name': 'type',
@@ -68,6 +68,7 @@ module.exports = class TypeCommand extends commando.Command {
 
   /* eslint-disable max-statements, complexity */
   run (msg, args) {
+    startTyping(msg);
     const atkMulti = {
         'Bug': 1,
         'Dark': 1,
@@ -271,6 +272,7 @@ module.exports = class TypeCommand extends commando.Command {
 		|  [PokémonDB](http://pokemondb.net/type/${args.type.split(' ')[0]})`);
 
     deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
     return msg.embed(typeEmbed);
   }
