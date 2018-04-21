@@ -27,7 +27,8 @@
  * @file Music SkipSongCommand - Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue  
  * A vote to skip is started if there are 4 or more people in the voice channel with `(amount of members) / 3` as required amount of votes (bot doesn't count as a member)  
  * Staff that can delete messages can force the skip by using `skip force`  
- * You need to be in a voice channel before you can use this command
+ * You need to be in a voice channel before you can use this command  
+ * **Aliases**: `next`
  * @module
  * @category music
  * @name skip
@@ -48,7 +49,9 @@ module.exports = class SkipSongCommand extends Command {
       'name': 'skip',
       'memberName': 'skip',
       'group': 'music',
+      'aliases': ['next'],
       'description': 'Skips the song that is currently playing.',
+      'details': 'If there are more than 3 people (not counting the bot) a voteskip is started. Staff can force the skip by adding `force` to the command',
       'examples': ['skip'],
       'guildOnly': true,
       'throttling': {
@@ -60,7 +63,6 @@ module.exports = class SkipSongCommand extends Command {
   }
 
   /* eslint-disable max-statements*/
-
   run (msg, args) {
     startTyping(msg);
     const queue = this.queue.get(msg.guild.id);
@@ -149,7 +151,6 @@ module.exports = class SkipSongCommand extends Command {
 				${remaining} more vote${remaining > 1 ? 's are' : ' is'} required for the song to be skipped.
 				The vote will end in ${time} seconds.
 			`);
-
   }
 
   skip (guild, queue) {

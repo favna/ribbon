@@ -295,13 +295,13 @@ There are 3 ways to queue songs  </p>
 <strong>Aliases</strong>: <code>save-songs</code>, <code>save-song-list</code>, <code>ss</code>, <code>savequeue</code></p>
 </dd>
 <dt><a href="#module_skip">skip</a> ⇒ <code>Message</code></dt>
-<dd><p>Music SkipSongCommand - Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue<br>A vote to skip is started if there are 4 or more people in the voice channel with <code>(amount of members) / 3</code> as required amount of votes (bot doesn&#39;t count as a member)<br>Staff that can delete messages can force the skip by using <code>skip force</code><br>You need to be in a voice channel before you can use this command</p>
+<dd><p>Music SkipSongCommand - Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue<br>A vote to skip is started if there are 4 or more people in the voice channel with <code>(amount of members) / 3</code> as required amount of votes (bot doesn&#39;t count as a member)<br>Staff that can delete messages can force the skip by using <code>skip force</code><br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>next</code></p>
 </dd>
 <dt><a href="#module_status">status</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Music MusicStatusCommand - Gets status about the currently playing song<br><strong>Aliases</strong>: <code>song</code>, <code>playing</code>, <code>current-song</code>, <code>now-playing</code></p>
 </dd>
 <dt><a href="#module_stop">stop</a> ⇒ <code>Message</code></dt>
-<dd><p>Music StopMusicCommand - Stops the current queue. Bot will automatically leave the channel after this command<br><strong>Aliases</strong>: <code>kill</code>, <code>stfu</code>, <code>quit</code>, <code>leave</code>, <code>disconnect</code></p>
+<dd><p>Music StopMusicCommand - Stops the current queue. Bot will automatically leave the channel after this command<br>A vote to skip is started if there are 4 or more people in the voice channel with <code>(amount of members) / 3</code> as required amount of votes (bot doesn&#39;t count as a member)<br>Staff that can delete messages can force the skip by using <code>skip force</code><br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>kill</code>, <code>stfu</code>, <code>quit</code>, <code>leave</code>, <code>disconnect</code></p>
 </dd>
 <dt><a href="#module_volume">volume</a> ⇒ <code>Message</code></dt>
 <dd><p>Music ChangeVolumeCommand - Changes the volume of the currently playing song<br>If you do not  give any parameter the bot will show the current volume<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>set-volume</code>, <code>set-vol</code>, <code>vol</code></p>
@@ -1583,7 +1583,8 @@ Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user
 Music SkipSongCommand - Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue  
 A vote to skip is started if there are 4 or more people in the voice channel with `(amount of members) / 3` as required amount of votes (bot doesn't count as a member)  
 Staff that can delete messages can force the skip by using `skip force`  
-You need to be in a voice channel before you can use this command
+You need to be in a voice channel before you can use this command  
+**Aliases**: `next`
 
 **Returns**: <code>Message</code> - Confirmation the song was skipped  
 **Category**: music  
@@ -1610,6 +1611,9 @@ Music MusicStatusCommand - Gets status about the currently playing song
 
 ## stop ⇒ <code>Message</code>
 Music StopMusicCommand - Stops the current queue. Bot will automatically leave the channel after this command  
+A vote to skip is started if there are 4 or more people in the voice channel with `(amount of members) / 3` as required amount of votes (bot doesn't count as a member)  
+Staff that can delete messages can force the skip by using `skip force`  
+You need to be in a voice channel before you can use this command  
 **Aliases**: `kill`, `stfu`, `quit`, `leave`, `disconnect`
 
 **Returns**: <code>Message</code> - Sad face about stopping the music  
