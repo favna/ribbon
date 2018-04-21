@@ -27,7 +27,6 @@
  * @file Music ViewQueueCommand - Shows the current queue of songs  
  * Songs are paginated in sets of 5  
  * **Aliases**: `songs`, `song-list`, `list`, `listqueue`
- * **Aliases**: `bal`, `cash`, `balance`
  * @module
  * @category music
  * @name queue
@@ -85,10 +84,7 @@ module.exports = class ViewQueueCommand extends Command {
       paginated = util.paginate(queue.songs, args.page, Math.floor(PAGINATED_ITEMS)),
       totalLength = queue.songs.reduce((prev, song) => prev + song.length, 0);
 
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
-
-    return msg.embed({
+    msg.embed({
       'color': msg.guild ? msg.guild.me.displayColor : 10610610,
       'author': {
         'name': `${msg.author.tag} (${msg.author.id})`,
@@ -111,6 +107,9 @@ module.exports = class ViewQueueCommand extends Command {
                 `
       /* eslint-enable max-len */
     });
+    deleteCommandMessages(msg, this.client);
+
+    return stopTyping(msg);
   }
 
   get queue () {
