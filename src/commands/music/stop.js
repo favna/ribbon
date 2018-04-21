@@ -91,7 +91,7 @@ module.exports = class StopMusicCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(this.skip(msg.guild, queue));
+      return msg.reply(this.stop(msg.guild, queue));
     }
 
     const vote = this.votes.get(msg.guild.id); // eslint-disable-line one-var
