@@ -34,11 +34,15 @@
  * @returns {MessageEmbed} Stats of the player
  */
 
-const commando = require('discord.js-commando'),
+const _ = require('underscore'),
+  commando = require('discord.js-commando'),
   request = require('snekfetch'),
   {MessageEmbed} = require('discord.js'),
   {osuapikey} = require('../../auth.json'),
-  {deleteCommandMessages, roundNumber} = require('../../util.js');
+  {
+    deleteCommandMessages,
+    roundNumber
+  } = require('../../util.js');
 
 module.exports = class OsuCommand extends commando.Command {
   constructor (client) {
@@ -75,7 +79,10 @@ module.exports = class OsuCommand extends commando.Command {
           .set('Content-Type', 'application/json'),
         osuEmbed = new MessageEmbed();
 
-if (osuData.ok) {
+      if (_.values(osuData.body[0]).includes(null)) {
+        throw new Error();
+      }
+
       osuEmbed
         .setTitle(`OSU! Player Stats for ${osuData.body[0].username} (${osuData.body[0].user_id})`)
         .setURL(`https://new.ppy.sh/u/${osuData.body[0].username}`)
@@ -92,12 +99,6 @@ if (osuData.ok) {
       deleteCommandMessages(msg, this.client);
 
       return msg.embed(osuEmbed);
-}
-
-deleteCommandMessages(msg, this.client);
-
-return msg.reply(`no user found with username ${args.player}`);
-
     } catch (err) {
       return msg.reply(`no user found with username ${args.player}`);
     }
