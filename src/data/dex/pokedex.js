@@ -1,4 +1,4 @@
-/* eslint-disable max-lines, max-len */
+/* eslint-disable */
 
 /*
  *   This file is part of Ribbon
@@ -25,8 +25,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const BattlePokedex = {
-  'bulbasaur': {
+const BattlePokedex = [{
     'num': 1,
     'species': 'Bulbasaur',
     'types': ['Grass', 'Poison'],
@@ -52,7 +51,7 @@ const BattlePokedex = {
     'evos': ['ivysaur'],
     'eggGroups': ['Monster', 'Grass']
   },
-  'ivysaur': {
+  {
     'num': 2,
     'species': 'Ivysaur',
     'types': ['Grass', 'Poison'],
@@ -80,7 +79,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Monster', 'Grass']
   },
-  'venusaur': {
+  {
     'num': 3,
     'species': 'Venusaur',
     'types': ['Grass', 'Poison'],
@@ -108,7 +107,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster', 'Grass'],
     'otherFormes': ['venusaurmega']
   },
-  'venusaurmega': {
+  {
     'num': 3,
     'species': 'Venusaur-Mega',
     'baseSpecies': 'Venusaur',
@@ -127,13 +126,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 80
     },
-    'abilities': {'0': 'Thick Fat'},
+    'abilities': {
+      '0': 'Thick Fat'
+    },
     'heightm': 2.4,
     'weightkg': 155.5,
     'color': 'Green',
     'eggGroups': ['Monster', 'Grass']
   },
-  'charmander': {
+  {
     'num': 4,
     'species': 'Charmander',
     'types': ['Fire'],
@@ -159,7 +160,7 @@ const BattlePokedex = {
     'evos': ['charmeleon'],
     'eggGroups': ['Monster', 'Dragon']
   },
-  'charmeleon': {
+  {
     'num': 5,
     'species': 'Charmeleon',
     'types': ['Fire'],
@@ -187,7 +188,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Monster', 'Dragon']
   },
-  'charizard': {
+  {
     'num': 6,
     'species': 'Charizard',
     'types': ['Fire', 'Flying'],
@@ -215,7 +216,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster', 'Dragon'],
     'otherFormes': ['charizardmegax', 'charizardmegay']
   },
-  'charizardmegax': {
+  {
     'num': 6,
     'species': 'Charizard-MegaX',
     'baseSpecies': 'Charizard',
@@ -234,13 +235,15 @@ const BattlePokedex = {
       'spd': 85,
       'spe': 100
     },
-    'abilities': {'0': 'Tough Claws'},
+    'abilities': {
+      '0': 'Tough Claws'
+    },
     'heightm': 1.7,
     'weightkg': 110.5,
     'color': 'Black',
     'eggGroups': ['Monster', 'Dragon']
   },
-  'charizardmegay': {
+  {
     'num': 6,
     'species': 'Charizard-MegaY',
     'baseSpecies': 'Charizard',
@@ -259,13 +262,15 @@ const BattlePokedex = {
       'spd': 115,
       'spe': 100
     },
-    'abilities': {'0': 'Drought'},
+    'abilities': {
+      '0': 'Drought'
+    },
     'heightm': 1.7,
     'weightkg': 100.5,
     'color': 'Red',
     'eggGroups': ['Monster', 'Dragon']
   },
-  'squirtle': {
+  {
     'num': 7,
     'species': 'Squirtle',
     'types': ['Water'],
@@ -291,7 +296,7 @@ const BattlePokedex = {
     'evos': ['wartortle'],
     'eggGroups': ['Monster', 'Water 1']
   },
-  'wartortle': {
+  {
     'num': 8,
     'species': 'Wartortle',
     'types': ['Water'],
@@ -319,7 +324,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Monster', 'Water 1']
   },
-  'blastoise': {
+  {
     'num': 9,
     'species': 'Blastoise',
     'types': ['Water'],
@@ -347,7 +352,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster', 'Water 1'],
     'otherFormes': ['blastoisemega']
   },
-  'blastoisemega': {
+  {
     'num': 9,
     'species': 'Blastoise-Mega',
     'baseSpecies': 'Blastoise',
@@ -366,13 +371,15 @@ const BattlePokedex = {
       'spd': 115,
       'spe': 78
     },
-    'abilities': {'0': 'Mega Launcher'},
+    'abilities': {
+      '0': 'Mega Launcher'
+    },
     'heightm': 1.6,
     'weightkg': 101.1,
     'color': 'Blue',
     'eggGroups': ['Monster', 'Water 1']
   },
-  'caterpie': {
+  {
     'num': 10,
     'species': 'Caterpie',
     'types': ['Bug'],
@@ -394,7 +401,7 @@ const BattlePokedex = {
     'evos': ['metapod'],
     'eggGroups': ['Bug']
   },
-  'metapod': {
+  {
     'num': 11,
     'species': 'Metapod',
     'types': ['Bug'],
@@ -406,7 +413,9 @@ const BattlePokedex = {
       'spd': 25,
       'spe': 30
     },
-    'abilities': {'0': 'Shed Skin'},
+    'abilities': {
+      '0': 'Shed Skin'
+    },
     'heightm': 0.7,
     'weightkg': 9.9,
     'color': 'Green',
@@ -415,7 +424,7 @@ const BattlePokedex = {
     'evoLevel': 7,
     'eggGroups': ['Bug']
   },
-  'butterfree': {
+  {
     'num': 12,
     'species': 'Butterfree',
     'types': ['Bug', 'Flying'],
@@ -438,7 +447,7 @@ const BattlePokedex = {
     'evoLevel': 10,
     'eggGroups': ['Bug']
   },
-  'weedle': {
+  {
     'num': 13,
     'species': 'Weedle',
     'types': ['Bug', 'Poison'],
@@ -460,7 +469,7 @@ const BattlePokedex = {
     'evos': ['kakuna'],
     'eggGroups': ['Bug']
   },
-  'kakuna': {
+  {
     'num': 14,
     'species': 'Kakuna',
     'types': ['Bug', 'Poison'],
@@ -472,7 +481,9 @@ const BattlePokedex = {
       'spd': 25,
       'spe': 35
     },
-    'abilities': {'0': 'Shed Skin'},
+    'abilities': {
+      '0': 'Shed Skin'
+    },
     'heightm': 0.6,
     'weightkg': 10,
     'color': 'Yellow',
@@ -481,7 +492,7 @@ const BattlePokedex = {
     'evoLevel': 7,
     'eggGroups': ['Bug']
   },
-  'beedrill': {
+  {
     'num': 15,
     'species': 'Beedrill',
     'types': ['Bug', 'Poison'],
@@ -505,7 +516,7 @@ const BattlePokedex = {
     'eggGroups': ['Bug'],
     'otherFormes': ['beedrillmega']
   },
-  'beedrillmega': {
+  {
     'num': 15,
     'species': 'Beedrill-Mega',
     'baseSpecies': 'Beedrill',
@@ -520,13 +531,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 145
     },
-    'abilities': {'0': 'Adaptability'},
+    'abilities': {
+      '0': 'Adaptability'
+    },
     'heightm': 1.4,
     'weightkg': 40.5,
     'color': 'Yellow',
     'eggGroups': ['Bug']
   },
-  'pidgey': {
+  {
     'num': 16,
     'species': 'Pidgey',
     'types': ['Normal', 'Flying'],
@@ -549,7 +562,7 @@ const BattlePokedex = {
     'evos': ['pidgeotto'],
     'eggGroups': ['Flying']
   },
-  'pidgeotto': {
+  {
     'num': 17,
     'species': 'Pidgeotto',
     'types': ['Normal', 'Flying'],
@@ -574,7 +587,7 @@ const BattlePokedex = {
     'evoLevel': 18,
     'eggGroups': ['Flying']
   },
-  'pidgeot': {
+  {
     'num': 18,
     'species': 'Pidgeot',
     'types': ['Normal', 'Flying'],
@@ -599,7 +612,7 @@ const BattlePokedex = {
     'eggGroups': ['Flying'],
     'otherFormes': ['pidgeotmega']
   },
-  'pidgeotmega': {
+  {
     'num': 18,
     'species': 'Pidgeot-Mega',
     'baseSpecies': 'Pidgeot',
@@ -614,13 +627,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 121
     },
-    'abilities': {'0': 'No Guard'},
+    'abilities': {
+      '0': 'No Guard'
+    },
     'heightm': 2.2,
     'weightkg': 50.5,
     'color': 'Brown',
     'eggGroups': ['Flying']
   },
-  'rattata': {
+  {
     'num': 19,
     'species': 'Rattata',
     'types': ['Normal'],
@@ -644,7 +659,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['rattataalola']
   },
-  'rattataalola': {
+  {
     'num': 19,
     'species': 'Rattata-Alola',
     'baseSpecies': 'Rattata',
@@ -670,7 +685,7 @@ const BattlePokedex = {
     'evos': ['raticatealola'],
     'eggGroups': ['Field']
   },
-  'raticate': {
+  {
     'num': 20,
     'species': 'Raticate',
     'types': ['Normal'],
@@ -695,7 +710,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['raticatealola', 'raticatealolatotem']
   },
-  'raticatealola': {
+  {
     'num': 20,
     'species': 'Raticate-Alola',
     'baseSpecies': 'Raticate',
@@ -722,7 +737,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Field']
   },
-  'raticatealolatotem': {
+  {
     'num': 20,
     'species': 'Raticate-Alola-Totem',
     'baseSpecies': 'Raticate',
@@ -737,13 +752,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 77
     },
-    'abilities': {'0': 'Thick Fat'},
+    'abilities': {
+      '0': 'Thick Fat'
+    },
     'heightm': 1.4,
     'weightkg': 105,
     'color': 'Black',
     'eggGroups': ['Field']
   },
-  'spearow': {
+  {
     'num': 21,
     'species': 'Spearow',
     'types': ['Normal', 'Flying'],
@@ -765,7 +782,7 @@ const BattlePokedex = {
     'evos': ['fearow'],
     'eggGroups': ['Flying']
   },
-  'fearow': {
+  {
     'num': 22,
     'species': 'Fearow',
     'types': ['Normal', 'Flying'],
@@ -788,7 +805,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Flying']
   },
-  'ekans': {
+  {
     'num': 23,
     'species': 'Ekans',
     'types': ['Poison'],
@@ -811,7 +828,7 @@ const BattlePokedex = {
     'evos': ['arbok'],
     'eggGroups': ['Field', 'Dragon']
   },
-  'arbok': {
+  {
     'num': 24,
     'species': 'Arbok',
     'types': ['Poison'],
@@ -835,7 +852,7 @@ const BattlePokedex = {
     'evoLevel': 22,
     'eggGroups': ['Field', 'Dragon']
   },
-  'pikachu': {
+  {
     'num': 25,
     'species': 'Pikachu',
     'types': ['Electric'],
@@ -860,7 +877,7 @@ const BattlePokedex = {
     'eggGroups': ['Field', 'Fairy'],
     'otherFormes': ['pikachucosplay', 'pikachurockstar', 'pikachubelle', 'pikachupopstar', 'pikachuphd', 'pikachulibre', 'pikachuoriginal', 'pikachuhoenn', 'pikachusinnoh', 'pikachuunova', 'pikachukalos', 'pikachualola', 'pikachupartner']
   },
-  'pikachucosplay': {
+  {
     'num': 25,
     'species': 'Pikachu-Cosplay',
     'baseSpecies': 'Pikachu',
@@ -876,13 +893,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Lightning Rod'},
+    'abilities': {
+      '0': 'Lightning Rod'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachurockstar': {
+  {
     'num': 25,
     'species': 'Pikachu-Rock-Star',
     'baseSpecies': 'Pikachu',
@@ -898,13 +917,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Lightning Rod'},
+    'abilities': {
+      '0': 'Lightning Rod'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachubelle': {
+  {
     'num': 25,
     'species': 'Pikachu-Belle',
     'baseSpecies': 'Pikachu',
@@ -920,13 +941,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Lightning Rod'},
+    'abilities': {
+      '0': 'Lightning Rod'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachupopstar': {
+  {
     'num': 25,
     'species': 'Pikachu-Pop-Star',
     'baseSpecies': 'Pikachu',
@@ -942,13 +965,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Lightning Rod'},
+    'abilities': {
+      '0': 'Lightning Rod'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachuphd': {
+  {
     'num': 25,
     'species': 'Pikachu-PhD',
     'baseSpecies': 'Pikachu',
@@ -964,13 +989,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Lightning Rod'},
+    'abilities': {
+      '0': 'Lightning Rod'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachulibre': {
+  {
     'num': 25,
     'species': 'Pikachu-Libre',
     'baseSpecies': 'Pikachu',
@@ -986,13 +1013,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Lightning Rod'},
+    'abilities': {
+      '0': 'Lightning Rod'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachuoriginal': {
+  {
     'num': 25,
     'species': 'Pikachu-Original',
     'baseSpecies': 'Pikachu',
@@ -1008,13 +1037,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Static'},
+    'abilities': {
+      '0': 'Static'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachuhoenn': {
+  {
     'num': 25,
     'species': 'Pikachu-Hoenn',
     'baseSpecies': 'Pikachu',
@@ -1030,13 +1061,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Static'},
+    'abilities': {
+      '0': 'Static'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachusinnoh': {
+  {
     'num': 25,
     'species': 'Pikachu-Sinnoh',
     'baseSpecies': 'Pikachu',
@@ -1052,13 +1085,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Static'},
+    'abilities': {
+      '0': 'Static'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachuunova': {
+  {
     'num': 25,
     'species': 'Pikachu-Unova',
     'baseSpecies': 'Pikachu',
@@ -1074,13 +1109,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Static'},
+    'abilities': {
+      '0': 'Static'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachukalos': {
+  {
     'num': 25,
     'species': 'Pikachu-Kalos',
     'baseSpecies': 'Pikachu',
@@ -1096,13 +1133,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Static'},
+    'abilities': {
+      '0': 'Static'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachualola': {
+  {
     'num': 25,
     'species': 'Pikachu-Alola',
     'baseSpecies': 'Pikachu',
@@ -1118,13 +1157,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Static'},
+    'abilities': {
+      '0': 'Static'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'pikachupartner': {
+  {
     'num': 25,
     'species': 'Pikachu-Partner',
     'baseSpecies': 'Pikachu',
@@ -1140,13 +1181,15 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 90
     },
-    'abilities': {'0': 'Static'},
+    'abilities': {
+      '0': 'Static'
+    },
     'heightm': 0.4,
     'weightkg': 6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'raichu': {
+  {
     'num': 26,
     'species': 'Raichu',
     'types': ['Electric'],
@@ -1170,7 +1213,7 @@ const BattlePokedex = {
     'eggGroups': ['Field', 'Fairy'],
     'otherFormes': ['raichualola']
   },
-  'raichualola': {
+  {
     'num': 26,
     'species': 'Raichu-Alola',
     'baseSpecies': 'Raichu',
@@ -1185,7 +1228,9 @@ const BattlePokedex = {
       'spd': 85,
       'spe': 110
     },
-    'abilities': {'0': 'Surge Surfer'},
+    'abilities': {
+      '0': 'Surge Surfer'
+    },
     'heightm': 0.7,
     'weightkg': 21,
     'color': 'Brown',
@@ -1193,7 +1238,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field', 'Fairy']
   },
-  'sandshrew': {
+  {
     'num': 27,
     'species': 'Sandshrew',
     'types': ['Ground'],
@@ -1216,7 +1261,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['sandshrewalola']
   },
-  'sandshrewalola': {
+  {
     'num': 27,
     'species': 'Sandshrew-Alola',
     'baseSpecies': 'Sandshrew',
@@ -1241,7 +1286,7 @@ const BattlePokedex = {
     'evos': ['sandslashalola'],
     'eggGroups': ['Field']
   },
-  'sandslash': {
+  {
     'num': 28,
     'species': 'Sandslash',
     'types': ['Ground'],
@@ -1265,7 +1310,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['sandslashalola']
   },
-  'sandslashalola': {
+  {
     'num': 28,
     'species': 'Sandslash-Alola',
     'baseSpecies': 'Sandslash',
@@ -1291,7 +1336,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field']
   },
-  'nidoranf': {
+  {
     'num': 29,
     'species': 'Nidoran-F',
     'types': ['Poison'],
@@ -1315,7 +1360,7 @@ const BattlePokedex = {
     'evos': ['nidorina'],
     'eggGroups': ['Monster', 'Field']
   },
-  'nidorina': {
+  {
     'num': 30,
     'species': 'Nidorina',
     'types': ['Poison'],
@@ -1341,7 +1386,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Undiscovered']
   },
-  'nidoqueen': {
+  {
     'num': 31,
     'species': 'Nidoqueen',
     'types': ['Poison', 'Ground'],
@@ -1366,7 +1411,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Undiscovered']
   },
-  'nidoranm': {
+  {
     'num': 32,
     'species': 'Nidoran-M',
     'types': ['Poison'],
@@ -1390,7 +1435,7 @@ const BattlePokedex = {
     'evos': ['nidorino'],
     'eggGroups': ['Monster', 'Field']
   },
-  'nidorino': {
+  {
     'num': 33,
     'species': 'Nidorino',
     'types': ['Poison'],
@@ -1416,7 +1461,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Monster', 'Field']
   },
-  'nidoking': {
+  {
     'num': 34,
     'species': 'Nidoking',
     'types': ['Poison', 'Ground'],
@@ -1441,7 +1486,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Monster', 'Field']
   },
-  'clefairy': {
+  {
     'num': 35,
     'species': 'Clefairy',
     'types': ['Fairy'],
@@ -1470,7 +1515,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Fairy']
   },
-  'clefable': {
+  {
     'num': 36,
     'species': 'Clefable',
     'types': ['Fairy'],
@@ -1498,7 +1543,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Fairy']
   },
-  'vulpix': {
+  {
     'num': 37,
     'species': 'Vulpix',
     'types': ['Fire'],
@@ -1525,7 +1570,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['vulpixalola']
   },
-  'vulpixalola': {
+  {
     'num': 37,
     'species': 'Vulpix-Alola',
     'baseSpecies': 'Vulpix',
@@ -1554,7 +1599,7 @@ const BattlePokedex = {
     'evos': ['ninetalesalola'],
     'eggGroups': ['Field']
   },
-  'ninetales': {
+  {
     'num': 38,
     'species': 'Ninetales',
     'types': ['Fire'],
@@ -1582,7 +1627,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['ninetalesalola']
   },
-  'ninetalesalola': {
+  {
     'num': 38,
     'species': 'Ninetales-Alola',
     'baseSpecies': 'Ninetales',
@@ -1612,7 +1657,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field']
   },
-  'jigglypuff': {
+  {
     'num': 39,
     'species': 'Jigglypuff',
     'types': ['Normal', 'Fairy'],
@@ -1641,7 +1686,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Fairy']
   },
-  'wigglytuff': {
+  {
     'num': 40,
     'species': 'Wigglytuff',
     'types': ['Normal', 'Fairy'],
@@ -1669,7 +1714,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Fairy']
   },
-  'zubat': {
+  {
     'num': 41,
     'species': 'Zubat',
     'types': ['Poison', 'Flying'],
@@ -1691,7 +1736,7 @@ const BattlePokedex = {
     'evos': ['golbat'],
     'eggGroups': ['Flying']
   },
-  'golbat': {
+  {
     'num': 42,
     'species': 'Golbat',
     'types': ['Poison', 'Flying'],
@@ -1715,7 +1760,7 @@ const BattlePokedex = {
     'evoLevel': 22,
     'eggGroups': ['Flying']
   },
-  'oddish': {
+  {
     'num': 43,
     'species': 'Oddish',
     'types': ['Grass', 'Poison'],
@@ -1737,7 +1782,7 @@ const BattlePokedex = {
     'evos': ['gloom'],
     'eggGroups': ['Grass']
   },
-  'gloom': {
+  {
     'num': 44,
     'species': 'Gloom',
     'types': ['Grass', 'Poison'],
@@ -1761,7 +1806,7 @@ const BattlePokedex = {
     'evoLevel': 21,
     'eggGroups': ['Grass']
   },
-  'vileplume': {
+  {
     'num': 45,
     'species': 'Vileplume',
     'types': ['Grass', 'Poison'],
@@ -1784,7 +1829,7 @@ const BattlePokedex = {
     'evoLevel': 21,
     'eggGroups': ['Grass']
   },
-  'paras': {
+  {
     'num': 46,
     'species': 'Paras',
     'types': ['Bug', 'Grass'],
@@ -1807,7 +1852,7 @@ const BattlePokedex = {
     'evos': ['parasect'],
     'eggGroups': ['Bug', 'Grass']
   },
-  'parasect': {
+  {
     'num': 47,
     'species': 'Parasect',
     'types': ['Bug', 'Grass'],
@@ -1831,7 +1876,7 @@ const BattlePokedex = {
     'evoLevel': 24,
     'eggGroups': ['Bug', 'Grass']
   },
-  'venonat': {
+  {
     'num': 48,
     'species': 'Venonat',
     'types': ['Bug', 'Poison'],
@@ -1854,7 +1899,7 @@ const BattlePokedex = {
     'evos': ['venomoth'],
     'eggGroups': ['Bug']
   },
-  'venomoth': {
+  {
     'num': 49,
     'species': 'Venomoth',
     'types': ['Bug', 'Poison'],
@@ -1878,7 +1923,7 @@ const BattlePokedex = {
     'evoLevel': 31,
     'eggGroups': ['Bug']
   },
-  'diglett': {
+  {
     'num': 50,
     'species': 'Diglett',
     'types': ['Ground'],
@@ -1902,7 +1947,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['diglettalola']
   },
-  'diglettalola': {
+  {
     'num': 50,
     'species': 'Diglett-Alola',
     'baseSpecies': 'Diglett',
@@ -1928,7 +1973,7 @@ const BattlePokedex = {
     'evos': ['dugtrioalola'],
     'eggGroups': ['Field']
   },
-  'dugtrio': {
+  {
     'num': 51,
     'species': 'Dugtrio',
     'types': ['Ground'],
@@ -1953,7 +1998,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['dugtrioalola']
   },
-  'dugtrioalola': {
+  {
     'num': 51,
     'species': 'Dugtrio-Alola',
     'baseSpecies': 'Dugtrio',
@@ -1980,7 +2025,7 @@ const BattlePokedex = {
     'evoLevel': 26,
     'eggGroups': ['Field']
   },
-  'meowth': {
+  {
     'num': 52,
     'species': 'Meowth',
     'types': ['Normal'],
@@ -2004,7 +2049,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['meowthalola']
   },
-  'meowthalola': {
+  {
     'num': 52,
     'species': 'Meowth-Alola',
     'baseSpecies': 'Meowth',
@@ -2030,7 +2075,7 @@ const BattlePokedex = {
     'evos': ['persianalola'],
     'eggGroups': ['Field']
   },
-  'persian': {
+  {
     'num': 53,
     'species': 'Persian',
     'types': ['Normal'],
@@ -2055,7 +2100,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['persianalola']
   },
-  'persianalola': {
+  {
     'num': 53,
     'species': 'Persian-Alola',
     'baseSpecies': 'Persian',
@@ -2082,7 +2127,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Field']
   },
-  'psyduck': {
+  {
     'num': 54,
     'species': 'Psyduck',
     'types': ['Water'],
@@ -2105,7 +2150,7 @@ const BattlePokedex = {
     'evos': ['golduck'],
     'eggGroups': ['Water 1', 'Field']
   },
-  'golduck': {
+  {
     'num': 55,
     'species': 'Golduck',
     'types': ['Water'],
@@ -2129,7 +2174,7 @@ const BattlePokedex = {
     'evoLevel': 33,
     'eggGroups': ['Water 1', 'Field']
   },
-  'mankey': {
+  {
     'num': 56,
     'species': 'Mankey',
     'types': ['Fighting'],
@@ -2152,7 +2197,7 @@ const BattlePokedex = {
     'evos': ['primeape'],
     'eggGroups': ['Field']
   },
-  'primeape': {
+  {
     'num': 57,
     'species': 'Primeape',
     'types': ['Fighting'],
@@ -2176,7 +2221,7 @@ const BattlePokedex = {
     'evoLevel': 28,
     'eggGroups': ['Field']
   },
-  'growlithe': {
+  {
     'num': 58,
     'species': 'Growlithe',
     'types': ['Fire'],
@@ -2203,7 +2248,7 @@ const BattlePokedex = {
     'evos': ['arcanine'],
     'eggGroups': ['Field']
   },
-  'arcanine': {
+  {
     'num': 59,
     'species': 'Arcanine',
     'types': ['Fire'],
@@ -2231,7 +2276,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field']
   },
-  'poliwag': {
+  {
     'num': 60,
     'species': 'Poliwag',
     'types': ['Water'],
@@ -2254,7 +2299,7 @@ const BattlePokedex = {
     'evos': ['poliwhirl'],
     'eggGroups': ['Water 1']
   },
-  'poliwhirl': {
+  {
     'num': 61,
     'species': 'Poliwhirl',
     'types': ['Water'],
@@ -2279,7 +2324,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Water 1']
   },
-  'poliwrath': {
+  {
     'num': 62,
     'species': 'Poliwrath',
     'types': ['Water', 'Fighting'],
@@ -2303,7 +2348,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Water 1']
   },
-  'abra': {
+  {
     'num': 63,
     'species': 'Abra',
     'types': ['Psychic'],
@@ -2330,7 +2375,7 @@ const BattlePokedex = {
     'evos': ['kadabra'],
     'eggGroups': ['Human-Like']
   },
-  'kadabra': {
+  {
     'num': 64,
     'species': 'Kadabra',
     'types': ['Psychic'],
@@ -2359,7 +2404,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Human-Like']
   },
-  'alakazam': {
+  {
     'num': 65,
     'species': 'Alakazam',
     'types': ['Psychic'],
@@ -2388,7 +2433,7 @@ const BattlePokedex = {
     'eggGroups': ['Human-Like'],
     'otherFormes': ['alakazammega']
   },
-  'alakazammega': {
+  {
     'num': 65,
     'species': 'Alakazam-Mega',
     'baseSpecies': 'Alakazam',
@@ -2407,13 +2452,15 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 150
     },
-    'abilities': {'0': 'Trace'},
+    'abilities': {
+      '0': 'Trace'
+    },
     'heightm': 1.2,
     'weightkg': 48,
     'color': 'Brown',
     'eggGroups': ['Human-Like']
   },
-  'machop': {
+  {
     'num': 66,
     'species': 'Machop',
     'types': ['Fighting'],
@@ -2440,7 +2487,7 @@ const BattlePokedex = {
     'evos': ['machoke'],
     'eggGroups': ['Human-Like']
   },
-  'machoke': {
+  {
     'num': 67,
     'species': 'Machoke',
     'types': ['Fighting'],
@@ -2469,7 +2516,7 @@ const BattlePokedex = {
     'evoLevel': 28,
     'eggGroups': ['Human-Like']
   },
-  'machamp': {
+  {
     'num': 68,
     'species': 'Machamp',
     'types': ['Fighting'],
@@ -2497,7 +2544,7 @@ const BattlePokedex = {
     'evoLevel': 28,
     'eggGroups': ['Human-Like']
   },
-  'bellsprout': {
+  {
     'num': 69,
     'species': 'Bellsprout',
     'types': ['Grass', 'Poison'],
@@ -2519,7 +2566,7 @@ const BattlePokedex = {
     'evos': ['weepinbell'],
     'eggGroups': ['Grass']
   },
-  'weepinbell': {
+  {
     'num': 70,
     'species': 'Weepinbell',
     'types': ['Grass', 'Poison'],
@@ -2543,7 +2590,7 @@ const BattlePokedex = {
     'evoLevel': 21,
     'eggGroups': ['Grass']
   },
-  'victreebel': {
+  {
     'num': 71,
     'species': 'Victreebel',
     'types': ['Grass', 'Poison'],
@@ -2566,7 +2613,7 @@ const BattlePokedex = {
     'evoLevel': 21,
     'eggGroups': ['Grass']
   },
-  'tentacool': {
+  {
     'num': 72,
     'species': 'Tentacool',
     'types': ['Water', 'Poison'],
@@ -2589,7 +2636,7 @@ const BattlePokedex = {
     'evos': ['tentacruel'],
     'eggGroups': ['Water 3']
   },
-  'tentacruel': {
+  {
     'num': 73,
     'species': 'Tentacruel',
     'types': ['Water', 'Poison'],
@@ -2613,7 +2660,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Water 3']
   },
-  'geodude': {
+  {
     'num': 74,
     'species': 'Geodude',
     'types': ['Rock', 'Ground'],
@@ -2637,7 +2684,7 @@ const BattlePokedex = {
     'eggGroups': ['Mineral'],
     'otherFormes': ['geodudealola']
   },
-  'geodudealola': {
+  {
     'num': 74,
     'species': 'Geodude-Alola',
     'baseSpecies': 'Geodude',
@@ -2663,7 +2710,7 @@ const BattlePokedex = {
     'evos': ['graveleralola'],
     'eggGroups': ['Mineral']
   },
-  'graveler': {
+  {
     'num': 75,
     'species': 'Graveler',
     'types': ['Rock', 'Ground'],
@@ -2689,7 +2736,7 @@ const BattlePokedex = {
     'eggGroups': ['Mineral'],
     'otherFormes': ['graveleralola']
   },
-  'graveleralola': {
+  {
     'num': 75,
     'species': 'Graveler-Alola',
     'baseSpecies': 'Graveler',
@@ -2717,7 +2764,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Mineral']
   },
-  'golem': {
+  {
     'num': 76,
     'species': 'Golem',
     'types': ['Rock', 'Ground'],
@@ -2742,7 +2789,7 @@ const BattlePokedex = {
     'eggGroups': ['Mineral'],
     'otherFormes': ['golemalola']
   },
-  'golemalola': {
+  {
     'num': 76,
     'species': 'Golem-Alola',
     'baseSpecies': 'Golem',
@@ -2769,7 +2816,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Mineral']
   },
-  'ponyta': {
+  {
     'num': 77,
     'species': 'Ponyta',
     'types': ['Fire'],
@@ -2792,7 +2839,7 @@ const BattlePokedex = {
     'evos': ['rapidash'],
     'eggGroups': ['Field']
   },
-  'rapidash': {
+  {
     'num': 78,
     'species': 'Rapidash',
     'types': ['Fire'],
@@ -2816,7 +2863,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Field']
   },
-  'slowpoke': {
+  {
     'num': 79,
     'species': 'Slowpoke',
     'types': ['Water', 'Psychic'],
@@ -2839,7 +2886,7 @@ const BattlePokedex = {
     'evos': ['slowbro', 'slowking'],
     'eggGroups': ['Monster', 'Water 1']
   },
-  'slowbro': {
+  {
     'num': 80,
     'species': 'Slowbro',
     'types': ['Water', 'Psychic'],
@@ -2864,7 +2911,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster', 'Water 1'],
     'otherFormes': ['slowbromega']
   },
-  'slowbromega': {
+  {
     'num': 80,
     'species': 'Slowbro-Mega',
     'baseSpecies': 'Slowbro',
@@ -2879,13 +2926,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 30
     },
-    'abilities': {'0': 'Shell Armor'},
+    'abilities': {
+      '0': 'Shell Armor'
+    },
     'heightm': 2,
     'weightkg': 120,
     'color': 'Pink',
     'eggGroups': ['Monster', 'Water 1']
   },
-  'magnemite': {
+  {
     'num': 81,
     'species': 'Magnemite',
     'types': ['Electric', 'Steel'],
@@ -2909,7 +2958,7 @@ const BattlePokedex = {
     'evos': ['magneton'],
     'eggGroups': ['Mineral']
   },
-  'magneton': {
+  {
     'num': 82,
     'species': 'Magneton',
     'types': ['Electric', 'Steel'],
@@ -2935,7 +2984,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Mineral']
   },
-  'farfetchd': {
+  {
     'num': 83,
     'species': 'Farfetch\'d',
     'types': ['Normal', 'Flying'],
@@ -2957,7 +3006,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Flying', 'Field']
   },
-  'doduo': {
+  {
     'num': 84,
     'species': 'Doduo',
     'types': ['Normal', 'Flying'],
@@ -2980,7 +3029,7 @@ const BattlePokedex = {
     'evos': ['dodrio'],
     'eggGroups': ['Flying']
   },
-  'dodrio': {
+  {
     'num': 85,
     'species': 'Dodrio',
     'types': ['Normal', 'Flying'],
@@ -3004,7 +3053,7 @@ const BattlePokedex = {
     'evoLevel': 31,
     'eggGroups': ['Flying']
   },
-  'seel': {
+  {
     'num': 86,
     'species': 'Seel',
     'types': ['Water'],
@@ -3027,7 +3076,7 @@ const BattlePokedex = {
     'evos': ['dewgong'],
     'eggGroups': ['Water 1', 'Field']
   },
-  'dewgong': {
+  {
     'num': 87,
     'species': 'Dewgong',
     'types': ['Water', 'Ice'],
@@ -3051,7 +3100,7 @@ const BattlePokedex = {
     'evoLevel': 34,
     'eggGroups': ['Water 1', 'Field']
   },
-  'grimer': {
+  {
     'num': 88,
     'species': 'Grimer',
     'types': ['Poison'],
@@ -3075,7 +3124,7 @@ const BattlePokedex = {
     'eggGroups': ['Amorphous'],
     'otherFormes': ['grimeralola']
   },
-  'grimeralola': {
+  {
     'num': 88,
     'species': 'Grimer-Alola',
     'baseSpecies': 'Grimer',
@@ -3101,7 +3150,7 @@ const BattlePokedex = {
     'evos': ['mukalola'],
     'eggGroups': ['Amorphous']
   },
-  'muk': {
+  {
     'num': 89,
     'species': 'Muk',
     'types': ['Poison'],
@@ -3126,7 +3175,7 @@ const BattlePokedex = {
     'eggGroups': ['Amorphous'],
     'otherFormes': ['mukalola']
   },
-  'mukalola': {
+  {
     'num': 89,
     'species': 'Muk-Alola',
     'baseSpecies': 'Muk',
@@ -3153,7 +3202,7 @@ const BattlePokedex = {
     'evoLevel': 38,
     'eggGroups': ['Amorphous']
   },
-  'shellder': {
+  {
     'num': 90,
     'species': 'Shellder',
     'types': ['Water'],
@@ -3176,7 +3225,7 @@ const BattlePokedex = {
     'evos': ['cloyster'],
     'eggGroups': ['Water 3']
   },
-  'cloyster': {
+  {
     'num': 91,
     'species': 'Cloyster',
     'types': ['Water', 'Ice'],
@@ -3200,7 +3249,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Water 3']
   },
-  'gastly': {
+  {
     'num': 92,
     'species': 'Gastly',
     'types': ['Ghost', 'Poison'],
@@ -3212,14 +3261,16 @@ const BattlePokedex = {
       'spd': 35,
       'spe': 80
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.3,
     'weightkg': 0.1,
     'color': 'Purple',
     'evos': ['haunter'],
     'eggGroups': ['Amorphous']
   },
-  'haunter': {
+  {
     'num': 93,
     'species': 'Haunter',
     'types': ['Ghost', 'Poison'],
@@ -3231,7 +3282,9 @@ const BattlePokedex = {
       'spd': 55,
       'spe': 95
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.6,
     'weightkg': 0.1,
     'color': 'Purple',
@@ -3240,7 +3293,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Amorphous']
   },
-  'gengar': {
+  {
     'num': 94,
     'species': 'Gengar',
     'types': ['Ghost', 'Poison'],
@@ -3252,7 +3305,9 @@ const BattlePokedex = {
       'spd': 75,
       'spe': 110
     },
-    'abilities': {'0': 'Cursed Body'},
+    'abilities': {
+      '0': 'Cursed Body'
+    },
     'heightm': 1.5,
     'weightkg': 40.5,
     'color': 'Purple',
@@ -3261,7 +3316,7 @@ const BattlePokedex = {
     'eggGroups': ['Amorphous'],
     'otherFormes': ['gengarmega']
   },
-  'gengarmega': {
+  {
     'num': 94,
     'species': 'Gengar-Mega',
     'baseSpecies': 'Gengar',
@@ -3276,13 +3331,15 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 130
     },
-    'abilities': {'0': 'Shadow Tag'},
+    'abilities': {
+      '0': 'Shadow Tag'
+    },
     'heightm': 1.4,
     'weightkg': 40.5,
     'color': 'Purple',
     'eggGroups': ['Amorphous']
   },
-  'onix': {
+  {
     'num': 95,
     'species': 'Onix',
     'types': ['Rock', 'Ground'],
@@ -3305,7 +3362,7 @@ const BattlePokedex = {
     'evos': ['steelix'],
     'eggGroups': ['Mineral']
   },
-  'drowzee': {
+  {
     'num': 96,
     'species': 'Drowzee',
     'types': ['Psychic'],
@@ -3328,7 +3385,7 @@ const BattlePokedex = {
     'evos': ['hypno'],
     'eggGroups': ['Human-Like']
   },
-  'hypno': {
+  {
     'num': 97,
     'species': 'Hypno',
     'types': ['Psychic'],
@@ -3352,7 +3409,7 @@ const BattlePokedex = {
     'evoLevel': 26,
     'eggGroups': ['Human-Like']
   },
-  'krabby': {
+  {
     'num': 98,
     'species': 'Krabby',
     'types': ['Water'],
@@ -3375,7 +3432,7 @@ const BattlePokedex = {
     'evos': ['kingler'],
     'eggGroups': ['Water 3']
   },
-  'kingler': {
+  {
     'num': 99,
     'species': 'Kingler',
     'types': ['Water'],
@@ -3399,7 +3456,7 @@ const BattlePokedex = {
     'evoLevel': 28,
     'eggGroups': ['Water 3']
   },
-  'voltorb': {
+  {
     'num': 100,
     'species': 'Voltorb',
     'types': ['Electric'],
@@ -3423,7 +3480,7 @@ const BattlePokedex = {
     'evos': ['electrode'],
     'eggGroups': ['Mineral']
   },
-  'electrode': {
+  {
     'num': 101,
     'species': 'Electrode',
     'types': ['Electric'],
@@ -3448,7 +3505,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Mineral']
   },
-  'exeggcute': {
+  {
     'num': 102,
     'species': 'Exeggcute',
     'types': ['Grass', 'Psychic'],
@@ -3470,7 +3527,7 @@ const BattlePokedex = {
     'evos': ['exeggutor', 'exeggutoralola'],
     'eggGroups': ['Grass']
   },
-  'exeggutor': {
+  {
     'num': 103,
     'species': 'Exeggutor',
     'types': ['Grass', 'Psychic'],
@@ -3494,7 +3551,7 @@ const BattlePokedex = {
     'eggGroups': ['Grass'],
     'otherFormes': ['exeggutoralola']
   },
-  'exeggutoralola': {
+  {
     'num': 103,
     'species': 'Exeggutor-Alola',
     'baseSpecies': 'Exeggutor',
@@ -3520,7 +3577,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Grass']
   },
-  'cubone': {
+  {
     'num': 104,
     'species': 'Cubone',
     'types': ['Ground'],
@@ -3543,7 +3600,7 @@ const BattlePokedex = {
     'evos': ['marowak', 'marowakalola'],
     'eggGroups': ['Monster']
   },
-  'marowak': {
+  {
     'num': 105,
     'species': 'Marowak',
     'types': ['Ground'],
@@ -3568,7 +3625,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster'],
     'otherFormes': ['marowakalola', 'marowakalolatotem']
   },
-  'marowakalola': {
+  {
     'num': 105,
     'species': 'Marowak-Alola',
     'baseSpecies': 'Marowak',
@@ -3595,7 +3652,7 @@ const BattlePokedex = {
     'evoLevel': 28,
     'eggGroups': ['Monster']
   },
-  'marowakalolatotem': {
+  {
     'num': 105,
     'species': 'Marowak-Alola-Totem',
     'baseSpecies': 'Marowak',
@@ -3610,13 +3667,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 45
     },
-    'abilities': {'0': 'Rock Head'},
+    'abilities': {
+      '0': 'Rock Head'
+    },
     'heightm': 1.7,
     'weightkg': 98,
     'color': 'Purple',
     'eggGroups': ['Monster']
   },
-  'hitmonlee': {
+  {
     'num': 106,
     'species': 'Hitmonlee',
     'types': ['Fighting'],
@@ -3641,7 +3700,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Human-Like']
   },
-  'hitmonchan': {
+  {
     'num': 107,
     'species': 'Hitmonchan',
     'types': ['Fighting'],
@@ -3666,7 +3725,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Human-Like']
   },
-  'lickitung': {
+  {
     'num': 108,
     'species': 'Lickitung',
     'types': ['Normal'],
@@ -3689,7 +3748,7 @@ const BattlePokedex = {
     'evos': ['lickilicky'],
     'eggGroups': ['Monster']
   },
-  'koffing': {
+  {
     'num': 109,
     'species': 'Koffing',
     'types': ['Poison'],
@@ -3701,14 +3760,16 @@ const BattlePokedex = {
       'spd': 45,
       'spe': 35
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.6,
     'weightkg': 1,
     'color': 'Purple',
     'evos': ['weezing'],
     'eggGroups': ['Amorphous']
   },
-  'weezing': {
+  {
     'num': 110,
     'species': 'Weezing',
     'types': ['Poison'],
@@ -3720,7 +3781,9 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 60
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.2,
     'weightkg': 9.5,
     'color': 'Purple',
@@ -3728,7 +3791,7 @@ const BattlePokedex = {
     'evoLevel': 35,
     'eggGroups': ['Amorphous']
   },
-  'rhyhorn': {
+  {
     'num': 111,
     'species': 'Rhyhorn',
     'types': ['Ground', 'Rock'],
@@ -3751,7 +3814,7 @@ const BattlePokedex = {
     'evos': ['rhydon'],
     'eggGroups': ['Monster', 'Field']
   },
-  'rhydon': {
+  {
     'num': 112,
     'species': 'Rhydon',
     'types': ['Ground', 'Rock'],
@@ -3776,7 +3839,7 @@ const BattlePokedex = {
     'evoLevel': 42,
     'eggGroups': ['Monster', 'Field']
   },
-  'chansey': {
+  {
     'num': 113,
     'species': 'Chansey',
     'types': ['Normal'],
@@ -3802,7 +3865,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Fairy']
   },
-  'tangela': {
+  {
     'num': 114,
     'species': 'Tangela',
     'types': ['Grass'],
@@ -3825,7 +3888,7 @@ const BattlePokedex = {
     'evos': ['tangrowth'],
     'eggGroups': ['Grass']
   },
-  'kangaskhan': {
+  {
     'num': 115,
     'species': 'Kangaskhan',
     'types': ['Normal'],
@@ -3849,7 +3912,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster'],
     'otherFormes': ['kangaskhanmega']
   },
-  'kangaskhanmega': {
+  {
     'num': 115,
     'species': 'Kangaskhan-Mega',
     'baseSpecies': 'Kangaskhan',
@@ -3865,13 +3928,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Parental Bond'},
+    'abilities': {
+      '0': 'Parental Bond'
+    },
     'heightm': 2.2,
     'weightkg': 100,
     'color': 'Brown',
     'eggGroups': ['Monster']
   },
-  'horsea': {
+  {
     'num': 116,
     'species': 'Horsea',
     'types': ['Water'],
@@ -3894,7 +3959,7 @@ const BattlePokedex = {
     'evos': ['seadra'],
     'eggGroups': ['Water 1', 'Dragon']
   },
-  'seadra': {
+  {
     'num': 117,
     'species': 'Seadra',
     'types': ['Water'],
@@ -3919,7 +3984,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Water 1', 'Dragon']
   },
-  'goldeen': {
+  {
     'num': 118,
     'species': 'Goldeen',
     'types': ['Water'],
@@ -3942,7 +4007,7 @@ const BattlePokedex = {
     'evos': ['seaking'],
     'eggGroups': ['Water 2']
   },
-  'seaking': {
+  {
     'num': 119,
     'species': 'Seaking',
     'types': ['Water'],
@@ -3966,7 +4031,7 @@ const BattlePokedex = {
     'evoLevel': 33,
     'eggGroups': ['Water 2']
   },
-  'staryu': {
+  {
     'num': 120,
     'species': 'Staryu',
     'types': ['Water'],
@@ -3990,7 +4055,7 @@ const BattlePokedex = {
     'evos': ['starmie'],
     'eggGroups': ['Water 3']
   },
-  'starmie': {
+  {
     'num': 121,
     'species': 'Starmie',
     'types': ['Water', 'Psychic'],
@@ -4015,7 +4080,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Water 3']
   },
-  'mrmime': {
+  {
     'num': 122,
     'species': 'Mr. Mime',
     'types': ['Psychic', 'Fairy'],
@@ -4040,7 +4105,7 @@ const BattlePokedex = {
     'evoMove': 'Mimic',
     'eggGroups': ['Human-Like']
   },
-  'scyther': {
+  {
     'num': 123,
     'species': 'Scyther',
     'types': ['Bug', 'Flying'],
@@ -4063,7 +4128,7 @@ const BattlePokedex = {
     'evos': ['scizor'],
     'eggGroups': ['Bug']
   },
-  'jynx': {
+  {
     'num': 124,
     'species': 'Jynx',
     'types': ['Ice', 'Psychic'],
@@ -4088,7 +4153,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Human-Like']
   },
-  'electabuzz': {
+  {
     'num': 125,
     'species': 'Electabuzz',
     'types': ['Electric'],
@@ -4116,7 +4181,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Human-Like']
   },
-  'magmar': {
+  {
     'num': 126,
     'species': 'Magmar',
     'types': ['Fire'],
@@ -4144,7 +4209,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Human-Like']
   },
-  'pinsir': {
+  {
     'num': 127,
     'species': 'Pinsir',
     'types': ['Bug'],
@@ -4167,7 +4232,7 @@ const BattlePokedex = {
     'eggGroups': ['Bug'],
     'otherFormes': ['pinsirmega']
   },
-  'pinsirmega': {
+  {
     'num': 127,
     'species': 'Pinsir-Mega',
     'baseSpecies': 'Pinsir',
@@ -4182,13 +4247,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 105
     },
-    'abilities': {'0': 'Aerilate'},
+    'abilities': {
+      '0': 'Aerilate'
+    },
     'heightm': 1.7,
     'weightkg': 59,
     'color': 'Brown',
     'eggGroups': ['Bug']
   },
-  'tauros': {
+  {
     'num': 128,
     'species': 'Tauros',
     'types': ['Normal'],
@@ -4211,7 +4278,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Field']
   },
-  'magikarp': {
+  {
     'num': 129,
     'species': 'Magikarp',
     'types': ['Water'],
@@ -4233,7 +4300,7 @@ const BattlePokedex = {
     'evos': ['gyarados'],
     'eggGroups': ['Water 2', 'Dragon']
   },
-  'gyarados': {
+  {
     'num': 130,
     'species': 'Gyarados',
     'types': ['Water', 'Flying'],
@@ -4257,7 +4324,7 @@ const BattlePokedex = {
     'eggGroups': ['Water 2', 'Dragon'],
     'otherFormes': ['gyaradosmega']
   },
-  'gyaradosmega': {
+  {
     'num': 130,
     'species': 'Gyarados-Mega',
     'baseSpecies': 'Gyarados',
@@ -4272,13 +4339,15 @@ const BattlePokedex = {
       'spd': 130,
       'spe': 81
     },
-    'abilities': {'0': 'Mold Breaker'},
+    'abilities': {
+      '0': 'Mold Breaker'
+    },
     'heightm': 6.5,
     'weightkg': 305,
     'color': 'Blue',
     'eggGroups': ['Water 2', 'Dragon']
   },
-  'lapras': {
+  {
     'num': 131,
     'species': 'Lapras',
     'types': ['Water', 'Ice'],
@@ -4300,7 +4369,7 @@ const BattlePokedex = {
     'color': 'Blue',
     'eggGroups': ['Monster', 'Water 1']
   },
-  'ditto': {
+  {
     'num': 132,
     'species': 'Ditto',
     'types': ['Normal'],
@@ -4322,7 +4391,7 @@ const BattlePokedex = {
     'color': 'Purple',
     'eggGroups': ['Ditto']
   },
-  'eevee': {
+  {
     'num': 133,
     'species': 'Eevee',
     'types': ['Normal'],
@@ -4349,7 +4418,7 @@ const BattlePokedex = {
     'evos': ['vaporeon', 'jolteon', 'flareon', 'espeon', 'umbreon', 'leafeon', 'glaceon', 'sylveon'],
     'eggGroups': ['Field']
   },
-  'vaporeon': {
+  {
     'num': 134,
     'species': 'Vaporeon',
     'types': ['Water'],
@@ -4376,7 +4445,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field']
   },
-  'jolteon': {
+  {
     'num': 135,
     'species': 'Jolteon',
     'types': ['Electric'],
@@ -4403,7 +4472,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field']
   },
-  'flareon': {
+  {
     'num': 136,
     'species': 'Flareon',
     'types': ['Fire'],
@@ -4430,7 +4499,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field']
   },
-  'porygon': {
+  {
     'num': 137,
     'species': 'Porygon',
     'types': ['Normal'],
@@ -4454,7 +4523,7 @@ const BattlePokedex = {
     'evos': ['porygon2'],
     'eggGroups': ['Mineral']
   },
-  'omanyte': {
+  {
     'num': 138,
     'species': 'Omanyte',
     'types': ['Rock', 'Water'],
@@ -4481,7 +4550,7 @@ const BattlePokedex = {
     'evos': ['omastar'],
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'omastar': {
+  {
     'num': 139,
     'species': 'Omastar',
     'types': ['Rock', 'Water'],
@@ -4509,7 +4578,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'kabuto': {
+  {
     'num': 140,
     'species': 'Kabuto',
     'types': ['Rock', 'Water'],
@@ -4536,7 +4605,7 @@ const BattlePokedex = {
     'evos': ['kabutops'],
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'kabutops': {
+  {
     'num': 141,
     'species': 'Kabutops',
     'types': ['Rock', 'Water'],
@@ -4564,7 +4633,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'aerodactyl': {
+  {
     'num': 142,
     'species': 'Aerodactyl',
     'types': ['Rock', 'Flying'],
@@ -4591,7 +4660,7 @@ const BattlePokedex = {
     'eggGroups': ['Flying'],
     'otherFormes': ['aerodactylmega']
   },
-  'aerodactylmega': {
+  {
     'num': 142,
     'species': 'Aerodactyl-Mega',
     'baseSpecies': 'Aerodactyl',
@@ -4610,13 +4679,15 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 150
     },
-    'abilities': {'0': 'Tough Claws'},
+    'abilities': {
+      '0': 'Tough Claws'
+    },
     'heightm': 2.1,
     'weightkg': 79,
     'color': 'Purple',
     'eggGroups': ['Flying']
   },
-  'snorlax': {
+  {
     'num': 143,
     'species': 'Snorlax',
     'types': ['Normal'],
@@ -4644,7 +4715,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Monster']
   },
-  'articuno': {
+  {
     'num': 144,
     'species': 'Articuno',
     'types': ['Ice', 'Flying'],
@@ -4666,7 +4737,7 @@ const BattlePokedex = {
     'color': 'Blue',
     'eggGroups': ['Undiscovered']
   },
-  'zapdos': {
+  {
     'num': 145,
     'species': 'Zapdos',
     'types': ['Electric', 'Flying'],
@@ -4688,7 +4759,7 @@ const BattlePokedex = {
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'moltres': {
+  {
     'num': 146,
     'species': 'Moltres',
     'types': ['Fire', 'Flying'],
@@ -4710,7 +4781,7 @@ const BattlePokedex = {
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'dratini': {
+  {
     'num': 147,
     'species': 'Dratini',
     'types': ['Dragon'],
@@ -4732,7 +4803,7 @@ const BattlePokedex = {
     'evos': ['dragonair'],
     'eggGroups': ['Water 1', 'Dragon']
   },
-  'dragonair': {
+  {
     'num': 148,
     'species': 'Dragonair',
     'types': ['Dragon'],
@@ -4756,7 +4827,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Water 1', 'Dragon']
   },
-  'dragonite': {
+  {
     'num': 149,
     'species': 'Dragonite',
     'types': ['Dragon', 'Flying'],
@@ -4779,7 +4850,7 @@ const BattlePokedex = {
     'evoLevel': 55,
     'eggGroups': ['Water 1', 'Dragon']
   },
-  'mewtwo': {
+  {
     'num': 150,
     'species': 'Mewtwo',
     'types': ['Psychic'],
@@ -4802,7 +4873,7 @@ const BattlePokedex = {
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['mewtwomegax', 'mewtwomegay']
   },
-  'mewtwomegax': {
+  {
     'num': 150,
     'species': 'Mewtwo-Mega-X',
     'baseSpecies': 'Mewtwo',
@@ -4818,13 +4889,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 130
     },
-    'abilities': {'0': 'Steadfast'},
+    'abilities': {
+      '0': 'Steadfast'
+    },
     'heightm': 2.3,
     'weightkg': 127,
     'color': 'Purple',
     'eggGroups': ['Undiscovered']
   },
-  'mewtwomegay': {
+  {
     'num': 150,
     'species': 'Mewtwo-Mega-Y',
     'baseSpecies': 'Mewtwo',
@@ -4840,13 +4913,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 140
     },
-    'abilities': {'0': 'Insomnia'},
+    'abilities': {
+      '0': 'Insomnia'
+    },
     'heightm': 1.5,
     'weightkg': 33,
     'color': 'Purple',
     'eggGroups': ['Undiscovered']
   },
-  'mew': {
+  {
     'num': 151,
     'species': 'Mew',
     'types': ['Psychic'],
@@ -4859,13 +4934,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Synchronize'},
+    'abilities': {
+      '0': 'Synchronize'
+    },
     'heightm': 0.4,
     'weightkg': 4,
     'color': 'Pink',
     'eggGroups': ['Undiscovered']
   },
-  'chikorita': {
+  {
     'num': 152,
     'species': 'Chikorita',
     'types': ['Grass'],
@@ -4891,7 +4968,7 @@ const BattlePokedex = {
     'evos': ['bayleef'],
     'eggGroups': ['Monster', 'Grass']
   },
-  'bayleef': {
+  {
     'num': 153,
     'species': 'Bayleef',
     'types': ['Grass'],
@@ -4919,7 +4996,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Monster', 'Grass']
   },
-  'meganium': {
+  {
     'num': 154,
     'species': 'Meganium',
     'types': ['Grass'],
@@ -4946,7 +5023,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Monster', 'Grass']
   },
-  'cyndaquil': {
+  {
     'num': 155,
     'species': 'Cyndaquil',
     'types': ['Fire'],
@@ -4972,7 +5049,7 @@ const BattlePokedex = {
     'evos': ['quilava'],
     'eggGroups': ['Field']
   },
-  'quilava': {
+  {
     'num': 156,
     'species': 'Quilava',
     'types': ['Fire'],
@@ -5000,7 +5077,7 @@ const BattlePokedex = {
     'evoLevel': 14,
     'eggGroups': ['Field']
   },
-  'typhlosion': {
+  {
     'num': 157,
     'species': 'Typhlosion',
     'types': ['Fire'],
@@ -5027,7 +5104,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Field']
   },
-  'totodile': {
+  {
     'num': 158,
     'species': 'Totodile',
     'types': ['Water'],
@@ -5053,7 +5130,7 @@ const BattlePokedex = {
     'evos': ['croconaw'],
     'eggGroups': ['Monster', 'Water 1']
   },
-  'croconaw': {
+  {
     'num': 159,
     'species': 'Croconaw',
     'types': ['Water'],
@@ -5081,7 +5158,7 @@ const BattlePokedex = {
     'evoLevel': 18,
     'eggGroups': ['Monster', 'Water 1']
   },
-  'feraligatr': {
+  {
     'num': 160,
     'species': 'Feraligatr',
     'types': ['Water'],
@@ -5108,7 +5185,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Monster', 'Water 1']
   },
-  'sentret': {
+  {
     'num': 161,
     'species': 'Sentret',
     'types': ['Normal'],
@@ -5131,7 +5208,7 @@ const BattlePokedex = {
     'evos': ['furret'],
     'eggGroups': ['Field']
   },
-  'furret': {
+  {
     'num': 162,
     'species': 'Furret',
     'types': ['Normal'],
@@ -5155,7 +5232,7 @@ const BattlePokedex = {
     'evoLevel': 15,
     'eggGroups': ['Field']
   },
-  'hoothoot': {
+  {
     'num': 163,
     'species': 'Hoothoot',
     'types': ['Normal', 'Flying'],
@@ -5178,7 +5255,7 @@ const BattlePokedex = {
     'evos': ['noctowl'],
     'eggGroups': ['Flying']
   },
-  'noctowl': {
+  {
     'num': 164,
     'species': 'Noctowl',
     'types': ['Normal', 'Flying'],
@@ -5202,7 +5279,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Flying']
   },
-  'ledyba': {
+  {
     'num': 165,
     'species': 'Ledyba',
     'types': ['Bug', 'Flying'],
@@ -5225,7 +5302,7 @@ const BattlePokedex = {
     'evos': ['ledian'],
     'eggGroups': ['Bug']
   },
-  'ledian': {
+  {
     'num': 166,
     'species': 'Ledian',
     'types': ['Bug', 'Flying'],
@@ -5249,7 +5326,7 @@ const BattlePokedex = {
     'evoLevel': 18,
     'eggGroups': ['Bug']
   },
-  'spinarak': {
+  {
     'num': 167,
     'species': 'Spinarak',
     'types': ['Bug', 'Poison'],
@@ -5272,7 +5349,7 @@ const BattlePokedex = {
     'evos': ['ariados'],
     'eggGroups': ['Bug']
   },
-  'ariados': {
+  {
     'num': 168,
     'species': 'Ariados',
     'types': ['Bug', 'Poison'],
@@ -5296,7 +5373,7 @@ const BattlePokedex = {
     'evoLevel': 22,
     'eggGroups': ['Bug']
   },
-  'crobat': {
+  {
     'num': 169,
     'species': 'Crobat',
     'types': ['Poison', 'Flying'],
@@ -5319,7 +5396,7 @@ const BattlePokedex = {
     'evoLevel': 23,
     'eggGroups': ['Flying']
   },
-  'chinchou': {
+  {
     'num': 170,
     'species': 'Chinchou',
     'types': ['Water', 'Electric'],
@@ -5342,7 +5419,7 @@ const BattlePokedex = {
     'evos': ['lanturn'],
     'eggGroups': ['Water 2']
   },
-  'lanturn': {
+  {
     'num': 171,
     'species': 'Lanturn',
     'types': ['Water', 'Electric'],
@@ -5366,7 +5443,7 @@ const BattlePokedex = {
     'evoLevel': 27,
     'eggGroups': ['Water 2']
   },
-  'pichu': {
+  {
     'num': 172,
     'species': 'Pichu',
     'types': ['Electric'],
@@ -5389,7 +5466,7 @@ const BattlePokedex = {
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['pichuspikyeared']
   },
-  'pichuspikyeared': {
+  {
     'num': 172,
     'species': 'Pichu-Spiky-eared',
     'baseSpecies': 'Pichu',
@@ -5404,13 +5481,15 @@ const BattlePokedex = {
       'spd': 35,
       'spe': 60
     },
-    'abilities': {'0': 'Static'},
+    'abilities': {
+      '0': 'Static'
+    },
     'heightm': 0.3,
     'weightkg': 2,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'cleffa': {
+  {
     'num': 173,
     'species': 'Cleffa',
     'types': ['Fairy'],
@@ -5437,7 +5516,7 @@ const BattlePokedex = {
     'evos': ['clefairy'],
     'eggGroups': ['Undiscovered']
   },
-  'igglybuff': {
+  {
     'num': 174,
     'species': 'Igglybuff',
     'types': ['Normal', 'Fairy'],
@@ -5464,7 +5543,7 @@ const BattlePokedex = {
     'evos': ['jigglypuff'],
     'eggGroups': ['Undiscovered']
   },
-  'togepi': {
+  {
     'num': 175,
     'species': 'Togepi',
     'types': ['Fairy'],
@@ -5491,7 +5570,7 @@ const BattlePokedex = {
     'evos': ['togetic'],
     'eggGroups': ['Undiscovered']
   },
-  'togetic': {
+  {
     'num': 176,
     'species': 'Togetic',
     'types': ['Fairy', 'Flying'],
@@ -5520,7 +5599,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Flying', 'Fairy']
   },
-  'natu': {
+  {
     'num': 177,
     'species': 'Natu',
     'types': ['Psychic', 'Flying'],
@@ -5543,7 +5622,7 @@ const BattlePokedex = {
     'evos': ['xatu'],
     'eggGroups': ['Flying']
   },
-  'xatu': {
+  {
     'num': 178,
     'species': 'Xatu',
     'types': ['Psychic', 'Flying'],
@@ -5567,7 +5646,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Flying']
   },
-  'mareep': {
+  {
     'num': 179,
     'species': 'Mareep',
     'types': ['Electric'],
@@ -5589,7 +5668,7 @@ const BattlePokedex = {
     'evos': ['flaaffy'],
     'eggGroups': ['Monster', 'Field']
   },
-  'flaaffy': {
+  {
     'num': 180,
     'species': 'Flaaffy',
     'types': ['Electric'],
@@ -5613,7 +5692,7 @@ const BattlePokedex = {
     'evoLevel': 15,
     'eggGroups': ['Monster', 'Field']
   },
-  'ampharos': {
+  {
     'num': 181,
     'species': 'Ampharos',
     'types': ['Electric'],
@@ -5637,7 +5716,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster', 'Field'],
     'otherFormes': ['ampharosmega']
   },
-  'ampharosmega': {
+  {
     'num': 181,
     'species': 'Ampharos-Mega',
     'baseSpecies': 'Ampharos',
@@ -5652,13 +5731,15 @@ const BattlePokedex = {
       'spd': 110,
       'spe': 45
     },
-    'abilities': {'0': 'Mold Breaker'},
+    'abilities': {
+      '0': 'Mold Breaker'
+    },
     'heightm': 1.4,
     'weightkg': 61.5,
     'color': 'Yellow',
     'eggGroups': ['Monster', 'Field']
   },
-  'bellossom': {
+  {
     'num': 182,
     'species': 'Bellossom',
     'types': ['Grass'],
@@ -5681,7 +5762,7 @@ const BattlePokedex = {
     'evoLevel': 21,
     'eggGroups': ['Grass']
   },
-  'marill': {
+  {
     'num': 183,
     'species': 'Marill',
     'types': ['Water', 'Fairy'],
@@ -5706,7 +5787,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Water 1', 'Fairy']
   },
-  'azumarill': {
+  {
     'num': 184,
     'species': 'Azumarill',
     'types': ['Water', 'Fairy'],
@@ -5730,7 +5811,7 @@ const BattlePokedex = {
     'evoLevel': 18,
     'eggGroups': ['Water 1', 'Fairy']
   },
-  'sudowoodo': {
+  {
     'num': 185,
     'species': 'Sudowoodo',
     'types': ['Rock'],
@@ -5755,7 +5836,7 @@ const BattlePokedex = {
     'evoMove': 'Mimic',
     'eggGroups': ['Mineral']
   },
-  'politoed': {
+  {
     'num': 186,
     'species': 'Politoed',
     'types': ['Water'],
@@ -5779,7 +5860,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Water 1']
   },
-  'hoppip': {
+  {
     'num': 187,
     'species': 'Hoppip',
     'types': ['Grass', 'Flying'],
@@ -5802,7 +5883,7 @@ const BattlePokedex = {
     'evos': ['skiploom'],
     'eggGroups': ['Fairy', 'Grass']
   },
-  'skiploom': {
+  {
     'num': 188,
     'species': 'Skiploom',
     'types': ['Grass', 'Flying'],
@@ -5827,7 +5908,7 @@ const BattlePokedex = {
     'evoLevel': 18,
     'eggGroups': ['Fairy', 'Grass']
   },
-  'jumpluff': {
+  {
     'num': 189,
     'species': 'Jumpluff',
     'types': ['Grass', 'Flying'],
@@ -5851,7 +5932,7 @@ const BattlePokedex = {
     'evoLevel': 27,
     'eggGroups': ['Fairy', 'Grass']
   },
-  'aipom': {
+  {
     'num': 190,
     'species': 'Aipom',
     'types': ['Normal'],
@@ -5874,7 +5955,7 @@ const BattlePokedex = {
     'evos': ['ambipom'],
     'eggGroups': ['Field']
   },
-  'sunkern': {
+  {
     'num': 191,
     'species': 'Sunkern',
     'types': ['Grass'],
@@ -5897,7 +5978,7 @@ const BattlePokedex = {
     'evos': ['sunflora'],
     'eggGroups': ['Grass']
   },
-  'sunflora': {
+  {
     'num': 192,
     'species': 'Sunflora',
     'types': ['Grass'],
@@ -5921,7 +6002,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Grass']
   },
-  'yanma': {
+  {
     'num': 193,
     'species': 'Yanma',
     'types': ['Bug', 'Flying'],
@@ -5944,7 +6025,7 @@ const BattlePokedex = {
     'evos': ['yanmega'],
     'eggGroups': ['Bug']
   },
-  'wooper': {
+  {
     'num': 194,
     'species': 'Wooper',
     'types': ['Water', 'Ground'],
@@ -5967,7 +6048,7 @@ const BattlePokedex = {
     'evos': ['quagsire'],
     'eggGroups': ['Water 1', 'Field']
   },
-  'quagsire': {
+  {
     'num': 195,
     'species': 'Quagsire',
     'types': ['Water', 'Ground'],
@@ -5991,7 +6072,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Water 1', 'Field']
   },
-  'espeon': {
+  {
     'num': 196,
     'species': 'Espeon',
     'types': ['Psychic'],
@@ -6018,7 +6099,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Field']
   },
-  'umbreon': {
+  {
     'num': 197,
     'species': 'Umbreon',
     'types': ['Dark'],
@@ -6045,7 +6126,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Field']
   },
-  'murkrow': {
+  {
     'num': 198,
     'species': 'Murkrow',
     'types': ['Dark', 'Flying'],
@@ -6068,7 +6149,7 @@ const BattlePokedex = {
     'evos': ['honchkrow'],
     'eggGroups': ['Flying']
   },
-  'slowking': {
+  {
     'num': 199,
     'species': 'Slowking',
     'types': ['Water', 'Psychic'],
@@ -6092,7 +6173,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Monster', 'Water 1']
   },
-  'misdreavus': {
+  {
     'num': 200,
     'species': 'Misdreavus',
     'types': ['Ghost'],
@@ -6104,14 +6185,16 @@ const BattlePokedex = {
       'spd': 85,
       'spe': 85
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.7,
     'weightkg': 1,
     'color': 'Gray',
     'evos': ['mismagius'],
     'eggGroups': ['Amorphous']
   },
-  'unown': {
+  {
     'num': 201,
     'species': 'Unown',
     'baseForme': 'A',
@@ -6125,14 +6208,16 @@ const BattlePokedex = {
       'spd': 48,
       'spe': 48
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.5,
     'weightkg': 5,
     'color': 'Black',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['unownb', 'unownc', 'unownd', 'unowne', 'unownf', 'unowng', 'unownh', 'unowni', 'unownj', 'unownk', 'unownl', 'unownm', 'unownn', 'unowno', 'unownp', 'unownq', 'unownr', 'unowns', 'unownt', 'unownu', 'unownv', 'unownw', 'unownx', 'unowny', 'unownz', 'unownexclamation', 'unownquestion']
   },
-  'wobbuffet': {
+  {
     'num': 202,
     'species': 'Wobbuffet',
     'types': ['Psychic'],
@@ -6155,7 +6240,7 @@ const BattlePokedex = {
     'evoLevel': 15,
     'eggGroups': ['Amorphous']
   },
-  'girafarig': {
+  {
     'num': 203,
     'species': 'Girafarig',
     'types': ['Normal', 'Psychic'],
@@ -6177,7 +6262,7 @@ const BattlePokedex = {
     'color': 'Yellow',
     'eggGroups': ['Field']
   },
-  'pineco': {
+  {
     'num': 204,
     'species': 'Pineco',
     'types': ['Bug'],
@@ -6199,7 +6284,7 @@ const BattlePokedex = {
     'evos': ['forretress'],
     'eggGroups': ['Bug']
   },
-  'forretress': {
+  {
     'num': 205,
     'species': 'Forretress',
     'types': ['Bug', 'Steel'],
@@ -6222,7 +6307,7 @@ const BattlePokedex = {
     'evoLevel': 31,
     'eggGroups': ['Bug']
   },
-  'dunsparce': {
+  {
     'num': 206,
     'species': 'Dunsparce',
     'types': ['Normal'],
@@ -6244,7 +6329,7 @@ const BattlePokedex = {
     'color': 'Yellow',
     'eggGroups': ['Field']
   },
-  'gligar': {
+  {
     'num': 207,
     'species': 'Gligar',
     'types': ['Ground', 'Flying'],
@@ -6267,7 +6352,7 @@ const BattlePokedex = {
     'evos': ['gliscor'],
     'eggGroups': ['Bug']
   },
-  'steelix': {
+  {
     'num': 208,
     'species': 'Steelix',
     'types': ['Steel', 'Ground'],
@@ -6292,7 +6377,7 @@ const BattlePokedex = {
     'eggGroups': ['Mineral'],
     'otherFormes': ['steelixmega']
   },
-  'steelixmega': {
+  {
     'num': 208,
     'species': 'Steelix-Mega',
     'baseSpecies': 'Steelix',
@@ -6307,13 +6392,15 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 30
     },
-    'abilities': {'0': 'Sand Force'},
+    'abilities': {
+      '0': 'Sand Force'
+    },
     'heightm': 10.5,
     'weightkg': 740,
     'color': 'Gray',
     'eggGroups': ['Mineral']
   },
-  'snubbull': {
+  {
     'num': 209,
     'species': 'Snubbull',
     'types': ['Fairy'],
@@ -6340,7 +6427,7 @@ const BattlePokedex = {
     'evos': ['granbull'],
     'eggGroups': ['Field', 'Fairy']
   },
-  'granbull': {
+  {
     'num': 210,
     'species': 'Granbull',
     'types': ['Fairy'],
@@ -6368,7 +6455,7 @@ const BattlePokedex = {
     'evoLevel': 23,
     'eggGroups': ['Field', 'Fairy']
   },
-  'qwilfish': {
+  {
     'num': 211,
     'species': 'Qwilfish',
     'types': ['Water', 'Poison'],
@@ -6390,7 +6477,7 @@ const BattlePokedex = {
     'color': 'Gray',
     'eggGroups': ['Water 2']
   },
-  'scizor': {
+  {
     'num': 212,
     'species': 'Scizor',
     'types': ['Bug', 'Steel'],
@@ -6415,7 +6502,7 @@ const BattlePokedex = {
     'eggGroups': ['Bug'],
     'otherFormes': ['scizormega']
   },
-  'scizormega': {
+  {
     'num': 212,
     'species': 'Scizor-Mega',
     'baseSpecies': 'Scizor',
@@ -6430,13 +6517,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 75
     },
-    'abilities': {'0': 'Technician'},
+    'abilities': {
+      '0': 'Technician'
+    },
     'heightm': 2,
     'weightkg': 125,
     'color': 'Red',
     'eggGroups': ['Bug']
   },
-  'shuckle': {
+  {
     'num': 213,
     'species': 'Shuckle',
     'types': ['Bug', 'Rock'],
@@ -6458,7 +6547,7 @@ const BattlePokedex = {
     'color': 'Yellow',
     'eggGroups': ['Bug']
   },
-  'heracross': {
+  {
     'num': 214,
     'species': 'Heracross',
     'types': ['Bug', 'Fighting'],
@@ -6481,7 +6570,7 @@ const BattlePokedex = {
     'eggGroups': ['Bug'],
     'otherFormes': ['heracrossmega']
   },
-  'heracrossmega': {
+  {
     'num': 214,
     'species': 'Heracross-Mega',
     'baseSpecies': 'Heracross',
@@ -6496,13 +6585,15 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 75
     },
-    'abilities': {'0': 'Skill Link'},
+    'abilities': {
+      '0': 'Skill Link'
+    },
     'heightm': 1.7,
     'weightkg': 62.5,
     'color': 'Blue',
     'eggGroups': ['Bug']
   },
-  'sneasel': {
+  {
     'num': 215,
     'species': 'Sneasel',
     'types': ['Dark', 'Ice'],
@@ -6525,7 +6616,7 @@ const BattlePokedex = {
     'evos': ['weavile'],
     'eggGroups': ['Field']
   },
-  'teddiursa': {
+  {
     'num': 216,
     'species': 'Teddiursa',
     'types': ['Normal'],
@@ -6548,7 +6639,7 @@ const BattlePokedex = {
     'evos': ['ursaring'],
     'eggGroups': ['Field']
   },
-  'ursaring': {
+  {
     'num': 217,
     'species': 'Ursaring',
     'types': ['Normal'],
@@ -6572,7 +6663,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Field']
   },
-  'slugma': {
+  {
     'num': 218,
     'species': 'Slugma',
     'types': ['Fire'],
@@ -6595,7 +6686,7 @@ const BattlePokedex = {
     'evos': ['magcargo'],
     'eggGroups': ['Amorphous']
   },
-  'magcargo': {
+  {
     'num': 219,
     'species': 'Magcargo',
     'types': ['Fire', 'Rock'],
@@ -6619,7 +6710,7 @@ const BattlePokedex = {
     'evoLevel': 38,
     'eggGroups': ['Amorphous']
   },
-  'swinub': {
+  {
     'num': 220,
     'species': 'Swinub',
     'types': ['Ice', 'Ground'],
@@ -6642,7 +6733,7 @@ const BattlePokedex = {
     'evos': ['piloswine'],
     'eggGroups': ['Field']
   },
-  'piloswine': {
+  {
     'num': 221,
     'species': 'Piloswine',
     'types': ['Ice', 'Ground'],
@@ -6667,7 +6758,7 @@ const BattlePokedex = {
     'evoLevel': 33,
     'eggGroups': ['Field']
   },
-  'corsola': {
+  {
     'num': 222,
     'species': 'Corsola',
     'types': ['Water', 'Rock'],
@@ -6693,7 +6784,7 @@ const BattlePokedex = {
     'color': 'Pink',
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'remoraid': {
+  {
     'num': 223,
     'species': 'Remoraid',
     'types': ['Water'],
@@ -6716,7 +6807,7 @@ const BattlePokedex = {
     'evos': ['octillery'],
     'eggGroups': ['Water 1', 'Water 2']
   },
-  'octillery': {
+  {
     'num': 224,
     'species': 'Octillery',
     'types': ['Water'],
@@ -6740,7 +6831,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Water 1', 'Water 2']
   },
-  'delibird': {
+  {
     'num': 225,
     'species': 'Delibird',
     'types': ['Ice', 'Flying'],
@@ -6762,7 +6853,7 @@ const BattlePokedex = {
     'color': 'Red',
     'eggGroups': ['Water 1', 'Field']
   },
-  'mantine': {
+  {
     'num': 226,
     'species': 'Mantine',
     'types': ['Water', 'Flying'],
@@ -6786,7 +6877,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Water 1']
   },
-  'skarmory': {
+  {
     'num': 227,
     'species': 'Skarmory',
     'types': ['Steel', 'Flying'],
@@ -6808,7 +6899,7 @@ const BattlePokedex = {
     'color': 'Gray',
     'eggGroups': ['Flying']
   },
-  'houndour': {
+  {
     'num': 228,
     'species': 'Houndour',
     'types': ['Dark', 'Fire'],
@@ -6831,7 +6922,7 @@ const BattlePokedex = {
     'evos': ['houndoom'],
     'eggGroups': ['Field']
   },
-  'houndoom': {
+  {
     'num': 229,
     'species': 'Houndoom',
     'types': ['Dark', 'Fire'],
@@ -6856,7 +6947,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['houndoommega']
   },
-  'houndoommega': {
+  {
     'num': 229,
     'species': 'Houndoom-Mega',
     'baseSpecies': 'Houndoom',
@@ -6871,13 +6962,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 115
     },
-    'abilities': {'0': 'Solar Power'},
+    'abilities': {
+      '0': 'Solar Power'
+    },
     'heightm': 1.9,
     'weightkg': 49.5,
     'color': 'Black',
     'eggGroups': ['Field']
   },
-  'kingdra': {
+  {
     'num': 230,
     'species': 'Kingdra',
     'types': ['Water', 'Dragon'],
@@ -6901,7 +6994,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Water 1', 'Dragon']
   },
-  'phanpy': {
+  {
     'num': 231,
     'species': 'Phanpy',
     'types': ['Ground'],
@@ -6923,7 +7016,7 @@ const BattlePokedex = {
     'evos': ['donphan'],
     'eggGroups': ['Field']
   },
-  'donphan': {
+  {
     'num': 232,
     'species': 'Donphan',
     'types': ['Ground'],
@@ -6946,7 +7039,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Field']
   },
-  'porygon2': {
+  {
     'num': 233,
     'species': 'Porygon2',
     'types': ['Normal'],
@@ -6972,7 +7065,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Mineral']
   },
-  'stantler': {
+  {
     'num': 234,
     'species': 'Stantler',
     'types': ['Normal'],
@@ -6994,7 +7087,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Field']
   },
-  'smeargle': {
+  {
     'num': 235,
     'species': 'Smeargle',
     'types': ['Normal'],
@@ -7017,7 +7110,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['pokestarsmeargle']
   },
-  'pokestarsmeargle': {
+  {
     'num': -5000,
     'species': 'Pokestar Smeargle',
     'types': ['Normal'],
@@ -7039,7 +7132,7 @@ const BattlePokedex = {
     'color': 'White',
     'eggGroups': ['Field']
   },
-  'tyrogue': {
+  {
     'num': 236,
     'species': 'Tyrogue',
     'types': ['Fighting'],
@@ -7063,7 +7156,7 @@ const BattlePokedex = {
     'evos': ['hitmonlee', 'hitmonchan', 'hitmontop'],
     'eggGroups': ['Undiscovered']
   },
-  'hitmontop': {
+  {
     'num': 237,
     'species': 'Hitmontop',
     'types': ['Fighting'],
@@ -7088,7 +7181,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Human-Like']
   },
-  'smoochum': {
+  {
     'num': 238,
     'species': 'Smoochum',
     'types': ['Ice', 'Psychic'],
@@ -7112,7 +7205,7 @@ const BattlePokedex = {
     'evos': ['jynx'],
     'eggGroups': ['Undiscovered']
   },
-  'elekid': {
+  {
     'num': 239,
     'species': 'Elekid',
     'types': ['Electric'],
@@ -7138,7 +7231,7 @@ const BattlePokedex = {
     'evos': ['electabuzz'],
     'eggGroups': ['Undiscovered']
   },
-  'magby': {
+  {
     'num': 240,
     'species': 'Magby',
     'types': ['Fire'],
@@ -7164,7 +7257,7 @@ const BattlePokedex = {
     'evos': ['magmar'],
     'eggGroups': ['Undiscovered']
   },
-  'miltank': {
+  {
     'num': 241,
     'species': 'Miltank',
     'types': ['Normal'],
@@ -7187,7 +7280,7 @@ const BattlePokedex = {
     'color': 'Pink',
     'eggGroups': ['Field']
   },
-  'blissey': {
+  {
     'num': 242,
     'species': 'Blissey',
     'types': ['Normal'],
@@ -7212,7 +7305,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Fairy']
   },
-  'raikou': {
+  {
     'num': 243,
     'species': 'Raikou',
     'types': ['Electric'],
@@ -7234,7 +7327,7 @@ const BattlePokedex = {
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'entei': {
+  {
     'num': 244,
     'species': 'Entei',
     'types': ['Fire'],
@@ -7256,7 +7349,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Undiscovered']
   },
-  'suicune': {
+  {
     'num': 245,
     'species': 'Suicune',
     'types': ['Water'],
@@ -7278,7 +7371,7 @@ const BattlePokedex = {
     'color': 'Blue',
     'eggGroups': ['Undiscovered']
   },
-  'larvitar': {
+  {
     'num': 246,
     'species': 'Larvitar',
     'types': ['Rock', 'Ground'],
@@ -7300,7 +7393,7 @@ const BattlePokedex = {
     'evos': ['pupitar'],
     'eggGroups': ['Monster']
   },
-  'pupitar': {
+  {
     'num': 247,
     'species': 'Pupitar',
     'types': ['Rock', 'Ground'],
@@ -7312,7 +7405,9 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 51
     },
-    'abilities': {'0': 'Shed Skin'},
+    'abilities': {
+      '0': 'Shed Skin'
+    },
     'heightm': 1.2,
     'weightkg': 152,
     'color': 'Gray',
@@ -7321,7 +7416,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Monster']
   },
-  'tyranitar': {
+  {
     'num': 248,
     'species': 'Tyranitar',
     'types': ['Rock', 'Dark'],
@@ -7345,7 +7440,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster'],
     'otherFormes': ['tyranitarmega']
   },
-  'tyranitarmega': {
+  {
     'num': 248,
     'species': 'Tyranitar-Mega',
     'baseSpecies': 'Tyranitar',
@@ -7360,13 +7455,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 71
     },
-    'abilities': {'0': 'Sand Stream'},
+    'abilities': {
+      '0': 'Sand Stream'
+    },
     'heightm': 2.5,
     'weightkg': 255,
     'color': 'Green',
     'eggGroups': ['Monster']
   },
-  'lugia': {
+  {
     'num': 249,
     'species': 'Lugia',
     'types': ['Psychic', 'Flying'],
@@ -7388,7 +7485,7 @@ const BattlePokedex = {
     'color': 'White',
     'eggGroups': ['Undiscovered']
   },
-  'hooh': {
+  {
     'num': 250,
     'species': 'Ho-Oh',
     'types': ['Fire', 'Flying'],
@@ -7410,7 +7507,7 @@ const BattlePokedex = {
     'color': 'Red',
     'eggGroups': ['Undiscovered']
   },
-  'celebi': {
+  {
     'num': 251,
     'species': 'Celebi',
     'types': ['Psychic', 'Grass'],
@@ -7423,13 +7520,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Natural Cure'},
+    'abilities': {
+      '0': 'Natural Cure'
+    },
     'heightm': 0.6,
     'weightkg': 5,
     'color': 'Green',
     'eggGroups': ['Undiscovered']
   },
-  'treecko': {
+  {
     'num': 252,
     'species': 'Treecko',
     'types': ['Grass'],
@@ -7455,7 +7554,7 @@ const BattlePokedex = {
     'evos': ['grovyle'],
     'eggGroups': ['Monster', 'Dragon']
   },
-  'grovyle': {
+  {
     'num': 253,
     'species': 'Grovyle',
     'types': ['Grass'],
@@ -7483,7 +7582,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Monster', 'Dragon']
   },
-  'sceptile': {
+  {
     'num': 254,
     'species': 'Sceptile',
     'types': ['Grass'],
@@ -7511,7 +7610,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster', 'Dragon'],
     'otherFormes': ['sceptilemega']
   },
-  'sceptilemega': {
+  {
     'num': 254,
     'species': 'Sceptile-Mega',
     'baseSpecies': 'Sceptile',
@@ -7530,13 +7629,15 @@ const BattlePokedex = {
       'spd': 85,
       'spe': 145
     },
-    'abilities': {'0': 'Lightning Rod'},
+    'abilities': {
+      '0': 'Lightning Rod'
+    },
     'heightm': 1.9,
     'weightkg': 55.2,
     'color': 'Green',
     'eggGroups': ['Monster', 'Dragon']
   },
-  'torchic': {
+  {
     'num': 255,
     'species': 'Torchic',
     'types': ['Fire'],
@@ -7562,7 +7663,7 @@ const BattlePokedex = {
     'evos': ['combusken'],
     'eggGroups': ['Field']
   },
-  'combusken': {
+  {
     'num': 256,
     'species': 'Combusken',
     'types': ['Fire', 'Fighting'],
@@ -7590,7 +7691,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Field']
   },
-  'blaziken': {
+  {
     'num': 257,
     'species': 'Blaziken',
     'types': ['Fire', 'Fighting'],
@@ -7618,7 +7719,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['blazikenmega']
   },
-  'blazikenmega': {
+  {
     'num': 257,
     'species': 'Blaziken-Mega',
     'baseSpecies': 'Blaziken',
@@ -7637,13 +7738,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 100
     },
-    'abilities': {'0': 'Speed Boost'},
+    'abilities': {
+      '0': 'Speed Boost'
+    },
     'heightm': 1.9,
     'weightkg': 52,
     'color': 'Red',
     'eggGroups': ['Field']
   },
-  'mudkip': {
+  {
     'num': 258,
     'species': 'Mudkip',
     'types': ['Water'],
@@ -7669,7 +7772,7 @@ const BattlePokedex = {
     'evos': ['marshtomp'],
     'eggGroups': ['Monster', 'Water 1']
   },
-  'marshtomp': {
+  {
     'num': 259,
     'species': 'Marshtomp',
     'types': ['Water', 'Ground'],
@@ -7697,7 +7800,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Monster', 'Water 1']
   },
-  'swampert': {
+  {
     'num': 260,
     'species': 'Swampert',
     'types': ['Water', 'Ground'],
@@ -7725,7 +7828,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster', 'Water 1'],
     'otherFormes': ['swampertmega']
   },
-  'swampertmega': {
+  {
     'num': 260,
     'species': 'Swampert-Mega',
     'baseSpecies': 'Swampert',
@@ -7744,13 +7847,15 @@ const BattlePokedex = {
       'spd': 110,
       'spe': 70
     },
-    'abilities': {'0': 'Swift Swim'},
+    'abilities': {
+      '0': 'Swift Swim'
+    },
     'heightm': 1.9,
     'weightkg': 102,
     'color': 'Blue',
     'eggGroups': ['Monster', 'Water 1']
   },
-  'poochyena': {
+  {
     'num': 261,
     'species': 'Poochyena',
     'types': ['Dark'],
@@ -7773,7 +7878,7 @@ const BattlePokedex = {
     'evos': ['mightyena'],
     'eggGroups': ['Field']
   },
-  'mightyena': {
+  {
     'num': 262,
     'species': 'Mightyena',
     'types': ['Dark'],
@@ -7797,7 +7902,7 @@ const BattlePokedex = {
     'evoLevel': 18,
     'eggGroups': ['Field']
   },
-  'zigzagoon': {
+  {
     'num': 263,
     'species': 'Zigzagoon',
     'types': ['Normal'],
@@ -7820,7 +7925,7 @@ const BattlePokedex = {
     'evos': ['linoone'],
     'eggGroups': ['Field']
   },
-  'linoone': {
+  {
     'num': 264,
     'species': 'Linoone',
     'types': ['Normal'],
@@ -7844,7 +7949,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Field']
   },
-  'wurmple': {
+  {
     'num': 265,
     'species': 'Wurmple',
     'types': ['Bug'],
@@ -7866,7 +7971,7 @@ const BattlePokedex = {
     'evos': ['silcoon', 'cascoon'],
     'eggGroups': ['Bug']
   },
-  'silcoon': {
+  {
     'num': 266,
     'species': 'Silcoon',
     'types': ['Bug'],
@@ -7878,7 +7983,9 @@ const BattlePokedex = {
       'spd': 25,
       'spe': 15
     },
-    'abilities': {'0': 'Shed Skin'},
+    'abilities': {
+      '0': 'Shed Skin'
+    },
     'heightm': 0.6,
     'weightkg': 10,
     'color': 'White',
@@ -7887,7 +7994,7 @@ const BattlePokedex = {
     'evoLevel': 7,
     'eggGroups': ['Bug']
   },
-  'beautifly': {
+  {
     'num': 267,
     'species': 'Beautifly',
     'types': ['Bug', 'Flying'],
@@ -7910,7 +8017,7 @@ const BattlePokedex = {
     'evoLevel': 10,
     'eggGroups': ['Bug']
   },
-  'cascoon': {
+  {
     'num': 268,
     'species': 'Cascoon',
     'types': ['Bug'],
@@ -7922,7 +8029,9 @@ const BattlePokedex = {
       'spd': 25,
       'spe': 15
     },
-    'abilities': {'0': 'Shed Skin'},
+    'abilities': {
+      '0': 'Shed Skin'
+    },
     'heightm': 0.7,
     'weightkg': 11.5,
     'color': 'Purple',
@@ -7931,7 +8040,7 @@ const BattlePokedex = {
     'evoLevel': 7,
     'eggGroups': ['Bug']
   },
-  'dustox': {
+  {
     'num': 269,
     'species': 'Dustox',
     'types': ['Bug', 'Poison'],
@@ -7954,7 +8063,7 @@ const BattlePokedex = {
     'evoLevel': 10,
     'eggGroups': ['Bug']
   },
-  'lotad': {
+  {
     'num': 270,
     'species': 'Lotad',
     'types': ['Water', 'Grass'],
@@ -7977,7 +8086,7 @@ const BattlePokedex = {
     'evos': ['lombre'],
     'eggGroups': ['Water 1', 'Grass']
   },
-  'lombre': {
+  {
     'num': 271,
     'species': 'Lombre',
     'types': ['Water', 'Grass'],
@@ -8002,7 +8111,7 @@ const BattlePokedex = {
     'evoLevel': 14,
     'eggGroups': ['Water 1', 'Grass']
   },
-  'ludicolo': {
+  {
     'num': 272,
     'species': 'Ludicolo',
     'types': ['Water', 'Grass'],
@@ -8026,7 +8135,7 @@ const BattlePokedex = {
     'evoLevel': 14,
     'eggGroups': ['Water 1', 'Grass']
   },
-  'seedot': {
+  {
     'num': 273,
     'species': 'Seedot',
     'types': ['Grass'],
@@ -8049,7 +8158,7 @@ const BattlePokedex = {
     'evos': ['nuzleaf'],
     'eggGroups': ['Field', 'Grass']
   },
-  'nuzleaf': {
+  {
     'num': 274,
     'species': 'Nuzleaf',
     'types': ['Grass', 'Dark'],
@@ -8074,7 +8183,7 @@ const BattlePokedex = {
     'evoLevel': 14,
     'eggGroups': ['Field', 'Grass']
   },
-  'shiftry': {
+  {
     'num': 275,
     'species': 'Shiftry',
     'types': ['Grass', 'Dark'],
@@ -8098,7 +8207,7 @@ const BattlePokedex = {
     'evoLevel': 14,
     'eggGroups': ['Field', 'Grass']
   },
-  'taillow': {
+  {
     'num': 276,
     'species': 'Taillow',
     'types': ['Normal', 'Flying'],
@@ -8120,7 +8229,7 @@ const BattlePokedex = {
     'evos': ['swellow'],
     'eggGroups': ['Flying']
   },
-  'swellow': {
+  {
     'num': 277,
     'species': 'Swellow',
     'types': ['Normal', 'Flying'],
@@ -8143,7 +8252,7 @@ const BattlePokedex = {
     'evoLevel': 22,
     'eggGroups': ['Flying']
   },
-  'wingull': {
+  {
     'num': 278,
     'species': 'Wingull',
     'types': ['Water', 'Flying'],
@@ -8166,7 +8275,7 @@ const BattlePokedex = {
     'evos': ['pelipper'],
     'eggGroups': ['Water 1', 'Flying']
   },
-  'pelipper': {
+  {
     'num': 279,
     'species': 'Pelipper',
     'types': ['Water', 'Flying'],
@@ -8190,7 +8299,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Water 1', 'Flying']
   },
-  'ralts': {
+  {
     'num': 280,
     'species': 'Ralts',
     'types': ['Psychic', 'Fairy'],
@@ -8213,7 +8322,7 @@ const BattlePokedex = {
     'evos': ['kirlia'],
     'eggGroups': ['Amorphous']
   },
-  'kirlia': {
+  {
     'num': 281,
     'species': 'Kirlia',
     'types': ['Psychic', 'Fairy'],
@@ -8238,7 +8347,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Amorphous']
   },
-  'gardevoir': {
+  {
     'num': 282,
     'species': 'Gardevoir',
     'types': ['Psychic', 'Fairy'],
@@ -8263,7 +8372,7 @@ const BattlePokedex = {
     'eggGroups': ['Amorphous'],
     'otherFormes': ['gardevoirmega']
   },
-  'gardevoirmega': {
+  {
     'num': 282,
     'species': 'Gardevoir-Mega',
     'baseSpecies': 'Gardevoir',
@@ -8278,13 +8387,15 @@ const BattlePokedex = {
       'spd': 135,
       'spe': 100
     },
-    'abilities': {'0': 'Pixilate'},
+    'abilities': {
+      '0': 'Pixilate'
+    },
     'heightm': 1.6,
     'weightkg': 48.4,
     'color': 'White',
     'eggGroups': ['Amorphous']
   },
-  'surskit': {
+  {
     'num': 283,
     'species': 'Surskit',
     'types': ['Bug', 'Water'],
@@ -8306,7 +8417,7 @@ const BattlePokedex = {
     'evos': ['masquerain'],
     'eggGroups': ['Water 1', 'Bug']
   },
-  'masquerain': {
+  {
     'num': 284,
     'species': 'Masquerain',
     'types': ['Bug', 'Flying'],
@@ -8329,7 +8440,7 @@ const BattlePokedex = {
     'evoLevel': 22,
     'eggGroups': ['Water 1', 'Bug']
   },
-  'shroomish': {
+  {
     'num': 285,
     'species': 'Shroomish',
     'types': ['Grass'],
@@ -8352,7 +8463,7 @@ const BattlePokedex = {
     'evos': ['breloom'],
     'eggGroups': ['Fairy', 'Grass']
   },
-  'breloom': {
+  {
     'num': 286,
     'species': 'Breloom',
     'types': ['Grass', 'Fighting'],
@@ -8376,7 +8487,7 @@ const BattlePokedex = {
     'evoLevel': 23,
     'eggGroups': ['Fairy', 'Grass']
   },
-  'slakoth': {
+  {
     'num': 287,
     'species': 'Slakoth',
     'types': ['Normal'],
@@ -8388,14 +8499,16 @@ const BattlePokedex = {
       'spd': 35,
       'spe': 30
     },
-    'abilities': {'0': 'Truant'},
+    'abilities': {
+      '0': 'Truant'
+    },
     'heightm': 0.8,
     'weightkg': 24,
     'color': 'Brown',
     'evos': ['vigoroth'],
     'eggGroups': ['Field']
   },
-  'vigoroth': {
+  {
     'num': 288,
     'species': 'Vigoroth',
     'types': ['Normal'],
@@ -8407,7 +8520,9 @@ const BattlePokedex = {
       'spd': 55,
       'spe': 90
     },
-    'abilities': {'0': 'Vital Spirit'},
+    'abilities': {
+      '0': 'Vital Spirit'
+    },
     'heightm': 1.4,
     'weightkg': 46.5,
     'color': 'White',
@@ -8416,7 +8531,7 @@ const BattlePokedex = {
     'evoLevel': 18,
     'eggGroups': ['Field']
   },
-  'slaking': {
+  {
     'num': 289,
     'species': 'Slaking',
     'types': ['Normal'],
@@ -8428,7 +8543,9 @@ const BattlePokedex = {
       'spd': 65,
       'spe': 100
     },
-    'abilities': {'0': 'Truant'},
+    'abilities': {
+      '0': 'Truant'
+    },
     'heightm': 2,
     'weightkg': 130.5,
     'color': 'Brown',
@@ -8436,7 +8553,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Field']
   },
-  'nincada': {
+  {
     'num': 290,
     'species': 'Nincada',
     'types': ['Bug', 'Ground'],
@@ -8458,7 +8575,7 @@ const BattlePokedex = {
     'evos': ['ninjask', 'shedinja'],
     'eggGroups': ['Bug']
   },
-  'ninjask': {
+  {
     'num': 291,
     'species': 'Ninjask',
     'types': ['Bug', 'Flying'],
@@ -8481,7 +8598,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Bug']
   },
-  'shedinja': {
+  {
     'num': 292,
     'species': 'Shedinja',
     'types': ['Bug', 'Ghost'],
@@ -8495,7 +8612,9 @@ const BattlePokedex = {
       'spe': 40
     },
     'maxHP': 1,
-    'abilities': {'0': 'Wonder Guard'},
+    'abilities': {
+      '0': 'Wonder Guard'
+    },
     'heightm': 0.8,
     'weightkg': 1.2,
     'color': 'Brown',
@@ -8503,7 +8622,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Mineral']
   },
-  'whismur': {
+  {
     'num': 293,
     'species': 'Whismur',
     'types': ['Normal'],
@@ -8525,7 +8644,7 @@ const BattlePokedex = {
     'evos': ['loudred'],
     'eggGroups': ['Monster', 'Field']
   },
-  'loudred': {
+  {
     'num': 294,
     'species': 'Loudred',
     'types': ['Normal'],
@@ -8549,7 +8668,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Monster', 'Field']
   },
-  'exploud': {
+  {
     'num': 295,
     'species': 'Exploud',
     'types': ['Normal'],
@@ -8572,7 +8691,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Monster', 'Field']
   },
-  'makuhita': {
+  {
     'num': 296,
     'species': 'Makuhita',
     'types': ['Fighting'],
@@ -8599,7 +8718,7 @@ const BattlePokedex = {
     'evos': ['hariyama'],
     'eggGroups': ['Human-Like']
   },
-  'hariyama': {
+  {
     'num': 297,
     'species': 'Hariyama',
     'types': ['Fighting'],
@@ -8627,7 +8746,7 @@ const BattlePokedex = {
     'evoLevel': 24,
     'eggGroups': ['Human-Like']
   },
-  'azurill': {
+  {
     'num': 298,
     'species': 'Azurill',
     'types': ['Normal', 'Fairy'],
@@ -8654,7 +8773,7 @@ const BattlePokedex = {
     'evos': ['marill'],
     'eggGroups': ['Undiscovered']
   },
-  'nosepass': {
+  {
     'num': 299,
     'species': 'Nosepass',
     'types': ['Rock'],
@@ -8677,7 +8796,7 @@ const BattlePokedex = {
     'evos': ['probopass'],
     'eggGroups': ['Mineral']
   },
-  'skitty': {
+  {
     'num': 300,
     'species': 'Skitty',
     'types': ['Normal'],
@@ -8704,7 +8823,7 @@ const BattlePokedex = {
     'evos': ['delcatty'],
     'eggGroups': ['Field', 'Fairy']
   },
-  'delcatty': {
+  {
     'num': 301,
     'species': 'Delcatty',
     'types': ['Normal'],
@@ -8732,7 +8851,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field', 'Fairy']
   },
-  'sableye': {
+  {
     'num': 302,
     'species': 'Sableye',
     'types': ['Dark', 'Ghost'],
@@ -8755,7 +8874,7 @@ const BattlePokedex = {
     'eggGroups': ['Human-Like'],
     'otherFormes': ['sableyemega']
   },
-  'sableyemega': {
+  {
     'num': 302,
     'species': 'Sableye-Mega',
     'baseSpecies': 'Sableye',
@@ -8770,13 +8889,15 @@ const BattlePokedex = {
       'spd': 115,
       'spe': 20
     },
-    'abilities': {'0': 'Magic Bounce'},
+    'abilities': {
+      '0': 'Magic Bounce'
+    },
     'heightm': 0.5,
     'weightkg': 161,
     'color': 'Purple',
     'eggGroups': ['Human-Like']
   },
-  'mawile': {
+  {
     'num': 303,
     'species': 'Mawile',
     'types': ['Steel', 'Fairy'],
@@ -8799,7 +8920,7 @@ const BattlePokedex = {
     'eggGroups': ['Field', 'Fairy'],
     'otherFormes': ['mawilemega']
   },
-  'mawilemega': {
+  {
     'num': 303,
     'species': 'Mawile-Mega',
     'baseSpecies': 'Mawile',
@@ -8814,13 +8935,15 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 50
     },
-    'abilities': {'0': 'Huge Power'},
+    'abilities': {
+      '0': 'Huge Power'
+    },
     'heightm': 1,
     'weightkg': 23.5,
     'color': 'Black',
     'eggGroups': ['Field', 'Fairy']
   },
-  'aron': {
+  {
     'num': 304,
     'species': 'Aron',
     'types': ['Steel', 'Rock'],
@@ -8843,7 +8966,7 @@ const BattlePokedex = {
     'evos': ['lairon'],
     'eggGroups': ['Monster']
   },
-  'lairon': {
+  {
     'num': 305,
     'species': 'Lairon',
     'types': ['Steel', 'Rock'],
@@ -8868,7 +8991,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Monster']
   },
-  'aggron': {
+  {
     'num': 306,
     'species': 'Aggron',
     'types': ['Steel', 'Rock'],
@@ -8893,7 +9016,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster'],
     'otherFormes': ['aggronmega']
   },
-  'aggronmega': {
+  {
     'num': 306,
     'species': 'Aggron-Mega',
     'baseSpecies': 'Aggron',
@@ -8908,13 +9031,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 50
     },
-    'abilities': {'0': 'Filter'},
+    'abilities': {
+      '0': 'Filter'
+    },
     'heightm': 2.2,
     'weightkg': 395,
     'color': 'Gray',
     'eggGroups': ['Monster']
   },
-  'meditite': {
+  {
     'num': 307,
     'species': 'Meditite',
     'types': ['Fighting', 'Psychic'],
@@ -8936,7 +9061,7 @@ const BattlePokedex = {
     'evos': ['medicham'],
     'eggGroups': ['Human-Like']
   },
-  'medicham': {
+  {
     'num': 308,
     'species': 'Medicham',
     'types': ['Fighting', 'Psychic'],
@@ -8960,7 +9085,7 @@ const BattlePokedex = {
     'eggGroups': ['Human-Like'],
     'otherFormes': ['medichammega']
   },
-  'medichammega': {
+  {
     'num': 308,
     'species': 'Medicham-Mega',
     'baseSpecies': 'Medicham',
@@ -8975,13 +9100,15 @@ const BattlePokedex = {
       'spd': 85,
       'spe': 100
     },
-    'abilities': {'0': 'Pure Power'},
+    'abilities': {
+      '0': 'Pure Power'
+    },
     'heightm': 1.3,
     'weightkg': 31.5,
     'color': 'Red',
     'eggGroups': ['Human-Like']
   },
-  'electrike': {
+  {
     'num': 309,
     'species': 'Electrike',
     'types': ['Electric'],
@@ -9004,7 +9131,7 @@ const BattlePokedex = {
     'evos': ['manectric'],
     'eggGroups': ['Field']
   },
-  'manectric': {
+  {
     'num': 310,
     'species': 'Manectric',
     'types': ['Electric'],
@@ -9029,7 +9156,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['manectricmega']
   },
-  'manectricmega': {
+  {
     'num': 310,
     'species': 'Manectric-Mega',
     'baseSpecies': 'Manectric',
@@ -9044,13 +9171,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 135
     },
-    'abilities': {'0': 'Intimidate'},
+    'abilities': {
+      '0': 'Intimidate'
+    },
     'heightm': 1.8,
     'weightkg': 44,
     'color': 'Yellow',
     'eggGroups': ['Field']
   },
-  'plusle': {
+  {
     'num': 311,
     'species': 'Plusle',
     'types': ['Electric'],
@@ -9071,7 +9200,7 @@ const BattlePokedex = {
     'color': 'Yellow',
     'eggGroups': ['Fairy']
   },
-  'minun': {
+  {
     'num': 312,
     'species': 'Minun',
     'types': ['Electric'],
@@ -9092,7 +9221,7 @@ const BattlePokedex = {
     'color': 'Yellow',
     'eggGroups': ['Fairy']
   },
-  'volbeat': {
+  {
     'num': 313,
     'species': 'Volbeat',
     'types': ['Bug'],
@@ -9115,7 +9244,7 @@ const BattlePokedex = {
     'color': 'Gray',
     'eggGroups': ['Bug', 'Human-Like']
   },
-  'illumise': {
+  {
     'num': 314,
     'species': 'Illumise',
     'types': ['Bug'],
@@ -9138,7 +9267,7 @@ const BattlePokedex = {
     'color': 'Purple',
     'eggGroups': ['Bug', 'Human-Like']
   },
-  'roselia': {
+  {
     'num': 315,
     'species': 'Roselia',
     'types': ['Grass', 'Poison'],
@@ -9163,7 +9292,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Fairy', 'Grass']
   },
-  'gulpin': {
+  {
     'num': 316,
     'species': 'Gulpin',
     'types': ['Poison'],
@@ -9186,7 +9315,7 @@ const BattlePokedex = {
     'evos': ['swalot'],
     'eggGroups': ['Amorphous']
   },
-  'swalot': {
+  {
     'num': 317,
     'species': 'Swalot',
     'types': ['Poison'],
@@ -9210,7 +9339,7 @@ const BattlePokedex = {
     'evoLevel': 26,
     'eggGroups': ['Amorphous']
   },
-  'carvanha': {
+  {
     'num': 318,
     'species': 'Carvanha',
     'types': ['Water', 'Dark'],
@@ -9232,7 +9361,7 @@ const BattlePokedex = {
     'evos': ['sharpedo'],
     'eggGroups': ['Water 2']
   },
-  'sharpedo': {
+  {
     'num': 319,
     'species': 'Sharpedo',
     'types': ['Water', 'Dark'],
@@ -9256,7 +9385,7 @@ const BattlePokedex = {
     'eggGroups': ['Water 2'],
     'otherFormes': ['sharpedomega']
   },
-  'sharpedomega': {
+  {
     'num': 319,
     'species': 'Sharpedo-Mega',
     'baseSpecies': 'Sharpedo',
@@ -9271,13 +9400,15 @@ const BattlePokedex = {
       'spd': 65,
       'spe': 105
     },
-    'abilities': {'0': 'Strong Jaw'},
+    'abilities': {
+      '0': 'Strong Jaw'
+    },
     'heightm': 2.5,
     'weightkg': 130.3,
     'color': 'Blue',
     'eggGroups': ['Water 2']
   },
-  'wailmer': {
+  {
     'num': 320,
     'species': 'Wailmer',
     'types': ['Water'],
@@ -9300,7 +9431,7 @@ const BattlePokedex = {
     'evos': ['wailord'],
     'eggGroups': ['Field', 'Water 2']
   },
-  'wailord': {
+  {
     'num': 321,
     'species': 'Wailord',
     'types': ['Water'],
@@ -9324,7 +9455,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Field', 'Water 2']
   },
-  'numel': {
+  {
     'num': 322,
     'species': 'Numel',
     'types': ['Fire', 'Ground'],
@@ -9347,7 +9478,7 @@ const BattlePokedex = {
     'evos': ['camerupt'],
     'eggGroups': ['Field']
   },
-  'camerupt': {
+  {
     'num': 323,
     'species': 'Camerupt',
     'types': ['Fire', 'Ground'],
@@ -9372,7 +9503,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['cameruptmega']
   },
-  'cameruptmega': {
+  {
     'num': 323,
     'species': 'Camerupt-Mega',
     'baseSpecies': 'Camerupt',
@@ -9387,13 +9518,15 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 20
     },
-    'abilities': {'0': 'Sheer Force'},
+    'abilities': {
+      '0': 'Sheer Force'
+    },
     'heightm': 2.5,
     'weightkg': 320.5,
     'color': 'Red',
     'eggGroups': ['Field']
   },
-  'torkoal': {
+  {
     'num': 324,
     'species': 'Torkoal',
     'types': ['Fire'],
@@ -9415,7 +9548,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Field']
   },
-  'spoink': {
+  {
     'num': 325,
     'species': 'Spoink',
     'types': ['Psychic'],
@@ -9438,7 +9571,7 @@ const BattlePokedex = {
     'evos': ['grumpig'],
     'eggGroups': ['Field']
   },
-  'grumpig': {
+  {
     'num': 326,
     'species': 'Grumpig',
     'types': ['Psychic'],
@@ -9462,7 +9595,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Field']
   },
-  'spinda': {
+  {
     'num': 327,
     'species': 'Spinda',
     'types': ['Normal'],
@@ -9484,7 +9617,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Field', 'Human-Like']
   },
-  'trapinch': {
+  {
     'num': 328,
     'species': 'Trapinch',
     'types': ['Ground'],
@@ -9507,7 +9640,7 @@ const BattlePokedex = {
     'evos': ['vibrava'],
     'eggGroups': ['Bug']
   },
-  'vibrava': {
+  {
     'num': 329,
     'species': 'Vibrava',
     'types': ['Ground', 'Dragon'],
@@ -9519,7 +9652,9 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 70
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.1,
     'weightkg': 15.3,
     'color': 'Green',
@@ -9528,7 +9663,7 @@ const BattlePokedex = {
     'evoLevel': 35,
     'eggGroups': ['Bug']
   },
-  'flygon': {
+  {
     'num': 330,
     'species': 'Flygon',
     'types': ['Ground', 'Dragon'],
@@ -9540,7 +9675,9 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 100
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 2,
     'weightkg': 82,
     'color': 'Green',
@@ -9548,7 +9685,7 @@ const BattlePokedex = {
     'evoLevel': 45,
     'eggGroups': ['Bug']
   },
-  'cacnea': {
+  {
     'num': 331,
     'species': 'Cacnea',
     'types': ['Grass'],
@@ -9570,7 +9707,7 @@ const BattlePokedex = {
     'evos': ['cacturne'],
     'eggGroups': ['Grass', 'Human-Like']
   },
-  'cacturne': {
+  {
     'num': 332,
     'species': 'Cacturne',
     'types': ['Grass', 'Dark'],
@@ -9593,7 +9730,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Grass', 'Human-Like']
   },
-  'swablu': {
+  {
     'num': 333,
     'species': 'Swablu',
     'types': ['Normal', 'Flying'],
@@ -9615,7 +9752,7 @@ const BattlePokedex = {
     'evos': ['altaria'],
     'eggGroups': ['Flying', 'Dragon']
   },
-  'altaria': {
+  {
     'num': 334,
     'species': 'Altaria',
     'types': ['Dragon', 'Flying'],
@@ -9639,7 +9776,7 @@ const BattlePokedex = {
     'eggGroups': ['Flying', 'Dragon'],
     'otherFormes': ['altariamega']
   },
-  'altariamega': {
+  {
     'num': 334,
     'species': 'Altaria-Mega',
     'baseSpecies': 'Altaria',
@@ -9654,13 +9791,15 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 80
     },
-    'abilities': {'0': 'Pixilate'},
+    'abilities': {
+      '0': 'Pixilate'
+    },
     'heightm': 1.5,
     'weightkg': 20.6,
     'color': 'Blue',
     'eggGroups': ['Flying', 'Dragon']
   },
-  'zangoose': {
+  {
     'num': 335,
     'species': 'Zangoose',
     'types': ['Normal'],
@@ -9681,7 +9820,7 @@ const BattlePokedex = {
     'color': 'White',
     'eggGroups': ['Field']
   },
-  'seviper': {
+  {
     'num': 336,
     'species': 'Seviper',
     'types': ['Poison'],
@@ -9702,7 +9841,7 @@ const BattlePokedex = {
     'color': 'Black',
     'eggGroups': ['Field', 'Dragon']
   },
-  'lunatone': {
+  {
     'num': 337,
     'species': 'Lunatone',
     'types': ['Rock', 'Psychic'],
@@ -9715,13 +9854,15 @@ const BattlePokedex = {
       'spd': 85,
       'spe': 70
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1,
     'weightkg': 168,
     'color': 'Yellow',
     'eggGroups': ['Mineral']
   },
-  'solrock': {
+  {
     'num': 338,
     'species': 'Solrock',
     'types': ['Rock', 'Psychic'],
@@ -9734,13 +9875,15 @@ const BattlePokedex = {
       'spd': 65,
       'spe': 70
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.2,
     'weightkg': 154,
     'color': 'Red',
     'eggGroups': ['Mineral']
   },
-  'barboach': {
+  {
     'num': 339,
     'species': 'Barboach',
     'types': ['Water', 'Ground'],
@@ -9763,7 +9906,7 @@ const BattlePokedex = {
     'evos': ['whiscash'],
     'eggGroups': ['Water 2']
   },
-  'whiscash': {
+  {
     'num': 340,
     'species': 'Whiscash',
     'types': ['Water', 'Ground'],
@@ -9787,7 +9930,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Water 2']
   },
-  'corphish': {
+  {
     'num': 341,
     'species': 'Corphish',
     'types': ['Water'],
@@ -9810,7 +9953,7 @@ const BattlePokedex = {
     'evos': ['crawdaunt'],
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'crawdaunt': {
+  {
     'num': 342,
     'species': 'Crawdaunt',
     'types': ['Water', 'Dark'],
@@ -9834,7 +9977,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'baltoy': {
+  {
     'num': 343,
     'species': 'Baltoy',
     'types': ['Ground', 'Psychic'],
@@ -9847,14 +9990,16 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 55
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.5,
     'weightkg': 21.5,
     'color': 'Brown',
     'evos': ['claydol'],
     'eggGroups': ['Mineral']
   },
-  'claydol': {
+  {
     'num': 344,
     'species': 'Claydol',
     'types': ['Ground', 'Psychic'],
@@ -9867,7 +10012,9 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 75
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.5,
     'weightkg': 108,
     'color': 'Black',
@@ -9875,7 +10022,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Mineral']
   },
-  'lileep': {
+  {
     'num': 345,
     'species': 'Lileep',
     'types': ['Rock', 'Grass'],
@@ -9901,7 +10048,7 @@ const BattlePokedex = {
     'evos': ['cradily'],
     'eggGroups': ['Water 3']
   },
-  'cradily': {
+  {
     'num': 346,
     'species': 'Cradily',
     'types': ['Rock', 'Grass'],
@@ -9928,7 +10075,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Water 3']
   },
-  'anorith': {
+  {
     'num': 347,
     'species': 'Anorith',
     'types': ['Rock', 'Bug'],
@@ -9954,7 +10101,7 @@ const BattlePokedex = {
     'evos': ['armaldo'],
     'eggGroups': ['Water 3']
   },
-  'armaldo': {
+  {
     'num': 348,
     'species': 'Armaldo',
     'types': ['Rock', 'Bug'],
@@ -9981,7 +10128,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Water 3']
   },
-  'feebas': {
+  {
     'num': 349,
     'species': 'Feebas',
     'types': ['Water'],
@@ -10004,7 +10151,7 @@ const BattlePokedex = {
     'evos': ['milotic'],
     'eggGroups': ['Water 1', 'Dragon']
   },
-  'milotic': {
+  {
     'num': 350,
     'species': 'Milotic',
     'types': ['Water'],
@@ -10028,7 +10175,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Water 1', 'Dragon']
   },
-  'castform': {
+  {
     'num': 351,
     'species': 'Castform',
     'types': ['Normal'],
@@ -10040,14 +10187,16 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 70
     },
-    'abilities': {'0': 'Forecast'},
+    'abilities': {
+      '0': 'Forecast'
+    },
     'heightm': 0.3,
     'weightkg': 0.8,
     'color': 'Gray',
     'eggGroups': ['Fairy', 'Amorphous'],
     'otherFormes': ['castformsunny', 'castformrainy', 'castformsnowy']
   },
-  'castformsunny': {
+  {
     'num': 351,
     'species': 'Castform-Sunny',
     'baseSpecies': 'Castform',
@@ -10062,13 +10211,15 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 70
     },
-    'abilities': {'0': 'Forecast'},
+    'abilities': {
+      '0': 'Forecast'
+    },
     'heightm': 0.3,
     'weightkg': 0.8,
     'color': 'Red',
     'eggGroups': ['Fairy', 'Amorphous']
   },
-  'castformrainy': {
+  {
     'num': 351,
     'species': 'Castform-Rainy',
     'baseSpecies': 'Castform',
@@ -10083,13 +10234,15 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 70
     },
-    'abilities': {'0': 'Forecast'},
+    'abilities': {
+      '0': 'Forecast'
+    },
     'heightm': 0.3,
     'weightkg': 0.8,
     'color': 'Blue',
     'eggGroups': ['Fairy', 'Amorphous']
   },
-  'castformsnowy': {
+  {
     'num': 351,
     'species': 'Castform-Snowy',
     'baseSpecies': 'Castform',
@@ -10104,13 +10257,15 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 70
     },
-    'abilities': {'0': 'Forecast'},
+    'abilities': {
+      '0': 'Forecast'
+    },
     'heightm': 0.3,
     'weightkg': 0.8,
     'color': 'White',
     'eggGroups': ['Fairy', 'Amorphous']
   },
-  'kecleon': {
+  {
     'num': 352,
     'species': 'Kecleon',
     'types': ['Normal'],
@@ -10131,7 +10286,7 @@ const BattlePokedex = {
     'color': 'Green',
     'eggGroups': ['Field']
   },
-  'shuppet': {
+  {
     'num': 353,
     'species': 'Shuppet',
     'types': ['Ghost'],
@@ -10154,7 +10309,7 @@ const BattlePokedex = {
     'evos': ['banette'],
     'eggGroups': ['Amorphous']
   },
-  'banette': {
+  {
     'num': 354,
     'species': 'Banette',
     'types': ['Ghost'],
@@ -10179,7 +10334,7 @@ const BattlePokedex = {
     'eggGroups': ['Amorphous'],
     'otherFormes': ['banettemega']
   },
-  'banettemega': {
+  {
     'num': 354,
     'species': 'Banette-Mega',
     'baseSpecies': 'Banette',
@@ -10194,13 +10349,15 @@ const BattlePokedex = {
       'spd': 83,
       'spe': 75
     },
-    'abilities': {'0': 'Prankster'},
+    'abilities': {
+      '0': 'Prankster'
+    },
     'heightm': 1.2,
     'weightkg': 13,
     'color': 'Black',
     'eggGroups': ['Amorphous']
   },
-  'duskull': {
+  {
     'num': 355,
     'species': 'Duskull',
     'types': ['Ghost'],
@@ -10222,7 +10379,7 @@ const BattlePokedex = {
     'evos': ['dusclops'],
     'eggGroups': ['Amorphous']
   },
-  'dusclops': {
+  {
     'num': 356,
     'species': 'Dusclops',
     'types': ['Ghost'],
@@ -10246,7 +10403,7 @@ const BattlePokedex = {
     'evoLevel': 37,
     'eggGroups': ['Amorphous']
   },
-  'tropius': {
+  {
     'num': 357,
     'species': 'Tropius',
     'types': ['Grass', 'Flying'],
@@ -10268,7 +10425,7 @@ const BattlePokedex = {
     'color': 'Green',
     'eggGroups': ['Monster', 'Grass']
   },
-  'chimecho': {
+  {
     'num': 358,
     'species': 'Chimecho',
     'types': ['Psychic'],
@@ -10280,7 +10437,9 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 65
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.6,
     'weightkg': 1,
     'color': 'Blue',
@@ -10288,7 +10447,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Amorphous']
   },
-  'absol': {
+  {
     'num': 359,
     'species': 'Absol',
     'types': ['Dark'],
@@ -10311,7 +10470,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['absolmega']
   },
-  'absolmega': {
+  {
     'num': 359,
     'species': 'Absol-Mega',
     'baseSpecies': 'Absol',
@@ -10326,13 +10485,15 @@ const BattlePokedex = {
       'spd': 60,
       'spe': 115
     },
-    'abilities': {'0': 'Magic Bounce'},
+    'abilities': {
+      '0': 'Magic Bounce'
+    },
     'heightm': 1.2,
     'weightkg': 49,
     'color': 'White',
     'eggGroups': ['Field']
   },
-  'wynaut': {
+  {
     'num': 360,
     'species': 'Wynaut',
     'types': ['Psychic'],
@@ -10354,7 +10515,7 @@ const BattlePokedex = {
     'evos': ['wobbuffet'],
     'eggGroups': ['Undiscovered']
   },
-  'snorunt': {
+  {
     'num': 361,
     'species': 'Snorunt',
     'types': ['Ice'],
@@ -10377,7 +10538,7 @@ const BattlePokedex = {
     'evos': ['glalie', 'froslass'],
     'eggGroups': ['Fairy', 'Mineral']
   },
-  'glalie': {
+  {
     'num': 362,
     'species': 'Glalie',
     'types': ['Ice'],
@@ -10402,7 +10563,7 @@ const BattlePokedex = {
     'eggGroups': ['Fairy', 'Mineral'],
     'otherFormes': ['glaliemega']
   },
-  'glaliemega': {
+  {
     'num': 362,
     'species': 'Glalie-Mega',
     'baseSpecies': 'Glalie',
@@ -10417,13 +10578,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 100
     },
-    'abilities': {'0': 'Refrigerate'},
+    'abilities': {
+      '0': 'Refrigerate'
+    },
     'heightm': 2.1,
     'weightkg': 350.2,
     'color': 'Gray',
     'eggGroups': ['Fairy', 'Mineral']
   },
-  'spheal': {
+  {
     'num': 363,
     'species': 'Spheal',
     'types': ['Ice', 'Water'],
@@ -10446,7 +10609,7 @@ const BattlePokedex = {
     'evos': ['sealeo'],
     'eggGroups': ['Water 1', 'Field']
   },
-  'sealeo': {
+  {
     'num': 364,
     'species': 'Sealeo',
     'types': ['Ice', 'Water'],
@@ -10471,7 +10634,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Water 1', 'Field']
   },
-  'walrein': {
+  {
     'num': 365,
     'species': 'Walrein',
     'types': ['Ice', 'Water'],
@@ -10495,7 +10658,7 @@ const BattlePokedex = {
     'evoLevel': 44,
     'eggGroups': ['Water 1', 'Field']
   },
-  'clamperl': {
+  {
     'num': 366,
     'species': 'Clamperl',
     'types': ['Water'],
@@ -10517,7 +10680,7 @@ const BattlePokedex = {
     'evos': ['huntail', 'gorebyss'],
     'eggGroups': ['Water 1']
   },
-  'huntail': {
+  {
     'num': 367,
     'species': 'Huntail',
     'types': ['Water'],
@@ -10540,7 +10703,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Water 1']
   },
-  'gorebyss': {
+  {
     'num': 368,
     'species': 'Gorebyss',
     'types': ['Water'],
@@ -10563,7 +10726,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Water 1']
   },
-  'relicanth': {
+  {
     'num': 369,
     'species': 'Relicanth',
     'types': ['Water', 'Rock'],
@@ -10589,7 +10752,7 @@ const BattlePokedex = {
     'color': 'Gray',
     'eggGroups': ['Water 1', 'Water 2']
   },
-  'luvdisc': {
+  {
     'num': 370,
     'species': 'Luvdisc',
     'types': ['Water'],
@@ -10614,7 +10777,7 @@ const BattlePokedex = {
     'color': 'Pink',
     'eggGroups': ['Water 2']
   },
-  'bagon': {
+  {
     'num': 371,
     'species': 'Bagon',
     'types': ['Dragon'],
@@ -10636,7 +10799,7 @@ const BattlePokedex = {
     'evos': ['shelgon'],
     'eggGroups': ['Dragon']
   },
-  'shelgon': {
+  {
     'num': 372,
     'species': 'Shelgon',
     'types': ['Dragon'],
@@ -10660,7 +10823,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Dragon']
   },
-  'salamence': {
+  {
     'num': 373,
     'species': 'Salamence',
     'types': ['Dragon', 'Flying'],
@@ -10684,7 +10847,7 @@ const BattlePokedex = {
     'eggGroups': ['Dragon'],
     'otherFormes': ['salamencemega']
   },
-  'salamencemega': {
+  {
     'num': 373,
     'species': 'Salamence-Mega',
     'baseSpecies': 'Salamence',
@@ -10699,13 +10862,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 120
     },
-    'abilities': {'0': 'Aerilate'},
+    'abilities': {
+      '0': 'Aerilate'
+    },
     'heightm': 1.8,
     'weightkg': 112.6,
     'color': 'Blue',
     'eggGroups': ['Dragon']
   },
-  'beldum': {
+  {
     'num': 374,
     'species': 'Beldum',
     'types': ['Steel', 'Psychic'],
@@ -10728,7 +10893,7 @@ const BattlePokedex = {
     'evos': ['metang'],
     'eggGroups': ['Mineral']
   },
-  'metang': {
+  {
     'num': 375,
     'species': 'Metang',
     'types': ['Steel', 'Psychic'],
@@ -10753,7 +10918,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Mineral']
   },
-  'metagross': {
+  {
     'num': 376,
     'species': 'Metagross',
     'types': ['Steel', 'Psychic'],
@@ -10778,7 +10943,7 @@ const BattlePokedex = {
     'eggGroups': ['Mineral'],
     'otherFormes': ['metagrossmega']
   },
-  'metagrossmega': {
+  {
     'num': 376,
     'species': 'Metagross-Mega',
     'baseSpecies': 'Metagross',
@@ -10794,13 +10959,15 @@ const BattlePokedex = {
       'spd': 110,
       'spe': 110
     },
-    'abilities': {'0': 'Tough Claws'},
+    'abilities': {
+      '0': 'Tough Claws'
+    },
     'heightm': 2.5,
     'weightkg': 942.9,
     'color': 'Blue',
     'eggGroups': ['Mineral']
   },
-  'regirock': {
+  {
     'num': 377,
     'species': 'Regirock',
     'types': ['Rock'],
@@ -10822,7 +10989,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Undiscovered']
   },
-  'regice': {
+  {
     'num': 378,
     'species': 'Regice',
     'types': ['Ice'],
@@ -10844,7 +11011,7 @@ const BattlePokedex = {
     'color': 'Blue',
     'eggGroups': ['Undiscovered']
   },
-  'registeel': {
+  {
     'num': 379,
     'species': 'Registeel',
     'types': ['Steel'],
@@ -10866,7 +11033,7 @@ const BattlePokedex = {
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'latias': {
+  {
     'num': 380,
     'species': 'Latias',
     'types': ['Dragon', 'Psychic'],
@@ -10879,14 +11046,16 @@ const BattlePokedex = {
       'spd': 130,
       'spe': 110
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.4,
     'weightkg': 40,
     'color': 'Red',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['latiasmega']
   },
-  'latiasmega': {
+  {
     'num': 380,
     'species': 'Latias-Mega',
     'baseSpecies': 'Latias',
@@ -10902,13 +11071,15 @@ const BattlePokedex = {
       'spd': 150,
       'spe': 110
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.8,
     'weightkg': 52,
     'color': 'Purple',
     'eggGroups': ['Undiscovered']
   },
-  'latios': {
+  {
     'num': 381,
     'species': 'Latios',
     'types': ['Dragon', 'Psychic'],
@@ -10921,14 +11092,16 @@ const BattlePokedex = {
       'spd': 110,
       'spe': 110
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 2,
     'weightkg': 60,
     'color': 'Blue',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['latiosmega']
   },
-  'latiosmega': {
+  {
     'num': 381,
     'species': 'Latios-Mega',
     'baseSpecies': 'Latios',
@@ -10944,13 +11117,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 110
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 2.3,
     'weightkg': 70,
     'color': 'Purple',
     'eggGroups': ['Undiscovered']
   },
-  'kyogre': {
+  {
     'num': 382,
     'species': 'Kyogre',
     'types': ['Water'],
@@ -10963,14 +11138,16 @@ const BattlePokedex = {
       'spd': 140,
       'spe': 90
     },
-    'abilities': {'0': 'Drizzle'},
+    'abilities': {
+      '0': 'Drizzle'
+    },
     'heightm': 4.5,
     'weightkg': 352,
     'color': 'Blue',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['kyogreprimal']
   },
-  'kyogreprimal': {
+  {
     'num': 382,
     'species': 'Kyogre-Primal',
     'baseSpecies': 'Kyogre',
@@ -10986,13 +11163,15 @@ const BattlePokedex = {
       'spd': 160,
       'spe': 90
     },
-    'abilities': {'0': 'Primordial Sea'},
+    'abilities': {
+      '0': 'Primordial Sea'
+    },
     'heightm': 9.8,
     'weightkg': 430,
     'color': 'Blue',
     'eggGroups': ['Undiscovered']
   },
-  'groudon': {
+  {
     'num': 383,
     'species': 'Groudon',
     'types': ['Ground'],
@@ -11005,14 +11184,16 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 90
     },
-    'abilities': {'0': 'Drought'},
+    'abilities': {
+      '0': 'Drought'
+    },
     'heightm': 3.5,
     'weightkg': 950,
     'color': 'Red',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['groudonprimal']
   },
-  'groudonprimal': {
+  {
     'num': 383,
     'species': 'Groudon-Primal',
     'baseSpecies': 'Groudon',
@@ -11028,13 +11209,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 90
     },
-    'abilities': {'0': 'Desolate Land'},
+    'abilities': {
+      '0': 'Desolate Land'
+    },
     'heightm': 5,
     'weightkg': 999.7,
     'color': 'Red',
     'eggGroups': ['Undiscovered']
   },
-  'rayquaza': {
+  {
     'num': 384,
     'species': 'Rayquaza',
     'types': ['Dragon', 'Flying'],
@@ -11047,14 +11230,16 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 95
     },
-    'abilities': {'0': 'Air Lock'},
+    'abilities': {
+      '0': 'Air Lock'
+    },
     'heightm': 7,
     'weightkg': 206.5,
     'color': 'Green',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['rayquazamega']
   },
-  'rayquazamega': {
+  {
     'num': 384,
     'species': 'Rayquaza-Mega',
     'baseSpecies': 'Rayquaza',
@@ -11070,13 +11255,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 115
     },
-    'abilities': {'0': 'Delta Stream'},
+    'abilities': {
+      '0': 'Delta Stream'
+    },
     'heightm': 10.8,
     'weightkg': 392,
     'color': 'Green',
     'eggGroups': ['Undiscovered']
   },
-  'jirachi': {
+  {
     'num': 385,
     'species': 'Jirachi',
     'types': ['Steel', 'Psychic'],
@@ -11089,13 +11276,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Serene Grace'},
+    'abilities': {
+      '0': 'Serene Grace'
+    },
     'heightm': 0.3,
     'weightkg': 1.1,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'deoxys': {
+  {
     'num': 386,
     'species': 'Deoxys',
     'baseForme': 'Normal',
@@ -11109,14 +11298,16 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 150
     },
-    'abilities': {'0': 'Pressure'},
+    'abilities': {
+      '0': 'Pressure'
+    },
     'heightm': 1.7,
     'weightkg': 60.8,
     'color': 'Red',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['deoxysattack', 'deoxysdefense', 'deoxysspeed']
   },
-  'deoxysattack': {
+  {
     'num': 386,
     'species': 'Deoxys-Attack',
     'baseSpecies': 'Deoxys',
@@ -11132,13 +11323,15 @@ const BattlePokedex = {
       'spd': 20,
       'spe': 150
     },
-    'abilities': {'0': 'Pressure'},
+    'abilities': {
+      '0': 'Pressure'
+    },
     'heightm': 1.7,
     'weightkg': 60.8,
     'color': 'Red',
     'eggGroups': ['Undiscovered']
   },
-  'deoxysdefense': {
+  {
     'num': 386,
     'species': 'Deoxys-Defense',
     'baseSpecies': 'Deoxys',
@@ -11154,13 +11347,15 @@ const BattlePokedex = {
       'spd': 160,
       'spe': 90
     },
-    'abilities': {'0': 'Pressure'},
+    'abilities': {
+      '0': 'Pressure'
+    },
     'heightm': 1.7,
     'weightkg': 60.8,
     'color': 'Red',
     'eggGroups': ['Undiscovered']
   },
-  'deoxysspeed': {
+  {
     'num': 386,
     'species': 'Deoxys-Speed',
     'baseSpecies': 'Deoxys',
@@ -11176,13 +11371,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 180
     },
-    'abilities': {'0': 'Pressure'},
+    'abilities': {
+      '0': 'Pressure'
+    },
     'heightm': 1.7,
     'weightkg': 60.8,
     'color': 'Red',
     'eggGroups': ['Undiscovered']
   },
-  'turtwig': {
+  {
     'num': 387,
     'species': 'Turtwig',
     'types': ['Grass'],
@@ -11208,7 +11405,7 @@ const BattlePokedex = {
     'evos': ['grotle'],
     'eggGroups': ['Monster', 'Grass']
   },
-  'grotle': {
+  {
     'num': 388,
     'species': 'Grotle',
     'types': ['Grass'],
@@ -11236,7 +11433,7 @@ const BattlePokedex = {
     'evoLevel': 18,
     'eggGroups': ['Monster', 'Grass']
   },
-  'torterra': {
+  {
     'num': 389,
     'species': 'Torterra',
     'types': ['Grass', 'Ground'],
@@ -11263,7 +11460,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Monster', 'Grass']
   },
-  'chimchar': {
+  {
     'num': 390,
     'species': 'Chimchar',
     'types': ['Fire'],
@@ -11289,7 +11486,7 @@ const BattlePokedex = {
     'evos': ['monferno'],
     'eggGroups': ['Field', 'Human-Like']
   },
-  'monferno': {
+  {
     'num': 391,
     'species': 'Monferno',
     'types': ['Fire', 'Fighting'],
@@ -11317,7 +11514,7 @@ const BattlePokedex = {
     'evoLevel': 14,
     'eggGroups': ['Field', 'Human-Like']
   },
-  'infernape': {
+  {
     'num': 392,
     'species': 'Infernape',
     'types': ['Fire', 'Fighting'],
@@ -11344,7 +11541,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Field', 'Human-Like']
   },
-  'piplup': {
+  {
     'num': 393,
     'species': 'Piplup',
     'types': ['Water'],
@@ -11370,7 +11567,7 @@ const BattlePokedex = {
     'evos': ['prinplup'],
     'eggGroups': ['Water 1', 'Field']
   },
-  'prinplup': {
+  {
     'num': 394,
     'species': 'Prinplup',
     'types': ['Water'],
@@ -11398,7 +11595,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Water 1', 'Field']
   },
-  'empoleon': {
+  {
     'num': 395,
     'species': 'Empoleon',
     'types': ['Water', 'Steel'],
@@ -11425,7 +11622,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Water 1', 'Field']
   },
-  'starly': {
+  {
     'num': 396,
     'species': 'Starly',
     'types': ['Normal', 'Flying'],
@@ -11447,7 +11644,7 @@ const BattlePokedex = {
     'evos': ['staravia'],
     'eggGroups': ['Flying']
   },
-  'staravia': {
+  {
     'num': 397,
     'species': 'Staravia',
     'types': ['Normal', 'Flying'],
@@ -11471,7 +11668,7 @@ const BattlePokedex = {
     'evoLevel': 14,
     'eggGroups': ['Flying']
   },
-  'staraptor': {
+  {
     'num': 398,
     'species': 'Staraptor',
     'types': ['Normal', 'Flying'],
@@ -11494,7 +11691,7 @@ const BattlePokedex = {
     'evoLevel': 34,
     'eggGroups': ['Flying']
   },
-  'bidoof': {
+  {
     'num': 399,
     'species': 'Bidoof',
     'types': ['Normal'],
@@ -11517,7 +11714,7 @@ const BattlePokedex = {
     'evos': ['bibarel'],
     'eggGroups': ['Water 1', 'Field']
   },
-  'bibarel': {
+  {
     'num': 400,
     'species': 'Bibarel',
     'types': ['Normal', 'Water'],
@@ -11541,7 +11738,7 @@ const BattlePokedex = {
     'evoLevel': 15,
     'eggGroups': ['Water 1', 'Field']
   },
-  'kricketot': {
+  {
     'num': 401,
     'species': 'Kricketot',
     'types': ['Bug'],
@@ -11563,7 +11760,7 @@ const BattlePokedex = {
     'evos': ['kricketune'],
     'eggGroups': ['Bug']
   },
-  'kricketune': {
+  {
     'num': 402,
     'species': 'Kricketune',
     'types': ['Bug'],
@@ -11586,7 +11783,7 @@ const BattlePokedex = {
     'evoLevel': 10,
     'eggGroups': ['Bug']
   },
-  'shinx': {
+  {
     'num': 403,
     'species': 'Shinx',
     'types': ['Electric'],
@@ -11609,7 +11806,7 @@ const BattlePokedex = {
     'evos': ['luxio'],
     'eggGroups': ['Field']
   },
-  'luxio': {
+  {
     'num': 404,
     'species': 'Luxio',
     'types': ['Electric'],
@@ -11634,7 +11831,7 @@ const BattlePokedex = {
     'evoLevel': 15,
     'eggGroups': ['Field']
   },
-  'luxray': {
+  {
     'num': 405,
     'species': 'Luxray',
     'types': ['Electric'],
@@ -11658,7 +11855,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Field']
   },
-  'budew': {
+  {
     'num': 406,
     'species': 'Budew',
     'types': ['Grass', 'Poison'],
@@ -11681,7 +11878,7 @@ const BattlePokedex = {
     'evos': ['roselia'],
     'eggGroups': ['Undiscovered']
   },
-  'roserade': {
+  {
     'num': 407,
     'species': 'Roserade',
     'types': ['Grass', 'Poison'],
@@ -11705,7 +11902,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Fairy', 'Grass']
   },
-  'cranidos': {
+  {
     'num': 408,
     'species': 'Cranidos',
     'types': ['Rock'],
@@ -11731,7 +11928,7 @@ const BattlePokedex = {
     'evos': ['rampardos'],
     'eggGroups': ['Monster']
   },
-  'rampardos': {
+  {
     'num': 409,
     'species': 'Rampardos',
     'types': ['Rock'],
@@ -11758,7 +11955,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Monster']
   },
-  'shieldon': {
+  {
     'num': 410,
     'species': 'Shieldon',
     'types': ['Rock', 'Steel'],
@@ -11784,7 +11981,7 @@ const BattlePokedex = {
     'evos': ['bastiodon'],
     'eggGroups': ['Monster']
   },
-  'bastiodon': {
+  {
     'num': 411,
     'species': 'Bastiodon',
     'types': ['Rock', 'Steel'],
@@ -11811,7 +12008,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Monster']
   },
-  'burmy': {
+  {
     'num': 412,
     'species': 'Burmy',
     'baseForme': 'Plant',
@@ -11835,7 +12032,7 @@ const BattlePokedex = {
     'eggGroups': ['Bug'],
     'otherForms': ['burmysandy', 'burmytrash']
   },
-  'wormadam': {
+  {
     'num': 413,
     'species': 'Wormadam',
     'baseForme': 'Plant',
@@ -11861,7 +12058,7 @@ const BattlePokedex = {
     'eggGroups': ['Bug'],
     'otherFormes': ['wormadamsandy', 'wormadamtrash']
   },
-  'wormadamsandy': {
+  {
     'num': 413,
     'species': 'Wormadam-Sandy',
     'baseSpecies': 'Wormadam',
@@ -11888,7 +12085,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Bug']
   },
-  'wormadamtrash': {
+  {
     'num': 413,
     'species': 'Wormadam-Trash',
     'baseSpecies': 'Wormadam',
@@ -11915,7 +12112,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Bug']
   },
-  'mothim': {
+  {
     'num': 414,
     'species': 'Mothim',
     'types': ['Bug', 'Flying'],
@@ -11939,7 +12136,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Bug']
   },
-  'combee': {
+  {
     'num': 415,
     'species': 'Combee',
     'types': ['Bug', 'Flying'],
@@ -11965,7 +12162,7 @@ const BattlePokedex = {
     'evos': ['vespiquen'],
     'eggGroups': ['Bug']
   },
-  'vespiquen': {
+  {
     'num': 416,
     'species': 'Vespiquen',
     'types': ['Bug', 'Flying'],
@@ -11989,7 +12186,7 @@ const BattlePokedex = {
     'evoLevel': 21,
     'eggGroups': ['Bug']
   },
-  'pachirisu': {
+  {
     'num': 417,
     'species': 'Pachirisu',
     'types': ['Electric'],
@@ -12011,7 +12208,7 @@ const BattlePokedex = {
     'color': 'White',
     'eggGroups': ['Field', 'Fairy']
   },
-  'buizel': {
+  {
     'num': 418,
     'species': 'Buizel',
     'types': ['Water'],
@@ -12033,7 +12230,7 @@ const BattlePokedex = {
     'evos': ['floatzel'],
     'eggGroups': ['Water 1', 'Field']
   },
-  'floatzel': {
+  {
     'num': 419,
     'species': 'Floatzel',
     'types': ['Water'],
@@ -12056,7 +12253,7 @@ const BattlePokedex = {
     'evoLevel': 26,
     'eggGroups': ['Water 1', 'Field']
   },
-  'cherubi': {
+  {
     'num': 420,
     'species': 'Cherubi',
     'types': ['Grass'],
@@ -12068,14 +12265,16 @@ const BattlePokedex = {
       'spd': 53,
       'spe': 35
     },
-    'abilities': {'0': 'Chlorophyll'},
+    'abilities': {
+      '0': 'Chlorophyll'
+    },
     'heightm': 0.4,
     'weightkg': 3.3,
     'color': 'Pink',
     'evos': ['cherrim'],
     'eggGroups': ['Fairy', 'Grass']
   },
-  'cherrim': {
+  {
     'num': 421,
     'species': 'Cherrim',
     'baseForme': 'Overcast',
@@ -12088,7 +12287,9 @@ const BattlePokedex = {
       'spd': 78,
       'spe': 85
     },
-    'abilities': {'0': 'Flower Gift'},
+    'abilities': {
+      '0': 'Flower Gift'
+    },
     'heightm': 0.5,
     'weightkg': 9.3,
     'color': 'Purple',
@@ -12097,7 +12298,7 @@ const BattlePokedex = {
     'eggGroups': ['Fairy', 'Grass'],
     'otherFormes': ['cherrimsunshine']
   },
-  'cherrimsunshine': {
+  {
     'num': 421,
     'species': 'Cherrim-Sunshine',
     'baseSpecies': 'Cherrim',
@@ -12112,7 +12313,9 @@ const BattlePokedex = {
       'spd': 78,
       'spe': 85
     },
-    'abilities': {'0': 'Flower Gift'},
+    'abilities': {
+      '0': 'Flower Gift'
+    },
     'heightm': 0.5,
     'weightkg': 9.3,
     'color': 'Pink',
@@ -12120,7 +12323,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Fairy', 'Grass']
   },
-  'shellos': {
+  {
     'num': 422,
     'species': 'Shellos',
     'baseForme': 'West',
@@ -12145,7 +12348,7 @@ const BattlePokedex = {
     'eggGroups': ['Water 1', 'Amorphous'],
     'otherForms': ['shelloseast']
   },
-  'gastrodon': {
+  {
     'num': 423,
     'species': 'Gastrodon',
     'baseForme': 'West',
@@ -12171,7 +12374,7 @@ const BattlePokedex = {
     'eggGroups': ['Water 1', 'Amorphous'],
     'otherForms': ['gastrodoneast']
   },
-  'ambipom': {
+  {
     'num': 424,
     'species': 'Ambipom',
     'types': ['Normal'],
@@ -12196,7 +12399,7 @@ const BattlePokedex = {
     'evoMove': 'Double Hit',
     'eggGroups': ['Field']
   },
-  'drifloon': {
+  {
     'num': 425,
     'species': 'Drifloon',
     'types': ['Ghost', 'Flying'],
@@ -12219,7 +12422,7 @@ const BattlePokedex = {
     'evos': ['drifblim'],
     'eggGroups': ['Amorphous']
   },
-  'drifblim': {
+  {
     'num': 426,
     'species': 'Drifblim',
     'types': ['Ghost', 'Flying'],
@@ -12243,7 +12446,7 @@ const BattlePokedex = {
     'evoLevel': 28,
     'eggGroups': ['Amorphous']
   },
-  'buneary': {
+  {
     'num': 427,
     'species': 'Buneary',
     'types': ['Normal'],
@@ -12266,7 +12469,7 @@ const BattlePokedex = {
     'evos': ['lopunny'],
     'eggGroups': ['Field', 'Human-Like']
   },
-  'lopunny': {
+  {
     'num': 428,
     'species': 'Lopunny',
     'types': ['Normal'],
@@ -12291,7 +12494,7 @@ const BattlePokedex = {
     'eggGroups': ['Field', 'Human-Like'],
     'otherFormes': ['lopunnymega']
   },
-  'lopunnymega': {
+  {
     'num': 428,
     'species': 'Lopunny-Mega',
     'baseSpecies': 'Lopunny',
@@ -12306,13 +12509,15 @@ const BattlePokedex = {
       'spd': 96,
       'spe': 135
     },
-    'abilities': {'0': 'Scrappy'},
+    'abilities': {
+      '0': 'Scrappy'
+    },
     'heightm': 1.3,
     'weightkg': 28.3,
     'color': 'Brown',
     'eggGroups': ['Field', 'Human-Like']
   },
-  'mismagius': {
+  {
     'num': 429,
     'species': 'Mismagius',
     'types': ['Ghost'],
@@ -12324,7 +12529,9 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 105
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.9,
     'weightkg': 4.4,
     'color': 'Purple',
@@ -12332,7 +12539,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Amorphous']
   },
-  'honchkrow': {
+  {
     'num': 430,
     'species': 'Honchkrow',
     'types': ['Dark', 'Flying'],
@@ -12356,7 +12563,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Flying']
   },
-  'glameow': {
+  {
     'num': 431,
     'species': 'Glameow',
     'types': ['Normal'],
@@ -12383,7 +12590,7 @@ const BattlePokedex = {
     'evos': ['purugly'],
     'eggGroups': ['Field']
   },
-  'purugly': {
+  {
     'num': 432,
     'species': 'Purugly',
     'types': ['Normal'],
@@ -12411,7 +12618,7 @@ const BattlePokedex = {
     'evoLevel': 38,
     'eggGroups': ['Field']
   },
-  'chingling': {
+  {
     'num': 433,
     'species': 'Chingling',
     'types': ['Psychic'],
@@ -12423,14 +12630,16 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 45
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.2,
     'weightkg': 0.6,
     'color': 'Yellow',
     'evos': ['chimecho'],
     'eggGroups': ['Undiscovered']
   },
-  'stunky': {
+  {
     'num': 434,
     'species': 'Stunky',
     'types': ['Poison', 'Dark'],
@@ -12453,7 +12662,7 @@ const BattlePokedex = {
     'evos': ['skuntank'],
     'eggGroups': ['Field']
   },
-  'skuntank': {
+  {
     'num': 435,
     'species': 'Skuntank',
     'types': ['Poison', 'Dark'],
@@ -12477,7 +12686,7 @@ const BattlePokedex = {
     'evoLevel': 34,
     'eggGroups': ['Field']
   },
-  'bronzor': {
+  {
     'num': 436,
     'species': 'Bronzor',
     'types': ['Steel', 'Psychic'],
@@ -12501,7 +12710,7 @@ const BattlePokedex = {
     'evos': ['bronzong'],
     'eggGroups': ['Mineral']
   },
-  'bronzong': {
+  {
     'num': 437,
     'species': 'Bronzong',
     'types': ['Steel', 'Psychic'],
@@ -12526,7 +12735,7 @@ const BattlePokedex = {
     'evoLevel': 33,
     'eggGroups': ['Mineral']
   },
-  'bonsly': {
+  {
     'num': 438,
     'species': 'Bonsly',
     'types': ['Rock'],
@@ -12549,7 +12758,7 @@ const BattlePokedex = {
     'evos': ['sudowoodo'],
     'eggGroups': ['Undiscovered']
   },
-  'mimejr': {
+  {
     'num': 439,
     'species': 'Mime Jr.',
     'types': ['Psychic', 'Fairy'],
@@ -12572,7 +12781,7 @@ const BattlePokedex = {
     'evos': ['mrmime'],
     'eggGroups': ['Undiscovered']
   },
-  'happiny': {
+  {
     'num': 440,
     'species': 'Happiny',
     'types': ['Normal'],
@@ -12596,7 +12805,7 @@ const BattlePokedex = {
     'evos': ['chansey'],
     'eggGroups': ['Undiscovered']
   },
-  'chatot': {
+  {
     'num': 441,
     'species': 'Chatot',
     'types': ['Normal', 'Flying'],
@@ -12618,7 +12827,7 @@ const BattlePokedex = {
     'color': 'Black',
     'eggGroups': ['Flying']
   },
-  'spiritomb': {
+  {
     'num': 442,
     'species': 'Spiritomb',
     'types': ['Ghost', 'Dark'],
@@ -12639,7 +12848,7 @@ const BattlePokedex = {
     'color': 'Purple',
     'eggGroups': ['Amorphous']
   },
-  'gible': {
+  {
     'num': 443,
     'species': 'Gible',
     'types': ['Dragon', 'Ground'],
@@ -12661,7 +12870,7 @@ const BattlePokedex = {
     'evos': ['gabite'],
     'eggGroups': ['Monster', 'Dragon']
   },
-  'gabite': {
+  {
     'num': 444,
     'species': 'Gabite',
     'types': ['Dragon', 'Ground'],
@@ -12685,7 +12894,7 @@ const BattlePokedex = {
     'evoLevel': 24,
     'eggGroups': ['Monster', 'Dragon']
   },
-  'garchomp': {
+  {
     'num': 445,
     'species': 'Garchomp',
     'types': ['Dragon', 'Ground'],
@@ -12709,7 +12918,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster', 'Dragon'],
     'otherFormes': ['garchompmega']
   },
-  'garchompmega': {
+  {
     'num': 445,
     'species': 'Garchomp-Mega',
     'baseSpecies': 'Garchomp',
@@ -12724,13 +12933,15 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 92
     },
-    'abilities': {'0': 'Sand Force'},
+    'abilities': {
+      '0': 'Sand Force'
+    },
     'heightm': 1.9,
     'weightkg': 95,
     'color': 'Blue',
     'eggGroups': ['Monster', 'Dragon']
   },
-  'munchlax': {
+  {
     'num': 446,
     'species': 'Munchlax',
     'types': ['Normal'],
@@ -12757,7 +12968,7 @@ const BattlePokedex = {
     'evos': ['snorlax'],
     'eggGroups': ['Undiscovered']
   },
-  'riolu': {
+  {
     'num': 447,
     'species': 'Riolu',
     'types': ['Fighting'],
@@ -12784,7 +12995,7 @@ const BattlePokedex = {
     'evos': ['lucario'],
     'eggGroups': ['Undiscovered']
   },
-  'lucario': {
+  {
     'num': 448,
     'species': 'Lucario',
     'types': ['Fighting', 'Steel'],
@@ -12813,7 +13024,7 @@ const BattlePokedex = {
     'eggGroups': ['Field', 'Human-Like'],
     'otherFormes': ['lucariomega']
   },
-  'lucariomega': {
+  {
     'num': 448,
     'species': 'Lucario-Mega',
     'baseSpecies': 'Lucario',
@@ -12832,13 +13043,15 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 112
     },
-    'abilities': {'0': 'Adaptability'},
+    'abilities': {
+      '0': 'Adaptability'
+    },
     'heightm': 1.3,
     'weightkg': 57.5,
     'color': 'Blue',
     'eggGroups': ['Field', 'Human-Like']
   },
-  'hippopotas': {
+  {
     'num': 449,
     'species': 'Hippopotas',
     'types': ['Ground'],
@@ -12860,7 +13073,7 @@ const BattlePokedex = {
     'evos': ['hippowdon'],
     'eggGroups': ['Field']
   },
-  'hippowdon': {
+  {
     'num': 450,
     'species': 'Hippowdon',
     'types': ['Ground'],
@@ -12883,7 +13096,7 @@ const BattlePokedex = {
     'evoLevel': 34,
     'eggGroups': ['Field']
   },
-  'skorupi': {
+  {
     'num': 451,
     'species': 'Skorupi',
     'types': ['Poison', 'Bug'],
@@ -12906,7 +13119,7 @@ const BattlePokedex = {
     'evos': ['drapion'],
     'eggGroups': ['Bug', 'Water 3']
   },
-  'drapion': {
+  {
     'num': 452,
     'species': 'Drapion',
     'types': ['Poison', 'Dark'],
@@ -12930,7 +13143,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Bug', 'Water 3']
   },
-  'croagunk': {
+  {
     'num': 453,
     'species': 'Croagunk',
     'types': ['Poison', 'Fighting'],
@@ -12953,7 +13166,7 @@ const BattlePokedex = {
     'evos': ['toxicroak'],
     'eggGroups': ['Human-Like']
   },
-  'toxicroak': {
+  {
     'num': 454,
     'species': 'Toxicroak',
     'types': ['Poison', 'Fighting'],
@@ -12977,7 +13190,7 @@ const BattlePokedex = {
     'evoLevel': 37,
     'eggGroups': ['Human-Like']
   },
-  'carnivine': {
+  {
     'num': 455,
     'species': 'Carnivine',
     'types': ['Grass'],
@@ -12989,13 +13202,15 @@ const BattlePokedex = {
       'spd': 72,
       'spe': 46
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.4,
     'weightkg': 27,
     'color': 'Green',
     'eggGroups': ['Grass']
   },
-  'finneon': {
+  {
     'num': 456,
     'species': 'Finneon',
     'types': ['Water'],
@@ -13018,7 +13233,7 @@ const BattlePokedex = {
     'evos': ['lumineon'],
     'eggGroups': ['Water 2']
   },
-  'lumineon': {
+  {
     'num': 457,
     'species': 'Lumineon',
     'types': ['Water'],
@@ -13042,7 +13257,7 @@ const BattlePokedex = {
     'evoLevel': 31,
     'eggGroups': ['Water 2']
   },
-  'mantyke': {
+  {
     'num': 458,
     'species': 'Mantyke',
     'types': ['Water', 'Flying'],
@@ -13065,7 +13280,7 @@ const BattlePokedex = {
     'evos': ['mantine'],
     'eggGroups': ['Undiscovered']
   },
-  'snover': {
+  {
     'num': 459,
     'species': 'Snover',
     'types': ['Grass', 'Ice'],
@@ -13087,7 +13302,7 @@ const BattlePokedex = {
     'evos': ['abomasnow'],
     'eggGroups': ['Monster', 'Grass']
   },
-  'abomasnow': {
+  {
     'num': 460,
     'species': 'Abomasnow',
     'types': ['Grass', 'Ice'],
@@ -13111,7 +13326,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster', 'Grass'],
     'otherFormes': ['abomasnowmega']
   },
-  'abomasnowmega': {
+  {
     'num': 460,
     'species': 'Abomasnow-Mega',
     'baseSpecies': 'Abomasnow',
@@ -13126,13 +13341,15 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 30
     },
-    'abilities': {'0': 'Snow Warning'},
+    'abilities': {
+      '0': 'Snow Warning'
+    },
     'heightm': 2.7,
     'weightkg': 185,
     'color': 'White',
     'eggGroups': ['Monster', 'Grass']
   },
-  'weavile': {
+  {
     'num': 461,
     'species': 'Weavile',
     'types': ['Dark', 'Ice'],
@@ -13155,7 +13372,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Field']
   },
-  'magnezone': {
+  {
     'num': 462,
     'species': 'Magnezone',
     'types': ['Electric', 'Steel'],
@@ -13180,7 +13397,7 @@ const BattlePokedex = {
     'evoLevel': 31,
     'eggGroups': ['Mineral']
   },
-  'lickilicky': {
+  {
     'num': 463,
     'species': 'Lickilicky',
     'types': ['Normal'],
@@ -13205,7 +13422,7 @@ const BattlePokedex = {
     'evoMove': 'Rollout',
     'eggGroups': ['Monster']
   },
-  'rhyperior': {
+  {
     'num': 464,
     'species': 'Rhyperior',
     'types': ['Ground', 'Rock'],
@@ -13229,7 +13446,7 @@ const BattlePokedex = {
     'evoLevel': 42,
     'eggGroups': ['Monster', 'Field']
   },
-  'tangrowth': {
+  {
     'num': 465,
     'species': 'Tangrowth',
     'types': ['Grass'],
@@ -13254,7 +13471,7 @@ const BattlePokedex = {
     'evoMove': 'AncientPower',
     'eggGroups': ['Grass']
   },
-  'electivire': {
+  {
     'num': 466,
     'species': 'Electivire',
     'types': ['Electric'],
@@ -13281,7 +13498,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Human-Like']
   },
-  'magmortar': {
+  {
     'num': 467,
     'species': 'Magmortar',
     'types': ['Fire'],
@@ -13308,7 +13525,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Human-Like']
   },
-  'togekiss': {
+  {
     'num': 468,
     'species': 'Togekiss',
     'types': ['Fairy', 'Flying'],
@@ -13336,7 +13553,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Flying', 'Fairy']
   },
-  'yanmega': {
+  {
     'num': 469,
     'species': 'Yanmega',
     'types': ['Bug', 'Flying'],
@@ -13361,7 +13578,7 @@ const BattlePokedex = {
     'evoMove': 'AncientPower',
     'eggGroups': ['Bug']
   },
-  'leafeon': {
+  {
     'num': 470,
     'species': 'Leafeon',
     'types': ['Grass'],
@@ -13388,7 +13605,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Field']
   },
-  'glaceon': {
+  {
     'num': 471,
     'species': 'Glaceon',
     'types': ['Ice'],
@@ -13415,7 +13632,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Field']
   },
-  'gliscor': {
+  {
     'num': 472,
     'species': 'Gliscor',
     'types': ['Ground', 'Flying'],
@@ -13439,7 +13656,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Bug']
   },
-  'mamoswine': {
+  {
     'num': 473,
     'species': 'Mamoswine',
     'types': ['Ice', 'Ground'],
@@ -13464,7 +13681,7 @@ const BattlePokedex = {
     'evoMove': 'AncientPower',
     'eggGroups': ['Field']
   },
-  'porygonz': {
+  {
     'num': 474,
     'species': 'Porygon-Z',
     'types': ['Normal'],
@@ -13489,7 +13706,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Mineral']
   },
-  'gallade': {
+  {
     'num': 475,
     'species': 'Gallade',
     'types': ['Psychic', 'Fighting'],
@@ -13514,7 +13731,7 @@ const BattlePokedex = {
     'eggGroups': ['Amorphous'],
     'otherFormes': ['gallademega']
   },
-  'gallademega': {
+  {
     'num': 475,
     'species': 'Gallade-Mega',
     'baseSpecies': 'Gallade',
@@ -13530,13 +13747,15 @@ const BattlePokedex = {
       'spd': 115,
       'spe': 110
     },
-    'abilities': {'0': 'Inner Focus'},
+    'abilities': {
+      '0': 'Inner Focus'
+    },
     'heightm': 1.6,
     'weightkg': 56.4,
     'color': 'White',
     'eggGroups': ['Amorphous']
   },
-  'probopass': {
+  {
     'num': 476,
     'species': 'Probopass',
     'types': ['Rock', 'Steel'],
@@ -13560,7 +13779,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Mineral']
   },
-  'dusknoir': {
+  {
     'num': 477,
     'species': 'Dusknoir',
     'types': ['Ghost'],
@@ -13583,7 +13802,7 @@ const BattlePokedex = {
     'evoLevel': 37,
     'eggGroups': ['Amorphous']
   },
-  'froslass': {
+  {
     'num': 478,
     'species': 'Froslass',
     'types': ['Ice', 'Ghost'],
@@ -13607,7 +13826,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Fairy', 'Mineral']
   },
-  'rotom': {
+  {
     'num': 479,
     'species': 'Rotom',
     'types': ['Electric', 'Ghost'],
@@ -13620,14 +13839,16 @@ const BattlePokedex = {
       'spd': 77,
       'spe': 91
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.3,
     'weightkg': 0.3,
     'color': 'Red',
     'eggGroups': ['Amorphous'],
     'otherFormes': ['rotomheat', 'rotomwash', 'rotomfrost', 'rotomfan', 'rotommow']
   },
-  'rotomheat': {
+  {
     'num': 479,
     'species': 'Rotom-Heat',
     'baseSpecies': 'Rotom',
@@ -13643,13 +13864,15 @@ const BattlePokedex = {
       'spd': 107,
       'spe': 86
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.3,
     'weightkg': 0.3,
     'color': 'Red',
     'eggGroups': ['Amorphous']
   },
-  'rotomwash': {
+  {
     'num': 479,
     'species': 'Rotom-Wash',
     'baseSpecies': 'Rotom',
@@ -13665,13 +13888,15 @@ const BattlePokedex = {
       'spd': 107,
       'spe': 86
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.3,
     'weightkg': 0.3,
     'color': 'Red',
     'eggGroups': ['Amorphous']
   },
-  'rotomfrost': {
+  {
     'num': 479,
     'species': 'Rotom-Frost',
     'baseSpecies': 'Rotom',
@@ -13687,13 +13912,15 @@ const BattlePokedex = {
       'spd': 107,
       'spe': 86
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.3,
     'weightkg': 0.3,
     'color': 'Red',
     'eggGroups': ['Amorphous']
   },
-  'rotomfan': {
+  {
     'num': 479,
     'species': 'Rotom-Fan',
     'baseSpecies': 'Rotom',
@@ -13709,13 +13936,15 @@ const BattlePokedex = {
       'spd': 107,
       'spe': 86
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.3,
     'weightkg': 0.3,
     'color': 'Red',
     'eggGroups': ['Amorphous']
   },
-  'rotommow': {
+  {
     'num': 479,
     'species': 'Rotom-Mow',
     'baseSpecies': 'Rotom',
@@ -13731,13 +13960,15 @@ const BattlePokedex = {
       'spd': 107,
       'spe': 86
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.3,
     'weightkg': 0.3,
     'color': 'Red',
     'eggGroups': ['Amorphous']
   },
-  'uxie': {
+  {
     'num': 480,
     'species': 'Uxie',
     'types': ['Psychic'],
@@ -13750,13 +13981,15 @@ const BattlePokedex = {
       'spd': 130,
       'spe': 95
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.3,
     'weightkg': 0.3,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'mesprit': {
+  {
     'num': 481,
     'species': 'Mesprit',
     'types': ['Psychic'],
@@ -13769,13 +14002,15 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 80
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.3,
     'weightkg': 0.3,
     'color': 'Pink',
     'eggGroups': ['Undiscovered']
   },
-  'azelf': {
+  {
     'num': 482,
     'species': 'Azelf',
     'types': ['Psychic'],
@@ -13788,13 +14023,15 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 115
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.3,
     'weightkg': 0.3,
     'color': 'Blue',
     'eggGroups': ['Undiscovered']
   },
-  'dialga': {
+  {
     'num': 483,
     'species': 'Dialga',
     'types': ['Steel', 'Dragon'],
@@ -13816,7 +14053,7 @@ const BattlePokedex = {
     'color': 'White',
     'eggGroups': ['Undiscovered']
   },
-  'palkia': {
+  {
     'num': 484,
     'species': 'Palkia',
     'types': ['Water', 'Dragon'],
@@ -13838,7 +14075,7 @@ const BattlePokedex = {
     'color': 'Purple',
     'eggGroups': ['Undiscovered']
   },
-  'heatran': {
+  {
     'num': 485,
     'species': 'Heatran',
     'types': ['Fire', 'Steel'],
@@ -13859,7 +14096,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Undiscovered']
   },
-  'regigigas': {
+  {
     'num': 486,
     'species': 'Regigigas',
     'types': ['Normal'],
@@ -13872,13 +14109,15 @@ const BattlePokedex = {
       'spd': 110,
       'spe': 100
     },
-    'abilities': {'0': 'Slow Start'},
+    'abilities': {
+      '0': 'Slow Start'
+    },
     'heightm': 3.7,
     'weightkg': 420,
     'color': 'White',
     'eggGroups': ['Undiscovered']
   },
-  'giratina': {
+  {
     'num': 487,
     'species': 'Giratina',
     'baseForme': 'Altered',
@@ -13902,7 +14141,7 @@ const BattlePokedex = {
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['giratinaorigin']
   },
-  'giratinaorigin': {
+  {
     'num': 487,
     'species': 'Giratina-Origin',
     'baseSpecies': 'Giratina',
@@ -13918,13 +14157,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 90
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 6.9,
     'weightkg': 650,
     'color': 'Black',
     'eggGroups': ['Undiscovered']
   },
-  'cresselia': {
+  {
     'num': 488,
     'species': 'Cresselia',
     'types': ['Psychic'],
@@ -13937,13 +14178,15 @@ const BattlePokedex = {
       'spd': 130,
       'spe': 85
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.5,
     'weightkg': 85.6,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'phione': {
+  {
     'num': 489,
     'species': 'Phione',
     'types': ['Water'],
@@ -13956,13 +14199,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 80
     },
-    'abilities': {'0': 'Hydration'},
+    'abilities': {
+      '0': 'Hydration'
+    },
     'heightm': 0.4,
     'weightkg': 3.1,
     'color': 'Blue',
     'eggGroups': ['Water 1', 'Fairy']
   },
-  'manaphy': {
+  {
     'num': 490,
     'species': 'Manaphy',
     'types': ['Water'],
@@ -13975,13 +14220,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Hydration'},
+    'abilities': {
+      '0': 'Hydration'
+    },
     'heightm': 0.3,
     'weightkg': 1.4,
     'color': 'Blue',
     'eggGroups': ['Water 1', 'Fairy']
   },
-  'darkrai': {
+  {
     'num': 491,
     'species': 'Darkrai',
     'types': ['Dark'],
@@ -13994,13 +14241,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 125
     },
-    'abilities': {'0': 'Bad Dreams'},
+    'abilities': {
+      '0': 'Bad Dreams'
+    },
     'heightm': 1.5,
     'weightkg': 50.5,
     'color': 'Black',
     'eggGroups': ['Undiscovered']
   },
-  'shaymin': {
+  {
     'num': 492,
     'species': 'Shaymin',
     'baseForme': 'Land',
@@ -14014,14 +14263,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Natural Cure'},
+    'abilities': {
+      '0': 'Natural Cure'
+    },
     'heightm': 0.2,
     'weightkg': 2.1,
     'color': 'Green',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['shayminsky']
   },
-  'shayminsky': {
+  {
     'num': 492,
     'species': 'Shaymin-Sky',
     'baseSpecies': 'Shaymin',
@@ -14037,13 +14288,15 @@ const BattlePokedex = {
       'spd': 75,
       'spe': 127
     },
-    'abilities': {'0': 'Serene Grace'},
+    'abilities': {
+      '0': 'Serene Grace'
+    },
     'heightm': 0.4,
     'weightkg': 5.2,
     'color': 'Green',
     'eggGroups': ['Undiscovered']
   },
-  'arceus': {
+  {
     'num': 493,
     'species': 'Arceus',
     'baseForme': 'Normal',
@@ -14057,14 +14310,16 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['arceusbug', 'arceusdark', 'arceusdragon', 'arceuselectric', 'arceusfairy', 'arceusfighting', 'arceusfire', 'arceusflying', 'arceusghost', 'arceusgrass', 'arceusground', 'arceusice', 'arceuspoison', 'arceuspsychic', 'arceusrock', 'arceussteel', 'arceuswater']
   },
-  'arceusbug': {
+  {
     'num': 493,
     'species': 'Arceus-Bug',
     'baseSpecies': 'Arceus',
@@ -14080,13 +14335,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceusdark': {
+  {
     'num': 493,
     'species': 'Arceus-Dark',
     'baseSpecies': 'Arceus',
@@ -14102,13 +14359,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceusdragon': {
+  {
     'num': 493,
     'species': 'Arceus-Dragon',
     'baseSpecies': 'Arceus',
@@ -14124,13 +14383,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceuselectric': {
+  {
     'num': 493,
     'species': 'Arceus-Electric',
     'baseSpecies': 'Arceus',
@@ -14146,13 +14407,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceusfairy': {
+  {
     'num': 493,
     'species': 'Arceus-Fairy',
     'baseSpecies': 'Arceus',
@@ -14168,13 +14431,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceusfighting': {
+  {
     'num': 493,
     'species': 'Arceus-Fighting',
     'baseSpecies': 'Arceus',
@@ -14190,13 +14455,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceusfire': {
+  {
     'num': 493,
     'species': 'Arceus-Fire',
     'baseSpecies': 'Arceus',
@@ -14212,13 +14479,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceusflying': {
+  {
     'num': 493,
     'species': 'Arceus-Flying',
     'baseSpecies': 'Arceus',
@@ -14234,13 +14503,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceusghost': {
+  {
     'num': 493,
     'species': 'Arceus-Ghost',
     'baseSpecies': 'Arceus',
@@ -14256,13 +14527,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceusgrass': {
+  {
     'num': 493,
     'species': 'Arceus-Grass',
     'baseSpecies': 'Arceus',
@@ -14278,13 +14551,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceusground': {
+  {
     'num': 493,
     'species': 'Arceus-Ground',
     'baseSpecies': 'Arceus',
@@ -14300,13 +14575,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceusice': {
+  {
     'num': 493,
     'species': 'Arceus-Ice',
     'baseSpecies': 'Arceus',
@@ -14322,13 +14599,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceuspoison': {
+  {
     'num': 493,
     'species': 'Arceus-Poison',
     'baseSpecies': 'Arceus',
@@ -14344,13 +14623,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceuspsychic': {
+  {
     'num': 493,
     'species': 'Arceus-Psychic',
     'baseSpecies': 'Arceus',
@@ -14366,13 +14647,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceusrock': {
+  {
     'num': 493,
     'species': 'Arceus-Rock',
     'baseSpecies': 'Arceus',
@@ -14388,13 +14671,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceussteel': {
+  {
     'num': 493,
     'species': 'Arceus-Steel',
     'baseSpecies': 'Arceus',
@@ -14410,13 +14695,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arceuswater': {
+  {
     'num': 493,
     'species': 'Arceus-Water',
     'baseSpecies': 'Arceus',
@@ -14432,13 +14719,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 120
     },
-    'abilities': {'0': 'Multitype'},
+    'abilities': {
+      '0': 'Multitype'
+    },
     'heightm': 3.2,
     'weightkg': 320,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'victini': {
+  {
     'num': 494,
     'species': 'Victini',
     'types': ['Psychic', 'Fire'],
@@ -14451,13 +14740,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Victory Star'},
+    'abilities': {
+      '0': 'Victory Star'
+    },
     'heightm': 0.4,
     'weightkg': 4,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'snivy': {
+  {
     'num': 495,
     'species': 'Snivy',
     'types': ['Grass'],
@@ -14483,7 +14774,7 @@ const BattlePokedex = {
     'evos': ['servine'],
     'eggGroups': ['Field', 'Grass']
   },
-  'servine': {
+  {
     'num': 496,
     'species': 'Servine',
     'types': ['Grass'],
@@ -14511,7 +14802,7 @@ const BattlePokedex = {
     'evoLevel': 17,
     'eggGroups': ['Field', 'Grass']
   },
-  'serperior': {
+  {
     'num': 497,
     'species': 'Serperior',
     'types': ['Grass'],
@@ -14538,7 +14829,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Field', 'Grass']
   },
-  'tepig': {
+  {
     'num': 498,
     'species': 'Tepig',
     'types': ['Fire'],
@@ -14564,7 +14855,7 @@ const BattlePokedex = {
     'evos': ['pignite'],
     'eggGroups': ['Field']
   },
-  'pignite': {
+  {
     'num': 499,
     'species': 'Pignite',
     'types': ['Fire', 'Fighting'],
@@ -14592,7 +14883,7 @@ const BattlePokedex = {
     'evoLevel': 17,
     'eggGroups': ['Field']
   },
-  'emboar': {
+  {
     'num': 500,
     'species': 'Emboar',
     'types': ['Fire', 'Fighting'],
@@ -14619,7 +14910,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Field']
   },
-  'oshawott': {
+  {
     'num': 501,
     'species': 'Oshawott',
     'types': ['Water'],
@@ -14645,7 +14936,7 @@ const BattlePokedex = {
     'evos': ['dewott'],
     'eggGroups': ['Field']
   },
-  'dewott': {
+  {
     'num': 502,
     'species': 'Dewott',
     'types': ['Water'],
@@ -14673,7 +14964,7 @@ const BattlePokedex = {
     'evoLevel': 17,
     'eggGroups': ['Field']
   },
-  'samurott': {
+  {
     'num': 503,
     'species': 'Samurott',
     'types': ['Water'],
@@ -14700,7 +14991,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Field']
   },
-  'patrat': {
+  {
     'num': 504,
     'species': 'Patrat',
     'types': ['Normal'],
@@ -14723,7 +15014,7 @@ const BattlePokedex = {
     'evos': ['watchog'],
     'eggGroups': ['Field']
   },
-  'watchog': {
+  {
     'num': 505,
     'species': 'Watchog',
     'types': ['Normal'],
@@ -14747,7 +15038,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Field']
   },
-  'lillipup': {
+  {
     'num': 506,
     'species': 'Lillipup',
     'types': ['Normal'],
@@ -14770,7 +15061,7 @@ const BattlePokedex = {
     'evos': ['herdier'],
     'eggGroups': ['Field']
   },
-  'herdier': {
+  {
     'num': 507,
     'species': 'Herdier',
     'types': ['Normal'],
@@ -14795,7 +15086,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Field']
   },
-  'stoutland': {
+  {
     'num': 508,
     'species': 'Stoutland',
     'types': ['Normal'],
@@ -14819,7 +15110,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Field']
   },
-  'purrloin': {
+  {
     'num': 509,
     'species': 'Purrloin',
     'types': ['Dark'],
@@ -14842,7 +15133,7 @@ const BattlePokedex = {
     'evos': ['liepard'],
     'eggGroups': ['Field']
   },
-  'liepard': {
+  {
     'num': 510,
     'species': 'Liepard',
     'types': ['Dark'],
@@ -14866,7 +15157,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Field']
   },
-  'pansage': {
+  {
     'num': 511,
     'species': 'Pansage',
     'types': ['Grass'],
@@ -14892,7 +15183,7 @@ const BattlePokedex = {
     'evos': ['simisage'],
     'eggGroups': ['Field']
   },
-  'simisage': {
+  {
     'num': 512,
     'species': 'Simisage',
     'types': ['Grass'],
@@ -14919,7 +15210,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field']
   },
-  'pansear': {
+  {
     'num': 513,
     'species': 'Pansear',
     'types': ['Fire'],
@@ -14945,7 +15236,7 @@ const BattlePokedex = {
     'evos': ['simisear'],
     'eggGroups': ['Field']
   },
-  'simisear': {
+  {
     'num': 514,
     'species': 'Simisear',
     'types': ['Fire'],
@@ -14972,7 +15263,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field']
   },
-  'panpour': {
+  {
     'num': 515,
     'species': 'Panpour',
     'types': ['Water'],
@@ -14998,7 +15289,7 @@ const BattlePokedex = {
     'evos': ['simipour'],
     'eggGroups': ['Field']
   },
-  'simipour': {
+  {
     'num': 516,
     'species': 'Simipour',
     'types': ['Water'],
@@ -15025,7 +15316,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field']
   },
-  'munna': {
+  {
     'num': 517,
     'species': 'Munna',
     'types': ['Psychic'],
@@ -15048,7 +15339,7 @@ const BattlePokedex = {
     'evos': ['musharna'],
     'eggGroups': ['Field']
   },
-  'musharna': {
+  {
     'num': 518,
     'species': 'Musharna',
     'types': ['Psychic'],
@@ -15072,7 +15363,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field']
   },
-  'pidove': {
+  {
     'num': 519,
     'species': 'Pidove',
     'types': ['Normal', 'Flying'],
@@ -15095,7 +15386,7 @@ const BattlePokedex = {
     'evos': ['tranquill'],
     'eggGroups': ['Flying']
   },
-  'tranquill': {
+  {
     'num': 520,
     'species': 'Tranquill',
     'types': ['Normal', 'Flying'],
@@ -15120,7 +15411,7 @@ const BattlePokedex = {
     'evoLevel': 21,
     'eggGroups': ['Flying']
   },
-  'unfezant': {
+  {
     'num': 521,
     'species': 'Unfezant',
     'types': ['Normal', 'Flying'],
@@ -15144,7 +15435,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Flying']
   },
-  'blitzle': {
+  {
     'num': 522,
     'species': 'Blitzle',
     'types': ['Electric'],
@@ -15167,7 +15458,7 @@ const BattlePokedex = {
     'evos': ['zebstrika'],
     'eggGroups': ['Field']
   },
-  'zebstrika': {
+  {
     'num': 523,
     'species': 'Zebstrika',
     'types': ['Electric'],
@@ -15191,7 +15482,7 @@ const BattlePokedex = {
     'evoLevel': 27,
     'eggGroups': ['Field']
   },
-  'roggenrola': {
+  {
     'num': 524,
     'species': 'Roggenrola',
     'types': ['Rock'],
@@ -15214,7 +15505,7 @@ const BattlePokedex = {
     'evos': ['boldore'],
     'eggGroups': ['Mineral']
   },
-  'boldore': {
+  {
     'num': 525,
     'species': 'Boldore',
     'types': ['Rock'],
@@ -15239,7 +15530,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Mineral']
   },
-  'gigalith': {
+  {
     'num': 526,
     'species': 'Gigalith',
     'types': ['Rock'],
@@ -15263,7 +15554,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Mineral']
   },
-  'woobat': {
+  {
     'num': 527,
     'species': 'Woobat',
     'types': ['Psychic', 'Flying'],
@@ -15286,7 +15577,7 @@ const BattlePokedex = {
     'evos': ['swoobat'],
     'eggGroups': ['Flying', 'Field']
   },
-  'swoobat': {
+  {
     'num': 528,
     'species': 'Swoobat',
     'types': ['Psychic', 'Flying'],
@@ -15310,7 +15601,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Flying', 'Field']
   },
-  'drilbur': {
+  {
     'num': 529,
     'species': 'Drilbur',
     'types': ['Ground'],
@@ -15333,7 +15624,7 @@ const BattlePokedex = {
     'evos': ['excadrill'],
     'eggGroups': ['Field']
   },
-  'excadrill': {
+  {
     'num': 530,
     'species': 'Excadrill',
     'types': ['Ground', 'Steel'],
@@ -15357,7 +15648,7 @@ const BattlePokedex = {
     'evoLevel': 31,
     'eggGroups': ['Field']
   },
-  'audino': {
+  {
     'num': 531,
     'species': 'Audino',
     'types': ['Normal'],
@@ -15380,7 +15671,7 @@ const BattlePokedex = {
     'eggGroups': ['Fairy'],
     'otherFormes': ['audinomega']
   },
-  'audinomega': {
+  {
     'num': 531,
     'species': 'Audino-Mega',
     'baseSpecies': 'Audino',
@@ -15395,13 +15686,15 @@ const BattlePokedex = {
       'spd': 126,
       'spe': 50
     },
-    'abilities': {'0': 'Healer'},
+    'abilities': {
+      '0': 'Healer'
+    },
     'heightm': 1.5,
     'weightkg': 32,
     'color': 'White',
     'eggGroups': ['Fairy']
   },
-  'timburr': {
+  {
     'num': 532,
     'species': 'Timburr',
     'types': ['Fighting'],
@@ -15428,7 +15721,7 @@ const BattlePokedex = {
     'evos': ['gurdurr'],
     'eggGroups': ['Human-Like']
   },
-  'gurdurr': {
+  {
     'num': 533,
     'species': 'Gurdurr',
     'types': ['Fighting'],
@@ -15457,7 +15750,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Human-Like']
   },
-  'conkeldurr': {
+  {
     'num': 534,
     'species': 'Conkeldurr',
     'types': ['Fighting'],
@@ -15485,7 +15778,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Human-Like']
   },
-  'tympole': {
+  {
     'num': 535,
     'species': 'Tympole',
     'types': ['Water'],
@@ -15508,7 +15801,7 @@ const BattlePokedex = {
     'evos': ['palpitoad'],
     'eggGroups': ['Water 1']
   },
-  'palpitoad': {
+  {
     'num': 536,
     'species': 'Palpitoad',
     'types': ['Water', 'Ground'],
@@ -15533,7 +15826,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Water 1']
   },
-  'seismitoad': {
+  {
     'num': 537,
     'species': 'Seismitoad',
     'types': ['Water', 'Ground'],
@@ -15557,7 +15850,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Water 1']
   },
-  'throh': {
+  {
     'num': 538,
     'species': 'Throh',
     'types': ['Fighting'],
@@ -15580,7 +15873,7 @@ const BattlePokedex = {
     'color': 'Red',
     'eggGroups': ['Human-Like']
   },
-  'sawk': {
+  {
     'num': 539,
     'species': 'Sawk',
     'types': ['Fighting'],
@@ -15603,7 +15896,7 @@ const BattlePokedex = {
     'color': 'Blue',
     'eggGroups': ['Human-Like']
   },
-  'sewaddle': {
+  {
     'num': 540,
     'species': 'Sewaddle',
     'types': ['Bug', 'Grass'],
@@ -15626,7 +15919,7 @@ const BattlePokedex = {
     'evos': ['swadloon'],
     'eggGroups': ['Bug']
   },
-  'swadloon': {
+  {
     'num': 541,
     'species': 'Swadloon',
     'types': ['Bug', 'Grass'],
@@ -15651,7 +15944,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Bug']
   },
-  'leavanny': {
+  {
     'num': 542,
     'species': 'Leavanny',
     'types': ['Bug', 'Grass'],
@@ -15675,7 +15968,7 @@ const BattlePokedex = {
     'evoLevel': 21,
     'eggGroups': ['Bug']
   },
-  'venipede': {
+  {
     'num': 543,
     'species': 'Venipede',
     'types': ['Bug', 'Poison'],
@@ -15698,7 +15991,7 @@ const BattlePokedex = {
     'evos': ['whirlipede'],
     'eggGroups': ['Bug']
   },
-  'whirlipede': {
+  {
     'num': 544,
     'species': 'Whirlipede',
     'types': ['Bug', 'Poison'],
@@ -15723,7 +16016,7 @@ const BattlePokedex = {
     'evoLevel': 22,
     'eggGroups': ['Bug']
   },
-  'scolipede': {
+  {
     'num': 545,
     'species': 'Scolipede',
     'types': ['Bug', 'Poison'],
@@ -15747,7 +16040,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Bug']
   },
-  'cottonee': {
+  {
     'num': 546,
     'species': 'Cottonee',
     'types': ['Grass', 'Fairy'],
@@ -15770,7 +16063,7 @@ const BattlePokedex = {
     'evos': ['whimsicott'],
     'eggGroups': ['Fairy', 'Grass']
   },
-  'whimsicott': {
+  {
     'num': 547,
     'species': 'Whimsicott',
     'types': ['Grass', 'Fairy'],
@@ -15794,7 +16087,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Fairy', 'Grass']
   },
-  'petilil': {
+  {
     'num': 548,
     'species': 'Petilil',
     'types': ['Grass'],
@@ -15818,7 +16111,7 @@ const BattlePokedex = {
     'evos': ['lilligant'],
     'eggGroups': ['Grass']
   },
-  'lilligant': {
+  {
     'num': 549,
     'species': 'Lilligant',
     'types': ['Grass'],
@@ -15843,7 +16136,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Grass']
   },
-  'basculin': {
+  {
     'num': 550,
     'species': 'Basculin',
     'baseForme': 'Red-Striped',
@@ -15867,7 +16160,7 @@ const BattlePokedex = {
     'eggGroups': ['Water 2'],
     'otherFormes': ['basculinbluestriped']
   },
-  'basculinbluestriped': {
+  {
     'num': 550,
     'species': 'Basculin-Blue-Striped',
     'baseSpecies': 'Basculin',
@@ -15892,7 +16185,7 @@ const BattlePokedex = {
     'color': 'Green',
     'eggGroups': ['Water 2']
   },
-  'sandile': {
+  {
     'num': 551,
     'species': 'Sandile',
     'types': ['Ground', 'Dark'],
@@ -15915,7 +16208,7 @@ const BattlePokedex = {
     'evos': ['krokorok'],
     'eggGroups': ['Field']
   },
-  'krokorok': {
+  {
     'num': 552,
     'species': 'Krokorok',
     'types': ['Ground', 'Dark'],
@@ -15940,7 +16233,7 @@ const BattlePokedex = {
     'evoLevel': 29,
     'eggGroups': ['Field']
   },
-  'krookodile': {
+  {
     'num': 553,
     'species': 'Krookodile',
     'types': ['Ground', 'Dark'],
@@ -15964,7 +16257,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Field']
   },
-  'darumaka': {
+  {
     'num': 554,
     'species': 'Darumaka',
     'types': ['Fire'],
@@ -15986,7 +16279,7 @@ const BattlePokedex = {
     'evos': ['darmanitan'],
     'eggGroups': ['Field']
   },
-  'darmanitan': {
+  {
     'num': 555,
     'species': 'Darmanitan',
     'baseForme': 'Standard',
@@ -16011,7 +16304,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['darmanitanzen']
   },
-  'darmanitanzen': {
+  {
     'num': 555,
     'species': 'Darmanitan-Zen',
     'baseSpecies': 'Darmanitan',
@@ -16026,7 +16319,9 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 55
     },
-    'abilities': {'0': 'Zen Mode'},
+    'abilities': {
+      '0': 'Zen Mode'
+    },
     'heightm': 1.3,
     'weightkg': 92.9,
     'color': 'Blue',
@@ -16034,7 +16329,7 @@ const BattlePokedex = {
     'evoLevel': 35,
     'eggGroups': ['Field']
   },
-  'maractus': {
+  {
     'num': 556,
     'species': 'Maractus',
     'types': ['Grass'],
@@ -16056,7 +16351,7 @@ const BattlePokedex = {
     'color': 'Green',
     'eggGroups': ['Grass']
   },
-  'dwebble': {
+  {
     'num': 557,
     'species': 'Dwebble',
     'types': ['Bug', 'Rock'],
@@ -16079,7 +16374,7 @@ const BattlePokedex = {
     'evos': ['crustle'],
     'eggGroups': ['Bug', 'Mineral']
   },
-  'crustle': {
+  {
     'num': 558,
     'species': 'Crustle',
     'types': ['Bug', 'Rock'],
@@ -16103,7 +16398,7 @@ const BattlePokedex = {
     'evoLevel': 34,
     'eggGroups': ['Bug', 'Mineral']
   },
-  'scraggy': {
+  {
     'num': 559,
     'species': 'Scraggy',
     'types': ['Dark', 'Fighting'],
@@ -16126,7 +16421,7 @@ const BattlePokedex = {
     'evos': ['scrafty'],
     'eggGroups': ['Field', 'Dragon']
   },
-  'scrafty': {
+  {
     'num': 560,
     'species': 'Scrafty',
     'types': ['Dark', 'Fighting'],
@@ -16150,7 +16445,7 @@ const BattlePokedex = {
     'evoLevel': 39,
     'eggGroups': ['Field', 'Dragon']
   },
-  'sigilyph': {
+  {
     'num': 561,
     'species': 'Sigilyph',
     'types': ['Psychic', 'Flying'],
@@ -16172,7 +16467,7 @@ const BattlePokedex = {
     'color': 'Black',
     'eggGroups': ['Flying']
   },
-  'yamask': {
+  {
     'num': 562,
     'species': 'Yamask',
     'types': ['Ghost'],
@@ -16184,14 +16479,16 @@ const BattlePokedex = {
       'spd': 65,
       'spe': 30
     },
-    'abilities': {'0': 'Mummy'},
+    'abilities': {
+      '0': 'Mummy'
+    },
     'heightm': 0.5,
     'weightkg': 1.5,
     'color': 'Black',
     'evos': ['cofagrigus'],
     'eggGroups': ['Mineral', 'Amorphous']
   },
-  'cofagrigus': {
+  {
     'num': 563,
     'species': 'Cofagrigus',
     'types': ['Ghost'],
@@ -16203,7 +16500,9 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 30
     },
-    'abilities': {'0': 'Mummy'},
+    'abilities': {
+      '0': 'Mummy'
+    },
     'heightm': 1.7,
     'weightkg': 76.5,
     'color': 'Yellow',
@@ -16211,7 +16510,7 @@ const BattlePokedex = {
     'evoLevel': 34,
     'eggGroups': ['Mineral', 'Amorphous']
   },
-  'tirtouga': {
+  {
     'num': 564,
     'species': 'Tirtouga',
     'types': ['Water', 'Rock'],
@@ -16238,7 +16537,7 @@ const BattlePokedex = {
     'evos': ['carracosta'],
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'carracosta': {
+  {
     'num': 565,
     'species': 'Carracosta',
     'types': ['Water', 'Rock'],
@@ -16266,7 +16565,7 @@ const BattlePokedex = {
     'evoLevel': 37,
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'archen': {
+  {
     'num': 566,
     'species': 'Archen',
     'types': ['Rock', 'Flying'],
@@ -16282,14 +16581,16 @@ const BattlePokedex = {
       'spd': 45,
       'spe': 70
     },
-    'abilities': {'0': 'Defeatist'},
+    'abilities': {
+      '0': 'Defeatist'
+    },
     'heightm': 0.5,
     'weightkg': 9.5,
     'color': 'Yellow',
     'evos': ['archeops'],
     'eggGroups': ['Flying', 'Water 3']
   },
-  'archeops': {
+  {
     'num': 567,
     'species': 'Archeops',
     'types': ['Rock', 'Flying'],
@@ -16305,7 +16606,9 @@ const BattlePokedex = {
       'spd': 65,
       'spe': 110
     },
-    'abilities': {'0': 'Defeatist'},
+    'abilities': {
+      '0': 'Defeatist'
+    },
     'heightm': 1.4,
     'weightkg': 32,
     'color': 'Yellow',
@@ -16313,7 +16616,7 @@ const BattlePokedex = {
     'evoLevel': 37,
     'eggGroups': ['Flying', 'Water 3']
   },
-  'trubbish': {
+  {
     'num': 568,
     'species': 'Trubbish',
     'types': ['Poison'],
@@ -16336,7 +16639,7 @@ const BattlePokedex = {
     'evos': ['garbodor'],
     'eggGroups': ['Mineral']
   },
-  'garbodor': {
+  {
     'num': 569,
     'species': 'Garbodor',
     'types': ['Poison'],
@@ -16360,7 +16663,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Mineral']
   },
-  'zorua': {
+  {
     'num': 570,
     'species': 'Zorua',
     'types': ['Dark'],
@@ -16376,14 +16679,16 @@ const BattlePokedex = {
       'spd': 40,
       'spe': 65
     },
-    'abilities': {'0': 'Illusion'},
+    'abilities': {
+      '0': 'Illusion'
+    },
     'heightm': 0.7,
     'weightkg': 12.5,
     'color': 'Gray',
     'evos': ['zoroark'],
     'eggGroups': ['Field']
   },
-  'zoroark': {
+  {
     'num': 571,
     'species': 'Zoroark',
     'types': ['Dark'],
@@ -16399,7 +16704,9 @@ const BattlePokedex = {
       'spd': 60,
       'spe': 105
     },
-    'abilities': {'0': 'Illusion'},
+    'abilities': {
+      '0': 'Illusion'
+    },
     'heightm': 1.6,
     'weightkg': 81.1,
     'color': 'Gray',
@@ -16407,7 +16714,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Field']
   },
-  'minccino': {
+  {
     'num': 572,
     'species': 'Minccino',
     'types': ['Normal'],
@@ -16434,7 +16741,7 @@ const BattlePokedex = {
     'evos': ['cinccino'],
     'eggGroups': ['Field']
   },
-  'cinccino': {
+  {
     'num': 573,
     'species': 'Cinccino',
     'types': ['Normal'],
@@ -16462,7 +16769,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Field']
   },
-  'gothita': {
+  {
     'num': 574,
     'species': 'Gothita',
     'types': ['Psychic'],
@@ -16489,7 +16796,7 @@ const BattlePokedex = {
     'evos': ['gothorita'],
     'eggGroups': ['Human-Like']
   },
-  'gothorita': {
+  {
     'num': 575,
     'species': 'Gothorita',
     'types': ['Psychic'],
@@ -16518,7 +16825,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Human-Like']
   },
-  'gothitelle': {
+  {
     'num': 576,
     'species': 'Gothitelle',
     'types': ['Psychic'],
@@ -16546,7 +16853,7 @@ const BattlePokedex = {
     'evoLevel': 41,
     'eggGroups': ['Human-Like']
   },
-  'solosis': {
+  {
     'num': 577,
     'species': 'Solosis',
     'types': ['Psychic'],
@@ -16569,7 +16876,7 @@ const BattlePokedex = {
     'evos': ['duosion'],
     'eggGroups': ['Amorphous']
   },
-  'duosion': {
+  {
     'num': 578,
     'species': 'Duosion',
     'types': ['Psychic'],
@@ -16594,7 +16901,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Amorphous']
   },
-  'reuniclus': {
+  {
     'num': 579,
     'species': 'Reuniclus',
     'types': ['Psychic'],
@@ -16618,7 +16925,7 @@ const BattlePokedex = {
     'evoLevel': 41,
     'eggGroups': ['Amorphous']
   },
-  'ducklett': {
+  {
     'num': 580,
     'species': 'Ducklett',
     'types': ['Water', 'Flying'],
@@ -16641,7 +16948,7 @@ const BattlePokedex = {
     'evos': ['swanna'],
     'eggGroups': ['Water 1', 'Flying']
   },
-  'swanna': {
+  {
     'num': 581,
     'species': 'Swanna',
     'types': ['Water', 'Flying'],
@@ -16665,7 +16972,7 @@ const BattlePokedex = {
     'evoLevel': 35,
     'eggGroups': ['Water 1', 'Flying']
   },
-  'vanillite': {
+  {
     'num': 582,
     'species': 'Vanillite',
     'types': ['Ice'],
@@ -16688,7 +16995,7 @@ const BattlePokedex = {
     'evos': ['vanillish'],
     'eggGroups': ['Mineral']
   },
-  'vanillish': {
+  {
     'num': 583,
     'species': 'Vanillish',
     'types': ['Ice'],
@@ -16713,7 +17020,7 @@ const BattlePokedex = {
     'evoLevel': 35,
     'eggGroups': ['Mineral']
   },
-  'vanilluxe': {
+  {
     'num': 584,
     'species': 'Vanilluxe',
     'types': ['Ice'],
@@ -16737,7 +17044,7 @@ const BattlePokedex = {
     'evoLevel': 47,
     'eggGroups': ['Mineral']
   },
-  'deerling': {
+  {
     'num': 585,
     'species': 'Deerling',
     'baseForme': 'Spring',
@@ -16762,7 +17069,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherForms': ['deerlingsummer', 'deerlingautumn', 'deerlingwinter']
   },
-  'sawsbuck': {
+  {
     'num': 586,
     'species': 'Sawsbuck',
     'baseForme': 'Spring',
@@ -16788,7 +17095,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherForms': ['sawsbucksummer', 'sawsbuckautumn', 'sawsbuckwinter']
   },
-  'emolga': {
+  {
     'num': 587,
     'species': 'Emolga',
     'types': ['Electric', 'Flying'],
@@ -16809,7 +17116,7 @@ const BattlePokedex = {
     'color': 'White',
     'eggGroups': ['Field']
   },
-  'karrablast': {
+  {
     'num': 588,
     'species': 'Karrablast',
     'types': ['Bug'],
@@ -16832,7 +17139,7 @@ const BattlePokedex = {
     'evos': ['escavalier'],
     'eggGroups': ['Bug']
   },
-  'escavalier': {
+  {
     'num': 589,
     'species': 'Escavalier',
     'types': ['Bug', 'Steel'],
@@ -16856,7 +17163,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Bug']
   },
-  'foongus': {
+  {
     'num': 590,
     'species': 'Foongus',
     'types': ['Grass', 'Poison'],
@@ -16878,7 +17185,7 @@ const BattlePokedex = {
     'evos': ['amoonguss'],
     'eggGroups': ['Grass']
   },
-  'amoonguss': {
+  {
     'num': 591,
     'species': 'Amoonguss',
     'types': ['Grass', 'Poison'],
@@ -16901,7 +17208,7 @@ const BattlePokedex = {
     'evoLevel': 39,
     'eggGroups': ['Grass']
   },
-  'frillish': {
+  {
     'num': 592,
     'species': 'Frillish',
     'types': ['Water', 'Ghost'],
@@ -16924,7 +17231,7 @@ const BattlePokedex = {
     'evos': ['jellicent'],
     'eggGroups': ['Amorphous']
   },
-  'jellicent': {
+  {
     'num': 593,
     'species': 'Jellicent',
     'types': ['Water', 'Ghost'],
@@ -16948,7 +17255,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Amorphous']
   },
-  'alomomola': {
+  {
     'num': 594,
     'species': 'Alomomola',
     'types': ['Water'],
@@ -16970,7 +17277,7 @@ const BattlePokedex = {
     'color': 'Pink',
     'eggGroups': ['Water 1', 'Water 2']
   },
-  'joltik': {
+  {
     'num': 595,
     'species': 'Joltik',
     'types': ['Bug', 'Electric'],
@@ -16993,7 +17300,7 @@ const BattlePokedex = {
     'evos': ['galvantula'],
     'eggGroups': ['Bug']
   },
-  'galvantula': {
+  {
     'num': 596,
     'species': 'Galvantula',
     'types': ['Bug', 'Electric'],
@@ -17017,7 +17324,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Bug']
   },
-  'ferroseed': {
+  {
     'num': 597,
     'species': 'Ferroseed',
     'types': ['Grass', 'Steel'],
@@ -17029,14 +17336,16 @@ const BattlePokedex = {
       'spd': 86,
       'spe': 10
     },
-    'abilities': {'0': 'Iron Barbs'},
+    'abilities': {
+      '0': 'Iron Barbs'
+    },
     'heightm': 0.6,
     'weightkg': 18.8,
     'color': 'Gray',
     'evos': ['ferrothorn'],
     'eggGroups': ['Grass', 'Mineral']
   },
-  'ferrothorn': {
+  {
     'num': 598,
     'species': 'Ferrothorn',
     'types': ['Grass', 'Steel'],
@@ -17059,7 +17368,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Grass', 'Mineral']
   },
-  'klink': {
+  {
     'num': 599,
     'species': 'Klink',
     'types': ['Steel'],
@@ -17083,7 +17392,7 @@ const BattlePokedex = {
     'evos': ['klang'],
     'eggGroups': ['Mineral']
   },
-  'klang': {
+  {
     'num': 600,
     'species': 'Klang',
     'types': ['Steel'],
@@ -17109,7 +17418,7 @@ const BattlePokedex = {
     'evoLevel': 38,
     'eggGroups': ['Mineral']
   },
-  'klinklang': {
+  {
     'num': 601,
     'species': 'Klinklang',
     'types': ['Steel'],
@@ -17134,7 +17443,7 @@ const BattlePokedex = {
     'evoLevel': 49,
     'eggGroups': ['Mineral']
   },
-  'tynamo': {
+  {
     'num': 602,
     'species': 'Tynamo',
     'types': ['Electric'],
@@ -17146,14 +17455,16 @@ const BattlePokedex = {
       'spd': 40,
       'spe': 60
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 0.2,
     'weightkg': 0.3,
     'color': 'White',
     'evos': ['eelektrik'],
     'eggGroups': ['Amorphous']
   },
-  'eelektrik': {
+  {
     'num': 603,
     'species': 'Eelektrik',
     'types': ['Electric'],
@@ -17165,7 +17476,9 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 40
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.2,
     'weightkg': 22,
     'color': 'Blue',
@@ -17174,7 +17487,7 @@ const BattlePokedex = {
     'evoLevel': 39,
     'eggGroups': ['Amorphous']
   },
-  'eelektross': {
+  {
     'num': 604,
     'species': 'Eelektross',
     'types': ['Electric'],
@@ -17186,7 +17499,9 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 50
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 2.1,
     'weightkg': 80.5,
     'color': 'Blue',
@@ -17194,7 +17509,7 @@ const BattlePokedex = {
     'evoLevel': 39,
     'eggGroups': ['Amorphous']
   },
-  'elgyem': {
+  {
     'num': 605,
     'species': 'Elgyem',
     'types': ['Psychic'],
@@ -17217,7 +17532,7 @@ const BattlePokedex = {
     'evos': ['beheeyem'],
     'eggGroups': ['Human-Like']
   },
-  'beheeyem': {
+  {
     'num': 606,
     'species': 'Beheeyem',
     'types': ['Psychic'],
@@ -17241,7 +17556,7 @@ const BattlePokedex = {
     'evoLevel': 42,
     'eggGroups': ['Human-Like']
   },
-  'litwick': {
+  {
     'num': 607,
     'species': 'Litwick',
     'types': ['Ghost', 'Fire'],
@@ -17264,7 +17579,7 @@ const BattlePokedex = {
     'evos': ['lampent'],
     'eggGroups': ['Amorphous']
   },
-  'lampent': {
+  {
     'num': 608,
     'species': 'Lampent',
     'types': ['Ghost', 'Fire'],
@@ -17289,7 +17604,7 @@ const BattlePokedex = {
     'evoLevel': 41,
     'eggGroups': ['Amorphous']
   },
-  'chandelure': {
+  {
     'num': 609,
     'species': 'Chandelure',
     'types': ['Ghost', 'Fire'],
@@ -17313,7 +17628,7 @@ const BattlePokedex = {
     'evoLevel': 41,
     'eggGroups': ['Amorphous']
   },
-  'axew': {
+  {
     'num': 610,
     'species': 'Axew',
     'types': ['Dragon'],
@@ -17336,7 +17651,7 @@ const BattlePokedex = {
     'evos': ['fraxure'],
     'eggGroups': ['Monster', 'Dragon']
   },
-  'fraxure': {
+  {
     'num': 611,
     'species': 'Fraxure',
     'types': ['Dragon'],
@@ -17361,7 +17676,7 @@ const BattlePokedex = {
     'evoLevel': 38,
     'eggGroups': ['Monster', 'Dragon']
   },
-  'haxorus': {
+  {
     'num': 612,
     'species': 'Haxorus',
     'types': ['Dragon'],
@@ -17385,7 +17700,7 @@ const BattlePokedex = {
     'evoLevel': 48,
     'eggGroups': ['Monster', 'Dragon']
   },
-  'cubchoo': {
+  {
     'num': 613,
     'species': 'Cubchoo',
     'types': ['Ice'],
@@ -17408,7 +17723,7 @@ const BattlePokedex = {
     'evos': ['beartic'],
     'eggGroups': ['Field']
   },
-  'beartic': {
+  {
     'num': 614,
     'species': 'Beartic',
     'types': ['Ice'],
@@ -17432,7 +17747,7 @@ const BattlePokedex = {
     'evoLevel': 37,
     'eggGroups': ['Field']
   },
-  'cryogonal': {
+  {
     'num': 615,
     'species': 'Cryogonal',
     'types': ['Ice'],
@@ -17445,13 +17760,15 @@ const BattlePokedex = {
       'spd': 135,
       'spe': 105
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.1,
     'weightkg': 148,
     'color': 'Blue',
     'eggGroups': ['Mineral']
   },
-  'shelmet': {
+  {
     'num': 616,
     'species': 'Shelmet',
     'types': ['Bug'],
@@ -17474,7 +17791,7 @@ const BattlePokedex = {
     'evos': ['accelgor'],
     'eggGroups': ['Bug']
   },
-  'accelgor': {
+  {
     'num': 617,
     'species': 'Accelgor',
     'types': ['Bug'],
@@ -17498,7 +17815,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Bug']
   },
-  'stunfisk': {
+  {
     'num': 618,
     'species': 'Stunfisk',
     'types': ['Ground', 'Electric'],
@@ -17520,7 +17837,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Water 1', 'Amorphous']
   },
-  'mienfoo': {
+  {
     'num': 619,
     'species': 'Mienfoo',
     'types': ['Fighting'],
@@ -17543,7 +17860,7 @@ const BattlePokedex = {
     'evos': ['mienshao'],
     'eggGroups': ['Field', 'Human-Like']
   },
-  'mienshao': {
+  {
     'num': 620,
     'species': 'Mienshao',
     'types': ['Fighting'],
@@ -17567,7 +17884,7 @@ const BattlePokedex = {
     'evoLevel': 50,
     'eggGroups': ['Field', 'Human-Like']
   },
-  'druddigon': {
+  {
     'num': 621,
     'species': 'Druddigon',
     'types': ['Dragon'],
@@ -17589,7 +17906,7 @@ const BattlePokedex = {
     'color': 'Red',
     'eggGroups': ['Monster', 'Dragon']
   },
-  'golett': {
+  {
     'num': 622,
     'species': 'Golett',
     'types': ['Ground', 'Ghost'],
@@ -17613,7 +17930,7 @@ const BattlePokedex = {
     'evos': ['golurk'],
     'eggGroups': ['Mineral']
   },
-  'golurk': {
+  {
     'num': 623,
     'species': 'Golurk',
     'types': ['Ground', 'Ghost'],
@@ -17638,7 +17955,7 @@ const BattlePokedex = {
     'evoLevel': 43,
     'eggGroups': ['Mineral']
   },
-  'pawniard': {
+  {
     'num': 624,
     'species': 'Pawniard',
     'types': ['Dark', 'Steel'],
@@ -17661,7 +17978,7 @@ const BattlePokedex = {
     'evos': ['bisharp'],
     'eggGroups': ['Human-Like']
   },
-  'bisharp': {
+  {
     'num': 625,
     'species': 'Bisharp',
     'types': ['Dark', 'Steel'],
@@ -17685,7 +18002,7 @@ const BattlePokedex = {
     'evoLevel': 52,
     'eggGroups': ['Human-Like']
   },
-  'bouffalant': {
+  {
     'num': 626,
     'species': 'Bouffalant',
     'types': ['Normal'],
@@ -17707,7 +18024,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Field']
   },
-  'rufflet': {
+  {
     'num': 627,
     'species': 'Rufflet',
     'types': ['Normal', 'Flying'],
@@ -17731,7 +18048,7 @@ const BattlePokedex = {
     'evos': ['braviary'],
     'eggGroups': ['Flying']
   },
-  'braviary': {
+  {
     'num': 628,
     'species': 'Braviary',
     'types': ['Normal', 'Flying'],
@@ -17756,7 +18073,7 @@ const BattlePokedex = {
     'evoLevel': 54,
     'eggGroups': ['Flying']
   },
-  'vullaby': {
+  {
     'num': 629,
     'species': 'Vullaby',
     'types': ['Dark', 'Flying'],
@@ -17780,7 +18097,7 @@ const BattlePokedex = {
     'evos': ['mandibuzz'],
     'eggGroups': ['Flying']
   },
-  'mandibuzz': {
+  {
     'num': 630,
     'species': 'Mandibuzz',
     'types': ['Dark', 'Flying'],
@@ -17805,7 +18122,7 @@ const BattlePokedex = {
     'evoLevel': 54,
     'eggGroups': ['Flying']
   },
-  'heatmor': {
+  {
     'num': 631,
     'species': 'Heatmor',
     'types': ['Fire'],
@@ -17827,7 +18144,7 @@ const BattlePokedex = {
     'color': 'Red',
     'eggGroups': ['Field']
   },
-  'durant': {
+  {
     'num': 632,
     'species': 'Durant',
     'types': ['Bug', 'Steel'],
@@ -17849,7 +18166,7 @@ const BattlePokedex = {
     'color': 'Gray',
     'eggGroups': ['Bug']
   },
-  'deino': {
+  {
     'num': 633,
     'species': 'Deino',
     'types': ['Dark', 'Dragon'],
@@ -17861,14 +18178,16 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 38
     },
-    'abilities': {'0': 'Hustle'},
+    'abilities': {
+      '0': 'Hustle'
+    },
     'heightm': 0.8,
     'weightkg': 17.3,
     'color': 'Blue',
     'evos': ['zweilous'],
     'eggGroups': ['Dragon']
   },
-  'zweilous': {
+  {
     'num': 634,
     'species': 'Zweilous',
     'types': ['Dark', 'Dragon'],
@@ -17880,7 +18199,9 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 58
     },
-    'abilities': {'0': 'Hustle'},
+    'abilities': {
+      '0': 'Hustle'
+    },
     'heightm': 1.4,
     'weightkg': 50,
     'color': 'Blue',
@@ -17889,7 +18210,7 @@ const BattlePokedex = {
     'evoLevel': 50,
     'eggGroups': ['Dragon']
   },
-  'hydreigon': {
+  {
     'num': 635,
     'species': 'Hydreigon',
     'types': ['Dark', 'Dragon'],
@@ -17901,7 +18222,9 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 98
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.8,
     'weightkg': 160,
     'color': 'Blue',
@@ -17909,7 +18232,7 @@ const BattlePokedex = {
     'evoLevel': 64,
     'eggGroups': ['Dragon']
   },
-  'larvesta': {
+  {
     'num': 636,
     'species': 'Larvesta',
     'types': ['Bug', 'Fire'],
@@ -17931,7 +18254,7 @@ const BattlePokedex = {
     'evos': ['volcarona'],
     'eggGroups': ['Bug']
   },
-  'volcarona': {
+  {
     'num': 637,
     'species': 'Volcarona',
     'types': ['Bug', 'Fire'],
@@ -17954,7 +18277,7 @@ const BattlePokedex = {
     'evoLevel': 59,
     'eggGroups': ['Bug']
   },
-  'cobalion': {
+  {
     'num': 638,
     'species': 'Cobalion',
     'types': ['Steel', 'Fighting'],
@@ -17967,13 +18290,15 @@ const BattlePokedex = {
       'spd': 72,
       'spe': 108
     },
-    'abilities': {'0': 'Justified'},
+    'abilities': {
+      '0': 'Justified'
+    },
     'heightm': 2.1,
     'weightkg': 250,
     'color': 'Blue',
     'eggGroups': ['Undiscovered']
   },
-  'terrakion': {
+  {
     'num': 639,
     'species': 'Terrakion',
     'types': ['Rock', 'Fighting'],
@@ -17986,13 +18311,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 108
     },
-    'abilities': {'0': 'Justified'},
+    'abilities': {
+      '0': 'Justified'
+    },
     'heightm': 1.9,
     'weightkg': 260,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'virizion': {
+  {
     'num': 640,
     'species': 'Virizion',
     'types': ['Grass', 'Fighting'],
@@ -18005,13 +18332,15 @@ const BattlePokedex = {
       'spd': 129,
       'spe': 108
     },
-    'abilities': {'0': 'Justified'},
+    'abilities': {
+      '0': 'Justified'
+    },
     'heightm': 2,
     'weightkg': 200,
     'color': 'Green',
     'eggGroups': ['Undiscovered']
   },
-  'tornadus': {
+  {
     'num': 641,
     'species': 'Tornadus',
     'baseForme': 'Incarnate',
@@ -18035,7 +18364,7 @@ const BattlePokedex = {
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['tornadustherian']
   },
-  'tornadustherian': {
+  {
     'num': 641,
     'species': 'Tornadus-Therian',
     'baseSpecies': 'Tornadus',
@@ -18051,13 +18380,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 121
     },
-    'abilities': {'0': 'Regenerator'},
+    'abilities': {
+      '0': 'Regenerator'
+    },
     'heightm': 1.4,
     'weightkg': 63,
     'color': 'Green',
     'eggGroups': ['Undiscovered']
   },
-  'thundurus': {
+  {
     'num': 642,
     'species': 'Thundurus',
     'baseForme': 'Incarnate',
@@ -18081,7 +18412,7 @@ const BattlePokedex = {
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['thundurustherian']
   },
-  'thundurustherian': {
+  {
     'num': 642,
     'species': 'Thundurus-Therian',
     'baseSpecies': 'Thundurus',
@@ -18097,13 +18428,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 101
     },
-    'abilities': {'0': 'Volt Absorb'},
+    'abilities': {
+      '0': 'Volt Absorb'
+    },
     'heightm': 3,
     'weightkg': 61,
     'color': 'Blue',
     'eggGroups': ['Undiscovered']
   },
-  'reshiram': {
+  {
     'num': 643,
     'species': 'Reshiram',
     'types': ['Dragon', 'Fire'],
@@ -18116,13 +18449,15 @@ const BattlePokedex = {
       'spd': 120,
       'spe': 90
     },
-    'abilities': {'0': 'Turboblaze'},
+    'abilities': {
+      '0': 'Turboblaze'
+    },
     'heightm': 3.2,
     'weightkg': 330,
     'color': 'White',
     'eggGroups': ['Undiscovered']
   },
-  'zekrom': {
+  {
     'num': 644,
     'species': 'Zekrom',
     'types': ['Dragon', 'Electric'],
@@ -18135,13 +18470,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 90
     },
-    'abilities': {'0': 'Teravolt'},
+    'abilities': {
+      '0': 'Teravolt'
+    },
     'heightm': 2.9,
     'weightkg': 345,
     'color': 'Black',
     'eggGroups': ['Undiscovered']
   },
-  'landorus': {
+  {
     'num': 645,
     'species': 'Landorus',
     'baseForme': 'Incarnate',
@@ -18165,7 +18502,7 @@ const BattlePokedex = {
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['landorustherian']
   },
-  'landorustherian': {
+  {
     'num': 645,
     'species': 'Landorus-Therian',
     'baseSpecies': 'Landorus',
@@ -18181,13 +18518,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 91
     },
-    'abilities': {'0': 'Intimidate'},
+    'abilities': {
+      '0': 'Intimidate'
+    },
     'heightm': 1.3,
     'weightkg': 68,
     'color': 'Brown',
     'eggGroups': ['Undiscovered']
   },
-  'kyurem': {
+  {
     'num': 646,
     'species': 'Kyurem',
     'types': ['Dragon', 'Ice'],
@@ -18200,14 +18539,16 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 95
     },
-    'abilities': {'0': 'Pressure'},
+    'abilities': {
+      '0': 'Pressure'
+    },
     'heightm': 3,
     'weightkg': 325,
     'color': 'Gray',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['kyuremblack', 'kyuremwhite']
   },
-  'kyuremblack': {
+  {
     'num': 646,
     'species': 'Kyurem-Black',
     'baseSpecies': 'Kyurem',
@@ -18223,13 +18564,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 95
     },
-    'abilities': {'0': 'Teravolt'},
+    'abilities': {
+      '0': 'Teravolt'
+    },
     'heightm': 3.3,
     'weightkg': 325,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'kyuremwhite': {
+  {
     'num': 646,
     'species': 'Kyurem-White',
     'baseSpecies': 'Kyurem',
@@ -18245,13 +18588,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 95
     },
-    'abilities': {'0': 'Turboblaze'},
+    'abilities': {
+      '0': 'Turboblaze'
+    },
     'heightm': 3.6,
     'weightkg': 325,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'keldeo': {
+  {
     'num': 647,
     'species': 'Keldeo',
     'baseForme': 'Ordinary',
@@ -18265,14 +18610,16 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 108
     },
-    'abilities': {'0': 'Justified'},
+    'abilities': {
+      '0': 'Justified'
+    },
     'heightm': 1.4,
     'weightkg': 48.5,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['keldeoresolute']
   },
-  'keldeoresolute': {
+  {
     'num': 647,
     'species': 'Keldeo-Resolute',
     'baseSpecies': 'Keldeo',
@@ -18288,13 +18635,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 108
     },
-    'abilities': {'0': 'Justified'},
+    'abilities': {
+      '0': 'Justified'
+    },
     'heightm': 1.4,
     'weightkg': 48.5,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'meloetta': {
+  {
     'num': 648,
     'species': 'Meloetta',
     'baseForme': 'Aria',
@@ -18308,14 +18657,16 @@ const BattlePokedex = {
       'spd': 128,
       'spe': 90
     },
-    'abilities': {'0': 'Serene Grace'},
+    'abilities': {
+      '0': 'Serene Grace'
+    },
     'heightm': 0.6,
     'weightkg': 6.5,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['meloettapirouette']
   },
-  'meloettapirouette': {
+  {
     'num': 648,
     'species': 'Meloetta-Pirouette',
     'baseSpecies': 'Meloetta',
@@ -18331,13 +18682,15 @@ const BattlePokedex = {
       'spd': 77,
       'spe': 128
     },
-    'abilities': {'0': 'Serene Grace'},
+    'abilities': {
+      '0': 'Serene Grace'
+    },
     'heightm': 0.6,
     'weightkg': 6.5,
     'color': 'White',
     'eggGroups': ['Undiscovered']
   },
-  'genesect': {
+  {
     'num': 649,
     'species': 'Genesect',
     'types': ['Bug', 'Steel'],
@@ -18350,14 +18703,16 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 99
     },
-    'abilities': {'0': 'Download'},
+    'abilities': {
+      '0': 'Download'
+    },
     'heightm': 1.5,
     'weightkg': 82.5,
     'color': 'Purple',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['genesectdouse', 'genesectshock', 'genesectburn', 'genesectchill']
   },
-  'genesectdouse': {
+  {
     'num': 649,
     'species': 'Genesect-Douse',
     'baseSpecies': 'Genesect',
@@ -18373,13 +18728,15 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 99
     },
-    'abilities': {'0': 'Download'},
+    'abilities': {
+      '0': 'Download'
+    },
     'heightm': 1.5,
     'weightkg': 82.5,
     'color': 'Purple',
     'eggGroups': ['Undiscovered']
   },
-  'genesectshock': {
+  {
     'num': 649,
     'species': 'Genesect-Shock',
     'baseSpecies': 'Genesect',
@@ -18395,13 +18752,15 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 99
     },
-    'abilities': {'0': 'Download'},
+    'abilities': {
+      '0': 'Download'
+    },
     'heightm': 1.5,
     'weightkg': 82.5,
     'color': 'Purple',
     'eggGroups': ['Undiscovered']
   },
-  'genesectburn': {
+  {
     'num': 649,
     'species': 'Genesect-Burn',
     'baseSpecies': 'Genesect',
@@ -18417,13 +18776,15 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 99
     },
-    'abilities': {'0': 'Download'},
+    'abilities': {
+      '0': 'Download'
+    },
     'heightm': 1.5,
     'weightkg': 82.5,
     'color': 'Purple',
     'eggGroups': ['Undiscovered']
   },
-  'genesectchill': {
+  {
     'num': 649,
     'species': 'Genesect-Chill',
     'baseSpecies': 'Genesect',
@@ -18439,13 +18800,15 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 99
     },
-    'abilities': {'0': 'Download'},
+    'abilities': {
+      '0': 'Download'
+    },
     'heightm': 1.5,
     'weightkg': 82.5,
     'color': 'Purple',
     'eggGroups': ['Undiscovered']
   },
-  'chespin': {
+  {
     'num': 650,
     'species': 'Chespin',
     'types': ['Grass'],
@@ -18471,7 +18834,7 @@ const BattlePokedex = {
     'evos': ['quilladin'],
     'eggGroups': ['Field']
   },
-  'quilladin': {
+  {
     'num': 651,
     'species': 'Quilladin',
     'types': ['Grass'],
@@ -18499,7 +18862,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Field']
   },
-  'chesnaught': {
+  {
     'num': 652,
     'species': 'Chesnaught',
     'types': ['Grass', 'Fighting'],
@@ -18526,7 +18889,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Field']
   },
-  'fennekin': {
+  {
     'num': 653,
     'species': 'Fennekin',
     'types': ['Fire'],
@@ -18552,7 +18915,7 @@ const BattlePokedex = {
     'evos': ['braixen'],
     'eggGroups': ['Field']
   },
-  'braixen': {
+  {
     'num': 654,
     'species': 'Braixen',
     'types': ['Fire'],
@@ -18580,7 +18943,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Field']
   },
-  'delphox': {
+  {
     'num': 655,
     'species': 'Delphox',
     'types': ['Fire', 'Psychic'],
@@ -18607,7 +18970,7 @@ const BattlePokedex = {
     'evoLevel': 36,
     'eggGroups': ['Field']
   },
-  'froakie': {
+  {
     'num': 656,
     'species': 'Froakie',
     'types': ['Water'],
@@ -18633,7 +18996,7 @@ const BattlePokedex = {
     'evos': ['frogadier'],
     'eggGroups': ['Water 1']
   },
-  'frogadier': {
+  {
     'num': 657,
     'species': 'Frogadier',
     'types': ['Water'],
@@ -18661,7 +19024,7 @@ const BattlePokedex = {
     'evoLevel': 16,
     'eggGroups': ['Water 1']
   },
-  'greninja': {
+  {
     'num': 658,
     'species': 'Greninja',
     'types': ['Water', 'Dark'],
@@ -18690,7 +19053,7 @@ const BattlePokedex = {
     'eggGroups': ['Water 1'],
     'otherFormes': ['greninjaash']
   },
-  'greninjaash': {
+  {
     'num': 658,
     'species': 'Greninja-Ash',
     'baseSpecies': 'Greninja',
@@ -18706,13 +19069,15 @@ const BattlePokedex = {
       'spd': 71,
       'spe': 132
     },
-    'abilities': {'0': 'Battle Bond'},
+    'abilities': {
+      '0': 'Battle Bond'
+    },
     'heightm': 1.5,
     'weightkg': 40,
     'color': 'Blue',
     'eggGroups': ['Undiscovered']
   },
-  'bunnelby': {
+  {
     'num': 659,
     'species': 'Bunnelby',
     'types': ['Normal'],
@@ -18735,7 +19100,7 @@ const BattlePokedex = {
     'evos': ['diggersby'],
     'eggGroups': ['Field']
   },
-  'diggersby': {
+  {
     'num': 660,
     'species': 'Diggersby',
     'types': ['Normal', 'Ground'],
@@ -18759,7 +19124,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Field']
   },
-  'fletchling': {
+  {
     'num': 661,
     'species': 'Fletchling',
     'types': ['Normal', 'Flying'],
@@ -18781,7 +19146,7 @@ const BattlePokedex = {
     'evos': ['fletchinder'],
     'eggGroups': ['Flying']
   },
-  'fletchinder': {
+  {
     'num': 662,
     'species': 'Fletchinder',
     'types': ['Fire', 'Flying'],
@@ -18805,7 +19170,7 @@ const BattlePokedex = {
     'evoLevel': 17,
     'eggGroups': ['Flying']
   },
-  'talonflame': {
+  {
     'num': 663,
     'species': 'Talonflame',
     'types': ['Fire', 'Flying'],
@@ -18828,7 +19193,7 @@ const BattlePokedex = {
     'evoLevel': 35,
     'eggGroups': ['Flying']
   },
-  'scatterbug': {
+  {
     'num': 664,
     'species': 'Scatterbug',
     'types': ['Bug'],
@@ -18851,7 +19216,7 @@ const BattlePokedex = {
     'evos': ['spewpa'],
     'eggGroups': ['Bug']
   },
-  'spewpa': {
+  {
     'num': 665,
     'species': 'Spewpa',
     'types': ['Bug'],
@@ -18875,7 +19240,7 @@ const BattlePokedex = {
     'evoLevel': 9,
     'eggGroups': ['Bug']
   },
-  'vivillon': {
+  {
     'num': 666,
     'species': 'Vivillon',
     'types': ['Bug', 'Flying'],
@@ -18901,7 +19266,7 @@ const BattlePokedex = {
     'otherForms': ['vivillonarchipelago', 'vivilloncontinental', 'vivillonelegant', 'vivillongarden', 'vivillonhighplains', 'vivillonicysnow', 'vivillonjungle', 'vivillonmarine', 'vivillonmodern', 'vivillonmonsoon', 'vivillonocean', 'vivillonpolar', 'vivillonriver', 'vivillonsandstorm', 'vivillonsavanna', 'vivillonsun', 'vivillontundra'],
     'otherFormes': ['vivillonfancy', 'vivillonpokeball']
   },
-  'vivillonfancy': {
+  {
     'num': 666,
     'species': 'Vivillon-Fancy',
     'baseSpecies': 'Vivillon',
@@ -18925,7 +19290,7 @@ const BattlePokedex = {
     'color': 'Black',
     'eggGroups': ['Bug']
   },
-  'vivillonpokeball': {
+  {
     'num': 666,
     'species': 'Vivillon-Pokeball',
     'baseSpecies': 'Vivillon',
@@ -18949,7 +19314,7 @@ const BattlePokedex = {
     'color': 'Black',
     'eggGroups': ['Bug']
   },
-  'litleo': {
+  {
     'num': 667,
     'species': 'Litleo',
     'types': ['Fire', 'Normal'],
@@ -18976,7 +19341,7 @@ const BattlePokedex = {
     'evos': ['pyroar'],
     'eggGroups': ['Field']
   },
-  'pyroar': {
+  {
     'num': 668,
     'species': 'Pyroar',
     'types': ['Fire', 'Normal'],
@@ -19004,7 +19369,7 @@ const BattlePokedex = {
     'evoLevel': 35,
     'eggGroups': ['Field']
   },
-  'flabebe': {
+  {
     'num': 669,
     'species': 'Flabe\u0301be\u0301',
     'baseForme': 'Red',
@@ -19029,7 +19394,7 @@ const BattlePokedex = {
     'eggGroups': ['Fairy'],
     'otherForms': ['flabebeblue', 'flabebeorange', 'flabebewhite', 'flabebeyellow']
   },
-  'floette': {
+  {
     'num': 670,
     'species': 'Floette',
     'baseForme': 'Red',
@@ -19057,7 +19422,7 @@ const BattlePokedex = {
     'otherForms': ['floetteblue', 'floetteorange', 'floettewhite', 'floetteyellow'],
     'otherFormes': ['floetteeternal']
   },
-  'floetteeternal': {
+  {
     'num': 670,
     'species': 'Floette-Eternal',
     'baseSpecies': 'Floette',
@@ -19073,13 +19438,15 @@ const BattlePokedex = {
       'spd': 128,
       'spe': 92
     },
-    'abilities': {'0': 'Flower Veil'},
+    'abilities': {
+      '0': 'Flower Veil'
+    },
     'heightm': 0.2,
     'weightkg': 0.9,
     'color': 'White',
     'eggGroups': ['Undiscovered']
   },
-  'florges': {
+  {
     'num': 671,
     'species': 'Florges',
     'baseForme': 'Red',
@@ -19105,7 +19472,7 @@ const BattlePokedex = {
     'eggGroups': ['Fairy'],
     'otherForms': ['florgesblue', 'florgesorange', 'florgeswhite', 'florgesyellow']
   },
-  'skiddo': {
+  {
     'num': 672,
     'species': 'Skiddo',
     'types': ['Grass'],
@@ -19127,7 +19494,7 @@ const BattlePokedex = {
     'evos': ['gogoat'],
     'eggGroups': ['Field']
   },
-  'gogoat': {
+  {
     'num': 673,
     'species': 'Gogoat',
     'types': ['Grass'],
@@ -19150,7 +19517,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Field']
   },
-  'pancham': {
+  {
     'num': 674,
     'species': 'Pancham',
     'types': ['Fighting'],
@@ -19173,7 +19540,7 @@ const BattlePokedex = {
     'evos': ['pangoro'],
     'eggGroups': ['Field', 'Human-Like']
   },
-  'pangoro': {
+  {
     'num': 675,
     'species': 'Pangoro',
     'types': ['Fighting', 'Dark'],
@@ -19197,7 +19564,7 @@ const BattlePokedex = {
     'evoLevel': 32,
     'eggGroups': ['Field', 'Human-Like']
   },
-  'furfrou': {
+  {
     'num': 676,
     'species': 'Furfrou',
     'types': ['Normal'],
@@ -19209,13 +19576,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 102
     },
-    'abilities': {'0': 'Fur Coat'},
+    'abilities': {
+      '0': 'Fur Coat'
+    },
     'heightm': 1.2,
     'weightkg': 28,
     'color': 'White',
     'eggGroups': ['Field']
   },
-  'espurr': {
+  {
     'num': 677,
     'species': 'Espurr',
     'types': ['Psychic'],
@@ -19238,7 +19607,7 @@ const BattlePokedex = {
     'evos': ['meowstic'],
     'eggGroups': ['Field']
   },
-  'meowstic': {
+  {
     'num': 678,
     'species': 'Meowstic',
     'baseForme': 'M',
@@ -19265,7 +19634,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['meowsticf']
   },
-  'meowsticf': {
+  {
     'num': 678,
     'species': 'Meowstic-F',
     'baseSpecies': 'Meowstic',
@@ -19293,7 +19662,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Field']
   },
-  'honedge': {
+  {
     'num': 679,
     'species': 'Honedge',
     'types': ['Steel', 'Ghost'],
@@ -19305,14 +19674,16 @@ const BattlePokedex = {
       'spd': 37,
       'spe': 28
     },
-    'abilities': {'0': 'No Guard'},
+    'abilities': {
+      '0': 'No Guard'
+    },
     'heightm': 0.8,
     'weightkg': 2,
     'color': 'Brown',
     'evos': ['doublade'],
     'eggGroups': ['Mineral']
   },
-  'doublade': {
+  {
     'num': 680,
     'species': 'Doublade',
     'types': ['Steel', 'Ghost'],
@@ -19324,7 +19695,9 @@ const BattlePokedex = {
       'spd': 49,
       'spe': 35
     },
-    'abilities': {'0': 'No Guard'},
+    'abilities': {
+      '0': 'No Guard'
+    },
     'heightm': 0.8,
     'weightkg': 4.5,
     'color': 'Brown',
@@ -19333,7 +19706,7 @@ const BattlePokedex = {
     'evoLevel': 35,
     'eggGroups': ['Mineral']
   },
-  'aegislash': {
+  {
     'num': 681,
     'species': 'Aegislash',
     'baseForme': 'Shield',
@@ -19346,7 +19719,9 @@ const BattlePokedex = {
       'spd': 150,
       'spe': 60
     },
-    'abilities': {'0': 'Stance Change'},
+    'abilities': {
+      '0': 'Stance Change'
+    },
     'heightm': 1.7,
     'weightkg': 53,
     'color': 'Brown',
@@ -19355,7 +19730,7 @@ const BattlePokedex = {
     'eggGroups': ['Mineral'],
     'otherFormes': ['aegislashblade']
   },
-  'aegislashblade': {
+  {
     'num': 681,
     'species': 'Aegislash-Blade',
     'baseSpecies': 'Aegislash',
@@ -19370,7 +19745,9 @@ const BattlePokedex = {
       'spd': 50,
       'spe': 60
     },
-    'abilities': {'0': 'Stance Change'},
+    'abilities': {
+      '0': 'Stance Change'
+    },
     'heightm': 1.7,
     'weightkg': 53,
     'color': 'Brown',
@@ -19378,7 +19755,7 @@ const BattlePokedex = {
     'evoLevel': 35,
     'eggGroups': ['Mineral']
   },
-  'spritzee': {
+  {
     'num': 682,
     'species': 'Spritzee',
     'types': ['Fairy'],
@@ -19400,7 +19777,7 @@ const BattlePokedex = {
     'evos': ['aromatisse'],
     'eggGroups': ['Fairy']
   },
-  'aromatisse': {
+  {
     'num': 683,
     'species': 'Aromatisse',
     'types': ['Fairy'],
@@ -19423,7 +19800,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Fairy']
   },
-  'swirlix': {
+  {
     'num': 684,
     'species': 'Swirlix',
     'types': ['Fairy'],
@@ -19445,7 +19822,7 @@ const BattlePokedex = {
     'evos': ['slurpuff'],
     'eggGroups': ['Fairy']
   },
-  'slurpuff': {
+  {
     'num': 685,
     'species': 'Slurpuff',
     'types': ['Fairy'],
@@ -19468,7 +19845,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Fairy']
   },
-  'inkay': {
+  {
     'num': 686,
     'species': 'Inkay',
     'types': ['Dark', 'Psychic'],
@@ -19491,7 +19868,7 @@ const BattlePokedex = {
     'evos': ['malamar'],
     'eggGroups': ['Water 1', 'Water 2']
   },
-  'malamar': {
+  {
     'num': 687,
     'species': 'Malamar',
     'types': ['Dark', 'Psychic'],
@@ -19515,7 +19892,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Water 1', 'Water 2']
   },
-  'binacle': {
+  {
     'num': 688,
     'species': 'Binacle',
     'types': ['Rock', 'Water'],
@@ -19538,7 +19915,7 @@ const BattlePokedex = {
     'evos': ['barbaracle'],
     'eggGroups': ['Water 3']
   },
-  'barbaracle': {
+  {
     'num': 689,
     'species': 'Barbaracle',
     'types': ['Rock', 'Water'],
@@ -19562,7 +19939,7 @@ const BattlePokedex = {
     'evoLevel': 39,
     'eggGroups': ['Water 3']
   },
-  'skrelp': {
+  {
     'num': 690,
     'species': 'Skrelp',
     'types': ['Poison', 'Water'],
@@ -19585,7 +19962,7 @@ const BattlePokedex = {
     'evos': ['dragalge'],
     'eggGroups': ['Water 1', 'Dragon']
   },
-  'dragalge': {
+  {
     'num': 691,
     'species': 'Dragalge',
     'types': ['Poison', 'Dragon'],
@@ -19609,7 +19986,7 @@ const BattlePokedex = {
     'evoLevel': 48,
     'eggGroups': ['Water 1', 'Dragon']
   },
-  'clauncher': {
+  {
     'num': 692,
     'species': 'Clauncher',
     'types': ['Water'],
@@ -19621,14 +19998,16 @@ const BattlePokedex = {
       'spd': 63,
       'spe': 44
     },
-    'abilities': {'0': 'Mega Launcher'},
+    'abilities': {
+      '0': 'Mega Launcher'
+    },
     'heightm': 0.5,
     'weightkg': 8.3,
     'color': 'Blue',
     'evos': ['clawitzer'],
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'clawitzer': {
+  {
     'num': 693,
     'species': 'Clawitzer',
     'types': ['Water'],
@@ -19640,7 +20019,9 @@ const BattlePokedex = {
       'spd': 89,
       'spe': 59
     },
-    'abilities': {'0': 'Mega Launcher'},
+    'abilities': {
+      '0': 'Mega Launcher'
+    },
     'heightm': 1.3,
     'weightkg': 35.3,
     'color': 'Blue',
@@ -19648,7 +20029,7 @@ const BattlePokedex = {
     'evoLevel': 37,
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'helioptile': {
+  {
     'num': 694,
     'species': 'Helioptile',
     'types': ['Electric', 'Normal'],
@@ -19671,7 +20052,7 @@ const BattlePokedex = {
     'evos': ['heliolisk'],
     'eggGroups': ['Monster', 'Dragon']
   },
-  'heliolisk': {
+  {
     'num': 695,
     'species': 'Heliolisk',
     'types': ['Electric', 'Normal'],
@@ -19695,7 +20076,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Monster', 'Dragon']
   },
-  'tyrunt': {
+  {
     'num': 696,
     'species': 'Tyrunt',
     'types': ['Rock', 'Dragon'],
@@ -19721,7 +20102,7 @@ const BattlePokedex = {
     'evos': ['tyrantrum'],
     'eggGroups': ['Monster', 'Dragon']
   },
-  'tyrantrum': {
+  {
     'num': 697,
     'species': 'Tyrantrum',
     'types': ['Rock', 'Dragon'],
@@ -19748,7 +20129,7 @@ const BattlePokedex = {
     'evoLevel': 39,
     'eggGroups': ['Monster', 'Dragon']
   },
-  'amaura': {
+  {
     'num': 698,
     'species': 'Amaura',
     'types': ['Rock', 'Ice'],
@@ -19774,7 +20155,7 @@ const BattlePokedex = {
     'evos': ['aurorus'],
     'eggGroups': ['Monster']
   },
-  'aurorus': {
+  {
     'num': 699,
     'species': 'Aurorus',
     'types': ['Rock', 'Ice'],
@@ -19801,7 +20182,7 @@ const BattlePokedex = {
     'evoLevel': 39,
     'eggGroups': ['Monster']
   },
-  'sylveon': {
+  {
     'num': 700,
     'species': 'Sylveon',
     'types': ['Fairy'],
@@ -19828,7 +20209,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Field']
   },
-  'hawlucha': {
+  {
     'num': 701,
     'species': 'Hawlucha',
     'types': ['Fighting', 'Flying'],
@@ -19850,7 +20231,7 @@ const BattlePokedex = {
     'color': 'Green',
     'eggGroups': ['Human-Like']
   },
-  'dedenne': {
+  {
     'num': 702,
     'species': 'Dedenne',
     'types': ['Electric', 'Fairy'],
@@ -19872,7 +20253,7 @@ const BattlePokedex = {
     'color': 'Yellow',
     'eggGroups': ['Field', 'Fairy']
   },
-  'carbink': {
+  {
     'num': 703,
     'species': 'Carbink',
     'types': ['Rock', 'Fairy'],
@@ -19894,7 +20275,7 @@ const BattlePokedex = {
     'color': 'Gray',
     'eggGroups': ['Fairy', 'Mineral']
   },
-  'goomy': {
+  {
     'num': 704,
     'species': 'Goomy',
     'types': ['Dragon'],
@@ -19917,7 +20298,7 @@ const BattlePokedex = {
     'evos': ['sliggoo'],
     'eggGroups': ['Dragon']
   },
-  'sliggoo': {
+  {
     'num': 705,
     'species': 'Sliggoo',
     'types': ['Dragon'],
@@ -19942,7 +20323,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Dragon']
   },
-  'goodra': {
+  {
     'num': 706,
     'species': 'Goodra',
     'types': ['Dragon'],
@@ -19966,7 +20347,7 @@ const BattlePokedex = {
     'evoLevel': 50,
     'eggGroups': ['Dragon']
   },
-  'klefki': {
+  {
     'num': 707,
     'species': 'Klefki',
     'types': ['Steel', 'Fairy'],
@@ -19987,7 +20368,7 @@ const BattlePokedex = {
     'color': 'Gray',
     'eggGroups': ['Mineral']
   },
-  'phantump': {
+  {
     'num': 708,
     'species': 'Phantump',
     'types': ['Ghost', 'Grass'],
@@ -20010,7 +20391,7 @@ const BattlePokedex = {
     'evos': ['trevenant'],
     'eggGroups': ['Grass', 'Amorphous']
   },
-  'trevenant': {
+  {
     'num': 709,
     'species': 'Trevenant',
     'types': ['Ghost', 'Grass'],
@@ -20034,7 +20415,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Grass', 'Amorphous']
   },
-  'pumpkaboo': {
+  {
     'num': 710,
     'species': 'Pumpkaboo',
     'baseForme': 'Average',
@@ -20059,7 +20440,7 @@ const BattlePokedex = {
     'eggGroups': ['Amorphous'],
     'otherFormes': ['pumpkaboosmall', 'pumpkaboolarge', 'pumpkaboosuper']
   },
-  'pumpkaboosmall': {
+  {
     'num': 710,
     'species': 'Pumpkaboo-Small',
     'baseSpecies': 'Pumpkaboo',
@@ -20085,7 +20466,7 @@ const BattlePokedex = {
     'evos': ['gourgeistsmall'],
     'eggGroups': ['Amorphous']
   },
-  'pumpkaboolarge': {
+  {
     'num': 710,
     'species': 'Pumpkaboo-Large',
     'baseSpecies': 'Pumpkaboo',
@@ -20111,7 +20492,7 @@ const BattlePokedex = {
     'evos': ['gourgeistlarge'],
     'eggGroups': ['Amorphous']
   },
-  'pumpkaboosuper': {
+  {
     'num': 710,
     'species': 'Pumpkaboo-Super',
     'baseSpecies': 'Pumpkaboo',
@@ -20137,7 +20518,7 @@ const BattlePokedex = {
     'evos': ['gourgeistsuper'],
     'eggGroups': ['Amorphous']
   },
-  'gourgeist': {
+  {
     'num': 711,
     'species': 'Gourgeist',
     'baseForme': 'Average',
@@ -20163,7 +20544,7 @@ const BattlePokedex = {
     'eggGroups': ['Amorphous'],
     'otherFormes': ['gourgeistsmall', 'gourgeistlarge', 'gourgeistsuper']
   },
-  'gourgeistsmall': {
+  {
     'num': 711,
     'species': 'Gourgeist-Small',
     'baseSpecies': 'Gourgeist',
@@ -20190,7 +20571,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Amorphous']
   },
-  'gourgeistlarge': {
+  {
     'num': 711,
     'species': 'Gourgeist-Large',
     'baseSpecies': 'Gourgeist',
@@ -20217,7 +20598,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Amorphous']
   },
-  'gourgeistsuper': {
+  {
     'num': 711,
     'species': 'Gourgeist-Super',
     'baseSpecies': 'Gourgeist',
@@ -20244,7 +20625,7 @@ const BattlePokedex = {
     'evoLevel': 1,
     'eggGroups': ['Amorphous']
   },
-  'bergmite': {
+  {
     'num': 712,
     'species': 'Bergmite',
     'types': ['Ice'],
@@ -20267,7 +20648,7 @@ const BattlePokedex = {
     'evos': ['avalugg'],
     'eggGroups': ['Monster']
   },
-  'avalugg': {
+  {
     'num': 713,
     'species': 'Avalugg',
     'types': ['Ice'],
@@ -20291,7 +20672,7 @@ const BattlePokedex = {
     'evoLevel': 37,
     'eggGroups': ['Monster']
   },
-  'noibat': {
+  {
     'num': 714,
     'species': 'Noibat',
     'types': ['Flying', 'Dragon'],
@@ -20314,7 +20695,7 @@ const BattlePokedex = {
     'evos': ['noivern'],
     'eggGroups': ['Flying']
   },
-  'noivern': {
+  {
     'num': 715,
     'species': 'Noivern',
     'types': ['Flying', 'Dragon'],
@@ -20338,7 +20719,7 @@ const BattlePokedex = {
     'evoLevel': 48,
     'eggGroups': ['Flying']
   },
-  'xerneas': {
+  {
     'num': 716,
     'species': 'Xerneas',
     'types': ['Fairy'],
@@ -20351,13 +20732,15 @@ const BattlePokedex = {
       'spd': 98,
       'spe': 99
     },
-    'abilities': {'0': 'Fairy Aura'},
+    'abilities': {
+      '0': 'Fairy Aura'
+    },
     'heightm': 3,
     'weightkg': 215,
     'color': 'Blue',
     'eggGroups': ['Undiscovered']
   },
-  'yveltal': {
+  {
     'num': 717,
     'species': 'Yveltal',
     'types': ['Dark', 'Flying'],
@@ -20370,13 +20753,15 @@ const BattlePokedex = {
       'spd': 98,
       'spe': 99
     },
-    'abilities': {'0': 'Dark Aura'},
+    'abilities': {
+      '0': 'Dark Aura'
+    },
     'heightm': 5.8,
     'weightkg': 203,
     'color': 'Red',
     'eggGroups': ['Undiscovered']
   },
-  'zygarde': {
+  {
     'num': 718,
     'species': 'Zygarde',
     'baseForme': '50%',
@@ -20400,7 +20785,7 @@ const BattlePokedex = {
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['zygarde10', 'zygardecomplete']
   },
-  'zygarde10': {
+  {
     'num': 718,
     'species': 'Zygarde-10%',
     'baseSpecies': 'Zygarde',
@@ -20425,7 +20810,7 @@ const BattlePokedex = {
     'color': 'Green',
     'eggGroups': ['Undiscovered']
   },
-  'zygardecomplete': {
+  {
     'num': 718,
     'species': 'Zygarde-Complete',
     'baseSpecies': 'Zygarde',
@@ -20441,13 +20826,15 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 85
     },
-    'abilities': {'0': 'Power Construct'},
+    'abilities': {
+      '0': 'Power Construct'
+    },
     'heightm': 4.5,
     'weightkg': 610,
     'color': 'Green',
     'eggGroups': ['Undiscovered']
   },
-  'diancie': {
+  {
     'num': 719,
     'species': 'Diancie',
     'types': ['Rock', 'Fairy'],
@@ -20460,14 +20847,16 @@ const BattlePokedex = {
       'spd': 150,
       'spe': 50
     },
-    'abilities': {'0': 'Clear Body'},
+    'abilities': {
+      '0': 'Clear Body'
+    },
     'heightm': 0.7,
     'weightkg': 8.8,
     'color': 'Pink',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['dianciemega']
   },
-  'dianciemega': {
+  {
     'num': 719,
     'species': 'Diancie-Mega',
     'baseSpecies': 'Diancie',
@@ -20483,13 +20872,15 @@ const BattlePokedex = {
       'spd': 110,
       'spe': 110
     },
-    'abilities': {'0': 'Magic Bounce'},
+    'abilities': {
+      '0': 'Magic Bounce'
+    },
     'heightm': 1.1,
     'weightkg': 27.8,
     'color': 'Pink',
     'eggGroups': ['Undiscovered']
   },
-  'hoopa': {
+  {
     'num': 720,
     'species': 'Hoopa',
     'baseForme': 'Confined',
@@ -20503,14 +20894,16 @@ const BattlePokedex = {
       'spd': 130,
       'spe': 70
     },
-    'abilities': {'0': 'Magician'},
+    'abilities': {
+      '0': 'Magician'
+    },
     'heightm': 0.5,
     'weightkg': 9,
     'color': 'Purple',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['hoopaunbound']
   },
-  'hoopaunbound': {
+  {
     'num': 720,
     'species': 'Hoopa-Unbound',
     'baseSpecies': 'Hoopa',
@@ -20526,13 +20919,15 @@ const BattlePokedex = {
       'spd': 130,
       'spe': 80
     },
-    'abilities': {'0': 'Magician'},
+    'abilities': {
+      '0': 'Magician'
+    },
     'heightm': 6.5,
     'weightkg': 490,
     'color': 'Purple',
     'eggGroups': ['Undiscovered']
   },
-  'volcanion': {
+  {
     'num': 721,
     'species': 'Volcanion',
     'types': ['Fire', 'Water'],
@@ -20545,13 +20940,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 70
     },
-    'abilities': {'0': 'Water Absorb'},
+    'abilities': {
+      '0': 'Water Absorb'
+    },
     'heightm': 1.7,
     'weightkg': 195,
     'color': 'Brown',
     'eggGroups': ['Undiscovered']
   },
-  'rowlet': {
+  {
     'num': 722,
     'species': 'Rowlet',
     'types': ['Grass', 'Flying'],
@@ -20577,7 +20974,7 @@ const BattlePokedex = {
     'evos': ['dartrix'],
     'eggGroups': ['Flying']
   },
-  'dartrix': {
+  {
     'num': 723,
     'species': 'Dartrix',
     'types': ['Grass', 'Flying'],
@@ -20605,7 +21002,7 @@ const BattlePokedex = {
     'evoLevel': 17,
     'eggGroups': ['Flying']
   },
-  'decidueye': {
+  {
     'num': 724,
     'species': 'Decidueye',
     'types': ['Grass', 'Ghost'],
@@ -20632,7 +21029,7 @@ const BattlePokedex = {
     'evoLevel': 34,
     'eggGroups': ['Flying']
   },
-  'litten': {
+  {
     'num': 725,
     'species': 'Litten',
     'types': ['Fire'],
@@ -20658,7 +21055,7 @@ const BattlePokedex = {
     'evos': ['torracat'],
     'eggGroups': ['Field']
   },
-  'torracat': {
+  {
     'num': 726,
     'species': 'Torracat',
     'types': ['Fire'],
@@ -20686,7 +21083,7 @@ const BattlePokedex = {
     'evoLevel': 17,
     'eggGroups': ['Field']
   },
-  'incineroar': {
+  {
     'num': 727,
     'species': 'Incineroar',
     'types': ['Fire', 'Dark'],
@@ -20713,7 +21110,7 @@ const BattlePokedex = {
     'evoLevel': 34,
     'eggGroups': ['Field']
   },
-  'popplio': {
+  {
     'num': 728,
     'species': 'Popplio',
     'types': ['Water'],
@@ -20739,7 +21136,7 @@ const BattlePokedex = {
     'evos': ['brionne'],
     'eggGroups': ['Water 1', 'Field']
   },
-  'brionne': {
+  {
     'num': 729,
     'species': 'Brionne',
     'types': ['Water'],
@@ -20767,7 +21164,7 @@ const BattlePokedex = {
     'evoLevel': 17,
     'eggGroups': ['Water 1', 'Field']
   },
-  'primarina': {
+  {
     'num': 730,
     'species': 'Primarina',
     'types': ['Water', 'Fairy'],
@@ -20794,7 +21191,7 @@ const BattlePokedex = {
     'evoLevel': 34,
     'eggGroups': ['Water 1', 'Field']
   },
-  'pikipek': {
+  {
     'num': 731,
     'species': 'Pikipek',
     'types': ['Normal', 'Flying'],
@@ -20817,7 +21214,7 @@ const BattlePokedex = {
     'evos': ['trumbeak'],
     'eggGroups': ['Flying']
   },
-  'trumbeak': {
+  {
     'num': 732,
     'species': 'Trumbeak',
     'types': ['Normal', 'Flying'],
@@ -20842,7 +21239,7 @@ const BattlePokedex = {
     'evoLevel': 14,
     'eggGroups': ['Flying']
   },
-  'toucannon': {
+  {
     'num': 733,
     'species': 'Toucannon',
     'types': ['Normal', 'Flying'],
@@ -20866,7 +21263,7 @@ const BattlePokedex = {
     'evoLevel': 28,
     'eggGroups': ['Flying']
   },
-  'yungoos': {
+  {
     'num': 734,
     'species': 'Yungoos',
     'types': ['Normal'],
@@ -20889,7 +21286,7 @@ const BattlePokedex = {
     'evos': ['gumshoos'],
     'eggGroups': ['Field']
   },
-  'gumshoos': {
+  {
     'num': 735,
     'species': 'Gumshoos',
     'types': ['Normal'],
@@ -20914,7 +21311,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['gumshoostotem']
   },
-  'gumshoostotem': {
+  {
     'num': 735,
     'species': 'Gumshoos-Totem',
     'baseSpecies': 'Gumshoos',
@@ -20929,13 +21326,15 @@ const BattlePokedex = {
       'spd': 60,
       'spe': 45
     },
-    'abilities': {'0': 'Adaptability'},
+    'abilities': {
+      '0': 'Adaptability'
+    },
     'heightm': 1.4,
     'weightkg': 60,
     'color': 'Brown',
     'eggGroups': ['Field']
   },
-  'grubbin': {
+  {
     'num': 736,
     'species': 'Grubbin',
     'types': ['Bug'],
@@ -20947,14 +21346,16 @@ const BattlePokedex = {
       'spd': 45,
       'spe': 46
     },
-    'abilities': {'0': 'Swarm'},
+    'abilities': {
+      '0': 'Swarm'
+    },
     'heightm': 0.4,
     'weightkg': 4.4,
     'color': 'Gray',
     'evos': ['charjabug'],
     'eggGroups': ['Bug']
   },
-  'charjabug': {
+  {
     'num': 737,
     'species': 'Charjabug',
     'types': ['Bug', 'Electric'],
@@ -20966,7 +21367,9 @@ const BattlePokedex = {
       'spd': 75,
       'spe': 36
     },
-    'abilities': {'0': 'Battery'},
+    'abilities': {
+      '0': 'Battery'
+    },
     'heightm': 0.5,
     'weightkg': 10.5,
     'color': 'Green',
@@ -20975,7 +21378,7 @@ const BattlePokedex = {
     'evoLevel': 20,
     'eggGroups': ['Bug']
   },
-  'vikavolt': {
+  {
     'num': 738,
     'species': 'Vikavolt',
     'types': ['Bug', 'Electric'],
@@ -20987,7 +21390,9 @@ const BattlePokedex = {
       'spd': 75,
       'spe': 43
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.5,
     'weightkg': 45,
     'color': 'Blue',
@@ -20996,7 +21401,7 @@ const BattlePokedex = {
     'eggGroups': ['Bug'],
     'otherFormes': ['vikavolttotem']
   },
-  'vikavolttotem': {
+  {
     'num': 738,
     'species': 'Vikavolt-Totem',
     'baseSpecies': 'Vikavolt',
@@ -21011,13 +21416,15 @@ const BattlePokedex = {
       'spd': 75,
       'spe': 43
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 2.6,
     'weightkg': 147.5,
     'color': 'Blue',
     'eggGroups': ['Bug']
   },
-  'crabrawler': {
+  {
     'num': 739,
     'species': 'Crabrawler',
     'types': ['Fighting'],
@@ -21040,7 +21447,7 @@ const BattlePokedex = {
     'evos': ['crabominable'],
     'eggGroups': ['Water 3']
   },
-  'crabominable': {
+  {
     'num': 740,
     'species': 'Crabominable',
     'types': ['Fighting', 'Ice'],
@@ -21064,7 +21471,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Water 3']
   },
-  'oricorio': {
+  {
     'num': 741,
     'species': 'Oricorio',
     'baseForme': 'Baile',
@@ -21081,14 +21488,16 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 93
     },
-    'abilities': {'0': 'Dancer'},
+    'abilities': {
+      '0': 'Dancer'
+    },
     'heightm': 0.6,
     'weightkg': 3.4,
     'color': 'Red',
     'eggGroups': ['Flying'],
     'otherFormes': ['oricoriopompom', 'oricoriopau', 'oricoriosensu']
   },
-  'oricoriopompom': {
+  {
     'num': 741,
     'species': 'Oricorio-Pom-Pom',
     'baseSpecies': 'Oricorio',
@@ -21107,13 +21516,15 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 93
     },
-    'abilities': {'0': 'Dancer'},
+    'abilities': {
+      '0': 'Dancer'
+    },
     'heightm': 0.6,
     'weightkg': 3.4,
     'color': 'Yellow',
     'eggGroups': ['Flying']
   },
-  'oricoriopau': {
+  {
     'num': 741,
     'species': 'Oricorio-Pa\'u',
     'baseSpecies': 'Oricorio',
@@ -21132,13 +21543,15 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 93
     },
-    'abilities': {'0': 'Dancer'},
+    'abilities': {
+      '0': 'Dancer'
+    },
     'heightm': 0.6,
     'weightkg': 3.4,
     'color': 'Pink',
     'eggGroups': ['Flying']
   },
-  'oricoriosensu': {
+  {
     'num': 741,
     'species': 'Oricorio-Sensu',
     'baseSpecies': 'Oricorio',
@@ -21157,13 +21570,15 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 93
     },
-    'abilities': {'0': 'Dancer'},
+    'abilities': {
+      '0': 'Dancer'
+    },
     'heightm': 0.6,
     'weightkg': 3.4,
     'color': 'Purple',
     'eggGroups': ['Flying']
   },
-  'cutiefly': {
+  {
     'num': 742,
     'species': 'Cutiefly',
     'types': ['Bug', 'Fairy'],
@@ -21186,7 +21601,7 @@ const BattlePokedex = {
     'evos': ['ribombee'],
     'eggGroups': ['Bug', 'Fairy']
   },
-  'ribombee': {
+  {
     'num': 743,
     'species': 'Ribombee',
     'types': ['Bug', 'Fairy'],
@@ -21211,7 +21626,7 @@ const BattlePokedex = {
     'eggGroups': ['Bug', 'Fairy'],
     'otherFormes': ['ribombeetotem']
   },
-  'ribombeetotem': {
+  {
     'num': 743,
     'species': 'Ribombee-Totem',
     'baseSpecies': 'Ribombee',
@@ -21226,13 +21641,15 @@ const BattlePokedex = {
       'spd': 70,
       'spe': 124
     },
-    'abilities': {'0': 'Sweet Veil'},
+    'abilities': {
+      '0': 'Sweet Veil'
+    },
     'heightm': 0.4,
     'weightkg': 2,
     'color': 'Yellow',
     'eggGroups': ['Bug', 'Fairy']
   },
-  'rockruff': {
+  {
     'num': 744,
     'species': 'Rockruff',
     'baseForme': 'Midday',
@@ -21257,7 +21674,7 @@ const BattlePokedex = {
     'evos': ['lycanroc', 'lycanrocmidnight', 'lycanrocdusk'],
     'eggGroups': ['Field']
   },
-  'lycanroc': {
+  {
     'num': 745,
     'species': 'Lycanroc',
     'baseForme': 'Midday',
@@ -21283,7 +21700,7 @@ const BattlePokedex = {
     'eggGroups': ['Field'],
     'otherFormes': ['lycanrocmidnight', 'lycanrocdusk']
   },
-  'lycanrocmidnight': {
+  {
     'num': 745,
     'species': 'Lycanroc-Midnight',
     'baseSpecies': 'Lycanroc',
@@ -21310,7 +21727,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Field']
   },
-  'lycanrocdusk': {
+  {
     'num': 745,
     'species': 'Lycanroc-Dusk',
     'baseSpecies': 'Lycanroc',
@@ -21325,7 +21742,9 @@ const BattlePokedex = {
       'spd': 65,
       'spe': 110
     },
-    'abilities': {'0': 'Tough Claws'},
+    'abilities': {
+      '0': 'Tough Claws'
+    },
     'heightm': 0.8,
     'weightkg': 25,
     'color': 'Brown',
@@ -21333,7 +21752,7 @@ const BattlePokedex = {
     'evoLevel': 25,
     'eggGroups': ['Field']
   },
-  'wishiwashi': {
+  {
     'num': 746,
     'species': 'Wishiwashi',
     'baseForme': 'Solo',
@@ -21346,14 +21765,16 @@ const BattlePokedex = {
       'spd': 25,
       'spe': 40
     },
-    'abilities': {'0': 'Schooling'},
+    'abilities': {
+      '0': 'Schooling'
+    },
     'heightm': 0.2,
     'weightkg': 0.3,
     'color': 'Blue',
     'eggGroups': ['Water 2'],
     'otherFormes': ['wishiwashischool']
   },
-  'wishiwashischool': {
+  {
     'num': 746,
     'species': 'Wishiwashi-School',
     'baseSpecies': 'Wishiwashi',
@@ -21368,13 +21789,15 @@ const BattlePokedex = {
       'spd': 135,
       'spe': 30
     },
-    'abilities': {'0': 'Schooling'},
+    'abilities': {
+      '0': 'Schooling'
+    },
     'heightm': 8.2,
     'weightkg': 78.6,
     'color': 'Blue',
     'eggGroups': ['Water 2']
   },
-  'mareanie': {
+  {
     'num': 747,
     'species': 'Mareanie',
     'types': ['Poison', 'Water'],
@@ -21397,7 +21820,7 @@ const BattlePokedex = {
     'evos': ['toxapex'],
     'eggGroups': ['Water 1']
   },
-  'toxapex': {
+  {
     'num': 748,
     'species': 'Toxapex',
     'types': ['Poison', 'Water'],
@@ -21421,7 +21844,7 @@ const BattlePokedex = {
     'evoLevel': 38,
     'eggGroups': ['Water 1']
   },
-  'mudbray': {
+  {
     'num': 749,
     'species': 'Mudbray',
     'types': ['Ground'],
@@ -21444,7 +21867,7 @@ const BattlePokedex = {
     'evos': ['mudsdale'],
     'eggGroups': ['Field']
   },
-  'mudsdale': {
+  {
     'num': 750,
     'species': 'Mudsdale',
     'types': ['Ground'],
@@ -21468,7 +21891,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Field']
   },
-  'dewpider': {
+  {
     'num': 751,
     'species': 'Dewpider',
     'types': ['Water', 'Bug'],
@@ -21490,7 +21913,7 @@ const BattlePokedex = {
     'evos': ['araquanid'],
     'eggGroups': ['Water 1', 'Bug']
   },
-  'araquanid': {
+  {
     'num': 752,
     'species': 'Araquanid',
     'types': ['Water', 'Bug'],
@@ -21514,7 +21937,7 @@ const BattlePokedex = {
     'eggGroups': ['Water 1', 'Bug'],
     'otherFormes': ['araquanidtotem']
   },
-  'araquanidtotem': {
+  {
     'num': 752,
     'species': 'Araquanid-Totem',
     'baseSpecies': 'Araquanid',
@@ -21529,13 +21952,15 @@ const BattlePokedex = {
       'spd': 132,
       'spe': 42
     },
-    'abilities': {'0': 'Water Bubble'},
+    'abilities': {
+      '0': 'Water Bubble'
+    },
     'heightm': 3.1,
     'weightkg': 217.5,
     'color': 'Green',
     'eggGroups': ['Water 1', 'Bug']
   },
-  'fomantis': {
+  {
     'num': 753,
     'species': 'Fomantis',
     'types': ['Grass'],
@@ -21557,7 +21982,7 @@ const BattlePokedex = {
     'evos': ['lurantis'],
     'eggGroups': ['Grass']
   },
-  'lurantis': {
+  {
     'num': 754,
     'species': 'Lurantis',
     'types': ['Grass'],
@@ -21581,7 +22006,7 @@ const BattlePokedex = {
     'eggGroups': ['Grass'],
     'otherFormes': ['lurantistotem']
   },
-  'lurantistotem': {
+  {
     'num': 754,
     'species': 'Lurantis-Totem',
     'baseSpecies': 'Lurantis',
@@ -21596,13 +22021,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 45
     },
-    'abilities': {'0': 'Leaf Guard'},
+    'abilities': {
+      '0': 'Leaf Guard'
+    },
     'heightm': 1.5,
     'weightkg': 58,
     'color': 'Pink',
     'eggGroups': ['Grass']
   },
-  'morelull': {
+  {
     'num': 755,
     'species': 'Morelull',
     'types': ['Grass', 'Fairy'],
@@ -21625,7 +22052,7 @@ const BattlePokedex = {
     'evos': ['shiinotic'],
     'eggGroups': ['Grass']
   },
-  'shiinotic': {
+  {
     'num': 756,
     'species': 'Shiinotic',
     'types': ['Grass', 'Fairy'],
@@ -21649,7 +22076,7 @@ const BattlePokedex = {
     'evoLevel': 24,
     'eggGroups': ['Grass']
   },
-  'salandit': {
+  {
     'num': 757,
     'species': 'Salandit',
     'types': ['Poison', 'Fire'],
@@ -21675,7 +22102,7 @@ const BattlePokedex = {
     'evos': ['salazzle'],
     'eggGroups': ['Monster', 'Dragon']
   },
-  'salazzle': {
+  {
     'num': 758,
     'species': 'Salazzle',
     'types': ['Poison', 'Fire'],
@@ -21700,7 +22127,7 @@ const BattlePokedex = {
     'eggGroups': ['Monster', 'Dragon'],
     'otherFormes': ['salazzletotem']
   },
-  'salazzletotem': {
+  {
     'num': 758,
     'species': 'Salazzle-Totem',
     'baseSpecies': 'Salazzle',
@@ -21716,13 +22143,15 @@ const BattlePokedex = {
       'spd': 60,
       'spe': 117
     },
-    'abilities': {'0': 'Corrosion'},
+    'abilities': {
+      '0': 'Corrosion'
+    },
     'heightm': 2.1,
     'weightkg': 81,
     'color': 'Black',
     'eggGroups': ['Monster', 'Dragon']
   },
-  'stufful': {
+  {
     'num': 759,
     'species': 'Stufful',
     'types': ['Normal', 'Fighting'],
@@ -21745,7 +22174,7 @@ const BattlePokedex = {
     'evos': ['bewear'],
     'eggGroups': ['Field']
   },
-  'bewear': {
+  {
     'num': 760,
     'species': 'Bewear',
     'types': ['Normal', 'Fighting'],
@@ -21769,7 +22198,7 @@ const BattlePokedex = {
     'evoLevel': 27,
     'eggGroups': ['Field']
   },
-  'bounsweet': {
+  {
     'num': 761,
     'species': 'Bounsweet',
     'types': ['Grass'],
@@ -21793,7 +22222,7 @@ const BattlePokedex = {
     'evos': ['steenee'],
     'eggGroups': ['Grass']
   },
-  'steenee': {
+  {
     'num': 762,
     'species': 'Steenee',
     'types': ['Grass'],
@@ -21819,7 +22248,7 @@ const BattlePokedex = {
     'evoLevel': 18,
     'eggGroups': ['Grass']
   },
-  'tsareena': {
+  {
     'num': 763,
     'species': 'Tsareena',
     'types': ['Grass'],
@@ -21845,7 +22274,7 @@ const BattlePokedex = {
     'evoMove': 'Stomp',
     'eggGroups': ['Grass']
   },
-  'comfey': {
+  {
     'num': 764,
     'species': 'Comfey',
     'types': ['Fairy'],
@@ -21871,7 +22300,7 @@ const BattlePokedex = {
     'color': 'Green',
     'eggGroups': ['Grass']
   },
-  'oranguru': {
+  {
     'num': 765,
     'species': 'Oranguru',
     'types': ['Normal', 'Psychic'],
@@ -21893,7 +22322,7 @@ const BattlePokedex = {
     'color': 'White',
     'eggGroups': ['Field']
   },
-  'passimian': {
+  {
     'num': 766,
     'species': 'Passimian',
     'types': ['Fighting'],
@@ -21914,7 +22343,7 @@ const BattlePokedex = {
     'color': 'White',
     'eggGroups': ['Field']
   },
-  'wimpod': {
+  {
     'num': 767,
     'species': 'Wimpod',
     'types': ['Bug', 'Water'],
@@ -21926,14 +22355,16 @@ const BattlePokedex = {
       'spd': 30,
       'spe': 80
     },
-    'abilities': {'0': 'Wimp Out'},
+    'abilities': {
+      '0': 'Wimp Out'
+    },
     'heightm': 0.5,
     'weightkg': 12,
     'color': 'Gray',
     'evos': ['golisopod'],
     'eggGroups': ['Bug', 'Water 3']
   },
-  'golisopod': {
+  {
     'num': 768,
     'species': 'Golisopod',
     'types': ['Bug', 'Water'],
@@ -21945,7 +22376,9 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 40
     },
-    'abilities': {'0': 'Emergency Exit'},
+    'abilities': {
+      '0': 'Emergency Exit'
+    },
     'heightm': 2,
     'weightkg': 108,
     'color': 'Gray',
@@ -21953,7 +22386,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Bug', 'Water 3']
   },
-  'sandygast': {
+  {
     'num': 769,
     'species': 'Sandygast',
     'types': ['Ghost', 'Ground'],
@@ -21975,7 +22408,7 @@ const BattlePokedex = {
     'evos': ['palossand'],
     'eggGroups': ['Amorphous']
   },
-  'palossand': {
+  {
     'num': 770,
     'species': 'Palossand',
     'types': ['Ghost', 'Ground'],
@@ -21998,7 +22431,7 @@ const BattlePokedex = {
     'evoLevel': 42,
     'eggGroups': ['Amorphous']
   },
-  'pyukumuku': {
+  {
     'num': 771,
     'species': 'Pyukumuku',
     'types': ['Water'],
@@ -22019,7 +22452,7 @@ const BattlePokedex = {
     'color': 'Black',
     'eggGroups': ['Water 1']
   },
-  'typenull': {
+  {
     'num': 772,
     'species': 'Type: Null',
     'types': ['Normal'],
@@ -22032,14 +22465,16 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 59
     },
-    'abilities': {'0': 'Battle Armor'},
+    'abilities': {
+      '0': 'Battle Armor'
+    },
     'heightm': 1.9,
     'weightkg': 120.5,
     'color': 'Gray',
     'evos': ['silvally'],
     'eggGroups': ['Undiscovered']
   },
-  'silvally': {
+  {
     'num': 773,
     'species': 'Silvally',
     'types': ['Normal'],
@@ -22052,7 +22487,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22061,7 +22498,7 @@ const BattlePokedex = {
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['silvallybug', 'silvallydark', 'silvallydragon', 'silvallyelectric', 'silvallyfairy', 'silvallyfighting', 'silvallyfire', 'silvallyflying', 'silvallyghost', 'silvallygrass', 'silvallyground', 'silvallyice', 'silvallypoison', 'silvallypsychic', 'silvallyrock', 'silvallysteel', 'silvallywater']
   },
-  'silvallybug': {
+  {
     'num': 773,
     'species': 'Silvally-Bug',
     'baseSpecies': 'Silvally',
@@ -22077,7 +22514,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22085,7 +22524,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallydark': {
+  {
     'num': 773,
     'species': 'Silvally-Dark',
     'baseSpecies': 'Silvally',
@@ -22101,7 +22540,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22109,7 +22550,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallydragon': {
+  {
     'num': 773,
     'species': 'Silvally-Dragon',
     'baseSpecies': 'Silvally',
@@ -22125,7 +22566,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22133,7 +22576,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallyelectric': {
+  {
     'num': 773,
     'species': 'Silvally-Electric',
     'baseSpecies': 'Silvally',
@@ -22149,7 +22592,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22157,7 +22602,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallyfairy': {
+  {
     'num': 773,
     'species': 'Silvally-Fairy',
     'baseSpecies': 'Silvally',
@@ -22173,7 +22618,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22181,7 +22628,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallyfighting': {
+  {
     'num': 773,
     'species': 'Silvally-Fighting',
     'baseSpecies': 'Silvally',
@@ -22197,7 +22644,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22205,7 +22654,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallyfire': {
+  {
     'num': 773,
     'species': 'Silvally-Fire',
     'baseSpecies': 'Silvally',
@@ -22221,7 +22670,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22229,7 +22680,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallyflying': {
+  {
     'num': 773,
     'species': 'Silvally-Flying',
     'baseSpecies': 'Silvally',
@@ -22245,7 +22696,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22253,7 +22706,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallyghost': {
+  {
     'num': 773,
     'species': 'Silvally-Ghost',
     'baseSpecies': 'Silvally',
@@ -22269,7 +22722,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22277,7 +22732,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallygrass': {
+  {
     'num': 773,
     'species': 'Silvally-Grass',
     'baseSpecies': 'Silvally',
@@ -22293,7 +22748,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22301,7 +22758,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallyground': {
+  {
     'num': 773,
     'species': 'Silvally-Ground',
     'baseSpecies': 'Silvally',
@@ -22317,7 +22774,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22325,7 +22784,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallyice': {
+  {
     'num': 773,
     'species': 'Silvally-Ice',
     'baseSpecies': 'Silvally',
@@ -22341,7 +22800,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22349,7 +22810,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallypoison': {
+  {
     'num': 773,
     'species': 'Silvally-Poison',
     'baseSpecies': 'Silvally',
@@ -22365,7 +22826,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22373,7 +22836,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallypsychic': {
+  {
     'num': 773,
     'species': 'Silvally-Psychic',
     'baseSpecies': 'Silvally',
@@ -22389,7 +22852,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22397,7 +22862,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallyrock': {
+  {
     'num': 773,
     'species': 'Silvally-Rock',
     'baseSpecies': 'Silvally',
@@ -22413,7 +22878,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22421,7 +22888,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallysteel': {
+  {
     'num': 773,
     'species': 'Silvally-Steel',
     'baseSpecies': 'Silvally',
@@ -22437,7 +22904,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22445,7 +22914,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'silvallywater': {
+  {
     'num': 773,
     'species': 'Silvally-Water',
     'baseSpecies': 'Silvally',
@@ -22461,7 +22930,9 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 95
     },
-    'abilities': {'0': 'RKS System'},
+    'abilities': {
+      '0': 'RKS System'
+    },
     'heightm': 2.3,
     'weightkg': 100.5,
     'color': 'Gray',
@@ -22469,7 +22940,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Undiscovered']
   },
-  'minior': {
+  {
     'num': 774,
     'species': 'Minior',
     'baseForme': 'Red',
@@ -22483,7 +22954,9 @@ const BattlePokedex = {
       'spd': 60,
       'spe': 120
     },
-    'abilities': {'0': 'Shields Down'},
+    'abilities': {
+      '0': 'Shields Down'
+    },
     'heightm': 0.3,
     'weightkg': 0.3,
     'color': 'Red',
@@ -22491,7 +22964,7 @@ const BattlePokedex = {
     'otherFormes': ['miniormeteor'],
     'otherForms': ['miniororange', 'minioryellow', 'miniorgreen', 'miniorblue', 'miniorindigo', 'miniorviolet']
   },
-  'miniormeteor': {
+  {
     'num': 774,
     'species': 'Minior-Meteor',
     'baseSpecies': 'Minior',
@@ -22507,13 +22980,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 60
     },
-    'abilities': {'0': 'Shields Down'},
+    'abilities': {
+      '0': 'Shields Down'
+    },
     'heightm': 0.3,
     'weightkg': 40,
     'color': 'Brown',
     'eggGroups': ['Mineral']
   },
-  'komala': {
+  {
     'num': 775,
     'species': 'Komala',
     'types': ['Normal'],
@@ -22525,13 +23000,15 @@ const BattlePokedex = {
       'spd': 95,
       'spe': 65
     },
-    'abilities': {'0': 'Comatose'},
+    'abilities': {
+      '0': 'Comatose'
+    },
     'heightm': 0.4,
     'weightkg': 19.9,
     'color': 'Blue',
     'eggGroups': ['Field']
   },
-  'turtonator': {
+  {
     'num': 776,
     'species': 'Turtonator',
     'types': ['Fire', 'Dragon'],
@@ -22543,13 +23020,15 @@ const BattlePokedex = {
       'spd': 85,
       'spe': 36
     },
-    'abilities': {'0': 'Shell Armor'},
+    'abilities': {
+      '0': 'Shell Armor'
+    },
     'heightm': 2,
     'weightkg': 212,
     'color': 'Red',
     'eggGroups': ['Monster', 'Dragon']
   },
-  'togedemaru': {
+  {
     'num': 777,
     'species': 'Togedemaru',
     'types': ['Electric', 'Steel'],
@@ -22572,7 +23051,7 @@ const BattlePokedex = {
     'eggGroups': ['Field', 'Fairy'],
     'otherFormes': ['togedemarutotem']
   },
-  'togedemarutotem': {
+  {
     'num': 777,
     'species': 'Togedemaru-Totem',
     'baseSpecies': 'Togedemaru',
@@ -22587,13 +23066,15 @@ const BattlePokedex = {
       'spd': 73,
       'spe': 96
     },
-    'abilities': {'0': 'Sturdy'},
+    'abilities': {
+      '0': 'Sturdy'
+    },
     'heightm': 0.6,
     'weightkg': 13,
     'color': 'Gray',
     'eggGroups': ['Field', 'Fairy']
   },
-  'mimikyu': {
+  {
     'num': 778,
     'species': 'Mimikyu',
     'types': ['Ghost', 'Fairy'],
@@ -22605,14 +23086,16 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 96
     },
-    'abilities': {'0': 'Disguise'},
+    'abilities': {
+      '0': 'Disguise'
+    },
     'heightm': 0.2,
     'weightkg': 0.7,
     'color': 'Yellow',
     'eggGroups': ['Amorphous'],
     'otherFormes': ['mimikyubusted', 'mimikyutotem', 'mimikyubustedtotem']
   },
-  'mimikyubusted': {
+  {
     'num': 778,
     'species': 'Mimikyu-Busted',
     'baseSpecies': 'Mimikyu',
@@ -22627,13 +23110,15 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 96
     },
-    'abilities': {'0': 'Disguise'},
+    'abilities': {
+      '0': 'Disguise'
+    },
     'heightm': 0.2,
     'weightkg': 0.7,
     'color': 'Yellow',
     'eggGroups': ['Amorphous']
   },
-  'mimikyutotem': {
+  {
     'num': 778,
     'species': 'Mimikyu-Totem',
     'baseSpecies': 'Mimikyu',
@@ -22648,13 +23133,15 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 96
     },
-    'abilities': {'0': 'Disguise'},
+    'abilities': {
+      '0': 'Disguise'
+    },
     'heightm': 0.4,
     'weightkg': 2.8,
     'color': 'Yellow',
     'eggGroups': ['Amorphous']
   },
-  'mimikyubustedtotem': {
+  {
     'num': 778,
     'species': 'Mimikyu-Busted-Totem',
     'baseSpecies': 'Mimikyu',
@@ -22669,13 +23156,15 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 96
     },
-    'abilities': {'0': 'Disguise'},
+    'abilities': {
+      '0': 'Disguise'
+    },
     'heightm': 0.4,
     'weightkg': 2.8,
     'color': 'Yellow',
     'eggGroups': ['Amorphous']
   },
-  'bruxish': {
+  {
     'num': 779,
     'species': 'Bruxish',
     'types': ['Water', 'Psychic'],
@@ -22697,7 +23186,7 @@ const BattlePokedex = {
     'color': 'Pink',
     'eggGroups': ['Water 2']
   },
-  'drampa': {
+  {
     'num': 780,
     'species': 'Drampa',
     'types': ['Normal', 'Dragon'],
@@ -22719,7 +23208,7 @@ const BattlePokedex = {
     'color': 'White',
     'eggGroups': ['Monster', 'Dragon']
   },
-  'dhelmise': {
+  {
     'num': 781,
     'species': 'Dhelmise',
     'types': ['Ghost', 'Grass'],
@@ -22732,13 +23221,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 40
     },
-    'abilities': {'0': 'Steelworker'},
+    'abilities': {
+      '0': 'Steelworker'
+    },
     'heightm': 3.9,
     'weightkg': 210,
     'color': 'Green',
     'eggGroups': ['Mineral']
   },
-  'jangmoo': {
+  {
     'num': 782,
     'species': 'Jangmo-o',
     'types': ['Dragon'],
@@ -22761,7 +23252,7 @@ const BattlePokedex = {
     'evos': ['hakamoo'],
     'eggGroups': ['Dragon']
   },
-  'hakamoo': {
+  {
     'num': 783,
     'species': 'Hakamo-o',
     'types': ['Dragon', 'Fighting'],
@@ -22786,7 +23277,7 @@ const BattlePokedex = {
     'evoLevel': 35,
     'eggGroups': ['Dragon']
   },
-  'kommoo': {
+  {
     'num': 784,
     'species': 'Kommo-o',
     'types': ['Dragon', 'Fighting'],
@@ -22811,7 +23302,7 @@ const BattlePokedex = {
     'eggGroups': ['Dragon'],
     'otherFormes': ['kommoototem']
   },
-  'kommoototem': {
+  {
     'num': 784,
     'species': 'Kommo-o-Totem',
     'baseSpecies': 'Kommo-o',
@@ -22826,13 +23317,15 @@ const BattlePokedex = {
       'spd': 105,
       'spe': 85
     },
-    'abilities': {'0': 'Overcoat'},
+    'abilities': {
+      '0': 'Overcoat'
+    },
     'heightm': 2.4,
     'weightkg': 207.5,
     'color': 'Gray',
     'eggGroups': ['Dragon']
   },
-  'tapukoko': {
+  {
     'num': 785,
     'species': 'Tapu Koko',
     'types': ['Electric', 'Fairy'],
@@ -22854,7 +23347,7 @@ const BattlePokedex = {
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'tapulele': {
+  {
     'num': 786,
     'species': 'Tapu Lele',
     'types': ['Psychic', 'Fairy'],
@@ -22876,7 +23369,7 @@ const BattlePokedex = {
     'color': 'Pink',
     'eggGroups': ['Undiscovered']
   },
-  'tapubulu': {
+  {
     'num': 787,
     'species': 'Tapu Bulu',
     'types': ['Grass', 'Fairy'],
@@ -22898,7 +23391,7 @@ const BattlePokedex = {
     'color': 'Red',
     'eggGroups': ['Undiscovered']
   },
-  'tapufini': {
+  {
     'num': 788,
     'species': 'Tapu Fini',
     'types': ['Water', 'Fairy'],
@@ -22920,7 +23413,7 @@ const BattlePokedex = {
     'color': 'Purple',
     'eggGroups': ['Undiscovered']
   },
-  'cosmog': {
+  {
     'num': 789,
     'species': 'Cosmog',
     'types': ['Psychic'],
@@ -22933,14 +23426,16 @@ const BattlePokedex = {
       'spd': 31,
       'spe': 37
     },
-    'abilities': {'0': 'Unaware'},
+    'abilities': {
+      '0': 'Unaware'
+    },
     'heightm': 0.2,
     'weightkg': 0.1,
     'color': 'Blue',
     'evos': ['cosmoem'],
     'eggGroups': ['Undiscovered']
   },
-  'cosmoem': {
+  {
     'num': 790,
     'species': 'Cosmoem',
     'types': ['Psychic'],
@@ -22953,7 +23448,9 @@ const BattlePokedex = {
       'spd': 131,
       'spe': 37
     },
-    'abilities': {'0': 'Sturdy'},
+    'abilities': {
+      '0': 'Sturdy'
+    },
     'heightm': 0.1,
     'weightkg': 999.9,
     'color': 'Blue',
@@ -22962,7 +23459,7 @@ const BattlePokedex = {
     'evoLevel': 43,
     'eggGroups': ['Undiscovered']
   },
-  'solgaleo': {
+  {
     'num': 791,
     'species': 'Solgaleo',
     'types': ['Psychic', 'Steel'],
@@ -22975,7 +23472,9 @@ const BattlePokedex = {
       'spd': 89,
       'spe': 97
     },
-    'abilities': {'0': 'Full Metal Body'},
+    'abilities': {
+      '0': 'Full Metal Body'
+    },
     'heightm': 3.4,
     'weightkg': 230,
     'color': 'White',
@@ -22983,7 +23482,7 @@ const BattlePokedex = {
     'evoLevel': 53,
     'eggGroups': ['Undiscovered']
   },
-  'lunala': {
+  {
     'num': 792,
     'species': 'Lunala',
     'types': ['Psychic', 'Ghost'],
@@ -22996,7 +23495,9 @@ const BattlePokedex = {
       'spd': 107,
       'spe': 97
     },
-    'abilities': {'0': 'Shadow Shield'},
+    'abilities': {
+      '0': 'Shadow Shield'
+    },
     'heightm': 4,
     'weightkg': 120,
     'color': 'Purple',
@@ -23004,7 +23505,7 @@ const BattlePokedex = {
     'evoLevel': 53,
     'eggGroups': ['Undiscovered']
   },
-  'nihilego': {
+  {
     'num': 793,
     'species': 'Nihilego',
     'types': ['Rock', 'Poison'],
@@ -23017,13 +23518,15 @@ const BattlePokedex = {
       'spd': 131,
       'spe': 103
     },
-    'abilities': {'0': 'Beast Boost'},
+    'abilities': {
+      '0': 'Beast Boost'
+    },
     'heightm': 1.2,
     'weightkg': 55.5,
     'color': 'White',
     'eggGroups': ['Undiscovered']
   },
-  'buzzwole': {
+  {
     'num': 794,
     'species': 'Buzzwole',
     'types': ['Bug', 'Fighting'],
@@ -23036,13 +23539,15 @@ const BattlePokedex = {
       'spd': 53,
       'spe': 79
     },
-    'abilities': {'0': 'Beast Boost'},
+    'abilities': {
+      '0': 'Beast Boost'
+    },
     'heightm': 2.4,
     'weightkg': 333.6,
     'color': 'Red',
     'eggGroups': ['Undiscovered']
   },
-  'pheromosa': {
+  {
     'num': 795,
     'species': 'Pheromosa',
     'types': ['Bug', 'Fighting'],
@@ -23055,13 +23560,15 @@ const BattlePokedex = {
       'spd': 37,
       'spe': 151
     },
-    'abilities': {'0': 'Beast Boost'},
+    'abilities': {
+      '0': 'Beast Boost'
+    },
     'heightm': 1.8,
     'weightkg': 25,
     'color': 'White',
     'eggGroups': ['Undiscovered']
   },
-  'xurkitree': {
+  {
     'num': 796,
     'species': 'Xurkitree',
     'types': ['Electric'],
@@ -23074,13 +23581,15 @@ const BattlePokedex = {
       'spd': 71,
       'spe': 83
     },
-    'abilities': {'0': 'Beast Boost'},
+    'abilities': {
+      '0': 'Beast Boost'
+    },
     'heightm': 3.8,
     'weightkg': 100,
     'color': 'Black',
     'eggGroups': ['Undiscovered']
   },
-  'celesteela': {
+  {
     'num': 797,
     'species': 'Celesteela',
     'types': ['Steel', 'Flying'],
@@ -23093,13 +23602,15 @@ const BattlePokedex = {
       'spd': 101,
       'spe': 61
     },
-    'abilities': {'0': 'Beast Boost'},
+    'abilities': {
+      '0': 'Beast Boost'
+    },
     'heightm': 9.2,
     'weightkg': 999.9,
     'color': 'Green',
     'eggGroups': ['Undiscovered']
   },
-  'kartana': {
+  {
     'num': 798,
     'species': 'Kartana',
     'types': ['Grass', 'Steel'],
@@ -23112,13 +23623,15 @@ const BattlePokedex = {
       'spd': 31,
       'spe': 109
     },
-    'abilities': {'0': 'Beast Boost'},
+    'abilities': {
+      '0': 'Beast Boost'
+    },
     'heightm': 0.3,
     'weightkg': 0.1,
     'color': 'White',
     'eggGroups': ['Undiscovered']
   },
-  'guzzlord': {
+  {
     'num': 799,
     'species': 'Guzzlord',
     'types': ['Dark', 'Dragon'],
@@ -23131,13 +23644,15 @@ const BattlePokedex = {
       'spd': 53,
       'spe': 43
     },
-    'abilities': {'0': 'Beast Boost'},
+    'abilities': {
+      '0': 'Beast Boost'
+    },
     'heightm': 5.5,
     'weightkg': 888,
     'color': 'Black',
     'eggGroups': ['Undiscovered']
   },
-  'necrozma': {
+  {
     'num': 800,
     'species': 'Necrozma',
     'types': ['Psychic'],
@@ -23150,14 +23665,16 @@ const BattlePokedex = {
       'spd': 89,
       'spe': 79
     },
-    'abilities': {'0': 'Prism Armor'},
+    'abilities': {
+      '0': 'Prism Armor'
+    },
     'heightm': 2.4,
     'weightkg': 230,
     'color': 'Black',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['necrozmaduskmane', 'necrozmadawnwings', 'necrozmaultra']
   },
-  'necrozmaduskmane': {
+  {
     'num': 800,
     'species': 'Necrozma-DuskMane',
     'baseSpecies': 'Necrozma',
@@ -23173,13 +23690,15 @@ const BattlePokedex = {
       'spd': 109,
       'spe': 77
     },
-    'abilities': {'0': 'Prism Armor'},
+    'abilities': {
+      '0': 'Prism Armor'
+    },
     'heightm': 3.8,
     'weightkg': 460,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'necrozmadawnwings': {
+  {
     'num': 800,
     'species': 'Necrozma-DawnWings',
     'baseSpecies': 'Necrozma',
@@ -23195,13 +23714,15 @@ const BattlePokedex = {
       'spd': 127,
       'spe': 77
     },
-    'abilities': {'0': 'Prism Armor'},
+    'abilities': {
+      '0': 'Prism Armor'
+    },
     'heightm': 4.2,
     'weightkg': 350,
     'color': 'Blue',
     'eggGroups': ['Undiscovered']
   },
-  'necrozmaultra': {
+  {
     'num': 800,
     'species': 'Necrozma-Ultra',
     'baseSpecies': 'Necrozma',
@@ -23217,13 +23738,15 @@ const BattlePokedex = {
       'spd': 97,
       'spe': 129
     },
-    'abilities': {'0': 'Neuroforce'},
+    'abilities': {
+      '0': 'Neuroforce'
+    },
     'heightm': 7.5,
     'weightkg': 230,
     'color': 'Blue',
     'eggGroups': ['Undiscovered']
   },
-  'magearna': {
+  {
     'num': 801,
     'species': 'Magearna',
     'types': ['Steel', 'Fairy'],
@@ -23236,14 +23759,16 @@ const BattlePokedex = {
       'spd': 115,
       'spe': 65
     },
-    'abilities': {'0': 'Soul-Heart'},
+    'abilities': {
+      '0': 'Soul-Heart'
+    },
     'heightm': 1,
     'weightkg': 80.5,
     'color': 'Gray',
     'eggGroups': ['Undiscovered'],
     'otherFormes': ['magearnaoriginal']
   },
-  'magearnaoriginal': {
+  {
     'num': 801,
     'species': 'Magearna-Original',
     'baseSpecies': 'Magearna',
@@ -23259,13 +23784,15 @@ const BattlePokedex = {
       'spd': 115,
       'spe': 65
     },
-    'abilities': {'0': 'Soul-Heart'},
+    'abilities': {
+      '0': 'Soul-Heart'
+    },
     'heightm': 1,
     'weightkg': 80.5,
     'color': 'Red',
     'eggGroups': ['Undiscovered']
   },
-  'marshadow': {
+  {
     'num': 802,
     'species': 'Marshadow',
     'types': ['Fighting', 'Ghost'],
@@ -23278,13 +23805,15 @@ const BattlePokedex = {
       'spd': 90,
       'spe': 125
     },
-    'abilities': {'0': 'Technician'},
+    'abilities': {
+      '0': 'Technician'
+    },
     'heightm': 0.7,
     'weightkg': 22.2,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'poipole': {
+  {
     'num': 803,
     'species': 'Poipole',
     'types': ['Poison'],
@@ -23297,14 +23826,16 @@ const BattlePokedex = {
       'spd': 67,
       'spe': 73
     },
-    'abilities': {'0': 'Beast Boost'},
+    'abilities': {
+      '0': 'Beast Boost'
+    },
     'heightm': 0.6,
     'weightkg': 1.8,
     'color': 'Purple',
     'evos': ['naganadel'],
     'eggGroups': ['Undiscovered']
   },
-  'naganadel': {
+  {
     'num': 804,
     'species': 'Naganadel',
     'types': ['Poison', 'Dragon'],
@@ -23317,7 +23848,9 @@ const BattlePokedex = {
       'spd': 73,
       'spe': 121
     },
-    'abilities': {'0': 'Beast Boost'},
+    'abilities': {
+      '0': 'Beast Boost'
+    },
     'heightm': 3.6,
     'weightkg': 150,
     'color': 'Purple',
@@ -23325,7 +23858,7 @@ const BattlePokedex = {
     'evoLevel': 41,
     'eggGroups': ['Undiscovered']
   },
-  'stakataka': {
+  {
     'num': 805,
     'species': 'Stakataka',
     'types': ['Rock', 'Steel'],
@@ -23338,13 +23871,15 @@ const BattlePokedex = {
       'spd': 101,
       'spe': 13
     },
-    'abilities': {'0': 'Beast Boost'},
+    'abilities': {
+      '0': 'Beast Boost'
+    },
     'heightm': 5.5,
     'weightkg': 820,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'blacephalon': {
+  {
     'num': 806,
     'species': 'Blacephalon',
     'types': ['Fire', 'Ghost'],
@@ -23357,13 +23892,15 @@ const BattlePokedex = {
       'spd': 79,
       'spe': 107
     },
-    'abilities': {'0': 'Beast Boost'},
+    'abilities': {
+      '0': 'Beast Boost'
+    },
     'heightm': 1.8,
     'weightkg': 13,
     'color': 'White',
     'eggGroups': ['Undiscovered']
   },
-  'zeraora': {
+  {
     'num': 807,
     'species': 'Zeraora',
     'types': ['Electric'],
@@ -23376,13 +23913,15 @@ const BattlePokedex = {
       'spd': 80,
       'spe': 143
     },
-    'abilities': {'0': 'Volt Absorb'},
+    'abilities': {
+      '0': 'Volt Absorb'
+    },
     'heightm': 1.5,
     'weightkg': 44.5,
     'color': 'Yellow',
     'eggGroups': ['Undiscovered']
   },
-  'missingno': {
+  {
     'num': 0,
     'species': 'Missingno.',
     'types': ['Bird', 'Normal'],
@@ -23394,13 +23933,15 @@ const BattlePokedex = {
       'spd': 6,
       'spe': 29
     },
-    'abilities': {'0': 'Breaking Your Game'},
+    'abilities': {
+      '0': 'Breaking Your Game'
+    },
     'heightm': 3,
     'weightkg': 1590.8,
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'tomohawk': {
+  {
     'num': -1,
     'species': 'Tomohawk',
     'types': ['Flying', 'Fighting'],
@@ -23424,7 +23965,7 @@ const BattlePokedex = {
     'evoLevel': 23,
     'eggGroups': ['Field', 'Flying']
   },
-  'necturna': {
+  {
     'num': -2,
     'species': 'Necturna',
     'types': ['Grass', 'Ghost'],
@@ -23448,7 +23989,7 @@ const BattlePokedex = {
     'evoLevel': 31,
     'eggGroups': ['Grass', 'Field']
   },
-  'mollux': {
+  {
     'num': -3,
     'species': 'Mollux',
     'types': ['Fire', 'Poison'],
@@ -23469,7 +24010,7 @@ const BattlePokedex = {
     'color': 'Pink',
     'eggGroups': ['Fairy', 'Field']
   },
-  'aurumoth': {
+  {
     'num': -4,
     'species': 'Aurumoth',
     'types': ['Bug', 'Psychic'],
@@ -23493,7 +24034,7 @@ const BattlePokedex = {
     'evoLevel': 50,
     'eggGroups': ['Bug']
   },
-  'malaconda': {
+  {
     'num': -5,
     'species': 'Malaconda',
     'types': ['Dark', 'Grass'],
@@ -23517,7 +24058,7 @@ const BattlePokedex = {
     'evoLevel': 33,
     'eggGroups': ['Grass', 'Dragon']
   },
-  'cawmodore': {
+  {
     'num': -6,
     'species': 'Cawmodore',
     'types': ['Steel', 'Flying'],
@@ -23541,7 +24082,7 @@ const BattlePokedex = {
     'evoLevel': 33,
     'eggGroups': ['Flying']
   },
-  'volkraken': {
+  {
     'num': -7,
     'species': 'Volkraken',
     'types': ['Water', 'Fire'],
@@ -23565,7 +24106,7 @@ const BattlePokedex = {
     'evoLevel': 34,
     'eggGroups': ['Water 1', 'Water 2']
   },
-  'plasmanta': {
+  {
     'num': -8,
     'species': 'Plasmanta',
     'types': ['Electric', 'Poison'],
@@ -23589,7 +24130,7 @@ const BattlePokedex = {
     'evoLevel': 29,
     'eggGroups': ['Water 1', 'Water 2']
   },
-  'naviathan': {
+  {
     'num': -9,
     'species': 'Naviathan',
     'types': ['Water', 'Steel'],
@@ -23613,7 +24154,7 @@ const BattlePokedex = {
     'evoLevel': 40,
     'eggGroups': ['Water 1', 'Field']
   },
-  'crucibelle': {
+  {
     'num': -10,
     'species': 'Crucibelle',
     'types': ['Rock', 'Poison'],
@@ -23640,7 +24181,7 @@ const BattlePokedex = {
     'eggGroups': ['Amorphous', 'Mineral'],
     'otherFormes': ['crucibellemega']
   },
-  'crucibellemega': {
+  {
     'num': -10,
     'species': 'Crucibelle-Mega',
     'baseSpecies': 'Crucibelle',
@@ -23659,13 +24200,15 @@ const BattlePokedex = {
       'spd': 125,
       'spe': 114
     },
-    'abilities': {'0': 'Magic Guard'},
+    'abilities': {
+      '0': 'Magic Guard'
+    },
     'heightm': 1.4,
     'weightkg': 22.5,
     'color': 'Purple',
     'eggGroups': ['Amorphous', 'Mineral']
   },
-  'kerfluffle': {
+  {
     'num': -11,
     'species': 'Kerfluffle',
     'types': ['Fairy', 'Fighting'],
@@ -23689,7 +24232,7 @@ const BattlePokedex = {
     'evoLevel': 2,
     'eggGroups': ['Fairy', 'Human-Like']
   },
-  'pajantom': {
+  {
     'num': -12,
     'species': 'Pajantom',
     'types': ['Dragon', 'Ghost'],
@@ -23701,13 +24244,15 @@ const BattlePokedex = {
       'spd': 111,
       'spe': 101
     },
-    'abilities': {'0': 'Comatose'},
+    'abilities': {
+      '0': 'Comatose'
+    },
     'heightm': 1.1,
     'weightkg': 3.1,
     'color': 'Purple',
     'eggGroups': ['Dragon', 'Monster']
   },
-  'syclant': {
+  {
     'num': -51,
     'species': 'Syclant',
     'types': ['Ice', 'Bug'],
@@ -23731,7 +24276,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Bug']
   },
-  'revenankh': {
+  {
     'num': -52,
     'species': 'Revenankh',
     'types': ['Ghost', 'Fighting'],
@@ -23753,7 +24298,7 @@ const BattlePokedex = {
     'color': 'White',
     'eggGroups': ['Amorphous', 'Human-Like']
   },
-  'pyroak': {
+  {
     'num': -53,
     'species': 'Pyroak',
     'types': ['Fire', 'Grass'],
@@ -23777,7 +24322,7 @@ const BattlePokedex = {
     'evoLevel': 38,
     'eggGroups': ['Monster', 'Dragon']
   },
-  'fidgit': {
+  {
     'num': -54,
     'species': 'Fidgit',
     'types': ['Poison', 'Ground'],
@@ -23801,7 +24346,7 @@ const BattlePokedex = {
     'evoLevel': 33,
     'eggGroups': ['Field']
   },
-  'stratagem': {
+  {
     'num': -55,
     'species': 'Stratagem',
     'types': ['Rock'],
@@ -23824,7 +24369,7 @@ const BattlePokedex = {
     'color': 'Gray',
     'eggGroups': ['Undiscovered']
   },
-  'arghonaut': {
+  {
     'num': -56,
     'species': 'Arghonaut',
     'types': ['Water', 'Fighting'],
@@ -23845,7 +24390,7 @@ const BattlePokedex = {
     'color': 'Green',
     'eggGroups': ['Water 1', 'Water 3']
   },
-  'kitsunoh': {
+  {
     'num': -57,
     'species': 'Kitsunoh',
     'types': ['Steel', 'Ghost'],
@@ -23867,7 +24412,7 @@ const BattlePokedex = {
     'color': 'Gray',
     'eggGroups': ['Field']
   },
-  'cyclohm': {
+  {
     'num': -58,
     'species': 'Cyclohm',
     'types': ['Electric', 'Dragon'],
@@ -23889,7 +24434,7 @@ const BattlePokedex = {
     'color': 'Yellow',
     'eggGroups': ['Dragon', 'Monster']
   },
-  'colossoil': {
+  {
     'num': -59,
     'species': 'Colossoil',
     'types': ['Dark', 'Ground'],
@@ -23911,7 +24456,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Water 2', 'Field']
   },
-  'krilowatt': {
+  {
     'num': -60,
     'species': 'Krilowatt',
     'types': ['Electric', 'Water'],
@@ -23933,7 +24478,7 @@ const BattlePokedex = {
     'color': 'Red',
     'eggGroups': ['Water 1', 'Fairy']
   },
-  'voodoom': {
+  {
     'num': -61,
     'species': 'Voodoom',
     'types': ['Fighting', 'Dark'],
@@ -23955,7 +24500,7 @@ const BattlePokedex = {
     'color': 'Brown',
     'eggGroups': ['Human-Like', 'Ground']
   },
-  'syclar': {
+  {
     'num': -101,
     'species': 'Syclar',
     'types': ['Ice', 'Bug'],
@@ -23977,7 +24522,7 @@ const BattlePokedex = {
     'evos': ['syclant'],
     'eggGroups': ['Bug']
   },
-  'embirch': {
+  {
     'num': -102,
     'species': 'Embirch',
     'types': ['Fire', 'Grass'],
@@ -23999,7 +24544,7 @@ const BattlePokedex = {
     'evos': ['flarelm'],
     'eggGroups': ['Monster', 'Dragon']
   },
-  'flarelm': {
+  {
     'num': -103,
     'species': 'Flarelm',
     'types': ['Fire', 'Grass'],
@@ -24023,7 +24568,7 @@ const BattlePokedex = {
     'evoLevel': 24,
     'eggGroups': ['Monster', 'Dragon']
   },
-  'breezi': {
+  {
     'num': -104,
     'species': 'Breezi',
     'types': ['Poison', 'Flying'],
@@ -24045,7 +24590,7 @@ const BattlePokedex = {
     'evos': ['fidgit'],
     'eggGroups': ['Field']
   },
-  'scratchet': {
+  {
     'num': -105,
     'species': 'Scratchet',
     'types': ['Normal', 'Fighting'],
@@ -24068,7 +24613,7 @@ const BattlePokedex = {
     'evos': ['tomohawk'],
     'eggGroups': ['Field', 'Flying']
   },
-  'necturine': {
+  {
     'num': -106,
     'species': 'Necturine',
     'types': ['Grass', 'Ghost'],
@@ -24091,7 +24636,7 @@ const BattlePokedex = {
     'evos': ['necturna'],
     'eggGroups': ['Grass', 'Field']
   },
-  'cupra': {
+  {
     'num': -107,
     'species': 'Cupra',
     'types': ['Bug', 'Psychic'],
@@ -24113,7 +24658,7 @@ const BattlePokedex = {
     'evos': ['argalis'],
     'eggGroups': ['Bug']
   },
-  'argalis': {
+  {
     'num': -108,
     'species': 'Argalis',
     'types': ['Bug', 'Psychic'],
@@ -24137,7 +24682,7 @@ const BattlePokedex = {
     'evoLevel': 30,
     'eggGroups': ['Bug']
   },
-  'brattler': {
+  {
     'num': -109,
     'species': 'Brattler',
     'types': ['Dark', 'Grass'],
@@ -24159,7 +24704,7 @@ const BattlePokedex = {
     'evos': ['malaconda'],
     'eggGroups': ['Grass', 'Dragon']
   },
-  'cawdet': {
+  {
     'num': -110,
     'species': 'Cawdet',
     'types': ['Steel', 'Flying'],
@@ -24182,7 +24727,7 @@ const BattlePokedex = {
     'evos': ['cawmodore'],
     'eggGroups': ['Flying']
   },
-  'volkritter': {
+  {
     'num': -111,
     'species': 'Volkritter',
     'types': ['Water', 'Fire'],
@@ -24205,7 +24750,7 @@ const BattlePokedex = {
     'evos': ['volkraken'],
     'eggGroups': ['Water 1', 'Water 2']
   },
-  'snugglow': {
+  {
     'num': -112,
     'species': 'Snugglow',
     'types': ['Electric', 'Poison'],
@@ -24228,7 +24773,7 @@ const BattlePokedex = {
     'evos': ['plasmanta'],
     'eggGroups': ['Water 1', 'Water 2']
   },
-  'floatoy': {
+  {
     'num': -113,
     'species': 'Floatoy',
     'types': ['Water'],
@@ -24251,7 +24796,7 @@ const BattlePokedex = {
     'evos': ['caimanoe'],
     'eggGroups': ['Water 1', 'Field']
   },
-  'caimanoe': {
+  {
     'num': -114,
     'species': 'Caimanoe',
     'types': ['Water', 'Steel'],
@@ -24276,7 +24821,7 @@ const BattlePokedex = {
     'evoLevel': 21,
     'eggGroups': ['Water 1', 'Field']
   },
-  'pluffle': {
+  {
     'num': -115,
     'species': 'Pluffle',
     'types': ['Fairy'],
@@ -24299,7 +24844,7 @@ const BattlePokedex = {
     'evos': ['kerfluffle'],
     'eggGroups': ['Fairy', 'Human-Like']
   },
-  'pokestarufo': {
+  {
     'num': -5001,
     'species': 'Pokestar UFO',
     'types': ['Flying', 'Electric'],
@@ -24312,7 +24857,9 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
@@ -24320,7 +24867,7 @@ const BattlePokedex = {
     'otherForms': ['pokestarufopropu1'],
     'otherFormes': ['pokestarufo2', 'pokestarufopropu2']
   },
-  'pokestarufo2': {
+  {
     'num': -5001,
     'species': 'Pokestar UFO-2',
     'baseSpecies': 'Pokestar UFO',
@@ -24336,13 +24883,15 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered']
   },
-  'pokestarbrycenman': {
+  {
     'num': -5002,
     'species': 'Pokestar Brycen-Man',
     'types': ['Dark', 'Psychic'],
@@ -24355,14 +24904,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestarbrycenmanprop']
   },
-  'pokestarmt': {
+  {
     'num': -5003,
     'species': 'Pokestar MT',
     'types': ['Steel'],
@@ -24375,14 +24926,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Analytic'},
+    'abilities': {
+      '0': 'Analytic'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestarmtprop']
   },
-  'pokestarmt2': {
+  {
     'num': -5004,
     'species': 'Pokestar MT2',
     'types': ['Steel', 'Electric'],
@@ -24395,14 +24948,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Flash Fire'},
+    'abilities': {
+      '0': 'Flash Fire'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestarmt2prop']
   },
-  'pokestartransport': {
+  {
     'num': -5005,
     'species': 'Pokestar Transport',
     'types': ['Steel'],
@@ -24415,14 +24970,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Motor Drive'},
+    'abilities': {
+      '0': 'Motor Drive'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestartransportprop']
   },
-  'pokestargiant': {
+  {
     'num': -5006,
     'species': 'Pokestar Giant',
     'types': ['Normal'],
@@ -24435,14 +24992,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Huge Power'},
+    'abilities': {
+      '0': 'Huge Power'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestargiant2', 'pokestargiantpropo1', 'pokestargiantpropo2']
   },
-  'pokestarhumanoid': {
+  {
     'num': -5007,
     'species': 'Pokestar Humanoid',
     'types': ['Normal'],
@@ -24454,14 +25013,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Insomnia'},
+    'abilities': {
+      '0': 'Insomnia'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestarhumanoidprop']
   },
-  'pokestarmonster': {
+  {
     'num': -5008,
     'species': 'Pokestar Monster',
     'types': ['Dark'],
@@ -24473,14 +25034,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Pressure'},
+    'abilities': {
+      '0': 'Pressure'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestarmonsterprop']
   },
-  'pokestarf00': {
+  {
     'num': -5009,
     'species': 'Pokestar F-00',
     'types': ['Steel', 'Normal'],
@@ -24492,14 +25055,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Volt Absorb'},
+    'abilities': {
+      '0': 'Volt Absorb'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestarf00prop']
   },
-  'pokestarf002': {
+  {
     'num': -5010,
     'species': 'Pokestar F-002',
     'types': ['Steel', 'Normal'],
@@ -24511,14 +25076,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Reckless'},
+    'abilities': {
+      '0': 'Reckless'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestarf002prop']
   },
-  'pokestarspirit': {
+  {
     'num': -5011,
     'species': 'Pokestar Spirit',
     'types': ['Dark', 'Ghost'],
@@ -24530,14 +25097,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Wonder Guard'},
+    'abilities': {
+      '0': 'Wonder Guard'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestarspiritprop']
   },
-  'pokestarblackdoor': {
+  {
     'num': -5012,
     'species': 'Pokestar Black Door',
     'types': ['Grass'],
@@ -24550,14 +25119,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Early Bird'},
+    'abilities': {
+      '0': 'Early Bird'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestarblackdoorprop']
   },
-  'pokestarwhitedoor': {
+  {
     'num': -5013,
     'species': 'Pokestar White Door',
     'types': ['Fire'],
@@ -24570,14 +25141,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Blaze'},
+    'abilities': {
+      '0': 'Blaze'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestarwhitedoorprop']
   },
-  'pokestarblackbelt': {
+  {
     'num': -5014,
     'species': 'Pokestar Black Belt',
     'types': ['Fighting'],
@@ -24590,14 +25163,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Huge Power'},
+    'abilities': {
+      '0': 'Huge Power'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered'],
     'otherForms': ['pokestarblackbeltprop']
   },
-  'pokestarufopropu2': {
+  {
     'num': -5001,
     'species': 'Pokestar UFO-PropU2',
     'baseForme': 'Pokestar UFO',
@@ -24612,12 +25187,16 @@ const BattlePokedex = {
       'spd': 100,
       'spe': 100
     },
-    'abilities': {'0': 'Levitate'},
+    'abilities': {
+      '0': 'Levitate'
+    },
     'heightm': 1.5,
     'weightkg': 61,
     'color': 'White',
     'eggGroups': ['Undiscovered']
   }
-};
+];
 
-module.exports = {BattlePokedex};
+module.exports = {
+  BattlePokedex
+};
