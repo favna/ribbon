@@ -284,8 +284,7 @@ There are 3 ways to queue songs  </p>
 </ol>
 </dd>
 <dt><a href="#module_queue">queue</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Music ViewQueueCommand - Shows the current queue of songs<br>Songs are paginated in sets of 5<br><strong>Aliases</strong>: <code>songs</code>, <code>song-list</code>, <code>list</code>, <code>listqueue</code>
-<strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p>
+<dd><p>Music ViewQueueCommand - Shows the current queue of songs<br>Songs are paginated in sets of 5<br><strong>Aliases</strong>: <code>songs</code>, <code>song-list</code>, <code>list</code>, <code>listqueue</code></p>
 </dd>
 <dt><a href="#module_resume">resume</a> ⇒ <code>Message</code></dt>
 <dd><p>Music ResumeSongCommand - Resumes the song after pausing it<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>go</code>, <code>continue</code>, <code>ale</code>, <code>loss</code>, <code>res</code></p>
@@ -293,6 +292,9 @@ There are 3 ways to queue songs  </p>
 <dt><a href="#module_save">save</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user
 <strong>Aliases</strong>: <code>save-songs</code>, <code>save-song-list</code>, <code>ss</code>, <code>savequeue</code></p>
+</dd>
+<dt><a href="#module_queue">queue</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Music ShuffleCommand - Shuffles the current queue<br>Shuffles using a <a href="https://en.wikipedia.org/wiki/Fisher–Yates_shuffle#The_modern_algorithm">modern version of the Fisher-Yates shuffle algorithm</a><br><strong>Aliases</strong>: <code>remix</code>, <code>mixtape</code></p>
 </dd>
 <dt><a href="#module_skip">skip</a> ⇒ <code>Message</code></dt>
 <dd><p>Music SkipSongCommand - Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue<br>A vote to skip is started if there are 4 or more people in the voice channel with <code>(amount of members) / 3</code> as required amount of votes (bot doesn&#39;t count as a member)<br>Staff that can delete messages can force the skip by using <code>skip force</code><br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>next</code></p>
@@ -1542,7 +1544,6 @@ play
 Music ViewQueueCommand - Shows the current queue of songs  
 Songs are paginated in sets of 5  
 **Aliases**: `songs`, `song-list`, `list`, `listqueue`
-**Aliases**: `bal`, `cash`, `balance`
 
 **Returns**: <code>MessageEmbed</code> - List of queued songs with their duration and total duration of the queue  
 **Category**: music  
@@ -1572,6 +1573,19 @@ Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user
 
 **Returns**: <code>MessageEmbed</code> - Titles, durations and total queue duration sent in a DM  
 **Category**: music  
+<a name="module_queue"></a>
+
+## queue ⇒ <code>MessageEmbed</code>
+Music ShuffleCommand - Shuffles the current queue  
+Shuffles using a [modern version of the Fisher-Yates shuffle algorithm](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle#The_modern_algorithm)  
+**Aliases**: `remix`, `mixtape`
+
+**Returns**: <code>MessageEmbed</code> - The new queue order (limited to the first 10 entries)  
+**Category**: music  
+**Example**  
+```js
+queue 2
+```
 <a name="module_skip"></a>
 
 ## skip ⇒ <code>Message</code>
