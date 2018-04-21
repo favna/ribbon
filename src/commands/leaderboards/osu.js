@@ -100,7 +100,7 @@ module.exports = class OsuCommand extends Command {
       return msg.embed(osuEmbed);
     } catch (err) {
       stopTyping(msg);
-      
+
       return msg.reply(`no user found with username ${args.player}`);
     }
   }

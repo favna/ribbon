@@ -91,7 +91,7 @@ module.exports = class MaxLengthCommand extends Command {
 
     if (isNaN(maxLength) || maxLength <= 0) {
       stopTyping(msg);
-      
+
       return msg.reply('invalid number provided.');
     }
 

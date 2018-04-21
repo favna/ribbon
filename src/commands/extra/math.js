@@ -35,7 +35,7 @@
  */
 
 const moment = require('moment'),
-  scalc = require('scalc'), 
+  scalc = require('scalc'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),

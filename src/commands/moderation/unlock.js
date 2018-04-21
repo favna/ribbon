@@ -34,10 +34,10 @@
  * @returns {Message} Confirmation the channel is unlocked
  */
 
-const moment = require('moment'), 
+const moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine} = require('common-tags'), 
+  {oneLine} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class UnlockCommand extends Command {
@@ -91,7 +91,7 @@ module.exports = class UnlockCommand extends Command {
         modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.say(embed);
       }
       stopTyping(msg);
-      
+
       return msg.say(embed);
     }
     deleteCommandMessages(msg, this.client);

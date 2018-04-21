@@ -34,7 +34,7 @@
  * @returns {MessageEmbed} Your question and its answer
  */
 
-const predict = require('eightball'), 
+const predict = require('eightball'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');

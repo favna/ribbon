@@ -34,7 +34,7 @@
  * @returns {MessageEmbed} Result of the conflict
  */
 
-const random = require('node-random'), 
+const random = require('node-random'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -113,7 +113,7 @@ module.exports = class RockPaperScissorCommand extends Command {
         return msg.embed(rpsEmbed);
       }
       stopTyping(msg);
-      
+
       return msg.reply('an error occurred getting a random result and I\'m not going to rig this game.');
     });
   }

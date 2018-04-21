@@ -129,10 +129,10 @@ module.exports = class ShowdownCommand extends Command {
     ║ mega           │ aaa      │ anyability ║
     ╚════════════════╧══════════╧════════════╝
     \`\`\``);
-    
+
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
-    
+
     return msg.embed(showdownEmbed);
   }
 };

@@ -36,7 +36,7 @@
  * @returns {Message} Confirmation of the change of volume
  */
 
-const {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class ChangeVolumeCommand extends Command {

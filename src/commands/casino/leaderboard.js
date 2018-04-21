@@ -34,10 +34,10 @@
 
 const Database = require('better-sqlite3'),
   moment = require('moment'),
-  path = require('path'), 
+  path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class LeaderboardCommand extends Command {
@@ -65,7 +65,7 @@ module.exports = class LeaderboardCommand extends Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    try { 
+    try {
       startTyping(msg);
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" ORDER BY balance DESC LIMIT 5;`).all();
 
@@ -76,13 +76,13 @@ module.exports = class LeaderboardCommand extends Command {
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
-        
+
         return msg.embed(lbEmbed);
       }
       stopTyping(msg);
-      
+
       return msg.reply(`looks like there aren't any people with chips yet on this server. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
-    } catch (e) { 
+    } catch (e) {
       stopTyping(msg);
       console.error(`	 ${stripIndents`Fatal SQL Error occurred while retrieving the leaderboard!
       Server: ${msg.guild.name} (${msg.guild.id})

@@ -91,7 +91,7 @@ module.exports = class MaxSongsCommand extends Command {
 
     if (isNaN(maxSongs) || maxSongs <= 0) {
       stopTyping(msg);
-      
+
       return msg.reply('invalid number provided.');
     }
 

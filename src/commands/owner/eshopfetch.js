@@ -59,12 +59,12 @@ module.exports = class EShopFetchCommand extends Command {
     if (fs.existsSync(path.join(__dirname, '../../data/websearch/eshop.json'))) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
-      
+
       return msg.reply('latest eShop data stored in file');
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
-    
+
     return msg.reply('an error occurred fetching latest data!');
   }
 };

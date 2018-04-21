@@ -37,8 +37,8 @@
 
 const booru = require('booru'),
   {MessageEmbed} = require('discord.js'),
-  {Command} = require('discord.js-commando'), 
-  {stripIndents} = require('common-tags'), 
+  {Command} = require('discord.js-commando'),
+  {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class PahealCommand extends Command {

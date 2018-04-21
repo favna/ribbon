@@ -63,7 +63,7 @@ module.exports = class xkcdCommand extends Command {
         randomImage = await request.get(`https://xkcd.com/${randomNum}/info.0.json`),
         xkcdEmbed = new MessageEmbed();
       /* eslint-enable sort-vars */
-        
+
       xkcdEmbed
         .setTitle(randomImage.body.safe_title)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
@@ -73,11 +73,11 @@ module.exports = class xkcdCommand extends Command {
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
-      
+
       return msg.embed(xkcdEmbed);
     } catch (err) {
       stopTyping(msg);
-      
+
       return msg.reply('woops, couldn\'t get a random xkcd image. Have a 🎀 instead!');
     }
   }

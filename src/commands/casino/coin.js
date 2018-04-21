@@ -41,7 +41,7 @@ const Database = require('better-sqlite3'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class CoinCommand extends Command {
@@ -131,11 +131,11 @@ module.exports = class CoinCommand extends Command {
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
-        
+
         return msg.embed(coinEmbed);
       }
       stopTyping(msg);
-      
+
       return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
     } catch (e) {
       stopTyping(msg);

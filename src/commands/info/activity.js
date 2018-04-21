@@ -37,10 +37,10 @@
 const Spotify = require('spotify-web-api-node'),
   duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
-  request = require('snekfetch'), 
+  request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js'), 
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js'),
   {spotifyID, spotifySecret} = require('../../auth.json');
 
 module.exports = class ActivityCommand extends Command {

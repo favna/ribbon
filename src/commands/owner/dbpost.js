@@ -57,12 +57,12 @@ module.exports = class DBPostCommand extends Command {
     if (post) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
-      
+
       return msg.reply('updated discordbots.org stats.');
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
-    
+
     return msg.reply('an error occurred updating discordbots.org stats.');
   }
 };

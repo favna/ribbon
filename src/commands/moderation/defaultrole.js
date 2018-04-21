@@ -34,8 +34,8 @@
  * @returns {Message} Confirmation the setting was stored
  */
 
-const {Command} = require('discord.js-commando'),
-  {oneLine} = require('common-tags'),
+const {Command} = require('discord.js-commando'), 
+  {oneLine} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class defaultroleCommand extends Command {

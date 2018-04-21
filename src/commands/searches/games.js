@@ -39,12 +39,7 @@ const igdbapi = require('igdb-api-node').default,
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {igdbAPIKey} = require('../../auth.json'),
-  {
-    deleteCommandMessages,
-    roundNumber,
-    stopTyping,
-    startTyping
-  } = require('../../util.js');
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class GamesCommand extends Command {
   constructor (client) {

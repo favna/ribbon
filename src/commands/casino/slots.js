@@ -38,9 +38,9 @@ const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'), 
+  {MessageEmbed} = require('discord.js'),
   {SlotMachine, SlotSymbol} = require('slot-machine'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class SlotsCommand extends Command {
@@ -176,9 +176,9 @@ module.exports = class SlotsCommand extends Command {
         return msg.embed(slotEmbed);
       }
       stopTyping(msg);
-      
+
       return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
-    } catch (e) { 
+    } catch (e) {
       stopTyping(msg);
       console.error(`	 ${stripIndents`Fatal SQL Error occurred for someone playing the slot machine!
       Server: ${msg.guild.name} (${msg.guild.id})

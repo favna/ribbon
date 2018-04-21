@@ -36,7 +36,7 @@
  */
 
 const Pornsearch = require('pornsearch'),
-  {Command} = require('discord.js-commando'), 
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
@@ -88,7 +88,7 @@ module.exports = class PornGifsCommand extends Command {
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
-    
+
     return msg.reply(`nothing found for \`${args.porn}\``);
   }
 };

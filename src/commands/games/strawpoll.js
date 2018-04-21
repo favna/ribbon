@@ -35,7 +35,7 @@
  * @returns {MessageEmbed} Poll url, title, options and preview image
  */
 
-const request = require('snekfetch'), 
+const request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');

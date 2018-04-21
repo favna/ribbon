@@ -106,12 +106,12 @@ module.exports = class EShopCommand extends Command {
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
-      
+
       return msg.reply(`No titles found for \`${args.game}\``);
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
-    
+
     return msg.reply(oneLine`eshop data was not found!!
 		Ask <@${this.client.owners[0].id}> to generate it`);
   }

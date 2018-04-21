@@ -105,11 +105,11 @@ module.exports = class ListWarnCommand extends Command {
         return msg.embed(embed);
       }
       stopTyping(msg);
-      
+
       return msg.reply('that user has no warning points yet');
     }
     stopTyping(msg);
-    
+
     return msg.reply(`📘 No warnpoints log found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
   }
 };

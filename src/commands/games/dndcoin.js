@@ -33,7 +33,7 @@
  */
 
 const {Command} = require('discord.js-commando'), 
-  {MessageEmbed} = require('discord.js'),
+  {MessageEmbed} = require('discord.js'), 
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class DndCCommand extends Command {

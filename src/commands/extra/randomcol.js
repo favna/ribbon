@@ -39,11 +39,11 @@
  * @returns {MessageEmbed} Color of embed matches generated color
  */
 
-const imgur = require('imgur'), 
-  {Canvas} = require('canvas-constructor'), 
+const imgur = require('imgur'),
+  {Canvas} = require('canvas-constructor'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {stripIndents} = require('common-tags'), 
+  {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class RandomColCommand extends Command {
@@ -78,7 +78,7 @@ module.exports = class RandomColCommand extends Command {
             if (/^#{0}(?:[0-9a-fA-F]{6})$/i.test(col)) {
               return `#${col}`;
             }
-            
+
             return col;
           }
         }
@@ -100,7 +100,7 @@ module.exports = class RandomColCommand extends Command {
     };
   }
 
-  async run (msg, args) { 
+  async run (msg, args) {
     startTyping(msg);
     const embed = new MessageEmbed(),
       hex = args.col !== 'random' ? args.col : `#${Math.floor(Math.random() * 16777215).toString(16)}`,
@@ -126,11 +126,11 @@ module.exports = class RandomColCommand extends Command {
         return msg.embed(embed);
       }
       stopTyping(msg);
-      
+
       return msg.reply('an error occurred uploading the canvas to imgur.');
     }
     stopTyping(msg);
-    
+
     return msg.reply('an error occurred getting a base64 for the canvas.');
   }
 };

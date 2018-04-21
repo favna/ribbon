@@ -33,7 +33,7 @@
  * @returns {MessageEmbed} The kiss and a cute image ❤
  */
 
-const {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class KissCommand extends Command {
@@ -90,7 +90,7 @@ module.exports = class KissCommand extends Command {
       'image': {'url': args.member !== '' ? this.fetchImage() : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
       'color': msg.guild ? msg.guild.me.displayColor : 10610610
     });
-    
+
     return stopTyping(msg);
   }
 };

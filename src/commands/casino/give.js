@@ -40,7 +40,7 @@ const Database = require('better-sqlite3'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class GiveCommand extends Command {
@@ -89,7 +89,7 @@ module.exports = class GiveCommand extends Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    try { 
+    try {
       startTyping(msg);
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = $authorid OR userID = $playerid;`).all({
         'authorid': msg.author.id,

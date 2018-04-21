@@ -38,7 +38,7 @@ const cheerio = require('cheerio'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {googleapikey, imageEngineKey} = require('../../auth.json'),
+  {googleapikey, imageEngineKey} = require('../../auth.json'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class ImageCommand extends Command {

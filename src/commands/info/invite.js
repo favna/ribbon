@@ -32,7 +32,7 @@
  * @returns {MessageEmbed} Invite link along with other links
  */
 
-const {MessageEmbed} = require('discord.js'),
+const {MessageEmbed} = require('discord.js'), 
   {Command} = require('discord.js-commando'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 

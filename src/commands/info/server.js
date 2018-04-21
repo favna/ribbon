@@ -32,7 +32,7 @@
  * @returns {MessageEmbed} Info about the server
  */
 
-const moment = require('moment'), 
+const moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -88,7 +88,7 @@ module.exports = class ServerInfoCommand extends Command {
     startTyping(msg);
     if (msg.channel.type !== 'text' && args.server === 'current') {
       stopTyping(msg);
-      
+
       return msg.reply('an argument of server name (partial or full) or server ID is required when talking outside of a server');
     }
 

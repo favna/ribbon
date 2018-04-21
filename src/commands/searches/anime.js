@@ -34,7 +34,7 @@
  * @returns {MessageEmbed} Information about the requested anime
  */
 
-const maljs = require('maljs'), 
+const maljs = require('maljs'),
   {MessageEmbed} = require('discord.js'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');

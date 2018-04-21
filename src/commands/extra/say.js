@@ -34,7 +34,7 @@
  * @returns {Message} Your message said by the bot
  */
 
-const {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'), 
   {stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class SayCommand extends Command {
@@ -89,7 +89,7 @@ module.exports = class SayCommand extends Command {
     this.client.provider.set(msg.guild.id, 'saydata', saydata);
     msg.delete();
     msg.say(args.txt);
-    
+
     return stopTyping(msg);
   }
 };

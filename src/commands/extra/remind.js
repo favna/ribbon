@@ -41,7 +41,7 @@ const Database = require('better-sqlite3'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class RemindCommand extends Command {

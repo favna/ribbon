@@ -36,10 +36,10 @@
 
 const Database = require('better-sqlite3'),
   moment = require('moment'),
-  path = require('path'), 
+  path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class MemberBalanceCommand extends Command {
@@ -76,7 +76,7 @@ module.exports = class MemberBalanceCommand extends Command {
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
-    try { 
+    try {
       startTyping(msg);
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(args.player.id);
 
@@ -85,15 +85,15 @@ module.exports = class MemberBalanceCommand extends Command {
         **Balance**
         ${query.balance}`);
 
-        deleteCommandMessages(msg, this.client); 
+        deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
         return msg.embed(mbalEmbed);
       }
       stopTyping(msg);
-      
+
       return msg.reply(`looks like ${args.player.displayName} doesn\'t have any chips yet. When they run \`${msg.guild.commandPrefix}chips\` they will get their first 500`);
-    } catch (e) { 
+    } catch (e) {
       stopTyping(msg);
       console.error(`	 ${stripIndents`Fatal SQL Error occurred while getting another person's balance (memberbalance)!
       Server: ${msg.guild.name} (${msg.guild.id})

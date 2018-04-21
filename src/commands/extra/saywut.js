@@ -32,10 +32,10 @@
  * @returns {MessageEmbed} Info on who used the "say" command last
  */
 
-const moment = require('moment'), 
+const moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine} = require('common-tags'), 
+  {oneLine} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class SayWutCommand extends Command {

@@ -34,8 +34,8 @@
  * @returns {MessageEmbed} A MessageEmbed with the joke text
  */
 
-const {Command} = require('discord.js-commando'),
-  {oneLine, stripIndents} = require('common-tags'),
+const {Command} = require('discord.js-commando'), 
+  {oneLine, stripIndents} = require('common-tags'), 
   {stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class FavnaCommand extends Command {
@@ -68,7 +68,7 @@ module.exports = class FavnaCommand extends Command {
     return true;
   }
 
-  run (msg) { 
+  run (msg) {
     if (this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
       startTyping(msg);
       msg.delete();

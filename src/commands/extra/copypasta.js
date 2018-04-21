@@ -37,10 +37,10 @@
 
 const Matcher = require('did-you-mean'),
   fs = require('fs'),
-  path = require('path'), 
+  path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine} = require('common-tags'), 
+  {oneLine} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class CopyPastaCommand extends Command {

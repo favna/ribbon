@@ -34,7 +34,7 @@
  * @returns {MessageEmbed} Info about that member
  */
 
-const moment = require('moment'), 
+const moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');

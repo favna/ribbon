@@ -129,7 +129,7 @@ module.exports = class CydiaCommand extends Command {
             deleteCommandMessages(msg, this.client);
           }
           startTyping(msg);
-          
+
           return msg.embed(embed);
         } catch (e) {
           console.error(`${stripIndents`An error occurred on the cydia command!
@@ -144,7 +144,7 @@ module.exports = class CydiaCommand extends Command {
             deleteCommandMessages(msg, this.client);
           }
           stopTyping(msg);
-          
+
           return msg.embed(embed);
         }
       }

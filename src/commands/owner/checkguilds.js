@@ -31,16 +31,10 @@
  * @returns {Message} Amount and list of guilds in code blocks
  */
 
-const _ = require('underscore'),
-  {Command} = require('discord.js-commando'),
-  {stripIndents} = require('common-tags'),
-  {
-    deleteCommandMessages,
-    stopTyping,
-    startTyping
-  } = require('../../util.js');
+const commando = require('discord.js-commando'),
+  {stripIndents} = require('common-tags');
 
-module.exports = class CheckGuildsCommand extends Command {
+module.exports = class CheckGuildsCommand extends commando.Command {
   constructor (client) {
     super(client, {
       'name': 'checkguilds',
@@ -52,12 +46,10 @@ module.exports = class CheckGuildsCommand extends Command {
     });
   }
 
-
-  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
   run (msg) {
-
-    
-
-
+    msg.say(stripIndents`\`\`\`The current guild count: ${this.client.guilds.size}
+        
+        Guild list:
+        ${this.client.guilds.map(m => m.name).join('\n')}\`\`\``, {'split': true});
   }
 };

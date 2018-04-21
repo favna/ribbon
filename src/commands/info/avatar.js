@@ -36,7 +36,7 @@
  */
 
 const {Command} = require('discord.js-commando'), 
-  {MessageEmbed} = require('discord.js'),
+  {MessageEmbed} = require('discord.js'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class AvatarCommand extends Command {

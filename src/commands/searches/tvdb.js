@@ -35,10 +35,10 @@
  */
 
 const moment = require('moment'),
-  request = require('snekfetch'), 
+  request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {TheMovieDBV3ApiKey} = require('../../auth.json'), 
+  {TheMovieDBV3ApiKey} = require('../../auth.json'),
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class TVCommand extends Command {

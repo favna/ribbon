@@ -77,10 +77,10 @@ module.exports = class RocketLeagueCommand extends Command {
      * @body Requires access to the Rocket League API which is pending.  
      * API is currently closed beta and requires granted access from Rocket League so hopefully I will be allowed access
      */
-    
+
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
-    
+
     return msg.reply('not yet implemented');
   }
 };

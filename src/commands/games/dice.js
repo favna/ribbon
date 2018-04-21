@@ -35,7 +35,7 @@
  * @returns {MessageEmbed} The eyes rolled for each dice as well as the total of all rolls
  */
 
-const xdicey = require('xdicey'), 
+const xdicey = require('xdicey'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');

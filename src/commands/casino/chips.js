@@ -36,11 +36,18 @@
 const Database = require('better-sqlite3'),
   duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   moment = require('moment'),
-  path = require('path'), 
+  path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {
+    oneLine,
+    stripIndents
+  } = require('common-tags'),
+  {
+    deleteCommandMessages,
+    stopTyping,
+    startTyping
+  } = require('../../util.js');
 
 module.exports = class ChipsCommand extends Command {
   constructor (client) {

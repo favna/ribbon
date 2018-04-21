@@ -35,10 +35,10 @@
  * @returns {MessageEmbed} Log of the kick
  */
 
-const moment = require('moment'), 
+const moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine} = require('common-tags'), 
+  {oneLine} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class KickCommand extends Command {
@@ -81,13 +81,13 @@ module.exports = class KickCommand extends Command {
 
     if (args.member.id === msg.author.id) {
       stopTyping(msg);
-      
+
       return msg.reply('I don\'t think you want to kick yourself.');
     }
 
     if (!args.member.kickable) {
       stopTyping(msg);
-      
+
       return msg.reply('I cannot kick that member, their role is probably higher than my own!');
     }
 

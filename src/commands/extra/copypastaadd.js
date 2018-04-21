@@ -89,7 +89,7 @@ module.exports = class CopyPastaAddCommand extends Command {
       return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with ${msg.guild.commandPrefix}copypasta ${args.name}`);
     }
     stopTyping(msg);
-    
+
     return msg.reply('an error occurred and your pasta was not saved.');
   }
 };

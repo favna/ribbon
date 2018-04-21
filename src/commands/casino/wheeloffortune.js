@@ -36,10 +36,10 @@
 
 const Database = require('better-sqlite3'),
   moment = require('moment'),
-  path = require('path'), 
+  path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class WheelOfFortuneCommand extends Command {

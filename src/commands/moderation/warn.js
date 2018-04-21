@@ -154,11 +154,11 @@ module.exports = class WarnCommand extends Command {
           : msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`);
       }
       stopTyping(msg);
-      
+
       return msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`);
     }
     stopTyping(msg);
-    
+
     return msg.reply(oneLine`An error occurred writing the warning to disc.
 							You can contact my developer on his server. Use \`${msg.guild.commandPrefix}invite\` to get an invite to his server.`);
   }

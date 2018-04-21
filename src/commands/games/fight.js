@@ -36,7 +36,7 @@
  */
 
 const moment = require('moment'),
-  random = require('node-random'), 
+  random = require('node-random'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -131,7 +131,7 @@ module.exports = class FightCommand extends Command {
       return msg.reply('an error occurred pitting these combatants against each other 😦');
     });
     stopTyping(msg);
-    
+
     return null;
   }
 };

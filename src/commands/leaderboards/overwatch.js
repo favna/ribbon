@@ -118,7 +118,7 @@ module.exports = class OverwatchCommand extends Command {
 
       if (owData.error) {
         stopTyping(msg);
-        
+
         return msg.reply('No player found by that name. Check the platform (`pc`, `psn` or `xbl`) and region (`us`, `eu` or `asia`)');
       }
 

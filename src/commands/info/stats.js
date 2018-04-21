@@ -33,8 +33,8 @@
  */
 
 const duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-  moment = require('moment'), 
-  process = require('process'), 
+  moment = require('moment'),
+  process = require('process'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'),

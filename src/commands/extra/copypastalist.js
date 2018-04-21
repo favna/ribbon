@@ -34,7 +34,7 @@
 
 const fs = require('fs'),
   moment = require('moment'),
-  path = require('path'), 
+  path = require('path'),
   {Command} = require('discord.js-commando'),
   {splitMessage} = require('discord.js'),
   {stripIndents} = require('common-tags'),
@@ -81,12 +81,12 @@ module.exports = class CopyPastaListCommand extends Command {
           }));
         }
         stopTyping(msg);
-        
+
         return messages;
       }
 
       stopTyping(msg);
-      
+
       return msg.embed({
         'title': 'Copypastas available on this server',
         'description': list.join('\n'),

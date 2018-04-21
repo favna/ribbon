@@ -37,10 +37,10 @@
 
 const Database = require('better-sqlite3'),
   moment = require('moment'),
-  path = require('path'), 
+  path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class CustomTopUpCommand extends Command {
@@ -108,7 +108,7 @@ module.exports = class CustomTopUpCommand extends Command {
       }
 
       stopTyping(msg);
-      
+
       return msg.reply('looks like that member has no chips yet');
     } catch (e) {
       stopTyping(msg);

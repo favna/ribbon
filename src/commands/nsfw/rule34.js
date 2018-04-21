@@ -36,9 +36,9 @@
  */
 
 const booru = require('booru'),
-  {Command} = require('discord.js-commando'), 
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {stripIndents} = require('common-tags'), 
+  {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class Rule34Command extends Command {

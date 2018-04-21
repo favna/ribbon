@@ -34,8 +34,8 @@
  * @returns {Message} Announcement you wrote in the announcement / news channel
  */
 
-const {Command} = require('discord.js-commando'),
-  {stripIndents} = require('common-tags'),
+const {Command} = require('discord.js-commando'), 
+  {stripIndents} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class NewsCommand extends Command {
@@ -74,7 +74,7 @@ module.exports = class NewsCommand extends Command {
 
       if (newsChannel.permissionsFor(msg.guild.me).has(['SEND_MESSAGES', 'VIEW_CHANNEL'])) {
         stopTyping(msg);
-        
+
         return msg.reply('I do not have permission to send messages to that channel. Better go and fix that!');
       }
       newsChannel.startTyping(1);

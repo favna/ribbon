@@ -36,7 +36,7 @@
  */
 
 const moment = require('moment'),
-  weather = require('yahoo-weather'), 
+  weather = require('yahoo-weather'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');

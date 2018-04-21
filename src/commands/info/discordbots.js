@@ -35,10 +35,10 @@
  */
 
 const moment = require('moment'),
-  request = require('snekfetch'), 
+  request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {discordbotsAPIKey} = require('../../auth.json'), 
+  {discordbotsAPIKey} = require('../../auth.json'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class DiscordBotsCommand extends Command {

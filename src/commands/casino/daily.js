@@ -37,7 +37,7 @@ const Database = require('better-sqlite3'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class DailyCommand extends Command {
@@ -59,7 +59,7 @@ module.exports = class DailyCommand extends Command {
   run (msg) {
     const balEmbed = new MessageEmbed(),
       conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
-    
+
     let returnMsg = '';
 
     balEmbed
@@ -101,7 +101,7 @@ module.exports = class DailyCommand extends Command {
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
-        
+
         return msg.embed(balEmbed, returnMsg);
       }
       stopTyping(msg);

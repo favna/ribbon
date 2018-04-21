@@ -33,7 +33,7 @@
  * @returns {Message} Confirmation the music was paused
  */
 
-const {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class PauseSongCommand extends Command {

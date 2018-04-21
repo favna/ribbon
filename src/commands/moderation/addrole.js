@@ -35,7 +35,7 @@
  * @returns {Message} Confirmation the role was added
  */
 
-const moment = require('moment'), 
+const moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {DiscordAPIError} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),

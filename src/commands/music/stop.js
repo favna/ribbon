@@ -32,7 +32,7 @@
  * @returns {Message} Sad face about stopping the music
  */
 
-const {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class StopMusicCommand extends Command {

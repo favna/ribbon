@@ -34,8 +34,8 @@
  * @returns {Message} Confirmation the setting was stored
  */
 
-const {Command} = require('discord.js-commando'),
-  {stripIndents} = require('common-tags'),
+const {Command} = require('discord.js-commando'), 
+  {stripIndents} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping, userSearch} = require('../../util.js');
 
 module.exports = class TwitchMonitorsCommand extends Command {

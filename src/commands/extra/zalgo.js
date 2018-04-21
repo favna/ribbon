@@ -70,7 +70,7 @@ module.exports = class zalgoCommand extends Command {
     deleteCommandMessages(msg, this.client);
 
     msg.say(zalgo(banish(args.txt)));
-    
+
     return stopTyping(msg);
   }
 };

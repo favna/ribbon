@@ -35,7 +35,7 @@
  */
 
 const imgur = require('imgur'),
-  qr = require('qrcode'), 
+  qr = require('qrcode'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -65,7 +65,7 @@ module.exports = class QRGenCommand extends Command {
     });
   }
 
-  async run (msg, args) { 
+  async run (msg, args) {
     startTyping(msg);
     const base64 = await qr.toDataURL(args.url, {'errorCorrectionLevel': 'M'});
 
@@ -86,11 +86,11 @@ module.exports = class QRGenCommand extends Command {
         return msg.embed(qrEmbed);
       }
       stopTyping(msg);
-      
+
       return msg.reply('an error occurred uploading the QR code to imgur.');
     }
     stopTyping(msg);
-    
+
     return msg.reply('an error occurred getting a base64 image for that URL.');
   }
 };

@@ -35,10 +35,10 @@
  * @returns {Message} Confirmation the nickname was assigned
  */
 
-const moment = require('moment'), 
+const moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {DiscordAPIError} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),  
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class NickCommand extends Command {
@@ -85,7 +85,7 @@ module.exports = class NickCommand extends Command {
           args.member.setNickname(args.nickname);
         }
         stopTyping(msg);
-        
+
         return msg.reply(`${args.nickname === 'clear' ? `removed <@${args.member.id}>'s nickname` : `assigned \`${args.nickname}\` as nickname to <@${args.member.id}>`}`);
       } catch (e) {
         if (e instanceof DiscordAPIError) {
@@ -102,7 +102,7 @@ module.exports = class NickCommand extends Command {
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
-    
+
     return msg.reply(oneLine`failed to set nickname to that member.
     Check that I have permission to set their nickname as well as the role hierarchy`);
   }

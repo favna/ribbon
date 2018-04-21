@@ -41,10 +41,10 @@
 const currencySymbol = require('currency-symbol-map'),
   fx = require('money'),
   moment = require('moment'),
-  request = require('snekfetch'), 
+  request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oxrAppID} = require('../../auth.json'), 
+  {oxrAppID} = require('../../auth.json'),
   {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
@@ -82,7 +82,7 @@ module.exports = class MoneyCommand extends Command {
               'MKD', 'MMK', 'MNT', 'MOP', 'MRO', 'MRU', 'MUR', 'MVR', 'MWK', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NMC', 'NOK', 'NPR', 'NVC', 'NXT', 'NZD', 'OMR', 'PAB', 'PEN', 'PGK', 'PHP',
               'PKR', 'PLN', 'PPC', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SBD', 'SCR', 'SDG', 'SEK', 'SGD', 'SHP', 'SLL', 'SOS', 'SRD', 'SSP', 'STD', 'STN', 'STR', 'SVC', 'SYP', 'SZL',
               'THB', 'TJS', 'TMT', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'USD', 'UYU', 'UZS', 'VEF', 'VEF_BLKMKT', 'VEF_DICOM', 'VEF_DIPRO', 'VND', 'VTC', 'VUV', 'WST', 'XAF', 'XAG',
-              'XAU', 'XCD', 'XDR', 'XMR', 'XOF', 'XPD', 'XPF', 'XPM', 'XPT', 'XRP', 'YER', 'ZAR', 'ZMW', 'ZWL' 
+              'XAU', 'XCD', 'XDR', 'XMR', 'XOF', 'XPD', 'XPF', 'XPM', 'XPT', 'XRP', 'YER', 'ZAR', 'ZMW', 'ZWL'
             ];
 
             if (validCurs.includes(curs.toUpperCase())) {
@@ -106,7 +106,7 @@ module.exports = class MoneyCommand extends Command {
               'MKD', 'MMK', 'MNT', 'MOP', 'MRO', 'MRU', 'MUR', 'MVR', 'MWK', 'MXN', 'MYR', 'MZN', 'NAD', 'NGN', 'NIO', 'NMC', 'NOK', 'NPR', 'NVC', 'NXT', 'NZD', 'OMR', 'PAB', 'PEN', 'PGK', 'PHP',
               'PKR', 'PLN', 'PPC', 'PYG', 'QAR', 'RON', 'RSD', 'RUB', 'RWF', 'SAR', 'SBD', 'SCR', 'SDG', 'SEK', 'SGD', 'SHP', 'SLL', 'SOS', 'SRD', 'SSP', 'STD', 'STN', 'STR', 'SVC', 'SYP', 'SZL',
               'THB', 'TJS', 'TMT', 'TND', 'TOP', 'TRY', 'TTD', 'TWD', 'TZS', 'UAH', 'UGX', 'USD', 'UYU', 'UZS', 'VEF', 'VEF_BLKMKT', 'VEF_DICOM', 'VEF_DIPRO', 'VND', 'VTC', 'VUV', 'WST', 'XAF', 'XAG',
-              'XAU', 'XCD', 'XDR', 'XMR', 'XOF', 'XPD', 'XPF', 'XPM', 'XPT', 'XRP', 'YER', 'ZAR', 'ZMW', 'ZWL' 
+              'XAU', 'XCD', 'XDR', 'XMR', 'XOF', 'XPD', 'XPF', 'XPM', 'XPT', 'XRP', 'YER', 'ZAR', 'ZMW', 'ZWL'
             ];
 
             if (validCurs.includes(curs.toUpperCase())) {
@@ -167,7 +167,7 @@ module.exports = class MoneyCommand extends Command {
 		Error Message:`} ${rates.statusText}`);
 
     stopTyping(msg);
-    
+
     return msg.reply('an error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
   }
 };

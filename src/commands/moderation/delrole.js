@@ -34,7 +34,7 @@
  * @param {role} AnyRole The role to remove
  */
 
-const moment = require('moment'), 
+const moment = require('moment'),
   {DiscordAPIError} = require('discord.js'),
   {Command} = require('discord.js-commando'),
   {oneLine, stripIndents} = require('common-tags'),

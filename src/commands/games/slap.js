@@ -34,7 +34,7 @@
  * @returns {MessageEmbed} The slap and an image
  */
 
-const {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class SlapCommand extends Command {

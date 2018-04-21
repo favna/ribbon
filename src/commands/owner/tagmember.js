@@ -34,7 +34,7 @@
  * @returns {Message} Mention of the member wrapped between carets
  */
 
-const {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class TagMemberCommand extends Command {
@@ -62,7 +62,7 @@ module.exports = class TagMemberCommand extends Command {
     startTyping(msg);
     deleteCommandMessages(msg, this.client);
     msg.say(`^^^^ <@${args.member.id}> ^^^^`);
-    
+
     return stopTyping(msg);
   }
 };

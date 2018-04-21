@@ -26,7 +26,7 @@
  * @returns {MessageEmbed} Possible definitions for that word
  */
 
-const request = require('snekfetch'), 
+const request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');

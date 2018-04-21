@@ -141,7 +141,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!<br><strong>Aliases</strong>: <code>xdicey</code>, <code>roll</code>, <code>dicey</code>, <code>die</code></p>
 </dd>
 <dt><a href="#module_dndc">dndc</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games DndCCommand - Flips a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code></p>
+<dd><p>Games DndCCommand - Flips a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code>, <code>dcoin</code></p>
 </dd>
 <dt><a href="#module_fight">fight</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games FightCommand - Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.<br><strong>Aliases</strong>: <code>combat</code></p>
@@ -816,7 +816,7 @@ dice 5 6
 
 ## dndc ⇒ <code>MessageEmbed</code>
 Games DndCCommand - Flips a coin  
-**Aliases**: `coinflip`, `dndc`
+**Aliases**: `coinflip`, `dndc`, `dcoin`
 
 **Returns**: <code>MessageEmbed</code> - Side the coin landed on  
 **Category**: games  
