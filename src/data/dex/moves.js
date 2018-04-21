@@ -25,8 +25,7 @@
  *         reasonable ways as different from the original version.
  */
 
-const BattleMovedex = {
-	'10000000voltthunderbolt': {
+const BattleMovedex = [{
 		'num': 719,
 		'accuracy': true,
 		'basePower': 195,
@@ -45,7 +44,7 @@ const BattleMovedex = {
 		'type': 'Electric',
 		'contestType': 'Cool'
 	},
-	'absorb': {
+	{
 		'num': 71,
 		'accuracy': 100,
 		'basePower': 20,
@@ -68,7 +67,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'accelerock': {
+	{
 		'num': 709,
 		'accuracy': 100,
 		'basePower': 40,
@@ -91,7 +90,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'acid': {
+	{
 		'num': 51,
 		'accuracy': 100,
 		'basePower': 40,
@@ -108,14 +107,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'spd': -1}
+			'boosts': {
+				'spd': -1
+			}
 		},
 		'target': 'allAdjacentFoes',
 		'type': 'Poison',
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'acidarmor': {
+	{
 		'num': 151,
 		'accuracy': true,
 		'basePower': 0,
@@ -126,15 +127,19 @@ const BattleMovedex = {
 		'name': 'Acid Armor',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'def': 2},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'def': 2
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Poison',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Tough'
 	},
-	'aciddownpour': {
+	{
 		'num': 628,
 		'accuracy': true,
 		'basePower': 1,
@@ -152,7 +157,7 @@ const BattleMovedex = {
 		'type': 'Poison',
 		'contestType': 'Cool'
 	},
-	'acidspray': {
+	{
 		'num': 491,
 		'accuracy': 100,
 		'basePower': 40,
@@ -171,24 +176,26 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'spd': -2}
+			'boosts': {
+				'spd': -2
+			}
 		},
 		'target': 'normal',
 		'type': 'Poison',
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'acrobatics': {
+	{
 		'num': 512,
 		'accuracy': 100,
 		'basePower': 55,
 		'basePowerCallback' (pokemon, target, move) {
 			if (!pokemon.item) {
 				this.debug('Power doubled for no item');
-				
+
 				return move.basePower * 2;
 			}
-			
+
 			return move.basePower;
 		},
 		'category': 'Physical',
@@ -211,7 +218,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'acupressure': {
+	{
 		'num': 367,
 		'accuracy': true,
 		'basePower': 0,
@@ -247,7 +254,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'crit2',
 		'contestType': 'Tough'
 	},
-	'aerialace': {
+	{
 		'num': 332,
 		'accuracy': true,
 		'basePower': 60,
@@ -271,7 +278,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'aeroblast': {
+	{
 		'num': 177,
 		'accuracy': 95,
 		'basePower': 100,
@@ -295,7 +302,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'afteryou': {
+	{
 		'num': 495,
 		'accuracy': true,
 		'basePower': 0,
@@ -312,7 +319,7 @@ const BattleMovedex = {
 		},
 		'onHit' (target) {
 			if (target.side.active.length < 2) {
-				return false; 
+				return false;
 			} // Fails in singles
 			const action = this.willMove(target);
 
@@ -327,10 +334,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Cute'
 	},
-	'agility': {
+	{
 		'num': 97,
 		'accuracy': true,
 		'basePower': 0,
@@ -342,15 +351,19 @@ const BattleMovedex = {
 		'name': 'Agility',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'spe': 2},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'spe': 2
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Psychic',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cool'
 	},
-	'aircutter': {
+	{
 		'num': 314,
 		'accuracy': 95,
 		'basePower': 60,
@@ -372,7 +385,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'airslash': {
+	{
 		'num': 403,
 		'accuracy': 95,
 		'basePower': 75,
@@ -398,7 +411,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'alloutpummeling': {
+	{
 		'num': 624,
 		'accuracy': true,
 		'basePower': 1,
@@ -416,7 +429,7 @@ const BattleMovedex = {
 		'type': 'Fighting',
 		'contestType': 'Cool'
 	},
-	'allyswitch': {
+	{
 		'num': 502,
 		'accuracy': true,
 		'basePower': 0,
@@ -430,30 +443,32 @@ const BattleMovedex = {
 		'flags': {},
 		'onTryHit' (source) {
 			if (source.side.active.length === 1) {
-				return false; 
+				return false;
 			}
 			if (source.side.active.length === 3 && source.position === 1) {
-				return false; 
+				return false;
 			}
 		},
 		'onHit' (pokemon) {
 			const newPosition = pokemon.position === 0 ? pokemon.side.active.length - 1 : 0;
 
 			if (!pokemon.side.active[newPosition]) {
-				return false; 
+				return false;
 			}
 			if (pokemon.side.active[newPosition].fainted) {
-				return false; 
+				return false;
 			}
 			this.swapPosition(pokemon, newPosition, '[from] move: Ally Switch');
 		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Psychic',
-		'zMoveBoost': {'spe': 2},
+		'zMoveBoost': {
+			'spe': 2
+		},
 		'contestType': 'Clever'
 	},
-	'amnesia': {
+	{
 		'num': 133,
 		'accuracy': true,
 		'basePower': 0,
@@ -464,15 +479,19 @@ const BattleMovedex = {
 		'name': 'Amnesia',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'spd': 2},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'spd': 2
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Psychic',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'anchorshot': {
+	{
 		'num': 677,
 		'accuracy': 100,
 		'basePower': 80,
@@ -493,7 +512,7 @@ const BattleMovedex = {
 			'chance': 100,
 			'onHit' (target, source, move) {
 				if (source.isActive) {
-					target.addVolatile('trapped', source, move, 'trapper'); 
+					target.addVolatile('trapped', source, move, 'trapper');
 				}
 			}
 		},
@@ -502,7 +521,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'ancientpower': {
+	{
 		'num': 246,
 		'accuracy': 100,
 		'basePower': 60,
@@ -534,7 +553,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'aquajet': {
+	{
 		'num': 453,
 		'accuracy': 100,
 		'basePower': 40,
@@ -557,7 +576,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'aquaring': {
+	{
 		'num': 392,
 		'accuracy': true,
 		'basePower': 0,
@@ -568,7 +587,9 @@ const BattleMovedex = {
 		'name': 'Aqua Ring',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'volatileStatus': 'aquaring',
 		'effect': {
 			'onStart' (pokemon) {
@@ -582,10 +603,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Water',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'aquatail': {
+	{
 		'num': 401,
 		'accuracy': 90,
 		'basePower': 90,
@@ -608,7 +631,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Beautiful'
 	},
-	'armthrust': {
+	{
 		'num': 292,
 		'accuracy': 100,
 		'basePower': 15,
@@ -631,7 +654,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'aromatherapy': {
+	{
 		'num': 312,
 		'accuracy': true,
 		'basePower': 0,
@@ -661,7 +684,7 @@ const BattleMovedex = {
 					success = true;
 				}
 			}
-			
+
 			return success;
 		},
 		'target': 'allyTeam',
@@ -669,7 +692,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Clever'
 	},
-	'aromaticmist': {
+	{
 		'num': 597,
 		'accuracy': true,
 		'basePower': 0,
@@ -680,15 +703,21 @@ const BattleMovedex = {
 		'name': 'Aromatic Mist',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'authentic': 1},
-		'boosts': {'spd': 1},
+		'flags': {
+			'authentic': 1
+		},
+		'boosts': {
+			'spd': 1
+		},
 		'secondary': false,
 		'target': 'adjacentAlly',
 		'type': 'Fairy',
-		'zMoveBoost': {'spd': 2},
+		'zMoveBoost': {
+			'spd': 2
+		},
 		'contestType': 'Beautiful'
 	},
-	'assist': {
+	{
 		'num': 274,
 		'accuracy': true,
 		'basePower': 0,
@@ -705,7 +734,7 @@ const BattleMovedex = {
 
 			for (const pokemon of target.side.pokemon) {
 				if (pokemon === target) {
-					continue; 
+					continue;
 				}
 				for (const moveSlot of pokemon.moveSlots) {
 					const move = moveSlot.id;
@@ -719,7 +748,7 @@ const BattleMovedex = {
 			let randomMove = '';
 
 			if (moves.length) {
-				randomMove = moves[this.random(moves.length)]; 
+				randomMove = moves[this.random(moves.length)];
 			}
 			if (!randomMove) {
 				return false;
@@ -731,17 +760,17 @@ const BattleMovedex = {
 		'type': 'Normal',
 		'contestType': 'Cute'
 	},
-	'assurance': {
+	{
 		'num': 372,
 		'accuracy': 100,
 		'basePower': 60,
 		'basePowerCallback' (pokemon, target, move) {
 			if (pokemon.volatiles.assurance && pokemon.volatiles.assurance.hurt) {
 				this.debug('Boosted for being damaged this turn');
-				
+
 				return move.basePower * 2;
 			}
-			
+
 			return move.basePower;
 		},
 		'category': 'Physical',
@@ -780,7 +809,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Clever'
 	},
-	'astonish': {
+	{
 		'num': 310,
 		'accuracy': 100,
 		'basePower': 30,
@@ -805,7 +834,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'attackorder': {
+	{
 		'num': 454,
 		'accuracy': 100,
 		'basePower': 90,
@@ -828,7 +857,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Clever'
 	},
-	'attract': {
+	{
 		'num': 213,
 		'accuracy': 100,
 		'basePower': 0,
@@ -851,12 +880,12 @@ const BattleMovedex = {
 			'onStart' (pokemon, source, effect) {
 				if (!(pokemon.gender === 'M' && source.gender === 'F') && !(pokemon.gender === 'F' && source.gender === 'M')) {
 					this.debug('incompatible gender');
-					
+
 					return false;
 				}
 				if (!this.runEvent('Attract', pokemon, source)) {
 					this.debug('Attract event failed');
-					
+
 					return false;
 				}
 
@@ -879,7 +908,7 @@ const BattleMovedex = {
 				this.add('-activate', pokemon, 'move: Attract', `[of] ${this.effectData.source}`);
 				if (this.random(2) === 0) {
 					this.add('cant', pokemon, 'Attract');
-					
+
 					return false;
 				}
 			},
@@ -893,7 +922,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'aurasphere': {
+	{
 		'num': 396,
 		'accuracy': true,
 		'basePower': 80,
@@ -918,7 +947,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'aurorabeam': {
+	{
 		'num': 62,
 		'accuracy': 100,
 		'basePower': 65,
@@ -935,14 +964,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'atk': -1}
+			'boosts': {
+				'atk': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Ice',
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'auroraveil': {
+	{
 		'num': 694,
 		'accuracy': true,
 		'basePower': 0,
@@ -954,7 +985,9 @@ const BattleMovedex = {
 		'name': 'Aurora Veil',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'sideCondition': 'auroraveil',
 		'onTryHitSide' () {
 			if (!this.isWeather('hail')) {
@@ -967,7 +1000,7 @@ const BattleMovedex = {
 				if (source && source.hasItem('lightclay')) {
 					return 8;
 				}
-				
+
 				return 5;
 			},
 			'onAnyModifyDamage' (damage, source, target, move) {
@@ -981,7 +1014,7 @@ const BattleMovedex = {
 						if (target.side.active.length > 1) {
 							return this.chainModify([0xAAC, 0x1000]);
 						}
-						
+
 						return this.chainModify(0.5);
 					}
 				}
@@ -998,10 +1031,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'allySide',
 		'type': 'Ice',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'autotomize': {
+	{
 		'num': 475,
 		'accuracy': true,
 		'basePower': 0,
@@ -1013,7 +1048,9 @@ const BattleMovedex = {
 		'name': 'Autotomize',
 		'pp': 15,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'onTryHit' (pokemon) {
 			const hasContrary = pokemon.hasAbility('contrary');
 
@@ -1021,7 +1058,9 @@ const BattleMovedex = {
 				return false;
 			}
 		},
-		'boosts': {'spe': 2},
+		'boosts': {
+			'spe': 2
+		},
 		'volatileStatus': 'autotomize',
 		'effect': {
 			'noCopy': true, // Doesn't get copied by Baton Pass
@@ -1042,9 +1081,9 @@ const BattleMovedex = {
 				if (this.effectData.multiplier) {
 					weight -= this.effectData.multiplier * 100;
 					if (weight < 0.1) {
-						weight = 0.1; 
+						weight = 0.1;
 					}
-					
+
 					return weight;
 				}
 			}
@@ -1055,17 +1094,17 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'avalanche': {
+	{
 		'num': 419,
 		'accuracy': 100,
 		'basePower': 60,
 		'basePowerCallback' (pokemon, target, move) {
 			if (target.lastDamage > 0 && pokemon.lastAttackedBy && pokemon.lastAttackedBy.thisTurn && pokemon.lastAttackedBy.pokemon === target) {
 				this.debug(`Boosted for getting hit by ${pokemon.lastAttackedBy.move}`);
-				
+
 				return move.basePower * 2;
 			}
-			
+
 			return move.basePower;
 		},
 		'category': 'Physical',
@@ -1087,7 +1126,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'babydolleyes': {
+	{
 		'num': 608,
 		'accuracy': 100,
 		'basePower': 0,
@@ -1104,14 +1143,18 @@ const BattleMovedex = {
 			'mirror': 1,
 			'mystery': 1
 		},
-		'boosts': {'atk': -1},
+		'boosts': {
+			'atk': -1
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Fairy',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cute'
 	},
-	'banefulbunker': {
+	{
 		'num': 661,
 		'accuracy': true,
 		'basePower': 0,
@@ -1141,9 +1184,9 @@ const BattleMovedex = {
 			'onTryHit' (target, source, move) {
 				if (!move.flags.protect) {
 					if (move.isZ) {
-						move.zBrokeProtect = true; 
+						move.zBrokeProtect = true;
 					}
-					
+
 					return;
 				}
 				this.add('-activate', target, 'move: Protect');
@@ -1159,17 +1202,19 @@ const BattleMovedex = {
 				if (move.flags.contact) {
 					source.trySetStatus('psn', target);
 				}
-				
+
 				return null;
 			}
 		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Poison',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Tough'
 	},
-	'barrage': {
+	{
 		'num': 140,
 		'accuracy': 85,
 		'basePower': 15,
@@ -1192,7 +1237,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'barrier': {
+	{
 		'num': 112,
 		'accuracy': true,
 		'basePower': 0,
@@ -1203,15 +1248,19 @@ const BattleMovedex = {
 		'name': 'Barrier',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'def': 2},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'def': 2
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Psychic',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cool'
 	},
-	'batonpass': {
+	{
 		'num': 226,
 		'accuracy': true,
 		'basePower': 0,
@@ -1231,7 +1280,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'beakblast': {
+	{
 		'num': 690,
 		'accuracy': 100,
 		'basePower': 100,
@@ -1273,7 +1322,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Tough'
 	},
-	'beatup': {
+	{
 		'num': 251,
 		'accuracy': 100,
 		'basePower': 0,
@@ -1302,7 +1351,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'belch': {
+	{
 		'num': 562,
 		'accuracy': 90,
 		'basePower': 120,
@@ -1313,7 +1362,9 @@ const BattleMovedex = {
 		'name': 'Belch',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'protect': 1},
+		'flags': {
+			'protect': 1
+		},
 		// Move disabling implemented in Battle#nextTurn in sim/battle.js
 		'secondary': false,
 		'target': 'normal',
@@ -1321,7 +1372,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Tough'
 	},
-	'bellydrum': {
+	{
 		'num': 187,
 		'accuracy': true,
 		'basePower': 0,
@@ -1332,13 +1383,17 @@ const BattleMovedex = {
 		'name': 'Belly Drum',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'onHit' (target) {
 			if (target.hp <= target.maxhp / 2 || target.boosts.atk >= 6 || target.maxhp === 1) { // Shedinja clause
 				return false;
 			}
 			this.directDamage(target.maxhp / 2);
-			this.boost({'atk': 12}, target);
+			this.boost({
+				'atk': 12
+			}, target);
 		},
 		'secondary': false,
 		'target': 'self',
@@ -1346,7 +1401,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Cute'
 	},
-	'bestow': {
+	{
 		'num': 516,
 		'accuracy': true,
 		'basePower': 0,
@@ -1369,14 +1424,14 @@ const BattleMovedex = {
 			const yourItem = source.takeItem();
 
 			if (!yourItem) {
-				return false; 
+				return false;
 			}
 			if (!this.singleEvent('TakeItem', yourItem, source.itemData, source, target, move, yourItem)) {
-				return; 
+				return;
 			}
 			if (!target.setItem(yourItem)) {
 				source.item = yourItem.id;
-				
+
 				return false;
 			}
 			this.add('-item', target, yourItem.name, '[from] move: Bestow', `[of] ${source}`);
@@ -1384,10 +1439,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 2},
+		'zMoveBoost': {
+			'spe': 2
+		},
 		'contestType': 'Cute'
 	},
-	'bide': {
+	{
 		'num': 117,
 		'accuracy': true,
 		'basePower': 0,
@@ -1406,7 +1463,7 @@ const BattleMovedex = {
 		'ignoreImmunity': true,
 		'beforeMoveCallback' (pokemon) {
 			if (pokemon.volatiles.bide) {
-				return true; 
+				return true;
 			}
 		},
 		'effect': {
@@ -1431,7 +1488,7 @@ const BattleMovedex = {
 					if (!target || !this.effectData.totalDamage) {
 						this.attrLastMove('[still]');
 						this.add('-fail', pokemon);
-						
+
 						return false;
 					}
 					if (!target.isActive) {
@@ -1439,7 +1496,7 @@ const BattleMovedex = {
 					}
 					if (!this.isAdjacent(pokemon, target)) {
 						this.add('-miss', pokemon, target);
-						
+
 						return false;
 					}
 					const moveData = {
@@ -1458,7 +1515,7 @@ const BattleMovedex = {
 					};
 
 					this.tryMoveHit(target, pokemon, moveData);
-					
+
 					return false;
 				}
 				this.add('-activate', pokemon, 'move: Bide');
@@ -1476,7 +1533,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'bind': {
+	{
 		'num': 20,
 		'accuracy': 85,
 		'basePower': 15,
@@ -1499,7 +1556,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'bite': {
+	{
 		'num': 44,
 		'accuracy': 100,
 		'basePower': 60,
@@ -1525,7 +1582,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'blackholeeclipse': {
+	{
 		'num': 654,
 		'accuracy': true,
 		'basePower': 1,
@@ -1543,7 +1600,7 @@ const BattleMovedex = {
 		'type': 'Dark',
 		'contestType': 'Cool'
 	},
-	'blastburn': {
+	{
 		'num': 307,
 		'accuracy': 90,
 		'basePower': 150,
@@ -1559,14 +1616,16 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'volatileStatus': 'mustrecharge'},
+		'self': {
+			'volatileStatus': 'mustrecharge'
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Fire',
 		'zMovePower': 200,
 		'contestType': 'Beautiful'
 	},
-	'blazekick': {
+	{
 		'num': 299,
 		'accuracy': 90,
 		'basePower': 85,
@@ -1593,7 +1652,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'blizzard': {
+	{
 		'num': 59,
 		'accuracy': 70,
 		'basePower': 110,
@@ -1623,7 +1682,7 @@ const BattleMovedex = {
 		'zMovePower': 185,
 		'contestType': 'Beautiful'
 	},
-	'block': {
+	{
 		'num': 335,
 		'accuracy': true,
 		'basePower': 0,
@@ -1644,10 +1703,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cute'
 	},
-	'bloomdoom': {
+	{
 		'num': 644,
 		'accuracy': true,
 		'basePower': 1,
@@ -1665,7 +1726,7 @@ const BattleMovedex = {
 		'type': 'Grass',
 		'contestType': 'Cool'
 	},
-	'blueflare': {
+	{
 		'num': 551,
 		'accuracy': 85,
 		'basePower': 130,
@@ -1690,7 +1751,7 @@ const BattleMovedex = {
 		'zMovePower': 195,
 		'contestType': 'Beautiful'
 	},
-	'bodyslam': {
+	{
 		'num': 34,
 		'accuracy': 100,
 		'basePower': 85,
@@ -1717,7 +1778,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'boltstrike': {
+	{
 		'num': 550,
 		'accuracy': 85,
 		'basePower': 130,
@@ -1743,7 +1804,7 @@ const BattleMovedex = {
 		'zMovePower': 195,
 		'contestType': 'Beautiful'
 	},
-	'boneclub': {
+	{
 		'num': 125,
 		'accuracy': 85,
 		'basePower': 65,
@@ -1767,7 +1828,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'bonerush': {
+	{
 		'num': 198,
 		'accuracy': 90,
 		'basePower': 25,
@@ -1789,7 +1850,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'bonemerang': {
+	{
 		'num': 155,
 		'accuracy': 90,
 		'basePower': 50,
@@ -1812,7 +1873,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'boomburst': {
+	{
 		'num': 586,
 		'accuracy': 100,
 		'basePower': 140,
@@ -1836,7 +1897,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Tough'
 	},
-	'bounce': {
+	{
 		'num': 340,
 		'accuracy': 85,
 		'basePower': 85,
@@ -1862,11 +1923,11 @@ const BattleMovedex = {
 			this.add('-prepare', attacker, move.name, defender);
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'effect': {
@@ -1884,7 +1945,7 @@ const BattleMovedex = {
 				if (source.volatiles.lockon && target === source.volatiles.lockon.source) {
 					return;
 				}
-				
+
 				return 0;
 			},
 			'onSourceBasePower' (basePower, target, source, move) {
@@ -1902,7 +1963,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cute'
 	},
-	'bravebird': {
+	{
 		'num': 413,
 		'accuracy': 100,
 		'basePower': 120,
@@ -1927,7 +1988,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'breakneckblitz': {
+	{
 		'num': 622,
 		'accuracy': true,
 		'basePower': 1,
@@ -1945,7 +2006,7 @@ const BattleMovedex = {
 		'type': 'Normal',
 		'contestType': 'Cool'
 	},
-	'brickbreak': {
+	{
 		'num': 280,
 		'accuracy': 100,
 		'basePower': 75,
@@ -1976,7 +2037,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'brine': {
+	{
 		'num': 362,
 		'accuracy': 100,
 		'basePower': 65,
@@ -2003,7 +2064,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'brutalswing': {
+	{
 		'num': 693,
 		'accuracy': 100,
 		'basePower': 60,
@@ -2025,7 +2086,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'bubble': {
+	{
 		'num': 145,
 		'accuracy': 100,
 		'basePower': 40,
@@ -2042,14 +2103,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'spe': -1}
+			'boosts': {
+				'spe': -1
+			}
 		},
 		'target': 'allAdjacentFoes',
 		'type': 'Water',
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'bubblebeam': {
+	{
 		'num': 61,
 		'accuracy': 100,
 		'basePower': 65,
@@ -2066,14 +2129,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'spe': -1}
+			'boosts': {
+				'spe': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Water',
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'bugbite': {
+	{
 		'num': 450,
 		'accuracy': 100,
 		'basePower': 60,
@@ -2108,7 +2173,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cute'
 	},
-	'bugbuzz': {
+	{
 		'num': 405,
 		'accuracy': 100,
 		'basePower': 90,
@@ -2128,14 +2193,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'spd': -1}
+			'boosts': {
+				'spd': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Bug',
 		'zMovePower': 175,
 		'contestType': 'Beautiful'
 	},
-	'bulkup': {
+	{
 		'num': 339,
 		'accuracy': true,
 		'basePower': 0,
@@ -2147,7 +2214,9 @@ const BattleMovedex = {
 		'name': 'Bulk Up',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'boosts': {
 			'atk': 1,
 			'def': 1
@@ -2155,10 +2224,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Fighting',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Cool'
 	},
-	'bulldoze': {
+	{
 		'num': 523,
 		'accuracy': 100,
 		'basePower': 60,
@@ -2176,14 +2247,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'spe': -1}
+			'boosts': {
+				'spe': -1
+			}
 		},
 		'target': 'allAdjacent',
 		'type': 'Ground',
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'bulletpunch': {
+	{
 		'num': 418,
 		'accuracy': 100,
 		'basePower': 40,
@@ -2207,7 +2280,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'bulletseed': {
+	{
 		'num': 331,
 		'accuracy': 100,
 		'basePower': 25,
@@ -2231,7 +2304,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'burnup': {
+	{
 		'num': 682,
 		'accuracy': 100,
 		'basePower': 130,
@@ -2252,7 +2325,7 @@ const BattleMovedex = {
 				return;
 			}
 			this.add('-fail', pokemon, 'move: Burn Up');
-			
+
 			return null;
 		},
 		'self': {
@@ -2267,7 +2340,7 @@ const BattleMovedex = {
 		'zMovePower': 195,
 		'contestType': 'Clever'
 	},
-	'calmmind': {
+	{
 		'num': 347,
 		'accuracy': true,
 		'basePower': 0,
@@ -2279,7 +2352,9 @@ const BattleMovedex = {
 		'name': 'Calm Mind',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'boosts': {
 			'spa': 1,
 			'spd': 1
@@ -2290,7 +2365,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'camouflage': {
+	{
 		'num': 293,
 		'accuracy': true,
 		'basePower': 0,
@@ -2301,7 +2376,9 @@ const BattleMovedex = {
 		'name': 'Camouflage',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'onHit' (target) {
 			let newType = 'Normal';
 
@@ -2323,10 +2400,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'evasion': 1},
+		'zMoveBoost': {
+			'evasion': 1
+		},
 		'contestType': 'Clever'
 	},
-	'captivate': {
+	{
 		'num': 445,
 		'accuracy': 100,
 		'basePower': 0,
@@ -2346,17 +2425,21 @@ const BattleMovedex = {
 			if (pokemon.gender === 'M' && source.gender === 'F' || pokemon.gender === 'F' && source.gender === 'M') {
 				return;
 			}
-			
+
 			return false;
 		},
-		'boosts': {'spa': -2},
+		'boosts': {
+			'spa': -2
+		},
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Normal',
-		'zMoveBoost': {'spd': 2},
+		'zMoveBoost': {
+			'spd': 2
+		},
 		'contestType': 'Cute'
 	},
-	'catastropika': {
+	{
 		'num': 658,
 		'accuracy': true,
 		'basePower': 210,
@@ -2367,14 +2450,16 @@ const BattleMovedex = {
 		'name': 'Catastropika',
 		'pp': 1,
 		'priority': 0,
-		'flags': {'contact': 1},
+		'flags': {
+			'contact': 1
+		},
 		'isZ': 'pikaniumz',
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Electric',
 		'contestType': 'Cool'
 	},
-	'celebrate': {
+	{
 		'num': 606,
 		'accuracy': true,
 		'basePower': 0,
@@ -2401,7 +2486,7 @@ const BattleMovedex = {
 		},
 		'contestType': 'Cute'
 	},
-	'charge': {
+	{
 		'num': 268,
 		'accuracy': true,
 		'basePower': 0,
@@ -2412,7 +2497,9 @@ const BattleMovedex = {
 		'name': 'Charge',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'volatileStatus': 'charge',
 		'onHit' (pokemon) {
 			this.add('-activate', pokemon, 'move: Charge');
@@ -2426,19 +2513,23 @@ const BattleMovedex = {
 			'onBasePower' (basePower, attacker, defender, move) {
 				if (move.type === 'Electric') {
 					this.debug('charge boost');
-					
+
 					return this.chainModify(2);
 				}
 			}
 		},
-		'boosts': {'spd': 1},
+		'boosts': {
+			'spd': 1
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Electric',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Clever'
 	},
-	'chargebeam': {
+	{
 		'num': 451,
 		'accuracy': 90,
 		'basePower': 50,
@@ -2455,14 +2546,18 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 70,
-			'self': {'boosts': {'spa': 1}}
+			'self': {
+				'boosts': {
+					'spa': 1
+				}
+			}
 		},
 		'target': 'normal',
 		'type': 'Electric',
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'charm': {
+	{
 		'num': 204,
 		'accuracy': 100,
 		'basePower': 0,
@@ -2479,14 +2574,18 @@ const BattleMovedex = {
 			'mirror': 1,
 			'mystery': 1
 		},
-		'boosts': {'atk': -2},
+		'boosts': {
+			'atk': -2
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Fairy',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cute'
 	},
-	'chatter': {
+	{
 		'num': 448,
 		'accuracy': 100,
 		'basePower': 65,
@@ -2515,7 +2614,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cute'
 	},
-	'chipaway': {
+	{
 		'num': 498,
 		'accuracy': 100,
 		'basePower': 70,
@@ -2539,7 +2638,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'circlethrow': {
+	{
 		'num': 509,
 		'accuracy': 90,
 		'basePower': 60,
@@ -2562,7 +2661,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'clamp': {
+	{
 		'num': 128,
 		'accuracy': 85,
 		'basePower': 35,
@@ -2585,7 +2684,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'clangingscales': {
+	{
 		'num': 691,
 		'accuracy': 100,
 		'basePower': 110,
@@ -2603,14 +2702,18 @@ const BattleMovedex = {
 			'sound': 1,
 			'authentic': 1
 		},
-		'selfBoost': {'boosts': {'def': -1}},
+		'selfBoost': {
+			'boosts': {
+				'def': -1
+			}
+		},
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Dragon',
 		'zMovePower': 185,
 		'contestType': 'Tough'
 	},
-	'clangoroussoulblaze': {
+	{
 		'num': 728,
 		'accuracy': true,
 		'basePower': 185,
@@ -2640,7 +2743,7 @@ const BattleMovedex = {
 		'type': 'Dragon',
 		'contestType': 'Cool'
 	},
-	'clearsmog': {
+	{
 		'num': 499,
 		'accuracy': true,
 		'basePower': 50,
@@ -2666,7 +2769,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'closecombat': {
+	{
 		'num': 370,
 		'accuracy': 100,
 		'basePower': 120,
@@ -2695,7 +2798,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Tough'
 	},
-	'coil': {
+	{
 		'num': 489,
 		'accuracy': true,
 		'basePower': 0,
@@ -2707,7 +2810,9 @@ const BattleMovedex = {
 		'name': 'Coil',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'boosts': {
 			'atk': 1,
 			'def': 1,
@@ -2719,7 +2824,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Tough'
 	},
-	'cometpunch': {
+	{
 		'num': 4,
 		'accuracy': 85,
 		'basePower': 18,
@@ -2743,7 +2848,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'confide': {
+	{
 		'num': 590,
 		'accuracy': true,
 		'basePower': 0,
@@ -2760,14 +2865,18 @@ const BattleMovedex = {
 			'sound': 1,
 			'authentic': 1
 		},
-		'boosts': {'spa': -1},
+		'boosts': {
+			'spa': -1
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Cute'
 	},
-	'confuseray': {
+	{
 		'num': 109,
 		'accuracy': 100,
 		'basePower': 0,
@@ -2787,10 +2896,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Ghost',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'confusion': {
+	{
 		'num': 93,
 		'accuracy': 100,
 		'basePower': 50,
@@ -2814,7 +2925,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'constrict': {
+	{
 		'num': 132,
 		'accuracy': 100,
 		'basePower': 10,
@@ -2832,14 +2943,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'spe': -1}
+			'boosts': {
+				'spe': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Normal',
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'continentalcrush': {
+	{
 		'num': 632,
 		'accuracy': true,
 		'basePower': 1,
@@ -2857,7 +2970,7 @@ const BattleMovedex = {
 		'type': 'Rock',
 		'contestType': 'Cool'
 	},
-	'conversion': {
+	{
 		'num': 160,
 		'accuracy': true,
 		'basePower': 0,
@@ -2868,12 +2981,14 @@ const BattleMovedex = {
 		'name': 'Conversion',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'onHit' (target) {
 			const type = this.getMove(target.moveSlots[0].id).type;
 
 			if (target.hasType(type) || !target.setType(type)) {
-				return false; 
+				return false;
 			}
 			this.add('-start', target, 'typechange', type);
 		},
@@ -2889,7 +3004,7 @@ const BattleMovedex = {
 		},
 		'contestType': 'Beautiful'
 	},
-	'conversion2': {
+	{
 		'num': 176,
 		'accuracy': true,
 		'basePower': 0,
@@ -2900,7 +3015,9 @@ const BattleMovedex = {
 		'name': 'Conversion 2',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'authentic': 1},
+		'flags': {
+			'authentic': 1
+		},
 		'onHit' (target, source) {
 			if (!target.lastMove) {
 				return false;
@@ -2910,7 +3027,7 @@ const BattleMovedex = {
 
 			for (const type in this.data.TypeChart) {
 				if (source.hasType(type) || target.hasType(type)) {
-					continue; 
+					continue;
 				}
 				const typeCheck = this.data.TypeChart[type].damageTaken[attackType];
 
@@ -2934,7 +3051,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Beautiful'
 	},
-	'copycat': {
+	{
 		'num': 383,
 		'accuracy': true,
 		'basePower': 0,
@@ -2957,10 +3074,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'accuracy': 1},
+		'zMoveBoost': {
+			'accuracy': 1
+		},
 		'contestType': 'Cute'
 	},
-	'coreenforcer': {
+	{
 		'num': 687,
 		'accuracy': 100,
 		'basePower': 100,
@@ -2978,7 +3097,7 @@ const BattleMovedex = {
 		},
 		'onHit' (target) {
 			if (['battlebond', 'comatose', 'disguise', 'multitype', 'powerconstruct', 'rkssystem', 'schooling', 'shieldsdown', 'stancechange'].includes(target.ability)) {
-				return; 
+				return;
 			}
 			if (target.newlySwitched || this.willMove(target)) {
 				return;
@@ -2990,7 +3109,7 @@ const BattleMovedex = {
 				return;
 			}
 			if (target.newlySwitched || this.willMove(target)) {
-				return; 
+				return;
 			}
 			target.addVolatile('gastroacid');
 		},
@@ -3000,7 +3119,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'corkscrewcrash': {
+	{
 		'num': 638,
 		'accuracy': true,
 		'basePower': 1,
@@ -3018,7 +3137,7 @@ const BattleMovedex = {
 		'type': 'Steel',
 		'contestType': 'Cool'
 	},
-	'cosmicpower': {
+	{
 		'num': 322,
 		'accuracy': true,
 		'basePower': 0,
@@ -3029,7 +3148,9 @@ const BattleMovedex = {
 		'name': 'Cosmic Power',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'boosts': {
 			'def': 1,
 			'spd': 1
@@ -3037,10 +3158,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Psychic',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'cottonguard': {
+	{
 		'num': 538,
 		'accuracy': true,
 		'basePower': 0,
@@ -3052,15 +3175,19 @@ const BattleMovedex = {
 		'name': 'Cotton Guard',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'def': 3},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'def': 3
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Grass',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'cottonspore': {
+	{
 		'num': 178,
 		'accuracy': 100,
 		'basePower': 0,
@@ -3077,14 +3204,16 @@ const BattleMovedex = {
 			'reflectable': 1,
 			'mirror': 1
 		},
-		'boosts': {'spe': -2},
+		'boosts': {
+			'spe': -2
+		},
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Grass',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'counter': {
+	{
 		'num': 68,
 		'accuracy': 100,
 		'basePower': 0,
@@ -3092,7 +3221,7 @@ const BattleMovedex = {
 			if (!pokemon.volatiles.counter) {
 				return 0;
 			}
-			
+
 			return pokemon.volatiles.counter.damage || 1;
 		},
 		'category': 'Physical',
@@ -3127,9 +3256,9 @@ const BattleMovedex = {
 			'onRedirectTargetPriority': -1,
 			'onRedirectTarget' (target, source, source2) {
 				if (source !== this.effectData.target) {
-					return; 
+					return;
 				}
-				
+
 				return source.side.foe.active[this.effectData.position];
 			},
 			'onDamagePriority': -101,
@@ -3146,7 +3275,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'covet': {
+	{
 		'num': 343,
 		'accuracy': 100,
 		'basePower': 60,
@@ -3173,7 +3302,7 @@ const BattleMovedex = {
 			}
 			if (!source.setItem(yourItem)) {
 				target.item = yourItem.id; // Bypass setItem so we don't break choicelock or anything
-				
+
 				return;
 			}
 			this.add('-item', source, yourItem, '[from] move: Covet', `[of] ${target}`);
@@ -3184,7 +3313,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cute'
 	},
-	'crabhammer': {
+	{
 		'num': 152,
 		'accuracy': 90,
 		'basePower': 100,
@@ -3208,7 +3337,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Tough'
 	},
-	'craftyshield': {
+	{
 		'num': 578,
 		'accuracy': true,
 		'basePower': 0,
@@ -3232,21 +3361,23 @@ const BattleMovedex = {
 			'onTryHitPriority': 3,
 			'onTryHit' (target, source, move) {
 				if (move && (move.target === 'self' || move.category !== 'Status')) {
-					return; 
+					return;
 				}
 				this.add('-activate', target, 'move: Crafty Shield');
 				source.moveThisTurnResult = true;
-				
+
 				return null;
 			}
 		},
 		'secondary': false,
 		'target': 'allySide',
 		'type': 'Fairy',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Clever'
 	},
-	'crosschop': {
+	{
 		'num': 238,
 		'accuracy': 80,
 		'basePower': 100,
@@ -3270,7 +3401,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'crosspoison': {
+	{
 		'num': 440,
 		'accuracy': 100,
 		'basePower': 70,
@@ -3296,7 +3427,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'crunch': {
+	{
 		'num': 242,
 		'accuracy': 100,
 		'basePower': 80,
@@ -3316,14 +3447,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 20,
-			'boosts': {'def': -1}
+			'boosts': {
+				'def': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Dark',
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'crushclaw': {
+	{
 		'num': 306,
 		'accuracy': 95,
 		'basePower': 75,
@@ -3341,14 +3474,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 50,
-			'boosts': {'def': -1}
+			'boosts': {
+				'def': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Normal',
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'crushgrip': {
+	{
 		'num': 462,
 		'accuracy': 100,
 		'basePower': 0,
@@ -3373,7 +3508,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Tough'
 	},
-	'curse': {
+	{
 		'num': 174,
 		'accuracy': true,
 		'basePower': 0,
@@ -3384,7 +3519,9 @@ const BattleMovedex = {
 		'name': 'Curse',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'authentic': 1},
+		'flags': {
+			'authentic': 1
+		},
 		'volatileStatus': 'curse',
 		'onModifyMove' (move, source, target) {
 			if (!source.hasType('Ghost')) {
@@ -3425,7 +3562,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'curse',
 		'contestType': 'Tough'
 	},
-	'cut': {
+	{
 		'num': 15,
 		'accuracy': 95,
 		'basePower': 50,
@@ -3447,7 +3584,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'darkpulse': {
+	{
 		'num': 399,
 		'accuracy': 100,
 		'basePower': 80,
@@ -3474,7 +3611,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'darkvoid': {
+	{
 		'num': 464,
 		'accuracy': 50,
 		'basePower': 0,
@@ -3498,7 +3635,7 @@ const BattleMovedex = {
 			}
 			this.add('-fail', pokemon, 'move: Dark Void');
 			this.add('-hint', 'Only a Pokemon whose form is Darkrai can use this move.');
-			
+
 			return null;
 		},
 		'secondary': false,
@@ -3507,7 +3644,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'darkestlariat': {
+	{
 		'num': 663,
 		'accuracy': 100,
 		'basePower': 85,
@@ -3532,7 +3669,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'dazzlinggleam': {
+	{
 		'num': 605,
 		'accuracy': 100,
 		'basePower': 80,
@@ -3554,7 +3691,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'defendorder': {
+	{
 		'num': 455,
 		'accuracy': true,
 		'basePower': 0,
@@ -3566,7 +3703,9 @@ const BattleMovedex = {
 		'name': 'Defend Order',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'boosts': {
 			'def': 1,
 			'spd': 1
@@ -3574,10 +3713,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Bug',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Clever'
 	},
-	'defensecurl': {
+	{
 		'num': 111,
 		'accuracy': true,
 		'basePower': 0,
@@ -3588,17 +3729,25 @@ const BattleMovedex = {
 		'name': 'Defense Curl',
 		'pp': 40,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'def': 1},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'def': 1
+		},
 		'volatileStatus': 'defensecurl',
-		'effect': {'noCopy': true},
+		'effect': {
+			'noCopy': true
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'accuracy': 1},
+		'zMoveBoost': {
+			'accuracy': 1
+		},
 		'contestType': 'Cute'
 	},
-	'defog': {
+	{
 		'num': 432,
 		'accuracy': true,
 		'basePower': 0,
@@ -3618,7 +3767,9 @@ const BattleMovedex = {
 		},
 		'onHit' (target, source, move) {
 			if (!target.volatiles.substitute || move.infiltrates) {
-				this.boost({'evasion': -1}); 
+				this.boost({
+					'evasion': -1
+				});
 			}
 			const removeTarget = ['reflect', 'lightscreen', 'auroraveil', 'safeguard', 'mist', 'spikes', 'toxicspikes', 'stealthrock', 'stickyweb'];
 			const removeAll = ['spikes', 'toxicspikes', 'stealthrock', 'stickyweb'];
@@ -3627,7 +3778,7 @@ const BattleMovedex = {
 			for (const targetCondition of removeTarget) {
 				if (target.side.removeSideCondition(targetCondition)) {
 					if (!removeAll.includes(targetCondition)) {
-						continue; 
+						continue;
 					}
 					this.add('-sideend', target.side, this.getEffect(targetCondition).name, '[from] move: Defog', `[of] ${target}`);
 					success = true;
@@ -3639,16 +3790,18 @@ const BattleMovedex = {
 					success = true;
 				}
 			}
-			
+
 			return success;
 		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Flying',
-		'zMoveBoost': {'accuracy': 1},
+		'zMoveBoost': {
+			'accuracy': 1
+		},
 		'contestType': 'Cool'
 	},
-	'destinybond': {
+	{
 		'num': 194,
 		'accuracy': true,
 		'basePower': 0,
@@ -3660,7 +3813,9 @@ const BattleMovedex = {
 		'name': 'Destiny Bond',
 		'pp': 5,
 		'priority': 0,
-		'flags': {'authentic': 1},
+		'flags': {
+			'authentic': 1
+		},
 		'volatileStatus': 'destinybond',
 		'onPrepareHit' (pokemon) {
 			return !pokemon.removeVolatile('destinybond');
@@ -3671,7 +3826,7 @@ const BattleMovedex = {
 			},
 			'onFaint' (target, source, effect) {
 				if (!source || !effect || target.side === source.side) {
-					return; 
+					return;
 				}
 				if (effect.effectType === 'Move' && !effect.isFutureMove) {
 					this.add('-activate', target, 'move: Destiny Bond');
@@ -3681,7 +3836,7 @@ const BattleMovedex = {
 			'onBeforeMovePriority': -1,
 			'onBeforeMove' (pokemon, target, move) {
 				if (move.id === 'destinybond') {
-					return; 
+					return;
 				}
 				this.debug('removing Destiny Bond before attack');
 				pokemon.removeVolatile('destinybond');
@@ -3700,7 +3855,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'redirect',
 		'contestType': 'Clever'
 	},
-	'detect': {
+	{
 		'num': 197,
 		'accuracy': true,
 		'basePower': 0,
@@ -3724,10 +3879,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Fighting',
-		'zMoveBoost': {'evasion': 1},
+		'zMoveBoost': {
+			'evasion': 1
+		},
 		'contestType': 'Cool'
 	},
-	'devastatingdrake': {
+	{
 		'num': 652,
 		'accuracy': true,
 		'basePower': 1,
@@ -3744,7 +3901,7 @@ const BattleMovedex = {
 		'type': 'Dragon',
 		'contestType': 'Cool'
 	},
-	'diamondstorm': {
+	{
 		'num': 591,
 		'accuracy': 95,
 		'basePower': 100,
@@ -3762,14 +3919,18 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 50,
-			'self': {'boosts': {'def': 2}}
+			'self': {
+				'boosts': {
+					'def': 2
+				}
+			}
 		},
 		'target': 'allAdjacentFoes',
 		'type': 'Rock',
 		'zMovePower': 180,
 		'contestType': 'Beautiful'
 	},
-	'dig': {
+	{
 		'num': 91,
 		'accuracy': 100,
 		'basePower': 80,
@@ -3794,11 +3955,11 @@ const BattleMovedex = {
 			this.add('-prepare', attacker, move.name, defender);
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'effect': {
@@ -3816,9 +3977,9 @@ const BattleMovedex = {
 					return;
 				}
 				if (source.volatiles.lockon && target === source.volatiles.lockon.source) {
-					return; 
+					return;
 				}
-				
+
 				return 0;
 			},
 			'onSourceModifyDamage' (damage, source, target, move) {
@@ -3833,7 +3994,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'disable': {
+	{
 		'num': 50,
 		'accuracy': 100,
 		'basePower': 0,
@@ -3861,25 +4022,25 @@ const BattleMovedex = {
 				}
 				if (!pokemon.lastMove) {
 					this.debug('pokemon hasn\'t moved yet');
-					
+
 					return false;
 				}
 				for (const moveSlot of pokemon.moveSlots) {
 					if (moveSlot.id === pokemon.lastMove.id) {
 						if (!moveSlot.pp) {
 							this.debug('Move out of PP');
-							
+
 							return false;
-						} 
+						}
 						if (effect.id === 'cursedbody') {
 							this.add('-start', pokemon, 'Disable', moveSlot.move, '[from] ability: Cursed Body', `[of] ${source}`);
 						} else {
 							this.add('-start', pokemon, 'Disable', moveSlot.move);
 						}
 						this.effectData.move = pokemon.lastMove.id;
-						
+
 						return;
-						
+
 					}
 				}
 				// This can happen if Disable works on a Z-move
@@ -3893,7 +4054,7 @@ const BattleMovedex = {
 			'onBeforeMove' (attacker, defender, move) {
 				if (move.id === this.effectData.move) {
 					this.add('cant', attacker, 'Disable', move);
-					
+
 					return false;
 				}
 			},
@@ -3911,7 +4072,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'disarmingvoice': {
+	{
 		'num': 574,
 		'accuracy': true,
 		'basePower': 40,
@@ -3934,7 +4095,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'discharge': {
+	{
 		'num': 435,
 		'accuracy': 100,
 		'basePower': 80,
@@ -3959,7 +4120,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'dive': {
+	{
 		'num': 291,
 		'accuracy': 100,
 		'basePower': 80,
@@ -3984,18 +4145,18 @@ const BattleMovedex = {
 			this.add('-prepare', attacker, move.name, defender);
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'effect': {
 			'duration': 2,
 			'onImmunity' (type, pokemon) {
 				if (type === 'sandstorm' || type === 'hail') {
-					return false; 
+					return false;
 				}
 			},
 			'onAccuracy' (accuracy, target, source, move) {
@@ -4008,7 +4169,7 @@ const BattleMovedex = {
 				if (source.volatiles.lockon && target === source.volatiles.lockon.source) {
 					return;
 				}
-				
+
 				return 0;
 			},
 			'onSourceModifyDamage' (damage, source, target, move) {
@@ -4023,7 +4184,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'dizzypunch': {
+	{
 		'num': 146,
 		'accuracy': 100,
 		'basePower': 70,
@@ -4049,7 +4210,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cute'
 	},
-	'doomdesire': {
+	{
 		'num': 353,
 		'accuracy': 100,
 		'basePower': 140,
@@ -4085,7 +4246,7 @@ const BattleMovedex = {
 				}
 			};
 			this.add('-start', source, 'Doom Desire');
-			
+
 			return null;
 		},
 		'secondary': false,
@@ -4094,7 +4255,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Beautiful'
 	},
-	'doubleedge': {
+	{
 		'num': 38,
 		'accuracy': 100,
 		'basePower': 120,
@@ -4118,7 +4279,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Tough'
 	},
-	'doublehit': {
+	{
 		'num': 458,
 		'accuracy': 90,
 		'basePower': 35,
@@ -4141,7 +4302,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'doublekick': {
+	{
 		'num': 24,
 		'accuracy': 100,
 		'basePower': 30,
@@ -4164,7 +4325,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'doubleslap': {
+	{
 		'num': 3,
 		'accuracy': 85,
 		'basePower': 15,
@@ -4187,7 +4348,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'doubleteam': {
+	{
 		'num': 104,
 		'accuracy': true,
 		'basePower': 0,
@@ -4198,15 +4359,19 @@ const BattleMovedex = {
 		'name': 'Double Team',
 		'pp': 15,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'evasion': 1},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'evasion': 1
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cool'
 	},
-	'dracometeor': {
+	{
 		'num': 434,
 		'accuracy': 90,
 		'basePower': 130,
@@ -4222,14 +4387,18 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'boosts': {'spa': -2}},
+		'self': {
+			'boosts': {
+				'spa': -2
+			}
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dragon',
 		'zMovePower': 195,
 		'contestType': 'Beautiful'
 	},
-	'dragonascent': {
+	{
 		'num': 620,
 		'accuracy': 100,
 		'basePower': 120,
@@ -4258,7 +4427,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Beautiful'
 	},
-	'dragonbreath': {
+	{
 		'num': 225,
 		'accuracy': 100,
 		'basePower': 60,
@@ -4282,7 +4451,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'dragonclaw': {
+	{
 		'num': 337,
 		'accuracy': 100,
 		'basePower': 80,
@@ -4305,7 +4474,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'dragondance': {
+	{
 		'num': 349,
 		'accuracy': true,
 		'basePower': 0,
@@ -4331,7 +4500,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cool'
 	},
-	'dragonhammer': {
+	{
 		'num': 692,
 		'accuracy': 100,
 		'basePower': 90,
@@ -4354,7 +4523,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Tough'
 	},
-	'dragonpulse': {
+	{
 		'num': 406,
 		'accuracy': 100,
 		'basePower': 85,
@@ -4378,7 +4547,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'dragonrage': {
+	{
 		'num': 82,
 		'accuracy': 100,
 		'basePower': 0,
@@ -4400,7 +4569,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'dragonrush': {
+	{
 		'num': 407,
 		'accuracy': 75,
 		'basePower': 100,
@@ -4425,7 +4594,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Tough'
 	},
-	'dragontail': {
+	{
 		'num': 525,
 		'accuracy': 90,
 		'basePower': 60,
@@ -4448,7 +4617,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'drainingkiss': {
+	{
 		'num': 577,
 		'accuracy': 100,
 		'basePower': 50,
@@ -4472,7 +4641,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'drainpunch': {
+	{
 		'num': 409,
 		'accuracy': 100,
 		'basePower': 75,
@@ -4498,7 +4667,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'dreameater': {
+	{
 		'num': 138,
 		'accuracy': 100,
 		'basePower': 100,
@@ -4518,7 +4687,7 @@ const BattleMovedex = {
 		'onTryHit' (target) {
 			if (target.status !== 'slp' && !target.hasAbility('comatose')) {
 				this.add('-immune', target, '[msg]');
-				
+
 				return null;
 			}
 		},
@@ -4528,7 +4697,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Clever'
 	},
-	'drillpeck': {
+	{
 		'num': 65,
 		'accuracy': 100,
 		'basePower': 80,
@@ -4552,7 +4721,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'drillrun': {
+	{
 		'num': 529,
 		'accuracy': 95,
 		'basePower': 80,
@@ -4576,7 +4745,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'dualchop': {
+	{
 		'num': 530,
 		'accuracy': 90,
 		'basePower': 40,
@@ -4599,7 +4768,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'dynamicpunch': {
+	{
 		'num': 223,
 		'accuracy': 50,
 		'basePower': 100,
@@ -4625,7 +4794,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'earthpower': {
+	{
 		'num': 414,
 		'accuracy': 100,
 		'basePower': 90,
@@ -4644,14 +4813,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'spd': -1}
+			'boosts': {
+				'spd': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Ground',
 		'zMovePower': 175,
 		'contestType': 'Beautiful'
 	},
-	'earthquake': {
+	{
 		'num': 89,
 		'accuracy': 100,
 		'basePower': 100,
@@ -4674,7 +4845,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Tough'
 	},
-	'echoedvoice': {
+	{
 		'num': 497,
 		'accuracy': 100,
 		'basePower': 40,
@@ -4682,7 +4853,7 @@ const BattleMovedex = {
 			if (this.pseudoWeather.echoedvoice) {
 				return 40 * this.pseudoWeather.echoedvoice.multiplier;
 			}
-			
+
 			return 40;
 		},
 		'category': 'Special',
@@ -4721,7 +4892,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'eerieimpulse': {
+	{
 		'num': 598,
 		'accuracy': 100,
 		'basePower': 0,
@@ -4737,14 +4908,18 @@ const BattleMovedex = {
 			'reflectable': 1,
 			'mirror': 1
 		},
-		'boosts': {'spa': -2},
+		'boosts': {
+			'spa': -2
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Electric',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Clever'
 	},
-	'eggbomb': {
+	{
 		'num': 121,
 		'accuracy': 75,
 		'basePower': 100,
@@ -4766,7 +4941,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cute'
 	},
-	'electricterrain': {
+	{
 		'num': 604,
 		'accuracy': true,
 		'basePower': 0,
@@ -4777,7 +4952,9 @@ const BattleMovedex = {
 		'name': 'Electric Terrain',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'nonsky': 1},
+		'flags': {
+			'nonsky': 1
+		},
 		'terrain': 'electricterrain',
 		'effect': {
 			'duration': 5,
@@ -4785,7 +4962,7 @@ const BattleMovedex = {
 				if (source && source.hasItem('terrainextender')) {
 					return 8;
 				}
-				
+
 				return 5;
 			},
 			'onSetStatus' (status, target, source, effect) {
@@ -4793,7 +4970,7 @@ const BattleMovedex = {
 					if (effect.effectType === 'Move' && !effect.secondaries) {
 						this.add('-activate', target, 'move: Electric Terrain');
 					}
-					
+
 					return false;
 				}
 			},
@@ -4803,14 +4980,14 @@ const BattleMovedex = {
 				}
 				if (status.id === 'yawn') {
 					this.add('-activate', target, 'move: Electric Terrain');
-					
+
 					return null;
 				}
 			},
 			'onBasePower' (basePower, attacker, defender, move) {
 				if (move.type === 'Electric' && attacker.isGrounded() && !attacker.isSemiInvulnerable()) {
 					this.debug('electric terrain boost');
-					
+
 					return this.chainModify(1.5);
 				}
 			},
@@ -4830,10 +5007,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Electric',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'electrify': {
+	{
 		'num': 582,
 		'accuracy': true,
 		'basePower': 0,
@@ -4852,7 +5031,7 @@ const BattleMovedex = {
 		'volatileStatus': 'electrify',
 		'onTryHit' (target) {
 			if (!this.willMove(target) && target.activeTurns) {
-				return false; 
+				return false;
 			}
 		},
 		'effect': {
@@ -4869,10 +5048,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Electric',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'electroball': {
+	{
 		'num': 486,
 		'accuracy': 100,
 		'basePower': 0,
@@ -4892,7 +5073,7 @@ const BattleMovedex = {
 			if (ratio >= 1) {
 				return 60;
 			}
-			
+
 			return 40;
 		},
 		'category': 'Special',
@@ -4913,7 +5094,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'electroweb': {
+	{
 		'num': 527,
 		'accuracy': 95,
 		'basePower': 55,
@@ -4930,14 +5111,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'spe': -1}
+			'boosts': {
+				'spe': -1
+			}
 		},
 		'target': 'allAdjacentFoes',
 		'type': 'Electric',
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'embargo': {
+	{
 		'num': 373,
 		'accuracy': 100,
 		'basePower': 0,
@@ -4968,10 +5151,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dark',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'ember': {
+	{
 		'num': 52,
 		'accuracy': 100,
 		'basePower': 40,
@@ -4995,7 +5180,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'encore': {
+	{
 		'num': 227,
 		'accuracy': 100,
 		'basePower': 0,
@@ -5024,7 +5209,7 @@ const BattleMovedex = {
 				if (!target.lastMove || target.lastMove.isZ || noEncore.includes(target.lastMove.id) || target.moveSlots[moveIndex] && target.moveSlots[moveIndex].pp <= 0) {
 					// It failed
 					delete target.volatiles.encore;
-					
+
 					return false;
 				}
 				this.effectData.move = target.lastMove.id;
@@ -5062,10 +5247,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Cute'
 	},
-	'endeavor': {
+	{
 		'num': 283,
 		'accuracy': 100,
 		'basePower': 0,
@@ -5088,7 +5275,7 @@ const BattleMovedex = {
 		'onTry' (pokemon, target) {
 			if (pokemon.hp >= target.hp) {
 				this.add('-immune', target, '[msg]');
-				
+
 				return null;
 			}
 		},
@@ -5098,7 +5285,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'endure': {
+	{
 		'num': 203,
 		'accuracy': true,
 		'basePower': 0,
@@ -5127,7 +5314,7 @@ const BattleMovedex = {
 			'onDamage' (damage, target, source, effect) {
 				if (effect && effect.effectType === 'Move' && damage >= target.hp) {
 					this.add('-activate', target, 'move: Endure');
-					
+
 					return target.hp - 1;
 				}
 			}
@@ -5138,7 +5325,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Tough'
 	},
-	'energyball': {
+	{
 		'num': 412,
 		'accuracy': 100,
 		'basePower': 90,
@@ -5157,14 +5344,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'spd': -1}
+			'boosts': {
+				'spd': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Grass',
 		'zMovePower': 175,
 		'contestType': 'Beautiful'
 	},
-	'entrainment': {
+	{
 		'num': 494,
 		'accuracy': 100,
 		'basePower': 0,
@@ -5197,19 +5386,21 @@ const BattleMovedex = {
 
 			if (oldAbility) {
 				this.add('-ability', target, this.getAbility(target.ability).name, '[from] move: Entrainment');
-				
+
 				return;
 			}
-			
+
 			return false;
 		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Cute'
 	},
-	'eruption': {
+	{
 		'num': 284,
 		'accuracy': 100,
 		'basePower': 150,
@@ -5234,7 +5425,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Beautiful'
 	},
-	'explosion': {
+	{
 		'num': 153,
 		'accuracy': 100,
 		'basePower': 250,
@@ -5257,7 +5448,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Beautiful'
 	},
-	'extrasensory': {
+	{
 		'num': 326,
 		'accuracy': 100,
 		'basePower': 80,
@@ -5282,7 +5473,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'extremeevoboost': {
+	{
 		'num': 702,
 		'accuracy': true,
 		'basePower': 0,
@@ -5308,7 +5499,7 @@ const BattleMovedex = {
 		'type': 'Normal',
 		'contestType': 'Beautiful'
 	},
-	'extremespeed': {
+	{
 		'num': 245,
 		'accuracy': 100,
 		'basePower': 80,
@@ -5331,7 +5522,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'facade': {
+	{
 		'num': 263,
 		'accuracy': 100,
 		'basePower': 70,
@@ -5360,7 +5551,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cute'
 	},
-	'feintattack': {
+	{
 		'num': 185,
 		'accuracy': true,
 		'basePower': 60,
@@ -5382,7 +5573,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Clever'
 	},
-	'fairylock': {
+	{
 		'num': 587,
 		'accuracy': true,
 		'basePower': 0,
@@ -5410,10 +5601,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Fairy',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Clever'
 	},
-	'fairywind': {
+	{
 		'num': 584,
 		'accuracy': 100,
 		'basePower': 40,
@@ -5434,7 +5627,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'fakeout': {
+	{
 		'num': 252,
 		'accuracy': 100,
 		'basePower': 40,
@@ -5456,7 +5649,7 @@ const BattleMovedex = {
 				this.attrLastMove('[still]');
 				this.add('-fail', pokemon);
 				this.add('-hint', 'Fake Out only works on your first turn out.');
-				
+
 				return null;
 			}
 		},
@@ -5469,7 +5662,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'faketears': {
+	{
 		'num': 313,
 		'accuracy': 100,
 		'basePower': 0,
@@ -5486,14 +5679,18 @@ const BattleMovedex = {
 			'mirror': 1,
 			'mystery': 1
 		},
-		'boosts': {'spd': -2},
+		'boosts': {
+			'spd': -2
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dark',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Cute'
 	},
-	'falseswipe': {
+	{
 		'num': 206,
 		'accuracy': 100,
 		'basePower': 40,
@@ -5516,7 +5713,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'featherdance': {
+	{
 		'num': 297,
 		'accuracy': 100,
 		'basePower': 0,
@@ -5534,14 +5731,18 @@ const BattleMovedex = {
 			'mystery': 1,
 			'dance': 1
 		},
-		'boosts': {'atk': -2},
+		'boosts': {
+			'atk': -2
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Flying',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'feint': {
+	{
 		'num': 364,
 		'accuracy': 100,
 		'basePower': 30,
@@ -5552,7 +5753,9 @@ const BattleMovedex = {
 		'name': 'Feint',
 		'pp': 10,
 		'priority': 2,
-		'flags': {'mirror': 1},
+		'flags': {
+			'mirror': 1
+		},
 		'breaksProtect': true,
 		// Breaking protection implemented in scripts.js
 		'secondary': false,
@@ -5561,7 +5764,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'fellstinger': {
+	{
 		'num': 565,
 		'accuracy': 100,
 		'basePower': 50,
@@ -5579,7 +5782,9 @@ const BattleMovedex = {
 		},
 		'onAfterMoveSecondarySelf' (pokemon, target, move) {
 			if (!target || target.fainted || target.hp <= 0) {
-				this.boost({'atk': 3}, pokemon, pokemon, move);
+				this.boost({
+					'atk': 3
+				}, pokemon, pokemon, move);
 			}
 		},
 		'secondary': false,
@@ -5588,7 +5793,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'fierydance': {
+	{
 		'num': 552,
 		'accuracy': 100,
 		'basePower': 80,
@@ -5607,14 +5812,18 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 50,
-			'self': {'boosts': {'spa': 1}}
+			'self': {
+				'boosts': {
+					'spa': 1
+				}
+			}
 		},
 		'target': 'normal',
 		'type': 'Fire',
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'finalgambit': {
+	{
 		'num': 515,
 		'accuracy': 100,
 		'basePower': 0,
@@ -5622,7 +5831,7 @@ const BattleMovedex = {
 			const damage = pokemon.hp;
 
 			pokemon.faint();
-			
+
 			return damage;
 		},
 		'category': 'Special',
@@ -5633,7 +5842,9 @@ const BattleMovedex = {
 		'name': 'Final Gambit',
 		'pp': 5,
 		'priority': 0,
-		'flags': {'protect': 1},
+		'flags': {
+			'protect': 1
+		},
 		'selfdestruct': 'ifHit',
 		'secondary': false,
 		'target': 'normal',
@@ -5641,7 +5852,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Tough'
 	},
-	'fireblast': {
+	{
 		'num': 126,
 		'accuracy': 85,
 		'basePower': 110,
@@ -5666,7 +5877,7 @@ const BattleMovedex = {
 		'zMovePower': 185,
 		'contestType': 'Beautiful'
 	},
-	'firefang': {
+	{
 		'num': 424,
 		'accuracy': 95,
 		'basePower': 65,
@@ -5684,21 +5895,19 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'secondaries': [
-			{
-				'chance': 10,
-				'status': 'brn'
-			}, {
-				'chance': 10,
-				'volatileStatus': 'flinch'
-			}
-		],
+		'secondaries': [{
+			'chance': 10,
+			'status': 'brn'
+		}, {
+			'chance': 10,
+			'volatileStatus': 'flinch'
+		}],
 		'target': 'normal',
 		'type': 'Fire',
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'firelash': {
+	{
 		'num': 680,
 		'accuracy': 100,
 		'basePower': 80,
@@ -5717,24 +5926,26 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'def': -1}
+			'boosts': {
+				'def': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Fire',
 		'zMovePower': 160,
 		'contestType': 'Cute'
 	},
-	'firepledge': {
+	{
 		'num': 519,
 		'accuracy': 100,
 		'basePower': 80,
 		'basePowerCallback' (target, source, move) {
 			if (['grasspledge', 'waterpledge'].includes(move.sourceEffect)) {
 				this.add('-combine');
-				
+
 				return 150;
 			}
-			
+
 			return 80;
 		},
 		'category': 'Special',
@@ -5754,12 +5965,12 @@ const BattleMovedex = {
 				const action = this.queue[i];
 
 				if (!action.move || !action.pokemon || !action.pokemon.isActive || action.pokemon.fainted) {
-					continue; 
+					continue;
 				}
 				if (action.pokemon.side === source.side && ['grasspledge', 'waterpledge'].includes(action.move.id)) {
 					this.prioritizeAction(action);
 					this.add('-waiting', source, action.pokemon);
-					
+
 					return null;
 				}
 			}
@@ -5806,7 +6017,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'firepunch': {
+	{
 		'num': 7,
 		'accuracy': 100,
 		'basePower': 75,
@@ -5833,7 +6044,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'firespin': {
+	{
 		'num': 83,
 		'accuracy': 85,
 		'basePower': 35,
@@ -5855,7 +6066,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'firstimpression': {
+	{
 		'num': 660,
 		'accuracy': 100,
 		'basePower': 90,
@@ -5876,7 +6087,7 @@ const BattleMovedex = {
 			if (pokemon.activeTurns > 1) {
 				this.add('-fail', pokemon);
 				this.add('-hint', 'First Impression only works on your first turn out.');
-				
+
 				return null;
 			}
 		},
@@ -5886,7 +6097,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Cute'
 	},
-	'fissure': {
+	{
 		'num': 90,
 		'accuracy': 30,
 		'basePower': 0,
@@ -5909,7 +6120,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Tough'
 	},
-	'flail': {
+	{
 		'num': 175,
 		'accuracy': 100,
 		'basePower': 0,
@@ -5931,7 +6142,7 @@ const BattleMovedex = {
 			if (ratio < 33) {
 				return 40;
 			}
-			
+
 			return 20;
 		},
 		'category': 'Physical',
@@ -5952,7 +6163,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cute'
 	},
-	'flameburst': {
+	{
 		'num': 481,
 		'accuracy': 100,
 		'basePower': 70,
@@ -5997,7 +6208,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Beautiful'
 	},
-	'flamecharge': {
+	{
 		'num': 488,
 		'accuracy': 100,
 		'basePower': 50,
@@ -6016,14 +6227,18 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'self': {'boosts': {'spe': 1}}
+			'self': {
+				'boosts': {
+					'spe': 1
+				}
+			}
 		},
 		'target': 'normal',
 		'type': 'Fire',
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'flamewheel': {
+	{
 		'num': 172,
 		'accuracy': 100,
 		'basePower': 60,
@@ -6049,7 +6264,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'flamethrower': {
+	{
 		'num': 53,
 		'accuracy': 100,
 		'basePower': 90,
@@ -6074,7 +6289,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Beautiful'
 	},
-	'flareblitz': {
+	{
 		'num': 394,
 		'accuracy': 100,
 		'basePower': 120,
@@ -6102,7 +6317,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'flash': {
+	{
 		'num': 148,
 		'accuracy': 100,
 		'basePower': 0,
@@ -6118,14 +6333,18 @@ const BattleMovedex = {
 			'reflectable': 1,
 			'mirror': 1
 		},
-		'boosts': {'accuracy': -1},
+		'boosts': {
+			'accuracy': -1
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'evasion': 1},
+		'zMoveBoost': {
+			'evasion': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'flashcannon': {
+	{
 		'num': 430,
 		'accuracy': 100,
 		'basePower': 80,
@@ -6143,14 +6362,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'spd': -1}
+			'boosts': {
+				'spd': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Steel',
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'flatter': {
+	{
 		'num': 260,
 		'accuracy': 100,
 		'basePower': 0,
@@ -6168,14 +6389,18 @@ const BattleMovedex = {
 			'mystery': 1
 		},
 		'volatileStatus': 'confusion',
-		'boosts': {'spa': 1},
+		'boosts': {
+			'spa': 1
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dark',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Clever'
 	},
-	'fleurcannon': {
+	{
 		'num': 705,
 		'accuracy': 90,
 		'basePower': 130,
@@ -6191,14 +6416,18 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'boosts': {'spa': -2}},
+		'self': {
+			'boosts': {
+				'spa': -2
+			}
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Fairy',
 		'zMovePower': 195,
 		'contestType': 'Beautiful'
 	},
-	'fling': {
+	{
 		'num': 374,
 		'accuracy': 100,
 		'basePower': 0,
@@ -6216,7 +6445,7 @@ const BattleMovedex = {
 		},
 		'onPrepareHit' (target, source, move) {
 			if (source.ignoringItem()) {
-				return false; 
+				return false;
 			}
 			const item = source.getItem();
 
@@ -6224,7 +6453,7 @@ const BattleMovedex = {
 				return false;
 			}
 			if (!item.fling) {
-				return false; 
+				return false;
 			}
 			move.basePower = item.fling.basePower;
 			if (item.isBerry) {
@@ -6240,12 +6469,16 @@ const BattleMovedex = {
 				move.onHit = item.fling.effect;
 			} else {
 				if (!move.secondaries) {
-					move.secondaries = []; 
+					move.secondaries = [];
 				}
 				if (item.fling.status) {
-					move.secondaries.push({'status': item.fling.status});
+					move.secondaries.push({
+						'status': item.fling.status
+					});
 				} else if (item.fling.volatileStatus) {
-					move.secondaries.push({'volatileStatus': item.fling.volatileStatus});
+					move.secondaries.push({
+						'volatileStatus': item.fling.volatileStatus
+					});
 				}
 			}
 			source.setItem('');
@@ -6258,7 +6491,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'floralhealing': {
+	{
 		'num': 666,
 		'accuracy': true,
 		'basePower': 0,
@@ -6279,10 +6512,10 @@ const BattleMovedex = {
 		'onHit' (target) {
 			if (this.isTerrain('grassyterrain')) {
 				return this.heal(this.modify(target.maxhp, 0.667)); // TODO: find out the real value
-			} 
-			
+			}
+
 			return this.heal(Math.ceil(target.maxhp * 0.5));
-			
+
 		},
 		'secondary': false,
 		'target': 'normal',
@@ -6290,7 +6523,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'flowershield': {
+	{
 		'num': 579,
 		'accuracy': true,
 		'basePower': 0,
@@ -6301,7 +6534,9 @@ const BattleMovedex = {
 		'name': 'Flower Shield',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'distance': 1},
+		'flags': {
+			'distance': 1
+		},
 		'onHitField' (target, source) {
 			const targets = [];
 
@@ -6318,18 +6553,22 @@ const BattleMovedex = {
 			let success = false;
 
 			for (const target of targets) {
-				success = this.boost({'def': 1}, target, source, this.getMove('Flower Shield')) || success;
+				success = this.boost({
+					'def': 1
+				}, target, source, this.getMove('Flower Shield')) || success;
 			}
-			
+
 			return success;
 		},
 		'secondary': false,
 		'target': 'all',
 		'type': 'Fairy',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'fly': {
+	{
 		'num': 19,
 		'accuracy': 95,
 		'basePower': 90,
@@ -6355,11 +6594,11 @@ const BattleMovedex = {
 			this.add('-prepare', attacker, move.name, defender);
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'effect': {
@@ -6375,9 +6614,9 @@ const BattleMovedex = {
 					return;
 				}
 				if (source.volatiles.lockon && target === source.volatiles.lockon.source) {
-					return; 
+					return;
 				}
-				
+
 				return 0;
 			},
 			'onSourceModifyDamage' (damage, source, target, move) {
@@ -6392,7 +6631,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Clever'
 	},
-	'flyingpress': {
+	{
 		'num': 560,
 		'accuracy': 95,
 		'basePower': 100,
@@ -6420,7 +6659,7 @@ const BattleMovedex = {
 		'zMovePower': 170,
 		'contestType': 'Tough'
 	},
-	'focusblast': {
+	{
 		'num': 411,
 		'accuracy': 70,
 		'basePower': 120,
@@ -6439,14 +6678,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'spd': -1}
+			'boosts': {
+				'spd': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Fighting',
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'focusenergy': {
+	{
 		'num': 116,
 		'accuracy': true,
 		'basePower': 0,
@@ -6457,7 +6698,9 @@ const BattleMovedex = {
 		'name': 'Focus Energy',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'volatileStatus': 'focusenergy',
 		'effect': {
 			'onStart' (target, source, effect) {
@@ -6474,10 +6717,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'accuracy': 1},
+		'zMoveBoost': {
+			'accuracy': 1
+		},
 		'contestType': 'Cool'
 	},
-	'focuspunch': {
+	{
 		'num': 264,
 		'accuracy': 100,
 		'basePower': 150,
@@ -6500,7 +6745,7 @@ const BattleMovedex = {
 		'beforeMoveCallback' (pokemon) {
 			if (pokemon.volatiles.focuspunch && pokemon.volatiles.focuspunch.lostFocus) {
 				this.add('cant', pokemon, 'Focus Punch', 'Focus Punch');
-				
+
 				return true;
 			}
 		},
@@ -6521,7 +6766,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Tough'
 	},
-	'followme': {
+	{
 		'num': 266,
 		'accuracy': true,
 		'basePower': 0,
@@ -6536,7 +6781,7 @@ const BattleMovedex = {
 		'volatileStatus': 'followme',
 		'onTryHit' (target) {
 			if (target.side.active.length < 2) {
-				return false; 
+				return false;
 			}
 		},
 		'effect': {
@@ -6552,7 +6797,7 @@ const BattleMovedex = {
 			'onFoeRedirectTarget' (target, source, source2, move) {
 				if (this.validTarget(this.effectData.target, source, move.target)) {
 					this.debug('Follow Me redirected target of move');
-					
+
 					return this.effectData.target;
 				}
 			}
@@ -6563,7 +6808,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'forcepalm': {
+	{
 		'num': 395,
 		'accuracy': 100,
 		'basePower': 60,
@@ -6588,7 +6833,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'foresight': {
+	{
 		'num': 193,
 		'accuracy': true,
 		'basePower': 0,
@@ -6608,7 +6853,7 @@ const BattleMovedex = {
 		'volatileStatus': 'foresight',
 		'onTryHit' (target) {
 			if (target.volatiles.miracleeye) {
-				return false; 
+				return false;
 			}
 		},
 		'effect': {
@@ -6618,7 +6863,7 @@ const BattleMovedex = {
 			},
 			'onNegateImmunity' (pokemon, type) {
 				if (pokemon.hasType('Ghost') && ['Normal', 'Fighting'].includes(type)) {
-					return false; 
+					return false;
 				}
 			},
 			'onModifyBoost' (boosts) {
@@ -6633,7 +6878,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'crit2',
 		'contestType': 'Clever'
 	},
-	'forestscurse': {
+	{
 		'num': 571,
 		'accuracy': 100,
 		'basePower': 0,
@@ -6671,7 +6916,7 @@ const BattleMovedex = {
 		},
 		'contestType': 'Clever'
 	},
-	'foulplay': {
+	{
 		'num': 492,
 		'accuracy': 100,
 		'basePower': 95,
@@ -6695,7 +6940,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Clever'
 	},
-	'freezedry': {
+	{
 		'num': 573,
 		'accuracy': 100,
 		'basePower': 70,
@@ -6713,7 +6958,7 @@ const BattleMovedex = {
 		},
 		'onEffectiveness' (typeMod, type) {
 			if (type === 'Water') {
-				return 1; 
+				return 1;
 			}
 		},
 		'secondary': {
@@ -6725,7 +6970,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Beautiful'
 	},
-	'freezeshock': {
+	{
 		'num': 553,
 		'accuracy': 90,
 		'basePower': 140,
@@ -6748,11 +6993,11 @@ const BattleMovedex = {
 			this.add('-prepare', attacker, move.name, defender);
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'secondary': {
@@ -6764,7 +7009,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Beautiful'
 	},
-	'frenzyplant': {
+	{
 		'num': 338,
 		'accuracy': 90,
 		'basePower': 150,
@@ -6781,14 +7026,16 @@ const BattleMovedex = {
 			'mirror': 1,
 			'nonsky': 1
 		},
-		'self': {'volatileStatus': 'mustrecharge'},
+		'self': {
+			'volatileStatus': 'mustrecharge'
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Grass',
 		'zMovePower': 200,
 		'contestType': 'Cool'
 	},
-	'frostbreath': {
+	{
 		'num': 524,
 		'accuracy': 90,
 		'basePower': 60,
@@ -6810,7 +7057,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'frustration': {
+	{
 		'num': 218,
 		'accuracy': 100,
 		'basePower': 0,
@@ -6836,7 +7083,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cute'
 	},
-	'furyattack': {
+	{
 		'num': 31,
 		'accuracy': 85,
 		'basePower': 15,
@@ -6859,7 +7106,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'furycutter': {
+	{
 		'num': 210,
 		'accuracy': 95,
 		'basePower': 40,
@@ -6867,7 +7114,7 @@ const BattleMovedex = {
 			if (!pokemon.volatiles.furycutter) {
 				pokemon.addVolatile('furycutter');
 			}
-			
+
 			return this.clampIntRange(move.basePower * pokemon.volatiles.furycutter.multiplier, 1, 160);
 		},
 		'category': 'Physical',
@@ -6903,7 +7150,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'furyswipes': {
+	{
 		'num': 154,
 		'accuracy': 80,
 		'basePower': 18,
@@ -6926,7 +7173,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'fusionbolt': {
+	{
 		'num': 559,
 		'accuracy': 100,
 		'basePower': 100,
@@ -6949,7 +7196,7 @@ const BattleMovedex = {
 			for (let i = 0; i < actives.length; i++) {
 				if (actives[i] && actives[i].moveThisTurn === 'fusionflare') {
 					this.debug('double power');
-					
+
 					return this.chainModify(2);
 				}
 			}
@@ -6960,7 +7207,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'fusionflare': {
+	{
 		'num': 558,
 		'accuracy': 100,
 		'basePower': 100,
@@ -6984,7 +7231,7 @@ const BattleMovedex = {
 			for (let i = 0; i < actives.length; i++) {
 				if (actives[i] && actives[i].moveThisTurn === 'fusionbolt') {
 					this.debug('double power');
-					
+
 					return this.chainModify(2);
 				}
 			}
@@ -6995,7 +7242,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Beautiful'
 	},
-	'futuresight': {
+	{
 		'num': 248,
 		'accuracy': 100,
 		'basePower': 120,
@@ -7033,7 +7280,7 @@ const BattleMovedex = {
 				}
 			};
 			this.add('-start', source, 'move: Future Sight');
-			
+
 			return null;
 		},
 		'secondary': false,
@@ -7042,7 +7289,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Clever'
 	},
-	'gastroacid': {
+	{
 		'num': 380,
 		'accuracy': 100,
 		'basePower': 0,
@@ -7077,10 +7324,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Poison',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Tough'
 	},
-	'geargrind': {
+	{
 		'num': 544,
 		'accuracy': 85,
 		'basePower': 50,
@@ -7104,7 +7353,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Clever'
 	},
-	'gearup': {
+	{
 		'num': 674,
 		'accuracy': true,
 		'basePower': 0,
@@ -7134,16 +7383,18 @@ const BattleMovedex = {
 				this.boost({
 					'atk': 1,
 					'spa': 1
-				}, targets[i], source, 'move: Gear Up'); 
+				}, targets[i], source, 'move: Gear Up');
 			}
 		},
 		'secondary': false,
 		'target': 'allySide',
 		'type': 'Steel',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'genesissupernova': {
+	{
 		'num': 703,
 		'accuracy': true,
 		'basePower': 185,
@@ -7168,7 +7419,7 @@ const BattleMovedex = {
 		'type': 'Psychic',
 		'contestType': 'Cool'
 	},
-	'geomancy': {
+	{
 		'num': 601,
 		'accuracy': true,
 		'basePower': 0,
@@ -7192,11 +7443,11 @@ const BattleMovedex = {
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
 				attacker.removeVolatile(move.id);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'boosts': {
@@ -7216,7 +7467,7 @@ const BattleMovedex = {
 		},
 		'contestType': 'Beautiful'
 	},
-	'gigadrain': {
+	{
 		'num': 202,
 		'accuracy': 100,
 		'basePower': 75,
@@ -7240,7 +7491,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Clever'
 	},
-	'gigaimpact': {
+	{
 		'num': 416,
 		'accuracy': 90,
 		'basePower': 150,
@@ -7257,14 +7508,16 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'volatileStatus': 'mustrecharge'},
+		'self': {
+			'volatileStatus': 'mustrecharge'
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
 		'zMovePower': 200,
 		'contestType': 'Tough'
 	},
-	'gigavolthavoc': {
+	{
 		'num': 646,
 		'accuracy': true,
 		'basePower': 1,
@@ -7282,7 +7535,7 @@ const BattleMovedex = {
 		'type': 'Electric',
 		'contestType': 'Cool'
 	},
-	'glaciate': {
+	{
 		'num': 549,
 		'accuracy': 95,
 		'basePower': 65,
@@ -7299,14 +7552,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'spe': -1}
+			'boosts': {
+				'spe': -1
+			}
 		},
 		'target': 'allAdjacentFoes',
 		'type': 'Ice',
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'glare': {
+	{
 		'num': 137,
 		'accuracy': 100,
 		'basePower': 0,
@@ -7327,10 +7582,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Tough'
 	},
-	'grassknot': {
+	{
 		'num': 447,
 		'accuracy': 100,
 		'basePower': 0,
@@ -7339,31 +7596,31 @@ const BattleMovedex = {
 
 			if (targetWeight >= 200) {
 				this.debug('120 bp');
-				
+
 				return 120;
 			}
 			if (targetWeight >= 100) {
 				this.debug('100 bp');
-				
+
 				return 100;
 			}
 			if (targetWeight >= 50) {
 				this.debug('80 bp');
-				
+
 				return 80;
 			}
 			if (targetWeight >= 25) {
 				this.debug('60 bp');
-				
+
 				return 60;
 			}
 			if (targetWeight >= 10) {
 				this.debug('40 bp');
-				
+
 				return 40;
 			}
 			this.debug('20 bp');
-			
+
 			return 20;
 		},
 		'category': 'Special',
@@ -7386,17 +7643,17 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cute'
 	},
-	'grasspledge': {
+	{
 		'num': 520,
 		'accuracy': 100,
 		'basePower': 80,
 		'basePowerCallback' (target, source, move) {
 			if (['waterpledge', 'firepledge'].includes(move.sourceEffect)) {
 				this.add('-combine');
-				
+
 				return 150;
 			}
-			
+
 			return 80;
 		},
 		'category': 'Special',
@@ -7421,7 +7678,7 @@ const BattleMovedex = {
 				if (action.pokemon.side === source.side && ['waterpledge', 'firepledge'].includes(action.move.id)) {
 					this.prioritizeAction(action);
 					this.add('-waiting', source, action.pokemon);
-					
+
 					return null;
 				}
 			}
@@ -7462,7 +7719,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'grasswhistle': {
+	{
 		'num': 320,
 		'accuracy': 55,
 		'basePower': 0,
@@ -7484,10 +7741,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Grass',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'grassyterrain': {
+	{
 		'num': 580,
 		'accuracy': true,
 		'basePower': 0,
@@ -7498,7 +7757,9 @@ const BattleMovedex = {
 		'name': 'Grassy Terrain',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'nonsky': 1},
+		'flags': {
+			'nonsky': 1
+		},
 		'terrain': 'grassyterrain',
 		'effect': {
 			'duration': 5,
@@ -7506,7 +7767,7 @@ const BattleMovedex = {
 				if (source && source.hasItem('terrainextender')) {
 					return 8;
 				}
-				
+
 				return 5;
 			},
 			'onBasePower' (basePower, attacker, defender, move) {
@@ -7514,12 +7775,12 @@ const BattleMovedex = {
 
 				if (weakenedMoves.includes(move.id)) {
 					this.debug('move weakened by grassy terrain');
-					
+
 					return this.chainModify(0.5);
 				}
 				if (move.type === 'Grass' && attacker.isGrounded()) {
 					this.debug('grassy terrain boost');
-					
+
 					return this.chainModify(1.5);
 				}
 			},
@@ -7549,10 +7810,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Grass',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'gravity': {
+	{
 		'num': 356,
 		'accuracy': true,
 		'basePower': 0,
@@ -7563,7 +7826,9 @@ const BattleMovedex = {
 		'name': 'Gravity',
 		'pp': 5,
 		'priority': 0,
-		'flags': {'nonsky': 1},
+		'flags': {
+			'nonsky': 1
+		},
 		'pseudoWeather': 'gravity',
 		'effect': {
 			'duration': 5,
@@ -7571,7 +7836,7 @@ const BattleMovedex = {
 				if (source && source.hasAbility('persistent')) {
 					return 7;
 				}
-				
+
 				return 5;
 			},
 			'onStart' () {
@@ -7605,7 +7870,7 @@ const BattleMovedex = {
 						delete pokemon.volatiles.telekinesis;
 					}
 					if (applies) {
-						this.add('-activate', pokemon, 'move: Gravity'); 
+						this.add('-activate', pokemon, 'move: Gravity');
 					}
 				}
 			},
@@ -7613,7 +7878,7 @@ const BattleMovedex = {
 				if (typeof accuracy !== 'number') {
 					return;
 				}
-				
+
 				return accuracy * 5 / 3;
 			},
 			'onDisableMove' (pokemon) {
@@ -7628,7 +7893,7 @@ const BattleMovedex = {
 			'onBeforeMove' (pokemon, target, move) {
 				if (move.flags.gravity) {
 					this.add('cant', pokemon, 'move: Gravity', move);
-					
+
 					return false;
 				}
 			},
@@ -7640,10 +7905,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Psychic',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'growl': {
+	{
 		'num': 45,
 		'accuracy': 100,
 		'basePower': 0,
@@ -7661,14 +7928,18 @@ const BattleMovedex = {
 			'sound': 1,
 			'authentic': 1
 		},
-		'boosts': {'atk': -1},
+		'boosts': {
+			'atk': -1
+		},
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Normal',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cute'
 	},
-	'growth': {
+	{
 		'num': 74,
 		'accuracy': true,
 		'basePower': 0,
@@ -7679,13 +7950,15 @@ const BattleMovedex = {
 		'name': 'Growth',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'onModifyMove' (move) {
 			if (this.isWeather(['sunnyday', 'desolateland'])) {
 				move.boosts = {
 					'atk': 2,
 					'spa': 2
-				}; 
+				};
 			}
 		},
 		'boosts': {
@@ -7695,10 +7968,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'grudge': {
+	{
 		'num': 288,
 		'accuracy': true,
 		'basePower': 0,
@@ -7709,7 +7984,9 @@ const BattleMovedex = {
 		'name': 'Grudge',
 		'pp': 5,
 		'priority': 0,
-		'flags': {'authentic': 1},
+		'flags': {
+			'authentic': 1
+		},
 		'volatileStatus': 'grudge',
 		'effect': {
 			'onStart' (pokemon) {
@@ -7740,7 +8017,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'redirect',
 		'contestType': 'Tough'
 	},
-	'guardsplit': {
+	{
 		'num': 470,
 		'accuracy': true,
 		'basePower': 0,
@@ -7769,10 +8046,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'guardswap': {
+	{
 		'num': 385,
 		'accuracy': true,
 		'basePower': 0,
@@ -7806,20 +8085,22 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'guardianofalola': {
+	{
 		'num': 698,
 		'accuracy': true,
 		'basePower': 0,
 		'damageCallback' (pokemon, target) {
 			if (target.volatiles.banefulbunker || target.volatiles.kingsshield || target.side.sideConditions.matblock || target.volatiles.protect || target.volatiles.spikyshield) {
 				this.add('-zbroken', target);
-				
+
 				return this.clampIntRange(Math.ceil(Math.floor(target.hp * 3 / 4) / 4 - 0.5), 1);
 			}
-			
+
 			return this.clampIntRange(Math.floor(target.hp * 3 / 4), 1);
 		},
 		'category': 'Special',
@@ -7836,7 +8117,7 @@ const BattleMovedex = {
 		'type': 'Fairy',
 		'contestType': 'Tough'
 	},
-	'guillotine': {
+	{
 		'num': 12,
 		'accuracy': 30,
 		'basePower': 0,
@@ -7859,7 +8140,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'gunkshot': {
+	{
 		'num': 441,
 		'accuracy': 80,
 		'basePower': 120,
@@ -7884,7 +8165,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Tough'
 	},
-	'gust': {
+	{
 		'num': 16,
 		'accuracy': 100,
 		'basePower': 40,
@@ -7906,7 +8187,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'gyroball': {
+	{
 		'num': 360,
 		'accuracy': 100,
 		'basePower': 0,
@@ -7914,10 +8195,10 @@ const BattleMovedex = {
 			let power = Math.floor(25 * target.getStat('spe') / pokemon.getStat('spe')) || 1;
 
 			if (power > 150) {
-				power = 150; 
+				power = 150;
 			}
 			this.debug(`${String(power)} bp`);
-			
+
 			return power;
 		},
 		'category': 'Physical',
@@ -7940,7 +8221,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'hail': {
+	{
 		'num': 258,
 		'accuracy': true,
 		'basePower': 0,
@@ -7956,10 +8237,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Ice',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'hammerarm': {
+	{
 		'num': 359,
 		'accuracy': 90,
 		'basePower': 100,
@@ -7977,14 +8260,18 @@ const BattleMovedex = {
 			'mirror': 1,
 			'punch': 1
 		},
-		'self': {'boosts': {'spe': -1}},
+		'self': {
+			'boosts': {
+				'spe': -1
+			}
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Fighting',
 		'zMovePower': 180,
 		'contestType': 'Tough'
 	},
-	'happyhour': {
+	{
 		'num': 603,
 		'accuracy': true,
 		'basePower': 0,
@@ -8011,7 +8298,7 @@ const BattleMovedex = {
 		},
 		'contestType': 'Cute'
 	},
-	'harden': {
+	{
 		'num': 106,
 		'accuracy': true,
 		'basePower': 0,
@@ -8022,15 +8309,21 @@ const BattleMovedex = {
 		'name': 'Harden',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'def': 1},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'def': 1
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Tough'
 	},
-	'haze': {
+	{
 		'num': 114,
 		'accuracy': true,
 		'basePower': 0,
@@ -8042,13 +8335,15 @@ const BattleMovedex = {
 		'name': 'Haze',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'authentic': 1},
+		'flags': {
+			'authentic': 1
+		},
 		'onHitField' () {
 			this.add('-clearallboost');
 			for (let i = 0; i < this.sides.length; i++) {
 				for (let j = 0; j < this.sides[i].active.length; j++) {
 					if (this.sides[i].active[j] && this.sides[i].active[j].isActive) {
-						this.sides[i].active[j].clearBoosts(); 
+						this.sides[i].active[j].clearBoosts();
 					}
 				}
 			}
@@ -8059,7 +8354,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Beautiful'
 	},
-	'headcharge': {
+	{
 		'num': 543,
 		'accuracy': 100,
 		'basePower': 120,
@@ -8083,7 +8378,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Tough'
 	},
-	'headsmash': {
+	{
 		'num': 457,
 		'accuracy': 80,
 		'basePower': 150,
@@ -8107,7 +8402,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Tough'
 	},
-	'headbutt': {
+	{
 		'num': 29,
 		'accuracy': 100,
 		'basePower': 70,
@@ -8132,7 +8427,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'healbell': {
+	{
 		'num': 215,
 		'accuracy': true,
 		'basePower': 0,
@@ -8157,13 +8452,13 @@ const BattleMovedex = {
 
 			for (const ally of side.pokemon) {
 				if (ally.hasAbility('soundproof')) {
-					continue; 
+					continue;
 				}
 				if (ally.cureStatus()) {
-					success = true; 
+					success = true;
 				}
 			}
-			
+
 			return success;
 		},
 		'target': 'allyTeam',
@@ -8171,7 +8466,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Beautiful'
 	},
-	'healblock': {
+	{
 		'num': 377,
 		'accuracy': 100,
 		'basePower': 0,
@@ -8194,7 +8489,7 @@ const BattleMovedex = {
 				if (source && source.hasAbility('persistent')) {
 					return 7;
 				}
-				
+
 				return 5;
 			},
 			'onStart' (pokemon) {
@@ -8211,7 +8506,7 @@ const BattleMovedex = {
 			'onBeforeMove' (pokemon, target, move) {
 				if (move.flags.heal) {
 					this.add('cant', pokemon, 'move: Heal Block', move);
-					
+
 					return false;
 				}
 			},
@@ -8224,10 +8519,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Psychic',
-		'zMoveBoost': {'spa': 2},
+		'zMoveBoost': {
+			'spa': 2
+		},
 		'contestType': 'Clever'
 	},
-	'healorder': {
+	{
 		'num': 456,
 		'accuracy': true,
 		'basePower': 0,
@@ -8250,7 +8547,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'healpulse': {
+	{
 		'num': 505,
 		'accuracy': true,
 		'basePower': 0,
@@ -8272,10 +8569,10 @@ const BattleMovedex = {
 		'onHit' (target, source) {
 			if (source.hasAbility('megalauncher')) {
 				return this.heal(this.modify(target.maxhp, 0.75));
-			} 
-			
+			}
+
 			return this.heal(Math.ceil(target.maxhp * 0.5));
-			
+
 		},
 		'secondary': false,
 		'target': 'any',
@@ -8283,7 +8580,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'healingwish': {
+	{
 		'num': 361,
 		'accuracy': true,
 		'basePower': 0,
@@ -8302,7 +8599,7 @@ const BattleMovedex = {
 		'onTryHit' (pokemon, target, move) {
 			if (!this.canSwitch(pokemon.side)) {
 				delete move.selfdestruct;
-				
+
 				return false;
 			}
 		},
@@ -8342,7 +8639,7 @@ const BattleMovedex = {
 		'type': 'Psychic',
 		'contestType': 'Beautiful'
 	},
-	'heartstamp': {
+	{
 		'num': 531,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8367,7 +8664,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cute'
 	},
-	'heartswap': {
+	{
 		'num': 391,
 		'accuracy': true,
 		'basePower': 0,
@@ -8404,7 +8701,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'crit2',
 		'contestType': 'Clever'
 	},
-	'heatcrash': {
+	{
 		'num': 535,
 		'accuracy': 100,
 		'basePower': 0,
@@ -8424,7 +8721,7 @@ const BattleMovedex = {
 			if (pokemonWeight > targetWeight * 2) {
 				return 60;
 			}
-			
+
 			return 40;
 		},
 		'category': 'Physical',
@@ -8446,7 +8743,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'heatwave': {
+	{
 		'num': 257,
 		'accuracy': 90,
 		'basePower': 95,
@@ -8471,7 +8768,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Beautiful'
 	},
-	'heavyslam': {
+	{
 		'num': 484,
 		'accuracy': 100,
 		'basePower': 0,
@@ -8491,7 +8788,7 @@ const BattleMovedex = {
 			if (pokemonWeight > targetWeight * 2) {
 				return 60;
 			}
-			
+
 			return 40;
 		},
 		'category': 'Physical',
@@ -8514,7 +8811,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'helpinghand': {
+	{
 		'num': 270,
 		'accuracy': true,
 		'basePower': 0,
@@ -8525,7 +8822,9 @@ const BattleMovedex = {
 		'name': 'Helping Hand',
 		'pp': 20,
 		'priority': 5,
-		'flags': {'authentic': 1},
+		'flags': {
+			'authentic': 1
+		},
 		'volatileStatus': 'helpinghand',
 		'effect': {
 			'duration': 1,
@@ -8540,7 +8839,7 @@ const BattleMovedex = {
 			'onBasePowerPriority': 3,
 			'onBasePower' (basePower) {
 				this.debug(`Boosting from Helping Hand: ${this.effectData.multiplier}`);
-				
+
 				return this.chainModify(this.effectData.multiplier);
 			}
 		},
@@ -8550,7 +8849,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'hex': {
+	{
 		'num': 506,
 		'accuracy': 100,
 		'basePower': 65,
@@ -8558,7 +8857,7 @@ const BattleMovedex = {
 			if (target.status || target.hasAbility('comatose')) {
 				return move.basePower * 2;
 			}
-			
+
 			return move.basePower;
 		},
 		'category': 'Special',
@@ -8579,7 +8878,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Clever'
 	},
-	'hiddenpower': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8603,7 +8902,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Clever'
 	},
-	'hiddenpowerbug': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8623,7 +8922,7 @@ const BattleMovedex = {
 		'type': 'Bug',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerdark': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8643,7 +8942,7 @@ const BattleMovedex = {
 		'type': 'Dark',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerdragon': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8663,7 +8962,7 @@ const BattleMovedex = {
 		'type': 'Dragon',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerelectric': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8684,7 +8983,7 @@ const BattleMovedex = {
 		'type': 'Electric',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerfighting': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8705,7 +9004,7 @@ const BattleMovedex = {
 		'type': 'Fighting',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerfire': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8726,7 +9025,7 @@ const BattleMovedex = {
 		'type': 'Fire',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerflying': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8746,7 +9045,7 @@ const BattleMovedex = {
 		'type': 'Flying',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerghost': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8766,7 +9065,7 @@ const BattleMovedex = {
 		'type': 'Ghost',
 		'contestType': 'Clever'
 	},
-	'hiddenpowergrass': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8787,7 +9086,7 @@ const BattleMovedex = {
 		'type': 'Grass',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerground': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8807,7 +9106,7 @@ const BattleMovedex = {
 		'type': 'Ground',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerice': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8828,7 +9127,7 @@ const BattleMovedex = {
 		'type': 'Ice',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerpoison': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8848,7 +9147,7 @@ const BattleMovedex = {
 		'type': 'Poison',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerpsychic': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8868,7 +9167,7 @@ const BattleMovedex = {
 		'type': 'Psychic',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerrock': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8888,7 +9187,7 @@ const BattleMovedex = {
 		'type': 'Rock',
 		'contestType': 'Clever'
 	},
-	'hiddenpowersteel': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8908,7 +9207,7 @@ const BattleMovedex = {
 		'type': 'Steel',
 		'contestType': 'Clever'
 	},
-	'hiddenpowerwater': {
+	{
 		'num': 237,
 		'accuracy': 100,
 		'basePower': 60,
@@ -8928,7 +9227,7 @@ const BattleMovedex = {
 		'type': 'Water',
 		'contestType': 'Clever'
 	},
-	'highhorsepower': {
+	{
 		'num': 667,
 		'accuracy': 95,
 		'basePower': 95,
@@ -8950,7 +9249,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Tough'
 	},
-	'highjumpkick': {
+	{
 		'num': 136,
 		'accuracy': 90,
 		'basePower': 130,
@@ -8978,7 +9277,7 @@ const BattleMovedex = {
 		'zMovePower': 195,
 		'contestType': 'Cool'
 	},
-	'holdback': {
+	{
 		'num': 610,
 		'accuracy': 100,
 		'basePower': 40,
@@ -9001,7 +9300,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'holdhands': {
+	{
 		'num': 615,
 		'accuracy': true,
 		'basePower': 0,
@@ -9012,7 +9311,9 @@ const BattleMovedex = {
 		'name': 'Hold Hands',
 		'pp': 40,
 		'priority': 0,
-		'flags': {'authentic': 1},
+		'flags': {
+			'authentic': 1
+		},
 		'secondary': false,
 		'target': 'adjacentAlly',
 		'type': 'Normal',
@@ -9025,7 +9326,7 @@ const BattleMovedex = {
 		},
 		'contestType': 'Cute'
 	},
-	'honeclaws': {
+	{
 		'num': 468,
 		'accuracy': true,
 		'basePower': 0,
@@ -9037,7 +9338,9 @@ const BattleMovedex = {
 		'name': 'Hone Claws',
 		'pp': 15,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'boosts': {
 			'atk': 1,
 			'accuracy': 1
@@ -9045,10 +9348,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Dark',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Cute'
 	},
-	'hornattack': {
+	{
 		'num': 30,
 		'accuracy': 100,
 		'basePower': 65,
@@ -9070,7 +9375,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'horndrill': {
+	{
 		'num': 32,
 		'accuracy': 30,
 		'basePower': 0,
@@ -9093,7 +9398,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'hornleech': {
+	{
 		'num': 532,
 		'accuracy': 100,
 		'basePower': 75,
@@ -9118,7 +9423,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'howl': {
+	{
 		'num': 336,
 		'accuracy': true,
 		'basePower': 0,
@@ -9129,15 +9434,21 @@ const BattleMovedex = {
 		'name': 'Howl',
 		'pp': 40,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'atk': 1},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'atk': 1
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Cool'
 	},
-	'hurricane': {
+	{
 		'num': 542,
 		'accuracy': 70,
 		'basePower': 110,
@@ -9170,7 +9481,7 @@ const BattleMovedex = {
 		'zMovePower': 185,
 		'contestType': 'Tough'
 	},
-	'hydrocannon': {
+	{
 		'num': 308,
 		'accuracy': 90,
 		'basePower': 150,
@@ -9186,14 +9497,16 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'volatileStatus': 'mustrecharge'},
+		'self': {
+			'volatileStatus': 'mustrecharge'
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Water',
 		'zMovePower': 200,
 		'contestType': 'Beautiful'
 	},
-	'hydropump': {
+	{
 		'num': 56,
 		'accuracy': 80,
 		'basePower': 110,
@@ -9215,7 +9528,7 @@ const BattleMovedex = {
 		'zMovePower': 185,
 		'contestType': 'Beautiful'
 	},
-	'hydrovortex': {
+	{
 		'num': 642,
 		'accuracy': true,
 		'basePower': 1,
@@ -9233,7 +9546,7 @@ const BattleMovedex = {
 		'type': 'Water',
 		'contestType': 'Cool'
 	},
-	'hyperbeam': {
+	{
 		'num': 63,
 		'accuracy': 90,
 		'basePower': 150,
@@ -9249,14 +9562,16 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'volatileStatus': 'mustrecharge'},
+		'self': {
+			'volatileStatus': 'mustrecharge'
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
 		'zMovePower': 200,
 		'contestType': 'Cool'
 	},
-	'hyperfang': {
+	{
 		'num': 158,
 		'accuracy': 90,
 		'basePower': 80,
@@ -9282,7 +9597,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'hyperspacefury': {
+	{
 		'num': 621,
 		'accuracy': true,
 		'basePower': 100,
@@ -9306,21 +9621,25 @@ const BattleMovedex = {
 			this.add('-hint', 'Only a Pokemon whose form is Hoopa Unbound can use this move.');
 			if (pokemon.template.species === 'Hoopa') {
 				this.add('-fail', pokemon, 'move: Hyperspace Fury', '[forme]');
-				
+
 				return null;
 			}
 			this.add('-fail', pokemon, 'move: Hyperspace Fury');
-			
+
 			return null;
 		},
-		'self': {'boosts': {'def': -1}},
+		'self': {
+			'boosts': {
+				'def': -1
+			}
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dark',
 		'zMovePower': 180,
 		'contestType': 'Tough'
 	},
-	'hyperspacehole': {
+	{
 		'num': 593,
 		'accuracy': true,
 		'basePower': 80,
@@ -9342,7 +9661,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Clever'
 	},
-	'hypervoice': {
+	{
 		'num': 304,
 		'accuracy': 100,
 		'basePower': 90,
@@ -9366,7 +9685,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Cool'
 	},
-	'hypnosis': {
+	{
 		'num': 95,
 		'accuracy': 60,
 		'basePower': 0,
@@ -9386,10 +9705,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'iceball': {
+	{
 		'num': 301,
 		'accuracy': 90,
 		'basePower': 30,
@@ -9404,7 +9725,7 @@ const BattleMovedex = {
 				bp *= 2;
 			}
 			this.debug(`Ice Ball bp: ${bp}`);
-			
+
 			return bp;
 		},
 		'category': 'Physical',
@@ -9445,7 +9766,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'icebeam': {
+	{
 		'num': 58,
 		'accuracy': 100,
 		'basePower': 90,
@@ -9470,7 +9791,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Beautiful'
 	},
-	'iceburn': {
+	{
 		'num': 554,
 		'accuracy': 90,
 		'basePower': 140,
@@ -9493,11 +9814,11 @@ const BattleMovedex = {
 			this.add('-prepare', attacker, move.name, defender);
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'secondary': {
@@ -9509,7 +9830,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Beautiful'
 	},
-	'icefang': {
+	{
 		'num': 423,
 		'accuracy': 95,
 		'basePower': 65,
@@ -9527,21 +9848,19 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'secondaries': [
-			{
-				'chance': 10,
-				'status': 'frz'
-			}, {
-				'chance': 10,
-				'volatileStatus': 'flinch'
-			}
-		],
+		'secondaries': [{
+			'chance': 10,
+			'status': 'frz'
+		}, {
+			'chance': 10,
+			'volatileStatus': 'flinch'
+		}],
 		'target': 'normal',
 		'type': 'Ice',
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'icehammer': {
+	{
 		'num': 665,
 		'accuracy': 90,
 		'basePower': 100,
@@ -9559,14 +9878,18 @@ const BattleMovedex = {
 			'mirror': 1,
 			'punch': 1
 		},
-		'self': {'boosts': {'spe': -1}},
+		'self': {
+			'boosts': {
+				'spe': -1
+			}
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Ice',
 		'zMovePower': 180,
 		'contestType': 'Tough'
 	},
-	'icepunch': {
+	{
 		'num': 8,
 		'accuracy': 100,
 		'basePower': 75,
@@ -9593,7 +9916,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Beautiful'
 	},
-	'iceshard': {
+	{
 		'num': 420,
 		'accuracy': 100,
 		'basePower': 40,
@@ -9615,7 +9938,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'iciclecrash': {
+	{
 		'num': 556,
 		'accuracy': 90,
 		'basePower': 85,
@@ -9640,7 +9963,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'iciclespear': {
+	{
 		'num': 333,
 		'accuracy': 100,
 		'basePower': 25,
@@ -9663,7 +9986,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Beautiful'
 	},
-	'icywind': {
+	{
 		'num': 196,
 		'accuracy': 95,
 		'basePower': 55,
@@ -9680,14 +10003,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'spe': -1}
+			'boosts': {
+				'spe': -1
+			}
 		},
 		'target': 'allAdjacentFoes',
 		'type': 'Ice',
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'imprison': {
+	{
 		'num': 286,
 		'accuracy': true,
 		'basePower': 0,
@@ -9711,7 +10036,7 @@ const BattleMovedex = {
 			'onFoeDisableMove' (pokemon) {
 				for (const moveSlot of this.effectData.source.moveSlots) {
 					if (moveSlot.id === 'struggle') {
-						continue; 
+						continue;
 					}
 					pokemon.disableMove(moveSlot.id, 'hidden');
 				}
@@ -9721,7 +10046,7 @@ const BattleMovedex = {
 			'onFoeBeforeMove' (attacker, defender, move) {
 				if (move.id !== 'struggle' && this.effectData.source.hasMove(move.id)) {
 					this.add('cant', attacker, 'move: Imprison', move);
-					
+
 					return false;
 				}
 			}
@@ -9730,10 +10055,12 @@ const BattleMovedex = {
 		'pressureTarget': 'foeSide',
 		'target': 'self',
 		'type': 'Psychic',
-		'zMoveBoost': {'spd': 2},
+		'zMoveBoost': {
+			'spd': 2
+		},
 		'contestType': 'Clever'
 	},
-	'incinerate': {
+	{
 		'num': 510,
 		'accuracy': 100,
 		'basePower': 60,
@@ -9761,7 +10088,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'inferno': {
+	{
 		'num': 517,
 		'accuracy': 50,
 		'basePower': 100,
@@ -9785,7 +10112,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Beautiful'
 	},
-	'infernooverdrive': {
+	{
 		'num': 640,
 		'accuracy': true,
 		'basePower': 1,
@@ -9803,7 +10130,7 @@ const BattleMovedex = {
 		'type': 'Fire',
 		'contestType': 'Cool'
 	},
-	'infestation': {
+	{
 		'num': 611,
 		'accuracy': 100,
 		'basePower': 20,
@@ -9826,7 +10153,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'ingrain': {
+	{
 		'num': 275,
 		'accuracy': true,
 		'basePower': 0,
@@ -9856,17 +10183,19 @@ const BattleMovedex = {
 			// Groundedness implemented in battle.engine.js:BattlePokemon#isGrounded
 			'onDragOut' (pokemon) {
 				this.add('-activate', pokemon, 'move: Ingrain');
-				
+
 				return null;
 			}
 		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Grass',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Clever'
 	},
-	'instruct': {
+	{
 		'num': 689,
 		'accuracy': true,
 		'basePower': 0,
@@ -9884,7 +10213,7 @@ const BattleMovedex = {
 		},
 		'onHit' (target, source) {
 			if (!target.lastMove) {
-				return false; 
+				return false;
 			}
 			const lastMove = target.lastMove;
 			const moveIndex = target.moves.indexOf(lastMove.id);
@@ -9899,10 +10228,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'iondeluge': {
+	{
 		'num': 569,
 		'accuracy': true,
 		'basePower': 0,
@@ -9931,10 +10262,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Electric',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'irondefense': {
+	{
 		'num': 334,
 		'accuracy': true,
 		'basePower': 0,
@@ -9945,15 +10278,19 @@ const BattleMovedex = {
 		'name': 'Iron Defense',
 		'pp': 15,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'def': 2},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'def': 2
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Steel',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Tough'
 	},
-	'ironhead': {
+	{
 		'num': 442,
 		'accuracy': 100,
 		'basePower': 80,
@@ -9979,7 +10316,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'irontail': {
+	{
 		'num': 231,
 		'accuracy': 75,
 		'basePower': 100,
@@ -9997,14 +10334,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 30,
-			'boosts': {'def': -1}
+			'boosts': {
+				'def': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Steel',
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'judgment': {
+	{
 		'num': 449,
 		'accuracy': 100,
 		'basePower': 100,
@@ -10033,7 +10372,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Beautiful'
 	},
-	'jumpkick': {
+	{
 		'num': 26,
 		'accuracy': 95,
 		'basePower': 100,
@@ -10061,7 +10400,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'karatechop': {
+	{
 		'num': 2,
 		'accuracy': 100,
 		'basePower': 50,
@@ -10084,7 +10423,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'kinesis': {
+	{
 		'num': 134,
 		'accuracy': 80,
 		'basePower': 0,
@@ -10100,14 +10439,18 @@ const BattleMovedex = {
 			'reflectable': 1,
 			'mirror': 1
 		},
-		'boosts': {'accuracy': -1},
+		'boosts': {
+			'accuracy': -1
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'evasion': 1},
+		'zMoveBoost': {
+			'evasion': 1
+		},
 		'contestType': 'Clever'
 	},
-	'kingsshield': {
+	{
 		'num': 588,
 		'accuracy': true,
 		'basePower': 0,
@@ -10137,9 +10480,9 @@ const BattleMovedex = {
 			'onTryHit' (target, source, move) {
 				if (!move.flags.protect || move.category === 'Status') {
 					if (move.isZ) {
-						move.zBrokeProtect = true; 
+						move.zBrokeProtect = true;
 					}
-					
+
 					return;
 				}
 				this.add('-activate', target, 'move: Protect');
@@ -10153,9 +10496,11 @@ const BattleMovedex = {
 					}
 				}
 				if (move.flags.contact) {
-					this.boost({'atk': -2}, source, target, this.getMove('King\'s Shield'));
+					this.boost({
+						'atk': -2
+					}, source, target, this.getMove('King\'s Shield'));
 				}
-				
+
 				return null;
 			}
 		},
@@ -10165,7 +10510,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cool'
 	},
-	'knockoff': {
+	{
 		'num': 282,
 		'accuracy': 100,
 		'basePower': 65,
@@ -10187,7 +10532,7 @@ const BattleMovedex = {
 			const item = target.getItem();
 
 			if (!this.singleEvent('TakeItem', item, target.itemData, target, source, move, item)) {
-				return; 
+				return;
 			}
 			if (item.id) {
 				return this.chainModify(1.5);
@@ -10208,7 +10553,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Clever'
 	},
-	'landswrath': {
+	{
 		'num': 616,
 		'accuracy': 100,
 		'basePower': 90,
@@ -10230,7 +10575,7 @@ const BattleMovedex = {
 		'zMovePower': 185,
 		'contestType': 'Beautiful'
 	},
-	'laserfocus': {
+	{
 		'num': 673,
 		'accuracy': true,
 		'basePower': 0,
@@ -10241,7 +10586,9 @@ const BattleMovedex = {
 		'name': 'Laser Focus',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'volatileStatus': 'laserfocus',
 		'effect': {
 			'duration': 2,
@@ -10258,10 +10605,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Cool'
 	},
-	'lastresort': {
+	{
 		'num': 387,
 		'accuracy': 100,
 		'basePower': 140,
@@ -10279,7 +10628,7 @@ const BattleMovedex = {
 		},
 		'onTryHit' (target, source) {
 			if (source.moveSlots.length < 2) {
-				return false; 
+				return false;
 			} // Last Resort fails unless the user knows at least 2 moves
 			let hasLastResort = false; // User must actually have Last Resort for it to succeed
 
@@ -10289,10 +10638,10 @@ const BattleMovedex = {
 					continue;
 				}
 				if (!moveSlot.used) {
-					return false; 
+					return false;
 				}
 			}
-			
+
 			return hasLastResort;
 		},
 		'secondary': false,
@@ -10301,7 +10650,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Cute'
 	},
-	'lavaplume': {
+	{
 		'num': 436,
 		'accuracy': 100,
 		'basePower': 80,
@@ -10326,7 +10675,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'leafblade': {
+	{
 		'num': 348,
 		'accuracy': 100,
 		'basePower': 90,
@@ -10350,7 +10699,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Cool'
 	},
-	'leafstorm': {
+	{
 		'num': 437,
 		'accuracy': 90,
 		'basePower': 130,
@@ -10366,14 +10715,18 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'boosts': {'spa': -2}},
+		'self': {
+			'boosts': {
+				'spa': -2
+			}
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Grass',
 		'zMovePower': 195,
 		'contestType': 'Beautiful'
 	},
-	'leaftornado': {
+	{
 		'num': 536,
 		'accuracy': 90,
 		'basePower': 65,
@@ -10390,14 +10743,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 50,
-			'boosts': {'accuracy': -1}
+			'boosts': {
+				'accuracy': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Grass',
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'leafage': {
+	{
 		'num': 670,
 		'accuracy': 100,
 		'basePower': 40,
@@ -10418,7 +10773,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'leechlife': {
+	{
 		'num': 141,
 		'accuracy': 100,
 		'basePower': 80,
@@ -10443,7 +10798,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Clever'
 	},
-	'leechseed': {
+	{
 		'num': 73,
 		'accuracy': 90,
 		'basePower': 0,
@@ -10471,7 +10826,7 @@ const BattleMovedex = {
 
 				if (!target || target.fainted || target.hp <= 0) {
 					this.debug('Nothing to leech into');
-					
+
 					return;
 				}
 				const damage = this.damage(pokemon.maxhp / 8, pokemon, target);
@@ -10484,7 +10839,7 @@ const BattleMovedex = {
 		'onTryHit' (target) {
 			if (target.hasType('Grass')) {
 				this.add('-immune', target, '[msg]');
-				
+
 				return null;
 			}
 		},
@@ -10494,7 +10849,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'leer': {
+	{
 		'num': 43,
 		'accuracy': 100,
 		'basePower': 0,
@@ -10510,14 +10865,18 @@ const BattleMovedex = {
 			'reflectable': 1,
 			'mirror': 1
 		},
-		'boosts': {'def': -1},
+		'boosts': {
+			'def': -1
+		},
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Normal',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Cool'
 	},
-	'letssnuggleforever': {
+	{
 		'num': 726,
 		'accuracy': true,
 		'basePower': 190,
@@ -10528,14 +10887,16 @@ const BattleMovedex = {
 		'name': 'Let\'s Snuggle Forever',
 		'pp': 1,
 		'priority': 0,
-		'flags': {'contact': 1},
+		'flags': {
+			'contact': 1
+		},
 		'isZ': 'mimikiumz',
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Fairy',
 		'contestType': 'Cool'
 	},
-	'lick': {
+	{
 		'num': 122,
 		'accuracy': 100,
 		'basePower': 30,
@@ -10560,7 +10921,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'lightofruin': {
+	{
 		'num': 617,
 		'accuracy': 90,
 		'basePower': 140,
@@ -10584,7 +10945,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Beautiful'
 	},
-	'lightscreen': {
+	{
 		'num': 113,
 		'accuracy': true,
 		'basePower': 0,
@@ -10596,7 +10957,9 @@ const BattleMovedex = {
 		'name': 'Light Screen',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'sideCondition': 'lightscreen',
 		'effect': {
 			'duration': 5,
@@ -10604,7 +10967,7 @@ const BattleMovedex = {
 				if (source && source.hasItem('lightclay')) {
 					return 8;
 				}
-				
+
 				return 5;
 			},
 			'onAnyModifyDamage' (damage, source, target, move) {
@@ -10612,9 +10975,9 @@ const BattleMovedex = {
 					if (!move.crit && !move.infiltrates) {
 						this.debug('Light Screen weaken');
 						if (target.side.active.length > 1) {
-							return this.chainModify([0xAAC, 0x1000]); 
+							return this.chainModify([0xAAC, 0x1000]);
 						}
-						
+
 						return this.chainModify(0.5);
 					}
 				}
@@ -10631,10 +10994,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'allySide',
 		'type': 'Psychic',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'lightthatburnsthesky': {
+	{
 		'num': 723,
 		'accuracy': true,
 		'basePower': 200,
@@ -10658,7 +11023,7 @@ const BattleMovedex = {
 		'type': 'Psychic',
 		'contestType': 'Cool'
 	},
-	'liquidation': {
+	{
 		'num': 710,
 		'accuracy': 100,
 		'basePower': 85,
@@ -10677,14 +11042,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 20,
-			'boosts': {'def': -1}
+			'boosts': {
+				'def': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Water',
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'lockon': {
+	{
 		'num': 199,
 		'accuracy': true,
 		'basePower': 0,
@@ -10713,17 +11080,19 @@ const BattleMovedex = {
 			'duration': 2,
 			'onSourceAccuracy' (accuracy, target, source, move) {
 				if (move && source === this.effectData.target && target === this.effectData.source) {
-					return true; 
+					return true;
 				}
 			}
 		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'lovelykiss': {
+	{
 		'num': 142,
 		'accuracy': 75,
 		'basePower': 0,
@@ -10744,10 +11113,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'lowkick': {
+	{
 		'num': 67,
 		'accuracy': 100,
 		'basePower': 0,
@@ -10769,7 +11140,7 @@ const BattleMovedex = {
 			if (targetWeight >= 10) {
 				return 40;
 			}
-			
+
 			return 20;
 		},
 		'category': 'Physical',
@@ -10791,7 +11162,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'lowsweep': {
+	{
 		'num': 490,
 		'accuracy': 100,
 		'basePower': 65,
@@ -10809,14 +11180,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'spe': -1}
+			'boosts': {
+				'spe': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Fighting',
 		'zMovePower': 120,
 		'contestType': 'Clever'
 	},
-	'luckychant': {
+	{
 		'num': 381,
 		'accuracy': true,
 		'basePower': 0,
@@ -10827,7 +11200,9 @@ const BattleMovedex = {
 		'name': 'Lucky Chant',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'sideCondition': 'luckychant',
 		'effect': {
 			'duration': 5,
@@ -10844,10 +11219,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'allySide',
 		'type': 'Normal',
-		'zMoveBoost': {'evasion': 1},
+		'zMoveBoost': {
+			'evasion': 1
+		},
 		'contestType': 'Cute'
 	},
-	'lunardance': {
+	{
 		'num': 461,
 		'accuracy': true,
 		'basePower': 0,
@@ -10867,7 +11244,7 @@ const BattleMovedex = {
 		'onTryHit' (pokemon, target, move) {
 			if (!this.canSwitch(pokemon.side)) {
 				delete move.selfdestruct;
-				
+
 				return false;
 			}
 		},
@@ -10910,7 +11287,7 @@ const BattleMovedex = {
 		'type': 'Psychic',
 		'contestType': 'Beautiful'
 	},
-	'lunge': {
+	{
 		'num': 679,
 		'accuracy': 100,
 		'basePower': 80,
@@ -10929,14 +11306,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'atk': -1}
+			'boosts': {
+				'atk': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Bug',
 		'zMovePower': 160,
 		'contestType': 'Cute'
 	},
-	'lusterpurge': {
+	{
 		'num': 295,
 		'accuracy': 100,
 		'basePower': 70,
@@ -10953,14 +11332,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 50,
-			'boosts': {'spd': -1}
+			'boosts': {
+				'spd': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Psychic',
 		'zMovePower': 140,
 		'contestType': 'Clever'
 	},
-	'machpunch': {
+	{
 		'num': 183,
 		'accuracy': 100,
 		'basePower': 40,
@@ -10984,7 +11365,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'magiccoat': {
+	{
 		'num': 277,
 		'accuracy': true,
 		'basePower': 0,
@@ -11013,7 +11394,7 @@ const BattleMovedex = {
 				newMove.hasBounced = true;
 				newMove.pranksterBoosted = false;
 				this.useMove(newMove, target, source);
-				
+
 				return null;
 			},
 			'onAllyTryHitSide' (target, source, move) {
@@ -11025,17 +11406,19 @@ const BattleMovedex = {
 				newMove.hasBounced = true;
 				newMove.pranksterBoosted = false;
 				this.useMove(newMove, this.effectData.target, source);
-				
+
 				return null;
 			}
 		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Psychic',
-		'zMoveBoost': {'spd': 2},
+		'zMoveBoost': {
+			'spd': 2
+		},
 		'contestType': 'Beautiful'
 	},
-	'magicroom': {
+	{
 		'num': 478,
 		'accuracy': true,
 		'basePower': 0,
@@ -11046,7 +11429,9 @@ const BattleMovedex = {
 		'name': 'Magic Room',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'mirror': 1},
+		'flags': {
+			'mirror': 1
+		},
 		'onHitField' (target, source, effect) {
 			if (this.pseudoWeather.magicroom) {
 				this.removePseudoWeather('magicroom', source, effect, `[of] ${source}`);
@@ -11060,7 +11445,7 @@ const BattleMovedex = {
 				if (source && source.hasAbility('persistent')) {
 					return 7;
 				}
-				
+
 				return 5;
 			},
 			'onStart' (target, source) {
@@ -11075,10 +11460,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Psychic',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Clever'
 	},
-	'magicalleaf': {
+	{
 		'num': 345,
 		'accuracy': true,
 		'basePower': 60,
@@ -11099,7 +11486,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'magmastorm': {
+	{
 		'num': 463,
 		'accuracy': 75,
 		'basePower': 100,
@@ -11122,7 +11509,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Tough'
 	},
-	'magnetbomb': {
+	{
 		'num': 443,
 		'accuracy': true,
 		'basePower': 60,
@@ -11144,7 +11531,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'magneticflux': {
+	{
 		'num': 602,
 		'accuracy': true,
 		'basePower': 0,
@@ -11181,10 +11568,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'allySide',
 		'type': 'Electric',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Clever'
 	},
-	'magnetrise': {
+	{
 		'num': 393,
 		'accuracy': true,
 		'basePower': 0,
@@ -11210,7 +11599,7 @@ const BattleMovedex = {
 			},
 			'onImmunity' (type) {
 				if (type === 'Ground') {
-					return false; 
+					return false;
 				}
 			},
 			'onResidualOrder': 15,
@@ -11221,10 +11610,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Electric',
-		'zMoveBoost': {'evasion': 1},
+		'zMoveBoost': {
+			'evasion': 1
+		},
 		'contestType': 'Clever'
 	},
-	'magnitude': {
+	{
 		'num': 222,
 		'accuracy': 100,
 		'basePower': 0,
@@ -11275,7 +11666,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'maliciousmoonsault': {
+	{
 		'num': 696,
 		'accuracy': true,
 		'basePower': 180,
@@ -11286,14 +11677,16 @@ const BattleMovedex = {
 		'name': 'Malicious Moonsault',
 		'pp': 1,
 		'priority': 0,
-		'flags': {'contact': 1},
+		'flags': {
+			'contact': 1
+		},
 		'isZ': 'inciniumz',
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dark',
 		'contestType': 'Cool'
 	},
-	'matblock': {
+	{
 		'num': 561,
 		'accuracy': true,
 		'basePower': 0,
@@ -11313,7 +11706,7 @@ const BattleMovedex = {
 		'onTryHitSide' (side, source) {
 			if (source.activeTurns > 1) {
 				this.add('-hint', 'Mat Block only works on your first turn out.');
-				
+
 				return false;
 			}
 		},
@@ -11328,7 +11721,7 @@ const BattleMovedex = {
 					if (move.isZ) {
 						move.zBrokeProtect = true;
 					}
-					
+
 					return;
 				}
 				if (move && (move.target === 'self' || move.category === 'Status')) {
@@ -11344,17 +11737,19 @@ const BattleMovedex = {
 						delete source.volatiles.lockedmove;
 					}
 				}
-				
+
 				return null;
 			}
 		},
 		'secondary': false,
 		'target': 'allySide',
 		'type': 'Fighting',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cool'
 	},
-	'mefirst': {
+	{
 		'num': 382,
 		'accuracy': true,
 		'basePower': 0,
@@ -11379,11 +11774,11 @@ const BattleMovedex = {
 				if (move.category !== 'Status' && !noMeFirst.includes(move)) {
 					pokemon.addVolatile('mefirst');
 					this.useMove(move, pokemon, target);
-					
+
 					return null;
 				}
 			}
-			
+
 			return false;
 		},
 		'effect': {
@@ -11396,10 +11791,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'adjacentFoe',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 2},
+		'zMoveBoost': {
+			'spe': 2
+		},
 		'contestType': 'Clever'
 	},
-	'meanlook': {
+	{
 		'num': 212,
 		'accuracy': true,
 		'basePower': 0,
@@ -11420,10 +11817,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'meditate': {
+	{
 		'num': 96,
 		'accuracy': true,
 		'basePower': 0,
@@ -11434,15 +11833,21 @@ const BattleMovedex = {
 		'name': 'Meditate',
 		'pp': 40,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'atk': 1},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'atk': 1
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Psychic',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'megadrain': {
+	{
 		'num': 72,
 		'accuracy': 100,
 		'basePower': 40,
@@ -11465,7 +11870,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Clever'
 	},
-	'megakick': {
+	{
 		'num': 25,
 		'accuracy': 75,
 		'basePower': 120,
@@ -11487,7 +11892,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'megapunch': {
+	{
 		'num': 5,
 		'accuracy': 85,
 		'basePower': 80,
@@ -11510,7 +11915,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'megahorn': {
+	{
 		'num': 224,
 		'accuracy': 85,
 		'basePower': 120,
@@ -11533,7 +11938,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'memento': {
+	{
 		'num': 262,
 		'accuracy': 100,
 		'basePower': 0,
@@ -11560,7 +11965,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'healreplacement',
 		'contestType': 'Tough'
 	},
-	'menacingmoonrazemaelstrom': {
+	{
 		'num': 725,
 		'accuracy': true,
 		'basePower': 200,
@@ -11579,15 +11984,15 @@ const BattleMovedex = {
 		'type': 'Ghost',
 		'contestType': 'Cool'
 	},
-	'metalburst': {
+	{
 		'num': 368,
 		'accuracy': 100,
 		'basePower': 0,
 		'damageCallback' (pokemon) {
 			if (!pokemon.volatiles.metalburst) {
-				return 0; 
+				return 0;
 			}
-			
+
 			return pokemon.volatiles.metalburst.damage || 1;
 		},
 		'category': 'Physical',
@@ -11609,7 +12014,7 @@ const BattleMovedex = {
 				return false;
 			}
 			if (source.volatiles.metalburst.position === null) {
-				return false; 
+				return false;
 			}
 		},
 		'effect': {
@@ -11624,7 +12029,7 @@ const BattleMovedex = {
 				if (source !== this.effectData.target) {
 					return;
 				}
-				
+
 				return source.side.foe.active[this.effectData.position];
 			},
 			'onDamagePriority': -101,
@@ -11641,7 +12046,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'metalclaw': {
+	{
 		'num': 232,
 		'accuracy': 95,
 		'basePower': 50,
@@ -11659,14 +12064,18 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'self': {'boosts': {'atk': 1}}
+			'self': {
+				'boosts': {
+					'atk': 1
+				}
+			}
 		},
 		'target': 'normal',
 		'type': 'Steel',
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'metalsound': {
+	{
 		'num': 319,
 		'accuracy': 85,
 		'basePower': 0,
@@ -11685,14 +12094,18 @@ const BattleMovedex = {
 			'authentic': 1,
 			'mystery': 1
 		},
-		'boosts': {'spd': -2},
+		'boosts': {
+			'spd': -2
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Steel',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'meteormash': {
+	{
 		'num': 309,
 		'accuracy': 90,
 		'basePower': 90,
@@ -11712,14 +12125,18 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 20,
-			'self': {'boosts': {'atk': 1}}
+			'self': {
+				'boosts': {
+					'atk': 1
+				}
+			}
 		},
 		'target': 'normal',
 		'type': 'Steel',
 		'zMovePower': 175,
 		'contestType': 'Cool'
 	},
-	'metronome': {
+	{
 		'num': 118,
 		'accuracy': true,
 		'basePower': 0,
@@ -11745,7 +12162,7 @@ const BattleMovedex = {
 					continue;
 				}
 				if (effect.noMetronome.includes(move.id)) {
-					continue; 
+					continue;
 				}
 				if (this.getMove(i).gen > this.gen) {
 					continue;
@@ -11768,7 +12185,7 @@ const BattleMovedex = {
 		'type': 'Normal',
 		'contestType': 'Cute'
 	},
-	'milkdrink': {
+	{
 		'num': 208,
 		'accuracy': true,
 		'basePower': 0,
@@ -11791,7 +12208,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'mimic': {
+	{
 		'num': 102,
 		'accuracy': true,
 		'basePower': 0,
@@ -11835,10 +12252,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'accuracy': 1},
+		'zMoveBoost': {
+			'accuracy': 1
+		},
 		'contestType': 'Cute'
 	},
-	'mindblown': {
+	{
 		'num': 720,
 		'accuracy': 100,
 		'basePower': 150,
@@ -11866,7 +12285,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Cool'
 	},
-	'mindreader': {
+	{
 		'num': 170,
 		'accuracy': true,
 		'basePower': 0,
@@ -11883,7 +12302,7 @@ const BattleMovedex = {
 		},
 		'onTryHit' (target, source) {
 			if (source.volatiles.lockon) {
-				return false; 
+				return false;
 			}
 		},
 		'onHit' (target, source) {
@@ -11893,10 +12312,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'minimize': {
+	{
 		'num': 107,
 		'accuracy': true,
 		'basePower': 0,
@@ -11907,7 +12328,9 @@ const BattleMovedex = {
 		'name': 'Minimize',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'volatileStatus': 'minimize',
 		'effect': {
 			'noCopy': true,
@@ -11920,18 +12343,20 @@ const BattleMovedex = {
 				if (['stomp', 'steamroller', 'bodyslam', 'flyingpress', 'dragonrush', 'phantomforce', 'heatcrash', 'shadowforce', 'heavyslam', 'maliciousmoonsault'].includes(move.id)) {
 					return true;
 				}
-				
+
 				return accuracy;
 			}
 		},
-		'boosts': {'evasion': 2},
+		'boosts': {
+			'evasion': 2
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'miracleeye': {
+	{
 		'num': 357,
 		'accuracy': true,
 		'basePower': 0,
@@ -11951,7 +12376,7 @@ const BattleMovedex = {
 		'volatileStatus': 'miracleeye',
 		'onTryHit' (target) {
 			if (target.volatiles.foresight) {
-				return false; 
+				return false;
 			}
 		},
 		'effect': {
@@ -11961,7 +12386,7 @@ const BattleMovedex = {
 			},
 			'onNegateImmunity' (pokemon, type) {
 				if (pokemon.hasType('Dark') && type === 'Psychic') {
-					return false; 
+					return false;
 				}
 			},
 			'onModifyBoost' (boosts) {
@@ -11973,10 +12398,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'mirrorcoat': {
+	{
 		'num': 243,
 		'accuracy': 100,
 		'basePower': 0,
@@ -11984,7 +12411,7 @@ const BattleMovedex = {
 			if (!pokemon.volatiles.mirrorcoat) {
 				return 0;
 			}
-			
+
 			return pokemon.volatiles.mirrorcoat.damage || 1;
 		},
 		'category': 'Special',
@@ -11994,7 +12421,9 @@ const BattleMovedex = {
 		'name': 'Mirror Coat',
 		'pp': 20,
 		'priority': -5,
-		'flags': {'protect': 1},
+		'flags': {
+			'protect': 1
+		},
 		'beforeTurnCallback' (pokemon) {
 			pokemon.addVolatile('mirrorcoat');
 		},
@@ -12003,7 +12432,7 @@ const BattleMovedex = {
 				return false;
 			}
 			if (source.volatiles.mirrorcoat.position === null) {
-				return false; 
+				return false;
 			}
 		},
 		'effect': {
@@ -12018,7 +12447,7 @@ const BattleMovedex = {
 				if (source !== this.effectData.target) {
 					return;
 				}
-				
+
 				return source.side.foe.active[this.effectData.position];
 			},
 			'onDamagePriority': -101,
@@ -12035,7 +12464,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'mirrormove': {
+	{
 		'num': 119,
 		'accuracy': true,
 		'basePower': 0,
@@ -12052,16 +12481,18 @@ const BattleMovedex = {
 				return false;
 			}
 			this.useMove(target.lastMove.id, pokemon, target);
-			
+
 			return null;
 		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Flying',
-		'zMoveBoost': {'atk': 2},
+		'zMoveBoost': {
+			'atk': 2
+		},
 		'contestType': 'Clever'
 	},
-	'mirrorshot': {
+	{
 		'num': 429,
 		'accuracy': 85,
 		'basePower': 65,
@@ -12078,14 +12509,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 30,
-			'boosts': {'accuracy': -1}
+			'boosts': {
+				'accuracy': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Steel',
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'mist': {
+	{
 		'num': 54,
 		'accuracy': true,
 		'basePower': 0,
@@ -12096,7 +12529,9 @@ const BattleMovedex = {
 		'name': 'Mist',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'sideCondition': 'mist',
 		'effect': {
 			'duration': 5,
@@ -12111,7 +12546,7 @@ const BattleMovedex = {
 						}
 					}
 					if (showMsg && !effect.secondaries) {
-						this.add('-activate', target, 'move: Mist'); 
+						this.add('-activate', target, 'move: Mist');
 					}
 				}
 			},
@@ -12130,7 +12565,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Beautiful'
 	},
-	'mistball': {
+	{
 		'num': 296,
 		'accuracy': 100,
 		'basePower': 70,
@@ -12148,14 +12583,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 50,
-			'boosts': {'spa': -1}
+			'boosts': {
+				'spa': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Psychic',
 		'zMovePower': 140,
 		'contestType': 'Clever'
 	},
-	'mistyterrain': {
+	{
 		'num': 581,
 		'accuracy': true,
 		'basePower': 0,
@@ -12166,7 +12603,9 @@ const BattleMovedex = {
 		'name': 'Misty Terrain',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'nonsky': 1},
+		'flags': {
+			'nonsky': 1
+		},
 		'terrain': 'mistyterrain',
 		'effect': {
 			'duration': 5,
@@ -12174,35 +12613,35 @@ const BattleMovedex = {
 				if (source && source.hasItem('terrainextender')) {
 					return 8;
 				}
-				
+
 				return 5;
 			},
 			'onSetStatus' (status, target, source, effect) {
 				if (!target.isGrounded() || target.isSemiInvulnerable()) {
-					return; 
+					return;
 				}
 				if (effect && effect.status) {
 					this.add('-activate', target, 'move: Misty Terrain');
 				}
-				
+
 				return false;
 			},
 			'onTryAddVolatile' (status, target, source, effect) {
 				if (!target.isGrounded() || target.isSemiInvulnerable()) {
-					return; 
+					return;
 				}
 				if (status.id === 'confusion') {
 					if (effect.effectType === 'Move' && !effect.secondaries) {
-						this.add('-activate', target, 'move: Misty Terrain'); 
+						this.add('-activate', target, 'move: Misty Terrain');
 					}
-					
+
 					return null;
 				}
 			},
 			'onBasePower' (basePower, attacker, defender, move) {
 				if (move.type === 'Dragon' && defender.isGrounded() && !defender.isSemiInvulnerable()) {
 					this.debug('misty terrain weaken');
-					
+
 					return this.chainModify(0.5);
 				}
 			},
@@ -12222,10 +12661,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Fairy',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'moonblast': {
+	{
 		'num': 585,
 		'accuracy': 100,
 		'basePower': 95,
@@ -12243,14 +12684,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 30,
-			'boosts': {'spa': -1}
+			'boosts': {
+				'spa': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Fairy',
 		'zMovePower': 175,
 		'contestType': 'Beautiful'
 	},
-	'moongeistbeam': {
+	{
 		'num': 714,
 		'accuracy': 100,
 		'basePower': 100,
@@ -12273,7 +12716,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'moonlight': {
+	{
 		'num': 236,
 		'accuracy': true,
 		'basePower': 0,
@@ -12294,10 +12737,10 @@ const BattleMovedex = {
 				return this.heal(this.modify(pokemon.maxhp, 0.667));
 			} else if (this.isWeather(['raindance', 'primordialsea', 'sandstorm', 'hail'])) {
 				return this.heal(this.modify(pokemon.maxhp, 0.25));
-			} 
-			
+			}
+
 			return this.heal(this.modify(pokemon.maxhp, 0.5));
-			
+
 		},
 		'secondary': false,
 		'target': 'self',
@@ -12305,7 +12748,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'morningsun': {
+	{
 		'num': 234,
 		'accuracy': true,
 		'basePower': 0,
@@ -12326,10 +12769,10 @@ const BattleMovedex = {
 				return this.heal(this.modify(pokemon.maxhp, 0.667));
 			} else if (this.isWeather(['raindance', 'primordialsea', 'sandstorm', 'hail'])) {
 				return this.heal(this.modify(pokemon.maxhp, 0.25));
-			} 
-			
+			}
+
 			return this.heal(this.modify(pokemon.maxhp, 0.5));
-			
+
 		},
 		'secondary': false,
 		'target': 'self',
@@ -12337,7 +12780,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'mudslap': {
+	{
 		'num': 189,
 		'accuracy': 100,
 		'basePower': 20,
@@ -12354,14 +12797,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'accuracy': -1}
+			'boosts': {
+				'accuracy': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Ground',
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'mudbomb': {
+	{
 		'num': 426,
 		'accuracy': 85,
 		'basePower': 65,
@@ -12379,14 +12824,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 30,
-			'boosts': {'accuracy': -1}
+			'boosts': {
+				'accuracy': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Ground',
 		'zMovePower': 120,
 		'contestType': 'Cute'
 	},
-	'mudshot': {
+	{
 		'num': 341,
 		'accuracy': 95,
 		'basePower': 55,
@@ -12403,14 +12850,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'spe': -1}
+			'boosts': {
+				'spe': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Ground',
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'mudsport': {
+	{
 		'num': 300,
 		'accuracy': true,
 		'basePower': 0,
@@ -12421,13 +12870,15 @@ const BattleMovedex = {
 		'name': 'Mud Sport',
 		'pp': 15,
 		'priority': 0,
-		'flags': {'nonsky': 1},
+		'flags': {
+			'nonsky': 1
+		},
 		'onHitField' (target, source, effect) {
 			if (this.pseudoWeather.mudsport) {
 				return false;
-			} 
+			}
 			this.addPseudoWeather('mudsport', source, effect, `[of] ${source}`);
-			
+
 		},
 		'effect': {
 			'duration': 5,
@@ -12438,7 +12889,7 @@ const BattleMovedex = {
 			'onBasePower' (basePower, attacker, defender, move) {
 				if (move.type === 'Electric') {
 					this.debug('mud sport weaken');
-					
+
 					return this.chainModify([0x548, 0x1000]);
 				}
 			},
@@ -12450,10 +12901,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Ground',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Cute'
 	},
-	'muddywater': {
+	{
 		'num': 330,
 		'accuracy': 85,
 		'basePower': 90,
@@ -12471,14 +12924,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 30,
-			'boosts': {'accuracy': -1}
+			'boosts': {
+				'accuracy': -1
+			}
 		},
 		'target': 'allAdjacentFoes',
 		'type': 'Water',
 		'zMovePower': 175,
 		'contestType': 'Tough'
 	},
-	'multiattack': {
+	{
 		'num': 718,
 		'accuracy': 100,
 		'basePower': 90,
@@ -12504,7 +12959,7 @@ const BattleMovedex = {
 		'zMovePower': 185,
 		'contestType': 'Tough'
 	},
-	'mysticalfire': {
+	{
 		'num': 595,
 		'accuracy': 100,
 		'basePower': 75,
@@ -12521,14 +12976,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'spa': -1}
+			'boosts': {
+				'spa': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Fire',
 		'zMovePower': 140,
 		'contestType': 'Beautiful'
 	},
-	'nastyplot': {
+	{
 		'num': 417,
 		'accuracy': true,
 		'basePower': 0,
@@ -12540,15 +12997,19 @@ const BattleMovedex = {
 		'name': 'Nasty Plot',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'spa': 2},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'spa': 2
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Dark',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'naturalgift': {
+	{
 		'num': 363,
 		'accuracy': 100,
 		'basePower': 0,
@@ -12570,7 +13031,7 @@ const BattleMovedex = {
 			const item = pokemon.getItem();
 
 			if (!item.naturalGift) {
-				return false; 
+				return false;
 			}
 			move.basePower = item.naturalGift.basePower;
 			move.type = item.naturalGift.type;
@@ -12583,7 +13044,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Clever'
 	},
-	'naturepower': {
+	{
 		'num': 267,
 		'accuracy': true,
 		'basePower': 0,
@@ -12609,7 +13070,7 @@ const BattleMovedex = {
 				move = 'psychic';
 			}
 			this.useMove(move, pokemon, target);
-			
+
 			return null;
 		},
 		'secondary': false,
@@ -12617,7 +13078,7 @@ const BattleMovedex = {
 		'type': 'Normal',
 		'contestType': 'Beautiful'
 	},
-	'naturesmadness': {
+	{
 		'num': 717,
 		'accuracy': 90,
 		'basePower': 0,
@@ -12642,7 +13103,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'needlearm': {
+	{
 		'num': 302,
 		'accuracy': 100,
 		'basePower': 60,
@@ -12667,7 +13128,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Clever'
 	},
-	'neverendingnightmare': {
+	{
 		'num': 636,
 		'accuracy': true,
 		'basePower': 1,
@@ -12685,7 +13146,7 @@ const BattleMovedex = {
 		'type': 'Ghost',
 		'contestType': 'Cool'
 	},
-	'nightdaze': {
+	{
 		'num': 539,
 		'accuracy': 95,
 		'basePower': 85,
@@ -12702,14 +13163,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 40,
-			'boosts': {'accuracy': -1}
+			'boosts': {
+				'accuracy': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Dark',
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'nightshade': {
+	{
 		'num': 101,
 		'accuracy': 100,
 		'basePower': 0,
@@ -12732,7 +13195,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'nightslash': {
+	{
 		'num': 400,
 		'accuracy': 100,
 		'basePower': 70,
@@ -12756,7 +13219,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'nightmare': {
+	{
 		'num': 171,
 		'accuracy': 100,
 		'basePower': 0,
@@ -12794,10 +13257,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Ghost',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'nobleroar': {
+	{
 		'num': 568,
 		'accuracy': 100,
 		'basePower': 0,
@@ -12822,10 +13287,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Tough'
 	},
-	'nuzzle': {
+	{
 		'num': 609,
 		'accuracy': 100,
 		'basePower': 20,
@@ -12851,7 +13318,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'oblivionwing': {
+	{
 		'num': 613,
 		'accuracy': 100,
 		'basePower': 80,
@@ -12876,7 +13343,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'oceanicoperetta': {
+	{
 		'num': 697,
 		'accuracy': true,
 		'basePower': 195,
@@ -12894,7 +13361,7 @@ const BattleMovedex = {
 		'type': 'Water',
 		'contestType': 'Cool'
 	},
-	'octazooka': {
+	{
 		'num': 190,
 		'accuracy': 85,
 		'basePower': 65,
@@ -12912,14 +13379,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 50,
-			'boosts': {'accuracy': -1}
+			'boosts': {
+				'accuracy': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Water',
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'odorsleuth': {
+	{
 		'num': 316,
 		'accuracy': true,
 		'basePower': 0,
@@ -12946,10 +13415,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Clever'
 	},
-	'ominouswind': {
+	{
 		'num': 466,
 		'accuracy': 100,
 		'basePower': 60,
@@ -12981,7 +13452,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'originpulse': {
+	{
 		'num': 618,
 		'accuracy': 85,
 		'basePower': 110,
@@ -13003,7 +13474,7 @@ const BattleMovedex = {
 		'zMovePower': 185,
 		'contestType': 'Beautiful'
 	},
-	'outrage': {
+	{
 		'num': 200,
 		'accuracy': 100,
 		'basePower': 120,
@@ -13020,7 +13491,9 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'volatileStatus': 'lockedmove'},
+		'self': {
+			'volatileStatus': 'lockedmove'
+		},
 		'onAfterMove' (pokemon) {
 			if (pokemon.volatiles.lockedmove && pokemon.volatiles.lockedmove.duration === 1) {
 				pokemon.removeVolatile('lockedmove');
@@ -13032,7 +13505,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'overheat': {
+	{
 		'num': 315,
 		'accuracy': 90,
 		'basePower': 130,
@@ -13048,14 +13521,18 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'boosts': {'spa': -2}},
+		'self': {
+			'boosts': {
+				'spa': -2
+			}
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Fire',
 		'zMovePower': 195,
 		'contestType': 'Beautiful'
 	},
-	'painsplit': {
+	{
 		'num': 220,
 		'accuracy': true,
 		'basePower': 0,
@@ -13082,10 +13559,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Clever'
 	},
-	'paraboliccharge': {
+	{
 		'num': 570,
 		'accuracy': 100,
 		'basePower': 65,
@@ -13108,7 +13587,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Clever'
 	},
-	'partingshot': {
+	{
 		'num': 575,
 		'accuracy': 100,
 		'basePower': 0,
@@ -13138,7 +13617,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'healreplacement',
 		'contestType': 'Cool'
 	},
-	'payday': {
+	{
 		'num': 6,
 		'accuracy': 100,
 		'basePower': 40,
@@ -13162,18 +13641,18 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'payback': {
+	{
 		'num': 371,
 		'accuracy': 100,
 		'basePower': 50,
 		'basePowerCallback' (pokemon, target, move) {
 			if (target.newlySwitched || this.willMove(target)) {
 				this.debug('Payback NOT boosted');
-				
+
 				return move.basePower;
 			}
 			this.debug('Payback damage boost');
-			
+
 			return move.basePower * 2;
 		},
 		'category': 'Physical',
@@ -13194,7 +13673,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'peck': {
+	{
 		'num': 64,
 		'accuracy': 100,
 		'basePower': 35,
@@ -13217,7 +13696,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'perishsong': {
+	{
 		'num': 195,
 		'accuracy': true,
 		'basePower': 0,
@@ -13281,7 +13760,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'petalblizzard': {
+	{
 		'num': 572,
 		'accuracy': 100,
 		'basePower': 90,
@@ -13303,7 +13782,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Beautiful'
 	},
-	'petaldance': {
+	{
 		'num': 80,
 		'accuracy': 100,
 		'basePower': 120,
@@ -13320,7 +13799,9 @@ const BattleMovedex = {
 			'mirror': 1,
 			'dance': 1
 		},
-		'self': {'volatileStatus': 'lockedmove'},
+		'self': {
+			'volatileStatus': 'lockedmove'
+		},
 		'onAfterMove' (pokemon) {
 			if (pokemon.volatiles.lockedmove && pokemon.volatiles.lockedmove.duration === 1) {
 				pokemon.removeVolatile('lockedmove');
@@ -13332,7 +13813,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Beautiful'
 	},
-	'phantomforce': {
+	{
 		'num': 566,
 		'accuracy': 100,
 		'basePower': 90,
@@ -13356,11 +13837,11 @@ const BattleMovedex = {
 			this.add('-prepare', attacker, move.name, defender);
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'effect': {
@@ -13375,7 +13856,7 @@ const BattleMovedex = {
 				if (source.volatiles.lockon && target === source.volatiles.lockon.source) {
 					return;
 				}
-				
+
 				return 0;
 			}
 		},
@@ -13385,7 +13866,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Cool'
 	},
-	'photongeyser': {
+	{
 		'num': 722,
 		'accuracy': 100,
 		'basePower': 100,
@@ -13413,7 +13894,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'pinmissile': {
+	{
 		'num': 42,
 		'accuracy': 95,
 		'basePower': 25,
@@ -13435,7 +13916,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'plasmafists': {
+	{
 		'num': 721,
 		'accuracy': 100,
 		'basePower': 100,
@@ -13461,7 +13942,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'playnice': {
+	{
 		'num': 589,
 		'accuracy': true,
 		'basePower': 0,
@@ -13477,14 +13958,18 @@ const BattleMovedex = {
 			'mirror': 1,
 			'authentic': 1
 		},
-		'boosts': {'atk': -1},
+		'boosts': {
+			'atk': -1
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cute'
 	},
-	'playrough': {
+	{
 		'num': 583,
 		'accuracy': 90,
 		'basePower': 90,
@@ -13503,14 +13988,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'atk': -1}
+			'boosts': {
+				'atk': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Fairy',
 		'zMovePower': 175,
 		'contestType': 'Cute'
 	},
-	'pluck': {
+	{
 		'num': 365,
 		'accuracy': 100,
 		'basePower': 60,
@@ -13536,7 +14023,7 @@ const BattleMovedex = {
 					this.runEvent('EatItem', source, null, null, item);
 				}
 				if (item.onEat) {
-					source.ateBerry = true; 
+					source.ateBerry = true;
 				}
 			}
 		},
@@ -13546,7 +14033,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cute'
 	},
-	'poisonfang': {
+	{
 		'num': 305,
 		'accuracy': 100,
 		'basePower': 50,
@@ -13572,7 +14059,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'poisongas': {
+	{
 		'num': 139,
 		'accuracy': 90,
 		'basePower': 0,
@@ -13592,10 +14079,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Poison',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Clever'
 	},
-	'poisonjab': {
+	{
 		'num': 398,
 		'accuracy': 100,
 		'basePower': 80,
@@ -13621,7 +14110,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'poisonpowder': {
+	{
 		'num': 77,
 		'accuracy': 75,
 		'basePower': 0,
@@ -13642,10 +14131,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Poison',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Clever'
 	},
-	'poisonsting': {
+	{
 		'num': 40,
 		'accuracy': 100,
 		'basePower': 15,
@@ -13669,7 +14160,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'poisontail': {
+	{
 		'num': 342,
 		'accuracy': 100,
 		'basePower': 50,
@@ -13695,7 +14186,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'pollenpuff': {
+	{
 		'num': 676,
 		'accuracy': 100,
 		'basePower': 90,
@@ -13723,7 +14214,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Cute'
 	},
-	'pound': {
+	{
 		'num': 1,
 		'accuracy': 100,
 		'basePower': 40,
@@ -13745,7 +14236,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'powder': {
+	{
 		'num': 600,
 		'accuracy': 100,
 		'basePower': 0,
@@ -13774,7 +14265,7 @@ const BattleMovedex = {
 				if (move.type === 'Fire') {
 					this.add('-activate', pokemon, 'move: Powder');
 					this.damage(this.clampIntRange(Math.round(pokemon.maxhp / 4), 1));
-					
+
 					return false;
 				}
 			}
@@ -13782,10 +14273,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Bug',
-		'zMoveBoost': {'spd': 2},
+		'zMoveBoost': {
+			'spd': 2
+		},
 		'contestType': 'Clever'
 	},
-	'powdersnow': {
+	{
 		'num': 181,
 		'accuracy': 100,
 		'basePower': 40,
@@ -13809,7 +14302,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'powergem': {
+	{
 		'num': 408,
 		'accuracy': 100,
 		'basePower': 80,
@@ -13831,7 +14324,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'powersplit': {
+	{
 		'num': 471,
 		'accuracy': true,
 		'basePower': 0,
@@ -13860,10 +14353,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'powerswap': {
+	{
 		'num': 384,
 		'accuracy': true,
 		'basePower': 0,
@@ -13897,10 +14392,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'powertrick': {
+	{
 		'num': 379,
 		'accuracy': true,
 		'basePower': 0,
@@ -13911,7 +14408,9 @@ const BattleMovedex = {
 		'name': 'Power Trick',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'volatileStatus': 'powertrick',
 		'effect': {
 			'onStart' (pokemon) {
@@ -13944,10 +14443,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Psychic',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Clever'
 	},
-	'powertrip': {
+	{
 		'num': 681,
 		'accuracy': 100,
 		'basePower': 20,
@@ -13972,7 +14473,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Clever'
 	},
-	'poweruppunch': {
+	{
 		'num': 612,
 		'accuracy': 100,
 		'basePower': 40,
@@ -13992,14 +14493,18 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'self': {'boosts': {'atk': 1}}
+			'self': {
+				'boosts': {
+					'atk': 1
+				}
+			}
 		},
 		'target': 'normal',
 		'type': 'Fighting',
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'powerwhip': {
+	{
 		'num': 438,
 		'accuracy': 85,
 		'basePower': 120,
@@ -14022,7 +14527,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Tough'
 	},
-	'precipiceblades': {
+	{
 		'num': 619,
 		'accuracy': 85,
 		'basePower': 120,
@@ -14044,7 +14549,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'present': {
+	{
 		'num': 217,
 		'accuracy': 90,
 		'basePower': 0,
@@ -14078,7 +14583,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'prismaticlaser': {
+	{
 		'num': 711,
 		'accuracy': 100,
 		'basePower': 160,
@@ -14094,14 +14599,16 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'volatileStatus': 'mustrecharge'},
+		'self': {
+			'volatileStatus': 'mustrecharge'
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
 		'zMovePower': 200,
 		'contestType': 'Cool'
 	},
-	'protect': {
+	{
 		'num': 182,
 		'accuracy': true,
 		'basePower': 0,
@@ -14131,9 +14638,9 @@ const BattleMovedex = {
 			'onTryHit' (target, source, move) {
 				if (!move.flags.protect) {
 					if (move.isZ) {
-						move.zBrokeProtect = true; 
+						move.zBrokeProtect = true;
 					}
-					
+
 					return;
 				}
 				this.add('-activate', target, 'move: Protect');
@@ -14146,7 +14653,7 @@ const BattleMovedex = {
 						delete source.volatiles.lockedmove;
 					}
 				}
-				
+
 				return null;
 			}
 		},
@@ -14156,7 +14663,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'psybeam': {
+	{
 		'num': 60,
 		'accuracy': 100,
 		'basePower': 65,
@@ -14180,7 +14687,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'psychup': {
+	{
 		'num': 244,
 		'accuracy': true,
 		'basePower': 0,
@@ -14207,7 +14714,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Clever'
 	},
-	'psychic': {
+	{
 		'num': 94,
 		'accuracy': 100,
 		'basePower': 90,
@@ -14225,14 +14732,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'boosts': {'spd': -1}
+			'boosts': {
+				'spd': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Psychic',
 		'zMovePower': 175,
 		'contestType': 'Clever'
 	},
-	'psychicfangs': {
+	{
 		'num': 706,
 		'accuracy': 100,
 		'basePower': 85,
@@ -14264,7 +14773,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Clever'
 	},
-	'psychicterrain': {
+	{
 		'num': 678,
 		'accuracy': true,
 		'basePower': 0,
@@ -14275,7 +14784,9 @@ const BattleMovedex = {
 		'name': 'Psychic Terrain',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'nonsky': 1},
+		'flags': {
+			'nonsky': 1
+		},
 		'terrain': 'psychicterrain',
 		'effect': {
 			'duration': 5,
@@ -14283,7 +14794,7 @@ const BattleMovedex = {
 				if (source && source.hasItem('terrainextender')) {
 					return 8;
 				}
-				
+
 				return 5;
 			},
 			'onTryHitPriority': 4,
@@ -14295,13 +14806,13 @@ const BattleMovedex = {
 					return;
 				}
 				this.add('-activate', target, 'move: Psychic Terrain');
-				
+
 				return null;
 			},
 			'onBasePower' (basePower, attacker, defender, move) {
 				if (move.type === 'Psychic' && attacker.isGrounded() && !attacker.isSemiInvulnerable()) {
 					this.debug('psychic terrain boost');
-					
+
 					return this.chainModify(1.5);
 				}
 			},
@@ -14321,10 +14832,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Psychic',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'psychoboost': {
+	{
 		'num': 354,
 		'accuracy': 90,
 		'basePower': 140,
@@ -14340,14 +14853,18 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'boosts': {'spa': -2}},
+		'self': {
+			'boosts': {
+				'spa': -2
+			}
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
 		'zMovePower': 200,
 		'contestType': 'Clever'
 	},
-	'psychocut': {
+	{
 		'num': 427,
 		'accuracy': 100,
 		'basePower': 70,
@@ -14370,7 +14887,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'psychoshift': {
+	{
 		'num': 375,
 		'accuracy': 100,
 		'basePower': 0,
@@ -14395,10 +14912,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spa': 2},
+		'zMoveBoost': {
+			'spa': 2
+		},
 		'contestType': 'Clever'
 	},
-	'psyshock': {
+	{
 		'num': 473,
 		'accuracy': 100,
 		'basePower': 80,
@@ -14421,7 +14940,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'psystrike': {
+	{
 		'num': 540,
 		'accuracy': 100,
 		'basePower': 100,
@@ -14444,7 +14963,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'psywave': {
+	{
 		'num': 149,
 		'accuracy': 100,
 		'basePower': 0,
@@ -14468,7 +14987,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'pulverizingpancake': {
+	{
 		'num': 701,
 		'accuracy': true,
 		'basePower': 210,
@@ -14479,14 +14998,16 @@ const BattleMovedex = {
 		'name': 'Pulverizing Pancake',
 		'pp': 1,
 		'priority': 0,
-		'flags': {'contact': 1},
+		'flags': {
+			'contact': 1
+		},
 		'isZ': 'snorliumz',
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
 		'contestType': 'Cool'
 	},
-	'punishment': {
+	{
 		'num': 386,
 		'accuracy': 100,
 		'basePower': 0,
@@ -14494,9 +15015,9 @@ const BattleMovedex = {
 			let power = 60 + 20 * target.positiveBoosts();
 
 			if (power > 200) {
-				power = 200; 
+				power = 200;
 			}
-			
+
 			return power;
 		},
 		'category': 'Physical',
@@ -14517,7 +15038,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'purify': {
+	{
 		'num': 685,
 		'accuracy': true,
 		'basePower': 0,
@@ -14535,7 +15056,7 @@ const BattleMovedex = {
 		},
 		'onHit' (target, source) {
 			if (!target.cureStatus()) {
-				return false; 
+				return false;
 			}
 			this.heal(Math.ceil(source.maxhp * 0.5), source);
 		},
@@ -14551,7 +15072,7 @@ const BattleMovedex = {
 		},
 		'contestType': 'Beautiful'
 	},
-	'pursuit': {
+	{
 		'num': 228,
 		'accuracy': 100,
 		'basePower': 40,
@@ -14559,10 +15080,10 @@ const BattleMovedex = {
 			// You can't get here unless the pursuit succeeds
 			if (target.beingCalledBack) {
 				this.debug('Pursuit damage boost');
-				
+
 				return move.basePower * 2;
 			}
-			
+
 			return move.basePower;
 		},
 		'category': 'Physical',
@@ -14587,7 +15108,7 @@ const BattleMovedex = {
 		},
 		'onModifyMove' (move, source, target) {
 			if (target && target.beingCalledBack) {
-				move.accuracy = true; 
+				move.accuracy = true;
 			}
 		},
 		'onTryHit' (target, pokemon) {
@@ -14631,7 +15152,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'quash': {
+	{
 		'num': 511,
 		'accuracy': 100,
 		'basePower': 0,
@@ -14669,10 +15190,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dark',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'quickattack': {
+	{
 		'num': 98,
 		'accuracy': 100,
 		'basePower': 40,
@@ -14695,7 +15218,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'quickguard': {
+	{
 		'num': 501,
 		'accuracy': true,
 		'basePower': 0,
@@ -14706,7 +15229,9 @@ const BattleMovedex = {
 		'name': 'Quick Guard',
 		'pp': 15,
 		'priority': 3,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'sideCondition': 'quickguard',
 		'onTryHitSide' (side, source) {
 			return this.willAct();
@@ -14733,7 +15258,7 @@ const BattleMovedex = {
 					if (move.isZ) {
 						move.zBrokeProtect = true;
 					}
-					
+
 					return;
 				}
 				this.add('-activate', target, 'move: Quick Guard');
@@ -14746,17 +15271,19 @@ const BattleMovedex = {
 						delete source.volatiles.lockedmove;
 					}
 				}
-				
+
 				return null;
 			}
 		},
 		'secondary': false,
 		'target': 'allySide',
 		'type': 'Fighting',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cool'
 	},
-	'quiverdance': {
+	{
 		'num': 483,
 		'accuracy': true,
 		'basePower': 0,
@@ -14783,7 +15310,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'rage': {
+	{
 		'num': 99,
 		'accuracy': 100,
 		'basePower': 20,
@@ -14799,14 +15326,18 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'volatileStatus': 'rage'},
+		'self': {
+			'volatileStatus': 'rage'
+		},
 		'effect': {
 			'onStart' (pokemon) {
 				this.add('-singlemove', pokemon, 'Rage');
 			},
 			'onHit' (target, source, move) {
 				if (target !== source && move.category !== 'Status') {
-					this.boost({'atk': 1});
+					this.boost({
+						'atk': 1
+					});
 				}
 			},
 			'onBeforeMovePriority': 100,
@@ -14821,7 +15352,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'ragepowder': {
+	{
 		'num': 476,
 		'accuracy': true,
 		'basePower': 0,
@@ -14832,11 +15363,13 @@ const BattleMovedex = {
 		'name': 'Rage Powder',
 		'pp': 20,
 		'priority': 2,
-		'flags': {'powder': 1},
+		'flags': {
+			'powder': 1
+		},
 		'volatileStatus': 'ragepowder',
 		'onTryHit' (target) {
 			if (target.side.active.length < 2) {
-				return false; 
+				return false;
 			}
 		},
 		'effect': {
@@ -14848,7 +15381,7 @@ const BattleMovedex = {
 			'onFoeRedirectTarget' (target, source, source2, move) {
 				if (source.runStatusImmunity('powder') && this.validTarget(this.effectData.target, source, move.target)) {
 					this.debug('Rage Powder redirected target of move');
-					
+
 					return this.effectData.target;
 				}
 			}
@@ -14859,7 +15392,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'raindance': {
+	{
 		'num': 240,
 		'accuracy': true,
 		'basePower': 0,
@@ -14875,10 +15408,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Water',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'rapidspin': {
+	{
 		'num': 229,
 		'accuracy': 100,
 		'basePower': 20,
@@ -14918,7 +15453,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'razorleaf': {
+	{
 		'num': 75,
 		'accuracy': 95,
 		'basePower': 55,
@@ -14940,7 +15475,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'razorshell': {
+	{
 		'num': 534,
 		'accuracy': 95,
 		'basePower': 75,
@@ -14959,14 +15494,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 50,
-			'boosts': {'def': -1}
+			'boosts': {
+				'def': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Water',
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'razorwind': {
+	{
 		'num': 13,
 		'accuracy': 100,
 		'basePower': 80,
@@ -14985,10 +15522,10 @@ const BattleMovedex = {
 		'onTry' (attacker, defender, move) {
 			if (attacker.volatiles.twoturnmove) {
 				if (attacker.volatiles.twoturnmove.duration === 2) {
-					return null; 
+					return null;
 				}
 				attacker.removeVolatile(move.id);
-				
+
 				return;
 			}
 			this.add('-prepare', attacker, move.name, defender);
@@ -14998,11 +15535,11 @@ const BattleMovedex = {
 					attacker.addVolatile('twoturnmove', defender);
 					attacker.volatiles.twoturnmove.duration = 1;
 				}
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'critRatio': 2,
@@ -15012,7 +15549,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'recover': {
+	{
 		'num': 105,
 		'accuracy': true,
 		'basePower': 0,
@@ -15035,7 +15572,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'recycle': {
+	{
 		'num': 278,
 		'accuracy': true,
 		'basePower': 0,
@@ -15046,10 +15583,12 @@ const BattleMovedex = {
 		'name': 'Recycle',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'onHit' (pokemon) {
 			if (pokemon.item || !pokemon.lastItem) {
-				return false; 
+				return false;
 			}
 			pokemon.setItem(pokemon.lastItem);
 			this.add('-item', pokemon, pokemon.getItem(), '[from] move: Recycle');
@@ -15057,10 +15596,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 2},
+		'zMoveBoost': {
+			'spe': 2
+		},
 		'contestType': 'Clever'
 	},
-	'reflect': {
+	{
 		'num': 115,
 		'accuracy': true,
 		'basePower': 0,
@@ -15072,7 +15613,9 @@ const BattleMovedex = {
 		'name': 'Reflect',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'sideCondition': 'reflect',
 		'effect': {
 			'duration': 5,
@@ -15080,7 +15623,7 @@ const BattleMovedex = {
 				if (source && source.hasItem('lightclay')) {
 					return 8;
 				}
-				
+
 				return 5;
 			},
 			'onAnyModifyDamage' (damage, source, target, move) {
@@ -15090,7 +15633,7 @@ const BattleMovedex = {
 						if (target.side.active.length > 1) {
 							return this.chainModify([0xAAC, 0x1000]);
 						}
-						
+
 						return this.chainModify(0.5);
 					}
 				}
@@ -15106,10 +15649,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'allySide',
 		'type': 'Psychic',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Clever'
 	},
-	'reflecttype': {
+	{
 		'num': 513,
 		'accuracy': true,
 		'basePower': 0,
@@ -15146,10 +15691,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'refresh': {
+	{
 		'num': 287,
 		'accuracy': true,
 		'basePower': 0,
@@ -15161,10 +15708,12 @@ const BattleMovedex = {
 		'name': 'Refresh',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'onHit' (pokemon) {
 			if (['', 'slp', 'frz'].includes(pokemon.status)) {
-				return false; 
+				return false;
 			}
 			pokemon.cureStatus();
 		},
@@ -15174,7 +15723,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Cute'
 	},
-	'relicsong': {
+	{
 		'num': 547,
 		'accuracy': 100,
 		'basePower': 75,
@@ -15213,7 +15762,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Beautiful'
 	},
-	'rest': {
+	{
 		'num': 156,
 		'accuracy': true,
 		'basePower': 0,
@@ -15231,10 +15780,10 @@ const BattleMovedex = {
 		},
 		'onHit' (target) {
 			if (target.hp >= target.maxhp) {
-				return false; 
+				return false;
 			}
 			if (!target.setStatus('slp')) {
-				return false; 
+				return false;
 			}
 			target.statusData.time = 3;
 			target.statusData.startTime = 3;
@@ -15247,7 +15796,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'retaliate': {
+	{
 		'num': 514,
 		'accuracy': 100,
 		'basePower': 70,
@@ -15267,7 +15816,7 @@ const BattleMovedex = {
 		'onBasePower' (basePower, pokemon) {
 			if (pokemon.side.faintedLastTurn) {
 				this.debug('Boosted for a faint last turn');
-				
+
 				return this.chainModify(2);
 			}
 		},
@@ -15277,7 +15826,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'return': {
+	{
 		'num': 216,
 		'accuracy': 100,
 		'basePower': 0,
@@ -15303,7 +15852,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cute'
 	},
-	'revelationdance': {
+	{
 		'num': 686,
 		'accuracy': 100,
 		'basePower': 90,
@@ -15334,17 +15883,17 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Beautiful'
 	},
-	'revenge': {
+	{
 		'num': 279,
 		'accuracy': 100,
 		'basePower': 60,
 		'basePowerCallback' (pokemon, target, move) {
 			if (target.lastDamage > 0 && pokemon.lastAttackedBy && pokemon.lastAttackedBy.thisTurn && pokemon.lastAttackedBy.pokemon === target) {
 				this.debug(`Boosted for getting hit by ${pokemon.lastAttackedBy.move}`);
-				
+
 				return move.basePower * 2;
 			}
-			
+
 			return move.basePower;
 		},
 		'category': 'Physical',
@@ -15365,7 +15914,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'reversal': {
+	{
 		'num': 179,
 		'accuracy': 100,
 		'basePower': 0,
@@ -15387,7 +15936,7 @@ const BattleMovedex = {
 			if (ratio < 33) {
 				return 40;
 			}
-			
+
 			return 20;
 		},
 		'category': 'Physical',
@@ -15408,7 +15957,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'roar': {
+	{
 		'num': 46,
 		'accuracy': true,
 		'basePower': 0,
@@ -15431,10 +15980,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cool'
 	},
-	'roaroftime': {
+	{
 		'num': 459,
 		'accuracy': 90,
 		'basePower': 150,
@@ -15450,14 +16001,16 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'volatileStatus': 'mustrecharge'},
+		'self': {
+			'volatileStatus': 'mustrecharge'
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dragon',
 		'zMovePower': 200,
 		'contestType': 'Beautiful'
 	},
-	'rockblast': {
+	{
 		'num': 350,
 		'accuracy': 90,
 		'basePower': 25,
@@ -15481,7 +16034,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'rockclimb': {
+	{
 		'num': 431,
 		'accuracy': 85,
 		'basePower': 90,
@@ -15506,7 +16059,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Tough'
 	},
-	'rockpolish': {
+	{
 		'num': 397,
 		'accuracy': true,
 		'basePower': 0,
@@ -15518,15 +16071,19 @@ const BattleMovedex = {
 		'name': 'Rock Polish',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'spe': 2},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'spe': 2
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Rock',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Tough'
 	},
-	'rockslide': {
+	{
 		'num': 157,
 		'accuracy': 90,
 		'basePower': 75,
@@ -15551,7 +16108,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'rocksmash': {
+	{
 		'num': 249,
 		'accuracy': 100,
 		'basePower': 40,
@@ -15569,14 +16126,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 50,
-			'boosts': {'def': -1}
+			'boosts': {
+				'def': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Fighting',
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'rockthrow': {
+	{
 		'num': 88,
 		'accuracy': 90,
 		'basePower': 50,
@@ -15597,7 +16156,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'rocktomb': {
+	{
 		'num': 317,
 		'accuracy': 95,
 		'basePower': 60,
@@ -15614,14 +16173,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'spe': -1}
+			'boosts': {
+				'spe': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Rock',
 		'zMovePower': 120,
 		'contestType': 'Clever'
 	},
-	'rockwrecker': {
+	{
 		'num': 439,
 		'accuracy': 90,
 		'basePower': 150,
@@ -15638,14 +16199,16 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'volatileStatus': 'mustrecharge'},
+		'self': {
+			'volatileStatus': 'mustrecharge'
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Rock',
 		'zMovePower': 200,
 		'contestType': 'Tough'
 	},
-	'roleplay': {
+	{
 		'num': 272,
 		'accuracy': true,
 		'basePower': 0,
@@ -15673,19 +16236,21 @@ const BattleMovedex = {
 
 			if (oldAbility) {
 				this.add('-ability', source, this.getAbility(source.ability).name, '[from] move: Role Play', `[of] ${target}`);
-				
+
 				return;
 			}
-			
+
 			return false;
 		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Cute'
 	},
-	'rollingkick': {
+	{
 		'num': 27,
 		'accuracy': 85,
 		'basePower': 60,
@@ -15710,7 +16275,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'rollout': {
+	{
 		'num': 205,
 		'accuracy': 90,
 		'basePower': 30,
@@ -15725,7 +16290,7 @@ const BattleMovedex = {
 				bp *= 2;
 			}
 			this.debug(`Rollout bp: ${bp}`);
-			
+
 			return bp;
 		},
 		'category': 'Physical',
@@ -15765,7 +16330,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'roost': {
+	{
 		'num': 355,
 		'accuracy': true,
 		'basePower': 0,
@@ -15782,7 +16347,9 @@ const BattleMovedex = {
 			'heal': 1
 		},
 		'heal': [1, 2],
-		'self': {'volatileStatus': 'roost'},
+		'self': {
+			'volatileStatus': 'roost'
+		},
 		'effect': {
 			'duration': 1,
 			'onResidualOrder': 20
@@ -15794,7 +16361,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'rototiller': {
+	{
 		'num': 563,
 		'accuracy': true,
 		'basePower': 0,
@@ -15818,7 +16385,7 @@ const BattleMovedex = {
 
 				for (let activeSlot = 0; activeSlot < sideActive.length; activeSlot++) {
 					if (!sideActive[activeSlot] || !sideActive[activeSlot].isActive) {
-						continue; 
+						continue;
 					}
 					if (!sideActive[activeSlot].runImmunity('Ground')) {
 						this.add('-immune', sideActive[activeSlot], '[msg]');
@@ -15838,16 +16405,18 @@ const BattleMovedex = {
 				this.boost({
 					'atk': 1,
 					'spa': 1
-				}, targets[i], source); 
+				}, targets[i], source);
 			}
 		},
 		'secondary': false,
 		'target': 'all',
 		'type': 'Ground',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Tough'
 	},
-	'round': {
+	{
 		'num': 496,
 		'accuracy': 100,
 		'basePower': 60,
@@ -15855,7 +16424,7 @@ const BattleMovedex = {
 			if (move.sourceEffect === 'round') {
 				return move.basePower * 2;
 			}
-			
+
 			return move.basePower;
 		},
 		'category': 'Special',
@@ -15876,11 +16445,11 @@ const BattleMovedex = {
 				const action = this.queue[i];
 
 				if (!action.pokemon || !action.move) {
-					continue; 
+					continue;
 				}
 				if (action.move.id === 'round') {
 					this.prioritizeAction(action);
-					
+
 					return;
 				}
 			}
@@ -15891,7 +16460,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'sacredfire': {
+	{
 		'num': 221,
 		'accuracy': 95,
 		'basePower': 100,
@@ -15917,7 +16486,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Beautiful'
 	},
-	'sacredsword': {
+	{
 		'num': 533,
 		'accuracy': 100,
 		'basePower': 90,
@@ -15942,7 +16511,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Cool'
 	},
-	'safeguard': {
+	{
 		'num': 219,
 		'accuracy': true,
 		'basePower': 0,
@@ -15953,7 +16522,9 @@ const BattleMovedex = {
 		'name': 'Safeguard',
 		'pp': 25,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'sideCondition': 'safeguard',
 		'effect': {
 			'duration': 5,
@@ -15961,7 +16532,7 @@ const BattleMovedex = {
 				if (source && source.hasAbility('persistent')) {
 					return 7;
 				}
-				
+
 				return 5;
 			},
 			'onSetStatus' (status, target, source, effect) {
@@ -15970,7 +16541,7 @@ const BattleMovedex = {
 					if (effect.id === 'synchronize' || effect.effectType === 'Move' && !effect.secondaries) {
 						this.add('-activate', target, 'move: Safeguard');
 					}
-					
+
 					return null;
 				}
 			},
@@ -15979,7 +16550,7 @@ const BattleMovedex = {
 					if (effect.effectType === 'Move' && !effect.secondaries) {
 						this.add('-activate', target, 'move: Safeguard');
 					}
-					
+
 					return null;
 				}
 			},
@@ -15995,10 +16566,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'allySide',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'sandattack': {
+	{
 		'num': 28,
 		'accuracy': 100,
 		'basePower': 0,
@@ -16014,14 +16587,18 @@ const BattleMovedex = {
 			'reflectable': 1,
 			'mirror': 1
 		},
-		'boosts': {'accuracy': -1},
+		'boosts': {
+			'accuracy': -1
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Ground',
-		'zMoveBoost': {'evasion': 1},
+		'zMoveBoost': {
+			'evasion': 1
+		},
 		'contestType': 'Cute'
 	},
-	'sandtomb': {
+	{
 		'num': 328,
 		'accuracy': 85,
 		'basePower': 35,
@@ -16043,7 +16620,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'sandstorm': {
+	{
 		'num': 201,
 		'accuracy': true,
 		'basePower': 0,
@@ -16059,10 +16636,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Rock',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Tough'
 	},
-	'savagespinout': {
+	{
 		'num': 634,
 		'accuracy': true,
 		'basePower': 1,
@@ -16079,7 +16658,7 @@ const BattleMovedex = {
 		'type': 'Bug',
 		'contestType': 'Cool'
 	},
-	'scald': {
+	{
 		'num': 503,
 		'accuracy': 100,
 		'basePower': 80,
@@ -16106,7 +16685,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'scaryface': {
+	{
 		'num': 184,
 		'accuracy': 100,
 		'basePower': 0,
@@ -16123,14 +16702,18 @@ const BattleMovedex = {
 			'mirror': 1,
 			'mystery': 1
 		},
-		'boosts': {'spe': -2},
+		'boosts': {
+			'spe': -2
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Tough'
 	},
-	'scratch': {
+	{
 		'num': 10,
 		'accuracy': 100,
 		'basePower': 40,
@@ -16152,7 +16735,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'screech': {
+	{
 		'num': 103,
 		'accuracy': 85,
 		'basePower': 0,
@@ -16171,14 +16754,18 @@ const BattleMovedex = {
 			'authentic': 1,
 			'mystery': 1
 		},
-		'boosts': {'def': -2},
+		'boosts': {
+			'def': -2
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Clever'
 	},
-	'searingshot': {
+	{
 		'num': 545,
 		'accuracy': 100,
 		'basePower': 100,
@@ -16203,7 +16790,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'searingsunrazesmash': {
+	{
 		'num': 724,
 		'accuracy': true,
 		'basePower': 200,
@@ -16214,7 +16801,9 @@ const BattleMovedex = {
 		'name': 'Searing Sunraze Smash',
 		'pp': 1,
 		'priority': 0,
-		'flags': {'contact': 1},
+		'flags': {
+			'contact': 1
+		},
 		'isZ': 'solganiumz',
 		'ignoreAbility': true,
 		'secondary': false,
@@ -16222,7 +16811,7 @@ const BattleMovedex = {
 		'type': 'Steel',
 		'contestType': 'Cool'
 	},
-	'secretpower': {
+	{
 		'num': 290,
 		'accuracy': 100,
 		'basePower': 70,
@@ -16239,7 +16828,7 @@ const BattleMovedex = {
 		},
 		'onModifyMove' (move, pokemon) {
 			if (this.isTerrain('')) {
-				return; 
+				return;
 			}
 			move.secondaries = [];
 			if (this.isTerrain('electricterrain')) {
@@ -16255,12 +16844,16 @@ const BattleMovedex = {
 			} else if (this.isTerrain('mistyterrain')) {
 				move.secondaries.push({
 					'chance': 30,
-					'boosts': {'spa': -1}
+					'boosts': {
+						'spa': -1
+					}
 				});
 			} else if (this.isTerrain('psychicterrain')) {
 				move.secondaries.push({
 					'chance': 30,
-					'boosts': {'spe': -1}
+					'boosts': {
+						'spe': -1
+					}
 				});
 			}
 		},
@@ -16273,7 +16866,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Clever'
 	},
-	'secretsword': {
+	{
 		'num': 548,
 		'accuracy': 100,
 		'basePower': 85,
@@ -16296,7 +16889,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'seedbomb': {
+	{
 		'num': 402,
 		'accuracy': 100,
 		'basePower': 80,
@@ -16319,7 +16912,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'seedflare': {
+	{
 		'num': 465,
 		'accuracy': 85,
 		'basePower': 120,
@@ -16337,14 +16930,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 40,
-			'boosts': {'spd': -2}
+			'boosts': {
+				'spd': -2
+			}
 		},
 		'target': 'normal',
 		'type': 'Grass',
 		'zMovePower': 190,
 		'contestType': 'Beautiful'
 	},
-	'seismictoss': {
+	{
 		'num': 69,
 		'accuracy': 100,
 		'basePower': 0,
@@ -16369,7 +16964,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'selfdestruct': {
+	{
 		'num': 120,
 		'accuracy': 100,
 		'basePower': 200,
@@ -16391,7 +16986,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Beautiful'
 	},
-	'shadowball': {
+	{
 		'num': 247,
 		'accuracy': 100,
 		'basePower': 80,
@@ -16410,14 +17005,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 20,
-			'boosts': {'spd': -1}
+			'boosts': {
+				'spd': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Ghost',
 		'zMovePower': 160,
 		'contestType': 'Clever'
 	},
-	'shadowbone': {
+	{
 		'num': 708,
 		'accuracy': 100,
 		'basePower': 85,
@@ -16435,14 +17032,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 20,
-			'boosts': {'def': -1}
+			'boosts': {
+				'def': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Ghost',
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'shadowclaw': {
+	{
 		'num': 421,
 		'accuracy': 100,
 		'basePower': 70,
@@ -16466,7 +17065,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'shadowforce': {
+	{
 		'num': 467,
 		'accuracy': 100,
 		'basePower': 120,
@@ -16491,11 +17090,11 @@ const BattleMovedex = {
 			this.add('-prepare', attacker, move.name, defender);
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'effect': {
@@ -16510,7 +17109,7 @@ const BattleMovedex = {
 				if (source.volatiles.lockon && target === source.volatiles.lockon.source) {
 					return;
 				}
-				
+
 				return 0;
 			}
 		},
@@ -16520,7 +17119,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'shadowpunch': {
+	{
 		'num': 325,
 		'accuracy': true,
 		'basePower': 60,
@@ -16544,7 +17143,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Clever'
 	},
-	'shadowsneak': {
+	{
 		'num': 425,
 		'accuracy': 100,
 		'basePower': 40,
@@ -16567,7 +17166,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Clever'
 	},
-	'sharpen': {
+	{
 		'num': 159,
 		'accuracy': true,
 		'basePower': 0,
@@ -16578,15 +17177,21 @@ const BattleMovedex = {
 		'name': 'Sharpen',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'atk': 1},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'atk': 1
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Cute'
 	},
-	'shatteredpsyche': {
+	{
 		'num': 648,
 		'accuracy': true,
 		'basePower': 1,
@@ -16604,7 +17209,7 @@ const BattleMovedex = {
 		'type': 'Psychic',
 		'contestType': 'Cool'
 	},
-	'sheercold': {
+	{
 		'num': 329,
 		'accuracy': 30,
 		'basePower': 0,
@@ -16626,7 +17231,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Beautiful'
 	},
-	'shellsmash': {
+	{
 		'num': 504,
 		'accuracy': true,
 		'basePower': 0,
@@ -16638,7 +17243,9 @@ const BattleMovedex = {
 		'name': 'Shell Smash',
 		'pp': 15,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'boosts': {
 			'def': -1,
 			'spd': -1,
@@ -16652,7 +17259,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Tough'
 	},
-	'shelltrap': {
+	{
 		'num': 704,
 		'accuracy': 100,
 		'basePower': 150,
@@ -16663,14 +17270,16 @@ const BattleMovedex = {
 		'name': 'Shell Trap',
 		'pp': 5,
 		'priority': -3,
-		'flags': {'protect': 1},
+		'flags': {
+			'protect': 1
+		},
 		'beforeTurnCallback' (pokemon) {
 			pokemon.addVolatile('shelltrap');
 		},
 		'beforeMoveCallback' (pokemon) {
 			if (pokemon.volatiles.shelltrap && !pokemon.volatiles.shelltrap.gotHit) {
 				this.add('cant', pokemon, 'Shell Trap', 'Shell Trap');
-				
+
 				return true;
 			}
 		},
@@ -16691,7 +17300,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Tough'
 	},
-	'shiftgear': {
+	{
 		'num': 508,
 		'accuracy': true,
 		'basePower': 0,
@@ -16703,7 +17312,9 @@ const BattleMovedex = {
 		'name': 'Shift Gear',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'boosts': {
 			'spe': 2,
 			'atk': 1
@@ -16714,7 +17325,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'shockwave': {
+	{
 		'num': 351,
 		'accuracy': true,
 		'basePower': 60,
@@ -16735,7 +17346,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'shoreup': {
+	{
 		'num': 659,
 		'accuracy': true,
 		'basePower': 0,
@@ -16754,10 +17365,10 @@ const BattleMovedex = {
 		'onHit' (pokemon) {
 			if (this.isWeather('sandstorm')) {
 				return this.heal(this.modify(pokemon.maxhp, 0.667));
-			} 
-			
+			}
+
 			return this.heal(this.modify(pokemon.maxhp, 0.5));
-			
+
 		},
 		'secondary': false,
 		'target': 'self',
@@ -16765,7 +17376,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'signalbeam': {
+	{
 		'num': 324,
 		'accuracy': 100,
 		'basePower': 75,
@@ -16790,7 +17401,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Beautiful'
 	},
-	'silverwind': {
+	{
 		'num': 318,
 		'accuracy': 100,
 		'basePower': 60,
@@ -16822,7 +17433,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'simplebeam': {
+	{
 		'num': 493,
 		'accuracy': 100,
 		'basePower': 0,
@@ -16851,19 +17462,21 @@ const BattleMovedex = {
 
 			if (oldAbility) {
 				this.add('-ability', pokemon, 'Simple', '[from] move: Simple Beam');
-				
+
 				return;
 			}
-			
+
 			return false;
 		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Cute'
 	},
-	'sing': {
+	{
 		'num': 47,
 		'accuracy': 55,
 		'basePower': 0,
@@ -16885,10 +17498,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Cute'
 	},
-	'sinisterarrowraid': {
+	{
 		'num': 695,
 		'accuracy': true,
 		'basePower': 180,
@@ -16906,7 +17521,7 @@ const BattleMovedex = {
 		'type': 'Ghost',
 		'contestType': 'Cool'
 	},
-	'sketch': {
+	{
 		'num': 166,
 		'accuracy': true,
 		'basePower': 0,
@@ -16926,7 +17541,7 @@ const BattleMovedex = {
 			const disallowedMoves = ['chatter', 'sketch', 'struggle'];
 
 			if (source.transformed || !target.lastMove || disallowedMoves.includes(target.lastMove.id) || source.moves.indexOf(target.lastMove.id) >= 0 || target.lastMove.isZ) {
-				return false; 
+				return false;
 			}
 			const sketchIndex = source.moves.indexOf('sketch');
 
@@ -16960,7 +17575,7 @@ const BattleMovedex = {
 		},
 		'contestType': 'Clever'
 	},
-	'skillswap': {
+	{
 		'num': 285,
 		'accuracy': true,
 		'basePower': 0,
@@ -17013,10 +17628,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'skullbash': {
+	{
 		'num': 130,
 		'accuracy': 100,
 		'basePower': 130,
@@ -17038,15 +17655,17 @@ const BattleMovedex = {
 				return;
 			}
 			this.add('-prepare', attacker, move.name, defender);
-			this.boost({'def': 1}, attacker, attacker, this.getMove('skullbash'));
+			this.boost({
+				'def': 1
+			}, attacker, attacker, this.getMove('skullbash'));
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
 				attacker.removeVolatile(move.id);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'secondary': false,
@@ -17055,7 +17674,7 @@ const BattleMovedex = {
 		'zMovePower': 195,
 		'contestType': 'Tough'
 	},
-	'skyattack': {
+	{
 		'num': 143,
 		'accuracy': 90,
 		'basePower': 140,
@@ -17080,11 +17699,11 @@ const BattleMovedex = {
 			this.add('-prepare', attacker, move.name, defender);
 			if (!this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'secondary': {
@@ -17096,7 +17715,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Cool'
 	},
-	'skydrop': {
+	{
 		'num': 507,
 		'accuracy': 100,
 		'basePower': 60,
@@ -17134,13 +17753,13 @@ const BattleMovedex = {
 			}
 			if (source.removeVolatile(move.id)) {
 				if (target !== source.volatiles.twoturnmove.source) {
-					return false; 
+					return false;
 				}
 
 				if (target.hasType('Flying')) {
 					this.add('-immune', target, '[msg]');
 					this.add('-end', target, 'Sky Drop');
-					
+
 					return null;
 				}
 			} else {
@@ -17149,13 +17768,13 @@ const BattleMovedex = {
 				}
 				if (target.getWeight() >= 200) {
 					this.add('-fail', target, 'move: Sky Drop', '[heavy]');
-					
+
 					return null;
 				}
 
 				this.add('-prepare', source, move.name, target);
 				source.addVolatile('twoturnmove', target);
-				
+
 				return null;
 			}
 		},
@@ -17187,19 +17806,19 @@ const BattleMovedex = {
 			'onFoeBeforeMove' (attacker, defender, move) {
 				if (attacker === this.effectData.source) {
 					this.debug('Sky drop nullifying.');
-					
+
 					return null;
 				}
 			},
 			'onRedirectTargetPriority': 99,
 			'onRedirectTarget' (target, source, source2) {
 				if (source !== this.effectData.target) {
-					return; 
+					return;
 				}
 				if (this.effectData.source.fainted) {
-					return; 
+					return;
 				}
-				
+
 				return this.effectData.source;
 			},
 			'onAnyAccuracy' (accuracy, target, source, move) {
@@ -17219,9 +17838,9 @@ const BattleMovedex = {
 					return;
 				}
 				if (source.volatiles.lockon && target === source.volatiles.lockon.source) {
-					return; 
+					return;
 				}
-				
+
 				return 0;
 			},
 			'onAnyBasePower' (basePower, target, source, move) {
@@ -17247,7 +17866,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'skyuppercut': {
+	{
 		'num': 327,
 		'accuracy': 90,
 		'basePower': 85,
@@ -17270,7 +17889,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'slackoff': {
+	{
 		'num': 303,
 		'accuracy': true,
 		'basePower': 0,
@@ -17293,7 +17912,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'slam': {
+	{
 		'num': 21,
 		'accuracy': 75,
 		'basePower': 80,
@@ -17316,7 +17935,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'slash': {
+	{
 		'num': 163,
 		'accuracy': 100,
 		'basePower': 70,
@@ -17339,7 +17958,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'sleeppowder': {
+	{
 		'num': 79,
 		'accuracy': 75,
 		'basePower': 0,
@@ -17361,10 +17980,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Grass',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'sleeptalk': {
+	{
 		'num': 214,
 		'accuracy': true,
 		'basePower': 0,
@@ -17380,7 +18001,7 @@ const BattleMovedex = {
 		'sleepUsable': true,
 		'onTryHit' (pokemon) {
 			if (pokemon.status !== 'slp' && !pokemon.hasAbility('comatose')) {
-				return false; 
+				return false;
 			}
 		},
 		'onHit' (pokemon) {
@@ -17397,7 +18018,7 @@ const BattleMovedex = {
 			let randomMove = '';
 
 			if (moves.length) {
-				randomMove = moves[this.random(moves.length)]; 
+				randomMove = moves[this.random(moves.length)];
 			}
 			if (!randomMove) {
 				return false;
@@ -17410,7 +18031,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'crit2',
 		'contestType': 'Cute'
 	},
-	'sludge': {
+	{
 		'num': 124,
 		'accuracy': 100,
 		'basePower': 65,
@@ -17434,7 +18055,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'sludgebomb': {
+	{
 		'num': 188,
 		'accuracy': 100,
 		'basePower': 90,
@@ -17460,7 +18081,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Tough'
 	},
-	'sludgewave': {
+	{
 		'num': 482,
 		'accuracy': 100,
 		'basePower': 95,
@@ -17485,7 +18106,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Tough'
 	},
-	'smackdown': {
+	{
 		'num': 479,
 		'accuracy': 100,
 		'basePower': 50,
@@ -17508,7 +18129,7 @@ const BattleMovedex = {
 				let applies = false;
 
 				if (pokemon.hasType('Flying') || pokemon.hasAbility('levitate')) {
-					applies = true; 
+					applies = true;
 				}
 				if (pokemon.hasItem('ironball') || pokemon.volatiles.ingrain || this.getPseudoWeather('gravity')) {
 					applies = false;
@@ -17527,7 +18148,7 @@ const BattleMovedex = {
 					delete pokemon.volatiles.telekinesis;
 				}
 				if (!applies) {
-					return false; 
+					return false;
 				}
 				this.add('-start', pokemon, 'Smack Down');
 			},
@@ -17545,7 +18166,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'smartstrike': {
+	{
 		'num': 684,
 		'accuracy': true,
 		'basePower': 70,
@@ -17567,15 +18188,15 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'smellingsalts': {
+	{
 		'num': 265,
 		'accuracy': 100,
 		'basePower': 70,
 		'basePowerCallback' (pokemon, target, move) {
 			if (target.status === 'par') {
-				return move.basePower * 2; 
+				return move.basePower * 2;
 			}
-			
+
 			return move.basePower;
 		},
 		'category': 'Physical',
@@ -17592,7 +18213,7 @@ const BattleMovedex = {
 		},
 		'onHit' (target) {
 			if (target.status === 'par') {
-				target.cureStatus(); 
+				target.cureStatus();
 			}
 		},
 		'secondary': false,
@@ -17601,7 +18222,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'smog': {
+	{
 		'num': 123,
 		'accuracy': 70,
 		'basePower': 30,
@@ -17625,7 +18246,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'smokescreen': {
+	{
 		'num': 108,
 		'accuracy': 100,
 		'basePower': 0,
@@ -17641,14 +18262,18 @@ const BattleMovedex = {
 			'reflectable': 1,
 			'mirror': 1
 		},
-		'boosts': {'accuracy': -1},
+		'boosts': {
+			'accuracy': -1
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'evasion': 1},
+		'zMoveBoost': {
+			'evasion': 1
+		},
 		'contestType': 'Clever'
 	},
-	'snarl': {
+	{
 		'num': 555,
 		'accuracy': 95,
 		'basePower': 55,
@@ -17667,14 +18292,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'spa': -1}
+			'boosts': {
+				'spa': -1
+			}
 		},
 		'target': 'allAdjacentFoes',
 		'type': 'Dark',
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'snatch': {
+	{
 		'num': 289,
 		'accuracy': true,
 		'basePower': 0,
@@ -17685,7 +18312,9 @@ const BattleMovedex = {
 		'name': 'Snatch',
 		'pp': 10,
 		'priority': 4,
-		'flags': {'authentic': 1},
+		'flags': {
+			'authentic': 1
+		},
 		'volatileStatus': 'snatch',
 		'effect': {
 			'duration': 1,
@@ -17699,7 +18328,7 @@ const BattleMovedex = {
 					snatchUser.removeVolatile('snatch');
 					this.add('-activate', snatchUser, 'move: Snatch', `[of] ${source}`);
 					this.useMove(move.id, snatchUser);
-					
+
 					return null;
 				}
 			}
@@ -17708,10 +18337,12 @@ const BattleMovedex = {
 		'pressureTarget': 'foeSide',
 		'target': 'self',
 		'type': 'Dark',
-		'zMoveBoost': {'spe': 2},
+		'zMoveBoost': {
+			'spe': 2
+		},
 		'contestType': 'Clever'
 	},
-	'snore': {
+	{
 		'num': 173,
 		'accuracy': 100,
 		'basePower': 50,
@@ -17743,7 +18374,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'spectralthief': {
+	{
 		'num': 712,
 		'accuracy': 100,
 		'basePower': 90,
@@ -17769,7 +18400,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Cool'
 	},
-	'speedswap': {
+	{
 		'num': 683,
 		'accuracy': true,
 		'basePower': 0,
@@ -17796,10 +18427,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'spikyshield': {
+	{
 		'num': 596,
 		'accuracy': true,
 		'basePower': 0,
@@ -17829,9 +18462,9 @@ const BattleMovedex = {
 			'onTryHit' (target, source, move) {
 				if (!move.flags.protect) {
 					if (move.isZ) {
-						move.zBrokeProtect = true; 
+						move.zBrokeProtect = true;
 					}
-					
+
 					return;
 				}
 				this.add('-activate', target, 'move: Protect');
@@ -17847,17 +18480,19 @@ const BattleMovedex = {
 				if (move.flags.contact) {
 					this.damage(source.maxhp / 8, source, target);
 				}
-				
+
 				return null;
 			}
 		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Grass',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Tough'
 	},
-	'spiritshackle': {
+	{
 		'num': 662,
 		'accuracy': 100,
 		'basePower': 80,
@@ -17886,7 +18521,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'soak': {
+	{
 		'num': 487,
 		'accuracy': 100,
 		'basePower': 0,
@@ -17912,10 +18547,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Water',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Cute'
 	},
-	'softboiled': {
+	{
 		'num': 135,
 		'accuracy': true,
 		'basePower': 0,
@@ -17938,7 +18575,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'solarbeam': {
+	{
 		'num': 76,
 		'accuracy': 100,
 		'basePower': 120,
@@ -17961,18 +18598,18 @@ const BattleMovedex = {
 			this.add('-prepare', attacker, move.name, defender);
 			if (this.isWeather(['sunnyday', 'desolateland']) || !this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'onBasePowerPriority': 4,
 		'onBasePower' (basePower, pokemon, target) {
 			if (this.isWeather(['raindance', 'primordialsea', 'sandstorm', 'hail'])) {
 				this.debug('weakened by weather');
-				
+
 				return this.chainModify(0.5);
 			}
 		},
@@ -17982,7 +18619,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'solarblade': {
+	{
 		'num': 669,
 		'accuracy': 100,
 		'basePower': 125,
@@ -18006,18 +18643,18 @@ const BattleMovedex = {
 			this.add('-prepare', attacker, move.name, defender);
 			if (this.isWeather(['sunnyday', 'desolateland']) || !this.runEvent('ChargeMove', attacker, defender, move)) {
 				this.add('-anim', attacker, move.name, defender);
-				
+
 				return;
 			}
 			attacker.addVolatile('twoturnmove', defender);
-			
+
 			return null;
 		},
 		'onBasePowerPriority': 4,
 		'onBasePower' (basePower, pokemon, target) {
 			if (this.isWeather(['raindance', 'primordialsea', 'sandstorm', 'hail'])) {
 				this.debug('weakened by weather');
-				
+
 				return this.chainModify(0.5);
 			}
 		},
@@ -18027,7 +18664,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'sonicboom': {
+	{
 		'num': 49,
 		'accuracy': 90,
 		'basePower': 0,
@@ -18049,7 +18686,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'soulstealing7starstrike': {
+	{
 		'num': 699,
 		'accuracy': true,
 		'basePower': 195,
@@ -18060,14 +18697,16 @@ const BattleMovedex = {
 		'name': 'Soul-Stealing 7-Star Strike',
 		'pp': 1,
 		'priority': 0,
-		'flags': {'contact': 1},
+		'flags': {
+			'contact': 1
+		},
 		'isZ': 'marshadiumz',
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Ghost',
 		'contestType': 'Cool'
 	},
-	'spacialrend': {
+	{
 		'num': 460,
 		'accuracy': 95,
 		'basePower': 100,
@@ -18090,7 +18729,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Beautiful'
 	},
-	'spark': {
+	{
 		'num': 209,
 		'accuracy': 100,
 		'basePower': 65,
@@ -18115,7 +18754,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'sparklingaria': {
+	{
 		'num': 664,
 		'accuracy': 100,
 		'basePower': 90,
@@ -18137,7 +18776,7 @@ const BattleMovedex = {
 			'chance': 100,
 			'onHit' (target) {
 				if (target.status === 'brn') {
-					target.cureStatus(); 
+					target.cureStatus();
 				}
 			}
 		},
@@ -18146,7 +18785,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Tough'
 	},
-	'spiderweb': {
+	{
 		'num': 169,
 		'accuracy': true,
 		'basePower': 0,
@@ -18168,10 +18807,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Bug',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Clever'
 	},
-	'spikecannon': {
+	{
 		'num': 131,
 		'accuracy': 100,
 		'basePower': 20,
@@ -18193,7 +18834,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'spikes': {
+	{
 		'num': 191,
 		'accuracy': true,
 		'basePower': 0,
@@ -18218,14 +18859,14 @@ const BattleMovedex = {
 			},
 			'onRestart' (side) {
 				if (this.effectData.layers >= 3) {
-					return false; 
+					return false;
 				}
 				this.add('-sidestart', side, 'Spikes');
 				this.effectData.layers++;
 			},
 			'onSwitchIn' (pokemon) {
 				if (!pokemon.isGrounded()) {
-					return; 
+					return;
 				}
 				const damageAmounts = [0, 3, 4, 6]; // 1/8, 1/6, 1/4
 
@@ -18235,18 +18876,20 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'foeSide',
 		'type': 'Ground',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Clever'
 	},
-	'spitup': {
+	{
 		'num': 255,
 		'accuracy': 100,
 		'basePower': 0,
 		'basePowerCallback' (pokemon) {
 			if (!pokemon.volatiles.stockpile || !pokemon.volatiles.stockpile.layers) {
-				return false; 
+				return false;
 			}
-			
+
 			return pokemon.volatiles.stockpile.layers * 100;
 		},
 		'category': 'Special',
@@ -18256,7 +18899,9 @@ const BattleMovedex = {
 		'name': 'Spit Up',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'protect': 1},
+		'flags': {
+			'protect': 1
+		},
 		'onTry' (pokemon) {
 			if (!pokemon.volatiles.stockpile) {
 				return false;
@@ -18271,7 +18916,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'spite': {
+	{
 		'num': 180,
 		'accuracy': 100,
 		'basePower': 0,
@@ -18291,10 +18936,10 @@ const BattleMovedex = {
 		'onHit' (target) {
 			if (target.lastMove && target.deductPP(target.lastMove.id, 4)) {
 				this.add('-activate', target, 'move: Spite', this.getMove(target.lastMove.id).name, 4);
-				
+
 				return;
 			}
-			
+
 			return false;
 		},
 		'secondary': false,
@@ -18303,7 +18948,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Tough'
 	},
-	'splash': {
+	{
 		'num': 150,
 		'accuracy': true,
 		'basePower': 0,
@@ -18314,17 +18959,21 @@ const BattleMovedex = {
 		'name': 'Splash',
 		'pp': 40,
 		'priority': 0,
-		'flags': {'gravity': 1},
+		'flags': {
+			'gravity': 1
+		},
 		'onTryHit' (target, source) {
 			this.add('-nothing');
 		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'atk': 3},
+		'zMoveBoost': {
+			'atk': 3
+		},
 		'contestType': 'Cute'
 	},
-	'splinteredstormshards': {
+	{
 		'num': 727,
 		'accuracy': true,
 		'basePower': 190,
@@ -18345,7 +18994,7 @@ const BattleMovedex = {
 		'type': 'Rock',
 		'contestType': 'Cool'
 	},
-	'spore': {
+	{
 		'num': 147,
 		'accuracy': 100,
 		'basePower': 0,
@@ -18370,7 +19019,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'spotlight': {
+	{
 		'num': 671,
 		'accuracy': true,
 		'basePower': 0,
@@ -18401,7 +19050,7 @@ const BattleMovedex = {
 			'onFoeRedirectTarget' (target, source, source2, move) {
 				if (this.validTarget(this.effectData.target, source, move.target)) {
 					this.debug('Spotlight redirected target of move');
-					
+
 					return this.effectData.target;
 				}
 			}
@@ -18409,10 +19058,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Cute'
 	},
-	'stealthrock': {
+	{
 		'num': 446,
 		'accuracy': true,
 		'basePower': 0,
@@ -18424,7 +19075,9 @@ const BattleMovedex = {
 		'name': 'Stealth Rock',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'reflectable': 1},
+		'flags': {
+			'reflectable': 1
+		},
 		'sideCondition': 'stealthrock',
 		'effect': {
 			// This is a side condition
@@ -18440,10 +19093,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'foeSide',
 		'type': 'Rock',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cool'
 	},
-	'steameruption': {
+	{
 		'num': 592,
 		'accuracy': 95,
 		'basePower': 110,
@@ -18470,7 +19125,7 @@ const BattleMovedex = {
 		'zMovePower': 185,
 		'contestType': 'Beautiful'
 	},
-	'steelwing': {
+	{
 		'num': 211,
 		'accuracy': 90,
 		'basePower': 70,
@@ -18488,14 +19143,18 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 10,
-			'self': {'boosts': {'def': 1}}
+			'self': {
+				'boosts': {
+					'def': 1
+				}
+			}
 		},
 		'target': 'normal',
 		'type': 'Steel',
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'stickyweb': {
+	{
 		'num': 564,
 		'accuracy': true,
 		'basePower': 0,
@@ -18507,7 +19166,9 @@ const BattleMovedex = {
 		'name': 'Sticky Web',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'reflectable': 1},
+		'flags': {
+			'reflectable': 1
+		},
 		'sideCondition': 'stickyweb',
 		'effect': {
 			'onStart' (side) {
@@ -18515,19 +19176,23 @@ const BattleMovedex = {
 			},
 			'onSwitchIn' (pokemon) {
 				if (!pokemon.isGrounded()) {
-					return; 
+					return;
 				}
 				this.add('-activate', pokemon, 'move: Sticky Web');
-				this.boost({'spe': -1}, pokemon, pokemon.side.foe.active[0], this.getMove('stickyweb'));
+				this.boost({
+					'spe': -1
+				}, pokemon, pokemon.side.foe.active[0], this.getMove('stickyweb'));
 			}
 		},
 		'secondary': false,
 		'target': 'foeSide',
 		'type': 'Bug',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Tough'
 	},
-	'stockpile': {
+	{
 		'num': 254,
 		'accuracy': true,
 		'basePower': 0,
@@ -18538,7 +19203,9 @@ const BattleMovedex = {
 		'name': 'Stockpile',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'onTryHit' (pokemon) {
 			if (pokemon.volatiles.stockpile && pokemon.volatiles.stockpile.layers >= 3) {
 				return false;
@@ -18557,7 +19224,7 @@ const BattleMovedex = {
 			},
 			'onRestart' (target) {
 				if (this.effectData.layers >= 3) {
-					return false; 
+					return false;
 				}
 				this.effectData.layers++;
 				this.add('-start', target, `stockpile${this.effectData.layers}`);
@@ -18583,7 +19250,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Tough'
 	},
-	'stokedsparksurfer': {
+	{
 		'num': 700,
 		'accuracy': true,
 		'basePower': 175,
@@ -18604,7 +19271,7 @@ const BattleMovedex = {
 		'type': 'Electric',
 		'contestType': 'Cool'
 	},
-	'stomp': {
+	{
 		'num': 23,
 		'accuracy': 100,
 		'basePower': 65,
@@ -18630,7 +19297,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'stompingtantrum': {
+	{
 		'num': 707,
 		'accuracy': 100,
 		'basePower': 75,
@@ -18658,7 +19325,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'stoneedge': {
+	{
 		'num': 444,
 		'accuracy': 80,
 		'basePower': 100,
@@ -18681,7 +19348,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Tough'
 	},
-	'storedpower': {
+	{
 		'num': 500,
 		'accuracy': 100,
 		'basePower': 20,
@@ -18705,7 +19372,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Clever'
 	},
-	'stormthrow': {
+	{
 		'num': 480,
 		'accuracy': 100,
 		'basePower': 60,
@@ -18729,7 +19396,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'steamroller': {
+	{
 		'num': 537,
 		'accuracy': 100,
 		'basePower': 65,
@@ -18754,7 +19421,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'strength': {
+	{
 		'num': 70,
 		'accuracy': 100,
 		'basePower': 80,
@@ -18776,7 +19443,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'strengthsap': {
+	{
 		'num': 668,
 		'accuracy': 100,
 		'basePower': 0,
@@ -18796,21 +19463,25 @@ const BattleMovedex = {
 		},
 		'onHit' (target, source) {
 			if (target.boosts.atk === -6) {
-				return false; 
+				return false;
 			}
 			const atk = target.getStat('atk', false, true);
-			const success = this.boost({'atk': -1}, target, source, null, null, true);
+			const success = this.boost({
+				'atk': -1
+			}, target, source, null, null, true);
 
-			
+
 			return this.heal(atk, source, target) || success;
 		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Grass',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cute'
 	},
-	'stringshot': {
+	{
 		'num': 81,
 		'accuracy': 95,
 		'basePower': 0,
@@ -18826,14 +19497,18 @@ const BattleMovedex = {
 			'reflectable': 1,
 			'mirror': 1
 		},
-		'boosts': {'spe': -2},
+		'boosts': {
+			'spe': -2
+		},
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Bug',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'struggle': {
+	{
 		'num': 165,
 		'accuracy': true,
 		'basePower': 50,
@@ -18861,7 +19536,7 @@ const BattleMovedex = {
 		'zMovePower': 1,
 		'contestType': 'Tough'
 	},
-	'strugglebug': {
+	{
 		'num': 522,
 		'accuracy': 100,
 		'basePower': 50,
@@ -18878,14 +19553,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'spa': -1}
+			'boosts': {
+				'spa': -1
+			}
 		},
 		'target': 'allAdjacentFoes',
 		'type': 'Bug',
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'stunspore': {
+	{
 		'num': 78,
 		'accuracy': 75,
 		'basePower': 0,
@@ -18906,10 +19583,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Grass',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Clever'
 	},
-	'submission': {
+	{
 		'num': 66,
 		'accuracy': 80,
 		'basePower': 80,
@@ -18932,7 +19611,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'substitute': {
+	{
 		'num': 164,
 		'accuracy': true,
 		'basePower': 0,
@@ -18952,12 +19631,12 @@ const BattleMovedex = {
 		'onTryHit' (target) {
 			if (target.volatiles.substitute) {
 				this.add('-fail', target, 'move: Substitute');
-				
+
 				return null;
 			}
 			if (target.hp <= target.maxhp / 4 || target.maxhp === 1) { // Shedinja clause
 				this.add('-fail', target, 'move: Substitute', '[weak]');
-				
+
 				return null;
 			}
 		},
@@ -18979,7 +19658,7 @@ const BattleMovedex = {
 
 				if (!damage && damage !== 0) {
 					this.add('-fail', target);
-					
+
 					return null;
 				}
 				damage = this.runEvent('SubDamage', target, source, move, damage);
@@ -19004,7 +19683,7 @@ const BattleMovedex = {
 				}
 				this.singleEvent('AfterSubDamage', move, null, target, source, move);
 				this.runEvent('AfterSubDamage', target, source, move, damage);
-				
+
 				return 0; // Hit
 			},
 			'onEnd' (target) {
@@ -19017,7 +19696,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'subzeroslammer': {
+	{
 		'num': 650,
 		'accuracy': true,
 		'basePower': 1,
@@ -19035,7 +19714,7 @@ const BattleMovedex = {
 		'type': 'Ice',
 		'contestType': 'Cool'
 	},
-	'suckerpunch': {
+	{
 		'num': 389,
 		'accuracy': 100,
 		'basePower': 70,
@@ -19058,7 +19737,7 @@ const BattleMovedex = {
 			if (!action || action.choice !== 'move' || action.move.category === 'Status' && action.move.id !== 'mefirst' || target.volatiles.mustrecharge) {
 				this.attrLastMove('[still]');
 				this.add('-fail', source);
-				
+
 				return null;
 			}
 		},
@@ -19068,7 +19747,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Clever'
 	},
-	'sunnyday': {
+	{
 		'num': 241,
 		'accuracy': true,
 		'basePower': 0,
@@ -19084,10 +19763,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Fire',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'sunsteelstrike': {
+	{
 		'num': 713,
 		'accuracy': 100,
 		'basePower': 100,
@@ -19111,7 +19792,7 @@ const BattleMovedex = {
 		'zMovePower': 180,
 		'contestType': 'Cool'
 	},
-	'superfang': {
+	{
 		'num': 162,
 		'accuracy': 90,
 		'basePower': 0,
@@ -19137,7 +19818,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'superpower': {
+	{
 		'num': 276,
 		'accuracy': 100,
 		'basePower': 120,
@@ -19166,7 +19847,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Tough'
 	},
-	'supersonic': {
+	{
 		'num': 48,
 		'accuracy': 55,
 		'basePower': 0,
@@ -19188,10 +19869,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'supersonicskystrike': {
+	{
 		'num': 626,
 		'accuracy': true,
 		'basePower': 1,
@@ -19209,7 +19892,7 @@ const BattleMovedex = {
 		'type': 'Flying',
 		'contestType': 'Cool'
 	},
-	'surf': {
+	{
 		'num': 57,
 		'accuracy': 100,
 		'basePower': 90,
@@ -19232,7 +19915,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Beautiful'
 	},
-	'swagger': {
+	{
 		'num': 207,
 		'accuracy': 85,
 		'basePower': 0,
@@ -19250,14 +19933,16 @@ const BattleMovedex = {
 			'mystery': 1
 		},
 		'volatileStatus': 'confusion',
-		'boosts': {'atk': 2},
+		'boosts': {
+			'atk': 2
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Cute'
 	},
-	'swallow': {
+	{
 		'num': 256,
 		'accuracy': true,
 		'basePower': 0,
@@ -19274,7 +19959,7 @@ const BattleMovedex = {
 		},
 		'onTryHit' (pokemon) {
 			if (!pokemon.volatiles.stockpile || !pokemon.volatiles.stockpile.layers) {
-				return false; 
+				return false;
 			}
 		},
 		'onHit' (pokemon) {
@@ -19282,7 +19967,7 @@ const BattleMovedex = {
 			const healedBy = this.heal(this.modify(pokemon.maxhp, healAmount[pokemon.volatiles.stockpile.layers - 1]));
 
 			pokemon.removeVolatile('stockpile');
-			
+
 			return healedBy;
 		},
 		'secondary': false,
@@ -19291,7 +19976,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Tough'
 	},
-	'sweetkiss': {
+	{
 		'num': 186,
 		'accuracy': 75,
 		'basePower': 0,
@@ -19311,10 +19996,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Fairy',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Cute'
 	},
-	'sweetscent': {
+	{
 		'num': 230,
 		'accuracy': 100,
 		'basePower': 0,
@@ -19330,14 +20017,18 @@ const BattleMovedex = {
 			'reflectable': 1,
 			'mirror': 1
 		},
-		'boosts': {'evasion': -2},
+		'boosts': {
+			'evasion': -2
+		},
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Normal',
-		'zMoveBoost': {'accuracy': 1},
+		'zMoveBoost': {
+			'accuracy': 1
+		},
 		'contestType': 'Cute'
 	},
-	'swift': {
+	{
 		'num': 129,
 		'accuracy': true,
 		'basePower': 60,
@@ -19358,7 +20049,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'switcheroo': {
+	{
 		'num': 415,
 		'accuracy': 100,
 		'basePower': 0,
@@ -19378,7 +20069,7 @@ const BattleMovedex = {
 		'onTryHit' (target) {
 			if (target.hasAbility('stickyhold')) {
 				this.add('-immune', target, '[msg]');
-				
+
 				return null;
 			}
 		},
@@ -19388,12 +20079,12 @@ const BattleMovedex = {
 
 			if (target.item || source.item || !yourItem && !myItem) {
 				if (yourItem) {
-					target.item = yourItem.id; 
+					target.item = yourItem.id;
 				}
 				if (myItem) {
 					source.item = myItem.id;
 				}
-				
+
 				return false;
 			}
 			if (myItem && !this.singleEvent('TakeItem', myItem, source.itemData, target, source, move, myItem) || yourItem && !this.singleEvent('TakeItem', yourItem, target.itemData, source, target, move, yourItem)) {
@@ -19403,7 +20094,7 @@ const BattleMovedex = {
 				if (myItem) {
 					source.item = myItem.id;
 				}
-				
+
 				return false;
 			}
 			this.add('-activate', source, 'move: Trick', `[of] ${target}`);
@@ -19423,10 +20114,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dark',
-		'zMoveBoost': {'spe': 2},
+		'zMoveBoost': {
+			'spe': 2
+		},
 		'contestType': 'Clever'
 	},
-	'swordsdance': {
+	{
 		'num': 14,
 		'accuracy': true,
 		'basePower': 0,
@@ -19442,14 +20135,16 @@ const BattleMovedex = {
 			'snatch': 1,
 			'dance': 1
 		},
-		'boosts': {'atk': 2},
+		'boosts': {
+			'atk': 2
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'synchronoise': {
+	{
 		'num': 485,
 		'accuracy': 100,
 		'basePower': 120,
@@ -19473,7 +20168,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Clever'
 	},
-	'synthesis': {
+	{
 		'num': 235,
 		'accuracy': true,
 		'basePower': 0,
@@ -19494,10 +20189,10 @@ const BattleMovedex = {
 				return this.heal(this.modify(pokemon.maxhp, 0.667));
 			} else if (this.isWeather(['raindance', 'primordialsea', 'sandstorm', 'hail'])) {
 				return this.heal(this.modify(pokemon.maxhp, 0.25));
-			} 
-			
+			}
+
 			return this.heal(this.modify(pokemon.maxhp, 0.5));
-			
+
 		},
 		'secondary': false,
 		'target': 'self',
@@ -19505,7 +20200,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Clever'
 	},
-	'tackle': {
+	{
 		'num': 33,
 		'accuracy': 100,
 		'basePower': 40,
@@ -19527,7 +20222,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'tailglow': {
+	{
 		'num': 294,
 		'accuracy': true,
 		'basePower': 0,
@@ -19539,15 +20234,19 @@ const BattleMovedex = {
 		'name': 'Tail Glow',
 		'pp': 20,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'spa': 3},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'spa': 3
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Bug',
 		'zMoveEffect': 'clearnegativeboost',
 		'contestType': 'Beautiful'
 	},
-	'tailslap': {
+	{
 		'num': 541,
 		'accuracy': 85,
 		'basePower': 25,
@@ -19571,7 +20270,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cute'
 	},
-	'tailwhip': {
+	{
 		'num': 39,
 		'accuracy': 100,
 		'basePower': 0,
@@ -19587,14 +20286,18 @@ const BattleMovedex = {
 			'reflectable': 1,
 			'mirror': 1
 		},
-		'boosts': {'def': -1},
+		'boosts': {
+			'def': -1
+		},
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Normal',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Cute'
 	},
-	'tailwind': {
+	{
 		'num': 366,
 		'accuracy': true,
 		'basePower': 0,
@@ -19606,7 +20309,9 @@ const BattleMovedex = {
 		'name': 'Tailwind',
 		'pp': 15,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'sideCondition': 'tailwind',
 		'effect': {
 			'duration': 4,
@@ -19614,7 +20319,7 @@ const BattleMovedex = {
 				if (source && source.hasAbility('persistent')) {
 					return 6;
 				}
-				
+
 				return 4;
 			},
 			'onStart' (side) {
@@ -19635,7 +20340,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'crit2',
 		'contestType': 'Cool'
 	},
-	'takedown': {
+	{
 		'num': 36,
 		'accuracy': 85,
 		'basePower': 90,
@@ -19658,7 +20363,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Tough'
 	},
-	'taunt': {
+	{
 		'num': 269,
 		'accuracy': 100,
 		'basePower': 0,
@@ -19700,7 +20405,7 @@ const BattleMovedex = {
 			'onBeforeMove' (attacker, defender, move) {
 				if (!move.isZ && move.category === 'Status') {
 					this.add('cant', attacker, 'move: Taunt', move);
-					
+
 					return false;
 				}
 			}
@@ -19708,10 +20413,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dark',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Clever'
 	},
-	'tearfullook': {
+	{
 		'num': 715,
 		'accuracy': true,
 		'basePower': 0,
@@ -19733,10 +20440,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cute'
 	},
-	'technoblast': {
+	{
 		'num': 546,
 		'accuracy': 100,
 		'basePower': 120,
@@ -19761,7 +20470,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'tectonicrage': {
+	{
 		'num': 630,
 		'accuracy': true,
 		'basePower': 1,
@@ -19779,7 +20488,7 @@ const BattleMovedex = {
 		'type': 'Ground',
 		'contestType': 'Cool'
 	},
-	'teeterdance': {
+	{
 		'num': 298,
 		'accuracy': 100,
 		'basePower': 0,
@@ -19799,10 +20508,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'allAdjacent',
 		'type': 'Normal',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Cute'
 	},
-	'telekinesis': {
+	{
 		'num': 477,
 		'accuracy': true,
 		'basePower': 0,
@@ -19827,11 +20538,11 @@ const BattleMovedex = {
 				if (['Diglett', 'Dugtrio', 'Palossand', 'Sandygast'].includes(target.baseTemplate.baseSpecies) ||
 					target.baseTemplate.species === 'Gengar-Mega') {
 					this.add('-immune', target, '[msg]');
-					
+
 					return null;
 				}
 				if (target.volatiles.smackdown || target.volatiles.ingrain) {
-					return false; 
+					return false;
 				}
 				this.add('-start', target, 'Telekinesis');
 			},
@@ -19843,7 +20554,7 @@ const BattleMovedex = {
 			},
 			'onImmunity' (type) {
 				if (type === 'Ground') {
-					return false; 
+					return false;
 				}
 			},
 			'onUpdate' (pokemon) {
@@ -19860,10 +20571,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spa': 1},
+		'zMoveBoost': {
+			'spa': 1
+		},
 		'contestType': 'Clever'
 	},
-	'teleport': {
+	{
 		'num': 100,
 		'accuracy': true,
 		'basePower': 0,
@@ -19882,7 +20595,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Cool'
 	},
-	'thief': {
+	{
 		'num': 168,
 		'accuracy': 100,
 		'basePower': 60,
@@ -19909,7 +20622,7 @@ const BattleMovedex = {
 			}
 			if (!source.setItem(yourItem)) {
 				target.item = yourItem.id; // Bypass setItem so we don't break choicelock or anything
-				
+
 				return;
 			}
 			this.add('-item', source, yourItem, '[from] move: Thief', `[of] ${target}`);
@@ -19920,7 +20633,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Tough'
 	},
-	'thousandarrows': {
+	{
 		'num': 614,
 		'accuracy': 100,
 		'basePower': 90,
@@ -19944,7 +20657,7 @@ const BattleMovedex = {
 			const target = this.activeTarget;
 
 			if (!target) {
-				return; 
+				return;
 			} // Avoid crashing when called from a chat plugin
 			// Ignore effectiveness if the target is Flying type and immune to Ground
 			if (!target.runImmunity('Ground')) {
@@ -19954,14 +20667,16 @@ const BattleMovedex = {
 			}
 		},
 		'volatileStatus': 'smackdown',
-		'ignoreImmunity': {'Ground': true},
+		'ignoreImmunity': {
+			'Ground': true
+		},
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Ground',
 		'zMovePower': 180,
 		'contestType': 'Beautiful'
 	},
-	'thousandwaves': {
+	{
 		'num': 615,
 		'accuracy': 100,
 		'basePower': 90,
@@ -19988,7 +20703,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Tough'
 	},
-	'thrash': {
+	{
 		'num': 37,
 		'accuracy': 100,
 		'basePower': 120,
@@ -20004,7 +20719,9 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'self': {'volatileStatus': 'lockedmove'},
+		'self': {
+			'volatileStatus': 'lockedmove'
+		},
 		'onAfterMove' (pokemon) {
 			if (pokemon.volatiles.lockedmove && pokemon.volatiles.lockedmove.duration === 1) {
 				pokemon.removeVolatile('lockedmove');
@@ -20016,7 +20733,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Tough'
 	},
-	'throatchop': {
+	{
 		'num': 675,
 		'accuracy': 100,
 		'basePower': 80,
@@ -20048,7 +20765,7 @@ const BattleMovedex = {
 			'onBeforeMove' (pokemon, target, move) {
 				if (!move.isZ && move.flags.sound) {
 					this.add('cant', pokemon, 'move: Throat Chop');
-					
+
 					return false;
 				}
 			},
@@ -20068,7 +20785,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Clever'
 	},
-	'thunder': {
+	{
 		'num': 87,
 		'accuracy': 70,
 		'basePower': 110,
@@ -20100,7 +20817,7 @@ const BattleMovedex = {
 		'zMovePower': 185,
 		'contestType': 'Cool'
 	},
-	'thunderfang': {
+	{
 		'num': 422,
 		'accuracy': 95,
 		'basePower': 65,
@@ -20117,21 +20834,19 @@ const BattleMovedex = {
 			'protect': 1,
 			'mirror': 1
 		},
-		'secondaries': [
-			{
-				'chance': 10,
-				'status': 'par'
-			}, {
-				'chance': 10,
-				'volatileStatus': 'flinch'
-			}
-		],
+		'secondaries': [{
+			'chance': 10,
+			'status': 'par'
+		}, {
+			'chance': 10,
+			'volatileStatus': 'flinch'
+		}],
 		'target': 'normal',
 		'type': 'Electric',
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'thunderpunch': {
+	{
 		'num': 9,
 		'accuracy': 100,
 		'basePower': 75,
@@ -20158,7 +20873,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'thundershock': {
+	{
 		'num': 84,
 		'accuracy': 100,
 		'basePower': 40,
@@ -20182,7 +20897,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'thunderwave': {
+	{
 		'num': 86,
 		'accuracy': 90,
 		'basePower': 0,
@@ -20204,10 +20919,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Electric',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Cool'
 	},
-	'thunderbolt': {
+	{
 		'num': 85,
 		'accuracy': 100,
 		'basePower': 90,
@@ -20232,7 +20949,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Cool'
 	},
-	'tickle': {
+	{
 		'num': 321,
 		'accuracy': 100,
 		'basePower': 0,
@@ -20256,10 +20973,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cute'
 	},
-	'topsyturvy': {
+	{
 		'num': 576,
 		'accuracy': true,
 		'basePower': 0,
@@ -20294,10 +21013,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dark',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Clever'
 	},
-	'torment': {
+	{
 		'num': 259,
 		'accuracy': 100,
 		'basePower': 0,
@@ -20325,17 +21046,19 @@ const BattleMovedex = {
 			},
 			'onDisableMove' (pokemon) {
 				if (pokemon.lastMove && pokemon.lastMove.id !== 'struggle') {
-					pokemon.disableMove(pokemon.lastMove.id); 
+					pokemon.disableMove(pokemon.lastMove.id);
 				}
 			}
 		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Dark',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Tough'
 	},
-	'toxic': {
+	{
 		'num': 92,
 		'accuracy': 90,
 		'basePower': 0,
@@ -20357,10 +21080,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Poison',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Clever'
 	},
-	'toxicspikes': {
+	{
 		'num': 390,
 		'accuracy': true,
 		'basePower': 0,
@@ -20385,14 +21110,14 @@ const BattleMovedex = {
 			},
 			'onRestart' (side) {
 				if (this.effectData.layers >= 2) {
-					return false; 
+					return false;
 				}
 				this.add('-sidestart', side, 'move: Toxic Spikes');
 				this.effectData.layers++;
 			},
 			'onSwitchIn' (pokemon) {
 				if (!pokemon.isGrounded()) {
-					return; 
+					return;
 				}
 				if (!pokemon.runImmunity('Poison')) {
 					return;
@@ -20410,10 +21135,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'foeSide',
 		'type': 'Poison',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Clever'
 	},
-	'toxicthread': {
+	{
 		'num': 672,
 		'accuracy': 100,
 		'basePower': 0,
@@ -20431,14 +21158,18 @@ const BattleMovedex = {
 			'mirror': 1
 		},
 		'status': 'psn',
-		'boosts': {'spe': -1},
+		'boosts': {
+			'spe': -1
+		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Poison',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Tough'
 	},
-	'transform': {
+	{
 		'num': 144,
 		'accuracy': true,
 		'basePower': 0,
@@ -20449,7 +21180,9 @@ const BattleMovedex = {
 		'name': 'Transform',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'mystery': 1},
+		'flags': {
+			'mystery': 1
+		},
 		'onHit' (target, pokemon) {
 			if (!pokemon.transformInto(target, pokemon)) {
 				return false;
@@ -20461,7 +21194,7 @@ const BattleMovedex = {
 		'zMoveEffect': 'heal',
 		'contestType': 'Clever'
 	},
-	'triattack': {
+	{
 		'num': 161,
 		'accuracy': 100,
 		'basePower': 80,
@@ -20496,7 +21229,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'trick': {
+	{
 		'num': 271,
 		'accuracy': 100,
 		'basePower': 0,
@@ -20516,7 +21249,7 @@ const BattleMovedex = {
 		'onTryHit' (target) {
 			if (target.hasAbility('stickyhold')) {
 				this.add('-immune', target, '[msg]');
-				
+
 				return null;
 			}
 		},
@@ -20531,17 +21264,17 @@ const BattleMovedex = {
 				if (myItem) {
 					source.item = myItem.id;
 				}
-				
+
 				return false;
 			}
 			if (myItem && !this.singleEvent('TakeItem', myItem, source.itemData, target, source, move, myItem) || yourItem && !this.singleEvent('TakeItem', yourItem, target.itemData, source, target, move, yourItem)) {
 				if (yourItem) {
-					target.item = yourItem.id; 
+					target.item = yourItem.id;
 				}
 				if (myItem) {
 					source.item = myItem.id;
 				}
-				
+
 				return false;
 			}
 			this.add('-activate', source, 'move: Trick', `[of] ${target}`);
@@ -20561,10 +21294,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Psychic',
-		'zMoveBoost': {'spe': 2},
+		'zMoveBoost': {
+			'spe': 2
+		},
 		'contestType': 'Clever'
 	},
-	'trickortreat': {
+	{
 		'num': 567,
 		'accuracy': 100,
 		'basePower': 0,
@@ -20586,7 +21321,7 @@ const BattleMovedex = {
 				return false;
 			}
 			if (!target.addType('Ghost')) {
-				return false; 
+				return false;
 			}
 			this.add('-start', target, 'typeadd', 'Ghost', '[from] move: Trick-or-Treat');
 
@@ -20611,7 +21346,7 @@ const BattleMovedex = {
 		},
 		'contestType': 'Cute'
 	},
-	'trickroom': {
+	{
 		'num': 433,
 		'accuracy': true,
 		'basePower': 0,
@@ -20622,7 +21357,9 @@ const BattleMovedex = {
 		'name': 'Trick Room',
 		'pp': 5,
 		'priority': -7,
-		'flags': {'mirror': 1},
+		'flags': {
+			'mirror': 1
+		},
 		'onHitField' (target, source, effect) {
 			if (this.pseudoWeather.trickroom) {
 				this.removePseudoWeather('trickroom', source, effect, `[of] ${source}`);
@@ -20636,7 +21373,7 @@ const BattleMovedex = {
 				if (source && source.hasAbility('persistent')) {
 					return 7;
 				}
-				
+
 				return 5;
 			},
 			'onStart' (target, source) {
@@ -20651,10 +21388,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Psychic',
-		'zMoveBoost': {'accuracy': 1},
+		'zMoveBoost': {
+			'accuracy': 1
+		},
 		'contestType': 'Clever'
 	},
-	'triplekick': {
+	{
 		'num': 167,
 		'accuracy': 90,
 		'basePower': 10,
@@ -20664,7 +21403,7 @@ const BattleMovedex = {
 			} else {
 				move.hit = 1;
 			}
-			
+
 			return 10 * move.hit;
 		},
 		'category': 'Physical',
@@ -20687,7 +21426,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'tropkick': {
+	{
 		'num': 688,
 		'accuracy': 100,
 		'basePower': 70,
@@ -20705,14 +21444,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 100,
-			'boosts': {'atk': -1}
+			'boosts': {
+				'atk': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Grass',
 		'zMovePower': 140,
 		'contestType': 'Cute'
 	},
-	'trumpcard': {
+	{
 		'num': 376,
 		'accuracy': true,
 		'basePower': 0,
@@ -20751,7 +21492,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'twineedle': {
+	{
 		'num': 41,
 		'accuracy': 100,
 		'basePower': 25,
@@ -20776,7 +21517,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'twinkletackle': {
+	{
 		'num': 656,
 		'accuracy': true,
 		'basePower': 1,
@@ -20794,7 +21535,7 @@ const BattleMovedex = {
 		'type': 'Fairy',
 		'contestType': 'Cool'
 	},
-	'twister': {
+	{
 		'num': 239,
 		'accuracy': 100,
 		'basePower': 40,
@@ -20818,7 +21559,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'uturn': {
+	{
 		'num': 369,
 		'accuracy': 100,
 		'basePower': 70,
@@ -20842,7 +21583,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cute'
 	},
-	'uproar': {
+	{
 		'num': 253,
 		'accuracy': 100,
 		'basePower': 90,
@@ -20859,7 +21600,9 @@ const BattleMovedex = {
 			'sound': 1,
 			'authentic': 1
 		},
-		'self': {'volatileStatus': 'uproar'},
+		'self': {
+			'volatileStatus': 'uproar'
+		},
 		'onTryHit' (target) {
 			for (let i = 0; i < target.side.active.length; i++) {
 				const allyActive = target.side.active[i];
@@ -20870,7 +21613,7 @@ const BattleMovedex = {
 				const foeActive = target.side.foe.active[i];
 
 				if (foeActive && foeActive.status === 'slp') {
-					foeActive.cureStatus(); 
+					foeActive.cureStatus();
 				}
 			}
 		},
@@ -20897,7 +21640,7 @@ const BattleMovedex = {
 					} else {
 						this.add('-fail', pokemon, 'slp', '[from] Uproar');
 					}
-					
+
 					return null;
 				}
 			}
@@ -20908,7 +21651,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Cute'
 	},
-	'vcreate': {
+	{
 		'num': 557,
 		'accuracy': 95,
 		'basePower': 180,
@@ -20938,7 +21681,7 @@ const BattleMovedex = {
 		'zMovePower': 220,
 		'contestType': 'Cool'
 	},
-	'vacuumwave': {
+	{
 		'num': 410,
 		'accuracy': 100,
 		'basePower': 40,
@@ -20959,7 +21702,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'venomdrench': {
+	{
 		'num': 599,
 		'accuracy': 100,
 		'basePower': 0,
@@ -20983,16 +21726,18 @@ const BattleMovedex = {
 					'spe': -1
 				}, target, source, move);
 			}
-			
+
 			return false;
 		},
 		'secondary': false,
 		'target': 'allAdjacentFoes',
 		'type': 'Poison',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Clever'
 	},
-	'venoshock': {
+	{
 		'num': 474,
 		'accuracy': 100,
 		'basePower': 65,
@@ -21019,7 +21764,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'vicegrip': {
+	{
 		'num': 11,
 		'accuracy': 100,
 		'basePower': 55,
@@ -21041,7 +21786,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'vinewhip': {
+	{
 		'num': 22,
 		'accuracy': 100,
 		'basePower': 45,
@@ -21063,7 +21808,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'vitalthrow': {
+	{
 		'num': 233,
 		'accuracy': true,
 		'basePower': 70,
@@ -21085,7 +21830,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'voltswitch': {
+	{
 		'num': 521,
 		'accuracy': 100,
 		'basePower': 70,
@@ -21108,7 +21853,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Cool'
 	},
-	'volttackle': {
+	{
 		'num': 344,
 		'accuracy': 100,
 		'basePower': 120,
@@ -21135,7 +21880,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'wakeupslap': {
+	{
 		'num': 358,
 		'accuracy': 100,
 		'basePower': 70,
@@ -21143,7 +21888,7 @@ const BattleMovedex = {
 			if (target.status === 'slp' || target.hasAbility('comatose')) {
 				return move.basePower * 2;
 			}
-			
+
 			return move.basePower;
 		},
 		'category': 'Physical',
@@ -21169,7 +21914,7 @@ const BattleMovedex = {
 		'zMovePower': 140,
 		'contestType': 'Tough'
 	},
-	'watergun': {
+	{
 		'num': 55,
 		'accuracy': 100,
 		'basePower': 40,
@@ -21190,17 +21935,17 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cute'
 	},
-	'waterpledge': {
+	{
 		'num': 518,
 		'accuracy': 100,
 		'basePower': 80,
 		'basePowerCallback' (target, source, move) {
 			if (['firepledge', 'grasspledge'].includes(move.sourceEffect)) {
 				this.add('-combine');
-				
+
 				return 150;
 			}
-			
+
 			return 80;
 		},
 		'category': 'Special',
@@ -21220,12 +21965,12 @@ const BattleMovedex = {
 				const action = this.queue[i];
 
 				if (!action.move || !action.pokemon || !action.pokemon.isActive || action.pokemon.fainted) {
-					continue; 
+					continue;
 				}
 				if (action.pokemon.side === source.side && ['firepledge', 'grasspledge'].includes(action.move.id)) {
 					this.prioritizeAction(action);
 					this.add('-waiting', source, action.pokemon);
-					
+
 					return null;
 				}
 			}
@@ -21271,7 +22016,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'waterpulse': {
+	{
 		'num': 352,
 		'accuracy': 100,
 		'basePower': 60,
@@ -21297,7 +22042,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Beautiful'
 	},
-	'watersport': {
+	{
 		'num': 346,
 		'accuracy': true,
 		'basePower': 0,
@@ -21308,13 +22053,15 @@ const BattleMovedex = {
 		'name': 'Water Sport',
 		'pp': 15,
 		'priority': 0,
-		'flags': {'nonsky': 1},
+		'flags': {
+			'nonsky': 1
+		},
 		'onHitField' (target, source, effect) {
 			if (this.pseudoWeather.watersport) {
 				return false;
-			} 
+			}
 			this.addPseudoWeather('watersport', source, effect, `[of] ${source}`);
-			
+
 		},
 		'effect': {
 			'duration': 5,
@@ -21325,7 +22072,7 @@ const BattleMovedex = {
 			'onBasePower' (basePower, attacker, defender, move) {
 				if (move.type === 'Fire') {
 					this.debug('water sport weaken');
-					
+
 					return this.chainModify([0x548, 0x1000]);
 				}
 			},
@@ -21337,10 +22084,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Water',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Cute'
 	},
-	'waterspout': {
+	{
 		'num': 323,
 		'accuracy': 100,
 		'basePower': 150,
@@ -21365,7 +22114,7 @@ const BattleMovedex = {
 		'zMovePower': 200,
 		'contestType': 'Beautiful'
 	},
-	'waterfall': {
+	{
 		'num': 127,
 		'accuracy': 100,
 		'basePower': 80,
@@ -21391,7 +22140,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Tough'
 	},
-	'watershuriken': {
+	{
 		'num': 594,
 		'accuracy': 100,
 		'basePower': 15,
@@ -21399,7 +22148,7 @@ const BattleMovedex = {
 			if (pokemon.template.species === 'Greninja-Ash' && pokemon.hasAbility('battlebond')) {
 				return move.basePower + 5;
 			}
-			
+
 			return move.basePower;
 		},
 		'category': 'Special',
@@ -21420,15 +22169,15 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Cool'
 	},
-	'weatherball': {
+	{
 		'num': 311,
 		'accuracy': 100,
 		'basePower': 50,
 		'basePowerCallback' (pokemon, target, move) {
 			if (this.weather) {
-				return move.basePower * 2; 
+				return move.basePower * 2;
 			}
-			
+
 			return move.basePower;
 		},
 		'category': 'Special',
@@ -21467,7 +22216,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'whirlpool': {
+	{
 		'num': 250,
 		'accuracy': 85,
 		'basePower': 35,
@@ -21489,7 +22238,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Beautiful'
 	},
-	'whirlwind': {
+	{
 		'num': 18,
 		'accuracy': true,
 		'basePower': 0,
@@ -21511,10 +22260,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Clever'
 	},
-	'wideguard': {
+	{
 		'num': 469,
 		'accuracy': true,
 		'basePower': 0,
@@ -21525,7 +22276,9 @@ const BattleMovedex = {
 		'name': 'Wide Guard',
 		'pp': 10,
 		'priority': 3,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'sideCondition': 'wideguard',
 		'onTryHitSide' (side, source) {
 			return this.willAct();
@@ -21546,7 +22299,7 @@ const BattleMovedex = {
 				}
 				if (move.isZ) {
 					move.zBrokeProtect = true;
-					
+
 					return;
 				}
 				this.add('-activate', target, 'move: Wide Guard');
@@ -21559,17 +22312,19 @@ const BattleMovedex = {
 						delete source.volatiles.lockedmove;
 					}
 				}
-				
+
 				return null;
 			}
 		},
 		'secondary': false,
 		'target': 'allySide',
 		'type': 'Rock',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Tough'
 	},
-	'wildcharge': {
+	{
 		'num': 528,
 		'accuracy': 100,
 		'basePower': 90,
@@ -21593,7 +22348,7 @@ const BattleMovedex = {
 		'zMovePower': 175,
 		'contestType': 'Tough'
 	},
-	'willowisp': {
+	{
 		'num': 261,
 		'accuracy': 85,
 		'basePower': 0,
@@ -21614,10 +22369,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Fire',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Beautiful'
 	},
-	'wingattack': {
+	{
 		'num': 17,
 		'accuracy': 100,
 		'basePower': 60,
@@ -21640,7 +22397,7 @@ const BattleMovedex = {
 		'zMovePower': 120,
 		'contestType': 'Cool'
 	},
-	'wish': {
+	{
 		'num': 273,
 		'accuracy': true,
 		'basePower': 0,
@@ -21679,10 +22436,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Cute'
 	},
-	'withdraw': {
+	{
 		'num': 110,
 		'accuracy': true,
 		'basePower': 0,
@@ -21693,15 +22452,21 @@ const BattleMovedex = {
 		'name': 'Withdraw',
 		'pp': 40,
 		'priority': 0,
-		'flags': {'snatch': 1},
-		'boosts': {'def': 1},
+		'flags': {
+			'snatch': 1
+		},
+		'boosts': {
+			'def': 1
+		},
 		'secondary': false,
 		'target': 'self',
 		'type': 'Water',
-		'zMoveBoost': {'def': 1},
+		'zMoveBoost': {
+			'def': 1
+		},
 		'contestType': 'Cute'
 	},
-	'wonderroom': {
+	{
 		'num': 472,
 		'accuracy': true,
 		'basePower': 0,
@@ -21712,7 +22477,9 @@ const BattleMovedex = {
 		'name': 'Wonder Room',
 		'pp': 10,
 		'priority': 0,
-		'flags': {'mirror': 1},
+		'flags': {
+			'mirror': 1
+		},
 		'onHitField' (target, source, effect) {
 			if (this.pseudoWeather.wonderroom) {
 				this.removePseudoWeather('wonderroom', source, effect, `[of] ${source}`);
@@ -21726,7 +22493,7 @@ const BattleMovedex = {
 				if (source && source.hasAbility('persistent')) {
 					return 7;
 				}
-				
+
 				return 5;
 			},
 			'onStart' (side, source) {
@@ -21741,10 +22508,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'all',
 		'type': 'Psychic',
-		'zMoveBoost': {'spd': 1},
+		'zMoveBoost': {
+			'spd': 1
+		},
 		'contestType': 'Clever'
 	},
-	'woodhammer': {
+	{
 		'num': 452,
 		'accuracy': 100,
 		'basePower': 120,
@@ -21768,7 +22537,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Tough'
 	},
-	'workup': {
+	{
 		'num': 526,
 		'accuracy': true,
 		'basePower': 0,
@@ -21779,7 +22548,9 @@ const BattleMovedex = {
 		'name': 'Work Up',
 		'pp': 30,
 		'priority': 0,
-		'flags': {'snatch': 1},
+		'flags': {
+			'snatch': 1
+		},
 		'boosts': {
 			'atk': 1,
 			'spa': 1
@@ -21787,10 +22558,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'self',
 		'type': 'Normal',
-		'zMoveBoost': {'atk': 1},
+		'zMoveBoost': {
+			'atk': 1
+		},
 		'contestType': 'Tough'
 	},
-	'worryseed': {
+	{
 		'num': 388,
 		'accuracy': 100,
 		'basePower': 0,
@@ -21822,19 +22595,21 @@ const BattleMovedex = {
 				if (pokemon.status === 'slp') {
 					pokemon.cureStatus();
 				}
-				
+
 				return;
 			}
-			
+
 			return false;
 		},
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Grass',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Clever'
 	},
-	'wrap': {
+	{
 		'num': 35,
 		'accuracy': 90,
 		'basePower': 15,
@@ -21857,7 +22632,7 @@ const BattleMovedex = {
 		'zMovePower': 100,
 		'contestType': 'Tough'
 	},
-	'wringout': {
+	{
 		'num': 378,
 		'accuracy': 100,
 		'basePower': 0,
@@ -21882,7 +22657,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Tough'
 	},
-	'xscissor': {
+	{
 		'num': 404,
 		'accuracy': 100,
 		'basePower': 80,
@@ -21905,7 +22680,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'yawn': {
+	{
 		'num': 281,
 		'accuracy': true,
 		'basePower': 0,
@@ -21941,10 +22716,12 @@ const BattleMovedex = {
 		'secondary': false,
 		'target': 'normal',
 		'type': 'Normal',
-		'zMoveBoost': {'spe': 1},
+		'zMoveBoost': {
+			'spe': 1
+		},
 		'contestType': 'Cute'
 	},
-	'zapcannon': {
+	{
 		'num': 192,
 		'accuracy': 50,
 		'basePower': 120,
@@ -21969,7 +22746,7 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cool'
 	},
-	'zenheadbutt': {
+	{
 		'num': 428,
 		'accuracy': 90,
 		'basePower': 80,
@@ -21995,7 +22772,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Clever'
 	},
-	'zingzap': {
+	{
 		'num': 716,
 		'accuracy': 100,
 		'basePower': 80,
@@ -22021,7 +22798,7 @@ const BattleMovedex = {
 		'zMovePower': 160,
 		'contestType': 'Cool'
 	},
-	'paleowave': {
+	{
 		'accuracy': 100,
 		'basePower': 85,
 		'category': 'Special',
@@ -22039,14 +22816,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 20,
-			'boosts': {'atk': -1}
+			'boosts': {
+				'atk': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Rock',
 		'zMovePower': 160,
 		'contestType': 'Beautiful'
 	},
-	'shadowstrike': {
+	{
 		'accuracy': 95,
 		'basePower': 80,
 		'category': 'Physical',
@@ -22065,14 +22844,16 @@ const BattleMovedex = {
 		},
 		'secondary': {
 			'chance': 50,
-			'boosts': {'def': -1}
+			'boosts': {
+				'def': -1
+			}
 		},
 		'target': 'normal',
 		'type': 'Ghost',
 		'zMovePower': 160,
 		'contestType': 'Clever'
 	},
-	'magikarpsrevenge': {
+	{
 		'accuracy': true,
 		'basePower': 120,
 		'category': 'Physical',
@@ -22094,7 +22875,7 @@ const BattleMovedex = {
 		'onTry' (pokemon) {
 			if (pokemon.template.name !== 'Magikarp') {
 				this.add('-fail', pokemon, 'move: Magikarp\'s Revenge');
-				
+
 				return null;
 			}
 		},
@@ -22120,6 +22901,8 @@ const BattleMovedex = {
 		'zMovePower': 190,
 		'contestType': 'Cute'
 	}
-};
+];
 
-module.exports = {BattleMovedex};
+module.exports = {
+	BattleMovedex
+};

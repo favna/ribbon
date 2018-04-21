@@ -33,14 +33,10 @@
  * @example move dragon dance
  * @param {string} MoveName The move you want to find
  * @returns {MessageEmbed} Details about the move
- *
- * @todo Implement FuseJS in Move
- * @body FuseJS will take away the need to use matcher and allow for far more consistent results
  */
 
-const Matcher = require('did-you-mean'),
+const Fuse = require('fuse.js'),
   path = require('path'),
-  underscore = require('underscore'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {BattleMovedex} = require(path.join(__dirname, '../../data/dex/moves')),
@@ -72,63 +68,54 @@ module.exports = class MoveCommand extends Command {
         }
       ]
     });
-
-    this.match = [];
   }
 
-  run (msg, args) {
+  run (msg, {move}) {
     startTyping(msg);
-    const moveEmbed = new MessageEmbed();
+    /* eslint-disable sort-vars */
+    const fsoptions = {
+        'shouldSort': true,
+        'threshold': 0.6,
+        'location': 0,
+        'distance': 100,
+        'maxPatternLength': 32,
+        'minMatchCharLength': 1,
+        'keys': ['alias', 'move', 'id', 'name']
+      },
+      aliasFuse = new Fuse(MoveAliases, fsoptions),
+      moveFuse = new Fuse(BattleMovedex, fsoptions),
+      aliasSearch = aliasFuse.search(move),
+      moveSearch = aliasSearch.length ? moveFuse.search(aliasSearch[0].move) : moveFuse.search(move),
+      moveEmbed = new MessageEmbed();
+    /* eslint-enable sort-vars */
 
-    let moveEntry = {};
-
-    if (MoveAliases[args.move]) {
-      args.item = MoveAliases[args.item];
-      this.match = new Matcher(Object.keys(MoveAliases).join(' '));
-    } else {
-      this.match = new Matcher(Object.keys(BattleMovedex).join(' '));
-    }
-
-    moveEntry = BattleMovedex[args.move];
-
-    for (const move in BattleMovedex) {
-      if (BattleMovedex[move].id.toLowerCase() === args.move.toLowerCase() || BattleMovedex[move].name.toLowerCase() === args.move.toLowerCase() || BattleMovedex[move].num.toString() === args.move) {
-        moveEntry = BattleMovedex[move];
-        break;
-      }
-    }
-
-    if (!underscore.isEmpty(moveEntry)) {
+    if (moveSearch.length) {
       moveEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
-        .addField('Description', moveEntry.desc ? moveEntry.desc : moveEntry.shortDesc)
-        .addField('Type', moveEntry.type, true)
-        .addField('Base Power', moveEntry.basePower, true)
-        .addField('PP', moveEntry.pp, true)
-        .addField('Category', moveEntry.category, true)
-        .addField('Accuracy', moveEntry.accuracy ? 'Certain Success' : moveEntry.accuracy, true)
-        .addField('Priority', moveEntry.priority, true)
-        .addField('Target', moveEntry.target === 'normal' ? 'One Enemy' : capitalizeFirstLetter(moveEntry.target.replace(/([A-Z])/g, ' $1')), true)
-        .addField('Contest Condition', moveEntry.contestType, true)
-        .addField('Z-Crystal', moveEntry.isZ ? `${capitalizeFirstLetter(moveEntry.isZ.substring(0, moveEntry.isZ.length - 1))}Z` : 'None', true)
+        .addField('Description', moveSearch[0].desc ? moveSearch[0].desc : moveSearch[0].shortDesc)
+        .addField('Type', moveSearch[0].type, true)
+        .addField('Base Power', moveSearch[0].basePower, true)
+        .addField('PP', moveSearch[0].pp, true)
+        .addField('Category', moveSearch[0].category, true)
+        .addField('Accuracy', moveSearch[0].accuracy ? 'Certain Success' : moveSearch[0].accuracy, true)
+        .addField('Priority', moveSearch[0].priority, true)
+        .addField('Target', moveSearch[0].target === 'normal' ? 'One Enemy' : capitalizeFirstLetter(moveSearch[0].target.replace(/([A-Z])/g, ' $1')), true)
+        .addField('Contest Condition', moveSearch[0].contestType, true)
+        .addField('Z-Crystal', moveSearch[0].isZ ? `${capitalizeFirstLetter(moveSearch[0].isZ.substring(0, moveSearch[0].isZ.length - 1))}Z` : 'None', true)
         .addField('External Resources', oneLine`
-			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${moveEntry.name.replace(' ', '_')}_(move\\))  
-			|  [Smogon](http://www.smogon.com/dex/sm/moves/${moveEntry.name.replace(' ', '_')})  
-			|  [PokémonDB](http://pokemondb.net/move/${moveEntry.name.replace(' ', '-')})`);
+			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${moveSearch[0].name.replace(/ /g, '_')}_(move\\))  
+			|  [Smogon](http://www.smogon.com/dex/sm/moves/${moveSearch[0].name.replace(/ /g, '_')})  
+			|  [PokémonDB](http://pokemondb.net/move/${moveSearch[0].name.replace(/ /g, '-')})`);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(moveEmbed, `**${capitalizeFirstLetter(moveEntry.name)}**`);
+      return msg.embed(moveEmbed, `**${capitalizeFirstLetter(moveSearch[0].name)}**`);
     }
-    this.match.setThreshold(4);
-    const dym = this.match.get(args.move), // eslint-disable-line one-var
-      dymString = dym !== null ? `Did you mean \`${dym}\`?` : 'Maybe you misspelt the move name?';
-
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.channel.send(`Move not found! ${dymString}`);
+    return msg.reply('no move found. Be sure it is a move that has an effect in battles!');
   }
 };

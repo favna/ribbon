@@ -1821,11 +1821,6 @@ If you want to get the shiny sprite displayed add the `--shiny` at the end of th
 
 **Returns**: <code>MessageEmbed</code> - Lots of information about the pokemon  
 **Category**: pokemon  
-**Body**: FuseJS will take away the need to use matcher and allow for far more consistent results  
-**Todo**
-
-- [ ] Implement FuseJS in Pokedex
-
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1846,11 +1841,6 @@ If you want to get the shiny sprite displayed add the `--shiny` at the end of th
 
 **Returns**: <code>MessageEmbed</code> - Flavor texts for the pokemon  
 **Category**: pokemon  
-**Body**: FuseJS will take away the need to use matcher and allow for far more consistent results  
-**Todo**
-
-- [ ] Implement FuseJS in Flavor
-
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1869,11 +1859,6 @@ For item names existing of multiple words (for example `life orb`) you can eithe
 
 **Returns**: <code>MessageEmbed</code> - Description and external links for the item  
 **Category**: pokemon  
-**Body**: FuseJS will take away the need to use matcher and allow for far more consistent results  
-**Todo**
-
-- [ ] Implement FuseJS in Item
-
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1891,11 +1876,6 @@ Pokémon AbilityCommand - Gets information on an ability in Pokémon
 
 **Returns**: <code>MessageEmbed</code> - Description and external links for the ability  
 **Category**: pokémon  
-**Body**: FuseJS will take away the need to use matcher and allow for far more consistent results  
-**Todo**
-
-- [ ] Implement FuseJS in Ability
-
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1914,11 +1894,6 @@ For move names existing of multiple words (for example `dragon dance`) you can e
 
 **Returns**: <code>MessageEmbed</code> - Details about the move  
 **Category**: pokémon  
-**Body**: FuseJS will take away the need to use matcher and allow for far more consistent results  
-**Todo**
-
-- [ ] Implement FuseJS in Move
-
 
 | Param | Type | Description |
 | --- | --- | --- |
