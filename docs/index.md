@@ -192,7 +192,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleTag<br><strong>Aliases</strong>: <code>owstats</code></p>
 </dd>
 <dt><a href="#module_rocketleague">rocketleague</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Leaderboards RocketLeagueCommand - Shows Player Stats / Leaderboard from Rocket League<br><strong>Aliases</strong>: <code>rlstats</code>, <code>rocketstats</code></p>
+<dd><p>Leaderboards RocketLeagueCommand - Shows Rocket League Leaderboard<br><strong>Aliases</strong>: <code>rlstats</code>, <code>rocketstats</code></p>
 </dd>
 <dt><a href="#module_showdown">showdown</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice<br><strong>Aliases</strong>: <code>showdownlb</code>, <code>pokelb</code></p>
@@ -1061,19 +1061,14 @@ overwatch Camoflouge#1267
 <a name="module_rocketleague"></a>
 
 ## rocketleague ⇒ <code>MessageEmbed</code>
-Leaderboards RocketLeagueCommand - Shows Player Stats / Leaderboard from Rocket League    
+Leaderboards RocketLeagueCommand - Shows Rocket League Leaderboard      
 **Aliases**: `rlstats`, `rocketstats`
 
-**Returns**: <code>MessageEmbed</code> - T.B.D. - Will be added later  
+**Returns**: <code>MessageEmbed</code> - Top 10 ranking players by their amount of wins  
 **Category**: leaderboards  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| T.B.D. | <code>string</code> | Will be added later |
-
 **Example**  
 ```js
-T.B.D
+rocketleague
 ```
 <a name="module_showdown"></a>
 

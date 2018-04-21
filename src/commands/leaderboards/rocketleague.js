@@ -23,22 +23,21 @@
  *         reasonable ways as different from the original version.
  */
 
-/* eslint-disable no-unused-vars */
-
 /**
- * @file Leaderboards RocketLeagueCommand - Shows Player Stats / Leaderboard from Rocket League    
+ * @file Leaderboards RocketLeagueCommand - Shows Rocket League Leaderboard      
  * **Aliases**: `rlstats`, `rocketstats`
  * @module
  * @category leaderboards
  * @name rocketleague
- * @example T.B.D
- * @param {string} T.B.D. Will be added later
- * @returns {MessageEmbed} T.B.D. - Will be added later
+ * @example rocketleague
+ * @returns {MessageEmbed} Top 10 ranking players by their amount of wins
  */
 
 const request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
+  {rocketleagueapikey} = require('../../auth.json'),
+  {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class RocketLeagueCommand extends Command {
@@ -48,7 +47,7 @@ module.exports = class RocketLeagueCommand extends Command {
       'memberName': 'rocketleague',
       'group': 'leaderboards',
       'aliases': ['rlstats'],
-      'description': 'Shows Player Stats / Leaderboard from Rocket League',
+      'description': 'Shows Rocket League Leaderboard',
       'format': 'BattleTag',
       'examples': ['rocketleague'],
       'guildOnly': false,
@@ -56,31 +55,55 @@ module.exports = class RocketLeagueCommand extends Command {
       'throttling': {
         'usages': 2,
         'duration': 3
-      },
-      'args': [
-        {
-          'key': 'player',
-          'prompt': 'Respond with the player\'s BattleTag',
-          'type': 'string',
-          'parse': p => p.toLowerCase(),
-          'default': 'Favna'
-        }
-      ]
+      }
     });
   }
 
-  run (msg, args) {
+  async run (msg) {
     startTyping(msg);
 
-    /**
-     * @todo Implement Rocket League Leaderboard
-     * @body Requires access to the Rocket League API which is pending.  
-     * API is currently closed beta and requires granted access from Rocket League so hopefully I will be allowed access
-     */
+    try {
+      const rocketData = await request.get('https://api.rocketleaguestats.com/v1/leaderboard/stat')
+          .set('Authorization', rocketleagueapikey)
+          .query('type', 'goals'),
+        rocketEmbed = new MessageEmbed(),
+        rocketEngine = {
+          'names': rocketData.body.map(n => n.displayName).slice(0, 10),
+          'wins': rocketData.body.map(w => w.stats.wins).slice(0, 10),
+          'mvps': rocketData.body.map(m => m.stats.mvps).slice(0, 10),
+          'saves': rocketData.body.map(sa => sa.stats.saves).slice(0, 10),
+          'goals': rocketData.body.map(g => g.stats.goals).slice(0, 10),
+          'shots': rocketData.body.map(sh => sh.stats.shots).slice(0, 10),
+          'assists': rocketData.body.map(a => a.stats.assists).slice(0, 10)
+        };
 
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+      for (const rank in rocketEngine.names) {
+        rocketEmbed.addField(`${parseInt(rank, 10) + 1}: ${rocketEngine.names[rank]}`, stripIndents`
+          **Wins**:${rocketEngine.wins[rank]}
+          **MVPS**:${rocketEngine.mvps[rank]}
+          **Saves**:${rocketEngine.saves[rank]}
+          **Goals**:${rocketEngine.goals[rank]}
+          **Shots**:${rocketEngine.shots[rank]}
+          **Assists**:${rocketEngine.assists[rank]}
+          `, true);
+      }
 
-    return msg.reply('not yet implemented');
+      rocketEmbed
+        .setTitle('Rocket League Top 10 Players')
+        .setDescription('based on goals made by player')
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/rocketleague.png');
+
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+
+      return msg.embed(rocketEmbed);
+    } catch (err) {
+      console.error(err);
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+
+      return msg.reply('something went wrong while getting Rocket League leaderboard. Try again later');
+    }
   }
 };
