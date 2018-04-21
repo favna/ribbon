@@ -53,7 +53,15 @@ module.exports = class UnlockCommand extends Command {
       'throttling': {
         'usages': 2,
         'duration': 3
-      }
+      },
+      'args': [
+        {
+          'key': 'lockrole',
+          'prompt': 'Which role to apply the lockdown to?',
+          'type': 'role',
+          'default': 'everyone'
+        }
+      ]
     });
   }
 
@@ -61,14 +69,24 @@ module.exports = class UnlockCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run (msg) {
+  async run (msg, {lockrole}) {
     startTyping(msg);
     const embed = new MessageEmbed(),
       modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
           ? msg.guild.channels.find('name', 'mod-logs').id
-          : null),
-      overwrite = msg.channel.overwritePermissions(msg.guild.roles.find('name', '@everyone'), {'SEND_MESSAGES': true}, 'Channel Unlock');
+          : null);
+
+    // eslint-disable-next-line one-var
+    const overwrite = await msg.channel.overwritePermissions({
+      'overwrites': [
+        {
+          'id': msg.guild.roles.find('name', lockrole === 'everyone' ? '@everyone' : lockrole.name).id,
+          'allowed': ['SEND_MESSAGES']
+        }
+      ],
+      'reason': 'Channel Lockdown'
+    });
 
     embed
       .setColor('#359876')

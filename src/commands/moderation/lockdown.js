@@ -53,7 +53,15 @@ module.exports = class LockdownCommand extends Command {
       'throttling': {
         'usages': 2,
         'duration': 3
-      }
+      },
+      'args': [
+        {
+          'key': 'lockrole',
+          'prompt': 'Which role to apply the lockdown to?',
+          'type': 'role',
+          'default': 'everyone'
+        }
+      ]
     });
   }
 
@@ -61,20 +69,28 @@ module.exports = class LockdownCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  /**
-   * @todo Enhance Lockdown
-   * @body Should enhance lockdown to make it configurable on which role the lockdown is applied instead of defaulting to `@everyone`.  
-   * Furthermore make it so if the issues doesn't have admin an overwrite for their highest role is added so they can lift the lockdown
-   */
-
-  run (msg) {
+  async run (msg, {lockrole}) {
     startTyping(msg);
     const embed = new MessageEmbed(),
       modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
           ? msg.guild.channels.find('name', 'mod-logs').id
-          : null),
-      overwrite = msg.channel.overwritePermissions(msg.guild.roles.find('name', '@everyone'), {'SEND_MESSAGES': false}, 'Channel Lockdown');
+          : null);
+
+    // eslint-disable-next-line one-var
+    const overwrite = await msg.channel.overwritePermissions({
+      'overwrites': [
+        {
+          'id': msg.member.roles.highest.id,
+          'allowed': ['SEND_MESSAGES', 'VIEW_CHANNEL']
+        },
+        {
+          'id': msg.guild.roles.find('name', lockrole === 'everyone' ? '@everyone' : lockrole.name).id,
+          'denied': ['SEND_MESSAGES']
+        }
+      ],
+      'reason': 'Channel Lockdown'
+    });
 
     embed
       .setColor('#983553')
