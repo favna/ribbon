@@ -69,19 +69,17 @@ module.exports = class PahealCommand extends Command {
   }
 
   async run (msg, args) {
-    startTyping(msg);
-    /* eslint-disable sort-vars*/
-    const search = await booru.search('paheal', args.tags, {
-        'limit': 1,
-        'random': true
-      }),
-      common = await booru.commonfy(search);
-    /* eslint-enable sort-vars*/
-
-    if (common && common[0].common) {
-      console.log(common[0]);
-      const embed = new MessageEmbed(),
+    try {
+      startTyping(msg);
+      /* eslint-disable sort-vars*/
+      const search = await booru.search('paheal', args.tags, {
+          'limit': 1,
+          'random': true
+        }),
+        common = await booru.commonfy(search),
+        embed = new MessageEmbed(),
         tags = [];
+      /* eslint-enable sort-vars*/
 
       for (const tag in common[0].common.tags) {
         tags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
@@ -92,18 +90,20 @@ module.exports = class PahealCommand extends Command {
         .setURL(common[0].common.file_url)
         .setColor('#FFB6C1')
         .setDescription(stripIndents`${tags.slice(0, 5).join(' ')}
-				
-				**Score**: ${common[0].common.score}`)
+          
+          **Score**: ${common[0].common.score}`)
         .setImage(common[0].common.file_url);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
       return msg.embed(embed);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
 
-    return msg.reply(`no juicy images found for ${args.tags}`);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+
+      return msg.reply(`no juicy images found for \`${args.tags}\``);
+    }
   }
 };
