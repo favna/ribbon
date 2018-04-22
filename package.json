@@ -68,7 +68,6 @@
     "slot-machine": "^2.1.0",
     "snekfetch": "3.6.4",
     "spotify-web-api-node": "3.0.0",
-    "sqlite": "^2.9.1",
     "steamapi": "2.0.2",
     "to-zalgo": "^1.0.1",
     "winston": "2.4.2",

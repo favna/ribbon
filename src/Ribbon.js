@@ -28,8 +28,7 @@ const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
   request = require('snekfetch'),
-  sqlite = require('sqlite'),
-  {Client, FriendlyError, SQLiteProvider} = require('discord.js-commando'),
+  {Client, FriendlyError, BetterSQLiteProvider} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
   {twitchclientid} = require(path.join(__dirname, 'auth.json'));
@@ -366,6 +365,7 @@ class Ribbon {
     };
   }
 
+  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
   init () {
     this.client
       .on('commandBlocked', this.onCmdBlock())
@@ -384,9 +384,11 @@ class Ribbon {
       .on('unknownCommand', this.onUnknownCommand())
       .on('warn', console.warn);
 
-    this.client.setProvider(
-      sqlite.open(path.join(__dirname, 'data/databases/settings.sqlite3')).then(db => new SQLiteProvider(db))
-    ).catch(console.error);
+    const db = new Database(path.join(__dirname, 'data/databases/settings.sqlite3'));
+
+    this.client.setBetterProvider(
+      new BetterSQLiteProvider(db)  
+    );
 
     this.client.registry
       .registerGroups([
