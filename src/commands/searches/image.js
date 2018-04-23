@@ -85,7 +85,7 @@ module.exports = class ImageCommand extends Command {
       embed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setImage(res.body.items[0].link)
-        .setFooter(`Search query: "${args.query}"`);
+        .setFooter(`Search query: "${args.query.replace(/\+/g, ' ')}"`);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
