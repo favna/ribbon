@@ -73,7 +73,7 @@ module.exports = class GoogleCommand extends Command {
 	async run (msg, args) {
 		startTyping(msg);
 		const knowledgeRes = await request.get('https://kgsearch.googleapis.com/v1/entities:search')
-			.query('key', process.env.googleapikey)
+			.query('key', `${process.env.googleapikey}`)
 			.query('limit', 1)
 			.query('indent', true)
 			.query('query', args.query);
@@ -105,8 +105,8 @@ module.exports = class GoogleCommand extends Command {
 		}
 
 		const normalRes = await request.get('https://www.googleapis.com/customsearch/v1') // eslint-disable-line one-var
-			.query('key', process.env.googleapikey)
-			.query('cx', process.env.searchkey)
+			.query('key', `${process.env.googleapikey}`)
+			.query('cx', `${process.env.searchkey}`)
 			.query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
 			.query('q', args.query);
 

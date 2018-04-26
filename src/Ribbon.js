@@ -283,11 +283,11 @@ class Ribbon {
             /* eslint-disable sort-vars*/
             const userData = await request.get('https://api.twitch.tv/kraken/users')
                 .set('Accept', 'application/vnd.twitchtv.v5+json')
-                .set('Client-ID', process.env.twitchclientid)
+                .set('Client-ID', `${process.env.twitchclientid}`)
                 .query('login', newActivity.url.split('/')[3]),
               streamData = await request.get('https://api.twitch.tv/kraken/streams')
                 .set('Accept', 'application/vnd.twitchtv.v5+json')
-                .set('Client-ID', process.env.twitchclientid)
+                .set('Client-ID', `${process.env.twitchclientid}`)
                 .query('channel', userData.body.users[0]._id),
               twitchChannel = this.client.provider.get(curGuild, 'twitchchannel', null),
               twitchEmbed = new MessageEmbed();

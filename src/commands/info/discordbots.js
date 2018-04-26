@@ -69,7 +69,7 @@ module.exports = class DiscordBotsCommand extends Command {
   async run (msg, args) {
     startTyping(msg);
     const info = await request.get(`https://discordbots.org/api/bots/${args.bot}`)
-        .set('Authorization', process.env.discordbotskey),
+        .set('Authorization', `${process.env.discordbotskey}`),
       infoEmbed = new MessageEmbed();
 
     if (info) {

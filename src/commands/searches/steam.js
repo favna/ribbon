@@ -74,7 +74,7 @@ module.exports = class SteamCommand extends Command {
 
   async run (msg, args) {
     startTyping(msg);
-    const steam = new SteamAPI(process.env.steamkey),
+    const steam = new SteamAPI(`${process.env.steamkey}`),
       steamEmbed = new MessageEmbed(),
       steamSearch = await request.get(`http://store.steampowered.com/search/?term=${args.game}`);
 

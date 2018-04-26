@@ -50,7 +50,7 @@ module.exports = class DBPostCommand extends Command {
   async run (msg) {
     startTyping(msg);
     const post = await request.post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
-      .set('Authorization', process.env.discordbotskey)
+      .set('Authorization', `${process.env.discordbotskey}`)
       .send({'server_count': this.client.guilds.size});
 
     if (post) {
