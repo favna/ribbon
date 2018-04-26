@@ -54,9 +54,9 @@ module.exports = class EShopFetchCommand extends Command {
 
   async run (msg) {
     startTyping(msg);
-    fs.writeFileSync(path.join(__dirname, '../../data/websearch/eshop.json'), JSON.stringify(await eshop.getGamesAmerica()), 'utf8');
+    fs.writeFileSync(path.join(__dirname, '../../data/databases/eshop.json'), JSON.stringify(await eshop.getGamesAmerica()), 'utf8');
 
-    if (fs.existsSync(path.join(__dirname, '../../data/websearch/eshop.json'))) {
+    if (fs.existsSync(path.join(__dirname, '../../data/databases/eshop.json'))) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
