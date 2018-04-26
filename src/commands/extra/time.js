@@ -69,7 +69,7 @@ module.exports = class TimeCommand extends Command {
   async getCords (city) {
     const cords = await request.get('https://maps.googleapis.com/maps/api/geocode/json?')
       .query('address', city)
-      .query('key', `${process.env.googleapikey}`);
+      .query('key', process.env.googleapikey);
 
     if (cords.ok) {
       return [cords.body.results[0].geometry.location.lat, cords.body.results[0].geometry.location.lng];

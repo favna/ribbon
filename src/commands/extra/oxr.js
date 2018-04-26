@@ -135,7 +135,7 @@ module.exports = class MoneyCommand extends Command {
   async run (msg, args) {
     startTyping(msg);
     const rates = await request.get('https://openexchangerates.org/api/latest.json')
-      .query('app_id', `${process.env.oxrkey}`)
+      .query('app_id', process.env.oxrkey)
       .query('prettyprint', false)
       .query('show_alternative', true);
 

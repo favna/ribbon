@@ -76,7 +76,7 @@ module.exports = class PlaySongCommand extends Command {
     });
 
     this.queue = new Map();
-    this.youtube = new YouTube(`${process.env.googleapikey}`);
+    this.youtube = new YouTube(process.env.googleapikey);
   }
 
   /* eslint-disable max-statements*/

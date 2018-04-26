@@ -70,7 +70,7 @@ module.exports = class OsuCommand extends Command {
     try {
       startTyping(msg);
       const osuData = await request.get('https://osu.ppy.sh/api/get_user')
-          .query('k', `${process.env.osukey}`)
+          .query('k', process.env.osukey)
           .query('u', args.player)
           .query('type', 'string')
           .set('Content-Type', 'application/json'),

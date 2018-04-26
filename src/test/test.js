@@ -29,9 +29,9 @@ const Ribbon = require('../Ribbon.js'),
 
 test('connect & disconnect', (timeout) => {
   timeout.timeoutAfter(30000);
-  timeout.ok(`${process.env.ribbontoken}`, 'discord token should be set');
+  timeout.ok(process.env.ribbontoken, 'discord token should be set');
 
-  const client = new Ribbon(`${process.env.ribbontoken}`, true);
+  const client = new Ribbon(process.env.ribbontoken, true);
 
   timeout.false(client.isReady, 'bot should not be ready');
   client.init();

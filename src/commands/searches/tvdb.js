@@ -69,12 +69,12 @@ module.exports = class TVCommand extends Command {
     startTyping(msg);
     const embed = new MessageEmbed(),
       search = await request.get('https://api.themoviedb.org/3/search/tv')
-        .query('api_key', `${process.env.moviedbkey}`)
+        .query('api_key', process.env.moviedbkey)
         .query('query', args.name);
 
     if (search.ok && search.body.total_results) {
       const details = await request.get(`https://api.themoviedb.org/3/tv/${search.body.results[0].id}`)
-        .query('api_key', `${process.env.moviedbkey}`);
+        .query('api_key', process.env.moviedbkey);
 
       if (details.ok) {
         const show = details.body;

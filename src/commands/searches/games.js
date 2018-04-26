@@ -86,7 +86,7 @@ module.exports = class GamesCommand extends Command {
     try {
       /* eslint-disable sort-vars*/
       const gameEmbed = new MessageEmbed(),
-        igdb = igdbapi(`${process.env.igdbkey}`),
+        igdb = igdbapi(process.env.igdbkey),
         gameInfo = await igdb.games({
           'search': args.game,
           'fields': ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],

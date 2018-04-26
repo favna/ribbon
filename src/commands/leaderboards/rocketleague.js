@@ -63,7 +63,7 @@ module.exports = class RocketLeagueCommand extends Command {
 
     try {
       const rocketData = await request.get('https://api.rocketleaguestats.com/v1/leaderboard/stat')
-          .set('Authorization', `${process.env.rocketleaguekey}`)
+          .set('Authorization', process.env.rocketleaguekey)
           .query('type', 'goals'),
         rocketEmbed = new MessageEmbed(),
         rocketEngine = {

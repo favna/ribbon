@@ -69,7 +69,7 @@ module.exports = class YouTubeCommand extends Command {
   async run (msg, args) {
     startTyping(msg);
     const res = await request.get('https://www.googleapis.com/youtube/v3/search')
-      .query('key', `${process.env.googleapikey}`)
+      .query('key', process.env.googleapikey)
       .query('part', 'snippet')
       .query('maxResults', '1')
       .query('q', args.query)

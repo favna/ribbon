@@ -28,9 +28,8 @@
 
 const path = require('path'),
   Ribbon = require(path.join(__dirname, 'Ribbon.js')),
-  stripe = Boolean(process.argv[2]),
   start = function () {
-    new Ribbon(stripe ? `${process.env.stripetoken}` : `${process.env.ribbontoken}`).init();
+    new Ribbon(process.argv[2] ? process.env.stripetoken : process.env.ribbontoken).init();
   };
 
 start();

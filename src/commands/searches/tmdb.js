@@ -69,13 +69,13 @@ module.exports = class MovieCommand extends Command {
     startTyping(msg);
     const embed = new MessageEmbed(),
       search = await request.get('https://api.themoviedb.org/3/search/movie')
-        .query('api_key', `${process.env.moviedbkey}`)
+        .query('api_key', process.env.moviedbkey)
         .query('query', args.name)
         .query('include_adult', false);
 
     if (search.ok && search.body.total_results > 0) {
       const details = await request.get(`https://api.themoviedb.org/3/movie/${search.body.results[0].id}`)
-        .query('api_key', `${process.env.moviedbkey}`);
+        .query('api_key', process.env.moviedbkey);
 
       if (details.ok) {
         const movie = details.body;
