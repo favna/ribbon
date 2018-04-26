@@ -50,7 +50,6 @@ module.exports = class RocketLeagueCommand extends Command {
       'format': 'BattleTag',
       'examples': ['rocketleague'],
       'guildOnly': false,
-      'ownerOnly': true,
       'throttling': {
         'usages': 2,
         'duration': 3
