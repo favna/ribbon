@@ -1,8 +1,8 @@
 # Node modules need to be installed through yarn
 node_modules/
 
-# Key files
-src/*.json
+# Environment variables
+.env
 
 # Any logs created
 *.log

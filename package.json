@@ -47,6 +47,7 @@
     "did-you-mean": "0.0.1",
     "discord.js": "Favna/discord.js#main",
     "discord.js-commando": "Favna/Commando#ribbon",
+    "dotenv": "^5.0.1",
     "eightball": "^1.0.1",
     "erlpack": "discordapp/erlpack",
     "fuse.js": "^3.2.0",

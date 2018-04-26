@@ -26,6 +26,8 @@
 
 /* eslint-disable no-mixed-requires, sort-vars */
 
+require('dotenv').config();
+
 const path = require('path'),
   Ribbon = require(path.join(__dirname, 'Ribbon.js')),
   start = function () {
