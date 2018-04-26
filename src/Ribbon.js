@@ -28,10 +28,9 @@ const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
   request = require('snekfetch'),
-  {Client, FriendlyError, BetterSQLiteProvider} = require('discord.js-commando'),
+  {Client, FriendlyError, SyncSQLiteProvider} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {twitchclientid} = require(path.join(__dirname, 'auth.json'));
+  {oneLine, stripIndents} = require('common-tags');
 /* eslint-enable sort-vars */
 
 class Ribbon {
@@ -284,11 +283,11 @@ class Ribbon {
             /* eslint-disable sort-vars*/
             const userData = await request.get('https://api.twitch.tv/kraken/users')
                 .set('Accept', 'application/vnd.twitchtv.v5+json')
-                .set('Client-ID', twitchclientid)
+                .set('Client-ID', process.env.twitchclientid)
                 .query('login', newActivity.url.split('/')[3]),
               streamData = await request.get('https://api.twitch.tv/kraken/streams')
                 .set('Accept', 'application/vnd.twitchtv.v5+json')
-                .set('Client-ID', twitchclientid)
+                .set('Client-ID', process.env.twitchclientid)
                 .query('channel', userData.body.users[0]._id),
               twitchChannel = this.client.provider.get(curGuild, 'twitchchannel', null),
               twitchEmbed = new MessageEmbed();
@@ -386,8 +385,8 @@ class Ribbon {
 
     const db = new Database(path.join(__dirname, 'data/databases/settings.sqlite3'));
 
-    this.client.setBetterProvider(
-      new BetterSQLiteProvider(db)  
+    this.client.setProvider(
+      new SyncSQLiteProvider(db)  
     );
 
     this.client.registry

@@ -39,7 +39,6 @@ const moment = require('moment'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {googleapikey} = require('../../auth.json'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class YouTubeCommand extends Command {
@@ -70,7 +69,7 @@ module.exports = class YouTubeCommand extends Command {
   async run (msg, args) {
     startTyping(msg);
     const res = await request.get('https://www.googleapis.com/youtube/v3/search')
-      .query('key', googleapikey)
+      .query('key', process.env.googleapikey)
       .query('part', 'snippet')
       .query('maxResults', '1')
       .query('q', args.query)

@@ -44,7 +44,6 @@ const currencySymbol = require('currency-symbol-map'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oxrAppID} = require('../../auth.json'),
   {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
@@ -136,7 +135,7 @@ module.exports = class MoneyCommand extends Command {
   async run (msg, args) {
     startTyping(msg);
     const rates = await request.get('https://openexchangerates.org/api/latest.json')
-      .query('app_id', oxrAppID)
+      .query('app_id', process.env.oxrkey)
       .query('prettyprint', false)
       .query('show_alternative', true);
 

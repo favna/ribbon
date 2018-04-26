@@ -38,7 +38,6 @@ const cheerio = require('cheerio'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {googleapikey, imageEngineKey} = require('../../auth.json'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class ImageCommand extends Command {
@@ -75,8 +74,8 @@ module.exports = class ImageCommand extends Command {
     const embed = new MessageEmbed();
 
     let res = await request.get('https://www.googleapis.com/customsearch/v1')
-      .query('cx', imageEngineKey)
-      .query('key', googleapikey)
+      .query('cx', process.env.imagekey)
+      .query('key', process.env.googleapikey)
       .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
       .query('searchType', 'image')
       .query('q', args.query);

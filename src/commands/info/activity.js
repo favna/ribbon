@@ -40,8 +40,7 @@ const Spotify = require('spotify-web-api-node'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js'),
-  {spotifyID, spotifySecret} = require('../../auth.json');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class ActivityCommand extends Command {
   constructor (client) {
@@ -86,8 +85,8 @@ module.exports = class ActivityCommand extends Command {
       ext = this.fetchExt(ava),
       gameList = await request.get('https://canary.discordapp.com/api/v6/games'),
       spotifyApi = new Spotify({
-        'clientId': spotifyID,
-        'clientSecret': spotifySecret
+        'clientId': process.env.spotifyid,
+        'clientSecret': process.env.spotifysecret
       });
 
     embed

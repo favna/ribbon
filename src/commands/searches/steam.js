@@ -40,7 +40,6 @@ const SteamAPI = require('steamapi'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {steamAPIKey} = require('../../auth.json'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class SteamCommand extends Command {
@@ -75,7 +74,7 @@ module.exports = class SteamCommand extends Command {
 
   async run (msg, args) {
     startTyping(msg);
-    const steam = new SteamAPI(steamAPIKey),
+    const steam = new SteamAPI(process.env.steamkey),
       steamEmbed = new MessageEmbed(),
       steamSearch = await request.get(`http://store.steampowered.com/search/?term=${args.game}`);
 

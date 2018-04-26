@@ -31,8 +31,7 @@
  * @returns {Message} Confirmation the update was made
  */
 
-const auth = require('../../auth.json'),
-  request = require('snekfetch'),
+const request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
@@ -51,7 +50,7 @@ module.exports = class DBPostCommand extends Command {
   async run (msg) {
     startTyping(msg);
     const post = await request.post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
-      .set('Authorization', auth.discordbotsAPIKey)
+      .set('Authorization', process.env.discordbotskey)
       .send({'server_count': this.client.guilds.size});
 
     if (post) {

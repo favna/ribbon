@@ -38,7 +38,6 @@ const moment = require('moment'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {discordbotsAPIKey} = require('../../auth.json'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class DiscordBotsCommand extends Command {
@@ -70,7 +69,7 @@ module.exports = class DiscordBotsCommand extends Command {
   async run (msg, args) {
     startTyping(msg);
     const info = await request.get(`https://discordbots.org/api/bots/${args.bot}`)
-        .set('Authorization', discordbotsAPIKey),
+        .set('Authorization', process.env.discordbotskey),
       infoEmbed = new MessageEmbed();
 
     if (info) {

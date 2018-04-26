@@ -36,7 +36,6 @@
 const request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {rocketleagueapikey} = require('../../auth.json'),
   {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
@@ -64,7 +63,7 @@ module.exports = class RocketLeagueCommand extends Command {
 
     try {
       const rocketData = await request.get('https://api.rocketleaguestats.com/v1/leaderboard/stat')
-          .set('Authorization', rocketleagueapikey)
+          .set('Authorization', process.env.rocketleaguekey)
           .query('type', 'goals'),
         rocketEmbed = new MessageEmbed(),
         rocketEngine = {

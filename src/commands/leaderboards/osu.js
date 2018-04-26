@@ -38,7 +38,6 @@ const _ = require('underscore'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {osuapikey} = require('../../auth.json'),
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class OsuCommand extends Command {
@@ -71,7 +70,7 @@ module.exports = class OsuCommand extends Command {
     try {
       startTyping(msg);
       const osuData = await request.get('https://osu.ppy.sh/api/get_user')
-          .query('k', osuapikey)
+          .query('k', process.env.osukey)
           .query('u', args.player)
           .query('type', 'string')
           .set('Content-Type', 'application/json'),

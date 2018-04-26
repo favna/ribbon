@@ -39,7 +39,6 @@ jobs:
       - run: source .bashrc
       - run: sudo yarn add sqlite
       - run: sudo yarn install
-      - run: openssl aes-256-cbc -d -k "$authdecrypt" -in src/auth.json.enc -out src/auth.json
       - save_cache:
           paths:
             - node_modules

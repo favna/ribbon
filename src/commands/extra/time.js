@@ -39,8 +39,7 @@ const request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js'),
-  {timezonedbkey, googleapikey} = require('../../auth.json');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class TimeCommand extends Command {
   constructor (client) {
@@ -70,7 +69,7 @@ module.exports = class TimeCommand extends Command {
   async getCords (city) {
     const cords = await request.get('https://maps.googleapis.com/maps/api/geocode/json?')
       .query('address', city)
-      .query('key', googleapikey);
+      .query('key', process.env.googleapikey);
 
     if (cords.ok) {
       return [cords.body.results[0].geometry.location.lat, cords.body.results[0].geometry.location.lng];
@@ -85,7 +84,7 @@ module.exports = class TimeCommand extends Command {
 
     if (cords) {
       const time = await request.get('http://api.timezonedb.com/v2/get-time-zone')
-        .query('key', timezonedbkey)
+        .query('key', process.envtimezonedbkey)
         .query('format', 'json')
         .query('by', 'position')
         .query('lat', cords[0])

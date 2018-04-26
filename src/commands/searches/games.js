@@ -38,7 +38,6 @@ const igdbapi = require('igdb-api-node').default,
   moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {igdbAPIKey} = require('../../auth.json'),
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class GamesCommand extends Command {
@@ -87,7 +86,7 @@ module.exports = class GamesCommand extends Command {
     try {
       /* eslint-disable sort-vars*/
       const gameEmbed = new MessageEmbed(),
-        igdb = igdbapi(igdbAPIKey),
+        igdb = igdbapi(process.env.igdbkey),
         gameInfo = await igdb.games({
           'search': args.game,
           'fields': ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],

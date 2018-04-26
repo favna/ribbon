@@ -9,8 +9,6 @@ Build-In HelpCommand - Displays a list of available commands, or detailed inform
 
 **Returns**: <code>[MessageEmbed]</code> - Multiple MessageEmbeds showing all commands  
 **Category**: Build-In  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
-**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -33,8 +31,6 @@ Omitting the parameter will simply print your current one.
 
 **Returns**: <code>Message</code> - Message with the current or new prefix  
 **Category**: Build-In  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
-**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -56,8 +52,6 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 
 **Returns**: <code>Message</code> - Reply message with the bot's ping  
 **Category**: Build-In  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
-**License**: GPL-3.0-or-later  
 
 ## Modules
 
@@ -2239,8 +2233,6 @@ Command-Management GroupsCommand - Shows all command groups
 
 **Returns**: <code>Message</code> - Reply message list of groups  
 **Category**: Command-Management  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
-**License**: GPL-3.0-or-later  
 
 <a name="module_enable"></a>
 
@@ -2250,8 +2242,6 @@ Command-Management EnableCommand - Enables a command or command group
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
-**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2270,8 +2260,6 @@ Command-Management DisableCommand - Disables a command or command group
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
-**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2290,8 +2278,6 @@ Command-Management ReloadCommand - Reloads a command or command group
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
-**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2310,8 +2296,6 @@ Command-Management LoadCommand - Loads a new command
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
-**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2330,8 +2314,6 @@ Command-Management UnloadCommand - Unloads a command
 
 **Returns**: <code>Message</code>
 **Category**: Command-Management  
-**Author**: Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>  
-**License**: GPL-3.0-or-later  
 
 | Param | Type | Description |
 | --- | --- | --- |

@@ -49,7 +49,7 @@ const path = require('path'),
   {escapeMarkdown} = require('discord.js'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js'),
-  {DEFAULT_VOLUME, GOOGLE_API, MAX_LENGTH, MAX_SONGS, PASSES} = require(path.join(__dirname, '../../data/melody/GlobalData'));
+  {DEFAULT_VOLUME, MAX_LENGTH, MAX_SONGS, PASSES} = require(path.join(__dirname, '../../data/melody/GlobalData'));
 
 module.exports = class PlaySongCommand extends Command {
   constructor (client) {
@@ -76,15 +76,10 @@ module.exports = class PlaySongCommand extends Command {
     });
 
     this.queue = new Map();
-    this.youtube = new YouTube(GOOGLE_API);
+    this.youtube = new YouTube(process.env.googleapikey);
   }
 
   /* eslint-disable max-statements*/
-
-  /**
-   * @todo Reimplement Music Playlist support
-   * @body No guarantees here but I will try...
-   */
 
   async run (msg, args) {
     startTyping(msg);

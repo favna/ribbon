@@ -23,10 +23,7 @@
  *         or requiring that modified versions of such material be marked in
  *         reasonable ways as different from the original version.
  */
-const {googleapikey} = require('../../auth.json');
-
 const DEFAULT_VOLUME = 1, // eslint-disable-line one-var
-  GOOGLE_API = googleapikey,
   MAX_LENGTH = 10,
   MAX_SONGS = 3,
   PAGINATED_ITEMS = 5,
@@ -34,7 +31,6 @@ const DEFAULT_VOLUME = 1, // eslint-disable-line one-var
 	
 module.exports = {
   DEFAULT_VOLUME,
-  GOOGLE_API,
   MAX_LENGTH,
   MAX_SONGS,
   PAGINATED_ITEMS,

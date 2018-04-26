@@ -39,8 +39,7 @@ const cheerio = require('cheerio'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js'),
-  {googleapikey, searchEngineKey} = require('../../auth.json');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class GoogleCommand extends Command {
   constructor (client) {
@@ -74,7 +73,7 @@ module.exports = class GoogleCommand extends Command {
 	async run (msg, args) {
 		startTyping(msg);
 		const knowledgeRes = await request.get('https://kgsearch.googleapis.com/v1/entities:search')
-			.query('key', googleapikey)
+			.query('key', process.env.googleapikey)
 			.query('limit', 1)
 			.query('indent', true)
 			.query('query', args.query);
@@ -106,8 +105,8 @@ module.exports = class GoogleCommand extends Command {
 		}
 
 		const normalRes = await request.get('https://www.googleapis.com/customsearch/v1') // eslint-disable-line one-var
-			.query('key', googleapikey)
-			.query('cx', searchEngineKey)
+			.query('key', process.env.googleapikey)
+			.query('cx', process.env.searchkey)
 			.query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
 			.query('q', args.query);
 
