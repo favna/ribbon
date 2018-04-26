@@ -6,7 +6,7 @@ machine:
   node:
     version: 8.11.1
   npm:
-    version: 5.7.1
+    version: 6.0.0
 dependencies:
   pre:
     - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -32,13 +32,9 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
-      - run: sudo apt-get update -y && sudo apt-get upgrade -y
-      - run: sudo apt-get install -y libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev build-essential g++ python3.4
+      - run: sudo apt-get install -y build-essential
       - run: sudo npm install -g node-pre-gyp node-gyp yarn
-      - run: sudo echo "alias python=python3" >> .bashrc
-      - run: source .bashrc
-      - run: sudo yarn add sqlite
-      - run: sudo yarn install
+      - run: yarn install
       - save_cache:
           paths:
             - node_modules
