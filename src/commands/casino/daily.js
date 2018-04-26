@@ -43,15 +43,15 @@ const Database = require('better-sqlite3'),
 module.exports = class DailyCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'daily',
-      'memberName': 'daily',
-      'group': 'casino',
-      'aliases': ['topup', 'bonus'],
-      'description': 'Receive your daily cash top up of 500 chips',
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'daily',
+      memberName: 'daily',
+      group: 'casino',
+      aliases: ['topup', 'bonus'],
+      description: 'Receive your daily cash top up of 500 chips',
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }
@@ -63,7 +63,7 @@ module.exports = class DailyCommand extends Command {
     let returnMsg = '';
 
     balEmbed
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({format: 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
@@ -80,8 +80,8 @@ module.exports = class DailyCommand extends Command {
 
         if (dura.asHours() <= 0) {
           conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance, lasttopup=$date WHERE userID="${msg.author.id}";`).run({
-            'balance': query.balance + 500,
-            'date': moment().format('YYYY-MM-DD HH:mm')
+            balance: query.balance + 500,
+            date: moment().format('YYYY-MM-DD HH:mm')
           });
 
           chipStr = `${query.balance} ➡ ${query.balance + 500}`;
@@ -106,9 +106,9 @@ module.exports = class DailyCommand extends Command {
       }
       stopTyping(msg);
       conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
-        'userid': msg.author.id,
-        'balance': '500',
-        'date': moment().format('YYYY-MM-DD HH:mm')
+        userid: msg.author.id,
+        balance: '500',
+        date: moment().format('YYYY-MM-DD HH:mm')
       });
     } catch (e) {
       stopTyping(msg);
@@ -116,9 +116,9 @@ module.exports = class DailyCommand extends Command {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
 
         conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
-          'userid': msg.author.id,
-          'balance': '500',
-          'date': moment().format('YYYY-MM-DD HH:mm')
+          userid: msg.author.id,
+          balance: '500',
+          date: moment().format('YYYY-MM-DD HH:mm')
         });
       } else {
         console.error(`	 ${stripIndents`Fatal SQL Error occurred while topping up someones balance!

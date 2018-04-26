@@ -44,29 +44,29 @@ const moment = require('moment'),
 module.exports = class banCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'ban',
-      'memberName': 'ban',
-      'group': 'moderation',
-      'aliases': ['b', 'banana'],
-      'description': 'Bans a member from the server',
-      'format': 'MemberID|MemberName(partial or full) [ReasonForBanning]',
-      'examples': ['ban JohnDoe annoying'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'ban',
+      memberName: 'ban',
+      group: 'moderation',
+      aliases: ['b', 'banana'],
+      description: 'Bans a member from the server',
+      format: 'MemberID|MemberName(partial or full) [ReasonForBanning]',
+      examples: ['ban JohnDoe annoying'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'Which member should I ban?',
-          'type': 'member'
+          key: 'member',
+          prompt: 'Which member should I ban?',
+          type: 'member'
         },
         {
-          'key': 'reason',
-          'prompt': 'What is the reason for this banishment?',
-          'type': 'string',
-          'default': ''
+          key: 'reason',
+          prompt: 'What is the reason for this banishment?',
+          type: 'string',
+          default: ''
         }
       ]
     });
@@ -96,8 +96,8 @@ module.exports = class banCommand extends Command {
     }
 
     args.member.ban({
-      'days': args.keepmessages ? 0 : 1,
-      'reason': args.reason !== '' ? args.reason : 'No reason given by staff'
+      days: args.keepmessages ? 0 : 1,
+      reason: args.reason !== '' ? args.reason : 'No reason given by staff'
     });
 
     const embed = new MessageEmbed(),

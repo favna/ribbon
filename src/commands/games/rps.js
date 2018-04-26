@@ -42,20 +42,20 @@ const random = require('node-random'),
 module.exports = class RockPaperScissorCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'rps',
-      'memberName': 'rps',
-      'group': 'games',
-      'aliases': ['rockpaperscissors'],
-      'description': 'Play Rock Paper Scissors against random.org randomization',
-      'format': 'HandToPlay',
-      'examples': ['rps Rock'],
-      'guildOnly': false,
-      'args': [
+      name: 'rps',
+      memberName: 'rps',
+      group: 'games',
+      aliases: ['rockpaperscissors'],
+      description: 'Play Rock Paper Scissors against random.org randomization',
+      format: 'HandToPlay',
+      examples: ['rps Rock'],
+      guildOnly: false,
+      args: [
         {
-          'key': 'hand',
-          'prompt': 'Do you play rock, paper or scissors?',
-          'type': 'string',
-          'validate': (hand) => {
+          key: 'hand',
+          prompt: 'Do you play rock, paper or scissors?',
+          type: 'string',
+          validate: (hand) => {
             const validHands = ['rock', 'paper', 'scissors'];
 
             if (validHands.includes(hand.toLowerCase())) {
@@ -64,7 +64,7 @@ module.exports = class RockPaperScissorCommand extends Command {
 
             return `Has to be one of ${validHands.join(', ')}`;
           },
-          'parse': p => p.toLowerCase()
+          parse: p => p.toLowerCase()
         }
       ]
     });
@@ -73,9 +73,9 @@ module.exports = class RockPaperScissorCommand extends Command {
   run (msg, args) {
     startTyping(msg);
     random.integers({
-      'number': 1,
-      'minimum': 1,
-      'maximum': 3
+      number: 1,
+      minimum: 1,
+      maximum: 3
     }, (error, randoms) => { // eslint-disable-line complexity
       if (!error) {
         const rpsEmbed = new MessageEmbed();

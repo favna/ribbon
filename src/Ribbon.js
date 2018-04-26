@@ -34,26 +34,26 @@ const Database = require('better-sqlite3'),
 /* eslint-enable sort-vars */
 
 class Ribbon {
-  constructor (token, test) {
+  constructor(token, test) {
     this.token = token;
     this.client = new Client({
-      'commandPrefix': '!',
-      'owner': '112001393140723712',
-      'selfbot': false,
-      'unknownCommandResponse': false,
-      'presence': {
-        'status': 'online',
-        'activity': {
-          'application': '376520643862331396',
-          'name': '@Ribbon help',
-          'type': 'WATCHING',
-          'details': 'Made by Favna',
-          'state': 'https://favna.xyz/ribbon',
-          'assets': {
-            'largeImage': '385133227997921280',
-            'smallImage': '385133144245927946',
-            'largeText': 'Invite me to your server!',
-            'smallText': 'Look at the website!'
+      commandPrefix: '!',
+      owner: '112001393140723712',
+      selfbot: false,
+      unknownCommandResponse: false,
+      presence: {
+        status: 'online',
+        activity: {
+          application: '376520643862331396',
+          name: '@Ribbon help',
+          type: 'WATCHING',
+          details: 'Made by Favna',
+          state: 'https://favna.xyz/ribbon',
+          assets: {
+            largeImage: '385133227997921280',
+            smallImage: '385133144245927946',
+            largeText: 'Invite me to your server!',
+            smallText: 'Look at the website!'
           }
         }
       }
@@ -62,7 +62,7 @@ class Ribbon {
     this.testrun = test ? test : false;
   }
 
-  checkReminders () {
+  checkReminders() {
     const conn = new Database(path.join(__dirname, 'data/databases/reminders.sqlite3'));
 
     try {
@@ -74,19 +74,19 @@ class Ribbon {
 
         if (dura.asMinutes() <= 0) {
           this.client.users.resolve(query[row].userID).send({
-            'embed': {
-              'color': 10610610,
-              'description': query[row].remindText,
-              'author': {
-                'name': 'Ribbon Reminders',
-                'icon_url': this.client.user.displayAvatarURL({'format': 'png'})
+            embed: {
+              color: 10610610,
+              description: query[row].remindText,
+              author: {
+                name: 'Ribbon Reminders',
+                iconURL: this.client.user.displayAvatarURL({format: 'png'})
               },
-              'thumbnail': {'url': 'https://favna.xyz/images/ribbonhost/reminders.png'}
+              thumbnail: {url: 'https://favna.xyz/images/ribbonhost/reminders.png'}
             }
           });
           conn.prepare('DELETE FROM "reminders" WHERE userID = $userid AND remindTime = $remindTime').run({
-            'userid': query[row].userID,
-            'remindTime': query[row].remindTime
+            userid: query[row].userID,
+            remindTime: query[row].remindTime
           });
         }
       }
@@ -97,7 +97,7 @@ class Ribbon {
     }
   }
 
-  lotto () {
+  lotto() {
     const conn = new Database(path.join(__dirname, 'data/databases/casino.sqlite3'));
 
     try {
@@ -110,7 +110,7 @@ class Ribbon {
 
         guildData[winner].balance += 2000;
 
-        conn.prepare(`UPDATE "${tables[row].name}" SET balance=$balance WHERE userID="${guildData[winner].userID}"`).run({'balance': guildData[winner].balance});
+        conn.prepare(`UPDATE "${tables[row].name}" SET balance=$balance WHERE userID="${guildData[winner].userID}"`).run({balance: guildData[winner].balance});
 
         // eslint-disable-next-line one-var
         const defaultChannel = this.client.guilds.resolve(tables[row].name).systemChannel,
@@ -123,14 +123,14 @@ class Ribbon {
           .setColor('#7CFC00')
           .setDescription(`Congratulations <@${guildData[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
           .setAuthor(this.client.guilds.resolve(tables[row].name).members.get(guildData[winner].userID).displayName,
-            this.client.guilds.resolve(tables[row].name).members.get(guildData[winner].userID).user.displayAvatarURL({'format': 'png'}))
+            this.client.guilds.resolve(tables[row].name).members.get(guildData[winner].userID).user.displayAvatarURL({format: 'png'}))
           .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png')
           .addField('Balance', `${prevBal} ➡ ${guildData[winner].balance}`);
 
         if (winnerLastMessageChannelPermitted) {
-          winnerLastMessageChannel.send(`<@${guildData[winner].userID}>`, {'embed': winnerEmbed});
+          winnerLastMessageChannel.send(`<@${guildData[winner].userID}>`, {embed: winnerEmbed});
         } else if (defaultChannel) {
-          defaultChannel.send(`<@${guildData[winner].userID}>`, {'embed': winnerEmbed});
+          defaultChannel.send(`<@${guildData[winner].userID}>`, {embed: winnerEmbed});
         }
       }
     } catch (err) {
@@ -140,7 +140,7 @@ class Ribbon {
     }
   }
 
-  forceStopTyping () {
+  forceStopTyping() {
     const allChannels = this.client.channels;
 
     for (const channel of allChannels.values()) {
@@ -153,7 +153,7 @@ class Ribbon {
   }
 
 
-  onCmdBlock () {
+  onCmdBlock() {
     return (msg, reason) => {
       console.log(oneLine`
 		Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
@@ -161,7 +161,7 @@ class Ribbon {
     };
   }
 
-  onCmdErr () {
+  onCmdErr() {
     return (cmd, err) => {
       if (err instanceof FriendlyError) {
         return;
@@ -170,7 +170,7 @@ class Ribbon {
     };
   }
 
-  onCommandPrefixChange () {
+  onCommandPrefixChange() {
     return (guild, prefix) => {
       console.log(oneLine` 
 			Prefix ${prefix === '' ? 'removed' : `changed to ${prefix || 'the default'}`}
@@ -179,7 +179,7 @@ class Ribbon {
     };
   }
 
-  onCmdStatusChange () {
+  onCmdStatusChange() {
     return (guild, command, enabled) => {
       console.log(oneLine`
             Command ${command.groupID}:${command.memberName}
@@ -189,13 +189,13 @@ class Ribbon {
     };
   }
 
-  onDisconnect () {
+  onDisconnect() {
     return () => {
       console.warn('Disconnected!');
     };
   }
 
-  onError () {
+  onError() {
     return (e) => {
       console.error(e);
       console.error(`${stripIndents`A websocket error occurred!
@@ -204,7 +204,7 @@ class Ribbon {
     };
   }
 
-  onGroupStatusChange () {
+  onGroupStatusChange() {
     return (guild, group, enabled) => {
       console.log(oneLine`
             Group ${group.id}
@@ -214,7 +214,7 @@ class Ribbon {
     };
   }
 
-  onGuildMemberAdd () {
+  onGuildMemberAdd() {
     return (member) => {
       if (this.client.provider.get(member.guild, 'memberlogs', true)) {
         const embed = new MessageEmbed(),
@@ -223,7 +223,7 @@ class Ribbon {
               ? member.guild.channels.find('name', 'member-logs').id
               : null);
 
-        embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
+        embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({format: 'png'}))
           .setFooter(`User joined | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
           .setColor('#80F31F');
 
@@ -240,7 +240,7 @@ class Ribbon {
     };
   }
 
-  onGuildMemberRemove () {
+  onGuildMemberRemove() {
     return (member) => {
       if (this.client.provider.get(member.guild, 'memberlogs', true)) {
         const embed = new MessageEmbed(),
@@ -249,7 +249,7 @@ class Ribbon {
               ? member.guild.channels.find('name', 'member-logs').id
               : null);
 
-        embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({'format': 'png'}))
+        embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({format: 'png'}))
           .setFooter(`User left | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
           .setColor('#F4BF42');
 
@@ -261,7 +261,7 @@ class Ribbon {
     };
   }
 
-  onPresenceUpdate () {
+  onPresenceUpdate() {
     return async (oldMember, newMember) => {
       if (this.client.provider.get(newMember.guild, 'twitchmonitors', []).includes(newMember.id)) {
         if (this.client.provider.get(newMember.guild, 'twitchnotifiers', false)) {
@@ -273,10 +273,10 @@ class Ribbon {
             oldActivity = oldMember.presence.activity;
 
           if (!oldActivity) {
-            oldActivity = {'url': 'placeholder'};
+            oldActivity = {url: 'placeholder'};
           }
           if (!newActivity) {
-            newActivity = {'url': 'placeholder'};
+            newActivity = {url: 'placeholder'};
           }
           if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
 
@@ -313,7 +313,7 @@ class Ribbon {
                 .setImage(streamData.body.streams[0].preview.large);
             }
             if (twitchChannel) {
-              curGuild.channels.get(twitchChannel).send({'embed': twitchEmbed});
+              curGuild.channels.get(twitchChannel).send({embed: twitchEmbed});
             }
           }
         }
@@ -321,7 +321,7 @@ class Ribbon {
     };
   }
 
-  onReady () {
+  onReady() {
     return () => {
       console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
       this.isReady = true;
@@ -344,13 +344,13 @@ class Ribbon {
     };
   }
 
-  onReconnect () {
+  onReconnect() {
     return () => {
       console.warn('Reconnecting...');
     };
   }
 
-  onUnknownCommand () {
+  onUnknownCommand() {
     return (msg) => {
       if (this.client.provider.get(msg.guild, 'unknownmessages', true)) {
         return msg.reply(stripIndents`${oneLine`That is not a registered command.
@@ -365,7 +365,7 @@ class Ribbon {
   }
 
   /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
-  init () {
+  init() {
     this.client
       .on('commandBlocked', this.onCmdBlock())
       .on('commandError', this.onCmdErr())
@@ -386,7 +386,7 @@ class Ribbon {
     const db = new Database(path.join(__dirname, 'data/databases/settings.sqlite3'));
 
     this.client.setProvider(
-      new SyncSQLiteProvider(db)  
+      new SyncSQLiteProvider(db)
     );
 
     this.client.registry
@@ -408,18 +408,18 @@ class Ribbon {
       .registerDefaultGroups()
       .registerDefaultTypes()
       .registerDefaultCommands({
-        'help': true,
-        'prefix': true,
-        'ping': true,
-        'eval_': true,
-        'commandState': true
+        help: true,
+        prefix: true,
+        ping: true,
+        eval_: true,
+        commandState: true
       })
       .registerCommandsIn(path.join(__dirname, 'commands'));
 
     return this.client.login(this.token);
   }
 
-  deinit () {
+  deinit() {
     this.isReady = false;
 
     return this.client.destroy();

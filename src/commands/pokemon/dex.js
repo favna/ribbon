@@ -50,24 +50,24 @@ const Fuse = require('fuse.js'),
 module.exports = class DexCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'dex',
-      'memberName': 'dex',
-      'group': 'pokemon',
-      'aliases': ['pokedex', 'dexfind', 'df', 'rotom', 'dexter', 'dexdata'],
-      'description': 'Get the info on a Pokémon',
-      'format': 'PokemonName',
-      'examples': ['dex Dragonite'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'dex',
+      memberName: 'dex',
+      group: 'pokemon',
+      aliases: ['pokedex', 'dexfind', 'df', 'rotom', 'dexter', 'dexdata'],
+      description: 'Get the info on a Pokémon',
+      format: 'PokemonName',
+      examples: ['dex Dragonite'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'pokemon',
-          'prompt': 'Get info from which Pokémon?',
-          'type': 'string',
-          'parse': p => p.toLowerCase()
+          key: 'pokemon',
+          prompt: 'Get info from which Pokémon?',
+          type: 'string',
+          parse: p => p.toLowerCase()
         }
       ]
     });
@@ -113,22 +113,22 @@ module.exports = class DexCommand extends Command {
 
     /* eslint-disable sort-vars */
     const aliasoptions = {
-        'shouldSort': true,
-        'threshold': 0.2,
-        'location': 0,
-        'distance': 100,
-        'maxPatternLength': 32,
-        'minMatchCharLength': 1,
-        'keys': ['alias']
+        shouldSort: true,
+        threshold: 0.2,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: ['alias']
       },
       pokeoptions = {
-        'shouldSort': true,
-        'threshold': 0.6,
-        'location': 0,
-        'distance': 100,
-        'maxPatternLength': 32,
-        'minMatchCharLength': 1,
-        'keys': ['num', 'species']
+        shouldSort: true,
+        threshold: 0.6,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: ['num', 'species']
       },
       aliasFuse = new Fuse(PokeAliases, aliasoptions),
       pokeFuse = new Fuse(BattlePokedex, pokeoptions),
@@ -139,11 +139,11 @@ module.exports = class DexCommand extends Command {
 
     if (pokeSearch.length) {
       const pokeData = {
-        'abilities': '',
-        'evos': `**${capitalizeFirstLetter(pokeSearch[0].species)}**`,
-        'flavors': '*PokéDex data not found for this Pokémon*',
-        'genders': '',
-        'sprite': ''
+        abilities: '',
+        evos: `**${capitalizeFirstLetter(pokeSearch[0].species)}**`,
+        flavors: '*PokéDex data not found for this Pokémon*',
+        genders: '',
+        sprite: ''
       };
 
       if (pokeSearch[0].prevo) {
@@ -243,9 +243,9 @@ module.exports = class DexCommand extends Command {
 
         for (const field in dexEmbed.fields) {
           fields.push({
-            'name': zalgo(dexEmbed.fields[field].name),
-            'value': zalgo(dexEmbed.fields[field].value),
-            'inline': dexEmbed.fields[field].inline
+            name: zalgo(dexEmbed.fields[field].name),
+            value: zalgo(dexEmbed.fields[field].value),
+            inline: dexEmbed.fields[field].inline
           });
         }
 

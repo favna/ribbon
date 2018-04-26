@@ -41,24 +41,24 @@ const {Command} = require('discord.js-commando'),
 module.exports = class MemberLogsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'memberlogs',
-      'memberName': 'memberlogs',
-      'group': 'moderation',
-      'aliases': ['tml', 'togglemember', 'togglememberlogs'],
-      'description': 'Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel',
-      'format': 'Enable|Disable',
-      'examples': ['memberlogs enable'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'memberlogs',
+      memberName: 'memberlogs',
+      group: 'moderation',
+      aliases: ['tml', 'togglemember', 'togglememberlogs'],
+      description: 'Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel',
+      format: 'Enable|Disable',
+      examples: ['memberlogs enable'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'option',
-          'prompt': 'Enable or disable memberlogs?',
-          'type': 'boolean',
-          'validate': (bool) => {
+          key: 'option',
+          prompt: 'Enable or disable memberlogs?',
+          type: 'boolean',
+          validate: (bool) => {
             const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 
             if (validBools.includes(bool.toLowerCase())) {

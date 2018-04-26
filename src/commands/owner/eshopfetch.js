@@ -41,14 +41,14 @@ const eshop = require('nintendo-switch-eshop'),
 module.exports = class EShopFetchCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'eshopfetch',
-      'memberName': 'eshopfetch',
-      'group': 'owner',
-      'aliases': ['efetch'],
-      'description': 'Fetches latest games list from the Nintendo Switch eShop',
-      'examples': ['eshopfetch'],
-      'guildOnly': false,
-      'ownerOnly': true
+      name: 'eshopfetch',
+      memberName: 'eshopfetch',
+      group: 'owner',
+      aliases: ['efetch'],
+      description: 'Fetches latest games list from the Nintendo Switch eShop',
+      examples: ['eshopfetch'],
+      guildOnly: false,
+      ownerOnly: true
     });
   }
 

@@ -46,29 +46,29 @@ const Database = require('better-sqlite3'),
 module.exports = class GiveCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'give',
-      'memberName': 'give',
-      'group': 'casino',
-      'aliases': ['donate'],
-      'description': 'Give another player some chips',
-      'format': 'AnyMember ChipsAmount',
-      'examples': ['give GuyInShroomSuit 50'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'give',
+      memberName: 'give',
+      group: 'casino',
+      aliases: ['donate'],
+      description: 'Give another player some chips',
+      format: 'AnyMember ChipsAmount',
+      examples: ['give GuyInShroomSuit 50'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'player',
-          'prompt': 'Which player should I give them to?',
-          'type': 'member'
+          key: 'player',
+          prompt: 'Which player should I give them to?',
+          type: 'member'
         },
         {
-          'key': 'chips',
-          'prompt': 'How many chips do you want to give?',
-          'type': 'integer',
-          'validate': (chips) => {
+          key: 'chips',
+          prompt: 'How many chips do you want to give?',
+          type: 'integer',
+          validate: (chips) => {
             if (/^[+]?\d+$/.test(chips) && chips >= 1 && chips <= 10000) {
               return true;
             }
@@ -92,8 +92,8 @@ module.exports = class GiveCommand extends Command {
     try {
       startTyping(msg);
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = $authorid OR userID = $playerid;`).all({
-        'authorid': msg.author.id,
-        'playerid': args.player.id
+        authorid: msg.author.id,
+        playerid: args.player.id
       });
 
       if (query.length !== 2) {

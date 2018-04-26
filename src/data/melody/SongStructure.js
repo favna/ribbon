@@ -28,7 +28,7 @@ module.exports = class Song {
   }
 
   get avatar () {
-    const avatar = `${this.member.user.displayAvatarURL({'format': 'png'})}`;
+    const avatar = `${this.member.user.displayAvatarURL({format: 'png'})}`;
 
     return avatar;
   }

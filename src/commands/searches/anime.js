@@ -42,23 +42,23 @@ const maljs = require('maljs'),
 module.exports = class AnimeCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'anime',
-      'memberName': 'anime',
-      'group': 'searches',
-      'aliases': ['ani', 'mal'],
-      'description': 'Finds anime on MyAnimeList',
-      'format': 'AnimeName',
-      'examples': ['anime Pokemon'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'anime',
+      memberName: 'anime',
+      group: 'searches',
+      aliases: ['ani', 'mal'],
+      description: 'Finds anime on MyAnimeList',
+      format: 'AnimeName',
+      examples: ['anime Pokemon'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'query',
-          'prompt': 'What anime do you want to find?',
-          'type': 'string'
+          key: 'query',
+          prompt: 'What anime do you want to find?',
+          type: 'string'
         }
       ]
     });

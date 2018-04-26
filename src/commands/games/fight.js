@@ -44,29 +44,29 @@ const moment = require('moment'),
 module.exports = class FightCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'fight',
-      'memberName': 'fight',
-      'group': 'games',
-      'aliases': ['combat'],
-      'description': 'Pit two things against each other in a fight to the death',
-      'details': 'Winner is determined with random.org randomization',
-      'format': 'FirstFighter, SecondFighter',
-      'examples': ['fight Favna Chuck Norris'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'fight',
+      memberName: 'fight',
+      group: 'games',
+      aliases: ['combat'],
+      description: 'Pit two things against each other in a fight to the death',
+      details: 'Winner is determined with random.org randomization',
+      format: 'FirstFighter, SecondFighter',
+      examples: ['fight Favna Chuck Norris'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'fighterOne',
-          'prompt': 'Who or what is the first fighter?',
-          'type': 'string'
+          key: 'fighterOne',
+          prompt: 'Who or what is the first fighter?',
+          type: 'string'
         },
         {
-          'key': 'fighterTwo',
-          'prompt': 'What or what is the second fighter?',
-          'type': 'string'
+          key: 'fighterTwo',
+          prompt: 'What or what is the second fighter?',
+          type: 'string'
         }
       ]
     });
@@ -107,7 +107,7 @@ module.exports = class FightCommand extends Command {
 
       return msg.embed(fighterEmbed);
     }
-    random.integers({'number': 2}, (error, data) => {
+    random.integers({number: 2}, (error, data) => {
       if (!error) {
         const fighterOneChance = parseInt(data[0], 10),
           fighterTwoChance = parseInt(data[1], 10),

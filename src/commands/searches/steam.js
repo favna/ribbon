@@ -45,24 +45,24 @@ const SteamAPI = require('steamapi'),
 module.exports = class SteamCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'steam',
-      'memberName': 'steam',
-      'group': 'searches',
-      'aliases': ['valve'],
-      'description': 'Finds a game on Steam',
-      'format': 'GameName',
-      'examples': ['steam Tales of Berseria'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'steam',
+      memberName: 'steam',
+      group: 'searches',
+      aliases: ['valve'],
+      description: 'Finds a game on Steam',
+      format: 'GameName',
+      examples: ['steam Tales of Berseria'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'game',
-          'prompt': 'Which game do you want to find on the steam store?',
-          'type': 'string',
-          'parse': p => p.replace(/ /gim, '+')
+          key: 'game',
+          prompt: 'Which game do you want to find on the steam store?',
+          type: 'string',
+          parse: p => p.replace(/ /gim, '+')
         }
       ]
     });

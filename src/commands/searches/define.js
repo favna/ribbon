@@ -34,24 +34,24 @@ const request = require('snekfetch'),
 module.exports = class DefineCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'define',
-      'memberName': 'define',
-      'group': 'searches',
-      'aliases': ['def', 'dict'],
-      'description': 'Gets the definition on a word on glosbe',
-      'format': 'Word',
-      'examples': ['define pixel'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'define',
+      memberName: 'define',
+      group: 'searches',
+      aliases: ['def', 'dict'],
+      description: 'Gets the definition on a word on glosbe',
+      format: 'Word',
+      examples: ['define pixel'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'query',
-          'prompt': 'What word do you want to define?',
-          'type': 'string',
-          'parse': p => p.replace(/[^a-zA-Z]/g, '')
+          key: 'query',
+          prompt: 'What word do you want to define?',
+          type: 'string',
+          parse: p => p.replace(/[^a-zA-Z]/g, '')
         }
       ]
     });

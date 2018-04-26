@@ -46,17 +46,17 @@ const {Command} = require('discord.js-commando'),
 module.exports = class SkipSongCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'skip',
-      'memberName': 'skip',
-      'group': 'music',
-      'aliases': ['next'],
-      'description': 'Skips the song that is currently playing.',
-      'details': 'If there are more than 3 people (not counting the bot) a voteskip is started. Staff can force the skip by adding `force` to the command',
-      'examples': ['skip'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'skip',
+      memberName: 'skip',
+      group: 'music',
+      aliases: ['next'],
+      description: 'Skips the song that is currently playing.',
+      details: 'If there are more than 3 people (not counting the bot) a voteskip is started. Staff can force the skip by adding `force` to the command',
+      examples: ['skip'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
     this.votes = new Map();
@@ -131,12 +131,12 @@ module.exports = class SkipSongCommand extends Command {
 			`);
     }
     const newVote = { // eslint-disable-line one-var            
-        'count': 1,
-        'users': [msg.author.id],
+        count: 1,
+        users: [msg.author.id],
         queue,
-        'guild': msg.guild.id,
-        'start': Date.now(),
-        'timeout': null
+        guild: msg.guild.id,
+        start: Date.now(),
+        timeout: null
       },
       remaining = threshold - 1,
       time = this.setTimeout(newVote);

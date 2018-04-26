@@ -54,23 +54,23 @@ const path = require('path'),
 module.exports = class PlaySongCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'play',
-      'memberName': 'play',
-      'group': 'music',
-      'aliases': ['add', 'enqueue', 'start', 'join'],
-      'description': 'Adds a song to the queue',
-      'format': 'YoutubeURL|YoutubeVideoSearch',
-      'examples': ['play {youtube video to play}'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'play',
+      memberName: 'play',
+      group: 'music',
+      aliases: ['add', 'enqueue', 'start', 'join'],
+      description: 'Adds a song to the queue',
+      format: 'YoutubeURL|YoutubeVideoSearch',
+      examples: ['play {youtube video to play}'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'url',
-          'prompt': 'what music would you like to listen to?',
-          'type': 'string'
+          key: 'url',
+          prompt: 'what music would you like to listen to?',
+          type: 'string'
         }
       ]
     });
@@ -169,27 +169,27 @@ module.exports = class PlaySongCommand extends Command {
     if (!queue) {
       // eslint-disable-next-line no-param-reassign
       queue = {
-        'textChannel': msg.channel,
+        textChannel: msg.channel,
         voiceChannel,
-        'connection': null,
-        'songs': [],
-        'volume': this.client.provider.get(msg.guild.id, 'defaultVolume', DEFAULT_VOLUME)
+        connection: null,
+        songs: [],
+        volume: this.client.provider.get(msg.guild.id, 'defaultVolume', DEFAULT_VOLUME)
       };
       this.queue.set(msg.guild.id, queue);
 
       const result = await this.addSong(msg, video),
         resultMessage = {
-          'color': 3447003,
-          'author': {
-            'name': `${msg.author.tag} (${msg.author.id})`,
-            'icon_url': msg.author.displayAvatarURL({'format': 'png'})
+          color: 3447003,
+          author: {
+            name: `${msg.author.tag} (${msg.author.id})`,
+            iconURL: msg.author.displayAvatarURL({format: 'png'})
           },
-          'description': result
+          description: result
         };
 
       if (!result.startsWith('👍')) {
         this.queue.delete(msg.guild.id);
-        statusMsg.edit('', {'embed': resultMessage});
+        statusMsg.edit('', {embed: resultMessage});
         stopTyping(msg);
 
         return null;
@@ -216,15 +216,15 @@ module.exports = class PlaySongCommand extends Command {
     } else {
       const result = await this.addSong(msg, video),
         resultMessage = {
-          'color': 3447003,
-          'author': {
-            'name': `${msg.author.tag} (${msg.author.id})`,
-            'icon_url': msg.author.displayAvatarURL({'format': 'png'})
+          color: 3447003,
+          author: {
+            name: `${msg.author.tag} (${msg.author.id})`,
+            iconURL: msg.author.displayAvatarURL({format: 'png'})
           },
-          'description': result
+          description: result
         };
 
-      statusMsg.edit('', {'embed': resultMessage});
+      statusMsg.edit('', {embed: resultMessage});
       stopTyping(msg);
 
       return null;
@@ -263,8 +263,8 @@ module.exports = class PlaySongCommand extends Command {
     }
 
     winston.info('Adding song to queue.', {
-      'song': video.id,
-      'guild': msg.guild.id
+      song: video.id,
+      guild: msg.guild.id
     });
 
     const song = new Song(video, msg.member); // eslint-disable-line one-var
@@ -295,17 +295,17 @@ module.exports = class PlaySongCommand extends Command {
     let streamErrored = false;
 
     const playing = queue.textChannel.send({ // eslint-disable-line one-var
-        'embed': {
-          'color': 4317875,
-          'author': {
-            'name': song.username,
-            'icon_url': song.avatar
+        embed: {
+          color: 4317875,
+          author: {
+            name: song.username,
+            iconURL: song.avatar
           },
-          'description': `${`[${song}](${`${song.url}`})`}`,
-          'image': {'url': song.thumbnail}
+          description: `${`[${song}](${`${song.url}`})`}`,
+          image: {url: song.thumbnail}
         }
       }),
-      stream = ytdl(song.url, {'audioonly': true})
+      stream = ytdl(song.url, {audioonly: true})
         .on('error', (err) => {
           streamErrored = true;
           winston.error('Error occurred when streaming video:', err);
@@ -314,7 +314,7 @@ module.exports = class PlaySongCommand extends Command {
           this.play(guild, queue.songs[0]);
         }),
       dispatcher = queue.connection.play(stream, { // eslint-disable-line sort-vars
-        'passes': PASSES
+        passes: PASSES
       })
         .on('end', () => {
           if (streamErrored) {

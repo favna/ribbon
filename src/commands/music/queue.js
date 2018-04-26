@@ -45,24 +45,24 @@ const path = require('path'),
 module.exports = class ViewQueueCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'queue',
-      'memberName': 'queue',
-      'group': 'music',
-      'aliases': ['songs', 'song-list', 'list', 'listqueue'],
-      'description': 'Lists the queued songs.',
-      'format': '[PageNumber]',
-      'examples': ['queue 2'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'queue',
+      memberName: 'queue',
+      group: 'music',
+      aliases: ['songs', 'song-list', 'list', 'listqueue'],
+      description: 'Lists the queued songs.',
+      format: '[PageNumber]',
+      examples: ['queue 2'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'page',
-          'prompt': 'what page would you like to view?',
-          'type': 'integer',
-          'default': 1
+          key: 'page',
+          prompt: 'what page would you like to view?',
+          type: 'integer',
+          default: 1
         }
       ]
     });
@@ -85,13 +85,13 @@ module.exports = class ViewQueueCommand extends Command {
       totalLength = queue.songs.reduce((prev, song) => prev + song.length, 0);
 
     msg.embed({
-      'color': msg.guild ? msg.guild.me.displayColor : 10610610,
-      'author': {
-        'name': `${msg.author.tag} (${msg.author.id})`,
-        'icon_url': msg.author.displayAvatarURL({'format': 'png'})
+      color: msg.guild ? msg.guild.me.displayColor : 10610610,
+      author: {
+        name: `${msg.author.tag} (${msg.author.id})`,
+        iconURL: msg.author.displayAvatarURL({format: 'png'})
       },
       /* eslint-disable max-len */
-      'description': stripIndents`
+      description: stripIndents`
                     __**Song queue, page ${paginated.page}**__
                     ${paginated.items.map(song => `**-** ${!isNaN(song.id) ? `${song.name} (${song.lengthString})` : `[${song.name}](${`https://www.youtube.com/watch?v=${song.id}`})`} (${song.lengthString})`).join('\n')}
                     ${paginated.maxPage > 1 ? `\nUse ${msg.usage()} to view a specific page.\n` : ''}

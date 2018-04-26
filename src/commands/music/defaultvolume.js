@@ -42,24 +42,24 @@ const path = require('path'),
 module.exports = class DefaultVolumeCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'defaultvolume',
-      'memberName': 'defaultvolume',
-      'group': 'music',
-      'aliases': ['defvol'],
-      'description': 'Shows or sets the default volume level',
-      'format': 'VolumeToSet',
-      'examples': ['defaultvolume 2'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'defaultvolume',
+      memberName: 'defaultvolume',
+      group: 'music',
+      aliases: ['defvol'],
+      description: 'Shows or sets the default volume level',
+      format: 'VolumeToSet',
+      examples: ['defaultvolume 2'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'volume',
-          'prompt': 'What is the default volume I should set? (\'default\' to reset)',
-          'type': 'string',
-          'default': 'show'
+          key: 'volume',
+          prompt: 'What is the default volume I should set? (\'default\' to reset)',
+          type: 'string',
+          default: 'show'
         }
       ]
     });

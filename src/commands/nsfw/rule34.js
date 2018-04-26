@@ -44,25 +44,25 @@ const booru = require('booru'),
 module.exports = class Rule34Command extends Command {
   constructor (client) {
     super(client, {
-      'name': 'rule34',
-      'memberName': 'rule34',
-      'group': 'nsfw',
-      'aliases': ['r34'],
-      'description': 'Find NSFW Content on Rule34',
-      'format': 'NSFWToLookUp',
-      'examples': ['rule34 Pyrrha Nikos'],
-      'guildOnly': false,
-      'nsfw': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'rule34',
+      memberName: 'rule34',
+      group: 'nsfw',
+      aliases: ['r34'],
+      description: 'Find NSFW Content on Rule34',
+      format: 'NSFWToLookUp',
+      examples: ['rule34 Pyrrha Nikos'],
+      guildOnly: false,
+      nsfw: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'tags',
-          'prompt': 'What do you want to find NSFW for?',
-          'type': 'string',
-          'parse': p => p.split(' ')
+          key: 'tags',
+          prompt: 'What do you want to find NSFW for?',
+          type: 'string',
+          parse: p => p.split(' ')
         }
       ]
     });
@@ -73,8 +73,8 @@ module.exports = class Rule34Command extends Command {
       startTyping(msg);
       /* eslint-disable sort-vars*/
       const search = await booru.search('r34', args.tags, {
-          'limit': 1,
-          'random': true
+          limit: 1,
+          random: true
         }),
         common = await booru.commonfy(search),
         embed = new MessageEmbed(),

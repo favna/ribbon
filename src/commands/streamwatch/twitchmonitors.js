@@ -39,35 +39,35 @@ const {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping, userSearch} = require('../../util.js');
 
 module.exports = class TwitchMonitorsCommand extends Command {
-  constructor (client) {
+  constructor(client) {
     super(client, {
-      'name': 'twitchmonitors',
-      'memberName': 'twitchmonitors',
-      'group': 'streamwatch',
-      'aliases': ['monitors', 'monitor', 'twitchmonitor'],
-      'description': 'Configures which streamers to spy on',
-      'format': 'Member [Member Member Member]',
-      'examples': ['twitchmonitors Favna Techagent'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'twitchmonitors',
+      memberName: 'twitchmonitors',
+      group: 'streamwatch',
+      aliases: ['monitors', 'monitor', 'twitchmonitor'],
+      description: 'Configures which streamers to spy on',
+      format: 'Member [Member Member Member]',
+      examples: ['twitchmonitors Favna Techagent'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'members',
-          'prompt': 'Which members to monitor?',
-          'type': 'string'
+          key: 'members',
+          prompt: 'Which members to monitor?',
+          type: 'string'
         }
       ]
     });
   }
 
-  hasPermission (msg) {
+  hasPermission(msg) {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  async run (msg, args) {
+  async run(msg, args) {
     startTyping(msg);
     const memberIDs = [],
       memberNames = [];

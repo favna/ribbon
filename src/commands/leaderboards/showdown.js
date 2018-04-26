@@ -46,24 +46,24 @@ const Fuse = require('fuse.js'),
 module.exports = class ShowdownCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'showdown',
-      'memberName': 'showdown',
-      'group': 'leaderboards',
-      'aliases': ['showdownlb', 'pokelb'],
-      'description': 'Show the top ranking players in your tier of choice',
-      'format': 'TierName',
-      'examples': ['showdown ou'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'showdown',
+      memberName: 'showdown',
+      group: 'leaderboards',
+      aliases: ['showdownlb', 'pokelb'],
+      description: 'Show the top ranking players in your tier of choice',
+      format: 'TierName',
+      examples: ['showdown ou'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'tier',
-          'prompt': 'Respond with the Showdown tier',
-          'type': 'string',
-          'parse': p => p.toLowerCase()
+          key: 'tier',
+          prompt: 'Respond with the Showdown tier',
+          type: 'string',
+          parse: p => p.toLowerCase()
         }
       ]
     });
@@ -72,13 +72,13 @@ module.exports = class ShowdownCommand extends Command {
   async run (msg, args) {
     startTyping(msg);
     const fsoptions = {
-        'shouldSort': true,
-        'threshold': 0.6,
-        'location': 0,
-        'distance': 100,
-        'maxPatternLength': 32,
-        'minMatchCharLength': 1,
-        'keys': ['alias']
+        shouldSort: true,
+        threshold: 0.6,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: ['alias']
       },
       fuse = new Fuse(TierAliases, fsoptions),
       results = fuse.search(args.tier),
@@ -91,10 +91,10 @@ module.exports = class ShowdownCommand extends Command {
     if (results.length) {
       const board = await request.get(`https://pokemonshowdown.com/ladder/${results[0].tier}.json`),
         data = {
-          'usernames': board.body.toplist.map(u => u.username).slice(0, 10),
-          'wins': board.body.toplist.map(w => w.w).slice(0, 10),
-          'losses': board.body.toplist.map(l => l.l).slice(0, 10),
-          'elo': board.body.toplist.map(e => roundNumber(e.elo)).slice(0, 10)
+          usernames: board.body.toplist.map(u => u.username).slice(0, 10),
+          wins: board.body.toplist.map(w => w.w).slice(0, 10),
+          losses: board.body.toplist.map(l => l.l).slice(0, 10),
+          elo: board.body.toplist.map(e => roundNumber(e.elo)).slice(0, 10)
         };
 
       for (const rank in data.usernames) {

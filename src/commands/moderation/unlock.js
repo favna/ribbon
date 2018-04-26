@@ -43,23 +43,23 @@ const moment = require('moment'),
 module.exports = class UnlockCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'unlock',
-      'memberName': 'unlock',
-      'group': 'moderation',
-      'aliases': ['delock', 'ul'],
-      'description': 'Unlocks the current channel',
-      'examples': ['unlock'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'unlock',
+      memberName: 'unlock',
+      group: 'moderation',
+      aliases: ['delock', 'ul'],
+      description: 'Unlocks the current channel',
+      examples: ['unlock'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'lockrole',
-          'prompt': 'Which role to apply the lockdown to?',
-          'type': 'role',
-          'default': 'everyone'
+          key: 'lockrole',
+          prompt: 'Which role to apply the lockdown to?',
+          type: 'role',
+          default: 'everyone'
         }
       ]
     });
@@ -79,13 +79,13 @@ module.exports = class UnlockCommand extends Command {
 
     // eslint-disable-next-line one-var
     const overwrite = await msg.channel.overwritePermissions({
-      'overwrites': [
+      overwrites: [
         {
-          'id': msg.guild.roles.find('name', lockrole === 'everyone' ? '@everyone' : lockrole.name).id,
-          'allowed': ['SEND_MESSAGES']
+          id: msg.guild.roles.find('name', lockrole === 'everyone' ? '@everyone' : lockrole.name).id,
+          allowed: ['SEND_MESSAGES']
         }
       ],
-      'reason': 'Channel Lockdown'
+      reason: 'Channel Lockdown'
     });
 
     embed

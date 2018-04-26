@@ -46,24 +46,24 @@ const Matcher = require('did-you-mean'),
 module.exports = class CopyPastaCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'copypasta',
-      'memberName': 'copypasta',
-      'group': 'extra',
-      'aliases': ['cp', 'pasta'],
-      'description': 'Sends contents of a copypasta file to the chat',
-      'format': 'CopypastaName',
-      'examples': ['copypasta navy'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'copypasta',
+      memberName: 'copypasta',
+      group: 'extra',
+      aliases: ['cp', 'pasta'],
+      description: 'Sends contents of a copypasta file to the chat',
+      format: 'CopypastaName',
+      examples: ['copypasta navy'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'name',
-          'prompt': 'Which copypasta should I send?',
-          'type': 'string',
-          'parse': p => p.toLowerCase()
+          key: 'name',
+          prompt: 'Which copypasta should I send?',
+          type: 'string',
+          parse: p => p.toLowerCase()
         }
       ]
     });
@@ -111,7 +111,7 @@ module.exports = class CopyPastaCommand extends Command {
         msg.delete();
         stopTyping(msg);
 
-        return msg.say(pastaContent, {'split': true});
+        return msg.say(pastaContent, {split: true});
       }
     } catch (err) {
       deleteCommandMessages(msg, this.client);

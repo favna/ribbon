@@ -41,15 +41,15 @@ const path = require('path'),
 module.exports = class MusicStatusCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'status',
-      'memberName': 'status',
-      'group': 'music',
-      'aliases': ['song', 'playing', 'current-song', 'now-playing'],
-      'description': 'Shows the current status of the music.',
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'status',
+      memberName: 'status',
+      group: 'music',
+      aliases: ['song', 'playing', 'current-song', 'now-playing'],
+      description: 'Shows the current status of the music.',
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }
@@ -67,18 +67,18 @@ module.exports = class MusicStatusCommand extends Command {
     const song = queue.songs[0], // eslint-disable-line one-var
       currentTime = song.dispatcher ? song.dispatcher.streamTime / 1000 : 0, // eslint-disable-line sort-vars
       embed = { // eslint-disable-line sort-vars
-        'color': 3447003,
-        'author': {
-          'name': `${song.username}`,
-          'icon_url': song.avatar
+        color: 3447003,
+        author: {
+          name: `${song.username}`,
+          iconURL: song.avatar
         },
-        'description': stripIndents`
+        description: stripIndents`
 				[${song}](${`${song.url}`})
 
 				We are ${Song.timeString(currentTime)} into the song, and have ${song.timeLeft(currentTime)} left.
 				${!song.playing ? 'The music is paused.' : ''}
 			`,
-        'image': {'url': song.thumbnail}
+        image: {url: song.thumbnail}
       };
 
     deleteCommandMessages(msg, this.client);

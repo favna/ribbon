@@ -45,19 +45,19 @@ const Fuse = require('fuse.js'),
 module.exports = class EShopCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'eshop',
-      'memberName': 'eshop',
-      'group': 'searches',
-      'aliases': ['shop'],
-      'description': 'Gets any game from the Nintendo eShop',
-      'format': 'GameName',
-      'examples': ['eshop Breath of the Wild'],
-      'guildOnly': false,
-      'args': [
+      name: 'eshop',
+      memberName: 'eshop',
+      group: 'searches',
+      aliases: ['shop'],
+      description: 'Gets any game from the Nintendo eShop',
+      format: 'GameName',
+      examples: ['eshop Breath of the Wild'],
+      guildOnly: false,
+      args: [
         {
-          'key': 'game',
-          'prompt': 'What game to find?',
-          'type': 'string'
+          key: 'game',
+          prompt: 'What game to find?',
+          type: 'string'
         }
       ]
     });
@@ -70,13 +70,13 @@ module.exports = class EShopCommand extends Command {
       /* eslint-disable sort-vars, no-var, vars-on-top, one-var*/
       const embed = new MessageEmbed(),
         fsoptions = {
-          'shouldSort': true,
-          'threshold': 0.6,
-          'location': 0,
-          'distance': 100,
-          'maxPatternLength': 32,
-          'minMatchCharLength': 1,
-          'keys': ['title']
+          shouldSort: true,
+          threshold: 0.6,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: ['title']
         },
         games = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/databases/eshop.json'), 'utf8')),
         fuse = new Fuse(games, fsoptions),

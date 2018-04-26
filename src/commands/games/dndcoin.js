@@ -39,16 +39,16 @@ const {Command} = require('discord.js-commando'),
 module.exports = class DndCCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'dndcoin',
-      'memberName': 'dndcoin',
-      'group': 'games',
-      'aliases': ['coinflip', 'dndc', 'dcoin'],
-      'description': 'Flips a coin',
-      'examples': ['coin'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'dndcoin',
+      memberName: 'dndcoin',
+      group: 'games',
+      aliases: ['coinflip', 'dndc', 'dcoin'],
+      description: 'Flips a coin',
+      examples: ['coin'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }

@@ -42,18 +42,18 @@ const {Command} = require('discord.js-commando'),
 module.exports = class ChangeVolumeCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'volume',
-      'memberName': 'volume',
-      'aliases': ['set-volume', 'set-vol', 'vol'],
-      'group': 'music',
-      'description': 'Changes the volume.',
-      'details': 'The volume level ranges from 0-10. You may specify "up" or "down" to modify the volume level by 2.',
-      'format': '[level]',
-      'examples': ['volume', 'volume 7', 'volume up', 'volume down'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'volume',
+      memberName: 'volume',
+      aliases: ['set-volume', 'set-vol', 'vol'],
+      group: 'music',
+      description: 'Changes the volume.',
+      details: 'The volume level ranges from 0-10. You may specify "up" or "down" to modify the volume level by 2.',
+      format: '[level]',
+      examples: ['volume', 'volume 7', 'volume up', 'volume down'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }

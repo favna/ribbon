@@ -44,24 +44,24 @@ const cheerio = require('cheerio'),
 module.exports = class GoogleCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'google',
-      'memberName': 'google',
-      'group': 'searches',
-      'aliases': ['search', 'g'],
-      'description': 'Finds anything on google',
-      'format': 'GoogleQuery',
-      'examples': ['google Pyrrha Nikos'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'google',
+      memberName: 'google',
+      group: 'searches',
+      aliases: ['search', 'g'],
+      description: 'Finds anything on google',
+      format: 'GoogleQuery',
+      examples: ['google Pyrrha Nikos'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'query',
-          'prompt': 'What do you want to google?',
-          'type': 'string',
-          'parse': p => p.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
+          key: 'query',
+          prompt: 'What do you want to google?',
+          type: 'string',
+          parse: p => p.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
             .split(' ')
             .map(uriComponent => encodeURIComponent(uriComponent))
             .join('+')

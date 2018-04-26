@@ -46,24 +46,24 @@ const Database = require('better-sqlite3'),
 module.exports = class SlotsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'slots',
-      'memberName': 'slots',
-      'group': 'casino',
-      'aliases': ['slot', 'fruits'],
-      'description': 'Gamble your chips at the slot machine',
-      'format': 'AmountOfChips',
-      'examples': ['slots 50'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 5
+      name: 'slots',
+      memberName: 'slots',
+      group: 'casino',
+      aliases: ['slot', 'fruits'],
+      description: 'Gamble your chips at the slot machine',
+      format: 'AmountOfChips',
+      examples: ['slots 50'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 5
       },
-      'args': [
+      args: [
         {
-          'key': 'chips',
-          'prompt': 'How many chips do you want to gamble?',
-          'type': 'integer',
-          'validate': (chips) => {
+          key: 'chips',
+          prompt: 'How many chips do you want to gamble?',
+          type: 'integer',
+          validate: (chips) => {
             if (/^[+]?\d+$/.test(chips) && chips >= 1 && chips <= 3) {
               return true;
             }
@@ -84,7 +84,7 @@ module.exports = class SlotsCommand extends Command {
       slotEmbed = new MessageEmbed();
 
     slotEmbed
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({format: 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
@@ -98,34 +98,34 @@ module.exports = class SlotsCommand extends Command {
         }
 
         const bar = new SlotSymbol('bar', {
-            'display': '<:bar:430366693630672916>',
-            'points': 50,
-            'weight': 20
+            display: '<:bar:430366693630672916>',
+            points: 50,
+            weight: 20
           }),
           cherry = new SlotSymbol('cherry', {
-            'display': '<:cherry:430366794230923266>',
-            'points': 6,
-            'weight': 100
+            display: '<:cherry:430366794230923266>',
+            points: 6,
+            weight: 100
           }),
           diamond = new SlotSymbol('diamond', {
-            'display': '<:diamond:430366803789873162>',
-            'points': 15,
-            'weight': 40
+            display: '<:diamond:430366803789873162>',
+            points: 15,
+            weight: 40
           }),
           lemon = new SlotSymbol('lemon', {
-            'display': '<:lemon:430366830784413727>',
-            'points': 8,
-            'weight': 80
+            display: '<:lemon:430366830784413727>',
+            points: 8,
+            weight: 80
           }),
           seven = new SlotSymbol('seven', {
-            'display': '<:seven:430366839735058443>',
-            'points': 300,
-            'weight': 10
+            display: '<:seven:430366839735058443>',
+            points: 300,
+            weight: 10
           }),
           watermelon = new SlotSymbol('watermelon', {
-            'display': '<:watermelon:430366848710737920>',
-            'points': 10,
-            'weight': 60
+            display: '<:watermelon:430366848710737920>',
+            points: 10,
+            weight: 60
           });
 
         const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven, watermelon]), // eslint-disable-line one-var
@@ -154,7 +154,7 @@ module.exports = class SlotsCommand extends Command {
 
         winningPoints !== 0 ? query.balance += winningPoints - args.chips : query.balance -= args.chips;
 
-        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({balance: query.balance});
 
         if (args.chips === winningPoints) {
           titleString = 'won back their exact input';

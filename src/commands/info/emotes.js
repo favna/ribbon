@@ -40,16 +40,16 @@ const moment = require('moment'),
 module.exports = class EmotesCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'emotes',
-      'memberName': 'emotes',
-      'group': 'info',
-      'aliases': ['listemo', 'emolist', 'listemoji', 'emote'],
-      'description': 'Gets all available custom emotes from the server',
-      'examples': ['emotes'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'emotes',
+      memberName: 'emotes',
+      group: 'info',
+      aliases: ['listemo', 'emolist', 'listemoji', 'emote'],
+      description: 'Gets all available custom emotes from the server',
+      examples: ['emotes'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }
@@ -67,7 +67,7 @@ module.exports = class EmotesCommand extends Command {
 
     embed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .setAuthor(`${staticEmotes.length + animEmotes.length} ${msg.guild.name} Emotes`, msg.guild.iconURL({'format': 'png'}))
+      .setAuthor(`${staticEmotes.length + animEmotes.length} ${msg.guild.name} Emotes`, msg.guild.iconURL({format: 'png'}))
       .setFooter(`Emotes list from ${moment().format('MMMM Do YYYY [at] HH:mm [utc]Z')}`);
 
     staticEmotes = staticEmotes.length !== 0 ? `__**${staticEmotes.length} Static Emotes**__\n${staticEmotes.join('')}` : '';

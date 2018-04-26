@@ -47,24 +47,24 @@ const Fuse = require('fuse.js'),
 module.exports = class MoveCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'move',
-      'memberName': 'move',
-      'group': 'pokemon',
-      'aliases': ['attack'],
-      'description': 'Get the info on a Pokémon move',
-      'format': 'MoveName',
-      'examples': ['move Dragon Dance'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'move',
+      memberName: 'move',
+      group: 'pokemon',
+      aliases: ['attack'],
+      description: 'Get the info on a Pokémon move',
+      format: 'MoveName',
+      examples: ['move Dragon Dance'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'move',
-          'prompt': 'Get info on which move?',
-          'type': 'string',
-          'parse': p => p.toLowerCase()
+          key: 'move',
+          prompt: 'Get info on which move?',
+          type: 'string',
+          parse: p => p.toLowerCase()
         }
       ]
     });
@@ -74,13 +74,13 @@ module.exports = class MoveCommand extends Command {
     startTyping(msg);
     /* eslint-disable sort-vars */
     const fsoptions = {
-        'shouldSort': true,
-        'threshold': 0.6,
-        'location': 0,
-        'distance': 100,
-        'maxPatternLength': 32,
-        'minMatchCharLength': 1,
-        'keys': ['alias', 'move', 'id', 'name']
+        shouldSort: true,
+        threshold: 0.6,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: ['alias', 'move', 'id', 'name']
       },
       aliasFuse = new Fuse(MoveAliases, fsoptions),
       moveFuse = new Fuse(BattleMovedex, fsoptions),

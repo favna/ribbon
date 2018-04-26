@@ -40,16 +40,16 @@ const moment = require('moment'),
 module.exports = class ServerInfoCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'server',
-      'memberName': 'server',
-      'group': 'info',
-      'aliases': ['serverinfo', 'sinfo'],
-      'description': 'Gets information about the server.',
-      'examples': ['server'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'server',
+      memberName: 'server',
+      group: 'info',
+      aliases: ['serverinfo', 'sinfo'],
+      description: 'Gets information about the server.',
+      examples: ['server'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }
@@ -113,7 +113,7 @@ module.exports = class ServerInfoCommand extends Command {
     serverEmbed
       .setColor(msg.guild.owner ? msg.guild.owner.displayHexColor : '#7CFC00')
       .setAuthor('Server Info', 'https://favna.xyz/images/ribbonhost/discordlogo.png')
-      .setThumbnail(msg.guild.iconURL({'format': 'png'}))
+      .setThumbnail(msg.guild.iconURL({format: 'png'}))
       .setFooter(`Server ID: ${msg.guild.id}`)
       .addField('Server Name', msg.guild.name, true)
       .addField('Owner', msg.guild.owner ? msg.guild.owner.user.tag : 'Owner is MIA', true)

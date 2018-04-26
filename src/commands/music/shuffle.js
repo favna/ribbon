@@ -44,17 +44,17 @@ const path = require('path'),
 module.exports = class ShuffleCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'shuffle',
-      'memberName': 'shuffle',
-      'group': 'music',
-      'aliases': ['remix', 'mixtape'],
-      'description': 'Shuffles the current queue of songs',
-      'details': 'Shuffles using a [modern version of the Fisher-Yates shuffle algorithm](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle#The_modern_algorithm)',
-      'examples': ['shuffle'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'shuffle',
+      memberName: 'shuffle',
+      group: 'music',
+      aliases: ['remix', 'mixtape'],
+      description: 'Shuffles the current queue of songs',
+      details: 'Shuffles using a [modern version of the Fisher-Yates shuffle algorithm](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle#The_modern_algorithm)',
+      examples: ['shuffle'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }
@@ -90,7 +90,7 @@ module.exports = class ShuffleCommand extends Command {
 
     embed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({'format': 'png'}))
+      .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({format: 'png'}))
       .setImage(currentSong.thumbnail)
       .setDescription(stripIndents`
             __**First 10 songs in the queue**__

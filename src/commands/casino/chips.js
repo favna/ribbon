@@ -39,28 +39,21 @@ const Database = require('better-sqlite3'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {
-    oneLine,
-    stripIndents
-  } = require('common-tags'),
-  {
-    deleteCommandMessages,
-    stopTyping,
-    startTyping
-  } = require('../../util.js');
+  {oneLine, stripIndents} = require('common-tags'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class ChipsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'chips',
-      'memberName': 'chips',
-      'group': 'casino',
-      'aliases': ['bal', 'cash', 'balance'],
-      'description': 'Retrieves your current balance for the casino',
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'chips',
+      memberName: 'chips',
+      group: 'casino',
+      aliases: ['bal', 'cash', 'balance'],
+      description: 'Retrieves your current balance for the casino',
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }
@@ -70,7 +63,7 @@ module.exports = class ChipsCommand extends Command {
       conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
     balEmbed
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({format: 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
     try {
@@ -93,9 +86,9 @@ module.exports = class ChipsCommand extends Command {
         return msg.embed(balEmbed);
       }
       conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
-        'userid': msg.author.id,
-        'balance': '500',
-        'date': moment().format('YYYY-MM-DD HH:mm')
+        userid: msg.author.id,
+        balance: '500',
+        date: moment().format('YYYY-MM-DD HH:mm')
       });
       stopTyping(msg);
     } catch (e) {
@@ -104,9 +97,9 @@ module.exports = class ChipsCommand extends Command {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
 
         conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
-          'userid': msg.author.id,
-          'balance': '500',
-          'date': moment().format('YYYY-MM-DD HH:mm')
+          userid: msg.author.id,
+          balance: '500',
+          date: moment().format('YYYY-MM-DD HH:mm')
         });
       } else {
         console.error(`	 ${stripIndents`Fatal SQL Error occurred while getting someones balance!

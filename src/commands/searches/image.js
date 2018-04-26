@@ -43,24 +43,24 @@ const cheerio = require('cheerio'),
 module.exports = class ImageCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'image',
-      'memberName': 'image',
-      'group': 'searches',
-      'aliases': ['img', 'i'],
-      'description': 'Finds an image through google',
-      'format': 'ImageQuery',
-      'examples': ['image Pyrrha Nikos'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'image',
+      memberName: 'image',
+      group: 'searches',
+      aliases: ['img', 'i'],
+      description: 'Finds an image through google',
+      format: 'ImageQuery',
+      examples: ['image Pyrrha Nikos'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'query',
-          'prompt': 'What do you want to find images of?',
-          'type': 'string',
-          'parse': p => p.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
+          key: 'query',
+          prompt: 'What do you want to find images of?',
+          type: 'string',
+          parse: p => p.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
             .split(' ')
             .map(x => encodeURIComponent(x))
             .join('+')

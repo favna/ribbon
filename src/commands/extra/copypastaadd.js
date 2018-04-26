@@ -44,30 +44,30 @@ const fs = require('fs'),
 module.exports = class CopyPastaAddCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'copypastaadd',
-      'memberName': 'copypastaadd',
-      'group': 'extra',
-      'aliases': ['cpadd', 'pastaadd'],
-      'description': 'Saves a copypasta to local file',
-      'format': 'CopypastaName CopypastaContent',
-      'examples': ['copypasta navy what the fuck did you just say to me ... (etc.)'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'copypastaadd',
+      memberName: 'copypastaadd',
+      group: 'extra',
+      aliases: ['cpadd', 'pastaadd'],
+      description: 'Saves a copypasta to local file',
+      format: 'CopypastaName CopypastaContent',
+      examples: ['copypasta navy what the fuck did you just say to me ... (etc.)'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
 
-      'args': [
+      args: [
         {
-          'key': 'name',
-          'prompt': 'What is the name of the copypasta you want to save?',
-          'type': 'string',
-          'parse': p => p.toLowerCase()
+          key: 'name',
+          prompt: 'What is the name of the copypasta you want to save?',
+          type: 'string',
+          parse: p => p.toLowerCase()
         },
         {
-          'key': 'content',
-          'prompt': 'What should be stored in the copypasta?',
-          'type': 'string'
+          key: 'content',
+          prompt: 'What should be stored in the copypasta?',
+          type: 'string'
         }
       ]
     });

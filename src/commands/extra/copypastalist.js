@@ -43,15 +43,15 @@ const fs = require('fs'),
 module.exports = class CopyPastaListCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'copypastalist',
-      'memberName': 'copypastalist',
-      'group': 'extra',
-      'aliases': ['cplist', 'copylist', 'pastalist'],
-      'description': 'Gets all copypastas available to the server',
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'copypastalist',
+      memberName: 'copypastalist',
+      group: 'extra',
+      aliases: ['cplist', 'copylist', 'pastalist'],
+      description: 'Gets all copypastas available to the server',
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }
@@ -75,9 +75,9 @@ module.exports = class CopyPastaListCommand extends Command {
 
         for (const part in splitTotal) {
           messages.push(await msg.embed({
-            'title': 'Copypastas available on this server',
-            'description': splitTotal[part],
-            'color': msg.guild.me.displayColor
+            title: 'Copypastas available on this server',
+            description: splitTotal[part],
+            color: msg.guild.me.displayColor
           }));
         }
         stopTyping(msg);
@@ -88,9 +88,9 @@ module.exports = class CopyPastaListCommand extends Command {
       stopTyping(msg);
 
       return msg.embed({
-        'title': 'Copypastas available on this server',
-        'description': list.join('\n'),
-        'color': msg.guild.me.displayColor
+        title: 'Copypastas available on this server',
+        description: list.join('\n'),
+        color: msg.guild.me.displayColor
       });
 
     } catch (err) {

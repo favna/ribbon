@@ -41,24 +41,24 @@ const {Command} = require('discord.js-commando'),
 module.exports = class ModLogsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'modlogs',
-      'memberName': 'modlogs',
-      'group': 'moderation',
-      'aliases': ['togglemod'],
-      'description': 'Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel',
-      'format': 'Enable|Disable',
-      'examples': ['modlogs {option}', 'modlogs enable'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'modlogs',
+      memberName: 'modlogs',
+      group: 'moderation',
+      aliases: ['togglemod'],
+      description: 'Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel',
+      format: 'Enable|Disable',
+      examples: ['modlogs {option}', 'modlogs enable'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'option',
-          'prompt': 'Enable or disable modlogs?',
-          'type': 'boolean',
-          'validate': (bool) => {
+          key: 'option',
+          prompt: 'Enable or disable modlogs?',
+          type: 'boolean',
+          validate: (bool) => {
             const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 
             if (validBools.includes(bool.toLowerCase())) {

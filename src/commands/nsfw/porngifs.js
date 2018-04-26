@@ -43,24 +43,24 @@ const Pornsearch = require('pornsearch'),
 module.exports = class PornGifsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'porngifs',
-      'memberName': 'porngifs',
-      'group': 'nsfw',
-      'aliases': ['nsfwgifs'],
-      'description': 'Search porn gifs',
-      'format': 'NSFWToLookUp',
-      'examples': ['porngifs babe'],
-      'guildOnly': false,
-      'nsfw': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'porngifs',
+      memberName: 'porngifs',
+      group: 'nsfw',
+      aliases: ['nsfwgifs'],
+      description: 'Search porn gifs',
+      format: 'NSFWToLookUp',
+      examples: ['porngifs babe'],
+      guildOnly: false,
+      nsfw: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'porn',
-          'prompt': 'What pornography do you want to find?',
-          'type': 'string'
+          key: 'porn',
+          prompt: 'What pornography do you want to find?',
+          type: 'string'
         }
       ]
     });

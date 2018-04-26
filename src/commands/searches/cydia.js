@@ -48,24 +48,24 @@ const Fuse = require('fuse.js'),
 module.exports = class CydiaCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'cydia',
-      'memberName': 'cydia',
-      'group': 'searches',
-      'aliases': ['cy'],
-      'description': 'Finds info on a Cydia package',
-      'format': 'PackageName | [[PackageName]]',
-      'examples': ['cydia anemone'],
-      'guildOnly': false,
-      'patterns': [/\[\[[a-zA-Z0-9 ]+\]\]/im],
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'cydia',
+      memberName: 'cydia',
+      group: 'searches',
+      aliases: ['cy'],
+      description: 'Finds info on a Cydia package',
+      format: 'PackageName | [[PackageName]]',
+      examples: ['cydia anemone'],
+      guildOnly: false,
+      patterns: [/\[\[[a-zA-Z0-9 ]+\]\]/im],
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'query',
-          'prompt': 'Please supply package name',
-          'type': 'string'
+          key: 'query',
+          prompt: 'Please supply package name',
+          type: 'string'
         }
       ]
     });
@@ -82,13 +82,13 @@ module.exports = class CydiaCommand extends Command {
     const baseURL = 'https://cydia.saurik.com/',
       embed = new MessageEmbed(),
       fsoptions = {
-        'shouldSort': true,
-        'threshold': 0.3,
-        'location': 0,
-        'distance': 100,
-        'maxPatternLength': 32,
-        'minMatchCharLength': 1,
-        'keys': ['display', 'name']
+        shouldSort: true,
+        threshold: 0.3,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: ['display', 'name']
       },
       packages = await request.get(`${baseURL}api/macciti`).query('query', args.query);
 

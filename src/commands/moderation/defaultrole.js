@@ -41,25 +41,25 @@ const {Command} = require('discord.js-commando'),
 module.exports = class defaultroleCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'defaultrole',
-      'memberName': 'defaultrole',
-      'group': 'moderation',
-      'aliases': ['defrole'],
-      'description': 'Set a default role the bot will assign to any members joining after this command',
-      'details': 'Use "delete" to remove the default role',
-      'format': 'RoleID|RoleName(partial or full)',
-      'examples': ['defaultrole Member'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'defaultrole',
+      memberName: 'defaultrole',
+      group: 'moderation',
+      aliases: ['defrole'],
+      description: 'Set a default role the bot will assign to any members joining after this command',
+      details: 'Use "delete" to remove the default role',
+      format: 'RoleID|RoleName(partial or full)',
+      examples: ['defaultrole Member'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'role',
-          'prompt': 'Which role would you like to set as the default role?',
-          'type': 'role',
-          'default': 'delete'
+          key: 'role',
+          prompt: 'Which role would you like to set as the default role?',
+          type: 'role',
+          default: 'delete'
         }
       ]
     });

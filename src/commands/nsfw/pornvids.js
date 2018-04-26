@@ -43,24 +43,24 @@ const Pornsearch = require('pornsearch'),
 module.exports = class PornVidsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'pornvids',
-      'memberName': 'pornvids',
-      'group': 'nsfw',
-      'aliases': ['porn', 'nsfwvids'],
-      'description': 'Search porn videos',
-      'format': 'NSFWToLookUp',
-      'examples': ['pornvids babe'],
-      'guildOnly': false,
-      'nsfw': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'pornvids',
+      memberName: 'pornvids',
+      group: 'nsfw',
+      aliases: ['porn', 'nsfwvids'],
+      description: 'Search porn videos',
+      format: 'NSFWToLookUp',
+      examples: ['pornvids babe'],
+      guildOnly: false,
+      nsfw: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'porn',
-          'prompt': 'What pornography do you want to find?',
-          'type': 'string'
+          key: 'porn',
+          prompt: 'What pornography do you want to find?',
+          type: 'string'
         }
       ]
     });

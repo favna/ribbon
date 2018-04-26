@@ -42,17 +42,17 @@ const request = require('snekfetch'),
 module.exports = class RocketLeagueCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'rocketleague',
-      'memberName': 'rocketleague',
-      'group': 'leaderboards',
-      'aliases': ['rlstats'],
-      'description': 'Shows Rocket League Leaderboard',
-      'format': 'BattleTag',
-      'examples': ['rocketleague'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'rocketleague',
+      memberName: 'rocketleague',
+      group: 'leaderboards',
+      aliases: ['rlstats'],
+      description: 'Shows Rocket League Leaderboard',
+      format: 'BattleTag',
+      examples: ['rocketleague'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }
@@ -66,13 +66,13 @@ module.exports = class RocketLeagueCommand extends Command {
           .query('type', 'goals'),
         rocketEmbed = new MessageEmbed(),
         rocketEngine = {
-          'names': rocketData.body.map(n => n.displayName).slice(0, 10),
-          'wins': rocketData.body.map(w => w.stats.wins).slice(0, 10),
-          'mvps': rocketData.body.map(m => m.stats.mvps).slice(0, 10),
-          'saves': rocketData.body.map(sa => sa.stats.saves).slice(0, 10),
-          'goals': rocketData.body.map(g => g.stats.goals).slice(0, 10),
-          'shots': rocketData.body.map(sh => sh.stats.shots).slice(0, 10),
-          'assists': rocketData.body.map(a => a.stats.assists).slice(0, 10)
+          names: rocketData.body.map(n => n.displayName).slice(0, 10),
+          wins: rocketData.body.map(w => w.stats.wins).slice(0, 10),
+          mvps: rocketData.body.map(m => m.stats.mvps).slice(0, 10),
+          saves: rocketData.body.map(sa => sa.stats.saves).slice(0, 10),
+          goals: rocketData.body.map(g => g.stats.goals).slice(0, 10),
+          shots: rocketData.body.map(sh => sh.stats.shots).slice(0, 10),
+          assists: rocketData.body.map(a => a.stats.assists).slice(0, 10)
         };
 
       for (const rank in rocketEngine.names) {

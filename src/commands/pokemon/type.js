@@ -44,23 +44,23 @@ const path = require('path'),
 module.exports = class TypeCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'type',
-      'memberName': 'type',
-      'group': 'pokemon',
-      'aliases': ['matchup', 'weakness', 'advantage'],
-      'description': 'Get type matchup for a given type or type combination',
-      'format': 'FirstType [SecondType]',
-      'examples': ['type Dragon Flying'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'type',
+      memberName: 'type',
+      group: 'pokemon',
+      aliases: ['matchup', 'weakness', 'advantage'],
+      description: 'Get type matchup for a given type or type combination',
+      format: 'FirstType [SecondType]',
+      examples: ['type Dragon Flying'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'type',
-          'prompt': 'Get info on which type?',
-          'type': 'string'
+          key: 'type',
+          prompt: 'Get info on which type?',
+          type: 'string'
         }
       ]
     });
@@ -70,24 +70,24 @@ module.exports = class TypeCommand extends Command {
   run (msg, args) {
     startTyping(msg);
     const atkMulti = {
-        'Bug': 1,
-        'Dark': 1,
-        'Dragon': 1,
-        'Electric': 1,
-        'Fairy': 1,
-        'Fighting': 1,
-        'Fire': 1,
-        'Flying': 1,
-        'Ghost': 1,
-        'Grass': 1,
-        'Ground': 1,
-        'Ice': 1,
-        'Normal': 1,
-        'Poison': 1,
-        'Psychic': 1,
-        'Rock': 1,
-        'Steel': 1,
-        'Water': 1
+        Bug: 1,
+        Dark: 1,
+        Dragon: 1,
+        Electric: 1,
+        Fairy: 1,
+        Fighting: 1,
+        Fire: 1,
+        Flying: 1,
+        Ghost: 1,
+        Grass: 1,
+        Ground: 1,
+        Ice: 1,
+        Normal: 1,
+        Poison: 1,
+        Psychic: 1,
+        Rock: 1,
+        Steel: 1,
+        Water: 1
       },
       atkNoRaw = [],
       atkNoTypes = [],
@@ -99,24 +99,24 @@ module.exports = class TypeCommand extends Command {
       atkVulnRaw = [],
       atkVulnTypes = [],
       defMulti = {
-        'Bug': 1,
-        'Dark': 1,
-        'Dragon': 1,
-        'Electric': 1,
-        'Fairy': 1,
-        'Fighting': 1,
-        'Fire': 1,
-        'Flying': 1,
-        'Ghost': 1,
-        'Grass': 1,
-        'Ground': 1,
-        'Ice': 1,
-        'Normal': 1,
-        'Poison': 1,
-        'Psychic': 1,
-        'Rock': 1,
-        'Steel': 1,
-        'Water': 1
+        Bug: 1,
+        Dark: 1,
+        Dragon: 1,
+        Electric: 1,
+        Fairy: 1,
+        Fighting: 1,
+        Fire: 1,
+        Flying: 1,
+        Ghost: 1,
+        Grass: 1,
+        Ground: 1,
+        Ice: 1,
+        Normal: 1,
+        Poison: 1,
+        Psychic: 1,
+        Rock: 1,
+        Steel: 1,
+        Water: 1
       },
       displayTypes = [],
       noRaw = [],

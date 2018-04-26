@@ -40,24 +40,24 @@ const {Command} = require('discord.js-commando'),
 module.exports = class SlapCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'slap',
-      'memberName': 'slap',
-      'group': 'games',
-      'aliases': ['bakaslap'],
-      'description': 'Give someone a slap 💢',
-      'format': 'MemberToGiveASlap',
-      'examples': ['slap Favna'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'slap',
+      memberName: 'slap',
+      group: 'games',
+      aliases: ['bakaslap'],
+      description: 'Give someone a slap 💢',
+      format: 'MemberToGiveASlap',
+      examples: ['slap Favna'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'Who do you want to give a slap?',
-          'type': 'member',
-          'default': ''
+          key: 'member',
+          prompt: 'Who do you want to give a slap?',
+          type: 'member',
+          default: ''
         }
       ]
     });
@@ -87,11 +87,11 @@ module.exports = class SlapCommand extends Command {
     startTyping(msg);
     deleteCommandMessages(msg, this.client);
     msg.embed({
-      'description': args.member !== ''
+      description: args.member !== ''
         ? `${args.member.displayName}! You got slapped by ${msg.member.displayName} 💢!`
         : `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
-      'image': {'url': args.member !== '' ? this.fetchImage() : 'http://cdn.awwni.me/mz98.gif'},
-      'color': msg.guild ? msg.guild.me.displayColor : 10610610
+      image: {url: args.member !== '' ? this.fetchImage() : 'http://cdn.awwni.me/mz98.gif'},
+      color: msg.guild ? msg.guild.me.displayColor : 10610610
     });
 
     return stopTyping(msg);

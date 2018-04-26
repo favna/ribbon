@@ -43,16 +43,16 @@ const duration = require('moment-duration-format'), // eslint-disable-line no-un
 module.exports = class RibbonStatsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'stats',
-      'memberName': 'stats',
-      'group': 'info',
-      'aliases': ['botinfo', 'info'],
-      'description': 'Gets statistics about Ribbon',
-      'examples': ['stats'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'stats',
+      memberName: 'stats',
+      group: 'info',
+      aliases: ['botinfo', 'info'],
+      description: 'Gets statistics about Ribbon',
+      examples: ['stats'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }

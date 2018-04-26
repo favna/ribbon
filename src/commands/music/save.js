@@ -42,16 +42,16 @@ const path = require('path'),
 module.exports = class SaveQueueCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'save',
-      'memberName': 'save',
-      'group': 'music',
-      'aliases': ['save-songs', 'save-song-list', 'ss', 'savequeue'],
-      'description': 'Saves the queued songs for later',
-      'examples': ['save'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'save',
+      memberName: 'save',
+      group: 'music',
+      aliases: ['save-songs', 'save-song-list', 'ss', 'savequeue'],
+      description: 'Saves the queued songs for later',
+      examples: ['save'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
 
@@ -74,7 +74,7 @@ module.exports = class SaveQueueCommand extends Command {
 
     embed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({'format': 'png'}))
+      .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({format: 'png'}))
       .setImage(currentSong.thumbnail)
       .setDescription(stripIndents`
             __**First 10 songs in the queue**__

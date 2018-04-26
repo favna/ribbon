@@ -43,15 +43,15 @@ const Database = require('better-sqlite3'),
 module.exports = class LeaderboardCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'leaderboard',
-      'memberName': 'leaderboard',
-      'group': 'casino',
-      'aliases': ['lb', 'casinolb', 'leaderboards'],
-      'description': 'Shows the top 5 ranking players for your server',
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'leaderboard',
+      memberName: 'leaderboard',
+      group: 'casino',
+      aliases: ['lb', 'casinolb', 'leaderboards'],
+      description: 'Shows the top 5 ranking players for your server',
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }

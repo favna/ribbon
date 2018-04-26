@@ -41,23 +41,23 @@ const {Command} = require('discord.js-commando'),
 module.exports = class NewsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'announce',
-      'memberName': 'announce',
-      'group': 'moderation',
-      'aliases': ['news'],
-      'description': 'Make an announcement in the news channel',
-      'format': 'Announcement',
-      'examples': ['announce John Appleseed reads the news'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'announce',
+      memberName: 'announce',
+      group: 'moderation',
+      aliases: ['news'],
+      description: 'Make an announcement in the news channel',
+      format: 'Announcement',
+      examples: ['announce John Appleseed reads the news'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'body',
-          'prompt': 'What do you want me to announce?',
-          'type': 'string'
+          key: 'body',
+          prompt: 'What do you want me to announce?',
+          type: 'string'
         }
       ]
     });

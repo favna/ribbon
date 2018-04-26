@@ -46,59 +46,59 @@ const duration = require('moment-duration-format'), // eslint-disable-line no-un
 module.exports = class OverwatchCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'overwatch',
-      'memberName': 'overwatch',
-      'group': 'leaderboards',
-      'aliases': ['owstats'],
-      'description': 'Shows Player Stats for a given Overwatch player',
-      'format': 'BattleTag',
-      'examples': ['overwatch Camoflouge#1267'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'overwatch',
+      memberName: 'overwatch',
+      group: 'leaderboards',
+      aliases: ['owstats'],
+      description: 'Shows Player Stats for a given Overwatch player',
+      format: 'BattleTag',
+      examples: ['overwatch Camoflouge#1267'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'player',
-          'prompt': 'Respond with the player\'s BattleTag',
-          'type': 'string',
-          'validate': (tag) => {
+          key: 'player',
+          prompt: 'Respond with the player\'s BattleTag',
+          type: 'string',
+          validate: (tag) => {
             if ((/[a-zA-Z0-9]+((?:#|-)[0-9]{4,5}){0,1}/i).test(tag)) {
               return true;
             }
 
             return 'Has to be in the format of <name>#<identifier>, for example `cats#11481`';
           },
-          'parse': tag => tag.replace(/#/g, '-')
+          parse: tag => tag.replace(/#/g, '-')
         },
         {
-          'key': 'platform',
-          'prompt': 'Respond with the platform that player plays on',
-          'type': 'string',
-          'validate': (plat) => {
+          key: 'platform',
+          prompt: 'Respond with the platform that player plays on',
+          type: 'string',
+          validate: (plat) => {
             if (/(?:pc|psn|xbl)/i.test(plat)) {
               return true;
             }
 
             return 'Has to be `pc`, `psn` or `xbl` for PC, Playstation or Xbox respectively';
           },
-          'parse': plat => plat.toLowerCase(),
-          'default': 'pc'
+          parse: plat => plat.toLowerCase(),
+          default: 'pc'
         },
         {
-          'key': 'region',
-          'prompt': 'Respond with the region that player is playing in',
-          'type': 'string',
-          'validate': (reg) => {
+          key: 'region',
+          prompt: 'Respond with the region that player is playing in',
+          type: 'string',
+          validate: (reg) => {
             if (/(?:us|eu|asia)/.test(reg)) {
               return true;
             }
 
             return 'Has to be `us`, `eu` or `asia` for USA, Europe or Asia respectively';
           },
-          'parse': reg => reg.toLowerCase(),
-          'default': 'us'
+          parse: reg => reg.toLowerCase(),
+          default: 'us'
         }
       ]
     });
@@ -123,14 +123,14 @@ module.exports = class OverwatchCommand extends Command {
       }
 
       const topCompetitiveHeroes = Object.keys(owData.competitiveStats.topHeroes).map(r => ({ // eslint-disable-line one-var
-          'hero': r,
-          'time': ms(owData.competitiveStats.topHeroes[r].timePlayed)
+          hero: r,
+          time: ms(owData.competitiveStats.topHeroes[r].timePlayed)
         }))
           .sort((a, b) => a.time > b.time)
           .reverse(),
         topQuickPlayHeroes = Object.keys(owData.quickPlayStats.topHeroes).map(r => ({
-          'hero': r,
-          'time': ms(owData.quickPlayStats.topHeroes[r].timePlayed)
+          hero: r,
+          time: ms(owData.quickPlayStats.topHeroes[r].timePlayed)
         }))
           .sort((a, b) => a.time > b.time)
           .reverse();

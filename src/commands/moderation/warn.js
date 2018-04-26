@@ -48,34 +48,34 @@ const fs = require('fs'),
 module.exports = class WarnCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'warn',
-      'memberName': 'warn',
-      'group': 'moderation',
-      'aliases': ['warning'],
-      'description': 'Warn a member with a specified amount of points',
-      'format': 'MemberID|MemberName(partial or full) AmountOfWarnPoints ReasonForWarning',
-      'examples': ['warn JohnDoe 1 annoying'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'warn',
+      memberName: 'warn',
+      group: 'moderation',
+      aliases: ['warning'],
+      description: 'Warn a member with a specified amount of points',
+      format: 'MemberID|MemberName(partial or full) AmountOfWarnPoints ReasonForWarning',
+      examples: ['warn JohnDoe 1 annoying'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'Which member should I give a warning?',
-          'type': 'member'
+          key: 'member',
+          prompt: 'Which member should I give a warning?',
+          type: 'member'
         },
         {
-          'key': 'points',
-          'prompt': 'How many warning points should I give this member?',
-          'type': 'integer'
+          key: 'points',
+          prompt: 'How many warning points should I give this member?',
+          type: 'integer'
         },
         {
-          'key': 'reason',
-          'prompt': 'What is the reason for this warning?',
-          'type': 'string',
-          'default': ''
+          key: 'reason',
+          prompt: 'What is the reason for this warning?',
+          type: 'string',
+          default: ''
         }
       ]
     });
@@ -94,9 +94,9 @@ module.exports = class WarnCommand extends Command {
           : null);
 
     let warn = {
-      'id': args.member.id,
-      'usertag': args.member.user.tag,
-      'points': args.points
+      id: args.member.id,
+      usertag: args.member.user.tag,
+      points: args.points
     };
 
     if (fs.existsSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`))) {
@@ -105,9 +105,9 @@ module.exports = class WarnCommand extends Command {
       for (const i in warns) {
         if (warns[i].id === args.member.id) {
           warn = {
-            'id': warns[i].id,
-            'usertag': warns[i].usertag,
-            'points': warns[i].points + args.points
+            id: warns[i].id,
+            usertag: warns[i].usertag,
+            points: warns[i].points + args.points
           };
           warns.splice(i, 1);
           break;

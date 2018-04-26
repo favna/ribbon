@@ -43,23 +43,23 @@ const moment = require('moment'),
 module.exports = class TVCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'tvdb',
-      'memberName': 'tvdb',
-      'group': 'searches',
-      'aliases': ['tv'],
-      'description': 'Finds TV shows on TheMovieDB',
-      'format': 'MovieName [release_year_movie]',
-      'examples': ['tvdb Pokemon'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'tvdb',
+      memberName: 'tvdb',
+      group: 'searches',
+      aliases: ['tv'],
+      description: 'Finds TV shows on TheMovieDB',
+      format: 'MovieName [release_year_movie]',
+      examples: ['tvdb Pokemon'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'name',
-          'prompt': 'What TV serie do you want to find?',
-          'type': 'string'
+          key: 'name',
+          prompt: 'What TV serie do you want to find?',
+          type: 'string'
         }
       ]
     });

@@ -44,24 +44,24 @@ const moment = require('moment'),
 module.exports = class MathCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'math',
-      'memberName': 'math',
-      'group': 'extra',
-      'aliases': ['calc'],
-      'description': 'Calculate anything',
-      'format': 'EquationToSolve',
-      'examples': ['math -10 - abs(-3) + 2^5'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'math',
+      memberName: 'math',
+      group: 'extra',
+      aliases: ['calc'],
+      description: 'Calculate anything',
+      format: 'EquationToSolve',
+      examples: ['math -10 - abs(-3) + 2^5'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'equation',
-          'prompt': 'What is the equation to solve?',
-          'type': 'string',
-          'parse': p => p.toLowerCase()
+          key: 'equation',
+          prompt: 'What is the equation to solve?',
+          type: 'string',
+          parse: p => p.toLowerCase()
         }
       ]
     });

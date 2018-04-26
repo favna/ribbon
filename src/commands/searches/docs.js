@@ -44,31 +44,31 @@ const request = require('snekfetch'),
 module.exports = class DocsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'docs',
-      'memberName': 'docs',
-      'group': 'searches',
-      'aliases': ['djsguide', 'guide', 'djs'],
-      'description': 'Gets info from something in the DJS docs',
-      'format': 'TopicToFind [master|stable|commando]',
-      'examples': ['docs ClientUser'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'docs',
+      memberName: 'docs',
+      group: 'searches',
+      aliases: ['djsguide', 'guide', 'djs'],
+      description: 'Gets info from something in the DJS docs',
+      format: 'TopicToFind [master|stable|commando]',
+      examples: ['docs ClientUser'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'query',
-          'prompt': 'what would you like to find?\n',
-          'type': 'string'
+          key: 'query',
+          prompt: 'what would you like to find?\n',
+          type: 'string'
         },
         {
-          'key': 'version',
-          'prompt': 'which version of docs would you like (stable, master, commando)?',
-          'type': 'string',
-          'parse': value => value.toLowerCase(),
-          'validate': value => ['master', 'stable', 'commando'].includes(value),
-          'default': 'stable'
+          key: 'version',
+          prompt: 'which version of docs would you like (stable, master, commando)?',
+          type: 'string',
+          parse: value => value.toLowerCase(),
+          validate: value => ['master', 'stable', 'commando'].includes(value),
+          default: 'stable'
         }
       ]
     });
@@ -191,8 +191,8 @@ module.exports = class DocsCommand extends Command {
 
   formatMain (main, version) {
     const embed = {
-      'description': `__**[${main.item.name}`,
-      'fields': []
+      description: `__**[${main.item.name}`,
+      fields: []
     };
 
     if (main.item.extends) {
@@ -213,22 +213,22 @@ module.exports = class DocsCommand extends Command {
 
     if (main.item.props) {
       embed.fields.push({
-        'name': 'Properties',
-        'value': join(main.item.props)
+        name: 'Properties',
+        value: join(main.item.props)
       });
     }
 
     if (main.item.methods) {
       embed.fields.push({
-        'name': 'Methods',
-        'value': join(main.item.methods)
+        name: 'Methods',
+        value: join(main.item.methods)
       });
     }
 
     if (main.item.events) {
       embed.fields.push({
-        'name': 'Events',
-        'value': join(main.item.events)
+        name: 'Events',
+        value: join(main.item.events)
       });
     }
 
@@ -237,11 +237,11 @@ module.exports = class DocsCommand extends Command {
 
   formatProp (main, member, version) {
     const embed = {
-      'description': oneLineTrim`
+      description: oneLineTrim`
 				__**[${main.item.name}${member.item.scope === 'static' ? '.' : '#'}${member.item.name}]
 				(${this.makeLink(main, member, version)})**__
 			`,
-      'fields': []
+      fields: []
     };
 
     embed.description += '\n';
@@ -252,14 +252,14 @@ module.exports = class DocsCommand extends Command {
     const type = this.joinType(member.item.type); // eslint-disable-line one-var
 
     embed.fields.push({
-      'name': 'Type',
-      'value': `\`${type}\``
+      name: 'Type',
+      value: `\`${type}\``
     });
 
     if (member.item.examples) {
       embed.fields.push({
-        'name': 'Example',
-        'value': `\`\`\`js\n${member.item.examples.join('```\n```js\n')}\`\`\``
+        name: 'Example',
+        value: `\`\`\`js\n${member.item.examples.join('```\n```js\n')}\`\`\``
       });
     }
 
@@ -268,11 +268,11 @@ module.exports = class DocsCommand extends Command {
 
   formatMethod (main, member, version) {
     const embed = {
-      'description': oneLineTrim`
+      description: oneLineTrim`
 				__**[${main.item.name}${member.item.scope === 'static' ? '.' : '#'}${member.item.name}()]
 				(${this.makeLink(main, member, version)})**__
 			`,
-      'fields': []
+      fields: []
     };
 
     embed.description += '\n';
@@ -290,8 +290,8 @@ module.exports = class DocsCommand extends Command {
       });
 
       embed.fields.push({
-        'name': 'Parameters',
-        'value': params.join('\n\n')
+        name: 'Parameters',
+        value: params.join('\n\n')
       });
     }
 
@@ -301,20 +301,20 @@ module.exports = class DocsCommand extends Command {
         returns = `${desc}\`=> ${type}\``; // eslint-disable-line sort-vars
 
       embed.fields.push({
-        'name': 'Returns',
-        'value': returns
+        name: 'Returns',
+        value: returns
       });
     } else {
       embed.fields.push({
-        'name': 'Returns',
-        'value': '`=> void`'
+        name: 'Returns',
+        value: '`=> void`'
       });
     }
 
     if (member.item.examples) {
       embed.fields.push({
-        'name': 'Example',
-        'value': `\`\`\`js\n${member.item.examples.join('```\n```js\n')}\`\`\``
+        name: 'Example',
+        value: `\`\`\`js\n${member.item.examples.join('```\n```js\n')}\`\`\``
       });
     }
 
@@ -323,8 +323,8 @@ module.exports = class DocsCommand extends Command {
 
   formatEvent (main, member, version) {
     const embed = {
-      'description': `__**[${main.item.name}#${member.item.name}](${this.makeLink(main, member, version)})**__\n`,
-      'fields': []
+      description: `__**[${main.item.name}#${member.item.name}](${this.makeLink(main, member, version)})**__\n`,
+      fields: []
     };
 
     if (member.item.description) {
@@ -340,15 +340,15 @@ module.exports = class DocsCommand extends Command {
       });
 
       embed.fields.push({
-        'name': 'Parameters',
-        'value': params.join('\n\n')
+        name: 'Parameters',
+        value: params.join('\n\n')
       });
     }
 
     if (member.item.examples) {
       embed.fields.push({
-        'name': 'Example',
-        'value': `\`\`\`js\n${member.item.examples.join('```\n```js\n')}\`\`\``
+        name: 'Example',
+        value: `\`\`\`js\n${member.item.examples.join('```\n```js\n')}\`\`\``
       });
     }
 
@@ -368,16 +368,16 @@ module.exports = class DocsCommand extends Command {
     }
 
     const embed = member ? { // eslint-disable-line one-var, prefer-reflect
-      'props': this.formatProp,
-      'methods': this.formatMethod,
-      'events': this.formatEvent
+      props: this.formatProp,
+      methods: this.formatMethod,
+      events: this.formatEvent
     }[member.category].call(this, main, member, version) : this.formatMain(main, version);
 
 
     embed.url = this.getLink(version);
     embed.author = {
-      'name': version === 'commando' ? 'Commando Docs' : `MessageEmbedjs Docs (${version})`,
-      'icon_url': 'https://github.com/discordjs.png'
+      name: version === 'commando' ? 'Commando Docs' : `MessageEmbedjs Docs (${version})`,
+      iconURL: 'https://github.com/discordjs.png'
     };
 
     deleteCommandMessages(msg, this.client);

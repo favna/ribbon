@@ -45,28 +45,28 @@ const moment = require('moment'),
 module.exports = class SoftbanCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'softban',
-      'memberName': 'softban',
-      'group': 'moderation',
-      'aliases': ['sb', 'sban'],
-      'description': 'Kicks a member while also purging messages from the last 24 hours',
-      'format': 'MemberID|MemberName(partial or full) [ReasonForSoftbanning]',
-      'examples': ['softban JohnDoe annoying'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'softban',
+      memberName: 'softban',
+      group: 'moderation',
+      aliases: ['sb', 'sban'],
+      description: 'Kicks a member while also purging messages from the last 24 hours',
+      format: 'MemberID|MemberName(partial or full) [ReasonForSoftbanning]',
+      examples: ['softban JohnDoe annoying'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'Which member should I softban?',
-          'type': 'member'
+          key: 'member',
+          prompt: 'Which member should I softban?',
+          type: 'member'
         },
         {
-          'key': 'reason',
-          'prompt': 'What is the reason for this softban?',
-          'type': 'string'
+          key: 'reason',
+          prompt: 'What is the reason for this softban?',
+          type: 'string'
         }
       ]
     });
@@ -91,8 +91,8 @@ module.exports = class SoftbanCommand extends Command {
     }
 
     args.member.ban({
-      'days': 1,
-      'reason': args.reason
+      days: 1,
+      reason: args.reason
     });
 
     msg.guild.members.unban(args.member.user);

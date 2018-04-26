@@ -39,16 +39,16 @@ const {Command} = require('discord.js-commando'),
 module.exports = class ResumeSongCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'resume',
-      'memberName': 'resume',
-      'group': 'music',
-      'aliases': ['go', 'continue', 'ale', 'loss', 'res'],
-      'description': 'Resumes the currently playing song.',
-      'examples': ['resume'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'resume',
+      memberName: 'resume',
+      group: 'music',
+      aliases: ['go', 'continue', 'ale', 'loss', 'res'],
+      description: 'Resumes the currently playing song.',
+      examples: ['resume'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }

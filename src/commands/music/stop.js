@@ -42,16 +42,16 @@ const {Command} = require('discord.js-commando'),
 module.exports = class StopMusicCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'stop',
-      'memberName': 'stop',
-      'group': 'music',
-      'aliases': ['kill', 'stfu', 'quit', 'leave', 'disconnect'],
-      'description': 'Stops the music and wipes the queue.',
-      'details': 'If there are more than 3 people (not counting the bot) a votestop is started. Staff can force the stop by adding `force` to the command',
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'stop',
+      memberName: 'stop',
+      group: 'music',
+      aliases: ['kill', 'stfu', 'quit', 'leave', 'disconnect'],
+      description: 'Stops the music and wipes the queue.',
+      details: 'If there are more than 3 people (not counting the bot) a votestop is started. Staff can force the stop by adding `force` to the command',
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
     this.votes = new Map();
@@ -126,12 +126,12 @@ module.exports = class StopMusicCommand extends Command {
 			`);
     }
     const newVote = { // eslint-disable-line one-var            
-        'count': 1,
-        'users': [msg.author.id],
+        count: 1,
+        users: [msg.author.id],
         queue,
-        'guild': msg.guild.id,
-        'start': Date.now(),
-        'timeout': null
+        guild: msg.guild.id,
+        start: Date.now(),
+        timeout: null
       },
       remaining = threshold - 1,
       time = this.setTimeout(newVote);

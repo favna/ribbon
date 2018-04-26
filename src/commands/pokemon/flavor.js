@@ -51,24 +51,24 @@ const Fuse = require('fuse.js'),
 module.exports = class FlavorCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'flavor',
-      'memberName': 'flavor',
-      'group': 'pokemon',
-      'aliases': ['flavors', 'dexentries', 'dextext', 'dextex'],
-      'description': 'Get all the available dex entries for a Pokémon',
-      'format': 'PokemonName',
-      'examples': ['flavor Dragonite'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'flavor',
+      memberName: 'flavor',
+      group: 'pokemon',
+      aliases: ['flavors', 'dexentries', 'dextext', 'dextex'],
+      description: 'Get all the available dex entries for a Pokémon',
+      format: 'PokemonName',
+      examples: ['flavor Dragonite'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'pokemon',
-          'prompt': 'Get info from which Pokémon?',
-          'type': 'string',
-          'parse': p => p.toLowerCase()
+          key: 'pokemon',
+          prompt: 'Get info from which Pokémon?',
+          type: 'string',
+          parse: p => p.toLowerCase()
         }
       ]
     });
@@ -114,22 +114,22 @@ module.exports = class FlavorCommand extends Command {
 
     /* eslint-disable sort-vars */
     const aliasoptions = {
-        'shouldSort': true,
-        'threshold': 0.2,
-        'location': 0,
-        'distance': 100,
-        'maxPatternLength': 32,
-        'minMatchCharLength': 1,
-        'keys': ['alias']
+        shouldSort: true,
+        threshold: 0.2,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: ['alias']
       },
       pokeoptions = {
-        'shouldSort': true,
-        'threshold': 0.6,
-        'location': 0,
-        'distance': 100,
-        'maxPatternLength': 32,
-        'minMatchCharLength': 1,
-        'keys': ['num', 'species']
+        shouldSort: true,
+        threshold: 0.6,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: ['num', 'species']
       },
       aliasFuse = new Fuse(PokeAliases, aliasoptions),
       pokeFuse = new Fuse(BattlePokedex, pokeoptions),
@@ -145,23 +145,23 @@ module.exports = class FlavorCommand extends Command {
       if (pokeSearch[0].forme) {
         for (let i = 0; i < dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`].length; i += 1) {
           pokedexEntries.push({
-            'game': dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`][i].version_id,
-            'text': dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`][i].flavor_text
+            game: dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`][i].version_id,
+            text: dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`][i].flavor_text
           });
         }
       } else {
         for (let i = 0; i < dexEntries[pokeSearch[0].num].length; i += 1) {
           pokedexEntries.push({
-            'game': dexEntries[pokeSearch[0].num][i].version_id,
-            'text': dexEntries[pokeSearch[0].num][i].flavor_text
+            game: dexEntries[pokeSearch[0].num][i].version_id,
+            text: dexEntries[pokeSearch[0].num][i].flavor_text
           });
         }
       }
 
       if (!pokedexEntries) {
         pokedexEntries.push({
-          'game': 'N.A.',
-          'text': '*PokéDex data not found for this Pokémon*'
+          game: 'N.A.',
+          text: '*PokéDex data not found for this Pokémon*'
         });
       }
       let i = pokedexEntries.length - 1;
@@ -197,9 +197,9 @@ module.exports = class FlavorCommand extends Command {
 
         for (const field in dataEmbed.fields) {
           fields.push({
-            'name': zalgo(dataEmbed.fields[field].name),
-            'value': zalgo(dataEmbed.fields[field].value),
-            'inline': dataEmbed.fields[field].inline
+            name: zalgo(dataEmbed.fields[field].name),
+            value: zalgo(dataEmbed.fields[field].value),
+            inline: dataEmbed.fields[field].inline
           });
         }
 

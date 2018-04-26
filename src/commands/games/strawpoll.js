@@ -43,31 +43,31 @@ const request = require('snekfetch'),
 module.exports = class StrawpollCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'strawpoll',
-      'memberName': 'strawpoll',
-      'group': 'games',
-      'aliases': ['straw', 'poll'],
-      'description': 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
-      'format': 'TitleOfStrawpoll OptionA|OptionB|OptionC...',
-      'examples': ['strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'strawpoll',
+      memberName: 'strawpoll',
+      group: 'games',
+      aliases: ['straw', 'poll'],
+      description: 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
+      format: 'TitleOfStrawpoll OptionA|OptionB|OptionC...',
+      examples: ['strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'title',
-          'prompt': 'Title of the strawpoll',
-          'type': 'string',
-          'wait': 60
+          key: 'title',
+          prompt: 'Title of the strawpoll',
+          type: 'string',
+          wait: 60
         },
         {
-          'key': 'options',
-          'prompt': 'Options for the strawpoll?',
-          'type': 'string',
-          'wait': 60,
-          'validate': (opts) => {
+          key: 'options',
+          prompt: 'Options for the strawpoll?',
+          type: 'string',
+          wait: 60,
+          validate: (opts) => {
             if (/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~ ]*\|[a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~]*)*/.test(opts) &&
               opts.split('|').length >= 2 && opts.split('|').length <= 30) {
               return true;
@@ -88,11 +88,11 @@ module.exports = class StrawpollCommand extends Command {
         .post('https://www.strawpoll.me/api/v2/polls')
         .set('Content-Type', 'application/json')
         .send({
-          'title': args.title,
-          'options': args.options.split('|'),
-          'multi': false,
-          'dupcheck': 'normal',
-          'captcha': true
+          title: args.title,
+          options: args.options.split('|'),
+          multi: false,
+          dupcheck: 'normal',
+          captcha: true
         });
 
     if (strawpoll.ok) {

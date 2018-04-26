@@ -45,21 +45,21 @@ const path = require('path'),
 module.exports = class MaxLengthCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'maxlength',
-      'memberName': 'maxlength',
-      'group': 'music',
-      'aliases': ['max-duration', 'max-song-length', 'max-song-duration'],
-      'description': 'Shows or sets the max song length.',
-      'details': oneLine`
+      name: 'maxlength',
+      memberName: 'maxlength',
+      group: 'music',
+      aliases: ['max-duration', 'max-song-length', 'max-song-duration'],
+      description: 'Shows or sets the max song length.',
+      details: oneLine`
             This is the maximum length of a song that users may queue, in minutes.
             The default is ${MAX_LENGTH}.
             Only administrators may change this setting.`,
-      'format': '[minutes|"default"]',
-      'examples': ['maxlength 10'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      format: '[minutes|"default"]',
+      examples: ['maxlength 10'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }

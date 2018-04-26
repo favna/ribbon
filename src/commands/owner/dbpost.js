@@ -38,12 +38,12 @@ const request = require('snekfetch'),
 module.exports = class DBPostCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'dbpost',
-      'memberName': 'dbpost',
-      'group': 'owner',
-      'description': 'Post current server count to Discord Bots List',
-      'guildOnly': false,
-      'ownerOnly': true
+      name: 'dbpost',
+      memberName: 'dbpost',
+      group: 'owner',
+      description: 'Post current server count to Discord Bots List',
+      guildOnly: false,
+      ownerOnly: true
     });
   }
 
@@ -51,7 +51,7 @@ module.exports = class DBPostCommand extends Command {
     startTyping(msg);
     const post = await request.post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
       .set('Authorization', process.env.discordbotskey)
-      .send({'server_count': this.client.guilds.size});
+      .send({server_count: this.client.guilds.size}); // eslint-disable-line camelcase
 
     if (post) {
       deleteCommandMessages(msg, this.client);

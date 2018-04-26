@@ -41,24 +41,24 @@ const {Command} = require('discord.js-commando'),
 module.exports = class UnknownMessagesCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'unknownmessages',
-      'memberName': 'unknownmessages',
-      'group': 'moderation',
-      'aliases': ['unkmsg', 'unknowns'],
-      'description': 'Toggle Unknown Command messages on or off',
-      'format': 'Enable|Disable',
-      'examples': ['unknownmessages {option}', 'unknownmessages enable'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'unknownmessages',
+      memberName: 'unknownmessages',
+      group: 'moderation',
+      aliases: ['unkmsg', 'unknowns'],
+      description: 'Toggle Unknown Command messages on or off',
+      format: 'Enable|Disable',
+      examples: ['unknownmessages {option}', 'unknownmessages enable'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'option',
-          'prompt': 'Enable or disable Unknown Command messages?',
-          'type': 'boolean',
-          'validate': (bool) => {
+          key: 'option',
+          prompt: 'Enable or disable Unknown Command messages?',
+          type: 'boolean',
+          validate: (bool) => {
             const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 
             if (validBools.includes(bool.toLowerCase())) {

@@ -39,27 +39,27 @@ const {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class TwitchToggleCommand extends Command {
-  constructor (client) {
+  constructor(client) {
     super(client, {
-      'name': 'twitchtoggle',
-      'memberName': 'twitchtoggle',
-      'group': 'streamwatch',
-      'aliases': ['twitchon', 'twitchoff'],
-      'description': 'Configures whether Twitch Notifications are enabled',
-      'details': 'This is a killswitch for the entire module!',
-      'format': 'Enable|Disable',
-      'examples': ['twitchtoggle enable'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'twitchtoggle',
+      memberName: 'twitchtoggle',
+      group: 'streamwatch',
+      aliases: ['twitchon', 'twitchoff'],
+      description: 'Configures whether Twitch Notifications are enabled',
+      details: 'This is a killswitch for the entire module!',
+      format: 'Enable|Disable',
+      examples: ['twitchtoggle enable'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'option',
-          'prompt': 'Enable or disable twitchtoggles?',
-          'type': 'boolean',
-          'validate': (bool) => {
+          key: 'option',
+          prompt: 'Enable or disable twitchtoggles?',
+          type: 'boolean',
+          validate: (bool) => {
             const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 
             if (validBools.includes(bool.toLowerCase())) {
@@ -73,11 +73,11 @@ module.exports = class TwitchToggleCommand extends Command {
     });
   }
 
-  hasPermission (msg) {
+  hasPermission(msg) {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run (msg, args) {
+  run(msg, args) {
     startTyping(msg);
     this.client.provider.set(msg.guild.id, 'twitchnotifiers', args.option);
 

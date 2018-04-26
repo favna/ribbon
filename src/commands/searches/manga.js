@@ -42,23 +42,23 @@ const maljs = require('maljs'),
 module.exports = class MangaCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'manga',
-      'memberName': 'manga',
-      'group': 'searches',
-      'aliases': ['cartoon', 'man'],
-      'description': 'Finds manga on MyAnimeList',
-      'format': 'MangaName',
-      'examples': ['manga Pokemon'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'manga',
+      memberName: 'manga',
+      group: 'searches',
+      aliases: ['cartoon', 'man'],
+      description: 'Finds manga on MyAnimeList',
+      format: 'MangaName',
+      examples: ['manga Pokemon'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'query',
-          'prompt': 'What manga do you want to find?',
-          'type': 'string'
+          key: 'query',
+          prompt: 'What manga do you want to find?',
+          type: 'string'
         }
       ]
     });

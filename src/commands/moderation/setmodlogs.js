@@ -41,23 +41,23 @@ const {Command} = require('discord.js-commando'),
 module.exports = class SetModlogsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'setmodlogs',
-      'memberName': 'setmodlogs',
-      'group': 'moderation',
-      'aliases': ['setmod'],
-      'description': 'Set the modlogs channel used for logging mod commands. Ensure to enable modlogs with the "modlogs" command.',
-      'format': 'ChannelID|ChannelName(partial or full)',
-      'examples': ['setmodlogs mod-logs'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'setmodlogs',
+      memberName: 'setmodlogs',
+      group: 'moderation',
+      aliases: ['setmod'],
+      description: 'Set the modlogs channel used for logging mod commands. Ensure to enable modlogs with the "modlogs" command.',
+      format: 'ChannelID|ChannelName(partial or full)',
+      examples: ['setmodlogs mod-logs'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'channel',
-          'prompt': 'What channel should I set for member logs? (make sure to start with a # when going by name)',
-          'type': 'channel'
+          key: 'channel',
+          prompt: 'What channel should I set for member logs? (make sure to start with a # when going by name)',
+          type: 'channel'
         }
       ]
     });

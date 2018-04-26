@@ -39,35 +39,35 @@ const {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class TwitchOutputCommand extends Command {
-  constructor (client) {
+  constructor(client) {
     super(client, {
-      'name': 'twitchoutput',
-      'memberName': 'twitchoutput',
-      'group': 'streamwatch',
-      'aliases': ['output', 'twitchout', 'twitchchannel'],
-      'description': 'Configures where Twitch Notifications are send to',
-      'format': 'ChannelID|ChannelName(partial or full)',
-      'examples': ['twitchoutput twitch'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'twitchoutput',
+      memberName: 'twitchoutput',
+      group: 'streamwatch',
+      aliases: ['output', 'twitchout', 'twitchchannel'],
+      description: 'Configures where Twitch Notifications are send to',
+      format: 'ChannelID|ChannelName(partial or full)',
+      examples: ['twitchoutput twitch'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'channel',
-          'prompt': 'What channel should I set for twitch notifications? (make sure to start with a # when going by name)',
-          'type': 'channel'
+          key: 'channel',
+          prompt: 'What channel should I set for twitch notifications? (make sure to start with a # when going by name)',
+          type: 'channel'
         }
       ]
     });
   }
 
-  hasPermission (msg) {
+  hasPermission(msg) {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run (msg, args) {
+  run(msg, args) {
     startTyping(msg);
     this.client.provider.set(msg.guild.id, 'twitchchannel', args.channel.id);
     deleteCommandMessages(msg, this.client);

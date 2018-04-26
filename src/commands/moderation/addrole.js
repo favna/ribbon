@@ -44,28 +44,28 @@ const moment = require('moment'),
 module.exports = class AddRoleCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'addrole',
-      'memberName': 'addrole',
-      'group': 'moderation',
-      'aliases': ['newrole', 'ar'],
-      'description': 'Adds a role to a member',
-      'format': 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
-      'examples': ['addrole favna testrole1'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'addrole',
+      memberName: 'addrole',
+      group: 'moderation',
+      aliases: ['newrole', 'ar'],
+      description: 'Adds a role to a member',
+      format: 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
+      examples: ['addrole favna testrole1'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'Which member should I assign a role to?',
-          'type': 'member'
+          key: 'member',
+          prompt: 'Which member should I assign a role to?',
+          type: 'member'
         },
         {
-          'key': 'role',
-          'prompt': 'What role should I add to that member?',
-          'type': 'role'
+          key: 'role',
+          prompt: 'What role should I add to that member?',
+          type: 'role'
         }
       ]
     });

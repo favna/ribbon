@@ -42,23 +42,23 @@ const predict = require('eightball'),
 module.exports = class EightBallCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': '8ball',
-      'memberName': '8ball',
-      'group': 'games',
-      'aliases': ['eightball'],
-      'description': 'Roll a magic 8ball',
-      'format': 'YourQuestion',
-      'examples': ['8ball is Favna a genius coder?'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: '8ball',
+      memberName: '8ball',
+      group: 'games',
+      aliases: ['eightball'],
+      description: 'Roll a magic 8ball',
+      format: 'YourQuestion',
+      examples: ['8ball is Favna a genius coder?'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'question',
-          'prompt': 'For what question should I roll a magic 8ball?',
-          'type': 'string'
+          key: 'question',
+          prompt: 'For what question should I roll a magic 8ball?',
+          type: 'string'
         }
       ]
     });

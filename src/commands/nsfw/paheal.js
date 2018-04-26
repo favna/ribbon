@@ -44,25 +44,25 @@ const booru = require('booru'),
 module.exports = class PahealCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'paheal',
-      'memberName': 'paheal',
-      'group': 'nsfw',
-      'aliases': ['pa', 'heal'],
-      'description': 'Find NSFW Content on Rule34 - Paheal',
-      'format': 'NSFWToLookUp',
-      'examples': ['paheal Pyrrha Nikos'],
-      'guildOnly': false,
-      'nsfw': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'paheal',
+      memberName: 'paheal',
+      group: 'nsfw',
+      aliases: ['pa', 'heal'],
+      description: 'Find NSFW Content on Rule34 - Paheal',
+      format: 'NSFWToLookUp',
+      examples: ['paheal Pyrrha Nikos'],
+      guildOnly: false,
+      nsfw: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'tags',
-          'prompt': 'What do you want to find NSFW for?',
-          'type': 'string',
-          'parse': p => p.split(' ')
+          key: 'tags',
+          prompt: 'What do you want to find NSFW for?',
+          type: 'string',
+          parse: p => p.split(' ')
         }
       ]
     });
@@ -73,8 +73,8 @@ module.exports = class PahealCommand extends Command {
       startTyping(msg);
       /* eslint-disable sort-vars*/
       const search = await booru.search('paheal', args.tags, {
-          'limit': 1,
-          'random': true
+          limit: 1,
+          random: true
         }),
         common = await booru.commonfy(search),
         embed = new MessageEmbed(),

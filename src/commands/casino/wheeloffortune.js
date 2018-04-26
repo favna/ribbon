@@ -45,24 +45,24 @@ const Database = require('better-sqlite3'),
 module.exports = class WheelOfFortuneCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'wheeloffortune',
-      'memberName': 'wheeloffortune',
-      'group': 'casino',
-      'aliases': ['wheel', 'wof'],
-      'description': 'Gamble your chips iat the wheel of fortune',
-      'format': 'AmountOfChips',
-      'examples': ['wof 50'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 5
+      name: 'wheeloffortune',
+      memberName: 'wheeloffortune',
+      group: 'casino',
+      aliases: ['wheel', 'wof'],
+      description: 'Gamble your chips iat the wheel of fortune',
+      format: 'AmountOfChips',
+      examples: ['wof 50'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 5
       },
-      'args': [
+      args: [
         {
-          'key': 'chips',
-          'prompt': 'How many chips do you want to gamble?',
-          'type': 'integer',
-          'validate': (chips) => {
+          key: 'chips',
+          prompt: 'How many chips do you want to gamble?',
+          type: 'integer',
+          validate: (chips) => {
             if (/^[+]?\d+$/.test(chips) && chips >= 1 && chips <= 10000) {
               return true;
             }
@@ -82,7 +82,7 @@ module.exports = class WheelOfFortuneCommand extends Command {
       wofEmbed = new MessageEmbed();
 
     wofEmbed
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({format: 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
@@ -101,7 +101,7 @@ module.exports = class WheelOfFortuneCommand extends Command {
         query.balance += args.chips * multipliers[spin];
         query.balance = roundNumber(query.balance);
 
-        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({balance: query.balance});
 
         wofEmbed
           .setTitle(`${msg.author.tag} ${multipliers[spin] < 1

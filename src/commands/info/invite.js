@@ -39,16 +39,16 @@ const {MessageEmbed} = require('discord.js'),
 module.exports = class InviteCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'invite',
-      'memberName': 'invite',
-      'group': 'info',
-      'aliases': ['inv', 'links', 'shill'],
-      'description': 'Gives you invitation links',
-      'examples': ['invite'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'invite',
+      memberName: 'invite',
+      group: 'info',
+      aliases: ['inv', 'links', 'shill'],
+      description: 'Gives you invitation links',
+      examples: ['invite'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }

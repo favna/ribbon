@@ -46,24 +46,24 @@ const Fuse = require('fuse.js'),
 module.exports = class AbilityCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'ability',
-      'memberName': 'ability',
-      'group': 'pokemon',
-      'aliases': ['abilities', 'abi'],
-      'description': 'Get the info on a Pokémon ability',
-      'format': 'AbilityName',
-      'examples': ['ability Multiscale'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'ability',
+      memberName: 'ability',
+      group: 'pokemon',
+      aliases: ['abilities', 'abi'],
+      description: 'Get the info on a Pokémon ability',
+      format: 'AbilityName',
+      examples: ['ability Multiscale'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'ability',
-          'prompt': 'Get info on which ability?',
-          'type': 'string',
-          'parse': p => p.toLowerCase()
+          key: 'ability',
+          prompt: 'Get info on which ability?',
+          type: 'string',
+          parse: p => p.toLowerCase()
         }
       ]
     });
@@ -73,13 +73,13 @@ module.exports = class AbilityCommand extends Command {
     startTyping(msg);
     /* eslint-disable sort-vars */
     const fsoptions = {
-        'shouldSort': true,
-        'threshold': 0.6,
-        'location': 0,
-        'distance': 100,
-        'maxPatternLength': 32,
-        'minMatchCharLength': 1,
-        'keys': ['alias', 'ability', 'id', 'name']
+        shouldSort: true,
+        threshold: 0.6,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: ['alias', 'ability', 'id', 'name']
       },
       aliasFuse = new Fuse(AbilityAliases, fsoptions),
       abilityFuse = new Fuse(BattleAbilities, fsoptions),

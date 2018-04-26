@@ -41,23 +41,23 @@ const {Command} = require('discord.js-commando'),
 module.exports = class SetMemberlogsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'setmemberlogs',
-      'memberName': 'setmemberlogs',
-      'group': 'moderation',
-      'aliases': ['setmember'],
-      'description': 'Set the memberlogs channel used for logging member logs (such as people joining and leaving). Ensure to enable memberlogs with the "memberlogs" command.',
-      'format': 'ChannelID|ChannelName(partial or full)',
-      'examples': ['setmemberlogs member-logs'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'setmemberlogs',
+      memberName: 'setmemberlogs',
+      group: 'moderation',
+      aliases: ['setmember'],
+      description: 'Set the memberlogs channel used for logging member logs (such as people joining and leaving). Ensure to enable memberlogs with the "memberlogs" command.',
+      format: 'ChannelID|ChannelName(partial or full)',
+      examples: ['setmemberlogs member-logs'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'channel',
-          'prompt': 'What channel should I set for member logs? (make sure to start with a # when going by name)',
-          'type': 'channel'
+          key: 'channel',
+          prompt: 'What channel should I set for member logs? (make sure to start with a # when going by name)',
+          type: 'channel'
         }
       ]
     });

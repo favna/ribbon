@@ -43,24 +43,24 @@ const igdbapi = require('igdb-api-node').default,
 module.exports = class GamesCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'games',
-      'memberName': 'games',
-      'group': 'searches',
-      'aliases': ['game', 'moby', 'igdb'],
-      'description': 'Finds info on a game on IGDB (IndieGamesDoneBad)',
-      'format': 'GameName',
-      'examples': ['games {gameName}', 'games Tales of Berseria'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'games',
+      memberName: 'games',
+      group: 'searches',
+      aliases: ['game', 'moby', 'igdb'],
+      description: 'Finds info on a game on IGDB (IndieGamesDoneBad)',
+      format: 'GameName',
+      examples: ['games {gameName}', 'games Tales of Berseria'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'game',
-          'prompt': 'Which game do you want to look up on IGDB?',
-          'type': 'string',
-          'label': 'Game to look up'
+          key: 'game',
+          prompt: 'Which game do you want to look up on IGDB?',
+          type: 'string',
+          label: 'Game to look up'
         }
       ]
 
@@ -88,23 +88,23 @@ module.exports = class GamesCommand extends Command {
       const gameEmbed = new MessageEmbed(),
         igdb = igdbapi(process.env.igdbkey),
         gameInfo = await igdb.games({
-          'search': args.game,
-          'fields': ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
-          'limit': 1,
-          'offset': 0
+          search: args.game,
+          fields: ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
+          limit: 1,
+          offset: 0
         }),
         coverImg = await gameInfo.body[0].cover.url.includes('http') ? gameInfo.body[0].cover.url : `https:${gameInfo.body[0].cover.url}`,
         developerInfo = await igdb.companies({
-          'ids': gameInfo.body[0].developers,
-          'fields': ['name']
+          ids: gameInfo.body[0].developers,
+          fields: ['name']
         }),
         genreInfo = await igdb.genres({
-          'ids': gameInfo.body[0].genres,
-          'fields': ['name']
+          ids: gameInfo.body[0].genres,
+          fields: ['name']
         }),
         platformInfo = await igdb.platforms({
-          'ids': gameInfo.body[0].platforms,
-          'fields': ['name']
+          ids: gameInfo.body[0].platforms,
+          fields: ['name']
         }),
         releaseDate = moment(gameInfo.body[0].release_dates[0].date).format('MMMM Do YYYY');
       /* eslint-enable sort-vars*/

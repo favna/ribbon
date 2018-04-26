@@ -42,23 +42,23 @@ const moment = require('moment'),
 module.exports = class UserInfoCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'userinfo',
-      'memberName': 'userinfo',
-      'group': 'info',
-      'aliases': ['user', 'uinfo'],
-      'description': 'Gets information about a user.',
-      'format': 'MemberID|MemberName(partial or full)',
-      'examples': ['uinfo Favna'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'userinfo',
+      memberName: 'userinfo',
+      group: 'info',
+      aliases: ['user', 'uinfo'],
+      description: 'Gets information about a user.',
+      format: 'MemberID|MemberName(partial or full)',
+      examples: ['uinfo Favna'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'What user would you like to snoop on?',
-          'type': 'member'
+          key: 'member',
+          prompt: 'What user would you like to snoop on?',
+          type: 'member'
         }
       ]
     });
@@ -68,8 +68,8 @@ module.exports = class UserInfoCommand extends Command {
     startTyping(msg);
     const uinfoEmbed = new MessageEmbed(),
       vals = {
-        'member': args.member,
-        'user': args.member.user
+        member: args.member,
+        user: args.member.user
       };
 
     uinfoEmbed

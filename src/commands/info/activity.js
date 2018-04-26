@@ -45,23 +45,23 @@ const Spotify = require('spotify-web-api-node'),
 module.exports = class ActivityCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'activity',
-      'memberName': 'activity',
-      'group': 'info',
-      'aliases': ['act', 'presence', 'richpresence'],
-      'description': 'Gets the activity (presence) data from a member',
-      'format': 'MemberID|MemberName(partial or full)',
-      'examples': ['activity Favna'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'activity',
+      memberName: 'activity',
+      group: 'info',
+      aliases: ['act', 'presence', 'richpresence'],
+      description: 'Gets the activity (presence) data from a member',
+      format: 'MemberID|MemberName(partial or full)',
+      examples: ['activity Favna'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'What user would you like to get the activity from?',
-          'type': 'member'
+          key: 'member',
+          prompt: 'What user would you like to get the activity from?',
+          type: 'member'
         }
       ]
     });
@@ -85,8 +85,8 @@ module.exports = class ActivityCommand extends Command {
       ext = this.fetchExt(ava),
       gameList = await request.get('https://canary.discordapp.com/api/v6/games'),
       spotifyApi = new Spotify({
-        'clientId': process.env.spotifyid,
-        'clientSecret': process.env.spotifysecret
+        clientId: process.env.spotifyid,
+        clientSecret: process.env.spotifysecret
       });
 
     embed

@@ -44,23 +44,23 @@ const request = require('snekfetch'),
 module.exports = class TimeCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'time',
-      'memberName': 'time',
-      'group': 'extra',
-      'aliases': ['citytime'],
-      'description': 'Gets the time in any given city',
-      'format': 'CityName',
-      'examples': ['time London'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'time',
+      memberName: 'time',
+      group: 'extra',
+      aliases: ['citytime'],
+      description: 'Gets the time in any given city',
+      format: 'CityName',
+      examples: ['time London'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'city',
-          'prompt': 'Get time in which city?',
-          'type': 'string'
+          key: 'city',
+          prompt: 'Get time in which city?',
+          type: 'string'
         }
       ]
     });

@@ -44,29 +44,29 @@ const moment = require('moment'),
 module.exports = class KickCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'kick',
-      'memberName': 'kick',
-      'group': 'moderation',
-      'aliases': ['k'],
-      'description': 'Kicks a member from the server',
-      'format': 'MemberID|MemberName(partial or full) [ReasonForKicking]',
-      'examples': ['kick JohnDoe annoying'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'kick',
+      memberName: 'kick',
+      group: 'moderation',
+      aliases: ['k'],
+      description: 'Kicks a member from the server',
+      format: 'MemberID|MemberName(partial or full) [ReasonForKicking]',
+      examples: ['kick JohnDoe annoying'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'Which member do you want me to kick?',
-          'type': 'member'
+          key: 'member',
+          prompt: 'Which member do you want me to kick?',
+          type: 'member'
         },
         {
-          'key': 'reason',
-          'prompt': 'What is the reason for this kick?',
-          'type': 'string',
-          'default': ''
+          key: 'reason',
+          prompt: 'What is the reason for this kick?',
+          type: 'string',
+          default: ''
         }
       ]
     });

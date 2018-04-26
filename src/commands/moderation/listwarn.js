@@ -45,24 +45,24 @@ const Fuse = require('fuse.js'),
 module.exports = class ListWarnCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'listwarn',
-      'memberName': 'listwarn',
-      'group': 'moderation',
-      'aliases': ['reqwarn', 'lw', 'rw'],
-      'description': 'Lists the warning points given to a member',
-      'format': 'MemberID|MemberName(partial or full)',
-      'examples': ['listwarn {member}'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'listwarn',
+      memberName: 'listwarn',
+      group: 'moderation',
+      aliases: ['reqwarn', 'lw', 'rw'],
+      description: 'Lists the warning points given to a member',
+      format: 'MemberID|MemberName(partial or full)',
+      examples: ['listwarn {member}'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'Which member should I show warning points for?',
-          'type': 'string',
-          'label': 'member name or ID'
+          key: 'member',
+          prompt: 'Which member should I show warning points for?',
+          type: 'string',
+          label: 'member name or ID'
         }
       ]
     });
@@ -78,13 +78,13 @@ module.exports = class ListWarnCommand extends Command {
       /* eslint-disable sort-vars*/
       const embed = new MessageEmbed(),
         fsoptions = {
-          'shouldSort': true,
-          'threshold': 0.6,
-          'location': 0,
-          'distance': 100,
-          'maxPatternLength': 32,
-          'minMatchCharLength': 1,
-          'keys': ['id', 'usertag']
+          shouldSort: true,
+          threshold: 0.6,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: ['id', 'usertag']
         },
         warns = JSON.parse(fs.readFileSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`)), 'utf8'),
         fuse = new Fuse(warns, fsoptions),

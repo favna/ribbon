@@ -49,32 +49,32 @@ const imgur = require('imgur'),
 module.exports = class RandomColCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'randomcol',
-      'memberName': 'randomcol',
-      'group': 'extra',
-      'aliases': ['randhex', 'rhex', 'randomcolor', 'randcol', 'randomhex'],
-      'description': 'Generate a random color',
-      'format': '[hex color]',
-      'examples': ['randomcol', 'randomcol #990000', 'randomcol 36B56e'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'randomcol',
+      memberName: 'randomcol',
+      group: 'extra',
+      aliases: ['randhex', 'rhex', 'randomcolor', 'randcol', 'randomhex'],
+      description: 'Generate a random color',
+      format: '[hex color]',
+      examples: ['randomcol', 'randomcol #990000', 'randomcol 36B56e'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'col',
-          'prompt': 'What color do you want to preview?',
-          'type': 'string',
-          'default': 'random',
-          'validate': (col) => {
+          key: 'col',
+          prompt: 'What color do you want to preview?',
+          type: 'string',
+          default: 'random',
+          validate: (col) => {
             if (/^#{0,1}(?:[0-9a-fA-F]{6})$/i.test(col) || col === 'random') {
               return true;
             }
 
             return 'Respond with a hex formatted color of 6 characters, example: `#990000` or `36B56e`';
           },
-          'parse': (col) => {
+          parse: (col) => {
             if (/^#{0}(?:[0-9a-fA-F]{6})$/i.test(col)) {
               return `#${col}`;
             }
@@ -94,9 +94,9 @@ module.exports = class RandomColCommand extends Command {
     const result = (/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})(?:[a-f\d])*$/i).exec(color);
 
     return {
-      'r': parseInt(result[1], 16),
-      'g': parseInt(result[2], 16),
-      'b': parseInt(result[3], 16)
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
     };
   }
 

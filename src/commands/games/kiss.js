@@ -39,23 +39,23 @@ const {Command} = require('discord.js-commando'),
 module.exports = class KissCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'kiss',
-      'memberName': 'kiss',
-      'group': 'games',
-      'description': 'Give someone a kiss ❤',
-      'format': 'MemberToGiveAKiss',
-      'examples': ['kiss Favna'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'kiss',
+      memberName: 'kiss',
+      group: 'games',
+      description: 'Give someone a kiss ❤',
+      format: 'MemberToGiveAKiss',
+      examples: ['kiss Favna'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'Who do you want to give a kiss?',
-          'type': 'member',
-          'default': ''
+          key: 'member',
+          prompt: 'Who do you want to give a kiss?',
+          type: 'member',
+          default: ''
         }
       ]
     });
@@ -84,11 +84,11 @@ module.exports = class KissCommand extends Command {
     startTyping(msg);
     deleteCommandMessages(msg, this.client);
     msg.embed({
-      'description': args.member !== ''
+      description: args.member !== ''
         ? `${args.member.displayName}! You were kissed by ${msg.member.displayName} 💋!`
         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-      'image': {'url': args.member !== '' ? this.fetchImage() : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
-      'color': msg.guild ? msg.guild.me.displayColor : 10610610
+      image: {url: args.member !== '' ? this.fetchImage() : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
+      color: msg.guild ? msg.guild.me.displayColor : 10610610
     });
 
     return stopTyping(msg);

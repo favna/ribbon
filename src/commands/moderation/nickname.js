@@ -44,28 +44,28 @@ const moment = require('moment'),
 module.exports = class NickCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'nickname',
-      'memberName': 'nickname',
-      'group': 'moderation',
-      'aliases': ['nick'],
-      'description': 'Assigns a nickname to a member. Use "clear" to remove the nickname',
-      'format': 'MemberID|MemberName(partial or full) NewNickname|clear',
-      'examples': ['nick favna pyrrha nikos'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'nickname',
+      memberName: 'nickname',
+      group: 'moderation',
+      aliases: ['nick'],
+      description: 'Assigns a nickname to a member. Use "clear" to remove the nickname',
+      format: 'MemberID|MemberName(partial or full) NewNickname|clear',
+      examples: ['nick favna pyrrha nikos'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'Which member should I assign a nickname to?',
-          'type': 'member'
+          key: 'member',
+          prompt: 'Which member should I assign a nickname to?',
+          type: 'member'
         },
         {
-          'key': 'nickname',
-          'prompt': 'What nickname should I assign?',
-          'type': 'string'
+          key: 'nickname',
+          prompt: 'What nickname should I assign?',
+          type: 'string'
         }
       ]
     });

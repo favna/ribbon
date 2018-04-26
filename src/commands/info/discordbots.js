@@ -43,24 +43,24 @@ const moment = require('moment'),
 module.exports = class DiscordBotsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'discordbots',
-      'memberName': 'discordbots',
-      'group': 'info',
-      'aliases': ['dbapi', 'db'],
-      'description': 'Gets the stats from a Discord Bot on DiscordBotList',
-      'format': 'DiscordBotID',
-      'examples': ['discordbots 376520643862331396'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'discordbots',
+      memberName: 'discordbots',
+      group: 'info',
+      aliases: ['dbapi', 'db'],
+      description: 'Gets the stats from a Discord Bot on DiscordBotList',
+      format: 'DiscordBotID',
+      examples: ['discordbots 376520643862331396'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'bot',
-          'prompt': 'ID of the bot to get stats from?',
-          'type': 'string',
-          'default': '376520643862331396'
+          key: 'bot',
+          prompt: 'ID of the bot to get stats from?',
+          type: 'string',
+          default: '376520643862331396'
         }
       ]
     });
@@ -84,7 +84,7 @@ module.exports = class DiscordBotsCommand extends Command {
         .setFooter(`${botinfo.username}#${botinfo.discriminator} was submitted at ${moment(botinfo.date).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
         .addField('Default Prefix', botinfo.prefix, true)
         .addField('Library', botinfo.lib, true)
-        .addField('Server Count', botinfo.server_count, true)
+        .addField('Server Count', botinfo.server_count, true) // eslint-disable-line camelcase
         .addField('Shards Count', botinfo.shards.length, true)
         .addField('Invite Link', `[Click Here](${botinfo.invite})`);
 

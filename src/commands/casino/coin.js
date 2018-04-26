@@ -47,24 +47,24 @@ const Database = require('better-sqlite3'),
 module.exports = class CoinCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'coin',
-      'memberName': 'coin',
-      'group': 'casino',
-      'aliases': ['flip', 'cflip'],
-      'description': 'Gamble your chips in a coin flip',
-      'format': 'AmountOfChips CoinSide',
-      'examples': ['coin 50 heads'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 5
+      name: 'coin',
+      memberName: 'coin',
+      group: 'casino',
+      aliases: ['flip', 'cflip'],
+      description: 'Gamble your chips in a coin flip',
+      format: 'AmountOfChips CoinSide',
+      examples: ['coin 50 heads'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 5
       },
-      'args': [
+      args: [
         {
-          'key': 'chips',
-          'prompt': 'How many chips do you want to gamble?',
-          'type': 'integer',
-          'validate': (chips) => {
+          key: 'chips',
+          prompt: 'How many chips do you want to gamble?',
+          type: 'integer',
+          validate: (chips) => {
             if (/^[+]?\d+$/.test(chips) && chips >= 1 && chips <= 10000) {
               return true;
             }
@@ -73,10 +73,10 @@ module.exports = class CoinCommand extends Command {
           }
         },
         {
-          'key': 'side',
-          'prompt': 'What side will the coin land on?',
-          'type': 'string',
-          'validate': (side) => {
+          key: 'side',
+          prompt: 'What side will the coin land on?',
+          type: 'string',
+          validate: (side) => {
             const validSides = ['heads', 'head', 'tails', 'tail'];
 
             if (validSides.includes(side.toLowerCase())) {
@@ -95,7 +95,7 @@ module.exports = class CoinCommand extends Command {
       conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
     coinEmbed
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({format: 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
@@ -121,7 +121,7 @@ module.exports = class CoinCommand extends Command {
 
         query.balance = roundNumber(query.balance);
 
-        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({'balance': query.balance});
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({balance: query.balance});
 
         coinEmbed
           .setTitle(`${msg.author.tag} ${flip === side ? 'won' : 'lost'} ${args.chips} chips`)

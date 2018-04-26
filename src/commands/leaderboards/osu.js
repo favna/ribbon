@@ -43,24 +43,24 @@ const _ = require('underscore'),
 module.exports = class OsuCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'osu',
-      'memberName': 'osu',
-      'group': 'leaderboards',
-      'aliases': ['osustats'],
-      'description': 'Shows Player Stats for a given OSU player',
-      'format': 'PlayerName',
-      'examples': ['osu WubWoofWolf'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'osu',
+      memberName: 'osu',
+      group: 'leaderboards',
+      aliases: ['osustats'],
+      description: 'Shows Player Stats for a given OSU player',
+      format: 'PlayerName',
+      examples: ['osu WubWoofWolf'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'player',
-          'prompt': 'Respond with the OSU Player name',
-          'type': 'string',
-          'parse': p => p.toLowerCase()
+          key: 'player',
+          prompt: 'Respond with the OSU Player name',
+          type: 'string',
+          parse: p => p.toLowerCase()
         }
       ]
     });

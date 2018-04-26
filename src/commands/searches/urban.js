@@ -40,31 +40,31 @@ const request = require('snekfetch'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class UrbanCommand extends Command {
-  constructor (client) {
+  constructor(client) {
     super(client, {
-      'name': 'urban',
-      'memberName': 'urban',
-      'group': 'searches',
-      'aliases': ['ub', 'ud'],
-      'description': 'Find definitions on urban dictionary',
-      'format': 'Term',
-      'examples': ['urban ugt'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'urban',
+      memberName: 'urban',
+      group: 'searches',
+      aliases: ['ub', 'ud'],
+      description: 'Find definitions on urban dictionary',
+      format: 'Term',
+      examples: ['urban ugt'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'query',
-          'prompt': 'What word do you want to define?',
-          'type': 'string'
+          key: 'query',
+          prompt: 'What word do you want to define?',
+          type: 'string'
         }
       ]
     });
   }
 
-  async run (msg, args) {
+  async run(msg, args) {
     startTyping(msg);
     const urban = await request.get('https://api.urbandictionary.com/v0/define').query('term', args.query);
 

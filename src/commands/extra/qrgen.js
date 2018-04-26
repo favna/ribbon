@@ -43,23 +43,23 @@ const imgur = require('imgur'),
 module.exports = class QRGenCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'qrgen',
-      'memberName': 'qrgen',
-      'group': 'extra',
-      'aliases': ['qr'],
-      'description': 'Generates a QR code from a given string',
-      'format': 'URLToConvert',
-      'examples': ['qrgen https://github.com/Favna/Ribbon'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'qrgen',
+      memberName: 'qrgen',
+      group: 'extra',
+      aliases: ['qr'],
+      description: 'Generates a QR code from a given string',
+      format: 'URLToConvert',
+      examples: ['qrgen https://github.com/Favna/Ribbon'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'url',
-          'prompt': 'String (URL) to make a QR code for?',
-          'type': 'string'
+          key: 'url',
+          prompt: 'String (URL) to make a QR code for?',
+          type: 'string'
         }
       ]
     });
@@ -67,7 +67,7 @@ module.exports = class QRGenCommand extends Command {
 
   async run (msg, args) {
     startTyping(msg);
-    const base64 = await qr.toDataURL(args.url, {'errorCorrectionLevel': 'M'});
+    const base64 = await qr.toDataURL(args.url, {errorCorrectionLevel: 'M'});
 
     if (base64) {
       const upload = await imgur.uploadBase64(base64.slice(22));

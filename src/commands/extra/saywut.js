@@ -41,16 +41,16 @@ const moment = require('moment'),
 module.exports = class SayWutCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'saywut',
-      'memberName': 'saywut',
-      'group': 'extra',
-      'aliases': ['saywat', 'saywot'],
-      'description': 'Bust the last "say" user',
-      'examples': ['saywut'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'saywut',
+      memberName: 'saywut',
+      group: 'extra',
+      aliases: ['saywat', 'saywot'],
+      description: 'Bust the last "say" user',
+      examples: ['saywut'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }

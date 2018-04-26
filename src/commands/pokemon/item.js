@@ -52,24 +52,24 @@ const Fuse = require('fuse.js'),
 module.exports = class ItemCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'item',
-      'memberName': 'item',
-      'group': 'pokemon',
-      'aliases': ['it', 'bag'],
-      'description': 'Get the info on an item in Pokémon',
-      'format': 'ItemName',
-      'examples': ['item Life Orb'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'item',
+      memberName: 'item',
+      group: 'pokemon',
+      aliases: ['it', 'bag'],
+      description: 'Get the info on an item in Pokémon',
+      format: 'ItemName',
+      examples: ['item Life Orb'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'item',
-          'prompt': 'Get info on which item?',
-          'type': 'string',
-          'parse': p => p.toLowerCase().replace(/ /g, '')
+          key: 'item',
+          prompt: 'Get info on which item?',
+          type: 'string',
+          parse: p => p.toLowerCase().replace(/ /g, '')
         }
       ]
     });
@@ -79,13 +79,13 @@ module.exports = class ItemCommand extends Command {
     startTyping(msg);
     /* eslint-disable sort-vars */
     const fsoptions = {
-        'shouldSort': true,
-        'threshold': 0.6,
-        'location': 0,
-        'distance': 100,
-        'maxPatternLength': 32,
-        'minMatchCharLength': 1,
-        'keys': ['alias', 'item', 'id', 'name']
+        shouldSort: true,
+        threshold: 0.6,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: ['alias', 'item', 'id', 'name']
       },
       aliasFuse = new Fuse(ItemAliases, fsoptions),
       itemFuse = new Fuse(BattleItems, fsoptions),

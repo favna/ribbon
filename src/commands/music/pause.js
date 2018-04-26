@@ -39,16 +39,16 @@ const {Command} = require('discord.js-commando'),
 module.exports = class PauseSongCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'pause',
-      'memberName': 'pause',
-      'group': 'music',
-      'aliases': ['shh', 'shhh', 'shhhh', 'shhhhh', 'hush', 'halt'],
-      'description': 'Pauses the currently playing song',
-      'examples': ['pause'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'pause',
+      memberName: 'pause',
+      group: 'music',
+      aliases: ['shh', 'shhh', 'shhhh', 'shhhhh', 'hush', 'halt'],
+      description: 'Pauses the currently playing song',
+      examples: ['pause'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }

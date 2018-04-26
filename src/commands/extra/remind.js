@@ -47,32 +47,32 @@ const Database = require('better-sqlite3'),
 module.exports = class RemindCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'remind',
-      'memberName': 'remind',
-      'group': 'extra',
-      'aliases': ['remindme', 'reminder'],
-      'description': 'Set a reminder and the bot will remind you',
-      'details': 'Works by reminding you after a given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`',
-      'format': 'Time Reminder',
-      'examples': ['remind 1h To continue developing Ribbon'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'remind',
+      memberName: 'remind',
+      group: 'extra',
+      aliases: ['remindme', 'reminder'],
+      description: 'Set a reminder and the bot will remind you',
+      details: 'Works by reminding you after a given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`',
+      format: 'Time Reminder',
+      examples: ['remind 1h To continue developing Ribbon'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'time',
-          'prompt': 'Reply with the time in which you want to be reminded?',
-          'type': 'string',
-          'validate': (t) => {
+          key: 'time',
+          prompt: 'Reply with the time in which you want to be reminded?',
+          type: 'string',
+          validate: (t) => {
             if (/^(?:[0-9]{1,2}(?:m|h|d){1})$/i.test(t)) {
               return true;
             }
 
             return 'Has to be in the pattern of `50m`, `2h` or `01d` wherein `m` would be minutes, `h` would be hours and `d` would be days';
           },
-          'parse': (t) => {
+          parse: (t) => {
             const match = t.match(/[a-z]+|[^a-z]+/gi);
             let multiplier = 1;
 
@@ -95,9 +95,9 @@ module.exports = class RemindCommand extends Command {
           }
         },
         {
-          'key': 'reminder',
-          'prompt': 'What do I need to remind you about?',
-          'type': 'string'
+          key: 'reminder',
+          prompt: 'What do I need to remind you about?',
+          type: 'string'
         }
       ]
     });
@@ -111,14 +111,14 @@ module.exports = class RemindCommand extends Command {
       startTyping(msg);
       conn.prepare('CREATE TABLE IF NOT EXISTS "reminders" (userID TEXT, remindTime TEXT, remindText TEXT);').run();
       conn.prepare('INSERT INTO "reminders" VALUES ($userid, $remindtime, $remindtext);').run({
-        'userid': msg.author.id,
-        'remindtime': moment().add(args.time, 'minutes')
+        userid: msg.author.id,
+        remindtime: moment().add(args.time, 'minutes')
           .format('YYYY-MM-DD HH:mm:ss'),
-        'remindtext': args.reminder
+        remindtext: args.reminder
       });
 
       remindEmbed
-        .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
+        .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({format: 'png'}))
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setThumbnail('https://favna.xyz/images/ribbonhost/reminders.png')
         .setTitle('Your reminder was stored!')

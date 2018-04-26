@@ -44,23 +44,23 @@ const moment = require('moment'),
 module.exports = class WeatherCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'weather',
-      'memberName': 'weather',
-      'group': 'extra',
-      'aliases': ['temp', 'forecast', 'fc', 'wth'],
-      'description': 'Get the weather in a city',
-      'format': 'CityName',
-      'examples': ['weather amsterdam'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'weather',
+      memberName: 'weather',
+      group: 'extra',
+      aliases: ['temp', 'forecast', 'fc', 'wth'],
+      description: 'Get the weather in a city',
+      format: 'CityName',
+      examples: ['weather amsterdam'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'city',
-          'prompt': 'For which city would you like to get the weather?',
-          'type': 'string'
+          key: 'city',
+          prompt: 'For which city would you like to get the weather?',
+          type: 'string'
         }
       ]
     });

@@ -43,28 +43,28 @@ const moment = require('moment'),
 module.exports = class DeleteRoleCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'delrole',
-      'memberName': 'delrole',
-      'group': 'moderation',
-      'aliases': ['deleterole', 'dr', 'remrole', 'removerole'],
-      'description': 'Deletes a role from a member',
-      'format': 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
-      'examples': ['delrole {member} {role}'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'delrole',
+      memberName: 'delrole',
+      group: 'moderation',
+      aliases: ['deleterole', 'dr', 'remrole', 'removerole'],
+      description: 'Deletes a role from a member',
+      format: 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
+      examples: ['delrole {member} {role}'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'member',
-          'prompt': 'Which member should I remove a role from?',
-          'type': 'member'
+          key: 'member',
+          prompt: 'Which member should I remove a role from?',
+          type: 'member'
         },
         {
-          'key': 'role',
-          'prompt': 'What role should I remove from that member?',
-          'type': 'role'
+          key: 'role',
+          prompt: 'What role should I remove from that member?',
+          type: 'role'
         }
       ]
     });

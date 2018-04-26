@@ -41,16 +41,16 @@ const {Command} = require('discord.js-commando'),
 module.exports = class KaiCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'kai',
-      'memberName': 'kai',
-      'group': 'custom',
-      'description': 'Kai get lost',
-      'details': 'Custom commands can be made for your server too! Just join the support server (use the `stats` command) and request the command.',
-      'guildOnly': true,
-      'patterns': [/^\.kai$/im],
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'kai',
+      memberName: 'kai',
+      group: 'custom',
+      description: 'Kai get lost',
+      details: 'Custom commands can be made for your server too! Just join the support server (use the `stats` command) and request the command.',
+      guildOnly: true,
+      patterns: [/^\.kai$/im],
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }
@@ -90,8 +90,8 @@ module.exports = class KaiCommand extends Command {
       startTyping(msg);
       msg.delete();
       msg.embed({
-        'image': {'url': this.fetchImage()},
-        'color': msg.guild ? msg.guild.me.displayColor : 10610610
+        image: {url: this.fetchImage()},
+        color: msg.guild ? msg.guild.me.displayColor : 10610610
       },
       'Please <@418504046337589249> get lost');
       stopTyping(msg);

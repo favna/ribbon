@@ -46,26 +46,26 @@ const Database = require('better-sqlite3'),
 module.exports = class CustomTopUpCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'customtopup',
-      'memberName': 'customtopup',
-      'group': 'owner',
-      'aliases': ['ctu'],
-      'description': 'Daniël Ocean doesn\'t give a crap about legality',
-      'format': 'AnyMember ChipsAmount',
-      'examples': ['ctu Biscuit 1000'],
-      'guildOnly': false,
-      'ownerOnly': true,
-      'args': [
+      name: 'customtopup',
+      memberName: 'customtopup',
+      group: 'owner',
+      aliases: ['ctu'],
+      description: 'Daniël Ocean doesn\'t give a crap about legality',
+      format: 'AnyMember ChipsAmount',
+      examples: ['ctu Biscuit 1000'],
+      guildOnly: false,
+      ownerOnly: true,
+      args: [
         {
-          'key': 'player',
-          'prompt': 'Which player should I give them to?',
-          'type': 'member'
+          key: 'player',
+          prompt: 'Which player should I give them to?',
+          type: 'member'
         },
         {
-          'key': 'chips',
-          'prompt': 'How many chips do you want to give?',
-          'type': 'integer',
-          'validate': (chips) => {
+          key: 'chips',
+          prompt: 'How many chips do you want to give?',
+          type: 'integer',
+          validate: (chips) => {
             if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips >= 1 && chips <= 1000000) {
               return true;
             }
@@ -83,7 +83,7 @@ module.exports = class CustomTopUpCommand extends Command {
       conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
     coinEmbed
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({'format': 'png'}))
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({format: 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
@@ -95,7 +95,7 @@ module.exports = class CustomTopUpCommand extends Command {
 
         query.balance += args.chips;
 
-        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${args.player.id}";`).run({'balance': query.balance});
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${args.player.id}";`).run({balance: query.balance});
         coinEmbed
           .setTitle('Daniël Ocean has stolen chips from Benedict for you')
           .addField('Previous Balance', prevBal, true)

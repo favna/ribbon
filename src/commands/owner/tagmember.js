@@ -40,19 +40,19 @@ const {Command} = require('discord.js-commando'),
 module.exports = class TagMemberCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'tagmember',
-      'memberName': 'tagmember',
-      'group': 'owner',
-      'description': 'Tag a member',
-      'format': 'MemberID|MemberName(partial or full)',
-      'examples': ['tagmember Favna'],
-      'guildOnly': false,
-      'ownerOnly': true,
-      'args': [
+      name: 'tagmember',
+      memberName: 'tagmember',
+      group: 'owner',
+      description: 'Tag a member',
+      format: 'MemberID|MemberName(partial or full)',
+      examples: ['tagmember Favna'],
+      guildOnly: false,
+      ownerOnly: true,
+      args: [
         {
-          'key': 'member',
-          'prompt': 'What user would you like to snoop on?',
-          'type': 'member'
+          key: 'member',
+          prompt: 'What user would you like to snoop on?',
+          type: 'member'
         }
       ]
     });

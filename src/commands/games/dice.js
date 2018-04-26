@@ -43,32 +43,32 @@ const xdicey = require('xdicey'),
 module.exports = class DiceCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'dice',
-      'memberName': 'dice',
-      'group': 'games',
-      'aliases': ['xdicey', 'roll', 'dicey', 'die'],
-      'description': 'Sends contents of a copypasta file to the chat',
-      'format': 'SidesOfTheDice AmountOfRolls',
-      'examples': ['dice 6 5'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'dice',
+      memberName: 'dice',
+      group: 'games',
+      aliases: ['xdicey', 'roll', 'dicey', 'die'],
+      description: 'Sends contents of a copypasta file to the chat',
+      format: 'SidesOfTheDice AmountOfRolls',
+      examples: ['dice 6 5'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
 
-      'args': [
+      args: [
         {
-          'key': 'sides',
-          'prompt': 'How many sides does your die have?',
-          'type': 'integer',
-          'min': 4,
-          'max': 20
+          key: 'sides',
+          prompt: 'How many sides does your die have?',
+          type: 'integer',
+          min: 4,
+          max: 20
         }, {
-          'key': 'rolls',
-          'prompt': 'How many times should the die be rolled?',
-          'type': 'integer',
-          'min': 1,
-          'max': 40
+          key: 'rolls',
+          prompt: 'How many times should the die be rolled?',
+          type: 'integer',
+          min: 1,
+          max: 40
         }
       ]
     });

@@ -45,23 +45,23 @@ const Database = require('better-sqlite3'),
 module.exports = class MemberBalanceCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'memberbalance',
-      'memberName': 'memberbalance',
-      'group': 'casino',
-      'aliases': ['mbal', 'mcash', 'mbalance', 'mchips'],
-      'description': 'Retrieves the amount of chips another member has for the casino',
-      'format': 'MemberID|MemberName(partial or full)',
-      'examples': ['memberbalance Sagiri'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'memberbalance',
+      memberName: 'memberbalance',
+      group: 'casino',
+      aliases: ['mbal', 'mcash', 'mbalance', 'mchips'],
+      description: 'Retrieves the amount of chips another member has for the casino',
+      format: 'MemberID|MemberName(partial or full)',
+      examples: ['memberbalance Sagiri'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'player',
-          'prompt': 'Which player should I give them to?',
-          'type': 'member'
+          key: 'player',
+          prompt: 'Which player should I give them to?',
+          type: 'member'
         }
       ]
     });
@@ -72,7 +72,7 @@ module.exports = class MemberBalanceCommand extends Command {
       mbalEmbed = new MessageEmbed();
 
     mbalEmbed
-      .setAuthor(args.player.displayName, args.player.user.displayAvatarURL({'format': 'png'}))
+      .setAuthor(args.player.displayName, args.player.user.displayAvatarURL({format: 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 

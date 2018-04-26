@@ -45,21 +45,21 @@ const path = require('path'),
 module.exports = class MaxSongsCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'maxsongs',
-      'memberName': 'maxsongs',
-      'group': 'music',
-      'aliases': ['songcap', 'songmax', 'maxsong'],
-      'description': 'Shows or sets the max songs per user.',
-      'details': oneLine`
+      name: 'maxsongs',
+      memberName: 'maxsongs',
+      group: 'music',
+      aliases: ['songcap', 'songmax', 'maxsong'],
+      description: 'Shows or sets the max songs per user.',
+      details: oneLine`
             This is the maximum number of songs a user may have in the queue.
             The default is ${MAX_SONGS}.
             Only administrators may change this setting.`,
-      'format': '[amount|"default"]',
-      'examples': ['maxsongs 3'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      format: '[amount|"default"]',
+      examples: ['maxsongs 3'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       }
     });
   }

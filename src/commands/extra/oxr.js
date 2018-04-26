@@ -50,29 +50,29 @@ const currencySymbol = require('currency-symbol-map'),
 module.exports = class MoneyCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'oxr',
-      'memberName': 'oxr',
-      'group': 'extra',
-      'aliases': ['money', 'rate', 'convert'],
-      'description': 'Currency converter - makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
-      'format': 'CurrencyAmount FirstValuta SecondValuta',
-      'examples': ['convert 50 USD EUR'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'oxr',
+      memberName: 'oxr',
+      group: 'extra',
+      aliases: ['money', 'rate', 'convert'],
+      description: 'Currency converter - makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
+      format: 'CurrencyAmount FirstValuta SecondValuta',
+      examples: ['convert 50 USD EUR'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'value',
-          'prompt': 'Amount of money?',
-          'type': 'string'
+          key: 'value',
+          prompt: 'Amount of money?',
+          type: 'string'
         },
         {
-          'key': 'curOne',
-          'prompt': 'What is the valuta you want to convert **from**?',
-          'type': 'string',
-          'validate': (curs) => {
+          key: 'curOne',
+          prompt: 'What is the valuta you want to convert **from**?',
+          type: 'string',
+          validate: (curs) => {
             const validCurs = [
               'AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 'BIF', 'BMD', 'BND', 'BOB', 'BRL', 'BSD', 'BTC', 'BTN', 'BTS',
               'BWP', 'BYN', 'BZD', 'CAD', 'CDF', 'CHF', 'CLF', 'CLP', 'CNH', 'CNY', 'COP', 'CRC', 'CUC', 'CUP', 'CVE', 'CZK', 'DASH', 'DJF', 'DKK', 'DOGE', 'DOP', 'DZD', 'EAC', 'EGP', 'EMC', 'ERN',
@@ -90,13 +90,13 @@ module.exports = class MoneyCommand extends Command {
 
             return 'Respond with a supported currency. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>';
           },
-          'parse': p => p.toUpperCase()
+          parse: p => p.toUpperCase()
         },
         {
-          'key': 'curTwo',
-          'prompt': 'What is the valuta you want to convert **to**?',
-          'type': 'string',
-          'validate': (curs) => {
+          key: 'curTwo',
+          prompt: 'What is the valuta you want to convert **to**?',
+          type: 'string',
+          validate: (curs) => {
             const validCurs = [
               'AED', 'AFN', 'ALL', 'AMD', 'ANG', 'AOA', 'ARS', 'AUD', 'AWG', 'AZN', 'BAM', 'BBD', 'BDT', 'BGN', 'BHD', 'BIF', 'BMD', 'BND', 'BOB', 'BRL', 'BSD', 'BTC', 'BTN', 'BTS',
               'BWP', 'BYN', 'BZD', 'CAD', 'CDF', 'CHF', 'CLF', 'CLP', 'CNH', 'CNY', 'COP', 'CRC', 'CUC', 'CUP', 'CVE', 'CZK', 'DASH', 'DJF', 'DKK', 'DOGE', 'DOP', 'DZD', 'EAC', 'EGP', 'EMC', 'ERN',
@@ -114,7 +114,7 @@ module.exports = class MoneyCommand extends Command {
 
             return 'Respond with a supported currency. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>';
           },
-          'parse': p => p.toUpperCase()
+          parse: p => p.toUpperCase()
         }
       ]
     });
@@ -123,8 +123,8 @@ module.exports = class MoneyCommand extends Command {
 
   converter (value, curOne, curTwo) {
     return fx.convert(value, {
-      'from': curOne,
-      'to': curTwo
+      from: curOne,
+      to: curTwo
     });
   }
 

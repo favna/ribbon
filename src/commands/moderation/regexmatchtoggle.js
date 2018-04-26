@@ -41,24 +41,24 @@ const {Command} = require('discord.js-commando'),
 module.exports = class RegexMatchToggleCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'regexmatchtoggle',
-      'memberName': 'regexmatchtoggle',
-      'group': 'moderation',
-      'aliases': ['rmt', 'regexmatch'],
-      'description': 'Toggle Toggle commands matching on regex for this server',
-      'format': 'Enable|Disable',
-      'examples': ['regexmatchtoggle enable'],
-      'guildOnly': true,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'regexmatchtoggle',
+      memberName: 'regexmatchtoggle',
+      group: 'moderation',
+      aliases: ['rmt', 'regexmatch'],
+      description: 'Toggle Toggle commands matching on regex for this server',
+      format: 'Enable|Disable',
+      examples: ['regexmatchtoggle enable'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'option',
-          'prompt': 'Enable or disable memberlogs?',
-          'type': 'boolean',
-          'validate': (bool) => {
+          key: 'option',
+          prompt: 'Enable or disable memberlogs?',
+          type: 'boolean',
+          validate: (bool) => {
             const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
 
             if (validBools.includes(bool.toLowerCase())) {

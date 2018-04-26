@@ -43,23 +43,23 @@ const banish = require('to-zalgo/banish'),
 module.exports = class zalgoCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'zalgo',
-      'memberName': 'zalgo',
-      'group': 'extra',
-      'aliases': ['trash'],
-      'description': 'F*ck up text using Zalgo',
-      'format': 'ContentToTransform',
-      'examples': ['zalgo HE COMES'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'zalgo',
+      memberName: 'zalgo',
+      group: 'extra',
+      aliases: ['trash'],
+      description: 'F*ck up text using Zalgo',
+      format: 'ContentToTransform',
+      examples: ['zalgo HE COMES'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'txt',
-          'prompt': 'What should I zalgolize?',
-          'type': 'string'
+          key: 'txt',
+          prompt: 'What should I zalgolize?',
+          type: 'string'
         }
       ]
     });

@@ -43,23 +43,23 @@ const moment = require('moment'),
 module.exports = class MovieCommand extends Command {
   constructor (client) {
     super(client, {
-      'name': 'tmdb',
-      'memberName': 'tmdb',
-      'group': 'searches',
-      'aliases': ['movie'],
-      'description': 'Finds movies on TheMovieDB',
-      'format': 'MovieName [release_year_movie]',
-      'examples': ['tmdb Ocean\'s Eleven 2001'],
-      'guildOnly': false,
-      'throttling': {
-        'usages': 2,
-        'duration': 3
+      name: 'tmdb',
+      memberName: 'tmdb',
+      group: 'searches',
+      aliases: ['movie'],
+      description: 'Finds movies on TheMovieDB',
+      format: 'MovieName [release_year_movie]',
+      examples: ['tmdb Ocean\'s Eleven 2001'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
       },
-      'args': [
+      args: [
         {
-          'key': 'name',
-          'prompt': 'What movie do you want to find?',
-          'type': 'string'
+          key: 'name',
+          prompt: 'What movie do you want to find?',
+          type: 'string'
         }
       ]
     });
