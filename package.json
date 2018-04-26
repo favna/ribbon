@@ -21,7 +21,7 @@
     "lint:fix": "./node_modules/.bin/eslint --fix **/*.js",
     "start": "node src/app.js stripe",
     "start:ribbon": "node src/app.js",
-    "test": "yarn run lintfix && yarn lint && node src/test/test.js | tap-summary"
+    "test": "yarn run lint:fix && yarn lint && node src/test/test.js | tap-summary"
   },
   "keywords": [
     "bot",
