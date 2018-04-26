@@ -3,7 +3,7 @@ module.exports = {
         "es6": true,
         "node": true
     },
-    "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+    "extends": ["eslint:recommended"],
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 2017
@@ -255,7 +255,6 @@ module.exports = {
         "prefer-rest-params": "error",
         "prefer-spread": "error",
         "prefer-template": "error",
-        "prettier/prettier": ["error", { "singleQuote": true, "bracketSpacing": false}],
         "quote-props": ["error", "as-needed"],
         "quotes": ["error", "single"],
         "radix": "error",

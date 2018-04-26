@@ -83,10 +83,7 @@
   },
   "devDependencies": {
     "eslint": "4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.6.0",
     "jsdoc-json": "^2.0.2",
-    "prettier": "^1.12.1",
     "tap-summary": "^4.0.0",
     "tape": "4.9.0"
   }
