@@ -32,7 +32,7 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
-      - run: sudo apt-get install -y build-essential
+      - run: sudo apt-get install -y build-essential libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev
       - run: sudo npm install -g node-pre-gyp node-gyp yarn
       - run: yarn install
       - save_cache:
