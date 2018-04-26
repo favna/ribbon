@@ -27,11 +27,10 @@
 /* eslint-disable no-mixed-requires, sort-vars, one-var */
 const path = require('path');
 
-require('dotenv').config({path: path.join(__dirname, '../.env')});
+require('dotenv').config({path: path.join(__dirname, '.env')});
 const Ribbon = require(path.join(__dirname, 'Ribbon.js')),
   start = function () {
     new Ribbon(process.argv[2] ? process.env.stripetoken : process.env.ribbontoken).init();
-    console.log(process.env.googleapikey);
   };
 
 start();
