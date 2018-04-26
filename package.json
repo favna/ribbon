@@ -23,10 +23,12 @@
     "test": "yarn run lintfix && yarn lint && node src/test/test.js | tap-summary"
   },
   "keywords": [
-    "discord",
     "bot",
+    "Commando",
+    "discord",
     "discord.js",
     "discord.js-commando",
+    "Favna",
     "NodeJS"
   ],
   "engines": {
@@ -35,7 +37,6 @@
   "dependencies": {
     "better-sqlite3": "4.0.0",
     "booru": "0.4.0",
-    "bufferutil": "3.0.4",
     "canvas": "Automattic/node-canvas#v1.x",
     "canvas-constructor": "1.0.1",
     "cheerio": "^1.0.0-rc.2",
@@ -43,7 +44,7 @@
     "countdown": "^2.6.0",
     "currency-symbol-map": "4.0.4",
     "did-you-mean": "0.0.1",
-    "discord.js": "favna/discord.js#main",
+    "discord.js": "Favna/discord.js#main",
     "discord.js-commando": "Favna/Commando#ribbon",
     "eightball": "^1.0.1",
     "erlpack": "discordapp/erlpack",
@@ -70,6 +71,7 @@
     "spotify-web-api-node": "3.0.0",
     "steamapi": "2.0.2",
     "to-zalgo": "^1.0.1",
+    "uws": "^9.148.0",
     "winston": "2.4.2",
     "xdicey": "2.0.3",
     "yahoo-weather": "^2.2.2",
