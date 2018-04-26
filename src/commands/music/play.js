@@ -80,12 +80,6 @@ module.exports = class PlaySongCommand extends Command {
   }
 
   /* eslint-disable max-statements*/
-
-  /**
-   * @todo Reimplement Music Playlist support
-   * @body No guarantees here but I will try...
-   */
-
   async run (msg, args) {
     startTyping(msg);
     const url = args.url.replace(/<(.+)>/g, '$1'),
