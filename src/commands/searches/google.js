@@ -110,7 +110,7 @@ module.exports = class GoogleCommand extends Command {
 			.query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
 			.query('q', args.query);
 
-		if (normalRes && normalRes.body.queries.request[0].totalResults === '0') {
+		if (normalRes && normalRes.body.queries.request[0].totalResults !== '0') {
 			deleteCommandMessages(msg, this.client);
 			stopTyping(msg);
 
