@@ -7,20 +7,10 @@ machine:
     version: 8.11.1
   npm:
     version: 6.0.0
-dependencies:
-  pre:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-  override:
-    - yarn
-  cache_directories:
-    - ~/.cache/yarn
 general:
   branches:
     only:
       - master
-test:
-  override:
-    - yarn test
 jobs:
   build:
     docker:
@@ -32,8 +22,10 @@ jobs:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
-      - run: sudo apt-get install -y build-essential libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev
-      - run: sudo npm install -g node-pre-gyp node-gyp yarn
+      - run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+      - run: echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+      - run: sudo apt-get update && sudo apt-get install -y yarn build-essential libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev
+      - run: sudo npm install -g node-pre-gyp node-gyp
       - run: yarn install
       - save_cache:
           paths:
