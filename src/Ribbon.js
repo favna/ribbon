@@ -34,7 +34,7 @@ const Database = require('better-sqlite3'),
 /* eslint-enable sort-vars */
 
 class Ribbon {
-  constructor(token, test) {
+  constructor (token, test) {
     this.token = token;
     this.client = new Client({
       commandPrefix: '!',
@@ -62,7 +62,7 @@ class Ribbon {
     this.testrun = test ? test : false;
   }
 
-  checkReminders() {
+  checkReminders () {
     const conn = new Database(path.join(__dirname, 'data/databases/reminders.sqlite3'));
 
     try {
@@ -97,7 +97,7 @@ class Ribbon {
     }
   }
 
-  lotto() {
+  lotto () {
     const conn = new Database(path.join(__dirname, 'data/databases/casino.sqlite3'));
 
     try {
@@ -140,7 +140,7 @@ class Ribbon {
     }
   }
 
-  forceStopTyping() {
+  forceStopTyping () {
     const allChannels = this.client.channels;
 
     for (const channel of allChannels.values()) {
@@ -153,7 +153,7 @@ class Ribbon {
   }
 
 
-  onCmdBlock() {
+  onCmdBlock () {
     return (msg, reason) => {
       console.log(oneLine`
 		Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
@@ -161,7 +161,7 @@ class Ribbon {
     };
   }
 
-  onCmdErr() {
+  onCmdErr () {
     return (cmd, err) => {
       if (err instanceof FriendlyError) {
         return;
@@ -170,7 +170,7 @@ class Ribbon {
     };
   }
 
-  onCommandPrefixChange() {
+  onCommandPrefixChange () {
     return (guild, prefix) => {
       console.log(oneLine` 
 			Prefix ${prefix === '' ? 'removed' : `changed to ${prefix || 'the default'}`}
@@ -179,7 +179,7 @@ class Ribbon {
     };
   }
 
-  onCmdStatusChange() {
+  onCmdStatusChange () {
     return (guild, command, enabled) => {
       console.log(oneLine`
             Command ${command.groupID}:${command.memberName}
@@ -189,13 +189,13 @@ class Ribbon {
     };
   }
 
-  onDisconnect() {
+  onDisconnect () {
     return () => {
       console.warn('Disconnected!');
     };
   }
 
-  onError() {
+  onError () {
     return (e) => {
       console.error(e);
       console.error(`${stripIndents`A websocket error occurred!
@@ -204,7 +204,7 @@ class Ribbon {
     };
   }
 
-  onGroupStatusChange() {
+  onGroupStatusChange () {
     return (guild, group, enabled) => {
       console.log(oneLine`
             Group ${group.id}
@@ -214,7 +214,7 @@ class Ribbon {
     };
   }
 
-  onGuildMemberAdd() {
+  onGuildMemberAdd () {
     return (member) => {
       if (this.client.provider.get(member.guild, 'memberlogs', true)) {
         const embed = new MessageEmbed(),
@@ -240,7 +240,7 @@ class Ribbon {
     };
   }
 
-  onGuildMemberRemove() {
+  onGuildMemberRemove () {
     return (member) => {
       if (this.client.provider.get(member.guild, 'memberlogs', true)) {
         const embed = new MessageEmbed(),
@@ -261,7 +261,7 @@ class Ribbon {
     };
   }
 
-  onPresenceUpdate() {
+  onPresenceUpdate () {
     return async (oldMember, newMember) => {
       if (this.client.provider.get(newMember.guild, 'twitchmonitors', []).includes(newMember.id)) {
         if (this.client.provider.get(newMember.guild, 'twitchnotifiers', false)) {
@@ -321,7 +321,7 @@ class Ribbon {
     };
   }
 
-  onReady() {
+  onReady () {
     return () => {
       console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
       this.isReady = true;
@@ -344,13 +344,13 @@ class Ribbon {
     };
   }
 
-  onReconnect() {
+  onReconnect () {
     return () => {
       console.warn('Reconnecting...');
     };
   }
 
-  onUnknownCommand() {
+  onUnknownCommand () {
     return (msg) => {
       if (this.client.provider.get(msg.guild, 'unknownmessages', true)) {
         return msg.reply(stripIndents`${oneLine`That is not a registered command.
@@ -365,7 +365,7 @@ class Ribbon {
   }
 
   /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
-  init() {
+  init () {
     this.client
       .on('commandBlocked', this.onCmdBlock())
       .on('commandError', this.onCmdErr())
@@ -419,7 +419,7 @@ class Ribbon {
     return this.client.login(this.token);
   }
 
-  deinit() {
+  deinit () {
     this.isReady = false;
 
     return this.client.destroy();

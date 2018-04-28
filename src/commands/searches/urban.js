@@ -40,7 +40,7 @@ const request = require('snekfetch'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class UrbanCommand extends Command {
-  constructor(client) {
+  constructor (client) {
     super(client, {
       name: 'urban',
       memberName: 'urban',
@@ -64,7 +64,7 @@ module.exports = class UrbanCommand extends Command {
     });
   }
 
-  async run(msg, args) {
+  async run (msg, args) {
     startTyping(msg);
     const urban = await request.get('https://api.urbandictionary.com/v0/define').query('term', args.query);
 

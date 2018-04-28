@@ -39,7 +39,7 @@ const {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping, userSearch} = require('../../util.js');
 
 module.exports = class TwitchMonitorsCommand extends Command {
-  constructor(client) {
+  constructor (client) {
     super(client, {
       name: 'twitchmonitors',
       memberName: 'twitchmonitors',
@@ -63,11 +63,11 @@ module.exports = class TwitchMonitorsCommand extends Command {
     });
   }
 
-  hasPermission(msg) {
+  hasPermission (msg) {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  async run(msg, args) {
+  async run (msg, args) {
     startTyping(msg);
     const memberIDs = [],
       memberNames = [];

@@ -39,7 +39,7 @@ const {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class TwitchToggleCommand extends Command {
-  constructor(client) {
+  constructor (client) {
     super(client, {
       name: 'twitchtoggle',
       memberName: 'twitchtoggle',
@@ -73,11 +73,11 @@ module.exports = class TwitchToggleCommand extends Command {
     });
   }
 
-  hasPermission(msg) {
+  hasPermission (msg) {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run(msg, args) {
+  run (msg, args) {
     startTyping(msg);
     this.client.provider.set(msg.guild.id, 'twitchnotifiers', args.option);
 

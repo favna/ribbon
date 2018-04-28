@@ -42,7 +42,7 @@ const moment = require('moment'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class YouTubeCommand extends Command {
-  constructor(client) {
+  constructor (client) {
     super(client, {
       name: 'youtube',
       memberName: 'youtube',
@@ -66,7 +66,7 @@ module.exports = class YouTubeCommand extends Command {
     });
   }
 
-  async run(msg, args) {
+  async run (msg, args) {
     startTyping(msg);
     const res = await request.get('https://www.googleapis.com/youtube/v3/search')
       .query('key', process.env.googleapikey)
