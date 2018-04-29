@@ -1,17 +1,17 @@
 {
   "name": "ribbon",
   "version": "5.3.0",
-  "description": "Ribbon - A discord bot for your server",
-  "author": "Favna",
+  "description": "feature rich, modular Discord.JS-Commando server bot",
+  "author": "Favna <sharkie.jeroen@gmail.com> (https://favna.xyz/home)",
   "license": "GPL-3.0",
   "main": "src/app.js",
   "homepage": "https://favna.xyz/ribbon",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Favna/Ribbon.git"
+    "url": "git+https://github.com/favna/ribbon.git"
   },
   "bugs": {
-    "url": "https://github.com/Favna/Ribbon/issues"
+    "url": "https://github.com/favna/ribbon/issues"
   },
   "scripts": {
     "docs": "jsdoc2md --template ./docs/template.hbs --files ./src/**/*.js | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
