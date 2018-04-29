@@ -25,7 +25,7 @@
   </p>
 
   <p>
-  <a href="https://discordbots.org/bot/376520643862331396"><img src="https://discordbots.org/api/widget/376520643862331396.svg" alt="Discordbots Listing" /></a>
+  <a href="https://discordbots.org/bot/376520643862331396"><img src="https://discordbots.org/api/widget/376520643862331396.svg?topcolor=697EC4&middlecolor=303333" alt="Discordbots Listing" /></a>
   </p>
 </div>
 
