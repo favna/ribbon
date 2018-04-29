@@ -12,10 +12,16 @@ src/data/databases/*
 src/data/modlogs/*
 src/data/pastas/*
 
+# VSCode settings
+.vscode/
+
+# files that do not need to be on npm
+docs/
+.github/
+.circleci/
+src/test/
+
 # Folder keep
 !**/*.gitkeep
 !src/data/modlogs/*.gitkeep
 !src/data/pastas/*.gitkeep
-
-# VSCode settings
-.vscode/
