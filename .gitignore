@@ -22,3 +22,4 @@ src/data/pastas/*
 
 # Code coverage results
 coverage/
+.nyc_output/

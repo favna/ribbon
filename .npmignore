@@ -3,6 +3,7 @@ coverage
 .circleci
 .github
 .vscode
+.nyc_output/
 docs
 yarn.lock
 src/.env
