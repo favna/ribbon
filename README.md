@@ -17,8 +17,7 @@
   <img src="https://forthebadge.com/images/badges/uses-badges.svg" alt="Uses Badges"><!--
 --><img src="https://forthebadge.com/images/badges/built-with-love.svg" alt="Built with Love"><!--
 --><img src="https://forthebadge.com/images/badges/made-with-javascript.svg" alt="Made with JavaScript"><!--
---><img src="https://forthebadge.com/images/badges/powered-by-electricity.svg" alt="Powered by Electricity"><!--
---><img src="https://forthebadge.com/images/badges/you-didnt-ask-for-this.svg" alt="You Didn't ask for this">
+--><img src="https://forthebadge.com/images/badges/powered-by-electricity.svg" alt="Powered by Electricity">
   </p>
 
   <p>
