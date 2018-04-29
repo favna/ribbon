@@ -2,7 +2,6 @@
 
   <p>
   <a href="https://favna.xyz/ribbon"><img src="https://favna.xyz/images/ribbonhost/GitHubBanner.png" height="200" alt="ribbon"/></a>
-  <h3>This is the source for Ribbon, a discord bot created by Favna. If you have any questions or concerns please join my server.</h3>
   </p>
 
   <p>
