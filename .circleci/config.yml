@@ -62,14 +62,11 @@ jobs:
           name: Run Mocha tests
           command: mocha --reporter mocha-junit-reporter --reporter-options mochaFile=coverage/mocha-results.xml src/test/mocha.js
           when: always
-      - run:
-          name: Send Report to Codecov
-          command: bash <(curl -s https://codecov.io/bash) -f coverage/eslint-results.xml coverage/mocha-results.xml -t $codecovtoken
-          when: always
-      - store_test_results:
-          path: coverage
       - store_artifacts:
           path: coverage
+          prefix: coverage
+      - store_test_results:
+          path: coverage/coverage.xml
 notify:
   webhooks:
     - url: https://skyhook.glitch.me/api/webhooks/431587377799233537/_kvV2bj5VcFeDX7gf5LmdwQIdVF_bA0xG_zYg-06-LPz8uZbiWLj2oH-1DX_vj1SsrSQ/circleci
