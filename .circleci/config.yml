@@ -56,11 +56,12 @@ jobs:
           command: yarn test
       - run:
           name: Save report
-          command: mkdir -p ~/reports && eslint ./src/ --format junit --output-file ~/reports/eslint.xml
+          command: mkdir -p $CIRCLE_TEST_REPORTS/reports && eslint ./src/ --format junit --output-file $CIRCLE_TEST_REPORTS/reports/eslint.xml
+          when: always
       - store_test_results:
-          path: ~/reports
+          path: $CIRCLE_TEST_REPORTS/reports
       - store_artifacts:
-          path: ~/reports
+          path: $CIRCLE_TEST_REPORTS/reports
       - run:
           name: Send Report to Codecov
           command: bash <(curl -s https://codecov.io/bash)
