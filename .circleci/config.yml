@@ -19,24 +19,50 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          name: Restore Yarn Package Cache
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
-      - run: sudo apt-get update && sudo apt-get upgrade -y
-      - run: sudo apt-get install -y apt-transport-https
-      - run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-      - run: echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-      - run: sudo apt-get update && sudo apt-get install -y yarn build-essential libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev
-      - run: sudo npm install -g node-pre-gyp node-gyp
-      - run: yarn install
+            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+            - yarn-packages-{{ .Branch }}
+            - yarn-packages-master
+            - yarn-packages-
+      - run:
+          name: Update APT
+          command: sudo apt-get update && sudo apt-get upgrade -y
+      - run:
+          name: Install apt-transport-https for yarn repo
+          command: sudo apt-get install -y apt-transport-https
+      - run:
+          name: Fetch yarn public gpg key
+          command: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+      - run:
+          name: Add yarn repo to sources
+          command: echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+      - run:
+          name: Update apt and add build dependencies
+          command: sudo apt-get update && sudo apt-get install -y yarn build-essential libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev
+      - run:
+          name: Install node-gyp
+          command: sudo npm install -g node-pre-gyp node-gyp
+      - run:
+          name: Install package dependencies
+          command: yarn install
       - save_cache:
+          name: Save Yarn Package Cache      
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn test
+      - run:
+        command: |
+          mkdir -p ~/reports
+          eslint ./src/ --format junit --output-file ~/reports/eslint.xml
+        when: always
+      - store_test_results:
+          path: ~/reports
+      - store_artifacts:
+          path: ~/reports
+      - run:
+        - bash <(curl -s https://codecov.io/bash)      
 notify:
   webhooks:
     - url: https://skyhook.glitch.me/api/webhooks/431587377799233537/_kvV2bj5VcFeDX7gf5LmdwQIdVF_bA0xG_zYg-06-LPz8uZbiWLj2oH-1DX_vj1SsrSQ/circleci
-test:
-  post:
-    - bash <(curl -s https://codecov.io/bash)
