@@ -42,7 +42,7 @@ jobs:
           command: sudo apt-get update && sudo apt-get install -y yarn build-essential libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev
       - run:
           name: Install node-gyp
-          command: sudo npm install -g node-pre-gyp node-gyp eslint
+          command: sudo npm install -g node-pre-gyp node-gyp mocha mocha-junit-reporter
       - run:
           name: Install package dependencies
           command: yarn install
@@ -52,19 +52,25 @@ jobs:
           paths:
             - node_modules
       - run:
-          name: Run tests
-          command: yarn test
+          name: Create folder for mocha and eslint
+          command: sudo mkdir coverage
       - run:
-          name: Save report
-          command: sudo mkdir -p reports && sudo eslint ./src/ --format junit --output-file reports/eslint.xml
+          name: Run eslint
+          command: sudo eslint ./src/ --format junit --output-file coverage/eslint-results.xml
+          when: always
+      - run:
+          name: Run Mocha tests
+          command: sudo mocha --timeout 30000 --reporter mocha-junit-reporter src/test/mocha.js
+          environment:
+            MOCHA_FILE: coverage/mocha-results.xml
           when: always
       - store_test_results:
-          path: reports/
+          path: coverage
       - store_artifacts:
-          path: reports/
+          path: coverage
       - run:
           name: Send Report to Codecov
-          command: bash <(curl -s https://codecov.io/bash)
+          command: bash <(curl -s https://codecov.io/bash) -f coverage/eslint-results.xml coverage/mocha-results.xml -t $codecovtoken
 notify:
   webhooks:
     - url: https://skyhook.glitch.me/api/webhooks/431587377799233537/_kvV2bj5VcFeDX7gf5LmdwQIdVF_bA0xG_zYg-06-LPz8uZbiWLj2oH-1DX_vj1SsrSQ/circleci

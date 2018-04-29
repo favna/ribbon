@@ -1,5 +1,5 @@
 /**
- * @file Ribbon Tests - Test Ribbon with TAP
+ * @file Ribbon Tests - Test Ribbon with Mocha
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @copyright © 2017-2018 Favna  
  *  
@@ -24,23 +24,43 @@
  *         reasonable ways as different from the original version.  
  */
 
+/* eslint-disable no-undef, no-unused-vars*/
+
 const Ribbon = require('../Ribbon.js'),
-  test = require('tape');
+  assert = require('assert'),
+  path = require('path');
 
-test('connect & disconnect', (timeout) => {
-  timeout.timeoutAfter(30000);
-  timeout.ok(process.env.ribbontoken, 'discord token should be set');
+require('dotenv').config({path: path.join(__dirname, '../.env')});
 
-  const client = new Ribbon(process.env.ribbontoken, true);
+describe('Check dotenv', () => {
+  it('ribbon token should be set', (done) => {
+    const token = process.env.ribbontoken;
 
-  timeout.false(client.isReady, 'bot should not be ready');
-  client.init();
-
-  const si = setInterval(() => { // eslint-disable-line one-var
-    if (client.isReady) {
-      client.deinit();
-      clearInterval(si);
-      timeout.end();
+    if (token) {
+      done();
     }
-  }, 5000);
+  });
+  it('google api token should be set', (done) => {
+    const token = process.env.googleapikey;
+
+    if (token) {
+      done();
+    }
+  });
+});
+
+describe('Connect & Disconnect bot', () => {
+  it('should connect then disconnect', (done) => {
+    const client = new Ribbon(process.env.ribbontoken, true);
+
+    client.init();
+
+    const si = setInterval(() => { // eslint-disable-line one-var
+      if (client.isReady) {
+        client.deinit();
+        clearInterval(si);
+        done();
+      }
+    }, 5000);
+  });
 });

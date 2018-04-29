@@ -21,7 +21,7 @@
     "lint:fix": "./node_modules/.bin/eslint --fix **/*.js",
     "start": "node src/app.js stripe",
     "start:ribbon": "node src/app.js",
-    "test": "yarn run lint:fix && yarn lint && node src/test/test.js | tap-summary"
+    "test": "yarn run lint:fix && yarn lint && ./node_modules/.bin/mocha --timeout 30000 src/test/mocha.js"
   },
   "keywords": [
     "bot",
@@ -84,7 +84,6 @@
   "devDependencies": {
     "eslint": "4.19.1",
     "jsdoc-json": "^2.0.2",
-    "tap-summary": "^4.0.0",
-    "tape": "4.9.0"
+    "mocha": "^5.1.1"
   }
 }
