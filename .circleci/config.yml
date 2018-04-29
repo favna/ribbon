@@ -42,27 +42,28 @@ jobs:
           command: sudo apt-get update && sudo apt-get install -y yarn build-essential libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev
       - run:
           name: Install node-gyp
-          command: sudo npm install -g node-pre-gyp node-gyp
+          command: sudo npm install -g node-pre-gyp node-gyp eslint
       - run:
           name: Install package dependencies
           command: yarn install
       - save_cache:
-          name: Save Yarn Package Cache      
+          name: Save Yarn Package Cache
           key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-      - run: yarn test
       - run:
-        command: |
-          mkdir -p ~/reports
-          eslint ./src/ --format junit --output-file ~/reports/eslint.xml
-        when: always
+          name: Run tests
+          command: yarn test
+      - run:
+          name: Save report
+          command: mkdir -p ~/reports && eslint ./src/ --format junit --output-file ~/reports/eslint.xml
       - store_test_results:
           path: ~/reports
       - store_artifacts:
           path: ~/reports
       - run:
-        - bash <(curl -s https://codecov.io/bash)      
+          name: Send Report to Codecov
+          command: bash <(curl -s https://codecov.io/bash)
 notify:
   webhooks:
     - url: https://skyhook.glitch.me/api/webhooks/431587377799233537/_kvV2bj5VcFeDX7gf5LmdwQIdVF_bA0xG_zYg-06-LPz8uZbiWLj2oH-1DX_vj1SsrSQ/circleci
