@@ -56,7 +56,7 @@ jobs:
           command: yarn test
       - run:
           name: Save report
-          command: sudo mkdir -p reports && eslint ./src/ --format junit --output-file reports/eslint.xml
+          command: sudo mkdir -p reports && sudo eslint ./src/ --format junit --output-file reports/eslint.xml
           when: always
       - store_test_results:
           path: reports/
