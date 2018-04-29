@@ -53,18 +53,19 @@ jobs:
             - node_modules
       - run:
           name: Create folder for mocha and eslint
-          command: sudo mkdir coverage
+          command: mkdir coverage
       - run:
           name: Run eslint
-          command: sudo eslint ./src/ --format junit --output-file coverage/eslint-results.xml
+          command: eslint ./src/ --format junit --output-file coverage/eslint-results.xml
           when: always
       - run:
           name: Run Mocha tests
-          command: sudo mocha --reporter mocha-junit-reporter --reporter-options mochaFile=coverage/mocha-results.xml src/test/mocha.js
+          command: mocha --reporter mocha-junit-reporter --reporter-options mochaFile=coverage/mocha-results.xml src/test/mocha.js
           when: always
       - run:
           name: Send Report to Codecov
           command: bash <(curl -s https://codecov.io/bash) -f coverage/eslint-results.xml coverage/mocha-results.xml -t $codecovtoken
+          when: always
       - store_test_results:
           path: coverage
       - store_artifacts:
