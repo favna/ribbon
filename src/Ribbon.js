@@ -34,7 +34,7 @@ const Database = require('better-sqlite3'),
 /* eslint-enable sort-vars */
 
 class Ribbon {
-  constructor (token, test) {
+  constructor (token) {
     this.token = token;
     this.client = new Client({
       commandPrefix: '!',
@@ -58,8 +58,6 @@ class Ribbon {
         }
       }
     });
-    this.isReady = false;
-    this.testrun = test ? test : false;
   }
 
   checkReminders () {
@@ -324,23 +322,19 @@ class Ribbon {
   onReady () {
     return () => {
       console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
-      this.isReady = true;
+      const bot = this;
 
-      if (!this.testrun) {
-        const bot = this;
+      setInterval(() => {
+        bot.forceStopTyping();
+      }, 180000);
 
-        setInterval(() => {
-          bot.forceStopTyping();
-        }, 180000);
+      setInterval(() => {
+        bot.checkReminders();
+      }, 300000);
 
-        setInterval(() => {
-          bot.checkReminders();
-        }, 300000);
-
-        setInterval(() => {
-          bot.lotto();
-        }, 86400000);
-      }
+      setInterval(() => {
+        bot.lotto();
+      }, 86400000);
     };
   }
 
@@ -417,12 +411,6 @@ class Ribbon {
       .registerCommandsIn(path.join(__dirname, 'commands'));
 
     return this.client.login(this.token);
-  }
-
-  deinit () {
-    this.isReady = false;
-
-    return this.client.destroy();
   }
 }
 

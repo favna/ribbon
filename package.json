@@ -21,7 +21,8 @@
     "lint:fix": "./node_modules/.bin/eslint --fix **/*.js",
     "start": "node src/app.js stripe",
     "start:ribbon": "node src/app.js",
-    "test": "yarn run lint:fix && yarn lint && ./node_modules/.bin/mocha --timeout 30000 src/test/mocha.js"
+    "test": "yarn run lint:fix && yarn lint && ./node_modules/.bin/mocha src/test/mocha.js",
+    "test:minimal": "./node_modules/.bin/mocha src/test/mocha.js"
   },
   "keywords": [
     "bot",
@@ -82,6 +83,7 @@
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {
+    "chai": "^4.1.2",
     "eslint": "4.19.1",
     "jsdoc-json": "^2.0.2",
     "mocha": "^5.1.1"

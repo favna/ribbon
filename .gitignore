@@ -19,3 +19,6 @@ src/data/pastas/*
 
 # VSCode settings
 .vscode/
+
+# Code coverage results
+coverage/

@@ -24,43 +24,52 @@
  *         reasonable ways as different from the original version.  
  */
 
-/* eslint-disable no-undef, no-unused-vars*/
+/* eslint-disable no-undef, no-unused-vars, sort-vars, no-mixed-requires*/
 
-const Ribbon = require('../Ribbon.js'),
+const Database = require('better-sqlite3'),
   assert = require('assert'),
-  path = require('path');
+  expect = require('chai').expect,
+  should = require('chai').should(),
+  path = require('path'),
+  {Client, SyncSQLiteProvider} = require('discord.js-commando');
 
 require('dotenv').config({path: path.join(__dirname, '../.env')});
 
 describe('Check dotenv', () => {
-  it('ribbon token should be set', (done) => {
+  it('ribbon token should be set', () => {
     const token = process.env.ribbontoken;
 
-    if (token) {
-      done();
-    }
+    expect(token).to.be.ok;
   });
-  it('google api token should be set', (done) => {
+  it('google api token should be set', () => {
     const token = process.env.googleapikey;
 
-    if (token) {
-      done();
-    }
+    expect(token).to.be.ok;
   });
 });
 
 describe('Connect & Disconnect bot', () => {
-  it('should connect then disconnect', (done) => {
-    const client = new Ribbon(process.env.ribbontoken, true);
+  it('should connect then disconnect', () => {
+    const client = new Client({
+        commandPrefix: 's!!',
+        owner: '112001393140723712',
+        selfbot: false,
+        unknownCommandResponse: false
+      }),
+      db = new Database(path.join(__dirname, '../data/databases/settings.sqlite3'));
 
-    client.init();
+    client.setProvider(
+      new SyncSQLiteProvider(db)
+    );
+    let readyTracker = false;
 
-    const si = setInterval(() => { // eslint-disable-line one-var
-      if (client.isReady) {
-        client.deinit();
-        clearInterval(si);
-        done();
-      }
-    }, 5000);
+    client.registry.registerDefaults();
+    client.login(process.env.stripetoken);
+
+    client.on('ready', () => {
+      client.destroy();
+      readyTracker = true;
+      expect(readyTracker).to.be.ok;
+    });
   });
 });
