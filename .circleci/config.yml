@@ -37,3 +37,6 @@ jobs:
 notify:
   webhooks:
     - url: https://skyhook.glitch.me/api/webhooks/431587377799233537/_kvV2bj5VcFeDX7gf5LmdwQIdVF_bA0xG_zYg-06-LPz8uZbiWLj2oH-1DX_vj1SsrSQ/circleci
+test:
+  post:
+    - bash <(curl -s https://codecov.io/bash)
