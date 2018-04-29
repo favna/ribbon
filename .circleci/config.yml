@@ -41,10 +41,10 @@ jobs:
           name: Update apt and add build dependencies
           command: sudo apt-get update && sudo apt-get install -y yarn build-essential libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev
       - run:
-          name: Install node-gyp
-          command: sudo npm install -g node-pre-gyp node-gyp mocha mocha-junit-reporter
+          name: Install global node modules
+          command: sudo npm install -g node-pre-gyp node-gyp mocha mocha-junit-reporter eslint
       - run:
-          name: Install package dependencies
+          name: Install ribbon dependencies
           command: yarn install
       - save_cache:
           name: Save Yarn Package Cache
@@ -60,9 +60,7 @@ jobs:
           when: always
       - run:
           name: Run Mocha tests
-          command: sudo mocha --timeout 30000 --reporter mocha-junit-reporter src/test/mocha.js
-          environment:
-            MOCHA_FILE: coverage/mocha-results.xml
+          command: sudo mocha --timeout 60000 --reporter mocha-junit-reporter --reporter-options mochaFile=coverage/mocha-results.xml src/test/mocha.js
           when: always
       - store_test_results:
           path: coverage
