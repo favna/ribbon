@@ -243,10 +243,10 @@ module.exports = {
         "padding-line-between-statements": "error",
         "prefer-arrow-callback": "error",
         "prefer-const": "error",
-        "prefer-destructuring": ["off", {
+        "prefer-destructuring": ["error", {
             "VariableDeclarator": {
                 "array": false,
-                "object": false
+                "object": true
             }
         }],
         "prefer-numeric-literals": "error",
