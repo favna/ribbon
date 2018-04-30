@@ -79,7 +79,7 @@ module.exports = class ActivityCommand extends Command {
   /* eslint-disable no-nested-ternary*/
   async run (msg, args) {
     startTyping(msg);
-    const activity = args.member.presence.activity,
+    const {activity} = args.member.presence,
       ava = args.member.user.displayAvatarURL(),
       embed = new MessageEmbed(),
       ext = this.fetchExt(ava),

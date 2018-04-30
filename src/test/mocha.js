@@ -24,16 +24,18 @@
  *         reasonable ways as different from the original version.  
  */
 
-/* eslint-disable no-undef, no-unused-vars, sort-vars, no-mixed-requires*/
+/* eslint-disable no-undef, no-unused-vars, sort-vars, no-mixed-requires, global-require*/
 
 const Database = require('better-sqlite3'),
   assert = require('assert'),
-  expect = require('chai').expect,
   should = require('chai').should(),
   path = require('path'),
+  {expect} = require('chai'),
   {Client, SyncSQLiteProvider} = require('discord.js-commando');
 
-require('dotenv').config({path: path.join(__dirname, '../.env')});
+beforeEach('Injecting dotenv', () => {
+  require('dotenv').config({path: path.join(__dirname, '../.env')});
+});
 
 describe('Check dotenv', () => {
   it('ribbon token should be set', () => {
