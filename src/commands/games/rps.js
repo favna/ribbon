@@ -50,6 +50,10 @@ module.exports = class RockPaperScissorCommand extends Command {
       format: 'HandToPlay',
       examples: ['rps Rock'],
       guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3
+      },
       args: [
         {
           key: 'hand',

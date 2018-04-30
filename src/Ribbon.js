@@ -256,6 +256,12 @@ class Ribbon {
           member.guild.channels.get(memberLogs).send({embed});
         }
       }
+
+      /**
+       * @todo Add removing casino record if member leaves
+       * @description When members leave their entry needs to be removed for the sake of the leaderboard
+       */
+
     };
   }
 
