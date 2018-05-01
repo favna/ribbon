@@ -25,7 +25,7 @@
 
 /**
  * @file Extra MathCommand - Take the effort out of calculations and let the bot do it for you  
- * **Aliases**: `calc`
+ * **Aliases**: `maths`, `calc`
  * @module
  * @category extra
  * @name math
@@ -47,7 +47,7 @@ module.exports = class MathCommand extends Command {
       name: 'math',
       memberName: 'math',
       group: 'extra',
-      aliases: ['calc'],
+      aliases: ['maths','calc'],
       description: 'Calculate anything',
       format: 'EquationToSolve',
       examples: ['math -10 - abs(-3) + 2^5'],
