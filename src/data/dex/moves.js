@@ -6511,7 +6511,7 @@ const BattleMovedex = [{
 		},
 		'onHit' (target) {
 			if (this.isTerrain('grassyterrain')) {
-				return this.heal(this.modify(target.maxhp, 0.667)); // TODO: find out the real value
+				return this.heal(this.modify(target.maxhp, 0.667));
 			}
 
 			return this.heal(Math.ceil(target.maxhp * 0.5));
