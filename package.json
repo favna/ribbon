@@ -15,9 +15,9 @@
   },
   "scripts": {
     "cov": "./node_modules/.bin/nyc yarn test",
-    "docs": "jsdoc2md --template ./docs/template.hbs --files ./src/**/*.js | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
-    "docs:json": "jsdoc --template ./node_modules/jsdoc-json --destination ../favna.xyz/public/dist/ribbondocs.json --recurse ./src/commands",
-    "docs:deploy": "yarn run docs && yarn run jsondocs && git commit -am documentation && git push && cd ../Ribbon.wiki/ && git commit -am documentation && git push && cd ../favna.xyz/ && git commit -am documentation && git push",
+    "docs": "./node_modules/.bin/jsdoc2md --template ./docs/template.hbs --files ./src/**/*.js | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
+    "docs:json": "./node_modules/.bin/jsdoc --template ./node_modules/jsdoc-json --destination ../favna.xyz/public/dist/ribbondocs.json --recurse ./src/commands",
+    "docs:deploy": "yarn run docs && yarn run docs:json && git commit -am documentation && git push && cd ../Ribbon.wiki/ && git commit -am documentation && git push && cd ../favna.xyz/ && git commit -am documentation && git push",
     "lint": "./node_modules/.bin/eslint src/commands/**/*.js",
     "lint:fix": "./node_modules/.bin/eslint --fix src/commands/**/*.js",
     "start": "node src/app.js stripe",
@@ -87,7 +87,9 @@
     "chai": "^4.1.2",
     "codecov": "^3.0.1",
     "eslint": "4.19.1",
+    "jsdoc": "^3.5.5",
     "jsdoc-json": "^2.0.2",
+    "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.1.1",
     "nyc": "^11.7.1"
   }

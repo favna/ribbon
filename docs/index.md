@@ -96,7 +96,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Extra CopyPastaListCommand - Gets all copypastas available to the server<br><strong>Aliases</strong>: <code>cplist</code>, <code>copylist</code>, <code>pastalist</code></p>
 </dd>
 <dt><a href="#module_math">math</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra MathCommand - Take the effort out of calculations and let the bot do it for you<br><strong>Aliases</strong>: <code>calc</code></p>
+<dd><p>Extra MathCommand - Take the effort out of calculations and let the bot do it for you<br><strong>Aliases</strong>: <code>maths</code>, <code>calc</code></p>
 </dd>
 <dt><a href="#module_oxr">oxr</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Extra MoneyCommand - Convert one currency to another<br>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC<br>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a><br><strong>Aliases</strong>: <code>money</code>, <code>rate</code>, <code>convert</code></p>
@@ -148,6 +148,9 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 </dd>
 <dt><a href="#module_rps">rps</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization<br><strong>Aliases</strong>: rockpaperscissors</p>
+</dd>
+<dt><a href="#module_ship">ship</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Games ShipCommand - Ship 2 players<br><strong>Aliases</strong>: <code>love</code>, <code>marry</code>, <code>engage</code></p>
 </dd>
 <dt><a href="#module_slap">slap</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games SlapCommand - Slap a dumb person💢!<br><strong>Aliases</strong>: <code>bakaslap</code></p>
@@ -594,7 +597,7 @@ Extra CopyPastaListCommand - Gets all copypastas available to the server
 
 ## math ⇒ <code>MessageEmbed</code>
 Extra MathCommand - Take the effort out of calculations and let the bot do it for you  
-**Aliases**: `calc`
+**Aliases**: `maths`, `calc`
 
 **Returns**: <code>MessageEmbed</code> - Your equation and its answer  
 **Category**: extra  
@@ -883,6 +886,24 @@ Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org rand
 **Example**  
 ```js
 rps Rock
+```
+<a name="module_ship"></a>
+
+## ship ⇒ <code>MessageEmbed</code>
+Games ShipCommand - Ship 2 players  
+**Aliases**: `love`, `marry`, `engage`
+
+**Returns**: <code>MessageEmbed</code> - Name of the ship  
+**Category**: games  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ShipMemberOne | <code>string</code> | The first member to ship |
+| ShipMemberTwo | <code>string</code> | The second member to ship |
+
+**Example**  
+```js
+ship Biscuit Rei
 ```
 <a name="module_slap"></a>
 
