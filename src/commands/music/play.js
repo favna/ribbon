@@ -85,7 +85,7 @@ module.exports = class PlaySongCommand extends Command {
    * @todo Reimplement Music Playlist support
    * @body No guarantees here but I will try...
    */
-  
+
   async run (msg, args) {
     startTyping(msg);
     const url = args.url.replace(/<(.+)>/g, '$1'),
@@ -140,9 +140,12 @@ module.exports = class PlaySongCommand extends Command {
       return this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
     } catch (error) {
       try {
-        const video = await this.youtube.searchVideos(url, 1)
-            .catch(() => statusMsg.edit(`${msg.author}, there were no search results.`)),
-          videoByID = await this.youtube.getVideoByID(video[0].id);
+        const video = await this.youtube.searchVideos(url, 1);
+
+        if (!video[0] || !video) {
+          return statusMsg.edit(`${msg.author}, there were no search results.`);
+        }
+        const videoByID = await this.youtube.getVideoByID(video[0].id); // eslint-disable-line one-var
 
         deleteCommandMessages(msg, this.client);
 
