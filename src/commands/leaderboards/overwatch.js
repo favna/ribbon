@@ -188,19 +188,21 @@ module.exports = class OverwatchCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(owEmbed);
-    } catch (e) {
-      console.error(`	 ${stripIndents`An error occurred getting someone Overwatch stats!
-      Server: ${msg.guild.name} (${msg.guild.id})
+    } catch (err) {
+      stopTyping(msg);
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`overwatch\` command!
+      server: ${msg.guild.name} (${msg.guild.id})
       Author: ${msg.author.tag} (${msg.author.id})
       Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       Player: ${args.player}
       Platform: ${args.platform}
       Region: ${args.region}
-      Error Message:`} ${e}`);
-      stopTyping(msg);
+      Error Message: ${err}
+      `);
 
-      return msg.reply(oneLine`Error occurred that was logged on Favna\'s system.
-              You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+      return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+      Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
     }
   }
 };

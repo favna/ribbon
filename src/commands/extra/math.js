@@ -47,7 +47,7 @@ module.exports = class MathCommand extends Command {
       name: 'math',
       memberName: 'math',
       group: 'extra',
-      aliases: ['maths','calc'],
+      aliases: ['maths', 'calc'],
       description: 'Calculate anything',
       format: 'EquationToSolve',
       examples: ['math -10 - abs(-3) + 2^5'],
@@ -76,12 +76,13 @@ module.exports = class MathCommand extends Command {
     try {
       res = scalc(args.equation);
     } catch (err) {
-      console.error(`	 ${stripIndents`An error occurred on the math command!
-			Server: ${msg.guild.name} (${msg.guild.id})
-			Author: ${msg.author.tag} (${msg.author.id})
-			Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-			Math input: ${args.equation.toString()}
-			Error Message:`} ${err}`);
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`math\` command!
+      server: ${msg.guild.name} (${msg.guild.id})
+      Author: ${msg.author.tag} (${msg.author.id})
+      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message: ${err}
+      `);
     }
 
     if (res || res === 0) {

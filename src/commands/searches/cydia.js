@@ -131,13 +131,15 @@ module.exports = class CydiaCommand extends Command {
           startTyping(msg);
 
           return msg.embed(embed);
-        } catch (e) {
-          console.error(`${stripIndents`An error occurred on the cydia command!
-					Server: ${msg.guild.name} (${msg.guild.id})
-					Author: ${msg.author.tag} (${msg.author.id})
-					Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-					Error Message:`} ${e}`);
-
+        } catch (err) {
+          this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+          <@${this.client.owners[0].id}> Error occurred in \`cydia\` command!
+          server: ${msg.guild.name} (${msg.guild.id})
+          Author: ${msg.author.tag} (${msg.author.id})
+          Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+          Error Message: ${err}
+          `);
+  
           embed.addField('Package Name', result.name, false);
 
           if (!msg.patternMatches) {

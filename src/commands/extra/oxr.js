@@ -158,14 +158,13 @@ module.exports = class MoneyCommand extends Command {
 
       return msg.embed(oxrEmbed);
     }
-
-    console.error(`${stripIndents`An error occurred on the oxr command!
-		Server: ${msg.guild.name} (${msg.guild.id})
-		Author: ${msg.author.tag} (${msg.author.id})
-		Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-		Error Message:`} ${rates.statusText}`);
-
     stopTyping(msg);
+    this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+    <@${this.client.owners[0].id}> Error occurred in \`oxr\` command!
+    server: ${msg.guild.name} (${msg.guild.id})
+    Author: ${msg.author.tag} (${msg.author.id})
+    Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    `);
 
     return msg.reply('an error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
   }

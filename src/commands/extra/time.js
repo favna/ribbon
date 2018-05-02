@@ -35,7 +35,8 @@
  * @returns {MessageEmbed} Current date, current time, country and DST offset
  */
 
-const request = require('snekfetch'),
+const moment = require('moment'),
+  request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -84,7 +85,7 @@ module.exports = class TimeCommand extends Command {
 
     if (cords) {
       const time = await request.get('http://api.timezonedb.com/v2/get-time-zone')
-        .query('key', process.envtimezonedbkey)
+        .query('key', process.env.timezonedbkey)
         .query('format', 'json')
         .query('by', 'position')
         .query('lat', cords[0])
@@ -109,13 +110,15 @@ module.exports = class TimeCommand extends Command {
       }
     }
     stopTyping(msg);
-    console.error(stripIndents`Time fetching command failed due to mismatched city
-						City: ${args.city}
-						Server: ${msg.guild.name} (${msg.guild.id})
-						Author: ${msg.author.tag} (${msg.author.id})`);
+    this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+    <@${this.client.owners[0].id}> Error occurred in \`time\` command!
+    server: ${msg.guild.name} (${msg.guild.id})
+    Author: ${msg.author.tag} (${msg.author.id})
+    Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    `);
 
-    return msg.reply(oneLine`Couldn\'t find that city, are you sure you spelled it correctly?
-		A log has been made for Favna so if you want to you can notify him on his server.
-		Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}invite\` to get a link to the support server.`);
+    return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+    Are you sure you spelled the city name correctly?
+    Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
   }
 };

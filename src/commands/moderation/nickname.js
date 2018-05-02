@@ -37,7 +37,6 @@
 
 const moment = require('moment'),
   {Command} = require('discord.js-commando'),
-  {DiscordAPIError} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),  
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
@@ -87,17 +86,19 @@ module.exports = class NickCommand extends Command {
         stopTyping(msg);
 
         return msg.reply(`${args.nickname === 'clear' ? `removed <@${args.member.id}>'s nickname` : `assigned \`${args.nickname}\` as nickname to <@${args.member.id}>`}`);
-      } catch (e) {
-        if (e instanceof DiscordAPIError) {
-          console.error(`	 ${stripIndents`An error occurred on the Nickname command!
-          Server: ${msg.guild.name} (${msg.guild.id})
-          Author: ${msg.author.tag} (${msg.author.id})
-          Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-          Role: ${args.role.name} (${args.role.id})
-          Error Message:`} ${e}`);
-        } else {
-          console.error('Unknown error occurred in Nickname command');
-        }
+      } catch (err) {
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+        this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+        <@${this.client.owners[0].id}> Error occurred in \`nickname\` command!
+        server: ${msg.guild.name} (${msg.guild.id})
+        Author: ${msg.author.tag} (${msg.author.id})
+        Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        Error Message: ${err}
+        `);
+  
+        return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+        Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
       }
     }
     deleteCommandMessages(msg, this.client);

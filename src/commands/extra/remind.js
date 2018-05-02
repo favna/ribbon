@@ -130,16 +130,18 @@ module.exports = class RemindCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(remindEmbed);
-    } catch (e) {
+    } catch (err) {
       stopTyping(msg);
-      console.error(`	 ${stripIndents`Fatal SQL Error occurred while setting someone's reminder!
-        Server: ${msg.guild.name} (${msg.guild.id})
-        Author: ${msg.author.tag} (${msg.author.id})
-        Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        Error Message:`} ${e}`);
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`remind\` command!
+      server: ${msg.guild.name} (${msg.guild.id})
+      Author: ${msg.author.tag} (${msg.author.id})
+      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      Error Message: ${err}
+      `);
 
-      return msg.reply(oneLine`Fatal Error occurred that was logged on Favna\'s system.
-                You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+      return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+      Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
     }
   }
 };

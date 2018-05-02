@@ -110,9 +110,9 @@ module.exports = class DailyCommand extends Command {
         balance: '500',
         date: moment().format('YYYY-MM-DD HH:mm')
       });
-    } catch (e) {
+    } catch (err) {
       stopTyping(msg);
-      if (/(?:no such table)/i.test(e.toString())) {
+      if (/(?:no such table)/i.test(err.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
 
         conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
@@ -121,14 +121,16 @@ module.exports = class DailyCommand extends Command {
           date: moment().format('YYYY-MM-DD HH:mm')
         });
       } else {
-        console.error(`	 ${stripIndents`Fatal SQL Error occurred while topping up someones balance!
-        Server: ${msg.guild.name} (${msg.guild.id})
+        this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+        <@${this.client.owners[0].id}> Error occurred in \`daily\` command!
+        server: ${msg.guild.name} (${msg.guild.id})
         Author: ${msg.author.tag} (${msg.author.id})
         Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        Error Message:`} ${e}`);
-
-        return msg.reply(oneLine`Fatal Error occurred that was logged on Favna\'s system.
-                You can contact him on his server, get an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+        Error Message: ${err}
+        `);
+  
+        return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+        Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
       }
     }
 

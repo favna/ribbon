@@ -37,7 +37,6 @@
 
 const moment = require('moment'),
   {Command} = require('discord.js-commando'),
-  {DiscordAPIError} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
@@ -87,17 +86,20 @@ module.exports = class AddRoleCommand extends Command {
 
           return msg.reply(`\`${args.role.name}\` assigned to \`${args.member.displayName}\``);
         }
-      } catch (e) {
-        if (e instanceof DiscordAPIError) {
-          console.error(`	 ${stripIndents`An error occurred on the AddRole command!
-          Server: ${msg.guild.name} (${msg.guild.id})
-          Author: ${msg.author.tag} (${msg.author.id})
-          Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-          Role: ${args.role.name} (${args.role.id})
-          Error Message:`} ${e}`);
-        } else {
-          console.error('Unknown error occurred in AddRole command');
-        }
+      } catch (err) {
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+        this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+        <@${this.client.owners[0].id}> Error occurred in \`addrole\` command!
+        server: ${msg.guild.name} (${msg.guild.id})
+        Author: ${msg.author.tag} (${msg.author.id})
+        Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        Role: ${args.role.name} (${args.role.id})
+        Error Message: ${err}
+        `);
+
+        return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+        Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
       }
     }
     deleteCommandMessages(msg, this.client);
