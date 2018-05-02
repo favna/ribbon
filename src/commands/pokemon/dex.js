@@ -149,7 +149,7 @@ module.exports = class DexCommand extends Command {
       if (pokeSearch[0].prevo) {
         pokeData.evos = `${capitalizeFirstLetter(pokeSearch[0].prevo)} > ${pokeData.evos}`;
 
-        if (pokeFuse.search(pokeSearch[0].prevo).length) {
+        if (pokeFuse.search(pokeSearch[0].prevo).length && pokeFuse.search(pokeSearch[0].prevo)[0].prevo) {
           pokeData.evos = `${capitalizeFirstLetter(pokeFuse.search(pokeSearch[0].prevo)[0].prevo)} > ${pokeData.evos}`;
         }
       }
@@ -158,7 +158,7 @@ module.exports = class DexCommand extends Command {
         pokeData.evos = `${pokeData.evos} > ${pokeSearch[0].evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
 
         if (pokeSearch[0].evos.length === 1) {
-          if (pokeFuse.search(pokeSearch[0].evos[0]).length) {
+          if (pokeFuse.search(pokeSearch[0].evos[0]).length && pokeFuse.search(pokeSearch[0].evos[0])[0].evos) {
             pokeData.evos = `${pokeData.evos} > ${pokeFuse.search(pokeSearch[0].evos[0])[0].evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
           }
         }
