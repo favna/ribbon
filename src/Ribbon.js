@@ -258,11 +258,16 @@ class Ribbon {
         }
       }
 
-      /**
-       * @todo Add removing casino record if member leaves
-       * @description When members leave their entry needs to be removed for the sake of the leaderboard
-       */
+      try {
+        const conn = new Database(path.join(__dirname, 'data/databases/casino.sqlite3')),
+          query = conn.prepare(`SELECT * FROM "${member.guild.id}" WHERE userID = ?`).get(member.id);
 
+        if (query) {
+          conn.prepare(`DELETE FROM "${member.guild.id}" WHERE userID = ?`).run(member.id);
+        }
+      } catch (err) {
+        null;
+      }
     };
   }
 
