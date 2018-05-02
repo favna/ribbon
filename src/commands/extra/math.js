@@ -47,7 +47,7 @@ module.exports = class MathCommand extends Command {
       name: 'math',
       memberName: 'math',
       group: 'extra',
-      aliases: ['maths','calc'],
+      aliases: ['maths', 'calc'],
       description: 'Calculate anything',
       format: 'EquationToSolve',
       examples: ['math -10 - abs(-3) + 2^5'],
