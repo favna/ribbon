@@ -35,12 +35,9 @@
  * @returns {MessageEmbed} List of queued songs with their duration and total duration of the queue
  */
 
-const path = require('path'),
-  Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
-  {Command, util} = require('discord.js-commando'),
-  {PAGINATED_ITEMS} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
+const {Command, util} = require('discord.js-commando'),
   {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class ViewQueueCommand extends Command {
   constructor (client) {
@@ -81,7 +78,7 @@ module.exports = class ViewQueueCommand extends Command {
 
     const currentSong = queue.songs[0], // eslint-disable-line one-var
       currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0,
-      paginated = util.paginate(queue.songs, args.page, Math.floor(PAGINATED_ITEMS)),
+      paginated = util.paginate(queue.songs, args.page, Math.floor(process.env.PAGINATED_ITEMS)),
       totalLength = queue.songs.reduce((prev, song) => prev + song.length, 0);
 
     msg.embed({

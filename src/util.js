@@ -1,5 +1,8 @@
 /* eslint-disable one-var */
 
+const {Util} = require('discord.js'), 
+  {oneLineTrim} = require('common-tags');
+
 const deleteCommandMessages = function (msg, client) { // eslint-disable-line consistent-return
   if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) {
     return msg.delete();
@@ -70,10 +73,67 @@ const userSearch = async function (client, message, search) {
   return null;
 };
 
+class Song {
+  constructor (video, member) {
+    this.name = Util.escapeMarkdown(video.title);
+    this.id = video.id;
+    this.length = video.durationSeconds ? video.durationSeconds : video.duration / 1000;
+    this.member = member;
+    this.dispatcher = null;
+    this.playing = false;
+  }
+
+  get url () {
+    return `https://www.youtube.com/watch?v=${this.id}`;
+  }
+
+  get thumbnail () {
+    const thumbnail = `https://img.youtube.com/vi/${this.id}/mqdefault.jpg`;
+
+    return thumbnail;
+  }
+
+  get username () {
+    const name = `${this.member.user.tag} (${this.member.user.id})`;
+
+    return Util.escapeMarkdown(name);
+  }
+
+  get avatar () {
+    const avatar = `${this.member.user.displayAvatarURL({format: 'png'})}`;
+
+    return avatar;
+  }
+
+  get lengthString () {
+    return this.constructor.timeString(this.length);
+  }
+
+  timeLeft (currentTime) {
+    return this.constructor.timeString(this.length - currentTime);
+  }
+
+  toString () {
+    return `${this.name} (${this.lengthString})`;
+  }
+
+  static timeString (seconds, forceHours = false) {
+    const hours = Math.floor(seconds / 3600),
+      minutes = Math.floor(seconds % 3600 / 60);
+
+    return oneLineTrim`
+			${forceHours || hours >= 1 ? `${hours}:` : ''}
+			${hours >= 1 ? `0${minutes}`.slice(-2) : minutes}:
+			${`0${Math.floor(seconds % 60)}`.slice(-2)}
+		`;
+  }
+}
+
 module.exports = {
   capitalizeFirstLetter,
   deleteCommandMessages,
   roundNumber,
+  Song,
   stopTyping,
   startTyping,
   userSearch

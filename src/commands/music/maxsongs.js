@@ -36,9 +36,7 @@
  * @returns {Message} Confirmation the setting was stored
  */
 
-const path = require('path'),
-  {MAX_SONGS} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
-  {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
@@ -52,7 +50,7 @@ module.exports = class MaxSongsCommand extends Command {
       description: 'Shows or sets the max songs per user.',
       details: oneLine`
             This is the maximum number of songs a user may have in the queue.
-            The default is ${MAX_SONGS}.
+            The default is ${process.env.MAX_SONGS}.
             Only administrators may change this setting.`,
       format: '[amount|"default"]',
       examples: ['maxsongs 3'],
@@ -71,7 +69,7 @@ module.exports = class MaxSongsCommand extends Command {
   run (msg, args) {
     startTyping(msg);
     if (!args) {
-      const maxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', MAX_SONGS);
+      const maxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', process.env.MAX_SONGS);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -84,7 +82,7 @@ module.exports = class MaxSongsCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`set the maximum songs to the default (currently ${MAX_SONGS}).`);
+      return msg.reply(`set the maximum songs to the default (currently ${process.env.MAX_SONGS}).`);
     }
 
     const maxSongs = parseInt(args, 10);

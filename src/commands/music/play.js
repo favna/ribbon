@@ -40,16 +40,13 @@
  * @returns {MessageEmbed} Title, duration and thumbnail of the video
  */
 
-const path = require('path'),
-  Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
-  YouTube = require('simple-youtube-api'), // eslint-disable-line sort-vars
+const YouTube = require('simple-youtube-api'), // eslint-disable-line sort-vars
   winston = require('winston'),
   ytdl = require('ytdl-core'),
   {Command} = require('discord.js-commando'), // eslint-disable-line sort-vars
   {escapeMarkdown} = require('discord.js'),
   {oneLine} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js'),
-  {DEFAULT_VOLUME, MAX_LENGTH, MAX_SONGS, PASSES} = require(path.join(__dirname, '../../data/melody/GlobalData'));
+  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class PlaySongCommand extends Command {
   constructor (client) {
@@ -176,7 +173,7 @@ module.exports = class PlaySongCommand extends Command {
         voiceChannel,
         connection: null,
         songs: [],
-        volume: this.client.provider.get(msg.guild.id, 'defaultVolume', DEFAULT_VOLUME)
+        volume: this.client.provider.get(msg.guild.id, 'defaultVolume', process.env.DEFAULT_VOLUME)
       };
       this.queue.set(msg.guild.id, queue);
 
@@ -245,8 +242,8 @@ module.exports = class PlaySongCommand extends Command {
       };
 
     if (!this.client.isOwner(msg.author)) {
-      const songMaxLength = this.client.provider.get(msg.guild.id, 'maxLength', MAX_LENGTH),
-        songMaxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', MAX_SONGS);
+      const songMaxLength = this.client.provider.get(msg.guild.id, 'maxLength', process.env.MAX_LENGTH),
+        songMaxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', process.env.MAX_SONGS);
 
       if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
         return oneLine`
@@ -308,7 +305,11 @@ module.exports = class PlaySongCommand extends Command {
           image: {url: song.thumbnail}
         }
       }),
-      stream = ytdl(song.url, {audioonly: true})
+      stream = ytdl(song.url, {
+        quality: 'highestaudio',
+        filter: 'audioonly',
+        highWaterMark: 12
+      })
         .on('error', (err) => {
           streamErrored = true;
           winston.error('Error occurred when streaming video:', err);
@@ -317,7 +318,8 @@ module.exports = class PlaySongCommand extends Command {
           this.play(guild, queue.songs[0]);
         }),
       dispatcher = queue.connection.play(stream, { // eslint-disable-line sort-vars
-        passes: PASSES
+        passes: process.env.PASSES,
+        fec: true
       })
         .on('end', () => {
           if (streamErrored) {

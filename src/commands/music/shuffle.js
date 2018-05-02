@@ -34,12 +34,10 @@
  * @returns {MessageEmbed} The new queue order (limited to the first 10 entries)
  */
 
-const path = require('path'),
-  Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
-  {Command, util} = require('discord.js-commando'),
+const {Command, util} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class ShuffleCommand extends Command {
   constructor (client) {

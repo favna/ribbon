@@ -34,9 +34,7 @@
  * @returns {Message} Confirmation the setting was stored 
  */
 
-const path = require('path'),
-  {DEFAULT_VOLUME} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
-  {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class DefaultVolumeCommand extends Command {
@@ -73,7 +71,7 @@ module.exports = class DefaultVolumeCommand extends Command {
   run (msg, args) {
     startTyping(msg);
     if (args.volume === 'show') {
-      const defaultVolume = this.client.provider.get(msg.guild.id, 'defaultVolume', DEFAULT_VOLUME);
+      const defaultVolume = this.client.provider.get(msg.guild.id, 'defaultVolume', process.env.DEFAULT_VOLUME);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -86,7 +84,7 @@ module.exports = class DefaultVolumeCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`set the default volume level to the bot's default (currently ${DEFAULT_VOLUME}).`);
+      return msg.reply(`set the default volume level to the bot's default (currently ${process.env.DEFAULT_VOLUME}).`);
     }
 
     const defaultVolume = parseInt(args.volume, 10);

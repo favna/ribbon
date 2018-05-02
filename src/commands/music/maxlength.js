@@ -36,9 +36,7 @@
  * @returns {Message} Confirmation the setting was stored
  */
 
-const path = require('path'),
-  {MAX_LENGTH} = require(path.join(__dirname, '../../data/melody/GlobalData.js')),
-  {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
@@ -52,7 +50,7 @@ module.exports = class MaxLengthCommand extends Command {
       description: 'Shows or sets the max song length.',
       details: oneLine`
             This is the maximum length of a song that users may queue, in minutes.
-            The default is ${MAX_LENGTH}.
+            The default is ${process.env.MAX_LENGTH}.
             Only administrators may change this setting.`,
       format: '[minutes|"default"]',
       examples: ['maxlength 10'],
@@ -71,7 +69,7 @@ module.exports = class MaxLengthCommand extends Command {
   run (msg, args) {
     startTyping(msg);
     if (!args) {
-      const maxLength = this.client.provider.get(msg.guild.id, 'maxLength', MAX_LENGTH);
+      const maxLength = this.client.provider.get(msg.guild.id, 'maxLength', process.env.MAX_LENGTH);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -84,7 +82,7 @@ module.exports = class MaxLengthCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`set the maximum song length to the default (currently ${MAX_LENGTH} minutes).`);
+      return msg.reply(`set the maximum song length to the default (currently ${process.env.MAX_LENGTH} minutes).`);
     }
 
     const maxLength = parseInt(args, 10);

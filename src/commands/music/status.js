@@ -32,11 +32,9 @@
  * @returns {MessageEmbed} Title, URL of and progress into the song
  */
 
-const path = require('path'),
-  Song = require(path.join(__dirname, '../../data/melody/SongStructure.js')), // eslint-disable-line sort-vars
-  {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class MusicStatusCommand extends Command {
   constructor (client) {
