@@ -9,8 +9,8 @@ machine:
     version: 6.0.0
 general:
   branches:
-    only:
-      - master
+    ignore:
+      - stripe
 jobs:
   build:
     docker:
