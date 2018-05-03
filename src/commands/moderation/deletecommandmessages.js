@@ -76,13 +76,13 @@ module.exports = class deleteCommandMessagesCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run (msg, args) {
+  run (msg, {option}) {
     startTyping(msg);
-    this.client.provider.set(msg.guild.id, 'deletecommandmessages', args.option);
+    this.client.provider.set(msg.guild.id, 'deletecommandmessages', option);
 
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(oneLine`command messages will now be ${args.option ? 'deleted' : 'kept'}.`);
+    return msg.reply(oneLine`command messages will now be ${option ? 'deleted' : 'kept'}.`);
   }
 };

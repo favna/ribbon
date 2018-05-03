@@ -67,12 +67,12 @@ module.exports = class SetMemberlogsCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run (msg, args) {
+  run (msg, {channel}) {
     startTyping(msg);
-    this.client.provider.set(msg.guild.id, 'memberlogchannel', args.channel.id);
+    this.client.provider.set(msg.guild.id, 'memberlogchannel', channel.id);
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(oneLine`the channel to use for the member logging has been set to ${msg.guild.channels.get(this.client.provider.get(msg.guild.id, 'memberlogchannel')).name}`);
+    return msg.reply(oneLine`the channel to use for the member logging has been set to <#${channel.id}>`);
   }
 };
