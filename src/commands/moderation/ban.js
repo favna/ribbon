@@ -38,7 +38,7 @@
 const moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class banCommand extends Command {
@@ -100,18 +100,19 @@ module.exports = class banCommand extends Command {
       reason: args.reason !== '' ? args.reason : 'No reason given by staff'
     });
 
-    const embed = new MessageEmbed(),
-      modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
+    const banEmbed = new MessageEmbed(),
+      modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
           ? msg.guild.channels.find('name', 'mod-logs').id
           : null);
 
-    embed
+    banEmbed
       .setColor('#FF1900')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-      .setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-        '**Action:** Ban\n' +
-        `**Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
+      .setDescription(stripIndents`
+      **Member:** ${args.member.user.tag} (${args.member.id})
+      **Action:** Ban
+      **Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
@@ -121,15 +122,11 @@ module.exports = class banCommand extends Command {
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
       }
-
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
-
-      return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);
+      modlogChannel ? msg.guild.channels.get(modlogChannel).send({banEmbed}) : null;
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.embed(embed);
+    return msg.embed(banEmbed);
   }
 };

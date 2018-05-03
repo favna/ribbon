@@ -87,7 +87,8 @@ module.exports = class NewsCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
       newsChannel.stopTyping(true);
-
+      msg.say('Announcement has been made!');
+      
       return newsChannel.send(announce);
     }
     deleteCommandMessages(msg, this.client);

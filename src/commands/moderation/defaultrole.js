@@ -34,8 +34,10 @@
  * @returns {Message} Confirmation the setting was stored
  */
 
-const {Command} = require('discord.js-commando'), 
-  {oneLine} = require('common-tags'), 
+const moment = require('moment'),
+  {Command} = require('discord.js-commando'), 
+  {MessageEmbed} = require('discord.js'),
+  {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class defaultroleCommand extends Command {
@@ -71,19 +73,43 @@ module.exports = class defaultroleCommand extends Command {
 
   run (msg, args) {
     startTyping(msg);
+    const defRoleEmbed = new MessageEmbed(),
+      modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
+        msg.guild.channels.exists('name', 'mod-logs')
+          ? msg.guild.channels.find('name', 'mod-logs').id
+          : null);
+
+    let description = oneLine`🔓 \`${args.role.name}\` has been set as the default role for this server and will now be granted to all people joining`;
+
     if (args.role === 'delete') {
       this.client.provider.remove(msg.guild.id, 'defaultRole');
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply('🔒 Default role has been removed');
+      description = 'Default role has been removed';
     }
 
     this.client.provider.set(msg.guild.id, 'defaultRole', args.role.id);
+
+    defRoleEmbed
+      .setColor('#AAEFE6')
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setDescription(stripIndents`**Action:** ${description}`)
+      .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+
+    if (this.client.provider.get(msg.guild, 'modlogs', true)) {
+      if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+        msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
+					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+        this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+      }
+      modlogChannel ? msg.guild.channels.get(modlogChannel).send({defRoleEmbed}) : null;
+    }
+
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(oneLine`🔓 \`${args.role.name}\` has been set as the default role for this server and will now be granted to all people joining.
-        Use \`${msg.guild.commandPrefix}defaultrole delete\` to remove this setting.`);
+    return msg.embed(defRoleEmbed);
   }
 };

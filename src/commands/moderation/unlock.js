@@ -72,21 +72,19 @@ module.exports = class UnlockCommand extends Command {
   async run (msg, {lockrole}) {
     startTyping(msg);
     const embed = new MessageEmbed(),
-      modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
+      modlogsChannel = this.client.provider.get(msg.guild, 'modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
           ? msg.guild.channels.find('name', 'mod-logs').id
-          : null);
-
-    // eslint-disable-next-line one-var
-    const overwrite = await msg.channel.overwritePermissions({
-      overwrites: [
-        {
-          id: msg.guild.roles.find('name', lockrole === 'everyone' ? '@everyone' : lockrole.name).id,
-          allowed: ['SEND_MESSAGES']
-        }
-      ],
-      reason: 'Channel Lockdown'
-    });
+          : null),
+      overwrite = await msg.channel.overwritePermissions({
+        overwrites: [
+          {
+            id: msg.guild.roles.find('name', lockrole === 'everyone' ? '@everyone' : lockrole.name).id,
+            allowed: ['SEND_MESSAGES']
+          }
+        ],
+        reason: 'Channel Lockdown'
+      });
 
     embed
       .setColor('#359876')
@@ -104,10 +102,9 @@ module.exports = class UnlockCommand extends Command {
           this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
         }
 
-        deleteCommandMessages(msg, this.client);
-
-        modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.say(embed);
+        modlogsChannel ? msg.guild.channels.get(modlogsChannel).send({embed}) : null;
       }
+      deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
       return msg.say(embed);

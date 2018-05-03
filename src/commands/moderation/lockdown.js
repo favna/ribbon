@@ -37,7 +37,7 @@
 const moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class LockdownCommand extends Command {
@@ -71,32 +71,31 @@ module.exports = class LockdownCommand extends Command {
 
   async run (msg, {lockrole}) {
     startTyping(msg);
-    const embed = new MessageEmbed(),
-      modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
+    const lockEmbed = new MessageEmbed(),
+      modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
           ? msg.guild.channels.find('name', 'mod-logs').id
-          : null);
+          : null),
+      overwrite = await msg.channel.overwritePermissions({
+        overwrites: [
+          {
+            id: msg.member.roles.highest.id,
+            allowed: ['SEND_MESSAGES', 'VIEW_CHANNEL']
+          },
+          {
+            id: msg.guild.roles.find('name', lockrole === 'everyone' ? '@everyone' : lockrole.name).id,
+            denied: ['SEND_MESSAGES']
+          }
+        ],
+        reason: 'Channel Lockdown'
+      });
 
-    // eslint-disable-next-line one-var
-    const overwrite = await msg.channel.overwritePermissions({
-      overwrites: [
-        {
-          id: msg.member.roles.highest.id,
-          allowed: ['SEND_MESSAGES', 'VIEW_CHANNEL']
-        },
-        {
-          id: msg.guild.roles.find('name', lockrole === 'everyone' ? '@everyone' : lockrole.name).id,
-          denied: ['SEND_MESSAGES']
-        }
-      ],
-      reason: 'Channel Lockdown'
-    });
-
-    embed
+    lockEmbed
       .setColor('#983553')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-      .setDescription(oneLine`**Action:** 🔒 locked the \`${msg.channel.name}\` channel. 
-				Only staff can now access this channel. Use \`${msg.guild.commandPrefix}unlock\` in this channel to unlock the channel`)
+      .setDescription(stripIndents`
+      **Action:** 🔒 locked the \`${msg.channel.name}\` channel.
+      **Details:** Only staff can now access this channel. Use \`${msg.guild.commandPrefix}unlock\` in this channel to unlock the channel`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
     if (overwrite) {
@@ -107,14 +106,12 @@ module.exports = class LockdownCommand extends Command {
                             This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
           this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
         }
-
-        deleteCommandMessages(msg, this.client);
-
-        modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.embed(embed);
+        modlogChannel ? msg.guild.channels.get(modlogChannel).send({lockEmbed}) : null;
       }
+      deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.say(embed.description.slice(12));
+      return msg.embed(lockEmbed);
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);

@@ -39,7 +39,7 @@
 const moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class SoftbanCommand extends Command {
@@ -97,18 +97,19 @@ module.exports = class SoftbanCommand extends Command {
 
     msg.guild.members.unban(args.member.user);
 
-    const embed = new MessageEmbed(),
-      modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
+    const modlogsChannel = this.client.provider.get(msg.guild, 'modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
           ? msg.guild.channels.find('name', 'mod-logs').id
-          : null);
+          : null),
+      softbanEmbed = new MessageEmbed();
 
-    embed
+    softbanEmbed
       .setColor('#FF8300')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-      .setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-        '**Action:** Softban\n' +
-        `**Reason:** ${args.reason}`)
+      .setDescription(stripIndents`
+      **Member:** ${args.member.user.tag} (${args.member.id})
+      **Action:** Softban
+      **Reason:** ${args.reason}`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
@@ -119,14 +120,11 @@ module.exports = class SoftbanCommand extends Command {
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
       }
 
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
-
-      return modLogs !== null ? msg.guild.channels.get(modLogs).send({embed}) : null;
+      modlogsChannel ? msg.guild.channels.get(modlogsChannel).send({softbanEmbed}) : null;
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return null;
+    return msg.embed(softbanEmbed);
   }
 };

@@ -42,7 +42,7 @@ const fs = require('fs'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class WarnCommand extends Command {
@@ -130,11 +130,12 @@ module.exports = class WarnCommand extends Command {
       embed
         .setColor('#FFFF00')
         .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-        .setDescription(`**Member:** ${args.member.user.tag} (${args.member.id})\n` +
-          '**Action:** Warn\n' +
-          `**Previous Warning Points:** ${warn.points - args.points}\n` +
-          `**Current Warning Points:** ${warn.points}\n` +
-          `**Reason:** ${args.reason !== '' ? args.reason : 'No reason has been added by the moderator'}`)
+        .setDescription(stripIndents`
+        **Member:** ${args.member.user.tag} (${args.member.id})
+        **Action:** Warn
+        **Previous Warning Points:** ${warn.points - args.points}
+        **Current Warning Points:** ${warn.points}
+        **Reason:** ${args.reason !== '' ? args.reason : 'No reason has been added by the moderator'}`)
         .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
       if (this.client.provider.get(msg.guild, 'modlogs', true)) {

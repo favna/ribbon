@@ -37,7 +37,8 @@
 
 const moment = require('moment'),
   {Command} = require('discord.js-commando'),
-  {oneLine, stripIndents} = require('common-tags'),
+  {MessageEmbed} = require('discord.js'),
+  {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class AddRoleCommand extends Command {
@@ -74,17 +75,38 @@ module.exports = class AddRoleCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
   }
 
-  async run (msg, args) {
+  async run (msg, {member, role}) {
     startTyping(msg);
-    if (args.member.manageable) {
+    if (member.manageable) {
       try {
-        const roleAdd = await args.member.roles.add(args.role);
+        const modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
+            msg.guild.channels.exists('name', 'mod-logs')
+              ? msg.guild.channels.find('name', 'mod-logs').id
+              : null),
+          roleAdd = await member.roles.add(role),
+          roleAddEmbed = new MessageEmbed();
 
         if (roleAdd) {
+          roleAddEmbed
+            .setColor('#AAEFE6')
+            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setDescription(stripIndents`**Action:** Added ${role.name} to ${member.displayName}`)
+            .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+
+          if (this.client.provider.get(msg.guild, 'modlogs', true)) {
+            if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+              msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+                (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
+                This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+              this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+            }
+            modlogChannel ? msg.guild.channels.get(modlogChannel).send({roleAddEmbed}) : null;
+          }
+
           deleteCommandMessages(msg, this.client);
           stopTyping(msg);
 
-          return msg.reply(`\`${args.role.name}\` assigned to \`${args.member.displayName}\``);
+          return msg.embed(roleAddEmbed);
         }
       } catch (err) {
         deleteCommandMessages(msg, this.client);
@@ -94,7 +116,7 @@ module.exports = class AddRoleCommand extends Command {
         server: ${msg.guild.name} (${msg.guild.id})
         Author: ${msg.author.tag} (${msg.author.id})
         Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        Role: ${args.role.name} (${args.role.id})
+        Role: ${role.name} (${role.id})
         Error Message: ${err}
         `);
 
@@ -105,7 +127,7 @@ module.exports = class AddRoleCommand extends Command {
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(oneLine`an error occurred adding the role \`${args.role.name}\` to \`${args.member.displayName}\`.
+    return msg.reply(oneLine`an error occurred adding the role \`${role.name}\` to \`${member.displayName}\`.
 		Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
   }
 };
