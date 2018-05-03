@@ -124,7 +124,7 @@ module.exports = class FlavorCommand extends Command {
       },
       pokeoptions = {
         shouldSort: true,
-        threshold: 0.6,
+        threshold: 0.3,
         location: 0,
         distance: 100,
         maxPatternLength: 32,
@@ -133,8 +133,9 @@ module.exports = class FlavorCommand extends Command {
       },
       aliasFuse = new Fuse(PokeAliases, aliasoptions),
       pokeFuse = new Fuse(BattlePokedex, pokeoptions),
-      aliasSearch = aliasFuse.search(pokemon),
-      pokeSearch = aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : pokeFuse.search(pokemon),
+      firstSearch = pokeFuse.search(pokemon),
+      aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null,
+      pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch,
       dataEmbed = new MessageEmbed(),
       pokedexEntries = [];
     /* eslint-enable sort-vars */

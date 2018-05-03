@@ -123,7 +123,7 @@ module.exports = class DexCommand extends Command {
       },
       pokeoptions = {
         shouldSort: true,
-        threshold: 0.6,
+        threshold: 0.3,
         location: 0,
         distance: 100,
         maxPatternLength: 32,
@@ -132,10 +132,16 @@ module.exports = class DexCommand extends Command {
       },
       aliasFuse = new Fuse(PokeAliases, aliasoptions),
       pokeFuse = new Fuse(BattlePokedex, pokeoptions),
-      aliasSearch = aliasFuse.search(pokemon),
-      pokeSearch = aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : pokeFuse.search(pokemon),
+      firstSearch = pokeFuse.search(pokemon),
+      aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null,
+      pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch,
       dexEmbed = new MessageEmbed();
     /* eslint-enable sort-vars */
+
+    /*
+     * aliasSearch = aliasFuse.search(pokemon),
+     * pokeSearch = aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : pokeFuse.search(pokemon),
+     */
 
     if (pokeSearch.length) {
       const pokeData = {
