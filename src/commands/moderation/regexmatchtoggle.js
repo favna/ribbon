@@ -24,7 +24,7 @@
  */
 
 /**
- * @file Moderation RegexMatchToggleCommand - Toggle Toggle commands matching on regex for this server  
+ * @file Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this server  
  * **Aliases**: `rmt`, `regexmatch`
  * @module
  * @category moderation
@@ -45,7 +45,7 @@ module.exports = class RegexMatchToggleCommand extends Command {
       memberName: 'regexmatchtoggle',
       group: 'moderation',
       aliases: ['rmt', 'regexmatch'],
-      description: 'Toggle Toggle commands matching on regex for this server',
+      description: 'Toggle commands matching on regex for this server',
       format: 'Enable|Disable',
       examples: ['regexmatchtoggle enable'],
       guildOnly: true,

@@ -85,6 +85,11 @@ module.exports = class WarnCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
+  /**
+   * @todo Rework warnings into database
+   * @description SQLite is a way better permanent storage than JSON
+   */
+
   run (msg, args) {
     startTyping(msg);
     const embed = new MessageEmbed(),
