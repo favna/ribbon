@@ -135,7 +135,6 @@ module.exports = class SlotsCommand extends Command {
         let titleString = '',
           winningPoints = 0;
 
-        /* eslint max-depth: ["error", 6]*/
         if (args.chips === 1 && result.lines[1].isWon) {
           winningPoints += result.lines[1].points;
         } else if (args.chips === 2) {

@@ -111,7 +111,7 @@ module.exports = class ActivityCommand extends Command {
           if (spotifyData) {
             spotify = spotifyData.body.tracks.items[0];
             activity.state = typeof activity.state === 'object' ? activity.state : activity.state.split(';');
-            for (const i in spotify.artists.length) { // eslint-disable-line max-depth
+            for (const i in spotify.artists.length) {
               activity.state[i] = `[${activity.state[i]}](${spotify.artists[i].external_urls.spotify})`;
             }
           }
