@@ -86,6 +86,10 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_kai">kai</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Custom KaiCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br>Server admins can disable this command entirely by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>.kai</code></p>
 </dd>
+<dt><a href="#module_biscuit">biscuit</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Custom CookieCommand - Steal someone&#39;s 🍪 gnanahahahaha
+<strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p>
+</dd>
 <dt><a href="#module_copypasta">copypasta</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Extra CopyPastaCommand - Gets one of the server&#39;s stored copypastas<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
 </dd>
@@ -548,6 +552,14 @@ Server admins can disable this command entirely by using the `rmt off` command
 **Aliases**: `.kai`
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔  
+**Category**: custom  
+<a name="module_biscuit"></a>
+
+## biscuit ⇒ <code>MessageEmbed</code>
+Custom CookieCommand - Steal someone's 🍪 gnanahahahaha
+**Aliases**: `.biscuit`, `biscuit`
+
+**Returns**: <code>MessageEmbed</code> - A MessageEmbed with a cookie gif  
 **Category**: custom  
 <a name="module_copypasta"></a>
 

@@ -154,7 +154,6 @@ class Ribbon {
     }
   }
 
-
   onCmdBlock () {
     return (msg, reason) => {
       console.log(oneLine`
