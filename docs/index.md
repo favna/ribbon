@@ -216,8 +216,16 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_delrole">delrole</a></dt>
 <dd><p>Moderation DeleteRoleCommand - Delete the role of a member<br><strong>Aliases</strong>: <code>deleterole</code>, `d</p>
 </dd>
+<dt><a href="#module_joinmessages">joinmessages</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join
+<strong>Aliases</strong>: <code>jmt</code>, <code>joinmessagestoggle</code></p>
+</dd>
 <dt><a href="#module_kick">kick</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation KickCommand - Kicks a somewhat bad member<br><strong>Aliases</strong>: <code>k</code></p>
+</dd>
+<dt><a href="#module_leavemessages">leavemessages</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave
+<strong>Aliases</strong>: <code>lmt</code>, <code>leavemessagestoggle</code></p>
 </dd>
 <dt><a href="#module_listwarn">listwarn</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation ListWarnCommand - Show the amount of warning points a member has<br><strong>Aliases</strong>: <code>reqwarn</code>, <code>lw</code>, <code>rw</code></p>
@@ -242,7 +250,7 @@ This may also mean that the bot won&#39;t have access if it doesn&#39;t have adm
 <dd><p>Moderation PurgeCommand - Quickly delete a certain amount of messages<br><strong>Aliases</strong>: <code>prune</code>, <code>delete</code></p>
 </dd>
 <dt><a href="#module_regexmatchtoggle">regexmatchtoggle</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation RegexMatchToggleCommand - Toggle Toggle commands matching on regex for this server<br><strong>Aliases</strong>: <code>rmt</code>, <code>regexmatch</code></p>
+<dd><p>Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this server<br><strong>Aliases</strong>: <code>rmt</code>, <code>regexmatch</code></p>
 </dd>
 <dt><a href="#module_setmemberlogs">setmemberlogs</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation SetMemberlogsCommand - Sets the channel used for member logs<br><strong>Aliases</strong>: <code>setmember</code></p>
@@ -1220,6 +1228,23 @@ Moderation DeleteRoleCommand - Delete the role of a member
 ```js
 delrole Favna Member
 ```
+<a name="module_joinmessages"></a>
+
+## joinmessages ⇒ <code>MessageEmbed</code>
+Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join
+**Aliases**: `jmt`, `joinmessagestoggle`
+
+**Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>boolean</code> | True or False |
+
+**Example**  
+```js
+joinmessages enable
+```
 <a name="module_kick"></a>
 
 ## kick ⇒ <code>MessageEmbed</code>
@@ -1237,6 +1262,23 @@ Moderation KickCommand - Kicks a somewhat bad member
 **Example**  
 ```js
 kick ThunderKai
+```
+<a name="module_leavemessages"></a>
+
+## leavemessages ⇒ <code>MessageEmbed</code>
+Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave
+**Aliases**: `lmt`, `leavemessagestoggle`
+
+**Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>boolean</code> | True or False |
+
+**Example**  
+```js
+leavemessages enable
 ```
 <a name="module_listwarn"></a>
 
@@ -1364,7 +1406,7 @@ purge 10
 <a name="module_regexmatchtoggle"></a>
 
 ## regexmatchtoggle ⇒ <code>Message</code>
-Moderation RegexMatchToggleCommand - Toggle Toggle commands matching on regex for this server  
+Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this server  
 **Aliases**: `rmt`, `regexmatch`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
