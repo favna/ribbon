@@ -24,20 +24,24 @@
  */
 
 /**
- * @file Games ShipCommand - Ship 2 players  
+ * @file Games ShipCommand - Ship 2 members  
+ * Leaving 1 or both parameters out will have the bot pick 1 or 2 random members  
  * **Aliases**: `love`, `marry`, `engage`
  * @module
  * @category games
  * @name ship
  * @example ship Biscuit Rei
- * @param {string} ShipMemberOne The first member to ship
- * @param {string} ShipMemberTwo The second member to ship
+ * @param {string} [ShipMemberOne] The first member to ship
+ * @param {string} [ShipMemberTwo] The second member to ship
  * @returns {MessageEmbed} Name of the ship
  */
 
-/* eslint-disable no-unused-vars*/ 
-const {Command} = require('discord.js-commando'), 
-  {MessageEmbed} = require('discord.js'), 
+/* eslint-disable no-unused-vars*/
+const Jimp = require('jimp'),
+  imgur = require('imgur'),
+  util = require('util'),
+  {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class ShipCommand extends Command {
@@ -47,40 +51,61 @@ module.exports = class ShipCommand extends Command {
       memberName: 'ship',
       group: 'games',
       aliases: ['love', 'marry', 'engage'],
-      description: 'Ship 2 players',
+      description: 'Ship 2 members',
+      details: 'Leaving 1 or both parameters out will have the bot pick 1 or 2 random members',
       format: 'ShipMemberOne ShipMemberTwo',
       examples: ['ship Biscuit Rei'],
       guildOnly: false,
-      ownerOnly: true,
       throttling: {
         usages: 2,
         duration: 3
       },
       args: [
         {
-          key: 'shipone',
+          key: 'romeo',
           prompt: 'Who to ship?',
-          type: 'member'
+          type: 'member',
+          default: 'random'
         },
         {
-          key: 'shiptwo',
+          key: 'juliet',
           prompt: 'And who to ship them with?',
-          type: 'member'
+          type: 'member',
+          default: 'random'
         }
       ]
     });
   }
 
-  run (msg, {shipone, shiptwo}) {
-
-    /**
-     * @todo implement shipping command
-     * @description This will output both avatars with a heart in between as well as their ship name, using JIMP
-     */
-
+  run (msg, {romeo, juliet}) {
     startTyping(msg);
-    stopTyping(msg);
+    romeo = romeo !== 'random' ? romeo : msg.guild.members.random().user;
+    juliet = juliet !== 'random' ? juliet : msg.guild.members.random().user;
+    Jimp.prototype.getBase64Async = util.promisify(Jimp.prototype.getBase64);
 
-    return msg.say('Sorry that command is still in development');
+    new Jimp(384, 128, async (err, ship) => { // eslint-disable-line handle-callback-err
+      const avaOne = await Jimp.read(romeo.displayAvatarURL({format: 'png'})),
+        avaTwo = await Jimp.read(juliet.displayAvatarURL({format: 'png'})),
+        boat = new MessageEmbed(),
+        heart = await Jimp.read('https://favna.xyz/images/ribbonhost/heart.png');
+
+      ship.blit(avaOne, 0, 0, 0, 0, 128, 128);
+      ship.blit(avaTwo, 256, 0, 0, 0, avaTwo.bitmap.width, avaTwo.bitmap.height);
+      ship.blit(heart, 160, 32, 0, 0, 64, 64);
+
+      const base64 = await ship.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
+        upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
+
+      boat
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+        .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
+        .setDescription(`I call it... ${romeo.username.substring(0, Math.floor(romeo.username.length / 2))}${juliet.username.substring(Math.ceil(juliet.username.length / 2))}! 😘`)
+        .setImage(upload.data.link);
+
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+
+      return msg.embed(boat);
+    });
   }
 };
