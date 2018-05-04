@@ -35,7 +35,7 @@
  * @returns {MessageEmbed} Copypasta content. In a normal message if more than 1024 characters
  */
 
-const Matcher = require('did-you-mean'),
+const dym = require('didyoumean2'),
   fs = require('fs'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
@@ -69,59 +69,49 @@ module.exports = class CopyPastaCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {name}) {
     startTyping(msg);
-    const match = new Matcher();
-
-    match.values = fs.readdirSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`));
-
-    const dym = match.get(`${args.name}.txt`), // eslint-disable-line one-var
-      dymString = dym !== null
-        ? oneLine`Did you mean \`${dym}\`?`
-        : oneLine`You can save it with \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}copypastaadd <filename> <content>\` or verify the file name manually`;
-
     try {
-      let pastaContent = fs.readFileSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}/${args.name}.txt`), 'utf8');
+      let pastaContent = fs.readFileSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}/${name}.txt`), 'utf8');
 
-      if (pastaContent) {
-        if (pastaContent.length <= 1024) {
-          /* eslint-disable no-nested-ternary */
-          const cpEmbed = new MessageEmbed(),
-            ext = pastaContent.includes('.png') ? '.png'
-              : pastaContent.includes('.jpg') ? '.jpg'
-                : pastaContent.includes('.gif') ? '.gif'
-                  : pastaContent.includes('.webp') ? '.webp' : 'none',
-            header = ext !== 'none' ? pastaContent.includes('https') ? 'https' : 'http' : 'none';
-          /* eslint-enable no-nested-ternary */
+      if (pastaContent.length <= 1024) {
+        /* eslint-disable no-nested-ternary */
+        const cpEmbed = new MessageEmbed(),
+          ext = pastaContent.includes('.png') ? '.png'
+            : pastaContent.includes('.jpg') ? '.jpg'
+              : pastaContent.includes('.gif') ? '.gif'
+                : pastaContent.includes('.webp') ? '.webp' : 'none',
+          header = ext !== 'none' ? pastaContent.includes('https') ? 'https' : 'http' : 'none';
+        /* eslint-enable no-nested-ternary */
 
-          if (ext !== 'none' && header !== 'none') {
-            cpEmbed.setImage(`${pastaContent.substring(pastaContent.indexOf(header), pastaContent.indexOf(ext))}${ext}`);
-            pastaContent = pastaContent.substring(0, pastaContent.indexOf(header) - 1) + pastaContent.substring(pastaContent.indexOf(ext) + ext.length);
-          }
-
-          cpEmbed
-            .setDescription(pastaContent)
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00');
-
-          msg.delete();
-          stopTyping(msg);
-
-          return msg.embed(cpEmbed);
+        if (ext !== 'none' && header !== 'none') {
+          cpEmbed.setImage(`${pastaContent.substring(pastaContent.indexOf(header), pastaContent.indexOf(ext))}${ext}`);
+          pastaContent = pastaContent.substring(0, pastaContent.indexOf(header) - 1) + pastaContent.substring(pastaContent.indexOf(ext) + ext.length);
         }
+
+        cpEmbed
+          .setDescription(pastaContent)
+          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00');
+
         msg.delete();
         stopTyping(msg);
 
-        return msg.say(pastaContent, {split: true});
+        return msg.embed(cpEmbed);
       }
+      msg.delete();
+      stopTyping(msg);
+
+      return msg.say(pastaContent, {split: true});
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`that copypasta does not exist! ${dymString}`);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+      const matchList = fs.readdirSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`)).map(v => v.slice(0, -4)),
+        maybe = dym(name, matchList, {deburr: true});
 
-    return msg.reply(`that copypasta does not exist! ${dymString}`);
+      return msg.reply(oneLine`that copypasta does not exist! ${maybe 
+        ? oneLine`Did you mean \`${maybe}\`?` 
+        : `You can save it with \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}copypastaadd <filename> <content>\``}`);
+    }
   }
 };
