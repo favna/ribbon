@@ -154,7 +154,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization<br><strong>Aliases</strong>: rockpaperscissors</p>
 </dd>
 <dt><a href="#module_ship">ship</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games ShipCommand - Ship 2 players<br><strong>Aliases</strong>: <code>love</code>, <code>marry</code>, <code>engage</code></p>
+<dd><p>Games ShipCommand - Ship 2 members<br>Leaving 1 or both parameters out will have the bot pick 1 or 2 random members<br><strong>Aliases</strong>: <code>love</code>, <code>marry</code>, <code>engage</code></p>
 </dd>
 <dt><a href="#module_slap">slap</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games SlapCommand - Slap a dumb person💢!<br><strong>Aliases</strong>: <code>bakaslap</code></p>
@@ -910,7 +910,8 @@ rps Rock
 <a name="module_ship"></a>
 
 ## ship ⇒ <code>MessageEmbed</code>
-Games ShipCommand - Ship 2 players  
+Games ShipCommand - Ship 2 members  
+Leaving 1 or both parameters out will have the bot pick 1 or 2 random members  
 **Aliases**: `love`, `marry`, `engage`
 
 **Returns**: <code>MessageEmbed</code> - Name of the ship  
@@ -918,8 +919,8 @@ Games ShipCommand - Ship 2 players
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ShipMemberOne | <code>string</code> | The first member to ship |
-| ShipMemberTwo | <code>string</code> | The second member to ship |
+| [ShipMemberOne] | <code>string</code> | The first member to ship |
+| [ShipMemberTwo] | <code>string</code> | The second member to ship |
 
 **Example**  
 ```js
