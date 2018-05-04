@@ -79,8 +79,8 @@ module.exports = class ShipCommand extends Command {
 
   run (msg, {romeo, juliet}) {
     startTyping(msg);
-    romeo = romeo.user !== 'random' ? romeo : msg.guild.members.random().user;
-    juliet = juliet.user !== 'random' ? juliet : msg.guild.members.random().user;
+    romeo = romeo !== 'random' ? romeo.user : msg.guild.members.random().user;
+    juliet = juliet !== 'random' ? juliet.user : msg.guild.members.random().user;
     Jimp.prototype.getBase64Async = util.promisify(Jimp.prototype.getBase64);
 
     new Jimp(384, 128, async (err, ship) => { // eslint-disable-line handle-callback-err
