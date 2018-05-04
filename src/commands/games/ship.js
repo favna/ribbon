@@ -42,7 +42,7 @@ const Jimp = require('jimp'),
   util = require('util'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class ShipCommand extends Command {
   constructor (client) {
@@ -99,7 +99,7 @@ module.exports = class ShipCommand extends Command {
       boat
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
-        .setDescription(`I call it... ${romeo.username.substring(0, Math.floor(romeo.username.length / 2))}${juliet.username.substring(Math.ceil(juliet.username.length / 2))}! 😘`)
+        .setDescription(`I call it... ${romeo.username.substring(0, roundNumber(romeo.username.length / 2))}${juliet.username.substring(roundNumber(juliet.username.length / 2))}! 😘`)
         .setImage(upload.data.link);
 
       deleteCommandMessages(msg, this.client);
