@@ -3,8 +3,8 @@
 
 
 "@types/node@*":
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.0.tgz#c40f8e07dce607d3ef25a626b93a6a7cdcf97881"
+  version "10.0.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.0.4.tgz#130598ee56e9a1210a53f557d64935571f05390d"
 
 acorn-jsx@^3.0.0:
   version "3.0.1"
@@ -309,9 +309,9 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-better-sqlite3@~4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/better-sqlite3/-/better-sqlite3-4.0.2.tgz#3a5542252e199ffcc3a58116255a39882fe06eeb"
+better-sqlite3@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/better-sqlite3/-/better-sqlite3-4.0.0.tgz#90d077c94c14e3a483f8086c48ce79ea57955417"
   dependencies:
     bindings "^1.2.1"
     integer "^1.0.1"
