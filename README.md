@@ -5,11 +5,13 @@
   </p>
 
   <p>
-<a href="https://circleci.com/gh/Favna/Ribbon/tree/master"><img src="https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser.svg?style=for-the-badge" alt="CircleCI"></a><!--
+   <a href="https://depfu.com/repos/Favna/Ribbon"><img src="https://img.shields.io/depfu/Favna/Ribbon.svg?style=for-the-badge" alt="Depfu" /></a><!--
+--><a href="https://circleci.com/gh/Favna/Ribbon/tree/master"><img src="https://img.shields.io/circleci/project/github/Favna/Ribbon.svg?style=for-the-badge" alt="CircleCI"></a><!--
 --><a href="https://github.com/Favna/Ribbon/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/favna/ribbon.svg?style=for-the-badge" alt="License"></a><!--
---><a href="https://www.npmjs.com/package/discord-ribbon"><img src="https://img.shields.io/node/v/discord-ribbon.svg?style=for-the-badge" alt="Node Version"></a><!--
---><a href="https://www.npmjs.com/package/discord-ribbon"><img src="https://img.shields.io/npm/v/discord-ribbon.svg?style=for-the-badge" alt="NPM Version"></a><!--
 --><a href="https://twitter.com/Favna_"><img src="https://img.shields.io/twitter/follow/espadrine.svg?style=for-the-badge&label=Follow" alt="Twitter Follow"></a>
+<br/>
+<a href="https://www.npmjs.com/package/discord-ribbon"><img src="https://img.shields.io/node/v/discord-ribbon.svg?style=for-the-badge" alt="Node Version"></a><!--
+--><a href="https://www.npmjs.com/package/discord-ribbon"><img src="https://img.shields.io/npm/v/discord-ribbon.svg?style=for-the-badge" alt="NPM Version"></a>
   </p>
 
   <p>
