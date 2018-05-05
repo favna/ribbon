@@ -77,35 +77,34 @@ module.exports = class ShipCommand extends Command {
     });
   }
 
-  run (msg, {romeo, juliet}) {
+  async run (msg, {romeo, juliet}) {
     startTyping(msg);
     romeo = romeo !== 'random' ? romeo.user : msg.guild.members.random().user;
     juliet = juliet !== 'random' ? juliet.user : msg.guild.members.random().user;
     Jimp.prototype.getBase64Async = util.promisify(Jimp.prototype.getBase64);
 
-    new Jimp(384, 128, async (err, ship) => { // eslint-disable-line handle-callback-err
-      const avaOne = await Jimp.read(romeo.displayAvatarURL({format: 'png'})),
-        avaTwo = await Jimp.read(juliet.displayAvatarURL({format: 'png'})),
-        boat = new MessageEmbed(),
-        heart = await Jimp.read('https://favna.xyz/images/ribbonhost/heart.png');
+    const avaOne = await Jimp.read(romeo.displayAvatarURL({format: 'png'})),
+      avaTwo = await Jimp.read(juliet.displayAvatarURL({format: 'png'})),
+      boat = new MessageEmbed(),
+      canvas = await Jimp.read('https://favna.xyz/images/ribbonhost/shipcanvas.png'),
+      heart = await Jimp.read('https://favna.xyz/images/ribbonhost/heart.png');
 
-      ship.blit(avaOne, 0, 0, 0, 0, 128, 128);
-      ship.blit(avaTwo, 256, 0, 0, 0, avaTwo.bitmap.width, avaTwo.bitmap.height);
-      ship.blit(heart, 160, 32, 0, 0, 64, 64);
+    canvas.blit(avaOne, 0, 0, 0, 0, 128, 128);
+    canvas.blit(avaTwo, 256, 0, 0, 0, avaTwo.bitmap.width, avaTwo.bitmap.height);
+    canvas.blit(heart, 160, 32, 0, 0, 64, 64);
 
-      const base64 = await ship.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
-        upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
+    const base64 = await canvas.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
+      upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
 
-      boat
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
-        .setDescription(`I call it... ${romeo.username.substring(0, roundNumber(romeo.username.length / 2))}${juliet.username.substring(roundNumber(juliet.username.length / 2))}! 😘`)
-        .setImage(upload.data.link);
+    boat
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+      .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
+      .setDescription(`I call it... ${romeo.username.substring(0, roundNumber(romeo.username.length / 2))}${juliet.username.substring(roundNumber(juliet.username.length / 2))}! 😘`)
+      .setImage(upload.data.link);
 
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
+    deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
-      return msg.embed(boat);
-    });
+    return msg.embed(boat);
   }
 };
