@@ -369,7 +369,6 @@ class Ribbon {
     };
   }
 
-  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
   init () {
     this.client
       .on('commandBlocked', this.onCmdBlock())
