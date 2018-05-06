@@ -2461,7 +2461,7 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-nan@2, nan@^2.1.0, nan@^2.3.2, nan@^2.4.0, nan@^2.8.0:
+nan@2, nan@^2.1.0, nan@^2.10.0, nan@^2.4.0, nan@^2.8.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.10.0.tgz#96d0cd610ebd58d4b4de9cc0c6828cda99c7548f"
 
@@ -2507,13 +2507,13 @@ node-fetch@^1.0.1:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-opus@^0.2.7:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/node-opus/-/node-opus-0.2.7.tgz#5b726e29795b0b127b4c87e662d4de816840579c"
+node-opus@^0.2.9:
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/node-opus/-/node-opus-0.2.9.tgz#a9da56c96b6b5f5c32c61ea8a4593bc7295daa11"
   dependencies:
     bindings "~1.2.1"
     commander "^2.9.0"
-    nan "^2.3.2"
+    nan "^2.10.0"
   optionalDependencies:
     ogg-packet "^1.0.0"
 
