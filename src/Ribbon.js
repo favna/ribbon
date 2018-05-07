@@ -25,12 +25,16 @@
 
 /* eslint-disable sort-vars */
 const Database = require('better-sqlite3'),
+  Jimp = require('jimp'),
+  imgur = require('imgur'),
   moment = require('moment'),
   path = require('path'),
   request = require('snekfetch'),
   {Client, FriendlyError, SyncSQLiteProvider} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags');
+  {promisify} = require('util'),
+  {oneLine, stripIndents} = require('common-tags'),
+  {ordinal} = require(path.join(__dirname, 'util.js'));
 /* eslint-enable sort-vars */
 
 class Ribbon {
@@ -154,6 +158,74 @@ class Ribbon {
     }
   }
 
+  async joinmessage (member) {
+    Jimp.prototype.getBase64Async = promisify(Jimp.prototype.getBase64);
+    /* eslint-disable sort-vars*/
+    const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
+      border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
+      canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
+      newMemberEmbed = new MessageEmbed(),
+      fontLarge = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-large.fnt')),
+      fontMedium = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-medium.fnt')),
+      mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
+    /* eslint-enable sort-vars*/
+
+    avatar.resize(136, Jimp.AUTO);
+    mask.resize(136, Jimp.AUTO);
+    border.resize(136, Jimp.AUTO);
+    avatar.mask(mask, 0, 0);
+    avatar.composite(border, 0, 0);
+    canvas.blit(avatar, 5, 5);
+    canvas.print(fontLarge, 155, 10, 'welcome'.toUpperCase());
+    canvas.print(fontMedium, 160, 60, `you are the ${ordinal(member.guild.memberCount)} member`.toUpperCase());
+    canvas.print(fontMedium, 160, 80, `of ${member.guild.name}`.toUpperCase());
+
+    const base64 = await canvas.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
+      upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
+
+    newMemberEmbed
+      .setColor('#80F31F')
+      .setTitle('NEW MEMBER!')
+      .setDescription(`Please give a warm welcome to <@${member.id}>`)
+      .setImage(upload.data.link);
+
+    member.guild.channels.get(member.guild.settings.get('joinmsgchannel')).send('', {embed: newMemberEmbed});
+  }
+
+  async leavemessages (member) {
+    Jimp.prototype.getBase64Async = promisify(Jimp.prototype.getBase64);
+    /* eslint-disable sort-vars*/
+    const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
+      border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
+      canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
+      leaveMemberEmbed = new MessageEmbed(),
+      fontLarge = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-large.fnt')),
+      fontMedium = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-medium.fnt')),
+      mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
+      /* eslint-enable sort-vars*/
+
+    avatar.resize(136, Jimp.AUTO);
+    mask.resize(136, Jimp.AUTO);
+    border.resize(136, Jimp.AUTO);
+    avatar.mask(mask, 0, 0);
+    avatar.composite(border, 0, 0);
+    canvas.blit(avatar, 5, 5);
+    canvas.print(fontLarge, 155, 10, 'goodbye'.toUpperCase());
+    canvas.print(fontMedium, 160, 60, `there are now ${member.guild.memberCount} members`.toUpperCase());
+    canvas.print(fontMedium, 160, 80, `on ${member.guild.name}`.toUpperCase());
+
+    const base64 = await canvas.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
+      upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
+
+    leaveMemberEmbed
+      .setColor('#F4BF42')
+      .setTitle('Member Left 😢')
+      .setDescription(`You will be missed <@${member.id}>`)
+      .setImage(upload.data.link);
+
+    member.guild.channels.get(member.guild.settings.get('leavemsgchannel')).send('', {embed: leaveMemberEmbed});
+  }
+
   onCmdBlock () {
     return (msg, reason) => {
       console.log(oneLine`
@@ -235,6 +307,10 @@ class Ribbon {
           member.guild.channels.get(memberLogs).send({embed});
         }
       }
+
+      if (member.guild.settings.get('joinmsgs', false) && member.guild.settings.get('joinmsgchannel', null)) {
+        this.joinmessage(member);
+      }
     };
   }
 
@@ -266,6 +342,10 @@ class Ribbon {
         }
       } catch (err) {
         null;
+      }
+
+      if (member.guild.settings.get('leavemsgs', false) && member.guild.settings.get('leavemsgchannel', null)) {
+        this.leavemessages(member);
       }
     };
   }

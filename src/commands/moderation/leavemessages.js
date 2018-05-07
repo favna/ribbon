@@ -73,7 +73,8 @@ module.exports = class LeaveMessagesCommand extends Command {
         {
           key: 'channel',
           prompt: 'In which channel should I wave people goodbye?',
-          type: 'channel'
+          type: 'channel',
+          default: 'off'
         }
       ]
     });
@@ -83,38 +84,38 @@ module.exports = class LeaveMessagesCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  /**
-   * @todo implement actual leave messages
-   * @description toggling something without it doing anything really is not useful
-   */
-
   run (msg, {channel, option}) {
+    if (option && channel === 'off') {
+      return msg.reply('when activating join messages you need to provide a channel for me to output the messages to!');
+    }
+
     startTyping(msg);
     const defRoleEmbed = new MessageEmbed(),
       description = option ? '📉 Ribbon leave messages have been enabled' : '📉 Ribbon leave messages have been disabled',
-      modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
+      modlogChannel = msg.guild.settings.get('modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
           ? msg.guild.channels.find('name', 'mod-logs').id
           : null);
     
-    this.client.provider.set(msg.guild.id, 'leavemsgs', option);
+    msg.guild.settings.set('leavemsgs', option);
+    msg.guild.settings.set('leavemsgchannel', channel.id);
 
     defRoleEmbed
       .setColor('#AAEFE6')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** ${description}
-        **Channel:** ${channel}`)
+        ${option ? `**Channel:** <#${channel.id}>` : ''}`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
-    if (this.client.provider.get(msg.guild, 'modlogs', true)) {
-      if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+    if (msg.guild.settings.get(msg.guild, 'modlogs', true)) {
+      if (!msg.guild.settings.get(msg.guild, 'hasSentModLogMessage', false)) {
         msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
                       (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
                       This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-        this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+        msg.guild.settings.set(msg.guild, 'hasSentModLogMessage', true);
       }
-      modlogChannel ? msg.guild.channels.get(modlogChannel).send({defRoleEmbed}) : null;
+      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: defRoleEmbed}) : null;
     }
 
     deleteCommandMessages(msg, this.client);

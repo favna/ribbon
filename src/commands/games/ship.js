@@ -39,7 +39,7 @@
 /* eslint-disable no-unused-vars*/
 const Jimp = require('jimp'),
   imgur = require('imgur'),
-  util = require('util'),
+  {promisify} = require('util'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
@@ -81,7 +81,7 @@ module.exports = class ShipCommand extends Command {
     startTyping(msg);
     romeo = romeo !== 'random' ? romeo.user : msg.guild.members.random().user;
     juliet = juliet !== 'random' ? juliet.user : msg.guild.members.random().user;
-    Jimp.prototype.getBase64Async = util.promisify(Jimp.prototype.getBase64);
+    Jimp.prototype.getBase64Async = promisify(Jimp.prototype.getBase64);
 
     const avaOne = await Jimp.read(romeo.displayAvatarURL({format: 'png'})),
       avaTwo = await Jimp.read(juliet.displayAvatarURL({format: 'png'})),

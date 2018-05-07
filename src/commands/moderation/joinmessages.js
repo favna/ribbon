@@ -35,9 +35,9 @@
  */
 
 const moment = require('moment'),
-  {Command} = require('discord.js-commando'), 
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class JoinMessagesCommand extends Command {
@@ -73,7 +73,8 @@ module.exports = class JoinMessagesCommand extends Command {
         {
           key: 'channel',
           prompt: 'In which channel should I greet people?',
-          type: 'channel'
+          type: 'channel',
+          default: 'off'
         }
       ]
     });
@@ -83,38 +84,38 @@ module.exports = class JoinMessagesCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  /**
-   * @todo implement actual join messages
-   * @description toggling something without it doing anything really is not useful
-   */
-
   run (msg, {channel, option}) {
+    if (option && channel === 'off') {
+      return msg.reply('when activating join messages you need to provide a channel for me to output the messages to!');
+    }
+
     startTyping(msg);
     const defRoleEmbed = new MessageEmbed(),
       description = option ? '📈 Ribbon join messages have been enabled' : '📈 Ribbon join messages have been disabled',
-      modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
+      modlogChannel = msg.guild.settings.get('modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
           ? msg.guild.channels.find('name', 'mod-logs').id
           : null);
-    
-    this.client.provider.set(msg.guild.id, 'joinmsgs', option);
+
+    msg.guild.settings.set('joinmsgs', option);
+    msg.guild.settings.set('joinmsgchannel', channel.id);
 
     defRoleEmbed
       .setColor('#AAEFE6')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** ${description}
-        **Channel:** ${channel}`)
+        ${option ? `**Channel:** <#${channel.id}>` : ''}`)
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
 
-    if (this.client.provider.get(msg.guild, 'modlogs', true)) {
-      if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+    if (msg.guild.settings.get('modlogs', true)) {
+      if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
         msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
                       (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
                       This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-        this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+        msg.guild.settings.set('hasSentModLogMessage', true);
       }
-      modlogChannel ? msg.guild.channels.get(modlogChannel).send({defRoleEmbed}) : null;
+      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: defRoleEmbed}) : null;
     }
 
     deleteCommandMessages(msg, this.client);

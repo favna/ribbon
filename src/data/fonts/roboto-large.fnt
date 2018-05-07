@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<font>
+  <info face="Roboto" size="-50" bold="1" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="1,1" outline="0"/>
+  <common lineHeight="61" base="48" scaleW="256" scaleH="256" pages="1" packed="0" alphaChnl="1" redChnl="1" greenChnl="1" blueChnl="1"/>
+  <pages>
+    <page id="0" file="roboto-large.png" />
+  </pages>
+  <chars count="10">
+    <char id="66" x="0" y="37" width="28" height="36" xoffset="2" yoffset="12" xadvance="32" page="0" chnl="15" />
+    <char id="67" x="85" y="0" width="31" height="36" xoffset="1" yoffset="12" xadvance="33" page="0" chnl="15" />
+    <char id="68" x="212" y="0" width="29" height="36" xoffset="2" yoffset="12" xadvance="33" page="0" chnl="15" />
+    <char id="69" x="29" y="37" width="26" height="36" xoffset="2" yoffset="12" xadvance="28" page="0" chnl="15" />
+    <char id="71" x="181" y="0" width="30" height="36" xoffset="2" yoffset="12" xadvance="34" page="0" chnl="15" />
+    <char id="76" x="56" y="37" width="25" height="36" xoffset="2" yoffset="12" xadvance="27" page="0" chnl="15" />
+    <char id="77" x="45" y="0" width="39" height="36" xoffset="2" yoffset="12" xadvance="44" page="0" chnl="15" />
+    <char id="79" x="117" y="0" width="31" height="36" xoffset="2" yoffset="12" xadvance="35" page="0" chnl="15" />
+    <char id="87" x="0" y="0" width="44" height="36" xoffset="0" yoffset="12" xadvance="44" page="0" chnl="15" />
+    <char id="89" x="149" y="0" width="31" height="36" xoffset="0" yoffset="12" xadvance="31" page="0" chnl="15" />
+  </chars>
+  <kernings count="12">
+    <kerning first="66" second="89" amount="-1" />
+    <kerning first="68" second="89" amount="-1" />
+    <kerning first="76" second="67" amount="-2" />
+    <kerning first="76" second="71" amount="-2" />
+    <kerning first="76" second="79" amount="-2" />
+    <kerning first="76" second="89" amount="-7" />
+    <kerning first="76" second="87" amount="-2" />
+    <kerning first="77" second="89" amount="-1" />
+    <kerning first="79" second="89" amount="-1" />
+    <kerning first="89" second="67" amount="-1" />
+    <kerning first="89" second="71" amount="-1" />
+    <kerning first="89" second="79" amount="-1" />
+  </kernings>
+</font>
