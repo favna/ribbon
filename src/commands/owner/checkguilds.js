@@ -31,10 +31,10 @@
  * @returns {Message} Amount and list of guilds in code blocks
  */
 
-const commando = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {stripIndents} = require('common-tags');
 
-module.exports = class CheckGuildsCommand extends commando.Command {
+module.exports = class CheckGuildsCommand extends Command {
   constructor (client) {
     super(client, {
       name: 'checkguilds',
