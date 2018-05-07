@@ -89,9 +89,12 @@ module.exports = class ShipCommand extends Command {
       canvas = await Jimp.read('https://favna.xyz/images/ribbonhost/shipcanvas.png'),
       heart = await Jimp.read('https://favna.xyz/images/ribbonhost/heart.png');
 
-    canvas.blit(avaOne, 0, 0, 0, 0, 128, 128);
-    canvas.blit(avaTwo, 256, 0, 0, 0, avaTwo.bitmap.width, avaTwo.bitmap.height);
-    canvas.blit(heart, 160, 32, 0, 0, 64, 64);
+    avaOne.resize(128, Jimp.AUTO);
+    avaTwo.resize(128, Jimp.AUTO);
+
+    canvas.blit(avaOne, 0, 0);
+    canvas.blit(avaTwo, 256, 0);
+    canvas.blit(heart, 160, 32);
 
     const base64 = await canvas.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
       upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
