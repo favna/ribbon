@@ -113,11 +113,11 @@ module.exports = class AddRoleCommand extends Command {
         stopTyping(msg);
         this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`addrole\` command!
-        server: ${msg.guild.name} (${msg.guild.id})
-        Author: ${msg.author.tag} (${msg.author.id})
-        Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        Role: ${role.name} (${role.id})
-        Error Message: ${err}
+        **Server:** ${msg.guild.name} (${msg.guild.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Input:** \`${role.name} (${role.id})\` || \`${member.user.tag} (${member.id})\`
+        **Error Message:** ${err}
         `);
 
         return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}

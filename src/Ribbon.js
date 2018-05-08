@@ -95,8 +95,8 @@ class Ribbon {
     } catch (err) {
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred sending someone their reminder!
-      Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      Error Message: ${err}
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Error Message:** ${err}
       `);
     }
   }
@@ -140,8 +140,8 @@ class Ribbon {
     } catch (err) {
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred giving someone their lotto payout!
-      Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      Error Message: ${err}
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Error Message:** ${err}
       `);
     }
   }

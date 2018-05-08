@@ -103,7 +103,7 @@ module.exports = class RemindCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {time, reminder}) {
     const conn = new Database(path.join(__dirname, '../../data/databases/reminders.sqlite3')),
       remindEmbed = new MessageEmbed();
 
@@ -112,9 +112,9 @@ module.exports = class RemindCommand extends Command {
       conn.prepare('CREATE TABLE IF NOT EXISTS "reminders" (userID TEXT, remindTime TEXT, remindText TEXT);').run();
       conn.prepare('INSERT INTO "reminders" VALUES ($userid, $remindtime, $remindtext);').run({
         userid: msg.author.id,
-        remindtime: moment().add(args.time, 'minutes')
+        remindtime: moment().add(time, 'minutes')
           .format('YYYY-MM-DD HH:mm:ss'),
-        remindtext: args.reminder
+        remindtext: reminder
       });
 
       remindEmbed
@@ -122,9 +122,9 @@ module.exports = class RemindCommand extends Command {
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setThumbnail('https://favna.xyz/images/ribbonhost/reminders.png')
         .setTitle('Your reminder was stored!')
-        .setDescription(args.reminder)
+        .setDescription(reminder)
         .setFooter('Reminder will be sent')
-        .setTimestamp(moment().add(args.time, 'minutes')._d);
+        .setTimestamp(moment().add(time, 'minutes')._d);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -134,10 +134,11 @@ module.exports = class RemindCommand extends Command {
       stopTyping(msg);
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred in \`remind\` command!
-      server: ${msg.guild.name} (${msg.guild.id})
-      Author: ${msg.author.tag} (${msg.author.id})
-      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      Error Message: ${err}
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Input:** \`${time}\` || \`${reminder}\`
+      **Error Message:** ${err}
       `);
 
       return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}

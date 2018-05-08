@@ -63,7 +63,7 @@ module.exports = class CydiaCommand extends Command {
       },
       args: [
         {
-          key: 'query',
+          key: 'deb',
           prompt: 'Please supply package name',
           type: 'string'
         }
@@ -71,13 +71,13 @@ module.exports = class CydiaCommand extends Command {
     });
   }
 
-  async run (msg, args) {
-    if (!this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
-      return null;
-    }
+  async run (msg, {deb}) {
     startTyping(msg);
     if (msg.patternMatches) {
-      args.query = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
+      if (!this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
+        return null;
+      }
+      deb = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
     }
     const baseURL = 'https://cydia.saurik.com/',
       embed = new MessageEmbed(),
@@ -90,11 +90,11 @@ module.exports = class CydiaCommand extends Command {
         minMatchCharLength: 1,
         keys: ['display', 'name']
       },
-      packages = await request.get(`${baseURL}api/macciti`).query('query', args.query);
+      packages = await request.get(`${baseURL}api/macciti`).query('query', deb);
 
     if (packages.ok) {
       const fuse = new Fuse(packages.body.results, fsoptions),
-        results = fuse.search(args.query);
+        results = fuse.search(deb);
 
       if (results.length) {
         const result = results[0];
@@ -134,10 +134,12 @@ module.exports = class CydiaCommand extends Command {
         } catch (err) {
           this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
           <@${this.client.owners[0].id}> Error occurred in \`cydia\` command!
-          server: ${msg.guild.name} (${msg.guild.id})
-          Author: ${msg.author.tag} (${msg.author.id})
-          Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-          Error Message: ${err}
+          **Server:** ${msg.guild.name} (${msg.guild.id})
+          **Author:** ${msg.author.tag} (${msg.author.id})
+          **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+          **Input:** ${deb}
+          **Regex Match:** \`${msg.patternMatches ? 'yes' : 'no'}\`
+          **Error Message:** ${err}
           `);
   
           embed.addField('Package Name', result.name, false);
@@ -152,6 +154,6 @@ module.exports = class CydiaCommand extends Command {
       }
     }
 
-    return msg.say(`**Tweak/Theme \`${args.query}\` not found!**`);
+    return msg.say(`**Tweak/Theme \`${deb}\` not found!**`);
   }
 };

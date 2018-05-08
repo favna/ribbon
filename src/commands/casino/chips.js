@@ -104,10 +104,10 @@ module.exports = class ChipsCommand extends Command {
       } else {
         this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`chips\` command!
-        server: ${msg.guild.name} (${msg.guild.id})
-        Author: ${msg.author.tag} (${msg.author.id})
-        Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        Error Message: ${err}
+        **Server:** ${msg.guild.name} (${msg.guild.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Error Message:** ${err}
         `);
 
         return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}

@@ -67,41 +67,39 @@ module.exports = class MathCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {equation}) {
     startTyping(msg);
     const mathEmbed = new MessageEmbed();
 
     let res = '';
 
     try {
-      res = scalc(args.equation);
-    } catch (err) {
-      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
-      <@${this.client.owners[0].id}> Error occurred in \`math\` command!
-      server: ${msg.guild.name} (${msg.guild.id})
-      Author: ${msg.author.tag} (${msg.author.id})
-      Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      Error Message: ${err}
-      `);
-    }
+      res = scalc(equation);
 
-    if (res || res === 0) {
       mathEmbed
         .setTitle('Calculator')
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setDescription(oneLine`The answer to \`${args.equation.toString()}\` is \`${res}\``);
+        .setDescription(oneLine`The answer to \`${equation.toString()}\` is \`${res}\``);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
       return msg.embed(mathEmbed);
+    } catch (err) {
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`math\` command!
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Input:** \`${equation}\`
+      **Error Message:** ${err}
+      `);
+
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+  
+      return msg.reply(oneLine`\`${equation.toString()}\` is is not a valid equation for me.
+          Check out this readme to see how to use the supported polish notation: https://github.com/dominhhai/calculator/blob/master/README.md`);
     }
-
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
-
-    return msg.reply(oneLine`\`${args.equation.toString()}\` is is not a valid equation for me.
-				Check out this readme to see how to use the supported polish notation: https://github.com/dominhhai/calculator/blob/master/README.md`);
-
   }
 };

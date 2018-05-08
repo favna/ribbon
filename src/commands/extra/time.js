@@ -79,9 +79,9 @@ module.exports = class TimeCommand extends Command {
     return null;
   }
 
-  async run (msg, args) {
+  async run (msg, {city}) {
     startTyping(msg);
-    const cords = await this.getCords(args.city);
+    const cords = await this.getCords(city);
 
     if (cords) {
       const time = await request.get('http://api.timezonedb.com/v2/get-time-zone')
@@ -96,7 +96,7 @@ module.exports = class TimeCommand extends Command {
           timeEmbed = new MessageEmbed();
 
         timeEmbed
-          .setTitle(`:flag_${time.body.countryCode.toLowerCase()}: ${args.city}`)
+          .setTitle(`:flag_${time.body.countryCode.toLowerCase()}: ${city}`)
           .setDescription(stripIndents`**Current Time:** ${timeArr[1]}
 					**Current Date:** ${timeArr[0]}
 					**Country:** ${time.body.countryName}
@@ -112,9 +112,10 @@ module.exports = class TimeCommand extends Command {
     stopTyping(msg);
     this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
     <@${this.client.owners[0].id}> Error occurred in \`time\` command!
-    server: ${msg.guild.name} (${msg.guild.id})
-    Author: ${msg.author.tag} (${msg.author.id})
-    Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    **Server:** ${msg.guild.name} (${msg.guild.id})
+    **Author:** ${msg.author.tag} (${msg.author.id})
+    **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    **Input:** ${city}
     `);
 
     return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}

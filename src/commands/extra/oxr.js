@@ -132,7 +132,7 @@ module.exports = class MoneyCommand extends Command {
     return string.replace(new RegExp(pattern, 'g'), replacement);
   }
 
-  async run (msg, args) {
+  async run (msg, {value, curOne, curTwo}) {
     startTyping(msg);
     const rates = await request.get('https://openexchangerates.org/api/latest.json')
       .query('app_id', process.env.oxrkey)
@@ -143,14 +143,14 @@ module.exports = class MoneyCommand extends Command {
       fx.rates = rates.body.rates;
       fx.base = rates.body.base;
 
-      const convertedMoney = this.converter(this.replaceAll(args.value, /,/, '.'), args.curOne, args.curTwo),
+      const convertedMoney = this.converter(this.replaceAll(value, /,/, '.'), curOne, curTwo),
         oxrEmbed = new MessageEmbed();
 
       oxrEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setAuthor('🌐 Currency Converter')
-        .addField(`:flag_${args.curOne.slice(0, 2).toLowerCase()}: Money in ${args.curOne}`, `${currencySymbol(args.curOne)}${this.replaceAll(args.value, /,/, '.')}`, true)
-        .addField(`:flag_${args.curTwo.slice(0, 2).toLowerCase()}: Money in ${args.curTwo}`, `${currencySymbol(args.curTwo)}${convertedMoney}`, true)
+        .addField(`:flag_${curOne.slice(0, 2).toLowerCase()}: Money in ${curOne}`, `${currencySymbol(curOne)}${this.replaceAll(value, /,/, '.')}`, true)
+        .addField(`:flag_${curTwo.slice(0, 2).toLowerCase()}: Money in ${curTwo}`, `${currencySymbol(curTwo)}${convertedMoney}`, true)
         .setFooter(`Converted on ${moment.unix(rates.body.timestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
 
       deleteCommandMessages(msg, this.client);
@@ -161,9 +161,10 @@ module.exports = class MoneyCommand extends Command {
     stopTyping(msg);
     this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
     <@${this.client.owners[0].id}> Error occurred in \`oxr\` command!
-    server: ${msg.guild.name} (${msg.guild.id})
-    Author: ${msg.author.tag} (${msg.author.id})
-    Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    **Server:** ${msg.guild.name} (${msg.guild.id})
+    **Author:** ${msg.author.tag} (${msg.author.id})
+    **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    **Input:** \`${value}\` || \`${curOne}\` || \`${curTwo}\`
     `);
 
     return msg.reply('an error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');

@@ -74,27 +74,28 @@ module.exports = class NickCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_NICKNAMES');
   }
 
-  run (msg, args) {
+  run (msg, {member, nickname}) {
     startTyping(msg);
-    if (args.member.manageable) {
+    if (member.manageable) {
       try {
-        if (args.nickname === 'clear') {
-          args.member.setNickname('');
+        if (nickname === 'clear') {
+          member.setNickname('');
         } else {
-          args.member.setNickname(args.nickname);
+          member.setNickname(nickname);
         }
         stopTyping(msg);
 
-        return msg.reply(`${args.nickname === 'clear' ? `removed <@${args.member.id}>'s nickname` : `assigned \`${args.nickname}\` as nickname to <@${args.member.id}>`}`);
+        return msg.reply(`${nickname === 'clear' ? `removed <@${member.id}>'s nickname` : `assigned \`${nickname}\` as nickname to <@${member.id}>`}`);
       } catch (err) {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
         this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`nickname\` command!
-        server: ${msg.guild.name} (${msg.guild.id})
-        Author: ${msg.author.tag} (${msg.author.id})
-        Time: ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        Error Message: ${err}
+        **Server:** ${msg.guild.name} (${msg.guild.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Input:** \`${member.user.tag} (${member.id})\` || \`${nickname}\`
+        **Error Message:** ${err}
         `);
   
         return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
