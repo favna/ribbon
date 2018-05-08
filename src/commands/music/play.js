@@ -118,6 +118,7 @@ module.exports = class PlaySongCommand extends Command {
     const statusMsg = await msg.reply('obtaining video details...'); // eslint-disable-line one-var
 
     if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+      await statusMsg.edit('obtaining playlist videos... (this can take a while for long lists)');
       const playlist = await this.youtube.getPlaylist(url),
         videos = await playlist.getVideos();
 
@@ -131,6 +132,21 @@ module.exports = class PlaySongCommand extends Command {
         }
         await this.handlePlaylist(video2, playlist, queue, voiceChannel, msg, statusMsg); // eslint-disable-line no-await-in-loop
       }
+
+      statusMsg.edit('', {
+        embed: {
+          color: 3447003,
+          author: {
+            name: `${msg.author.tag} (${msg.author.id})`,
+            icon_url: msg.author.displayAvatarURL({format: 'png'}) // eslint-disable-line camelcase
+          },
+          description: stripIndents`
+            Playlist: [${playlist.title}](https://www.youtube.com/playlist?list=${playlist.id}) added to the queue!
+            Check what's been added with: \`${msg.guild.commandPrefix}queue\`!
+          `
+        }
+      });
+      stopTyping(msg);
 
       return null;
     }
@@ -246,68 +262,61 @@ module.exports = class PlaySongCommand extends Command {
     }
 
     if (!queue) {
-      queue = {
-        textChannel: msg.channel,
-        voiceChannel,
-        connection: null,
-        songs: [],
-        volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME)
-      };
-      this.queue.set(msg.guild.id, queue);
+      /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
+      // queue = {
+      //   textChannel: msg.channel,
+      //   voiceChannel,
+      //   connection: null,
+      //   songs: [],
+      //   volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME)
+      // };
+      // this.queue.set(msg.guild.id, queue);
 
-      const result = await this.addSong(msg, video);
+      // const result = await this.addSong(msg, video);
 
-      if (!result.startsWith('👍')) {
-        this.queue.delete(msg.guild.id);
-        stopTyping(msg);
+      // if (!result.startsWith('👍')) {
+      //   this.queue.delete(msg.guild.id);
+      //   stopTyping(msg);
 
-        return null;
-      }
+      //   return null;
+      // }
 
-      statusMsg.edit(`${msg.author}, joining your voice channel...`);
-      try {
-        const connection = await queue.voiceChannel.join();
+      statusMsg.edit(oneLine`<@${msg.author.id}>, sorry but in its current state adding a playlist requires at least 1 song in the queue.
+        Please add an individual song first. This issue will be resolved soon™`);
 
-        queue.connection = connection;
-        this.play(msg.guild, queue.songs[0]);
-        statusMsg.delete();
-        stopTyping(msg);
+      stopTyping(msg);
+      
+      return null;
+      // try {
+      //   const connection = await queue.voiceChannel.join();
 
-        return null;
-      } catch (error) {
-        winston.error('Error occurred when joining voice channel.', error);
-        this.queue.delete(msg.guild.id);
-        statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
-        stopTyping(msg);
+      //   queue.connection = connection;
+      //   this.play(msg.guild, queue.songs[0]);
+      //   statusMsg.delete();
+      //   stopTyping(msg);
 
-        return null;
-      }
-    } else {
-      const result = await this.addSong(msg, video);
+      //   return null;
+      // } catch (error) {
+      //   winston.error('Error occurred when joining voice channel.', error);
+      //   this.queue.delete(msg.guild.id);
+      //   statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
+      //   stopTyping(msg);
 
-      if (!result.startsWith('👍')) {
-        this.queue.delete(msg.guild.id);
-        stopTyping(msg);
+      //   return null;
+      // }
+    } 
+    //  else {
+    const result = await this.addSong(msg, video);
 
-        return null;
-      }
-      statusMsg.edit('Playlist added!', {
-        embed: {
-          color: 3447003,
-          author: {
-            name: `${msg.author.tag} (${msg.author.id})`,
-            icon_url: msg.author.displayAvatarURL({format: 'png'}) // eslint-disable-line camelcase
-          },
-          description: stripIndents`
-					Playlist: [${playlist.title}](https://www.youtube.com/playlist?list=${playlist.id}) added to the queue!
-					Check what's been added with: \`${msg.guild.commandPrefix}queue\`!
-				`
-        }
-      });
+    if (!result.startsWith('👍')) {
+      this.queue.delete(msg.guild.id);
       stopTyping(msg);
 
       return null;
     }
+
+    return null;
+    // }
   }
 
   addSong (msg, video) {
