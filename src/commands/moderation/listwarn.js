@@ -34,12 +34,12 @@
  * @returns {MessageEmbed} The warnings that member has
  */
 
-const Fuse = require('fuse.js'),
-  fs = require('fs'),
+const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class ListWarnCommand extends Command {
@@ -61,7 +61,7 @@ module.exports = class ListWarnCommand extends Command {
         {
           key: 'member',
           prompt: 'Which member should I show warning points for?',
-          type: 'string',
+          type: 'member',
           label: 'member name or ID'
         }
       ]
@@ -72,44 +72,42 @@ module.exports = class ListWarnCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run (msg, args) {
-    startTyping(msg);
-    if (fs.existsSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`))) {
-      /* eslint-disable sort-vars*/
-      const embed = new MessageEmbed(),
-        fsoptions = {
-          shouldSort: true,
-          threshold: 0.6,
-          location: 0,
-          distance: 100,
-          maxPatternLength: 32,
-          minMatchCharLength: 1,
-          keys: ['id', 'usertag']
-        },
-        warns = JSON.parse(fs.readFileSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`)), 'utf8'),
-        fuse = new Fuse(warns, fsoptions),
-        results = fuse.search(args.member);
-      /* eslint-enable sort-vars*/
+  run (msg, {member}) {
+    const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3')),
+      embed = new MessageEmbed();
 
-      if (results.length) {
-        embed
-          .setColor('#ECECC9')
-          .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-          .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'))
-          .setDescription(`**Member:** ${results[0].usertag} (${results[0].id})\n` +
-            `**Current Warning Points:** ${results[0].points}`);
 
-        deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
+    embed
+      .setColor('#ECECC9')
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setTimestamp();
 
-        return msg.embed(embed);
-      }
+    try {
+      startTyping(msg);
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERe id= ?;`).get(member.id);
+
+      embed.setDescription(stripIndents`**Member:** ${query.tag} (${query.id})
+                  **Current warning Points:** ${query.points}`);
+      deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply('that user has no warning points yet');
-    }
-    stopTyping(msg);
+      return msg.embed(embed);
+    } catch (err) {
+      stopTyping(msg);
+      if (/(?:no such table)/i.test(err.toString())) {
+        return msg.reply(`📘 No warnpoints found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
+      }
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+        <@${this.client.owners[0].id}> Error occurred in \`listwarn\` command!
+        **Server:** ${msg.guild.name} (${msg.guild.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Input:** \`${member.user.tag} (${member.id})\`
+        **Error Message:** ${err}
+        `);
 
-    return msg.reply(`📘 No warnpoints log found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
+      return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+              Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+    }
   }
 };

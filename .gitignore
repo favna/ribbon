@@ -9,12 +9,10 @@ node_modules/
 
 # Data folders
 src/data/databases/*
-src/data/modlogs/*
 src/data/pastas/*
 
 # Folder keep
 !**/*.gitkeep
-!src/data/modlogs/*.gitkeep
 !src/data/pastas/*.gitkeep
 
 # VSCode settings

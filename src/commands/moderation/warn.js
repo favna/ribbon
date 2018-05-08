@@ -30,14 +30,14 @@
  * @module
  * @category moderation
  * @name warn
- * @example warn Biscuit
+ * @example warn Biscuit 5 Not giving everyone cookies
  * @param {member} AnyMember The member to give warning points
  * @param {number} WarningPoints The amount of warning points to give
  * @param {string} TheReason Reason for warning
  * @returns {MessageEmbed} A MessageEmbed with a log of the warning
  */
 
-const fs = require('fs'),
+const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
@@ -85,87 +85,92 @@ module.exports = class WarnCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  /**
-   * @todo Rework warnings into database
-   * @description SQLite is a way better permanent storage than JSON
-   */
-
-  run (msg, args) {
-    startTyping(msg);
-    const embed = new MessageEmbed(),
-      modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
+  run (msg, {member, points, reason}) {
+    const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3')),
+      modlogChannel = msg.guild.settings.get('modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
           ? msg.guild.channels.find('name', 'mod-logs').id
-          : null);
+          : null),
+      warnEmbed = new MessageEmbed();
 
-    let warn = {
-      id: args.member.id,
-      usertag: args.member.user.tag,
-      points: args.points
-    };
+    warnEmbed
+      .setColor('#FFFF00')
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setTimestamp();
 
-    if (fs.existsSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`))) {
-      const warns = JSON.parse(fs.readFileSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`)), 'utf8');
+    try {
+      startTyping(msg);
+      const query = conn.prepare(`SELECT id,points FROM "${msg.guild.id}" WHERE id = ?;`).get(member.id);
+      let newPoints = points,
+        previousPoints = null;
 
-      for (const i in warns) {
-        if (warns[i].id === args.member.id) {
-          warn = {
-            id: warns[i].id,
-            usertag: warns[i].usertag,
-            points: warns[i].points + args.points
-          };
-          warns.splice(i, 1);
-          break;
-        }
+      if (query) {
+        previousPoints = query.points;
+        newPoints += query.points;
+        conn.prepare(`UPDATE "${msg.guild.id}" SET points=$points WHERE id="${member.id}";`).run({points: newPoints});
+      } else {
+        previousPoints = 0;
+        conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($id, $tag, $points);`).run({
+          id: member.id,
+          tag: member.user.tag,
+          points
+        });
       }
 
-      warns.push(warn);
+      warnEmbed.setDescription(stripIndents`
+            **Member:** ${member.user.tag} (${member.id})
+            **Action:** Warn
+            **Previous Warning Points:** ${previousPoints}
+            **Current Warning Points:** ${newPoints}
+            **Reason:** ${reason !== '' ? reason : 'No reason has been added by the moderator'}`);
 
-      fs.writeFileSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`), JSON.stringify(warns), 'utf8');
-    } else {
-      msg.reply('📘 No warnpoints log found for this server, creating one and filling with the first warning data');
-      fs.mkdirSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}`));
-
-      const warns = [warn];
-
-      fs.writeFileSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`), JSON.stringify(warns), 'utf8');
-    }
-
-    if (fs.existsSync(path.join(__dirname, `../../data/modlogs/${msg.guild.id}/warnlog.json`))) {
-      embed
-        .setColor('#FFFF00')
-        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-        .setDescription(stripIndents`
-        **Member:** ${args.member.user.tag} (${args.member.id})
-        **Action:** Warn
-        **Previous Warning Points:** ${warn.points - args.points}
-        **Current Warning Points:** ${warn.points}
-        **Reason:** ${args.reason !== '' ? args.reason : 'No reason has been added by the moderator'}`)
-        .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
-
-      if (this.client.provider.get(msg.guild, 'modlogs', true)) {
-        if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+      if (msg.guild.settings.get(msg.guild, 'modlogs', true)) {
+        if (!msg.guild.settings.get(msg.guild, 'hasSentModLogMessage', false)) {
           msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
-							(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
-							Alternatively use the ${msg.guild.commandPrefix}listwarn command to view the current warning points for a given member.
-							This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-          this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+                                  (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
+                                  This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+          msg.guild.settings.set(msg.guild, 'hasSentModLogMessage', true);
         }
-
-        deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
-
-        return modLogs
-          ? msg.guild.channels.get(modLogs).send({embed}) && msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`)
-          : msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`);
+        modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: warnEmbed}) : null;
       }
+
+      deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(embed, `<@${args.member.id}> you have been given ${args.points} warning point(s) by ${msg.member.displayName}`);
-    }
-    stopTyping(msg);
+      return msg.embed(warnEmbed);
+    } catch (err) {
+      stopTyping(msg);
+      if (/(?:no such table)/i.test(err.toString())) {
+        conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id TEXT PRIMARY KEY, tag TEXT, points INTEGER);`).run();
 
-    return msg.reply(oneLine`An error occurred writing the warning to disc.
-							You can contact my developer on his server. Use \`${msg.guild.commandPrefix}invite\` to get an invite to his server.`);
+        conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($id, $tag, $points);`).run({
+          id: member.id,
+          tag: member.user.tag,
+          points
+        });
+      } else {
+        this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+              <@${this.client.owners[0].id}> Error occurred in \`warn\` command!
+              **Server:** ${msg.guild.name} (${msg.guild.id})
+              **Author:** ${msg.author.tag} (${msg.author.id})
+              **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+              **Input:** \`${member.user.tag} (${member.id})\`|| \`${points}\` || \`${reason}\`
+              **Error Message:** ${err}
+              `);
+
+        return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+              Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+      }
+    }
+    warnEmbed.setDescription(stripIndents`
+          **Member:** ${member.user.tag} (${member.id})
+          **Action:** Warn
+          **Previous Warning Points:** 0
+          **Current Warning Points:** ${points}
+          **Reason:** ${reason !== '' ? reason : 'No reason has been added by the moderator'}`);
+
+    deleteCommandMessages(msg, this.client);
+
+    return msg.embed(warnEmbed);
   }
 };
