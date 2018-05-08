@@ -84,13 +84,13 @@ module.exports = class NickallCommand extends Command {
     startTyping(msg);
     const allMembers = msg.guild.members.values(),
       argData = args.data.split(' '),
-      embed = new MessageEmbed(),
       modLogs = this.client.provider.get(msg.guild, 'modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
           ? msg.guild.channels.find('name', 'mod-logs').id
-          : null);
+          : null),
+      nickallLogembed = new MessageEmbed();
 
-    embed
+    nickallLogembed
       .setColor('#355698')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
@@ -101,28 +101,28 @@ module.exports = class NickallCommand extends Command {
           member.setNickname('');
         }
       }
-      embed.setDescription('**Action:** Removed the nicknames from all members');
+      nickallLogembed.setDescription('**Action:** Removed the nicknames from all members');
     } else if (argData[0] === 'prefix') {
       for (const member of allMembers) {
         if (member.manageable) {
           member.setNickname(`${argData.slice(1).join(' ')} ${member.displayName}`);
         }
       }
-      embed.setDescription(`**Action:** Prefix the name of every member with ${argData.slice(1).join(' ')}`);
+      nickallLogembed.setDescription(`**Action:** Prefix the name of every member with ${argData.slice(1).join(' ')}`);
     } else if (argData[0] === 'append') {
       for (const member of allMembers) {
         if (member.manageable) {
           member.setNickname(`${member.displayName} ${argData.slice(1).join(' ')}`);
         }
       }
-      embed.setDescription(`**Action:** Appended the name of every member with ${argData.slice(1).join(' ')}`);
+      nickallLogembed.setDescription(`**Action:** Appended the name of every member with ${argData.slice(1).join(' ')}`);
     } else {
       for (const member of allMembers) {
         if (member.manageable) {
           member.setNickname(args.data);
         }
       }
-      embed.setDescription(`**Action:** Assigned the nickname ${args.data} to all members`);
+      nickallLogembed.setDescription(`**Action:** Assigned the nickname ${args.data} to all members`);
     }
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
@@ -133,15 +133,12 @@ module.exports = class NickallCommand extends Command {
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
       }
 
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
-
-      return modLogs ? msg.guild.channels.get(modLogs).send({embed}) : msg.say(embed);
+      modLogs ? msg.guild.channels.get(modLogs).send('', {embed: nickallLogembed}) : null;
     }
 
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.embed(embed);
+    return msg.embed(nickallLogembed);
   }
 };

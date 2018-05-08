@@ -122,7 +122,7 @@ module.exports = class banCommand extends Command {
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
       }
-      modlogChannel ? msg.guild.channels.get(modlogChannel).send({banEmbed}) : null;
+      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: banEmbed}) : null;
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);

@@ -71,8 +71,7 @@ module.exports = class UnlockCommand extends Command {
 
   async run (msg, {lockrole}) {
     startTyping(msg);
-    const embed = new MessageEmbed(),
-      modlogsChannel = this.client.provider.get(msg.guild, 'modlogchannel',
+    const modlogsChannel = this.client.provider.get(msg.guild, 'modlogchannel',
         msg.guild.channels.exists('name', 'mod-logs')
           ? msg.guild.channels.find('name', 'mod-logs').id
           : null),
@@ -84,9 +83,10 @@ module.exports = class UnlockCommand extends Command {
           }
         ],
         reason: 'Channel Lockdown'
-      });
+      }),
+      unlockEmbed = new MessageEmbed();
 
-    embed
+    unlockEmbed
       .setColor('#359876')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(oneLine`**Action:** 🔓 unlocked the \`${msg.channel.name}\` channel. 
@@ -102,12 +102,12 @@ module.exports = class UnlockCommand extends Command {
           this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
         }
 
-        modlogsChannel ? msg.guild.channels.get(modlogsChannel).send({embed}) : null;
+        modlogsChannel ? msg.guild.channels.get(modlogsChannel).send('', {embed: unlockEmbed}) : null;
       }
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.say(embed);
+      return msg.embed(unlockEmbed);
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);

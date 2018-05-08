@@ -287,24 +287,24 @@ class Ribbon {
   onGuildMemberAdd () {
     return (member) => {
       if (this.client.provider.get(member.guild, 'memberlogs', true)) {
-        const embed = new MessageEmbed(),
+        const memberJoinLogEmbed = new MessageEmbed(),
           memberLogs = this.client.provider.get(member.guild, 'memberlogchannel',
             member.guild.channels.exists('name', 'member-logs')
               ? member.guild.channels.find('name', 'member-logs').id
               : null);
 
-        embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({format: 'png'}))
+        memberJoinLogEmbed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({format: 'png'}))
           .setFooter(`User joined | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
           .setColor('#80F31F');
 
         if (this.client.provider.get(member.guild.id, 'defaultRole')) {
           member.roles.add(this.client.provider.get(member.guild.id, 'defaultRole'));
-          embed.setDescription(`Automatically assigned the role ${member.guild.roles.get(this.client.provider.get(member.guild.id, 'defaultRole')).name} to this member`);
+          memberJoinLogEmbed.setDescription(`Automatically assigned the role ${member.guild.roles.get(this.client.provider.get(member.guild.id, 'defaultRole')).name} to this member`);
         }
 
-        if (memberLogs !== null && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
+        if (memberLogs && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
           .has('SEND_MESSAGES')) {
-          member.guild.channels.get(memberLogs).send({embed});
+          member.guild.channels.get(memberLogs).send('', {embed: memberJoinLogEmbed});
         }
       }
 
@@ -317,19 +317,19 @@ class Ribbon {
   onGuildMemberRemove () {
     return (member) => {
       if (this.client.provider.get(member.guild, 'memberlogs', true)) {
-        const embed = new MessageEmbed(),
+        const memberLeaveLogEmbed = new MessageEmbed(),
           memberLogs = this.client.provider.get(member.guild, 'memberlogchannel',
             member.guild.channels.exists('name', 'member-logs')
               ? member.guild.channels.find('name', 'member-logs').id
               : null);
 
-        embed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({format: 'png'}))
+        memberLeaveLogEmbed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({format: 'png'}))
           .setFooter(`User left | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
           .setColor('#F4BF42');
 
         if (memberLogs !== null && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
           .has('SEND_MESSAGES')) {
-          member.guild.channels.get(memberLogs).send({embed});
+          member.guild.channels.get(memberLogs).send('', {embed: memberLeaveLogEmbed});
         }
       }
 
