@@ -1519,7 +1519,7 @@ Please note that the bot will not auto ban when the member has a certain amount 
 
 **Example**  
 ```js
-warn Biscuit
+warn Biscuit 5 Not giving everyone cookies
 ```
 <a name="module_defaultvolume"></a>
 
