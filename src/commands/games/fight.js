@@ -35,8 +35,7 @@
  * @returns {MessageEmbed} Result of the combat
  */
 
-const moment = require('moment'),
-  random = require('node-random'),
+const random = require('node-random'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -117,7 +116,8 @@ module.exports = class FightCommand extends Command {
         fighterEmbed
           .addField('🇼 Winner', `**${winner}**`, true)
           .addField('🇱 Loser', `**${loser}**`, true)
-          .setFooter(`${winner} bodied ${loser} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+          .setFooter(`${winner} bodied ${loser}`)
+          .setTimestamp();
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);

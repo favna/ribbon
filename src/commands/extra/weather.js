@@ -35,8 +35,7 @@
  * @returns {MessageEmbed} Various statistics about the current forecast
  */
 
-const moment = require('moment'),
-  weather = require('yahoo-weather'),
+const weather = require('yahoo-weather'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -120,9 +119,10 @@ module.exports = class WeatherCommand extends Command {
     if (info) {
       weatherEmbed
         .setAuthor(`Weather data for ${info.location.city} - ${info.location.country}`)
-        .setFooter(`Weather data pulled from ${info.image.title} on ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
         .setThumbnail(info.item.description.slice(19, 56))
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+        .setFooter('Powered by Yahoo! Weather')
+        .setTimestamp()
         .addField('💨 Wind Speed', `${info.wind.speed} ${info.units.speed}`, true)
         .addField('💧 Humidity', `${info.atmosphere.humidity}%`, true)
         .addField('🌅 Sunrise', this.convertTimeFormat(info.astronomy.sunrise), true)

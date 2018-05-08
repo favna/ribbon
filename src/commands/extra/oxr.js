@@ -151,7 +151,7 @@ module.exports = class MoneyCommand extends Command {
         .setAuthor('🌐 Currency Converter')
         .addField(`:flag_${curOne.slice(0, 2).toLowerCase()}: Money in ${curOne}`, `${currencySymbol(curOne)}${this.replaceAll(value, /,/, '.')}`, true)
         .addField(`:flag_${curTwo.slice(0, 2).toLowerCase()}: Money in ${curTwo}`, `${currencySymbol(curTwo)}${convertedMoney}`, true)
-        .setFooter(`Converted on ${moment.unix(rates.body.timestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+        .setTimestamp();
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

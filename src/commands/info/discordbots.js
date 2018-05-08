@@ -81,7 +81,8 @@ module.exports = class DiscordBotsCommand extends Command {
         .setURL(`https://discordbots.org/bot/${botinfo.clientid}`)
         .setThumbnail(`https://images.discordapp.net/avatars/${botinfo.clientid}/${botinfo.avatar}.png`)
         .setDescription(botinfo.shortdesc)
-        .setFooter(`${botinfo.username}#${botinfo.discriminator} was submitted at ${moment(botinfo.date).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
+        .setFooter(`${botinfo.username}#${botinfo.discriminator} was submitted`)
+        .setTimestamp(moment(botinfo.date)._d)
         .addField('Default Prefix', botinfo.prefix, true)
         .addField('Library', botinfo.lib, true)
         .addField('Server Count', botinfo.server_count, true) // eslint-disable-line camelcase

@@ -32,8 +32,7 @@
  * @returns {MessageEmbed} List of emotes
  */
 
-const moment = require('moment'),
-  {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
 
@@ -68,7 +67,7 @@ module.exports = class EmotesCommand extends Command {
     embed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setAuthor(`${staticEmotes.length + animEmotes.length} ${msg.guild.name} Emotes`, msg.guild.iconURL({format: 'png'}))
-      .setFooter(`Emotes list from ${moment().format('MMMM Do YYYY [at] HH:mm [utc]Z')}`);
+      .setTimestamp();
 
     staticEmotes = staticEmotes.length !== 0 ? `__**${staticEmotes.length} Static Emotes**__\n${staticEmotes.join('')}` : '';
     animEmotes = animEmotes.length !== 0 ? `\n\n__**${animEmotes.length} Animated Emotes**__\n${animEmotes.join('')}` : '';
