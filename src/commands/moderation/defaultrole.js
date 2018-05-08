@@ -34,8 +34,7 @@
  * @returns {Message} Confirmation the setting was stored
  */
 
-const moment = require('moment'),
-  {Command} = require('discord.js-commando'), 
+const {Command} = require('discord.js-commando'), 
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -95,7 +94,7 @@ module.exports = class defaultroleCommand extends Command {
       .setColor('#AAEFE6')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`**Action:** ${description}`)
-      .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+      .setTimestamp();
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
       if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {

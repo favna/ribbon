@@ -34,8 +34,7 @@
  * @returns {Message} Confirmation the channel was locked
  */
 
-const moment = require('moment'),
-  {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -96,7 +95,7 @@ module.exports = class LockdownCommand extends Command {
       .setDescription(stripIndents`
       **Action:** 🔒 locked the \`${msg.channel.name}\` channel.
       **Details:** Only staff can now access this channel. Use \`${msg.guild.commandPrefix}unlock\` in this channel to unlock the channel`)
-      .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+      .setTimestamp();
 
     if (overwrite) {
       if (this.client.provider.get(msg.guild, 'modlogs', true)) {

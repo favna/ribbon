@@ -34,8 +34,7 @@
  * @returns {Message} Confirmation the channel is unlocked
  */
 
-const moment = require('moment'),
-  {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -91,7 +90,7 @@ module.exports = class UnlockCommand extends Command {
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(oneLine`**Action:** 🔓 unlocked the \`${msg.channel.name}\` channel. 
 				This channel can now be used by everyone again. Use \`${msg.guild.commandPrefix}lockdown\` in this channel to (re)-lock it.`)
-      .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+      .setTimestamp();
 
     if (overwrite) {
       if (this.client.provider.get(msg.guild, 'modlogs', true)) {

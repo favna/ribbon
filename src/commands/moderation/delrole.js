@@ -93,7 +93,7 @@ module.exports = class DeleteRoleCommand extends Command {
             .setColor('#AAEFE6')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
             .setDescription(stripIndents`**Action:** Removed ${role.name} from ${member.displayName}`)
-            .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+            .setTimestamp();
 
           if (this.client.provider.get(msg.guild, 'modlogs', true)) {
             if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {

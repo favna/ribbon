@@ -44,8 +44,7 @@
  * @returns {MessageEmbed} Log of the nicknaming
  */
 
-const moment = require('moment'),
-  {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -93,7 +92,7 @@ module.exports = class NickallCommand extends Command {
     nickallLogembed
       .setColor('#355698')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-      .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+      .setTimestamp();
 
     if (argData[0] === 'clear') {
       for (const member of allMembers) {

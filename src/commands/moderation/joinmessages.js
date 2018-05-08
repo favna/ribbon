@@ -34,8 +34,7 @@
  * @returns {MessageEmbed} Confirmation the setting was stored
  */
 
-const moment = require('moment'),
-  {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -106,7 +105,7 @@ module.exports = class JoinMessagesCommand extends Command {
       .setDescription(stripIndents`
         **Action:** ${description}
         ${option ? `**Channel:** <#${channel.id}>` : ''}`)
-      .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+      .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
       if (!msg.guild.settings.get('hasSentModLogMessage', false)) {

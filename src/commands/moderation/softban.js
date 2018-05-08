@@ -36,8 +36,7 @@
  * @returns {MessageEmbed} A MessageEmbed with a log of the softban
  */
 
-const moment = require('moment'),
-  {Command} = require('discord.js-commando'),
+const {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
@@ -110,7 +109,7 @@ module.exports = class SoftbanCommand extends Command {
       **Member:** ${args.member.user.tag} (${args.member.id})
       **Action:** Softban
       **Reason:** ${args.reason}`)
-      .setFooter(moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'));
+      .setTimestamp();
 
     if (this.client.provider.get(msg.guild, 'modlogs', true)) {
       if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
