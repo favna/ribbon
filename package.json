@@ -89,7 +89,7 @@
     "jsdoc-json": "^2.0.2",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.1.1",
-    "nyc": "^11.7.2"
+    "nyc": "^11.7.3"
   },
   "directories": {
     "doc": "./docs",
