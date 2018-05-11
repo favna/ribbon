@@ -910,17 +910,17 @@ dijkstrajs@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
-discord.js-commando@Favna/Commando#ribbon:
-  version "1.0.0-ribbon"
-  resolved "https://codeload.github.com/Favna/Commando/tar.gz/adbdc6b0f84713f0dd35338ca08d7a88efcaa169"
+discord.js-commando@favna/commando#ribbon:
+  version "1.1.1-ribbon"
+  resolved "https://codeload.github.com/favna/commando/tar.gz/b70cfe5ab919dcf19116db54e75f61d30944f92b"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
     require-all "^2.0.0"
 
-discord.js@Favna/discord.js#main:
-  version "12.0.0-dev-F.2"
-  resolved "https://codeload.github.com/Favna/discord.js/tar.gz/c1b95a9295f5e3023c2bac1e3a186b1c07e39ce8"
+discord.js@favna/discord.js#main:
+  version "12.0.0-main"
+  resolved "https://codeload.github.com/favna/discord.js/tar.gz/7356eea173ee3c149e7dda5377ad327254c80157"
   dependencies:
     pako "^1.0.0"
     prism-media "^0.2.0"
@@ -1020,9 +1020,9 @@ entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
-erlpack@discordapp/erlpack:
+erlpack@hammerandchisel/erlpack:
   version "0.1.0"
-  resolved "https://codeload.github.com/discordapp/erlpack/tar.gz/674ebfd3439ba4b7ce616709821d27630f7cdc61"
+  resolved "https://codeload.github.com/hammerandchisel/erlpack/tar.gz/674ebfd3439ba4b7ce616709821d27630f7cdc61"
   dependencies:
     bindings "^1.2.1"
     nan "^2.1.0"

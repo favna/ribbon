@@ -124,6 +124,32 @@ module.exports = class PlaySongCommand extends Command {
 
       let video2 = null;
 
+      if (!queue) {
+        const listQueue = {
+          textChannel: msg.channel,
+          voiceChannel,
+          connection: null,
+          songs: [],
+          volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME)
+        };
+
+        this.queue.set(msg.guild.id, listQueue);
+
+        statusMsg.edit(`${msg.author}, joining your voice channel...`);
+        try {
+          const connection = await listQueue.voiceChannel.join();
+
+          listQueue.connection = connection;
+        } catch (error) {
+          winston.error('Error occurred when joining voice channel.', error);
+          this.queue.delete(msg.guild.id);
+          statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
+          stopTyping(msg);
+
+          return null;
+        }
+      }
+
       for (const video of Object.values(videos)) {
         try {
           video2 = await this.youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
@@ -133,20 +159,7 @@ module.exports = class PlaySongCommand extends Command {
         await this.handlePlaylist(video2, playlist, queue, voiceChannel, msg, statusMsg); // eslint-disable-line no-await-in-loop
       }
 
-      statusMsg.edit('', {
-        embed: {
-          color: 3447003,
-          author: {
-            name: `${msg.author.tag} (${msg.author.id})`,
-            icon_url: msg.author.displayAvatarURL({format: 'png'}) // eslint-disable-line camelcase
-          },
-          description: stripIndents`
-            Playlist: [${playlist.title}](https://www.youtube.com/playlist?list=${playlist.id}) added to the queue!
-            Check what's been added with: \`${msg.guild.commandPrefix}queue\`!
-          `
-        }
-      });
-      stopTyping(msg);
+      this.play(msg.guild, this.queue.get(msg.guild.id, queue).songs[0]);
 
       return null;
     }
@@ -255,68 +268,45 @@ module.exports = class PlaySongCommand extends Command {
 
   async handlePlaylist (video, playlist, queue, voiceChannel, msg, statusMsg) {
     if (moment.duration(video.raw.contentDetails.duration, moment.ISO_8601).asSeconds() === 0) {
-      statusMsg.edit(`${msg.author}, you can't play live streams.`);
+      statusMsg.edit(`${msg.author}, looks like that playlist has a livestream and I cannot play livestreams`);
       stopTyping(msg);
 
       return null;
     }
-
-    if (!queue) {
-      /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
-      // queue = {
-      //   textChannel: msg.channel,
-      //   voiceChannel,
-      //   connection: null,
-      //   songs: [],
-      //   volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME)
-      // };
-      // this.queue.set(msg.guild.id, queue);
-
-      // const result = await this.addSong(msg, video);
-
-      // if (!result.startsWith('👍')) {
-      //   this.queue.delete(msg.guild.id);
-      //   stopTyping(msg);
-
-      //   return null;
-      // }
-
-      statusMsg.edit(oneLine`<@${msg.author.id}>, sorry but in its current state adding a playlist requires at least 1 song in the queue.
-        Please add an individual song first. This issue will be resolved soon™`);
-
-      stopTyping(msg);
-      
-      return null;
-      // try {
-      //   const connection = await queue.voiceChannel.join();
-
-      //   queue.connection = connection;
-      //   this.play(msg.guild, queue.songs[0]);
-      //   statusMsg.delete();
-      //   stopTyping(msg);
-
-      //   return null;
-      // } catch (error) {
-      //   winston.error('Error occurred when joining voice channel.', error);
-      //   this.queue.delete(msg.guild.id);
-      //   statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
-      //   stopTyping(msg);
-
-      //   return null;
-      // }
-    } 
-    //  else {
-    const result = await this.addSong(msg, video);
+    const result = await this.addSong(msg, video),
+      resultMessage = {
+        color: 3447003,
+        author: {
+          name: `${msg.author.tag} (${msg.author.id})`,
+          iconURL: msg.author.displayAvatarURL({format: 'png'})
+        },
+        description: result
+      };
 
     if (!result.startsWith('👍')) {
       this.queue.delete(msg.guild.id);
+      statusMsg.edit('', {embed: resultMessage});
       stopTyping(msg);
 
       return null;
     }
 
+    statusMsg.edit('', {
+      embed: {
+        color: 3447003,
+        author: {
+          name: `${msg.author.tag} (${msg.author.id})`,
+          icon_url: msg.author.displayAvatarURL({format: 'png'}) // eslint-disable-line camelcase
+        },
+        description: stripIndents`
+          Adding playlist [${playlist.title}](https://www.youtube.com/playlist?list=${playlist.id}) to the queue!
+          Check what's been added with: \`${msg.guild.commandPrefix}queue\`!
+        `
+      }
+    });
+    stopTyping(msg);
+
     return null;
-    // }
   }
 
   addSong (msg, video) {
@@ -332,7 +322,7 @@ module.exports = class PlaySongCommand extends Command {
     if (!this.client.isOwner(msg.author)) {
       const songMaxLength = msg.guild.settings.get('maxLength', process.env.MAX_LENGTH),
         songMaxSongs = msg.guild.settings.get('maxSongs', process.env.MAX_SONGS);
-        
+
       if (songMaxLength > 0 && moment.duration(video.raw.contentDetails.duration, moment.ISO_8601).asSeconds() > songMaxLength * 60) {
         return oneLine`
 					👎 ${escapeMarkdown(video.title)}
