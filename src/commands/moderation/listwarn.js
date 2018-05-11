@@ -76,7 +76,6 @@ module.exports = class ListWarnCommand extends Command {
     const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3')),
       embed = new MessageEmbed();
 
-
     embed
       .setColor('#ECECC9')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
@@ -84,7 +83,7 @@ module.exports = class ListWarnCommand extends Command {
 
     try {
       startTyping(msg);
-      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERe id= ?;`).get(member.id);
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE id= ?;`).get(member.id);
 
       embed.setDescription(stripIndents`**Member:** ${query.tag} (${query.id})
                   **Current warning Points:** ${query.points}`);
@@ -95,7 +94,13 @@ module.exports = class ListWarnCommand extends Command {
     } catch (err) {
       stopTyping(msg);
       if (/(?:no such table)/i.test(err.toString())) {
-        return msg.reply(`📘 No warnpoints found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
+        return msg.reply(`no warnpoints found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
+      }
+      if (/(?:TypeError: Cannot read property 'tag')/i.test(err.toString())) {
+        embed.setDescription(stripIndents`**Member:** ${member.user.tag} (${member.id})
+        **Current warning Points:** 0`);
+
+        return msg.embed(embed);
       }
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`listwarn\` command!
