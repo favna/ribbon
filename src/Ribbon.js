@@ -64,7 +64,7 @@ class Ribbon {
     });
   }
 
-  checkReminders () {
+  async checkReminders () {
     const conn = new Database(path.join(__dirname, 'data/databases/reminders.sqlite3'));
 
     try {
@@ -75,7 +75,9 @@ class Ribbon {
           dura = moment.duration(remindTime.diff()); // eslint-disable-line sort-vars
 
         if (dura.asMinutes() <= 0) {
-          this.client.users.resolve(query[row].userID).send({
+          const user = await this.client.users.fetch(query[row].userID);
+
+          user.send({
             embed: {
               color: 10610610,
               description: query[row].remindText,
@@ -93,7 +95,7 @@ class Ribbon {
         }
       }
     } catch (err) {
-      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      this.client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred sending someone their reminder!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       **Error Message:** ${err}
@@ -117,17 +119,17 @@ class Ribbon {
         conn.prepare(`UPDATE "${tables[row].name}" SET balance=$balance WHERE userID="${guildData[winner].userID}"`).run({balance: guildData[winner].balance});
 
         // eslint-disable-next-line one-var
-        const defaultChannel = this.client.guilds.resolve(tables[row].name).systemChannel,
+        const defaultChannel = this.client.guilds.get(tables[row].name).systemChannel,
           winnerEmbed = new MessageEmbed(),
-          winnerLastMessage = this.client.guilds.resolve(tables[row].name).members.get('112001393140723712').lastMessageChannelID,
-          winnerLastMessageChannel = winnerLastMessage ? this.client.guilds.resolve(tables[row].name).channels.get(winnerLastMessage) : null,
+          winnerLastMessage = this.client.guilds.get(tables[row].name).members.get('112001393140723712').lastMessageChannelID,
+          winnerLastMessageChannel = winnerLastMessage ? this.client.guilds.get(tables[row].name).channels.get(winnerLastMessage) : null,
           winnerLastMessageChannelPermitted = winnerLastMessageChannel ? winnerLastMessageChannel.permissionsFor(this.client.user).has('SEND_MESSAGES') : false;
 
         winnerEmbed
           .setColor('#7CFC00')
           .setDescription(`Congratulations <@${guildData[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
-          .setAuthor(this.client.guilds.resolve(tables[row].name).members.get(guildData[winner].userID).displayName,
-            this.client.guilds.resolve(tables[row].name).members.get(guildData[winner].userID).user.displayAvatarURL({format: 'png'}))
+          .setAuthor(this.client.guilds.get(tables[row].name).members.get(guildData[winner].userID).displayName,
+            this.client.guilds.get(tables[row].name).members.get(guildData[winner].userID).user.displayAvatarURL({format: 'png'}))
           .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png')
           .addField('Balance', `${prevBal} ➡ ${guildData[winner].balance}`);
 
@@ -138,7 +140,7 @@ class Ribbon {
         }
       }
     } catch (err) {
-      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      this.client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred giving someone their lotto payout!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       **Error Message:** ${err}

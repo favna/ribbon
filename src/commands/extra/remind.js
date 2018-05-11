@@ -109,7 +109,6 @@ module.exports = class RemindCommand extends Command {
 
     try {
       startTyping(msg);
-      conn.prepare('CREATE TABLE IF NOT EXISTS "reminders" (userID TEXT, remindTime TEXT, remindText TEXT);').run();
       conn.prepare('INSERT INTO "reminders" VALUES ($userid, $remindtime, $remindtext);').run({
         userid: msg.author.id,
         remindtime: moment().add(time, 'minutes')
