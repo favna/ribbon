@@ -69,8 +69,9 @@ describe('Connect & Disconnect bot', () => {
     client.login(process.env.stripetoken);
 
     client.on('ready', () => {
-      client.destroy();
       readyTracker = true;
+      client.destroy();
+      process.exit(); // eslint-disable-line no-process-exit
       expect(readyTracker).to.be.ok;
     });
   });
