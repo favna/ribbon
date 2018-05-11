@@ -85,7 +85,6 @@
     "codecov": "^3.0.1",
     "eslint": "4.19.1",
     "jsdoc": "^3.5.5",
-    "jsdoc-json": "^2.0.2",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.1.1",
     "nyc": "^11.7.1"

@@ -2004,10 +2004,6 @@ jsdoc-api@^4.0.1:
     temp-path "^1.0.0"
     walk-back "^3.0.0"
 
-jsdoc-json@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/jsdoc-json/-/jsdoc-json-2.0.2.tgz#a6452d001f5eefa0918a53a9a934458b9d72eae3"
-
 jsdoc-parse@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/jsdoc-parse/-/jsdoc-parse-3.0.1.tgz#1194d6a16a2dfbe5fb8cccfeb5058ea808759893"
