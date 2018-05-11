@@ -25,7 +25,7 @@
 
 /**
  * @file Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications  
- * **Aliases**: `twitchcon`, `twitchoff`
+ * **Aliases**: `twitchon`, `twitchoff`
  * @module
  * @category streamwatch
  * @name twitchtoggle
@@ -57,7 +57,7 @@ module.exports = class TwitchToggleCommand extends Command {
       args: [
         {
           key: 'option',
-          prompt: 'Enable or disable twitchtoggles?',
+          prompt: 'Enable or disable twitch monitoring?',
           type: 'boolean',
           validate: (bool) => {
             const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
