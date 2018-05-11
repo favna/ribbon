@@ -31,7 +31,7 @@
  * @name ban
  * @example ban MultiMegaMander
  * @param {member} AnyMember The member to ban from the server
- * @param {string} TheReason Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages
+ * @param {string} [TheReason] Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages
  * @returns {MessageEmbed} Log of the ban
  */
 

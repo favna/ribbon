@@ -25,7 +25,7 @@
 
 /**
  * @file Moderation DeleteRoleCommand - Delete the role of a member  
- * **Aliases**: `deleterole`, `d
+ * **Aliases**: `deleterole`, `dr`, `remrole`, `removerole`
  * @module
  * @category moderation
  * @name delrole
