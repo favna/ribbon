@@ -70,6 +70,7 @@
     "simple-youtube-api": "^5.0.1",
     "slot-machine": "^2.1.0",
     "snekfetch": "^3.6.4",
+    "speedtest-net": "^1.4.2",
     "spotify-web-api-node": "^3.0.0",
     "steamapi": "2.0.2",
     "to-zalgo": "^1.0.1",
@@ -82,12 +83,12 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "codecov": "^3.0.1",
+    "codecov": "^3.0.2",
     "eslint": "4.19.1",
     "jsdoc": "^3.5.5",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.1.1",
-    "nyc": "^11.7.1"
+    "nyc": "^11.7.3"
   },
   "directories": {
     "doc": "./docs",

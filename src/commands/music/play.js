@@ -41,11 +41,12 @@
  */
 
 const YouTube = require('simple-youtube-api'), // eslint-disable-line sort-vars
+  moment = require('moment'),
   winston = require('winston'),
   ytdl = require('ytdl-core'),
   {Command} = require('discord.js-commando'), // eslint-disable-line sort-vars
   {escapeMarkdown} = require('discord.js'),
-  {oneLine} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../util.js');
 
 module.exports = class PlaySongCommand extends Command {
@@ -67,7 +68,8 @@ module.exports = class PlaySongCommand extends Command {
         {
           key: 'url',
           prompt: 'what music would you like to listen to?',
-          type: 'string'
+          type: 'string',
+          parse: p => p.replace(/<(.+)>/g, '$1')
         }
       ]
     });
@@ -77,16 +79,9 @@ module.exports = class PlaySongCommand extends Command {
   }
 
   /* eslint-disable max-statements*/
-
-  /**
-   * @todo Reimplement Music Playlist support
-   * @body No guarantees here but I will try...
-   */
-
-  async run (msg, args) {
+  async run (msg, {url}) {
     startTyping(msg);
-    const url = args.url.replace(/<(.+)>/g, '$1'),
-      queue = this.queue.get(msg.guild.id); // eslint-disable-line sort-vars
+    const queue = this.queue.get(msg.guild.id); // eslint-disable-line sort-vars
 
     let voiceChannel; // eslint-disable-line init-declarations
 
@@ -123,10 +118,37 @@ module.exports = class PlaySongCommand extends Command {
     const statusMsg = await msg.reply('obtaining video details...'); // eslint-disable-line one-var
 
     if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
-      deleteCommandMessages(msg, this.client);
+      await statusMsg.edit('obtaining playlist videos... (this can take a while for long lists)');
+      const playlist = await this.youtube.getPlaylist(url),
+        videos = await playlist.getVideos();
+
+      let video2 = null;
+
+      for (const video of Object.values(videos)) {
+        try {
+          video2 = await this.youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
+        } catch (err) {
+          null;
+        }
+        await this.handlePlaylist(video2, playlist, queue, voiceChannel, msg, statusMsg); // eslint-disable-line no-await-in-loop
+      }
+
+      statusMsg.edit('', {
+        embed: {
+          color: 3447003,
+          author: {
+            name: `${msg.author.tag} (${msg.author.id})`,
+            icon_url: msg.author.displayAvatarURL({format: 'png'}) // eslint-disable-line camelcase
+          },
+          description: stripIndents`
+            Playlist: [${playlist.title}](https://www.youtube.com/playlist?list=${playlist.id}) added to the queue!
+            Check what's been added with: \`${msg.guild.commandPrefix}queue\`!
+          `
+        }
+      });
       stopTyping(msg);
 
-      return statusMsg.edit(`<@${msg.author.id}>, sorry youtube playlists are not supported due to big lists causing queueing loop issues. Please queue the individual tracks`);
+      return null;
     }
     try {
       const video = await this.youtube.getVideo(url);
@@ -159,7 +181,7 @@ module.exports = class PlaySongCommand extends Command {
   }
 
   async handleVideo (video, queue, voiceChannel, msg, statusMsg) {
-    if (video.durationSeconds === 0) {
+    if (moment.duration(video.raw.contentDetails.duration, moment.ISO_8601).asSeconds() === 0) {
       statusMsg.edit(`${msg.author}, you can't play live streams.`);
       stopTyping(msg);
 
@@ -173,7 +195,7 @@ module.exports = class PlaySongCommand extends Command {
         voiceChannel,
         connection: null,
         songs: [],
-        volume: this.client.provider.get(msg.guild.id, 'defaultVolume', process.env.DEFAULT_VOLUME)
+        volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME)
       };
       this.queue.set(msg.guild.id, queue);
 
@@ -231,6 +253,72 @@ module.exports = class PlaySongCommand extends Command {
     }
   }
 
+  async handlePlaylist (video, playlist, queue, voiceChannel, msg, statusMsg) {
+    if (moment.duration(video.raw.contentDetails.duration, moment.ISO_8601).asSeconds() === 0) {
+      statusMsg.edit(`${msg.author}, you can't play live streams.`);
+      stopTyping(msg);
+
+      return null;
+    }
+
+    if (!queue) {
+      /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
+      // queue = {
+      //   textChannel: msg.channel,
+      //   voiceChannel,
+      //   connection: null,
+      //   songs: [],
+      //   volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME)
+      // };
+      // this.queue.set(msg.guild.id, queue);
+
+      // const result = await this.addSong(msg, video);
+
+      // if (!result.startsWith('👍')) {
+      //   this.queue.delete(msg.guild.id);
+      //   stopTyping(msg);
+
+      //   return null;
+      // }
+
+      statusMsg.edit(oneLine`<@${msg.author.id}>, sorry but in its current state adding a playlist requires at least 1 song in the queue.
+        Please add an individual song first. This issue will be resolved soon™`);
+
+      stopTyping(msg);
+      
+      return null;
+      // try {
+      //   const connection = await queue.voiceChannel.join();
+
+      //   queue.connection = connection;
+      //   this.play(msg.guild, queue.songs[0]);
+      //   statusMsg.delete();
+      //   stopTyping(msg);
+
+      //   return null;
+      // } catch (error) {
+      //   winston.error('Error occurred when joining voice channel.', error);
+      //   this.queue.delete(msg.guild.id);
+      //   statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
+      //   stopTyping(msg);
+
+      //   return null;
+      // }
+    } 
+    //  else {
+    const result = await this.addSong(msg, video);
+
+    if (!result.startsWith('👍')) {
+      this.queue.delete(msg.guild.id);
+      stopTyping(msg);
+
+      return null;
+    }
+
+    return null;
+    // }
+  }
+
   addSong (msg, video) {
     const queue = this.queue.get(msg.guild.id),
       songNumerator = function (prev, song) {
@@ -242,13 +330,13 @@ module.exports = class PlaySongCommand extends Command {
       };
 
     if (!this.client.isOwner(msg.author)) {
-      const songMaxLength = this.client.provider.get(msg.guild.id, 'maxLength', process.env.MAX_LENGTH),
-        songMaxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', process.env.MAX_SONGS);
-
-      if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
+      const songMaxLength = msg.guild.settings.get('maxLength', process.env.MAX_LENGTH),
+        songMaxSongs = msg.guild.settings.get('maxSongs', process.env.MAX_SONGS);
+        
+      if (songMaxLength > 0 && moment.duration(video.raw.contentDetails.duration, moment.ISO_8601).asSeconds() > songMaxLength * 60) {
         return oneLine`
 					👎 ${escapeMarkdown(video.title)}
-					(${Song.timeString(video.durationSeconds)})
+					(${Song.timeString(moment.duration(video.raw.contentDetails.duration, moment.ISO_8601).asSeconds())})
 					is too long. No songs longer than ${songMaxLength} minutes!
 				`;
       }
