@@ -30,7 +30,7 @@
  * @category streamwatch
  * @name twitchoutput
  * @example twitchoutput #twitch-notifications
- * @param {channel} AnyChannel Channel to output notifs to
+ * @param {ChannelResolvable} AnyChannel Channel to output notifs to
  * @returns {Message} Confirmation the setting was stored
  */
 

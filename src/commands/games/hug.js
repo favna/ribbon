@@ -30,7 +30,7 @@
  * @category games
  * @name hug
  * @example hug Pyrrha
- * @param {member} [MemberToHug] Name of the member you want to give a hug
+ * @param {GuildMemberResolvable} [MemberToHug] Name of the member you want to give a hug
  * @returns {MessageEmbed} The hug and a cute image ❤
  */
 

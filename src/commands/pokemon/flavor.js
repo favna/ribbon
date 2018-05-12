@@ -33,7 +33,7 @@
  * @category pokemon
  * @name flavor
  * @example flavor dragonite
- * @param {string} PokemonName The name of the pokemon you want to get flavor text for
+ * @param {StringResolvable} PokemonName The name of the pokemon you want to get flavor text for
  * @returns {MessageEmbed} Flavor texts for the pokemon
  */
 

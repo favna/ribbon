@@ -32,7 +32,7 @@
  * @category searches
  * @name cydia
  * @example cydia Anemone
- * @param {string} TweakName Name of the tweak to find
+ * @param {StringResolvable} TweakName Name of the tweak to find
  * @returns {MessageEmbed} Information about the tweak
  */
 

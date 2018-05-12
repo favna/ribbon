@@ -31,7 +31,7 @@
  * @category extra
  * @name zalgo
  * @example zalgo HE COMES 
- * @param {string} SomeText Your input to transform with Zalgo
+ * @param {StringResolvable} SomeText Your input to transform with Zalgo
  * @returns {Message} Your text zalgo-fied
  */
 

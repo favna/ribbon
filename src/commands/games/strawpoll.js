@@ -30,8 +30,8 @@
  * @category games
  * @name strawpoll
  * @example strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"
- * @param {string} Question The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or `' '`) to allow spaces
- * @param {string} Options The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to allow spaces. Splits on every `|`
+ * @param {StringResolvable} Question The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or `' '`) to allow spaces
+ * @param {StringResolvable} Options The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to allow spaces. Splits on every `|`
  * @returns {MessageEmbed} Poll url, title, options and preview image
  */
 

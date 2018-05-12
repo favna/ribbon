@@ -32,9 +32,9 @@
  * @category extra
  * @name oxr
  * @example ox 1 EUR USD
- * @param {number} MoneyAmount Amount of money to convert
- * @param {string} OriginCurrency Currency to convert from
- * @param {string} TargetCurrency Currency to convert to
+ * @param {Number} MoneyAmount Amount of money to convert
+ * @param {StringResolvable} OriginCurrency Currency to convert from
+ * @param {StringResolvable} TargetCurrency Currency to convert to
  * @returns {MessageEmbed} Input and output currency's and the amount your input is worth in both
  */
 

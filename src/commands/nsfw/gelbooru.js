@@ -31,7 +31,7 @@
  * @category nsfw
  * @name gelbooru
  * @example gelbooru pyrrha_nikos
- * @param {string} Query Something you want to find
+ * @param {StringResolvable} Query Something you want to find
  * @returns {MessageEmbed} Score, Link and preview of the image
  */
 

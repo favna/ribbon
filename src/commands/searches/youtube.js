@@ -31,7 +31,7 @@
  * @category searches
  * @name youtube
  * @example youtube Voldemort Origins of the heir
- * @param {string} VideoQuery Video to find on YouTube
+ * @param {StringResolvable} VideoQuery Video to find on YouTube
  * @returns {MessageEmbed} Title, Channel, Publication Date and Description of the video
  */
 

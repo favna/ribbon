@@ -30,8 +30,8 @@
  * @category moderation
  * @name setmemberlogs
  * @example setmemberlogs logs
- * @param {channel} LogChannel The channel to use for member logs
  * @returns {Message} Confirmation the setting was stored
+ * @param {ChannelResolvable} LogChannel The channel to use for member logs
  */
 
 const {Command} = require('discord.js-commando'), 

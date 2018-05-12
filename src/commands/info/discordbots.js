@@ -30,7 +30,7 @@
  * @category info
  * @name discordbots
  * @example discordbots 376520643862331396
- * @param {string} BotID the user ID of the bot you want to get info about
+ * @param {StringResolvable} BotID the user ID of the bot you want to get info about
  * @returns {MessageEmbed} Info about a bot
  */
 

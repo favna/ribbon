@@ -30,7 +30,7 @@
  * @category games
  * @name 8ball
  * @example 8ball is Favna a genius coder?
- * @param {string} question Question you want the 8 ball to answer
+ * @param {StringResolvable} question Question you want the 8 ball to answer
  * @returns {MessageEmbed} Your question and its answer
  */
 

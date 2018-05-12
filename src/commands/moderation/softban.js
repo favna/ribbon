@@ -31,8 +31,8 @@
  * @category moderation
  * @name softban
  * @example softban ImmortalZypther
- * @param {member} AnyMember The member to softban from the server
- * @param {string} TheReason Reason for this softban.
+ * @param {GuildMemberResolvable} AnyMember The member to softban from the server
+ * @param {StringResolvable} TheReason Reason for this softban.
  * @returns {MessageEmbed} A MessageEmbed with a log of the softban
  */
 

@@ -30,7 +30,7 @@
  * @category leaderboards
  * @name osu
  * @example osu WubWoofWolf
- * @param {string} PlayerName Name of the OSU player
+ * @param {StringResolvable} PlayerName Name of the OSU player
  * @returns {MessageEmbed} Stats of the player
  */
 

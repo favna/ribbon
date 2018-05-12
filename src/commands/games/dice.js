@@ -30,8 +30,8 @@
  * @category games
  * @name dice
  * @example dice 5 6
- * @param {string} DiceSides The amount of sides the dice should have
- * @param {string} AmountOfRolls The amount of dice to roll
+ * @param {StringResolvable} DiceSides The amount of sides the dice should have
+ * @param {StringResolvable} AmountOfRolls The amount of dice to roll
  * @returns {MessageEmbed} The eyes rolled for each dice as well as the total of all rolls
  */
 

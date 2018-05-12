@@ -31,7 +31,7 @@
  * @category extra
  * @name copypasta
  * @example copypasta navy
- * @param {string} PastaName Name of the copypasta to send
+ * @param {StringResolvable} PastaName Name of the copypasta to send
  * @returns {MessageEmbed} Copypasta content. In a normal message if more than 1024 characters
  */
 

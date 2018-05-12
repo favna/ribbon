@@ -30,8 +30,8 @@
  * @category moderation
  * @name regexmatchtoggle
  * @example regexmatchtoggle enable
- * @param {boolean} Option True or False
  * @returns {Message} Confirmation the setting was stored
+ * @param {BooleanResolvable} Option True or False
  */
 
 const {Command} = require('discord.js-commando'), 

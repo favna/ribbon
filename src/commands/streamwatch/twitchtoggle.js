@@ -30,7 +30,7 @@
  * @category streamwatch
  * @name twitchtoggle
  * @example twitchtoggle enable
- * @param {boolean} Option True or False
+ * @param {BooleanResolvable} Option True or False
  * @returns {Message} Confirmation the setting was stored
  */
 

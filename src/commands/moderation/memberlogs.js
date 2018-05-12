@@ -30,8 +30,8 @@
  * @category moderation
  * @name memberlogs
  * @example memberlogs enable
- * @param {boolean} Option True or False
  * @returns {Message} Confirmation the setting was stored
+ * @param {BooleanResolvable} Option True or False
  */
 
 const {Command} = require('discord.js-commando'), 

@@ -30,7 +30,7 @@
  * @category searches
  * @name anime
  * @example anime Yu-Gi-Oh Dual Monsters
- * @param {string} AnyAnime anime to look up
+ * @param {StringResolvable} AnyAnime anime to look up
  * @returns {MessageEmbed} Information about the requested anime
  */
 

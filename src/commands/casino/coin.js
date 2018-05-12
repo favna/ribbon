@@ -31,8 +31,8 @@
  * @category casino
  * @name coin
  * @example coin 10 heads
- * @param {number} AmountOfChips Amount of chips you want to gamble
- * @param {string} CoinSide The side of the coin you want to bet on
+ * @param {Number} AmountOfChips Amount of chips you want to gamble
+ * @param {StringResolvable} CoinSide The side of the coin you want to bet on
  * @returns {MessageEmbed} Outcome of the coin flip
  */
 

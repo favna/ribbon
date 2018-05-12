@@ -31,7 +31,7 @@
  * @category searches
  * @name google
  * @example google Pyrrha Nikos
- * @param {string} SearchQuery Thing to find on google
+ * @param {StringResolvable} SearchQuery Thing to find on google
  * @returns {Message} Result of your search
  */
 

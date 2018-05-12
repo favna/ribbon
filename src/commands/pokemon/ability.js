@@ -30,7 +30,7 @@
  * @category pokémon
  * @name ability
  * @example ability multiscale
- * @param {string} AbilityName The name of the ability you  want to find
+ * @param {StringResolvable} AbilityName The name of the ability you  want to find
  * @returns {MessageEmbed} Description and external links for the ability
  */
 

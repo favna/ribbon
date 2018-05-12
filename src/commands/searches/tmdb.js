@@ -30,7 +30,7 @@
  * @category searches
  * @name tmdb
  * @example tmdb Pokemon 2000
- * @param {string} MovieName Name of the movie you want to find
+ * @param {StringResolvable} MovieName Name of the movie you want to find
  * @returns {MessageEmbed} Information about the requested movie
  */
 

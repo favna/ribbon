@@ -29,7 +29,7 @@
  * @category games
  * @name kiss
  * @example kiss Pyrrha
- * @param {member} [MemberToKiss] Name of the member you want to give a kiss
+ * @param {GuildMemberResolvable} [MemberToKiss] Name of the member you want to give a kiss
  * @returns {MessageEmbed} The kiss and a cute image ❤
  */
 

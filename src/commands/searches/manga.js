@@ -30,7 +30,7 @@
  * @category searches
  * @name manga
  * @example manga Yu-Gi-Oh
- * @param {string} AnyManga manga to look up
+ * @param {StringResolvable} AnyManga manga to look up
  * @returns {MessageEmbed} Information about the requested manga
  */
 

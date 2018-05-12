@@ -30,7 +30,7 @@
  * @category info
  * @name Activity
  * @example activity Favna
- * @param {member} member Member to get the activity for
+ * @param {GuildMemberResolvable} member Member to get the activity for
  * @returns {MessageEmbed} Activity from that member
  */
 

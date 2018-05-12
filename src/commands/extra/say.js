@@ -30,7 +30,7 @@
  * @category extra
  * @name say
  * @example say Favna is a great coder!
- * @param {string} Text Message you want to have repeated
+ * @param {StringResolvable} Text Message you want to have repeated
  * @returns {Message} Your message said by the bot
  */
 

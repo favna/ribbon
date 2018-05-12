@@ -35,9 +35,9 @@
  * @category moderation
  * @name timeradd
  * @example timeradd #general 1d Please read the rules everyone!
- * @param {string} Interval The interval at which the message(s) should be repeated
- * @param {channel} Channel The channel to send the timed message in
- * @param {string} Message  The message(s) to repeat
+ * @param {StringResolvable} Interval The interval at which the message(s) should be repeated
+ * @param {ChannelResolvable} Channel The channel to send the timed message in
+ * @param {StringResolvable} Message  The message(s) to repeat
  * @returns {MessageEmbed} Confirmation the setting was stored
  */
 

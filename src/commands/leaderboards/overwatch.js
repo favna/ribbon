@@ -30,7 +30,7 @@
  * @category leaderboards
  * @name overwatch
  * @example overwatch Camoflouge#1267
- * @param {string} BattleTag BattleTag for that overwatch player
+ * @param {StringResolvable} BattleTag BattleTag for that overwatch player
  * @returns {MessageEmbed} Stats of the player
  */
 

@@ -35,7 +35,7 @@
  * randomcol #990000  
  * -OR-  
  * randomcol 36B56e
- * @param {string} [hex] Optional: Color hex to display
+ * @param {StringResolvable} [hex] Optional: Color hex to display
  * @returns {MessageEmbed} Color of embed matches generated color
  */
 

@@ -31,7 +31,7 @@
  * @category nsfw
  * @name pornvids
  * @example pornvids babe
- * @param {string} Query Something you want to find
+ * @param {StringResolvable} Query Something you want to find
  * @returns {MessageEmbed} URL, duration and embedded thumbnail
  */
 

@@ -31,7 +31,7 @@
  * @category extra
  * @name weather
  * @example weather Amsterdam
- * @param {string} CityName Name of the city to get the weather forecast for
+ * @param {StringResolvable} CityName Name of the city to get the weather forecast for
  * @returns {MessageEmbed} Various statistics about the current forecast
  */
 

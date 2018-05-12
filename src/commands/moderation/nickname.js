@@ -30,9 +30,9 @@
  * @category moderation
  * @name nickname
  * @example nick Muffin Cupcake
- * @param {member} AnyMember Member to give a nickname
- * @param {string} NewNickname Nickname to assign
  * @returns {Message} Confirmation the nickname was assigned
+ * @param {GuildMemberResolvable} AnyMember Member to give a nickname
+ * @param {StringResolvable} NewNickname Nickname to assign
  */
 
 const moment = require('moment'),

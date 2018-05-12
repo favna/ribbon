@@ -31,7 +31,7 @@
  * @category nsfw
  * @name rule34
  * @example rule34 pyrrha_nikos
- * @param {string} Query Something you want to find
+ * @param {StringResolvable} Query Something you want to find
  * @returns {MessageEmbed} Score, Link and preview of the image
  */
 

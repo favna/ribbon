@@ -31,7 +31,7 @@
  * @category music
  * @name queue
  * @example queue 2
- * @param {string} [Page] Page to show
+ * @param {StringResolvable} [Page] Page to show
  * @returns {MessageEmbed} List of queued songs with their duration and total duration of the queue
  */
 

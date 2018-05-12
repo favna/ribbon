@@ -30,7 +30,7 @@
  * @category searches
  * @name image
  * @example image Pyrrha Nikos
- * @param {string} ImageQuery Image to find on google images
+ * @param {StringResolvable} ImageQuery Image to find on google images
  * @returns {MessageEmbed} Embedded image and search query
  */
 

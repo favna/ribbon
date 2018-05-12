@@ -30,7 +30,7 @@
  * @category info
  * @name userinfo
  * @example userinfo Favna
- * @param {member} AnyMember Member you want to get info about
+ * @param {GuildMemberResolvable} AnyMember Member you want to get info about
  * @returns {MessageEmbed} Info about that member
  */
 

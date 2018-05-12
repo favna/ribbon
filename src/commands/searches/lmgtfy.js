@@ -30,7 +30,7 @@
  * @category searches
  * @name lmgtfy
  * @example lmgtfy is it legal to kill an ant???
- * @param {string} SearchQuery The dumb sh*t people need to use google for
+ * @param {StringResolvable} SearchQuery The dumb sh*t people need to use google for
  * @returns {Message} LMGTFY url
  */
 

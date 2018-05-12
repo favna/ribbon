@@ -30,8 +30,8 @@
  * @category moderation
  * @name setmodlogs
  * @example setmodlogs logs
- * @param {channel} LogChannel The channel to use for mod logs
  * @returns {Message} Confirmation the setting was stored
+ * @param {ChannelResolvable} LogChannel The channel to use for mod logs
  */
 
 const {Command} = require('discord.js-commando'), 

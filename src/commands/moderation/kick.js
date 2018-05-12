@@ -30,8 +30,8 @@
  * @category moderation
  * @name kick
  * @example kick ThunderKai
- * @param {member} AnyMember The member to kick from the server
- * @param {string} TheReason Reason for this kick.
+ * @param {GuildMemberResolvable} AnyMember The member to kick from the server
+ * @param {StringResolvable} TheReason Reason for this kick.
  * @returns {MessageEmbed} Log of the kick
  */
 

@@ -30,7 +30,7 @@
  * @category moderation
  * @name announce
  * @example announce Pokemon Switch has released!
- * @param {string} Announcement The announcement you want to make
+ * @param {StringResolvable} Announcement The announcement you want to make
  * @returns {Message} Announcement you wrote in the announcement / news channel
  */
 

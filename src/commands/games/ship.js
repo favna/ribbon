@@ -31,8 +31,8 @@
  * @category games
  * @name ship
  * @example ship Biscuit Rei
- * @param {string} [ShipMemberOne] The first member to ship
- * @param {string} [ShipMemberTwo] The second member to ship
+ * @param {StringResolvable} [ShipMemberOne] The first member to ship
+ * @param {StringResolvable} [ShipMemberTwo] The second member to ship
  * @returns {MessageEmbed} Name of the ship
  */
 

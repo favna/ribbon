@@ -30,8 +30,8 @@
  * @category moderation
  * @name delrole
  * @example delrole Favna Member
- * @param {member} AnyMember The member to remove a role from
- * @param {role} AnyRole The role to remove
+ * @param {GuildMemberResolvable} AnyMember The member to remove a role from
+ * @param {RoleResolvable} AnyRole The role to remove
  */
 
 const moment = require('moment'),
@@ -49,7 +49,7 @@ module.exports = class DeleteRoleCommand extends Command {
       aliases: ['deleterole', 'dr', 'remrole', 'removerole'],
       description: 'Deletes a role from a member',
       format: 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
-      examples: ['delrole {member} {role}'],
+      examples: ['delrole favna tagrole1'],
       guildOnly: true,
       throttling: {
         usages: 2,

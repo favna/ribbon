@@ -31,7 +31,7 @@
  * @category nsfw
  * @name porngifs
  * @example porngifs babe
- * @param {string} Query Something you want to find
+ * @param {StringResolvable} Query Something you want to find
  * @returns {MessageEmbed} Webm link and embeds gif
  */
 

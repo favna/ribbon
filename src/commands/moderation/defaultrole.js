@@ -30,7 +30,7 @@
  * @category moderation
  * @name defaultrole
  * @example defaultrole Member
- * @param {role} AnyRole Role to assign to all new joining members
+ * @param {RoleResolvable} AnyRole Role to assign to all new joining members
  * @returns {Message} Confirmation the setting was stored
  */
 

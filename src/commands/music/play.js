@@ -37,7 +37,7 @@
  * @category music
  * @name play
  * @example play
- * @param {string} Video One of the options linking to a video to play
+ * @param {StringResolvable} Video One of the options linking to a video to play
  * @returns {MessageEmbed} Title, duration and thumbnail of the video
  */
 

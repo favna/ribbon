@@ -30,8 +30,8 @@
  * @category moderation
  * @name addrole
  * @example addrole Favna Member
- * @param {member} AnyMember Member to give a role
- * @param {role} AnyRole Role to give
+ * @param {GuildMemberResolvable} AnyMember Member to give a role
+ * @param {RoleResolvable} AnyRole Role to give
  * @returns {Message} Confirmation the role was added
  */
 
@@ -50,7 +50,7 @@ module.exports = class AddRoleCommand extends Command {
       aliases: ['newrole', 'ar'],
       description: 'Adds a role to a member',
       format: 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
-      examples: ['addrole favna testrole1'],
+      examples: ['addrole favna tagrole1'],
       guildOnly: true,
       throttling: {
         usages: 2,

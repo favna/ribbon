@@ -30,7 +30,7 @@
  * @category extra
  * @name qrgen
  * @example qrgen https://favna.xyz/ribbon
- * @param {string} URL URL you want to encode into a QR image
+ * @param {StringResolvable} URL URL you want to encode into a QR image
  * @returns {MessageEmbed} Embedded QR code and original image URL
  */
 

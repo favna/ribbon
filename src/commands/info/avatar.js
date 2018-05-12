@@ -30,8 +30,8 @@
  * @category info
  * @name avatar
  * @example avatar Favna
- * @param {member} MemberName Member to get the avatar from
- * @param {member} [ImageSize] Optional: Size of the avatar to get. Defaults to 1024
+ * @param {GuildMemberResolvable} MemberName Member to get the avatar from
+ * @param {GuildMemberResolvable} [ImageSize] Optional: Size of the avatar to get. Defaults to 1024
  * @returns {MessageEmbed} The avatar image and a direct link to it
  */
 

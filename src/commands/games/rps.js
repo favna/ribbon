@@ -30,7 +30,7 @@
  * @category games
  * @name rps
  * @example rps Rock
- * @param {string} HandToPlay The hand that you want to play
+ * @param {StringResolvable} HandToPlay The hand that you want to play
  * @returns {MessageEmbed} Result of the conflict
  */
 

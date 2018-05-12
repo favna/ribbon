@@ -31,7 +31,7 @@
  * @category pokémon
  * @name move
  * @example move dragon dance
- * @param {string} MoveName The move you want to find
+ * @param {StringResolvable} MoveName The move you want to find
  * @returns {MessageEmbed} Details about the move
  */
 

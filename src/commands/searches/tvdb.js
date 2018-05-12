@@ -30,7 +30,7 @@
  * @category searches
  * @name tvdb
  * @example tvdb Pokemon
- * @param {string} SeriesName Name of the TV serie you want to find
+ * @param {StringResolvable} SeriesName Name of the TV serie you want to find
  * @returns {MessageEmbed} Information about the requested TV serie
  */
 

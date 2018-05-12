@@ -31,7 +31,7 @@
  * @category extra
  * @name time
  * @example time Amsterdam
- * @param {string} Location Place where you want to get the current time for
+ * @param {StringResolvable} Location Place where you want to get the current time for
  * @returns {MessageEmbed} Current date, current time, country and DST offset
  */
 

@@ -30,7 +30,7 @@
  * @category casino
  * @name wheeloffortune
  * @example wof 5
- * @param {number} ChipsAmount The amount of chips you want to gamble
+ * @param {Number} ChipsAmount The amount of chips you want to gamble
  * @returns {MessageEmbed} Outcome of the game
  */
 

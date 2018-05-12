@@ -30,7 +30,7 @@
  * @category searches
  * @name steam
  * @example steam Tales of Berseria
- * @param {string} GameName The name of any game that you want to find
+ * @param {StringResolvable} GameName The name of any game that you want to find
  * @returns {MessageEmbed} Information about the requested game
  */
 

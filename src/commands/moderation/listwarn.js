@@ -30,7 +30,7 @@
  * @category moderation
  * @name listwarn
  * @example listwarn Biscuit
- * @param {member} AnyMember The member of whom to list the warning points
+ * @param {GuildMemberResolvable} AnyMember The member of whom to list the warning points
  * @returns {MessageEmbed} The warnings that member has
  */
 
@@ -51,7 +51,7 @@ module.exports = class ListWarnCommand extends Command {
       aliases: ['reqwarn', 'lw', 'rw'],
       description: 'Lists the warning points given to a member',
       format: 'MemberID|MemberName(partial or full)',
-      examples: ['listwarn {member}'],
+      examples: ['listwarn Biscuit'],
       guildOnly: true,
       throttling: {
         usages: 2,

@@ -32,7 +32,7 @@
  * @category searches
  * @name docs
  * @example docs ClientUser
- * @param {string} DocEntry The entry from the docs you want to get info about
+ * @param {StringResolvable} DocEntry The entry from the docs you want to get info about
  * @returns {MessageEmbed} Info about the entry from the library
  */
 

@@ -30,7 +30,7 @@
  * @category games
  * @name slap
  * @example slap Cinder
- * @param {member} [MemberToSlap] Name of the member you want to slap
+ * @param {GuildMemberResolvable} [MemberToSlap] Name of the member you want to slap
  * @returns {MessageEmbed} The slap and an image
  */
 

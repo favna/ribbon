@@ -30,7 +30,7 @@
  * @category pokémon
  * @name type
  * @example type dragon flying
- * @param {string} Types One or two types to find the matchup for
+ * @param {StringResolvable} Types One or two types to find the matchup for
  * @returns {MessageEmbed} All weaknesses, advantages
  */
 

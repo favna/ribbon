@@ -31,9 +31,9 @@
  * @category moderation
  * @name warn
  * @example warn Biscuit 5 Not giving everyone cookies
- * @param {member} AnyMember The member to give warning points
- * @param {number} WarningPoints The amount of warning points to give
- * @param {string} TheReason Reason for warning
+ * @param {GuildMemberResolvable} AnyMember The member to give warning points
+ * @param {Number} WarningPoints The amount of warning points to give
+ * @param {StringResolvable} TheReason Reason for warning
  * @returns {MessageEmbed} A MessageEmbed with a log of the warning
  */
 

@@ -32,7 +32,7 @@
  * @category music
  * @name volume
  * @example volume 2
- * @param {number} [Volume] The new volume to set
+ * @param {Number} [Volume] The new volume to set
  * @returns {Message} Confirmation of the change of volume
  */
 

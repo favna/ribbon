@@ -30,7 +30,7 @@
  * @category leaderboards
  * @name showdown
  * @example showdown ou
- * @param {string} TierName Name of the tier to view the leaderboard for
+ * @param {StringResolvable} TierName Name of the tier to view the leaderboard for
  * @returns {MessageEmbed} List of top 10 ranking players in given tier
  */
 

@@ -30,7 +30,7 @@
  * @category searches
  * @name urban
  * @example urban Everclear
- * @param {string} PhraseQuery Phrase that you want to define
+ * @param {StringResolvable} PhraseQuery Phrase that you want to define
  * @returns {MessageEmbed} Top definition for the requested phrase
  */
 

@@ -30,7 +30,7 @@
  * @category streamwatch
  * @name twitchmonitors
  * @example twitchmonitors techagent favna
- * @param {string} AnyMembers List of members to monitor space delimited
+ * @param {StringResolvable} AnyMembers List of members to monitor space delimited
  * @returns {Message} Confirmation the setting was stored
  */
 

@@ -31,8 +31,8 @@
  * @category extra
  * @name remind
  * @example remind 1h To continue developing Ribbon
- * @param {string} Time Amount of time you want to be reminded in
- * @param {string} Reminder Thing you want the bot to remind you of
+ * @param {StringResolvable} Time Amount of time you want to be reminded in
+ * @param {StringResolvable} Reminder Thing you want the bot to remind you of
  * @returns {Message} Confirmation the reminder was stored
  */
 

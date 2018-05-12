@@ -30,7 +30,7 @@
  * @category moderation
  * @name joinmessages
  * @example joinmessages enable
- * @param {boolean} Option True or False
+ * @param {BooleanResolvable} Option True or False
  * @returns {MessageEmbed} Confirmation the setting was stored
  */
 

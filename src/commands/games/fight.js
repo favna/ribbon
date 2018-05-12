@@ -30,8 +30,8 @@
  * @category games
  * @name fight
  * @example fight Pyrrha Ruby
- * @param {string} FighterOne The first combatant
- * @param {string} FighterTwo The second combatant
+ * @param {StringResolvable} FighterOne The first combatant
+ * @param {StringResolvable} FighterTwo The second combatant
  * @returns {MessageEmbed} Result of the combat
  */
 

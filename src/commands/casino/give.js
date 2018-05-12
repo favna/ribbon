@@ -30,8 +30,8 @@
  * @category casino
  * @name give
  * @example give Favna 10
- * @param {member} AnyMember The member you want to give some chips
- * @param {number} ChipsAmount The amount of chips you want to give
+ * @param {GuildMemberResolvable} AnyMember The member you want to give some chips
+ * @param {Number} ChipsAmount The amount of chips you want to give
  * @returns {MessageEmbed} Changed balances of the two players
  */
 

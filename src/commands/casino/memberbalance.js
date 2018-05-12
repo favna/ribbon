@@ -30,7 +30,7 @@
  * @category casino
  * @name memberbalance
  * @example mchips Rohul
- * @param {Member} AnyMember Member to get the balance for
+ * @param {GuildMemberResolvable} AnyMember Member to get the balance for
  * @returns {MessageEmbed} Information about the current balance of the member
  */
 

@@ -31,7 +31,7 @@
  * @category pokemon
  * @name item
  * @example item assault vest
- * @param {string} ItemName Name of the item to find
+ * @param {StringResolvable} ItemName Name of the item to find
  * @returns {MessageEmbed} Description and external links for the item
  */
 

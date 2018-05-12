@@ -30,7 +30,7 @@
  * @category extra
  * @name math
  * @example math (PI - 1) * 3
- * @param {string} Equation The equation to solve
+ * @param {StringResolvable} Equation The equation to solve
  * @returns {MessageEmbed} Your equation and its answer
  */
 

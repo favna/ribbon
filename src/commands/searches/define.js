@@ -22,7 +22,7 @@
  * @category searches
  * @name define
  * @example define Google
- * @param {string} Word the word you want to define
+ * @param {StringResolvable} Word the word you want to define
  * @returns {MessageEmbed} Possible definitions for that word
  */
 
