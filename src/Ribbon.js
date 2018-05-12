@@ -25,7 +25,6 @@
 
 /* eslint-disable sort-vars */
 const Database = require('better-sqlite3'),
-  moment = require('moment'),
   path = require('path'),
   request = require('snekfetch'),
   {Client, FriendlyError, SyncSQLiteProvider} = require('discord.js-commando'),
@@ -234,9 +233,9 @@ class Ribbon {
             }
 
             if (streamData.ok && streamData.body._total > 0 && streamData.body.streams[0]) {
-              twitchEmbed.setDescription(stripIndents`${twitchEmbed.description}\n
-                **Stream Started At**${moment(streamData.body.streams[0].created_at).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`)
-                .setImage(streamData.body.streams[0].preview.large);
+              twitchEmbed
+                .setFooter('Stream started')
+                .setTimestamp(streamData.body.streams[0].created_at);
             }
             if (twitchChannel) {
               curGuild.channels.get(twitchChannel).send({embed: twitchEmbed});
