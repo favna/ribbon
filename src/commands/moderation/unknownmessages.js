@@ -48,7 +48,7 @@ module.exports = class UnknownMessagesCommand extends Command {
       aliases: ['unkmsg', 'unknowns'],
       description: 'Toggle Unknown Command messages on or off',
       format: 'Enable|Disable',
-      examples: ['unknownmessages {option}', 'unknownmessages enable'],
+      examples: ['unknownmessages enable'],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -66,7 +66,7 @@ module.exports = class UnknownMessagesCommand extends Command {
               return true;
             }
 
-            return `Has to be one of ${validBools.join(', ')}`;
+            return `Has to be one of ${validBools.map(val => `\`${val}\``).join(', ')}`;
           }
         }
       ]

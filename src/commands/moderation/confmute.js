@@ -24,7 +24,7 @@
  */
 
 /**
- * @file Moderation ConfigureMuteCommand - Configure which role is the server's "muted" role  
+ * @file Moderation ConfigureMuteCommand - Configure which role to use as "mute" role  
  * **Aliases**: `cm`, `configmute` 
  * @module
  * @category moderation
@@ -46,7 +46,7 @@ module.exports = class ConfigureMuteCommand extends Command {
       memberName: 'confmute',
       group: 'moderation',
       aliases: ['cm', 'configmute'],
-      description: 'Toggle Unknown Command messages on or off',
+      description: 'Configure which role to use as "mute" role',
       format: 'RoleResolvable',
       examples: ['confmute mute'],
       guildOnly: true,

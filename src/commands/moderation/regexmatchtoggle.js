@@ -66,7 +66,7 @@ module.exports = class RegexMatchToggleCommand extends Command {
               return true;
             }
 
-            return `Has to be one of ${validBools.join(', ')}`;
+            return `Has to be one of ${validBools.map(val => `\`${val}\``).join(', ')}`;
           }
         }
       ]
