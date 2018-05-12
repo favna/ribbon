@@ -45,7 +45,17 @@
 
 - Playing games such as magic 8ball and flipping coins
 
+- Casino chips as currency
+
+- Music streaming from YouTube
+
 - Getting info on members and the current server
+
+- Monitor Twitch streamers and get a message when one goes live
+
+- Auto-moderation functions
+
+- Timed repeating messages
 
 - Many other commands. See [All Commands on the Wiki](https://github.com/Favna/Ribbon/wiki/All-Commands) for the full list
 
