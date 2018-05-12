@@ -238,7 +238,7 @@ class Ribbon {
                 .setTimestamp(streamData.body.streams[0].created_at);
             }
             if (twitchChannel) {
-              curGuild.channels.get(twitchChannel).send({embed: twitchEmbed});
+              curGuild.channels.get(twitchChannel).send('', {embed: twitchEmbed});
             }
           }
         }
