@@ -56,6 +56,30 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 ## Modules
 
 <dl>
+<dt><a href="#module_badwords">badwords</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Automod BadWordsCommand - Toggle the bad words filter<br><strong>Aliases</strong>: <code>badwordsfilter</code>, <code>bwf</code>, <code>bwf</code></p>
+</dd>
+<dt><a href="#module_duptext">duptext</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Automod DuplicateTextCommand - Toggle the duplicate text filter<br><strong>Aliases</strong>: <code>duplicatefilter</code>, <code>duplicatetextfilter</code>, <code>dtf</code></p>
+</dd>
+<dt><a href="#module_excessivecaps">excessivecaps</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Automod ExcessiveCapsCommand - Toggle the excessive caps filter<br><strong>Aliases</strong>: <code>spammedcaps</code>, <code>manycaps</code></p>
+</dd>
+<dt><a href="#module_excessiveemojis">excessiveemojis</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Automod ExcessiveEmojisCommand - Toggle the excessive emojis filter<br><strong>Aliases</strong>: <code>spammedemojis</code>, <code>manyemojis</code></p>
+</dd>
+<dt><a href="#module_excessivementions">excessivementions</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter<br><strong>Aliases</strong>: <code>spammedmentions</code>, <code>manymentions</code></p>
+</dd>
+<dt><a href="#module_externallinks">externallinks</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Automod ExternalLinksCommand - Toggle the external links filter<br><strong>Aliases</strong>: <code>extlinks</code>, <code>extlinksfilter</code>, <code>elf</code></p>
+</dd>
+<dt><a href="#module_serverinvites">serverinvites</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Automod ServerInvitesCommand - Toggle the server invites filter<br><strong>Aliases</strong>: <code>serverinvitesfilter</code>, <code>inviteblock</code>, <code>invitesblock</code>, <code>invitefilter</code>, <code>invitesfilter</code></p>
+</dd>
+<dt><a href="#module_slowmode">slowmode</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Automod SlowmodeCommand - Toggle slowmode on this server<br><strong>Aliases</strong>: <code>slowdown</code></p>
+</dd>
 <dt><a href="#module_chips">chips</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Casino ChipsCommand - Retrieves your current amount of chips for the casino<br><strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p>
 </dd>
@@ -204,16 +228,22 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_announce">announce</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation NewsCommand - Make an announcement to a channel named &quot;announcements&quot; or &quot;news&quot;<br><strong>Aliases</strong>: <code>news</code></p>
 </dd>
+<dt><a href="#module_automod">automod</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation AutomodCommand - General toggle for all automod features<br><strong>Aliases</strong>: <code>botmod</code>, <code>skynetmod</code></p>
+</dd>
 <dt><a href="#module_ban">ban</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation BanCommand - Ban a bad member<br><strong>Aliases</strong>: <code>b</code>, <code>banana</code></p>
+</dd>
+<dt><a href="#module_confmute">confmute</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation ConfigureMuteCommand - Configure which role to use as &quot;mute&quot; role<br><strong>Aliases</strong>: <code>cm</code>, <code>configmute</code></p>
 </dd>
 <dt><a href="#module_defaultrole">defaultrole</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation defaultroleCommand - Sets a default role that should be assigned to all new joining members<br><strong>Aliases</strong>: <code>defrole</code></p>
 </dd>
-<dt><a href="#module_deletecommandmessages">deletecommandmessages</a> ⇒ <code>Message</code></dt>
+<dt><a href="#module_deletecommandmessages">deletecommandmessages</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation deleteCommandMessagesCommand - Configure whether the bot should delete command messages<br><strong>Aliases</strong>: <code>dcm</code></p>
 </dd>
-<dt><a href="#module_delrole">delrole</a></dt>
+<dt><a href="#module_delrole">delrole</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation DeleteRoleCommand - Delete the role of a member<br><strong>Aliases</strong>: <code>deleterole</code>, <code>dr</code>, <code>remrole</code>, <code>removerole</code></p>
 </dd>
 <dt><a href="#module_joinmessages">joinmessages</a> ⇒ <code>MessageEmbed</code></dt>
@@ -234,28 +264,28 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Moderation LockdownCommand - Lockdown a channel<br>NOTE: Once locked it will be locked to the <code>@everyone</code> role and depending on your permissions setup it may be that only people with the <code>administrator</code> role will have access to the channel.
 This may also mean that the bot won&#39;t have access if it doesn&#39;t have administrator role so you cannot use the <code>unlock</code> command until you give it that permission!<br><strong>Aliases</strong>: <code>lock</code>, <code>ld</code></p>
 </dd>
-<dt><a href="#module_memberlogs">memberlogs</a> ⇒ <code>Message</code></dt>
+<dt><a href="#module_memberlogs">memberlogs</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel<br><strong>Aliases</strong>: <code>tml</code>, <code>togglemember</code>, <code>togglememberlogs</code></p>
 </dd>
-<dt><a href="#module_modlogs">modlogs</a> ⇒ <code>Message</code></dt>
+<dt><a href="#module_modlogs">modlogs</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation ModLogsCommand - Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel<br><strong>Aliases</strong>: <code>togglemod</code></p>
 </dd>
-<dt><a href="#module_nickall">nickall</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation NickallCommand - Assign a nickname to every member on the server<br>Use <code>clear</code> to remove all nicknames<br>Use <code>prefix</code> to prefix all names with something<br>Use <code>append</code> to append all names with something<br>Note that if there are a lot of members on the server it will take a long time to nickname them all due to Discord limiting the amount of actions per minute<br><strong>Aliases</strong>: <code>na</code>, <code>massnick</code>, <code>nickmass</code>, <code>allnick</code></p>
+<dt><a href="#module_mute">mute</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation MuteCommand - Mute a member<br>Requires either a role named <code>muted</code> on the server, or first having set the mute role with confmute<br>You can optionally specify a duration for how long this mute will last. Not specifying any will mean it will last until manually unmuted.<br>The format for duration is in minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>silent</code></p>
 </dd>
-<dt><a href="#module_nickname">nickname</a> ⇒ <code>Message</code></dt>
+<dt><a href="#module_nickname">nickname</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation NickCommand - Nickname a single member<br><strong>Aliases</strong>: <code>nick</code></p>
 </dd>
 <dt><a href="#module_purge">purge</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation PurgeCommand - Quickly delete a certain amount of messages<br><strong>Aliases</strong>: <code>prune</code>, <code>delete</code></p>
 </dd>
-<dt><a href="#module_regexmatchtoggle">regexmatchtoggle</a> ⇒ <code>Message</code></dt>
+<dt><a href="#module_regexmatchtoggle">regexmatchtoggle</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this server<br><strong>Aliases</strong>: <code>rmt</code>, <code>regexmatch</code></p>
 </dd>
-<dt><a href="#module_setmemberlogs">setmemberlogs</a> ⇒ <code>Message</code></dt>
+<dt><a href="#module_setmemberlogs">setmemberlogs</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation SetMemberlogsCommand - Sets the channel used for member logs<br><strong>Aliases</strong>: <code>setmember</code></p>
 </dd>
-<dt><a href="#module_setmodlogs">setmodlogs</a> ⇒ <code>Message</code></dt>
+<dt><a href="#module_setmodlogs">setmodlogs</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation SetModlogsCommand - Sets the channel used for mod logs<br><strong>Aliases</strong>: <code>setmod</code></p>
 </dd>
 <dt><a href="#module_softban">softban</a> ⇒ <code>MessageEmbed</code></dt>
@@ -265,7 +295,7 @@ This may also mean that the bot won&#39;t have access if it doesn&#39;t have adm
 <dd><p>Moderation TempBanCommand - Temporary bans a member, then unbans them when the timer expires<br>Given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>tb</code>, <code>rottenbanana</code></p>
 </dd>
 <dt><a href="#module_timeradd">timeradd</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation TimerAddCommand - Store timed messages<br>These are messages the bot will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check the bot will do (which is every minute) after adding the timed message<br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p>
+<dd><p>Moderation TimerAddCommand - Store timed messages<br>These are messages the bot will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check the bot will do (which is every minute) after adding the timed message<br>The format for the interval is in minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p>
 </dd>
 <dt><a href="#module_timerlist">timerlist</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation TimerListCommand - List all stored timed messages in the current guild<br><strong>Aliases</strong>: <code>tl</code>, <code>timelist</code></p>
@@ -273,11 +303,15 @@ This may also mean that the bot won&#39;t have access if it doesn&#39;t have adm
 <dt><a href="#module_timerremove">timerremove</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation TimerRemoveCommand - Remove a specified timed message<br><strong>Aliases</strong>: <code>tr</code>, <code>timeremove</code>, <code>timerdelete</code>, <code>timedelete</code></p>
 </dd>
-<dt><a href="#module_unknownmessages">unknownmessages</a> ⇒ <code>Message</code></dt>
+<dt><a href="#module_unknownmessages">unknownmessages</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
 </dd>
 <dt><a href="#module_unlock">unlock</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation UnlockCommand - Unlock the channel<br>Only really useful if you previously locked the channel<br>Note that the bot does need to be able to be able to access this channel to unlock it (read permissions)<br><strong>Aliases</strong>: <code>delock</code>, <code>ul</code></p>
+</dd>
+<dt><a href="#module_unmute">unmute</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation UnmuteCommand - Unmutes a previously muted member
+<strong>Aliases</strong>: <code>um</code></p>
 </dd>
 <dt><a href="#module_warn">warn</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation WarnCommand - Gives a member warning points<br>Please note that the bot will not auto ban when the member has a certain amount of points!
@@ -438,6 +472,142 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 </dd>
 </dl>
 
+<a name="module_badwords"></a>
+
+## badwords ⇒ <code>MessageEmbed</code>
+Automod BadWordsCommand - Toggle the bad words filter  
+**Aliases**: `badwordsfilter`, `bwf`, `bwf`
+
+**Returns**: <code>MessageEmbed</code> - Bad words filter confirmation log  
+**Category**: automod  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>BooleanResolvable</code> | True or False |
+
+**Example**  
+```js
+badwords enable
+```
+<a name="module_duptext"></a>
+
+## duptext ⇒ <code>MessageEmbed</code>
+Automod DuplicateTextCommand - Toggle the duplicate text filter  
+**Aliases**: `duplicatefilter`, `duplicatetextfilter`, `dtf`
+
+**Returns**: <code>MessageEmbed</code> - Duplicate text filter confirmation log  
+**Category**: automod  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>BooleanResolvable</code> | True or False |
+
+**Example**  
+```js
+duptext enable
+```
+<a name="module_excessivecaps"></a>
+
+## excessivecaps ⇒ <code>MessageEmbed</code>
+Automod ExcessiveCapsCommand - Toggle the excessive caps filter  
+**Aliases**: `spammedcaps`, `manycaps`
+
+**Returns**: <code>MessageEmbed</code> - Excessive Caps filter confirmation log  
+**Category**: automod  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>BooleanResolvable</code> | True or False |
+
+**Example**  
+```js
+excessivecaps enable
+```
+<a name="module_excessiveemojis"></a>
+
+## excessiveemojis ⇒ <code>MessageEmbed</code>
+Automod ExcessiveEmojisCommand - Toggle the excessive emojis filter  
+**Aliases**: `spammedemojis`, `manyemojis`
+
+**Returns**: <code>MessageEmbed</code> - Excessive Emojis filter confirmation log  
+**Category**: automod  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>BooleanResolvable</code> | True or False |
+
+**Example**  
+```js
+excessiveemojis enable
+```
+<a name="module_excessivementions"></a>
+
+## excessivementions ⇒ <code>MessageEmbed</code>
+Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter  
+**Aliases**: `spammedmentions`, `manymentions`
+
+**Returns**: <code>MessageEmbed</code> - Excessive Emojis filter confirmation log  
+**Category**: automod  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>BooleanResolvable</code> | True or False |
+
+**Example**  
+```js
+excessivementions enable
+```
+<a name="module_externallinks"></a>
+
+## externallinks ⇒ <code>MessageEmbed</code>
+Automod ExternalLinksCommand - Toggle the external links filter  
+**Aliases**: `extlinks`, `extlinksfilter`, `elf`
+
+**Returns**: <code>MessageEmbed</code> - External Links filter confirmation log  
+**Category**: automod  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>BooleanResolvable</code> | True or False |
+
+**Example**  
+```js
+externallinks enable
+```
+<a name="module_serverinvites"></a>
+
+## serverinvites ⇒ <code>MessageEmbed</code>
+Automod ServerInvitesCommand - Toggle the server invites filter  
+**Aliases**: `serverinvitesfilter`, `inviteblock`, `invitesblock`, `invitefilter`, `invitesfilter`
+
+**Returns**: <code>MessageEmbed</code> - Server invites filter confirmation log  
+**Category**: automod  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>BooleanResolvable</code> | True or False |
+
+**Example**  
+```js
+serverinvites enable
+```
+<a name="module_slowmode"></a>
+
+## slowmode ⇒ <code>MessageEmbed</code>
+Automod SlowmodeCommand - Toggle slowmode on this server  
+**Aliases**: `slowdown`
+
+**Returns**: <code>MessageEmbed</code> - Server invites filter confirmation log  
+**Category**: automod  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>BooleanResolvable</code> | True or False |
+
+**Example**  
+```js
+slowmode enable
+```
 <a name="module_chips"></a>
 
 ## chips ⇒ <code>MessageEmbed</code>
@@ -462,8 +632,8 @@ Payout is 1:2
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AmountOfChips | <code>number</code> | Amount of chips you want to gamble |
-| CoinSide | <code>string</code> | The side of the coin you want to bet on |
+| AmountOfChips | <code>Number</code> | Amount of chips you want to gamble |
+| CoinSide | <code>StringResolvable</code> | The side of the coin you want to bet on |
 
 **Example**  
 ```js
@@ -488,8 +658,8 @@ Casino GiveCommand - Give another player some chips
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | The member you want to give some chips |
-| ChipsAmount | <code>number</code> | The amount of chips you want to give |
+| AnyMember | <code>GuildMemberResolvable</code> | The member you want to give some chips |
+| ChipsAmount | <code>Number</code> | The amount of chips you want to give |
 
 **Example**  
 ```js
@@ -514,7 +684,7 @@ Casino MemberBalanceCommand - Retrieves the amount of chips another member has f
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>Member</code> | Member to get the balance for |
+| AnyMember | <code>GuildMemberResolvable</code> | Member to get the balance for |
 
 **Example**  
 ```js
@@ -531,7 +701,7 @@ Casino SlotsCommand - Gamble your chips at the slot machine
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ChipsAmount | <code>number</code> | The amount of chips you want to gamble |
+| ChipsAmount | <code>Number</code> | The amount of chips you want to gamble |
 
 **Example**  
 ```js
@@ -548,7 +718,7 @@ Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ChipsAmount | <code>number</code> | The amount of chips you want to gamble |
+| ChipsAmount | <code>Number</code> | The amount of chips you want to gamble |
 
 **Example**  
 ```js
@@ -594,7 +764,7 @@ Note: It is possible to get copypastas with more than 2000 characters. Ask me to
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PastaName | <code>string</code> | Name of the copypasta to send |
+| PastaName | <code>StringResolvable</code> | Name of the copypasta to send |
 
 **Example**  
 ```js
@@ -611,8 +781,8 @@ Extra CopyPastaAddCommand - Adds a new copypasta for your server
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PasteName | <code>string</code> | Name for the new pasta |
-| PastaContent | <code>string</code> | Content for the new pasta |
+| PasteName | <code>StringResolvable</code> | Name for the new pasta |
+| PastaContent | <code>StringResolvable</code> | Content for the new pasta |
 
 **Example**  
 ```js
@@ -637,7 +807,7 @@ Extra MathCommand - Take the effort out of calculations and let the bot do it fo
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Equation | <code>string</code> | The equation to solve |
+| Equation | <code>StringResolvable</code> | The equation to solve |
 
 **Example**  
 ```js
@@ -656,9 +826,9 @@ For a full list of supported currencies see [this url](https://docs.openexchange
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MoneyAmount | <code>number</code> | Amount of money to convert |
-| OriginCurrency | <code>string</code> | Currency to convert from |
-| TargetCurrency | <code>string</code> | Currency to convert to |
+| MoneyAmount | <code>Number</code> | Amount of money to convert |
+| OriginCurrency | <code>StringResolvable</code> | Currency to convert from |
+| TargetCurrency | <code>StringResolvable</code> | Currency to convert to |
 
 **Example**  
 ```js
@@ -675,7 +845,7 @@ Extra QRGenCommand - Generates a QR code from text (like a URL)
 
 | Param | Type | Description |
 | --- | --- | --- |
-| URL | <code>string</code> | URL you want to encode into a QR image |
+| URL | <code>StringResolvable</code> | URL you want to encode into a QR image |
 
 **Example**  
 ```js
@@ -693,7 +863,7 @@ Providing a color hex will display that color, providing none will generate a ra
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [hex] | <code>string</code> | Optional: Color hex to display |
+| [hex] | <code>StringResolvable</code> | Optional: Color hex to display |
 
 **Example**  
 ```js
@@ -715,8 +885,8 @@ Works by reminding you after a given amount of minutes, hours or days in the for
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Time | <code>string</code> | Amount of time you want to be reminded in |
-| Reminder | <code>string</code> | Thing you want the bot to remind you of |
+| Time | <code>StringResolvable</code> | Amount of time you want to be reminded in |
+| Reminder | <code>StringResolvable</code> | Thing you want the bot to remind you of |
 
 **Example**  
 ```js
@@ -733,7 +903,7 @@ Extra Say - Repeats a message and deletes your message
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Text | <code>string</code> | Message you want to have repeated |
+| Text | <code>StringResolvable</code> | Message you want to have repeated |
 
 **Example**  
 ```js
@@ -759,7 +929,7 @@ Uses Google's Geocoding to determine the correct location therefore supports any
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Location | <code>string</code> | Place where you want to get the current time for |
+| Location | <code>StringResolvable</code> | Place where you want to get the current time for |
 
 **Example**  
 ```js
@@ -777,7 +947,7 @@ Potentially you'll have to specify city if the city is in multiple countries, i.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| CityName | <code>string</code> | Name of the city to get the weather forecast for |
+| CityName | <code>StringResolvable</code> | Name of the city to get the weather forecast for |
 
 **Example**  
 ```js
@@ -803,7 +973,7 @@ First banishes any existing zalgo to ensure proper result
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SomeText | <code>string</code> | Your input to transform with Zalgo |
+| SomeText | <code>StringResolvable</code> | Your input to transform with Zalgo |
 
 **Example**  
 ```js
@@ -820,7 +990,7 @@ Games EightBallCommand - Rolls a magic 8 ball using your input
 
 | Param | Type | Description |
 | --- | --- | --- |
-| question | <code>string</code> | Question you want the 8 ball to answer |
+| question | <code>StringResolvable</code> | Question you want the 8 ball to answer |
 
 **Example**  
 ```js
@@ -837,8 +1007,8 @@ Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| DiceSides | <code>string</code> | The amount of sides the dice should have |
-| AmountOfRolls | <code>string</code> | The amount of dice to roll |
+| DiceSides | <code>StringResolvable</code> | The amount of sides the dice should have |
+| AmountOfRolls | <code>StringResolvable</code> | The amount of dice to roll |
 
 **Example**  
 ```js
@@ -863,8 +1033,8 @@ Games FightCommand - Pit two things against each other in a fight to the death. 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| FighterOne | <code>string</code> | The first combatant |
-| FighterTwo | <code>string</code> | The second combatant |
+| FighterOne | <code>StringResolvable</code> | The first combatant |
+| FighterTwo | <code>StringResolvable</code> | The second combatant |
 
 **Example**  
 ```js
@@ -881,7 +1051,7 @@ Games HugCommand - Give someone a hug ❤!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MemberToHug] | <code>member</code> | Name of the member you want to give a hug |
+| [MemberToHug] | <code>GuildMemberResolvable</code> | Name of the member you want to give a hug |
 
 **Example**  
 ```js
@@ -897,7 +1067,7 @@ Games KissCommand - Give someone a kiss ❤!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MemberToKiss] | <code>member</code> | Name of the member you want to give a kiss |
+| [MemberToKiss] | <code>GuildMemberResolvable</code> | Name of the member you want to give a kiss |
 
 **Example**  
 ```js
@@ -914,7 +1084,7 @@ Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org rand
 
 | Param | Type | Description |
 | --- | --- | --- |
-| HandToPlay | <code>string</code> | The hand that you want to play |
+| HandToPlay | <code>StringResolvable</code> | The hand that you want to play |
 
 **Example**  
 ```js
@@ -932,8 +1102,8 @@ Leaving 1 or both parameters out will have the bot pick 1 or 2 random members
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [ShipMemberOne] | <code>string</code> | The first member to ship |
-| [ShipMemberTwo] | <code>string</code> | The second member to ship |
+| [ShipMemberOne] | <code>StringResolvable</code> | The first member to ship |
+| [ShipMemberTwo] | <code>StringResolvable</code> | The second member to ship |
 
 **Example**  
 ```js
@@ -950,7 +1120,7 @@ Games SlapCommand - Slap a dumb person💢!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MemberToSlap] | <code>member</code> | Name of the member you want to slap |
+| [MemberToSlap] | <code>GuildMemberResolvable</code> | Name of the member you want to slap |
 
 **Example**  
 ```js
@@ -967,8 +1137,8 @@ Games StrawpollCommand - Create a strawpoll and find out what people really thin
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Question | <code>string</code> | The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or `' '`) to allow spaces |
-| Options | <code>string</code> | The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to allow spaces. Splits on every `|` |
+| Question | <code>StringResolvable</code> | The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or `' '`) to allow spaces |
+| Options | <code>StringResolvable</code> | The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to allow spaces. Splits on every `|` |
 
 **Example**  
 ```js
@@ -985,7 +1155,7 @@ Info ActivityCommand - Gets the activity (presence) data from a member
 
 | Param | Type | Description |
 | --- | --- | --- |
-| member | <code>member</code> | Member to get the activity for |
+| member | <code>GuildMemberResolvable</code> | Member to get the activity for |
 
 **Example**  
 ```js
@@ -1002,8 +1172,8 @@ Games AvatarCommand - Get the avatar from any member
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MemberName | <code>member</code> | Member to get the avatar from |
-| [ImageSize] | <code>member</code> | Optional: Size of the avatar to get. Defaults to 1024 |
+| MemberName | <code>GuildMemberResolvable</code> | Member to get the avatar from |
+| [ImageSize] | <code>GuildMemberResolvable</code> | Optional: Size of the avatar to get. Defaults to 1024 |
 
 **Example**  
 ```js
@@ -1020,7 +1190,7 @@ Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList
 
 | Param | Type | Description |
 | --- | --- | --- |
-| BotID | <code>string</code> | the user ID of the bot you want to get info about |
+| BotID | <code>StringResolvable</code> | the user ID of the bot you want to get info about |
 
 **Example**  
 ```js
@@ -1069,7 +1239,7 @@ Info UserInfoCommand - Get the info from a user
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | Member you want to get info about |
+| AnyMember | <code>GuildMemberResolvable</code> | Member you want to get info about |
 
 **Example**  
 ```js
@@ -1086,7 +1256,7 @@ Leaderboards OsuCommand - Shows Player Stats for a given OSU player
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PlayerName | <code>string</code> | Name of the OSU player |
+| PlayerName | <code>StringResolvable</code> | Name of the OSU player |
 
 **Example**  
 ```js
@@ -1103,7 +1273,7 @@ Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleT
 
 | Param | Type | Description |
 | --- | --- | --- |
-| BattleTag | <code>string</code> | BattleTag for that overwatch player |
+| BattleTag | <code>StringResolvable</code> | BattleTag for that overwatch player |
 
 **Example**  
 ```js
@@ -1132,7 +1302,7 @@ Leaderboards ShowdownCommand - Show the top ranking players in your tier of choi
 
 | Param | Type | Description |
 | --- | --- | --- |
-| TierName | <code>string</code> | Name of the tier to view the leaderboard for |
+| TierName | <code>StringResolvable</code> | Name of the tier to view the leaderboard for |
 
 **Example**  
 ```js
@@ -1149,8 +1319,8 @@ Moderation AddRoleCommand - Add a role to member
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | Member to give a role |
-| AnyRole | <code>role</code> | Role to give |
+| AnyMember | <code>GuildMemberResolvable</code> | Member to give a role |
+| AnyRole | <code>RoleResolvable</code> | Role to give |
 
 **Example**  
 ```js
@@ -1167,11 +1337,28 @@ Moderation NewsCommand - Make an announcement to a channel named "announcements"
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Announcement | <code>string</code> | The announcement you want to make |
+| Announcement | <code>StringResolvable</code> | The announcement you want to make |
 
 **Example**  
 ```js
 announce Pokemon Switch has released!
+```
+<a name="module_automod"></a>
+
+## automod ⇒ <code>MessageEmbed</code>
+Moderation AutomodCommand - General toggle for all automod features  
+**Aliases**: `botmod`, `skynetmod`
+
+**Returns**: <code>MessageEmbed</code> - automod confirmation log  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>BooleanResolvable</code> | True or False |
+
+**Example**  
+```js
+automod enable
 ```
 <a name="module_ban"></a>
 
@@ -1184,12 +1371,29 @@ Moderation BanCommand - Ban a bad member
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | The member to ban from the server |
-| [TheReason] | <code>string</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages |
+| AnyMember | <code>GuildMemberResolvable</code> | The member to ban from the server |
+| [TheReason] | <code>StringResolvable</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages |
 
 **Example**  
 ```js
 ban MultiMegaMander
+```
+<a name="module_confmute"></a>
+
+## confmute ⇒ <code>MessageEmbed</code>
+Moderation ConfigureMuteCommand - Configure which role to use as "mute" role  
+**Aliases**: `cm`, `configmute`
+
+**Returns**: <code>MessageEmbed</code> - Configuration log  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Role | <code>RoleResolvable</code> | Role to set as mute role |
+
+**Example**  
+```js
+confmute mute
 ```
 <a name="module_defaultrole"></a>
 
@@ -1202,7 +1406,7 @@ Moderation defaultroleCommand - Sets a default role that should be assigned to a
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyRole | <code>role</code> | Role to assign to all new joining members |
+| AnyRole | <code>RoleResolvable</code> | Role to assign to all new joining members |
 
 **Example**  
 ```js
@@ -1210,16 +1414,16 @@ defaultrole Member
 ```
 <a name="module_deletecommandmessages"></a>
 
-## deletecommandmessages ⇒ <code>Message</code>
+## deletecommandmessages ⇒ <code>MessageEmbed</code>
 Moderation deleteCommandMessagesCommand - Configure whether the bot should delete command messages  
 **Aliases**: `dcm`
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Returns**: <code>MessageEmbed</code> - DeleteCommandMessages confirmation log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>boolean</code> | True or False |
+| Option | <code>BooleanResolvable</code> | True or False |
 
 **Example**  
 ```js
@@ -1227,16 +1431,17 @@ deletecommandmessages enable
 ```
 <a name="module_delrole"></a>
 
-## delrole
+## delrole ⇒ <code>MessageEmbed</code>
 Moderation DeleteRoleCommand - Delete the role of a member  
 **Aliases**: `deleterole`, `dr`, `remrole`, `removerole`
 
+**Returns**: <code>MessageEmbed</code> - Delete role log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | The member to remove a role from |
-| AnyRole | <code>role</code> | The role to remove |
+| AnyMember | <code>GuildMemberResolvable</code> | The member to remove a role from |
+| AnyRole | <code>RoleResolvable</code> | The role to remove |
 
 **Example**  
 ```js
@@ -1253,7 +1458,7 @@ Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greet
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>boolean</code> | True or False |
+| Option | <code>BooleanResolvable</code> | True or False |
 
 **Example**  
 ```js
@@ -1270,8 +1475,8 @@ Moderation KickCommand - Kicks a somewhat bad member
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | The member to kick from the server |
-| TheReason | <code>string</code> | Reason for this kick. |
+| AnyMember | <code>GuildMemberResolvable</code> | The member to kick from the server |
+| TheReason | <code>StringResolvable</code> | Reason for this kick. |
 
 **Example**  
 ```js
@@ -1288,7 +1493,7 @@ Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leav
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>boolean</code> | True or False |
+| Option | <code>BooleanResolvable</code> | True or False |
 
 **Example**  
 ```js
@@ -1305,7 +1510,7 @@ Moderation ListWarnCommand - Show the amount of warning points a member has
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | The member of whom to list the warning points |
+| AnyMember | <code>GuildMemberResolvable</code> | The member of whom to list the warning points |
 
 **Example**  
 ```js
@@ -1323,16 +1528,16 @@ This may also mean that the bot won't have access if it doesn't have administrat
 **Category**: moderation  
 <a name="module_memberlogs"></a>
 
-## memberlogs ⇒ <code>Message</code>
+## memberlogs ⇒ <code>MessageEmbed</code>
 Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel  
 **Aliases**: `tml`, `togglemember`, `togglememberlogs`
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Returns**: <code>MessageEmbed</code> - Memberlogs confirmation log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>boolean</code> | True or False |
+| Option | <code>BooleanResolvable</code> | True or False |
 
 **Example**  
 ```js
@@ -1340,61 +1545,54 @@ memberlogs enable
 ```
 <a name="module_modlogs"></a>
 
-## modlogs ⇒ <code>Message</code>
+## modlogs ⇒ <code>MessageEmbed</code>
 Moderation ModLogsCommand - Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel  
 **Aliases**: `togglemod`
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Returns**: <code>MessageEmbed</code> - Modlogs confirmation log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>boolean</code> | True or False |
+| Option | <code>BooleanResolvable</code> | True or False |
 
 **Example**  
 ```js
 modlogs enable
 ```
-<a name="module_nickall"></a>
+<a name="module_mute"></a>
 
-## nickall ⇒ <code>MessageEmbed</code>
-Moderation NickallCommand - Assign a nickname to every member on the server  
-Use `clear` to remove all nicknames  
-Use `prefix` to prefix all names with something  
-Use `append` to append all names with something  
-Note that if there are a lot of members on the server it will take a long time to nickname them all due to Discord limiting the amount of actions per minute  
-**Aliases**: `na`, `massnick`, `nickmass`, `allnick`
+## mute ⇒ <code>MessageEmbed</code>
+Moderation MuteCommand - Mute a member  
+Requires either a role named `muted` on the server, or first having set the mute role with confmute  
+You can optionally specify a duration for how long this mute will last. Not specifying any will mean it will last until manually unmuted.  
+The format for duration is in minutes, hours or days in the format of `5m`, `2h` or `1d`  
+**Aliases**: `silent`
 
-**Returns**: <code>MessageEmbed</code> - Log of the nicknaming  
+**Returns**: <code>MessageEmbed</code> - Mute log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Nickname | <code>string</code> | Nickname to assign |
+| AnyMember | <code>GuildMemberResolvable</code> | Member to mute |
 
 **Example**  
 ```js
-nickall prefix ༼ つ ◕_◕ ༽つ  
--OR-  
-nickall append ( ͡° ͜ʖ ͡°)  
--OR-  
-nickall clear  
--OR-  
-nickall Ribbon
+mute Muffin
 ```
 <a name="module_nickname"></a>
 
-## nickname ⇒ <code>Message</code>
+## nickname ⇒ <code>MessageEmbed</code>
 Moderation NickCommand - Nickname a single member  
 **Aliases**: `nick`
 
-**Returns**: <code>Message</code> - Confirmation the nickname was assigned  
+**Returns**: <code>MessageEmbed</code> - Nickname log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | Member to give a nickname |
-| NewNickname | <code>string</code> | Nickname to assign |
+| AnyMember | <code>GuildMemberResolvable</code> | Member to give a nickname |
+| NewNickname | <code>StringResolvable</code> | Nickname to assign |
 
 **Example**  
 ```js
@@ -1411,7 +1609,7 @@ Moderation PurgeCommand - Quickly delete a certain amount of messages
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MessageAmount | <code>number</code> | The amount of messages to delete, between 1 and 99 |
+| MessageAmount | <code>Number</code> | The amount of messages to delete, between 1 and 99 |
 
 **Example**  
 ```js
@@ -1419,16 +1617,16 @@ purge 10
 ```
 <a name="module_regexmatchtoggle"></a>
 
-## regexmatchtoggle ⇒ <code>Message</code>
+## regexmatchtoggle ⇒ <code>MessageEmbed</code>
 Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this server  
 **Aliases**: `rmt`, `regexmatch`
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>boolean</code> | True or False |
+| Option | <code>BooleanResolvable</code> | True or False |
 
 **Example**  
 ```js
@@ -1436,16 +1634,16 @@ regexmatchtoggle enable
 ```
 <a name="module_setmemberlogs"></a>
 
-## setmemberlogs ⇒ <code>Message</code>
+## setmemberlogs ⇒ <code>MessageEmbed</code>
 Moderation SetMemberlogsCommand - Sets the channel used for member logs  
 **Aliases**: `setmember`
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Returns**: <code>MessageEmbed</code> - Setmemberlogs confirmation log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| LogChannel | <code>channel</code> | The channel to use for member logs |
+| LogChannel | <code>ChannelResolvable</code> | The channel to use for member logs |
 
 **Example**  
 ```js
@@ -1453,16 +1651,16 @@ setmemberlogs logs
 ```
 <a name="module_setmodlogs"></a>
 
-## setmodlogs ⇒ <code>Message</code>
+## setmodlogs ⇒ <code>MessageEmbed</code>
 Moderation SetModlogsCommand - Sets the channel used for mod logs  
 **Aliases**: `setmod`
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Returns**: <code>MessageEmbed</code> - Setmodlogs confirmation log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| LogChannel | <code>channel</code> | The channel to use for mod logs |
+| LogChannel | <code>ChannelResolvable</code> | The channel to use for mod logs |
 
 **Example**  
 ```js
@@ -1480,8 +1678,8 @@ This is essentially a kick with the added effect of deleting all their past mess
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | The member to softban from the server |
-| TheReason | <code>string</code> | Reason for this softban. |
+| AnyMember | <code>GuildMemberResolvable</code> | The member to softban from the server |
+| TheReason | <code>StringResolvable</code> | Reason for this softban. |
 
 **Example**  
 ```js
@@ -1499,9 +1697,9 @@ Given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | The member to ban from the server |
-| Time | <code>string</code> | The amount of time this member should be banned |
-| [TheReason] | <code>string</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages |
+| AnyMember | <code>GuildMemberResolvable</code> | The member to ban from the server |
+| Time | <code>StringResolvable</code> | The amount of time this member should be banned |
+| [TheReason] | <code>StringResolvable</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages |
 
 **Example**  
 ```js
@@ -1515,6 +1713,7 @@ These are messages the bot will repeat in a given channel on a given interval
 Useful for repeating about rules and such  
 You can save multiple messages with varying intervals and channels by using this command multiple times  
 The first time the message will be send is the next periodic check the bot will do (which is every minute) after adding the timed message  
+The format for the interval is in minutes, hours or days in the format of `5m`, `2h` or `1d`  
 **Aliases**: `timedmsgs`, `timedmsg`, timedmessages`, `timer`, `tm`
 
 **Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
@@ -1522,9 +1721,9 @@ The first time the message will be send is the next periodic check the bot will 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Interval | <code>string</code> | The interval at which the message(s) should be repeated |
-| Channel | <code>channel</code> | The channel to send the timed message in |
-| Message | <code>string</code> | The message(s) to repeat |
+| Interval | <code>StringResolvable</code> | The interval at which the message(s) should be repeated |
+| Channel | <code>ChannelResolvable</code> | The channel to send the timed message in |
+| Message | <code>StringResolvable</code> | The message(s) to repeat |
 
 **Example**  
 ```js
@@ -1548,16 +1747,16 @@ Moderation TimerRemoveCommand - Remove a specified timed message
 **Category**: moderation  
 <a name="module_unknownmessages"></a>
 
-## unknownmessages ⇒ <code>Message</code>
+## unknownmessages ⇒ <code>MessageEmbed</code>
 Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off  
 **Aliases**: `unknowns`, `unkmsg`
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Returns**: <code>MessageEmbed</code> - Unknownmessages confirmation log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>boolean</code> | True or False |
+| Option | <code>BooleanResolvable</code> | True or False |
 
 **Example**  
 ```js
@@ -1573,6 +1772,23 @@ Note that the bot does need to be able to be able to access this channel to unlo
 
 **Returns**: <code>Message</code> - Confirmation the channel is unlocked  
 **Category**: moderation  
+<a name="module_unmute"></a>
+
+## unmute ⇒ <code>MessageEmbed</code>
+Moderation UnmuteCommand - Unmutes a previously muted member
+**Aliases**: `um`
+
+**Returns**: <code>MessageEmbed</code> - Unmute log  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyMember | <code>GuildMemberResolvable</code> | The member to remove a role from |
+
+**Example**  
+```js
+unmute Muffin
+```
 <a name="module_warn"></a>
 
 ## warn ⇒ <code>MessageEmbed</code>
@@ -1585,9 +1801,9 @@ Please note that the bot will not auto ban when the member has a certain amount 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | The member to give warning points |
-| WarningPoints | <code>number</code> | The amount of warning points to give |
-| TheReason | <code>string</code> | Reason for warning |
+| AnyMember | <code>GuildMemberResolvable</code> | The member to give warning points |
+| WarningPoints | <code>Number</code> | The amount of warning points to give |
+| TheReason | <code>StringResolvable</code> | Reason for warning |
 
 **Example**  
 ```js
@@ -1675,7 +1891,7 @@ There are 4 ways to queue songs
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Video | <code>string</code> | One of the options linking to a video to play |
+| Video | <code>StringResolvable</code> | One of the options linking to a video to play |
 
 **Example**  
 ```js
@@ -1693,7 +1909,7 @@ Songs are paginated in sets of 5
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [Page] | <code>string</code> | Page to show |
+| [Page] | <code>StringResolvable</code> | Page to show |
 
 **Example**  
 ```js
@@ -1743,7 +1959,7 @@ You need to be in a voice channel before you can use this command
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [force] | <code>string</code> | Force the skip if you are the requester or a server moderator |
+| [force] | <code>StringResolvable</code> | Force the skip if you are the requester or a server moderator |
 
 **Example**  
 ```js
@@ -1783,7 +1999,7 @@ You need to be in a voice channel before you can use this command
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [Volume] | <code>number</code> | The new volume to set |
+| [Volume] | <code>Number</code> | The new volume to set |
 
 **Example**  
 ```js
@@ -1801,7 +2017,7 @@ Can only be used in NSFW marked channels!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>string</code> | Something you want to find |
+| Query | <code>StringResolvable</code> | Something you want to find |
 
 **Example**  
 ```js
@@ -1819,7 +2035,7 @@ Can only be used in NSFW marked channels!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>string</code> | Something you want to find |
+| Query | <code>StringResolvable</code> | Something you want to find |
 
 **Example**  
 ```js
@@ -1837,7 +2053,7 @@ Can only be used in NSFW marked channels!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>string</code> | Something you want to find |
+| Query | <code>StringResolvable</code> | Something you want to find |
 
 **Example**  
 ```js
@@ -1855,7 +2071,7 @@ Can only be used in NSFW marked channels!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>string</code> | Something you want to find |
+| Query | <code>StringResolvable</code> | Something you want to find |
 
 **Example**  
 ```js
@@ -1873,7 +2089,7 @@ Can only be used in NSFW marked channels!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>string</code> | Something you want to find |
+| Query | <code>StringResolvable</code> | Something you want to find |
 
 **Example**  
 ```js
@@ -1891,7 +2107,7 @@ Can only be used in NSFW marked channels!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>string</code> | Something you want to find |
+| Query | <code>StringResolvable</code> | Something you want to find |
 
 **Example**  
 ```js
@@ -1915,8 +2131,8 @@ Owner CustomTopUpCommand - Daniël Ocean doesn't give a crap about legality
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | The member you want to give some chips |
-| ChipsAmount | <code>number</code> | The amount of chips you want to give |
+| AnyMember | <code>GuildMemberResolvable</code> | The member you want to give some chips |
+| ChipsAmount | <code>Number</code> | The amount of chips you want to give |
 
 **Example**  
 ```js
@@ -1948,7 +2164,7 @@ Primarily meant for mobile and when members have annoying untaggable names
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>member</code> | Member to make a mention to |
+| AnyMember | <code>GuildMemberResolvable</code> | Member to make a mention to |
 
 **Example**  
 ```js
@@ -1967,7 +2183,7 @@ If you want to get the shiny sprite displayed add the `--shiny` at the end of th
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PokemonName | <code>string</code> | The name of the pokemon you want to find |
+| PokemonName | <code>StringResolvable</code> | The name of the pokemon you want to find |
 
 **Example**  
 ```js
@@ -1987,7 +2203,7 @@ If you want to get the shiny sprite displayed add the `--shiny` at the end of th
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PokemonName | <code>string</code> | The name of the pokemon you want to get flavor text for |
+| PokemonName | <code>StringResolvable</code> | The name of the pokemon you want to get flavor text for |
 
 **Example**  
 ```js
@@ -2005,7 +2221,7 @@ For item names existing of multiple words (for example `life orb`) you can eithe
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ItemName | <code>string</code> | Name of the item to find |
+| ItemName | <code>StringResolvable</code> | Name of the item to find |
 
 **Example**  
 ```js
@@ -2022,7 +2238,7 @@ Pokémon AbilityCommand - Gets information on an ability in Pokémon
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AbilityName | <code>string</code> | The name of the ability you  want to find |
+| AbilityName | <code>StringResolvable</code> | The name of the ability you  want to find |
 
 **Example**  
 ```js
@@ -2040,7 +2256,7 @@ For move names existing of multiple words (for example `dragon dance`) you can e
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MoveName | <code>string</code> | The move you want to find |
+| MoveName | <code>StringResolvable</code> | The move you want to find |
 
 **Example**  
 ```js
@@ -2057,7 +2273,7 @@ Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Types | <code>string</code> | One or two types to find the matchup for |
+| Types | <code>StringResolvable</code> | One or two types to find the matchup for |
 
 **Example**  
 ```js
@@ -2074,7 +2290,7 @@ Searches AnimeCommand - Gets information about any anime from MyAnimeList
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyAnime | <code>string</code> | anime to look up |
+| AnyAnime | <code>StringResolvable</code> | anime to look up |
 
 **Example**  
 ```js
@@ -2093,7 +2309,7 @@ Server admins can disable the `[[]]` matching by using the `rmt off` command
 
 | Param | Type | Description |
 | --- | --- | --- |
-| TweakName | <code>string</code> | Name of the tweak to find |
+| TweakName | <code>StringResolvable</code> | Name of the tweak to find |
 
 **Example**  
 ```js
@@ -2110,7 +2326,7 @@ Searches DefineCommand - Define a word using glosbe
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Word | <code>string</code> | the word you want to define |
+| Word | <code>StringResolvable</code> | the word you want to define |
 
 **Example**  
 ```js
@@ -2127,7 +2343,7 @@ Searches DocsCommand - Get an entry from the Discord.JS documentation
 
 | Param | Type | Description |
 | --- | --- | --- |
-| DocEntry | <code>string</code> | The entry from the docs you want to get info about |
+| DocEntry | <code>StringResolvable</code> | The entry from the docs you want to get info about |
 
 **Example**  
 ```js
@@ -2144,7 +2360,7 @@ Searches EShopCommand - Gets information about a game in the Nintendo Switch eSh
 
 | Param | Type | Description |
 | --- | --- | --- |
-| GameName | <code>string</code> | Game that you want to find in the eShop |
+| GameName | <code>StringResolvable</code> | Game that you want to find in the eShop |
 
 **Example**  
 ```js
@@ -2161,7 +2377,7 @@ Searches GamesCommand - Gets information about a game using IndieGamesDoneBad (I
 
 | Param | Type | Description |
 | --- | --- | --- |
-| GameName | <code>string</code> | The name of any game that you want to find |
+| GameName | <code>StringResolvable</code> | The name of any game that you want to find |
 
 **Example**  
 ```js
@@ -2179,7 +2395,7 @@ Note: prioritizes Knowledge Graphs for better searching
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SearchQuery | <code>string</code> | Thing to find on google |
+| SearchQuery | <code>StringResolvable</code> | Thing to find on google |
 
 **Example**  
 ```js
@@ -2196,7 +2412,7 @@ Searches ImageCommand - Gets an image through Google Images
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ImageQuery | <code>string</code> | Image to find on google images |
+| ImageQuery | <code>StringResolvable</code> | Image to find on google images |
 
 **Example**  
 ```js
@@ -2213,7 +2429,7 @@ Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SearchQuery | <code>string</code> | The dumb sh*t people need to use google for |
+| SearchQuery | <code>StringResolvable</code> | The dumb sh*t people need to use google for |
 
 **Example**  
 ```js
@@ -2230,7 +2446,7 @@ Searches MangaCommand - Gets information about any manga from MyAnimeList
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyManga | <code>string</code> | manga to look up |
+| AnyManga | <code>StringResolvable</code> | manga to look up |
 
 **Example**  
 ```js
@@ -2247,7 +2463,7 @@ Searches SteamCommand - Gets information about a game using Steam
 
 | Param | Type | Description |
 | --- | --- | --- |
-| GameName | <code>string</code> | The name of any game that you want to find |
+| GameName | <code>StringResolvable</code> | The name of any game that you want to find |
 
 **Example**  
 ```js
@@ -2264,7 +2480,7 @@ Searches MovieCommand - Find information about a movie using TheMovieDatabase
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MovieName | <code>string</code> | Name of the movie you want to find |
+| MovieName | <code>StringResolvable</code> | Name of the movie you want to find |
 
 **Example**  
 ```js
@@ -2281,7 +2497,7 @@ Searches TVCommand - Find information about a TV series using TheMovieDatabase
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SeriesName | <code>string</code> | Name of the TV serie you want to find |
+| SeriesName | <code>StringResolvable</code> | Name of the TV serie you want to find |
 
 **Example**  
 ```js
@@ -2298,7 +2514,7 @@ Searches UrbanCommand - Define a word using UrbanDictionary
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PhraseQuery | <code>string</code> | Phrase that you want to define |
+| PhraseQuery | <code>StringResolvable</code> | Phrase that you want to define |
 
 **Example**  
 ```js
@@ -2316,7 +2532,7 @@ By default returns MessageEmbed. use `yts` to return just the URL and have in-cl
 
 | Param | Type | Description |
 | --- | --- | --- |
-| VideoQuery | <code>string</code> | Video to find on YouTube |
+| VideoQuery | <code>StringResolvable</code> | Video to find on YouTube |
 
 **Example**  
 ```js
@@ -2333,7 +2549,7 @@ Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMembers | <code>string</code> | List of members to monitor space delimited |
+| AnyMembers | <code>StringResolvable</code> | List of members to monitor space delimited |
 
 **Example**  
 ```js
@@ -2350,7 +2566,7 @@ Streamwatch TwitchOutputCommand - Configures the channel in which twitch notific
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyChannel | <code>channel</code> | Channel to output notifs to |
+| AnyChannel | <code>ChannelResolvable</code> | Channel to output notifs to |
 
 **Example**  
 ```js
@@ -2367,7 +2583,7 @@ Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>boolean</code> | True or False |
+| Option | <code>BooleanResolvable</code> | True or False |
 
 **Example**  
 ```js
