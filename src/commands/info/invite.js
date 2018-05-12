@@ -62,8 +62,8 @@ module.exports = class InviteCommand extends Command {
       .setThumbnail('https://favna.xyz/images/appIcons/ribbon.png')
       .setURL('https://favna.xyz/ribbon')
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .addField('​', ' [Add me to your server](https://discord.now.sh/376520643862331396?p8)\n' +
-        '[Join the Support Server](https://discord.gg/zdt5yQt)\n' +
+      .addField('​', ' [Add me to your server](https://favna.xyz/redirect/ribbon)\n' +
+        '[Join the Support Server](https://favna.xyz/redirect/server)\n' +
         '[Website](https://favna.xyz/ribbon)\n' +
         '[GitHub](https://github.com/Favna/Ribbon)\n' +
         '[Wiki](https://github.com/Favna/Ribbon/wiki)');

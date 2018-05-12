@@ -89,9 +89,9 @@ module.exports = class RibbonStatsCommand extends Command {
       .addField('NodeJS', process.version, true)
       .addField('Platform', this.fetchPlatform(process.platform.toLowerCase()), true)
       .addField('Memory Usage', `${roundNumber(process.memoryUsage().heapUsed / 10485.76) / 100} MB`, true)
-      .addField('Invite Me', '[Click Here](https://discord.now.sh/376520643862331396?p8)', true)
+      .addField('Invite Me', '[Click Here](https://favna.xyz/redirect/ribbon)', true)
       .addField('Source', '[Available on GitHub](https://github.com/favna/ribbon)', true)
-      .addField('Support', '[Server Invite](https://discord.gg/zdt5yQt)', true)
+      .addField('Support', '[Server Invite](https://favna.xyz/redirect/server)', true)
       .addField('Uptime', moment.duration(this.client.uptime).format('DD [days], HH [hours and] mm [minutes]'), true)
       .addField('Current server time', moment().format('MMMM Do YYYY [|] HH:mm.ss [UTC]ZZ'), false)
       .addField('\u200b', oneLine`Use the \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\` command to get the list of commands available to you in a DM. 
