@@ -264,8 +264,14 @@ This may also mean that the bot won&#39;t have access if it doesn&#39;t have adm
 <dt><a href="#module_tempban">tempban</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation TempBanCommand - Temporary bans a member, then unbans them when the timer expires<br>Given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>tb</code>, <code>rottenbanana</code></p>
 </dd>
-<dt><a href="#module_timeradd">timeradd</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation TimerAddCommand - Toggle and set timed messages<br>These are messages the bot will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check the bot will do (which is every minute) after adding the timed message<br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p>
+<dt><a href="#module_timeradd">timeradd</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation TimerAddCommand - Store timed messages<br>These are messages the bot will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check the bot will do (which is every minute) after adding the timed message<br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p>
+</dd>
+<dt><a href="#module_timerlist">timerlist</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation TimerListCommand - List all stored timed messages in the current guild<br><strong>Aliases</strong>: <code>tl</code>, <code>timelist</code></p>
+</dd>
+<dt><a href="#module_timerremove">timerremove</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation TimerRemoveCommand - Remove a specified timed message<br><strong>Aliases</strong>: <code>tr</code>, <code>timeremove</code>, <code>timerdelete</code>, <code>timedelete</code></p>
 </dd>
 <dt><a href="#module_unknownmessages">unknownmessages</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
@@ -1503,15 +1509,15 @@ tempban Kai
 ```
 <a name="module_timeradd"></a>
 
-## timeradd ⇒ <code>Message</code>
-Moderation TimerAddCommand - Toggle and set timed messages  
+## timeradd ⇒ <code>MessageEmbed</code>
+Moderation TimerAddCommand - Store timed messages  
 These are messages the bot will repeat in a given channel on a given interval  
 Useful for repeating about rules and such  
 You can save multiple messages with varying intervals and channels by using this command multiple times  
 The first time the message will be send is the next periodic check the bot will do (which is every minute) after adding the timed message  
 **Aliases**: `timedmsgs`, `timedmsg`, timedmessages`, `timer`, `tm`
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
 **Category**: moderation  
 
 | Param | Type | Description |
@@ -1524,6 +1530,22 @@ The first time the message will be send is the next periodic check the bot will 
 ```js
 timeradd #general 1d Please read the rules everyone!
 ```
+<a name="module_timerlist"></a>
+
+## timerlist ⇒ <code>MessageEmbed</code>
+Moderation TimerListCommand - List all stored timed messages in the current guild  
+**Aliases**: `tl`, `timelist`
+
+**Returns**: <code>MessageEmbed</code> - List of all timed messages  
+**Category**: moderation  
+<a name="module_timerremove"></a>
+
+## timerremove ⇒ <code>MessageEmbed</code>
+Moderation TimerRemoveCommand - Remove a specified timed message  
+**Aliases**: `tr`, `timeremove`, `timerdelete`, `timedelete`
+
+**Returns**: <code>MessageEmbed</code> - Confirmation the timed message was removed  
+**Category**: moderation  
 <a name="module_unknownmessages"></a>
 
 ## unknownmessages ⇒ <code>Message</code>

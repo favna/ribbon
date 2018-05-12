@@ -33,11 +33,11 @@ const Database = require('better-sqlite3'),
   path = require('path'),
   {MessageEmbed} = require('discord.js'),
   {promisify} = require('util'),
-  {ordinal} = require(path.join(__dirname, 'components/util.js')),
+  {ordinal} = require(path.join(__dirname, 'util.js')),
   {stripIndents} = require('common-tags');
   
 const checkReminders = async function (client) {
-  const conn = new Database(path.join(__dirname, 'data/databases/reminders.sqlite3'));
+  const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
 
   try {
     const query = conn.prepare('SELECT * FROM "reminders"').all();
@@ -156,39 +156,39 @@ const leavemessage = async function (member) {
 };
 
 const lotto = function (client) {
-  const conn = new Database(path.join(__dirname, 'data/databases/casino.sqlite3'));
+  const conn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3'));
 
   try {
     const tables = conn.prepare('SELECT name FROM sqlite_master WHERE type=\'table\'').all();
 
-    for (const row in tables) {
-      const guildData = conn.prepare(`SELECT * FROM "${tables[row].name}"`).all(),
-        winner = Math.floor(Math.random() * guildData.length),
-        prevBal = guildData[winner].balance; // eslint-disable-line sort-vars
+    for (const table in tables) {
+      const rows = conn.prepare(`SELECT * FROM "${tables[table].name}"`).all(),
+        winner = Math.floor(Math.random() * rows.length),
+        prevBal = rows[winner].balance; // eslint-disable-line sort-vars
 
-      guildData[winner].balance += 2000;
+      rows[winner].balance += 2000;
 
-      conn.prepare(`UPDATE "${tables[row].name}" SET balance=$balance WHERE userID="${guildData[winner].userID}"`).run({balance: guildData[winner].balance});
+      conn.prepare(`UPDATE "${tables[table].name}" SET balance=$balance WHERE userID="${rows[winner].userID}"`).run({balance: rows[winner].balance});
 
       // eslint-disable-next-line one-var
-      const defaultChannel = client.guilds.get(tables[row].name).systemChannel,
+      const defaultChannel = client.guilds.get(tables[table].name).systemChannel,
         winnerEmbed = new MessageEmbed(),
-        winnerLastMessage = client.guilds.get(tables[row].name).members.get('112001393140723712').lastMessageChannelID,
-        winnerLastMessageChannel = winnerLastMessage ? client.guilds.get(tables[row].name).channels.get(winnerLastMessage) : null,
+        winnerLastMessage = client.guilds.get(tables[table].name).members.get('112001393140723712').lastMessageChannelID,
+        winnerLastMessageChannel = winnerLastMessage ? client.guilds.get(tables[table].name).channels.get(winnerLastMessage) : null,
         winnerLastMessageChannelPermitted = winnerLastMessageChannel ? winnerLastMessageChannel.permissionsFor(client.user).has('SEND_MESSAGES') : false;
 
       winnerEmbed
         .setColor('#7CFC00')
-        .setDescription(`Congratulations <@${guildData[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
-        .setAuthor(client.guilds.get(tables[row].name).members.get(guildData[winner].userID).displayName,
-          client.guilds.get(tables[row].name).members.get(guildData[winner].userID).user.displayAvatarURL({format: 'png'}))
+        .setDescription(`Congratulations <@${rows[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
+        .setAuthor(client.guilds.get(tables[table].name).members.get(rows[winner].userID).displayName,
+          client.guilds.get(tables[table].name).members.get(rows[winner].userID).user.displayAvatarURL({format: 'png'}))
         .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png')
-        .addField('Balance', `${prevBal} ➡ ${guildData[winner].balance}`);
+        .addField('Balance', `${prevBal} ➡ ${rows[winner].balance}`);
 
       if (winnerLastMessageChannelPermitted) {
-        winnerLastMessageChannel.send(`<@${guildData[winner].userID}>`, {embed: winnerEmbed});
+        winnerLastMessageChannel.send(`<@${rows[winner].userID}>`, {embed: winnerEmbed});
       } else if (defaultChannel) {
-        defaultChannel.send(`<@${guildData[winner].userID}>`, {embed: winnerEmbed});
+        defaultChannel.send(`<@${rows[winner].userID}>`, {embed: winnerEmbed});
       }
     }
   } catch (err) {
@@ -201,14 +201,45 @@ const lotto = function (client) {
 };
 
 const timermessages = function (client) {
-  const conn = new Database(path.join(__dirname, 'data/databases/timers.sqlite3'));
+  const conn = new Database(path.join(__dirname, '../data/databases/timers.sqlite3'));
 
   try {
-    const tables = conn.prepare('SELECT name FROM sqlite_master WHERE type=\'table\'').all();
+    const tables = conn.prepare('SELECT name FROM sqlite_master WHERE type=\'table\' AND name != \'sqlite_sequence\';').all();
 
-    return console.log(tables);
+    for (const table in tables) {
+      const rows = conn.prepare(`SELECT * FROM "${tables[table].name}"`).all();
+      
+      /* eslint-disable sort-vars*/
+      for (const row in rows) {
+        const timermoment = moment(rows[row].lastsend).add(rows[row].interval, 'ms'),
+          dura = moment.duration(timermoment.diff());
+
+        if (dura.asMinutes() <= 0) {
+          conn.prepare(`UPDATE "${tables[table].name}" SET lastsend=$lastsend WHERE id=$id;`).run({
+            id: rows[row].id,
+            lastsend: moment().format('YYYY-MM-DD HH:mm')
+          });
+          const guild = client.guilds.get(tables[table].name),
+            channel = guild.channels.get(rows[row].channel),
+            timerEmbed = new MessageEmbed(),
+            {me} = client.guilds.get(tables[table].name);
+          /* eslint-enable sort-vars*/
+
+          timerEmbed
+            .setAuthor('Ribbon Timed Message', me.user.displayAvatarURL({format: 'png'}))
+            .setColor(me.displayHexColor)
+            .setDescription(rows[row].content);
+
+          channel.send('', {embed: timerEmbed});
+        }
+      }
+    }
   } catch (err) {
-    return console.error(err);
+    client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
+    <@${client.owners[0].id}> Error occurred sending a timed message!
+    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    **Error Message:** ${err}
+    `);
   }
 };
 

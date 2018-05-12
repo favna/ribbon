@@ -249,18 +249,19 @@ class Ribbon {
   onReady () {
     return () => {
       console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
-      timermessages(this.client);
-      
+      const bot = this.client;
+
       setInterval(() => {
-        forceStopTyping();
+        forceStopTyping(bot);
+        timermessages(bot);
       }, 180000);
 
       setInterval(() => {
-        checkReminders();
+        checkReminders(bot);
       }, 300000);
 
       setInterval(() => {
-        lotto();
+        lotto(bot);
       }, 86400000);
     };
   }
