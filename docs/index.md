@@ -214,7 +214,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Moderation deleteCommandMessagesCommand - Configure whether the bot should delete command messages<br><strong>Aliases</strong>: <code>dcm</code></p>
 </dd>
 <dt><a href="#module_delrole">delrole</a></dt>
-<dd><p>Moderation DeleteRoleCommand - Delete the role of a member<br><strong>Aliases</strong>: <code>deleterole</code>, `d</p>
+<dd><p>Moderation DeleteRoleCommand - Delete the role of a member<br><strong>Aliases</strong>: <code>deleterole</code>, <code>dr</code>, <code>remrole</code>, <code>removerole</code></p>
 </dd>
 <dt><a href="#module_joinmessages">joinmessages</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join
@@ -261,6 +261,12 @@ This may also mean that the bot won&#39;t have access if it doesn&#39;t have adm
 <dt><a href="#module_softban">softban</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation SoftbanCommand - Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)<br>This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours<br><strong>Aliases</strong>: <code>sb</code>, <code>sban</code></p>
 </dd>
+<dt><a href="#module_tempban">tempban</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation TempBanCommand - Temporary bans a member, then unbans them when the timer expires<br>Given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>tb</code>, <code>rottenbanana</code></p>
+</dd>
+<dt><a href="#module_timeradd">timeradd</a> ⇒ <code>Message</code></dt>
+<dd><p>Moderation TimerAddCommand - Toggle and set timed messages<br>These are messages the bot will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check the bot will do (which is every minute) after adding the timed message<br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p>
+</dd>
 <dt><a href="#module_unknownmessages">unknownmessages</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
 </dd>
@@ -285,10 +291,11 @@ This may also mean that the bot won&#39;t have access if it doesn&#39;t have adm
 </dd>
 <dt><a href="#module_play">play</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Music PlaySongCommand - Starts playing music<br>You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it<br>If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
-There are 3 ways to queue songs  </p>
+There are 4 ways to queue songs  </p>
 <ol>
 <li>Youtube Search Query  </li>
-<li>Youtube URL  </li>
+<li>Youtube video URL  </li>
+<li>Youtube playlist URL</li>
 <li>Youtube video ID<br><strong>Aliases</strong>: <code>add</code>, <code>enqueue</code>, <code>start</code>, <code>join</code></li>
 </ol>
 </dd>
@@ -421,7 +428,7 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dd><p>Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send<br><strong>Aliases</strong>: <code>output</code>, <code>twitchout</code>, <code>twitchchannel</code></p>
 </dd>
 <dt><a href="#module_twitchtoggle">twitchtoggle</a> ⇒ <code>Message</code></dt>
-<dd><p>Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications<br><strong>Aliases</strong>: <code>twitchcon</code>, <code>twitchoff</code></p>
+<dd><p>Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications<br><strong>Aliases</strong>: <code>twitchon</code>, <code>twitchoff</code></p>
 </dd>
 </dl>
 
@@ -505,7 +512,7 @@ Casino MemberBalanceCommand - Retrieves the amount of chips another member has f
 
 **Example**  
 ```js
-mchips Sagiri
+mchips Rohul
 ```
 <a name="module_slots"></a>
 
@@ -1172,7 +1179,7 @@ Moderation BanCommand - Ban a bad member
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>member</code> | The member to ban from the server |
-| TheReason | <code>string</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages |
+| [TheReason] | <code>string</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages |
 
 **Example**  
 ```js
@@ -1216,7 +1223,7 @@ deletecommandmessages enable
 
 ## delrole
 Moderation DeleteRoleCommand - Delete the role of a member  
-**Aliases**: `deleterole`, `d
+**Aliases**: `deleterole`, `dr`, `remrole`, `removerole`
 
 **Category**: moderation  
 
@@ -1474,6 +1481,49 @@ This is essentially a kick with the added effect of deleting all their past mess
 ```js
 softban ImmortalZypther
 ```
+<a name="module_tempban"></a>
+
+## tempban ⇒ <code>MessageEmbed</code>
+Moderation TempBanCommand - Temporary bans a member, then unbans them when the timer expires  
+Given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`  
+**Aliases**: `tb`, `rottenbanana`
+
+**Returns**: <code>MessageEmbed</code> - Log of the ban  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyMember | <code>member</code> | The member to ban from the server |
+| Time | <code>string</code> | The amount of time this member should be banned |
+| [TheReason] | <code>string</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages |
+
+**Example**  
+```js
+tempban Kai
+```
+<a name="module_timeradd"></a>
+
+## timeradd ⇒ <code>Message</code>
+Moderation TimerAddCommand - Toggle and set timed messages  
+These are messages the bot will repeat in a given channel on a given interval  
+Useful for repeating about rules and such  
+You can save multiple messages with varying intervals and channels by using this command multiple times  
+The first time the message will be send is the next periodic check the bot will do (which is every minute) after adding the timed message  
+**Aliases**: `timedmsgs`, `timedmsg`, timedmessages`, `timer`, `tm`
+
+**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Interval | <code>string</code> | The interval at which the message(s) should be repeated |
+| Channel | <code>channel</code> | The channel to send the timed message in |
+| Message | <code>string</code> | The message(s) to repeat |
+
+**Example**  
+```js
+timeradd #general 1d Please read the rules everyone!
+```
 <a name="module_unknownmessages"></a>
 
 ## unknownmessages ⇒ <code>Message</code>
@@ -1591,10 +1641,11 @@ You need to be in a voice channel before you can use this command
 Music PlaySongCommand - Starts playing music  
 You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it  
 If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
-There are 3 ways to queue songs  
+There are 4 ways to queue songs  
 1. Youtube Search Query  
-2. Youtube URL  
-3. Youtube video ID  
+2. Youtube video URL  
+3. Youtube playlist URL
+4. Youtube video ID  
 **Aliases**: `add`, `enqueue`, `start`, `join`
 
 **Returns**: <code>MessageEmbed</code> - Title, duration and thumbnail of the video  
@@ -2287,7 +2338,7 @@ twitchoutput #twitch-notifications
 
 ## twitchtoggle ⇒ <code>Message</code>
 Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications  
-**Aliases**: `twitchcon`, `twitchoff`
+**Aliases**: `twitchon`, `twitchoff`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: streamwatch  
