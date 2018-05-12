@@ -30,7 +30,7 @@ const Database = require('better-sqlite3'),
   {Client, FriendlyError, SyncSQLiteProvider} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
-  {checkReminders, forceStopTyping, joinmessage, leavemessage, lotto, timermessages} = require(path.join(__dirname, 'components/modules.js'));
+  {checkReminders, forceStopTyping, joinmessage, leavemessage, lotto, timermessages} = require(path.join(__dirname, 'components/events.js'));
 /* eslint-enable sort-vars */
 
 class Ribbon {

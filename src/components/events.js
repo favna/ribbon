@@ -1,5 +1,5 @@
 /**
- * @file Ribbon Modules - These are modules used by Ribbon
+ * @file Ribbon Modules - Event modules for Ribbon
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @copyright © 2017-2018 Favna  
  *  
