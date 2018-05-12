@@ -38,7 +38,7 @@ const _ = require('underscore'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class OsuCommand extends Command {
   constructor (client) {

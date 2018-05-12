@@ -36,7 +36,7 @@
 
 const {Command} = require('discord.js-commando'), 
   {stripIndents} = require('common-tags'), 
-  {stopTyping, startTyping} = require('../../util.js');
+  {stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class KaiCommand extends Command {
   constructor (client) {

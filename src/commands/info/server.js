@@ -35,7 +35,7 @@
 const moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class ServerInfoCommand extends Command {
   constructor (client) {

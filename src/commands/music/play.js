@@ -48,7 +48,7 @@ const YouTube = require('simple-youtube-api'), // eslint-disable-line sort-vars
   {Command} = require('discord.js-commando'), // eslint-disable-line sort-vars
   {escapeMarkdown} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class PlaySongCommand extends Command {
   constructor (client) {

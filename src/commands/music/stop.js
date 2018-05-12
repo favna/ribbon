@@ -37,7 +37,7 @@
 
 const {Command} = require('discord.js-commando'), 
   {oneLine} = require('common-tags'), 
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class StopMusicCommand extends Command {
   constructor (client) {

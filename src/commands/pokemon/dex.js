@@ -45,7 +45,7 @@ const Fuse = require('fuse.js'),
   {PokeAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {BattlePokedex} = require(path.join(__dirname, '../../data/dex/pokedex')),
   {oneLine} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class DexCommand extends Command {
   constructor (client) {

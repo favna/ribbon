@@ -42,7 +42,7 @@ const Jimp = require('jimp'),
   {promisify} = require('util'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class ShipCommand extends Command {
   constructor (client) {

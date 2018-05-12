@@ -38,7 +38,7 @@
 
 const {Command} = require('discord.js-commando'),
   {oneLine} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class MaxLengthCommand extends Command {
   constructor (client) {

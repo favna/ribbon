@@ -38,7 +38,7 @@
 const Pornsearch = require('pornsearch'),
   {MessageEmbed} = require('discord.js'),
   {Command} = require('discord.js-commando'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class PornVidsCommand extends Command {
   constructor (client) {

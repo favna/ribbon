@@ -36,7 +36,7 @@
 
 const {Command} = require('discord.js-commando'), 
   {stripIndents} = require('common-tags'), 
-  {deleteCommandMessages, stopTyping, startTyping, userSearch} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping, userSearch} = require('../../components/util.js');
 
 module.exports = class TwitchMonitorsCommand extends Command {
   constructor (client) {

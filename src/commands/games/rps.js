@@ -37,7 +37,7 @@
 const random = require('node-random'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class RockPaperScissorCommand extends Command {
   constructor (client) {

@@ -42,7 +42,7 @@ const Fuse = require('fuse.js'),
   {BattleMovedex} = require(path.join(__dirname, '../../data/dex/moves')),
   {MoveAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {oneLine} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class MoveCommand extends Command {
   constructor (client) {

@@ -38,7 +38,7 @@ const fs = require('fs'),
   {Command} = require('discord.js-commando'),
   {splitMessage} = require('discord.js'),
   {stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class CopyPastaListCommand extends Command {
   constructor (client) {

@@ -39,7 +39,7 @@ const duration = require('moment-duration-format'), // eslint-disable-line no-un
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'),
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class RibbonStatsCommand extends Command {
   constructor (client) {

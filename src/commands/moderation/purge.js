@@ -35,7 +35,7 @@
  */
 
 const {Command} = require('discord.js-commando'), 
-  {stopTyping, startTyping} = require('../../util.js');
+  {stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class PurgeCommand extends Command {
   constructor (client) {

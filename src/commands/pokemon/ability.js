@@ -41,7 +41,7 @@ const Fuse = require('fuse.js'),
   {BattleAbilities} = require(path.join(__dirname, '../../data/dex/abilities')),
   {AbilityAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {oneLine} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class AbilityCommand extends Command {
   constructor (client) {

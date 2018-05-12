@@ -42,12 +42,7 @@ const Fuse = require('fuse.js'),
   {BattleItems} = require(path.join(__dirname, '../../data/dex/items')),
   {ItemAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {oneLine} = require('common-tags'),
-  {
-    capitalizeFirstLetter,
-    deleteCommandMessages,
-    stopTyping,
-    startTyping
-  } = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class ItemCommand extends Command {
   constructor (client) {

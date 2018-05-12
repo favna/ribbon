@@ -39,7 +39,7 @@ const path = require('path'),
   {MessageEmbed} = require('discord.js'),
   {BattleTypeChart} = require(path.join(__dirname, '../../data/dex/typechart')),
   {oneLine} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class TypeCommand extends Command {
   constructor (client) {

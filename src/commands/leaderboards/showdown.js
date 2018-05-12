@@ -41,7 +41,7 @@ const Fuse = require('fuse.js'),
   {MessageEmbed} = require('discord.js'),
   {TierAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {stripIndents} = require('common-tags'),
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class ShowdownCommand extends Command {
   constructor (client) {

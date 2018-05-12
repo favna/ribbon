@@ -41,7 +41,7 @@ const Database = require('better-sqlite3'),
   {MessageEmbed} = require('discord.js'),
   {SlotMachine, SlotSymbol} = require('slot-machine'),
   {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class SlotsCommand extends Command {
   constructor (client) {

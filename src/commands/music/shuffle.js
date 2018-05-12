@@ -37,7 +37,7 @@
 const {Command, util} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class ShuffleCommand extends Command {
   constructor (client) {

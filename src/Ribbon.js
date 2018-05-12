@@ -25,16 +25,13 @@
 
 /* eslint-disable sort-vars */
 const Database = require('better-sqlite3'),
-  Jimp = require('jimp'),
-  imgur = require('imgur'),
   moment = require('moment'),
   path = require('path'),
   request = require('snekfetch'),
   {Client, FriendlyError, SyncSQLiteProvider} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {promisify} = require('util'),
   {oneLine, stripIndents} = require('common-tags'),
-  {ordinal} = require(path.join(__dirname, 'util.js'));
+  {checkReminders, forceStopTyping, joinmessage, leavemessage, lotto, timermessages} = require(path.join(__dirname, 'components/modules.js'));
 /* eslint-enable sort-vars */
 
 class Ribbon {
@@ -62,170 +59,6 @@ class Ribbon {
         }
       }
     });
-  }
-
-  async checkReminders () {
-    const conn = new Database(path.join(__dirname, 'data/databases/reminders.sqlite3'));
-
-    try {
-      const query = conn.prepare('SELECT * FROM "reminders"').all();
-
-      for (const row in query) {
-        const remindTime = moment(query[row].remindTime),
-          dura = moment.duration(remindTime.diff()); // eslint-disable-line sort-vars
-
-        if (dura.asMinutes() <= 0) {
-          const user = await this.client.users.fetch(query[row].userID);
-
-          user.send({
-            embed: {
-              color: 10610610,
-              description: query[row].remindText,
-              author: {
-                name: 'Ribbon Reminders',
-                iconURL: this.client.user.displayAvatarURL({format: 'png'})
-              },
-              thumbnail: {url: 'https://favna.xyz/images/ribbonhost/reminders.png'}
-            }
-          });
-          conn.prepare('DELETE FROM "reminders" WHERE userID = $userid AND remindTime = $remindTime').run({
-            userid: query[row].userID,
-            remindTime: query[row].remindTime
-          });
-        }
-      }
-    } catch (err) {
-      this.client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
-      <@${this.client.owners[0].id}> Error occurred sending someone their reminder!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}
-      `);
-    }
-  }
-
-  lotto () {
-    const conn = new Database(path.join(__dirname, 'data/databases/casino.sqlite3'));
-
-    try {
-      const tables = conn.prepare('SELECT name FROM sqlite_master WHERE type=\'table\'').all();
-
-      for (const row in tables) {
-        const guildData = conn.prepare(`SELECT * FROM "${tables[row].name}"`).all(),
-          winner = Math.floor(Math.random() * guildData.length),
-          prevBal = guildData[winner].balance; // eslint-disable-line sort-vars
-
-        guildData[winner].balance += 2000;
-
-        conn.prepare(`UPDATE "${tables[row].name}" SET balance=$balance WHERE userID="${guildData[winner].userID}"`).run({balance: guildData[winner].balance});
-
-        // eslint-disable-next-line one-var
-        const defaultChannel = this.client.guilds.get(tables[row].name).systemChannel,
-          winnerEmbed = new MessageEmbed(),
-          winnerLastMessage = this.client.guilds.get(tables[row].name).members.get('112001393140723712').lastMessageChannelID,
-          winnerLastMessageChannel = winnerLastMessage ? this.client.guilds.get(tables[row].name).channels.get(winnerLastMessage) : null,
-          winnerLastMessageChannelPermitted = winnerLastMessageChannel ? winnerLastMessageChannel.permissionsFor(this.client.user).has('SEND_MESSAGES') : false;
-
-        winnerEmbed
-          .setColor('#7CFC00')
-          .setDescription(`Congratulations <@${guildData[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
-          .setAuthor(this.client.guilds.get(tables[row].name).members.get(guildData[winner].userID).displayName,
-            this.client.guilds.get(tables[row].name).members.get(guildData[winner].userID).user.displayAvatarURL({format: 'png'}))
-          .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png')
-          .addField('Balance', `${prevBal} ➡ ${guildData[winner].balance}`);
-
-        if (winnerLastMessageChannelPermitted) {
-          winnerLastMessageChannel.send(`<@${guildData[winner].userID}>`, {embed: winnerEmbed});
-        } else if (defaultChannel) {
-          defaultChannel.send(`<@${guildData[winner].userID}>`, {embed: winnerEmbed});
-        }
-      }
-    } catch (err) {
-      this.client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
-      <@${this.client.owners[0].id}> Error occurred giving someone their lotto payout!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}
-      `);
-    }
-  }
-
-  forceStopTyping () {
-    const allChannels = this.client.channels;
-
-    for (const channel of allChannels.values()) {
-      if (channel.type === 'text' || channel.type === 'dm' || channel.type === 'group') {
-        if (this.client.user.typingDurationIn(channel) > 10000) {
-          channel.stopTyping(true);
-        }
-      }
-    }
-  }
-
-  async joinmessage (member) {
-    Jimp.prototype.getBase64Async = promisify(Jimp.prototype.getBase64);
-    /* eslint-disable sort-vars*/
-    const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
-      border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
-      canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
-      newMemberEmbed = new MessageEmbed(),
-      fontLarge = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-large.fnt')),
-      fontMedium = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-medium.fnt')),
-      mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
-    /* eslint-enable sort-vars*/
-
-    avatar.resize(136, Jimp.AUTO);
-    mask.resize(136, Jimp.AUTO);
-    border.resize(136, Jimp.AUTO);
-    avatar.mask(mask, 0, 0);
-    avatar.composite(border, 0, 0);
-    canvas.blit(avatar, 5, 5);
-    canvas.print(fontLarge, 155, 10, 'welcome'.toUpperCase());
-    canvas.print(fontMedium, 160, 60, `you are the ${ordinal(member.guild.memberCount)} member`.toUpperCase());
-    canvas.print(fontMedium, 160, 80, `of ${member.guild.name}`.toUpperCase());
-
-    const base64 = await canvas.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
-      upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
-
-    newMemberEmbed
-      .setColor('#80F31F')
-      .setTitle('NEW MEMBER!')
-      .setDescription(`Please give a warm welcome to <@${member.id}>`)
-      .setImage(upload.data.link);
-
-    member.guild.channels.get(member.guild.settings.get('joinmsgchannel')).send('', {embed: newMemberEmbed});
-  }
-
-  async leavemessages (member) {
-    Jimp.prototype.getBase64Async = promisify(Jimp.prototype.getBase64);
-    /* eslint-disable sort-vars*/
-    const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
-      border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
-      canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
-      leaveMemberEmbed = new MessageEmbed(),
-      fontLarge = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-large.fnt')),
-      fontMedium = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-medium.fnt')),
-      mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
-      /* eslint-enable sort-vars*/
-
-    avatar.resize(136, Jimp.AUTO);
-    mask.resize(136, Jimp.AUTO);
-    border.resize(136, Jimp.AUTO);
-    avatar.mask(mask, 0, 0);
-    avatar.composite(border, 0, 0);
-    canvas.blit(avatar, 5, 5);
-    canvas.print(fontLarge, 155, 10, 'goodbye'.toUpperCase());
-    canvas.print(fontMedium, 160, 60, `there are now ${member.guild.memberCount} members`.toUpperCase());
-    canvas.print(fontMedium, 160, 80, `on ${member.guild.name}`.toUpperCase());
-
-    const base64 = await canvas.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
-      upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
-
-    leaveMemberEmbed
-      .setColor('#F4BF42')
-      .setTitle('Member Left 😢')
-      .setDescription(`You will be missed <@${member.id}>`)
-      .setImage(upload.data.link);
-
-    member.guild.channels.get(member.guild.settings.get('leavemsgchannel')).send('', {embed: leaveMemberEmbed});
   }
 
   onCmdBlock () {
@@ -312,7 +145,7 @@ class Ribbon {
       }
 
       if (member.guild.settings.get('joinmsgs', false) && member.guild.settings.get('joinmsgchannel', null)) {
-        this.joinmessage(member);
+        joinmessage(member);
       }
     };
   }
@@ -349,7 +182,7 @@ class Ribbon {
       }
 
       if (member.guild.settings.get('leavemsgs', false) && member.guild.settings.get('leavemsgchannel', null)) {
-        this.leavemessages(member);
+        leavemessage(member);
       }
     };
   }
@@ -417,18 +250,18 @@ class Ribbon {
   onReady () {
     return () => {
       console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
-      const bot = this;
-
+      timermessages(this.client);
+      
       setInterval(() => {
-        bot.forceStopTyping();
+        forceStopTyping();
       }, 180000);
 
       setInterval(() => {
-        bot.checkReminders();
+        checkReminders();
       }, 300000);
 
       setInterval(() => {
-        bot.lotto();
+        lotto();
       }, 86400000);
     };
   }

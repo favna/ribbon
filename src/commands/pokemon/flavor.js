@@ -46,7 +46,7 @@ const Fuse = require('fuse.js'),
   {MessageEmbed} = require('discord.js'),
   {PokeAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {BattlePokedex} = require(path.join(__dirname, '../../data/dex/pokedex')),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class FlavorCommand extends Command {
   constructor (client) {

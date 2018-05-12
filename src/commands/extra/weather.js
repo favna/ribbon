@@ -38,7 +38,7 @@
 const weather = require('yahoo-weather'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class WeatherCommand extends Command {
   constructor (client) {

@@ -35,7 +35,7 @@
  */
 
 const {Command} = require('discord.js-commando'), 
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class LmgtfyCommand extends Command {
   constructor (client) {
