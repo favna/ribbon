@@ -173,7 +173,7 @@ const lotto = function (client) {
       // eslint-disable-next-line one-var
       const defaultChannel = client.guilds.get(tables[table].name).systemChannel,
         winnerEmbed = new MessageEmbed(),
-        winnerLastMessage = client.guilds.get(tables[table].name).members.get('112001393140723712').lastMessageChannelID,
+        winnerLastMessage = client.guilds.get(tables[table].name).members.get(rows[winner].userID).lastMessageChannelID,
         winnerLastMessageChannel = winnerLastMessage ? client.guilds.get(tables[table].name).channels.get(winnerLastMessage) : null,
         winnerLastMessageChannelPermitted = winnerLastMessageChannel ? winnerLastMessageChannel.permissionsFor(client.user).has('SEND_MESSAGES') : false;
 
