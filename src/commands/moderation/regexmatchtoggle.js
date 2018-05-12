@@ -30,11 +30,12 @@
  * @category moderation
  * @name regexmatchtoggle
  * @example regexmatchtoggle enable
- * @returns {Message} Confirmation the setting was stored
  * @param {BooleanResolvable} Option True or False
+ * @returns {MessageEmbed} Confirmation the setting was stored
  */
 
 const {Command} = require('discord.js-commando'), 
+  {MessageEmbed} = require('discord.js'), 
   {oneLine} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
@@ -73,16 +74,39 @@ module.exports = class RegexMatchToggleCommand extends Command {
   }
 
   hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
-  run (msg, args) {
+  run (msg, {option}) {
     startTyping(msg);
-    this.client.provider.set(msg.guild.id, 'regexmatches', args.option);
+
+    const modlogChannel = msg.guild.settings.get('modlogchannel',
+        msg.guild.channels.exists('name', 'mod-logs')
+          ? msg.guild.channels.find('name', 'mod-logs').id
+          : null),
+      regexMatchEmbed = new MessageEmbed();
+
+    msg.guild.settings.set('regexmatches', option);
+
+    regexMatchEmbed
+      .setColor('#3DFFE5')
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setDescription(oneLine`**Action:** Pattern matching commands are now ${option ? 'enabled' : 'disabled'}`)
+      .setTimestamp();
+
+    if (msg.guild.settings.get('modlogs', true)) {
+      if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
+        msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+              (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
+              This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+        msg.guild.settings.set('hasSentModLogMessage', true);
+      }
+      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: regexMatchEmbed}) : null;
+    }
 
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(oneLine`RegEx Matches have been ${args.option ? 'enabled' : 'disabled'}.`);
+    return msg.embed(regexMatchEmbed);
   }
 };

@@ -30,11 +30,12 @@
  * @category moderation
  * @name unknownmessages
  * @example unknownmessages enable
- * @returns {Message} Confirmation the setting was stored
  * @param {BooleanResolvable} Option True or False
+ * @returns {MessageEmbed} Unknownmessages confirmation log
  */
 
 const {Command} = require('discord.js-commando'), 
+  {MessageEmbed} = require('discord.js'), 
   {oneLine} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
@@ -76,14 +77,36 @@ module.exports = class UnknownMessagesCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
-  run (msg, args) {
+  run (msg, {option}) {
     startTyping(msg);
-    this.client.provider.set(msg.guild.id, 'unknownmessages', args.option);
+
+    const modlogChannel = msg.guild.settings.get('modlogchannel',
+        msg.guild.channels.exists('name', 'mod-logs')
+          ? msg.guild.channels.find('name', 'mod-logs').id
+          : null),
+      ukmEmbed = new MessageEmbed();
+
+    msg.guild.settings.set('unknownmessages', option);
+
+    ukmEmbed
+      .setColor('#3DFFE5')
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setDescription(oneLine`**Action:** Unknown command response messages are now ${option ? 'enabled' : 'disabled'}`)
+      .setTimestamp();
+
+    if (msg.guild.settings.get('modlogs', true)) {
+      if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
+        msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+              (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
+              This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+        msg.guild.settings.set('hasSentModLogMessage', true);
+      }
+      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: ukmEmbed}) : null;
+    }
 
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(oneLine`Unknown Command messages have been
-                        ${args.option ? 'enabled. Get those commands!' : 'disabled. Peace and quiet when people spam the bot incorrectly achieved!'}`);
+    return msg.embed(ukmEmbed);
   }
 };

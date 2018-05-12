@@ -124,12 +124,12 @@ module.exports = class WarnCommand extends Command {
             **Current Warning Points:** ${newPoints}
             **Reason:** ${reason !== '' ? reason : 'No reason has been added by the moderator'}`);
 
-      if (msg.guild.settings.get(msg.guild, 'modlogs', true)) {
-        if (!msg.guild.settings.get(msg.guild, 'hasSentModLogMessage', false)) {
+      if (msg.guild.settings.get('modlogs', true)) {
+        if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
           msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
                                   (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
                                   This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-          msg.guild.settings.set(msg.guild, 'hasSentModLogMessage', true);
+          msg.guild.settings.set('hasSentModLogMessage', true);
         }
         modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: warnEmbed}) : null;
       }

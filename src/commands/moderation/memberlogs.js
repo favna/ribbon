@@ -30,12 +30,13 @@
  * @category moderation
  * @name memberlogs
  * @example memberlogs enable
- * @returns {Message} Confirmation the setting was stored
  * @param {BooleanResolvable} Option True or False
+ * @returns {MessageEmbed} Memberlogs confirmation log
  */
 
 const {Command} = require('discord.js-commando'), 
-  {oneLine} = require('common-tags'), 
+  {MessageEmbed} = require('discord.js'), 
+  {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class MemberLogsCommand extends Command {
@@ -76,16 +77,39 @@ module.exports = class MemberLogsCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run (msg, args) {
+  run (msg, {option}) {
     startTyping(msg);
-    this.client.provider.set(msg.guild.id, 'memberlogs', args.option);
+
+    const memberLogsEmbed = new MessageEmbed(),
+      modlogChannel = msg.guild.settings.get('modlogchannel',
+        msg.guild.channels.exists('name', 'mod-logs')
+          ? msg.guild.channels.find('name', 'mod-logs').id
+          : null);
+
+    msg.guild.settings.set(msg.guild.id, 'memberlogs', option);
+
+    memberLogsEmbed
+      .setColor('#3DFFE5')
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setDescription(stripIndents`
+  **Action:** Member logs are now ${option ? 'enabled' : 'disabled'}
+  **Details:** Please ensure you configure memberlogs with \`${msg.guild.commandPrefix}setmodlogs\` or have a channel named \`member-logs\`
+  `)
+      .setTimestamp();
+
+    if (msg.guild.settings.get('modlogs', true)) {
+      if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
+        msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+              (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
+              This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+        msg.guild.settings.set('hasSentModLogMessage', true);
+      }
+      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: memberLogsEmbed}) : null;
+    }
 
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(oneLine`member logs have been
-        ${args.option 
-    ? 'enabled. Please ensure there is a channel named "member-logs" and that I have access to it!' 
-    : 'disabled. No need for a member-logs channel'}.`);
+    return msg.embed(memberLogsEmbed);
   }
 };

@@ -32,6 +32,7 @@
  * @example delrole Favna Member
  * @param {GuildMemberResolvable} AnyMember The member to remove a role from
  * @param {RoleResolvable} AnyRole The role to remove
+ * @returns {MessageEmbed} Delete role log
  */
 
 const moment = require('moment'),
@@ -90,7 +91,7 @@ module.exports = class DeleteRoleCommand extends Command {
 
         if (roleRemove) {
           roleRemoveEmbed
-            .setColor('#AAEFE6')
+            .setColor('#4A9E93')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
             .setDescription(stripIndents`**Action:** Removed ${role.name} from ${member.displayName}`)
             .setTimestamp();

@@ -30,13 +30,14 @@
  * @category moderation
  * @name nickname
  * @example nick Muffin Cupcake
- * @returns {Message} Confirmation the nickname was assigned
  * @param {GuildMemberResolvable} AnyMember Member to give a nickname
  * @param {StringResolvable} NewNickname Nickname to assign
+ * @returns {MessageEmbed} Nickname log
  */
 
 const moment = require('moment'),
   {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'), 
   {oneLine, stripIndents} = require('common-tags'),  
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
@@ -77,15 +78,46 @@ module.exports = class NickCommand extends Command {
   run (msg, {member, nickname}) {
     startTyping(msg);
     if (member.manageable) {
+
+      const modlogChannel = msg.guild.settings.get('modlogchannel',
+          msg.guild.channels.exists('name', 'mod-logs')
+            ? msg.guild.channels.find('name', 'mod-logs').id
+            : null),
+        nicknameEmbed = new MessageEmbed(),
+        oldName = member.displayName;
+
       try {
         if (nickname === 'clear') {
           member.setNickname('');
         } else {
           member.setNickname(nickname);
         }
-        stopTyping(msg);
 
-        return msg.reply(`${nickname === 'clear' ? `removed <@${member.id}>'s nickname` : `assigned \`${nickname}\` as nickname to <@${member.id}>`}`);
+        nicknameEmbed
+          .setColor('#3DFFE5')
+          .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+          .setDescription(stripIndents`
+        **Action:** Nickname change'}
+        **Member:** <@${member.id}> (${member.user.tag})
+        **Old name:** ${oldName}
+        **New name:** ${member.displayName}
+        `)
+          .setTimestamp();
+
+        if (msg.guild.settings.get('modlogs', true)) {
+          if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
+            msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+                      (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
+                      This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+            msg.guild.settings.set('hasSentModLogMessage', true);
+          }
+          modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: nicknameEmbed}) : null;
+        }
+      
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+      
+        return msg.embed(nicknameEmbed);
       } catch (err) {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
