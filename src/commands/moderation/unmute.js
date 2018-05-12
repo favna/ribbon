@@ -24,15 +24,14 @@
  */
 
 /**
- * @file Moderation DeleteRoleCommand - Delete the role of a member  
- * **Aliases**: `deleterole`, `dr`, `remrole`, `removerole`
+ * @file Moderation UnmuteCommand - Unmutes a previously muted member
+ * **Aliases**: `um`
  * @module
  * @category moderation
- * @name delrole
- * @example delrole Favna Member
+ * @name unmute
+ * @example unmute Muffin
  * @param {GuildMemberResolvable} AnyMember The member to remove a role from
- * @param {RoleResolvable} AnyRole The role to remove
- * @returns {MessageEmbed} Delete role log
+ * @returns {MessageEmbed} Unmute log
  */
 
 const moment = require('moment'),
@@ -41,16 +40,16 @@ const moment = require('moment'),
   {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
-module.exports = class DeleteRoleCommand extends Command {
+module.exports = class UnmuteCommand extends Command {
   constructor (client) {
     super(client, {
-      name: 'delrole',
-      memberName: 'delrole',
+      name: 'unmute',
+      memberName: 'unmute',
       group: 'moderation',
-      aliases: ['deleterole', 'dr', 'remrole', 'removerole'],
-      description: 'Deletes a role from a member',
-      format: 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
-      examples: ['delrole favna tagrole1'],
+      aliases: ['um'],
+      description: 'Unmutes a previously muted member',
+      format: 'MemberID|MemberName(partial or full)',
+      examples: ['unmute Muffin'],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -59,13 +58,8 @@ module.exports = class DeleteRoleCommand extends Command {
       args: [
         {
           key: 'member',
-          prompt: 'Which member should I remove a role from?',
+          prompt: 'Which member should I unmute?',
           type: 'member'
-        },
-        {
-          key: 'role',
-          prompt: 'What role should I remove from that member?',
-          type: 'role'
         }
       ]
     });
@@ -75,38 +69,44 @@ module.exports = class DeleteRoleCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
   }
 
-  async run (msg, {member, role}) {
+  async run (msg, {member}) {
     startTyping(msg);
     if (member.manageable) {
       try {
-        const modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
+        /* eslint-disable sort-vars*/
+        const modlogChannel = msg.guild.settings.get('modlogchannel',
             msg.guild.channels.exists('name', 'mod-logs')
               ? msg.guild.channels.find('name', 'mod-logs').id
               : null),
-          roleRemove = await member.roles.remove(role),
-          roleRemoveEmbed = new MessageEmbed();
+          muteRole = msg.guild.settings.get('muterole',
+            msg.guild.roles.exists('name', 'muted')
+              ? msg.guild.roles.find('name', 'muted')
+              : null),
+          muteRemove = await member.roles.remove(muteRole),
+          muteRoleEmbed = new MessageEmbed();
+        /* eslint-enable sort-vars*/
 
-        if (roleRemove) {
-          roleRemoveEmbed
+        if (muteRemove) {
+          muteRoleEmbed
             .setColor('#4A9E93')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(stripIndents`**Action:** Removed ${role.name} from ${member.displayName}`)
+            .setDescription(stripIndents`**Action:** Unmuted ${member.displayName} (<@${member.id}>)`)
             .setTimestamp();
 
-          if (this.client.provider.get(msg.guild, 'modlogs', true)) {
-            if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+          if (msg.guild.settings.get('modlogs', true)) {
+            if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
               msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
                 (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
                 This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-              this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+              msg.guild.settings.set('hasSentModLogMessage', true);
             }
-            modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: roleRemoveEmbed}) : null;
+            modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: muteRoleEmbed}) : null;
           }
 
           deleteCommandMessages(msg, this.client);
           stopTyping(msg);
 
-          return msg.embed(roleRemoveEmbed);
+          return msg.embed(muteRoleEmbed);
         }
       } catch (err) {
         deleteCommandMessages(msg, this.client);
@@ -116,7 +116,6 @@ module.exports = class DeleteRoleCommand extends Command {
       **Server:** ${msg.guild.name} (${msg.guild.id})
       **Author:** ${msg.author.tag} (${msg.author.id})
       **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Input:** \`${role.name} (${role.id})\` || \`${member.user.tag} (${member.id})\`
       **Error Message:** ${err}
       `);
 
@@ -127,7 +126,7 @@ module.exports = class DeleteRoleCommand extends Command {
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(oneLine`an error occurred removing the role \`${role.name}\` from \`${member.displayName}\`.
+    return msg.reply(oneLine`an error occurred unmuting \`${member.displayName}\` (${member.id}).
 		Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
   }
 };
