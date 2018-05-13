@@ -29,14 +29,25 @@
 const {Util} = require('discord.js'), 
   {oneLineTrim} = require('common-tags');
 
-const deleteCommandMessages = function (msg, client) { // eslint-disable-line consistent-return
-  if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) {
-    return msg.delete();
+const arrayClean = function (deleteValue, array) {
+  for (let val in array) {
+    if (array[val] === deleteValue) {
+      array.splice(val, 1);
+      val -= 1;
+    }
   }
+
+  return array;
 };
 
 const capitalizeFirstLetter = function (string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
+
+const deleteCommandMessages = function (msg, client) { // eslint-disable-line consistent-return
+  if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) {
+    return msg.delete();
+  }
 };
 
 const memberFilterExact = function (search) {
@@ -187,13 +198,14 @@ class Song {
 }
 
 module.exports = {
+  arrayClean,
   capitalizeFirstLetter,
   deleteCommandMessages,
   ordinal,
   removeDiacritics,
   roundNumber,
-  Song,
-  stopTyping,
   startTyping,
-  userSearch
+  stopTyping,
+  userSearch,
+  Song
 };
