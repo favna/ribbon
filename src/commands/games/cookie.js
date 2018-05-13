@@ -24,10 +24,10 @@
  */
 
 /**
- * @file Custom CookieCommand - Steal someone's 🍪 gnanahahahaha
+ * @file Games CookieCommand - Steal someone's 🍪 gnanahahahaha
  * **Aliases**: `.biscuit`, `biscuit`
  * @module
- * @category custom
+ * @category games
  * @name biscuit
  * @returns {MessageEmbed} A MessageEmbed with a cookie gif
  */

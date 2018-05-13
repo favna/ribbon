@@ -60,7 +60,8 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Automod BadWordsCommand - Toggle the bad words filter<br><strong>Aliases</strong>: <code>badwordsfilter</code>, <code>bwf</code>, <code>bwf</code></p>
 </dd>
 <dt><a href="#module_duptext">duptext</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod DuplicateTextCommand - Toggle the duplicate text filter<br><strong>Aliases</strong>: <code>duplicatefilter</code>, <code>duplicatetextfilter</code>, <code>dtf</code></p>
+<dd><p>Automod DuplicateTextCommand - Toggle the duplicate text filter<br>Uses the Levenshtein Distance Algorithm to determine similarity. If the distance is less than 10 the messages are considered duplicate.<br>You can specify the minutes within messages should be checked (defaults to 3), the amount of allowed similar messages (defaults to 2) and the Levenshtein distance (defaults to 20)
+<strong>Aliases</strong>: <code>duplicatefilter</code>, <code>duplicatetextfilter</code>, <code>dtf</code></p>
 </dd>
 <dt><a href="#module_excessivecaps">excessivecaps</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Automod ExcessiveCapsCommand - Toggle the excessive caps filter<br><strong>Aliases</strong>: <code>spammedcaps</code>, <code>manycaps</code></p>
@@ -73,9 +74,6 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 </dd>
 <dt><a href="#module_externallinks">externallinks</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Automod ExternalLinksCommand - Toggle the external links filter<br><strong>Aliases</strong>: <code>extlinks</code>, <code>extlinksfilter</code>, <code>elf</code></p>
-</dd>
-<dt><a href="#module_serverinvites">serverinvites</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod ServerInvitesCommand - Toggle the server invites filter<br><strong>Aliases</strong>: <code>serverinvitesfilter</code>, <code>inviteblock</code>, <code>invitesblock</code>, <code>invitefilter</code>, <code>invitesfilter</code></p>
 </dd>
 <dt><a href="#module_slowmode">slowmode</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Automod SlowmodeCommand - Toggle slowmode on this server<br><strong>Aliases</strong>: <code>slowdown</code></p>
@@ -109,10 +107,6 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 </dd>
 <dt><a href="#module_kai">kai</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Custom KaiCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br>Server admins can disable this command entirely by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>.kai</code></p>
-</dd>
-<dt><a href="#module_biscuit">biscuit</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Custom CookieCommand - Steal someone&#39;s 🍪 gnanahahahaha
-<strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p>
 </dd>
 <dt><a href="#module_copypasta">copypasta</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Extra CopyPastaCommand - Gets one of the server&#39;s stored copypastas<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
@@ -159,6 +153,10 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_8ball">8ball</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games EightBallCommand - Rolls a magic 8 ball using your input<br><strong>Aliases</strong>: <code>eightball</code></p>
 </dd>
+<dt><a href="#module_biscuit">biscuit</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Games CookieCommand - Steal someone&#39;s 🍪 gnanahahahaha
+<strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p>
+</dd>
 <dt><a href="#module_dice">dice</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!<br><strong>Aliases</strong>: <code>xdicey</code>, <code>roll</code>, <code>dicey</code>, <code>die</code></p>
 </dd>
@@ -166,7 +164,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Games DndCCommand - Flips a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code>, <code>dcoin</code></p>
 </dd>
 <dt><a href="#module_fight">fight</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games FightCommand - Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.<br><strong>Aliases</strong>: <code>combat</code></p>
+<dd><p>Games FightCommand - Pit two things against each other in a fight to the death.<br>Winner is determined with random.org randomization.<br><strong>Aliases</strong>: <code>combat</code></p>
 </dd>
 <dt><a href="#module_hug">hug</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games HugCommand - Give someone a hug ❤!<br><strong>Aliases</strong>: <code>bearhug</code>, <code>embrace</code></p>
@@ -184,7 +182,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Games SlapCommand - Slap a dumb person💢!<br><strong>Aliases</strong>: <code>bakaslap</code></p>
 </dd>
 <dt><a href="#module_strawpoll">strawpoll</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)<br><strong>Aliases</strong>: <code>straw</code>, <code>poll</code></p>
+<dd><p>Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)<br>Has a very specific syntax! Be sure to adapt the example!<br><strong>Aliases</strong>: <code>straw</code>, <code>poll</code></p>
 </dd>
 <dt><a href="#module_Activity">Activity</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info ActivityCommand - Gets the activity (presence) data from a member<br><strong>Aliases</strong>: <code>act</code>, <code>presence</code>, <code>richpresence</code></p>
@@ -247,22 +245,19 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Moderation DeleteRoleCommand - Delete the role of a member<br><strong>Aliases</strong>: <code>deleterole</code>, <code>dr</code>, <code>remrole</code>, <code>removerole</code></p>
 </dd>
 <dt><a href="#module_joinmessages">joinmessages</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join
-<strong>Aliases</strong>: <code>jmt</code>, <code>joinmessagestoggle</code></p>
+<dd><p>Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join<br><strong>Aliases</strong>: <code>jmt</code>, <code>joinmessagestoggle</code></p>
 </dd>
 <dt><a href="#module_kick">kick</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation KickCommand - Kicks a somewhat bad member<br><strong>Aliases</strong>: <code>k</code></p>
 </dd>
 <dt><a href="#module_leavemessages">leavemessages</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave
-<strong>Aliases</strong>: <code>lmt</code>, <code>leavemessagestoggle</code></p>
+<dd><p>Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave<br><strong>Aliases</strong>: <code>lmt</code>, <code>leavemessagestoggle</code></p>
 </dd>
 <dt><a href="#module_listwarn">listwarn</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation ListWarnCommand - Show the amount of warning points a member has<br><strong>Aliases</strong>: <code>reqwarn</code>, <code>lw</code>, <code>rw</code></p>
 </dd>
 <dt><a href="#module_lockdown">lockdown</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation LockdownCommand - Lockdown a channel<br>NOTE: Once locked it will be locked to the <code>@everyone</code> role and depending on your permissions setup it may be that only people with the <code>administrator</code> role will have access to the channel.
-This may also mean that the bot won&#39;t have access if it doesn&#39;t have administrator role so you cannot use the <code>unlock</code> command until you give it that permission!<br><strong>Aliases</strong>: <code>lock</code>, <code>ld</code></p>
+<dd><p>Moderation LockdownCommand - Lockdown a channel<br>Once locked it will be locked to the <code>@everyone</code> or whichever role you specified.<br>Depending on your permissions setup it may be that only people with the <code>administrator</code> role will have access to the channel.<br>This may also mean that the bot won&#39;t have access if it doesn&#39;t have administrator role so you cannot use the <code>unlock</code> command until you give it that permission!<br><strong>Aliases</strong>: <code>lock</code>, <code>ld</code></p>
 </dd>
 <dt><a href="#module_memberlogs">memberlogs</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel<br><strong>Aliases</strong>: <code>tml</code>, <code>togglemember</code>, <code>togglememberlogs</code></p>
@@ -493,6 +488,8 @@ badwords enable
 
 ## duptext ⇒ <code>MessageEmbed</code>
 Automod DuplicateTextCommand - Toggle the duplicate text filter  
+Uses the Levenshtein Distance Algorithm to determine similarity. If the distance is less than 10 the messages are considered duplicate.  
+You can specify the minutes within messages should be checked (defaults to 3), the amount of allowed similar messages (defaults to 2) and the Levenshtein distance (defaults to 20)
 **Aliases**: `duplicatefilter`, `duplicatetextfilter`, `dtf`
 
 **Returns**: <code>MessageEmbed</code> - Duplicate text filter confirmation log  
@@ -573,23 +570,6 @@ Automod ExternalLinksCommand - Toggle the external links filter
 **Example**  
 ```js
 externallinks enable
-```
-<a name="module_serverinvites"></a>
-
-## serverinvites ⇒ <code>MessageEmbed</code>
-Automod ServerInvitesCommand - Toggle the server invites filter  
-**Aliases**: `serverinvitesfilter`, `inviteblock`, `invitesblock`, `invitefilter`, `invitesfilter`
-
-**Returns**: <code>MessageEmbed</code> - Server invites filter confirmation log  
-**Category**: automod  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
-
-**Example**  
-```js
-serverinvites enable
 ```
 <a name="module_slowmode"></a>
 
@@ -744,14 +724,6 @@ Server admins can disable this command entirely by using the `rmt off` command
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔  
 **Category**: custom  
-<a name="module_biscuit"></a>
-
-## biscuit ⇒ <code>MessageEmbed</code>
-Custom CookieCommand - Steal someone's 🍪 gnanahahahaha
-**Aliases**: `.biscuit`, `biscuit`
-
-**Returns**: <code>MessageEmbed</code> - A MessageEmbed with a cookie gif  
-**Category**: custom  
 <a name="module_copypasta"></a>
 
 ## copypasta ⇒ <code>MessageEmbed</code>
@@ -832,7 +804,7 @@ For a full list of supported currencies see [this url](https://docs.openexchange
 
 **Example**  
 ```js
-ox 1 EUR USD
+oxr 1 EUR USD
 ```
 <a name="module_qrgen"></a>
 
@@ -996,6 +968,14 @@ Games EightBallCommand - Rolls a magic 8 ball using your input
 ```js
 8ball is Favna a genius coder?
 ```
+<a name="module_biscuit"></a>
+
+## biscuit ⇒ <code>MessageEmbed</code>
+Games CookieCommand - Steal someone's 🍪 gnanahahahaha
+**Aliases**: `.biscuit`, `biscuit`
+
+**Returns**: <code>MessageEmbed</code> - A MessageEmbed with a cookie gif  
+**Category**: games  
 <a name="module_dice"></a>
 
 ## dice ⇒ <code>MessageEmbed</code>
@@ -1025,7 +1005,8 @@ Games DndCCommand - Flips a coin
 <a name="module_fight"></a>
 
 ## fight ⇒ <code>MessageEmbed</code>
-Games FightCommand - Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.  
+Games FightCommand - Pit two things against each other in a fight to the death.  
+Winner is determined with random.org randomization.  
 **Aliases**: `combat`
 
 **Returns**: <code>MessageEmbed</code> - Result of the combat  
@@ -1130,6 +1111,7 @@ slap Cinder
 
 ## strawpoll ⇒ <code>MessageEmbed</code>
 Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)  
+Has a very specific syntax! Be sure to adapt the example!  
 **Aliases**: `straw`, `poll`
 
 **Returns**: <code>MessageEmbed</code> - Poll url, title, options and preview image  
@@ -1138,7 +1120,7 @@ Games StrawpollCommand - Create a strawpoll and find out what people really thin
 | Param | Type | Description |
 | --- | --- | --- |
 | Question | <code>StringResolvable</code> | The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or `' '`) to allow spaces |
-| Options | <code>StringResolvable</code> | The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to allow spaces. Splits on every `|` |
+| Options | <code>StringResolvable</code> | The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to allow spaces. Splits on every \`|\` |
 
 **Example**  
 ```js
@@ -1450,7 +1432,7 @@ delrole Favna Member
 <a name="module_joinmessages"></a>
 
 ## joinmessages ⇒ <code>MessageEmbed</code>
-Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join
+Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join  
 **Aliases**: `jmt`, `joinmessagestoggle`
 
 **Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
@@ -1485,7 +1467,7 @@ kick ThunderKai
 <a name="module_leavemessages"></a>
 
 ## leavemessages ⇒ <code>MessageEmbed</code>
-Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave
+Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave  
 **Aliases**: `lmt`, `leavemessagestoggle`
 
 **Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
@@ -1520,7 +1502,8 @@ listwarn Biscuit
 
 ## lockdown ⇒ <code>Message</code>
 Moderation LockdownCommand - Lockdown a channel  
-NOTE: Once locked it will be locked to the `@everyone` role and depending on your permissions setup it may be that only people with the `administrator` role will have access to the channel.
+Once locked it will be locked to the `@everyone` or whichever role you specified.  
+Depending on your permissions setup it may be that only people with the `administrator` role will have access to the channel.  
 This may also mean that the bot won't have access if it doesn't have administrator role so you cannot use the `unlock` command until you give it that permission!  
 **Aliases**: `lock`, `ld`
 

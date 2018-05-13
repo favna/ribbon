@@ -31,7 +31,7 @@
  * @module
  * @category extra
  * @name oxr
- * @example ox 1 EUR USD
+ * @example oxr 1 EUR USD
  * @param {Number} MoneyAmount Amount of money to convert
  * @param {StringResolvable} OriginCurrency Currency to convert from
  * @param {StringResolvable} TargetCurrency Currency to convert to

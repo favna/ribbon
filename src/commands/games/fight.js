@@ -24,7 +24,8 @@
  */
 
 /**
- * @file Games FightCommand - Pit two things against each other in a fight to the death. Winner is determined with random.org randomization.  
+ * @file Games FightCommand - Pit two things against each other in a fight to the death.  
+ * Winner is determined with random.org randomization.  
  * **Aliases**: `combat`
  * @module
  * @category games
@@ -47,7 +48,7 @@ module.exports = class FightCommand extends Command {
       memberName: 'fight',
       group: 'games',
       aliases: ['combat'],
-      description: 'Pit two things against each other in a fight to the death',
+      description: 'Pit two things against each other in a fight to the death.',
       details: 'Winner is determined with random.org randomization',
       format: 'FirstFighter, SecondFighter',
       examples: ['fight Favna Chuck Norris'],

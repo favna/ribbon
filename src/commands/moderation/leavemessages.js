@@ -24,7 +24,7 @@
  */
 
 /**
- * @file Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave
+ * @file Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave  
  * **Aliases**: `lmt`, `leavemessagestoggle`
  * @module
  * @category moderation

@@ -24,7 +24,7 @@
  */
 
 /**
- * @file Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join
+ * @file Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join  
  * **Aliases**: `jmt`, `joinmessagestoggle`
  * @module
  * @category moderation

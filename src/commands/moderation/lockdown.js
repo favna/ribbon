@@ -25,7 +25,8 @@
 
 /**
  * @file Moderation LockdownCommand - Lockdown a channel  
- * NOTE: Once locked it will be locked to the `@everyone` role and depending on your permissions setup it may be that only people with the `administrator` role will have access to the channel.
+ * Once locked it will be locked to the `@everyone` or whichever role you specified.  
+ * Depending on your permissions setup it may be that only people with the `administrator` role will have access to the channel.  
  * This may also mean that the bot won't have access if it doesn't have administrator role so you cannot use the `unlock` command until you give it that permission!  
  * **Aliases**: `lock`, `ld`
  * @module
@@ -47,6 +48,9 @@ module.exports = class LockdownCommand extends Command {
       group: 'moderation',
       aliases: ['lock', 'ld'],
       description: 'Locks the current channel to just staff',
+      details: stripIndents`Once locked it will be locked to the \`@everyone\` or whichever role you specified.
+      Depending on your permissions setup it may be that only people with the \`administrator\` role will have access to the channel.  
+      This may also mean that the bot won't have access if it doesn't have administrator role so you cannot use the \`unlock\` command until you give it that permission!`,
       examples: ['lockdown'],
       guildOnly: true,
       throttling: {

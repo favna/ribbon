@@ -25,13 +25,14 @@
 
 /**
  * @file Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)  
+ * Has a very specific syntax! Be sure to adapt the example!  
  * **Aliases**: `straw`, `poll`
  * @module
  * @category games
  * @name strawpoll
  * @example strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"
  * @param {StringResolvable} Question The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or `' '`) to allow spaces
- * @param {StringResolvable} Options The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to allow spaces. Splits on every `|`
+ * @param {StringResolvable} Options The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to allow spaces. Splits on every \`|\`
  * @returns {MessageEmbed} Poll url, title, options and preview image
  */
 
@@ -48,6 +49,7 @@ module.exports = class StrawpollCommand extends Command {
       group: 'games',
       aliases: ['straw', 'poll'],
       description: 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
+      details: 'Has a very specific syntax! Be sure to adapt the example!',
       format: 'TitleOfStrawpoll OptionA|OptionB|OptionC...',
       examples: ['strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"'],
       guildOnly: false,
