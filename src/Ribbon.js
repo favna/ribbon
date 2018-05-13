@@ -53,7 +53,7 @@ class Ribbon {
             largeImage: '385133227997921280',
             smallImage: '385133144245927946',
             largeText: 'Invite me to your server!',
-            smallText: 'Look at the website!'
+            smallText: 'https://favna.xyz/redirect/ribbon'
           }
         }
       }
