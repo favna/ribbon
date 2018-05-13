@@ -67,6 +67,7 @@ const checkReminders = async function (client) {
       }
     }
   } catch (err) {
+    console.error(err);
     client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
       <@${client.owners[0].id}> Error occurred sending someone their reminder!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -94,8 +95,8 @@ const joinmessage = async function (member) {
     border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
     canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
     newMemberEmbed = new MessageEmbed(),
-    fontLarge = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-large.fnt')),
-    fontMedium = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-medium.fnt')),
+    fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt')),
+    fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
     mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
   /* eslint-enable sort-vars*/
 
@@ -235,6 +236,7 @@ const timermessages = function (client) {
       }
     }
   } catch (err) {
+    console.error(err);
     client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
     <@${client.owners[0].id}> Error occurred sending a timed message!
     **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
