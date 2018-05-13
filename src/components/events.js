@@ -47,7 +47,7 @@ const checkReminders = async function (client) {
         dura = moment.duration(remindTime.diff()); // eslint-disable-line sort-vars
 
       if (dura.asMinutes() <= 0) {
-        const user = await client.users.fetch(query[row].userID);
+        const user = await client.users.get(query[row].userID);
 
         user.send({
           embed: {
