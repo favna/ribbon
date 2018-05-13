@@ -84,7 +84,7 @@ module.exports = class UserInfoCommand extends Command {
         ? capitalizeFirstLetter(vals.user.presence.activity.type)
         : 'Activity', vals.user.presence.activity !== null ? vals.user.presence.activity.name : 'Nothing', true)
       .addField('Display Color', vals.member.displayHexColor, true)
-      .addField('Role(s)', vals.member.roles.size > 1 ? vals.member.roles.map(r => r.name).slice(1).join(' | ') : 'None', false) // eslint-disable-line newline-per-chained-call
+      .addField('Role(s)', vals.member.roles.size > 1 ? vals.member.roles.map(r => r.name).slice(0, -1).join(' | ') : 'None', false) // eslint-disable-line newline-per-chained-call
       .addField('Account created at', moment(vals.user.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
       .addField('Joined server at', moment(vals.member.joinedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true);
     vals.member.roles.size >= 1 ? uinfoEmbed.setFooter(`${vals.member.displayName} has ${vals.member.roles.size - 1} role(s)`) : uinfoEmbed.setFooter(`${vals.member.displayName} has 0 roles`);
