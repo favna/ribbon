@@ -129,8 +129,8 @@ const leavemessage = async function (member) {
     border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
     canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
     leaveMemberEmbed = new MessageEmbed(),
-    fontLarge = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-large.fnt')),
-    fontMedium = await Jimp.loadFont(path.join(__dirname, 'data/fonts/roboto-medium.fnt')),
+    fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt')),
+    fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
     mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
     /* eslint-enable sort-vars*/
 
