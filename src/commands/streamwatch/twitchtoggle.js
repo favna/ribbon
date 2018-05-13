@@ -47,7 +47,7 @@ module.exports = class TwitchToggleCommand extends Command {
       aliases: ['twitchon', 'twitchoff'],
       description: 'Configures whether Twitch Notifications are enabled',
       details: 'This is a killswitch for the entire module!',
-      format: 'Enable|Disable',
+      format: 'BooleanResolvable',
       examples: ['twitchtoggle enable'],
       guildOnly: true,
       throttling: {

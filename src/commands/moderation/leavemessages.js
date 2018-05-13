@@ -47,7 +47,7 @@ module.exports = class LeaveMessagesCommand extends Command {
       group: 'moderation',
       aliases: ['lmt', 'leavemessagestoggle'],
       description: 'Toggle whether Ribbon should send special leave messages when members leave',
-      format: 'Enable|Disable',
+      format: 'BooleanResolvable  [Channel]',
       examples: ['leavemessages enable'],
       guildOnly: true,
       throttling: {

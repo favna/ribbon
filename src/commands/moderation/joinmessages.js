@@ -47,7 +47,7 @@ module.exports = class JoinMessagesCommand extends Command {
       group: 'moderation',
       aliases: ['jmt', 'joinmessagestoggle'],
       description: 'Toggle whether Ribbon should send special greeting messages when members join',
-      format: 'Enable|Disable',
+      format: 'BooleanResolvable [Channel]',
       examples: ['joinmessages enable'],
       guildOnly: true,
       throttling: {

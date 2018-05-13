@@ -47,7 +47,7 @@ module.exports = class UnknownMessagesCommand extends Command {
       group: 'moderation',
       aliases: ['unkmsg', 'unknowns'],
       description: 'Toggle Unknown Command messages on or off',
-      format: 'Enable|Disable',
+      format: 'BooleanResolvable',
       examples: ['unknownmessages enable'],
       guildOnly: true,
       throttling: {

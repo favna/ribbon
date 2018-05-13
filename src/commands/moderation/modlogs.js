@@ -47,7 +47,7 @@ module.exports = class ModLogsCommand extends Command {
       group: 'moderation',
       aliases: ['togglemod'],
       description: 'Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel',
-      format: 'Enable|Disable',
+      format: 'BooleanResolvable',
       examples: ['modlogs {option}', 'modlogs enable'],
       guildOnly: true,
       throttling: {

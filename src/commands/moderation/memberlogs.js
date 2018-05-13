@@ -47,7 +47,7 @@ module.exports = class MemberLogsCommand extends Command {
       group: 'moderation',
       aliases: ['tml', 'togglemember', 'togglememberlogs'],
       description: 'Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel',
-      format: 'Enable|Disable',
+      format: 'BooleanResolvable',
       examples: ['memberlogs enable'],
       guildOnly: true,
       throttling: {

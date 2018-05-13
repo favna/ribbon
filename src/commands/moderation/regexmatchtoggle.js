@@ -47,7 +47,7 @@ module.exports = class RegexMatchToggleCommand extends Command {
       group: 'moderation',
       aliases: ['rmt', 'regexmatch'],
       description: 'Toggle commands matching on regex for this server',
-      format: 'Enable|Disable',
+      format: 'BooleanResolvable',
       examples: ['regexmatchtoggle enable'],
       guildOnly: true,
       throttling: {

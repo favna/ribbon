@@ -47,7 +47,7 @@ module.exports = class deleteCommandMessagesCommand extends Command {
       group: 'moderation',
       aliases: ['dcm'],
       description: 'Configure whether the bot should delete command messages',
-      format: 'Enable|Disable',
+      format: 'BooleanResolvable',
       examples: ['deletecommandmessages enable'],
       guildOnly: true,
       throttling: {
