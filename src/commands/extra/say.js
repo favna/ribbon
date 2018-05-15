@@ -62,7 +62,9 @@ module.exports = class SayCommand extends Command {
             msg.content.toLowerCase().includes('@everyone') ||
             msg.cleanContent.toLowerCase().includes('@here') ||
             msg.cleanContent.toLowerCase().includes('@everyone')) {
-              msg.delete();
+              if (msg.deletable) {
+                msg.delete();
+              }
 
               return 'You cannot make me mention `@here` or `@everyone`! Would you like me to say anything else?';
             }
@@ -74,7 +76,7 @@ module.exports = class SayCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {txt}) {
     startTyping(msg);
     const saydata = {
       memberHexColor: msg.member.displayHexColor,
@@ -86,9 +88,11 @@ module.exports = class SayCommand extends Command {
       argString: msg.argString.slice(1)
     };
 
-    this.client.provider.set(msg.guild.id, 'saydata', saydata);
-    msg.delete();
-    msg.say(args.txt);
+    msg.guild.settings.set(msg.guild.id, 'saydata', saydata);
+    if (msg.deletable) {
+      msg.delete();
+    }
+    msg.say(txt);
 
     return stopTyping(msg);
   }
