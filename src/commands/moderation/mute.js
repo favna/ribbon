@@ -110,62 +110,63 @@ module.exports = class MuteCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
   }
 
-  async run (msg, {
-    member,
-    duration
-  }) {
+  async run (msg, {member, duration}) {
     startTyping(msg);
     if (member.manageable) {
       try {
         /* eslint-disable sort-vars*/
         const modlogChannel = msg.guild.settings.get('modlogchannel',
             msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
-          muteRole = msg.guild.settings.get('muterole', 
+          muteRole = msg.guild.settings.get('muterole',
             msg.guild.roles.find(r => r.name === 'muted') ? msg.guild.roles.find(r => r.name === 'muted') : null),
-          muteAdd = await member.roles.add(muteRole),
           muteEmbed = new MessageEmbed();
         /* eslint-enable sort-vars*/
 
-        if (muteAdd) {
-          muteEmbed
-            .setColor('#AAEFE6')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(stripIndents`
+        await member.roles.add(muteRole);
+
+        muteEmbed
+          .setColor('#AAEFE6')
+          .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+          .setDescription(stripIndents`
             **Action:** Muted <@${member.id}>
             **Duration:** ${duration ? ms(duration, {long: true}) : 'Until manually removed'}`)
-            .setTimestamp();
+          .setTimestamp();
 
-          if (msg.guild.settings.get('modlogs', true)) {
-            if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
-              msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+        if (msg.guild.settings.get('modlogs', true)) {
+          if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
+            msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
                 (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
                 This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-              msg.guild.settings.set('hasSentModLogMessage', true);
-            }
-            modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: muteEmbed}) : null;
-            this.logs = true;
+            msg.guild.settings.set('hasSentModLogMessage', true);
           }
-
-          deleteCommandMessages(msg, this.client);
-          stopTyping(msg);
-
-          const muteMessage = await msg.embed(muteEmbed);
-
-          if (duration) {
-            setTimeout(async () => {
-              await member.roles.remove(muteRole);
-              muteEmbed.setDescription(stripIndents`**Action:** Mute duration ended, unmuted ${member.displayName} (<@${member.id}>)`);
-              this.logs ? msg.guild.channels.get(modlogChannel).send('', {embed: muteEmbed}) : null;
-
-              return muteMessage.edit('', {embed: muteEmbed});
-            }, duration);
-          }
-
-          return muteMessage;
+          modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: muteEmbed}) : null;
+          this.logs = true;
         }
+
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        const muteMessage = await msg.embed(muteEmbed); // eslint-disable-line one-var
+
+        if (duration) {
+          setTimeout(async () => {
+            await member.roles.remove(muteRole);
+            muteEmbed.setDescription(stripIndents`**Action:** Mute duration ended, unmuted ${member.displayName} (<@${member.id}>)`);
+            this.logs ? msg.guild.channels.get(modlogChannel).send('', {embed: muteEmbed}) : null;
+
+            return muteMessage.edit('', {embed: muteEmbed});
+          }, duration);
+        }
+
+        return muteMessage;
       } catch (err) {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
+        if (/(?:Missing Permissions)/i.test(err.toString())) {
+
+          return msg.reply(stripIndents`an error occurred muting \`${member.displayName}\`.
+          Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
+        }
         this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`addrole\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
@@ -182,7 +183,7 @@ module.exports = class MuteCommand extends Command {
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(oneLine`an error occurred muting \`${member.displayName}\`.
+    return msg.reply(stripIndents`an error occurred muting \`${member.displayName}\`.
 		Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
   }
 };

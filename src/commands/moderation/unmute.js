@@ -76,37 +76,42 @@ module.exports = class UnmuteCommand extends Command {
         /* eslint-disable sort-vars*/
         const modlogChannel = msg.guild.settings.get('modlogchannel',
             msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
-          muteRole = msg.guild.settings.get('muterole', 
+          muteRole = msg.guild.settings.get('muterole',
             msg.guild.roles.find(r => r.name === 'muted') ? msg.guild.roles.find(r => r.name === 'muted') : null),
-          muteRemove = await member.roles.remove(muteRole),
           muteRoleEmbed = new MessageEmbed();
         /* eslint-enable sort-vars*/
 
-        if (muteRemove) {
-          muteRoleEmbed
-            .setColor('#4A9E93')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(stripIndents`**Action:** Unmuted ${member.displayName} (<@${member.id}>)`)
-            .setTimestamp();
+        await member.roles.remove(muteRole);
 
-          if (msg.guild.settings.get('modlogs', true)) {
-            if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
-              msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+        muteRoleEmbed
+          .setColor('#4A9E93')
+          .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+          .setDescription(stripIndents`**Action:** Unmuted ${member.displayName} (<@${member.id}>)`)
+          .setTimestamp();
+
+        if (msg.guild.settings.get('modlogs', true)) {
+          if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
+            msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
                 (or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
                 This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-              msg.guild.settings.set('hasSentModLogMessage', true);
-            }
-            modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: muteRoleEmbed}) : null;
+            msg.guild.settings.set('hasSentModLogMessage', true);
           }
-
-          deleteCommandMessages(msg, this.client);
-          stopTyping(msg);
-
-          return msg.embed(muteRoleEmbed);
+          modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: muteRoleEmbed}) : null;
         }
+
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.embed(muteRoleEmbed);
+
       } catch (err) {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
+        if (/(?:Missing Permissions)/i.test(err.toString())) {
+
+          return msg.reply(stripIndents`an error occurred unmuting \`${member.displayName}\`.
+          Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
+        }
         this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred in \`deleterole\` command!
       **Server:** ${msg.guild.name} (${msg.guild.id})
@@ -122,7 +127,7 @@ module.exports = class UnmuteCommand extends Command {
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(oneLine`an error occurred unmuting \`${member.displayName}\` (${member.id}).
-		Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
+    return msg.reply(stripIndents`an error occurred unmuting \`${member.displayName}\`.
+    Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
   }
 };
