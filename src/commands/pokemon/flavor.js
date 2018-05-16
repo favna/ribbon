@@ -101,7 +101,7 @@ module.exports = class FlavorCommand extends Command {
     }
   }
 
-  /* eslint-disable complexity, no-param-reassign*/
+  /* eslint-disable complexity*/
   run (msg, {pokemon, shines}) {
     startTyping(msg);
     if (/(?:--shiny)/i.test(pokemon)) {

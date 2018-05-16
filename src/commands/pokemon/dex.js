@@ -100,7 +100,7 @@ module.exports = class DexCommand extends Command {
     }
   }
 
-  /* eslint-disable max-statements, complexity, no-param-reassign */
+  /* eslint-disable max-statements, complexity */
   run (msg, {pokemon, shines}) {
     startTyping(msg);
     if (/(?:--shiny)/i.test(pokemon)) {
@@ -137,11 +137,6 @@ module.exports = class DexCommand extends Command {
       pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch,
       dexEmbed = new MessageEmbed();
     /* eslint-enable sort-vars */
-
-    /*
-     * aliasSearch = aliasFuse.search(pokemon),
-     * pokeSearch = aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : pokeFuse.search(pokemon),
-     */
 
     if (pokeSearch.length) {
       const pokeData = {
