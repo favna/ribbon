@@ -35,7 +35,7 @@
  */
 
 const {Command} = require('discord.js-commando'), 
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine} = require('common-tags'), 
   {stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class FavnaCommand extends Command {
