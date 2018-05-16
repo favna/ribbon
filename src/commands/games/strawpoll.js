@@ -70,7 +70,7 @@ module.exports = class StrawpollCommand extends Command {
           type: 'string',
           wait: 60,
           validate: (opts) => {
-            if (/([a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~ ]*\|[a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\{\]\}\;\:\'\"\\\,\<\.\>\/\?\`\~]*)*/.test(opts) &&
+            if (/([\S ]*\|[\S ]*)*/i.test(opts) &&
               opts.split('|').length >= 2 && opts.split('|').length <= 30) {
               return true;
             }
