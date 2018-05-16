@@ -67,7 +67,8 @@ module.exports = class ExcessiveMentionsCommand extends Command {
               return true;
             }
 
-            return `Has to be one of ${validBools.map(val => `\`${val}\``).join(', ')}`;
+            return stripIndents`Has to be one of ${validBools.map(val => `\`${val}\``).join(', ')}
+            Respond with your new selection or`;
           }
         },
         {

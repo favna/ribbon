@@ -37,6 +37,7 @@
 const random = require('node-random'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
+  {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class RockPaperScissorCommand extends Command {
@@ -66,7 +67,8 @@ module.exports = class RockPaperScissorCommand extends Command {
               return true;
             }
 
-            return `Has to be one of ${validHands.join(', ')}`;
+            return stripIndents`Has to be one of ${validHands.map(val => `\`${val}\``).join(', ')}
+            Respond with your new selection or`;
           },
           parse: p => p.toLowerCase()
         }

@@ -36,7 +36,7 @@
 
 const {Command} = require('discord.js-commando'), 
   {MessageEmbed} = require('discord.js'), 
-  {oneLine} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class UnknownMessagesCommand extends Command {
@@ -66,7 +66,8 @@ module.exports = class UnknownMessagesCommand extends Command {
               return true;
             }
 
-            return `Has to be one of ${validBools.map(val => `\`${val}\``).join(', ')}`;
+            return stripIndents`Has to be one of ${validBools.map(val => `\`${val}\``).join(', ')}
+            Respond with your new selection or`;
           }
         }
       ]

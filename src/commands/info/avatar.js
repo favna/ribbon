@@ -36,7 +36,8 @@
  */
 
 const {Command} = require('discord.js-commando'), 
-  {MessageEmbed} = require('discord.js'), 
+  {MessageEmbed} = require('discord.js'),
+  {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class AvatarCommand extends Command {
@@ -72,7 +73,8 @@ module.exports = class AvatarCommand extends Command {
               return true;
             }
 
-            return `Has to be one of ${validSizes.join(', ')}`;
+            return stripIndents`Has to be one of ${validSizes.map(val => `\`${val}\``).join(', ')}
+            Respond with your new selection or`;
           }
         }
       ]
