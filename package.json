@@ -50,6 +50,7 @@
     "discord.js-commando": "favna/commando#ribbon",
     "dotenv": "^5.0.1",
     "eightball": "^1.0.1",
+    "emoji-regex": "^6.5.1",
     "erlpack": "hammerandchisel/erlpack",
     "fuse.js": "^3.2.0",
     "igdb-api-node": "^3.1.3",

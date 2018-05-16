@@ -31,6 +31,7 @@ const Database = require('better-sqlite3'),
   {Client, FriendlyError, SyncSQLiteProvider} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
+  {badwords, duptext, caps, emojis, mentions, links, invites, slowmode} = require(path.join(__dirname, 'components/automod.js')),
   {checkReminders, forceStopTyping, joinmessage, leavemessage, lotto, timermessages} = require(path.join(__dirname, 'components/events.js'));
 /* eslint-enable sort-vars */
 
@@ -183,6 +184,35 @@ class Ribbon {
     };
   }
 
+  onMessage () {
+    /* eslint-disable curly */
+    return (msg) => {
+      if (msg.guild && msg.deletable && msg.guild.settings.get('automod', false)) {
+        if (msg.guild.settings.get('caps', false).enabled) {
+          const opts = msg.guild.settings.get('caps');
+
+          if (caps(msg, opts.threshold, opts.minlength, this.client)) msg.delete();
+        }
+        if (msg.guild.settings.get('duptext', false).enabled) {
+          const opts = msg.guild.settings.get('duptext');
+
+          if (duptext(msg, opts.within, opts.equals, opts.distance, this.client)) msg.delete();
+        }
+        if (msg.guild.settings.get('emojis', false).enabled) {
+          const opts = msg.guild.settings.get('emojis');
+
+          if (emojis(msg, opts.threshold, opts.minlength, this.client)) msg.delete();
+        }
+        if (msg.guild.settings.get('badwords', false).enabled && badwords(msg, msg.guild.settings.get('badwords').words, this.client)) msg.delete();
+        if (msg.guild.settings.get('invites', false) && invites(msg, this.client)) msg.delete();
+        if (msg.guild.settings.get('links', false) && links(msg, this.client)) msg.delete();
+        if (msg.guild.settings.get('mentions', false).enabled && mentions(msg, msg.guild.settings.get('mentions').threshold, this.client)) msg.delete();
+        if (msg.guild.settings.get('slowmode', false).enabled && slowmode(msg, msg.guild.settings.get('slowmode').within, this.client)) msg.delete();
+      }
+    };
+    /* eslint-enable curly */
+  }
+
   onPresenceUpdate () {
     return async (oldMember, newMember) => {
       if (newMember.guild.settings.get('twitchmonitors', []).includes(newMember.id)) {
@@ -295,6 +325,7 @@ class Ribbon {
       .on('groupStatusChange', this.onGroupStatusChange())
       .on('guildMemberAdd', this.onGuildMemberAdd())
       .on('guildMemberRemove', this.onGuildMemberRemove())
+      .on('message', this.onMessage())
       .on('presenceUpdate', this.onPresenceUpdate())
       .on('ready', this.onReady())
       .on('reconnecting', this.onReconnect())
@@ -318,6 +349,7 @@ class Ribbon {
         ['pokemon', 'Pokemon - Let Dexter answer your questions'],
         ['extra', 'Extra - Extra! Extra! Read All About It! Only Two Cents!'],
         ['moderation', 'Moderation - Moderate with no effort'],
+        ['automod', 'Automod - Let the bot moderate the chat for you'],
         ['streamwatch', 'Streamwatch - Spy on members and get notified when they go live'],
         ['custom', 'Custom - Server specific commands'],
         ['nsfw', 'NSFW - For all you dirty minds ( ͡° ͜ʖ ͡°)'],

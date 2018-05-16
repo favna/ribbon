@@ -57,23 +57,26 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 
 <dl>
 <dt><a href="#module_badwords">badwords</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod BadWordsCommand - Toggle the bad words filter<br><strong>Aliases</strong>: <code>badwordsfilter</code>, <code>bwf</code>, <code>bwf</code></p>
+<dd><p>Automod BadWordsCommand - Toggle the bad words filter<br>Please note that when adding new words to your server&#39;s filter you overwrite all your currently set words!<br><strong>Aliases</strong>: <code>badwordsfilter</code>, <code>bwf</code>, <code>bwf</code></p>
 </dd>
 <dt><a href="#module_duptext">duptext</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Automod DuplicateTextCommand - Toggle the duplicate text filter<br>Uses the Levenshtein Distance Algorithm to determine similarity. If the distance is less than 10 the messages are considered duplicate.<br>You can specify the minutes within messages should be checked (defaults to 3), the amount of allowed similar messages (defaults to 2) and the Levenshtein distance (defaults to 20)
 <strong>Aliases</strong>: <code>duplicatefilter</code>, <code>duplicatetextfilter</code>, <code>dtf</code></p>
 </dd>
 <dt><a href="#module_excessivecaps">excessivecaps</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod ExcessiveCapsCommand - Toggle the excessive caps filter<br><strong>Aliases</strong>: <code>spammedcaps</code>, <code>manycaps</code></p>
+<dd><p>Automod ExcessiveCapsCommand - Toggle the excessive caps filter<br><strong>Aliases</strong>: <code>spammedcaps</code>, <code>manycaps</code>, <code>caps</code></p>
 </dd>
 <dt><a href="#module_excessiveemojis">excessiveemojis</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod ExcessiveEmojisCommand - Toggle the excessive emojis filter<br><strong>Aliases</strong>: <code>spammedemojis</code>, <code>manyemojis</code></p>
+<dd><p>Automod ExcessiveEmojisCommand - Toggle the excessive emojis filter<br><strong>Aliases</strong>: <code>ef</code>, <code>emojifilter</code>, <code>spammedemojis</code>, <code>manyemojis</code></p>
 </dd>
 <dt><a href="#module_excessivementions">excessivementions</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter<br><strong>Aliases</strong>: <code>spammedmentions</code>, <code>manymentions</code></p>
+<dd><p>Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter<br><strong>Aliases</strong>: <code>emf</code>, <code>mfilter</code>,  <code>spammedmentions</code>, <code>manymentions</code></p>
 </dd>
 <dt><a href="#module_externallinks">externallinks</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Automod ExternalLinksCommand - Toggle the external links filter<br><strong>Aliases</strong>: <code>extlinks</code>, <code>extlinksfilter</code>, <code>elf</code></p>
+</dd>
+<dt><a href="#module_invitesfilter">invitesfilter</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Automod InvitesFilterCommand - Toggle the Discord server invites filter<br><strong>Aliases</strong>: <code>if</code>, <code>noinvites</code></p>
 </dd>
 <dt><a href="#module_slowmode">slowmode</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Automod SlowmodeCommand - Toggle slowmode on this server<br><strong>Aliases</strong>: <code>slowdown</code></p>
@@ -415,7 +418,7 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dd><p>Searches AnimeCommand - Gets information about any anime from MyAnimeList<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code></p>
 </dd>
 <dt><a href="#module_cydia">cydia</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories<br>Also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak subreddit</a> and <a href="https://discord.gg/jb">its discord server</a><br>Server admins can disable the <code>[[]]</code> matching by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>cy</code></p>
+<dd><p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories<br>Can also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak subreddit</a> and <a href="https://discord.gg/jb">its discord server</a><br>Server admins can enable the <code>[[]]</code> matching by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>cy</code></p>
 </dd>
 <dt><a href="#module_define">define</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Searches DefineCommand - Define a word using glosbe<br><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p>
@@ -471,6 +474,7 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 
 ## badwords ⇒ <code>MessageEmbed</code>
 Automod BadWordsCommand - Toggle the bad words filter  
+Please note that when adding new words to your server's filter you overwrite all your currently set words!  
 **Aliases**: `badwordsfilter`, `bwf`, `bwf`
 
 **Returns**: <code>MessageEmbed</code> - Bad words filter confirmation log  
@@ -507,7 +511,7 @@ duptext enable
 
 ## excessivecaps ⇒ <code>MessageEmbed</code>
 Automod ExcessiveCapsCommand - Toggle the excessive caps filter  
-**Aliases**: `spammedcaps`, `manycaps`
+**Aliases**: `spammedcaps`, `manycaps`, `caps`
 
 **Returns**: <code>MessageEmbed</code> - Excessive Caps filter confirmation log  
 **Category**: automod  
@@ -524,7 +528,7 @@ excessivecaps enable
 
 ## excessiveemojis ⇒ <code>MessageEmbed</code>
 Automod ExcessiveEmojisCommand - Toggle the excessive emojis filter  
-**Aliases**: `spammedemojis`, `manyemojis`
+**Aliases**: `ef`, `emojifilter`, `spammedemojis`, `manyemojis`
 
 **Returns**: <code>MessageEmbed</code> - Excessive Emojis filter confirmation log  
 **Category**: automod  
@@ -541,7 +545,7 @@ excessiveemojis enable
 
 ## excessivementions ⇒ <code>MessageEmbed</code>
 Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter  
-**Aliases**: `spammedmentions`, `manymentions`
+**Aliases**: `emf`, `mfilter`,  `spammedmentions`, `manymentions`
 
 **Returns**: <code>MessageEmbed</code> - Excessive Emojis filter confirmation log  
 **Category**: automod  
@@ -553,6 +557,10 @@ Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter
 **Example**  
 ```js
 excessivementions enable
+```
+**Example**  
+```js
+emf enable 3
 ```
 <a name="module_externallinks"></a>
 
@@ -570,6 +578,23 @@ Automod ExternalLinksCommand - Toggle the external links filter
 **Example**  
 ```js
 externallinks enable
+```
+<a name="module_invitesfilter"></a>
+
+## invitesfilter ⇒ <code>MessageEmbed</code>
+Automod InvitesFilterCommand - Toggle the Discord server invites filter  
+**Aliases**: `if`, `noinvites`
+
+**Returns**: <code>MessageEmbed</code> - Invites Filter confirmation log  
+**Category**: automod  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>BooleanResolvable</code> | True or False |
+
+**Example**  
+```js
+invitesfilter enable
 ```
 <a name="module_slowmode"></a>
 
@@ -2283,8 +2308,8 @@ anime Yu-Gi-Oh Dual Monsters
 
 ## cydia ⇒ <code>MessageEmbed</code>
 Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories  
-Also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
-Server admins can disable the `[[]]` matching by using the `rmt off` command  
+Can also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
+Server admins can enable the `[[]]` matching by using the `rmt off` command  
 **Aliases**: `cy`
 
 **Returns**: <code>MessageEmbed</code> - Information about the tweak  

@@ -26,7 +26,8 @@
 
 /* eslint-disable one-var */
 
-const {Util} = require('discord.js'), 
+const emojis = require('emoji-regex'),
+  {Util} = require('discord.js'), 
   {oneLineTrim} = require('common-tags');
 
 const arrayClean = function (deleteValue, array) {
@@ -42,6 +43,33 @@ const arrayClean = function (deleteValue, array) {
 
 const capitalizeFirstLetter = function (string) {
   return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+};
+
+const countCaps = function (capcount, total) {
+  return (capcount.replace(/[^A-Z]/g, '').length / total.length) * 100;
+};
+
+const countEmojis = function (str) {
+  const customEmojis = /<a{0,1}:[\S]+:[0-9]{18}>/gim,
+    customMatch = str.match(customEmojis),
+    unicodeEmojis = emojis(),
+    unicodeMatch = str.match(unicodeEmojis);
+  let counter = 0;
+
+  unicodeMatch ? counter += unicodeMatch.length : null;
+  customMatch ? counter += customMatch.length : null;
+
+  return counter;
+};
+
+const countMentions = function (str) {
+  const mentions = /^<@![0-9]{18}>$/gim,
+    mentionsMatch = str.match(mentions);
+  let counter = 0;
+
+  mentionsMatch ? counter += mentionsMatch.length : null;
+
+  return counter;
 };
 
 const deleteCommandMessages = function (msg, client) { // eslint-disable-line consistent-return
@@ -60,6 +88,13 @@ const memberFilterInexact = function (search) {
   return mem => mem.user.username.toLowerCase().includes(search) ||
     (mem.nickname && mem.nickname.toLowerCase().includes(search)) ||
     `${mem.user.username.toLowerCase()}#${mem.user.discriminator}`.includes(search);
+};
+
+const numberBetween = function (num, lower, upper, inclusive) {
+  const max = Math.max(lower, upper),
+    min = Math.min(lower, upper);
+
+  return inclusive ? num >= min && num <= max : num > min && num < max;
 };
 
 const ordinal = function (number) {
@@ -213,8 +248,12 @@ class Song {
 
 module.exports = {
   arrayClean,
+  countCaps,
+  countEmojis,
+  countMentions,
   capitalizeFirstLetter,
   deleteCommandMessages,
+  numberBetween,
   ordinal,
   removeDiacritics,
   roundNumber,
