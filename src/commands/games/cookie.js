@@ -33,7 +33,7 @@
  */
 
 const {Command} = require('discord.js-commando'), 
-  {MessageEmbed} = require('discord.js'),
+  {MessageEmbed} = require('discord.js'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class CookieCommand extends Command {
@@ -78,15 +78,19 @@ module.exports = class CookieCommand extends Command {
     return images[curImage];
   }
 
+  verifyRmt (msg) {
+    /* eslint-disable curly*/
+    if (msg.guild.id === '373826006651240450') return true;
+    if (msg.guild.commandPrefix === '.') return true;
+    if (msg.guild.settings.get('regexmatches', false)) return true;
+    if (this.client.isOwner(msg.author)) return true;
+
+    return false;
+  }
+
   run (msg, {member}) {
-    if (msg.patternMatches) {
-      if (msg.guild.id !== '373826006651240450' && msg.guild.commandPrefix !== '.') {
-        return null;
-      }
-      if (!msg.guild.settings.get('regexmatches', false)) {
-        return null;
-      }
-    }
+    if (msg.patternMatches && !this.verifyRmt(msg)) return null;
+    /* eslint-enable curly*/
 
     startTyping(msg);
     const cookieEmbed = new MessageEmbed();

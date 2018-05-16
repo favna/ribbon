@@ -35,7 +35,6 @@
  */
 
 const {Command} = require('discord.js-commando'), 
-  {stripIndents} = require('common-tags'), 
   {stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class KaiCommand extends Command {
@@ -73,29 +72,28 @@ module.exports = class KaiCommand extends Command {
     return images[curImage];
   }
 
-  hasPermission (msg) {
-    if (this.client.isOwner(msg.author)) {
-      return true;
-    }
 
-    if (msg.guild.id !== '373826006651240450' && this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
-      return stripIndents`That command can only be used in the Chaos Gamez server, sorry 😦
-			Want your own server specific custom commands? Join the support server (link in the \`${msg.guild.commandPrefix}stats\` command) and request the command.`;
-    }
+  verifyRmt (msg) {
+    /* eslint-disable curly*/
+    if (msg.guild.id === '373826006651240450') return true;
+    if (msg.guild.commandPrefix === '.') return true;
+    if (msg.guild.settings.get('regexmatches', false)) return true;
+    if (this.client.isOwner(msg.author)) return true;
 
-    return true;
+    return false;
   }
 
   run (msg) {
-    if (this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
-      startTyping(msg);
-      msg.delete();
-      msg.embed({
-        image: {url: this.fetchImage()},
-        color: msg.guild ? msg.guild.me.displayColor : 10610610
-      },
-      'Please <@418504046337589249> get lost');
-      stopTyping(msg);
-    }
+    if (msg.patternMatches && !this.verifyRmt(msg)) return null;
+    /* eslint-enable curly*/
+    startTyping(msg);
+    msg.delete();
+    stopTyping(msg);
+
+    return msg.embed({
+      image: {url: this.fetchImage()},
+      color: msg.guild ? msg.guild.me.displayColor : 10610610
+    },
+    'Please <@418504046337589249> get lost');
   }
 };

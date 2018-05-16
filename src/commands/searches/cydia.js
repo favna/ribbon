@@ -25,8 +25,8 @@
 
 /**
  * @file Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories  
- * Also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
- * Server admins can disable the `[[]]` matching by using the `rmt off` command  
+ * Can also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
+ * Server admins can enable the `[[]]` matching by using the `rmt off` command  
  * **Aliases**: `cy`
  * @module
  * @category searches
@@ -42,7 +42,7 @@ const Fuse = require('fuse.js'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {stripIndents} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class CydiaCommand extends Command {
@@ -53,6 +53,9 @@ module.exports = class CydiaCommand extends Command {
       group: 'searches',
       aliases: ['cy'],
       description: 'Finds info on a Cydia package',
+      details: stripIndents`${oneLine`Can also listens to the pattern of \`[[SomePackageName]]\`
+        as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)`}
+        Server admins can enable the \`[[]]\` matching by using the \`rmt on\` command`,
       format: 'PackageName | [[PackageName]]',
       examples: ['cydia anemone'],
       guildOnly: false,
@@ -74,7 +77,7 @@ module.exports = class CydiaCommand extends Command {
   async run (msg, {deb}) {
     startTyping(msg);
     if (msg.patternMatches) {
-      if (!this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
+      if (!msg.guild.settings.get('regexmatches', false)) {
         return null;
       }
       deb = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);

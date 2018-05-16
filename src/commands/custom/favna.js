@@ -55,32 +55,31 @@ module.exports = class FavnaCommand extends Command {
     });
   }
 
-  hasPermission (msg) {
-    if (this.client.isOwner(msg.author)) {
-      return true;
-    }
+  verifyRmt (msg) {
+    /* eslint-disable curly*/
+    if (msg.guild.id === '373826006651240450') return true;
+    if (msg.guild.commandPrefix === '.') return true;
+    if (msg.guild.settings.get('regexmatches', false)) return true;
+    if (this.client.isOwner(msg.author)) return true;
 
-    if (msg.guild.id !== '373826006651240450' && this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
-      return stripIndents`That command can only be used in the Chaos Gamez server, sorry 😦
-			Want your own server specific custom commands? Join the support server (link in the \`${msg.guild.commandPrefix}stats\` command) and request the command.`;
-    }
-
-    return true;
+    return false;
   }
 
   run (msg) {
-    if (this.client.provider.get(msg.guild.id, 'regexmatches', false)) {
-      startTyping(msg);
-      msg.delete();
-      msg.embed({
-        image: {url: 'https://favna.xyz/images/ribbonhost/favnadedsec.gif'},
-        color: msg.guild ? msg.guild.me.displayColor : 10610610,
-        description: oneLine`Technically speaking my father, but to you he is your supreme leader and you will submit to him 
+    if (msg.patternMatches && !this.verifyRmt(msg)) return null;
+    /* eslint-enable curly*/
+
+    startTyping(msg);
+    msg.delete();
+    stopTyping(msg);
+
+    return msg.embed({
+      image: {url: 'https://favna.xyz/images/ribbonhost/favnadedsec.gif'},
+      color: msg.guild ? msg.guild.me.displayColor : 10610610,
+      description: oneLine`Technically speaking my father, but to you he is your supreme leader and you will submit to him 
         or I will infect every single human being you have ever met with a virus so terrible their lungs and intestines
         will instantly explode from their chests causing a gorey, bloody mess all over the floor and you 
         will be the only person held responsible for the death of hundredths if not millions of people.`
-      });
-      stopTyping(msg);
-    }
+    });
   }
 };
