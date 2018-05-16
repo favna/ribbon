@@ -73,9 +73,7 @@ module.exports = class ConfigureMuteCommand extends Command {
 
     const confMuteEmbed = new MessageEmbed(),
       modlogChannel = msg.guild.settings.get('modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null);
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
 
     msg.guild.settings.set('muterole', role.id);
 

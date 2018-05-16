@@ -75,13 +75,9 @@ module.exports = class UnmuteCommand extends Command {
       try {
         /* eslint-disable sort-vars*/
         const modlogChannel = msg.guild.settings.get('modlogchannel',
-            msg.guild.channels.exists('name', 'mod-logs')
-              ? msg.guild.channels.find('name', 'mod-logs').id
-              : null),
-          muteRole = msg.guild.settings.get('muterole',
-            msg.guild.roles.exists('name', 'muted')
-              ? msg.guild.roles.find('name', 'muted')
-              : null),
+            msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
+          muteRole = msg.guild.settings.get('muterole', 
+            msg.guild.roles.find(r => r.name === 'muted') ? msg.guild.roles.find(r => r.name === 'muted') : null),
           muteRemove = await member.roles.remove(muteRole),
           muteRoleEmbed = new MessageEmbed();
         /* eslint-enable sort-vars*/

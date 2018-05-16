@@ -115,30 +115,44 @@ const startTyping = function (msg) {
   msg.channel.startTyping(1);
 };
 
-const userSearch = async function (client, message, search) {
-  let member = '';
-  const matches = search.match(/^(?:<@!?)?([0-9]+)>?$/);
+const userSearch = async function (client, msg, val) {
+  /* eslint-disable curly */
+  const matches = val.match(/^(?:<@!?)?([0-9]+)>?$/);
 
   if (matches) {
     try {
-      return await message.guild.members.fetch(await message.client.users.fetch(matches[1]));
+      const user = await client.users.fetch(matches[1]);
+
+      if (!user) return false;
+
+      if (!(/^[0-9]{18}$/).test(user.id)) return false;
+    
+      return user;
     } catch (err) {
       return false;
     }
   }
-  member = await message.guild.members.filterArray(memberFilterInexact(search));
-  if (member.length === 0) {
-    return null;
+  if (!msg.guild) return false;
+  const search = val.toLowerCase();
+  const members = msg.guild.members.filter(memberFilterInexact(search));
+
+  if (members.size === 0) return false;
+  if (members.size === 1) {
+    if (!(/^[0-9]{18}$/).test(members.first().id)) return false;
+
+    return members.first();
   }
-  if (member.length === 1) {
-    return member[0];
-  }
-  member = member.filter(memberFilterExact(search));
-  if (member.length === 1) {
-    return member[0];
+
+  const exactMembers = members.filter(memberFilterExact(search));
+
+  if (exactMembers.size === 1) {
+    if (!(/^[0-9]{18}$/).test(exactMembers.first().id)) return false;
+
+    return exactMembers.first();
   }
 
   return null;
+  /* eslint-enable curly */
 };
 
 class Song {

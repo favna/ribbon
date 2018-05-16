@@ -92,9 +92,7 @@ module.exports = class LeaveMessagesCommand extends Command {
     const defRoleEmbed = new MessageEmbed(),
       description = option ? '📉 Ribbon leave messages have been enabled' : '📉 Ribbon leave messages have been disabled',
       modlogChannel = msg.guild.settings.get('modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null);
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
     
     msg.guild.settings.set('leavemsgs', option);
     msg.guild.settings.set('leavemsgchannel', channel.id);

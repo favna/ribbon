@@ -136,10 +136,8 @@ module.exports = class TempBanCommand extends Command {
     });
 
     const banEmbed = new MessageEmbed(),
-      modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null),
+      modlogChannel = msg.guild.settings.get('modlogchannel',
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
       unbanEmbed = new MessageEmbed();
 
     banEmbed

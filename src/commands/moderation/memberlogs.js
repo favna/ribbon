@@ -82,9 +82,7 @@ module.exports = class MemberLogsCommand extends Command {
 
     const memberLogsEmbed = new MessageEmbed(),
       modlogChannel = msg.guild.settings.get('modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null);
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
 
     msg.guild.settings.set(msg.guild.id, 'memberlogs', option);
 

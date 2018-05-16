@@ -57,7 +57,7 @@ module.exports = class RegexMatchToggleCommand extends Command {
       args: [
         {
           key: 'option',
-          prompt: 'Enable or disable memberlogs?',
+          prompt: 'Enable or disable regex matches?',
           type: 'boolean',
           validate: (bool) => {
             const validBools = ['true', 't', 'yes', 'y', 'on', 'enable', 'enabled', '1', '+', 'false', 'f', 'no', 'n', 'off', 'disable', 'disabled', '0', '-'];
@@ -81,9 +81,7 @@ module.exports = class RegexMatchToggleCommand extends Command {
     startTyping(msg);
 
     const modlogChannel = msg.guild.settings.get('modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null),
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
       regexMatchEmbed = new MessageEmbed();
 
     msg.guild.settings.set('regexmatches', option);

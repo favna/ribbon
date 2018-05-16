@@ -73,10 +73,8 @@ module.exports = class defaultroleCommand extends Command {
   run (msg, args) {
     startTyping(msg);
     const defRoleEmbed = new MessageEmbed(),
-      modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null);
+      modlogChannel = msg.guild.settings.get('modlogchannel',
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
 
     let description = oneLine`🔓 \`${args.role.name}\` has been set as the default role for this server and will now be granted to all people joining`;
 

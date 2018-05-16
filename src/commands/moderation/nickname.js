@@ -80,9 +80,7 @@ module.exports = class NickCommand extends Command {
     if (member.manageable) {
 
       const modlogChannel = msg.guild.settings.get('modlogchannel',
-          msg.guild.channels.exists('name', 'mod-logs')
-            ? msg.guild.channels.find('name', 'mod-logs').id
-            : null),
+          msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
         nicknameEmbed = new MessageEmbed(),
         oldName = member.displayName;
 

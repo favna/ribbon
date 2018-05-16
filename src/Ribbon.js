@@ -121,21 +121,19 @@ class Ribbon {
 
   onGuildMemberAdd () {
     return (member) => {
-      if (this.client.provider.get(member.guild, 'memberlogs', true)) {
+      if (member.guild.settings.get('memberlogs', true)) {
         const memberJoinLogEmbed = new MessageEmbed(),
-          memberLogs = this.client.provider.get(member.guild, 'memberlogchannel',
-            member.guild.channels.exists('name', 'member-logs')
-              ? member.guild.channels.find('name', 'member-logs').id
-              : null);
+          memberLogs = member.guild.settings.get('memberlogchannel',
+            member.guild.channels.find(c => c.name === 'member-logs') ? member.guild.channels.find(c => c.name === 'member-logs').id : null);
 
         memberJoinLogEmbed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({format: 'png'}))
           .setFooter('User joined')
           .setTimestamp()
           .setColor('#80F31F');
 
-        if (this.client.provider.get(member.guild.id, 'defaultRole')) {
-          member.roles.add(this.client.provider.get(member.guild.id, 'defaultRole'));
-          memberJoinLogEmbed.setDescription(`Automatically assigned the role ${member.guild.roles.get(this.client.provider.get(member.guild.id, 'defaultRole')).name} to this member`);
+        if (member.guild.settings.get('defaultRole')) {
+          member.roles.add(member.guild.settings.get('defaultRole'));
+          memberJoinLogEmbed.setDescription(`Automatically assigned the role ${member.guild.roles.get(member.guild.settings.get('defaultRole')).name} to this member`);
         }
 
         if (memberLogs && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
@@ -152,19 +150,17 @@ class Ribbon {
 
   onGuildMemberRemove () {
     return (member) => {
-      if (this.client.provider.get(member.guild, 'memberlogs', true)) {
+      if (member.guild.settings.get('memberlogs', true)) {
         const memberLeaveLogEmbed = new MessageEmbed(),
-          memberLogs = this.client.provider.get(member.guild, 'memberlogchannel',
-            member.guild.channels.exists('name', 'member-logs')
-              ? member.guild.channels.find('name', 'member-logs').id
-              : null);
+          memberLogs = member.guild.settings.get('memberlogchannel',
+            member.guild.channels.find(c => c.name === 'member-logs') ? member.guild.channels.find(c => c.name === 'member-logs').id : null);
 
         memberLeaveLogEmbed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({format: 'png'}))
           .setFooter('User left')
           .setTimestamp()
           .setColor('#F4BF42');
 
-        if (memberLogs !== null && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
+        if (memberLogs && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
           .has('SEND_MESSAGES')) {
           member.guild.channels.get(memberLogs).send('', {embed: memberLeaveLogEmbed});
         }
@@ -189,8 +185,8 @@ class Ribbon {
 
   onPresenceUpdate () {
     return async (oldMember, newMember) => {
-      if (this.client.provider.get(newMember.guild, 'twitchmonitors', []).includes(newMember.id)) {
-        if (this.client.provider.get(newMember.guild, 'twitchnotifiers', false)) {
+      if (newMember.guild.settings.get('twitchmonitors', []).includes(newMember.id)) {
+        if (newMember.guild.settings.get('twitchnotifiers', false)) {
           const curDisplayName = newMember.displayName,
             curGuild = newMember.guild,
             curUser = newMember.user;
@@ -215,7 +211,7 @@ class Ribbon {
                 .set('Accept', 'application/vnd.twitchtv.v5+json')
                 .set('Client-ID', process.env.twitchclientid)
                 .query('channel', userData.body.users[0]._id),
-              twitchChannel = this.client.provider.get(curGuild, 'twitchchannel', null),
+              twitchChannel = curGuild.settings.get('twitchchannel', null),
               twitchEmbed = new MessageEmbed();
             /* eslint-enable sort-vars*/
 

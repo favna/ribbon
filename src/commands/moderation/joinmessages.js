@@ -92,9 +92,7 @@ module.exports = class JoinMessagesCommand extends Command {
     const defRoleEmbed = new MessageEmbed(),
       description = option ? '📈 Ribbon join messages have been enabled' : '📈 Ribbon join messages have been disabled',
       modlogChannel = msg.guild.settings.get('modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null);
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
 
     msg.guild.settings.set('joinmsgs', option);
     msg.guild.settings.set('joinmsgchannel', channel.id);

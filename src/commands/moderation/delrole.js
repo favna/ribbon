@@ -79,10 +79,8 @@ module.exports = class DeleteRoleCommand extends Command {
     startTyping(msg);
     if (member.manageable) {
       try {
-        const modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
-            msg.guild.channels.exists('name', 'mod-logs')
-              ? msg.guild.channels.find('name', 'mod-logs').id
-              : null),
+        const modlogChannel = msg.guild.settings.get('modlogchannel',
+            msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
           roleRemove = await member.roles.remove(role),
           roleRemoveEmbed = new MessageEmbed();
 

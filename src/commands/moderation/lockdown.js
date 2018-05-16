@@ -75,10 +75,8 @@ module.exports = class LockdownCommand extends Command {
   async run (msg, {lockrole}) {
     startTyping(msg);
     const lockEmbed = new MessageEmbed(),
-      modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null),
+      modlogChannel = msg.guild.settings.get('modlogchannel',
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
       overwrite = await msg.channel.overwritePermissions({
         overwrites: [
           {

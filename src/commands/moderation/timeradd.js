@@ -126,9 +126,7 @@ module.exports = class TimerAddCommand extends Command {
     startTyping(msg);
     const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3')),
       modlogChannel = msg.guild.settings.get('modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null),
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
       timedMsgEmbed = new MessageEmbed();
 
     try {

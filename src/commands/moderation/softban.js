@@ -96,10 +96,8 @@ module.exports = class SoftbanCommand extends Command {
 
     msg.guild.members.unban(args.member.user);
 
-    const modlogsChannel = this.client.provider.get(msg.guild, 'modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null),
+    const modlogChannel = msg.guild.settings.get('modlogchannel',
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
       softbanEmbed = new MessageEmbed();
 
     softbanEmbed
@@ -119,7 +117,7 @@ module.exports = class SoftbanCommand extends Command {
         this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
       }
 
-      modlogsChannel ? msg.guild.channels.get(modlogsChannel).send('', {embed: softbanEmbed}) : null;
+      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: softbanEmbed}) : null;
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);

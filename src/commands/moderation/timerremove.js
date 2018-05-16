@@ -107,9 +107,7 @@ module.exports = class TimerRemoveCommand extends Command {
 
     try {
       const modlogChannel = msg.guild.settings.get('modlogchannel',
-          msg.guild.channels.exists('name', 'mod-logs')
-            ? msg.guild.channels.find('name', 'mod-logs').id
-            : null),
+          msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
         timedMessage = conn.prepare(`SELECT * from "${msg.guild.id}" WHERE id=$id`).get({id}),
         timerRemoveEmbed = new MessageEmbed();
 

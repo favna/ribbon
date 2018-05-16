@@ -92,10 +92,8 @@ module.exports = class KickCommand extends Command {
 
     args.member.kick(args.reason !== '' ? args.reason : 'No reason given by staff');
     const kickEmbed = new MessageEmbed(),
-      modlogChannel = this.client.provider.get(msg.guild, 'modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null);
+      modlogChannel = msg.guild.settings.get('modlogchannel',
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
 
     kickEmbed
       .setColor('#FF8300')

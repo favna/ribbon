@@ -69,8 +69,8 @@ module.exports = class NewsCommand extends Command {
 
   run (msg, args) {
     startTyping(msg);
-    if (msg.guild.channels.exists('name', 'announcements') || msg.guild.channels.exists('name', 'news')) {
-      const newsChannel = msg.guild.channels.exists('name', 'announcements') ? msg.guild.channels.find('name', 'announcements') : msg.guild.channels.find('name', 'news');
+    if (msg.guild.channels.find(c=>c.name === 'announcements' || c.name === 'news')) {
+      const newsChannel = msg.guild.channels.find(c => c.name === 'announcements') ? msg.guild.channels.find(c => c.name === 'announcements') : msg.guild.channels.find(c => c.name === 'news');
 
       if (newsChannel.permissionsFor(msg.guild.me).has(['SEND_MESSAGES', 'VIEW_CHANNEL'])) {
         stopTyping(msg);

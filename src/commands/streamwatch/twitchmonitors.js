@@ -77,8 +77,10 @@ module.exports = class TwitchMonitorsCommand extends Command {
     for (const member in args.members) {
       const thisMember = await userSearch(this.client, msg, args.members[member]);
 
-      memberIDs.push(thisMember.id);
-      memberNames.push(thisMember.displayName);
+      if (thisMember) {
+        memberIDs.push(thisMember.id);
+        memberNames.push(thisMember.displayName);
+      }
     }
 
     this.client.provider.set(msg.guild.id, 'twitchmonitors', memberIDs);

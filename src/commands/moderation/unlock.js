@@ -70,10 +70,8 @@ module.exports = class UnlockCommand extends Command {
 
   async run (msg, {lockrole}) {
     startTyping(msg);
-    const modlogsChannel = this.client.provider.get(msg.guild, 'modlogchannel',
-        msg.guild.channels.exists('name', 'mod-logs')
-          ? msg.guild.channels.find('name', 'mod-logs').id
-          : null),
+    const modlogChannel = msg.guild.settings.get('modlogchannel',
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
       overwrite = await msg.channel.overwritePermissions({
         overwrites: [
           {
@@ -101,7 +99,7 @@ module.exports = class UnlockCommand extends Command {
           this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
         }
 
-        modlogsChannel ? msg.guild.channels.get(modlogsChannel).send('', {embed: unlockEmbed}) : null;
+        modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: unlockEmbed}) : null;
       }
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
