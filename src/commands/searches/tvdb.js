@@ -82,7 +82,7 @@ module.exports = class TVCommand extends Command {
         embed
           .setTitle(show.name)
           .setURL(`https://www.themoviedb.org/tv/${show.id}`)
-          .setColor(msg.guild ? msg.member.displayHexColor : '#E24141')
+          .setColor(msg.guild ? msg.member.displayHexColor : '#7CFC00')
           .setImage(`https://image.tmdb.org/t/p/original${show.backdrop_path}`)
           .setThumbnail(`https://image.tmdb.org/t/p/original${show.poster_path}`)
           .setDescription(show.overview)
