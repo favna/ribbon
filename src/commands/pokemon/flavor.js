@@ -144,14 +144,14 @@ module.exports = class FlavorCommand extends Command {
 
     if (pokeSearch.length) {
       if (pokeSearch[0].forme) {
-        for (let i = 0; i < dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`].length; i += 1) {
+        for (let i = 0; i < dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`].length; ++i) {
           pokedexEntries.push({
             game: dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`][i].version_id,
             text: dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`][i].flavor_text
           });
         }
       } else {
-        for (let i = 0; i < dexEntries[pokeSearch[0].num].length; i += 1) {
+        for (let i = 0; i < dexEntries[pokeSearch[0].num].length; ++i) {
           pokedexEntries.push({
             game: dexEntries[pokeSearch[0].num][i].version_id,
             text: dexEntries[pokeSearch[0].num][i].flavor_text

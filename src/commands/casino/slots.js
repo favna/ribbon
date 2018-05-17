@@ -138,13 +138,13 @@ module.exports = class SlotsCommand extends Command {
         if (args.chips === 1 && result.lines[1].isWon) {
           winningPoints += result.lines[1].points;
         } else if (args.chips === 2) {
-          for (let i = 0; i <= 2; i += 1) {
+          for (let i = 0; i <= 2; ++i) {
             if (result.lines[i].isWon) {
               winningPoints += result.lines[i].points;
             }
           }
         } else if (args.chips === 3) {
-          for (let i = 0; i < result.lines.length; i += 1) {
+          for (let i = 0; i < result.lines.length; ++i) {
             if (result.lines[i].isWon) {
               winningPoints += result.lines[i].points;
             }

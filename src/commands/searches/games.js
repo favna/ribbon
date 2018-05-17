@@ -70,7 +70,7 @@ module.exports = class GamesCommand extends Command {
   extractNames (arr) {
     let res = '';
 
-    for (let i = 0; i < arr.length; i += 1) {
+    for (let i = 0; i < arr.length; ++i) {
       if (i !== arr.length - 1) {
         res += `${arr[i].name}, `;
       } else {
