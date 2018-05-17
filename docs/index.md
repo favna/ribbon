@@ -411,7 +411,7 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dt><a href="#module_move">move</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pokémon MoveCommand - Gets information about a move in Pokémon<br>For move names existing of multiple words (for example <code>dragon dance</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>attack</code></p>
 </dd>
-<dt><a href="#module_ability">ability</a> ⇒ <code>MessageEmbed</code></dt>
+<dt><a href="#module_TCG">TCG</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pokémon PokemonTCGCommand - Gets information on a Pokemon card<br>At start of the command you can specify which properties you want to use for the search, the options are <code>name</code>, <code>types</code>, <code>subtype</code>, <code>supertype</code> and <code>hp</code><br>After specifying which options you want to use the bot will go through the options asking you the values to use for the search<br>By default only <code>name</code> is used as argument and the supertype is set to pokemon<br>name is the name of the pokemon card<br>types are the types of the pokemon card (only works with pokemon as supertype)<br>subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)<br>supertype specifies the supertype of a card (pokemon, trainer or energy)<br>hp specifies the hp of a pokemon<br><strong>Aliases</strong>: <code>ptcg</code>, <code>tcgo</code></p>
 </dd>
 <dt><a href="#module_type">type</a> ⇒ <code>MessageEmbed</code></dt>
@@ -2273,9 +2273,9 @@ For move names existing of multiple words (for example `dragon dance`) you can e
 ```js
 move dragon dance
 ```
-<a name="module_ability"></a>
+<a name="module_TCG"></a>
 
-## ability ⇒ <code>MessageEmbed</code>
+## TCG ⇒ <code>MessageEmbed</code>
 Pokémon PokemonTCGCommand - Gets information on a Pokemon card  
 At start of the command you can specify which properties you want to use for the search, the options are `name`, `types`, `subtype`, `supertype` and `hp`  
 After specifying which options you want to use the bot will go through the options asking you the values to use for the search  
@@ -2287,7 +2287,7 @@ supertype specifies the supertype of a card (pokemon, trainer or energy)
 hp specifies the hp of a pokemon  
 **Aliases**: `ptcg`, `tcgo`
 
-**Returns**: <code>MessageEmbed</code> - Description and external links for the ability  
+**Returns**: <code>MessageEmbed</code> - Pokemon TCG card details  
 **Category**: pokémon  
 
 | Param | Type | Description |

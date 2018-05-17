@@ -36,13 +36,11 @@
  * **Aliases**: `ptcg`, `tcgo`
  * @module
  * @category pokémon
- * @name ability
+ * @name TCG
  * @example tcg name types subtype
  * @param {StringResolvable} Properties Properties you want to use for your search
- * @returns {MessageEmbed} Description and external links for the ability
+ * @returns {MessageEmbed} Pokemon TCG card details
  */
-
-/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position, one-var*/
 
 const moment = require('moment'),
   request = require('snekfetch'),
@@ -117,15 +115,15 @@ module.exports = class PokemonTCGCommand extends Command {
 
     if (props.includes('name')) {
       const namePicker = new ArgumentCollector(command.client, [
-        {
-          key: 'name',
-          prompt: stripIndents`Name of the card to find?
+          {
+            key: 'name',
+            prompt: stripIndents`Name of the card to find?
       **Note:** Do not specify "EX" and such here, that goes in the \`subtype\``,
-          type: 'string',
-          parse: p => p.toLowerCase()
-        }
-      ], 1);
-      const nameSelection = await namePicker.obtain(command, [], 1);
+            type: 'string',
+            parse: p => p.toLowerCase()
+          }
+        ], 1),
+        nameSelection = await namePicker.obtain(command, [], 1);
 
       properties.name = nameSelection.values.name;
       nameSelection.prompts[0].delete();
@@ -138,14 +136,14 @@ module.exports = class PokemonTCGCommand extends Command {
 
     if (props.includes('types')) {
       const typePicker = new ArgumentCollector(command.client, [
-        {
-          key: 'types',
-          prompt: 'Which types can the Pokemon be (ex. Fire, Fighting, Psychic, etc.)?',
-          type: 'string',
-          parse: p => p.replace(/ /gm, ',').toLowerCase()
-        }
-      ], 1);
-      const typeSelection = await typePicker.obtain(command, [], 1);
+          {
+            key: 'types',
+            prompt: 'Which types can the Pokemon be (ex. Fire, Fighting, Psychic, etc.)?',
+            type: 'string',
+            parse: p => p.replace(/ /gm, ',').toLowerCase()
+          }
+        ], 1),
+        typeSelection = await typePicker.obtain(command, [], 1);
 
       properties.types = typeSelection.values.types;
       typeSelection.prompts[0].delete();
@@ -154,14 +152,14 @@ module.exports = class PokemonTCGCommand extends Command {
 
     if (props.includes('subtype')) {
       const subTypePicker = new ArgumentCollector(command.client, [
-        {
-          key: 'subtype',
-          prompt: 'What can the card\'s subtype be (ex. MEGA, Stage 1, BREAK, Supporter etc.)?',
-          type: 'string',
-          parse: p => p.toLowerCase()
-        }
-      ], 1);
-      const subTypeSelection = await subTypePicker.obtain(command, [], 1);
+          {
+            key: 'subtype',
+            prompt: 'What can the card\'s subtype be (ex. MEGA, Stage 1, BREAK, Supporter etc.)?',
+            type: 'string',
+            parse: p => p.toLowerCase()
+          }
+        ], 1),
+        subTypeSelection = await subTypePicker.obtain(command, [], 1);
 
       properties.subtype = subTypeSelection.values.subtype;
       subTypeSelection.prompts[0].delete();
@@ -170,24 +168,24 @@ module.exports = class PokemonTCGCommand extends Command {
 
     if (props.includes('supertype')) {
       const superTypePicker = new ArgumentCollector(command.client, [
-        {
-          key: 'supertype',
-          prompt: 'What can the card\'s super be (one of pokemon, trainer or energy)?',
-          type: 'string',
-          validate: (type) => {
-            const validTypes = ['pokemon', 'trainer', 'energy'];
+          {
+            key: 'supertype',
+            prompt: 'What can the card\'s super be (one of pokemon, trainer or energy)?',
+            type: 'string',
+            validate: (type) => {
+              const validTypes = ['pokemon', 'trainer', 'energy'];
 
-            if (validTypes.includes(type.toLowerCase())) {
-              return true;
-            }
+              if (validTypes.includes(type.toLowerCase())) {
+                return true;
+              }
 
-            return stripIndents`Has to be one of ${validTypes.map(val => `\`${val}\``).join(', ')}
+              return stripIndents`Has to be one of ${validTypes.map(val => `\`${val}\``).join(', ')}
             Respond with your new selection or`;
-          },
-          parse: p => p.toLowerCase()
-        }
-      ], 1);
-      const superTypeSelection = await superTypePicker.obtain(command, [], 1);
+            },
+            parse: p => p.toLowerCase()
+          }
+        ], 1),
+        superTypeSelection = await superTypePicker.obtain(command, [], 1);
 
       properties.supertype = superTypeSelection.values.supertype;
       superTypeSelection.prompts[0].delete();
@@ -196,13 +194,13 @@ module.exports = class PokemonTCGCommand extends Command {
 
     if (props.includes('hp')) {
       const hpPicker = new ArgumentCollector(command.client, [
-        {
-          key: 'hp',
-          prompt: 'How much HP does the pokemon have?',
-          type: 'integer'
-        }
-      ], 1);
-      const hpSelection = await hpPicker.obtain(command, [], 1);
+          {
+            key: 'hp',
+            prompt: 'How much HP does the pokemon have?',
+            type: 'integer'
+          }
+        ], 1),
+        hpSelection = await hpPicker.obtain(command, [], 1);
 
       properties.hp = hpSelection.values.hp.toString();
       hpSelection.prompts[0].delete();
@@ -227,12 +225,14 @@ module.exports = class PokemonTCGCommand extends Command {
           body += `**${parseInt(i, 10) + 1}:** ${cards[i].name}\n`;
         }
 
+        // eslint-disable-next-line one-var
         const selectionEmbed = await command.embed({
           thumbnail: {url: 'https://favna.xyz/images/ribbonhost/tcglogo.png'},
           color: command.guild ? command.member.displayColor : 14827841,
           description: body
         });
 
+        // eslint-disable-next-line one-var
         const cardChooser = new ArgumentCollector(command.client, [
           {
             key: 'card',
@@ -249,6 +249,7 @@ module.exports = class PokemonTCGCommand extends Command {
           }
         ], 1);
 
+        // eslint-disable-next-line one-var
         const cardSelection = await cardChooser.obtain(command, [], 1),
           selection = cardSelection.values.card;
 
