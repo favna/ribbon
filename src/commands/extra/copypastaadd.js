@@ -36,7 +36,6 @@
  */
 
 const fs = require('fs'),
-  moment = require('moment'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
@@ -56,7 +55,6 @@ module.exports = class CopyPastaAddCommand extends Command {
         usages: 2,
         duration: 3
       },
-
       args: [
         {
           key: 'name',
@@ -73,20 +71,19 @@ module.exports = class CopyPastaAddCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {name, content}) {
     startTyping(msg);
     if (!fs.existsSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`))) {
-      console.log(`Creating guild dir for guild ${msg.guild.name}(${msg.guild.id}) at ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
       fs.mkdirSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`));
     }
 
-    fs.writeFileSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}/${args.name}.txt`), args.content, 'utf8');
+    fs.writeFileSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}/${name}.txt`), content, 'utf8');
 
-    if (fs.existsSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}/${args.name}.txt`))) {
+    if (fs.existsSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}/${name}.txt`))) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`Copypasta stored in ${args.name}.txt. You can summon it with ${msg.guild.commandPrefix}copypasta ${args.name}`);
+      return msg.reply(`Copypasta stored in ${name}.txt. You can summon it with ${msg.guild.commandPrefix}copypasta ${name}`);
     }
     stopTyping(msg);
 
