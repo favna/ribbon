@@ -39,10 +39,9 @@
  * @returns {MessageEmbed} Color of embed matches generated color
  */
 
-const imgur = require('imgur'),
-  {Canvas} = require('canvas-constructor'),
+const {Canvas} = require('canvas-constructor'),
   {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
+  {MessageEmbed, MessageAttachment} = require('discord.js'),
   {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
@@ -100,37 +99,29 @@ module.exports = class RandomColCommand extends Command {
     };
   }
 
-  async run (msg, args) {
+  run (msg, args) {
     startTyping(msg);
+    /* eslint-disable sort-vars*/
     const embed = new MessageEmbed(),
       hex = args.col !== 'random' ? args.col : `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-      canv = new Canvas(80, 60) // eslint-disable-line sort-vars
+      canv = new Canvas(80, 60)
         .setColor(hex)
         .addRect(0, 0, 100, 60)
-        .toBuffer();
+        .toBuffer(),
+      embedAttachment = new MessageAttachment(canv, 'canvas.png');
+    /* eslint-enable sort-vars*/
 
-    if (canv.toString('base64')) {
-      const upload = await imgur.uploadBase64(canv.toString('base64'));
-
-      if (upload) {
-        embed
-          .setColor(hex)
-          .setThumbnail(upload.data.link)
-          .setDescription(stripIndents`**hex**: ${hex}
+    embed
+      .attachFiles([embedAttachment])
+      .setColor(hex)
+      .setThumbnail('attachment://canvas.png')
+      .setDescription(stripIndents`**hex**: ${hex}
 				**dec**: ${this.hextodec(hex)}
 				**rgb**: rgb(${this.hextorgb(hex).r}, ${this.hextorgb(hex).g}, ${this.hextorgb(hex).b})`);
 
-        deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
-
-        return msg.embed(embed);
-      }
-      stopTyping(msg);
-
-      return msg.reply('an error occurred uploading the canvas to imgur.');
-    }
+    deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply('an error occurred getting a base64 for the canvas.');
+    return msg.embed(embed);
   }
 };

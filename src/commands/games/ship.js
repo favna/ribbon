@@ -38,12 +38,11 @@
 
 /* eslint-disable no-unused-vars*/
 const Jimp = require('jimp'),
-  imgur = require('imgur'),
   {promisify} = require('util'),
   {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
+  {MessageEmbed, MessageAttachment} = require('discord.js'),
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
-  
+
 module.exports = class ShipCommand extends Command {
   constructor (client) {
     super(client, {
@@ -81,7 +80,7 @@ module.exports = class ShipCommand extends Command {
     startTyping(msg);
     romeo = romeo !== 'random' ? romeo.user : msg.guild.members.random().user;
     juliet = juliet !== 'random' ? juliet.user : msg.guild.members.random().user;
-    Jimp.prototype.getBase64Async = promisify(Jimp.prototype.getBase64);
+    Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
 
     const avaOne = await Jimp.read(romeo.displayAvatarURL({format: 'png'})),
       avaTwo = await Jimp.read(juliet.displayAvatarURL({format: 'png'})),
@@ -96,22 +95,20 @@ module.exports = class ShipCommand extends Command {
     canvas.blit(avaTwo, 256, 0);
     canvas.blit(heart, 160, 32);
 
-    try {
-      const base64 = await canvas.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
-        upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
+    // eslint-disable-next-line one-var
+    const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG),
+      embedAttachment = new MessageAttachment(buffer, 'ship.png');
 
-      boat
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
-        .setDescription(`I call it... ${romeo.username.substring(0, roundNumber(romeo.username.length / 2))}${juliet.username.substring(roundNumber(juliet.username.length / 2))}! 😘`)
-        .setImage(upload.data.link);
+    boat
+      .attachFiles([embedAttachment])
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+      .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
+      .setDescription(`I call it... ${romeo.username.substring(0, roundNumber(romeo.username.length / 2))}${juliet.username.substring(roundNumber(juliet.username.length / 2))}! 😘`)
+      .setImage('attachment://ship.png');
 
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
+    deleteCommandMessages(msg, this.client);
+    stopTyping(msg);
 
-      return msg.embed(boat);
-    } catch (err) {
-      return msg.reply('error occurred getting that ship 😞 try again in 5 minutes');
-    }
+    return msg.embed(boat);
   }
 };

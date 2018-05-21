@@ -28,10 +28,9 @@
 
 const Database = require('better-sqlite3'),
   Jimp = require('jimp'),
-  imgur = require('imgur'),
   moment = require('moment'),
   path = require('path'),
-  {MessageEmbed} = require('discord.js'),
+  {MessageEmbed, MessageAttachment} = require('discord.js'),
   {promisify} = require('util'),
   {ordinal} = require(path.join(__dirname, 'util.js')),
   {stripIndents} = require('common-tags');
@@ -89,7 +88,7 @@ const forceStopTyping = function (client) {
 };
 
 const joinmessage = async function (member) {
-  Jimp.prototype.getBase64Async = promisify(Jimp.prototype.getBase64);
+  Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
   /* eslint-disable sort-vars*/
   const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
     border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
@@ -110,20 +109,21 @@ const joinmessage = async function (member) {
   canvas.print(fontMedium, 160, 60, `you are the ${ordinal(member.guild.memberCount)} member`.toUpperCase());
   canvas.print(fontMedium, 160, 80, `of ${member.guild.name}`.toUpperCase());
 
-  const base64 = await canvas.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
-    upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
+  const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG),
+    embedAttachment = new MessageAttachment(buffer, 'joinimg.png');
 
   newMemberEmbed
+    .attachFiles([embedAttachment])
     .setColor('#80F31F')
     .setTitle('NEW MEMBER!')
     .setDescription(`Please give a warm welcome to <@${member.id}>`)
-    .setImage(upload.data.link);
+    .setImage('attachment://joinimg.png');
 
   member.guild.channels.get(member.guild.settings.get('joinmsgchannel')).send('', {embed: newMemberEmbed});
 };
 
 const leavemessage = async function (member) {
-  Jimp.prototype.getBase64Async = promisify(Jimp.prototype.getBase64);
+  Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
   /* eslint-disable sort-vars*/
   const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
     border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
@@ -144,14 +144,16 @@ const leavemessage = async function (member) {
   canvas.print(fontMedium, 160, 60, `there are now ${member.guild.memberCount} members`.toUpperCase());
   canvas.print(fontMedium, 160, 80, `on ${member.guild.name}`.toUpperCase());
 
-  const base64 = await canvas.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
-    upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
+  // eslint-disable-next-line one-var
+  const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG),
+    embedAttachment = new MessageAttachment(buffer, 'leaveimg.png');
 
   leaveMemberEmbed
+    .attachFiles([embedAttachment])
     .setColor('#F4BF42')
     .setTitle('Member Left 😢')
     .setDescription(`You will be missed <@${member.id}>`)
-    .setImage(upload.data.link);
+    .setImage('attachment://leaveimg.png');
 
   member.guild.channels.get(member.guild.settings.get('leavemsgchannel')).send('', {embed: leaveMemberEmbed});
 };
