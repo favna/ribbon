@@ -32,7 +32,7 @@
  * @returns {MessageEmbed} List of all available copypastas
  */
 
-const fs = require('fs'),
+const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
@@ -57,19 +57,23 @@ module.exports = class CopyPastaListCommand extends Command {
   }
 
   async run (msg) {
+    const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
+
     try {
       startTyping(msg);
-      const list = fs.readdirSync(path.join(__dirname, `../../data/pastas/${msg.guild.id}`));
+
+      // eslint-disable-next-line newline-per-chained-call
+      const list = conn.prepare(`SELECT name FROM "${msg.guild.id}";`).all().map(p => p.name);
 
       if (list && list.length) {
         for (const entry in list) {
-          list[entry] = `- \`${list[entry].slice(0, -4)}\``;
+          list[entry] = `- \`${list[entry]}\``;
         }
       }
 
       deleteCommandMessages(msg, this.client);
 
-      if (list.join('\n').length >= 2000) {
+      if (list.join('\n').length >= 2048) {
         const messages = [],
           splitTotal = splitMessage(stripIndents`${list.join('\n')}`);
 
@@ -96,6 +100,9 @@ module.exports = class CopyPastaListCommand extends Command {
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
+      if (/(?:no such table)/i.test(err.toString())) {
+        return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);
+      }
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred in \`copypastalist\` command!
       **Server:** ${msg.guild.name} (${msg.guild.id})
