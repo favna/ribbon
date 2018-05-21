@@ -112,7 +112,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Custom KaiCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br>Server admins can disable this command entirely by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>.kai</code></p>
 </dd>
 <dt><a href="#module_copypasta">copypasta</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra CopyPastaCommand - Gets one of the server&#39;s stored copypastas<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
+<dd><p>Extra CopyPastaCommand - Sends a copypasta to the chat<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
 </dd>
 <dt><a href="#module_copypastaadd">copypastaadd</a> ⇒ <code>Message</code></dt>
 <dd><p>Extra CopyPastaAddCommand - Adds a new copypasta for your server<br><strong>Aliases</strong>: <code>cpadd</code>, <code>pastaadd</code></p>
@@ -127,7 +127,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Extra MoneyCommand - Convert one currency to another<br>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC<br>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a><br><strong>Aliases</strong>: <code>money</code>, <code>rate</code>, <code>convert</code></p>
 </dd>
 <dt><a href="#module_qrgen">qrgen</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra QRGenCommand - Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code></p>
+<dd><p>Extra QRGenCommand - Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code>, <code>qrcode</code></p>
 </dd>
 <dt><a href="#module_randomcol">randomcol</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Extra RandomCol - Generates a random color<br>Providing a color hex will display that color, providing none will generate a random one<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
@@ -755,7 +755,7 @@ Server admins can disable this command entirely by using the `rmt off` command
 <a name="module_copypasta"></a>
 
 ## copypasta ⇒ <code>MessageEmbed</code>
-Extra CopyPastaCommand - Gets one of the server's stored copypastas  
+Extra CopyPastaCommand - Sends a copypasta to the chat  
 Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!  
 **Aliases**: `cp`, `pasta`
 
@@ -838,7 +838,7 @@ oxr 1 EUR USD
 
 ## qrgen ⇒ <code>MessageEmbed</code>
 Extra QRGenCommand - Generates a QR code from text (like a URL)  
-**Aliases**: `qr`
+**Aliases**: `qr`, `qrcode`
 
 **Returns**: <code>MessageEmbed</code> - Embedded QR code and original image URL  
 **Category**: extra  
