@@ -43,7 +43,7 @@ const Jimp = require('jimp'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
-
+  
 module.exports = class ShipCommand extends Command {
   constructor (client) {
     super(client, {
@@ -96,18 +96,22 @@ module.exports = class ShipCommand extends Command {
     canvas.blit(avaTwo, 256, 0);
     canvas.blit(heart, 160, 32);
 
-    const base64 = await canvas.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
-      upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
+    try {
+      const base64 = await canvas.getBase64Async(Jimp.MIME_PNG), // eslint-disable-line one-var
+        upload = await imgur.uploadBase64(base64.slice(base64.indexOf(',') + 1));
 
-    boat
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
-      .setDescription(`I call it... ${romeo.username.substring(0, roundNumber(romeo.username.length / 2))}${juliet.username.substring(roundNumber(juliet.username.length / 2))}! 😘`)
-      .setImage(upload.data.link);
+      boat
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+        .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
+        .setDescription(`I call it... ${romeo.username.substring(0, roundNumber(romeo.username.length / 2))}${juliet.username.substring(roundNumber(juliet.username.length / 2))}! 😘`)
+        .setImage(upload.data.link);
 
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.embed(boat);
+      return msg.embed(boat);
+    } catch (err) {
+      return msg.reply('error occurred getting that ship 😞 try again in 5 minutes');
+    }
   }
 };
