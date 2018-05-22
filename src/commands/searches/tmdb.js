@@ -92,9 +92,10 @@ module.exports = class MovieCommand extends Command {
           .addField('Status', movie.status, true)
           .addField('Release Date', moment(movie.release_date).format('MMMM Do YYYY'), true)
           .addField('Collection', movie.belongs_to_collection ? movie.belongs_to_collection.name : 'none', true)
-          .addField('IMDB Page', movie.imdb_id_id ? `[Click Here](http://www.imdb.com/title/${movie.imdb_id})` : 'none', true)
-          .addField('Genres', movie.genres.length ? movie.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB');
-
+          .addField('IMDB Page', movie.imdb_id_id !== '' ? `[Click Here](http://www.imdb.com/title/${movie.imdb_id})` : 'none', true)
+          .addField('Genres', movie.genres.length ? movie.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB')
+          .addField('Production Companies', movie.production_companies.length !== 0 ? movie.production_companies.map(company => company.name).join(', ') : 'None on TheMovieDB');
+        
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
