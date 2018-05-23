@@ -89,13 +89,11 @@ module.exports = class EShopCommand extends Command {
           .setURL(`https://www.nintendo.com/games/detail/${results[0].slug}`)
           .setThumbnail(results[0].front_box_art)
           .setColor('#FFA600')
-          .addField('eShop Price', `$${results[0].eshop_price} USD`, true)
+          .addField('eShop Price', results[0].eshop_price ? `$${results[0].eshop_price} USD` : 'TBA', true)
           .addField('Release Date', results[0].release_date, true)
           .addField('Number of Players', results[0].number_of_players, true)
-          .addField('Available', results[0].buyitnow ? 'Yes' : 'No', true)
           .addField('Game Code', results[0].game_code, true)
-          .addField('NSUID', results[0].nsuid, true)
-          .addField('Digital Download', results[0].digitaldownload ? 'Yes' : 'No', true)
+          .addField('NSUID', results[0].nsuid ? results[0].nsuid : 'TBD', true)
           .addField('Categories', typeof results[0].categories.category === 'object' ? results[0].categories.category.join(', ') : results[0].categories.category, true);
 
         deleteCommandMessages(msg, this.client);
