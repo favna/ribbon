@@ -36,6 +36,7 @@
 
 const Fuse = require('fuse.js'),
   fs = require('fs'),
+  moment = require('moment'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
@@ -90,7 +91,7 @@ module.exports = class EShopCommand extends Command {
           .setThumbnail(results[0].front_box_art)
           .setColor('#FFA600')
           .addField('eShop Price', results[0].eshop_price ? `$${results[0].eshop_price} USD` : 'TBA', true)
-          .addField('Release Date', results[0].release_date, true)
+          .addField('Release Date', moment(results[0].release_date, 'MMM, DD YYYY').format('MMMM Do YYYY'), true)
           .addField('Number of Players', results[0].number_of_players, true)
           .addField('Game Code', results[0].game_code, true)
           .addField('NSUID', results[0].nsuid ? results[0].nsuid : 'TBD', true)
