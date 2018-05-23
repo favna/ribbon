@@ -122,64 +122,105 @@ class Ribbon {
 
   onGuildMemberAdd () {
     return (member) => {
-      if (member.guild.settings.get('memberlogs', true)) {
-        const memberJoinLogEmbed = new MessageEmbed(),
-          memberLogs = member.guild.settings.get('memberlogchannel',
-            member.guild.channels.find(c => c.name === 'member-logs') ? member.guild.channels.find(c => c.name === 'member-logs').id : null);
+      const joinmember = member;
 
-        memberJoinLogEmbed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({format: 'png'}))
-          .setFooter('User joined')
-          .setTimestamp()
-          .setColor('#80F31F');
+      try {
+        if (joinmember.guild.settings.get('memberlogs', true)) {
+          const memberJoinLogEmbed = new MessageEmbed(),
+            memberLogs = joinmember.guild.settings.get('memberlogchannel',
+              joinmember.guild.channels.find(c => c.name === 'member-logs') ? joinmember.guild.channels.find(c => c.name === 'member-logs').id : null);
 
-        if (member.guild.settings.get('defaultRole')) {
-          member.roles.add(member.guild.settings.get('defaultRole'));
-          memberJoinLogEmbed.setDescription(`Automatically assigned the role ${member.guild.roles.get(member.guild.settings.get('defaultRole')).name} to this member`);
+          memberJoinLogEmbed.setAuthor(`${joinmember.user.tag} (${joinmember.id})`, joinmember.user.displayAvatarURL({format: 'png'}))
+            .setFooter('User joined')
+            .setTimestamp()
+            .setColor('#80F31F');
+
+          if (joinmember.guild.settings.get('defaultRole')) {
+            joinmember.roles.add(joinmember.guild.settings.get('defaultRole'));
+            memberJoinLogEmbed.setDescription(`Automatically assigned the role ${joinmember.guild.roles.get(joinmember.guild.settings.get('defaultRole')).name} to this member`);
+          }
+
+          if (memberLogs && joinmember.guild.channels.get(memberLogs).permissionsFor(this.client.user)
+            .has('SEND_MESSAGES')) {
+            joinmember.guild.channels.get(memberLogs).send('', {embed: memberJoinLogEmbed});
+          }
         }
-
-        if (memberLogs && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
-          .has('SEND_MESSAGES')) {
-          member.guild.channels.get(memberLogs).send('', {embed: memberJoinLogEmbed});
-        }
+      } catch (err) {
+        this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+        <@${this.client.owners[0].id}> An error sending the member join memberlog message!
+        **Server:** ${joinmember.guild.name} (${joinmember.guild.id})
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Error Message:** ${err}
+        `);
       }
 
-      if (member.guild.settings.get('joinmsgs', false) && member.guild.settings.get('joinmsgchannel', null)) {
-        joinmessage(member);
+      try {
+        if (joinmember.guild.settings.get('joinmsgs', false) && joinmember.guild.settings.get('joinmsgchannel', null)) {
+          joinmessage(joinmember);
+        }
+      } catch (err) {
+        this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+        <@${this.client.owners[0].id}> An error occurred sending the member join image!
+        **Server:** ${joinmember.guild.name} (${joinmember.guild.id})
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Error Message:** ${err}
+        `);
       }
     };
   }
 
   onGuildMemberRemove () {
     return (member) => {
-      if (member.guild.settings.get('memberlogs', true)) {
-        const memberLeaveLogEmbed = new MessageEmbed(),
-          memberLogs = member.guild.settings.get('memberlogchannel',
-            member.guild.channels.find(c => c.name === 'member-logs') ? member.guild.channels.find(c => c.name === 'member-logs').id : null);
+      const leavemember = member;
 
-        memberLeaveLogEmbed.setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({format: 'png'}))
-          .setFooter('User left')
-          .setTimestamp()
-          .setColor('#F4BF42');
+      try {
+        if (leavemember.guild.settings.get('memberlogs', true)) {
+          const memberLeaveLogEmbed = new MessageEmbed(),
+            memberLogs = leavemember.guild.settings.get('memberlogchannel',
+              leavemember.guild.channels.find(c => c.name === 'member-logs') ? leavemember.guild.channels.find(c => c.name === 'member-logs').id : null);
 
-        if (memberLogs && member.guild.channels.get(memberLogs).permissionsFor(this.client.user)
-          .has('SEND_MESSAGES')) {
-          member.guild.channels.get(memberLogs).send('', {embed: memberLeaveLogEmbed});
+          memberLeaveLogEmbed.setAuthor(`${leavemember.user.tag} (${leavemember.id})`, leavemember.user.displayAvatarURL({format: 'png'}))
+            .setFooter('User left')
+            .setTimestamp()
+            .setColor('#F4BF42');
+
+          if (memberLogs && leavemember.guild.channels.get(memberLogs).permissionsFor(this.client.user)
+            .has('SEND_MESSAGES')) {
+            leavemember.guild.channels.get(memberLogs).send('', {embed: memberLeaveLogEmbed});
+          }
         }
+
+      } catch (err) {
+        this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+        <@${this.client.owners[0].id}> An error occurred sending the member left memberlog message!
+        **Server:** ${leavemember.guild.name} (${leavemember.guild.id})
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Error Message:** ${err}
+        `);
       }
 
       try {
         const conn = new Database(path.join(__dirname, 'data/databases/casino.sqlite3')),
-          query = conn.prepare(`SELECT * FROM "${member.guild.id}" WHERE userID = ?`).get(member.id);
+          query = conn.prepare(`SELECT * FROM "${leavemember.guild.id}" WHERE userID = ?`).get(leavemember.id);
 
         if (query) {
-          conn.prepare(`DELETE FROM "${member.guild.id}" WHERE userID = ?`).run(member.id);
+          conn.prepare(`DELETE FROM "${leavemember.guild.id}" WHERE userID = ?`).run(leavemember.id);
         }
       } catch (err) {
         null;
       }
 
-      if (member.guild.settings.get('leavemsgs', false) && member.guild.settings.get('leavemsgchannel', null)) {
-        leavemessage(member);
+      try {
+        if (leavemember.guild.settings.get('leavemsgs', false) && leavemember.guild.settings.get('leavemsgchannel', null)) {
+          leavemessage(leavemember);
+        }
+      } catch (err) {
+        this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+        <@${this.client.owners[0].id}> An error occurred sending the member leave image!
+        **Server:** ${leavemember.guild.name} (${leavemember.guild.id})
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Error Message:** ${err}
+        `);
       }
     };
   }
