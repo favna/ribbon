@@ -36,8 +36,10 @@
  */
 
 const Pornsearch = require('pornsearch'),
+  moment = require('moment'),
   {MessageEmbed} = require('discord.js'),
   {Command} = require('discord.js-commando'),
+  {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class PornVidsCommand extends Command {
@@ -82,13 +84,22 @@ module.exports = class PornVidsCommand extends Command {
         .setImage(vids[random].thumb)
         .setColor('#FFB6C1')
         .addField('Porn video URL', `[Click Here](${vids[random].url})`, true)
-        .addField('Porn video duration', vids[random].duration !== '' ? vids[random].duration : 'unknown', true);
+        .addField('Porn video duration', vids[random].duration ? vids[random].duration : 'unknown', true);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
       return msg.embed(pornEmbed, vids[random].url);
     } catch (err) {
+      this.client.channels.resolve('309470585027559425').send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`pornvids\` command!
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Input:** ${porn}
+      **Error Message:** ${err}
+      `);
+
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 

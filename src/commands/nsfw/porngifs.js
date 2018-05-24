@@ -36,8 +36,10 @@
  */
 
 const Pornsearch = require('pornsearch'),
-  {Command} = require('discord.js-commando'),
+  moment = require('moment'),
   {MessageEmbed} = require('discord.js'),
+  {Command} = require('discord.js-commando'),
+  {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class PornGifsCommand extends Command {
@@ -87,6 +89,15 @@ module.exports = class PornGifsCommand extends Command {
 
       return msg.embed(pornEmbed, gifs[random].webm);
     } catch (err) {
+      this.client.channels.resolve('309470585027559425').send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`porngifs\` command!
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Input:** ${porn}
+      **Error Message:** ${err}
+      `);
+
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
