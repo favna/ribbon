@@ -35,11 +35,9 @@
  * @returns {MessageEmbed} URL, duration and embedded thumbnail
  */
 
-const Pornsearch = require('pornsearch'),
-  moment = require('moment'),
+const request = require('snekfetch'),
   {MessageEmbed} = require('discord.js'),
   {Command} = require('discord.js-commando'),
-  {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class PornVidsCommand extends Command {
@@ -71,35 +69,23 @@ module.exports = class PornVidsCommand extends Command {
   async run (msg, {porn}) {
     try {
       startTyping(msg);
-      /* eslint-disable sort-vars */
-      const search = new Pornsearch(porn),
-        vids = await search.videos(),
-        pornEmbed = new MessageEmbed(),
-        random = Math.floor(Math.random() * vids.length);
-      /* eslint-enable sort-vars */
+      const pornEmbed = new MessageEmbed(),
+        vid = await request.get('https://www.pornhub.com/webmasters/search?').query('search', porn),
+        vidRandom = Math.floor(Math.random() * vid.body.videos.length);
 
       pornEmbed
-        .setURL(vids[random].url)
-        .setTitle(vids[random].title)
-        .setImage(vids[random].thumb)
+        .setURL(vid.body.videos[vidRandom].url)
+        .setTitle(vid.body.videos[vidRandom].title)
+        .setImage(vid.body.videos[vidRandom].default_thumb)
         .setColor('#FFB6C1')
-        .addField('Porn video URL', `[Click Here](${vids[random].url})`, true)
-        .addField('Porn video duration', vids[random].duration ? vids[random].duration : 'unknown', true);
+        .addField('Porn video URL', `[Click Here](${vid.body.videos[vidRandom].url})`, true)
+        .addField('Porn video duration', `${vid.body.videos[vidRandom].duration} minutes`, true);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(pornEmbed, vids[random].url);
+      return msg.embed(pornEmbed);
     } catch (err) {
-      this.client.channels.resolve('309470585027559425').send(stripIndents`
-      <@${this.client.owners[0].id}> Error occurred in \`pornvids\` command!
-      **Server:** ${msg.guild.name} (${msg.guild.id})
-      **Author:** ${msg.author.tag} (${msg.author.id})
-      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Input:** ${porn}
-      **Error Message:** ${err}
-      `);
-
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
