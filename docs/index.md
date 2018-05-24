@@ -130,7 +130,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Extra QRGenCommand - Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code>, <code>qrcode</code></p>
 </dd>
 <dt><a href="#module_randomcol">randomcol</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra RandomCol - Generates a random color<br>Providing a color hex will display that color, providing none will generate a random one<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
+<dd><p>Extra RandomColCommand - Generates a random color<br>Providing a color hex will display that color, providing none will generate a random one<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
 </dd>
 <dt><a href="#module_remind">remind</a> ⇒ <code>Message</code></dt>
 <dd><p>Extra RemindCommand - Set a reminder and the bot will remind you<br>Works by reminding you after a given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>remindme</code>, <code>reminder</code></p>
@@ -363,7 +363,7 @@ There are 4 ways to queue songs  </p>
 <dd><p>Music ChangeVolumeCommand - Changes the volume of the currently playing song<br>If you do not  give any parameter the bot will show the current volume<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>set-volume</code>, <code>set-vol</code>, <code>vol</code></p>
 </dd>
 <dt><a href="#module_e621">e621</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>nsfw e621Command - Gets a NSFW image from e621<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>eee</code></p>
+<dd><p>nsfw E621Command - Gets a NSFW image from e621<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>eee</code></p>
 </dd>
 <dt><a href="#module_gelbooru">gelbooru</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>nsfw GelbooruCommand - Gets a NSFW image from gelbooru<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>gel</code>, <code>booru</code></p>
@@ -432,11 +432,11 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dt><a href="#module_eshop">eshop</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop<br><strong>Aliases</strong>: <code>shop</code></p>
 </dd>
-<dt><a href="#module_games">games</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches GamesCommand - Gets information about a game using IndieGamesDoneBad (IGDB)<br><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>igdb</code></p>
-</dd>
 <dt><a href="#module_google">google</a> ⇒ <code>Message</code></dt>
 <dd><p>Searches GoogleCommand - Gets information through google<br>Note: prioritizes Knowledge Graphs for better searching<br><strong>Aliases</strong>: <code>search</code>, <code>g</code></p>
+</dd>
+<dt><a href="#module_igdb">igdb</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Searches IGDBCommand - Gets information about a game using IndieGamesDoneBad (IGDB)<br><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>games</code></p>
 </dd>
 <dt><a href="#module_image">image</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Searches ImageCommand - Gets an image through Google Images<br><strong>Aliases</strong>: <code>img</code>, <code>i</code></p>
@@ -854,7 +854,7 @@ qrgen https://favna.xyz/ribbon
 <a name="module_randomcol"></a>
 
 ## randomcol ⇒ <code>MessageEmbed</code>
-Extra RandomCol - Generates a random color  
+Extra RandomColCommand - Generates a random color  
 Providing a color hex will display that color, providing none will generate a random one  
 **Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
 
@@ -2019,7 +2019,7 @@ volume 2
 <a name="module_e621"></a>
 
 ## e621 ⇒ <code>MessageEmbed</code>
-nsfw e621Command - Gets a NSFW image from e621  
+nsfw E621Command - Gets a NSFW image from e621  
 Can only be used in NSFW marked channels!  
 **Aliases**: `eee`
 
@@ -2326,7 +2326,7 @@ Searches AnimeCommand - Gets information about any anime from MyAnimeList
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyAnime | <code>StringResolvable</code> | anime to look up |
+| AnimeName | <code>StringResolvable</code> | anime to look up |
 
 **Example**  
 ```js
@@ -2402,23 +2402,6 @@ Searches EShopCommand - Gets information about a game in the Nintendo Switch eSh
 ```js
 eshop Breath of The Wild
 ```
-<a name="module_games"></a>
-
-## games ⇒ <code>MessageEmbed</code>
-Searches GamesCommand - Gets information about a game using IndieGamesDoneBad (IGDB)  
-**Aliases**: `game`, `moby`, `igdb`
-
-**Returns**: <code>MessageEmbed</code> - Information about the requested game  
-**Category**: searches  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| GameName | <code>StringResolvable</code> | The name of any game that you want to find |
-
-**Example**  
-```js
-games Tales of Berseria
-```
 <a name="module_google"></a>
 
 ## google ⇒ <code>Message</code>
@@ -2436,6 +2419,23 @@ Note: prioritizes Knowledge Graphs for better searching
 **Example**  
 ```js
 google Pyrrha Nikos
+```
+<a name="module_igdb"></a>
+
+## igdb ⇒ <code>MessageEmbed</code>
+Searches IGDBCommand - Gets information about a game using IndieGamesDoneBad (IGDB)  
+**Aliases**: `game`, `moby`, `games`
+
+**Returns**: <code>MessageEmbed</code> - Information about the requested game  
+**Category**: searches  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| GameName | <code>StringResolvable</code> | The name of any game that you want to find |
+
+**Example**  
+```js
+igdb Tales of Berseria
 ```
 <a name="module_image"></a>
 
