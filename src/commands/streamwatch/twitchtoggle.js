@@ -78,15 +78,15 @@ module.exports = class TwitchToggleCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run (msg, args) {
+  run (msg, {option}) {
     startTyping(msg);
-    this.client.provider.set(msg.guild.id, 'twitchnotifiers', args.option);
+    msg.guild.settings.set('twitchnotifiers', option);
 
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
     return msg.reply(oneLine`Twitch Notifiers have been
-    ${args.option 
+    ${option 
     ? `enabled.
         Please make sure to set the output channel with \`${msg.guild.commandPrefix}twitchoutput\`
         and configure which users to monitor with \`${msg.guild.commandPrefix}twitchmonitors\` ` 

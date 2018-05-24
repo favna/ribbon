@@ -67,15 +67,15 @@ module.exports = class TwitchMonitorsCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  async run (msg, args) {
+  async run (msg, {members}) {
     startTyping(msg);
     const memberIDs = [],
       memberNames = [];
 
-    args.members = msg.argString.slice(1).split(' ');
+    members = msg.argString.slice(1).split(' ');
 
-    for (const member in args.members) {
-      const thisMember = await userSearch(this.client, msg, args.members[member]);
+    for (const member in members) {
+      const thisMember = await userSearch(this.client, msg, members[member]);
 
       if (thisMember) {
         memberIDs.push(thisMember.id);
@@ -83,7 +83,7 @@ module.exports = class TwitchMonitorsCommand extends Command {
       }
     }
 
-    this.client.provider.set(msg.guild.id, 'twitchmonitors', memberIDs);
+    msg.guild.settings.set('twitchmonitors', memberIDs);
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 

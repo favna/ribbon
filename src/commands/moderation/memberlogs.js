@@ -85,7 +85,7 @@ module.exports = class MemberLogsCommand extends Command {
       modlogChannel = msg.guild.settings.get('modlogchannel',
         msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
 
-    msg.guild.settings.set(msg.guild.id, 'memberlogs', option);
+    msg.guild.settings.set('memberlogs', option);
 
     memberLogsEmbed
       .setColor('#3DFFE5')

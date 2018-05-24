@@ -68,10 +68,10 @@ module.exports = class DefaultVolumeCommand extends Command {
   }
 
 
-  run (msg, args) {
+  run (msg, {volume}) {
     startTyping(msg);
-    if (args.volume === 'show') {
-      const defaultVolume = this.client.provider.get(msg.guild.id, 'defaultVolume', process.env.DEFAULT_VOLUME);
+    if (volume === 'show') {
+      const defaultVolume = msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -79,15 +79,15 @@ module.exports = class DefaultVolumeCommand extends Command {
       return msg.reply(`the default volume level is ${defaultVolume}.`);
     }
 
-    if (args.volume === 'default') {
-      this.client.provider.remove(msg.guild.id, 'defaultVolume');
+    if (volume === 'default') {
+      msg.guild.settings.remove('defaultVolume');
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
       return msg.reply(`set the default volume level to the bot's default (currently ${process.env.DEFAULT_VOLUME}).`);
     }
 
-    const defaultVolume = parseInt(args.volume, 10);
+    const defaultVolume = parseInt(volume, 10);
 
     if (isNaN(defaultVolume) || defaultVolume <= 0 || defaultVolume > 10) {
       deleteCommandMessages(msg, this.client);
@@ -96,7 +96,7 @@ module.exports = class DefaultVolumeCommand extends Command {
       return msg.reply('invalid number provided. It must be in the range of 0-10.');
     }
 
-    this.client.provider.set(msg.guild.id, 'defaultVolume', defaultVolume);
+    msg.guild.settings.set('defaultVolume', defaultVolume);
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 

@@ -69,7 +69,7 @@ module.exports = class MaxSongsCommand extends Command {
   run (msg, args) {
     startTyping(msg);
     if (!args) {
-      const maxSongs = this.client.provider.get(msg.guild.id, 'maxSongs', process.env.MAX_SONGS);
+      const maxSongs = msg.guild.settings.get('maxSongs', process.env.MAX_SONGS);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -78,7 +78,7 @@ module.exports = class MaxSongsCommand extends Command {
     }
 
     if (args.toLowerCase() === 'default') {
-      this.client.provider.remove(msg.guild.id, 'maxSongs');
+      msg.guild.settings.remove('maxSongs');
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
@@ -93,7 +93,7 @@ module.exports = class MaxSongsCommand extends Command {
       return msg.reply('invalid number provided.');
     }
 
-    this.client.provider.set(msg.guild.id, 'maxSongs', maxSongs);
+    msg.guild.settings.set('maxSongs', maxSongs);
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 

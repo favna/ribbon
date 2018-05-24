@@ -69,7 +69,7 @@ module.exports = class MaxLengthCommand extends Command {
   run (msg, args) {
     startTyping(msg);
     if (!args) {
-      const maxLength = this.client.provider.get(msg.guild.id, 'maxLength', process.env.MAX_LENGTH);
+      const maxLength = msg.guild.settings.get('maxLength', process.env.MAX_LENGTH);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -78,7 +78,7 @@ module.exports = class MaxLengthCommand extends Command {
     }
 
     if (args.toLowerCase() === 'default') {
-      this.client.provider.remove(msg.guild.id, 'maxLength');
+      msg.guild.settings.remove('maxLength');
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
@@ -93,7 +93,7 @@ module.exports = class MaxLengthCommand extends Command {
       return msg.reply('invalid number provided.');
     }
 
-    this.client.provider.set(msg.guild.id, 'maxLength', maxLength);
+    msg.guild.settings.set('maxLength', maxLength);
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 

@@ -70,23 +70,23 @@ module.exports = class defaultroleCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run (msg, args) {
+  run (msg, {role}) {
     startTyping(msg);
     const defRoleEmbed = new MessageEmbed(),
       modlogChannel = msg.guild.settings.get('modlogchannel',
         msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
 
-    let description = oneLine`🔓 \`${args.role.name}\` has been set as the default role for this server and will now be granted to all people joining`;
+    let description = oneLine`🔓 \`${role.name}\` has been set as the default role for this server and will now be granted to all people joining`;
 
-    if (args.role === 'delete') {
-      this.client.provider.remove(msg.guild.id, 'defaultRole');
+    if (role === 'delete') {
+      msg.guild.settings.remove('defaultRole');
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
       description = 'Default role has been removed';
     }
 
-    this.client.provider.set(msg.guild.id, 'defaultRole', args.role.id);
+    msg.guild.settings.set('defaultRole', role.id);
 
     defRoleEmbed
       .setColor('#AAEFE6')
@@ -94,12 +94,12 @@ module.exports = class defaultroleCommand extends Command {
       .setDescription(stripIndents`**Action:** ${description}`)
       .setTimestamp();
 
-    if (this.client.provider.get(msg.guild, 'modlogs', true)) {
-      if (!this.client.provider.get(msg.guild, 'hasSentModLogMessage', false)) {
+    if (msg.guild.settings.get('modlogs', true)) {
+      if (!msg.guild.settings.get('hasSentModLogMessage', false)) {
         msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
 					(or some other name configured by the ${msg.guild.commandPrefix}setmodlogs command) and give me access to it.
 					This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-        this.client.provider.set(msg.guild, 'hasSentModLogMessage', true);
+        msg.guild.settings.set('hasSentModLogMessage', true);
       }
       modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: defRoleEmbed}) : null;
     }

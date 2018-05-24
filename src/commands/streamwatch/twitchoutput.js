@@ -67,12 +67,12 @@ module.exports = class TwitchOutputCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run (msg, args) {
+  run (msg, {channel}) {
     startTyping(msg);
-    this.client.provider.set(msg.guild.id, 'twitchchannel', args.channel.id);
+    msg.guild.settings.set('twitchchannel', channel.id);
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(oneLine`📹 the channel to use for the twitch notifications has been set to <#${args.channel.id}>`);
+    return msg.reply(oneLine`📹 the channel to use for the twitch notifications has been set to <#${channel.id}>`);
   }
 };
