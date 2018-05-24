@@ -34,7 +34,7 @@ const Database = require('better-sqlite3'),
   {Client, SyncSQLiteProvider} = require('discord.js-commando');
 
 beforeEach('Injecting dotenv', () => {
-  require('dotenv').config({path: path.join(__dirname, '../.env')});
+  require('dotenv').config({path: path.join(__dirname, '../src/.env')});
 });
 
 describe('Check dotenv', () => {
@@ -58,7 +58,7 @@ describe('Connect & Disconnect bot', () => {
         selfbot: false,
         unknownCommandResponse: false
       }),
-      db = new Database(path.join(__dirname, '../data/databases/settings.sqlite3'));
+      db = new Database(path.join(__dirname, '../src/data/databases/settings.sqlite3'));
 
     client.setProvider(
       new SyncSQLiteProvider(db)
