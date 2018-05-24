@@ -56,7 +56,7 @@ module.exports = class SayWutCommand extends Command {
 
   run (msg) {
     startTyping(msg);
-    const saydata = this.client.provider.get(msg.guild.id, 'saydata', null),
+    const saydata = msg.guild.settings.get('saydata', null),
       wutEmbed = new MessageEmbed();
 
     if (saydata) {

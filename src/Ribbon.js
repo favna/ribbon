@@ -343,7 +343,7 @@ class Ribbon {
 
   onUnknownCommand () {
     return (msg) => {
-      if (this.client.provider.get(msg.guild, 'unknownmessages', true)) {
+      if (msg.guild.settings.get('unknownmessages', true)) {
         return msg.reply(stripIndents`${oneLine`That is not a registered command.
 				Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\`
 				or @Ribbon#2325 help to view the list of all commands.`}
