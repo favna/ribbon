@@ -72,7 +72,7 @@ module.exports = class FightCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {fighterOne, fighterTwo}) {
     startTyping(msg);
     const fighterEmbed = new MessageEmbed();
 
@@ -81,8 +81,8 @@ module.exports = class FightCommand extends Command {
       .setTitle('🥊 Fight Results 🥊')
       .setThumbnail('https://favna.xyz/images/ribbonhost/dbxlogo.png');
 
-    if (args.fighterOne.toLowerCase() === 'chuck norris' || args.fighterTwo.toLowerCase() === 'chuck norris') {
-      if (args.fighterOne.toLowerCase() === 'favna' || args.fighterTwo.toLowerCase() === 'favna') {
+    if (fighterOne.toLowerCase() === 'chuck norris' || fighterTwo.toLowerCase() === 'chuck norris') {
+      if (fighterOne.toLowerCase() === 'favna' || fighterTwo.toLowerCase() === 'favna') {
         fighterEmbed
           .addField('All right, you asked for it...', '***The universe was destroyed due to this battle between two unstoppable forces. Good Job.***')
           .setImage('https://favna.xyz/images/ribbonhost/universeblast.png');
@@ -97,7 +97,7 @@ module.exports = class FightCommand extends Command {
 
       return msg.embed(fighterEmbed);
     }
-    if (args.fighterOne.toLowerCase() === 'favna' || args.fighterTwo.toLowerCase() === 'favna') {
+    if (fighterOne.toLowerCase() === 'favna' || fighterTwo.toLowerCase() === 'favna') {
       fighterEmbed
         .addField('You got mega rekt', '***Favna always wins***')
         .setImage('https://favna.xyz/images/ribbonhost/pyrrhawins.gif');
@@ -111,8 +111,8 @@ module.exports = class FightCommand extends Command {
       if (!error) {
         const fighterOneChance = parseInt(data[0], 10),
           fighterTwoChance = parseInt(data[1], 10),
-          loser = Math.min(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo,
-          winner = Math.max(fighterOneChance, fighterTwoChance) === fighterOneChance ? args.fighterOne : args.fighterTwo;
+          loser = Math.min(fighterOneChance, fighterTwoChance) === fighterOneChance ? fighterOne : fighterTwo,
+          winner = Math.max(fighterOneChance, fighterTwoChance) === fighterOneChance ? fighterOne : fighterTwo;
 
         fighterEmbed
           .addField('🇼 Winner', `**${winner}**`, true)

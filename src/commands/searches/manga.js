@@ -56,7 +56,7 @@ module.exports = class MangaCommand extends Command {
       },
       args: [
         {
-          key: 'query',
+          key: 'manga',
           prompt: 'What manga do you want to find?',
           type: 'string'
         }
@@ -64,39 +64,32 @@ module.exports = class MangaCommand extends Command {
     });
   }
 
-  async run (msg, args) {
-    startTyping(msg);
-    const manEmbed = new MessageEmbed(),
-      res = await maljs.quickSearch(args.query, 'manga');
+  async run (msg, {manga}) {
+    try {
+      startTyping(msg);
+      const manEmbed = new MessageEmbed(),
+        search = await maljs.quickSearch(manga, 'manga'),
+        searchDetails = await search.manga[0].fetch();
 
-    if (res) {
-      const manga = await res.manga[0].fetch();
+      manEmbed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+        .setTitle(searchDetails.title)
+        .setImage(searchDetails.cover)
+        .setDescription(searchDetails.description)
+        .setURL(`${searchDetails.mal.url}${searchDetails.path}`)
+        .addField('Score', searchDetails.score, true)
+        .addField('Popularity', searchDetails.popularity, true)
+        .addField('Rank', searchDetails.ranked, true);
 
-      if (manga) {
-
-        manEmbed
-          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-          .setTitle(manga.title)
-          .setImage(manga.cover)
-          .setDescription(manga.description)
-          .setURL(`${manga.mal.url}${manga.path}`)
-          .addField('Score', manga.score, true)
-          .addField('Popularity', manga.popularity, true)
-          .addField('Rank', manga.ranked, true);
-
-        deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
-
-        return msg.embed(manEmbed, `${manga.mal.url}${manga.path}`);
-      }
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`no manga found for the input \`${args.query}\` `);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+      return msg.embed(manEmbed, `${searchDetails.mal.url}${searchDetails.path}`);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.reply(`no manga found for the input \`${args.query}\` `);
+      return msg.reply(`no manga found for \`${manga}\` `);
+    }
   }
 };

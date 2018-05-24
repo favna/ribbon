@@ -73,9 +73,8 @@ module.exports = class SteamCommand extends Command {
   }
 
   async run (msg, {game}) {
-    startTyping(msg);
-
     try {
+      startTyping(msg);
       /* eslint-disable sort-vars*/
       const steam = new SteamAPI(process.env.steamkey),
         steamEmbed = new MessageEmbed(),

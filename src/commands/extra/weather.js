@@ -65,7 +65,7 @@ module.exports = class WeatherCommand extends Command {
     });
   }
 
-  convertTimeFormat (input) { // eslint-disable-line one-var
+  convertTimeFormat (input) {
     const ampm = input.match(/\s(.*)$/)[1],
       minutes = Number(input.match(/:(\d+)/)[1]);
     let hours = Number(input.match(/^(\d+)/)[1]),
@@ -111,9 +111,9 @@ module.exports = class WeatherCommand extends Command {
     }
   }
 
-  async run (msg, args) {
+  async run (msg, {city}) {
     startTyping(msg);
-    const info = await weather(args.city),
+    const info = await weather(city),
       weatherEmbed = new MessageEmbed();
 
     if (info) {

@@ -47,7 +47,7 @@ module.exports = class DiceCommand extends Command {
       memberName: 'dice',
       group: 'games',
       aliases: ['xdicey', 'roll', 'dicey', 'die'],
-      description: 'Sends contents of a copypasta file to the chat',
+      description: 'Rolls some dice with some sides. Great for the DnD players!',
       format: 'SidesOfTheDice AmountOfRolls',
       examples: ['dice 6 5'],
       guildOnly: false,
@@ -55,7 +55,6 @@ module.exports = class DiceCommand extends Command {
         usages: 2,
         duration: 3
       },
-
       args: [
         {
           key: 'sides',
@@ -74,11 +73,11 @@ module.exports = class DiceCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {sides, rolls}) {
     startTyping(msg);
     const diceEmbed = new MessageEmbed(),
       res = [],
-      throwDice = xdicey(args.rolls, args.sides);
+      throwDice = xdicey(rolls, sides);
 
 
     for (const i in throwDice.individual) {

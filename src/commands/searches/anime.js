@@ -30,7 +30,7 @@
  * @category searches
  * @name anime
  * @example anime Yu-Gi-Oh Dual Monsters
- * @param {StringResolvable} AnyAnime anime to look up
+ * @param {StringResolvable} AnimeName anime to look up
  * @returns {MessageEmbed} Information about the requested anime
  */
 
@@ -48,7 +48,7 @@ module.exports = class AnimeCommand extends Command {
       aliases: ['ani', 'mal'],
       description: 'Finds anime on MyAnimeList',
       format: 'AnimeName',
-      examples: ['anime Pokemon'],
+      examples: ['anime Yu-Gi-Oh Dual Monsters'],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -64,39 +64,32 @@ module.exports = class AnimeCommand extends Command {
     });
   }
 
-  async run (msg, args) {
-    startTyping(msg);
-    const aniEmbed = new MessageEmbed(),
-      res = await maljs.quickSearch(args.query, 'anime');
+  async run (msg, {anime}) {
+    try {
+      startTyping(msg);
+      const aniEmbed = new MessageEmbed(),
+        search = await maljs.quickSearch(anime, 'anime'),
+        searchDetails = await search.anime[0].fetch();
 
-    if (res) {
-      const anime = await res.anime[0].fetch();
+      aniEmbed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+        .setTitle(searchDetails.title)
+        .setImage(searchDetails.cover)
+        .setDescription(searchDetails.description)
+        .setURL(`${searchDetails.mal.url}${searchDetails.path}`)
+        .addField('Score', searchDetails.score, true)
+        .addField('Popularity', searchDetails.popularity, true)
+        .addField('Rank', searchDetails.ranked, true);
 
-      if (anime) {
-
-        aniEmbed
-          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-          .setTitle(anime.title)
-          .setImage(anime.cover)
-          .setDescription(anime.description)
-          .setURL(`${anime.mal.url}${anime.path}`)
-          .addField('Score', anime.score, true)
-          .addField('Popularity', anime.popularity, true)
-          .addField('Rank', anime.ranked, true);
-
-        deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
-
-        return msg.embed(aniEmbed, `${anime.mal.url}${anime.path}`);
-      }
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`no anime found for the input \`${args.query}\` `);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+      return msg.embed(aniEmbed, `${searchDetails.mal.url}${searchDetails.path}`);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.reply(`no anime found for the input \`${args.query}\` `);
+      return msg.reply(`no anime found for the input \`${anime}\` `);
+    }
   }
 };

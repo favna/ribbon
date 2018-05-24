@@ -68,13 +68,10 @@ module.exports = class MathCommand extends Command {
   }
 
   run (msg, {equation}) {
-    startTyping(msg);
-    const mathEmbed = new MessageEmbed();
-
-    let res = '';
-
     try {
-      res = scalc(equation);
+      startTyping(msg);
+      const mathEmbed = new MessageEmbed(),
+        res = scalc(equation);
 
       mathEmbed
         .setTitle('Calculator')
@@ -97,7 +94,7 @@ module.exports = class MathCommand extends Command {
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
-  
+
       return msg.reply(oneLine`\`${equation.toString()}\` is is not a valid equation for me.
           Check out this readme to see how to use the supported polish notation: https://github.com/dominhhai/calculator/blob/master/README.md`);
     }

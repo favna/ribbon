@@ -94,6 +94,6 @@ module.exports = class UserInfoCommand extends Command {
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    msg.embed(uinfoEmbed);
+    return msg.embed(uinfoEmbed);
   }
 };

@@ -131,7 +131,7 @@ module.exports = class CydiaCommand extends Command {
           if (!msg.patternMatches) {
             deleteCommandMessages(msg, this.client);
           }
-          startTyping(msg);
+          stopTyping(msg);
 
           return msg.embed(embed);
         } catch (err) {

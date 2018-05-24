@@ -34,6 +34,7 @@
 
 const {MessageEmbed} = require('discord.js'), 
   {Command} = require('discord.js-commando'), 
+  {stripIndents} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class InviteCommand extends Command {
@@ -58,15 +59,17 @@ module.exports = class InviteCommand extends Command {
     const inviteEmbed = new MessageEmbed();
 
     inviteEmbed
-      .setAuthor('Ribbon Links')
+      .setTitle('Ribbon by Favna')
       .setThumbnail('https://favna.xyz/images/appIcons/ribbon.png')
       .setURL('https://favna.xyz/ribbon')
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .addField('​', ' [Add me to your server](https://favna.xyz/redirect/ribbon)\n' +
-        '[Join the Support Server](https://favna.xyz/redirect/server)\n' +
-        '[Website](https://favna.xyz/ribbon)\n' +
-        '[GitHub](https://github.com/Favna/Ribbon)\n' +
-        '[Wiki](https://github.com/Favna/Ribbon/wiki)');
+      .setDescription(stripIndents`Enrich your Discord server with a fully modular Discord bot with many many commands\n
+        [Add me to your server](https://favna.xyz/redirect/ribbon)
+        [Join the Support Server](https://favna.xyz/redirect/server)
+        [Website](https://favna.xyz/ribbon)
+        [GitHub](https://github.com/Favna/Ribbon)
+        [Wiki](https://github.com/Favna/Ribbon/wiki)
+        `);
 
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);

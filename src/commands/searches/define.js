@@ -57,17 +57,17 @@ module.exports = class DefineCommand extends Command {
     });
   }
 
-  async run (msg, args) {
+  async run (msg, {query}) {
     startTyping(msg);
     const defineEmbed = new MessageEmbed(),
       word = await request.get('https://glosbe.com/gapi/translate')
         .query('from', 'en')
         .query('dest', 'en')
         .query('format', 'json')
-        .query('phrase', args.query);
+        .query('phrase', query);
 
     if (word.ok && word.body.tuc && word.body.tuc.length > 0) {
-      const final = [`**Definitions for __${args.query}__:**`];
+      const final = [`**Definitions for __${query}__:**`];
 
       for (let [index, item] of Object.entries(word.body.tuc.filter(tuc => tuc.meanings)[0].meanings.slice(0, 5))) { // eslint-disable-line prefer-const
 
@@ -93,6 +93,6 @@ module.exports = class DefineCommand extends Command {
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(`nothing found for \`${args.query}\`, maybe check your spelling?`);
+    return msg.reply(`nothing found for \`${query}\`, maybe check your spelling?`);
   }
 };

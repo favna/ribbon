@@ -24,12 +24,12 @@
  */
 
 /**
- * @file Searches GamesCommand - Gets information about a game using IndieGamesDoneBad (IGDB)  
- * **Aliases**: `game`, `moby`, `igdb`
+ * @file Searches IGDBCommand - Gets information about a game using IndieGamesDoneBad (IGDB)  
+ * **Aliases**: `game`, `moby`, `games`
  * @module
  * @category searches
- * @name games
- * @example games Tales of Berseria
+ * @name igdb
+ * @example igdb Tales of Berseria
  * @param {StringResolvable} GameName The name of any game that you want to find
  * @returns {MessageEmbed} Information about the requested game
  */
@@ -40,16 +40,16 @@ const igdbapi = require('igdb-api-node').default,
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
 
-module.exports = class GamesCommand extends Command {
+module.exports = class IGDBCommand extends Command {
   constructor (client) {
     super(client, {
-      name: 'games',
-      memberName: 'games',
+      name: 'igdb',
+      memberName: 'igdb',
       group: 'searches',
-      aliases: ['game', 'moby', 'igdb'],
-      description: 'Finds info on a game on IGDB (IndieGamesDoneBad)',
+      aliases: ['game', 'moby', 'games'],
+      description: 'Gets information about a game using IndieGamesDoneBad (IGDB)',
       format: 'GameName',
-      examples: ['games {gameName}', 'games Tales of Berseria'],
+      examples: ['igdb Tales of Berseria'],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -63,7 +63,6 @@ module.exports = class GamesCommand extends Command {
           label: 'Game to look up'
         }
       ]
-
     });
   }
 
@@ -81,14 +80,14 @@ module.exports = class GamesCommand extends Command {
     return res;
   }
 
-  async run (msg, args) {
+  async run (msg, {game}) {
     startTyping(msg);
     try {
       /* eslint-disable sort-vars*/
       const gameEmbed = new MessageEmbed(),
         igdb = igdbapi(process.env.igdbkey),
         gameInfo = await igdb.games({
-          search: args.game,
+          search: game,
           fields: ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
           limit: 1,
           offset: 0
@@ -130,7 +129,7 @@ module.exports = class GamesCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`nothing found for \`${args.game}\``);
+      return msg.reply(`nothing found for \`${game}\``);
     }
   }
 };

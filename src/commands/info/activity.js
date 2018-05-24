@@ -76,11 +76,10 @@ module.exports = class ActivityCommand extends Command {
   }
 
   /* eslint complexity: ["error", 45], max-statements: ["error", 35]*/
-  /* eslint-disable no-nested-ternary*/
-  async run (msg, args) {
+  async run (msg, {member}) {
     startTyping(msg);
-    const {activity} = args.member.presence,
-      ava = args.member.user.displayAvatarURL(),
+    const {activity} = member.presence,
+      ava = member.user.displayAvatarURL(),
       embed = new MessageEmbed(),
       ext = this.fetchExt(ava),
       gameList = await request.get('https://canary.discordapp.com/api/v6/games'),
@@ -91,7 +90,7 @@ module.exports = class ActivityCommand extends Command {
 
     embed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .setAuthor(args.member.user.tag, ava, `${ava}?size2048`)
+      .setAuthor(member.user.tag, ava, `${ava}?size2048`)
       .setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
 
     if (activity) {
@@ -138,10 +137,11 @@ module.exports = class ActivityCommand extends Command {
 
       activity.assets && activity.assets.largeImage
         ? embed.setThumbnail(!activity.assets.largeImage.includes('spotify')
-          ? `https://cdn.discordapp.com/app-assets/${activity.appID}/${activity.assets.largeImage}.png`
+          ? `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.largeImage}.png`
           : `https://i.scdn.co/image/${activity.assets.largeImage.split(':')[1]}`)
         : null;
 
+      /* eslint-disable no-nested-ternary*/
       activity.timestamps && activity.timestamps.start
         ? embed.setFooter('Start Time') && embed.setTimestamp(activity.timestamps.start) && activity.timestamps.end
           ? embed.addField('End Time', `${moment.duration(activity.timestamps.end - Date.now()).format('HH[:]mm[:]ss [seconds left]')}`, true)
@@ -156,17 +156,18 @@ module.exports = class ActivityCommand extends Command {
           : activity.timestamps && activity.timestamps.start
             ? 'Start Time'
             : '​', !activity.assets.smallImage.includes('spotify')
-          ? `https://cdn.discordapp.com/app-assets/${activity.appID}/${activity.assets.smallImage}.png`
+          ? `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`
           : `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`)
         : null;
-
+      /* eslint-enable no-nested-ternary*/
+  
       activity.assets && activity.assets.largeText
         ? embed.addField('Large Text', activity.type === 'LISTENING' && activity.name === 'Spotify'
           ? `on [${activity.assets.largeText}](${spotify.album.external_urls.spotify})`
           : activity.assets.largeText, true)
         : null;
 
-      activity.appID ? embed.addField('Application ID', activity.appID, true) : null;
+      activity.applicationID ? embed.addField('Application ID', activity.applicationID, true) : null;
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

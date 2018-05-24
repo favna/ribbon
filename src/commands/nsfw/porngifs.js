@@ -66,14 +66,15 @@ module.exports = class PornGifsCommand extends Command {
     });
   }
 
-  async run (msg, args) {
-    startTyping(msg);
-    const search = new Pornsearch(args.porn),
-      gifs = await search.gifs(); // eslint-disable-line sort-vars
-
-    if (gifs) {
-      const pornEmbed = new MessageEmbed(),
+  async run (msg, {porn}) {
+    try {
+      startTyping(msg);
+      /* eslint-disable sort-vars */
+      const search = new Pornsearch(porn),
+        pornEmbed = new MessageEmbed(),
+        gifs = await search.gifs(),
         random = Math.floor(Math.random() * gifs.length);
+      /* eslint-enable sort-vars */
 
       pornEmbed
         .setURL(gifs[random].url)
@@ -85,10 +86,11 @@ module.exports = class PornGifsCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(pornEmbed, gifs[random].webm);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.reply(`nothing found for \`${args.porn}\``);
+      return msg.reply(`nothing found for \`${porn}\``);
+    }
   }
 };

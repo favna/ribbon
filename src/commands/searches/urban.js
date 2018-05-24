@@ -56,17 +56,17 @@ module.exports = class UrbanCommand extends Command {
       },
       args: [
         {
-          key: 'query',
-          prompt: 'What word do you want to define?',
+          key: 'term',
+          prompt: 'What term do you want to define?',
           type: 'string'
         }
       ]
     });
   }
 
-  async run (msg, args) {
+  async run (msg, {term}) {
     startTyping(msg);
-    const urban = await request.get('https://api.urbandictionary.com/v0/define').query('term', args.query);
+    const urban = await request.get('https://api.urbandictionary.com/v0/define').query('term', term);
 
     if (urban.ok && urban.body.result_type !== 'no_results') {
       const embed = new MessageEmbed();
@@ -92,6 +92,6 @@ module.exports = class UrbanCommand extends Command {
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(`no definitions found for \`${args.query}\``);
+    return msg.reply(`no definitions found for \`${term}\``);
   }
 };

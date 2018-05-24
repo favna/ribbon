@@ -64,8 +64,8 @@ module.exports = class DndCCommand extends Command {
       .setTitle(`Flipped ${flip === 1 ? 'heads' : 'tails'}`);
 
     deleteCommandMessages(msg, this.client);
-    msg.embed(coinEmbed);
+    stopTyping(msg);
 
-    return stopTyping(msg);
+    return msg.embed(coinEmbed);
   }
 };

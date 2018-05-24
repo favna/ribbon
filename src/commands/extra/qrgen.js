@@ -48,8 +48,8 @@ module.exports = class QRGenCommand extends Command {
       memberName: 'qrgen',
       group: 'extra',
       aliases: ['qr', 'qrcode'],
-      description: 'Generates a QR code from a given string',
-      format: 'URLToConvert',
+      description: 'Generates a QR code from text (like a URL)',
+      format: 'TextToEncode',
       examples: ['qrgen https://github.com/Favna/Ribbon'],
       guildOnly: false,
       throttling: {
@@ -59,7 +59,7 @@ module.exports = class QRGenCommand extends Command {
       args: [
         {
           key: 'url',
-          prompt: 'String (URL) to make a QR code for?',
+          prompt: 'Text to make a QR code for?',
           type: 'string'
         }
       ]

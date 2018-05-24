@@ -63,11 +63,11 @@ module.exports = class LmgtfyCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {question}) {
     startTyping(msg);
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.say(`<https://lmgtfy.com/?q=${args.question}>`);
+    return msg.say(`<https://lmgtfy.com/?q=${question}>`);
   }
 };

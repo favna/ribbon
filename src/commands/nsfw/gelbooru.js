@@ -68,29 +68,28 @@ module.exports = class GelbooruCommand extends Command {
     });
   }
 
-  async run (msg, args) {
-
+  async run (msg, {tags}) {
     try {
       startTyping(msg);
       /* eslint-disable sort-vars*/
-      const search = await booru.search('gelbooru', args.tags, {
+      const search = await booru.search('gelbooru', tags, {
           limit: 1,
           random: true
         }),
         common = await booru.commonfy(search),
         embed = new MessageEmbed(),
-        tags = [];
+        imageTags = [];
       /* eslint-enable sort-vars*/
 
       for (const tag in common[0].common.tags) {
-        tags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
+        imageTags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
       }
 
       embed
-        .setTitle(`gelbooru image for ${args.tags.join(', ')}`)
+        .setTitle(`gelbooru image for ${tags.join(', ')}`)
         .setURL(common[0].common.file_url)
         .setColor('#FFB6C1')
-        .setDescription(stripIndents`${tags.slice(0, 5).join(' ')}
+        .setDescription(stripIndents`${imageTags.slice(0, 5).join(' ')}
 				
 				**Score**: ${common[0].common.score}`)
         .setImage(common[0].common.file_url);
@@ -104,7 +103,7 @@ module.exports = class GelbooruCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`no juicy images found for \`${args.tags}\``);
+      return msg.reply(`no juicy images found for \`${tags}\``);
     }
   }
 };

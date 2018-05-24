@@ -84,14 +84,8 @@ module.exports = class ServerInfoCommand extends Command {
     }
   }
 
-  run (msg, args) {
+  run (msg) {
     startTyping(msg);
-    if (msg.channel.type !== 'text' && args.server === 'current') {
-      stopTyping(msg);
-
-      return msg.reply('an argument of server name (partial or full) or server ID is required when talking outside of a server');
-    }
-
     const channels = msg.guild.channels.map(ty => ty.type), // eslint-disable-line sort-vars
       presences = msg.guild.presences.map(st => st.status),
       serverEmbed = new MessageEmbed();

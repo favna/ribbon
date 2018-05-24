@@ -24,7 +24,7 @@
  */
 
 /**
- * @file Extra RandomCol - Generates a random color  
+ * @file Extra RandomColCommand - Generates a random color  
  * Providing a color hex will display that color, providing none will generate a random one  
  * **Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
  * @module
@@ -99,11 +99,11 @@ module.exports = class RandomColCommand extends Command {
     };
   }
 
-  run (msg, args) {
+  run (msg, {col}) {
     startTyping(msg);
     /* eslint-disable sort-vars*/
     const embed = new MessageEmbed(),
-      hex = args.col !== 'random' ? args.col : `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+      hex = col !== 'random' ? col : `#${Math.floor(Math.random() * 16777215).toString(16)}`,
       canv = new Canvas(80, 60)
         .setColor(hex)
         .addRect(0, 0, 100, 60)

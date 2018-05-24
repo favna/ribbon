@@ -69,7 +69,7 @@ module.exports = class ImageCommand extends Command {
     });
   }
 
-  async run (msg, args) {
+  async run (msg, {query}) {
     startTyping(msg);
     const embed = new MessageEmbed();
 
@@ -78,13 +78,13 @@ module.exports = class ImageCommand extends Command {
       .query('key', process.env.googleapikey)
       .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
       .query('searchType', 'image')
-      .query('q', args.query);
+      .query('q', query);
 
     if (res && res.body.items) {
       embed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setImage(res.body.items[0].link)
-        .setFooter(`Search query: "${args.query.replace(/\+/g, ' ')}"`);
+        .setFooter(`Search query: "${query.replace(/\+/g, ' ')}"`);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -97,7 +97,7 @@ module.exports = class ImageCommand extends Command {
         .query('tbm', 'isch')
         .query('gs_l', 'img')
         .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
-        .query('q', args.query);
+        .query('q', query);
 
       const $ = cheerio.load(res.text),
         result = $('.images_table').find('img')
@@ -107,7 +107,7 @@ module.exports = class ImageCommand extends Command {
       embed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setImage(result)
-        .setFooter(`Search query: "${args.query}"`);
+        .setFooter(`Search query: "${query}"`);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -117,6 +117,6 @@ module.exports = class ImageCommand extends Command {
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(`nothing found for \`${args.query}\``);
+    return msg.reply(`nothing found for \`${query}\``);
   }
 };

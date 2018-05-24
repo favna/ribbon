@@ -85,16 +85,16 @@ module.exports = class AvatarCommand extends Command {
     return str.substring(str.length - 14, str.length - 8);
   }
 
-  run (msg, args) {
+  run (msg, {member, size}) {
     startTyping(msg);
-    const ava = args.member.user.displayAvatarURL({size: args.size}),
+    const ava = member.user.displayAvatarURL({size}),
       embed = new MessageEmbed(),
       ext = this.fetchExt(ava);
 
     embed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setImage(ext.includes('gif') ? `${ava}&f=.gif` : ava)
-      .setTitle(args.member.displayName)
+      .setTitle(member.displayName)
       .setURL(ava)
       .setDescription(`[Direct Link](${ava})`);
 

@@ -64,13 +64,13 @@ module.exports = class EightBallCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {question}) {
     startTyping(msg);
     const eightBallEmbed = new MessageEmbed();
 
     eightBallEmbed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .addField(':question: Question', args.question, false)
+      .addField(':question: Question', question, false)
       .addField(':8ball: 8ball', predict(), false);
 
     deleteCommandMessages(msg, this.client);

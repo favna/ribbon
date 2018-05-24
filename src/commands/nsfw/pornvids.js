@@ -66,14 +66,15 @@ module.exports = class PornVidsCommand extends Command {
     });
   }
 
-  async run (msg, args) {
-    startTyping(msg);
-    const search = new Pornsearch(args.porn),
-      vids = await search.videos();
-
-    if (vids) {
-      const pornEmbed = new MessageEmbed(),
+  async run (msg, {porn}) {
+    try {
+      startTyping(msg);
+      /* eslint-disable sort-vars */
+      const search = new Pornsearch(porn),
+        vids = await search.videos(),
+        pornEmbed = new MessageEmbed(),
         random = Math.floor(Math.random() * vids.length);
+      /* eslint-enable sort-vars */
 
       pornEmbed
         .setURL(vids[random].url)
@@ -87,10 +88,11 @@ module.exports = class PornVidsCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(pornEmbed, vids[random].url);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.reply(`nothing found for \`${args.porn}\``);
+      return msg.reply(`nothing found for \`${porn}\``);
+    }
   }
 };

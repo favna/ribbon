@@ -24,7 +24,7 @@
  */
 
 /**
- * @file nsfw e621Command - Gets a NSFW image from e621  
+ * @file nsfw E621Command - Gets a NSFW image from e621  
  * Can only be used in NSFW marked channels!  
  * **Aliases**: `eee`
  * @module
@@ -41,7 +41,7 @@ const booru = require('booru'),
   {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
-module.exports = class e621Command extends Command {
+module.exports = class E621Command extends Command {
   constructor (client) {
     super(client, {
       name: 'e621',
@@ -68,28 +68,28 @@ module.exports = class e621Command extends Command {
     });
   }
 
-  async run (msg, args) {
+  async run (msg, {tags}) {
     try {
       startTyping(msg);
       /* eslint-disable sort-vars*/
-      const search = await booru.search('e621', args.tags, {
+      const search = await booru.search('e621', tags, {
           limit: 1,
           random: true
         }),
         common = await booru.commonfy(search),
         embed = new MessageEmbed(),
-        tags = [];
+        imageTags = [];
       /* eslint-enable sort-vars*/
 
       for (const tag in common[0].common.tags) {
-        tags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
+        imageTags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
       }
 
       embed
-        .setTitle(`e621 image for ${args.tags.join(', ')}`)
+        .setTitle(`e621 image for ${tags.join(', ')}`)
         .setURL(common[0].common.file_url)
         .setColor('#FFB6C1')
-        .setDescription(stripIndents`${tags.slice(0, 5).join(' ')}
+        .setDescription(stripIndents`${imageTags.slice(0, 5).join(' ')}
           
           **Score**: ${common[0].common.score}`)
         .setImage(common[0].common.file_url);
@@ -102,7 +102,7 @@ module.exports = class e621Command extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`no juicy images found for \`${args.tags}\``);
+      return msg.reply(`no juicy images found for \`${tags}\``);
     }
   }
 };

@@ -58,7 +58,7 @@ module.exports = class YouTubeCommand extends Command {
       },
       args: [
         {
-          key: 'query',
+          key: 'video',
           prompt: 'Which video do you want to find?',
           type: 'string'
         }
@@ -66,42 +66,41 @@ module.exports = class YouTubeCommand extends Command {
     });
   }
 
-  async run (msg, args) {
-    startTyping(msg);
-    const res = await request.get('https://www.googleapis.com/youtube/v3/search')
-      .query('key', process.env.googleapikey)
-      .query('part', 'snippet')
-      .query('maxResults', '1')
-      .query('q', args.query)
-      .query('type', 'video');
-
-    if (res && res.body.items && res.body.items.length >= 1) {
+  async run (msg, {video}) {
+    try {
+      startTyping(msg);
       const embed = new MessageEmbed(),
-        video = res.body.items[0];
+        res = await request.get('https://www.googleapis.com/youtube/v3/search')
+          .query('key', process.env.googleapikey)
+          .query('part', 'snippet')
+          .query('maxResults', '1')
+          .query('q', video)
+          .query('type', 'video');
 
       deleteCommandMessages(msg, this.client);
       if (msg.content.split(' ')[0].slice(msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length) === 'yts') {
         stopTyping(msg);
 
-        return msg.say(`https://www.youtube.com/watch?v=${video.id.videoId}`);
+        return msg.say(`https://www.youtube.com/watch?v=${res.body.items[0].id.videoId}`);
       }
 
       embed
-        .setTitle(`Youtube Search Result ${args.query}`)
-        .setURL(`https://www.youtube.com/watch?v=${video.id.videoId}`)
+        .setTitle(`Youtube Search Result ${res.body.items[0]}`)
+        .setURL(`https://www.youtube.com/watch?v=${res.body.items[0].id.videoId}`)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setImage(video.snippet.thumbnails.high.url)
-        .addField('Title', video.snippet.title, true)
-        .addField('URL', `[Click Here](https://www.youtube.com/watch?v=${video.id.videoId})`, true)
-        .addField('Channel', `[${video.snippet.channelTitle}](https://www.youtube.com/channel/${video.snippet.channelId})`, true)
-        .addField('Published At', moment(video.snippet.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
-        .addField('Description', video.snippet.description ? video.snippet.description : 'No Description', false);
+        .setImage(res.body.items[0].snippet.thumbnails.high.url)
+        .addField('Title', res.body.items[0].snippet.title, true)
+        .addField('URL', `[Click Here](https://www.youtube.com/watch?v=${res.body.items[0].id.videoId})`, true)
+        .addField('Channel', `[${res.body.items[0].snippet.channelTitle}](https://www.youtube.com/channel/${res.body.items[0].snippet.channelId})`, true)
+        .addField('Published At', moment(res.body.items[0].snippet.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
+        .addField('Description', res.body.items[0].snippet.description ? res.body.items[0].snippet.description : 'No Description', false);
       stopTyping(msg);
 
-      return msg.embed(embed, `https://www.youtube.com/watch?v=${video.id.videoId}`);
-    }
-    stopTyping(msg);
+      return msg.embed(embed, `https://www.youtube.com/watch?v=${res.body.items[0].id.videoId}`);
+    } catch (err) {
+      stopTyping(msg);
 
-    return msg.reply(`no videos found for \`${args.query}\``);
+      return msg.reply(`no videos found for \`${video}\``);
+    }
   }
 };
