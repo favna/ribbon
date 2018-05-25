@@ -28,11 +28,34 @@ const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
   request = require('snekfetch'),
-  {Client, FriendlyError, SyncSQLiteProvider} = require('discord.js-commando'),
+  {
+    Client,
+    FriendlyError,
+    SyncSQLiteProvider
+  } = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {badwords, duptext, caps, emojis, mentions, links, invites, slowmode} = require(path.join(__dirname, 'components/automod.js')),
-  {checkReminders, forceStopTyping, joinmessage, leavemessage, lotto, timermessages} = require(path.join(__dirname, 'components/events.js'));
+  {
+    oneLine,
+    stripIndents
+  } = require('common-tags'),
+  {
+    badwords,
+    duptext,
+    caps,
+    emojis,
+    mentions,
+    links,
+    invites,
+    slowmode
+  } = require(path.join(__dirname, 'components/automod.js')),
+  {
+    checkReminders,
+    forceStopTyping,
+    joinmessage,
+    leavemessage,
+    lotto,
+    timermessages
+  } = require(path.join(__dirname, 'components/events.js'));
 /* eslint-enable sort-vars */
 
 class Ribbon {
@@ -261,54 +284,66 @@ class Ribbon {
           const curDisplayName = newMember.displayName,
             curGuild = newMember.guild,
             curUser = newMember.user;
-
           let newActivity = newMember.presence.activity,
             oldActivity = oldMember.presence.activity;
 
-          if (!oldActivity) {
-            oldActivity = {url: 'placeholder'};
-          }
-          if (!newActivity) {
-            newActivity = {url: 'placeholder'};
-          }
-          if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
+          try {
+            if (!oldActivity) {
+              oldActivity = {url: 'placeholder'};
+            }
+            if (!newActivity) {
+              newActivity = {url: 'placeholder'};
+            }
+            if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
 
-            /* eslint-disable sort-vars*/
-            const userData = await request.get('https://api.twitch.tv/kraken/users')
-                .set('Accept', 'application/vnd.twitchtv.v5+json')
-                .set('Client-ID', process.env.twitchclientid)
-                .query('login', newActivity.url.split('/')[3]),
-              streamData = await request.get('https://api.twitch.tv/kraken/streams')
-                .set('Accept', 'application/vnd.twitchtv.v5+json')
-                .set('Client-ID', process.env.twitchclientid)
-                .query('channel', userData.body.users[0]._id),
-              twitchChannel = curGuild.settings.get('twitchchannel', null),
-              twitchEmbed = new MessageEmbed();
-            /* eslint-enable sort-vars*/
+              /* eslint-disable sort-vars*/
+              const userData = await request.get('https://api.twitch.tv/kraken/users')
+                  .set('Accept', 'application/vnd.twitchtv.v5+json')
+                  .set('Client-ID', process.env.twitchclientid)
+                  .query('login', newActivity.url.split('/')[3]),
+                streamData = await request.get('https://api.twitch.tv/kraken/streams')
+                  .set('Accept', 'application/vnd.twitchtv.v5+json')
+                  .set('Client-ID', process.env.twitchclientid)
+                  .query('channel', userData.body.users[0]._id),
+                twitchChannel = curGuild.settings.get('twitchchannel', null),
+                twitchEmbed = new MessageEmbed();
+              /* eslint-enable sort-vars*/
 
-            twitchEmbed
-              .setThumbnail(curUser.displayAvatarURL())
-              .setURL(newActivity.url)
-              .setColor('#6441A4')
-              .setTitle(`${curDisplayName} just went live!`)
-              .setDescription(stripIndents`streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
-
-            if (userData.ok && userData.body._total > 0 && userData.body.users[0]) {
               twitchEmbed
-                .setThumbnail(userData.body.users[0].logo)
-                .setTitle(`${userData.body.users[0].display_name} just went live!`)
-                .setDescription(stripIndents`${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
-            }
+                .setThumbnail(curUser.displayAvatarURL())
+                .setURL(newActivity.url)
+                .setColor('#6441A4')
+                .setTitle(`${curDisplayName} just went live!`)
+                .setDescription(stripIndents`streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
 
-            if (streamData.ok && streamData.body._total > 0 && streamData.body.streams[0]) {
-              const streamTime = moment(streamData.body.streams[0].created_at).isValid() ? moment(streamData.body.streams[0].created_at)._d : null;
+              if (userData.ok && userData.body._total > 0 && userData.body.users[0]) {
+                twitchEmbed
+                  .setThumbnail(userData.body.users[0].logo)
+                  .setTitle(`${userData.body.users[0].display_name} just went live!`)
+                  .setDescription(stripIndents`${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
+              }
 
-              twitchEmbed.setFooter('Stream started');
-              streamTime ? twitchEmbed.setTimestamp(streamTime) : null;
+              if (streamData.ok && streamData.body._total > 0 && streamData.body.streams[0]) {
+                const streamTime = moment(streamData.body.streams[0].created_at).isValid() ? moment(streamData.body.streams[0].created_at)._d : null;
+
+                twitchEmbed.setFooter('Stream started');
+                streamTime ? twitchEmbed.setTimestamp(streamTime) : null;
+              }
+              if (twitchChannel) {
+                curGuild.channels.get(twitchChannel).send('', {embed: twitchEmbed});
+              }
             }
-            if (twitchChannel) {
-              curGuild.channels.get(twitchChannel).send('', {embed: twitchEmbed});
-            }
+          } catch (err) {
+            console.error(err);
+            this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+              <@${this.client.owners[0].id}> Error occurred in sending a twitch live notifier!
+              **Server:** ${curGuild.name} (${curGuild.id})
+              **Member:** ${curUser.tag} (${curUser.id})
+              **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+              **Old Activity:** ${oldActivity.url}
+              **New Activity:** ${newActivity.url}
+              **Error Message:** ${err}
+              `);
           }
         }
       }
@@ -343,12 +378,14 @@ class Ribbon {
 
   onUnknownCommand () {
     return (msg) => {
-      if (msg.guild.settings.get('unknownmessages', true)) {
+      const {guild} = msg;
+
+      if (guild.settings.get('unknownmessages', true)) {
         return msg.reply(stripIndents`${oneLine`That is not a registered command.
-				Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\`
+				Use \`${guild ? guild.commandPrefix : this.client.commandPrefix}help\`
 				or @Ribbon#2325 help to view the list of all commands.`}
 				${oneLine`Server staff (those who can manage other's messages) can disable these replies by using
-				\`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}unknownmessages disable\``}`);
+				\`${guild ? guild.commandPrefix : this.client.commandPrefix}unknownmessages disable\``}`);
       }
 
       return null;
