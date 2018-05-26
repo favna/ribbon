@@ -32,7 +32,8 @@
  * @returns {MessageEmbed} Info on who used the "say" command last
  */
 
-const {Command} = require('discord.js-commando'),
+const moment = require('moment'),
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
@@ -65,7 +66,7 @@ module.exports = class SayWutCommand extends Command {
         .setTitle(`Last ${saydata.commandPrefix}say message author`)
         .setAuthor(oneLine`${saydata.authorTag} (${saydata.authorID})`, saydata.avatarURL)
         .setDescription(saydata.argString)
-        .setTimestamp();
+        .setTimestamp(moment(saydata.messageDate)._d);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
