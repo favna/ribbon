@@ -58,10 +58,10 @@ module.exports = class TagMemberCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {member}) {
     startTyping(msg);
     deleteCommandMessages(msg, this.client);
-    msg.say(`^^^^ <@${args.member.id}> ^^^^`);
+    msg.say(`^^^^ <@${member.id}> ^^^^`);
 
     return stopTyping(msg);
   }

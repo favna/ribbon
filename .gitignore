@@ -19,3 +19,4 @@ src/data/databases/*
 # Code coverage results
 coverage/
 .nyc_output/
+src/commands/owner/test.js
