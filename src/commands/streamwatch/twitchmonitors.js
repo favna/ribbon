@@ -36,7 +36,7 @@
 
 const {Command} = require('discord.js-commando'), 
   {stripIndents} = require('common-tags'), 
-  {deleteCommandMessages, stopTyping, startTyping, userSearch} = require('../../components/util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class TwitchMonitorsCommand extends Command {
   constructor (client) {
@@ -57,7 +57,8 @@ module.exports = class TwitchMonitorsCommand extends Command {
         {
           key: 'members',
           prompt: 'Which members to monitor?',
-          type: 'string'
+          type: 'member',
+          infinite: true
         }
       ]
     });
@@ -67,27 +68,16 @@ module.exports = class TwitchMonitorsCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  async run (msg, {members}) {
+  run (msg, {members}) {
     startTyping(msg);
-    const memberIDs = [],
-      memberNames = [];
-
-    members = msg.argString.slice(1).split(' ');
-
-    for (const member in members) {
-      const thisMember = await userSearch(this.client, msg, members[member]);
-
-      if (thisMember) {
-        memberIDs.push(thisMember.id);
-        memberNames.push(thisMember.displayName);
-      }
-    }
+    const memberIDs = members.map(m => m.id),
+      memberNames = members.map(m => m.displayName);
 
     msg.guild.settings.set('twitchmonitors', memberIDs);
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.reply(stripIndents`🕵 Started spying on the stream status of \`${memberNames.join(', ')}\`
+    return msg.reply(stripIndents`🕵 Started spying on the stream status of ${memberNames.map(val => `\`${val}\``).join(', ')}
         Use \`${msg.guild.commandPrefix}twitchtoggle\` to toggle twitch notifiers on or off
         Use \`${msg.guild.commandPrefix}twitchoutput\` to set the channel the notifiers should be sent to`);
   }

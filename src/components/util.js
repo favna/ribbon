@@ -78,18 +78,6 @@ const deleteCommandMessages = function (msg, client) { // eslint-disable-line co
   }
 };
 
-const memberFilterExact = function (search) {
-  return mem => mem.user.username.toLowerCase() === search ||
-    (mem.nickname && mem.nickname.toLowerCase() === search) ||
-    `${mem.user.username.toLowerCase()}#${mem.user.discriminator}` === search;
-};
-
-const memberFilterInexact = function (search) {
-  return mem => mem.user.username.toLowerCase().includes(search) ||
-    (mem.nickname && mem.nickname.toLowerCase().includes(search)) ||
-    `${mem.user.username.toLowerCase()}#${mem.user.discriminator}`.includes(search);
-};
-
 const numberBetween = function (num, lower, upper, inclusive) {
   const max = Math.max(lower, upper),
     min = Math.min(lower, upper);
@@ -148,46 +136,6 @@ const stopTyping = function (msg) {
 
 const startTyping = function (msg) {
   msg.channel.startTyping(1);
-};
-
-const userSearch = async function (client, msg, val) {
-  /* eslint-disable curly */
-  const matches = val.match(/^(?:<@!?)?([0-9]+)>?$/);
-
-  if (matches) {
-    try {
-      const user = await client.users.fetch(matches[1]);
-
-      if (!user) return false;
-
-      if (!(/^[0-9]{18}$/).test(user.id)) return false;
-    
-      return user;
-    } catch (err) {
-      return false;
-    }
-  }
-  if (!msg.guild) return false;
-  const search = val.toLowerCase();
-  const members = msg.guild.members.filter(memberFilterInexact(search));
-
-  if (members.size === 0) return false;
-  if (members.size === 1) {
-    if (!(/^[0-9]{18}$/).test(members.first().id)) return false;
-
-    return members.first();
-  }
-
-  const exactMembers = members.filter(memberFilterExact(search));
-
-  if (exactMembers.size === 1) {
-    if (!(/^[0-9]{18}$/).test(exactMembers.first().id)) return false;
-
-    return exactMembers.first();
-  }
-
-  return null;
-  /* eslint-enable curly */
 };
 
 class Song {
@@ -259,6 +207,5 @@ module.exports = {
   roundNumber,
   startTyping,
   stopTyping,
-  userSearch,
   Song
 };
