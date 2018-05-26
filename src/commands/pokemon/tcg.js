@@ -68,7 +68,6 @@ module.exports = class PokemonTCGCommand extends Command {
       format: 'Properties',
       examples: ['tcg name types subtype'],
       guildOnly: false,
-      ownerOnly: true,
       throttling: {
         usages: 2,
         duration: 3
