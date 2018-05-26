@@ -371,9 +371,6 @@ There are 4 ways to queue songs  </p>
 <dt><a href="#module_paheal">paheal</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>nsfw PahealCommand - Gets a NSFW image from paheal<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>pa</code>, <code>heal</code></p>
 </dd>
-<dt><a href="#module_porngifs">porngifs</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>nsfw PornGifsCommand - Gets a NSFW gif and webm from pornhub<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>nsfwgifs</code></p>
-</dd>
 <dt><a href="#module_pornvids">pornvids</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>nsfw PornVidsCommand - Gets a NSFW video from pornhub<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>porn</code>, <code>nsfwvids</code></p>
 </dd>
@@ -1365,6 +1362,7 @@ Moderation AutomodCommand - General toggle for all automod features
 | Param | Type | Description |
 | --- | --- | --- |
 | Option | <code>BooleanResolvable</code> | True or False |
+| [Roles] | <code>RoleResolvable</code> | Roles that are exempted from automod |
 
 **Example**  
 ```js
@@ -2069,24 +2067,6 @@ Can only be used in NSFW marked channels!
 **Example**  
 ```js
 paheal pyrrha_nikos
-```
-<a name="module_porngifs"></a>
-
-## porngifs ⇒ <code>MessageEmbed</code>
-nsfw PornGifsCommand - Gets a NSFW gif and webm from pornhub  
-Can only be used in NSFW marked channels!  
-**Aliases**: `nsfwgifs`
-
-**Returns**: <code>MessageEmbed</code> - Webm link and embeds gif  
-**Category**: nsfw  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| Query | <code>StringResolvable</code> | Something you want to find |
-
-**Example**  
-```js
-porngifs babe
 ```
 <a name="module_pornvids"></a>
 

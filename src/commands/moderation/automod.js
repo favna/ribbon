@@ -31,6 +31,7 @@
  * @name automod
  * @example automod enable
  * @param {BooleanResolvable} Option True or False
+ * @param {RoleResolvable} [Roles] Roles that are exempted from automod
  * @returns {MessageEmbed} automod confirmation log
  */
 
@@ -47,7 +48,7 @@ module.exports = class AutomodCommand extends Command {
       group: 'moderation',
       aliases: ['botmod', 'skynetmod'],
       description: 'General toggle for all automod features',
-      format: 'BooleanResolvable',
+      format: 'BooleanResolvable [RoleResolvable(s)]',
       examples: ['automod enable'],
       guildOnly: true,
       throttling: {
