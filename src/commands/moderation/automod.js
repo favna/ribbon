@@ -69,6 +69,13 @@ module.exports = class AutomodCommand extends Command {
             return stripIndents`Has to be one of ${validBools.map(val => `\`${val}\``).join(', ')}
             Respond with your new selection or`;
           }
+        },
+        {
+          key: 'roles',
+          prompt: 'What roles, if any, should be exempt from automod? End with `finish` when you replied all role names (if any)',
+          type: 'role',
+          default: 'none',
+          infinite: true
         }
       ]
     });
@@ -78,19 +85,24 @@ module.exports = class AutomodCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
-  run (msg, {option}) {
+  run (msg, {option, roles}) {
     startTyping(msg);
 
     const automodEmbed = new MessageEmbed(),
       modlogChannel = msg.guild.settings.get('modlogchannel',
-        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
+        msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
+      options = {
+        enabled: option,
+        filterroles: roles ? roles.map(r => r.id) : []
+      };
 
-    msg.guild.settings.set('automod', option);
+    msg.guild.settings.set('automod', options);
 
     automodEmbed
       .setColor('#3DFFE5')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`**Action:** Automod features are now ${option ? 'enabled' : 'disabled'}
+      ${roles ? `Roles that are exempted from automod: ${roles.map(val => `\`${val.name}\``).join(', ')}` : null}
       **Notice:** Be sure to enable your desired individual features, they are all off by default!`)
       .setTimestamp();
 

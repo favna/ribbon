@@ -249,9 +249,11 @@ class Ribbon {
   }
 
   onMessage () {
-    /* eslint-disable curly */
+    /* eslint-disable curly*/
+    // eslint-disable-next-line complexity, consistent-return
     return (msg) => {
-      if (msg.guild && msg.deletable && msg.guild.settings.get('automod', false)) {
+      if (msg.guild && msg.deletable && msg.guild.settings.get('automod', false).enabled) {
+        if (msg.member.roles.some(ro => msg.guild.settings.get('automod', []).filterroles.includes(ro.id))) return null;
         if (msg.guild.settings.get('caps', false).enabled) {
           const opts = msg.guild.settings.get('caps');
 
