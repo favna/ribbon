@@ -176,7 +176,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Games KissCommand - Give someone a kiss ❤!</p>
 </dd>
 <dt><a href="#module_rps">rps</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization<br><strong>Aliases</strong>: rockpaperscissors</p>
+<dd><p>Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization<br><strong>Aliases</strong>: <code>rockpaperscissors</code></p>
 </dd>
 <dt><a href="#module_ship">ship</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games ShipCommand - Ship 2 members<br>Leaving 1 or both parameters out will have the bot pick 1 or 2 random members<br><strong>Aliases</strong>: <code>love</code>, <code>marry</code>, <code>engage</code></p>
@@ -1083,7 +1083,7 @@ kiss Pyrrha
 
 ## rps ⇒ <code>MessageEmbed</code>
 Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization  
-**Aliases**: rockpaperscissors
+**Aliases**: `rockpaperscissors`
 
 **Returns**: <code>MessageEmbed</code> - Result of the conflict  
 **Category**: games  
