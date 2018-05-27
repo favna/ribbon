@@ -75,28 +75,28 @@ module.exports = class banCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('BAN_MEMBERS');
   }
 
-  run (msg, args) {
+  run (msg, {member, reason, keepmessages}) {
     startTyping(msg);
-    if (args.member.id === msg.author.id) {
+    if (member.id === msg.author.id) {
       stopTyping(msg);
 
       return msg.reply('I don\'t think you want to ban yourself.');
     }
 
-    if (!args.member.bannable) {
+    if (!member.bannable) {
       stopTyping(msg);
 
       return msg.reply('I cannot ban that member, their role is probably higher than my own!');
     }
 
     if (/--nodelete/im.test(msg.argString)) {
-      args.reason = args.reason.substring(0, args.reason.indexOf('--nodelete')) + args.reason.substring(args.reason.indexOf('--nodelete') + '--nodelete'.length + 1);
-      args.keepmessages = true;
+      reason = reason.substring(0, reason.indexOf('--nodelete')) + reason.substring(reason.indexOf('--nodelete') + '--nodelete'.length + 1);
+      keepmessages = true;
     }
 
-    args.member.ban({
-      days: args.keepmessages ? 0 : 1,
-      reason: args.reason !== '' ? args.reason : 'No reason given by staff'
+    member.ban({
+      days: keepmessages ? 0 : 1,
+      reason: reason !== '' ? reason : 'No reason given by staff'
     });
 
     const banEmbed = new MessageEmbed(),
@@ -107,9 +107,9 @@ module.exports = class banCommand extends Command {
       .setColor('#FF1900')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
-      **Member:** ${args.member.user.tag} (${args.member.id})
+      **Member:** ${member.user.tag} (${member.id})
       **Action:** Ban
-      **Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
+      **Reason:** ${reason !== '' ? reason : 'No reason given by staff'}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {

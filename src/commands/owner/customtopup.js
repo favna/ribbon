@@ -77,7 +77,7 @@ module.exports = class CustomTopUpCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {player, chips}) {
     startTyping(msg);
     const coinEmbed = new MessageEmbed(),
       conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
@@ -88,14 +88,14 @@ module.exports = class CustomTopUpCommand extends Command {
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {
-      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(args.player.id);
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(player.id);
 
       if (query) {
         const prevBal = query.balance;
 
-        query.balance += args.chips;
+        query.balance += chips;
 
-        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${args.player.id}";`).run({balance: query.balance});
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${player.id}";`).run({balance: query.balance});
         coinEmbed
           .setTitle('Daniël Ocean has stolen chips from Benedict for you')
           .addField('Previous Balance', prevBal, true)

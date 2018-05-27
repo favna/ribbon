@@ -75,22 +75,22 @@ module.exports = class KickCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('KICK_MEMBERS');
   }
 
-  run (msg, args) {
+  run (msg, {member, reason}) {
     startTyping(msg);
 
-    if (args.member.id === msg.author.id) {
+    if (member.id === msg.author.id) {
       stopTyping(msg);
 
       return msg.reply('I don\'t think you want to kick yourself.');
     }
 
-    if (!args.member.kickable) {
+    if (!member.kickable) {
       stopTyping(msg);
 
       return msg.reply('I cannot kick that member, their role is probably higher than my own!');
     }
 
-    args.member.kick(args.reason !== '' ? args.reason : 'No reason given by staff');
+    member.kick(reason !== '' ? reason : 'No reason given by staff');
     const kickEmbed = new MessageEmbed(),
       modlogChannel = msg.guild.settings.get('modlogchannel',
         msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
@@ -99,9 +99,9 @@ module.exports = class KickCommand extends Command {
       .setColor('#FF8300')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
-      **Member:** ${args.member.user.tag} (${args.member.id})
+      **Member:** ${member.user.tag} (${member.id})
       **Action:** Kick
-      **Reason:** ${args.reason !== '' ? args.reason : 'No reason given by staff'}`)
+      **Reason:** ${reason !== '' ? reason : 'No reason given by staff'}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {

@@ -53,7 +53,7 @@ module.exports = class PurgeCommand extends Command {
           key: 'amount',
           prompt: 'How many messages should I purge?',
           min: 1,
-          max: 99,
+          max: 100,
           type: 'integer'
         }
       ]
@@ -64,7 +64,7 @@ module.exports = class PurgeCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
-  async run (msg, args) {
+  async run (msg, {amount}) {
     startTyping(msg);
     if (!msg.channel.permissionsFor(msg.guild.me).has('MANAGE_MESSAGES')) {
       stopTyping(msg);
@@ -72,9 +72,10 @@ module.exports = class PurgeCommand extends Command {
       return msg.reply('I do not have permission to delete messages from this channel. Better go and fix that!');
     }
 
-    msg.channel.bulkDelete(args.amount + 1, true);
+    amount = amount === 100 ? 99 : amount;
+    msg.channel.bulkDelete(amount + 1, true);
 
-    const reply = await msg.say(`\`Deleted ${args.amount} messages\``);
+    const reply = await msg.say(`\`Deleted ${amount + 1} messages\``);
 
     stopTyping(msg);
 

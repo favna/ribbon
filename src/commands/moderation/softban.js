@@ -75,26 +75,26 @@ module.exports = class SoftbanCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('BAN_MEMBERS');
   }
 
-  run (msg, args) {
+  run (msg, {member, reason}) {
     startTyping(msg);
-    if (args.member.id === msg.author.id) {
+    if (member.id === msg.author.id) {
       stopTyping(msg);
 
       return msg.reply('I don\'t think you want to softban yourself.');
     }
 
-    if (!args.member.bannable) {
+    if (!member.bannable) {
       stopTyping(msg);
 
       return msg.reply('I cannot softban that member, their role is probably higher than my own!');
     }
 
-    args.member.ban({
+    member.ban({
       days: 1,
-      reason: args.reason
+      reason
     });
 
-    msg.guild.members.unban(args.member.user);
+    msg.guild.members.unban(member.user);
 
     const modlogChannel = msg.guild.settings.get('modlogchannel',
         msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
@@ -104,9 +104,9 @@ module.exports = class SoftbanCommand extends Command {
       .setColor('#FF8300')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
-      **Member:** ${args.member.user.tag} (${args.member.id})
+      **Member:** ${member.user.tag} (${member.id})
       **Action:** Softban
-      **Reason:** ${args.reason}`)
+      **Reason:** ${reason}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {

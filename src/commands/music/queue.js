@@ -65,7 +65,7 @@ module.exports = class ViewQueueCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {page}) {
     startTyping(msg);
     const queue = this.queue.get(msg.guild.id);
 
@@ -78,7 +78,7 @@ module.exports = class ViewQueueCommand extends Command {
 
     const currentSong = queue.songs[0], // eslint-disable-line one-var
       currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0,
-      paginated = util.paginate(queue.songs, args.page, Math.floor(process.env.PAGINATED_ITEMS)),
+      paginated = util.paginate(queue.songs, page, Math.floor(process.env.PAGINATED_ITEMS)),
       totalLength = queue.songs.reduce((prev, song) => prev + song.length, 0);
 
     msg.embed({

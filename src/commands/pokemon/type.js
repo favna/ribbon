@@ -58,7 +58,7 @@ module.exports = class TypeCommand extends Command {
       },
       args: [
         {
-          key: 'type',
+          key: 'types',
           prompt: 'Get info on which type?',
           type: 'string'
         }
@@ -67,7 +67,7 @@ module.exports = class TypeCommand extends Command {
   }
 
   /* eslint-disable max-statements, complexity */
-  run (msg, args) {
+  run (msg, {types}) {
     startTyping(msg);
     const atkMulti = {
         Bug: 1,
@@ -139,8 +139,8 @@ module.exports = class TypeCommand extends Command {
       resistCheck = false,
       vulnCheck = false;
 
-    for (let z = 0; z < args.type.split(' ').length; z += 1) {
-      const argsSplit = args.type.split(' ')[z];
+    for (let z = 0; z < types.split(' ').length; z += 1) {
+      const argsSplit = types.split(' ')[z];
 
       if (Object.keys(BattleTypeChart).map(c => c.toLowerCase())
         .indexOf(argsSplit.toLowerCase()) !== -1) {
@@ -267,9 +267,9 @@ module.exports = class TypeCommand extends Command {
       .addField('Offense', atkVulnDisplay.join('\n\n'))
       .addField('Defense', vulnDisplay.join('\n\n'))
       .addField('External Resources', oneLine`
-		[Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/${args.type.split(' ')[0]}_(type\\))  
-		|  [Smogon](http://www.smogon.com/dex/sm/types/${args.type.split(' ')[0]})
-		|  [PokémonDB](http://pokemondb.net/type/${args.type.split(' ')[0]})`);
+		[Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/${types.split(' ')[0]}_(type\\))  
+		|  [Smogon](http://www.smogon.com/dex/sm/types/${types.split(' ')[0]})
+		|  [PokémonDB](http://pokemondb.net/type/${types.split(' ')[0]})`);
 
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);

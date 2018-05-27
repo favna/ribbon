@@ -64,7 +64,7 @@ module.exports = class EShopCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {game}) {
     startTyping(msg);
     if (fs.existsSync(path.join(__dirname, '../../data/databases/eshop.json'))) {
 
@@ -81,7 +81,7 @@ module.exports = class EShopCommand extends Command {
         },
         games = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/databases/eshop.json'), 'utf8')),
         fuse = new Fuse(games, fsoptions),
-        results = fuse.search(args.game);
+        results = fuse.search(game);
       /* eslint-enable sort-vars*/
 
       if (results.length) {
@@ -106,7 +106,7 @@ module.exports = class EShopCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`No titles found for \`${args.game}\``);
+      return msg.reply(`No titles found for \`${game}\``);
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);

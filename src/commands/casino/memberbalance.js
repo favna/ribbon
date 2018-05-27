@@ -67,18 +67,18 @@ module.exports = class MemberBalanceCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {player}) {
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3')),
       mbalEmbed = new MessageEmbed();
 
     mbalEmbed
-      .setAuthor(args.player.displayName, args.player.user.displayAvatarURL({format: 'png'}))
+      .setAuthor(player.displayName, player.user.displayAvatarURL({format: 'png'}))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
     try {
       startTyping(msg);
-      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(args.player.id);
+      const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(player.id);
 
       if (query) {
         mbalEmbed.setDescription(stripIndents`
@@ -92,7 +92,7 @@ module.exports = class MemberBalanceCommand extends Command {
       }
       stopTyping(msg);
 
-      return msg.reply(`looks like ${args.player.displayName} doesn\'t have any chips yet. When they run \`${msg.guild.commandPrefix}chips\` they will get their first 500`);
+      return msg.reply(`looks like ${player.displayName} doesn\'t have any chips yet. When they run \`${msg.guild.commandPrefix}chips\` they will get their first 500`);
     } catch (err) {
       stopTyping(msg);
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`

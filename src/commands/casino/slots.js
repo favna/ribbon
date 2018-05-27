@@ -79,7 +79,7 @@ module.exports = class SlotsCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {chips}) {
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3')),
       slotEmbed = new MessageEmbed();
 
@@ -93,7 +93,7 @@ module.exports = class SlotsCommand extends Command {
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (query) {
-        if (args.chips > query.balance) {
+        if (chips > query.balance) {
           return msg.reply(`you don\'t have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
         }
 
@@ -135,15 +135,15 @@ module.exports = class SlotsCommand extends Command {
         let titleString = '',
           winningPoints = 0;
 
-        if (args.chips === 1 && result.lines[1].isWon) {
+        if (chips === 1 && result.lines[1].isWon) {
           winningPoints += result.lines[1].points;
-        } else if (args.chips === 2) {
+        } else if (chips === 2) {
           for (let i = 0; i <= 2; ++i) {
             if (result.lines[i].isWon) {
               winningPoints += result.lines[i].points;
             }
           }
-        } else if (args.chips === 3) {
+        } else if (chips === 3) {
           for (let i = 0; i < result.lines.length; ++i) {
             if (result.lines[i].isWon) {
               winningPoints += result.lines[i].points;
@@ -151,14 +151,14 @@ module.exports = class SlotsCommand extends Command {
           }
         }
 
-        winningPoints !== 0 ? query.balance += winningPoints - args.chips : query.balance -= args.chips;
+        winningPoints !== 0 ? query.balance += winningPoints - chips : query.balance -= chips;
 
         conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({balance: query.balance});
 
-        if (args.chips === winningPoints) {
+        if (chips === winningPoints) {
           titleString = 'won back their exact input';
-        } else if (args.chips > winningPoints) {
-          titleString = `lost ${args.chips - winningPoints} chips ${winningPoints !== 0 ? `(slots gave back ${winningPoints})` : ''}`;
+        } else if (chips > winningPoints) {
+          titleString = `lost ${chips - winningPoints} chips ${winningPoints !== 0 ? `(slots gave back ${winningPoints})` : ''}`;
         } else {
           titleString = `won ${query.balance - prevBal} chips`;
         }

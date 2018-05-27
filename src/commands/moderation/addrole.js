@@ -75,10 +75,7 @@ module.exports = class AddRoleCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
   }
 
-  async run (msg, {
-    member,
-    role
-  }) {
+  async run (msg, {member, role}) {
     startTyping(msg);
     if (member.manageable) {
       try {

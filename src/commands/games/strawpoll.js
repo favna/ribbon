@@ -61,43 +61,41 @@ module.exports = class StrawpollCommand extends Command {
         {
           key: 'title',
           prompt: 'Title of the strawpoll',
-          type: 'string',
-          wait: 60
+          type: 'string'
         },
         {
           key: 'options',
-          prompt: 'Options for the strawpoll?',
+          prompt: 'What are the messages for the strawpoll (minimum is 2)? Send 1 option per message and end with `finish`',
           type: 'string',
-          wait: 60,
-          validate: (opts) => {
-            if (/([\S ]*\|[\S ]*)*/i.test(opts) &&
-              opts.split('|').length >= 2 && opts.split('|').length <= 30) {
-              return true;
-            }
-
-            return 'You need between 2 and 30 options and the valid format for the options is `Question 1|Question 2|Question 3 etc..`';
-
+          infinite: true,
+          validate: (v) => {
+            console.log(v);
+            
+            return true;
           }
         }
       ]
     });
   }
 
-  async run (msg, args) {
-    startTyping(msg);
-    const pollEmbed = new MessageEmbed(),
-      strawpoll = await request
-        .post('https://www.strawpoll.me/api/v2/polls')
-        .set('Content-Type', 'application/json')
-        .send({
-          title: args.title,
-          options: args.options.split('|'),
-          multi: false,
-          dupcheck: 'normal',
-          captcha: true
-        });
+  async run (msg, {title, options}) {
+    if (options.length <= 2) {
+      return msg.reply('a poll needs to have at least 2 options to pick from');
+    }
+    try {
+      startTyping(msg);
+      const pollEmbed = new MessageEmbed(),
+        strawpoll = await request
+          .post('https://www.strawpoll.me/api/v2/polls')
+          .set('Content-Type', 'application/json')
+          .send({
+            title,
+            options,
+            multi: false,
+            dupcheck: 'normal',
+            captcha: true
+          });
 
-    if (strawpoll.ok) {
       pollEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setTitle(strawpoll.body.title)
@@ -109,11 +107,11 @@ module.exports = class StrawpollCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(pollEmbed, `http://www.strawpoll.me/${strawpoll.body.id}`);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+
+      return msg.reply('an error occurred creating the strawpoll');
     }
-
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
-
-    return msg.reply('an error occurred creating the strawpoll');
   }
 };

@@ -66,38 +66,36 @@ module.exports = class DiscordBotsCommand extends Command {
     });
   }
 
-  async run (msg, args) {
-    startTyping(msg);
-    const info = await request.get(`https://discordbots.org/api/bots/${args.bot}`)
-        .set('Authorization', process.env.discordbotskey),
-      infoEmbed = new MessageEmbed();
-
-    if (info) {
-      const botinfo = JSON.parse(info.text);
+  async run (msg, {bot}) {
+    try {
+      startTyping(msg);
+      const info = await request.get(`https://discordbots.org/api/bots/${bot}`).set('Authorization', process.env.discordbotskey),
+        infoEmbed = new MessageEmbed(),
+        infoParsed = JSON.parse(info.text);
 
       infoEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setTitle(`Discord Bots Info for ${botinfo.username}#${botinfo.discriminator} (${botinfo.clientid})`)
-        .setURL(`https://discordbots.org/bot/${botinfo.clientid}`)
-        .setThumbnail(`https://images.discordapp.net/avatars/${botinfo.clientid}/${botinfo.avatar}.png`)
-        .setDescription(botinfo.shortdesc)
-        .setFooter(`${botinfo.username}#${botinfo.discriminator} was submitted`)
-        .setTimestamp(moment(botinfo.date)._d)
-        .addField('Default Prefix', botinfo.prefix, true)
-        .addField('Library', botinfo.lib, true)
-        .addField('Server Count', botinfo.server_count, true) // eslint-disable-line camelcase
-        .addField('Shards Count', botinfo.shards.length, true)
-        .addField('Invite Link', `[Click Here](${botinfo.invite})`);
-
+        .setTitle(`Discord Bots Info for ${infoParsed.username}#${infoParsed.discriminator} (${infoParsed.clientid})`)
+        .setURL(`https://discordbots.org/bot/${infoParsed.clientid}`)
+        .setThumbnail(`https://images.discordapp.net/avatars/${infoParsed.clientid}/${infoParsed.avatar}.png`)
+        .setDescription(infoParsed.shortdesc)
+        .setFooter(`${infoParsed.username}#${infoParsed.discriminator} was submitted`)
+        .setTimestamp(moment(infoParsed.date)._d)
+        .addField('Default Prefix', infoParsed.prefix, true)
+        .addField('Library', infoParsed.lib, true)
+        .addField('Server Count', infoParsed.server_count, true) // eslint-disable-line camelcase
+        .addField('Shards Count', infoParsed.shards.length, true)
+        .addField('Invite Link', `[Click Here](${infoParsed.invite})`);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(infoEmbed, `https://discordbots.org/bot/${botinfo.clientid}`);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+      return msg.embed(infoEmbed, `https://discordbots.org/bot/${infoParsed.clientid}`);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.reply('an error occurred getting info from that bot, are you sure it exists on the website?');
+      return msg.reply('an error occurred getting info from that bot, are you sure it exists on the website?');
+    }
   }
 };

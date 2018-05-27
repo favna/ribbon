@@ -74,7 +74,7 @@ module.exports = class WheelOfFortuneCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {chips}) {
     const arrowmojis = ['⬆', '↖', '⬅', '↙', '⬇', '↘', '➡', '↗'],
       conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3')),
       multipliers = ['0.1', '0.2', '0.3', '0.5', '1.2', '1.5', '1.7', '2.4'],
@@ -91,22 +91,22 @@ module.exports = class WheelOfFortuneCommand extends Command {
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (query) {
-        if (args.chips > query.balance) {
+        if (chips > query.balance) {
           return msg.reply(`you don\'t have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
         }
 
         const prevBal = query.balance;
 
-        query.balance -= args.chips;
-        query.balance += args.chips * multipliers[spin];
+        query.balance -= chips;
+        query.balance += chips * multipliers[spin];
         query.balance = roundNumber(query.balance);
 
         conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({balance: query.balance});
 
         wofEmbed
           .setTitle(`${msg.author.tag} ${multipliers[spin] < 1
-            ? `lost ${roundNumber(args.chips - (args.chips * multipliers[spin]))}` 
-            : `won ${roundNumber((args.chips * multipliers[spin]) - args.chips)}`} chips`)
+            ? `lost ${roundNumber(chips - (chips * multipliers[spin]))}` 
+            : `won ${roundNumber((chips * multipliers[spin]) - chips)}`} chips`)
           .addField('Previous Balance', prevBal, true)
           .addField('New Balance', query.balance, true)
           .setDescription(`

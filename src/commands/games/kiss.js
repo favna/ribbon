@@ -80,14 +80,14 @@ module.exports = class KissCommand extends Command {
     return images[curImage];
   }
 
-  run (msg, args) {
+  run (msg, {member}) {
     startTyping(msg);
     deleteCommandMessages(msg, this.client);
     msg.embed({
-      description: args.member !== ''
-        ? `${args.member.displayName}! You were kissed by ${msg.member.displayName} 💋!`
+      description: member !== ''
+        ? `${member.displayName}! You were kissed by ${msg.member.displayName} 💋!`
         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-      image: {url: args.member !== '' ? this.fetchImage() : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
+      image: {url: member !== '' ? this.fetchImage() : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
       color: msg.guild ? msg.guild.me.displayColor : 10610610
     });
 

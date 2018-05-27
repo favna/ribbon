@@ -90,7 +90,7 @@ module.exports = class CoinCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {chips, side}) {
     const coinEmbed = new MessageEmbed(),
       conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
@@ -104,30 +104,30 @@ module.exports = class CoinCommand extends Command {
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (query) {
-        if (args.chips > query.balance) {
+        if (chips > query.balance) {
           return msg.reply(`you don\'t have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
         }
 
-        if (args.side === 'head') args.side = 'heads'; // eslint-disable-line curly
-        if (args.side === 'tail') args.side = 'tails'; // eslint-disable-line curly
+        if (side === 'head') side = 'heads'; // eslint-disable-line curly
+        if (side === 'tail') side = 'tails'; // eslint-disable-line curly
 
-        const flip = roundNumber(Math.random()),
+        const flip = Math.random() >= 0.5,
           prevBal = query.balance,
-          side = args.side === 'heads' ? 0 : 1;
+          res = side === 'heads';
 
-        query.balance -= args.chips;
+        query.balance -= chips;
 
-        if (flip === side) query.balance += args.chips * 2; // eslint-disable-line curly
+        if (flip === res) query.balance += chips * 2; // eslint-disable-line curly
 
         query.balance = roundNumber(query.balance);
 
         conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`).run({balance: query.balance});
 
         coinEmbed
-          .setTitle(`${msg.author.tag} ${flip === side ? 'won' : 'lost'} ${args.chips} chips`)
+          .setTitle(`${msg.author.tag} ${flip === res ? 'won' : 'lost'} ${chips} chips`)
           .addField('Previous Balance', prevBal, true)
           .addField('New Balance', query.balance, true)
-          .setImage(flip === 0 ? 'https://favna.xyz/images/ribbonhost/coinheads.png' : 'https://favna.xyz/images/ribbonhost/cointails.png');
+          .setImage(flip === res ? `https://favna.xyz/images/ribbonhost/coin${side}.png` : `https://favna.xyz/images/ribbonhost/coin${side === 'heads' ? 'tails' : 'heads'}.png`);
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);

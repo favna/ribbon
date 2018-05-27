@@ -69,7 +69,7 @@ module.exports = class ShowdownCommand extends Command {
     });
   }
 
-  async run (msg, args) {
+  async run (msg, {tier}) {
     startTyping(msg);
     const fsoptions = {
         shouldSort: true,
@@ -81,7 +81,7 @@ module.exports = class ShowdownCommand extends Command {
         keys: ['alias']
       },
       fuse = new Fuse(TierAliases, fsoptions),
-      results = fuse.search(args.tier),
+      results = fuse.search(tier),
       showdownEmbed = new MessageEmbed();
 
     showdownEmbed

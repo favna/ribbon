@@ -80,7 +80,7 @@ module.exports = class GiveCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {player, chips}) {
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3')),
       giveEmbed = new MessageEmbed();
 
@@ -93,7 +93,7 @@ module.exports = class GiveCommand extends Command {
       startTyping(msg);
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = $authorid OR userID = $playerid;`).all({
         authorid: msg.author.id,
-        playerid: args.player.id
+        playerid: player.id
       });
 
       if (query.length !== 2) {
@@ -107,7 +107,7 @@ module.exports = class GiveCommand extends Command {
         if (query[row].userID === msg.author.id) {
           giverEntry = row;
         }
-        if (query[row].userID === args.player.id) {
+        if (query[row].userID === player.id) {
           receiverEntry = row;
         }
       }
@@ -115,15 +115,15 @@ module.exports = class GiveCommand extends Command {
       const oldGiverBalance = query[giverEntry].balance, // eslint-disable-line one-var
         oldReceiverEntry = query[receiverEntry].balance;
 
-      query[giverEntry].balance -= args.chips;
-      query[receiverEntry].balance += args.chips;
+      query[giverEntry].balance -= chips;
+      query[receiverEntry].balance += chips;
 
       conn.prepare(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID=?;`).run(query[giverEntry].balance, query[giverEntry].userID);
       conn.prepare(`UPDATE "${msg.guild.id}" SET balance=? WHERE userID=?;`).run(query[receiverEntry].balance, query[receiverEntry].userID);
 
       giveEmbed
         .addField(msg.member.displayName, `${oldGiverBalance} ➡ ${query[giverEntry].balance}`)
-        .addField(args.player.displayName, `${oldReceiverEntry} ➡ ${query[receiverEntry].balance}`);
+        .addField(player.displayName, `${oldReceiverEntry} ➡ ${query[receiverEntry].balance}`);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

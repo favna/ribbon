@@ -66,12 +66,12 @@ module.exports = class OsuCommand extends Command {
     });
   }
 
-  async run (msg, args) {
+  async run (msg, {player}) {
     try {
       startTyping(msg);
       const osuData = await request.get('https://osu.ppy.sh/api/get_user')
           .query('k', process.env.osukey)
-          .query('u', args.player)
+          .query('u', player)
           .query('type', 'string')
           .set('Content-Type', 'application/json'),
         osuEmbed = new MessageEmbed();
@@ -100,7 +100,7 @@ module.exports = class OsuCommand extends Command {
     } catch (err) {
       stopTyping(msg);
 
-      return msg.reply(`no user found with username ${args.player}`);
+      return msg.reply(`no user found with username ${player}`);
     }
   }
 };

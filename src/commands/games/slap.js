@@ -83,14 +83,14 @@ module.exports = class SlapCommand extends Command {
     return images[curImage];
   }
 
-  run (msg, args) {
+  run (msg, {member}) {
     startTyping(msg);
     deleteCommandMessages(msg, this.client);
     msg.embed({
-      description: args.member !== ''
-        ? `${args.member.displayName}! You got slapped by ${msg.member.displayName} 💢!`
+      description: member !== ''
+        ? `${member.displayName}! You got slapped by ${msg.member.displayName} 💢!`
         : `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
-      image: {url: args.member !== '' ? this.fetchImage() : 'http://cdn.awwni.me/mz98.gif'},
+      image: {url: member !== '' ? this.fetchImage() : 'http://cdn.awwni.me/mz98.gif'},
       color: msg.guild ? msg.guild.me.displayColor : 10610610
     });
 

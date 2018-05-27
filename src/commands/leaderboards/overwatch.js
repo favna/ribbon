@@ -104,11 +104,11 @@ module.exports = class OverwatchCommand extends Command {
     });
   }
 
-  async run (msg, args) {
+  async run (msg, {player, platform, region}) {
     try {
       startTyping(msg);
       const owEmbed = new MessageEmbed();
-      let owData = await request.get(`https://ow-api.com/v1/stats/${args.platform}/${args.region}/${args.player}/complete`).set('Content-Type', 'application/json');
+      let owData = await request.get(`https://ow-api.com/v1/stats/${platform}/${region}/${player}/complete`).set('Content-Type', 'application/json');
 
       if (/(?:text(?:\/|-)plain){1}/i.test(owData.headers['content-type'])) {
         owData = JSON.parse(owData.text);
@@ -137,7 +137,7 @@ module.exports = class OverwatchCommand extends Command {
 
       owEmbed
         .setAuthor('Overwatch Player Statistics', 'https://favna.xyz/images/ribbonhost/overwatch.png')
-        .setURL(`https://playoverwatch.com/en-us/career/${args.platform}/${args.player}`)
+        .setURL(`https://playoverwatch.com/en-us/career/${platform}/${player}`)
         .setThumbnail(owData.icon)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .addField('Account Stats', stripIndents`
@@ -195,9 +195,9 @@ module.exports = class OverwatchCommand extends Command {
       **Server:** ${msg.guild.name} (${msg.guild.id})
       **Author:** ${msg.author.tag} (${msg.author.id})
       **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Player:** ${args.player}
-      **Platform:** ${args.platform}
-      **Region:** ${args.region}
+      **Player:** ${player}
+      **Platform:** ${platform}
+      **Region:** ${region}
       **Error Message:** ${err}
       `);
 

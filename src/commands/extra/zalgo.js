@@ -65,11 +65,11 @@ module.exports = class zalgoCommand extends Command {
     });
   }
 
-  run (msg, args) {
+  run (msg, {txt}) {
     startTyping(msg);
     deleteCommandMessages(msg, this.client);
 
-    msg.say(zalgo(banish(args.txt)));
+    msg.say(zalgo(banish(txt)));
 
     return stopTyping(msg);
   }

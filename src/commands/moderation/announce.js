@@ -67,7 +67,7 @@ module.exports = class NewsCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-  run (msg, args) {
+  run (msg, {body}) {
     startTyping(msg);
     if (msg.guild.channels.find(c => c.name === 'announcements' || c.name === 'news')) {
       const newsChannel = msg.guild.channels.find(c => c.name === 'announcements') ? msg.guild.channels.find(c => c.name === 'announcements') : msg.guild.channels.find(c => c.name === 'news');
@@ -79,9 +79,9 @@ module.exports = class NewsCommand extends Command {
       }
       newsChannel.startTyping(1);
 
-      let announce = args.body;
+      let announce = body;
 
-      announce.slice(0, 4) !== 'http' ? announce = `${args.body.slice(0, 1).toUpperCase()}${args.body.slice(1)}` : null;
+      announce.slice(0, 4) !== 'http' ? announce = `${body.slice(0, 1).toUpperCase()}${body.slice(1)}` : null;
       msg.attachments.first() && msg.attachments.first().url ? announce += `\n${msg.attachments.first().url}` : null;
 
       deleteCommandMessages(msg, this.client);
@@ -97,7 +97,7 @@ module.exports = class NewsCommand extends Command {
     return msg.reply(stripIndents`To use the announce command you need a channel named \'news\' or \'announcements\'.
     Here is a backup of your message:
     \`\`\`
-    ${args.body}
+    ${body}
     \`\`\``);
   }
 };
