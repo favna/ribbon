@@ -101,7 +101,7 @@ module.exports = class StrawpollCommand extends Command {
         .setTitle(strawpoll.body.title)
         .setURL(`http://www.strawpoll.me/${strawpoll.body.id}`)
         .setImage(`http://www.strawpoll.me/images/poll-results/${strawpoll.body.id}.png`)
-        .setDescription(`Options on this poll: \`${strawpoll.body.options.join(', ')}\` `);
+        .setDescription(`Options on this poll: ${strawpoll.body.options.map(val => `\`${val}\``).join(', ')}`);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
