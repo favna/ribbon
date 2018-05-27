@@ -61,8 +61,7 @@ module.exports = class ListWarnCommand extends Command {
         {
           key: 'member',
           prompt: 'Which member should I show warning points for?',
-          type: 'member',
-          label: 'member name or ID'
+          type: 'member'
         }
       ]
     });

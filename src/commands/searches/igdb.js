@@ -59,8 +59,7 @@ module.exports = class IGDBCommand extends Command {
         {
           key: 'game',
           prompt: 'Which game do you want to look up on IGDB?',
-          type: 'string',
-          label: 'Game to look up'
+          type: 'string'
         }
       ]
     });
