@@ -143,18 +143,6 @@ class Ribbon {
     };
   }
 
-  onGuildJoin () {
-    return (guild) => {
-
-    };
-  }
-
-  onGuildLeave () {
-    return (guild) => {
-
-    };
-  }
-
   onGuildMemberAdd () {
     return (member) => {
       const joinmember = member;
@@ -414,8 +402,6 @@ class Ribbon {
       .on('disconnect', this.onDisconnect())
       .on('error', this.onError())
       .on('groupStatusChange', this.onGroupStatusChange())
-      .on('guildCreate', this.onGuildJoin())
-      .on('guildDelete', this.onGuildLeave())
       .on('guildMemberAdd', this.onGuildMemberAdd())
       .on('guildMemberRemove', this.onGuildMemberRemove())
       .on('message', this.onMessage())
