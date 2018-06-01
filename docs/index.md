@@ -187,7 +187,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_strawpoll">strawpoll</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)<br>Has a very specific syntax! Be sure to adapt the example!<br><strong>Aliases</strong>: <code>straw</code>, <code>poll</code></p>
 </dd>
-<dt><a href="#module_Activity">Activity</a> ⇒ <code>MessageEmbed</code></dt>
+<dt><a href="#module_activity">activity</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info ActivityCommand - Gets the activity (presence) data from a member<br><strong>Aliases</strong>: <code>act</code>, <code>presence</code>, <code>richpresence</code></p>
 </dd>
 <dt><a href="#module_avatar">avatar</a> ⇒ <code>MessageEmbed</code></dt>
@@ -1151,9 +1151,9 @@ Has a very specific syntax! Be sure to adapt the example!
 ```js
 strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"
 ```
-<a name="module_Activity"></a>
+<a name="module_activity"></a>
 
-## Activity ⇒ <code>MessageEmbed</code>
+## activity ⇒ <code>MessageEmbed</code>
 Info ActivityCommand - Gets the activity (presence) data from a member  
 **Aliases**: `act`, `presence`, `richpresence`
 

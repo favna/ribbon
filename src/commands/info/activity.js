@@ -28,7 +28,7 @@
  * **Aliases**: `act`, `presence`, `richpresence`
  * @module
  * @category info
- * @name Activity
+ * @name activity
  * @example activity Favna
  * @param {GuildMemberResolvable} member Member to get the activity for
  * @returns {MessageEmbed} Activity from that member
