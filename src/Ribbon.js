@@ -28,34 +28,11 @@ const Database = require('better-sqlite3'),
   moment = require('moment'),
   path = require('path'),
   request = require('snekfetch'),
-  {
-    Client,
-    FriendlyError,
-    SyncSQLiteProvider
-  } = require('discord.js-commando'),
+  {Client, FriendlyError, SyncSQLiteProvider} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {
-    oneLine,
-    stripIndents
-  } = require('common-tags'),
-  {
-    badwords,
-    duptext,
-    caps,
-    emojis,
-    mentions,
-    links,
-    invites,
-    slowmode
-  } = require(path.join(__dirname, 'components/automod.js')),
-  {
-    checkReminders,
-    forceStopTyping,
-    joinmessage,
-    leavemessage,
-    lotto,
-    timermessages
-  } = require(path.join(__dirname, 'components/events.js'));
+  {oneLine, stripIndents} = require('common-tags'),
+  {badwords, duptext, caps, emojis, mentions, links, invites, slowmode} = require(path.join(__dirname, 'components/automod.js')),
+  {checkReminders, forceStopTyping, guildAdd, guildLeave, joinmessage, leavemessage, lotto, timermessages} = require(path.join(__dirname, 'components/events.js'));
 /* eslint-enable sort-vars */
 
 class Ribbon {
@@ -140,6 +117,18 @@ class Ribbon {
             ${enabled ? 'enabled' : 'disabled'}
             ${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
         `);
+    };
+  }
+
+  onGuildJoin () {
+    return (guild) => {
+      guildAdd(this.client, guild);
+    };
+  }
+
+  onGuildLeave () {
+    return (guild) => {
+      guildLeave(this.client, guild);
     };
   }
 
@@ -402,6 +391,8 @@ class Ribbon {
       .on('disconnect', this.onDisconnect())
       .on('error', this.onError())
       .on('groupStatusChange', this.onGroupStatusChange())
+      .on('guildCreate', this.onGuildJoin())
+      .on('guildDelete', this.onGuildLeave())
       .on('guildMemberAdd', this.onGuildMemberAdd())
       .on('guildMemberRemove', this.onGuildMemberRemove())
       .on('message', this.onMessage())

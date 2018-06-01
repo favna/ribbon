@@ -34,7 +34,7 @@ const Database = require('better-sqlite3'),
   {promisify} = require('util'),
   {ordinal} = require(path.join(__dirname, 'util.js')),
   {stripIndents} = require('common-tags');
-  
+
 const checkReminders = async function (client) {
   const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
 
@@ -87,6 +87,98 @@ const forceStopTyping = function (client) {
   }
 };
 
+const guildAdd = async function (client, guild) {
+  try {
+    Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
+    /* eslint-disable sort-vars*/
+    const avatar = await Jimp.read(client.user.displayAvatarURL({format: 'png'})),
+      border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
+      canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
+      mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png'),
+      fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
+      newGuildEmbed = new MessageEmbed(),
+      channel = guild.systemChannel ? guild.systemChannel : null;
+    /* eslint-enable sort-vars*/
+
+    avatar.resize(136, Jimp.AUTO);
+    mask.resize(136, Jimp.AUTO);
+    border.resize(136, Jimp.AUTO);
+    avatar.mask(mask, 0, 0);
+    avatar.composite(border, 0, 0);
+    canvas.blit(avatar, 5, 5);
+    canvas.print(fontMedium, 155, 55, `Currently powering up ${client.guilds.size} servers`.toUpperCase());
+    canvas.print(fontMedium, 155, 75, `serving ${client.users.size} Discord users`.toUpperCase());
+
+    const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG),
+      embedAttachment = new MessageAttachment(buffer, 'added.png');
+
+    newGuildEmbed
+      .attachFiles([embedAttachment])
+      .setColor('#80F31F')
+      .setTitle('Ribbon is here!')
+      .setDescription(stripIndents`
+      I'm an all-purpose bot and I hope I can make your server better!
+      I've got many commands, you can see them all by using \`${client.commandPrefix}help\`
+      Don't like the prefix? The admins can change my prefix by using \`${client.commandPrefix}prefix [new prefix]\`
+      
+      **All these commands can also be called by mentioning me instead of using a prefix, for example \`@${client.user.tag} help\`**
+      `)
+      .setImage('attachment://added.png');
+
+    return channel ? channel.send('', {embed: newGuildEmbed}) : null;
+  } catch (err) {
+    return null;
+  }
+};
+
+const guildLeave = function (client, guild) {
+  guild.settings.clear();
+  const casinoConn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3')),
+    pastasConn = new Database(path.join(__dirname, '../data/databases/pastas.sqlite3')),
+    timerConn = new Database(path.join(__dirname, '../data/databases/timers.sqlite3')),
+    warningsConn = new Database(path.join(__dirname, '../data/databases/warnings.sqlite3'));
+
+  try {
+    casinoConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
+  } catch (err) {
+    client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
+      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the casino database!
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Error Message:** ${err}
+      `);
+  }
+
+  try {
+    pastasConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
+  } catch (err) {
+    client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
+      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the pastas database!
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Error Message:** ${err}
+      `);
+  }
+
+  try {
+    timerConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
+  } catch (err) {
+    client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
+      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the timers database!
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Error Message:** ${err}
+      `);
+  }
+
+  try {
+    warningsConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
+  } catch (err) {
+    client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
+      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the warnings database!
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Error Message:** ${err}
+      `);
+  }
+};
+
 const joinmessage = async function (member) {
   Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
   /* eslint-disable sort-vars*/
@@ -132,7 +224,7 @@ const leavemessage = async function (member) {
     fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt')),
     fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
     mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
-    /* eslint-enable sort-vars*/
+  /* eslint-enable sort-vars*/
 
   avatar.resize(136, Jimp.AUTO);
   mask.resize(136, Jimp.AUTO);
@@ -211,7 +303,7 @@ const timermessages = function (client) {
 
     for (const table in tables) {
       const rows = conn.prepare(`SELECT * FROM "${tables[table].name}"`).all();
-      
+
       /* eslint-disable sort-vars*/
       for (const row in rows) {
         const timermoment = moment(rows[row].lastsend).add(rows[row].interval, 'ms'),
@@ -250,6 +342,8 @@ const timermessages = function (client) {
 module.exports = {
   checkReminders,
   forceStopTyping,
+  guildAdd,
+  guildLeave,
   joinmessage,
   leavemessage,
   lotto,
