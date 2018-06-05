@@ -59,7 +59,7 @@ module.exports = class LockdownCommand extends Command {
             allowed: ['SEND_MESSAGES', 'VIEW_CHANNEL']
           },
           {
-            id: msg.guild.roles.find('name', lockrole === 'everyone' ? '@everyone' : lockrole.name).id,
+            id: msg.guild.roles.find(n => lockrole === 'everyone' ? n.name === '@everyone' : n.name === lockrole.name).id, // eslint-disable-line no-confusing-arrow
             denied: ['SEND_MESSAGES']
           }
         ],
