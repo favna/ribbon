@@ -302,7 +302,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Moderation TimerListCommand - List all stored timed messages in the current guild<br><strong>Aliases</strong>: <code>tl</code>, <code>timelist</code></p>
 </dd>
 <dt><a href="#module_timerremove">timerremove</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation TimerRemoveCommand - Remove a specified timed message<br><strong>Aliases</strong>: <code>tr</code>, <code>timeremove</code>, <code>timerdelete</code>, <code>timedelete</code></p>
+<dd><p>Moderation TimerRemoveCommand - Remove a specified timed message<br><strong>Aliases</strong>: <code>timeremove</code>, <code>timerdelete</code>, <code>timedelete</code></p>
 </dd>
 <dt><a href="#module_unknownmessages">unknownmessages</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
@@ -1773,7 +1773,7 @@ Moderation TimerListCommand - List all stored timed messages in the current guil
 
 ## timerremove ⇒ <code>MessageEmbed</code>
 Moderation TimerRemoveCommand - Remove a specified timed message  
-**Aliases**: `tr`, `timeremove`, `timerdelete`, `timedelete`
+**Aliases**: `timeremove`, `timerdelete`, `timedelete`
 
 **Returns**: <code>MessageEmbed</code> - Confirmation the timed message was removed  
 **Category**: moderation  

@@ -1,6 +1,6 @@
 /**
  * @file Moderation TimerRemoveCommand - Remove a specified timed message  
- * **Aliases**: `tr`, `timeremove`, `timerdelete`, `timedelete`
+ * **Aliases**: `timeremove`, `timerdelete`, `timedelete`
  * @module
  * @category moderation
  * @name timerremove
@@ -22,7 +22,7 @@ module.exports = class TimerRemoveCommand extends Command {
       name: 'timerremove',
       memberName: 'timerremove',
       group: 'moderation',
-      aliases: ['tr', 'timeremove', 'timerdelete', 'timedelete'],
+      aliases: ['timeremove', 'timerdelete', 'timedelete'],
       description: 'Remove a specified timed message',
       details: 'Use the timerlist command to find the ID for deleting',
       format: 'idOfMessage',
