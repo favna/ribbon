@@ -144,6 +144,9 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_time">time</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Extra Time - Gets the current time in any place<br>Uses Google&#39;s Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>citytime</code></p>
 </dd>
+<dt><a href="#module_translate">translate</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Extra TranslateCommand - Translate any word from any language to any other language<br>Language specifications can be either 1 or 2 letter ISO 639 or full names<br><strong>Aliases</strong>: <code>tr</code></p>
+</dd>
 <dt><a href="#module_weather">weather</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Extra Weather - Get the current weather forecast in any city<br>Potentially you&#39;ll have to specify city if the city is in multiple countries, i.e. <code>weather amsterdam</code> will not be the same as <code>weather amsterdam missouri</code><br><strong>Aliases</strong>: <code>temp</code>, <code>forecast</code>, <code>fc</code>, <code>wth</code></p>
 </dd>
@@ -931,6 +934,26 @@ Uses Google's Geocoding to determine the correct location therefore supports any
 **Example**  
 ```js
 time Amsterdam
+```
+<a name="module_translate"></a>
+
+## translate ⇒ <code>MessageEmbed</code>
+Extra TranslateCommand - Translate any word from any language to any other language  
+Language specifications can be either 1 or 2 letter ISO 639 or full names  
+**Aliases**: `tr`
+
+**Returns**: <code>MessageEmbed</code> - The input and output of the translation  
+**Category**: extra  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| FromLanguage | <code>StringResolvable</code> | The language to translate from |
+| ToLanguage | <code>StringResolvable</code> | The language to translate to |
+| Text | <code>StringResolvable</code> | The word or text to translate |
+
+**Example**  
+```js
+translate en nl Hello World
 ```
 <a name="module_weather"></a>
 
