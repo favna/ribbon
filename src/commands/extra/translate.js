@@ -25,7 +25,7 @@ module.exports = class TranslateCommand extends Command {
       name: 'translate',
       memberName: 'translate',
       group: 'extra',
-      alias: ['tr'],
+      aliases: ['tr'],
       description: 'Translate any word from any language to any other language',
       details: 'Language specifications can be either 1 or 2 letter ISO 639 or full names',
       format: 'FromLanguage ToLanguage Text',
