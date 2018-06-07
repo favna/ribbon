@@ -50,7 +50,7 @@ module.exports = class MoveCommand extends Command {
     /* eslint-disable sort-vars */
     const fsoptions = {
         shouldSort: true,
-        threshold: 0.6,
+        threshold: 0.2,
         location: 0,
         distance: 100,
         maxPatternLength: 32,
@@ -73,7 +73,7 @@ module.exports = class MoveCommand extends Command {
         .addField('Base Power', moveSearch[0].basePower, true)
         .addField('PP', moveSearch[0].pp, true)
         .addField('Category', moveSearch[0].category, true)
-        .addField('Accuracy', moveSearch[0].accuracy ? 'Certain Success' : moveSearch[0].accuracy, true)
+        .addField('Accuracy', typeof moveSearch[0].accuracy === 'boolean' ? 'Certain Success' : moveSearch[0].accuracy, true)
         .addField('Priority', moveSearch[0].priority, true)
         .addField('Target', moveSearch[0].target === 'normal' ? 'One Enemy' : capitalizeFirstLetter(moveSearch[0].target.replace(/([A-Z])/g, ' $1')), true)
         .addField('Contest Condition', moveSearch[0].contestType, true)
