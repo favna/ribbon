@@ -627,6 +627,8 @@ const PokeAliases = [
   {alias: 'pex', name: 'Toxapex'},
   {alias: 'phero', name: 'Pheromosa'},
   {alias: 'pika', name: 'Pikachu'},
+  {alias: 'pikachu doctor', name: 'Pikachu-PhD'},
+  {alias: 'pikachu kanto', name: 'Pikachu-Original'},
   {alias: 'pory2', name: 'Porygon2'},
   {alias: 'poryz', name: 'Porygon-Z'},
   {alias: 'pyuku', name: 'Pyukumuku'},
