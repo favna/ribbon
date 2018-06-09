@@ -48,17 +48,26 @@ module.exports = class MoveCommand extends Command {
   run (msg, {move}) {
     startTyping(msg);
     /* eslint-disable sort-vars */
-    const fsoptions = {
+    const aliasOptions = {
         shouldSort: true,
         threshold: 0.2,
         location: 0,
         distance: 100,
         maxPatternLength: 32,
         minMatchCharLength: 1,
-        keys: ['alias', 'move', 'id', 'name']
+        keys: ['alias', 'move']
       },
-      aliasFuse = new Fuse(MoveAliases, fsoptions),
-      moveFuse = new Fuse(BattleMovedex, fsoptions),
+      moveOptions = {
+        shouldSort: true,
+        threshold: 0.2,
+        location: 0,
+        distance: 100,
+        maxPatternLength: 32,
+        minMatchCharLength: 1,
+        keys: ['id', 'name']
+      },
+      aliasFuse = new Fuse(MoveAliases, aliasOptions),
+      moveFuse = new Fuse(BattleMovedex, moveOptions),
       aliasSearch = aliasFuse.search(move),
       moveSearch = aliasSearch.length ? moveFuse.search(aliasSearch[0].move) : moveFuse.search(move),
       moveEmbed = new MessageEmbed();
