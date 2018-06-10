@@ -14,7 +14,12 @@ const path = require('path'),
   {MessageEmbed} = require('discord.js'),
   {BattleTypeChart} = require(path.join(__dirname, '../../data/dex/typechart')),
   {oneLine} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+  {
+    capitalizeFirstLetter,
+    deleteCommandMessages,
+    stopTyping,
+    startTyping
+  } = require('../../components/util.js');
 
 module.exports = class TypeCommand extends Command {
   constructor (client) {
@@ -34,8 +39,17 @@ module.exports = class TypeCommand extends Command {
       args: [
         {
           key: 'types',
-          prompt: 'Get info on which type?',
-          type: 'string'
+          prompt: 'Get info on which type(s)?',
+          type: 'string',
+          validate: (input) => {
+            const validTypes = ['bug', 'dark', 'dragon', 'electric', 'fairy', 'fighting', 'fire', 'flying', 'ghost', 'grass', 'ground', 'ice', 'normal', 'poison', 'psychic', 'rock', 'steel', 'water'];
+
+            if (validTypes.some(val => input.split(' ').indexOf(val) >= 0)) {
+              return true;
+            }
+
+            return `one of more of your types was invalid. Valid types are ${validTypes.map(val => `\`${val}\``).join(', ')}`;
+          }
         }
       ]
     });
@@ -242,13 +256,14 @@ module.exports = class TypeCommand extends Command {
       .addField('Offense', atkVulnDisplay.join('\n\n'))
       .addField('Defense', vulnDisplay.join('\n\n'))
       .addField('External Resources', oneLine`
-		[Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/${types.split(' ')[0]}_(type\\))  
-		|  [Smogon](http://www.smogon.com/dex/sm/types/${types.split(' ')[0]})
-		|  [PokémonDB](http://pokemondb.net/type/${types.split(' ')[0]})`);
+      [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/${types.split(' ')[0]}_(type\\))  
+      |  [Smogon](http://www.smogon.com/dex/sm/types/${types.split(' ')[0]})
+      |  [PokémonDB](http://pokemondb.net/type/${types.split(' ')[0]})`);
 
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
     return msg.embed(typeEmbed);
+
   }
 };
