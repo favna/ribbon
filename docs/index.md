@@ -170,7 +170,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Games DndCCommand - Flips a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code>, <code>dcoin</code></p>
 </dd>
 <dt><a href="#module_fight">fight</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games FightCommand - Pit two things against each other in a fight to the death.<br>Winner is determined with random.org randomization.<br><strong>Aliases</strong>: <code>combat</code></p>
+<dd><p>Games FightCommand - Pit two things against each other in a fight to the death.<br><strong>Aliases</strong>: <code>combat</code></p>
 </dd>
 <dt><a href="#module_hug">hug</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games HugCommand - Give someone a hug ❤!<br><strong>Aliases</strong>: <code>bearhug</code>, <code>embrace</code></p>
@@ -1055,7 +1055,6 @@ Games DndCCommand - Flips a coin
 
 ## fight ⇒ <code>MessageEmbed</code>
 Games FightCommand - Pit two things against each other in a fight to the death.  
-Winner is determined with random.org randomization.  
 **Aliases**: `combat`
 
 **Returns**: <code>MessageEmbed</code> - Result of the combat  
