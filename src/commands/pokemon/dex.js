@@ -188,9 +188,9 @@ module.exports = class DexCommand extends Command {
       if (pokeSearch[0].num < 0) {
         pokeData.sprite = 'https://favna.xyz/images/ribbonhost/pokesprites/unknown.png';
       } else if (shines) {
-        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${pokeSearch[0].species.replace(/ /g, '_').toLowerCase()}.png`;
+        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${pokeSearch[0].species.replace(/ /g, '').toLowerCase()}.png`;
       } else {
-        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${pokeSearch[0].species.replace(/ /g, '_').toLowerCase()}.png`;
+        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${pokeSearch[0].species.replace(/ /g, '').toLowerCase()}.png`;
       }
 
       dexEmbed
