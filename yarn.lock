@@ -931,8 +931,8 @@ discord.js-commando@favna/commando#ribbon:
     require-all "^2.0.0"
 
 discord.js@favna/discord.js#main:
-  version "12.0.1-main"
-  resolved "https://codeload.github.com/favna/discord.js/tar.gz/50023b6311fd4ab9b9dedc3e1ac4eb68f984787f"
+  version "12.0.2-main"
+  resolved "https://codeload.github.com/favna/discord.js/tar.gz/c8f349e3753bf816253c610819c2ac967b320d7c"
   dependencies:
     pako "^1.0.0"
     prism-media "^0.2.0"
