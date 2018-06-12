@@ -70,7 +70,7 @@ module.exports = class NickCommand extends Command {
           .setColor('#3DFFE5')
           .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
           .setDescription(stripIndents`
-        **Action:** Nickname change'}
+        **Action:** Nickname change
         **Member:** <@${member.id}> (${member.user.tag})
         **Old name:** ${oldName}
         **New name:** ${nickname}
