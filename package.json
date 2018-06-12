@@ -69,7 +69,7 @@
     "simple-youtube-api": "^5.0.1",
     "slot-machine": "^2.1.0",
     "snekfetch": "^3.6.4",
-    "speedtest-net": "^1.4.2",
+    "speedtest-net": "^1.4.3",
     "spotify-web-api-node": "^3.0.0",
     "steamapi": "2.0.2",
     "to-zalgo": "^1.0.1",
