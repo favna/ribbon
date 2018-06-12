@@ -73,7 +73,7 @@ module.exports = class NickCommand extends Command {
         **Action:** Nickname change'}
         **Member:** <@${member.id}> (${member.user.tag})
         **Old name:** ${oldName}
-        **New name:** ${member.displayName}
+        **New name:** ${nickname}
         `)
           .setTimestamp();
 
