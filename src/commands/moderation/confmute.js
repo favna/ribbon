@@ -56,7 +56,7 @@ module.exports = class ConfigureMuteCommand extends Command {
       .setColor('#3DFFE5')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
-    **Action:** Configured mute role to <@${role.id}>`)
+    **Action:** Configured mute role to \`${role.name}\``)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
