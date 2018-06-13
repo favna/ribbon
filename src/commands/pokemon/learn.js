@@ -46,7 +46,7 @@ module.exports = class LearnCommand extends Command {
           prompt: 'For which Pokemon should I check move learnability?',
           type: 'string',
           validate: (v) => {
-            if (v in BattleLearnsets) {
+            if (v.toLowerCase() in BattleLearnsets) {
               return true;
             }
 
@@ -72,12 +72,15 @@ module.exports = class LearnCommand extends Command {
           prompt: 'For which generation should move learnability be checked?',
           type: 'integer',
           default: 7,
-          validate: (v) => {
+          validate: (v, msg) => {
             if (v >= 1 && v <= 7) {
               return true;
             }
 
-            return 'has to be a number between 1 and 7 (including boundaries)';
+            return stripIndents`has to be a number between 1 and 7 (including boundaries)
+            **__Note__**: If you got this message when you had spaces in your list of moves just reply \`7\` for now.
+            the next time you have a move with spaces be sure to wrap it in \`''\`
+            for example \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}learn pichu 'judgement,thunderbolt,tackle,extreme speed'\` `;
           }
         }
       ]
