@@ -15,8 +15,8 @@
   },
   "scripts": {
     "cov": "./node_modules/.bin/nyc yarn test",
-    "docs": "./node_modules/.bin/jsdoc2md --template ./docs/template.hbs --files ./src/**/*.js | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
-    "docs:json": "./node_modules/.bin/jsdoc2md --json --files ./src/**/*.js > ../favna.xyz/public/dist/ribbondocs.json",
+    "docs": "./node_modules/.bin/jsdoc2md --template ./docs/template.hbs --files ./src/commands/**/*.js | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
+    "docs:json": "./node_modules/.bin/jsdoc2md --json --files ./src/commands/**/*.js > ../favna.xyz/public/dist/ribbondocs.json",
     "docs:deploy": "yarn run docs && yarn run docs:json && git commit -am documentation && git push && cd ../Ribbon.wiki/ && git commit -am documentation && git push && cd ../favna.xyz/ && git commit -am documentation && git push",
     "lint": "./node_modules/.bin/eslint src/commands/**/*.js",
     "lint:fix": "./node_modules/.bin/eslint --fix src/commands/**/*.js",
