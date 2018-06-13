@@ -284,20 +284,6 @@ const BattleMovedex = [
       authentic: 1,
       mystery: 1
     },
-    onHit (target) {
-      if (target.side.active.length < 2) {
-        return false;
-      }
-      const action = this.willMove(target);
-
-      if (action) {
-        this.cancelMove(target);
-        this.queue.unshift(action);
-        this.add('-activate', target, 'move: After You');
-      } else {
-        return false;
-      }
-    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -409,17 +395,6 @@ const BattleMovedex = [
       if (source.side.active.length === 3 && source.position === 1) {
         return false;
       }
-    },
-    onHit (pokemon) {
-      const newPosition = pokemon.position === 0 ? pokemon.side.active.length - 1 : 0;
-
-      if (!pokemon.side.active[newPosition]) {
-        return false;
-      }
-      if (pokemon.side.active[newPosition].fainted) {
-        return false;
-      }
-      this.swapPosition(pokemon, newPosition, '[from] move: Ally Switch');
     },
     secondary: false,
     target: 'self',
@@ -621,22 +596,6 @@ const BattleMovedex = [
       snatch: 1,
       distance: 1
     },
-    onHit (pokemon, source, move) {
-      this.add('-activate', source, 'move: Aromatherapy');
-      let success = false;
-
-      for (const ally of pokemon.side.pokemon) {
-        if (ally !== source && (ally.hasAbility('sapsipper') ||
-						(ally.volatiles.substitute && !move.infiltrates))) {
-          continue;
-        }
-        if (ally.cureStatus()) {
-          success = true;
-        }
-      }
-
-      return success;
-    },
     target: 'allyTeam',
     type: 'Grass',
     zMoveEffect: 'heal',
@@ -673,32 +632,6 @@ const BattleMovedex = [
     pp: 20,
     priority: 0,
     flags: {},
-    onHit (target) {
-      const moves = [];
-
-      for (const pokemon of target.side.pokemon) {
-        if (pokemon === target) {
-          continue;
-        }
-        for (const moveSlot of pokemon.moveSlots) {
-          const move = moveSlot.id;
-          const noAssist = ['assist', 'banefulbunker', 'beakblast', 'belch', 'bestow', 'bounce', 'chatter', 'circlethrow', 'copycat', 'counter', 'covet', 'destinybond', 'detect', 'dig', 'dive', 'dragontail', 'endure', 'feint', 'fly', 'focuspunch', 'followme', 'helpinghand', 'holdhands', 'kingsshield', 'matblock', 'mefirst', 'metronome', 'mimic', 'mirrorcoat', 'mirrormove', 'naturepower', 'phantomforce', 'protect', 'ragepowder', 'roar', 'shadowforce', 'shelltrap', 'sketch', 'skydrop', 'sleeptalk', 'snatch', 'spikyshield', 'spotlight', 'struggle', 'switcheroo', 'thief', 'transform', 'trick', 'whirlwind'];
-
-          if (!noAssist.includes(move) && !this.getMove(move).isZ) {
-            moves.push(move);
-          }
-        }
-      }
-      let randomMove = '';
-
-      if (moves.length) {
-        randomMove = this.sample(moves);
-      }
-      if (!randomMove) {
-        return false;
-      }
-      this.useMove(randomMove, target);
-    },
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -1102,40 +1035,6 @@ const BattleMovedex = [
     onTryHit (target) {
       return Boolean(this.willAct()) && this.runEvent('StallMove', target);
     },
-    onHit (pokemon) {
-      pokemon.addVolatile('stall');
-    },
-    effect: {
-      duration: 1,
-      onStart (target) {
-        this.add('-singleturn', target, 'move: Protect');
-      },
-      onTryHitPriority: 3,
-      onTryHit (target, source, move) {
-        if (!move.flags.protect) {
-          if (move.isZ) {
-            move.zBrokeProtect = true;
-          }
-
-          return;
-        }
-        this.add('-activate', target, 'move: Protect');
-        source.moveThisTurnResult = true;
-        const lockedmove = source.getVolatile('lockedmove');
-
-        if (lockedmove) {
-
-          if (source.volatiles.lockedmove.duration === 2) {
-            delete source.volatiles.lockedmove;
-          }
-        }
-        if (move.flags.contact) {
-          source.trySetStatus('psn', target);
-        }
-
-        return null;
-      }
-    },
     secondary: false,
     target: 'self',
     type: 'Poison',
@@ -1216,30 +1115,6 @@ const BattleMovedex = [
     name: 'Beak Blast',
     pp: 15,
     priority: -3,
-    flags: {
-      bullet: 1,
-      protect: 1
-    },
-    beforeTurnCallback (pokemon) {
-      pokemon.addVolatile('beakblast');
-    },
-    effect: {
-      duration: 1,
-      onStart (pokemon) {
-        this.add('-singleturn', pokemon, 'move: Beak Blast');
-      },
-      onHit (pokemon, source, move) {
-        if (move.flags.contact) {
-          source.trySetStatus('brn', pokemon);
-        }
-      }
-    },
-    onMoveAborted (pokemon) {
-      pokemon.removeVolatile('beakblast');
-    },
-    onAfterMove (pokemon) {
-      pokemon.removeVolatile('beakblast');
-    },
     secondary: false,
     target: 'normal',
     type: 'Flying',
@@ -1307,13 +1182,6 @@ const BattleMovedex = [
     pp: 10,
     priority: 0,
     flags: {snatch: 1},
-    onHit (target) {
-      if (target.hp <= target.maxhp / 2 || target.boosts.atk >= 6 || target.maxhp === 1) {
-        return false;
-      }
-      this.directDamage(target.maxhp / 2);
-      this.boost({atk: 12}, target);
-    },
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -1335,25 +1203,6 @@ const BattleMovedex = [
       mirror: 1,
       authentic: 1,
       mystery: 1
-    },
-    onHit (target, source, move) {
-      if (target.item) {
-        return false;
-      }
-      const yourItem = source.takeItem();
-
-      if (!yourItem) {
-        return false;
-      }
-      if (!this.singleEvent('TakeItem', yourItem, source.itemData, source, target, move, yourItem)) {
-        return;
-      }
-      if (!target.setItem(yourItem)) {
-        source.item = yourItem.id;
-
-        return false;
-      }
-      this.add('-item', target, yourItem.name, '[from] move: Bestow', `[of] ${source}`);
     },
     secondary: false,
     target: 'normal',
@@ -1611,9 +1460,6 @@ const BattleMovedex = [
     flags: {
       reflectable: 1,
       mirror: 1
-    },
-    onHit (target, source, move) {
-      return target.addVolatile('trapped', source, move, 'trapper');
     },
     secondary: false,
     target: 'normal',
@@ -2063,19 +1909,6 @@ const BattleMovedex = [
       protect: 1,
       mirror: 1
     },
-    onHit (target, source) {
-      const item = target.getItem();
-
-      if (source.hp && item.isBerry && target.takeItem(source)) {
-        this.add('-enditem', target, item.name, '[from] stealeat', '[move] Bug Bite', `[of] ${source}`);
-        if (this.singleEvent('Eat', item, null, source, null, null)) {
-          this.runEvent('EatItem', source, null, null, item);
-        }
-        if (item.onEat) {
-          source.ateBerry = true;
-        }
-      }
-    },
     secondary: false,
     target: 'normal',
     type: 'Bug',
@@ -2257,24 +2090,6 @@ const BattleMovedex = [
     pp: 20,
     priority: 0,
     flags: {snatch: 1},
-    onHit (target) {
-      let newType = 'Normal';
-
-      if (this.isTerrain('electricterrain')) {
-        newType = 'Electric';
-      } else if (this.isTerrain('grassyterrain')) {
-        newType = 'Grass';
-      } else if (this.isTerrain('mistyterrain')) {
-        newType = 'Fairy';
-      } else if (this.isTerrain('psychicterrain')) {
-        newType = 'Psychic';
-      }
-
-      if (!target.setType(newType)) {
-        return false;
-      }
-      this.add('-start', target, 'typechange', newType);
-    },
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -2369,23 +2184,6 @@ const BattleMovedex = [
     priority: 0,
     flags: {snatch: 1},
     volatileStatus: 'charge',
-    onHit (pokemon) {
-      this.add('-activate', pokemon, 'move: Charge');
-    },
-    effect: {
-      duration: 2,
-      onRestart () {
-        this.effectData.duration = 2;
-      },
-      onBasePowerPriority: 3,
-      onBasePower (move) {
-        if (move.type === 'Electric') {
-          this.debug('charge boost');
-
-          return this.chainModify(2);
-        }
-      }
-    },
     boosts: {spd: 1},
     secondary: false,
     target: 'self',
@@ -2610,10 +2408,6 @@ const BattleMovedex = [
     flags: {
       protect: 1,
       mirror: 1
-    },
-    onHit (target) {
-      target.clearBoosts();
-      this.add('-clearboost', target);
     },
     secondary: false,
     target: 'normal',
@@ -2866,14 +2660,6 @@ const BattleMovedex = [
     pp: 20,
     priority: 0,
     flags: {},
-    onHit (pokemon) {
-      const noCopycat = ['assist', 'banefulbunker', 'bestow', 'chatter', 'circlethrow', 'copycat', 'counter', 'covet', 'destinybond', 'detect', 'dragontail', 'endure', 'feint', 'focuspunch', 'followme', 'helpinghand', 'mefirst', 'metronome', 'mimic', 'mirrorcoat', 'mirrormove', 'naturepower', 'protect', 'ragepowder', 'roar', 'sketch', 'sleeptalk', 'snatch', 'struggle', 'switcheroo', 'thief', 'transform', 'trick', 'whirlwind'];
-
-      if (!this.lastMove || noCopycat.includes(this.lastMove.id) || this.lastMove.isZ) {
-        return false;
-      }
-      this.useMove(this.lastMove.id, pokemon);
-    },
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -2895,24 +2681,6 @@ const BattleMovedex = [
     flags: {
       protect: 1,
       mirror: 1
-    },
-    onHit (target) {
-      if (['battlebond', 'comatose', 'disguise', 'multitype', 'powerconstruct', 'rkssystem', 'schooling', 'shieldsdown', 'stancechange'].includes(target.ability)) {
-        return;
-      }
-      if (target.newlySwitched || this.willMove(target)) {
-        return;
-      }
-      target.addVolatile('gastroacid');
-    },
-    onAfterSubDamage (target) {
-      if (['battlebond', 'comatose', 'disguise', 'multitype', 'powerconstruct', 'rkssystem', 'schooling', 'shieldsdown', 'stancechange'].includes(target.ability)) {
-        return;
-      }
-      if (target.newlySwitched || this.willMove(target)) {
-        return;
-      }
-      target.addVolatile('gastroacid');
     },
     secondary: false,
     target: 'allAdjacentFoes',
@@ -3081,22 +2849,6 @@ const BattleMovedex = [
       contact: 1,
       protect: 1,
       mirror: 1
-    },
-    onHit (target, source) {
-      if (source.item || source.volatiles.gem) {
-        return;
-      }
-      const yourItem = target.takeItem(source);
-
-      if (!yourItem) {
-        return;
-      }
-      if (!source.setItem(yourItem)) {
-        target.item = yourItem.id;
-
-        return;
-      }
-      this.add('-item', source, yourItem, '[from] move: Covet', `[of] ${target}`);
     },
     secondary: false,
     target: 'normal',
@@ -3306,39 +3058,6 @@ const BattleMovedex = [
     priority: 0,
     flags: {authentic: 1},
     volatileStatus: 'curse',
-    onModifyMove (move, source) {
-      if (!source.hasType('Ghost')) {
-
-        move.target = move.nonGhostTarget;
-      }
-    },
-    onTryHit (target, source, move) {
-      if (!source.hasType('Ghost')) {
-        delete move.volatileStatus;
-        delete move.onHit;
-        move.self = {
-          boosts: {
-            spe: -1,
-            atk: 1,
-            def: 1
-          }
-        };
-      } else if (move.volatileStatus && target.volatiles.curse) {
-        return false;
-      }
-    },
-    onHit (source) {
-      this.directDamage(source.maxhp / 2, source, source);
-    },
-    effect: {
-      onStart (pokemon, source) {
-        this.add('-start', pokemon, 'Curse', `[of] ${source}`);
-      },
-      onResidualOrder: 10,
-      onResidual (pokemon) {
-        this.damage(pokemon.maxhp / 4);
-      }
-    },
     secondary: false,
     target: 'normal',
     nonGhostTarget: 'self',
@@ -3536,35 +3255,6 @@ const BattleMovedex = [
       reflectable: 1,
       mirror: 1,
       authentic: 1
-    },
-    onHit (target, source, move) {
-
-    /** @type {?boolean | number} */
-      let success = false;
-
-      if (!target.volatiles.substitute || move.infiltrates) {
-        success = this.boost({evasion: -1});
-      }
-      const removeTarget = ['reflect', 'lightscreen', 'auroraveil', 'safeguard', 'mist', 'spikes', 'toxicspikes', 'stealthrock', 'stickyweb'];
-      const removeAll = ['spikes', 'toxicspikes', 'stealthrock', 'stickyweb'];
-
-      for (const targetCondition of removeTarget) {
-        if (target.side.removeSideCondition(targetCondition)) {
-          if (!removeAll.includes(targetCondition)) {
-            continue;
-          }
-          this.add('-sideend', target.side, this.getEffect(targetCondition).name, '[from] move: Defog', `[of] ${target}`);
-          success = true;
-        }
-      }
-      for (const sideCondition of removeAll) {
-        if (source.side.removeSideCondition(sideCondition)) {
-          this.add('-sideend', source.side, this.getEffect(sideCondition).name, '[from] move: Defog', `[of] ${source}`);
-          success = true;
-        }
-      }
-
-      return success;
     },
     secondary: false,
     target: 'normal',
