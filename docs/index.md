@@ -405,6 +405,9 @@ There are 4 ways to queue songs  </p>
 <dd><p>Pokémon ItemCommand - Gets information about an item in Pokémon
 For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p>
 </dd>
+<dt><a href="#module_learn">learn</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all<br>Moves split on every <code>,</code>. See examples for usages.<br>You can specify a generation for the match as third argument, in this case make sure to wrap the moves in <code>&#39; &#39;</code> if they have spaces!<br><strong>Aliases</strong>: <code>learnset</code>, <code>learnall</code></p>
+</dd>
 <dt><a href="#module_ability">ability</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pokémon AbilityCommand - Gets information on an ability in Pokémon<br><strong>Aliases</strong>: <code>abilities</code>, <code>abi</code></p>
 </dd>
@@ -2240,6 +2243,32 @@ For item names existing of multiple words (for example `life orb`) you can eithe
 **Example**  
 ```js
 item assault vest
+```
+<a name="module_learn"></a>
+
+## learn ⇒ <code>MessageEmbed</code>
+Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all  
+Moves split on every `,`. See examples for usages.  
+You can specify a generation for the match as third argument, in this case make sure to wrap the moves in `' '` if they have spaces!  
+**Aliases**: `learnset`, `learnall`
+
+**Returns**: <code>MessageEmbed</code> - Info on whether the Pokemon can learn the move and how or not  
+**Category**: pokemon  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| PokemonName | <code>StringResolvable</code> | Name of the pokemon to get the match for |
+| [MoveName] | <code>StringResolvable</code> | Name of the move you want to find out about |
+| [AnotherMoveName] | <code>StringResolvable</code> | Any additional moves you also want to find out about |
+| [Generation] | <code>StringResolvable</code> | The generation to find the match for |
+
+**Example**  
+```js
+learn dragonite dragon dance
+```
+**Example**  
+```js
+learn dragonite dragon dance,dragon claw
 ```
 <a name="module_ability"></a>
 
