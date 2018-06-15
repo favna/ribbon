@@ -102,7 +102,8 @@ module.exports = class CoinCommand extends Command {
           .setTitle(`${msg.author.tag} ${flip === res ? 'won' : 'lost'} ${chips} chips`)
           .addField('Previous Balance', prevBal, true)
           .addField('New Balance', query.balance, true)
-          .setImage(flip === res ? `https://favna.xyz/images/ribbonhost/coin${side}.png` : `https://favna.xyz/images/ribbonhost/coin${side === 'heads' ? 'tails' : 'heads'}.png`);
+          .setImage(flip === res ? `https://favna.xyz/images/ribbonhost/coin${side.toLowerCase()}.png`
+            : `https://favna.xyz/images/ribbonhost/coin${side.toLowerCase() === 'heads' ? 'tails' : 'heads'}.png`);
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
