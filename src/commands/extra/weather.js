@@ -11,12 +11,12 @@
  * @returns {MessageEmbed} Various statistics about the current forecast
  */
 
-const request = require('snekfetch'),
-  weather = require('yahoo-weather'),
+const moment = require('moment'),
+  request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+  {oneLine, stripIndents} = require('common-tags'),
+  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class WeatherCommand extends Command {
   constructor (client) {
@@ -39,102 +39,69 @@ module.exports = class WeatherCommand extends Command {
       args: [
         {
           key: 'location',
-          prompt: 'For which city would you like to get the weather?',
+          prompt: 'For which location do you want to know the weather forecast?',
           type: 'string'
         }
       ]
     });
   }
 
-  convertTimeFormat (input) {
-    const ampm = input.match(/\s(.*)$/)[1],
-      minutes = Number(input.match(/:(\d+)/)[1]);
-    let hours = Number(input.match(/^(\d+)/)[1]),
-      sHours = hours.toString(),
-      sMinutes = minutes.toString();
-
-
-    if (ampm === 'pm' && hours < 12) {
-      hours += 12;
-    }
-    if (ampm === 'am' && hours === 12) {
-      hours -= 12;
-    }
-
-    if (hours < 10) {
-      sHours = `0${sHours}`;
-    }
-    if (minutes < 10) {
-      sMinutes = `0${sMinutes}`;
-    }
-
-    return `${sHours}:${sMinutes}`;
-  }
-
-  convertDays (day) {
-    switch (day) {
-    case 'Mon':
-      return 'Monday';
-    case 'Tue':
-      return 'Tuesday';
-    case 'Wed':
-      return 'Wednesday';
-    case 'Thu':
-      return 'Thursday';
-    case 'Fri':
-      return 'Friday';
-    case 'Sat':
-      return 'Saturday';
-    case 'Sun':
-      return 'Sunday';
-    default:
-      return 'Unknown Day';
-    }
-  }
-
-  async getCity (location) {
+  async getCords (location) {
     const cords = await request.get('https://maps.googleapis.com/maps/api/geocode/json?')
       .query('address', location)
       .query('key', process.env.googleapikey);
 
-    return cords.body.results[0].formatted_address;
+    return {
+      lat: cords.body.results[0].geometry.location.lat,
+      long: cords.body.results[0].geometry.location.lng,
+      address: cords.body.results[0].formatted_address
+    };
+  }
+
+  fahrenify (temp) {
+    return temp * 1.8 + 32;
   }
 
   async run (msg, {location}) {
     try {
       startTyping(msg);
-      const city = await this.getCity(location),
-        info = await weather(city),
-        weatherEmbed = new MessageEmbed();
+      const cords = await this.getCords(location),
+        wethData = await request
+          .get(`https://api.darksky.net/forecast/${process.env.darkskykey}/${cords.lat},${cords.long}`)
+          .query('exclude', ['minutely', 'hourly', 'alerts', 'flags'])
+          .query('units', 'si'),
+        wethEmbed = new MessageEmbed();
 
-      weatherEmbed
-        .setAuthor(`Weather forecast for ${city}`)
-        .setThumbnail(info.item.description.slice(19, 56))
+      wethEmbed
+        .setTitle(`Weather forecast for ${cords.address}`)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setFooter('Powered by Yahoo! Weather')
+        .setFooter('Powered by DarkSky')
         .setTimestamp()
-        .addField('💨 Wind Speed', `${info.wind.speed} ${info.units.speed}`, true)
-        .addField('💧 Humidity', `${info.atmosphere.humidity}%`, true)
-        .addField('🌅 Sunrise', this.convertTimeFormat(info.astronomy.sunrise), true)
-        .addField('🌇 Sunset', this.convertTimeFormat(info.astronomy.sunset), true)
-        .addField('☀️ Today\'s High', `${info.item.forecast[0].high} °${info.units.temperature}`, true)
-        .addField('☁️️ Today\'s Low', `${info.item.forecast[0].low} °${info.units.temperature}`, true)
-        .addField('🌡️ Temperature', `${info.item.condition.temp} °${info.units.temperature}`, true)
-        .addField('🏙️ Condition', info.item.condition.text, true)
-        .addField(`🛰️ Forecast ${this.convertDays(info.item.forecast[1].day)} ${info.item.forecast[1].date.slice(0, -5)}`,
-          `High: ${info.item.forecast[1].high} °${info.units.temperature} | Low: ${info.item.forecast[1].low} °${info.units.temperature}`, true)
-        .addField(`🛰️ Forecast ${this.convertDays(info.item.forecast[2].day)} ${info.item.forecast[2].date.slice(0, -5)}`,
-          `High: ${info.item.forecast[2].high} °${info.units.temperature} | Low: ${info.item.forecast[2].low} °${info.units.temperature}`, true);
+        .setThumbnail(`https://favna.xyz/images/ribbonhost/weather/${wethData.body.currently.icon}.png`)
+        .setDescription(wethData.body.daily.summary)
+        .addField('💨 Wind Speed', `${wethData.body.currently.windSpeed} km/h`, true)
+        .addField('💧 Humidity', `${wethData.body.currently.humidity * 100}%`, true)
+        .addField('🌅 Sunrise', moment(wethData.body.daily.data[0].sunriseTime * 1000).format('HH:mm'), true)
+        .addField('🌇 Sunset', moment(wethData.body.daily.data[0].sunsetTime * 1000).format('HH:mm'), true)
+        .addField('☀️ Today\'s High', `${wethData.body.daily.data[0].temperatureHigh} °C | ${roundNumber(this.fahrenify(wethData.body.daily.data[0].temperatureHigh), 2)} °F`, true)
+        .addField('☁️️ Today\'s Low', `${wethData.body.daily.data[0].temperatureLow} °C | ${roundNumber(this.fahrenify(wethData.body.daily.data[0].temperatureLow), 2)} °F`, true)
+        .addField('🌡️ Temperature', `${wethData.body.currently.temperature} °C | ${roundNumber(this.fahrenify(wethData.body.currently.temperature), 2)} °F`, true)
+        .addField('🌡️ Feels Like', `${wethData.body.currently.apparentTemperature} °C | ${roundNumber(this.fahrenify(wethData.body.currently.apparentTemperature), 2)} °F`, true)
+        .addField('🏙️ Condition', wethData.body.daily.data[0].summary, false)
+        .addField(`🛰️ Forecast ${moment(wethData.body.daily.data[1].time).format('dddd Do MMMM')}`,
+          oneLine`High: ${wethData.body.daily.data[1].temperatureHigh} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[1].temperatureHigh), 2)} °F) 
+          | Low: ${wethData.body.daily.data[1].temperatureLow} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[1].temperatureLow), 2)} °F)`, false)
+        .addField(`🛰️ Forecast ${moment(wethData.body.daily.data[2].time).format('dddd Do MMMM')}`,
+          oneLine`High: ${wethData.body.daily.data[2].temperatureHigh} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[2].temperatureHigh), 2)} °F) 
+          | Low: ${wethData.body.daily.data[2].temperatureLow} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[2].temperatureLow), 2)} °F)`, false);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(weatherEmbed);
+      return msg.embed(wethEmbed);
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
-
-      console.error(err);
 
       return msg.reply(`i wasn't able to find a location for \`${location}\``);
     }
