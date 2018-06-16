@@ -830,7 +830,7 @@ const BattlePokedex = [
     color: 'Yellow',
     prevo: 'pichu',
     evos: ['raichu', 'raichualola'],
-    evoLevel: 1,
+    evoLevel: 'Level up with High Friendship',
     eggGroups: ['Field', 'Fairy'],
     otherFormes: ['pikachucosplay', 'pikachurockstar', 'pikachubelle', 'pikachupopstar', 'pikachuphd', 'pikachulibre', 'pikachuoriginal', 'pikachuhoenn', 'pikachusinnoh', 'pikachuunova', 'pikachukalos', 'pikachualola', 'pikachupartner']
   },
@@ -1140,7 +1140,7 @@ const BattlePokedex = [
     weightkg: 30,
     color: 'Yellow',
     prevo: 'pikachu',
-    evoLevel: 1,
+    evoLevel: 'use Thunder Stone',
     eggGroups: ['Field', 'Fairy'],
     otherFormes: ['raichualola']
   },
@@ -1164,7 +1164,7 @@ const BattlePokedex = [
     weightkg: 21,
     color: 'Brown',
     prevo: 'pikachu',
-    evoLevel: 1,
+    evoLevel: 'use Thunder Stone',
     eggGroups: ['Field', 'Fairy']
   },
   {
@@ -1262,7 +1262,7 @@ const BattlePokedex = [
     weightkg: 55,
     color: 'Blue',
     prevo: 'sandshrewalola',
-    evoLevel: 1,
+    evoLevel: 'use Icestone',
     eggGroups: ['Field']
   },
   {
@@ -1312,7 +1312,7 @@ const BattlePokedex = [
     color: 'Blue',
     prevo: 'nidoranf',
     evos: ['nidoqueen'],
-    evoLevel: 16,
+    evoLevel: 'use Moon Stone',
     eggGroups: ['Undiscovered']
   },
   {
@@ -1387,7 +1387,7 @@ const BattlePokedex = [
     color: 'Purple',
     prevo: 'nidoranm',
     evos: ['nidoking'],
-    evoLevel: 16,
+    evoLevel: 'use Moon Stone',
     eggGroups: ['Monster', 'Field']
   },
   {
@@ -1441,7 +1441,7 @@ const BattlePokedex = [
     color: 'Pink',
     prevo: 'cleffa',
     evos: ['clefable'],
-    evoLevel: 1,
+    evoLevel: 'Level up with High Friendship',
     eggGroups: ['Fairy']
   },
   {
@@ -1469,7 +1469,7 @@ const BattlePokedex = [
     weightkg: 40,
     color: 'Pink',
     prevo: 'clefairy',
-    evoLevel: 1,
+    evoLevel: 'use Moon Stone',
     eggGroups: ['Fairy']
   },
   {
@@ -1552,7 +1552,7 @@ const BattlePokedex = [
     weightkg: 19.9,
     color: 'Yellow',
     prevo: 'vulpix',
-    evoLevel: 1,
+    evoLevel: 'use Fire Stone',
     eggGroups: ['Field'],
     otherFormes: ['ninetalesalola']
   },
@@ -1583,7 +1583,7 @@ const BattlePokedex = [
     weightkg: 19.9,
     color: 'Blue',
     prevo: 'vulpixalola',
-    evoLevel: 1,
+    evoLevel: 'use Ice Stone',
     eggGroups: ['Field']
   },
   {
@@ -1612,7 +1612,7 @@ const BattlePokedex = [
     color: 'Pink',
     prevo: 'igglybuff',
     evos: ['wigglytuff'],
-    evoLevel: 1,
+    evoLevel: 'Level up with High Friendship',
     eggGroups: ['Fairy']
   },
   {
@@ -1640,7 +1640,7 @@ const BattlePokedex = [
     weightkg: 12,
     color: 'Pink',
     prevo: 'jigglypuff',
-    evoLevel: 1,
+    evoLevel: 'use Moon Stone',
     eggGroups: ['Fairy']
   },
   {
@@ -1732,7 +1732,7 @@ const BattlePokedex = [
     color: 'Blue',
     prevo: 'oddish',
     evos: ['vileplume', 'bellossom'],
-    evoLevel: 21,
+    evoLevel: 'use Leaf Stone ',
     eggGroups: ['Grass']
   },
   {
@@ -2202,7 +2202,7 @@ const BattlePokedex = [
     weightkg: 155,
     color: 'Brown',
     prevo: 'growlithe',
-    evoLevel: 1,
+    evoLevel: 'use Fire Stone',
     eggGroups: ['Field']
   },
   {
@@ -2274,7 +2274,7 @@ const BattlePokedex = [
     weightkg: 54,
     color: 'Blue',
     prevo: 'poliwhirl',
-    evoLevel: 25,
+    evoLevel: 'use Water Stone',
     eggGroups: ['Water 1']
   },
   {
@@ -2358,7 +2358,7 @@ const BattlePokedex = [
     weightkg: 48,
     color: 'Brown',
     prevo: 'kadabra',
-    evoLevel: 16,
+    evoLevel: 'Trade',
     eggGroups: ['Human-Like'],
     otherFormes: ['alakazammega']
   },
@@ -2468,7 +2468,7 @@ const BattlePokedex = [
     weightkg: 130,
     color: 'Gray',
     prevo: 'machoke',
-    evoLevel: 28,
+    evoLevel: 'Trade',
     eggGroups: ['Human-Like']
   },
   {
@@ -2537,7 +2537,7 @@ const BattlePokedex = [
     weightkg: 15.5,
     color: 'Green',
     prevo: 'weepinbell',
-    evoLevel: 21,
+    evoLevel: 'use Leaf Stone',
     eggGroups: ['Grass']
   },
   {
@@ -2712,7 +2712,7 @@ const BattlePokedex = [
     weightkg: 300,
     color: 'Brown',
     prevo: 'graveler',
-    evoLevel: 25,
+    evoLevel: 'Trade',
     eggGroups: ['Mineral'],
     otherFormes: ['golemalola']
   },
@@ -2740,7 +2740,7 @@ const BattlePokedex = [
     weightkg: 316,
     color: 'Gray',
     prevo: 'graveleralola',
-    evoLevel: 25,
+    evoLevel: 'Trade',
     eggGroups: ['Mineral']
   },
   {
@@ -3171,7 +3171,7 @@ const BattlePokedex = [
     weightkg: 132.5,
     color: 'Purple',
     prevo: 'shellder',
-    evoLevel: 1,
+    evoLevel: 'use Water Stone',
     eggGroups: ['Water 3']
   },
   {
@@ -3231,7 +3231,7 @@ const BattlePokedex = [
     weightkg: 40.5,
     color: 'Purple',
     prevo: 'haunter',
-    evoLevel: 25,
+    evoLevel: 'Trade',
     eggGroups: ['Amorphous'],
     otherFormes: ['gengarmega']
   },
@@ -3464,7 +3464,7 @@ const BattlePokedex = [
     weightkg: 120,
     color: 'Yellow',
     prevo: 'exeggcute',
-    evoLevel: 1,
+    evoLevel: 'use Leaf Stone',
     eggGroups: ['Grass'],
     otherFormes: ['exeggutoralola']
   },
@@ -3491,7 +3491,7 @@ const BattlePokedex = [
     weightkg: 415.6,
     color: 'Yellow',
     prevo: 'exeggcute',
-    evoLevel: 1,
+    evoLevel: 'use Leaf Stone',
     eggGroups: ['Grass']
   },
   {
@@ -3612,7 +3612,7 @@ const BattlePokedex = [
     weightkg: 49.8,
     color: 'Brown',
     prevo: 'tyrogue',
-    evoLevel: 20,
+    evoLevel: 'Level 20 with higher Attack',
     eggGroups: ['Human-Like']
   },
   {
@@ -3637,7 +3637,7 @@ const BattlePokedex = [
     weightkg: 50.2,
     color: 'Brown',
     prevo: 'tyrogue',
-    evoLevel: 20,
+    evoLevel: 'Level 20 with higher defense',
     eggGroups: ['Human-Like']
   },
   {
@@ -3773,7 +3773,7 @@ const BattlePokedex = [
     color: 'Pink',
     prevo: 'happiny',
     evos: ['blissey'],
-    evoLevel: 1,
+    evoLevel: 'Hold Oval Stone, Level Up',
     eggGroups: ['Fairy']
   },
   {
@@ -3986,7 +3986,7 @@ const BattlePokedex = [
     weightkg: 80,
     color: 'Purple',
     prevo: 'staryu',
-    evoLevel: 1,
+    evoLevel: 'use Water Stone',
     eggGroups: ['Water 3']
   },
   {
@@ -4010,7 +4010,7 @@ const BattlePokedex = [
     weightkg: 54.5,
     color: 'Pink',
     prevo: 'mimejr',
-    evoLevel: 1,
+    evoLevel: 'Level up while knowing Mimic',
     evoMove: 'Mimic',
     eggGroups: ['Human-Like']
   },
@@ -4347,7 +4347,7 @@ const BattlePokedex = [
     weightkg: 29,
     color: 'Blue',
     prevo: 'eevee',
-    evoLevel: 1,
+    evoLevel: 'use Water Stone',
     eggGroups: ['Field']
   },
   {
@@ -4374,7 +4374,7 @@ const BattlePokedex = [
     weightkg: 24.5,
     color: 'Yellow',
     prevo: 'eevee',
-    evoLevel: 1,
+    evoLevel: 'use Thunder Stone',
     eggGroups: ['Field']
   },
   {
@@ -4401,7 +4401,7 @@ const BattlePokedex = [
     weightkg: 25,
     color: 'Red',
     prevo: 'eevee',
-    evoLevel: 1,
+    evoLevel: 'use Fire Stone',
     eggGroups: ['Field']
   },
   {
@@ -4615,7 +4615,7 @@ const BattlePokedex = [
     weightkg: 460,
     color: 'Black',
     prevo: 'munchlax',
-    evoLevel: 1,
+    evoLevel: 'Level up with High Friendship',
     eggGroups: ['Monster']
   },
   {
@@ -5652,7 +5652,7 @@ const BattlePokedex = [
     weightkg: 5.8,
     color: 'Green',
     prevo: 'gloom',
-    evoLevel: 21,
+    evoLevel: 'use Sun Stone',
     eggGroups: ['Grass']
   },
   {
@@ -5677,7 +5677,7 @@ const BattlePokedex = [
     color: 'Blue',
     prevo: 'azurill',
     evos: ['azumarill'],
-    evoLevel: 1,
+    evoLevel: 'Level up with High Friendship',
     eggGroups: ['Water 1', 'Fairy']
   },
   {
@@ -5725,7 +5725,7 @@ const BattlePokedex = [
     weightkg: 38,
     color: 'Brown',
     prevo: 'bonsly',
-    evoLevel: 1,
+    evoLevel: 'Level up while knowing Mimic',
     evoMove: 'Mimic',
     eggGroups: ['Mineral']
   },
@@ -5750,7 +5750,7 @@ const BattlePokedex = [
     weightkg: 33.9,
     color: 'Green',
     prevo: 'poliwhirl',
-    evoLevel: 25,
+    evoLevel: 'Trade while holding King\'s Rock',
     eggGroups: ['Water 1']
   },
   {
@@ -5892,7 +5892,7 @@ const BattlePokedex = [
     weightkg: 8.5,
     color: 'Yellow',
     prevo: 'sunkern',
-    evoLevel: 1,
+    evoLevel: 'use Sun Stone',
     eggGroups: ['Grass']
   },
   {
@@ -5989,7 +5989,7 @@ const BattlePokedex = [
     weightkg: 26.5,
     color: 'Purple',
     prevo: 'eevee',
-    evoLevel: 2,
+    evoLevel: 'Level up during Daytime with High Friendship',
     eggGroups: ['Field']
   },
   {
@@ -6016,7 +6016,7 @@ const BattlePokedex = [
     weightkg: 27,
     color: 'Black',
     prevo: 'eevee',
-    evoLevel: 2,
+    evoLevel: 'Level up during Nighttime with High Friendship',
     eggGroups: ['Field']
   },
   {
@@ -6063,7 +6063,7 @@ const BattlePokedex = [
     weightkg: 79.5,
     color: 'Pink',
     prevo: 'slowpoke',
-    evoLevel: 1,
+    evoLevel: 'Trade while holding King\'s Rock',
     eggGroups: ['Monster', 'Water 1']
   },
   {
@@ -6262,7 +6262,7 @@ const BattlePokedex = [
     weightkg: 400,
     color: 'Gray',
     prevo: 'onix',
-    evoLevel: 1,
+    evoLevel: 'Trade while holding Metal Coat',
     eggGroups: ['Mineral'],
     otherFormes: ['steelixmega']
   },
@@ -6385,7 +6385,7 @@ const BattlePokedex = [
     weightkg: 118,
     color: 'Red',
     prevo: 'scyther',
-    evoLevel: 1,
+    evoLevel: 'Trade while holding Metal Coat',
     eggGroups: ['Bug'],
     otherFormes: ['scizormega']
   },
@@ -6757,7 +6757,7 @@ const BattlePokedex = [
     weightkg: 220,
     color: 'Purple',
     prevo: 'mantyke',
-    evoLevel: 1,
+    evoLevel: 'Level up with Remoraid in party',
     eggGroups: ['Water 1']
   },
   {
@@ -6872,7 +6872,7 @@ const BattlePokedex = [
     weightkg: 152,
     color: 'Blue',
     prevo: 'seadra',
-    evoLevel: 32,
+    evoLevel: 'Trade while holding Dragon Scale',
     eggGroups: ['Water 1', 'Dragon']
   },
   {
@@ -6943,7 +6943,7 @@ const BattlePokedex = [
     color: 'Red',
     prevo: 'porygon',
     evos: ['porygonz'],
-    evoLevel: 1,
+    evoLevel: 'Trade while holding Up-Grade',
     eggGroups: ['Mineral']
   },
   {
@@ -7036,7 +7036,7 @@ const BattlePokedex = [
     weightkg: 48,
     color: 'Brown',
     prevo: 'tyrogue',
-    evoLevel: 20,
+    evoLevel: 'Level 20 with Attack = Defense',
     eggGroups: ['Human-Like']
   },
   {
@@ -7974,7 +7974,7 @@ const BattlePokedex = [
     weightkg: 55,
     color: 'Green',
     prevo: 'lombre',
-    evoLevel: 14,
+    evoLevel: 'use Water Stone',
     eggGroups: ['Water 1', 'Grass']
   },
   {
@@ -8046,7 +8046,7 @@ const BattlePokedex = [
     weightkg: 59.6,
     color: 'Brown',
     prevo: 'nuzleaf',
-    evoLevel: 14,
+    evoLevel: 'use Leaf Stone',
     eggGroups: ['Field', 'Grass']
   },
   {
@@ -8451,7 +8451,7 @@ const BattlePokedex = [
     weightkg: 1.2,
     color: 'Brown',
     prevo: 'nincada',
-    evoLevel: 20,
+    evoLevel: 'Level 20 with Free Party Slot',
     eggGroups: ['Mineral']
   },
   {
@@ -8680,7 +8680,7 @@ const BattlePokedex = [
     weightkg: 32.6,
     color: 'Purple',
     prevo: 'skitty',
-    evoLevel: 1,
+    evoLevel: 'use Moon Stone',
     eggGroups: ['Field', 'Fairy']
   },
   {
@@ -9111,7 +9111,7 @@ const BattlePokedex = [
     color: 'Green',
     prevo: 'budew',
     evos: ['roserade'],
-    evoLevel: 1,
+    evoLevel: 'Level up during Daytime with High Friendship',
     eggGroups: ['Fairy', 'Grass']
   },
   {
@@ -9976,7 +9976,7 @@ const BattlePokedex = [
     weightkg: 162,
     color: 'Pink',
     prevo: 'feebas',
-    evoLevel: 1,
+    evoLevel: 'Trade while holding Prism Scale',
     eggGroups: ['Water 1', 'Dragon']
   },
   {
@@ -10236,7 +10236,7 @@ const BattlePokedex = [
     weightkg: 1,
     color: 'Blue',
     prevo: 'chingling',
-    evoLevel: 1,
+    evoLevel: 'Level up during Nighttime with High Friendship',
     eggGroups: ['Amorphous']
   },
   {
@@ -10488,7 +10488,7 @@ const BattlePokedex = [
     weightkg: 27,
     color: 'Blue',
     prevo: 'clamperl',
-    evoLevel: 1,
+    evoLevel: 'Trade while holding Deep Sea Tooth',
     eggGroups: ['Water 1']
   },
   {
@@ -10511,7 +10511,7 @@ const BattlePokedex = [
     weightkg: 22.6,
     color: 'Pink',
     prevo: 'clamperl',
-    evoLevel: 1,
+    evoLevel: 'Trade while holding Deep Sea Scale',
     eggGroups: ['Water 1']
   },
   {
@@ -11653,7 +11653,7 @@ const BattlePokedex = [
     weightkg: 14.5,
     color: 'Green',
     prevo: 'roselia',
-    evoLevel: 1,
+    evoLevel: 'use Shiny Stone',
     eggGroups: ['Fairy', 'Grass']
   },
   {
@@ -11808,7 +11808,7 @@ const BattlePokedex = [
     weightkg: 6.5,
     color: 'Green',
     prevo: 'burmy',
-    evoLevel: 20,
+    evoLevel: 'Level 20, Female only',
     eggGroups: ['Bug'],
     otherFormes: ['wormadamsandy', 'wormadamtrash']
   },
@@ -11887,7 +11887,7 @@ const BattlePokedex = [
     weightkg: 23.3,
     color: 'Yellow',
     prevo: 'burmy',
-    evoLevel: 20,
+    evoLevel: 'Level 20, Male only',
     eggGroups: ['Bug']
   },
   {
@@ -11937,7 +11937,7 @@ const BattlePokedex = [
     weightkg: 38.5,
     color: 'Yellow',
     prevo: 'combee',
-    evoLevel: 21,
+    evoLevel: 'Level 21, Female only',
     eggGroups: ['Bug']
   },
   {
@@ -12143,7 +12143,7 @@ const BattlePokedex = [
     weightkg: 20.3,
     color: 'Purple',
     prevo: 'aipom',
-    evoLevel: 2,
+    evoLevel: 'Level up while knowing Double Hit',
     evoMove: 'Double Hit',
     eggGroups: ['Field']
   },
@@ -12280,7 +12280,7 @@ const BattlePokedex = [
     weightkg: 4.4,
     color: 'Purple',
     prevo: 'misdreavus',
-    evoLevel: 1,
+    evoLevel: 'use Dusk Stone',
     eggGroups: ['Amorphous']
   },
   {
@@ -12304,7 +12304,7 @@ const BattlePokedex = [
     weightkg: 27.3,
     color: 'Black',
     prevo: 'murkrow',
-    evoLevel: 1,
+    evoLevel: 'use Dusk Stone',
     eggGroups: ['Flying']
   },
   {
@@ -12760,7 +12760,7 @@ const BattlePokedex = [
     weightkg: 54,
     color: 'Blue',
     prevo: 'riolu',
-    evoLevel: 2,
+    evoLevel: 'Level up during Daytime with High Friendship',
     eggGroups: ['Field', 'Human-Like'],
     otherFormes: ['lucariomega']
   },
@@ -13103,7 +13103,7 @@ const BattlePokedex = [
     weightkg: 34,
     color: 'Black',
     prevo: 'sneasel',
-    evoLevel: 2,
+    evoLevel: 'Hold Razor Claw Nighttime',
     eggGroups: ['Field']
   },
   {
@@ -13128,7 +13128,7 @@ const BattlePokedex = [
     weightkg: 180,
     color: 'Gray',
     prevo: 'magneton',
-    evoLevel: 31,
+    evoLevel: 'Level 31 inside special magnetic field',
     eggGroups: ['Mineral']
   },
   {
@@ -13152,7 +13152,7 @@ const BattlePokedex = [
     weightkg: 140,
     color: 'Pink',
     prevo: 'lickitung',
-    evoLevel: 2,
+    evoLevel: 'Level up while knowing Rollout',
     evoMove: 'Rollout',
     eggGroups: ['Monster']
   },
@@ -13177,7 +13177,7 @@ const BattlePokedex = [
     weightkg: 282.8,
     color: 'Gray',
     prevo: 'rhydon',
-    evoLevel: 42,
+    evoLevel: 'Trade while holding Protector',
     eggGroups: ['Monster', 'Field']
   },
   {
@@ -13201,7 +13201,7 @@ const BattlePokedex = [
     weightkg: 128.6,
     color: 'Blue',
     prevo: 'tangela',
-    evoLevel: 2,
+    evoLevel: 'Level up while knowing Ancient Power',
     evoMove: 'AncientPower',
     eggGroups: ['Grass']
   },
@@ -13229,7 +13229,7 @@ const BattlePokedex = [
     weightkg: 138.6,
     color: 'Yellow',
     prevo: 'electabuzz',
-    evoLevel: 30,
+    evoLevel: 'Trade while holding Electirizer',
     eggGroups: ['Human-Like']
   },
   {
@@ -13256,7 +13256,7 @@ const BattlePokedex = [
     weightkg: 68,
     color: 'Red',
     prevo: 'magmar',
-    evoLevel: 30,
+    evoLevel: 'Trade while holding Magmarizer',
     eggGroups: ['Human-Like']
   },
   {
@@ -13284,7 +13284,7 @@ const BattlePokedex = [
     weightkg: 38,
     color: 'White',
     prevo: 'togetic',
-    evoLevel: 2,
+    evoLevel: 'use Shiny Stone',
     eggGroups: ['Flying', 'Fairy']
   },
   {
@@ -13308,7 +13308,7 @@ const BattlePokedex = [
     weightkg: 51.5,
     color: 'Green',
     prevo: 'yanma',
-    evoLevel: 2,
+    evoLevel: 'Level up while knowing Ancient Power',
     evoMove: 'AncientPower',
     eggGroups: ['Bug']
   },
@@ -13336,7 +13336,7 @@ const BattlePokedex = [
     weightkg: 25.5,
     color: 'Green',
     prevo: 'eevee',
-    evoLevel: 2,
+    evoLevel: 'Level up near Moss Rock',
     eggGroups: ['Field']
   },
   {
@@ -13363,7 +13363,7 @@ const BattlePokedex = [
     weightkg: 25.9,
     color: 'Blue',
     prevo: 'eevee',
-    evoLevel: 2,
+    evoLevel: 'Level up near Ice Rock',
     eggGroups: ['Field']
   },
   {
@@ -13387,7 +13387,7 @@ const BattlePokedex = [
     weightkg: 42.5,
     color: 'Purple',
     prevo: 'gligar',
-    evoLevel: 2,
+    evoLevel: 'Hold Razor Fang Nighttime',
     eggGroups: ['Bug']
   },
   {
@@ -13411,7 +13411,7 @@ const BattlePokedex = [
     weightkg: 291,
     color: 'Brown',
     prevo: 'piloswine',
-    evoLevel: 34,
+    evoLevel: 'Level up while knowing Ancient Power',
     evoMove: 'AncientPower',
     eggGroups: ['Field']
   },
@@ -13437,7 +13437,7 @@ const BattlePokedex = [
     weightkg: 34,
     color: 'Red',
     prevo: 'porygon2',
-    evoLevel: 1,
+    evoLevel: 'Trade while holding Dubious Disc',
     eggGroups: ['Mineral']
   },
   {
@@ -13461,7 +13461,7 @@ const BattlePokedex = [
     weightkg: 52,
     color: 'White',
     prevo: 'kirlia',
-    evoLevel: 20,
+    evoLevel: 'Male + use Dawn Stone',
     eggGroups: ['Amorphous'],
     otherFormes: ['gallademega']
   },
@@ -13508,7 +13508,7 @@ const BattlePokedex = [
     weightkg: 340,
     color: 'Gray',
     prevo: 'nosepass',
-    evoLevel: 2,
+    evoLevel: 'Level up in special magnetic field',
     eggGroups: ['Mineral']
   },
   {
@@ -13531,7 +13531,7 @@ const BattlePokedex = [
     weightkg: 106.6,
     color: 'Black',
     prevo: 'dusclops',
-    evoLevel: 37,
+    evoLevel: 'Trade while holding Reaper Cloth',
     eggGroups: ['Amorphous']
   },
   {
@@ -13555,7 +13555,7 @@ const BattlePokedex = [
     weightkg: 26.6,
     color: 'White',
     prevo: 'snorunt',
-    evoLevel: 1,
+    evoLevel: 'Female + use Dawn Stone',
     eggGroups: ['Fairy', 'Mineral']
   },
   {
@@ -14867,7 +14867,7 @@ const BattlePokedex = [
     weightkg: 30.5,
     color: 'Green',
     prevo: 'pansage',
-    evoLevel: 1,
+    evoLevel: 'use Leaf Stone',
     eggGroups: ['Field']
   },
   {
@@ -14920,7 +14920,7 @@ const BattlePokedex = [
     weightkg: 28,
     color: 'Red',
     prevo: 'pansear',
-    evoLevel: 1,
+    evoLevel: 'use Fire Stone',
     eggGroups: ['Field']
   },
   {
@@ -14973,7 +14973,7 @@ const BattlePokedex = [
     weightkg: 29,
     color: 'Blue',
     prevo: 'panpour',
-    evoLevel: 1,
+    evoLevel: 'use Water Stone',
     eggGroups: ['Field']
   },
   {
@@ -15020,7 +15020,7 @@ const BattlePokedex = [
     weightkg: 60.5,
     color: 'Pink',
     prevo: 'munna',
-    evoLevel: 1,
+    evoLevel: 'use Moon Stone',
     eggGroups: ['Field']
   },
   {
@@ -15211,7 +15211,7 @@ const BattlePokedex = [
     weightkg: 260,
     color: 'Blue',
     prevo: 'boldore',
-    evoLevel: 25,
+    evoLevel: 'Trade',
     eggGroups: ['Mineral']
   },
   {
@@ -15433,7 +15433,7 @@ const BattlePokedex = [
     weightkg: 87,
     color: 'Brown',
     prevo: 'gurdurr',
-    evoLevel: 25,
+    evoLevel: 'Trade',
     eggGroups: ['Human-Like']
   },
   {
@@ -15742,7 +15742,7 @@ const BattlePokedex = [
     weightkg: 6.6,
     color: 'Green',
     prevo: 'cottonee',
-    evoLevel: 1,
+    evoLevel: 'use Sun Stone',
     eggGroups: ['Fairy', 'Grass']
   },
   {
@@ -15791,7 +15791,7 @@ const BattlePokedex = [
     weightkg: 16.3,
     color: 'Green',
     prevo: 'petilil',
-    evoLevel: 1,
+    evoLevel: 'use Sun Stone',
     eggGroups: ['Grass']
   },
   {
@@ -16410,7 +16410,7 @@ const BattlePokedex = [
     weightkg: 7.5,
     color: 'Gray',
     prevo: 'minccino',
-    evoLevel: 1,
+    evoLevel: 'use Shiny Stone',
     eggGroups: ['Field']
   },
   {
@@ -16804,7 +16804,7 @@ const BattlePokedex = [
     weightkg: 33,
     color: 'Gray',
     prevo: 'karrablast',
-    evoLevel: 1,
+    evoLevel: 'Trade for Shelmet',
     eggGroups: ['Bug']
   },
   {
@@ -17446,7 +17446,7 @@ const BattlePokedex = [
     weightkg: 25.3,
     color: 'Red',
     prevo: 'shelmet',
-    evoLevel: 1,
+    evoLevel: 'Trade for Karrablast',
     eggGroups: ['Bug']
   },
   {
@@ -19145,7 +19145,7 @@ const BattlePokedex = [
     weightkg: 136,
     color: 'White',
     prevo: 'pancham',
-    evoLevel: 32,
+    evoLevel: 'Level 32 with Dark Type in Party',
     eggGroups: ['Field', 'Human-Like']
   },
   {
@@ -19372,7 +19372,7 @@ const BattlePokedex = [
     weightkg: 15.5,
     color: 'Pink',
     prevo: 'spritzee',
-    evoLevel: 1,
+    evoLevel: 'Trade while holding Sachet',
     eggGroups: ['Fairy']
   },
   {
@@ -19417,7 +19417,7 @@ const BattlePokedex = [
     weightkg: 5,
     color: 'White',
     prevo: 'swirlix',
-    evoLevel: 1,
+    evoLevel: 'Trade while holding Whipped Dream',
     eggGroups: ['Fairy']
   },
   {
@@ -19464,7 +19464,7 @@ const BattlePokedex = [
     weightkg: 47,
     color: 'Blue',
     prevo: 'inkay',
-    evoLevel: 30,
+    evoLevel: 'Level 30, Flip device upside down',
     eggGroups: ['Water 1', 'Water 2']
   },
   {
@@ -19644,7 +19644,7 @@ const BattlePokedex = [
     weightkg: 21,
     color: 'Yellow',
     prevo: 'helioptile',
-    evoLevel: 1,
+    evoLevel: 'use Sun Stone',
     eggGroups: ['Monster', 'Dragon']
   },
   {
@@ -19697,7 +19697,7 @@ const BattlePokedex = [
     weightkg: 270,
     color: 'Red',
     prevo: 'tyrunt',
-    evoLevel: 39,
+    evoLevel: '39 Daytime',
     eggGroups: ['Monster', 'Dragon']
   },
   {
@@ -19750,7 +19750,7 @@ const BattlePokedex = [
     weightkg: 225,
     color: 'Blue',
     prevo: 'amaura',
-    evoLevel: 39,
+    evoLevel: '39 Nighttime',
     eggGroups: ['Monster']
   },
   {
@@ -19777,7 +19777,7 @@ const BattlePokedex = [
     weightkg: 23.5,
     color: 'Pink',
     prevo: 'eevee',
-    evoLevel: 2,
+    evoLevel: 'Level up while having high Affection and knowing a Fairy type move',
     eggGroups: ['Field']
   },
   {
@@ -19915,7 +19915,7 @@ const BattlePokedex = [
     weightkg: 150.5,
     color: 'Purple',
     prevo: 'sliggoo',
-    evoLevel: 50,
+    evoLevel: 'Level 50 In Rain',
     eggGroups: ['Dragon']
   },
   {
@@ -19983,7 +19983,7 @@ const BattlePokedex = [
     weightkg: 71,
     color: 'Brown',
     prevo: 'phantump',
-    evoLevel: 1,
+    evoLevel: 'Trade',
     eggGroups: ['Grass', 'Amorphous']
   },
   {
@@ -20111,7 +20111,7 @@ const BattlePokedex = [
     weightkg: 12.5,
     color: 'Brown',
     prevo: 'pumpkaboo',
-    evoLevel: 1,
+    evoLevel: 'Trade',
     eggGroups: ['Amorphous'],
     otherFormes: ['gourgeistsmall', 'gourgeistlarge', 'gourgeistsuper']
   },
@@ -20139,7 +20139,7 @@ const BattlePokedex = [
     weightkg: 9.5,
     color: 'Brown',
     prevo: 'pumpkaboosmall',
-    evoLevel: 1,
+    evoLevel: 'Trade',
     eggGroups: ['Amorphous']
   },
   {
@@ -20166,7 +20166,7 @@ const BattlePokedex = [
     weightkg: 14,
     color: 'Brown',
     prevo: 'pumpkaboolarge',
-    evoLevel: 1,
+    evoLevel: 'Trade',
     eggGroups: ['Amorphous']
   },
   {
@@ -20193,7 +20193,7 @@ const BattlePokedex = [
     weightkg: 39,
     color: 'Brown',
     prevo: 'pumpkaboosuper',
-    evoLevel: 1,
+    evoLevel: 'Trade',
     eggGroups: ['Amorphous']
   },
   {
@@ -20944,7 +20944,7 @@ const BattlePokedex = [
     weightkg: 45,
     color: 'Blue',
     prevo: 'charjabug',
-    evoLevel: 21,
+    evoLevel: 'Level 21 inside special magnetic field',
     eggGroups: ['Bug'],
     otherFormes: ['vikavolttotem']
   },
@@ -21013,7 +21013,7 @@ const BattlePokedex = [
     weightkg: 180,
     color: 'White',
     prevo: 'crabrawler',
-    evoLevel: 2,
+    evoLevel: 'Level up in extreme cold',
     eggGroups: ['Water 3']
   },
   {
@@ -21231,7 +21231,7 @@ const BattlePokedex = [
     weightkg: 25,
     color: 'Brown',
     prevo: 'rockruff',
-    evoLevel: 25,
+    evoLevel: 'Level 25 during Daytime',
     eggGroups: ['Field'],
     otherFormes: ['lycanrocmidnight', 'lycanrocdusk']
   },
@@ -21259,7 +21259,7 @@ const BattlePokedex = [
     weightkg: 25,
     color: 'Red',
     prevo: 'rockruff',
-    evoLevel: 25,
+    evoLevel: 'Level 25 during Nightttime',
     eggGroups: ['Field']
   },
   {
@@ -21282,7 +21282,7 @@ const BattlePokedex = [
     weightkg: 25,
     color: 'Brown',
     prevo: 'rockruff',
-    evoLevel: 25,
+    evoLevel: 'Level 25 between 5:00 PM and 5:59 PM',
     eggGroups: ['Field']
   },
   {
@@ -21648,7 +21648,7 @@ const BattlePokedex = [
     weightkg: 22.2,
     color: 'Black',
     prevo: 'salandit',
-    evoLevel: 33,
+    evoLevel: 'Level 33, Female only',
     eggGroups: ['Monster', 'Dragon'],
     otherFormes: ['salazzletotem']
   },
@@ -21793,7 +21793,7 @@ const BattlePokedex = [
     weightkg: 21.4,
     color: 'Purple',
     prevo: 'steenee',
-    evoLevel: 19,
+    evoLevel: 'Level 19 while knowing Stomp',
     evoMove: 'Stomp',
     eggGroups: ['Grass']
   },
@@ -22009,7 +22009,7 @@ const BattlePokedex = [
     weightkg: 100.5,
     color: 'Gray',
     prevo: 'typenull',
-    evoLevel: 41,
+    evoLevel: 'Level up with High Friendship',
     eggGroups: ['Undiscovered'],
     otherFormes: ['silvallybug', 'silvallydark', 'silvallydragon', 'silvallyelectric', 'silvallyfairy', 'silvallyfighting', 'silvallyfire', 'silvallyflying', 'silvallyghost', 'silvallygrass', 'silvallyground', 'silvallyice', 'silvallypoison', 'silvallypsychic', 'silvallyrock', 'silvallysteel', 'silvallywater']
   },

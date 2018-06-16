@@ -114,47 +114,50 @@ module.exports = class DexCommand extends Command {
     /* eslint-enable sort-vars */
 
     if (pokeSearch.length) {
-      const pokeData = {
-        abilities: '',
-        evos: `**${capitalizeFirstLetter(pokeSearch[0].species)}**`,
-        flavors: '*PokéDex data not found for this Pokémon*',
-        genders: '',
-        sprite: ''
-      };
+      const poke = pokeSearch[0],
+        pokeData = {
+          abilities: '',
+          evos: `**${capitalizeFirstLetter(poke.species)}**`,
+          flavors: '*PokéDex data not found for this Pokémon*',
+          genders: '',
+          sprite: ''
+        };
 
-      if (pokeSearch[0].prevo) {
-        pokeData.evos = `${capitalizeFirstLetter(pokeSearch[0].prevo)} > ${pokeData.evos}`;
-
-        if (pokeFuse.search(pokeSearch[0].prevo).length && pokeFuse.search(pokeSearch[0].prevo)[0].prevo) {
-          pokeData.evos = `${capitalizeFirstLetter(pokeFuse.search(pokeSearch[0].prevo)[0].prevo)} > ${pokeData.evos}`;
+      if (poke.prevo) {
+        pokeData.evos = oneLine`${capitalizeFirstLetter(poke.prevo)} ${pokeFuse.search(poke.prevo)[0].evoLevel ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})` : ''}
+        → ${pokeData.evos} **(${poke.evoLevel})**`;
+        
+        if (pokeFuse.search(poke.prevo).length && pokeFuse.search(poke.prevo)[0].prevo) {
+          pokeData.evos = `${capitalizeFirstLetter(pokeFuse.search(poke.prevo)[0].prevo)} → ${pokeData.evos}`;
         }
       }
 
-      if (pokeSearch[0].evos) {
-        pokeData.evos = `${pokeData.evos} > ${pokeSearch[0].evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
+      if (poke.evos) {
+        pokeData.evos = oneLine`${pokeData.evos} → ${poke.evos.map(entry => `\`${capitalizeFirstLetter(entry)}\` *(${pokeFuse.search(entry)[0].evoLevel})*`).join(', ')} `;
 
-        if (pokeSearch[0].evos.length === 1) {
-          if (pokeFuse.search(pokeSearch[0].evos[0]).length && pokeFuse.search(pokeSearch[0].evos[0])[0].evos) {
-            pokeData.evos = `${pokeData.evos} > ${pokeFuse.search(pokeSearch[0].evos[0])[0].evos.map(entry => capitalizeFirstLetter(entry)).join(', ')}`;
+        if (poke.evos.length === 1) {
+          if (pokeFuse.search(poke.evos[0]).length && pokeFuse.search(poke.evos[0])[0].evos) {
+            pokeData.evos = oneLine`${pokeData.evos}
+            → ${pokeFuse.search(poke.evos[0])[0].evos.map(entry => `\`${capitalizeFirstLetter(entry)}\` *(${pokeFuse.search(entry)[0].evoLevel})*`).join(', ')}`;
           }
         }
       }
 
-      if (!pokeSearch[0].prevo && !pokeSearch[0].evos) {
+      if (!poke.prevo && !poke.evos) {
         pokeData.evos += ' (No Evolutions)';
       }
 
-      for (const ability in pokeSearch[0].abilities) {
+      for (const ability in poke.abilities) {
         if (ability === '0') {
-          pokeData.abilities += `${pokeSearch[0].abilities[ability]}`;
+          pokeData.abilities += `${poke.abilities[ability]}`;
         } else if (ability === 'H') {
-          pokeData.abilities += `, *${pokeSearch[0].abilities[ability]}*`;
+          pokeData.abilities += `, *${poke.abilities[ability]}*`;
         } else {
-          pokeData.abilities += `, ${pokeSearch[0].abilities[ability]}`;
+          pokeData.abilities += `, ${poke.abilities[ability]}`;
         }
       }
 
-      switch (pokeSearch[0].gender) {
+      switch (poke.gender) {
       case 'N':
         pokeData.genders = 'None';
         break;
@@ -169,52 +172,52 @@ module.exports = class DexCommand extends Command {
         break;
       }
 
-      if (pokeSearch[0].genderRatio) {
-        pokeData.genders = `${pokeSearch[0].genderRatio.M * 100}% Male | ${pokeSearch[0].genderRatio.F * 100}% Female`;
+      if (poke.genderRatio) {
+        pokeData.genders = `${poke.genderRatio.M * 100}% Male | ${poke.genderRatio.F * 100}% Female`;
       }
 
-      if (pokeSearch[0].num >= 0) {
-        if (pokeSearch[0].forme && dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`]) {
-          pokeData.flavors = dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`][dexEntries[`${pokeSearch[0].num}${pokeSearch[0].forme.toLowerCase()}`].length - 1].flavor_text;
+      if (poke.num >= 0) {
+        if (poke.forme && dexEntries[`${poke.num}${poke.forme.toLowerCase()}`]) {
+          pokeData.flavors = dexEntries[`${poke.num}${poke.forme.toLowerCase()}`][dexEntries[`${poke.num}${poke.forme.toLowerCase()}`].length - 1].flavor_text;
         } else {
-          pokeData.flavors = dexEntries[pokeSearch[0].num][dexEntries[pokeSearch[0].num].length - 1].flavor_text;
+          pokeData.flavors = dexEntries[poke.num][dexEntries[poke.num].length - 1].flavor_text;
         }
       }
 
       dexEmbed
-        .setColor(this.fetchColor(pokeSearch[0].color))
+        .setColor(this.fetchColor(poke.color))
         .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png');
 
-      if (pokeSearch[0].num < 0) {
+      if (poke.num < 0) {
         pokeData.sprite = 'https://favna.xyz/images/ribbonhost/pokesprites/unknown.png';
       } else if (shines) {
-        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${pokeSearch[0].species.replace(/ /g, '').toLowerCase()}.png`;
+        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${poke.species.replace(/ /g, '').toLowerCase()}.png`;
       } else {
-        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${pokeSearch[0].species.replace(/ /g, '').toLowerCase()}.png`;
+        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${poke.species.replace(/ /g, '').toLowerCase()}.png`;
       }
 
       dexEmbed
-        .setAuthor(`#${pokeSearch[0].num} - ${capitalizeFirstLetter(pokeSearch[0].species)}`, pokeData.sprite)
-        .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${pokeSearch[0].species.toLowerCase().replace(/ /g, '')}.gif`)
-        .addField('Type(s)', pokeSearch[0].types.join(', '), true)
-        .addField('Height', `${pokeSearch[0].heightm}m`, true)
+        .setAuthor(`#${poke.num} - ${capitalizeFirstLetter(poke.species)}`, pokeData.sprite)
+        .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/ /g, '')}.gif`)
+        .addField('Type(s)', poke.types.join(', '), true)
+        .addField('Height', `${poke.heightm}m`, true)
         .addField('Gender Ratio', pokeData.genders, true)
-        .addField('Weight', `${pokeSearch[0].weightkg}kg`, true)
-        .addField('Egg Groups', pokeSearch[0].eggGroups.join(', '), true)
+        .addField('Weight', `${poke.weightkg}kg`, true)
+        .addField('Egg Groups', poke.eggGroups.join(', '), true)
         .addField('Abilities', pokeData.abilities, true);
-      pokeSearch[0].otherFormes ? dexEmbed.addField('Other Formes', pokeSearch[0].otherFormes.join(', '), true) : null;
+      poke.otherFormes ? dexEmbed.addField('Other Formes', poke.otherFormes.join(', '), true) : null;
       dexEmbed
         .addField('Evolutionary Line', pokeData.evos, false)
-        .addField('Base Stats', Object.keys(pokeSearch[0].baseStats).map(index => `${index.toUpperCase()}: **${pokeSearch[0].baseStats[index]}**`)
+        .addField('Base Stats', Object.keys(poke.baseStats).map(index => `${index.toUpperCase()}: **${poke.baseStats[index]}**`)
           .join(', '))
         .addField('PokéDex Data', pokeData.flavors)
-        .addField('External Resource', oneLine`${pokeSearch[0].num >= 0 ? `
-    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(pokeSearch[0].species).replace(/ /g, '_')}_(Pokémon\\))`
+        .addField('External Resource', oneLine`${poke.num >= 0 ? `
+    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(poke.species).replace(/ /g, '_')}_(Pokémon\\))`
           : '*Fan made Pokémon*'}
-      ${pokeSearch[0].num >= 1 ? `  |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${pokeSearch[0].species.replace(/ /g, '_')})  
-      |  [PokémonDB](http://pokemondb.net/pokedex/${pokeSearch[0].species.replace(/ /g, '-')})` : ''}`);
+      ${poke.num >= 1 ? `  |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${poke.species.replace(/ /g, '_')})  
+      |  [PokémonDB](http://pokemondb.net/pokedex/${poke.species.replace(/ /g, '-')})` : ''}`);
 
-      if (pokeSearch[0].num === 0) {
+      if (poke.num === 0) {
         const fields = [];
 
         for (const field in dexEmbed.fields) {
