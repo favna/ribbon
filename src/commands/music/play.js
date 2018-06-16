@@ -18,7 +18,6 @@
 
 const YouTube = require('simple-youtube-api'), // eslint-disable-line sort-vars
   moment = require('moment'),
-  winston = require('winston'),
   ytdl = require('ytdl-core'),
   {Command} = require('discord.js-commando'), // eslint-disable-line sort-vars
   {escapeMarkdown} = require('discord.js'),
@@ -117,7 +116,6 @@ module.exports = class PlaySongCommand extends Command {
 
           listQueue.connection = connection;
         } catch (error) {
-          winston.error('Error occurred when joining voice channel.', error);
           this.queue.delete(msg.guild.id);
           statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
           stopTyping(msg);
@@ -159,7 +157,6 @@ module.exports = class PlaySongCommand extends Command {
 
         return this.handleVideo(videoByID, queue, voiceChannel, msg, statusMsg);
       } catch (err) {
-        winston.error(err);
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
@@ -217,7 +214,6 @@ module.exports = class PlaySongCommand extends Command {
 
         return null;
       } catch (error) {
-        winston.error('Error occurred when joining voice channel.', error);
         this.queue.delete(msg.guild.id);
         statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
         stopTyping(msg);
@@ -316,11 +312,6 @@ module.exports = class PlaySongCommand extends Command {
       }
     }
 
-    winston.info('Adding song to queue.', {
-      song: video.id,
-      guild: msg.guild.id
-    });
-
     const song = new Song(video, msg.member); // eslint-disable-line one-var
 
     queue.songs.push(song);
@@ -366,7 +357,7 @@ module.exports = class PlaySongCommand extends Command {
       })
         .on('error', (err) => {
           streamErrored = true;
-          winston.error('Error occurred when streaming video:', err);
+          console.error('Error occurred when streaming video:', err);
           playing.then(msg => msg.edit(`❌ Couldn't play ${song}. What a drag!`));
           queue.songs.shift();
           this.play(guild, queue.songs[0]);
@@ -383,7 +374,6 @@ module.exports = class PlaySongCommand extends Command {
           this.play(guild, queue.songs[0]);
         })
         .on('error', (err) => {
-          winston.error('Error occurred in stream dispatcher:', err);
           queue.textChannel.send(`An error occurred while playing the song: \`${err}\``);
         });
 
