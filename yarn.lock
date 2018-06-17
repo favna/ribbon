@@ -2375,13 +2375,6 @@ node-opus@0.3.0:
   optionalDependencies:
     ogg-packet "^1.0.0"
 
-node-random@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/node-random/-/node-random-1.0.1.tgz#b18880a3b5959e55bdec5ace43e4f91a53b53548"
-  dependencies:
-    random-ua "0.0.6"
-    request "^2.34.0"
-
 normalize-package-data@^2.3.2:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/normalize-package-data/-/normalize-package-data-2.4.0.tgz#12f95a307d58352075a04907b84ac8be98ac012f"
@@ -2727,10 +2720,6 @@ qs@^6.1.0, qs@~6.5.1:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
 
-random-ua@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/random-ua/-/random-ua-0.0.6.tgz#eb70901b72a4fe0b8d3ab752a6b25122e40c0ad7"
-
 read-chunk@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/read-chunk/-/read-chunk-1.0.1.tgz#5f68cab307e663f19993527d9b589cace4661194"
@@ -2835,7 +2824,7 @@ repeat-string@^1.5.2, repeat-string@^1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/repeat-string/-/repeat-string-1.6.1.tgz#8dcae470e1c88abc2d600fff4a776286da75e637"
 
-request@^2.34.0, request@^2.60.0, request@^2.65.0, request@^2.75.0, request@^2.81.0:
+request@^2.60.0, request@^2.65.0, request@^2.75.0, request@^2.81.0:
   version "2.85.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.85.0.tgz#5a03615a47c61420b3eb99b7dba204f83603e1fa"
   dependencies:

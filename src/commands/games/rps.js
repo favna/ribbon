@@ -9,11 +9,15 @@
  * @returns {MessageEmbed} Result of the conflict
  */
 
-const random = require('node-random'),
+const request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+  {
+    deleteCommandMessages,
+    stopTyping,
+    startTyping
+  } = require('../../components/util.js');
 
 module.exports = class RockPaperScissorCommand extends Command {
   constructor (client) {
@@ -51,51 +55,64 @@ module.exports = class RockPaperScissorCommand extends Command {
     });
   }
 
-  run (msg, {hand}) {
-    startTyping(msg);
-    random.integers({
-      number: 1,
-      minimum: 1,
-      maximum: 3
-    }, (error, randoms) => { // eslint-disable-line complexity
-      if (!error) {
-        const rpsEmbed = new MessageEmbed();
+  // eslint-disable-next-line complexity
+  async run (msg, {hand}) {
+    try {
+      startTyping(msg);
 
-        let resString = 'Woops something went wrong';
+      const random = await request
+          .post('https://api.random.org/json-rpc/1/invoke')
+          .set('Content-Type', 'application/json-rpc')
+          .send({
+            jsonrpc: '2.0',
+            method: 'generateIntegers',
+            params: {
+              apiKey: process.env.randomkey,
+              n: 1,
+              min: 1,
+              max: 3
+            },
+            id: Math.floor(Math.random() * 42)
+          }),
+        randoms = random.body.result.random.data[0],
+        rpsEmbed = new MessageEmbed();
 
-        if (hand === 'rock' && randoms === 1) {
-          resString = 'It\'s a draw 😶! Both picked 🗿';
-        } else if (hand === 'rock' && randoms === 2) {
-          resString = 'I won 😃! My 📜 covered your 🗿';
-        } else if (hand === 'rock' && randoms === 3) {
-          resString = ' I lost 😞! Your 🗿 smashed my ️️️✂️ to pieces';
-        } else if (hand === 'paper' && randoms === 1) {
-          resString = 'I lost 😞! Your 📜 covered my 🗿';
-        } else if (hand === 'paper' && randoms === 2) {
-          resString = 'It\'s a draw 😶! Both picked 📜';
-        } else if (hand === 'paper' && randoms === 3) {
-          resString = 'I won 😃! My ✂️ cut your 📜 to shreds';
-        } else if (hand === 'scissor' && randoms === 1) {
-          resString = 'I won 😃! My 🗿 smashed your ✂️ to pieces';
-        } else if (hand === 'scissor' && randoms === 2) {
-          resString = 'I lost 😞! Your ✂️ cut my 📜 to shreds';
-        } else if (hand === 'scissor' && randoms === 3) {
-          resString = 'It\'s a draw 😶! Both picked ✂️';
-        }
+      let resString = 'Woops something went wrong';
 
-        rpsEmbed
-          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-          .setTitle('Rock Paper Scissors')
-          .setDescription(resString);
-
-        deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
-
-        return msg.embed(rpsEmbed);
+      if (hand === 'rock' && randoms === 1) {
+        resString = 'It\'s a draw 😶! Both picked 🗿';
+      } else if (hand === 'rock' && randoms === 2) {
+        resString = 'I won 😃! My 📜 covered your 🗿';
+      } else if (hand === 'rock' && randoms === 3) {
+        resString = ' I lost 😞! Your 🗿 smashed my ️️️✂️ to pieces';
+      } else if (hand === 'paper' && randoms === 1) {
+        resString = 'I lost 😞! Your 📜 covered my 🗿';
+      } else if (hand === 'paper' && randoms === 2) {
+        resString = 'It\'s a draw 😶! Both picked 📜';
+      } else if (hand === 'paper' && randoms === 3) {
+        resString = 'I won 😃! My ✂️ cut your 📜 to shreds';
+      } else if (hand === 'scissor' && randoms === 1) {
+        resString = 'I won 😃! My 🗿 smashed your ✂️ to pieces';
+      } else if (hand === 'scissor' && randoms === 2) {
+        resString = 'I lost 😞! Your ✂️ cut my 📜 to shreds';
+      } else if (hand === 'scissor' && randoms === 3) {
+        resString = 'It\'s a draw 😶! Both picked ✂️';
       }
+
+      rpsEmbed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+        .setTitle('Rock Paper Scissors')
+        .setDescription(resString);
+
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+
+      return msg.embed(rpsEmbed);
+    } catch (err) {
+      console.error(err);
       stopTyping(msg);
 
       return msg.reply('an error occurred getting a random result and I\'m not going to rig this game.');
-    });
+    }
   }
 };
