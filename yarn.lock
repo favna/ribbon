@@ -909,8 +909,8 @@ dijkstrajs@^1.0.1:
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
 discord.js-commando@favna/commando#ribbon:
-  version "1.1.6-ribbon"
-  resolved "https://codeload.github.com/favna/commando/tar.gz/f60528f2fd49811db86dfff2d7bd492cf7e9f5e2"
+  version "1.1.7-ribbon"
+  resolved "https://codeload.github.com/favna/commando/tar.gz/b8dde152ecacf63aa7a6963197e819d43b05b0ea"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
