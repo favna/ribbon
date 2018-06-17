@@ -49,6 +49,8 @@ module.exports = class DocsCommand extends Command {
     this.docs = {}; // Cache for docs
   }
 
+  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position, one-var*/
+
   async fetchDocs (version) {
     if (this.docs[version]) {
       return this.docs[version];
@@ -56,10 +58,10 @@ module.exports = class DocsCommand extends Command {
 
     const link = version === 'commando'
       ? 'https://raw.githubusercontent.com/Gawdl3y/discord.js-commando/docs/master.json'
-      : `https://raw.githubusercontent.com/hydrabolt/discord.js/docs/${version}.json`;
+      : `https://raw.githubusercontent.com/discordjs/discord.js/docs/${version}.json`;
 
-    const {text} = await request.get(link), // eslint-disable-line one-var
-      json = JSON.parse(text);
+    const {body} = await request.get(link), // eslint-disable-line one-var
+      json = JSON.parse(body);
 
     this.docs[version] = json;
 
@@ -205,6 +207,21 @@ module.exports = class DocsCommand extends Command {
       });
     }
 
+    this.formatSource(main.item.meta, version, embed);
+
+    return embed;
+  }
+
+  formatSource (meta, version, embed) {
+    const url = version === 'commando'
+      ? 'https://github.com/discordjs/commando/blob/master'
+      : `https://github.com/discordjs/discord.js/blob/${version}`;
+
+    embed.fields.push({
+      name: '\u200b',
+      value: `[View source](${url}/${meta.path}/${meta.file}#L${meta.line})`
+    });
+
     return embed;
   }
 
@@ -269,8 +286,8 @@ module.exports = class DocsCommand extends Command {
     }
 
     if (member.item.returns) {
-      const desc = member.item.returns.description ? `${this.clean(member.item.returns.description)}\n` : '';
-      const type = this.joinType(member.item.returns.types || member.item.returns), // eslint-disable-line one-var
+      const desc = member.item.returns.description ? `${this.clean(member.item.returns.description)}\n` : '',
+        type = this.joinType(member.item.returns.types || member.item.returns),
         returns = `${desc}\`=> ${type}\``; // eslint-disable-line sort-vars
 
       embed.fields.push({
@@ -290,6 +307,8 @@ module.exports = class DocsCommand extends Command {
         value: `\`\`\`js\n${member.item.examples.join('```\n```js\n')}\`\`\``
       });
     }
+
+    this.formatSource(member.item.meta, version, embed);
 
     return embed;
   }
@@ -328,13 +347,10 @@ module.exports = class DocsCommand extends Command {
     return embed;
   }
 
-  async run (msg, {
-    query,
-    version
-  }) {
+  async run (msg, {query, version}) {
     startTyping(msg);
-    const docs = await this.fetchDocs(version);
-    const [main, member] = this.search(docs, query); // eslint-disable-line one-var
+    const docs = await this.fetchDocs(version),
+      [main, member] = this.search(docs, query);
 
     if (!main) {
       return msg.say('Could not find that item in the docs.');
@@ -346,10 +362,9 @@ module.exports = class DocsCommand extends Command {
       events: this.formatEvent
     }[member.category].call(this, main, member, version) : this.formatMain(main, version);
 
-
     embed.url = this.getLink(version);
     embed.author = {
-      name: version === 'commando' ? 'Commando Docs' : `MessageEmbedjs Docs (${version})`,
+      name: version === 'commando' ? 'Commando Docs' : `Discord.JS Docs (${version})`,
       iconURL: 'https://github.com/discordjs.png'
     };
 
