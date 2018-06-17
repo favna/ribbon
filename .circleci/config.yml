@@ -57,6 +57,3 @@ jobs:
       - run:
           name: Code coverage
           command: ./node_modules/.bin/nyc --reporter=lcov yarn test > coverage.lcov && ./node_modules/.bin/codecov -t $codecovtoken || echo "Codecov did not collect coverage reports"
-notify:
-  webhooks:
-    - url: https://skyhook.glitch.me/api/webhooks/431587377799233537/_kvV2bj5VcFeDX7gf5LmdwQIdVF_bA0xG_zYg-06-LPz8uZbiWLj2oH-1DX_vj1SsrSQ/circleci
