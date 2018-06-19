@@ -46,75 +46,71 @@ module.exports = class GoogleCommand extends Command {
   }
 
   async run (msg, {query}) {
-    startTyping(msg);
-    const knowledgeRes = await request.get('https://kgsearch.googleapis.com/v1/entities:search')
-      .query('key', process.env.googleapikey)
-      .query('limit', 1)
-      .query('indent', true)
-      .query('query', query);
+    try {
+      startTyping(msg);
+      const knowledgeRes = await request.get('https://kgsearch.googleapis.com/v1/entities:search')
+        .query('key', process.env.googleapikey)
+        .query('limit', 1)
+        .query('indent', true)
+        .query('query', query);
 
-    knowledgeCheck: if (knowledgeRes) {
-      let result = knowledgeRes.body.itemListElement[0];
+      try {
+        const knowledgeGraphEmbed = new MessageEmbed(),
+          {result} = knowledgeRes.body.itemListElement[0];
 
-      if (!result || !result.result || !result.result.detailedDescription) {
-        break knowledgeCheck;
+        let types = result['@type'].map(t => t.replace(/([a-z])([A-Z])/g, '$1 $2')); // eslint-disable-line one-var
+
+        if (types.length > 1) {
+          types = types.filter(t => t !== 'Thing');
+        }
+
+        knowledgeGraphEmbed
+          .setURL(result.detailedDescription.url)
+          .setTitle(`${result.name} ${types.length === 0 ? '' : `(${types.join(', ')})`}`)
+          .setImage(result.image.contentUrl)
+          .setDescription(`${result.detailedDescription.articleBody} [Learn More...](${result.detailedDescription.url.replace(/\(/, '%28').replace(/\)/, '%29')})`);
+
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.embed(knowledgeGraphEmbed);
+      } catch (err) {
+        const normalRes = await request.get('https://www.googleapis.com/customsearch/v1') // eslint-disable-line one-var
+          .query('key', process.env.googleapikey)
+          .query('cx', process.env.searchkey)
+          .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
+          .query('q', query);
+
+        if (normalRes && normalRes.body.queries.request[0].totalResults !== '0') {
+          deleteCommandMessages(msg, this.client);
+          stopTyping(msg);
+
+          return msg.say(normalRes.body.items[0].link);
+        }
+
+        const noAPIRes = await request.get('https://www.google.com/search') // eslint-disable-line one-var
+            .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
+            .query('q', query),
+          $ = cheerio.load(noAPIRes.body.toString()), // eslint-disable-line sort-vars
+          href = $('.r').first() // eslint-disable-line sort-vars
+            .find('a')
+            .first()
+            .attr('href');
+
+        if (!href) {
+          return msg.reply('***nothing found***');
+        }
+
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.say(href.replace('/url?q=', '').split('&')[0]);
       }
-      result = result.result;
-      let types = result['@type'].map(t => t.replace(/([a-z])([A-Z])/g, '$1 $2')); // eslint-disable-line one-var
-
-      if (types.length > 1) {
-        types = types.filter(t => t !== 'Thing');
-      }
-
-      const knowledgeGraphEmbed = new MessageEmbed();
-
-      knowledgeGraphEmbed
-        .setURL(result.detailedDescription.url)
-        .setTitle(`${result.name} ${types.length === 0 ? '' : `(${types.join(', ')})`}`)
-        .setDescription(`${result.detailedDescription.articleBody} [Learn More...](${result.detailedDescription.url.replace(/\(/, '%28').replace(/\)/, '%29')})`);
-
+    } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(knowledgeGraphEmbed);
+      return msg.reply(`error occurred or nothing found for \`${query}\``);
     }
-
-    const normalRes = await request.get('https://www.googleapis.com/customsearch/v1') // eslint-disable-line one-var
-      .query('key', process.env.googleapikey)
-      .query('cx', process.env.searchkey)
-      .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
-      .query('q', query);
-
-    if (normalRes && normalRes.body.queries.request[0].totalResults !== '0') {
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
-
-      return msg.say(normalRes.body.items[0].link);
-    }
-
-    const noAPIRes = await request.get('https://www.google.com/search') // eslint-disable-line one-var
-      .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
-      .query('q', query);
-
-    if (noAPIRes) {
-      const $ = cheerio.load(noAPIRes.text),
-        href = $('.r').first()
-          .find('a')
-          .first()
-          .attr('href');
-
-      if (!href) {
-        return msg.reply('***nothing found***');
-      }
-
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
-
-      return msg.say(href.replace('/url?q=', '').split('&')[0]);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
-
-    return msg.reply(`nothing found for \`${query}\``);
   }
 };

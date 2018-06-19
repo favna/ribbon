@@ -82,30 +82,25 @@ module.exports = class OverwatchCommand extends Command {
   async run (msg, {player, platform, region}) {
     try {
       startTyping(msg);
-      const owEmbed = new MessageEmbed();
-      let owData = await request.get(`https://ow-api.com/v1/stats/${platform}/${region}/${player}/complete`).set('Content-Type', 'application/json');
+      const owData = await request.get(`https://ow-api.com/v1/stats/${platform}/${region}/${player}/complete`).set('Content-Type', 'application/json'),
+        owEmbed = new MessageEmbed(),
+        data = owData.body; // eslint-disable-line sort-vars
 
-      if (/(?:text(?:\/|-)plain){1}/i.test(owData.headers['content-type'])) {
-        owData = JSON.parse(owData.text);
-      } else {
-        owData = owData.body;
-      }
-
-      if (owData.error) {
+      if (data.error) {
         stopTyping(msg);
 
         return msg.reply('No player found by that name. Check the platform (`pc`, `psn` or `xbl`) and region (`us`, `eu` or `asia`)');
       }
 
-      const topCompetitiveHeroes = Object.keys(owData.competitiveStats.topHeroes).map(r => ({ // eslint-disable-line one-var
+      const topCompetitiveHeroes = Object.keys(data.competitiveStats.topHeroes).map(r => ({ // eslint-disable-line one-var
           hero: r,
-          time: ms(owData.competitiveStats.topHeroes[r].timePlayed)
+          time: ms(data.competitiveStats.topHeroes[r].timePlayed)
         }))
           .sort((a, b) => a.time > b.time)
           .reverse(),
-        topQuickPlayHeroes = Object.keys(owData.quickPlayStats.topHeroes).map(r => ({
+        topQuickPlayHeroes = Object.keys(data.quickPlayStats.topHeroes).map(r => ({
           hero: r,
-          time: ms(owData.quickPlayStats.topHeroes[r].timePlayed)
+          time: ms(data.quickPlayStats.topHeroes[r].timePlayed)
         }))
           .sort((a, b) => a.time > b.time)
           .reverse();
@@ -113,40 +108,40 @@ module.exports = class OverwatchCommand extends Command {
       owEmbed
         .setAuthor('Overwatch Player Statistics', 'https://favna.xyz/images/ribbonhost/overwatch.png')
         .setURL(`https://playoverwatch.com/en-us/career/${platform}/${player}`)
-        .setThumbnail(owData.icon)
+        .setThumbnail(data.icon)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .addField('Account Stats', stripIndents`
-          Level: **${owData.level}**
-          Prestige level: **${owData.level + (owData.prestige * 100)}**
-          Rank: **${owData.rating ? owData.rating : 'Unknown Rating'}${owData.ratingName ? ` (${owData.ratingName})` : null}**
-          Total Games Won: **${owData.gamesWon ? owData.gamesWon : 'No games won'}**
+          Level: **${data.level}**
+          Prestige level: **${data.level + (data.prestige * 100)}**
+          Rank: **${data.rating ? data.rating : 'Unknown Rating'}${data.ratingName ? ` (${data.ratingName})` : null}**
+          Total Games Won: **${data.gamesWon ? data.gamesWon : 'No games won'}**
           `, true)
         .addBlankField(true)
         .addField('Quickplay Stats', stripIndents`
-          Final Blows: **${owData.quickPlayStats.careerStats.allHeroes.combat.finalBlows}**
-          Deaths: **${owData.quickPlayStats.careerStats.allHeroes.combat.deaths}**
-          Damage Dealt: **${owData.quickPlayStats.careerStats.allHeroes.combat.damageDone}**
-          Healing: **${owData.quickPlayStats.careerStats.allHeroes.assists.healingDone}**
-          Objective Kills: **${owData.quickPlayStats.careerStats.allHeroes.combat.objectiveKills}**
-          Solo Kills: **${owData.quickPlayStats.careerStats.allHeroes.combat.soloKills}**
-          Playtime: **${owData.quickPlayStats.careerStats.allHeroes.game.timePlayed}**
-          Games Won: **${owData.quickPlayStats.games.won}**
-          Golden Medals: **${owData.quickPlayStats.awards.medalsGold}**
-          Silver Medals: **${owData.quickPlayStats.awards.medalsSilver}**
-          Bronze Medals: **${owData.quickPlayStats.awards.medalsBronze}**
+          Final Blows: **${data.quickPlayStats.careerStats.allHeroes.combat.finalBlows}**
+          Deaths: **${data.quickPlayStats.careerStats.allHeroes.combat.deaths}**
+          Damage Dealt: **${data.quickPlayStats.careerStats.allHeroes.combat.damageDone}**
+          Healing: **${data.quickPlayStats.careerStats.allHeroes.assists.healingDone}**
+          Objective Kills: **${data.quickPlayStats.careerStats.allHeroes.combat.objectiveKills}**
+          Solo Kills: **${data.quickPlayStats.careerStats.allHeroes.combat.soloKills}**
+          Playtime: **${data.quickPlayStats.careerStats.allHeroes.game.timePlayed}**
+          Games Won: **${data.quickPlayStats.games.won}**
+          Golden Medals: **${data.quickPlayStats.awards.medalsGold}**
+          Silver Medals: **${data.quickPlayStats.awards.medalsSilver}**
+          Bronze Medals: **${data.quickPlayStats.awards.medalsBronze}**
           `, true)
         .addField('Competitive Stats', stripIndents`
-        Final Blows: **${owData.competitiveStats.careerStats.allHeroes.combat.finalBlows}**
-        Deaths: **${owData.competitiveStats.careerStats.allHeroes.combat.deaths}**
-        Damage Dealt: **${owData.competitiveStats.careerStats.allHeroes.combat.damageDone}**
-        Healing: **${owData.competitiveStats.careerStats.allHeroes.assists.healingDone}**
-        Objective Kills: **${owData.competitiveStats.careerStats.allHeroes.combat.objectiveKills}**
-        Solo Kills: **${owData.competitiveStats.careerStats.allHeroes.combat.soloKills}**
-        Playtime: **${owData.competitiveStats.careerStats.allHeroes.game.timePlayed}**
-        Games Won: **${owData.competitiveStats.games.won}**
-        Golden Medals: **${owData.competitiveStats.awards.medalsGold}**
-        Silver Medals: **${owData.competitiveStats.awards.medalsSilver}**
-        Bronze Medals: **${owData.competitiveStats.awards.medalsBronze}**
+        Final Blows: **${data.competitiveStats.careerStats.allHeroes.combat.finalBlows}**
+        Deaths: **${data.competitiveStats.careerStats.allHeroes.combat.deaths}**
+        Damage Dealt: **${data.competitiveStats.careerStats.allHeroes.combat.damageDone}**
+        Healing: **${data.competitiveStats.careerStats.allHeroes.assists.healingDone}**
+        Objective Kills: **${data.competitiveStats.careerStats.allHeroes.combat.objectiveKills}**
+        Solo Kills: **${data.competitiveStats.careerStats.allHeroes.combat.soloKills}**
+        Playtime: **${data.competitiveStats.careerStats.allHeroes.game.timePlayed}**
+        Games Won: **${data.competitiveStats.games.won}**
+        Golden Medals: **${data.competitiveStats.awards.medalsGold}**
+        Silver Medals: **${data.competitiveStats.awards.medalsSilver}**
+        Bronze Medals: **${data.competitiveStats.awards.medalsBronze}**
           `, true)
         .addField('top Heroes Quick Play', stripIndents`
         **${capitalizeFirstLetter(topQuickPlayHeroes[0].hero)}** (${moment.duration(topQuickPlayHeroes[0].time, 'milliseconds').format('H [hours]', 2)})

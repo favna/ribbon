@@ -45,17 +45,18 @@ module.exports = class ImageCommand extends Command {
   }
 
   async run (msg, {query}) {
-    startTyping(msg);
     const embed = new MessageEmbed();
 
-    let res = await request.get('https://www.googleapis.com/customsearch/v1')
-      .query('cx', process.env.imagekey)
-      .query('key', process.env.googleapikey)
-      .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
-      .query('searchType', 'image')
-      .query('q', query);
+    try {
+      startTyping(msg);
 
-    if (res && res.body.items) {
+      const res = await request.get('https://www.googleapis.com/customsearch/v1')
+        .query('cx', process.env.imagekey)
+        .query('key', process.env.googleapikey)
+        .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
+        .query('searchType', 'image')
+        .query('q', query);
+
       embed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setImage(res.body.items[0].link)
@@ -65,33 +66,33 @@ module.exports = class ImageCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(embed);
+    } catch (apiErr) {
+      try {
+        const res = await request.get('https://www.google.com/search')
+            .query('tbm', 'isch')
+            .query('gs_l', 'img')
+            .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
+            .query('q', query),
+          $ = cheerio.load(res.body.toString()), // eslint-disable-line sort-vars
+          result = $('.images_table').find('img')
+            .first()
+            .attr('src');
+
+        embed
+          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+          .setImage(result)
+          .setFooter(`Search query: "${query}"`);
+
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.embed(embed);
+      } catch (regErr) {
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.reply(`nothing found for \`${msg.argString}\``);
+      }
     }
-
-    if (!res) {
-      res = await request.get('https://www.google.com/search')
-        .query('tbm', 'isch')
-        .query('gs_l', 'img')
-        .query('safe', msg.guild ? msg.channel.nsfw ? 'off' : 'medium' : 'high') // eslint-disable-line no-nested-ternary
-        .query('q', query);
-
-      const $ = cheerio.load(res.text),
-        result = $('.images_table').find('img')
-          .first()
-          .attr('src');
-
-      embed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setImage(result)
-        .setFooter(`Search query: "${query}"`);
-
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
-
-      return msg.embed(embed);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
-
-    return msg.reply(`nothing found for \`${query}\``);
   }
 };
