@@ -10,7 +10,7 @@
  */
 
 const moment = require('moment'),
-  request = require('snekfetch'),
+  request = require('request'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
@@ -41,31 +41,44 @@ module.exports = class DiscordBotsCommand extends Command {
     });
   }
 
-  async run (msg, {bot}) {
+  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position, consistent-return*/
+  run (msg, {bot}) {
     try {
       startTyping(msg);
-      const info = await request.get(`https://discordbots.org/api/bots/${bot}`).set('Authorization', process.env.discordbotskey),
-        infoEmbed = new MessageEmbed(),
-        infoParsed = JSON.parse(info.text);
+      // const info = await request.get(`https://discordbots.org/api/bots/${bot}`).set('Authorization', process.env.discordbotskey),
+      //   infoEmbed = new MessageEmbed(),
+      //   infoParsed = JSON.parse(info.text);
 
-      infoEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setTitle(`Discord Bots Info for ${infoParsed.username}#${infoParsed.discriminator} (${infoParsed.clientid})`)
-        .setURL(`https://discordbots.org/bot/${infoParsed.clientid}`)
-        .setThumbnail(`https://images.discordapp.net/avatars/${infoParsed.clientid}/${infoParsed.avatar}.png`)
-        .setDescription(infoParsed.shortdesc)
-        .setFooter(`${infoParsed.username}#${infoParsed.discriminator} was submitted`)
-        .setTimestamp(moment(infoParsed.date)._d)
-        .addField('Default Prefix', infoParsed.prefix, true)
-        .addField('Library', infoParsed.lib, true)
-        .addField('Server Count', infoParsed.server_count, true) // eslint-disable-line camelcase
-        .addField('Shards Count', infoParsed.shards.length, true)
-        .addField('Invite Link', `[Click Here](${infoParsed.invite})`);
+      request({
+        url: `https://discordbots.org/api/bots/${bot}`,
+        headers: {Authorization: process.env.discordbotskey}
+      }, (err, resp, body) => {
+        if (err) {
+          throw new Error('DBAPI ERROR');
+        }
 
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
+        const infoEmbed = new MessageEmbed(),
+          infoParsed = JSON.parse(body);
 
-      return msg.embed(infoEmbed, `https://discordbots.org/bot/${infoParsed.clientid}`);
+        infoEmbed
+          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+          .setTitle(`Discord Bots Info for ${infoParsed.username}#${infoParsed.discriminator} (${infoParsed.clientid})`)
+          .setURL(`https://discordbots.org/bot/${infoParsed.clientid}`)
+          .setThumbnail(`https://images.discordapp.net/avatars/${infoParsed.clientid}/${infoParsed.avatar}.png`)
+          .setDescription(infoParsed.shortdesc)
+          .setFooter(`${infoParsed.username}#${infoParsed.discriminator} was submitted`)
+          .setTimestamp(moment(infoParsed.date)._d)
+          .addField('Default Prefix', infoParsed.prefix, true)
+          .addField('Library', infoParsed.lib, true)
+          .addField('Server Count', infoParsed.server_count, true) // eslint-disable-line camelcase
+          .addField('Shards Count', infoParsed.shards.length, true)
+          .addField('Invite Link', `[Click Here](${infoParsed.invite})`);
+
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.embed(infoEmbed, `https://discordbots.org/bot/${infoParsed.clientid}`);
+      });
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
