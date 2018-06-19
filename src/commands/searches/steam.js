@@ -54,7 +54,7 @@ module.exports = class SteamCommand extends Command {
       const steam = new SteamAPI(process.env.steamkey),
         steamEmbed = new MessageEmbed(),
         steamSearch = await request.get(`http://store.steampowered.com/search/?term=${game}`),
-        $ = cheerio.load(steamSearch.text),
+        $ = cheerio.load(steamSearch.body.toString()),
         gameID = $('#search_result_container > div:nth-child(2) > a:nth-child(2)').attr('href')
           .split('/')[4],
         steamData = await steam.getGameDetails(gameID),
