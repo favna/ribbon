@@ -60,7 +60,7 @@ module.exports = class YouTubeCommand extends Command {
       }
 
       embed
-        .setTitle(`Youtube Search Result for "${res.request.query.q}"`)
+        .setTitle(`Youtube Search Result for "${video}"`)
         .setURL(`https://www.youtube.com/watch?v=${res.body.items[0].id.videoId}`)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setImage(res.body.items[0].snippet.thumbnails.high.url)
