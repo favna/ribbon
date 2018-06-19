@@ -41,11 +41,11 @@ module.exports = class RemindCommand extends Command {
           prompt: 'Reply with the time in which you want to be reminded?',
           type: 'string',
           validate: (t) => {
-            if (/^(?:[0-9]{1,2}(?:m|h|d){1})$/i.test(t)) {
+            if (/^(?:[0-9]{1,2}(?:m|h|hr|d){1})$/i.test(t)) {
               return true;
             }
 
-            return 'Has to be in the pattern of `50m`, `2h` or `01d` wherein `m` would be minutes, `h` would be hours and `d` would be days';
+            return 'Has to be in the pattern of `50m`, `2h`, `3hr` or `01d` wherein `m` would be minutes, `h` (or `hr`) would be hours and `d` would be days';
           },
           parse: (t) => {
             const match = t.match(/[a-z]+|[^a-z]+/gi);
@@ -56,6 +56,7 @@ module.exports = class RemindCommand extends Command {
               multiplier = 1;
               break;
             case 'h':
+            case 'hr':
               multiplier = 60;
               break;
             case 'd':
