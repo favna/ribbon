@@ -23,20 +23,21 @@ module.exports = class DBPostCommand extends Command {
   }
 
   async run (msg) {
-    startTyping(msg);
-    const post = await request.post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
-      .set('Authorization', process.env.discordbotskey)
-      .send({server_count: this.client.guilds.size}); // eslint-disable-line camelcase
+    try {
+      startTyping(msg);
+      await request.post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
+        .set('Authorization', process.env.discordbotskey)
+        .send({server_count: this.client.guilds.size}); // eslint-disable-line camelcase
 
-    if (post) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
       return msg.reply('updated discordbots.org stats.');
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.reply('an error occurred updating discordbots.org stats.');
+      return msg.reply('an error occurred updating discordbots.org stats.');
+    }
   }
 };
