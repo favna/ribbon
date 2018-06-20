@@ -97,10 +97,6 @@ module.exports = class GoogleCommand extends Command {
             .first()
             .attr('href');
 
-        if (!href) {
-          return msg.reply('***nothing found***');
-        }
-
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
