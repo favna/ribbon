@@ -205,6 +205,9 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_invite">invite</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info InviteCommand - Gets the invite link for the bot<br><strong>Aliases</strong>: <code>inv</code>, <code>links</code>, <code>shill</code></p>
 </dd>
+<dt><a href="#module_Reddit">Reddit</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Info RedditCommand - Gets statistics on a Reddit user<br><strong>Aliases</strong>: <code>red</code>, <code>redditor</code></p>
+</dd>
 <dt><a href="#module_server">server</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info ServerInfoCommand - Gets information about the current server<br><strong>Aliases</strong>: <code>serverinfo</code>, <code>sinfo</code></p>
 </dd>
@@ -1245,6 +1248,23 @@ Info InviteCommand - Gets the invite link for the bot
 
 **Returns**: <code>MessageEmbed</code> - Invite link along with other links  
 **Category**: info  
+<a name="module_Reddit"></a>
+
+## Reddit ⇒ <code>MessageEmbed</code>
+Info RedditCommand - Gets statistics on a Reddit user  
+**Aliases**: `red`, `redditor`
+
+**Returns**: <code>MessageEmbed</code> - Statistics of the reddit user  
+**Category**: info  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| RedditUser | <code>StringResolvable</code> | The Reddit user you want to look up |
+
+**Example**  
+```js
+reddit favna
+```
 <a name="module_server"></a>
 
 ## server ⇒ <code>MessageEmbed</code>
