@@ -112,7 +112,7 @@ module.exports = class DexCommand extends Command {
       aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null,
       pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch,
       dexEmbed = new MessageEmbed();
-
+      /* eslint-enable sort-vars */
 
     if (pokeSearch.length) {
       const poke = pokeSearch[0],
@@ -122,10 +122,8 @@ module.exports = class DexCommand extends Command {
           flavors: '*PokéDex data not found for this Pokémon*',
           genders: '',
           sprite: '',
-          tier: smogonFormats.find(s => s.name === poke.species.toLowerCase()).tier
+          tier: smogonFormats.find(s => s.name === poke.species.toLowerCase().replace(/(-| )/gm, '')).tier
         };
-      /* eslint-enable sort-vars */
-
 
       if (poke.prevo) {
         pokeData.evos = oneLine`${capitalizeFirstLetter(poke.prevo)} ${pokeFuse.search(poke.prevo)[0].evoLevel ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})` : ''}
@@ -206,7 +204,7 @@ module.exports = class DexCommand extends Command {
         .addField('Type(s)', poke.types.join(', '), true)
         .addField('Abilities', pokeData.abilities, true)
         .addField('Gender Ratio', pokeData.genders, true)
-        .addField('Smogon Tier', pokeData.tier, true)
+        .addField('Smogon Tier', pokeData.tier ? pokeData.tier : 'Unknown/Alt form', true)
         .addField('Height', `${poke.heightm}m`, true)
         .addField('Weight', `${poke.weightkg}kg`, true)
         .addField('Egg Groups', poke.eggGroups.join(', '), true);
