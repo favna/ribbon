@@ -76,7 +76,7 @@ module.exports = class MoveCommand extends Command {
     if (moveSearch.length) {
       moveEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
         .addField('Description', moveSearch[0].desc ? moveSearch[0].desc : moveSearch[0].shortDesc)
         .addField('Type', moveSearch[0].type, true)
         .addField('Base Power', moveSearch[0].basePower, true)

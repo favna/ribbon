@@ -67,7 +67,7 @@ module.exports = class ItemCommand extends Command {
     if (itemSearch.length) {
       itemEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
         .setAuthor(`${capitalizeFirstLetter(itemSearch[0].name)}`, `https://play.pokemonshowdown.com/sprites/itemicons/${itemSearch[0].name.toLowerCase().replace(/ /g, '-')}.png`)
         .addField('Description', itemSearch[0].desc)
         .addField('Generation Introduced', itemSearch[0].gen)

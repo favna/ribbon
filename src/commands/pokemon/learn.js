@@ -137,7 +137,7 @@ module.exports = class LearnCommand extends Command {
 
       learnEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
         .setAuthor(`${capitalizeFirstLetter(pokemon)}`, `https://favna.xyz/images/ribbonhost/pokesprites/regular/${pokemon.toLowerCase().replace(/ /g, '')}.png`)
         .setDescription(response.join('\n'));
 

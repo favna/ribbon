@@ -251,7 +251,7 @@ module.exports = class TypeCommand extends Command {
 
     typeEmbed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
+      .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
       .setAuthor(`Type effectiveness for ${displayTypes.join(', ')}`)
       .addField('Offense', atkVulnDisplay.join('\n\n'))
       .addField('Defense', vulnDisplay.join('\n\n'))

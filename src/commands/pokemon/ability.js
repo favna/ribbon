@@ -66,7 +66,7 @@ module.exports = class AbilityCommand extends Command {
     if (abilitySearch.length) {
       abilityEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
         .addField('Description', abilitySearch[0].desc ? abilitySearch[0].desc : abilitySearch[0].shortDesc)
         .addField('External Resource', oneLine`
 			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(abilitySearch[0].name.replace(/ /g, '_'))}_(Ability\\))  

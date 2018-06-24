@@ -190,7 +190,7 @@ module.exports = class DexCommand extends Command {
 
       dexEmbed
         .setColor(this.fetchColor(poke.color))
-        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png');
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png');
 
       if (poke.num < 0) {
         pokeData.sprite = 'https://favna.xyz/images/ribbonhost/pokesprites/unknown.png';

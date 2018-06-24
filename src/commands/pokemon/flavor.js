@@ -165,7 +165,7 @@ module.exports = class FlavorCommand extends Command {
         .setColor(this.fetchColor(pokeSearch[0].color))
         .setAuthor(`#${pokeSearch[0].num} - ${capitalizeFirstLetter(pokeSearch[0].species)}`, pokeSearch[0].sprite)
         .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${pokeSearch[0].species.toLowerCase().replace(' ', '')}.gif`)
-        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosed.png')
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
         .setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.');
 
       if (pokeSearch[0].num === 0) {
