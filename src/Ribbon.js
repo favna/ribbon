@@ -1,5 +1,7 @@
 /* eslint-disable sort-vars */
 const Database = require('better-sqlite3'),
+  decache = require('decache'),
+  fs = require('fs'),
   moment = require('moment'),
   path = require('path'),
   request = require('snekfetch'),
@@ -333,6 +335,13 @@ class Ribbon {
       setInterval(() => {
         lotto(bot);
       }, 86400000);
+
+      fs.watch(path.join(__dirname, 'data/dex/formats.json'), (eventType, filename) => {
+        if (filename) {
+          decache(path.join(__dirname, 'data/dex/formats.json'));
+          this.client.registry.resolveCommand('pokemon:dex').reload();
+        }
+      });
     };
   }
 

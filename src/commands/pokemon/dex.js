@@ -13,7 +13,8 @@
 
 const Fuse = require('fuse.js'),
   dexEntries = require('../../data/dex/flavorText.json'),
-  path = require('path'),
+  smogonFormats = require('../../data/dex/formats.json'),
+  path = require('path'), // eslint-disable-line sort-vars
   zalgo = require('to-zalgo'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
@@ -111,7 +112,7 @@ module.exports = class DexCommand extends Command {
       aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null,
       pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch,
       dexEmbed = new MessageEmbed();
-    /* eslint-enable sort-vars */
+
 
     if (pokeSearch.length) {
       const poke = pokeSearch[0],
@@ -120,8 +121,11 @@ module.exports = class DexCommand extends Command {
           evos: `**${capitalizeFirstLetter(poke.species)}**`,
           flavors: '*PokéDex data not found for this Pokémon*',
           genders: '',
-          sprite: ''
+          sprite: '',
+          tier: smogonFormats.find(s => s.name === poke.species.toLowerCase()).tier
         };
+      /* eslint-enable sort-vars */
+
 
       if (poke.prevo) {
         pokeData.evos = oneLine`${capitalizeFirstLetter(poke.prevo)} ${pokeFuse.search(poke.prevo)[0].evoLevel ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})` : ''}
@@ -162,18 +166,18 @@ module.exports = class DexCommand extends Command {
         pokeData.genders = 'None';
         break;
       case 'M':
-        pokeData.genders = '100% Male';
+        pokeData.genders = '100% ♂';
         break;
       case 'F':
-        pokeData.genders = '100% Female';
+        pokeData.genders = '100% ♀';
         break;
       default:
-        pokeData.genders = '50% Male | 50% Female';
+        pokeData.genders = '50% ♂ | 50% ♀';
         break;
       }
 
       if (poke.genderRatio) {
-        pokeData.genders = `${poke.genderRatio.M * 100}% Male | ${poke.genderRatio.F * 100}% Female`;
+        pokeData.genders = `${poke.genderRatio.M * 100}% ♂ | ${poke.genderRatio.F * 100}% ♀`;
       }
 
       if (poke.num >= 0) {
@@ -200,11 +204,12 @@ module.exports = class DexCommand extends Command {
         .setAuthor(`#${poke.num} - ${capitalizeFirstLetter(poke.species)}`, pokeData.sprite)
         .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/ /g, '')}.gif`)
         .addField('Type(s)', poke.types.join(', '), true)
-        .addField('Height', `${poke.heightm}m`, true)
+        .addField('Abilities', pokeData.abilities, true)
         .addField('Gender Ratio', pokeData.genders, true)
+        .addField('Smogon Tier', pokeData.tier, true)
+        .addField('Height', `${poke.heightm}m`, true)
         .addField('Weight', `${poke.weightkg}kg`, true)
-        .addField('Egg Groups', poke.eggGroups.join(', '), true)
-        .addField('Abilities', pokeData.abilities, true);
+        .addField('Egg Groups', poke.eggGroups.join(', '), true);
       poke.otherFormes ? dexEmbed.addField('Other Formes', poke.otherFormes.join(', '), true) : null;
       dexEmbed
         .addField('Evolutionary Line', pokeData.evos, false)
