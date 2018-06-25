@@ -1,13 +1,14 @@
 /**
  * @file Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all  
  * Moves split on every `,`. See examples for usages.  
- * You can specify a generation for the match as third argument, in this case make sure to wrap the moves in `' '` if they have spaces!  
+ * You can specify a generation for the match by adding `--gen [1-7]` anywhere in the list of moves, with `[1-7]` being a number in that range. Generation defaults to 7  
  * **Aliases**: `learnset`, `learnall`
  * @module
  * @category pokemon
  * @name learn
  * @example learn dragonite dragon dance
  * @example learn dragonite dragon dance,dragon claw
+ * @example learn dragonite dragon dance, dragon claw --gen 6
  * @param {StringResolvable} PokemonName Name of the pokemon to get the match for
  * @param {StringResolvable} [MoveName] Name of the move you want to find out about
  * @param {StringResolvable} [AnotherMoveName] Any additional moves you also want to find out about
@@ -32,9 +33,9 @@ module.exports = class LearnCommand extends Command {
       aliases: ['learnset', 'learnall'],
       description: 'Displays how a Pokemon can learn given moves, if at all',
       details: stripIndents`Moves split on every \`,\`. See examples for usages.
-      You can specify a generation for the match as third argument, in this case make sure to wrap the moves in \`' '\` if they have spaces!`,
+      You can specify a generation for the match by adding \`--gen [1-7]\` anywhere in the list of moves, with \`[1-7]\` being a number in that range. Generation defaults to 7`,
       format: 'PokemonName MoveName[, AnotherMoveName...] [Generation]',
-      examples: ['learn dragonite dragon dance', 'learn dragonite dragon dance,dragon claw'],
+      examples: ['learn dragonite dragon dance', 'learn dragonite dragon dance,dragon claw', 'learn dragonite dragon dance, dragon claw --gen 6'],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -46,50 +47,37 @@ module.exports = class LearnCommand extends Command {
           prompt: 'For which Pokemon should I check move learnability?',
           type: 'string',
           validate: (v) => {
-            if (v.toLowerCase() in BattleLearnsets) {
+            v = v.toLowerCase().replace(/(:| )/gm, '');
+            if (v in BattleLearnsets) {
               return true;
             }
 
             return `\`${v}\` is not a (supported) pokemon, please provide a pokemon name`;
           },
-          parse: p => p.toLowerCase()
+          parse: p => p.toLowerCase().replace(/(:| )/gm, '')
         },
         {
           key: 'moves',
           prompt: 'Which move(s) should I check for that Pokemon?',
           type: 'string',
-          parse: (p) => {
-            p.toLowerCase();
-            if (p.includes(',')) {
-              return p.split(',');
-            }
-
-            return [p];
-          }
-        },
-        {
-          key: 'gen',
-          prompt: 'For which generation should move learnability be checked?',
-          type: 'integer',
-          default: 7,
-          validate: (v, msg) => {
-            if (v >= 1 && v <= 7) {
-              return true;
-            }
-
-            return stripIndents`has to be a number between 1 and 7 (including boundaries)
-            **__Note__**: If you got this message when you had spaces in your list of moves just reply \`7\` for now.
-            the next time you have a move with spaces be sure to wrap it in \`''\`
-            for example \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}learn pichu 'judgement,thunderbolt,tackle,extreme speed'\` `;
-          }
+          parse: p => p.toLowerCase().replace(/ /gm, '')
         }
       ]
     });
   }
 
-  run (msg, {pokemon, moves, gen}) {
+  run (msg, {pokemon, moves, gen = 7}) {
     try {
       startTyping(msg);
+      if (/(?:--gen)/i.test(moves)) {
+        gen = moves.match(/[1-7]/gm) ? moves.match(/[1-7]/gm)[0] : 7;
+        moves = moves.substring(0, moves.indexOf('--gen')) + moves.substring(moves.indexOf('--gen') + '--gen'.length + 1);
+      }
+      if (moves.includes(',')) {
+        moves = moves.split(',');
+      } else {
+        moves = [moves];
+      }
 
       const {learnset} = BattleLearnsets[pokemon],
         learnEmbed = new MessageEmbed(),
@@ -122,7 +110,7 @@ module.exports = class LearnCommand extends Command {
               response.push(`${pokemon} **__can__** learn ${move} as Egg Move`);
               break;
             case 'S':
-              response.push(`${pokemon} **__can__** learn ${move}, but it is Event Exclusive`);
+              response.push(`${pokemon} **__can__** learn ${move} through an event`);
               break;
             case 'D':
               response.push(`${pokemon} **__can__** learn ${move} through Dream World`);
@@ -138,7 +126,7 @@ module.exports = class LearnCommand extends Command {
       learnEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
-        .setAuthor(`${capitalizeFirstLetter(pokemon)}`, `https://favna.xyz/images/ribbonhost/pokesprites/regular/${pokemon.toLowerCase().replace(/ /g, '')}.png`)
+        .setAuthor(`${capitalizeFirstLetter(pokemon)} - Generation ${gen}`, `https://favna.xyz/images/ribbonhost/pokesprites/regular/${pokemon.toLowerCase().replace(/ /g, '')}.png`)
         .setDescription(response.join('\n'));
 
       deleteCommandMessages(msg, this.client);
