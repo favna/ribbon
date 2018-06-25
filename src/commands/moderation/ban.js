@@ -44,6 +44,8 @@ module.exports = class banCommand extends Command {
         }
       ]
     });
+
+    this.regex = /--nodelete/im;
   }
 
   hasPermission (msg) {
@@ -64,7 +66,7 @@ module.exports = class banCommand extends Command {
       return msg.reply('I cannot ban that member, their role is probably higher than my own!');
     }
 
-    if (/--nodelete/im.test(msg.argString)) {
+    if (this.regex.test(msg.argString)) {
       reason = reason.substring(0, reason.indexOf('--nodelete')) + reason.substring(reason.indexOf('--nodelete') + '--nodelete'.length + 1);
       keepmessages = true;
     }
