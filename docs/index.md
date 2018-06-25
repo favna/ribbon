@@ -409,7 +409,7 @@ There are 4 ways to queue songs  </p>
 For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p>
 </dd>
 <dt><a href="#module_learn">learn</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all<br>Moves split on every <code>,</code>. See examples for usages.<br>You can specify a generation for the match as third argument, in this case make sure to wrap the moves in <code>&#39; &#39;</code> if they have spaces!<br><strong>Aliases</strong>: <code>learnset</code>, <code>learnall</code></p>
+<dd><p>Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all<br>Moves split on every <code>,</code>. See examples for usages.<br>You can specify a generation for the match by adding <code>--gen [1-7]</code> anywhere in the list of moves, with <code>[1-7]</code> being a number in that range. Generation defaults to 7<br><strong>Aliases</strong>: <code>learnset</code>, <code>learnall</code></p>
 </dd>
 <dt><a href="#module_ability">ability</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pokémon AbilityCommand - Gets information on an ability in Pokémon<br><strong>Aliases</strong>: <code>abilities</code>, <code>abi</code></p>
@@ -2269,7 +2269,7 @@ item assault vest
 ## learn ⇒ <code>MessageEmbed</code>
 Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all  
 Moves split on every `,`. See examples for usages.  
-You can specify a generation for the match as third argument, in this case make sure to wrap the moves in `' '` if they have spaces!  
+You can specify a generation for the match by adding `--gen [1-7]` anywhere in the list of moves, with `[1-7]` being a number in that range. Generation defaults to 7  
 **Aliases**: `learnset`, `learnall`
 
 **Returns**: <code>MessageEmbed</code> - Info on whether the Pokemon can learn the move and how or not  
@@ -2289,6 +2289,10 @@ learn dragonite dragon dance
 **Example**  
 ```js
 learn dragonite dragon dance,dragon claw
+```
+**Example**  
+```js
+learn dragonite dragon dance, dragon claw --gen 6
 ```
 <a name="module_ability"></a>
 
