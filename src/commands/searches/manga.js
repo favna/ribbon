@@ -43,7 +43,6 @@ module.exports = class MangaCommand extends Command {
     });
   }
 
-  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
   async run (msg, {manga}) {
     try {
       startTyping(msg);
