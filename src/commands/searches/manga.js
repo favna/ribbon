@@ -46,15 +46,15 @@ module.exports = class MangaCommand extends Command {
   async run (msg, {manga}) {
     try {
       startTyping(msg);
-      const animeEmbed = new MessageEmbed(),
-        animeList = await request.post(`https://${process.env.kitsuid}-dsn.algolia.net/1/indexes/production_media/query`)
+      const mangaEmbed = new MessageEmbed(),
+        mangaList = await request.post(`https://${process.env.kitsuid}-dsn.algolia.net/1/indexes/production_media/query`)
           .set('Content-Type', 'application/json')
           .set('X-Algolia-Application-Id', process.env.kitsuid)
           .set('X-Algolia-API-Key', process.env.kitsukey)
           .send({params: `query=${manga}&facetFilters=[\"kind:manga\"]`}),
-        hit = animeList.body.hits[0];
+        hit = mangaList.body.hits[0]; // eslint-disable-line sort-vars
 
-      animeEmbed
+      mangaEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setTitle(hit.titles.en)
         .setURL(`https://kitsu.io/anime/${hit.id}`)
@@ -70,7 +70,7 @@ module.exports = class MangaCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(animeEmbed, `https://kitsu.io/manga/${hit.slug}`);
+      return msg.embed(mangaEmbed, `https://kitsu.io/manga/${hit.slug}`);
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
