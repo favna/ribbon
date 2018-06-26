@@ -51,7 +51,8 @@ module.exports = class HugCommand extends Command {
         'https://favna.xyz/images/ribbonhost/hug/hug09.gif',
         'https://favna.xyz/images/ribbonhost/hug/hug10.gif',
         'https://favna.xyz/images/ribbonhost/hug/hug11.gif',
-        'https://favna.xyz/images/ribbonhost/hug/hug12.gif'
+        'https://favna.xyz/images/ribbonhost/hug/hug12.gif',
+        'https://favna.xyz/images/ribbonhost/hug/hug13.gif'
       ],
       curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
 
