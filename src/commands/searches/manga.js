@@ -1,5 +1,5 @@
 /**
- * @file Searches MangaCommand - Gets information about any manga from MyAnimeList  
+ * @file Searches MangaCommand - Gets information about any manga from kitsu.io  
  * **Aliases**: `cartoon`, `man`
  * @module
  * @category searches
@@ -9,10 +9,12 @@
  * @returns {MessageEmbed} Information about the requested manga
  */
 
-const maljs = require('maljs'),
-  {Command} = require('discord.js-commando'),
+const moment = require('moment'),
+  momentduration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
+  request = require('snekfetch'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+  {Command} = require('discord.js-commando'),
+  {deleteCommandMessages, removeDiacritics, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class MangaCommand extends Command {
   constructor (client) {
@@ -21,7 +23,7 @@ module.exports = class MangaCommand extends Command {
       memberName: 'manga',
       group: 'searches',
       aliases: ['cartoon', 'man'],
-      description: 'Finds manga on MyAnimeList',
+      description: 'Finds manga on kitsu.io',
       format: 'MangaName',
       examples: ['manga Pokemon'],
       guildOnly: false,
@@ -33,33 +35,43 @@ module.exports = class MangaCommand extends Command {
         {
           key: 'manga',
           prompt: 'What manga do you want to find?',
-          type: 'string'
+          type: 'string',
+          parse: p => removeDiacritics(p.toLowerCase().replace(/([^a-zA-Z0-9_\- ])/gm, '')),
+          default: 'pokemon'
         }
       ]
     });
   }
 
+  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
   async run (msg, {manga}) {
     try {
       startTyping(msg);
-      const manEmbed = new MessageEmbed(),
-        search = await maljs.quickSearch(manga, 'manga'),
-        searchDetails = await search.manga[0].fetch();
+      const animeEmbed = new MessageEmbed(),
+        animeList = await request.post(`https://${process.env.kitsuid}-dsn.algolia.net/1/indexes/production_media/query`)
+          .set('Content-Type', 'application/json')
+          .set('X-Algolia-Application-Id', process.env.kitsuid)
+          .set('X-Algolia-API-Key', process.env.kitsukey)
+          .send({params: `query=${manga}&facetFilters=[\"kind:manga\"]`}),
+        hit = animeList.body.hits[0];
 
-      manEmbed
+      animeEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setTitle(searchDetails.title)
-        .setImage(searchDetails.cover)
-        .setDescription(searchDetails.description)
-        .setURL(`${searchDetails.mal.url}${searchDetails.path}`)
-        .addField('Score', searchDetails.score, true)
-        .addField('Popularity', searchDetails.popularity, true)
-        .addField('Rank', searchDetails.ranked, true);
+        .setTitle(hit.titles.en)
+        .setURL(`https://kitsu.io/anime/${hit.id}`)
+        .setDescription(hit.synopsis.replace(/(.+)(?:\r|\n|\t)(.+)/gim, '$1 $2').split('\r\n')[0])
+        .setImage(hit.posterImage.original)
+        .setThumbnail('https://favna.xyz/images/ribbonhost/kitsulogo.png')
+        .addField('Canonical Title', hit.canonicalTitle, true)
+        .addField('Score', `${hit.averageRating}%`, true)
+        .addField('Age Rating', hit.ageRating, true)
+        .addField('First Publish Date', moment.unix(hit.startDate).format('MMMM Do YYYY'), true)
+        .addField('Genres', hit.categories.slice(0, 5).join(', '), false);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(manEmbed, `${searchDetails.mal.url}${searchDetails.path}`);
+      return msg.embed(animeEmbed, `https://kitsu.io/manga/${hit.slug}`);
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

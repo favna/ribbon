@@ -424,7 +424,7 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dd><p>Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types<br><strong>Aliases</strong>: <code>matchup</code>, <code>weakness</code>, <code>advantage</code></p>
 </dd>
 <dt><a href="#module_anime">anime</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches AnimeCommand - Gets information about any anime from MyAnimeList<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code></p>
+<dd><p>Searches AnimeCommand - Gets information about any anime from kitsu.io<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code>, <code>kitsu</code></p>
 </dd>
 <dt><a href="#module_cydia">cydia</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories<br>Can also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak subreddit</a> and <a href="https://discord.gg/jb">its discord server</a><br>Server admins can enable the <code>[[]]</code> matching by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>cy</code></p>
@@ -451,7 +451,7 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dd><p>Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url<br><strong>Aliases</strong>: <code>dumb</code></p>
 </dd>
 <dt><a href="#module_manga">manga</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches MangaCommand - Gets information about any manga from MyAnimeList<br><strong>Aliases</strong>: <code>cartoon</code>, <code>man</code></p>
+<dd><p>Searches MangaCommand - Gets information about any manga from kitsu.io<br><strong>Aliases</strong>: <code>cartoon</code>, <code>man</code></p>
 </dd>
 <dt><a href="#module_steam">steam</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Searches SteamCommand - Gets information about a game using Steam<br><strong>Aliases</strong>: <code>valve</code></p>
@@ -2374,8 +2374,8 @@ type dragon flying
 <a name="module_anime"></a>
 
 ## anime ⇒ <code>MessageEmbed</code>
-Searches AnimeCommand - Gets information about any anime from MyAnimeList  
-**Aliases**: `ani`, `mal`
+Searches AnimeCommand - Gets information about any anime from kitsu.io  
+**Aliases**: `ani`, `mal`, `kitsu`
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested anime  
 **Category**: searches  
@@ -2530,7 +2530,7 @@ lmgtfy is it legal to kill an ant???
 <a name="module_manga"></a>
 
 ## manga ⇒ <code>MessageEmbed</code>
-Searches MangaCommand - Gets information about any manga from MyAnimeList  
+Searches MangaCommand - Gets information about any manga from kitsu.io  
 **Aliases**: `cartoon`, `man`
 
 **Returns**: <code>MessageEmbed</code> - Information about the requested manga  
