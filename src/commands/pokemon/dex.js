@@ -126,21 +126,21 @@ module.exports = class DexCommand extends Command {
         };
 
       if (poke.prevo) {
-        pokeData.evos = oneLine`${capitalizeFirstLetter(poke.prevo)} ${pokeFuse.search(poke.prevo)[0].evoLevel ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})` : ''}
+        pokeData.evos = oneLine`\`${capitalizeFirstLetter(poke.prevo)}\` ${pokeFuse.search(poke.prevo)[0].evoLevel ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})` : ''}
         → ${pokeData.evos} **(${poke.evoLevel})**`;
         
         if (pokeFuse.search(poke.prevo).length && pokeFuse.search(poke.prevo)[0].prevo) {
-          pokeData.evos = `${capitalizeFirstLetter(pokeFuse.search(poke.prevo)[0].prevo)} → ${pokeData.evos}`;
+          pokeData.evos = `\`${capitalizeFirstLetter(pokeFuse.search(poke.prevo)[0].prevo)}\` → ${pokeData.evos}`;
         }
       }
 
       if (poke.evos) {
-        pokeData.evos = oneLine`${pokeData.evos} → ${poke.evos.map(entry => `\`${capitalizeFirstLetter(entry)}\` *(${pokeFuse.search(entry)[0].evoLevel})*`).join(', ')} `;
+        pokeData.evos = oneLine`${pokeData.evos} → ${poke.evos.map(entry => `\`${capitalizeFirstLetter(entry)}\` (${pokeFuse.search(entry)[0].evoLevel})`).join(', ')} `;
 
         if (poke.evos.length === 1) {
           if (pokeFuse.search(poke.evos[0]).length && pokeFuse.search(poke.evos[0])[0].evos) {
             pokeData.evos = oneLine`${pokeData.evos}
-            → ${pokeFuse.search(poke.evos[0])[0].evos.map(entry => `\`${capitalizeFirstLetter(entry)}\` *(${pokeFuse.search(entry)[0].evoLevel})*`).join(', ')}`;
+            → ${pokeFuse.search(poke.evos[0])[0].evos.map(entry => `\`${capitalizeFirstLetter(entry)}\` (${pokeFuse.search(entry)[0].evoLevel})`).join(', ')}`;
           }
         }
       }
