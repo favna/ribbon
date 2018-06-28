@@ -447,6 +447,9 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dt><a href="#module_image">image</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Searches ImageCommand - Gets an image through Google Images<br><strong>Aliases</strong>: <code>img</code>, <code>i</code></p>
 </dd>
+<dt><a href="#module_itunes">itunes</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Searches iTunesCommand - Search iTunes for music tracks<br><strong>Aliases</strong>: <code>apple</code>, <code>tunes</code></p>
+</dd>
 <dt><a href="#module_lmgtfy">lmgtfy</a> ⇒ <code>Message</code></dt>
 <dd><p>Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url<br><strong>Aliases</strong>: <code>dumb</code></p>
 </dd>
@@ -2509,6 +2512,23 @@ Searches ImageCommand - Gets an image through Google Images
 **Example**  
 ```js
 image Pyrrha Nikos
+```
+<a name="module_itunes"></a>
+
+## itunes ⇒ <code>MessageEmbed</code>
+Searches iTunesCommand - Search iTunes for music tracks  
+**Aliases**: `apple`, `tunes`
+
+**Returns**: <code>MessageEmbed</code> - Information about the music track  
+**Category**: searches  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| TrackQuery | <code>StringResolvable</code> | The music track to look up |
+
+**Example**  
+```js
+itunes dash berlin symphony
 ```
 <a name="module_lmgtfy"></a>
 
