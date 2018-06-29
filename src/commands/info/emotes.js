@@ -1,6 +1,6 @@
 /**
  * @file Info EmotesCommand - Lists all emotes from the server  
- * **Aliases**: `listemo`, `emolist`, `listemoji`, `emote`
+ * **Aliases**: `listemo`, `emolist`, `listemoji`, `emote`, `emojis`, `emoji`
  * @module
  * @category info
  * @name emotes
@@ -17,7 +17,7 @@ module.exports = class EmotesCommand extends Command {
       name: 'emotes',
       memberName: 'emotes',
       group: 'info',
-      aliases: ['listemo', 'emolist', 'listemoji', 'emote'],
+      aliases: ['listemo', 'emolist', 'listemoji', 'emote', 'emojis', 'emoji'],
       description: 'Gets all available custom emotes from the server',
       examples: ['emotes'],
       guildOnly: true,

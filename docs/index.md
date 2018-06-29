@@ -200,7 +200,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList<br><strong>Aliases</strong>: <code>dbapi</code>, <code>db</code></p>
 </dd>
 <dt><a href="#module_emotes">emotes</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info EmotesCommand - Lists all emotes from the server<br><strong>Aliases</strong>: <code>listemo</code>, <code>emolist</code>, <code>listemoji</code>, <code>emote</code></p>
+<dd><p>Info EmotesCommand - Lists all emotes from the server<br><strong>Aliases</strong>: <code>listemo</code>, <code>emolist</code>, <code>listemoji</code>, <code>emote</code>, <code>emojis</code>, <code>emoji</code></p>
 </dd>
 <dt><a href="#module_invite">invite</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info InviteCommand - Gets the invite link for the bot<br><strong>Aliases</strong>: <code>inv</code>, <code>links</code>, <code>shill</code></p>
@@ -1239,7 +1239,7 @@ discordbots 376520643862331396
 
 ## emotes ⇒ <code>MessageEmbed</code>
 Info EmotesCommand - Lists all emotes from the server  
-**Aliases**: `listemo`, `emolist`, `listemoji`, `emote`
+**Aliases**: `listemo`, `emolist`, `listemoji`, `emote`, `emojis`, `emoji`
 
 **Returns**: <code>MessageEmbed</code> - List of emotes  
 **Category**: info  
