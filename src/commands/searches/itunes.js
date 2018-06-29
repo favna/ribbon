@@ -68,6 +68,10 @@ module.exports = class iTunesCommand extends Command {
         tunesEmbed = new MessageEmbed(),
         hit = JSON.parse(tunes.body).results[0]; // eslint-disable-line sort-vars
 
+      if (!hit) {
+        throw new Error('no song found');
+      }
+
       tunesEmbed
         .setThumbnail(hit.artworkUrl100)
         .setTitle(hit.trackName)
@@ -87,11 +91,17 @@ module.exports = class iTunesCommand extends Command {
 
       return msg.embed(tunesEmbed);
     } catch (err) {
+      stopTyping(msg);
+
+      if (/(?:no song found)/i.test(err.toString())) {
+        return msg.reply(`no song found for \`${music.replace(/\+/g, ' ')}\``);
+      }
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
-    <@${this.client.owners[0].id}> Error occurred in \`chips\` command!
+    <@${this.client.owners[0].id}> Error occurred in \`itunes\` command!
     **Server:** ${msg.guild.name} (${msg.guild.id})
     **Author:** ${msg.author.tag} (${msg.author.id})
     **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    **Input:** ${music}
     **Error Message:** ${err}
     `);
 
