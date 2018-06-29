@@ -83,7 +83,7 @@ module.exports = class iTunesCommand extends Command {
         .addField('Track Release Date', moment(hit.releaseDate).format('MMMM Do YYYY'), true)
         .addField('# Tracks in Collection', hit.trackCount, true)
         .addField('Primary Genre', hit.primaryGenreName, true)
-        .addField('Streamable', hit.isStreamable ? 'Yes' : 'No', true);
+        .addField('Preview', `[Click Here](${hit.previewUrl})`, true);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
