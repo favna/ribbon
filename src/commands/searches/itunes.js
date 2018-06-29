@@ -60,7 +60,6 @@ module.exports = class iTunesCommand extends Command {
           .query('term', music)
           .query('media', 'music')
           .query('entity', 'song')
-          .query('attribute', 'songTerm')
           .query('limit', 5)
           .query('lang', 'en_us')
           .query('country', 'US')
