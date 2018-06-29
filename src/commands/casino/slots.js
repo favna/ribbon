@@ -54,6 +54,7 @@ module.exports = class SlotsCommand extends Command {
     });
   }
 
+  // eslint-disable-next-line max-statements
   run (msg, {chips}) {
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3')),
       slotEmbed = new MessageEmbed();
@@ -154,6 +155,11 @@ module.exports = class SlotsCommand extends Command {
       return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
     } catch (err) {
       stopTyping(msg);
+      if (/(?:no such table)/i.test(err.toString())) {
+        conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
+
+        return msg.reply(`looks like you don\'t have any chips yet, please use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
+      }
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred in \`slots\` command!
       **Server:** ${msg.guild.name} (${msg.guild.id})

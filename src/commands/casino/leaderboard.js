@@ -56,9 +56,14 @@ module.exports = class LeaderboardCommand extends Command {
       }
       stopTyping(msg);
 
-      return msg.reply(`looks like there aren't any people with chips yet on this server. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
+      return msg.reply(`looks like there aren't any casino players in this server yet, use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
     } catch (err) {
       stopTyping(msg);
+      if (/(?:no such table)/i.test(err.toString())) {
+        conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
+
+        return msg.reply(`looks like there aren't any casino players in this server yet, use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
+      }
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred in \`leaderboard\` command!
       **Server:** ${msg.guild.name} (${msg.guild.id})
