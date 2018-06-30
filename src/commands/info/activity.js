@@ -57,7 +57,7 @@ module.exports = class ActivityCommand extends Command {
       ava = member.user.displayAvatarURL(),
       embed = new MessageEmbed(),
       ext = this.fetchExt(ava),
-      gameList = await request.get('https://canary.discordapp.com/api/v6/games'),
+      gameList = await request.get('https://canary.discordapp.com/api/v6/applications'),
       spotifyApi = new Spotify({
         clientId: process.env.spotifyid,
         clientSecret: process.env.spotifysecret
@@ -141,8 +141,6 @@ module.exports = class ActivityCommand extends Command {
           ? `on [${activity.assets.largeText}](${spotify.album.external_urls.spotify})`
           : activity.assets.largeText, true)
         : null;
-
-      activity.applicationID ? embed.addField('Application ID', activity.applicationID, true) : null;
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
