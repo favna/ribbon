@@ -57,7 +57,7 @@ module.exports = class ActivityCommand extends Command {
       ava = member.user.displayAvatarURL(),
       embed = new MessageEmbed(),
       ext = this.fetchExt(ava),
-      gameList = await request.get('https://canary.discordapp.com/api/v6/games'),
+      gameList = await request.get('https://canary.discordapp.com/api/v6/applications'),
       spotifyApi = new Spotify({
         clientId: process.env.spotifyid,
         clientSecret: process.env.spotifysecret
