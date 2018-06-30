@@ -88,10 +88,10 @@ module.exports = class WeatherCommand extends Command {
         .addField('🌡️ Temperature', `${wethData.body.currently.temperature} °C | ${roundNumber(this.fahrenify(wethData.body.currently.temperature), 2)} °F`, true)
         .addField('🌡️ Feels Like', `${wethData.body.currently.apparentTemperature} °C | ${roundNumber(this.fahrenify(wethData.body.currently.apparentTemperature), 2)} °F`, true)
         .addField('🏙️ Condition', wethData.body.daily.data[0].summary, false)
-        .addField(`🛰️ Forecast ${moment(wethData.body.daily.data[1].time).format('dddd Do MMMM')}`,
+        .addField(`🛰️ Forecast ${moment.unix(wethData.body.daily.data[1].time).format('dddd MMMM Do')}`,
           oneLine`High: ${wethData.body.daily.data[1].temperatureHigh} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[1].temperatureHigh), 2)} °F) 
           | Low: ${wethData.body.daily.data[1].temperatureLow} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[1].temperatureLow), 2)} °F)`, false)
-        .addField(`🛰️ Forecast ${moment(wethData.body.daily.data[2].time).format('dddd Do MMMM')}`,
+        .addField(`🛰️ Forecast ${moment.unix(wethData.body.daily.data[2].time).format('dddd MMMM Do')}`,
           oneLine`High: ${wethData.body.daily.data[2].temperatureHigh} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[2].temperatureHigh), 2)} °F) 
           | Low: ${wethData.body.daily.data[2].temperatureLow} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[2].temperatureLow), 2)} °F)`, false);
 
