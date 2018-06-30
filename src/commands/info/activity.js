@@ -142,8 +142,6 @@ module.exports = class ActivityCommand extends Command {
           : activity.assets.largeText, true)
         : null;
 
-      activity.applicationID ? embed.addField('Application ID', activity.applicationID, true) : null;
-
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
