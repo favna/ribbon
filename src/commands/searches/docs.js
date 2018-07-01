@@ -13,7 +13,7 @@ const Fuse = require('fuse.js'),
   request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {stripIndents} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, startTyping, stopTyping} = require('../../components/util.js');
 
 module.exports = class DocsCommand extends Command {
@@ -78,9 +78,9 @@ module.exports = class DocsCommand extends Command {
   joinType (types, version, docs) {
     return types.map(type => type.map((t) => {
       if (t.length === 1) {
-        return `[ ${t[0]}](${this.docifyLink(t[0], version, docs)})`;
+        return `[${t[0]}](${this.docifyLink(t[0], version, docs)})`;
       } else if (t[1] === '>') {
-        return `[ <${t[0]}>](${this.docifyLink(t[0], version, docs)})`;
+        return `[<${t[0]}>](${this.docifyLink(t[0], version, docs)})`;
       }
 
       return `[${t[0]}](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/${t[0]})`;
@@ -159,19 +159,17 @@ module.exports = class DocsCommand extends Command {
               return this.join('');
             };
 
-            docsEmbed
-              .setDescription(res.description)
-              .setURL(`${this.docifyLink(hit.name, version, docs)}?scrollTo=${res.name}`);
-
             switch (sub) {
             case 'props':
               docsEmbed
-                .setTitle(`__**${hit.name}.${res.name}**__`)
-                .addField('Type', `[${this.joinType(res.type, version, docs)}](${this.docifyLink(this.joinType(res.type, version, docs), version, docs)})`);
+                .setDescription(stripIndents`${oneLine`[__**${hit.name}.${res.name}**__](${this.docifyLink(hit.name, version, docs)}?scrollTo=${res.name})`}
+              ${hit.description}`)
+                .addField('Type', `${this.joinType(res.type, version, docs)}`);
               break subLoop;
             case 'methods':
               docsEmbed
-                .setTitle(`__**${hit.name}.${res.name}()**__`)
+                .setDescription(stripIndents`${oneLine`[__**${hit.name}.${res.name}()**__](${this.docifyLink(hit.name, version, docs)}?scrollTo=${res.name})`}
+              ${hit.description}`)
                 .addField('Parameters', 
                   res.params.map(param => `\`${param.optional ? `[${param.name}]` : param.name}:\` **${this.joinType(param.type, version, docs).join(' | ')}**\n${this.clean(param.description)}\n`))
                 .addField('Returns', `${res.returns.description ? `${this.clean(res.returns.description)}` : ''} **⇒** **${this.joinType(res.returns.types || res.returns, version, docs)}**`)
@@ -180,7 +178,8 @@ module.exports = class DocsCommand extends Command {
               break subLoop;
             case 'events':
               docsEmbed
-                .setTitle(`__**${hit.name}.on('${res.name}' … )**__`)
+                .setDescription(stripIndents`${oneLine`[__**${hit.name}.on('${res.name}' … )**__](${this.docifyLink(hit.name, version, docs)}?scrollTo=${res.name})`}
+                ${hit.description}`)
                 .addField('Parameters', 
                   res.params.map(param => `\`${param.optional ? `[${param.name}]` : param.name}:\` **${this.joinType(param.type, version, docs)}**\n${this.clean(param.description)}\n`))
                 .addField('\u200b', `[View Source](${sourceBaseURL}/${res.meta.path}/${res.meta.file}#L${res.meta.line})`);
@@ -194,9 +193,9 @@ module.exports = class DocsCommand extends Command {
         }
       } else {
         docsEmbed
-          .setTitle(`__**${hit.name}${hit.extends ? ` (extends ${hit.extends.join(', ')})` : ''}**__`)
-          .setDescription(stripIndents(hit.description))
-          .setURL(`${this.docifyLink(hit.name, version, docs)}`);
+          .setDescription(stripIndents`${oneLine`[__**${hit.name}**__](${this.docifyLink(hit.name, version, docs)})
+          ${hit.extends ? ` (extends [**${hit.extends}**](${this.docifyLink(hit.extends[0], version, docs)}))` : ''}`}
+          ${hit.description}`);
 
         hit.props ? docsEmbed.addField('Properties', `\`${hit.props.map(p => p.name).join('` `')}\``) : null;
         hit.methods ? docsEmbed.addField('Methods', `\`${hit.methods.map(m => m.name).join('` `')}\``) : null;
