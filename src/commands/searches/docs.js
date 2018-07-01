@@ -9,10 +9,12 @@
  * @returns {MessageEmbed} Info about the entry from the library
  */
 
-const request = require('snekfetch'),
+const Fuse = require('fuse.js'),
+  request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
-  {oneLineTrim} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+  {MessageEmbed} = require('discord.js'),
+  {stripIndents} = require('common-tags'),
+  {deleteCommandMessages, startTyping, stopTyping} = require('../../components/util.js');
 
 module.exports = class DocsCommand extends Command {
   constructor (client) {
@@ -33,7 +35,8 @@ module.exports = class DocsCommand extends Command {
         {
           key: 'query',
           prompt: 'what would you like to find?\n',
-          type: 'string'
+          type: 'string',
+          parse: p => p.split(/[\#\.]/)
         },
         {
           key: 'version',
@@ -48,8 +51,6 @@ module.exports = class DocsCommand extends Command {
 
     this.docs = {}; // Cache for docs
   }
-
-  /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position, one-var*/
 
   async fetchDocs (version) {
     if (this.docs[version]) {
@@ -68,309 +69,153 @@ module.exports = class DocsCommand extends Command {
     return json;
   }
 
-  search (docs, query) { // eslint-disable-line max-statements
-    query = query.split(/[#.]/); // eslint-disable-line no-param-reassign
-    const mainQuery = query[0].toLowerCase();
-    let memberQuery = query[1] ? query[1].toLowerCase() : null;
-
-    const findWithin = (parentItem, props, name) => { // eslint-disable-line one-var
-      let found = null;
-
-      for (const category of props) {
-        if (!parentItem[category]) {
-          continue; // eslint-disable-line no-continue
-        }
-        const item = parentItem[category].find(i => i.name.toLowerCase() === name);
-
-        if (item) {
-          found = {
-            item,
-            category
-          };
-          break;
-        }
-      }
-
-      return found;
-    };
-
-    const main = findWithin(docs, ['classes', 'interfaces', 'typedefs'], mainQuery); // eslint-disable-line one-var
-
-    if (!main) {
-      return [];
-    }
-
-    const res = [main]; // eslint-disable-line one-var
-
-    if (!memberQuery) {
-      return res;
-    }
-
-    let props; // eslint-disable-line one-var, init-declarations
-
-    if (/\(.*?\)$/.test(memberQuery)) {
-      memberQuery = memberQuery.replace(/\(.*?\)$/, '');
-      props = ['methods'];
-    } else {
-      props = main.category === 'typedefs' ? ['props'] : ['props', 'methods', 'events'];
-    }
-
-    const member = findWithin(main.item, props, memberQuery); // eslint-disable-line one-var
-
-    if (!member) {
-      return [];
-    }
-
-    const rest = query.slice(2); // eslint-disable-line one-var
-
-    if (rest.length) {
-      if (!member.item.type) {
-        return [];
-      }
-      const base = this.joinType(member.item.type)
-        .replace(/<.+>/g, '')
-        .replace(/\|.+/, '')
-        .trim();
-
-      return this.search(docs, `${base}.${rest.join('.')}`);
-    }
-
-    res.push(member);
-
-    return res;
-  }
-
   clean (text) {
     return text.replace(/\n/g, ' ')
       .replace(/<\/?(?:info|warn)>/g, '')
       .replace(/\{@link (.+?)\}/g, '`$1`');
   }
 
-  joinType (type) {
-    return type.map(t => t.map(a => Array.isArray(a) ? a.join('') : a).join('')).join(' | '); // eslint-disable-line no-confusing-arrow
+  joinType (types, version, docs) {
+    return types.map(type => type.map((t) => {
+      if (t.length === 1) {
+        return `[ ${t[0]}](${this.docifyLink(t[0], version, docs)})`;
+      } else if (t[1] === '>') {
+        return `[ <${t[0]}>](${this.docifyLink(t[0], version, docs)})`;
+      }
+
+      return `[${t[0]}](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/${t[0]})`;
+    }));
   }
 
-  getLink (version) {
-    return version === 'commando'
-      ? 'https://discord.js.org/#/docs/commando/master/'
-      : `https://discord.js.org/#/docs/main/${version}/`;
+  docifyLink (prop, version, docs) {
+    let section = 'classes';
+    const docsBaseURL = `https://discord.js.org/#/docs/${version === 'commando' ? 'commando/master' : `main/${version}`}`,
+      matchCheck = docs[section].find(el => el.name === prop);
+
+    if (!matchCheck || matchCheck.name !== prop) {
+      section = 'typedefs';
+    }
+
+    return `${docsBaseURL}/${section === 'classes' ? 'class' : 'typedef'}/${prop}`;
   }
 
-  makeLink (main, member, version) {
-    return oneLineTrim`
-			${this.getLink(version)}
-			${main.category === 'classes' ? 'class' : 'typedef'}/${main.item.name}
-			?scrollTo=${member.item.scope === 'static' ? 's-' : ''}${member.item.name}
-		`;
-  }
-
-  formatMain (main, version) {
-    const embed = {
-      description: `__**[${main.item.name}`,
-      fields: []
-    };
-
-    if (main.item.extends) {
-      embed.description += ` (extends ${main.item.extends[0]})`;
-    }
-
-    embed.description += oneLineTrim`
-			](${this.getLink(version)}
-			${main.category === 'classes' ? 'class' : 'typedef'}/${main.item.name})**__
-		`;
-
-    embed.description += '\n';
-    if (main.item.description) {
-      embed.description += `\n${this.clean(main.item.description)}`;
-    }
-
-    const join = it => `\`${it.map(index => index.name).join('` `')}\``; // eslint-disable-line one-var
-
-    if (main.item.props) {
-      embed.fields.push({
-        name: 'Properties',
-        value: join(main.item.props)
-      });
-    }
-
-    if (main.item.methods) {
-      embed.fields.push({
-        name: 'Methods',
-        value: join(main.item.methods)
-      });
-    }
-
-    if (main.item.events) {
-      embed.fields.push({
-        name: 'Events',
-        value: join(main.item.events)
-      });
-    }
-
-    this.formatSource(main.item.meta, version, embed);
-
-    return embed;
-  }
-
-  formatSource (meta, version, embed) {
-    const url = version === 'commando'
-      ? 'https://github.com/discordjs/commando/blob/master'
-      : `https://github.com/discordjs/discord.js/blob/${version}`;
-
-    embed.fields.push({
-      name: '\u200b',
-      value: `[View source](${url}/${meta.path}/${meta.file}#L${meta.line})`
-    });
-
-    return embed;
-  }
-
-  formatProp (main, member, version) {
-    const embed = {
-      description: oneLineTrim`
-				__**[${main.item.name}${member.item.scope === 'static' ? '.' : '#'}${member.item.name}]
-				(${this.makeLink(main, member, version)})**__
-			`,
-      fields: []
-    };
-
-    embed.description += '\n';
-    if (member.item.description) {
-      embed.description += `\n${this.clean(member.item.description)}`;
-    }
-
-    const type = this.joinType(member.item.type); // eslint-disable-line one-var
-
-    embed.fields.push({
-      name: 'Type',
-      value: `\`${type}\``
-    });
-
-    if (member.item.examples) {
-      embed.fields.push({
-        name: 'Example',
-        value: `\`\`\`js\n${member.item.examples.join('```\n```js\n')}\`\`\``
-      });
-    }
-
-    return embed;
-  }
-
-  formatMethod (main, member, version) {
-    const embed = {
-      description: oneLineTrim`
-				__**[${main.item.name}${member.item.scope === 'static' ? '.' : '#'}${member.item.name}()]
-				(${this.makeLink(main, member, version)})**__
-			`,
-      fields: []
-    };
-
-    embed.description += '\n';
-    if (member.item.description) {
-      embed.description += `\n${this.clean(member.item.description)}`;
-    }
-
-    if (member.item.params) {
-      const params = member.item.params.map((param) => {
-        const name = param.optional ? `[${param.name}]` : param.name;
-        const type = this.joinType(param.type); // eslint-disable-line one-var
-
-
-        return `\`${name}: ${type}\`\n${this.clean(param.description)}`;
-      });
-
-      embed.fields.push({
-        name: 'Parameters',
-        value: params.join('\n\n')
-      });
-    }
-
-    if (member.item.returns) {
-      const desc = member.item.returns.description ? `${this.clean(member.item.returns.description)}\n` : '',
-        type = this.joinType(member.item.returns.types || member.item.returns),
-        returns = `${desc}\`=> ${type}\``; // eslint-disable-line sort-vars
-
-      embed.fields.push({
-        name: 'Returns',
-        value: returns
-      });
-    } else {
-      embed.fields.push({
-        name: 'Returns',
-        value: '`=> void`'
-      });
-    }
-
-    if (member.item.examples) {
-      embed.fields.push({
-        name: 'Example',
-        value: `\`\`\`js\n${member.item.examples.join('```\n```js\n')}\`\`\``
-      });
-    }
-
-    this.formatSource(member.item.meta, version, embed);
-
-    return embed;
-  }
-
-  formatEvent (main, member, version) {
-    const embed = {
-      description: `__**[${main.item.name}#${member.item.name}](${this.makeLink(main, member, version)})**__\n`,
-      fields: []
-    };
-
-    if (member.item.description) {
-      embed.description += `\n${this.clean(member.item.description)}`;
-    }
-
-    if (member.item.params) {
-      const params = member.item.params.map((param) => {
-        const type = this.joinType(param.type);
-
-
-        return `\`${param.name}: ${type}\`\n${this.clean(param.description)}`;
-      });
-
-      embed.fields.push({
-        name: 'Parameters',
-        value: params.join('\n\n')
-      });
-    }
-
-    if (member.item.examples) {
-      embed.fields.push({
-        name: 'Example',
-        value: `\`\`\`js\n${member.item.examples.join('```\n```js\n')}\`\`\``
-      });
-    }
-
-    return embed;
-  }
-
+  /* eslint complexity: ["error", 35]*/
   async run (msg, {query, version}) {
-    startTyping(msg);
-    const docs = await this.fetchDocs(version),
-      [main, member] = this.search(docs, query);
+    try {
+      startTyping(msg);
+      /* eslint-disable sort-vars*/
+      const docs = await this.fetchDocs(version),
+        sourceBaseURL = `https://github.com/discordjs/${version === 'commando' ? 'commando/blob/master' : `discord.js/blob/${version}`}`,
+        hitOpts = {
+          shouldSort: true,
+          threshold: 0.3,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: ['name']
+        },
+        input = {
+          main: query[0],
+          sub: query[1] ? query[1].replace(/(\(.*\))/gm, '') : null
+        },
+        docsFuse = new Fuse(docs.classes.concat(docs.typedefs), hitOpts),
+        docsEmbed = new MessageEmbed(),
+        docsSearch = docsFuse.search(input.main),
+        hit = docsSearch[0];
+        /* eslint-enable sort-vars*/
 
-    if (!main) {
-      return msg.say('Could not find that item in the docs.');
+      docsEmbed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+        .setAuthor(version === 'commando' ? 'Commando Docs' : `Discord.JS Docs (${version})`, 'https://github.com/discordjs.png');
+
+      if (input.sub) {
+        /* eslint-disable sort-vars*/
+        const subopts = {
+            shouldSort: true,
+            threshold: 0.2,
+            location: 5,
+            distance: 0,
+            maxPatternLength: 32,
+            minMatchCharLength: 1,
+            keys: ['name']
+          },
+          propsFuse = hit.props ? new Fuse(hit.props, subopts) : null,
+          methodFuse = hit.methods ? new Fuse(hit.methods, subopts) : null,
+          eventsFuse = hit.events ? new Fuse(hit.events, subopts) : null,
+          subHit = {
+            props: propsFuse ? propsFuse.search(input.sub) : [],
+            methods: methodFuse ? methodFuse.search(input.sub) : [],
+            events: eventsFuse ? eventsFuse.search(input.sub) : []
+          };
+          /* eslint-enable sort-vars*/
+
+        subLoop: for (const sub in subHit) {
+          if (subHit[sub].length) {
+            const res = subHit[sub][0];
+
+            // eslint-disable-next-line no-extend-native
+            Array.prototype.toString = function () {
+              return this.join('');
+            };
+
+            docsEmbed
+              .setDescription(res.description)
+              .setURL(`${this.docifyLink(hit.name, version, docs)}?scrollTo=${res.name}`);
+
+            switch (sub) {
+            case 'props':
+              docsEmbed
+                .setTitle(`__**${hit.name}.${res.name}**__`)
+                .addField('Type', `[${this.joinType(res.type, version, docs)}](${this.docifyLink(this.joinType(res.type, version, docs), version, docs)})`);
+              break subLoop;
+            case 'methods':
+              docsEmbed
+                .setTitle(`__**${hit.name}.${res.name}()**__`)
+                .addField('Parameters', 
+                  res.params.map(param => `\`${param.optional ? `[${param.name}]` : param.name}:\` **${this.joinType(param.type, version, docs).join(' | ')}**\n${this.clean(param.description)}\n`))
+                .addField('Returns', `${res.returns.description ? `${this.clean(res.returns.description)}` : ''} **⇒** **${this.joinType(res.returns.types || res.returns, version, docs)}**`)
+                .addField('Example(s)', `\`\`\`js\n${res.examples.join('```\n```js\n')}\`\`\``)
+                .addField('\u200b', `[View Source](${sourceBaseURL}/${res.meta.path}/${res.meta.file}#L${res.meta.line})`);
+              break subLoop;
+            case 'events':
+              docsEmbed
+                .setTitle(`__**${hit.name}.on('${res.name}' … )**__`)
+                .addField('Parameters', 
+                  res.params.map(param => `\`${param.optional ? `[${param.name}]` : param.name}:\` **${this.joinType(param.type, version, docs)}**\n${this.clean(param.description)}\n`))
+                .addField('\u200b', `[View Source](${sourceBaseURL}/${res.meta.path}/${res.meta.file}#L${res.meta.line})`);
+              break subLoop;
+            default:
+              throw new Error('none found');
+            }
+          } else if (sub === 'events') {
+            throw new Error('none found');
+          }
+        }
+      } else {
+        docsEmbed
+          .setTitle(`__**${hit.name}${hit.extends ? ` (extends ${hit.extends.join(', ')})` : ''}**__`)
+          .setDescription(stripIndents(hit.description))
+          .setURL(`${this.docifyLink(hit.name, version, docs)}`);
+
+        hit.props ? docsEmbed.addField('Properties', `\`${hit.props.map(p => p.name).join('` `')}\``) : null;
+        hit.methods ? docsEmbed.addField('Methods', `\`${hit.methods.map(m => m.name).join('` `')}\``) : null;
+        hit.events ? docsEmbed.addField('Events', `\`${hit.events.map(e => e.name).join('` `')}\``) : null;
+        hit.type ? docsEmbed.addField('Type', this.joinType(hit.type, version, docs)) : null;
+
+        docsEmbed.addField('\u200b', `[View Source](${sourceBaseURL}/${hit.meta.path}/${hit.meta.file}#L${hit.meta.line})`);
+      }
+
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+
+      return msg.embed(docsEmbed);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+
+      return msg.reply(`could not find an item for \`${query.join('.')}\` in the ${version === 'commando' ? 'Commando' : `Discord.JS ${version}`} docs.`);
     }
 
-    const embed = member ? { // eslint-disable-line one-var, prefer-reflect
-      props: this.formatProp,
-      methods: this.formatMethod,
-      events: this.formatEvent
-    }[member.category].call(this, main, member, version) : this.formatMain(main, version);
-
-    embed.url = this.getLink(version);
-    embed.author = {
-      name: version === 'commando' ? 'Commando Docs' : `Discord.JS Docs (${version})`,
-      iconURL: 'https://github.com/discordjs.png'
-    };
-
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
-
-    return msg.embed(embed);
   }
 };
