@@ -49,22 +49,24 @@ module.exports = class MovieCommand extends Command {
           .query('query', name)
           .query('include_adult', false),
         movieStats = await request.get(`https://api.themoviedb.org/3/movie/${movieSearch.body.results[0].id}`)
-          .query('api_key', process.env.moviedbkey);
+          .query('api_key', process.env.moviedbkey),
+        hit = movieStats.body; // eslint-disable-line sort-vars
 
       movieEmbed
-        .setTitle(movieStats.body.title)
-        .setURL(`https://www.themoviedb.org/movie/${movieStats.body.id}`)
+        .setTitle(hit.title)
+        .setURL(`https://www.themoviedb.org/movie/${hit.id}`)
         .setColor(msg.guild ? msg.member.displayHexColor : '#7CFC00')
-        .setImage(`https://image.tmdb.org/t/p/original${movieStats.body.backdrop_path}`)
-        .setThumbnail(`https://image.tmdb.org/t/p/original${movieStats.body.poster_path}`)
-        .setDescription(movieStats.body.overview)
-        .addField('Runtime', `${movieStats.body.runtime} minutes`, true)
-        .addField('User Score', movieStats.body.vote_average, true)
-        .addField('Status', movieStats.body.status, true)
-        .addField('Release Date', moment(movieStats.body.release_date).format('MMMM Do YYYY'), true)
-        .addField('Collection', movieStats.body.belongs_to_collection ? movieStats.body.belongs_to_collection.name : 'none', true)
-        .addField('IMDB Page', movieStats.body.imdb_id ? `[Click Here](http://www.imdb.com/title/${movieStats.body.imdb_id})` : 'none', true)
-        .addField('Genres', movieStats.body.genres.length ? movieStats.body.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB');
+        .setImage(`https://image.tmdb.org/t/p/original${hit.backdrop_path}`)
+        .setThumbnail(`https://image.tmdb.org/t/p/original${hit.poster_path}`)
+        .setDescription(hit.overview)
+        .addField('Runtime', hit.runtime ? `${hit.runtime} minutes` : 'Movie in production', true)
+        .addField('User Score', hit.vote_average ? hit.vote_average : 'Movie in production', true)
+        .addField('Status', hit.status, true)
+        .addField('Release Date', moment(hit.release_date).format('MMMM Do YYYY'), true)
+        .addField('IMDB Page', hit.imdb_id ? `[Click Here](http://www.imdb.com/title/${hit.imdb_id})` : 'none', true)
+        .addField('Home Page', hit.homepage ? `[Click Here](${hit.homepage})` : 'None', true)
+        .addField('Collection', hit.belongs_to_collection ? hit.belongs_to_collection.name : 'Not part of a collection', false)
+        .addField('Genres', hit.genres.length ? hit.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB', false);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
