@@ -14,6 +14,7 @@
 
 const moment = require('moment'),
   translate = require('translate'),
+  unescape = require('unescape'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -56,11 +57,11 @@ module.exports = class TranslateCommand extends Command {
   }
 
   async run (msg, {fromlang, tolang, text}) {
-    translate.engine = 'google';
-    translate.key = process.env.googleapikey;
-
-    startTyping(msg);
     try {
+      startTyping(msg);
+      translate.engine = 'google';
+      translate.key = process.env.googleapikey;
+
       const transEmbed = new MessageEmbed(),
         translation = await translate(text, {
           from: fromlang,
@@ -70,19 +71,20 @@ module.exports = class TranslateCommand extends Command {
       transEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setTitle(`Translating from ${fromlang.toUpperCase()} to ${tolang.toUpperCase()}`)
-        .setDescription(`\`${text}\` ⇒ \`${translation}\``);
+        .setDescription(`\`${text}\` ⇒ \`${unescape`${translation}`}\``);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
       return msg.embed(transEmbed);
     } catch (err) {
+      stopTyping(msg);
       if (/(?:not part of the ISO 639)/i.test(err.toString())) {
         return msg.reply('either your from language or to language was not recognized. Please use ISO 639-1 codes for the languages (<https://en.wikipedia.org/wiki/ISO_639-1>)');
       }
 
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
-      <@${this.client.owners[0].id}> Error occurred in \`chips\` command!
+      <@${this.client.owners[0].id}> Error occurred in \`translate\` command!
       **Server:** ${msg.guild.name} (${msg.guild.id})
       **Author:** ${msg.author.tag} (${msg.author.id})
       **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}

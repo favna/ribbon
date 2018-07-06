@@ -75,6 +75,7 @@
     "syllable": "^3.0.0",
     "to-zalgo": "^1.0.1",
     "translate": "Marak/translate.js#modern",
+    "unescape": "favna/unescape",
     "uws": "^9.148.0",
     "xdicey": "2.0.3",
     "ytdl-core": "0.20.4",
