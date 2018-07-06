@@ -14,7 +14,7 @@
 
 const moment = require('moment'),
   translate = require('translate'),
-  unescape = require('unescape'),
+  unescape = require('unescape-es6'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -70,8 +70,11 @@ module.exports = class TranslateCommand extends Command {
 
       transEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setTitle(`Translating from ${fromlang.toUpperCase()} to ${tolang.toUpperCase()}`)
-        .setDescription(`\`${text}\` ⇒ \`${unescape`${translation}`}\``);
+        .setTitle(`__Translating from ${fromlang.toUpperCase()} to ${tolang.toUpperCase()}__`)
+        .setDescription(stripIndents`
+        \`${text}\`
+        
+        ${unescape`${translation}`}`);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

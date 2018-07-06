@@ -3552,9 +3552,9 @@ underscore@~1.8.3:
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
 
-unescape@favna/unescape:
-  version "1.2.2"
-  resolved "https://codeload.github.com/favna/unescape/tar.gz/8ded6adfaa0ba32a3b583dc998645d736ea86602"
+unescape-es6@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/unescape-es6/-/unescape-es6-1.0.2.tgz#ea2a38df7c1bf731a9a2c6cd943cd025ecd7f889"
 
 unicode-string@^1.0.0:
   version "1.1.1"
