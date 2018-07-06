@@ -60,7 +60,7 @@ module.exports = class LearnCommand extends Command {
           key: 'moves',
           prompt: 'Which move(s) should I check for that Pokemon?',
           type: 'string',
-          parse: p => p.toLowerCase().replace(/ /gm, '')
+          parse: p => p.toLowerCase().replace(/( |-)/gm, '')
         }
       ]
     });
@@ -127,7 +127,9 @@ module.exports = class LearnCommand extends Command {
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
         .setAuthor(`${capitalizeFirstLetter(pokemon)} - Generation ${gen}`, `https://favna.xyz/images/ribbonhost/pokesprites/regular/${pokemon.toLowerCase().replace(/ /g, '')}.png`)
-        .setDescription(response.join('\n'));
+        .setDescription(response.length ? response.join('\n')
+          : stripIndents`${capitalizeFirstLetter(pokemon)} cannot learn ${moves.map(val => `\`${val}\``).join(', ')} in generation ${gen}.
+                         Use \`--genX\` (for example\`--gen6\`) to specify the generation`);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
