@@ -1234,8 +1234,12 @@ const BattleItems = [
   },
   {
     id: 'lumberry',
-    name: 'Lum Berry'
-  }, {
+    name: 'Lum Berry',
+    num: 157,
+    gen: 3,
+    desc: 'Holder cures itself if it is confused or has a major status condition. Single use.'
+  }, 
+  {
     id: 'luminousmoss',
     name: 'Luminous Moss',
     num: 648,
