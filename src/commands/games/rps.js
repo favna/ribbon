@@ -109,7 +109,6 @@ module.exports = class RockPaperScissorCommand extends Command {
 
       return msg.embed(rpsEmbed);
     } catch (err) {
-      console.error(err);
       stopTyping(msg);
 
       return msg.reply('an error occurred getting a random result and I\'m not going to rig this game.');

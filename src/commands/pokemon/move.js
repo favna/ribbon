@@ -100,7 +100,6 @@ module.exports = class MoveCommand extends Command {
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
-      console.error(err);
 
       if (/(?:Cannot read property 'desc' of undefined)/i.test(err.toString())) {
         return msg.reply(stripIndents`no move found for \`${move}\``);

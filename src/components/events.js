@@ -46,7 +46,6 @@ const checkReminders = async function (client) {
       }
     }
   } catch (err) {
-    console.error(err);
     client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
       <@${client.owners[0].id}> Error occurred sending someone their reminder!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -310,7 +309,6 @@ const timermessages = function (client) {
       }
     }
   } catch (err) {
-    console.error(err);
     client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
     <@${client.owners[0].id}> Error occurred sending a timed message!
     **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}

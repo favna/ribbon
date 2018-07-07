@@ -302,7 +302,6 @@ class Ribbon {
               }
             }
           } catch (err) {
-            console.error(err);
             this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
               <@${this.client.owners[0].id}> Error occurred in sending a twitch live notifier!
               **Server:** ${curGuild.name} (${curGuild.id})
