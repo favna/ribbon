@@ -21,7 +21,7 @@ const moment = require('moment'),
   request = require('snekfetch'),
   {Command, ArgumentCollector} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {stripIndents} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class PokemonTCGCommand extends Command {
