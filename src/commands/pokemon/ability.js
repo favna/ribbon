@@ -10,12 +10,13 @@
  */
 
 const Fuse = require('fuse.js'),
+  moment = require('moment'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {BattleAbilities} = require(path.join(__dirname, '../../data/dex/abilities')),
   {AbilityAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
-  {oneLine} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class AbilityCommand extends Command {
@@ -45,25 +46,25 @@ module.exports = class AbilityCommand extends Command {
   }
 
   run (msg, {ability}) {
-    startTyping(msg);
-    /* eslint-disable sort-vars */
-    const fsoptions = {
-        shouldSort: true,
-        threshold: 0.6,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: ['alias', 'ability', 'id', 'name']
-      },
-      aliasFuse = new Fuse(AbilityAliases, fsoptions),
-      abilityFuse = new Fuse(BattleAbilities, fsoptions),
-      aliasSearch = aliasFuse.search(ability),
-      abilitySearch = aliasSearch.length ? abilityFuse.search(aliasSearch[0].ability) : abilityFuse.search(ability),
-      abilityEmbed = new MessageEmbed();
-    /* eslint-enable sort-vars */
+    try {
+      startTyping(msg);
+      /* eslint-disable sort-vars */
+      const fsoptions = {
+          shouldSort: true,
+          threshold: 0.6,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: ['alias', 'ability', 'id', 'name']
+        },
+        aliasFuse = new Fuse(AbilityAliases, fsoptions),
+        abilityFuse = new Fuse(BattleAbilities, fsoptions),
+        aliasSearch = aliasFuse.search(ability),
+        abilitySearch = aliasSearch.length ? abilityFuse.search(aliasSearch[0].ability) : abilityFuse.search(ability),
+        abilityEmbed = new MessageEmbed();
+      /* eslint-enable sort-vars */
 
-    if (abilitySearch.length) {
       abilityEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
@@ -77,10 +78,26 @@ module.exports = class AbilityCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(abilityEmbed, `**${capitalizeFirstLetter(abilitySearch[0].name)}**`);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.reply('no ability found. Be sure it is an ability that has an effect in battles!');
+      if (/(?:Cannot read property 'desc' of undefined)/i.test(err.toString())) {
+        return msg.reply(stripIndents`no ability found for \`${ability}\``);
+      }
+
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`ability\` command!
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Input:** ${ability}
+      **Error Message:** ${err}
+      `);
+  
+      return msg.reply(stripIndents`no ability found for \`${ability}\`. Be sure it is an ability that has an effect in battles!
+      If it was an error that occurred then I notified ${this.client.owners[0].username} about it
+      and you can find out more by joining the support server using the \`${msg.guild.commandPrefix}invite\` command`);
+    }
   }
 };

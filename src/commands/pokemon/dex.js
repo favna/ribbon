@@ -13,6 +13,7 @@
 
 const Fuse = require('fuse.js'),
   dexEntries = require('../../data/dex/flavorText.json'),
+  moment = require('moment'),
   smogonFormats = require('../../data/dex/formats.json'),
   path = require('path'), // eslint-disable-line sort-vars
   zalgo = require('to-zalgo'),
@@ -20,7 +21,7 @@ const Fuse = require('fuse.js'),
   {MessageEmbed} = require('discord.js'),
   {PokeAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
   {BattlePokedex} = require(path.join(__dirname, '../../data/dex/pokedex')),
-  {oneLine} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class DexCommand extends Command {
@@ -78,57 +79,56 @@ module.exports = class DexCommand extends Command {
 
   /* eslint-disable max-statements, complexity */
   run (msg, {pokemon, shines}) {
-    startTyping(msg);
-    if (/(?:--shiny)/i.test(pokemon)) {
-      pokemon = (pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length)).replace(/ /g, '');
-      shines = true;
-    }
-    if (pokemon.split(' ')[0] === 'mega') {
-      pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
-    }
+    try {
+      startTyping(msg);
+      if (/(?:--shiny)/i.test(pokemon)) {
+        pokemon = (pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length)).replace(/ /g, '');
+        shines = true;
+      }
+      if (pokemon.split(' ')[0] === 'mega') {
+        pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
+      }
 
-    /* eslint-disable sort-vars */
-    const aliasoptions = {
-        shouldSort: true,
-        threshold: 0.2,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: ['alias']
-      },
-      pokeoptions = {
-        shouldSort: true,
-        threshold: 0.2,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: ['num', 'species']
-      },
-      aliasFuse = new Fuse(PokeAliases, aliasoptions),
-      pokeFuse = new Fuse(BattlePokedex, pokeoptions),
-      firstSearch = pokeFuse.search(pokemon),
-      aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null,
-      pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch,
-      dexEmbed = new MessageEmbed();
-      /* eslint-enable sort-vars */
-
-    if (pokeSearch.length) {
-      const poke = pokeSearch[0],
+      /* eslint-disable sort-vars */
+      const aliasoptions = {
+          shouldSort: true,
+          threshold: 0.2,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: ['alias']
+        },
+        pokeoptions = {
+          shouldSort: true,
+          threshold: 0.2,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: ['num', 'species']
+        },
+        aliasFuse = new Fuse(PokeAliases, aliasoptions),
+        pokeFuse = new Fuse(BattlePokedex, pokeoptions),
+        firstSearch = pokeFuse.search(pokemon),
+        aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null,
+        pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch,
+        dexEmbed = new MessageEmbed(),
+        poke = pokeSearch[0],
         pokeData = {
           abilities: '',
           evos: `**${capitalizeFirstLetter(poke.species)}**`,
           flavors: '*PokéDex data not found for this Pokémon*',
           genders: '',
           sprite: '',
-          tier: smogonFormats.find(s => s.name === poke.species.toLowerCase().replace(/(-| )/gm, '')).tier
+          tier: smogonFormats.find(s => s.name === poke.species.toLowerCase().replace(/(-|%| )/gm, '')).tier
         };
+      /* eslint-enable sort-vars */
 
       if (poke.prevo) {
         pokeData.evos = oneLine`\`${capitalizeFirstLetter(poke.prevo)}\` ${pokeFuse.search(poke.prevo)[0].evoLevel ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})` : ''}
         → ${pokeData.evos} **(${poke.evoLevel})**`;
-        
+
         if (pokeFuse.search(poke.prevo).length && pokeFuse.search(poke.prevo)[0].prevo) {
           pokeData.evos = `\`${capitalizeFirstLetter(pokeFuse.search(poke.prevo)[0].prevo)}\` → ${pokeData.evos}`;
         }
@@ -186,21 +186,19 @@ module.exports = class DexCommand extends Command {
         }
       }
 
-      dexEmbed
-        .setColor(this.fetchColor(poke.color))
-        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png');
-
       if (poke.num < 0) {
         pokeData.sprite = 'https://favna.xyz/images/ribbonhost/pokesprites/unknown.png';
       } else if (shines) {
-        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${poke.species.replace(/ /g, '').toLowerCase()}.png`;
+        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${poke.species.replace(/(%| )/g, '').toLowerCase()}.png`;
       } else {
-        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${poke.species.replace(/ /g, '').toLowerCase()}.png`;
+        pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${poke.species.replace(/(%| )/g, '').toLowerCase()}.png`;
       }
 
       dexEmbed
+        .setColor(this.fetchColor(poke.color))
+        .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
         .setAuthor(`#${poke.num} - ${capitalizeFirstLetter(poke.species)}`, pokeData.sprite)
-        .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/ /g, '')}.gif`)
+        .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/(%| )/g, '')}.gif`)
         .addField('Type(s)', poke.types.join(', '), true)
         .addField('Abilities', pokeData.abilities, true)
         .addField('Gender Ratio', pokeData.genders, true)
@@ -240,10 +238,27 @@ module.exports = class DexCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(dexEmbed);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.reply(`no Pokémon found for \`${pokemon}\``);
+      if (/(?:Cannot read property 'species' of undefined)/i.test(err.toString())) {
+        return msg.reply(stripIndents`no Pokémon found for \`${pokemon}\``);
+      }
+
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`dex\` command!
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Input:** ${pokemon}
+      **Shiny?:** ${shines ? 'yes' : 'no'}
+      **Error Message:** ${err}
+      `);
+
+      return msg.reply(stripIndents`no Pokémon found for \`${pokemon}\`.
+      If it was an error that occurred then I notified ${this.client.owners[0].username} about it
+      and you can find out more by joining the support server using the \`${msg.guild.commandPrefix}invite\` command`);
+    }
   }
 };

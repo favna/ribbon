@@ -11,12 +11,13 @@
  */
 
 const Fuse = require('fuse.js'),
+  moment = require('moment'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {BattleItems} = require(path.join(__dirname, '../../data/dex/items')),
   {ItemAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
-  {oneLine} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class ItemCommand extends Command {
@@ -46,25 +47,26 @@ module.exports = class ItemCommand extends Command {
   }
 
   run (msg, {item}) {
-    startTyping(msg);
-    /* eslint-disable sort-vars */
-    const fsoptions = {
-        shouldSort: true,
-        threshold: 0.3,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: ['alias', 'item', 'id', 'name']
-      },
-      aliasFuse = new Fuse(ItemAliases, fsoptions),
-      itemFuse = new Fuse(BattleItems, fsoptions),
-      aliasSearch = aliasFuse.search(item),
-      itemSearch = aliasSearch.length ? itemFuse.search(aliasSearch[0].item) : itemFuse.search(item),
-      itemEmbed = new MessageEmbed();
-    /* eslint-enable sort-vars */
+    try {
+      startTyping(msg);
+      /* eslint-disable sort-vars */
+      const fsoptions = {
+          shouldSort: true,
+          threshold: 0.3,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: ['alias', 'item', 'id', 'name']
+        },
+        aliasFuse = new Fuse(ItemAliases, fsoptions),
+        itemFuse = new Fuse(BattleItems, fsoptions),
+        aliasSearch = aliasFuse.search(item),
+        itemSearch = aliasSearch.length ? itemFuse.search(aliasSearch[0].item) : itemFuse.search(item),
+        itemEmbed = new MessageEmbed();
+      /* eslint-enable sort-vars */
 
-    if (itemSearch.length) {
+
       itemEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
@@ -82,10 +84,26 @@ module.exports = class ItemCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(itemEmbed, `**${capitalizeFirstLetter(itemSearch[0].name)}**`);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.reply('no item found. Be sure it is an item that has an effect in battles!');
+      if (/(?:Cannot read property 'name' of undefined)/i.test(err.toString())) {
+        return msg.reply(stripIndents`no item found for \`${item}\``);
+      }
+
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`item\` command!
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Input:** ${item}
+      **Error Message:** ${err}
+      `);
+
+      return msg.reply(stripIndents`no item found for \`${item}\`. Be sure it is an item that has an effect in battles!
+      If it was an error that occurred then I notified ${this.client.owners[0].username} about it
+      and you can find out more by joining the support server using the \`${msg.guild.commandPrefix}invite\` command`);
+    }
   }
 };

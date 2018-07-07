@@ -11,12 +11,13 @@
  */
 
 const Fuse = require('fuse.js'),
+  moment = require('moment'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {BattleMovedex} = require(path.join(__dirname, '../../data/dex/moves')),
   {MoveAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
-  {oneLine} = require('common-tags'),
+  {oneLine, stripIndents} = require('common-tags'),
   {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class MoveCommand extends Command {
@@ -46,34 +47,34 @@ module.exports = class MoveCommand extends Command {
   }
 
   run (msg, {move}) {
-    startTyping(msg);
-    /* eslint-disable sort-vars */
-    const aliasOptions = {
-        shouldSort: true,
-        threshold: 0.2,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: ['alias', 'move']
-      },
-      moveOptions = {
-        shouldSort: true,
-        threshold: 0.2,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: ['id', 'name']
-      },
-      aliasFuse = new Fuse(MoveAliases, aliasOptions),
-      moveFuse = new Fuse(BattleMovedex, moveOptions),
-      aliasSearch = aliasFuse.search(move),
-      moveSearch = aliasSearch.length ? moveFuse.search(aliasSearch[0].move) : moveFuse.search(move),
-      moveEmbed = new MessageEmbed();
-    /* eslint-enable sort-vars */
+    try {
+      startTyping(msg);
+      /* eslint-disable sort-vars */
+      const aliasOptions = {
+          shouldSort: true,
+          threshold: 0.2,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: ['alias', 'move']
+        },
+        moveOptions = {
+          shouldSort: true,
+          threshold: 0.2,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: ['id', 'name']
+        },
+        aliasFuse = new Fuse(MoveAliases, aliasOptions),
+        moveFuse = new Fuse(BattleMovedex, moveOptions),
+        aliasSearch = aliasFuse.search(move),
+        moveSearch = aliasSearch.length ? moveFuse.search(aliasSearch[0].move) : moveFuse.search(move),
+        moveEmbed = new MessageEmbed();
+      /* eslint-enable sort-vars */
 
-    if (moveSearch.length) {
       moveEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
@@ -96,10 +97,27 @@ module.exports = class MoveCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(moveEmbed, `**${capitalizeFirstLetter(moveSearch[0].name)}**`);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+      console.error(err);
 
-    return msg.reply('no move found. Be sure it is a move that has an effect in battles!');
+      if (/(?:Cannot read property 'desc' of undefined)/i.test(err.toString())) {
+        return msg.reply(stripIndents`no move found for \`${move}\``);
+      }
+
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`move\` command!
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Input:** ${move}
+      **Error Message:** ${err}
+      `);
+
+      return msg.reply(stripIndents`no move found for \`${move}\`. Be sure it is a move that has an effect in battles!
+      If it was an error that occurred then I notified ${this.client.owners[0].username} about it
+      and you can find out more by joining the support server using the \`${msg.guild.commandPrefix}invite\` command`);
+    }
   }
 };
