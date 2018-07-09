@@ -55,7 +55,7 @@ module.exports = class AnimeCommand extends Command {
 
       animeEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setTitle(hit.titles.en ? hit.titles.en : hit.titles.en_jp)
+        .setTitle(hit.titles.en ? hit.titles.en : hit.canonicalTitle)
         .setURL(`https://kitsu.io/anime/${hit.id}`)
         .setDescription(hit.synopsis.replace(/(.+)(?:\r|\n|\t)(.+)/gim, '$1 $2').split('\r\n')[0])
         .setImage(hit.posterImage.original)
