@@ -2,7 +2,7 @@
  * @file Pokémon DexCommand - Gets information about a Pokémon from Dexter  
  * Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
  * If you want to get the shiny sprite displayed add the `--shiny` at the end of the search  
- * **Aliases**: `p`, `poke`, `mon`, `pokemon`, `pokedex`, `df`, `dexfind`, `dexdata`, `dexter`, `rotom`
+ * **Aliases**: `p`, `mon`, `pokemon`, `pokedex`, `df`, `dexfind`, `dexdata`, `dexter`, `rotom`
  * @module
  * @category pokemon
  * @name dex
@@ -30,7 +30,7 @@ module.exports = class DexCommand extends Command {
       name: 'dex',
       memberName: 'dex',
       group: 'pokemon',
-      aliases: ['p', 'poke', 'mon', 'pokemon', 'pokedex', 'df', 'dexfind', 'dexdata', 'dexter', 'rotom'],
+      aliases: ['p', 'mon', 'pokemon', 'pokedex', 'df', 'dexfind', 'dexdata', 'dexter', 'rotom'],
       description: 'Get the info on a Pokémon',
       format: 'PokemonName',
       examples: ['dex Dragonite'],

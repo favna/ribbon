@@ -401,6 +401,7 @@ class Ribbon {
         ['leaderboards', 'Leaderboards - View leaderboards from various games'],
         ['pokemon', 'Pokemon - Let Dexter answer your questions'],
         ['extra', 'Extra - Extra! Extra! Read All About It! Only Two Cents!'],
+        ['weeb', 'Weeb - Hugs, Kisses, Slaps and all with weeb animu pics'],
         ['moderation', 'Moderation - Moderate with no effort'],
         ['automod', 'Automod - Let the bot moderate the chat for you'],
         ['streamwatch', 'Streamwatch - Spy on members and get notified when they go live'],

@@ -172,20 +172,11 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_fight">fight</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games FightCommand - Pit two things against each other in a fight to the death.<br><strong>Aliases</strong>: <code>combat</code></p>
 </dd>
-<dt><a href="#module_hug">hug</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games HugCommand - Give someone a hug ❤!<br><strong>Aliases</strong>: <code>bearhug</code>, <code>embrace</code></p>
-</dd>
-<dt><a href="#module_kiss">kiss</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games KissCommand - Give someone a kiss ❤!</p>
-</dd>
 <dt><a href="#module_rps">rps</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization<br><strong>Aliases</strong>: <code>rockpaperscissors</code></p>
 </dd>
 <dt><a href="#module_ship">ship</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games ShipCommand - Ship 2 members<br>Leaving 1 or both parameters out will have the bot pick 1 or 2 random members<br><strong>Aliases</strong>: <code>love</code>, <code>marry</code>, <code>engage</code></p>
-</dd>
-<dt><a href="#module_slap">slap</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games SlapCommand - Slap a dumb person💢!<br><strong>Aliases</strong>: <code>bakaslap</code></p>
 </dd>
 <dt><a href="#module_strawpoll">strawpoll</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)<br>Has a very specific syntax! Be sure to adapt the example!<br><strong>Aliases</strong>: <code>straw</code>, <code>poll</code></p>
@@ -402,7 +393,7 @@ There are 4 ways to queue songs  </p>
 <dd><p>Owner TagMemberCommand - Tags a member by ID<br>Primarily meant for mobile and when members have annoying untaggable names</p>
 </dd>
 <dt><a href="#module_dex">dex</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokémon DexCommand - Gets information about a Pokémon from Dexter<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>p</code>, <code>poke</code>, <code>mon</code>, <code>pokemon</code>, <code>pokedex</code>, <code>df</code>, <code>dexfind</code>, <code>dexdata</code>, <code>dexter</code>, <code>rotom</code></p>
+<dd><p>Pokémon DexCommand - Gets information about a Pokémon from Dexter<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>p</code>, <code>mon</code>, <code>pokemon</code>, <code>pokedex</code>, <code>df</code>, <code>dexfind</code>, <code>dexdata</code>, <code>dexter</code>, <code>rotom</code></p>
 </dd>
 <dt><a href="#module_flavor">flavor</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pokémon FlavorCommand - Gets flavor text from a Pokémon<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>Due to message limit size it fetches as many entries possible starting with generation 7 going downwards<br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>flavors</code>, <code>dexdata</code>, <code>dexentries</code>, <code>dextext</code>, <code>dextex</code>, <code>dexter</code></p>
@@ -482,6 +473,30 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 </dd>
 <dt><a href="#module_twitchtoggle">twitchtoggle</a> ⇒ <code>Message</code></dt>
 <dd><p>Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications<br><strong>Aliases</strong>: <code>twitchon</code>, <code>twitchoff</code></p>
+</dd>
+<dt><a href="#module_cuddle">cuddle</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Weeb CuddleCommand - Cuuuuddlleeesss!! 💕!</p>
+</dd>
+<dt><a href="#module_feed">feed</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Weeb FeedCommand - Feed someone licious food 🍜 😋!</p>
+</dd>
+<dt><a href="#module_hug">hug</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Weeb HugCommand - Give someone a hug ❤!</p>
+</dd>
+<dt><a href="#module_kiss">kiss</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Weeb KissCommand - Give someone a kiss ❤!</p>
+</dd>
+<dt><a href="#module_pat">pat</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Weeb PatCommand - Pat a good person 🐇!</p>
+</dd>
+<dt><a href="#module_poke">poke</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Weeb PokeCommand - Poke an annoying person 👉!</p>
+</dd>
+<dt><a href="#module_slap">slap</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Weeb SlapCommand - Slap a dumb person 💢!</p>
+</dd>
+<dt><a href="#module_tickle">tickle</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Weeb TickleCommand - TICKLE WAR 😂!!</p>
 </dd>
 </dl>
 
@@ -1081,39 +1096,6 @@ Games FightCommand - Pit two things against each other in a fight to the death.
 ```js
 fight Pyrrha Ruby
 ```
-<a name="module_hug"></a>
-
-## hug ⇒ <code>MessageEmbed</code>
-Games HugCommand - Give someone a hug ❤!  
-**Aliases**: `bearhug`, `embrace`
-
-**Returns**: <code>MessageEmbed</code> - The hug and a cute image ❤  
-**Category**: games  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [MemberToHug] | <code>GuildMemberResolvable</code> | Name of the member you want to give a hug |
-
-**Example**  
-```js
-hug Pyrrha
-```
-<a name="module_kiss"></a>
-
-## kiss ⇒ <code>MessageEmbed</code>
-Games KissCommand - Give someone a kiss ❤!
-
-**Returns**: <code>MessageEmbed</code> - The kiss and a cute image ❤  
-**Category**: games  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [MemberToKiss] | <code>GuildMemberResolvable</code> | Name of the member you want to give a kiss |
-
-**Example**  
-```js
-kiss Pyrrha
-```
 <a name="module_rps"></a>
 
 ## rps ⇒ <code>MessageEmbed</code>
@@ -1149,23 +1131,6 @@ Leaving 1 or both parameters out will have the bot pick 1 or 2 random members
 **Example**  
 ```js
 ship Biscuit Rei
-```
-<a name="module_slap"></a>
-
-## slap ⇒ <code>MessageEmbed</code>
-Games SlapCommand - Slap a dumb person💢!  
-**Aliases**: `bakaslap`
-
-**Returns**: <code>MessageEmbed</code> - The slap and an image  
-**Category**: games  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [MemberToSlap] | <code>GuildMemberResolvable</code> | Name of the member you want to slap |
-
-**Example**  
-```js
-slap Cinder
 ```
 <a name="module_strawpoll"></a>
 
@@ -2241,7 +2206,7 @@ tagmember ☜(⌒▽⌒)☞guy
 Pokémon DexCommand - Gets information about a Pokémon from Dexter  
 Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
 If you want to get the shiny sprite displayed add the `--shiny` at the end of the search  
-**Aliases**: `p`, `poke`, `mon`, `pokemon`, `pokedex`, `df`, `dexfind`, `dexdata`, `dexter`, `rotom`
+**Aliases**: `p`, `mon`, `pokemon`, `pokedex`, `df`, `dexfind`, `dexdata`, `dexter`, `rotom`
 
 **Returns**: <code>MessageEmbed</code> - Lots of information about the pokemon  
 **Category**: pokemon  
@@ -2725,6 +2690,134 @@ Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications
 **Example**  
 ```js
 twitchtoggle enable
+```
+<a name="module_cuddle"></a>
+
+## cuddle ⇒ <code>MessageEmbed</code>
+Weeb CuddleCommand - Cuuuuddlleeesss!! 💕!
+
+**Returns**: <code>MessageEmbed</code> - The cuddle and a cute image 💕  
+**Category**: weeb  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [MemberToCuddle] | <code>GuildMemberResolvable</code> | Name of the member you want to cuddle |
+
+**Example**  
+```js
+cuddle Velvet
+```
+<a name="module_feed"></a>
+
+## feed ⇒ <code>MessageEmbed</code>
+Weeb FeedCommand - Feed someone licious food 🍜 😋!
+
+**Returns**: <code>MessageEmbed</code> - Feeding and a cute image 🍜 😋  
+**Category**: weeb  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [MemberToFeed] | <code>GuildMemberResolvable</code> | Name of the member you want to feed |
+
+**Example**  
+```js
+feed Ren
+```
+<a name="module_hug"></a>
+
+## hug ⇒ <code>MessageEmbed</code>
+Weeb HugCommand - Give someone a hug ❤!
+
+**Returns**: <code>MessageEmbed</code> - The hug and a cute image ❤  
+**Category**: weeb  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [MemberToHug] | <code>GuildMemberResolvable</code> | Name of the member you want to give a hug |
+
+**Example**  
+```js
+hug Nora
+```
+<a name="module_kiss"></a>
+
+## kiss ⇒ <code>MessageEmbed</code>
+Weeb KissCommand - Give someone a kiss ❤!
+
+**Returns**: <code>MessageEmbed</code> - The kiss and a cute image ❤  
+**Category**: weeb  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [MemberToKiss] | <code>GuildMemberResolvable</code> | Name of the member you want to give a kiss |
+
+**Example**  
+```js
+kiss Pyrrha
+```
+<a name="module_pat"></a>
+
+## pat ⇒ <code>MessageEmbed</code>
+Weeb PatCommand - Pat a good person 🐇!
+
+**Returns**: <code>MessageEmbed</code> - The pat and an image  
+**Category**: weeb  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [MemberToPat] | <code>GuildMemberResolvable</code> | Name of the member you want to pat |
+
+**Example**  
+```js
+pat Ruby
+```
+<a name="module_poke"></a>
+
+## poke ⇒ <code>MessageEmbed</code>
+Weeb PokeCommand - Poke an annoying person 👉!
+
+**Returns**: <code>MessageEmbed</code> - The poke and an image  
+**Category**: weeb  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [MemberToPoke] | <code>GuildMemberResolvable</code> | Name of the member you want to poke |
+
+**Example**  
+```js
+poke Weiss
+```
+<a name="module_slap"></a>
+
+## slap ⇒ <code>MessageEmbed</code>
+Weeb SlapCommand - Slap a dumb person 💢!
+
+**Returns**: <code>MessageEmbed</code> - The slap and an image  
+**Category**: weeb  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [MemberToSlap] | <code>GuildMemberResolvable</code> | Name of the member you want to slap |
+
+**Example**  
+```js
+slap Cinder
+```
+<a name="module_tickle"></a>
+
+## tickle ⇒ <code>MessageEmbed</code>
+Weeb TickleCommand - TICKLE WAR 😂!!
+
+**Returns**: <code>MessageEmbed</code> - The tickling and a cute image ❤  
+**Category**: weeb  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [MemberToTickle] | <code>GuildMemberResolvable</code> | Name of the member you want to tickle |
+
+**Example**  
+```js
+tickle Yang
 ```
 
 <a name="module_groups"></a>
