@@ -250,6 +250,9 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_deletecommandmessages">deletecommandmessages</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation deleteCommandMessagesCommand - Configure whether the bot should delete command messages<br><strong>Aliases</strong>: <code>dcm</code></p>
 </dd>
+<dt><a href="#module_deletewarn">deletewarn</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation DeleteWarnCommand - Deletes all or some warnings points from a user<br><strong>Aliases</strong>: <code>removewarn</code>, <code>unwarn</code>, <code>dw</code>, <code>uw</code></p>
+</dd>
 <dt><a href="#module_delrole">delrole</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation DeleteRoleCommand - Delete the role of a member<br><strong>Aliases</strong>: <code>deleterole</code>, <code>dr</code>, <code>remrole</code>, <code>removerole</code></p>
 </dd>
@@ -1485,6 +1488,28 @@ Moderation deleteCommandMessagesCommand - Configure whether the bot should delet
 **Example**  
 ```js
 deletecommandmessages enable
+```
+<a name="module_deletewarn"></a>
+
+## deletewarn ⇒ <code>MessageEmbed</code>
+Moderation DeleteWarnCommand - Deletes all or some warnings points from a user  
+**Aliases**: `removewarn`, `unwarn`, `dw`, `uw`
+
+**Returns**: <code>MessageEmbed</code> - Confirmation of the action and the new warning points that user has  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyMember | <code>MemberResolvable</code> | The member to remove warning points from |
+| [AmountOfWarnPoints] | <code>Number</code> | The amount of warning points to remove |
+
+**Example**  
+```js
+deletewarn favna
+```
+**Example**  
+```js
+deletewarn favna
 ```
 <a name="module_delrole"></a>
 
