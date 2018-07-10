@@ -187,10 +187,10 @@ const joinmessage = async function (member) {
     .attachFiles([embedAttachment])
     .setColor('#80F31F')
     .setTitle('NEW MEMBER!')
-    .setDescription(`Please give a warm welcome to <@${member.id}>`)
+    .setDescription(`Please give a warm welcome to \`${member.displayName}\`  (${member.id})`)
     .setImage('attachment://joinimg.png');
 
-  member.guild.channels.get(member.guild.settings.get('joinmsgchannel')).send('', {embed: newMemberEmbed});
+  member.guild.channels.get(member.guild.settings.get('joinmsgchannel')).send(`welcome <@${member.id}> 🎗️!`, {embed: newMemberEmbed});
 };
 
 const leavemessage = async function (member) {
@@ -223,7 +223,7 @@ const leavemessage = async function (member) {
     .attachFiles([embedAttachment])
     .setColor('#F4BF42')
     .setTitle('Member Left 😢')
-    .setDescription(`You will be missed <@${member.id}>`)
+    .setDescription(`You will be missed \`${member.displayName}\` (${member.id})`)
     .setImage('attachment://leaveimg.png');
 
   member.guild.channels.get(member.guild.settings.get('leavemsgchannel')).send('', {embed: leaveMemberEmbed});
