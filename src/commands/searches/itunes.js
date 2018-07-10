@@ -53,7 +53,7 @@ module.exports = class iTunesCommand extends Command {
                   val = encodeURIComponent(obj[k]).replace(/%2B/gm, '+');
 
                 return key + val;
-              }).filter(Boolean).join('&'), // eslint-disable-line newline-per-chained-call
+              }).filter(Boolean).join('&'),
               parse: null
             }
           })

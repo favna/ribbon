@@ -110,7 +110,7 @@ module.exports = class TimerAddCommand extends Command {
         interval,
         channel: channel.id,
         content,
-        lastsend: moment().subtract(interval, 'ms').format('YYYY-MM-DD HH:mm') // eslint-disable-line newline-per-chained-call
+        lastsend: moment().subtract(interval, 'ms').format('YYYY-MM-DD HH:mm')
       });
       stopTyping(msg);
 
@@ -123,7 +123,7 @@ module.exports = class TimerAddCommand extends Command {
           interval,
           channel: channel.id,
           content,
-          lastsend: moment().subtract(interval, 'ms').format('YYYY-MM-DD HH:mm') // eslint-disable-line newline-per-chained-call
+          lastsend: moment().subtract(interval, 'ms').format('YYYY-MM-DD HH:mm')
         });
       } else {
         this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`

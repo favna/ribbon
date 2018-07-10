@@ -37,7 +37,6 @@ module.exports = class CopyPastaListCommand extends Command {
     try {
       startTyping(msg);
 
-      // eslint-disable-next-line newline-per-chained-call
       const list = conn.prepare(`SELECT name FROM "${msg.guild.id}";`).all().map(p => p.name);
 
       if (list && list.length) {
