@@ -74,32 +74,32 @@ module.exports = class SlotsCommand extends Command {
         }
 
         const bar = new SlotSymbol('bar', {
-            display: '<:bar:430366693630672916>',
+            display: '<:bar:466061610088267776>',
             points: 50,
             weight: 20
           }),
           cherry = new SlotSymbol('cherry', {
-            display: '<:cherry:430366794230923266>',
+            display: '<:cherry:466061632821395456>',
             points: 6,
             weight: 100
           }),
           diamond = new SlotSymbol('diamond', {
-            display: '<:diamond:430366803789873162>',
+            display: '<:diamond:466061645118963732>',
             points: 15,
             weight: 40
           }),
           lemon = new SlotSymbol('lemon', {
-            display: '<:lemon:430366830784413727>',
+            display: '<:lemon:466061677448790026>',
             points: 8,
             weight: 80
           }),
           seven = new SlotSymbol('seven', {
-            display: '<:seven:430366839735058443>',
+            display: '<:seven:466061686629990421>',
             points: 300,
             weight: 10
           }),
           watermelon = new SlotSymbol('watermelon', {
-            display: '<:watermelon:430366848710737920>',
+            display: '<:watermelon:466061696704839704>',
             points: 10,
             weight: 60
           });
