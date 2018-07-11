@@ -56,6 +56,12 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 ## Modules
 
 <dl>
+<dt><a href="#module_iam">iam</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Info IamCommand - Self Assign roles<br><strong>Aliases</strong>: <code>self</code></p>
+</dd>
+<dt><a href="#module_iamnot">iamnot</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Info IamNotCommand - Remove self assigned roles<br><strong>Aliases</strong>: <code>notself</code>, <code>iamn</code></p>
+</dd>
 <dt><a href="#module_badwords">badwords</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Automod BadWordsCommand - Toggle the bad words filter<br>Please note that when adding new words to your server&#39;s filter you overwrite all your currently set words!<br><strong>Aliases</strong>: <code>badwordsfilter</code>, <code>bwf</code>, <code>bwf</code></p>
 </dd>
@@ -280,6 +286,9 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_regexmatchtoggle">regexmatchtoggle</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this server<br><strong>Aliases</strong>: <code>rmt</code>, <code>regexmatch</code></p>
 </dd>
+<dt><a href="#module_selfroles">selfroles</a> ⇒ <code>Message</code></dt>
+<dd><p>Moderation SelfRolesCommand - Sets the self assignable roles for the server members, to be used by the <code>iam</code> command<br>You can set multiple roles by delimiting with spaces (<code>role1 role2</code>)<br>You can clear the setting by giving no roles then replying <code>finish</code><br><strong>Aliases</strong>: <code>sroles</code></p>
+</dd>
 <dt><a href="#module_setmemberlogs">setmemberlogs</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation SetMemberlogsCommand - Sets the channel used for member logs<br><strong>Aliases</strong>: <code>setmember</code></p>
 </dd>
@@ -500,6 +509,38 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 </dd>
 </dl>
 
+<a name="module_iam"></a>
+
+## iam ⇒ <code>MessageEmbed</code>
+Info IamCommand - Self Assign roles  
+**Aliases**: `self`
+
+**Returns**: <code>MessageEmbed</code> - Confirmation the role has been assigned, will also be added to modlogs if enabled for the server  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyRole | <code>RoleResolvable</code> | The role you want to assign to yourself |
+
+**Example**  
+```js
+iam uploader
+```
+<a name="module_iamnot"></a>
+
+## iamnot ⇒ <code>MessageEmbed</code>
+Info IamNotCommand - Remove self assigned roles  
+**Aliases**: `notself`, `iamn`
+
+**Returns**: <code>MessageEmbed</code> - Confirmation the role was removed, will also be added to modlogs if enabled for the server  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyRole | <code>RoleResolvable</code> | The role you want to remove from yourself |
+
+**Example**  
+```js
+iamnot uploader
+```
 <a name="module_badwords"></a>
 
 ## badwords ⇒ <code>MessageEmbed</code>
@@ -1679,6 +1720,29 @@ Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this 
 **Example**  
 ```js
 regexmatchtoggle enable
+```
+<a name="module_selfroles"></a>
+
+## selfroles ⇒ <code>Message</code>
+Moderation SelfRolesCommand - Sets the self assignable roles for the server members, to be used by the `iam` command  
+You can set multiple roles by delimiting with spaces (`role1 role2`)  
+You can clear the setting by giving no roles then replying `finish`  
+**Aliases**: `sroles`
+
+**Returns**: <code>Message</code> - Confirmation the setting was stored  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyRole | <code>RoleResolvable</code> | Role to set, can be multiple split by spaces |
+
+**Example**  
+```js
+selfroles uploader
+```
+**Example**  
+```js
+selfroles uploader superuploader
 ```
 <a name="module_setmemberlogs"></a>
 
