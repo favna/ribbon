@@ -42,7 +42,7 @@ module.exports = class defaultroleCommand extends Command {
   }
 
   hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
+    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
   }
 
   run (msg, {role}) {
@@ -55,13 +55,10 @@ module.exports = class defaultroleCommand extends Command {
 
     if (role === 'delete') {
       msg.guild.settings.remove('defaultRole');
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
-
       description = 'Default role has been removed';
+    } else {
+      msg.guild.settings.set('defaultRole', role.id);
     }
-
-    msg.guild.settings.set('defaultRole', role.id);
 
     defRoleEmbed
       .setColor('#AAEFE6')
