@@ -88,12 +88,12 @@ module.exports = class AddRoleCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
       if (/(?:Missing Permissions)/i.test(err.toString())) {
-
         return msg.reply(stripIndents`an error occurred adding the role \`${role.name}\` to \`${member.displayName}\`.
           Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
       } else if (/(?:is not an array or collection of roles)/i.test(err.toString())) {
         return msg.reply(stripIndents`it looks like you supplied an invalid role to add. If you are certain that the role is valid please feel free to open an issue on the GitHub.`);
       }
+
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`addrole\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})

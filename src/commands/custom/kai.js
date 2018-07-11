@@ -49,7 +49,6 @@ module.exports = class KaiCommand extends Command {
 
 
   verifyRmt (msg) {
-    /* eslint-disable curly*/
     if (msg.guild.id === '373826006651240450') return true;
     if (msg.guild.commandPrefix === '.') return true;
     if (msg.guild.settings.get('regexmatches', false)) return true;
@@ -60,7 +59,6 @@ module.exports = class KaiCommand extends Command {
 
   run (msg) {
     if (msg.patternMatches && !this.verifyRmt(msg)) return null;
-    /* eslint-enable curly*/
     startTyping(msg);
     msg.delete();
     stopTyping(msg);

@@ -40,7 +40,7 @@ module.exports = class TypeCommand extends Command {
           type: 'string',
           validate: (input) => {
             input = input.split(' ').map(type => capitalizeFirstLetter(type)).slice(0, 2);
-            if (input.every(type => Object.keys(BattleTypeChart).includes(type))) return true; // eslint-disable-line curly
+            if (input.every(type => Object.keys(BattleTypeChart).includes(type))) return true;
             
             return `one of more of your types was invalid. Valid types are ${Object.keys(BattleTypeChart).map(val => `\`${val}\``).join(', ')}`;
           },

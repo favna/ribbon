@@ -107,8 +107,8 @@ module.exports = class RedditCommand extends Command {
   calculateControversiality () {
     const {comments} = this;
 
-    if (!comments.length) return 'N/A'; // eslint-disable-line curly
-    if (comments.length < 5) return 0; // eslint-disable-line curly
+    if (!comments.length) return 'N/A';
+    if (comments.length < 5) return 0;
     let count = 0;
 
     comments.forEach((item) => {

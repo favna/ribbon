@@ -70,7 +70,7 @@ module.exports = class DeleteWarnCommand extends Command {
 
       const query = conn.prepare(`SELECT id,points FROM "${msg.guild.id}" WHERE id = ?;`).get(member.id);
 
-      if (!query) return msg.reply('that user has no warnings points yet'); // eslint-disable-line curly
+      if (!query) return msg.reply('that user has no warnings points yet');
 
       const previousPoints = query.points; // eslint-disable-line one-var
       let newPoints = points === 999999 ? 0 : query.points - points;

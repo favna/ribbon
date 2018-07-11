@@ -55,7 +55,7 @@ module.exports = class SayCommand extends Command {
 
   run (msg, {txt}) {
     if (msg.guild && msg.deletable && msg.guild.settings.get('automod', false)) {
-      /* eslint-disable curly, max-len*/
+      /* eslint-disable max-len*/
       if (msg.guild.settings.get('caps', false).enabled) {
         const opts = msg.guild.settings.get('caps');
 
@@ -75,7 +75,7 @@ module.exports = class SayCommand extends Command {
       if (msg.guild.settings.get('invites', false) && invites(msg, this.client)) return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no server invites filter`);
       if (msg.guild.settings.get('links', false) && links(msg, this.client)) return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no external links filter`);
       if (msg.guild.settings.get('mentions', false).enabled && mentions(msg, msg.guild.settings.get('mentions').threshold, this.client)) return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no excessive mentions filter`);
-      /* eslint-enable curly, max-len */
+      /* eslint-enable max-len */
     }
 
     startTyping(msg);

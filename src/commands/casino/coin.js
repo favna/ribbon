@@ -83,8 +83,8 @@ module.exports = class CoinCommand extends Command {
           return msg.reply(`you don\'t have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
         }
 
-        if (side === 'head') side = 'heads'; // eslint-disable-line curly
-        if (side === 'tail') side = 'tails'; // eslint-disable-line curly
+        if (side === 'head') side = 'heads';
+        if (side === 'tail') side = 'tails';
 
         const flip = Math.random() >= 0.5,
           prevBal = query.balance,
@@ -92,7 +92,7 @@ module.exports = class CoinCommand extends Command {
 
         query.balance -= chips;
 
-        if (flip === res) query.balance += chips * 2; // eslint-disable-line curly
+        if (flip === res) query.balance += chips * 2;
 
         query.balance = roundNumber(query.balance);
 

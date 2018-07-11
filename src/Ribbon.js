@@ -215,7 +215,6 @@ class Ribbon {
   }
 
   onMessage () {
-    /* eslint-disable curly*/
     // eslint-disable-next-line complexity, consistent-return
     return (msg) => {
       if (msg.guild && msg.deletable && msg.guild.settings.get('automod', false).enabled) {
@@ -242,7 +241,6 @@ class Ribbon {
         if (msg.guild.settings.get('slowmode', false).enabled && slowmode(msg, msg.guild.settings.get('slowmode').within, this.client)) msg.delete();
       }
     };
-    /* eslint-enable curly */
   }
 
   onPresenceUpdate () {

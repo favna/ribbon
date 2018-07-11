@@ -72,7 +72,7 @@ module.exports = class PokemonTCGCommand extends Command {
     });
   }
 
-  /* eslint-disable max-statements, complexity, curly*/
+  /* eslint-disable max-statements, complexity*/
   async run (msg, {props}) {
     startTyping(msg);
     const command = msg,
