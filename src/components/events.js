@@ -223,7 +223,7 @@ const leavemessage = async function (member) {
     .attachFiles([embedAttachment])
     .setColor('#F4BF42')
     .setTitle('Member Left 😢')
-    .setDescription(`You will be missed __**${member.displayName}**__ (${member.id})`)
+    .setDescription(`You will be missed __**${member.displayName}**__ (\`${member.id}\`)`)
     .setImage('attachment://leaveimg.png');
 
   member.guild.channels.get(member.guild.settings.get('leavemsgchannel')).send('', {embed: leaveMemberEmbed});
