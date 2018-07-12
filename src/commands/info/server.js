@@ -63,7 +63,8 @@ module.exports = class ServerInfoCommand extends Command {
     startTyping(msg);
     const channels = msg.guild.channels.map(ty => ty.type), // eslint-disable-line sort-vars
       presences = msg.guild.presences.map(st => st.status),
-      serverEmbed = new MessageEmbed();
+      selfRoles = msg.guild.settings.get('selfroles', null),
+      serverEmbed = new MessageEmbed();      
 
     let guildChannels = 0,
       onlineMembers = 0;
@@ -96,6 +97,14 @@ module.exports = class ServerInfoCommand extends Command {
       .addField('Created At', moment(msg.guild.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
       .addField('Verification Level', this.verificationFilter(msg.guild.verificationLevel), false)
       .addField('Explicit Content Filter', this.contentFilter(msg.guild.explicitContentFilter), false);
+
+    if (selfRoles) {
+      const roleNames = [];
+
+      selfRoles.forEach(r => roleNames.push(msg.guild.roles.get(r).name));
+
+      serverEmbed.addField('Self-Assignable Roles', `${roleNames.map(val => `\`${val}\``).join(', ')}`, false);
+    }
 
     msg.guild.splashURL() !== null ? serverEmbed.setImage(msg.guild.splashURL()) : null;
 
