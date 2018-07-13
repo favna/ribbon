@@ -38,10 +38,7 @@ module.exports = class EShopCommand extends Command {
     });
   }
 
-  run (msg, {
-    game,
-    price = 'TBA'
-  }) {
+  run (msg, {game, price = 'TBA'}) {
     try {
       startTyping(msg);
 
