@@ -8,6 +8,7 @@
 
 const Database = require('better-sqlite3'),
   Jimp = require('jimp'),
+  decache = require('decache'),
   eshop = require('nintendo-switch-eshop'),
   fs = require('fs'),
   moment = require('moment'),
@@ -56,9 +57,11 @@ const checkReminders = async (client) => {
   }
 };
 
-const fetchEshop = async () => {
+const fetchEshop = async (client) => {
   try {
     fs.writeFileSync(path.join(__dirname, '../data/databases/eshop.json'), JSON.stringify(await eshop.getGamesAmerica({shop: 'all'})), 'utf8');
+    decache(path.join(__dirname, '../data/databases/eshop.json'));
+    client.registry.resolveCommand('searches:eshop').reload();
   } catch (err) {
     console.error('error occurred fetching eshop periodically');
     console.error(err);

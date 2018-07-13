@@ -331,7 +331,7 @@ class Ribbon {
 
       setInterval(() => {
         lotto(bot);
-        fetchEshop();
+        fetchEshop(bot);
       }, ms('24h'));
 
       fs.watch(path.join(__dirname, 'data/dex/formats.json'), (eventType, filename) => {

@@ -7,7 +7,8 @@
  * @returns {Message} Confirmation the data was fetched 
  */
 
-const eshop = require('nintendo-switch-eshop'),
+const decache = require('decache'),
+  eshop = require('nintendo-switch-eshop'),
   fs = require('fs'),
   path = require('path'),
   {Command} = require('discord.js-commando'),
@@ -30,6 +31,8 @@ module.exports = class EShopFetchCommand extends Command {
   async run (msg) {
     startTyping(msg);
     fs.writeFileSync(path.join(__dirname, '../../data/databases/eshop.json'), JSON.stringify(await eshop.getGamesAmerica({shop: 'all'})), 'utf8');
+    decache(path.join(__dirname, '../../data/databases/eshop.json'));
+    this.client.registry.resolveCommand('searches:eshop').reload();
 
     if (fs.existsSync(path.join(__dirname, '../../data/databases/eshop.json'))) {
       deleteCommandMessages(msg, this.client);
