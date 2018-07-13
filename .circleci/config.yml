@@ -45,7 +45,7 @@ jobs:
           command: sudo npm install -g node-pre-gyp node-gyp
       - run:
           name: Install ribbon dependencies
-          command: yarn install
+          command: yarn install --production=false
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
