@@ -8,6 +8,8 @@
 
 const Database = require('better-sqlite3'),
   Jimp = require('jimp'),
+  eshop = require('nintendo-switch-eshop'),
+  fs = require('fs'),
   moment = require('moment'),
   path = require('path'),
   {MessageEmbed, MessageAttachment} = require('discord.js'),
@@ -15,7 +17,7 @@ const Database = require('better-sqlite3'),
   {ordinal} = require(path.join(__dirname, 'util.js')),
   {stripIndents} = require('common-tags');
 
-const checkReminders = async function (client) {
+const checkReminders = async (client) => {
   const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
 
   try {
@@ -54,7 +56,16 @@ const checkReminders = async function (client) {
   }
 };
 
-const forceStopTyping = function (client) {
+const fetchEshop = async () => {
+  try {
+    fs.writeFileSync(path.join(__dirname, '../data/databases/eshop.json'), JSON.stringify(await eshop.getGamesAmerica({shop: 'all'})), 'utf8');
+  } catch (err) {
+    console.error('error occurred fetching eshop periodically');
+    console.error(err);
+  }
+};
+
+const forceStopTyping = (client) => {
   const allChannels = client.channels;
 
   for (const channel of allChannels.values()) {
@@ -66,7 +77,7 @@ const forceStopTyping = function (client) {
   }
 };
 
-const guildAdd = async function (client, guild) {
+const guildAdd = async (client, guild) => {
   try {
     Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
     /* eslint-disable sort-vars*/
@@ -110,7 +121,7 @@ const guildAdd = async function (client, guild) {
   }
 };
 
-const guildLeave = function (client, guild) {
+const guildLeave = (client, guild) => {
   guild.settings.clear();
   const casinoConn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3')),
     pastasConn = new Database(path.join(__dirname, '../data/databases/pastas.sqlite3')),
@@ -158,7 +169,7 @@ const guildLeave = function (client, guild) {
   }
 };
 
-const joinmessage = async function (member) {
+const joinmessage = async (member) => {
   Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
   /* eslint-disable sort-vars*/
   const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
@@ -193,7 +204,7 @@ const joinmessage = async function (member) {
   member.guild.channels.get(member.guild.settings.get('joinmsgchannel')).send(`welcome <@${member.id}> 🎗️!`, {embed: newMemberEmbed});
 };
 
-const leavemessage = async function (member) {
+const leavemessage = async (member) => {
   Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
   /* eslint-disable sort-vars*/
   const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
@@ -229,7 +240,7 @@ const leavemessage = async function (member) {
   member.guild.channels.get(member.guild.settings.get('leavemsgchannel')).send('', {embed: leaveMemberEmbed});
 };
 
-const lotto = function (client) {
+const lotto = (client) => {
   const conn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3'));
 
   try {
@@ -274,7 +285,7 @@ const lotto = function (client) {
   }
 };
 
-const timermessages = function (client) {
+const timermessages = (client) => {
   const conn = new Database(path.join(__dirname, '../data/databases/timers.sqlite3'));
 
   try {
@@ -319,6 +330,7 @@ const timermessages = function (client) {
 
 module.exports = {
   checkReminders,
+  fetchEshop,
   forceStopTyping,
   guildAdd,
   guildLeave,

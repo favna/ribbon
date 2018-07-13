@@ -3,13 +3,14 @@ const Database = require('better-sqlite3'),
   decache = require('decache'),
   fs = require('fs'),
   moment = require('moment'),
+  ms = require('ms'),
   path = require('path'),
   request = require('snekfetch'),
   {Client, FriendlyError, SyncSQLiteProvider} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
   {badwords, duptext, caps, emojis, mentions, links, invites, slowmode} = require(path.join(__dirname, 'components/automod.js')),
-  {checkReminders, forceStopTyping, guildAdd, guildLeave, joinmessage, leavemessage, lotto, timermessages} = require(path.join(__dirname, 'components/events.js'));
+  {checkReminders, fetchEshop, forceStopTyping, guildAdd, guildLeave, joinmessage, leavemessage, lotto, timermessages} = require(path.join(__dirname, 'components/events.js'));
 /* eslint-enable sort-vars */
 
 class Ribbon {
@@ -322,15 +323,16 @@ class Ribbon {
       setInterval(() => {
         forceStopTyping(bot);
         timermessages(bot);
-      }, 180000);
+      }, ms('3m'));
 
       setInterval(() => {
         checkReminders(bot);
-      }, 300000);
+      }, ms('5m'));
 
       setInterval(() => {
         lotto(bot);
-      }, 86400000);
+        fetchEshop();
+      }, ms('24h'));
 
       fs.watch(path.join(__dirname, 'data/dex/formats.json'), (eventType, filename) => {
         if (filename) {

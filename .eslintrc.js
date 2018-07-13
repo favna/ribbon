@@ -82,7 +82,7 @@ module.exports = {
             "error",
             "never"
         ],
-        "func-style": "error",
+        "func-style": ["error", "expression", { "allowArrowFunctions": true }],
         "function-paren-newline": "off",
         "generator-star-spacing": "error",
         "getter-return": "error",
