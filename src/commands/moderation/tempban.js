@@ -43,7 +43,7 @@ module.exports = class TempBanCommand extends Command {
           prompt: 'How long should that member be banned?',
           type: 'string',
           validate: (t) => {
-            if (/^(?:[0-9]{1,2}(?:m|h|d){1})$/i.test(t)) {
+            if ((/^(?:[0-9]{1,2}(?:m|h|d){1})$/i).test(t)) {
               return true;
             }
 
@@ -100,7 +100,7 @@ module.exports = class TempBanCommand extends Command {
       return msg.reply('I cannot ban that member, their role is probably higher than my own!');
     }
 
-    if (/--nodelete/im.test(msg.argString)) {
+    if ((/--nodelete/im).test(msg.argString)) {
       reason = reason.substring(0, reason.indexOf('--nodelete')) + reason.substring(reason.indexOf('--nodelete') + '--nodelete'.length + 1);
       this.keepmessages = true;
     }

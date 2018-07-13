@@ -92,7 +92,7 @@ module.exports = class iTunesCommand extends Command {
     } catch (err) {
       stopTyping(msg);
 
-      if (/(?:no song found)/i.test(err.toString())) {
+      if ((/(?:no song found)/i).test(err.toString())) {
         return msg.reply(`no song found for \`${music.replace(/\+/g, ' ')}\``);
       }
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`

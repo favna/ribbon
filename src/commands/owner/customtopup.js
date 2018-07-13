@@ -41,7 +41,7 @@ module.exports = class CustomTopUpCommand extends Command {
           prompt: 'How many chips do you want to give?',
           type: 'integer',
           validate: (chips) => {
-            if (/^[+]?\d+([.]\d+)?$/.test(chips) && chips >= 1 && chips <= 1000000) {
+            if ((/^[+]?\d+([.]\d+)?$/).test(chips) && chips >= 1 && chips <= 1000000) {
               return true;
             }
 

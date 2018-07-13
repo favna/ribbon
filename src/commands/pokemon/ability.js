@@ -82,7 +82,7 @@ module.exports = class AbilityCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      if (/(?:Cannot read property 'desc' of undefined)/i.test(err.toString())) {
+      if ((/(?:Cannot read property 'desc' of undefined)/i).test(err.toString())) {
         return msg.reply(stripIndents`no ability found for \`${ability}\``);
       }
 

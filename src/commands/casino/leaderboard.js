@@ -59,7 +59,7 @@ module.exports = class LeaderboardCommand extends Command {
       return msg.reply(`looks like there aren't any casino players in this server yet, use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
     } catch (err) {
       stopTyping(msg);
-      if (/(?:no such table)/i.test(err.toString())) {
+      if ((/(?:no such table)/i).test(err.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
 
         return msg.reply(`looks like there aren't any casino players in this server yet, use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);

@@ -49,7 +49,7 @@ module.exports = class MuteCommand extends Command {
           type: 'string',
           default: '',
           validate: (t) => {
-            if (/^(?:[0-9]{1,2}(?:m|h|d){1})$/i.test(t)) {
+            if ((/^(?:[0-9]{1,2}(?:m|h|d){1})$/i).test(t)) {
               return true;
             }
 
@@ -137,7 +137,7 @@ module.exports = class MuteCommand extends Command {
       } catch (err) {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
-        if (/(?:Missing Permissions)/i.test(err.toString())) {
+        if ((/(?:Missing Permissions)/i).test(err.toString())) {
 
           return msg.reply(stripIndents`an error occurred muting \`${member.displayName}\`.
           Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);

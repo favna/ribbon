@@ -88,7 +88,7 @@ module.exports = class ItemCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      if (/(?:Cannot read property 'name' of undefined)/i.test(err.toString())) {
+      if ((/(?:Cannot read property 'name' of undefined)/i).test(err.toString())) {
         return msg.reply(stripIndents`no item found for \`${item}\``);
       }
 

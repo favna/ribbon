@@ -86,7 +86,7 @@ module.exports = class CopyPastaAddCommand extends Command {
       return msg.embed(pastaAddEmbed);
     } catch (err) {
       stopTyping(msg);
-      if (/(?:no such table)/i.test(err.toString())) {
+      if ((/(?:no such table)/i).test(err.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (name TEXT PRIMARY KEY, content TEXT);`).run();
 
         conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($name, $content);`).run({

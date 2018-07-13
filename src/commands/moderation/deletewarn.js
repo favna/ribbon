@@ -101,7 +101,7 @@ module.exports = class DeleteWarnCommand extends Command {
       return msg.embed(warnEmbed);
     } catch (err) {
       stopTyping(msg);
-      if (/(?:no such table)/i.test(err.toString())) {
+      if ((/(?:no such table)/i).test(err.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id TEXT PRIMARY KEY, tag TEXT, points INTEGER);`).run();
 
         conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($id, $tag, $points);`).run({

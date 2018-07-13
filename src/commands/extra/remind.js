@@ -41,7 +41,7 @@ module.exports = class RemindCommand extends Command {
           prompt: 'Reply with the time in which you want to be reminded?',
           type: 'string',
           validate: (t) => {
-            if (/^(?:[0-9]{1,2}(?:m|h|hr|d){1})$/i.test(t)) {
+            if ((/^(?:[0-9]{1,2}(?:m|h|hr|d){1})$/i).test(t)) {
               return true;
             }
 

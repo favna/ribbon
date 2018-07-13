@@ -99,7 +99,7 @@ module.exports = class CopyPastaCommand extends Command {
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
-      if (/(?:no such table)/i.test(err.toString())) {
+      if ((/(?:no such table)/i).test(err.toString())) {
         return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);
       }
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`

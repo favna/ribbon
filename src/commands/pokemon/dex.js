@@ -81,7 +81,7 @@ module.exports = class DexCommand extends Command {
   run (msg, {pokemon, shines}) {
     try {
       startTyping(msg);
-      if (/(?:--shiny)/i.test(pokemon)) {
+      if ((/(?:--shiny)/i).test(pokemon)) {
         pokemon = (pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length)).replace(/ /g, '');
         shines = true;
       }
@@ -242,7 +242,7 @@ module.exports = class DexCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      if (/(?:Cannot read property 'species' of undefined)/i.test(err.toString())) {
+      if ((/(?:Cannot read property 'species' of undefined)/i).test(err.toString())) {
         return msg.reply(stripIndents`no Pokémon found for \`${pokemon}\``);
       }
 

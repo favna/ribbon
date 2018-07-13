@@ -42,14 +42,14 @@ module.exports = class RandomColCommand extends Command {
           type: 'string',
           default: 'random',
           validate: (col) => {
-            if (/^#{0,1}(?:[0-9a-fA-F]{6})$/i.test(col) || col === 'random') {
+            if ((/^#{0,1}(?:[0-9a-fA-F]{6})$/i).test(col) || col === 'random') {
               return true;
             }
 
             return 'Respond with a hex formatted color of 6 characters, example: `#990000` or `36B56e`';
           },
           parse: (col) => {
-            if (/^#{0}(?:[0-9a-fA-F]{6})$/i.test(col)) {
+            if ((/^#{0}(?:[0-9a-fA-F]{6})$/i).test(col)) {
               return `#${col}`;
             }
 

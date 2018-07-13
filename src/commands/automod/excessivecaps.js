@@ -51,7 +51,7 @@ module.exports = class ExcessiveCapsCommand extends Command {
           type: 'string',
           default: '60',
           validate: (t) => {
-            if (/(?:[%])/.test(t)) {
+            if ((/(?:[%])/).test(t)) {
               if (Number(t.slice(0, -1))) {
                 return true;
               }
@@ -78,7 +78,7 @@ module.exports = class ExcessiveCapsCommand extends Command {
 
   run (msg, {option, threshold, minlength}) {
     startTyping(msg);
-    if (/(?:[%])/.test(threshold)) {
+    if ((/(?:[%])/).test(threshold)) {
       threshold = Number(threshold.slice(0, -1));
     } else {
       threshold = Number(threshold);

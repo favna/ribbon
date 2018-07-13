@@ -80,7 +80,7 @@ module.exports = class TimerListCommand extends Command {
       });
     } catch (err) {
       stopTyping(msg);
-      if (/(?:no such table)/i.test(err.toString())) {
+      if ((/(?:no such table)/i).test(err.toString())) {
         return msg.reply(`no timed messages found for this server. Start saving your first with ${msg.guild.commandPrefix}timeradd`);
       }
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`

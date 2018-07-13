@@ -38,7 +38,7 @@ module.exports = class WheelOfFortuneCommand extends Command {
           prompt: 'How many chips do you want to gamble?',
           type: 'integer',
           validate: (chips) => {
-            if (/^[+]?\d+$/.test(chips) && chips >= 1 && chips <= 10000) {
+            if ((/^[+]?\d+$/).test(chips) && chips >= 1 && chips <= 10000) {
               return true;
             }
 
@@ -102,7 +102,7 @@ module.exports = class WheelOfFortuneCommand extends Command {
       return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
     } catch (err) {
       stopTyping(msg);
-      if (/(?:no such table)/i.test(err.toString())) {
+      if ((/(?:no such table)/i).test(err.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
 
         return msg.reply(`looks like you don\'t have any chips yet, please use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);

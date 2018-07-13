@@ -94,10 +94,10 @@ module.exports = class IamNotCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      if (/(?:Missing Permissions)/i.test(err.toString())) {
+      if ((/(?:Missing Permissions)/i).test(err.toString())) {
         return msg.reply(stripIndents`an error occurred removing the role \`${role.name}\` from you.
               The mods should check that I have \`Manage Roles\` permission and I am higher in hierarchy than the your roles?`);
-      } else if (/(?:is not an array or collection of roles)/i.test(err.toString())) {
+      } else if ((/(?:is not an array or collection of roles)/i).test(err.toString())) {
         return msg.reply(stripIndents`it looks like you supplied an invalid role to add. If you are certain that the role is valid please feel free to open an issue on the GitHub.`);
       }
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`

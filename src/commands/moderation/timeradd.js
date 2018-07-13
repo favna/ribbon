@@ -51,7 +51,7 @@ module.exports = class TimerAddCommand extends Command {
           prompt: 'At which interval should the message(s) be repeated?',
           type: 'string',
           validate: (t) => {
-            if (/^(?:[0-9]{1,2}(?:m|h|d){1})$/i.test(t)) {
+            if ((/^(?:[0-9]{1,2}(?:m|h|d){1})$/i).test(t)) {
               return true;
             }
 
@@ -116,7 +116,7 @@ module.exports = class TimerAddCommand extends Command {
 
     } catch (err) {
       stopTyping(msg);
-      if (/(?:no such table)/i.test(err.toString())) {
+      if ((/(?:no such table)/i).test(err.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id INTEGER PRIMARY KEY AUTOINCREMENT, interval INTEGER, channel TEXT, content TEXT, lastsend TEXT);`).run();
 
         conn.prepare(`INSERT INTO "${msg.guild.id}" (interval, channel, content, lastsend) VALUES ($interval, $channel, $content, $lastsend);`).run({

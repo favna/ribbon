@@ -82,7 +82,7 @@ module.exports = class TranslateCommand extends Command {
       return msg.embed(transEmbed);
     } catch (err) {
       stopTyping(msg);
-      if (/(?:not part of the ISO 639)/i.test(err.toString())) {
+      if ((/(?:not part of the ISO 639)/i).test(err.toString())) {
         return msg.reply('either your from language or to language was not recognized. Please use ISO 639-1 codes for the languages (<https://en.wikipedia.org/wiki/ISO_639-1>)');
       }
 

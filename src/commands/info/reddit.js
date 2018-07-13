@@ -38,7 +38,7 @@ module.exports = class RedditCommand extends Command {
           prompt: 'For what Reddit user do you want to view statistics?',
           type: 'string',
           validate: (v) => {
-            if (/[A-z0-9_-]/.test(v)) {
+            if ((/[A-z0-9_-]/).test(v)) {
               return true;
             }
 

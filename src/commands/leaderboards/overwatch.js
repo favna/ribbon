@@ -52,7 +52,7 @@ module.exports = class OverwatchCommand extends Command {
           prompt: 'Respond with the platform that player plays on',
           type: 'string',
           validate: (plat) => {
-            if (/(?:pc|psn|xbl)/i.test(plat)) {
+            if ((/(?:pc|psn|xbl)/i).test(plat)) {
               return true;
             }
 
@@ -66,7 +66,7 @@ module.exports = class OverwatchCommand extends Command {
           prompt: 'Respond with the region that player is playing in',
           type: 'string',
           validate: (reg) => {
-            if (/(?:us|eu|asia)/.test(reg)) {
+            if ((/(?:us|eu|asia)/).test(reg)) {
               return true;
             }
 

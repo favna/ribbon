@@ -67,10 +67,10 @@ module.exports = class ListWarnCommand extends Command {
       return msg.embed(embed);
     } catch (err) {
       stopTyping(msg);
-      if (/(?:no such table)/i.test(err.toString())) {
+      if ((/(?:no such table)/i).test(err.toString())) {
         return msg.reply(`no warnpoints found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
       }
-      if (/(?:TypeError: Cannot read property 'tag')/i.test(err.toString())) {
+      if ((/(?:TypeError: Cannot read property 'tag')/i).test(err.toString())) {
         embed.setDescription(stripIndents`**Member:** ${member.user.tag} (${member.id})
         **Current warning Points:** 0`);
 
