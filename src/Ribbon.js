@@ -18,7 +18,6 @@ class Ribbon {
     this.client = new Client({
       commandPrefix: '!',
       owner: '112001393140723712',
-      selfbot: false,
       unknownCommandResponse: false,
       presence: {
         status: 'online',
