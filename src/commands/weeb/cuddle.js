@@ -41,6 +41,7 @@ module.exports = class CuddleCommand extends Command {
   async run (msg, {member}) {
     try {
       startTyping(msg);
+      !member ? member = msg.member : null;
 
       const {body} = await request.get('https://nekos.life/api/v2/img/cuddle');
 
