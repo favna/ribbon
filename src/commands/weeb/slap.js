@@ -47,11 +47,11 @@ module.exports = class SlapCommand extends Command {
       stopTyping(msg);
 
       return msg.embed({
-        description: member !== ''
+        description: member
           ? `${member.displayName}! You got slapped by ${msg.member.displayName} 💢!` : `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
-        image: {url: member !== '' ? body.url : 'http://cdn.awwni.me/mz98.gif'},
+        image: {url: member ? body.url : 'http://cdn.awwni.me/mz98.gif'},
         color: msg.guild ? msg.guild.me.displayColor : 10610610
-      }, `<@${member.id}>`);
+      }, `<@${member ? member.id : msg.author.id}>`);
     } catch (err) {
       stopTyping(msg);
 
