@@ -2323,9 +2323,9 @@ nice-try@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.4.tgz#d93962f6c52f2c1558c0fbda6d512819f1efe1c4"
 
-nintendo-switch-eshop@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/nintendo-switch-eshop/-/nintendo-switch-eshop-1.1.1.tgz#f4c6b1baf6e8f413b95d200059fedfb911db898d"
+nintendo-switch-eshop@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/nintendo-switch-eshop/-/nintendo-switch-eshop-1.1.2.tgz#51981545942407247ce937e7834c9cbd3da28d4b"
   dependencies:
     array-unique-x "^1.0.5"
     country-data "0.0.31"
