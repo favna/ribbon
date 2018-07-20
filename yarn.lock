@@ -2124,9 +2124,9 @@ lru-cache@^4.0.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
-m3u8stream@^0.2.1:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/m3u8stream/-/m3u8stream-0.2.2.tgz#02ef837253595f2557efab86c4234018e8a60da2"
+m3u8stream@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/m3u8stream/-/m3u8stream-0.3.0.tgz#9b8255ad48b47d6069e755f22c84fce04c4e2697"
   dependencies:
     miniget "^1.1.0"
 
@@ -3740,12 +3740,12 @@ yargs@~3.10.0:
     decamelize "^1.0.0"
     window-size "0.1.0"
 
-ytdl-core@0.20.4:
-  version "0.20.4"
-  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.20.4.tgz#91108882e1fe526e14c1e99a589b4971180ba42a"
+ytdl-core@0.21.0:
+  version "0.21.0"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.21.0.tgz#a69091d4bf015fc0cd2c15af1459b205340d106d"
   dependencies:
     html-entities "^1.1.3"
-    m3u8stream "^0.2.1"
+    m3u8stream "^0.3.0"
     miniget "^1.1.0"
     sax "^1.1.3"
 
