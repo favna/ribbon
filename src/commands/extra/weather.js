@@ -62,7 +62,7 @@ module.exports = class WeatherCommand extends Command {
     return temp * 1.8 + 32;
   }
 
-  milefy (speed) {
+  mileify (speed) {
     return speed * 0.6214;
   }
 
@@ -83,7 +83,7 @@ module.exports = class WeatherCommand extends Command {
         .setTimestamp()
         .setThumbnail(`https://favna.xyz/images/ribbonhost/weather/${wethData.body.currently.icon}.png`)
         .setDescription(wethData.body.daily.summary)
-        .addField('💨 Wind Speed', `${wethData.body.currently.windSpeed} km/h (${milefy(wethData.body.currently.windSpeed)} mph)`, true)
+        .addField('💨 Wind Speed', `${wethData.body.currently.windSpeed} km/h (${this. mileify(wethData.body.currently.windSpeed)} mph)`, true)
         .addField('💧 Humidity', `${wethData.body.currently.humidity * 100}%`, true)
         .addField('🌅 Sunrise', moment(wethData.body.daily.data[0].sunriseTime * 1000).format('HH:mm'), true)
         .addField('🌇 Sunset', moment(wethData.body.daily.data[0].sunsetTime * 1000).format('HH:mm'), true)
