@@ -79,7 +79,7 @@
     "unescape-es6": "^1.0.2",
     "uws": "^9.148.0",
     "xdicey": "2.0.3",
-    "ytdl-core": "0.21.0",
+    "ytdl-core": "0.21.1",
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {
