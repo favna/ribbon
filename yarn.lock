@@ -882,16 +882,16 @@ dijkstrajs@^1.0.1:
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
 discord.js-commando@favna/commando#ribbon:
-  version "1.1.9-ribbon"
-  resolved "https://codeload.github.com/favna/commando/tar.gz/419ef6eaae9e11724661d4698aa7a4774afeefe1"
+  version "1.2.0-ribbon"
+  resolved "https://codeload.github.com/favna/commando/tar.gz/a86037d8a0d3d2ae09c6a4dd5135eba10098e2c2"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
-    require-all "^2.0.0"
+    require-all "^3.0.0"
 
 discord.js@favna/discord.js#main:
-  version "12.0.4-main"
-  resolved "https://codeload.github.com/favna/discord.js/tar.gz/a87dd66a57eb8450fe95e6d61f73b2988bc80902"
+  version "12.0.5-main"
+  resolved "https://codeload.github.com/favna/discord.js/tar.gz/8b8cdcf75f4025f0611c1e6d1b8c107cfa803d4b"
   dependencies:
     form-data "^2.3.2"
     node-fetch "^2.1.2"
@@ -1112,8 +1112,8 @@ espree@^4.0.0:
     acorn-jsx "^4.1.1"
 
 esprima@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.0.tgz#4499eddcd1110e0b218bacf2fa7f7f59f55ca804"
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/esprima/-/esprima-4.0.1.tgz#13b04cdb3e6c5d19df91ab6987a8695619b0aa71"
 
 esquery@^1.0.1:
   version "1.0.1"
@@ -1177,8 +1177,8 @@ extend-shallow@^3.0.0, extend-shallow@^3.0.2:
     is-extendable "^1.0.1"
 
 extend@^3.0.0, extend@~3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.1.tgz#a755ea7bc1adfcc5a31ce7e762dbaadc5e636444"
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/extend/-/extend-3.0.2.tgz#f8b1136b4071fbd8eb140aff858b1019ec2915fa"
 
 external-editor@^2.1.0:
   version "2.2.0"
@@ -2188,15 +2188,15 @@ micromatch@^3.1.10, micromatch@^3.1.8:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-mime-db@~1.33.0:
-  version "1.33.0"
-  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.33.0.tgz#a3492050a5cb9b63450541e39d9788d2272783db"
+mime-db@~1.35.0:
+  version "1.35.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.35.0.tgz#0569d657466491283709663ad379a99b90d9ab47"
 
 mime-types@^2.1.10, mime-types@^2.1.12, mime-types@~2.1.17:
-  version "2.1.18"
-  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.18.tgz#6f323f60a83d11146f831ff11fd66e2fe5503bb8"
+  version "2.1.19"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.19.tgz#71e464537a7ef81c15f2db9d97e913fc0ff606f0"
   dependencies:
-    mime-db "~1.33.0"
+    mime-db "~1.35.0"
 
 mime@^1.3.4:
   version "1.6.0"
@@ -2333,7 +2333,7 @@ nintendo-switch-eshop@1.1.2:
     request "^2.81.0"
     xml2js "^0.4.17"
 
-node-fetch@2.1.2, node-fetch@^2.1.2:
+node-fetch@2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
 
@@ -2343,6 +2343,10 @@ node-fetch@^1.7.3:
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
+
+node-fetch@^2.1.2:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.2.0.tgz#4ee79bde909262f9775f731e3656d0db55ced5b5"
 
 node-opus@0.3.0:
   version "0.3.0"
@@ -2846,9 +2850,9 @@ request@^2.60.0, request@^2.65.0, request@^2.81.0, request@^2.87.0:
     tunnel-agent "^0.6.0"
     uuid "^3.1.0"
 
-require-all@^2.0.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/require-all/-/require-all-2.2.0.tgz#b4420c233ac0282d0ff49b277fb880a8b5de0894"
+require-all@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/require-all/-/require-all-3.0.0.tgz#473d49704be310115ce124f77383b1ebd8671312"
 
 require-directory@^2.1.1:
   version "2.1.1"
