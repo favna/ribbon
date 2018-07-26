@@ -1190,7 +1190,11 @@ Has a very specific syntax! Be sure to adapt the example!
 
 **Example**  
 ```js
-strawpoll "Best Anime Waifu?" "Pyrrha Nikos|Ruby Rose"
+strawpoll 'Best RWBY girl?' 'Pyrrha Nikos' 'Ruby Rose'
+```
+**Example**  
+```js
+strawpoll 'Best coding language?' JavaScript C# C++
 ```
 <a name="module_activity"></a>
 
