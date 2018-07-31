@@ -65,7 +65,7 @@
     "ms": "^2.1.1",
     "nintendo-switch-eshop": "1.1.3",
     "node-opus": "0.3.0",
-    "qrcode": "^1.0.0",
+    "qrcode": "^1.2.2",
     "scalc": "^2.0.1",
     "simple-youtube-api": "^5.0.1",
     "slot-machine": "^2.1.0",
