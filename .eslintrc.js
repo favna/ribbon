@@ -1,12 +1,13 @@
 module.exports = {
     "env": {
         "es6": true,
-        "node": true
+        "node": true,
+        "mocha": true
     },
     "extends": ["eslint:recommended"],
     "parserOptions": {
         "sourceType": "module",
-        "ecmaVersion": 2017
+        "ecmaVersion": 9
     },
     "rules": {
         "accessor-pairs": "error",
@@ -82,7 +83,9 @@ module.exports = {
             "error",
             "never"
         ],
-        "func-style": ["error", "expression", { "allowArrowFunctions": true }],
+        "func-style": ["error", "expression", {
+            "allowArrowFunctions": true
+        }],
         "function-paren-newline": "off",
         "generator-star-spacing": "error",
         "getter-return": "error",
@@ -144,7 +147,7 @@ module.exports = {
         "no-caller": "error",
         "no-catch-shadow": "error",
         "no-confusing-arrow": "error",
-        "no-console" : "off",
+        "no-console": "off",
         "no-continue": "error",
         "no-div-regex": "error",
         "no-duplicate-imports": "error",
@@ -155,7 +158,9 @@ module.exports = {
         "no-extend-native": "error",
         "no-extra-bind": "error",
         "no-extra-label": "error",
-        "no-extra-parens": ["error", "all", { "nestedBinaryExpressions": false }],
+        "no-extra-parens": ["error", "all", {
+            "nestedBinaryExpressions": false
+        }],
         "no-floating-decimal": "error",
         "no-implicit-coercion": "error",
         "no-implicit-globals": "error",
@@ -231,8 +236,16 @@ module.exports = {
         "no-with": "error",
         "node/no-unpublished-require": "off",
         "nonblock-statement-body-position": "error",
-        "object-curly-newline": "error",
-        "object-curly-spacing": "error",
+        "object-curly-newline": ["error", {
+            "ObjectExpression": {
+                "multiline": true,
+                "minProperties": 3
+            },
+            "ObjectPattern": "never",
+            "ImportDeclaration": "never",
+            "ExportDeclaration": "never"
+        }],
+        "object-curly-spacing": ["error", "never"],
         "object-property-newline": "error",
         "object-shorthand": "error",
         "one-var": "error",
@@ -251,7 +264,7 @@ module.exports = {
         }],
         "prefer-numeric-literals": "error",
         "prefer-promise-reject-errors": "error",
-        "prefer-reflect": "off",
+        "prefer-reflect": "error",
         "prefer-rest-params": "error",
         "prefer-spread": "error",
         "prefer-template": "error",

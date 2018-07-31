@@ -13,11 +13,7 @@ const request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {stripIndents} = require('common-tags'),
-  {
-    deleteCommandMessages,
-    stopTyping,
-    startTyping
-  } = require('../../components/util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class RockPaperScissorCommand extends Command {
   constructor (client) {

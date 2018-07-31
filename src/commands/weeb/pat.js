@@ -10,11 +10,7 @@
 
 const request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
-  {
-    deleteCommandMessages,
-    stopTyping,
-    startTyping
-  } = require('../../components/util.js');
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class PatCommand extends Command {
   constructor (client) {
