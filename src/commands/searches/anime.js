@@ -63,7 +63,7 @@ module.exports = class AnimeCommand extends Command {
         .addField('Canonical Title', hit.canonicalTitle, true)
         .addField('Score', `${hit.averageRating}%`, true)
         .addField('Episode(s)', hit.episodeCount ? hit.episodeCount : 'Still airing', true)
-        .addField('Episode Length', hit.episodeLength ? moment.duration(hit.episodeLength, 'minutes').format('h [hours] [and] m [minutes]') : 'unknown', true)
+        .addField('Episode Length', hit.episodeLength ? moment.duration(hit.episodeLength, 'seconds').format('h [hours] [and] m [minutes]') : 'unknown', true)
         .addField('Age Rating', hit.ageRating, true)
         .addField('First Air Date', moment.unix(hit.startDate).format('MMMM Do YYYY'), true)
         .addField('Genres', hit.categories.slice(0, 5).join(', '), false);
