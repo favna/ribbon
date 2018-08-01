@@ -73,7 +73,6 @@ const forceStopTyping = (client) => {
 
   for (const channel of allChannels.values()) {
     if (channel.type === 'text' || channel.type === 'dm' || channel.type === 'group') {
-      console.log(`passed first if for ${channel.name} (${channel.id})`);
       if (client.user.typingDurationIn(channel) > 10000) {
         console.log(`passed second if for ${channel.name} (${channel.id})`);
         channel.stopTyping(true);
