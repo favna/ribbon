@@ -40,6 +40,7 @@
   "dependencies": {
     "better-sqlite3": "^4.1.4",
     "booru": "0.4.0",
+    "bufferutil": "^3.0.0",
     "canvas": "Automattic/node-canvas#v1.x",
     "canvas-constructor": "1.0.1",
     "cheerio": "^1.0.0-rc.2",
@@ -53,6 +54,7 @@
     "eightball": "^1.0.1",
     "emoji-regex": "^7.0.0",
     "erlpack": "hammerandchisel/erlpack",
+    "fast-levenshtein": "~2.0.4",
     "flesch-kincaid": "^1.0.2",
     "fuse.js": "^3.2.1",
     "igdb-api-node": "^3.1.7",
@@ -76,8 +78,8 @@
     "syllable": "^3.0.0",
     "to-zalgo": "^1.0.1",
     "translate": "Marak/translate.js#modern",
+    "underscore": "^1.9.1",
     "unescape-es6": "^1.0.2",
-    "uws": "^9.148.0",
     "xdicey": "2.0.3",
     "ytdl-core": "0.21.1",
     "zlib-sync": "^0.1.4"
