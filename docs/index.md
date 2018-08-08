@@ -214,6 +214,9 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_userinfo">userinfo</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info UserInfoCommand - Get the info from a user<br><strong>Aliases</strong>: <code>user</code>, <code>uinfo</code></p>
 </dd>
+<dt><a href="#module_fortnite">fortnite</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Leaderboards FortniteCommand - Get Player Statistics from Fortnite<br><strong>Aliases</strong>: <code>fort</code>, <code>fortshite</code></p>
+</dd>
 <dt><a href="#module_osu">osu</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Leaderboards OsuCommand - Shows Player Stats for a given OSU player<br><strong>Aliases</strong>: <code>osustats</code></p>
 </dd>
@@ -1317,6 +1320,24 @@ Info UserInfoCommand - Get the info from a user
 ```js
 userinfo Favna
 ```
+<a name="module_fortnite"></a>
+
+## fortnite ⇒ <code>MessageEmbed</code>
+Leaderboards FortniteCommand - Get Player Statistics from Fortnite  
+**Aliases**: `fort`, `fortshite`
+
+**Returns**: <code>MessageEmbed</code> - Player Statistics from that player  
+**Category**: leaderboards  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Username | <code>StringResolvable</code> | The Epic Username of the player you want to find |
+| Platform | <code>StringResolvable</code> | The platform the player plays on (pc, xbox or psn) |
+
+**Example**  
+```js
+fortnite darkentz014 pc
+```
 <a name="module_osu"></a>
 
 ## osu ⇒ <code>MessageEmbed</code>
@@ -1362,10 +1383,11 @@ Leaderboards PubgCommand - Get statistics from a PUBG account
 | Param | Type | Description |
 | --- | --- | --- |
 | PubgUsername | <code>StringResolvable</code> | The username you want to find statistics for |
+| Shard | <code>StringResolvable</code> | A combination of platform and region to look through, for example `pc-na` for PC in North America |
 
 **Example**  
 ```js
-pubg Favna
+pubg shroud pc-na
 ```
 <a name="module_rocketleague"></a>
 
