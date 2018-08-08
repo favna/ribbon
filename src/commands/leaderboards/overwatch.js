@@ -86,11 +86,9 @@ module.exports = class OverwatchCommand extends Command {
         owEmbed = new MessageEmbed(),
         data = owData.body; // eslint-disable-line sort-vars
 
-      if (data.error) {
-        stopTyping(msg);
-
-        return msg.reply('No player found by that name. Check the platform (`pc`, `psn` or `xbl`) and region (`us`, `eu` or `asia`)');
-      }
+      if (data.error) throw new Error('noplayer');
+      if (!data.competitiveStats.topHeroes) throw new Error('nostats');
+      if (!data.quickPlayStats.topHeroes) throw new Error('nostats');
 
       const topCompetitiveHeroes = Object.keys(data.competitiveStats.topHeroes).map(r => ({ // eslint-disable-line one-var
           hero: r,
@@ -160,6 +158,13 @@ module.exports = class OverwatchCommand extends Command {
       return msg.embed(owEmbed);
     } catch (err) {
       stopTyping(msg);
+
+      if (/(noplayer)/i.test(err.toString())) {
+        return msg.reply('no player found by that name. Check the platform (`pc`, `psn` or `xbl`) and region (`us`, `eu` or `asia`)');
+      } else if (/(nostats)/i.test(err.toString())) {
+        return msg.reply('player has been found but the player has no statistics logged yet. Heroes never die!');
+      }
+
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred in \`overwatch\` command!
       **Server:** ${msg.guild.name} (${msg.guild.id})
