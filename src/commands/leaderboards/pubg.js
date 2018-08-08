@@ -3,7 +3,7 @@
  * @module
  * @category leaderboards
  * @name pubg
- * @example pubg Favna
+ * @example pubg shroud pc-na
  * @param {StringResolvable} PubgUsername The username you want to find statistics for
  * @param {StringResolvable} Shard A combination of platform and region to look through, for example `pc-na` for PC in North America
  * @returns {MessageEmbed} Statistics of that user
@@ -24,7 +24,7 @@ module.exports = class PubgCommand extends Command {
       group: 'leaderboards',
       description: 'Get statistics from a PUBG account',
       format: 'PubgUsername Shard',
-      examples: ['pubg Favna'],
+      examples: ['pubg shroud pc-na'],
       guildOnly: false,
       throttling: {
         usages: 2,
