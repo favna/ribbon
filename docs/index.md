@@ -220,6 +220,9 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_overwatch">overwatch</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleTag<br><strong>Aliases</strong>: <code>owstats</code></p>
 </dd>
+<dt><a href="#module_pubg">pubg</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Leaderboards PubgCommand - Get statistics from a PUBG account</p>
+</dd>
 <dt><a href="#module_rocketleague">rocketleague</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Leaderboards RocketLeagueCommand - Shows Rocket League Leaderboard<br><strong>Aliases</strong>: <code>rlstats</code>, <code>rocketstats</code></p>
 </dd>
@@ -1347,6 +1350,22 @@ Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleT
 **Example**  
 ```js
 overwatch Camoflouge#1267
+```
+<a name="module_pubg"></a>
+
+## pubg ⇒ <code>MessageEmbed</code>
+Leaderboards PubgCommand - Get statistics from a PUBG account
+
+**Returns**: <code>MessageEmbed</code> - Statistics of that user  
+**Category**: leaderboards  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| PubgUsername | <code>StringResolvable</code> | The username you want to find statistics for |
+
+**Example**  
+```js
+pubg Favna
 ```
 <a name="module_rocketleague"></a>
 

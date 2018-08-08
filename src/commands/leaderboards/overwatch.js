@@ -159,9 +159,9 @@ module.exports = class OverwatchCommand extends Command {
     } catch (err) {
       stopTyping(msg);
 
-      if (/(noplayer)/i.test(err.toString())) {
+      if ((/(noplayer)/i).test(err.toString())) {
         return msg.reply('no player found by that name. Check the platform (`pc`, `psn` or `xbl`) and region (`us`, `eu` or `asia`)');
-      } else if (/(nostats)/i.test(err.toString())) {
+      } else if ((/(nostats)/i).test(err.toString())) {
         return msg.reply('player has been found but the player has no statistics logged yet. Heroes never die!');
       }
 
