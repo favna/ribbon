@@ -14,16 +14,16 @@
     "url": "https://github.com/favna/ribbon/issues"
   },
   "scripts": {
-    "cov": "./node_modules/.bin/nyc yarn test",
-    "docs": "./node_modules/.bin/jsdoc2md --template ./docs/template.hbs --files ./src/commands/**/*.js | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
-    "docs:json": "./node_modules/.bin/jsdoc2md --json --files ./src/commands/**/*.js > ../favna.xyz/public/dist/ribbondocs.json",
+    "cov": "nyc yarn test",
+    "docs": "jsdoc2md --template ./docs/template.hbs --files ./src/commands/**/*.js | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
+    "docs:json": "jsdoc2md --json --files ./src/commands/**/*.js > ../favna.xyz/public/dist/ribbondocs.json",
     "docs:deploy": "yarn run docs && yarn run docs:json && git commit -am documentation && git push && cd ../Ribbon.wiki/ && git commit -am documentation && git push && cd ../favna.xyz/ && git commit -am documentation && git push",
-    "lint": "./node_modules/.bin/eslint src/commands/**/*.js",
-    "lint:fix": "./node_modules/.bin/eslint --fix src/commands/**/*.js",
+    "lint": "eslint src/commands/**/*.js",
+    "lint:fix": "eslint --fix src/commands/**/*.js",
     "start": "node src/app.js stripe",
     "start:ribbon": "node src/app.js",
-    "test": "yarn run lint:fix && yarn lint && ./node_modules/.bin/mocha",
-    "test:minimal": "./node_modules/.bin/mocha"
+    "test": "yarn run lint:fix && yarn lint && mocha",
+    "test:minimal": "mocha"
   },
   "keywords": [
     "bot",
