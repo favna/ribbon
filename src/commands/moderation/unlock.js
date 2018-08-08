@@ -50,7 +50,7 @@ module.exports = class UnlockCommand extends Command {
       overwrite = await msg.channel.overwritePermissions({
         overwrites: [
           {
-            id: msg.guild.roles.find(n => lockrole === 'everyone' ? n.name === '@everyone' : n.name === lockrole.name).id, // eslint-disable-line no-confusing-arrow
+            id: msg.guild.roles.find(n => lockrole === 'everyone' ? n.name === '@everyone' : n.name === lockrole.name).id,
             allowed: ['SEND_MESSAGES']
           }
         ],
