@@ -16,10 +16,10 @@
  * @returns {MessageEmbed} Title, duration and thumbnail of the video
  */
 
-const YouTube = require('simple-youtube-api'), // eslint-disable-line sort-vars
+const YouTube = require('simple-youtube-api'),
   moment = require('moment'),
   ytdl = require('ytdl-core'),
-  {Command} = require('discord.js-commando'), // eslint-disable-line sort-vars
+  {Command} = require('discord.js-commando'),
   {escapeMarkdown} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../components/util.js');
@@ -56,7 +56,7 @@ module.exports = class PlaySongCommand extends Command {
   /* eslint-disable max-statements*/
   async run (msg, {url}) {
     startTyping(msg);
-    const queue = this.queue.get(msg.guild.id); // eslint-disable-line sort-vars
+    const queue = this.queue.get(msg.guild.id);
 
     let voiceChannel; // eslint-disable-line init-declarations
 
@@ -362,7 +362,7 @@ module.exports = class PlaySongCommand extends Command {
           queue.songs.shift();
           this.play(guild, queue.songs[0]);
         }),
-      dispatcher = queue.connection.play(stream, { // eslint-disable-line sort-vars
+      dispatcher = queue.connection.play(stream, {
         passes: process.env.PASSES,
         fec: true
       })

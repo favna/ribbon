@@ -10,7 +10,8 @@
  * @returns {MessageEmbed} URL, duration and embedded thumbnail
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
+  querystring = require('querystring'),
   {MessageEmbed} = require('discord.js'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
@@ -44,17 +45,19 @@ module.exports = class PornVidsCommand extends Command {
   async run (msg, {porn}) {
     try {
       startTyping(msg);
+
       const pornEmbed = new MessageEmbed(),
-        vid = await request.get('https://www.pornhub.com/webmasters/search?').query('search', porn),
-        vidRandom = Math.floor(Math.random() * vid.body.videos.length);
+        res = await fetch(`https://www.pornhub.com/webmasters/search?${querystring.stringify({search: porn})}`),
+        vid = await res.json(),
+        vidRandom = Math.floor(Math.random() * vid.videos.length);
 
       pornEmbed
-        .setURL(vid.body.videos[vidRandom].url)
-        .setTitle(vid.body.videos[vidRandom].title)
-        .setImage(vid.body.videos[vidRandom].default_thumb)
+        .setURL(vid.videos[vidRandom].url)
+        .setTitle(vid.videos[vidRandom].title)
+        .setImage(vid.videos[vidRandom].default_thumb)
         .setColor('#FFB6C1')
-        .addField('Porn video URL', `[Click Here](${vid.body.videos[vidRandom].url})`, true)
-        .addField('Porn video duration', `${vid.body.videos[vidRandom].duration} minutes`, true);
+        .addField('Porn video URL', `[Click Here](${vid.videos[vidRandom].url})`, true)
+        .addField('Porn video duration', `${vid.videos[vidRandom].duration} minutes`, true);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

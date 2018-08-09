@@ -47,7 +47,7 @@ module.exports = class ChipsCommand extends Command {
 
       if (query) {
         const topupdate = moment(query.lasttopup).add(24, 'hours'),
-          dura = moment.duration(topupdate.diff()); // eslint-disable-line sort-vars
+          dura = moment.duration(topupdate.diff());
 
         balEmbed
           .setDescription(stripIndents`**Balance**
@@ -70,7 +70,7 @@ module.exports = class ChipsCommand extends Command {
       stopTyping(msg);
       if ((/(?:no such table)/i).test(err.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
-        
+
         conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
           userid: msg.author.id,
           balance: '500',

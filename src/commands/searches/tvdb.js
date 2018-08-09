@@ -6,11 +6,12 @@
  * @name tvdb
  * @example tvdb Pokemon
  * @param {StringResolvable} SeriesName Name of the TV serie you want to find
- * @returns {MessageEmbed} Information about the requested TV serie
+ * @returns {MessageEmbed} Information about the fetched TV serie
  */
 
-const moment = require('moment'),
-  request = require('snekfetch'),
+const fetch = require('node-fetch'),
+  moment = require('moment'),
+  querystring = require('querystring'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
@@ -43,25 +44,27 @@ module.exports = class TVCommand extends Command {
   async run (msg, {name}) {
     try {
       startTyping(msg);
-      const showEmbed = new MessageEmbed(),
-        showSearch = await request.get('https://api.themoviedb.org/3/search/tv')
-          .query('api_key', process.env.moviedbkey)
-          .query('query', name),
-        showStats = await request.get(`https://api.themoviedb.org/3/tv/${showSearch.body.results[0].id}`)
-          .query('api_key', process.env.moviedbkey);
+      const movieSearch = await fetch(`https://api.themoviedb.org/3/search/tv?${querystring.stringify({
+          api_key: process.env.moviedbkey, // eslint-disable-line camelcase
+          query: name
+        })}`),
+        showList = await movieSearch.json(),
+        showStats = await fetch(`https://api.themoviedb.org/3/tv/${showList.results[0].id}?${querystring.stringify({api_key: process.env.moviedbkey})}`), // eslint-disable-line camelcase
+        show = await showStats.json(),
+        showEmbed = new MessageEmbed();
 
       showEmbed
-        .setTitle(showStats.body.name)
-        .setURL(`https://www.themoviedb.org/tv/${showStats.body.id}`)
+        .setTitle(show.name)
+        .setURL(`https://www.themoviedb.org/tv/${show.id}`)
         .setColor(msg.guild ? msg.member.displayHexColor : '#7CFC00')
-        .setImage(`https://image.tmdb.org/t/p/original${showStats.body.backdrop_path}`)
-        .setThumbnail(`https://image.tmdb.org/t/p/original${showStats.body.poster_path}`)
-        .setDescription(showStats.body.overview)
-        .addField('Episode Runtime', `${showStats.body.episode_run_time} minutes`, true)
-        .addField('Popularity', `${roundNumber(showStats.body.popularity, 2)}%`, true)
-        .addField('Status', showStats.body.status, true)
-        .addField('First air Date', moment(showStats.body.first_air_date).format('MMMM Do YYYY'), true)
-        .addField('Genres', showStats.body.genres.length ? showStats.body.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB');
+        .setImage(`https://image.tmdb.org/t/p/original${show.backdrop_path}`)
+        .setThumbnail(`https://image.tmdb.org/t/p/original${show.poster_path}`)
+        .setDescription(show.overview)
+        .addField('Episode Runtime', `${show.episode_run_time} minutes`, true)
+        .addField('Popularity', `${roundNumber(show.popularity, 2)}%`, true)
+        .addField('Status', show.status, true)
+        .addField('First air Date', moment(show.first_air_date).format('MMMM Do YYYY'), true)
+        .addField('Genres', show.genres.length ? show.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB');
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

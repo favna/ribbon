@@ -9,7 +9,8 @@
  * @returns {MessageEmbed} Possible definitions for that word
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
+  querystring = require('querystring'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
@@ -41,18 +42,19 @@ module.exports = class DefineCommand extends Command {
   }
 
   async run (msg, {query}) {
-    startTyping(msg);
-    const defineEmbed = new MessageEmbed(),
-      word = await request.get('https://glosbe.com/gapi/translate')
-        .query('from', 'en')
-        .query('dest', 'en')
-        .query('format', 'json')
-        .query('phrase', query);
+    try {
+      startTyping(msg);
+      const defineEmbed = new MessageEmbed(),
+        res = await fetch(`https://glosbe.com/gapi/translate?${querystring.stringify({
+          from: 'en',
+          dest: 'en',
+          format: 'json',
+          phrase: query
+        })}`),
+        word = await res.json(),
+        final = [`**Definitions for __${query}__:**`];
 
-    if (word.ok && word.body.tuc && word.body.tuc.length > 0) {
-      const final = [`**Definitions for __${query}__:**`];
-
-      for (let [index, item] of Object.entries(word.body.tuc.filter(tuc => tuc.meanings)[0].meanings.slice(0, 5))) { // eslint-disable-line prefer-const
+      for (let [index, item] of Object.entries(word.tuc.filter(tuc => tuc.meanings)[0].meanings.slice(0, 5))) { // eslint-disable-line prefer-const
 
         item = item.text
           .replace(/\[(\w+)[^\]]*](.*?)\[\/\1]/g, '_')
@@ -71,11 +73,11 @@ module.exports = class DefineCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(defineEmbed);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
+
+      return msg.reply(`nothing found for \`${query}\`, maybe check your spelling?`);
     }
-
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
-
-    return msg.reply(`nothing found for \`${query}\`, maybe check your spelling?`);
   }
 };

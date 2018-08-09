@@ -1,17 +1,16 @@
-/* eslint-disable sort-vars */
 const Database = require('better-sqlite3'),
   decache = require('decache'),
+  fetch = require('node-fetch'),
   fs = require('fs'),
   moment = require('moment'),
   ms = require('ms'),
   path = require('path'),
-  request = require('snekfetch'),
+  querystring = require('querystring'),
   {Client, FriendlyError, SyncSQLiteProvider} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
   {badwords, duptext, caps, emojis, mentions, links, invites, slowmode} = require(path.join(__dirname, 'components/automod.js')),
   {checkReminders, fetchEshop, forceStopTyping, guildAdd, guildLeave, joinmessage, leavemessage, lotto, timermessages} = require(path.join(__dirname, 'components/events.js'));
-/* eslint-enable sort-vars */
 
 class Ribbon {
   constructor (token) {
@@ -261,19 +260,16 @@ class Ribbon {
               newActivity = {url: 'placeholder'};
             }
             if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
-
-              /* eslint-disable sort-vars*/
-              const userData = await request.get('https://api.twitch.tv/kraken/users')
-                  .set('Accept', 'application/vnd.twitchtv.v5+json')
-                  .set('Client-ID', process.env.twitchclientid)
-                  .query('login', newActivity.url.split('/')[3]),
-                streamData = await request.get('https://api.twitch.tv/kraken/streams')
-                  .set('Accept', 'application/vnd.twitchtv.v5+json')
-                  .set('Client-ID', process.env.twitchclientid)
-                  .query('channel', userData.body.users[0]._id),
+              const headers = {
+                  Accept: 'application/vnd.twitchtv.v5+json',
+                  'Client-ID': process.env.twitchclientid
+                },
+                userFetch = await fetch(`https://api.twitch.tv/kraken/users?${querystring.stringify({login: newActivity.url.split('/')[3]})}`, {headers}),
+                userData = await userFetch.json(),
+                streamFetch = await fetch(`https://api.twitch.tv/kraken/streams?${querystring.stringify({channel: userData.users[0]._id})}`),
+                streamData = await streamFetch.json(),
                 twitchChannel = curGuild.settings.get('twitchchannel', null),
                 twitchEmbed = new MessageEmbed();
-              /* eslint-enable sort-vars*/
 
               twitchEmbed
                 .setThumbnail(curUser.displayAvatarURL())
@@ -282,15 +278,15 @@ class Ribbon {
                 .setTitle(`${curDisplayName} just went live!`)
                 .setDescription(stripIndents`streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
 
-              if (userData.ok && userData.body._total > 0 && userData.body.users[0]) {
+              if (userFetch.ok && userData._total > 0 && userData.users[0]) {
                 twitchEmbed
-                  .setThumbnail(userData.body.users[0].logo)
-                  .setTitle(`${userData.body.users[0].display_name} just went live!`)
-                  .setDescription(stripIndents`${userData.body.users[0].display_name} just started ${twitchEmbed.description}`);
+                  .setThumbnail(userData.users[0].logo)
+                  .setTitle(`${userData.users[0].display_name} just went live!`)
+                  .setDescription(stripIndents`${userData.users[0].display_name} just started ${twitchEmbed.description}`);
               }
 
-              if (streamData.ok && streamData.body._total > 0 && streamData.body.streams[0]) {
-                const streamTime = moment(streamData.body.streams[0].created_at).isValid() ? moment(streamData.body.streams[0].created_at)._d : null;
+              if (streamFetch.ok && streamData._total > 0 && streamData.streams[0]) {
+                const streamTime = moment(streamData.streams[0].created_at).isValid() ? moment(streamData.streams[0].created_at)._d : null;
 
                 twitchEmbed.setFooter('Stream started');
                 streamTime ? twitchEmbed.setTimestamp(streamTime) : null;

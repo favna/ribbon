@@ -15,7 +15,7 @@ const Fuse = require('fuse.js'),
   dexEntries = require('../../data/dex/flavorText.json'),
   moment = require('moment'),
   smogonFormats = require('../../data/dex/formats.json'),
-  path = require('path'), // eslint-disable-line sort-vars
+  path = require('path'),
   zalgo = require('to-zalgo'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
@@ -89,7 +89,6 @@ module.exports = class DexCommand extends Command {
         pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
       }
 
-      /* eslint-disable sort-vars */
       const aliasoptions = {
           shouldSort: true,
           threshold: 0.2,
@@ -123,7 +122,6 @@ module.exports = class DexCommand extends Command {
           sprite: '',
           tier: smogonFormats.find(s => s.name === poke.species.toLowerCase().replace(/(-|%| )/gm, '')).tier
         };
-      /* eslint-enable sort-vars */
 
       if (poke.prevo) {
         pokeData.evos = oneLine`\`${capitalizeFirstLetter(poke.prevo)}\` ${pokeFuse.search(poke.prevo)[0].evoLevel ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})` : ''}

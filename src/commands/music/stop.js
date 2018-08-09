@@ -57,7 +57,7 @@ module.exports = class StopMusicCommand extends Command {
     }
 
     const threshold = Math.ceil((queue.voiceChannel.members.size - 1) / 3), // eslint-disable-line one-var
-      force = threshold <= 1 || // eslint-disable-line sort-vars
+      force = threshold <= 1 ||
       queue.voiceChannel.members.size < threshold ||
       queue.songs[0].member.id === msg.author.id ||
       (msg.member.hasPermission('MANAGE_MESSAGES') && args.toLowerCase() === 'force'); // eslint-disable-line no-extra-parens

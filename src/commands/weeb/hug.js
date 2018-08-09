@@ -8,7 +8,7 @@
  * @returns {MessageEmbed} The hug and a cute image ❤
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
@@ -41,7 +41,8 @@ module.exports = class HugCommand extends Command {
     try {
       startTyping(msg);
 
-      const {body} = await request.get('https://nekos.life/api/v2/img/hug');
+      const hugFetch = await fetch('https://nekos.life/api/v2/img/hug'),
+        hugImg = await hugFetch.json();
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -50,7 +51,7 @@ module.exports = class HugCommand extends Command {
         description: member
           ? `${member.displayName}! You were hugged by ${msg.member.displayName} 💖!`
           : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-        image: {url: member ? body.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
+        image: {url: member ? hugImg.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
         color: msg.guild ? msg.guild.me.displayColor : 10610610
       }, `<@${member ? member.id : msg.author.id}>`);
     } catch (err) {

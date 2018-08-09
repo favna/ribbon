@@ -7,8 +7,8 @@
  * @returns {MessageEmbed} Title, URL of and progress into the song
  */
 
-const {Command} = require('discord.js-commando'),
-  {stripIndents} = require('common-tags'),
+const {Command} = require('discord.js-commando'), 
+  {stripIndents} = require('common-tags'), 
   {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class MusicStatusCommand extends Command {
@@ -38,8 +38,8 @@ module.exports = class MusicStatusCommand extends Command {
       return msg.say('There isn\'t any music playing right now. You should get on that.');
     }
     const song = queue.songs[0], // eslint-disable-line one-var
-      currentTime = song.dispatcher ? song.dispatcher.streamTime / 1000 : 0, // eslint-disable-line sort-vars
-      embed = { // eslint-disable-line sort-vars
+      currentTime = song.dispatcher ? song.dispatcher.streamTime / 1000 : 0,
+      embed = {
         color: 3447003,
         author: {
           name: `${song.username}`,

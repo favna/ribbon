@@ -26,7 +26,7 @@ const checkReminders = async (client) => {
 
     for (const row in query) {
       const remindTime = moment(query[row].remindTime),
-        dura = moment.duration(remindTime.diff()); // eslint-disable-line sort-vars
+        dura = moment.duration(remindTime.diff());
 
       if (dura.asMinutes() <= 0) {
         const user = await client.users.get(query[row].userID);
@@ -84,7 +84,7 @@ const forceStopTyping = (client) => {
 const guildAdd = async (client, guild) => {
   try {
     Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
-    /* eslint-disable sort-vars*/
+
     const avatar = await Jimp.read(client.user.displayAvatarURL({format: 'png'})),
       border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
       canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
@@ -92,7 +92,6 @@ const guildAdd = async (client, guild) => {
       fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
       newGuildEmbed = new MessageEmbed(),
       channel = guild.systemChannel ? guild.systemChannel : null;
-    /* eslint-enable sort-vars*/
 
     avatar.resize(136, Jimp.AUTO);
     mask.resize(136, Jimp.AUTO);
@@ -175,7 +174,7 @@ const guildLeave = (client, guild) => {
 
 const joinmessage = async (member) => {
   Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
-  /* eslint-disable sort-vars*/
+
   const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
     border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
     canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
@@ -183,7 +182,6 @@ const joinmessage = async (member) => {
     fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt')),
     fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
     mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
-  /* eslint-enable sort-vars*/
 
   avatar.resize(136, Jimp.AUTO);
   mask.resize(136, Jimp.AUTO);
@@ -210,7 +208,7 @@ const joinmessage = async (member) => {
 
 const leavemessage = async (member) => {
   Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
-  /* eslint-disable sort-vars*/
+
   const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
     border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
     canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
@@ -218,7 +216,6 @@ const leavemessage = async (member) => {
     fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt')),
     fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
     mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
-  /* eslint-enable sort-vars*/
 
   avatar.resize(136, Jimp.AUTO);
   mask.resize(136, Jimp.AUTO);
@@ -253,7 +250,7 @@ const lotto = (client) => {
     for (const table in tables) {
       const rows = conn.prepare(`SELECT * FROM "${tables[table].name}"`).all(),
         winner = Math.floor(Math.random() * rows.length),
-        prevBal = rows[winner].balance; // eslint-disable-line sort-vars
+        prevBal = rows[winner].balance;
 
       rows[winner].balance += 2000;
 
@@ -298,7 +295,6 @@ const timermessages = (client) => {
     for (const table in tables) {
       const rows = conn.prepare(`SELECT * FROM "${tables[table].name}"`).all();
 
-      /* eslint-disable sort-vars*/
       for (const row in rows) {
         const timermoment = moment(rows[row].lastsend).add(rows[row].interval, 'ms'),
           dura = moment.duration(timermoment.diff());
@@ -312,7 +308,6 @@ const timermessages = (client) => {
             channel = guild.channels.get(rows[row].channel),
             timerEmbed = new MessageEmbed(),
             {me} = client.guilds.get(tables[table].name);
-          /* eslint-enable sort-vars*/
 
           timerEmbed
             .setAuthor('Ribbon Timed Message', me.user.displayAvatarURL({format: 'png'}))

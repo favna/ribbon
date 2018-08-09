@@ -10,7 +10,8 @@
  * @returns {MessageEmbed} Current date, current time, country and DST offset
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
+  querystring = require('querystring'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {stripIndents} = require('common-tags'),
@@ -42,14 +43,16 @@ module.exports = class TimeCommand extends Command {
   }
 
   async getCords (location) {
-    const cords = await request.get('https://maps.googleapis.com/maps/api/geocode/json?')
-      .query('address', location)
-      .query('key', process.env.googleapikey);
+    const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?${querystring.stringify({
+        address: location,
+        key: process.env.googleapikey
+      })}`),
+      cords = await res.json();
 
     return {
-      lat: cords.body.results[0].geometry.location.lat,
-      long: cords.body.results[0].geometry.location.lng,
-      address: cords.body.results[0].formatted_address
+      lat: cords.results[0].geometry.location.lat,
+      long: cords.results[0].geometry.location.lng,
+      address: cords.results[0].formatted_address
     };
   }
 
@@ -57,21 +60,22 @@ module.exports = class TimeCommand extends Command {
     try {
       startTyping(msg);
       const cords = await this.getCords(location),
-        time = await request.get('http://api.timezonedb.com/v2/get-time-zone')
-          .query('key', process.env.timezonedbkey)
-          .query('format', 'json')
-          .query('by', 'position')
-          .query('lat', cords.lat)
-          .query('lng', cords.long),
-        timeArr = time.body.formatted.split(' '),
+        res = await fetch(`http://api.timezonedb.com/v2/get-time-zone?${querystring.stringify({
+          key: process.env.timezonedbkey,
+          format: 'json',
+          by: 'position',
+          lat: cords.lat,
+          lng: cords.long
+        })}`),
+        time = await res.json(),
         timeEmbed = new MessageEmbed();
 
       timeEmbed
-        .setTitle(`:flag_${time.body.countryCode.toLowerCase()}: ${cords.address}`)
-        .setDescription(stripIndents`**Current Time:** ${timeArr[1]}
-					**Current Date:** ${timeArr[0]}
-					**Country:** ${time.body.countryName}
-					**DST:** ${time.body.dst}`)
+        .setTitle(`:flag_${time.countryCode.toLowerCase()}: ${cords.address}`)
+        .setDescription(stripIndents`**Current Time:** ${time.formatted.split(' ')[1]}
+					**Current Date:** ${time.formatted.split(' ')[0]}
+					**Country:** ${time.countryName}
+					**DST:** ${time.dst}`)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00');
 
       deleteCommandMessages(msg, this.client);

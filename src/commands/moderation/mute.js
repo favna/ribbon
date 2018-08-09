@@ -86,16 +86,14 @@ module.exports = class MuteCommand extends Command {
   }
 
   async run (msg, {member, duration}) {
-    startTyping(msg);
     if (member.manageable) {
+      startTyping(msg);
       try {
-        /* eslint-disable sort-vars*/
         const modlogChannel = msg.guild.settings.get('modlogchannel',
             msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null),
           muteRole = msg.guild.settings.get('muterole',
             msg.guild.roles.find(r => r.name === 'muted') ? msg.guild.roles.find(r => r.name === 'muted') : null),
           muteEmbed = new MessageEmbed();
-        /* eslint-enable sort-vars*/
 
         await member.roles.add(muteRole);
 

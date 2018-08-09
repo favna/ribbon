@@ -13,8 +13,9 @@
 
 const Fuse = require('fuse.js'),
   cheerio = require('cheerio'),
+  fetch = require('node-fetch'),
   moment = require('moment'),
-  request = require('snekfetch'),
+  querystring = require('querystring'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -42,7 +43,7 @@ module.exports = class CydiaCommand extends Command {
       args: [
         {
           key: 'deb',
-          prompt: 'Please supply package name',
+          prompt: 'What package do you want to find on Cydia?',
           type: 'string'
         }
       ]
@@ -50,88 +51,90 @@ module.exports = class CydiaCommand extends Command {
   }
 
   async run (msg, {deb}) {
-    startTyping(msg);
-    if (msg.patternMatches) {
-      if (!msg.guild.settings.get('regexmatches', false)) {
-        return null;
+    try {
+      startTyping(msg);
+      if (msg.patternMatches) {
+        if (!msg.guild.settings.get('regexmatches', false)) {
+          return null;
+        }
+        deb = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
       }
-      deb = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
-    }
-    const baseURL = 'https://cydia.saurik.com/',
-      embed = new MessageEmbed(),
-      fsoptions = {
-        shouldSort: true,
-        threshold: 0.3,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: ['display', 'name']
-      },
-      packages = await request.get(`${baseURL}api/macciti`).query('query', deb);
 
-    if (packages.ok) {
-      const fuse = new Fuse(packages.body.results, fsoptions),
-        results = fuse.search(deb);
+      const baseURL = 'https://cydia.saurik.com/',
+        embed = new MessageEmbed(),
+        fsoptions = {
+          shouldSort: true,
+          threshold: 0.3,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: ['display', 'name']
+        },
+        res = await fetch(`${baseURL}api/macciti?${querystring.stringify({query: deb})}`),
+        packages = await res.json(),
+        fuzzyList = new Fuse(packages.results, fsoptions),
+        search = fuzzyList.search(deb);
 
-      if (results.length) {
-        const result = results[0];
+      if (!search.length) throw new Error('noPackages');
+
+      embed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+        .setTitle(search[0].display)
+        .setDescription(search[0].summary)
+        .addField('Version', search[0].version, true)
+        .addField('Link', `[Click Here](${baseURL}package/${search[0].name})`, true);
+
+      try {
+        const siteReq = await fetch(`${baseURL}package/${search[0].name}`),
+          site = await siteReq.text(),
+          $ = cheerio.load(site);
 
         embed
-          .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-          .setTitle(result.display)
-          .setDescription(result.summary)
-          .addField('Version', result.version, true)
-          .addField('Link', `[Click Here](${baseURL}package/${result.name})`, true);
-
-        try {
-          const price = await request.get(`${baseURL}api/ibbignerd`).query('query', result.name),
-            site = await request.get(`${baseURL}package/${result.name}`);
-
-          if (site.ok) {
-            const $ = cheerio.load(site.body.toString());
-
-            embed
-              .addField('Source', $('.source-name').html(), true)
-              .addField('Section', $('#section').html(), true)
-              .addField('Size', $('#extra').text(), true);
-          }
-
-          if (price.ok) {
-            embed.addField('Price', price.body ? `$${price.body.msrp}` : 'Free', true);
-          }
-
-          embed.addField('Package Name', result.name, false);
-
-          if (!msg.patternMatches) {
-            deleteCommandMessages(msg, this.client);
-          }
-          stopTyping(msg);
-
-          return msg.embed(embed);
-        } catch (err) {
-          this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
-          <@${this.client.owners[0].id}> Error occurred in \`cydia\` command!
-          **Server:** ${msg.guild.name} (${msg.guild.id})
-          **Author:** ${msg.author.tag} (${msg.author.id})
-          **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-          **Input:** ${deb}
-          **Regex Match:** \`${msg.patternMatches ? 'yes' : 'no'}\`
-          **Error Message:** ${err}
-          `);
-  
-          embed.addField('Package Name', result.name, false);
-
-          if (!msg.patternMatches) {
-            deleteCommandMessages(msg, this.client);
-          }
-          stopTyping(msg);
-
-          return msg.embed(embed);
-        }
+          .addField('Source', $('.source-name').html(), true)
+          .addField('Section', $('#section').html(), true)
+          .addField('Size', $('#extra').text(), true)
+          .setThumbnail(`${baseURL}${$('#header > #icon > div > span > img').attr('src').slice(1)}`);
+      } catch (siteErr) {
+        null;
       }
-    }
 
-    return msg.say(`**Tweak/Theme \`${deb}\` not found!**`);
+      try {
+        const priceReq = await fetch(`${baseURL}api/ibbignerd?${querystring.stringify({query: search[0].name})}`),
+          price = await priceReq.json();
+
+        embed.addField('Price', price ? price.msrp : 'Free', true);
+      } catch (priceErr) {
+        null;
+      }
+
+      embed.addField('Package Name', search[0].name, false);
+
+      if (!msg.patternMatches) {
+        deleteCommandMessages(msg, this.client);
+      }
+      stopTyping(msg);
+
+      return msg.embed(embed);
+    } catch (err) {
+      stopTyping(msg);
+
+      if ((/(noPackages)/i).test(err.toString())) {
+        return msg.say(`**Tweak/Theme \`${deb}\` not found!**`);
+      }
+
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`cydia\` command!
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Package:** ${deb}
+      **Regex Match:** \`${msg.patternMatches ? 'yes' : 'no'}\`
+      **Error Message:** ${err}
+      `);
+
+      return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+      Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+    }
   }
 };

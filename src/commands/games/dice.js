@@ -54,11 +54,9 @@ module.exports = class DiceCommand extends Command {
       res = [],
       throwDice = xdicey(rolls, sides);
 
-
     for (const i in throwDice.individual) {
       res.push(`${throwDice.individual[i]}`);
     }
-
 
     diceEmbed
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')

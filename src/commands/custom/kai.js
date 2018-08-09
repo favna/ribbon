@@ -42,11 +42,10 @@ module.exports = class KaiCommand extends Command {
         'https://favna.xyz/images/ribbonhost/kai/antikai09.png',
         'https://favna.xyz/images/ribbonhost/kai/antikai10.png'
       ],
-      curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
+      curImage = Math.floor(Math.random() * images.length);
 
     return images[curImage];
   }
-
 
   verifyRmt (msg) {
     if (msg.guild.id === '373826006651240450') return true;

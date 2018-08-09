@@ -7,7 +7,7 @@
  * @returns {MessageEmbed} Embedded image and info about it
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
@@ -32,18 +32,18 @@ module.exports = class xkcdCommand extends Command {
   async run (msg) {
     startTyping(msg);
     try {
-      /* eslint-disable sort-vars */
-      const totalImages = await request.get('https://xkcd.com/info.0.json'),
-        randomNum = Math.floor(Math.random() * totalImages.body.num) + 1,
-        randomImage = await request.get(`https://xkcd.com/${randomNum}/info.0.json`),
+      const count = await fetch('https://xkcd.com/info.0.json'),
+        totalImages = await count.json(),
+        randomNum = Math.floor(Math.random() * totalImages.num) + 1,
+        res = await fetch(`https://xkcd.com/${randomNum}/info.0.json`),
+        randomImage = await res.json(),
         xkcdEmbed = new MessageEmbed();
-      /* eslint-enable sort-vars */
 
       xkcdEmbed
-        .setTitle(randomImage.body.safe_title)
+        .setTitle(randomImage.safe_title)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setDescription(randomImage.body.alt)
-        .setImage(randomImage.body.img)
+        .setDescription(randomImage.alt)
+        .setImage(randomImage.img)
         .setURL(`https://xkcd.com/${randomNum}/`);
 
       deleteCommandMessages(msg, this.client);

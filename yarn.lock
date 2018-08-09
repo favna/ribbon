@@ -947,8 +947,8 @@ dijkstrajs@^1.0.1:
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
 discord.js-commando@favna/commando#ribbon:
-  version "1.2.1-ribbon"
-  resolved "https://codeload.github.com/favna/commando/tar.gz/dbb3e8335ad28554029ea2ee5e10cf63a4983958"
+  version "1.2.2-ribbon"
+  resolved "https://codeload.github.com/favna/commando/tar.gz/3a70c5e02cf7fc12fd3d500ddda53e71905d44d7"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
@@ -2463,7 +2463,7 @@ node-fetch@^1.7.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-fetch@^2.1.2:
+node-fetch@^2.1.2, node-fetch@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.2.0.tgz#4ee79bde909262f9775f731e3656d0db55ced5b5"
 

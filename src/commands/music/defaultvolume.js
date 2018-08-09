@@ -42,7 +42,6 @@ module.exports = class DefaultVolumeCommand extends Command {
     return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
-
   run (msg, {volume}) {
     startTyping(msg);
     if (volume === 'show') {

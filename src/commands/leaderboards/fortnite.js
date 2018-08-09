@@ -10,8 +10,8 @@
  * @returns {MessageEmbed} Player Statistics from that player
  */
 
-const moment = require('moment'),
-  request = require('snekfetch'),
+const fetch = require('node-fetch'),
+  moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -53,59 +53,56 @@ module.exports = class FortniteCommand extends Command {
     try {
       startTyping(msg);
 
-      /* eslint-disable sort-vars*/
-      const stats = await request.get(`https://api.fortnitetracker.com/v1/profile/${platform}/${user}`)
-          .set('TRN-Api-Key', process.env.trnkey),
-        hit = stats.body,
+      const res = await fetch(`https://api.fortnitetracker.com/v1/profile/${platform}/${user}`, {headers: {'TRN-Api-Key': process.env.trnkey}}),
+        stats = await res.json(),
         fortEmbed = new MessageEmbed();
-      /* eslint-enable sort-vars*/
 
-      if (hit.error) throw new Error('noplayer');
+      if (stats.error) throw new Error('noplayer');
 
       fortEmbed
-        .setTitle(`Fortnite Player Statistics for ${hit.epicUserHandle}`)
-        .setURL(`https://fortnitetracker.com/profile/${hit.platformName}/${hit.epicUserHandle}`)
+        .setTitle(`Fortnite Player Statistics for ${stats.epicUserHandle}`)
+        .setURL(`https://fortnitetracker.com/profile/${stats.platformName}/${stats.epicUserHandle}`)
         .setThumbnail('https://nintendowire.com/wp-content/uploads/2018/06/FortniteSwitch.jpg')
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .addField('Lifetime Stats', stripIndents`
-        Wins: **${hit.lifeTimeStats.filter(el => el.key.toLowerCase() === 'wins')[0].value}**
-        Kills: **${hit.lifeTimeStats.filter(el => el.key.toLowerCase() === 'kills')[0].value}**
-        KDR: **${parseFloat(hit.lifeTimeStats.filter(el => el.key.toLowerCase() === 'k/d')[0].value, 10) * 100}%**
-        Matches Played: **${hit.lifeTimeStats.filter(el => el.key.toLowerCase() === 'matches played')[0].value}**
-        Top 3s: **${hit.lifeTimeStats.filter(el => el.key.toLowerCase() === 'top 3s')[0].value}**
-        Top 5s: **${hit.lifeTimeStats.filter(el => el.key.toLowerCase() === 'top 5s')[0].value}**
-        Top 10s: **${hit.lifeTimeStats.filter(el => el.key.toLowerCase() === 'top 10')[0].value}**
-        Top 25s: **${hit.lifeTimeStats.filter(el => el.key.toLowerCase() === 'top 25s')[0].value}**
+        Wins: **${stats.lifeTimeStats.filter(el => el.key.toLowerCase() === 'wins')[0].value}**
+        Kills: **${stats.lifeTimeStats.filter(el => el.key.toLowerCase() === 'kills')[0].value}**
+        KDR: **${parseFloat(stats.lifeTimeStats.filter(el => el.key.toLowerCase() === 'k/d')[0].value, 10) * 100}%**
+        Matches Played: **${stats.lifeTimeStats.filter(el => el.key.toLowerCase() === 'matches played')[0].value}**
+        Top 3s: **${stats.lifeTimeStats.filter(el => el.key.toLowerCase() === 'top 3s')[0].value}**
+        Top 5s: **${stats.lifeTimeStats.filter(el => el.key.toLowerCase() === 'top 5s')[0].value}**
+        Top 10s: **${stats.lifeTimeStats.filter(el => el.key.toLowerCase() === 'top 10')[0].value}**
+        Top 25s: **${stats.lifeTimeStats.filter(el => el.key.toLowerCase() === 'top 25s')[0].value}**
         `, true)
         .addField('Solos', stripIndents`
-        Wins: **${hit.stats.p2.top1.value}**
-        Kills: **${hit.stats.p2.kills.value}**
-        KDR: **${parseFloat(hit.stats.p2.kd.value, 10) * 100}%**
-        Matches Played: **${hit.stats.p2.matches.value}**
-        Top 3s: **${hit.stats.p2.top3.value}**
-        Top 5s: **${hit.stats.p2.top5.value}**
-        Top 10s: **${hit.stats.p2.top10.value}**
-        Top 25s: **${hit.stats.p2.top25.value}**
+        Wins: **${stats.stats.p2.top1.value}**
+        Kills: **${stats.stats.p2.kills.value}**
+        KDR: **${parseFloat(stats.stats.p2.kd.value, 10) * 100}%**
+        Matches Played: **${stats.stats.p2.matches.value}**
+        Top 3s: **${stats.stats.p2.top3.value}**
+        Top 5s: **${stats.stats.p2.top5.value}**
+        Top 10s: **${stats.stats.p2.top10.value}**
+        Top 25s: **${stats.stats.p2.top25.value}**
         `, true)
         .addField('Duos', stripIndents`
-        Wins: **${hit.stats.p10.top1.value}**
-        Kills: **${hit.stats.p10.kills.value}**
-        KDR: **${parseFloat(hit.stats.p10.kd.value, 10) * 100}%**
-        Matches Played: **${hit.stats.p10.matches.value}**
-        Top 3s: **${hit.stats.p10.top3.value}**
-        Top 5s: **${hit.stats.p10.top5.value}**
-        Top 10s: **${hit.stats.p10.top10.value}**
-        Top 25s: **${hit.stats.p10.top25.value}**
+        Wins: **${stats.stats.p10.top1.value}**
+        Kills: **${stats.stats.p10.kills.value}**
+        KDR: **${parseFloat(stats.stats.p10.kd.value, 10) * 100}%**
+        Matches Played: **${stats.stats.p10.matches.value}**
+        Top 3s: **${stats.stats.p10.top3.value}**
+        Top 5s: **${stats.stats.p10.top5.value}**
+        Top 10s: **${stats.stats.p10.top10.value}**
+        Top 25s: **${stats.stats.p10.top25.value}**
         `, true)
         .addField('Squads', stripIndents`
-        Wins: **${hit.stats.p9.top1.value}**
-        Kills: **${hit.stats.p9.kills.value}**
-        KDR: **${parseFloat(hit.stats.p9.kd.value, 10) * 100}%**
-        Matches Played: **${hit.stats.p9.matches.value}**
-        Top 3s: **${hit.stats.p9.top3.value}**
-        Top 5s: **${hit.stats.p9.top5.value}**
-        Top 10s: **${hit.stats.p9.top10.value}**
-        Top 25s: **${hit.stats.p9.top25.value}**
+        Wins: **${stats.stats.p9.top1.value}**
+        Kills: **${stats.stats.p9.kills.value}**
+        KDR: **${parseFloat(stats.stats.p9.kd.value, 10) * 100}%**
+        Matches Played: **${stats.stats.p9.matches.value}**
+        Top 3s: **${stats.stats.p9.top3.value}**
+        Top 5s: **${stats.stats.p9.top5.value}**
+        Top 10s: **${stats.stats.p9.top10.value}**
+        Top 25s: **${stats.stats.p9.top25.value}**
         `, true);
 
       deleteCommandMessages(msg, this.client);

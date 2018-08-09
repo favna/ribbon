@@ -8,7 +8,7 @@
  * @returns {MessageEmbed} The poke and an image
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
@@ -41,7 +41,8 @@ module.exports = class PokeCommand extends Command {
     try {
       startTyping(msg);
 
-      const {body} = await request.get('https://nekos.life/api/v2/img/poke');
+      const pokeFetch = await fetch('https://nekos.life/api/v2/img/poke'),
+        pokeImg = await pokeFetch.json();
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -49,7 +50,7 @@ module.exports = class PokeCommand extends Command {
       return msg.embed({
         description: member
           ? `${member.displayName}! You got poked by ${msg.member.displayName} 👉!` : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-        image: {url: member ? body.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
+        image: {url: member ? pokeImg.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
         color: msg.guild ? msg.guild.me.displayColor : 10610610
       }, `<@${member ? member.id : msg.author.id}>`);
     } catch (err) {

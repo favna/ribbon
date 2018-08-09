@@ -8,7 +8,7 @@
  * @returns {MessageEmbed} The slap and an image
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
@@ -41,7 +41,8 @@ module.exports = class SlapCommand extends Command {
     try {
       startTyping(msg);
 
-      const {body} = await request.get('https://nekos.life/api/v2/img/slap');
+      const slapFetch = await fetch('https://nekos.life/api/v2/img/slap'),
+        slapImg = await slapFetch.json();
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -49,7 +50,7 @@ module.exports = class SlapCommand extends Command {
       return msg.embed({
         description: member
           ? `${member.displayName}! You got slapped by ${msg.member.displayName} 💢!` : `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
-        image: {url: member ? body.url : 'http://cdn.awwni.me/mz98.gif'},
+        image: {url: member ? slapImg.url : 'http://cdn.awwni.me/mz98.gif'},
         color: msg.guild ? msg.guild.me.displayColor : 10610610
       }, `<@${member ? member.id : msg.author.id}>`);
     } catch (err) {

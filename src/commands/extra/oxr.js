@@ -14,9 +14,10 @@
  */
 
 const currencySymbol = require('currency-symbol-map'),
+  fetch = require('node-fetch'),
   fx = require('money'),
   moment = require('moment'),
-  request = require('snekfetch'),
+  querystring = require('querystring'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {stripIndents} = require('common-tags'),
@@ -41,7 +42,8 @@ module.exports = class MoneyCommand extends Command {
         {
           key: 'value',
           prompt: 'Amount of money?',
-          type: 'string'
+          type: 'string',
+          parse: p => p.replace(/,/gm, '.')
         },
         {
           key: 'curOne',
@@ -95,7 +97,6 @@ module.exports = class MoneyCommand extends Command {
     });
   }
 
-
   converter (value, curOne, curTwo) {
     return fx.convert(value, {
       from: curOne,
@@ -103,45 +104,45 @@ module.exports = class MoneyCommand extends Command {
     });
   }
 
-  replaceAll (string, pattern, replacement) {
-    return string.replace(new RegExp(pattern, 'g'), replacement);
-  }
-
   async run (msg, {value, curOne, curTwo}) {
-    startTyping(msg);
-    const rates = await request.get('https://openexchangerates.org/api/latest.json')
-      .query('app_id', process.env.oxrkey)
-      .query('prettyprint', false)
-      .query('show_alternative', true);
+    try {
+      startTyping(msg);
 
-    if (rates.ok) {
-      fx.rates = rates.body.rates;
-      fx.base = rates.body.base;
+      /* eslint-disable camelcase*/
+      const oxrEmbed = new MessageEmbed(),
+        res = await fetch(`https://openexchangerates.org/api/latest.json?${querystring.stringify({
+          app_id: process.env.oxrkey,
+          prettyprint: false,
+          show_alternative: true
+        })}`),
+        exchangeData = await res.json();
+      /* eslint-enable camelcase*/
 
-      const convertedMoney = this.converter(this.replaceAll(value, /,/, '.'), curOne, curTwo),
-        oxrEmbed = new MessageEmbed();
+      fx.rates = exchangeData.rates;
+      fx.base = exchangeData.body;
 
       oxrEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setAuthor('🌐 Currency Converter')
-        .addField(`:flag_${curOne.slice(0, 2).toLowerCase()}: Money in ${curOne}`, `${currencySymbol(curOne)}${this.replaceAll(value, /,/, '.')}`, true)
-        .addField(`:flag_${curTwo.slice(0, 2).toLowerCase()}: Money in ${curTwo}`, `${currencySymbol(curTwo)}${convertedMoney}`, true)
+        .addField(`:flag_${curOne.slice(0, 2).toLowerCase()}: Money in ${curOne}`, `${currencySymbol(curOne)}${value}`, true)
+        .addField(`:flag_${curTwo.slice(0, 2).toLowerCase()}: Money in ${curTwo}`, `${currencySymbol(curTwo)}${this.converter(value, curOne, curTwo)}`, true)
         .setTimestamp();
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
       return msg.embed(oxrEmbed);
-    }
-    stopTyping(msg);
-    this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
-    <@${this.client.owners[0].id}> Error occurred in \`oxr\` command!
-    **Server:** ${msg.guild.name} (${msg.guild.id})
-    **Author:** ${msg.author.tag} (${msg.author.id})
-    **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    **Input:** \`${value}\` || \`${curOne}\` || \`${curTwo}\`
-    `);
+    } catch (err) {
+      stopTyping(msg);
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`oxr\` command!
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Input:** \`${value}\` || \`${curOne}\` || \`${curTwo}\`
+      `);
 
-    return msg.reply('an error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
+      return msg.reply('an error occurred. Make sure you used supported currency names. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>');
+    }
   }
 };

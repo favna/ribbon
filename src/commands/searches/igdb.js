@@ -6,7 +6,7 @@
  * @name igdb
  * @example igdb Tales of Berseria
  * @param {StringResolvable} GameName The name of any game that you want to find
- * @returns {MessageEmbed} Information about the requested game
+ * @returns {MessageEmbed} Information about the fetched game
  */
 
 const igdbapi = require('igdb-api-node').default,
@@ -57,7 +57,7 @@ module.exports = class IGDBCommand extends Command {
   async run (msg, {game}) {
     startTyping(msg);
     try {
-      /* eslint-disable sort-vars*/
+
       const gameEmbed = new MessageEmbed(),
         igdb = igdbapi(process.env.igdbkey),
         gameInfo = await igdb.games({
@@ -80,7 +80,6 @@ module.exports = class IGDBCommand extends Command {
           fields: ['name']
         }),
         releaseDate = moment(gameInfo.body[0].release_dates[0].date).format('MMMM Do YYYY');
-      /* eslint-enable sort-vars*/
 
       gameEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')

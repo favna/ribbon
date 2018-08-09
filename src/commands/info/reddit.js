@@ -10,9 +10,10 @@
  */
 
 const countSyllable = require('syllable'),
+  fetch = require('node-fetch'),
   fleschKincaid = require('flesch-kincaid'),
   moment = require('moment'),
-  request = require('snekfetch'),
+  querystring = require('querystring'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -62,9 +63,10 @@ module.exports = class RedditCommand extends Command {
 
   async fetchAbout (user) {
     try {
-      const {body} = await request.get(`https://www.reddit.com/user/${user}/about/.json`); // eslint-disable-line newline-after-var
+      const res = await fetch(`https://www.reddit.com/user/${user}/about/.json`),
+        json = await res.json();
 
-      this.about = body.data;
+      this.about = json.data;
     } catch (err) {
       null;
     }
@@ -72,8 +74,12 @@ module.exports = class RedditCommand extends Command {
 
   async fetchComments (user, after = '') {
     try {
-      const {body} = await request.get(`https://www.reddit.com/user/${user}/comments.json?limit=100&after=${after}`),
-        arr = body.data.children;
+      const res = await fetch(`https://www.reddit.com/user/${user}/comments.json?${querystring.stringify({
+          limit: 100,
+          after
+        })}`),
+        json = await res.json(),
+        arr = json.data.children;
 
       arr.forEach((item) => {
         this.comments.push(item);
@@ -89,8 +95,12 @@ module.exports = class RedditCommand extends Command {
 
   async fetchSubmissions (user, after = '') {
     try {
-      const {body} = await request.get(`https://www.reddit.com/user/${user}/submitted.json?limit=100&after=${after}`),
-        arr = body.data.children;
+      const res = await fetch(`https://www.reddit.com/user/${user}/submitted.json?${querystring.stringify({
+          limit: 100,
+          after
+        })}`),
+        json = await res.json(),
+        arr = json.data.children;
 
       arr.forEach((item) => {
         this.submitted.push(item);
@@ -199,6 +209,8 @@ module.exports = class RedditCommand extends Command {
   async run (msg, {user}) {
     try {
       startTyping(msg);
+      const reply = await msg.say('`fetching and calculating statistics...`');
+
       await this.fetchData(user);
       this.comments.sort((a, b) => b.data.score - a.data.score);
 
@@ -245,6 +257,8 @@ module.exports = class RedditCommand extends Command {
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
+
+      reply.delete();
 
       return msg.embed(redditEmbed);
     } catch (err) {

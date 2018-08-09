@@ -90,7 +90,6 @@ module.exports = class FlavorCommand extends Command {
         pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
       }
 
-      /* eslint-disable sort-vars */
       const aliasoptions = {
           shouldSort: true,
           threshold: 0.2,
@@ -120,7 +119,6 @@ module.exports = class FlavorCommand extends Command {
           entries: [],
           sprite: ''
         };
-      /* eslint-enable sort-vars */
 
       let totalEntriesLength = 0;
 

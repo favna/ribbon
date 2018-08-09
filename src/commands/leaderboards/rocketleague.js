@@ -8,8 +8,9 @@
  * @returns {MessageEmbed} Top 10 ranking players by their amount of wins
  */
 
-const moment = require('moment'),
-  request = require('snekfetch'),
+const fetch = require('node-fetch'),
+  moment = require('moment'),
+  querystring = require('querystring'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -37,18 +38,17 @@ module.exports = class RocketLeagueCommand extends Command {
     startTyping(msg);
 
     try {
-      const rocketData = await request.get('https://api.rocketleaguestats.com/v1/leaderboard/stat')
-          .set('Authorization', process.env.rocketleaguekey)
-          .query('type', 'goals'),
+      const res = await fetch(`https://api.rocketleaguestats.com/v1/leaderboard/stat?${querystring.stringify({type: 'goals'})}`, {headers: {Authorization: process.env.rocketleaguekey}}),
+        rocketData = await res.json(),
         rocketEmbed = new MessageEmbed(),
         rocketEngine = {
-          names: rocketData.body.map(n => n.displayName).slice(0, 10),
-          wins: rocketData.body.map(w => w.stats.wins).slice(0, 10),
-          mvps: rocketData.body.map(m => m.stats.mvps).slice(0, 10),
-          saves: rocketData.body.map(sa => sa.stats.saves).slice(0, 10),
-          goals: rocketData.body.map(g => g.stats.goals).slice(0, 10),
-          shots: rocketData.body.map(sh => sh.stats.shots).slice(0, 10),
-          assists: rocketData.body.map(a => a.stats.assists).slice(0, 10)
+          names: rocketData.map(n => n.displayName).slice(0, 10),
+          wins: rocketData.map(w => w.stats.wins).slice(0, 10),
+          mvps: rocketData.map(m => m.stats.mvps).slice(0, 10),
+          saves: rocketData.map(sa => sa.stats.saves).slice(0, 10),
+          goals: rocketData.map(g => g.stats.goals).slice(0, 10),
+          shots: rocketData.map(sh => sh.stats.shots).slice(0, 10),
+          assists: rocketData.map(a => a.stats.assists).slice(0, 10)
         };
 
       for (const rank in rocketEngine.names) {
@@ -75,6 +75,7 @@ module.exports = class RocketLeagueCommand extends Command {
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
+
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred in \`remind\` command!
       **Server:** ${msg.guild.name} (${msg.guild.id})

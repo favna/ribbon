@@ -10,7 +10,7 @@
  */
 
 const Fuse = require('fuse.js'),
-  request = require('snekfetch'),
+  fetch = require('node-fetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -58,11 +58,10 @@ module.exports = class DocsCommand extends Command {
     }
 
     const link = version === 'commando'
-      ? 'https://raw.githubusercontent.com/Gawdl3y/discord.js-commando/docs/master.json'
-      : `https://raw.githubusercontent.com/discordjs/discord.js/docs/${version}.json`;
-
-    const {body} = await request.get(link), // eslint-disable-line one-var
-      json = JSON.parse(body);
+        ? 'https://raw.githubusercontent.com/Gawdl3y/discord.js-commando/docs/master.json'
+        : `https://raw.githubusercontent.com/discordjs/discord.js/docs/${version}.json`,
+      res = await fetch(link),
+      json = res.json();
 
     this.docs[version] = json;
 
@@ -99,11 +98,11 @@ module.exports = class DocsCommand extends Command {
     return `${docsBaseURL}/${section === 'classes' ? 'class' : 'typedef'}/${prop}`;
   }
 
-  /* eslint complexity: ["error", 35]*/
+  /* eslint-disable complexity */
   async run (msg, {query, version}) {
     try {
       startTyping(msg);
-      /* eslint-disable sort-vars*/
+
       const docs = await this.fetchDocs(version),
         sourceBaseURL = `https://github.com/discordjs/${version === 'commando' ? 'commando/blob/master' : `discord.js/blob/${version}`}`,
         hitOpts = {
@@ -123,14 +122,13 @@ module.exports = class DocsCommand extends Command {
         docsEmbed = new MessageEmbed(),
         docsSearch = docsFuse.search(input.main),
         hit = docsSearch[0];
-        /* eslint-enable sort-vars*/
 
       docsEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setAuthor(version === 'commando' ? 'Commando Docs' : `Discord.JS Docs (${version})`, 'https://github.com/discordjs.png');
 
       if (input.sub) {
-        /* eslint-disable sort-vars*/
+
         const subopts = {
             shouldSort: true,
             threshold: 0.2,
@@ -148,7 +146,6 @@ module.exports = class DocsCommand extends Command {
             methods: methodFuse ? methodFuse.search(input.sub) : [],
             events: eventsFuse ? eventsFuse.search(input.sub) : []
           };
-          /* eslint-enable sort-vars*/
 
         subLoop: for (const sub in subHit) {
           if (subHit[sub].length) {
@@ -170,7 +167,7 @@ module.exports = class DocsCommand extends Command {
               docsEmbed
                 .setDescription(stripIndents`${oneLine`[__**${hit.name}.${res.name}()**__](${this.docifyLink(hit.name, version, docs)}?scrollTo=${res.name})`}
               ${hit.description}`)
-                .addField('Parameters', 
+                .addField('Parameters',
                   res.params.map(param => `\`${param.optional ? `[${param.name}]` : param.name}:\` **${this.joinType(param.type, version, docs).join(' | ')}**\n${this.clean(param.description)}\n`))
                 .addField('Returns', `${res.returns.description ? `${this.clean(res.returns.description)}` : ''} **⇒** **${this.joinType(res.returns.types || res.returns, version, docs)}**`)
                 .addField('Example(s)', `\`\`\`js\n${res.examples.join('```\n```js\n')}\`\`\``)
@@ -180,7 +177,7 @@ module.exports = class DocsCommand extends Command {
               docsEmbed
                 .setDescription(stripIndents`${oneLine`[__**${hit.name}.on('${res.name}' … )**__](${this.docifyLink(hit.name, version, docs)}?scrollTo=${res.name})`}
                 ${hit.description}`)
-                .addField('Parameters', 
+                .addField('Parameters',
                   res.params.map(param => `\`${param.optional ? `[${param.name}]` : param.name}:\` **${this.joinType(param.type, version, docs)}**\n${this.clean(param.description)}\n`))
                 .addField('\u200b', `[View Source](${sourceBaseURL}/${res.meta.path}/${res.meta.file}#L${res.meta.line})`);
               break subLoop;

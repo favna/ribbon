@@ -6,12 +6,12 @@
  * @name manga
  * @example manga Yu-Gi-Oh
  * @param {StringResolvable} AnyManga manga to look up
- * @returns {MessageEmbed} Information about the requested manga
+ * @returns {MessageEmbed} Information about the fetched manga
  */
 
-const moment = require('moment'),
+const fetch = require('node-fetch'),
+  moment = require('moment'),
   momentduration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-  request = require('snekfetch'),
   {MessageEmbed} = require('discord.js'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, removeDiacritics, stopTyping, startTyping} = require('../../components/util.js');
@@ -46,13 +46,19 @@ module.exports = class MangaCommand extends Command {
   async run (msg, {manga}) {
     try {
       startTyping(msg);
-      const mangaEmbed = new MessageEmbed(),
-        mangaList = await request.post(`https://${process.env.kitsuid}-dsn.algolia.net/1/indexes/production_media/query`)
-          .set('Content-Type', 'application/json')
-          .set('X-Algolia-Application-Id', process.env.kitsuid)
-          .set('X-Algolia-API-Key', process.env.kitsukey)
-          .send({params: `query=${manga}&facetFilters=[\"kind:manga\"]`}),
-        hit = mangaList.body.hits[0]; // eslint-disable-line sort-vars
+      const mangaList = await fetch(`https://${process.env.kitsuid}-dsn.algolia.net/1/indexes/production_media/query`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Algolia-Application-Id': process.env.kitsuid,
+            'X-Algolia-API-Key': process.env.kitsukey
+
+          },
+          body: JSON.stringify({params: `query=${manga}&facetFilters=[\"kind:manga\"]`})
+        }),
+        mangas = await mangaList.json(),
+        hit = mangas.hits[0],
+        mangaEmbed = new MessageEmbed();
 
       mangaEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')

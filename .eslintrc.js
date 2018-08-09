@@ -179,7 +179,7 @@ module.exports = {
         "no-multi-assign": "error",
         "no-multi-spaces": "error",
         "no-multi-str": "error",
-        "no-multiple-empty-lines": "error",
+        "no-multiple-empty-lines": ["error", {"max": 1}],
         "no-native-reassign": "error",
         "no-negated-condition": "off",
         "no-negated-in-lhs": "error",
@@ -282,7 +282,7 @@ module.exports = {
         ],
         "sort-imports": "error",
         "sort-keys": "off",
-        "sort-vars": "error",
+        "sort-vars": "off",
         "space-before-blocks": "error",
         "space-before-function-paren": ["error", "always"],
         "space-in-parens": [

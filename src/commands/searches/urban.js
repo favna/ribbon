@@ -6,13 +6,14 @@
  * @name urban
  * @example urban Everclear
  * @param {StringResolvable} PhraseQuery Phrase that you want to define
- * @returns {MessageEmbed} Top definition for the requested phrase
+ * @returns {MessageEmbed} Top definition for the fetched phrase
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
+  querystring = require('querystring'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class UrbanCommand extends Command {
   constructor (client) {
@@ -40,33 +41,30 @@ module.exports = class UrbanCommand extends Command {
   }
 
   async run (msg, {term}) {
-    startTyping(msg);
-    const urban = await request.get('https://api.urbandictionary.com/v0/define').query('term', term);
+    try {
+      startTyping(msg);
+      const urbanSearch = await fetch(`https://api.urbandictionary.com/v0/define?${querystring.stringify({term})}`),
+        definition = await urbanSearch.json(),
+        urbanEmbed = new MessageEmbed();
 
-    if (urban.ok && urban.body.result_type !== 'no_results') {
-      const embed = new MessageEmbed();
+      definition.list.sort((a, b) => b.thumbs_up - b.thumbs_down - (a.thumbs_up - a.thumbs_down));
 
-      urban.body.list.sort((a, b) => b.thumbs_up - b.thumbs_down - (a.thumbs_up - a.thumbs_down));
-
-      embed
-        .setTitle(`Urban Search - ${urban.body.list[0].word}`)
-        .setURL(urban.body.list[0].permalink)
+      urbanEmbed
+        .setTitle(`Urban Search - ${definition.list[0].word}`)
+        .setURL(definition.list[0].permalink)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setDescription(urban.body.list[0].definition)
-        .addField('Example',
-          urban.body.list[0].example.length <= 1024
-            ? urban.body.list[0].example
-            : `Truncated due to exceeding maximum length\n${urban.body.list[0].example.slice(0, 970)}`,
-          false);
+        .setDescription(capitalizeFirstLetter(definition.list[0].definition.replace(/(?:\[|\])/gim, '')))
+        .addField('Example', definition.list[0].example ? `${definition.list[0].example.slice(0, 1020)}${definition.list[0].example.length >= 1024 ? '...' : ''}` : 'None');
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(embed);
-    }
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+      return msg.embed(urbanEmbed);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      stopTyping(msg);
 
-    return msg.reply(`no definitions found for \`${term}\``);
+      return msg.reply(`no definitions found for \`${term}\``);
+    }
   }
 };

@@ -10,9 +10,9 @@
  */
 
 const duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
+  fetch = require('node-fetch'),
   moment = require('moment'),
   ms = require('ms'),
-  request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -82,9 +82,9 @@ module.exports = class OverwatchCommand extends Command {
   async run (msg, {player, platform, region}) {
     try {
       startTyping(msg);
-      const owData = await request.get(`https://ow-api.com/v1/stats/${platform}/${region}/${player}/complete`).set('Content-Type', 'application/json'),
+      const owData = await fetch(`https://ow-api.com/v1/stats/${platform}/${region}/${player}/complete`, {headers: {'Content-Type': 'application/json'}}),
         owEmbed = new MessageEmbed(),
-        data = owData.body; // eslint-disable-line sort-vars
+        data = await owData.json();
 
       if (data.error) throw new Error('noplayer');
       if (!data.competitiveStats.topHeroes) throw new Error('nostats');

@@ -8,7 +8,7 @@
  * @returns {MessageEmbed} The cuddle and a cute image 💕
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
@@ -37,12 +37,12 @@ module.exports = class CuddleCommand extends Command {
     });
   }
 
-
   async run (msg, {member}) {
     try {
       startTyping(msg);
 
-      const {body} = await request.get('https://nekos.life/api/v2/img/cuddle');
+      const cuddleFetch = await fetch('https://nekos.life/api/v2/img/cuddle'),
+        cuddleImg = await cuddleFetch.json();
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -51,7 +51,7 @@ module.exports = class CuddleCommand extends Command {
         description: member
           ? `Awww ${msg.member.displayName} is giving ${member.displayName} cuddles 💕!`
           : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-        image: {url: member ? body.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
+        image: {url: member ? cuddleImg.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
         color: msg.guild ? msg.guild.me.displayColor : 10610610
       }, `<@${member ? member.id : msg.author.id}>`);
     } catch (err) {

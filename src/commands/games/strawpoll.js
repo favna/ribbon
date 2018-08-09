@@ -12,7 +12,7 @@
  * @returns {MessageEmbed} Poll url, title, options and preview image
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
@@ -43,12 +43,7 @@ module.exports = class StrawpollCommand extends Command {
           key: 'options',
           prompt: 'What are the messages for the strawpoll (minimum is 2)? Send 1 option per message and end with `finish`',
           type: 'string',
-          infinite: true,
-          validate: (v) => {
-            console.log(v);
-            
-            return true;
-          }
+          infinite: true
         }
       ]
     });
@@ -61,28 +56,30 @@ module.exports = class StrawpollCommand extends Command {
     try {
       startTyping(msg);
       const pollEmbed = new MessageEmbed(),
-        strawpoll = await request
-          .post('https://www.strawpoll.me/api/v2/polls')
-          .set('Content-Type', 'application/json')
-          .send({
+        pollPost = await fetch('https://www.strawpoll.me/api/v2/polls', {
+          method: 'POST',
+          body: JSON.stringify({
             title,
             options,
             multi: false,
             dupcheck: 'normal',
             captcha: true
-          });
+          }),
+          headers: {'Content-Type': 'application/json'}
+        }),
+        strawpoll = await pollPost.json();
 
       pollEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setTitle(strawpoll.body.title)
-        .setURL(`http://www.strawpoll.me/${strawpoll.body.id}`)
-        .setImage(`http://www.strawpoll.me/images/poll-results/${strawpoll.body.id}.png`)
-        .setDescription(`Options on this poll: ${strawpoll.body.options.map(val => `\`${val}\``).join(', ')}`);
+        .setTitle(strawpoll.title)
+        .setURL(`http://www.strawpoll.me/${strawpoll.id}`)
+        .setImage(`http://www.strawpoll.me/images/poll-results/${strawpoll.id}.png`)
+        .setDescription(`Options on this poll: ${strawpoll.options.map(val => `\`${val}\``).join(', ')}`);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(pollEmbed, `http://www.strawpoll.me/${strawpoll.body.id}`);
+      return msg.embed(pollEmbed, `http://www.strawpoll.me/${strawpoll.id}`);
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

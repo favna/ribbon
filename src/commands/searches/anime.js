@@ -6,12 +6,12 @@
  * @name anime
  * @example anime Yu-Gi-Oh Dual Monsters
  * @param {StringResolvable} AnimeName anime to look up
- * @returns {MessageEmbed} Information about the requested anime
+ * @returns {MessageEmbed} Information about the fetched anime
  */
 
-const moment = require('moment'),
+const fetch = require('node-fetch'),
+  moment = require('moment'),
   momentduration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-  request = require('snekfetch'),
   {MessageEmbed} = require('discord.js'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, removeDiacritics, stopTyping, startTyping} = require('../../components/util.js');
@@ -45,13 +45,19 @@ module.exports = class AnimeCommand extends Command {
   async run (msg, {anime}) {
     try {
       startTyping(msg);
-      const animeEmbed = new MessageEmbed(),
-        animeList = await request.post(`https://${process.env.kitsuid}-dsn.algolia.net/1/indexes/production_media/query`)
-          .set('Content-Type', 'application/json')
-          .set('X-Algolia-Application-Id', process.env.kitsuid)
-          .set('X-Algolia-API-Key', process.env.kitsukey)
-          .send({params: `query=${anime}&facetFilters=[\"kind:anime\"]`}),
-        hit = animeList.body.hits[0];
+      const animeList = await fetch(`https://${process.env.kitsuid}-dsn.algolia.net/1/indexes/production_media/query`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Algolia-Application-Id': process.env.kitsuid,
+            'X-Algolia-API-Key': process.env.kitsukey
+
+          },
+          body: JSON.stringify({params: `query=${anime}&facetFilters=[\"kind:anime\"]`})
+        }),
+        animes = await animeList.json(),
+        hit = animes.hits[0],
+        animeEmbed = new MessageEmbed();
 
       animeEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')

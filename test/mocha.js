@@ -4,7 +4,7 @@
  * @copyright © 2017-2018 Favna  
  */
 
-/* eslint-disable no-undef, no-unused-vars, sort-vars, no-mixed-requires, global-require*/
+/* eslint-disable no-unused-vars, no-mixed-requires, global-require*/
 const Database = require('better-sqlite3'),
   assert = require('assert'),
   should = require('chai').should(),

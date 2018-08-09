@@ -11,10 +11,11 @@
 
 const Spotify = require('spotify-web-api-node'),
   duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
+  fetch = require('node-fetch'),
   moment = require('moment'),
-  request = require('snekfetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class ActivityCommand extends Command {
@@ -52,27 +53,28 @@ module.exports = class ActivityCommand extends Command {
 
   /* eslint complexity: ["error", 45], max-statements: ["error", 35]*/
   async run (msg, {member}) {
-    startTyping(msg);
-    const {activity} = member.presence,
-      ava = member.user.displayAvatarURL(),
-      embed = new MessageEmbed(),
-      ext = this.fetchExt(ava),
-      gameList = await request.get('https://canary.discordapp.com/api/v6/applications'),
-      spotifyApi = new Spotify({
-        clientId: process.env.spotifyid,
-        clientSecret: process.env.spotifysecret
-      });
-
-    embed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .setAuthor(member.user.tag, ava, `${ava}?size2048`)
-      .setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
-
-    if (activity) {
-      const gameIcon = gameList.body.find(g => g.name === activity.name);
+    try {
+      startTyping(msg);
+      const {activity} = member.presence,
+        ava = member.user.displayAvatarURL(),
+        embed = new MessageEmbed(),
+        ext = this.fetchExt(ava),
+        games = await fetch('https://canary.discordapp.com/api/v6/applications'),
+        gameList = await games.json(),
+        gameIcon = gameList.find(g => g.name === activity.name),
+        spotifyApi = new Spotify({
+          clientId: process.env.spotifyid,
+          clientSecret: process.env.spotifysecret
+        });
 
       let spotify = {};
 
+      embed
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+        .setAuthor(member.user.tag, ava, `${ava}?size2048`)
+        .setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
+
+      if (!activity) throw new Error('noActivity');
       if (activity.type === 'LISTENING' && activity.name === 'Spotify') {
 
         const spotTokenReq = await spotifyApi.clientCredentialsGrant();
@@ -135,7 +137,7 @@ module.exports = class ActivityCommand extends Command {
           : `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`)
         : null;
       /* eslint-enable no-nested-ternary*/
-  
+
       activity.assets && activity.assets.largeText
         ? embed.addField('Large Text', activity.type === 'LISTENING' && activity.name === 'Spotify'
           ? `on [${activity.assets.largeText}](${spotify.album.external_urls.spotify})`
@@ -146,11 +148,38 @@ module.exports = class ActivityCommand extends Command {
       stopTyping(msg);
 
       return msg.embed(embed);
-    }
-    embed.addField('Activity', 'Nothing', true);
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+    } catch (err) {
+      stopTyping(msg);
+      if ((/(noActivity|Cannot read property 'name' of null)/i).test(err.toString())) {
+        return msg.embed({
+          color: msg.guild ? msg.guild.me.displayColor : 8190976,
+          author: {
+            name: member.user.tag,
+            url: `${member.user.displayAvatarURL()}?size=2048`,
+            iconURL: member.user.displayAvatarURL()
+          },
+          thumbnail: {url: member.user.displayAvatarURL()},
+          fields: [
+            {
+              name: 'Activity',
+              value: 'Nothing',
+              inline: true
+            }
+          ]
+        });
+      }
 
-    return msg.embed(embed);
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      <@${this.client.owners[0].id}> Error occurred in \`fortnite\` command!
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Member:** ${member.user.tag} (${member.id})
+      **Error Message:** ${err}
+      `);
+
+      return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+      Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+    }
   }
 };

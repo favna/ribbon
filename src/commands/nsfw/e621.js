@@ -46,7 +46,7 @@ module.exports = class E621Command extends Command {
   async run (msg, {tags}) {
     try {
       startTyping(msg);
-      /* eslint-disable sort-vars*/
+
       const search = await booru.search('e621', tags, {
           limit: 1,
           random: true
@@ -54,7 +54,6 @@ module.exports = class E621Command extends Command {
         common = await booru.commonfy(search),
         embed = new MessageEmbed(),
         imageTags = [];
-      /* eslint-enable sort-vars*/
 
       for (const tag in common[0].common.tags) {
         imageTags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);

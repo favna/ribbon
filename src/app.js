@@ -4,7 +4,7 @@
  * @copyright © 2017-2018 Favna  
  */
 
-/* eslint-disable no-mixed-requires, sort-vars, one-var */
+/* eslint-disable no-mixed-requires, one-var */
 const path = require('path');
 
 require('dotenv').config({path: path.join(__dirname, '.env')});

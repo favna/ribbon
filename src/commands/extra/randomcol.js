@@ -14,10 +14,10 @@
  * @returns {MessageEmbed} Color of embed matches generated color
  */
 
-const {Canvas} = require('canvas-constructor'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed, MessageAttachment} = require('discord.js'),
-  {stripIndents} = require('common-tags'),
+const {Canvas} = require('canvas-constructor'), 
+  {Command} = require('discord.js-commando'), 
+  {MessageEmbed, MessageAttachment} = require('discord.js'), 
+  {stripIndents} = require('common-tags'), 
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class RandomColCommand extends Command {
@@ -76,7 +76,6 @@ module.exports = class RandomColCommand extends Command {
 
   run (msg, {col}) {
     startTyping(msg);
-    /* eslint-disable sort-vars*/
     const embed = new MessageEmbed(),
       hex = col !== 'random' ? col : `#${Math.floor(Math.random() * 16777215).toString(16)}`,
       canv = new Canvas(80, 60)
@@ -84,7 +83,6 @@ module.exports = class RandomColCommand extends Command {
         .addRect(0, 0, 100, 60)
         .toBuffer(),
       embedAttachment = new MessageAttachment(canv, 'canvas.png');
-    /* eslint-enable sort-vars*/
 
     embed
       .attachFiles([embedAttachment])

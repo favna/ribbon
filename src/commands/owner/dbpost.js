@@ -6,7 +6,7 @@
  * @returns {Message} Confirmation the update was made
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
@@ -25,9 +25,12 @@ module.exports = class DBPostCommand extends Command {
   async run (msg) {
     try {
       startTyping(msg);
-      await request.post(`https://discordbots.org/api/bots/${this.client.user.id}/stats`)
-        .set('Authorization', process.env.discordbotskey)
-        .send({server_count: this.client.guilds.size}); // eslint-disable-line camelcase
+
+      await fetch(`https://discordbots.org/api/bots/${this.client.user.id}/stats`, {
+        method: 'POST',
+        body: JSON.stringify({server_count: this.client.guilds.size}), // eslint-disable-line camelcase
+        headers: {Authorization: process.env.discordbotskey}
+      });
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

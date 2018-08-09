@@ -17,8 +17,9 @@
  * @returns {MessageEmbed} Pokemon TCG card details
  */
 
-const moment = require('moment'),
-  request = require('snekfetch'),
+const fetch = require('node-fetch'),
+  moment = require('moment'),
+  querystring = require('querystring'),
   {Command, ArgumentCollector} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -182,17 +183,19 @@ module.exports = class PokemonTCGCommand extends Command {
     }
 
     try {
-      const pokeRes = await request.get('https://api.pokemontcg.io/v1/cards')
-        .query('page', 1)
-        .query('pageSize', 10)
-        .query('name', properties.name)
-        .query('supertype', properties.supertype)
-        .query('subtype', properties.subtype ? properties.subtype : '')
-        .query('types', properties.types ? properties.types : '')
-        .query('hp', properties.hp ? properties.hp : '');
+      const res = await fetch(`https://api.pokemontcg.io/v1/cards?${querystring.stringify({
+          page: 1,
+          pageSize: 10,
+          name: properties.name,
+          supertype: properties.supertype,
+          subtype: properties.subtype ? properties.subtype : '',
+          types: properties.types ? properties.types : '',
+          hp: properties.hp ? properties.hp : ''
+        })}`),
+        poke = await res.json();
 
-      if (pokeRes.body.cards.length) {
-        const {cards} = pokeRes.body;
+      if (poke.cards.length) {
+        const {cards} = poke;
         let body = '';
 
         for (let i = 0, n = cards.length; i < n; ++i) {

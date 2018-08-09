@@ -11,8 +11,9 @@
  * @returns {MessageEmbed} Various statistics about the current forecast
  */
 
-const moment = require('moment'),
-  request = require('snekfetch'),
+const fetch = require('node-fetch'),
+  moment = require('moment'),
+  querystring = require('querystring'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -47,14 +48,16 @@ module.exports = class WeatherCommand extends Command {
   }
 
   async getCords (location) {
-    const cords = await request.get('https://maps.googleapis.com/maps/api/geocode/json?')
-      .query('address', location)
-      .query('key', process.env.googleapikey);
+    const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?${querystring.stringify({
+        address: location,
+        key: process.env.googleapikey
+      })}`),
+      cords = await res.json();
 
     return {
-      lat: cords.body.results[0].geometry.location.lat,
-      long: cords.body.results[0].geometry.location.lng,
-      address: cords.body.results[0].formatted_address
+      lat: cords.results[0].geometry.location.lat,
+      long: cords.results[0].geometry.location.lng,
+      address: cords.results[0].formatted_address
     };
   }
 
@@ -70,39 +73,40 @@ module.exports = class WeatherCommand extends Command {
     try {
       startTyping(msg);
       const cords = await this.getCords(location),
-        wethData = await request
-          .get(`https://api.darksky.net/forecast/${process.env.darkskykey}/${cords.lat},${cords.long}`)
-          .query('exclude', ['minutely', 'hourly', 'alerts', 'flags'])
-          .query('units', 'si'),
-        wethEmbed = new MessageEmbed();
+        res = await fetch(`https://api.darksky.net/forecast/${process.env.darkskykey}/${cords.lat},${cords.long}?${querystring.stringify({
+          exclude: ['minutely', 'hourly', 'alerts', 'flags'],
+          units: 'si'
+        })}`),
+        weather = await res.json(),
+        weatherEmbed = new MessageEmbed();
 
-      wethEmbed
+      weatherEmbed
         .setTitle(`Weather forecast for ${cords.address}`)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setFooter('Powered by DarkSky')
         .setTimestamp()
-        .setThumbnail(`https://favna.xyz/images/ribbonhost/weather/${wethData.body.currently.icon}.png`)
-        .setDescription(wethData.body.daily.summary)
-        .addField('💨 Wind Speed', `${wethData.body.currently.windSpeed} km/h (${roundNumber(this.mileify(wethData.body.currently.windSpeed), 2)} mph)`, true)
-        .addField('💧 Humidity', `${wethData.body.currently.humidity * 100}%`, true)
-        .addField('🌅 Sunrise', moment(wethData.body.daily.data[0].sunriseTime * 1000).format('HH:mm'), true)
-        .addField('🌇 Sunset', moment(wethData.body.daily.data[0].sunsetTime * 1000).format('HH:mm'), true)
-        .addField('☀️ Today\'s High', `${wethData.body.daily.data[0].temperatureHigh} °C | ${roundNumber(this.fahrenify(wethData.body.daily.data[0].temperatureHigh), 2)} °F`, true)
-        .addField('☁️️ Today\'s Low', `${wethData.body.daily.data[0].temperatureLow} °C | ${roundNumber(this.fahrenify(wethData.body.daily.data[0].temperatureLow), 2)} °F`, true)
-        .addField('🌡️ Temperature', `${wethData.body.currently.temperature} °C | ${roundNumber(this.fahrenify(wethData.body.currently.temperature), 2)} °F`, true)
-        .addField('🌡️ Feels Like', `${wethData.body.currently.apparentTemperature} °C | ${roundNumber(this.fahrenify(wethData.body.currently.apparentTemperature), 2)} °F`, true)
-        .addField('🏙️ Condition', wethData.body.daily.data[0].summary, false)
-        .addField(`🛰️ Forecast ${moment.unix(wethData.body.daily.data[1].time).format('dddd MMMM Do')}`,
-          oneLine`High: ${wethData.body.daily.data[1].temperatureHigh} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[1].temperatureHigh), 2)} °F) 
-          | Low: ${wethData.body.daily.data[1].temperatureLow} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[1].temperatureLow), 2)} °F)`, false)
-        .addField(`🛰️ Forecast ${moment.unix(wethData.body.daily.data[2].time).format('dddd MMMM Do')}`,
-          oneLine`High: ${wethData.body.daily.data[2].temperatureHigh} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[2].temperatureHigh), 2)} °F) 
-          | Low: ${wethData.body.daily.data[2].temperatureLow} °C (${roundNumber(this.fahrenify(wethData.body.daily.data[2].temperatureLow), 2)} °F)`, false);
+        .setThumbnail(`https://favna.xyz/images/ribbonhost/weather/${weather.currently.icon}.png`)
+        .setDescription(weather.daily.summary)
+        .addField('💨 Wind Speed', `${weather.currently.windSpeed} km/h (${roundNumber(this.mileify(weather.currently.windSpeed), 2)} mph)`, true)
+        .addField('💧 Humidity', `${weather.currently.humidity * 100}%`, true)
+        .addField('🌅 Sunrise', moment(weather.daily.data[0].sunriseTime * 1000).format('HH:mm'), true)
+        .addField('🌇 Sunset', moment(weather.daily.data[0].sunsetTime * 1000).format('HH:mm'), true)
+        .addField('☀️ Today\'s High', `${weather.daily.data[0].temperatureHigh} °C | ${roundNumber(this.fahrenify(weather.daily.data[0].temperatureHigh), 2)} °F`, true)
+        .addField('☁️️ Today\'s Low', `${weather.daily.data[0].temperatureLow} °C | ${roundNumber(this.fahrenify(weather.daily.data[0].temperatureLow), 2)} °F`, true)
+        .addField('🌡️ Temperature', `${weather.currently.temperature} °C | ${roundNumber(this.fahrenify(weather.currently.temperature), 2)} °F`, true)
+        .addField('🌡️ Feels Like', `${weather.currently.apparentTemperature} °C | ${roundNumber(this.fahrenify(weather.currently.apparentTemperature), 2)} °F`, true)
+        .addField('🏙️ Condition', weather.daily.data[0].summary, false)
+        .addField(`🛰️ Forecast ${moment.unix(weather.daily.data[1].time).format('dddd MMMM Do')}`,
+          oneLine`High: ${weather.daily.data[1].temperatureHigh} °C (${roundNumber(this.fahrenify(weather.daily.data[1].temperatureHigh), 2)} °F) 
+          | Low: ${weather.daily.data[1].temperatureLow} °C (${roundNumber(this.fahrenify(weather.daily.data[1].temperatureLow), 2)} °F)`, false)
+        .addField(`🛰️ Forecast ${moment.unix(weather.daily.data[2].time).format('dddd MMMM Do')}`,
+          oneLine`High: ${weather.daily.data[2].temperatureHigh} °C (${roundNumber(this.fahrenify(weather.daily.data[2].temperatureHigh), 2)} °F) 
+          | Low: ${weather.daily.data[2].temperatureLow} °C (${roundNumber(this.fahrenify(weather.daily.data[2].temperatureLow), 2)} °F)`, false);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(wethEmbed);
+      return msg.embed(weatherEmbed);
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

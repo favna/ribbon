@@ -9,8 +9,8 @@
  * @returns {MessageEmbed} Info about a bot
  */
 
-const moment = require('moment'),
-  request = require('snekfetch'),
+const fetch = require('node-fetch'),
+  moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
@@ -44,27 +44,28 @@ module.exports = class DiscordBotsCommand extends Command {
   async run (msg, {bot}) {
     try {
       startTyping(msg);
-      const info = await request.get(`https://discordbots.org/api/bots/${bot}`).set('Authorization', process.env.discordbotskey),
+      const res = await fetch(`https://discordbots.org/api/bots/${bot}`, {headers: {Authorization: process.env.discordbotskey}}),
+        info = await res.json(),
         infoEmbed = new MessageEmbed();
 
       infoEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setTitle(`Discord Bots Info for ${info.body.username}#${info.body.discriminator} (${info.body.clientid})`)
-        .setURL(`https://discordbots.org/bot/${info.body.clientid}`)
-        .setThumbnail(`https://images.discordapp.net/avatars/${info.body.clientid}/${info.body.avatar}.png`)
-        .setDescription(info.body.shortdesc)
-        .setFooter(`${info.body.username}#${info.body.discriminator} was submitted`)
-        .setTimestamp(moment(info.body.date)._d)
-        .addField('Default Prefix', info.body.prefix, true)
-        .addField('Library', info.body.lib, true)
-        .addField('Server Count', info.body.server_count, true) // eslint-disable-line camelcase
-        .addField('Shards Count', info.body.shards.length, true)
-        .addField('Invite Link', `[Click Here](${info.body.invite})`);
+        .setTitle(`Discord Bots Info for ${info.username}#${info.discriminator} (${info.clientid})`)
+        .setURL(`https://discordbots.org/bot/${info.clientid}`)
+        .setThumbnail(`https://images.discordapp.net/avatars/${info.clientid}/${info.avatar}.png`)
+        .setDescription(info.shortdesc)
+        .setFooter(`${info.username}#${info.discriminator} was submitted`)
+        .setTimestamp(moment(info.date)._d)
+        .addField('Default Prefix', info.prefix, true)
+        .addField('Library', info.lib, true)
+        .addField('Server Count', info.server_count, true) // eslint-disable-line camelcase
+        .addField('Shards Count', info.shards.length, true)
+        .addField('Invite Link', `[Click Here](${info.invite})`);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.embed(infoEmbed, `https://discordbots.org/bot/${info.body.clientid}`);
+      return msg.embed(infoEmbed, `https://discordbots.org/bot/${info.clientid}`);
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

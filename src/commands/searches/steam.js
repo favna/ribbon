@@ -6,13 +6,14 @@
  * @name steam
  * @example steam Tales of Berseria
  * @param {StringResolvable} GameName The name of any game that you want to find
- * @returns {MessageEmbed} Information about the requested game
+ * @returns {MessageEmbed} Information about the fetched game
  */
 
 const SteamAPI = require('steamapi'),
   cheerio = require('cheerio'),
   currencySymbol = require('currency-symbol-map'),
-  request = require('snekfetch'),
+  fetch = require('node-fetch'),
+  querystring = require('querystring'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
@@ -36,8 +37,7 @@ module.exports = class SteamCommand extends Command {
         {
           key: 'game',
           prompt: 'Which game do you want to find on the steam store?',
-          type: 'string',
-          parse: p => p.replace(/ /gim, '+')
+          type: 'string'
         }
       ]
     });
@@ -50,17 +50,19 @@ module.exports = class SteamCommand extends Command {
   async run (msg, {game}) {
     try {
       startTyping(msg);
-      /* eslint-disable sort-vars*/
+
       const steam = new SteamAPI(process.env.steamkey),
         steamEmbed = new MessageEmbed(),
-        steamSearch = await request.get(`http://store.steampowered.com/search/?term=${game}`),
-        $ = cheerio.load(steamSearch.body.toString()),
+        steamSearch = await fetch(`http://store.steampowered.com/search/?${querystring.stringify({
+          term: game,
+          category1: 998
+        })}`),
+        $ = cheerio.load(await steamSearch.text()),
         gameID = $('#search_result_container > div:nth-child(2) > a:nth-child(2)').attr('href')
           .split('/')[4],
         steamData = await steam.getGameDetails(gameID),
         genres = [],
         platforms = [];
-      /* eslint-enable sort-vars*/
 
       steamData.platforms.windows ? platforms.push('Windows') : null;
       steamData.platforms.mac ? platforms.push('MacOS') : null;

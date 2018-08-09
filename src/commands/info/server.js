@@ -61,10 +61,10 @@ module.exports = class ServerInfoCommand extends Command {
 
   run (msg) {
     startTyping(msg);
-    const channels = msg.guild.channels.map(ty => ty.type), // eslint-disable-line sort-vars
+    const channels = msg.guild.channels.map(ty => ty.type),
       presences = msg.guild.presences.map(st => st.status),
       selfRoles = msg.guild.settings.get('selfroles', null),
-      serverEmbed = new MessageEmbed();      
+      serverEmbed = new MessageEmbed();
 
     let guildChannels = 0,
       onlineMembers = 0;

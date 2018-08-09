@@ -9,10 +9,9 @@
  * @returns {MessageEmbed} Result of the conflict
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class RockPaperScissorCommand extends Command {
@@ -35,16 +34,7 @@ module.exports = class RockPaperScissorCommand extends Command {
           key: 'hand',
           prompt: 'Do you play rock, paper or scissors?',
           type: 'string',
-          validate: (hand) => {
-            const validHands = ['rock', 'paper', 'scissors'];
-
-            if (validHands.includes(hand.toLowerCase())) {
-              return true;
-            }
-
-            return stripIndents`Has to be one of ${validHands.map(val => `\`${val}\``).join(', ')}
-            Respond with your new selection or`;
-          },
+          validate: v => (/(rock|paper|scissors)/i).test(v) ? true : 'has to be one of `rock`, `paper` or `scissors`',
           parse: p => p.toLowerCase()
         }
       ]
@@ -56,10 +46,9 @@ module.exports = class RockPaperScissorCommand extends Command {
     try {
       startTyping(msg);
 
-      const random = await request
-          .post('https://api.random.org/json-rpc/1/invoke')
-          .set('Content-Type', 'application/json-rpc')
-          .send({
+      const randPost = await fetch('https://api.random.org/json-rpc/1/invoke', {
+          method: 'POST',
+          body: JSON.stringify({
             jsonrpc: '2.0',
             method: 'generateIntegers',
             params: {
@@ -70,7 +59,10 @@ module.exports = class RockPaperScissorCommand extends Command {
             },
             id: Math.floor(Math.random() * 42)
           }),
-        randoms = random.body.result.random.data[0],
+          headers: {'Content-Type': 'application/json-rpc'}
+        }),
+        random = await randPost.json(),
+        randoms = random.result.random.data[0],
         rpsEmbed = new MessageEmbed();
 
       let resString = 'Woops something went wrong';

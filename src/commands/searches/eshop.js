@@ -6,7 +6,7 @@
  * @name eshop
  * @example eshop Breath of The Wild
  * @param {StringResolvable} GameName Game that you want to find in the eShop
- * @returns {MessageEmbed} Information about the requested game
+ * @returns {MessageEmbed} Information about the fetched game
  */
 
 const Fuse = require('fuse.js'),
@@ -42,7 +42,6 @@ module.exports = class EShopCommand extends Command {
     try {
       startTyping(msg);
 
-      /* eslint-disable sort-vars */
       const embed = new MessageEmbed(),
         fsoptions = {
           shouldSort: true,
@@ -57,7 +56,6 @@ module.exports = class EShopCommand extends Command {
         fuse = new Fuse(games, fsoptions),
         results = fuse.search(game),
         hit = results[0];
-      /* eslint-enable sort-vars*/
 
       if (hit.eshop_price) {
         if (hit.eshop_price === '0.00') {

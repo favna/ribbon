@@ -8,7 +8,7 @@
  * @returns {MessageEmbed} The pat and an image
  */
 
-const request = require('snekfetch'),
+const fetch = require('node-fetch'),
   {Command} = require('discord.js-commando'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
@@ -41,7 +41,8 @@ module.exports = class PatCommand extends Command {
     try {
       startTyping(msg);
 
-      const {body} = await request.get('https://nekos.life/api/v2/img/pat');
+      const patFetch = await fetch('https://nekos.life/api/v2/img/pat'),
+        petImg = await patFetch.json();
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -50,7 +51,7 @@ module.exports = class PatCommand extends Command {
         description: member
           ? `${member.displayName}! You got patted by ${msg.member.displayName} 🐇!`
           : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-        image: {url: member ? body.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
+        image: {url: member ? petImg.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif'},
         color: msg.guild ? msg.guild.me.displayColor : 10610610
       }, `<@${member ? member.id : msg.author.id}>`);
     } catch (err) {

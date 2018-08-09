@@ -6,11 +6,12 @@
  * @name tmdb
  * @example tmdb Pokemon 2000
  * @param {StringResolvable} MovieName Name of the movie you want to find
- * @returns {MessageEmbed} Information about the requested movie
+ * @returns {MessageEmbed} Information about the fetched movie
  */
 
-const moment = require('moment'),
-  request = require('snekfetch'),
+const fetch = require('node-fetch'),
+  moment = require('moment'),
+  querystring = require('querystring'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
@@ -43,30 +44,30 @@ module.exports = class MovieCommand extends Command {
   async run (msg, {name}) {
     try {
       startTyping(msg);
-      const movieEmbed = new MessageEmbed(),
-        movieSearch = await request.get('https://api.themoviedb.org/3/search/movie')
-          .query('api_key', process.env.moviedbkey)
-          .query('query', name)
-          .query('include_adult', false),
-        movieStats = await request.get(`https://api.themoviedb.org/3/movie/${movieSearch.body.results[0].id}`)
-          .query('api_key', process.env.moviedbkey),
-        hit = movieStats.body; // eslint-disable-line sort-vars
+      const movieSearch = await fetch(`https://api.themoviedb.org/3/search/movie?${querystring.stringify({
+          api_key: process.env.moviedbkey, // eslint-disable-line camelcase
+          query: name 
+        })}`),
+        movieList = await movieSearch.json(),
+        movieStats = await fetch(`https://api.themoviedb.org/3/movie/${movieList.results[0].id}?${querystring.stringify({api_key: process.env.moviedbkey})}`), // eslint-disable-line camelcase
+        movie = await movieStats.json(),
+        movieEmbed = new MessageEmbed();
 
       movieEmbed
-        .setTitle(hit.title)
-        .setURL(`https://www.themoviedb.org/movie/${hit.id}`)
+        .setTitle(movie.title)
+        .setURL(`https://www.themoviedb.org/movie/${movie.id}`)
         .setColor(msg.guild ? msg.member.displayHexColor : '#7CFC00')
-        .setImage(`https://image.tmdb.org/t/p/original${hit.backdrop_path}`)
-        .setThumbnail(`https://image.tmdb.org/t/p/original${hit.poster_path}`)
-        .setDescription(hit.overview)
-        .addField('Runtime', hit.runtime ? `${hit.runtime} minutes` : 'Movie in production', true)
-        .addField('User Score', hit.vote_average ? hit.vote_average : 'Movie in production', true)
-        .addField('Status', hit.status, true)
-        .addField('Release Date', moment(hit.release_date).format('MMMM Do YYYY'), true)
-        .addField('IMDB Page', hit.imdb_id ? `[Click Here](http://www.imdb.com/title/${hit.imdb_id})` : 'none', true)
-        .addField('Home Page', hit.homepage ? `[Click Here](${hit.homepage})` : 'None', true)
-        .addField('Collection', hit.belongs_to_collection ? hit.belongs_to_collection.name : 'Not part of a collection', false)
-        .addField('Genres', hit.genres.length ? hit.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB', false);
+        .setImage(`https://image.tmdb.org/t/p/original${movie.backdrop_path}`)
+        .setThumbnail(`https://image.tmdb.org/t/p/original${movie.poster_path}`)
+        .setDescription(movie.overview)
+        .addField('Runtime', movie.runtime ? `${movie.runtime} minutes` : 'Movie in production', true)
+        .addField('User Score', movie.vote_average ? movie.vote_average : 'Movie in production', true)
+        .addField('Status', movie.status, true)
+        .addField('Release Date', moment(movie.release_date).format('MMMM Do YYYY'), true)
+        .addField('IMDB Page', movie.imdb_id ? `[Click Here](http://www.imdb.com/title/${movie.imdb_id})` : 'none', true)
+        .addField('Home Page', movie.homepage ? `[Click Here](${movie.homepage})` : 'None', true)
+        .addField('Collection', movie.belongs_to_collection ? movie.belongs_to_collection.name : 'Not part of a collection', false)
+        .addField('Genres', movie.genres.length ? movie.genres.map(genre => genre.name).join(', ') : 'None on TheMovieDB', false);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);

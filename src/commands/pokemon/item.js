@@ -49,7 +49,6 @@ module.exports = class ItemCommand extends Command {
   run (msg, {item}) {
     try {
       startTyping(msg);
-      /* eslint-disable sort-vars */
       const fsoptions = {
           shouldSort: true,
           threshold: 0.3,
@@ -64,8 +63,6 @@ module.exports = class ItemCommand extends Command {
         aliasSearch = aliasFuse.search(item),
         itemSearch = aliasSearch.length ? itemFuse.search(aliasSearch[0].item) : itemFuse.search(item),
         itemEmbed = new MessageEmbed();
-      /* eslint-enable sort-vars */
-
 
       itemEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')

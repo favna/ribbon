@@ -48,7 +48,7 @@ module.exports = class CookieCommand extends Command {
         'https://favna.xyz/images/ribbonhost/cookie/cookie08.gif',
         'https://favna.xyz/images/ribbonhost/cookie/cookie09.gif'
       ],
-      curImage = Math.floor(Math.random() * images.length); // eslint-disable-line sort-vars
+      curImage = Math.floor(Math.random() * images.length);
 
     return images[curImage];
   }

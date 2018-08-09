@@ -49,7 +49,6 @@ module.exports = class MoveCommand extends Command {
   run (msg, {move}) {
     try {
       startTyping(msg);
-      /* eslint-disable sort-vars */
       const aliasOptions = {
           shouldSort: true,
           threshold: 0.2,
@@ -73,7 +72,6 @@ module.exports = class MoveCommand extends Command {
         aliasSearch = aliasFuse.search(move),
         moveSearch = aliasSearch.length ? moveFuse.search(aliasSearch[0].move) : moveFuse.search(move),
         moveEmbed = new MessageEmbed();
-      /* eslint-enable sort-vars */
 
       moveEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')

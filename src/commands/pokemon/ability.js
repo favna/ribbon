@@ -48,7 +48,6 @@ module.exports = class AbilityCommand extends Command {
   run (msg, {ability}) {
     try {
       startTyping(msg);
-      /* eslint-disable sort-vars */
       const fsoptions = {
           shouldSort: true,
           threshold: 0.6,
@@ -63,7 +62,6 @@ module.exports = class AbilityCommand extends Command {
         aliasSearch = aliasFuse.search(ability),
         abilitySearch = aliasSearch.length ? abilityFuse.search(aliasSearch[0].ability) : abilityFuse.search(ability),
         abilityEmbed = new MessageEmbed();
-      /* eslint-enable sort-vars */
 
       abilityEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
