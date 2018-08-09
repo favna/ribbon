@@ -24,7 +24,7 @@
   </p>
 
   <p>
-    <a href="https://discord.gg/zdt5yQt"><img src="https://canary.discordapp.com/api/guilds/246821351585742851/widget.png?style=banner2" alt="Join Discord Server"/></a>
+    <a href="https://favna.xyz/redirect/server"><img src="https://canary.discordapp.com/api/guilds/246821351585742851/widget.png?style=banner2" alt="Join Discord Server"/></a>
   </p>
 
   <p>

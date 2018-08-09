@@ -1,6 +1,6 @@
 <!--
 If you need help with discord.js installation or usage, please first read the wiki thoroughly and then go to the support Discord server instead:
-  https://discord.gg/zdt5yQt
+  https://favna.xyz/redirect/server
   
 This issue tracker is only for bug reports and enhancement suggestions. You won't receive any basic help here.
 -->
