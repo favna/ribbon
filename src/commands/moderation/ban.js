@@ -42,12 +42,10 @@ module.exports = class banCommand extends Command {
           type: 'string',
           default: ''
         }
-      ]
+      ],
+      clientPermissions: ['BAN_MEMBERS'],
+      userPermissions: ['BAN_MEMBERS']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('BAN_MEMBERS');
   }
 
   run (msg, {member, reason, keepmessages}) {

@@ -45,12 +45,10 @@ module.exports = class InvitesFilterCommand extends Command {
             Respond with your new selection or`;
           }
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_MESSAGES'],
+      userPermissions: ['MANAGE_MESSAGES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
   run (msg, {option}) {

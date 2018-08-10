@@ -46,12 +46,10 @@ module.exports = class DeleteWarnCommand extends Command {
           type: 'integer',
           default: 999999
         }
-      ]
+      ],
+      clientPermissions: ['ADMINISTRATOR'],
+      userPermissions: ['ADMINISTRATOR']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
   run (msg, {member, points}) {

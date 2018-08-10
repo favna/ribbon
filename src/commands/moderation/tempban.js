@@ -77,16 +77,13 @@ module.exports = class TempBanCommand extends Command {
           type: 'string',
           default: ''
         }
-      ]
+      ],
+      clientPermissions: ['BAN_MEMBERS'],
+      userPermissions: ['BAN_MEMBERS']
     });
-    this.keepmessages = false;
   }
 
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('BAN_MEMBERS');
-  }
-
-  run (msg, {member, time, reason}) {
+  run (msg, {member, time, reason, keepmessages = false}) {
     startTyping(msg);
     if (member.id === msg.author.id) {
       stopTyping(msg);
@@ -102,11 +99,11 @@ module.exports = class TempBanCommand extends Command {
 
     if ((/--nodelete/im).test(msg.argString)) {
       reason = reason.substring(0, reason.indexOf('--nodelete')) + reason.substring(reason.indexOf('--nodelete') + '--nodelete'.length + 1);
-      this.keepmessages = true;
+      keepmessages = true;
     }
 
     member.ban({
-      days: this.keepmessages ? 0 : 1,
+      days: keepmessages ? 0 : 1,
       reason: reason !== '' ? reason : 'No reason given by staff'
     });
 

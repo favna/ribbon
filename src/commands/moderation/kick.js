@@ -42,12 +42,10 @@ module.exports = class KickCommand extends Command {
           type: 'string',
           default: ''
         }
-      ]
+      ],
+      clientPermissions: ['KICK_MEMBERS'],
+      userPermissions: ['KICK_MEMBERS']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('KICK_MEMBERS');
   }
 
   run (msg, {member, reason}) {

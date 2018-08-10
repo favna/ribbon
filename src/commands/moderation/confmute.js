@@ -35,12 +35,10 @@ module.exports = class ConfigureMuteCommand extends Command {
           prompt: 'Which role should be set as the mute role?',
           type: 'role'
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_ROLES'],
+      userPermissions: ['MANAGE_ROLES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
   }
 
   run (msg, {role}) {

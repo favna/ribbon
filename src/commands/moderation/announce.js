@@ -34,12 +34,9 @@ module.exports = class NewsCommand extends Command {
           prompt: 'What do you want me to announce?',
           type: 'string'
         }
-      ]
+      ],
+      userPermissions: ['ADMINISTRATOR']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
   run (msg, {body}) {

@@ -77,12 +77,10 @@ module.exports = class MuteCommand extends Command {
             return parseInt(match[0], 10) * multiplier * 60000;
           }
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_ROLES'],
+      userPermissions: ['MANAGE_ROLES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
   }
 
   async run (msg, {member, duration}) {

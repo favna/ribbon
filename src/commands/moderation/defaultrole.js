@@ -37,12 +37,10 @@ module.exports = class defaultroleCommand extends Command {
           type: 'role',
           default: 'delete'
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_ROLES'],
+      userPermissions: ['MANAGE_ROLES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
   }
 
   run (msg, {role}) {

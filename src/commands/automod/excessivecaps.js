@@ -68,12 +68,10 @@ module.exports = class ExcessiveCapsCommand extends Command {
           type: 'integer',
           default: 10
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_MESSAGES'],
+      userPermissions: ['MANAGE_MESSAGES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
   run (msg, {option, threshold, minlength}) {

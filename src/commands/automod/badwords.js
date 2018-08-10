@@ -60,12 +60,10 @@ module.exports = class BadWordsCommand extends Command {
           },
           default: 'fuck'
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_MESSAGES'],
+      userPermissions: ['MANAGE_MESSAGES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
   run (msg, {option, words}) {

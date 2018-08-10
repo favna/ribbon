@@ -68,12 +68,10 @@ module.exports = class DuplicateTextCommand extends Command {
           type: 'integer',
           default: 20
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_MESSAGES'],
+      userPermissions: ['MANAGE_MESSAGES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
   run (msg, {option, within, equals, distance}) {

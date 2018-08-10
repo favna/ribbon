@@ -28,12 +28,10 @@ module.exports = class TimerListCommand extends Command {
       throttling: {
         usages: 2,
         duration: 3
-      }
+      },
+      clientPermissions: ['MANAGE_MESSAGES'],
+      userPermissions: ['MANAGE_MESSAGES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
   async run (msg) {

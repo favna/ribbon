@@ -45,12 +45,10 @@ module.exports = class ModLogsCommand extends Command {
             Respond with your new selection or`;
           }
         }
-      ]
+      ],
+      clientPermissions: ['ADMINISTRATOR'],
+      userPermissions: ['ADMINISTRATOR']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
   run (msg, {option}) {

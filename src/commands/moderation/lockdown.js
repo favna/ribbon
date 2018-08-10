@@ -39,12 +39,10 @@ module.exports = class LockdownCommand extends Command {
           type: 'role',
           default: 'everyone'
         }
-      ]
+      ],
+      clientPermissions: ['ADMINISTRATOR'],
+      userPermissions: ['ADMINISTRATOR']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
   async run (msg, {lockrole}) {

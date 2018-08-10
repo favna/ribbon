@@ -42,12 +42,10 @@ module.exports = class NickCommand extends Command {
           prompt: 'What nickname should I assign?',
           type: 'string'
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_NICKNAMES'],
+      userPermissions: ['MANAGE_NICKNAMES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_NICKNAMES');
   }
 
   run (msg, {member, nickname}) {

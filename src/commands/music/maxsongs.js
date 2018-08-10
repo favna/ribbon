@@ -33,12 +33,10 @@ module.exports = class MaxSongsCommand extends Command {
       throttling: {
         usages: 2,
         duration: 3
-      }
+      },
+      clientPermissions: ['ADMINISTRATOR'],
+      userPermissions: ['ADMINISTRATOR']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
   run (msg, args) {

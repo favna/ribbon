@@ -35,12 +35,10 @@ module.exports = class TwitchMonitorsCommand extends Command {
           type: 'member',
           infinite: true
         }
-      ]
+      ],
+      clientPermissions: ['ADMINISTRATOR'],
+      userPermissions: ['ADMINISTRATOR']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
   run (msg, {members}) {

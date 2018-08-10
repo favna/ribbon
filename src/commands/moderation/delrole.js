@@ -42,12 +42,10 @@ module.exports = class DeleteRoleCommand extends Command {
           prompt: 'What role should I remove from that member?',
           type: 'role'
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_ROLES'],
+      userPermissions: ['MANAGE_ROLES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
   }
 
   async run (msg, {member, role}) {

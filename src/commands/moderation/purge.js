@@ -31,22 +31,14 @@ module.exports = class PurgeCommand extends Command {
           max: 100,
           type: 'integer'
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_MESSAGES'],
+      userPermissions: ['MANAGE_MESSAGES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
   async run (msg, {amount}) {
     startTyping(msg);
-    if (!msg.channel.permissionsFor(msg.guild.me).has('MANAGE_MESSAGES')) {
-      stopTyping(msg);
-
-      return msg.reply('I do not have permission to delete messages from this channel. Better go and fix that!');
-    }
-
     amount = amount === 100 ? 99 : amount;
     msg.channel.bulkDelete(amount + 1, true);
 

@@ -42,12 +42,10 @@ module.exports = class SelfRolesCommand extends Command {
           default: 'none',
           infinite: true
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_ROLES'],
+      userPermissions: ['MANAGE_ROLES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
   }
 
   run (msg, {roles, roleIDs = [], roleNames = []}) {

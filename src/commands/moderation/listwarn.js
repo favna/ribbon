@@ -38,12 +38,10 @@ module.exports = class ListWarnCommand extends Command {
           prompt: 'Which member should I show warning points for?',
           type: 'member'
         }
-      ]
+      ],
+      clientPermissions: ['ADMINISTRATOR'],
+      userPermissions: ['ADMINISTRATOR']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
   run (msg, {member}) {

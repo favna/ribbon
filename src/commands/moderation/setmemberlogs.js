@@ -35,12 +35,10 @@ module.exports = class SetMemberlogsCommand extends Command {
           prompt: 'What channel should I set for member logs? (make sure to start with a # when going by name)',
           type: 'channel'
         }
-      ]
+      ],
+      clientPermissions: ['ADMINISTRATOR'],
+      userPermissions: ['ADMINISTRATOR']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
   run (msg, {channel}) {

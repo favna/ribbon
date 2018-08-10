@@ -53,12 +53,10 @@ module.exports = class AutomodCommand extends Command {
           default: 'none',
           infinite: true
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_MESSAGES'],
+      userPermissions: ['MANAGE_MESSAGES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES');
   }
 
   run (msg, {option, roles}) {

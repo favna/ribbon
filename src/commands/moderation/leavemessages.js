@@ -51,12 +51,10 @@ module.exports = class LeaveMessagesCommand extends Command {
           type: 'channel',
           default: 'off'
         }
-      ]
+      ],
+      clientPermissions: ['ADMINISTRATOR'],
+      userPermissions: ['ADMINISTRATOR']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('ADMINISTRATOR');
   }
 
   run (msg, {channel, option}) {

@@ -36,12 +36,10 @@ module.exports = class UnmuteCommand extends Command {
           prompt: 'Which member should I unmute?',
           type: 'member'
         }
-      ]
+      ],
+      clientPermissions: ['MANAGE_ROLES'],
+      userPermissions: ['MANAGE_ROLES']
     });
-  }
-
-  hasPermission (msg) {
-    return this.client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_ROLES');
   }
 
   async run (msg, {member}) {
