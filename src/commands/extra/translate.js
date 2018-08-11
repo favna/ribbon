@@ -74,7 +74,7 @@ module.exports = class TranslateCommand extends Command {
         .setDescription(stripIndents`
         \`${text}\`
         
-        ${unescape`${translation}`}`);
+        \`${unescape(translation)}\``);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
