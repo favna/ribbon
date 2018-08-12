@@ -2479,7 +2479,7 @@ type dragon flying
 Searches AnimeCommand - Gets information about any anime from kitsu.io  
 **Aliases**: `ani`, `mal`, `kitsu`
 
-**Returns**: <code>MessageEmbed</code> - Information about the requested anime  
+**Returns**: <code>MessageEmbed</code> - Information about the fetched anime  
 **Category**: searches  
 
 | Param | Type | Description |
@@ -2549,7 +2549,7 @@ docs ClientUser
 Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop  
 **Aliases**: `shop`
 
-**Returns**: <code>MessageEmbed</code> - Information about the requested game  
+**Returns**: <code>MessageEmbed</code> - Information about the fetched game  
 **Category**: searches  
 
 | Param | Type | Description |
@@ -2584,7 +2584,7 @@ google Pyrrha Nikos
 Searches IGDBCommand - Gets information about a game using IndieGamesDoneBad (IGDB)  
 **Aliases**: `game`, `moby`, `games`
 
-**Returns**: <code>MessageEmbed</code> - Information about the requested game  
+**Returns**: <code>MessageEmbed</code> - Information about the fetched game  
 **Category**: searches  
 
 | Param | Type | Description |
@@ -2652,7 +2652,7 @@ lmgtfy is it legal to kill an ant???
 Searches MangaCommand - Gets information about any manga from kitsu.io  
 **Aliases**: `cartoon`, `man`
 
-**Returns**: <code>MessageEmbed</code> - Information about the requested manga  
+**Returns**: <code>MessageEmbed</code> - Information about the fetched manga  
 **Category**: searches  
 
 | Param | Type | Description |
@@ -2669,7 +2669,7 @@ manga Yu-Gi-Oh
 Searches SteamCommand - Gets information about a game using Steam  
 **Aliases**: `valve`
 
-**Returns**: <code>MessageEmbed</code> - Information about the requested game  
+**Returns**: <code>MessageEmbed</code> - Information about the fetched game  
 **Category**: searches  
 
 | Param | Type | Description |
@@ -2686,7 +2686,7 @@ steam Tales of Berseria
 Searches MovieCommand - Find information about a movie using TheMovieDatabase  
 **Aliases**: `movie`
 
-**Returns**: <code>MessageEmbed</code> - Information about the requested movie  
+**Returns**: <code>MessageEmbed</code> - Information about the fetched movie  
 **Category**: searches  
 
 | Param | Type | Description |
@@ -2703,7 +2703,7 @@ tmdb Pokemon 2000
 Searches TVCommand - Find information about a TV series using TheMovieDatabase  
 **Aliases**: `tv`, `show`, `serie`, `series`
 
-**Returns**: <code>MessageEmbed</code> - Information about the requested TV serie  
+**Returns**: <code>MessageEmbed</code> - Information about the fetched TV serie  
 **Category**: searches  
 
 | Param | Type | Description |
@@ -2720,7 +2720,7 @@ tvdb Pokemon
 Searches UrbanCommand - Define a word using UrbanDictionary  
 **Aliases**: `ub`, `ud`
 
-**Returns**: <code>MessageEmbed</code> - Top definition for the requested phrase  
+**Returns**: <code>MessageEmbed</code> - Top definition for the fetched phrase  
 **Category**: searches  
 
 | Param | Type | Description |
