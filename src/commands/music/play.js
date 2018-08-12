@@ -355,9 +355,8 @@ module.exports = class PlaySongCommand extends Command {
         filter: 'audioonly',
         highWaterMark: 12
       })
-        .on('error', (err) => {
+        .on('error', () => {
           streamErrored = true;
-          console.error('Error occurred when streaming video:', err);
           playing.then(msg => msg.edit(`❌ Couldn't play ${song}. What a drag!`));
           queue.songs.shift();
           this.play(guild, queue.songs[0]);

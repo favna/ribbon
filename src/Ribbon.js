@@ -6,7 +6,7 @@ const Database = require('better-sqlite3'),
   ms = require('ms'),
   path = require('path'),
   querystring = require('querystring'),
-  {Client, FriendlyError, SyncSQLiteProvider} = require('discord.js-commando'),
+  {Client, SyncSQLiteProvider} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
   {badwords, duptext, caps, emojis, mentions, links, invites, slowmode} = require(path.join(__dirname, 'components/automod.js')),
@@ -38,61 +38,16 @@ class Ribbon {
     });
   }
 
-  onCmdBlock () {
-    return (msg, reason) => {
-      console.log(oneLine`
-		Command ${msg.command ? `${msg.command.groupID}:${msg.command.memberName}` : ''}
-		blocked; ${reason}`);
-    };
-  }
-
   onCmdErr () {
-    return (cmd, err) => {
-      if (err instanceof FriendlyError) {
-        return;
-      }
-      console.error(`Error in command ${cmd.groupID}:${cmd.memberName}`, err);
-    };
-  }
-
-  onCommandPrefixChange () {
-    return (guild, prefix) => {
-      console.log(oneLine` 
-			Prefix ${prefix === '' ? 'removed' : `changed to ${prefix || 'the default'}`}
-			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
-		`);
-    };
-  }
-
-  onCmdStatusChange () {
-    return (guild, command, enabled) => {
-      console.log(oneLine`
-            Command ${command.groupID}:${command.memberName}
-            ${enabled ? 'enabled' : 'disabled'}
-            ${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
-        `);
-    };
-  }
-
-  onDisconnect () {
-    return () => {
-      console.warn('Disconnected!');
-    };
-  }
-
-  onError () {
-    return (e) => {
-      console.error(e);
-    };
-  }
-
-  onGroupStatusChange () {
-    return (guild, group, enabled) => {
-      console.log(oneLine`
-            Group ${group.id}
-            ${enabled ? 'enabled' : 'disabled'}
-            ${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
-        `);
+    return (cmd, err, msg) => {
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      Caught general error!
+      **Command:** ${cmd.name}
+      **Server:** ${msg.guild.name} (${msg.guild.id})
+      **Author:** ${msg.author.tag} (${msg.author.id})
+      **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Error Message:** ${err}
+      `);
     };
   }
 
@@ -313,7 +268,7 @@ class Ribbon {
 
   onReady () {
     return () => {
-      console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
+      console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`); // eslint-disable-line no-console
       const bot = this.client;
 
       setInterval(() => {
@@ -339,12 +294,6 @@ class Ribbon {
     };
   }
 
-  onReconnect () {
-    return () => {
-      console.warn('Reconnecting...');
-    };
-  }
-
   onUnknownCommand () {
     return (msg) => {
       const {guild} = msg;
@@ -361,14 +310,9 @@ class Ribbon {
 
   init () {
     this.client
-      .on('commandBlocked', this.onCmdBlock())
       .on('commandError', this.onCmdErr())
-      .on('commandPrefixChange', this.onCommandPrefixChange())
-      .on('commandStatusChange', this.onCmdStatusChange())
-      .on('debug', console.log)
-      .on('disconnect', this.onDisconnect())
-      .on('error', this.onError())
-      .on('groupStatusChange', this.onGroupStatusChange())
+      .on('debug', console.log) // eslint-disable-line no-console
+      .on('error', console.error) // eslint-disable-line no-console
       .on('guildCreate', this.onGuildJoin())
       .on('guildDelete', this.onGuildLeave())
       .on('guildMemberAdd', this.onGuildMemberAdd())
@@ -376,9 +320,8 @@ class Ribbon {
       .on('message', this.onMessage())
       .on('presenceUpdate', this.onPresenceUpdate())
       .on('ready', this.onReady())
-      .on('reconnecting', this.onReconnect())
       .on('unknownCommand', this.onUnknownCommand())
-      .on('warn', console.warn);
+      .on('warn', console.warn); // eslint-disable-line no-console
 
     const db = new Database(path.join(__dirname, 'data/databases/settings.sqlite3'));
 

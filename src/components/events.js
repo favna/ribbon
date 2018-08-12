@@ -63,8 +63,7 @@ const fetchEshop = async (client) => {
     decache(path.join(__dirname, '../data/databases/eshop.json'));
     client.registry.resolveCommand('searches:eshop').reload();
   } catch (err) {
-    console.error('error occurred fetching eshop periodically');
-    console.error(err);
+    null;
   }
 };
 
@@ -74,7 +73,6 @@ const forceStopTyping = (client) => {
   for (const channel of allChannels.values()) {
     if (channel.type === 'text' || channel.type === 'dm' || channel.type === 'group') {
       if (client.user.typingDurationIn(channel) > 10000) {
-        console.log(`passed second if for ${channel.name} (${channel.id})`);
         channel.stopTyping(true);
       }
     }
