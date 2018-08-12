@@ -17,7 +17,7 @@ class Ribbon {
     this.token = token;
     this.client = new Client({
       commandPrefix: '!',
-      owners: ['112001393140723712', '268792781713965056'],
+      owner: ['112001393140723712', '268792781713965056'],
       unknownCommandResponse: false,
       presence: {
         status: 'online',

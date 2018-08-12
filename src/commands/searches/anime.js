@@ -72,7 +72,7 @@ module.exports = class AnimeCommand extends Command {
         .addField('Episode Length', hit.episodeLength ? moment.duration(hit.episodeLength, 'minutes').format('h [hours] [and] m [minutes]') : 'unknown', true)
         .addField('Age Rating', hit.ageRating, true)
         .addField('First Air Date', moment.unix(hit.startDate).format('MMMM Do YYYY'), true)
-        .addField('Genres', hit.categories.slice(0, 5).join(', '), false);
+        .addField('Genres', hit.categories ? hit.categories.slice(0, 5).join(', ') : 'Why do you have to be such a unique bean', false);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
