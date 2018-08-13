@@ -78,7 +78,8 @@ class Ribbon {
             .setTimestamp()
             .setColor('#80F31F');
 
-          if (joinmember.guild.settings.get('defaultRole')) {
+          if (joinmember.guild.settings.get('defaultRole') && joinmember.guild.roles.get(joinmember.guild.settings.get('defaultRole'))) {
+
             joinmember.roles.add(joinmember.guild.settings.get('defaultRole'));
             memberJoinLogEmbed.setDescription(`Automatically assigned the role ${joinmember.guild.roles.get(joinmember.guild.settings.get('defaultRole')).name} to this member`);
           }
