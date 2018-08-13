@@ -247,6 +247,15 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_confmute">confmute</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation ConfigureMuteCommand - Configure which role to use as &quot;mute&quot; role<br><strong>Aliases</strong>: <code>cm</code>, <code>configmute</code></p>
 </dd>
+<dt><a href="#module_countdownadd">countdownadd</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation CountdownAddCommand - Store a countdown message<br>Countdown messages are sent every 24 hours in a given channel and count down to a certain event<br>For the date you should not have any spaces and it is strongly recommended to use <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a><br>They will automatically get deleted when the event time is reached<br>Optionally you can make the bot tag @everyone or @here when the event time is reached by adding `--everyone` or `--here` anywhere in the countdown content<br>You can save multiple messages for varying events and channels by using this command multiple times<br>The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the countdown<br><strong>Aliases</strong>: <code>countdownmsg</code>, <code>countdownmessage</code>, <code>countdown</code>, <code>cam</code></p>
+</dd>
+<dt><a href="#module_countdownlist">countdownlist</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation CountDownList - List all stored countdown messages in the current guild<br><strong>Aliases</strong>: <code>cl</code>, <code>cdlist</code></p>
+</dd>
+<dt><a href="#module_countdownremove">countdownremove</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation CountDownRemove - Remove a specified countdown<br>Use the countdownlist command to find the ID for deleting<br><strong>Aliases</strong>: <code>cdremove</code>, <code>countdowndelete</code>, <code>cddelete</code>, <code>cdd</code>, <code>cdr</code></p>
+</dd>
 <dt><a href="#module_defaultrole">defaultrole</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation defaultroleCommand - Sets a default role that should be assigned to all new joining members<br><strong>Aliases</strong>: <code>defrole</code></p>
 </dd>
@@ -308,13 +317,13 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Moderation TempBanCommand - Temporary bans a member, then unbans them when the timer expires<br>Given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>tb</code>, <code>rottenbanana</code></p>
 </dd>
 <dt><a href="#module_timeradd">timeradd</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation TimerAddCommand - Store timed messages<br>These are messages the bot will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check the bot will do (which is every minute) after adding the timed message<br>The format for the interval is in minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p>
+<dd><p>Moderation TimerAddCommand - Store timed messages<br>These are messages the bot will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the timed message<br>The format for the interval is in minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p>
 </dd>
 <dt><a href="#module_timerlist">timerlist</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation TimerListCommand - List all stored timed messages in the current guild<br><strong>Aliases</strong>: <code>tl</code>, <code>timelist</code></p>
 </dd>
 <dt><a href="#module_timerremove">timerremove</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation TimerRemoveCommand - Remove a specified timed message<br><strong>Aliases</strong>: <code>timeremove</code>, <code>timerdelete</code>, <code>timedelete</code></p>
+<dd><p>Moderation TimerRemoveCommand - Remove a specified timed message<br>Use the timerlist command to find the ID for deleting<br><strong>Aliases</strong>: <code>timeremove</code>, <code>timerdelete</code>, <code>timedelete</code></p>
 </dd>
 <dt><a href="#module_unknownmessages">unknownmessages</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
@@ -1506,6 +1515,57 @@ Moderation ConfigureMuteCommand - Configure which role to use as "mute" role
 ```js
 confmute mute
 ```
+<a name="module_countdownadd"></a>
+
+## countdownadd ⇒ <code>MessageEmbed</code>
+Moderation CountdownAddCommand - Store a countdown message  
+Countdown messages are sent every 24 hours in a given channel and count down to a certain event  
+For the date you should not have any spaces and it is strongly recommended to use [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)  
+They will automatically get deleted when the event time is reached  
+Optionally you can make the bot tag @everyone or @here when the event time is reached by adding \`--everyone\` or \`--here\` anywhere in the countdown content  
+You can save multiple messages for varying events and channels by using this command multiple times  
+The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the countdown  
+**Aliases**: `countdownmsg`, `countdownmessage`, `countdown`, `cam`
+
+**Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| DateTime | <code>StringResolvable</code> | The date (and time) of the event |
+| Channel | <code>ChannelResolvable</code> | The channel to send countdown reminders in |
+| Message | <code>StringResolvable</code> | The message to repeat |
+
+**Example**  
+```js
+countdownadd 2018-12-31T18:00 #general New years day!
+```
+<a name="module_countdownlist"></a>
+
+## countdownlist ⇒ <code>MessageEmbed</code>
+Moderation CountDownList - List all stored countdown messages in the current guild  
+**Aliases**: `cl`, `cdlist`
+
+**Returns**: <code>MessageEmbed</code> - List of all countdowns  
+**Category**: moderation  
+<a name="module_countdownremove"></a>
+
+## countdownremove ⇒ <code>MessageEmbed</code>
+Moderation CountDownRemove - Remove a specified countdown  
+Use the countdownlist command to find the ID for deleting  
+**Aliases**: `cdremove`, `countdowndelete`, `cddelete`, `cdd`, `cdr`
+
+**Returns**: <code>MessageEmbed</code> - Confirmation the countdown was removed  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| CountdownID | <code>StringResolvable</code> | The ID of the Countdown to remove |
+
+**Example**  
+```js
+countdownremove 1
+```
 <a name="module_defaultrole"></a>
 
 ## defaultrole ⇒ <code>Message</code>
@@ -1869,7 +1929,7 @@ Moderation TimerAddCommand - Store timed messages
 These are messages the bot will repeat in a given channel on a given interval  
 Useful for repeating about rules and such  
 You can save multiple messages with varying intervals and channels by using this command multiple times  
-The first time the message will be send is the next periodic check the bot will do (which is every minute) after adding the timed message  
+The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the timed message  
 The format for the interval is in minutes, hours or days in the format of `5m`, `2h` or `1d`  
 **Aliases**: `timedmsgs`, `timedmsg`, timedmessages`, `timer`, `tm`
 
@@ -1898,10 +1958,20 @@ Moderation TimerListCommand - List all stored timed messages in the current guil
 
 ## timerremove ⇒ <code>MessageEmbed</code>
 Moderation TimerRemoveCommand - Remove a specified timed message  
+Use the timerlist command to find the ID for deleting  
 **Aliases**: `timeremove`, `timerdelete`, `timedelete`
 
 **Returns**: <code>MessageEmbed</code> - Confirmation the timed message was removed  
 **Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| TimerID | <code>StringResolvable</code> | The ID of the timed message to remove |
+
+**Example**  
+```js
+timerremove 1
+```
 <a name="module_unknownmessages"></a>
 
 ## unknownmessages ⇒ <code>MessageEmbed</code>

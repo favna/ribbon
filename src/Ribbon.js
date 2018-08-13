@@ -10,7 +10,7 @@ const Database = require('better-sqlite3'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
   {badwords, duptext, caps, emojis, mentions, links, invites, slowmode} = require(path.join(__dirname, 'components/automod.js')),
-  {checkReminders, fetchEshop, forceStopTyping, guildAdd, guildLeave, joinmessage, leavemessage, lotto, timermessages} = require(path.join(__dirname, 'components/events.js'));
+  {checkReminders, countdownMessages, fetchEshop, forceStopTyping, guildAdd, guildLeave, joinMessage, leaveMessage, lotto, timerMessages} = require(path.join(__dirname, 'components/events.js'));
 
 class Ribbon {
   constructor (token) {
@@ -100,7 +100,7 @@ class Ribbon {
 
       try {
         if (joinmember.guild.settings.get('joinmsgs', false) && joinmember.guild.settings.get('joinmsgchannel', null)) {
-          joinmessage(joinmember);
+          joinMessage(joinmember);
         }
       } catch (err) {
         this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
@@ -156,7 +156,7 @@ class Ribbon {
 
       try {
         if (leavemember.guild.settings.get('leavemsgs', false) && leavemember.guild.settings.get('leavemsgchannel', null)) {
-          leavemessage(leavemember);
+          leaveMessage(leavemember);
         }
       } catch (err) {
         this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
@@ -269,12 +269,15 @@ class Ribbon {
 
   onReady () {
     return () => {
-      console.log(`Client ready; logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`); // eslint-disable-line no-console
+      // eslint-disable-next-line no-console
+      console.log(oneLine`Client ready at ${moment().format('HH:mm:ss')};
+        logged in as ${this.client.user.username}#${this.client.user.discriminator} (${this.client.user.id})`);
       const bot = this.client;
 
       setInterval(() => {
         forceStopTyping(bot);
-        timermessages(bot);
+        timerMessages(bot);
+        countdownMessages(bot);
       }, ms('3m'));
 
       setInterval(() => {

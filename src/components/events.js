@@ -12,6 +12,7 @@ const Database = require('better-sqlite3'),
   eshop = require('nintendo-switch-eshop'),
   fs = require('fs'),
   moment = require('moment'),
+  momentduration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   path = require('path'),
   {MessageEmbed, MessageAttachment} = require('discord.js'),
   {promisify} = require('util'),
@@ -54,6 +55,70 @@ const checkReminders = async (client) => {
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       **Error Message:** ${err}
       `);
+  }
+};
+
+const countdownMessages = (client) => {
+  const conn = new Database(path.join(__dirname, '../data/databases/countdowns.sqlite3'));
+
+  try {
+    const tables = conn.prepare('SELECT name FROM sqlite_master WHERE type=\'table\' AND name != \'sqlite_sequence\';').all();
+
+    for (const table in tables) {
+      const rows = conn.prepare(`SELECT * FROM "${tables[table].name}"`).all();
+
+      for (const row in rows) {
+        const cdmoment = moment(rows[row].lastsend).add(24, 'hours'),
+          dura = moment.duration(cdmoment.diff());
+    
+        if (dura.asMinutes() <= 0) {
+          const guild = client.guilds.get(tables[table].name),
+            channel = guild.channels.get(rows[row].channel),
+            timerEmbed = new MessageEmbed(),
+            {me} = client.guilds.get(tables[table].name);
+
+          timerEmbed
+            .setAuthor('Countdown Reminder', me.user.displayAvatarURL({format: 'png'}))
+            .setColor(me.displayHexColor)
+            .setTimestamp()
+            .setDescription(stripIndents`
+            Event on: ${moment(rows[row].datetime).format('MMMM Do YYYY [at] HH:mm')}
+            That is: ${moment.duration(moment(rows[row].datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+
+            **__${rows[row].content}__**
+            `);
+
+          if (moment(rows[row].datetime).diff(new Date(), 'hours') >= 24) {
+            conn.prepare(`UPDATE "${tables[table].name}" SET lastsend=$lastsend WHERE id=$id;`).run({
+              id: rows[row].id,
+              lastsend: moment().format('YYYY-MM-DD HH:mm')
+            });
+
+            channel.send('', {embed: timerEmbed});
+          } else {
+            conn.prepare(`DELETE FROM "${tables[table].name}" WHERE id=$id;`).run({id: rows[row].id});
+
+            switch (rows[row].tag) {
+            case 'everyone': 
+              channel.send('@everyone GET HYPE IT IS TIME!', {embed: timerEmbed});
+              break;
+            case 'here':
+              channel.send('@here GET HYPE IT IS TIME!', {embed: timerEmbed});
+              break;
+            default:
+              channel.send('GET HYPE IT IS TIME!', {embed: timerEmbed});
+              break;
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    client.channels.get(process.env.ribbonlogchannel).send(stripIndents`
+    <@${client.owners[0].id}> Error occurred sending a countdown!
+    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    **Error Message:** ${err}
+    `);
   }
 };
 
@@ -170,7 +235,7 @@ const guildLeave = (client, guild) => {
   }
 };
 
-const joinmessage = async (member) => {
+const joinMessage = async (member) => {
   Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
 
   const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
@@ -204,7 +269,7 @@ const joinmessage = async (member) => {
   member.guild.channels.get(member.guild.settings.get('joinmsgchannel')).send(`welcome <@${member.id}> 🎗️!`, {embed: newMemberEmbed});
 };
 
-const leavemessage = async (member) => {
+const leaveMessage = async (member) => {
   Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
 
   const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
@@ -284,7 +349,7 @@ const lotto = (client) => {
   }
 };
 
-const timermessages = (client) => {
+const timerMessages = (client) => {
   const conn = new Database(path.join(__dirname, '../data/databases/timers.sqlite3'));
 
   try {
@@ -310,7 +375,8 @@ const timermessages = (client) => {
           timerEmbed
             .setAuthor('Ribbon Timed Message', me.user.displayAvatarURL({format: 'png'}))
             .setColor(me.displayHexColor)
-            .setDescription(rows[row].content);
+            .setDescription(rows[row].content)
+            .setTimestamp();
 
           channel.send('', {embed: timerEmbed});
         }
@@ -327,12 +393,13 @@ const timermessages = (client) => {
 
 module.exports = {
   checkReminders,
+  countdownMessages,
   fetchEshop,
   forceStopTyping,
   guildAdd,
   guildLeave,
-  joinmessage,
-  leavemessage,
+  joinMessage,
+  leaveMessage,
   lotto,
-  timermessages
+  timerMessages
 };
