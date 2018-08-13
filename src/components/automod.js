@@ -93,7 +93,7 @@ const links = function (msg, client) {
   if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
-  if (/https?:\/\/(?!discordapp\.com|discord.gg)[^\s]+/gim.test(msg.content)) {
+  if ((/https?:\/\/(?!discordapp\.com|discord.gg)[^\s]+/gim).test(msg.content)) {
     return true;
   }
 
@@ -104,7 +104,7 @@ const invites = function (msg, client) {
   if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
-  if (/(?:discord\.gg|discordapp.com\/invite)/gim.test(msg.content)) {
+  if ((/(?:discord\.gg|discordapp.com\/invite)/gim).test(msg.content)) {
     return true;
   }
 

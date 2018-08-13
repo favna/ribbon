@@ -1,9 +1,12 @@
 /**
  * @file Moderation TimerRemoveCommand - Remove a specified timed message  
+ * Use the timerlist command to find the ID for deleting  
  * **Aliases**: `timeremove`, `timerdelete`, `timedelete`
  * @module
  * @category moderation
  * @name timerremove
+ * @example timerremove 1
+ * @param {StringResolvable} TimerID The ID of the timed message to remove
  * @returns {MessageEmbed} Confirmation the timed message was removed
  */
 
@@ -25,7 +28,7 @@ module.exports = class TimerRemoveCommand extends Command {
       aliases: ['timeremove', 'timerdelete', 'timedelete'],
       description: 'Remove a specified timed message',
       details: 'Use the timerlist command to find the ID for deleting',
-      format: 'idOfMessage',
+      format: 'TimerID',
       examples: ['timerremove 1'],
       guildOnly: true,
       throttling: {
