@@ -36,7 +36,6 @@ module.exports = class TwitchMonitorsCommand extends Command {
           infinite: true
         }
       ],
-      clientPermissions: ['ADMINISTRATOR'],
       userPermissions: ['ADMINISTRATOR']
     });
   }

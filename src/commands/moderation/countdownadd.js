@@ -72,7 +72,6 @@ module.exports = class CountdownAddCommand extends Command {
           type: 'string'
         }
       ],
-      clientPermissions: ['MANAGE_MESSAGES'],
       userPermissions: ['MANAGE_MESSAGES']
     });
   }

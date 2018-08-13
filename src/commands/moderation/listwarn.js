@@ -39,8 +39,7 @@ module.exports = class ListWarnCommand extends Command {
           type: 'member'
         }
       ],
-      clientPermissions: ['ADMINISTRATOR'],
-      userPermissions: ['ADMINISTRATOR']
+      userPermissions: ['MANAGE_MESSAGES']
     });
   }
 

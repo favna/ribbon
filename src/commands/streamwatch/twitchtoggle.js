@@ -46,7 +46,6 @@ module.exports = class TwitchToggleCommand extends Command {
           }
         }
       ],
-      clientPermissions: ['ADMINISTRATOR'],
       userPermissions: ['ADMINISTRATOR']
     });
   }

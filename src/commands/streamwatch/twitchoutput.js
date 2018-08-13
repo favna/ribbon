@@ -35,7 +35,6 @@ module.exports = class TwitchOutputCommand extends Command {
           type: 'channel'
         }
       ],
-      clientPermissions: ['ADMINISTRATOR'],
       userPermissions: ['ADMINISTRATOR']
     });
   }

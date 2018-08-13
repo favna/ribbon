@@ -34,7 +34,6 @@ module.exports = class MaxLengthCommand extends Command {
         usages: 2,
         duration: 3
       },
-      clientPermissions: ['ADMINISTRATOR'],
       userPermissions: ['ADMINISTRATOR']
     });
   }

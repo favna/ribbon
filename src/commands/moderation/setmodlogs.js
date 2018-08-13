@@ -36,7 +36,6 @@ module.exports = class SetModlogsCommand extends Command {
           type: 'channel'
         }
       ],
-      clientPermissions: ['ADMINISTRATOR'],
       userPermissions: ['ADMINISTRATOR']
     });
   }

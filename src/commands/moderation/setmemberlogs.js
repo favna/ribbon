@@ -36,7 +36,6 @@ module.exports = class SetMemberlogsCommand extends Command {
           type: 'channel'
         }
       ],
-      clientPermissions: ['ADMINISTRATOR'],
       userPermissions: ['ADMINISTRATOR']
     });
   }

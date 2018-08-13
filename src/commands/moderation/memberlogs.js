@@ -46,7 +46,6 @@ module.exports = class MemberLogsCommand extends Command {
           }
         }
       ],
-      clientPermissions: ['ADMINISTRATOR'],
       userPermissions: ['ADMINISTRATOR']
     });
   }

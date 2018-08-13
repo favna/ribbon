@@ -29,7 +29,6 @@ module.exports = class CountDownList extends Command {
         usages: 2,
         duration: 3
       },
-      clientPermissions: ['MANAGE_MESSAGES'],
       userPermissions: ['MANAGE_MESSAGES']
     });
   }

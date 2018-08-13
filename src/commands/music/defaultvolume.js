@@ -35,7 +35,6 @@ module.exports = class DefaultVolumeCommand extends Command {
           default: 'show'
         }
       ],
-      clientPermissions: ['ADMINISTRATOR'],
       userPermissions: ['ADMINISTRATOR']
     });
   }

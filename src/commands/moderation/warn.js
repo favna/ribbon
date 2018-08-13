@@ -53,8 +53,7 @@ module.exports = class WarnCommand extends Command {
           default: ''
         }
       ],
-      clientPermissions: ['ADMINISTRATOR'],
-      userPermissions: ['ADMINISTRATOR']
+      userPermissions: ['MANAGE_MESSAGES']
     });
   }
 

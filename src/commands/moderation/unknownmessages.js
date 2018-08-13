@@ -46,7 +46,6 @@ module.exports = class UnknownMessagesCommand extends Command {
           }
         }
       ],
-      clientPermissions: ['MANAGE_MESSAGES'],
       userPermissions: ['MANAGE_MESSAGES']
     });
   }

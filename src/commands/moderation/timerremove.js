@@ -42,7 +42,6 @@ module.exports = class TimerRemoveCommand extends Command {
           type: 'integer'
         }
       ],
-      clientPermissions: ['MANAGE_MESSAGES'],
       userPermissions: ['MANAGE_MESSAGES']
     });
   }

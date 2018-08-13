@@ -90,7 +90,6 @@ module.exports = class TimerAddCommand extends Command {
           type: 'string'
         }
       ],
-      clientPermissions: ['MANAGE_MESSAGES'],
       userPermissions: ['MANAGE_MESSAGES']
     });
   }

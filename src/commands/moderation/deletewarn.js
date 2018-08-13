@@ -47,8 +47,7 @@ module.exports = class DeleteWarnCommand extends Command {
           default: 999999
         }
       ],
-      clientPermissions: ['ADMINISTRATOR'],
-      userPermissions: ['ADMINISTRATOR']
+      userPermissions: ['MANAGE_MESSAGES']
     });
   }
 

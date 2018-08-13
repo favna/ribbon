@@ -52,8 +52,7 @@ module.exports = class JoinMessagesCommand extends Command {
           default: 'off'
         }
       ],
-      clientPermissions: ['ADMINISTRATOR'],
-      userPermissions: ['ADMINISTRATOR']
+      userPermissions: ['MANAGE_MESSAGES']
     });
   }
 

@@ -53,7 +53,6 @@ module.exports = class CountDownRemove extends Command {
           }
         }
       ],
-      clientPermissions: ['MANAGE_MESSAGES'],
       userPermissions: ['MANAGE_MESSAGES']
     });
   }
