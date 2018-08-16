@@ -60,7 +60,7 @@ module.exports = class LearnCommand extends Command {
           key: 'moves',
           prompt: 'Which move(s) should I check for that Pokemon?',
           type: 'string',
-          parse: p => p.toLowerCase().replace(/( |-)/gm, '')
+          parse: p => p.toLowerCase().replace(/( )/gm, '')
         }
       ]
     });
@@ -73,6 +73,7 @@ module.exports = class LearnCommand extends Command {
         gen = moves.match(/[1-7]/gm) ? moves.match(/[1-7]/gm)[0] : 7;
         moves = moves.substring(0, moves.indexOf('--gen')) + moves.substring(moves.indexOf('--gen') + '--gen'.length + 1);
       }
+      moves = moves.toLowerCase().replace(/(-)/gm, '');
       if (moves.includes(',')) {
         moves = moves.split(',');
       } else {
