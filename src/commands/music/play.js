@@ -133,7 +133,7 @@ module.exports = class PlaySongCommand extends Command {
         await this.handlePlaylist(video2, playlist, queue, voiceChannel, msg, statusMsg); // eslint-disable-line no-await-in-loop
       }
 
-      this.play(msg.guild, this.queue.get(msg.guild.id, queue).songs[0]);
+      if (!this.queue.get(msg.guild.id, queue).playing) this.play(msg.guild, this.queue.get(msg.guild.id, queue).songs[0]);
 
       return null;
     }
@@ -379,6 +379,7 @@ module.exports = class PlaySongCommand extends Command {
     dispatcher.setVolumeLogarithmic(queue.volume / 5);
     song.dispatcher = dispatcher;
     song.playing = true;
+    queue.playing = true;
   }
 
   get votes () {
