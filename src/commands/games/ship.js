@@ -16,6 +16,7 @@ const Jimp = require('jimp'),
   {promisify} = require('util'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed, MessageAttachment} = require('discord.js'),
+  {oneLine} = require('common-tags'),
   {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class ShipCommand extends Command {
@@ -55,13 +56,14 @@ module.exports = class ShipCommand extends Command {
     startTyping(msg);
     romeo = romeo !== 'random' ? romeo.user : msg.guild.members.random().user;
     juliet = juliet !== 'random' ? juliet.user : msg.guild.members.random().user;
-    Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
 
     const avaOne = await Jimp.read(romeo.displayAvatarURL({format: 'png'})),
       avaTwo = await Jimp.read(juliet.displayAvatarURL({format: 'png'})),
       boat = new MessageEmbed(),
-      canvas = await Jimp.read('https://favna.xyz/images/ribbonhost/shipcanvas.png'),
-      heart = await Jimp.read('https://favna.xyz/images/ribbonhost/heart.png');
+      canvas = await Jimp.read(384, 128),
+      heart = await Jimp.read('https://favna.xyz/images/ribbonhost/heart.png'),
+      randLengthRomeo = roundNumber((Math.random() * 4) + 2),
+      randLengthJuliet = roundNumber((Math.random() * 4) + 2);
 
     avaOne.resize(128, Jimp.AUTO);
     avaTwo.resize(128, Jimp.AUTO);
@@ -78,7 +80,8 @@ module.exports = class ShipCommand extends Command {
       .attachFiles([embedAttachment])
       .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
       .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
-      .setDescription(`I call it... ${romeo.username.substring(0, roundNumber(romeo.username.length / 2))}${juliet.username.substring(roundNumber(juliet.username.length / 2))}! 😘`)
+      .setDescription(oneLine`I call it... 
+            ${romeo.username.substring(0, roundNumber(romeo.username.length / randLengthRomeo))}${juliet.username.substring(roundNumber(juliet.username.length / randLengthJuliet))}! 😘`)
       .setImage('attachment://ship.png');
 
     deleteCommandMessages(msg, this.client);

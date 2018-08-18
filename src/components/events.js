@@ -15,7 +15,6 @@ const Database = require('better-sqlite3'),
   momentduration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
   path = require('path'),
   {MessageEmbed, MessageAttachment} = require('discord.js'),
-  {promisify} = require('util'),
   {ordinal} = require(path.join(__dirname, 'util.js')),
   {stripIndents} = require('common-tags');
 
@@ -146,11 +145,9 @@ const forceStopTyping = (client) => {
 
 const guildAdd = async (client, guild) => {
   try {
-    Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
-
     const avatar = await Jimp.read(client.user.displayAvatarURL({format: 'png'})),
       border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
-      canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
+      canvas = await Jimp.read(500, 150),
       mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png'),
       fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
       newGuildEmbed = new MessageEmbed(),
@@ -236,11 +233,9 @@ const guildLeave = (client, guild) => {
 };
 
 const joinMessage = async (member) => {
-  Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
-
   const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
     border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
-    canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
+    canvas = await Jimp.read(500, 150),
     newMemberEmbed = new MessageEmbed(),
     fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt')),
     fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
@@ -270,11 +265,9 @@ const joinMessage = async (member) => {
 };
 
 const leaveMessage = async (member) => {
-  Jimp.prototype.getBufferAsync = promisify(Jimp.prototype.getBuffer);
-
   const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
     border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
-    canvas = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/canvas.png'),
+    canvas = await Jimp.read(500, 150),
     leaveMemberEmbed = new MessageEmbed(),
     fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt')),
     fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
