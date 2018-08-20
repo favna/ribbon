@@ -42,7 +42,7 @@ module.exports = class CountdownAddCommand extends Command {
                 You can save multiple messages for varying events and channels by using this command multiple times
                 The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the countdown`,
       format: 'DateTime Channel Message',
-      examples: ['countdownadd #general 1d Please read the rules everyone!'],
+      examples: ['countdownadd 2018-12-31T18:00 #general New years day!'],
       guildOnly: true,
       throttling: {
         usages: 2,
