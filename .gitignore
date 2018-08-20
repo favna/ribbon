@@ -6,6 +6,7 @@ node_modules/
 
 # Any logs created
 *.log
+*.stackdump
 
 # Data folders
 src/data/databases/*

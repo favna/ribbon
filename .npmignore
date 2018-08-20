@@ -1,13 +1,20 @@
-node_modules
-coverage
-.circleci
-.github
-.vscode
+# Folders
+.circleci/
+.github/
 .nyc_output/
-docs
+.vscode/
+coverage/
+docs/
+test/
+node_modules/
+
+# Files
+.env
+*.log
+*.stackdump
 yarn.lock
-src/.env
-src/test
-src/data/databases/**/*.sqlite3
-src/data/modlogs/**/*.json
-src/data/pastas/**/*.txt
+src/data/databases/*
+src/commands/owner/test.js
+
+# Filter
+!**/*.gitkeep
