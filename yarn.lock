@@ -1942,7 +1942,6 @@ jpeg-js@^0.3.4:
 
 "jpgjs@github:makr28/jpgjs":
   version "1.0.0"
-  uid c83f107ad725b476a3441d20680a02590d8752cc
   resolved "https://codeload.github.com/makr28/jpgjs/tar.gz/c83f107ad725b476a3441d20680a02590d8752cc"
 
 js-tokens@^3.0.0, js-tokens@^3.0.2:

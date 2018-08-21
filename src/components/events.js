@@ -233,68 +233,76 @@ const guildLeave = (client, guild) => {
 };
 
 const joinMessage = async (member) => {
-  const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
-    border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
-    canvas = await Jimp.read(500, 150),
-    newMemberEmbed = new MessageEmbed(),
-    fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt')),
-    fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
-    mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
-
-  avatar.resize(136, Jimp.AUTO);
-  mask.resize(136, Jimp.AUTO);
-  border.resize(136, Jimp.AUTO);
-  avatar.mask(mask, 0, 0);
-  avatar.composite(border, 0, 0);
-  canvas.blit(avatar, 5, 5);
-  canvas.print(fontLarge, 155, 10, 'welcome'.toUpperCase());
-  canvas.print(fontMedium, 160, 60, `you are the ${ordinal(member.guild.memberCount)} member`.toUpperCase());
-  canvas.print(fontMedium, 160, 80, `of ${member.guild.name}`.toUpperCase());
-
-  const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG),
-    embedAttachment = new MessageAttachment(buffer, 'joinimg.png');
-
-  newMemberEmbed
-    .attachFiles([embedAttachment])
-    .setColor('#80F31F')
-    .setTitle('NEW MEMBER!')
-    .setDescription(`Please give a warm welcome to __**${member.displayName}**__  (\`${member.id}\`)`)
-    .setImage('attachment://joinimg.png');
-
-  member.guild.channels.get(member.guild.settings.get('joinmsgchannel')).send(`welcome <@${member.id}> 🎗️!`, {embed: newMemberEmbed});
+  try {
+    const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
+      border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
+      canvas = await Jimp.read(500, 150),
+      newMemberEmbed = new MessageEmbed(),
+      fontLarge = await Jimp.loadFont(Jimp.FONT_SANS_32_WHITE),
+      fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
+      mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
+  
+    avatar.resize(136, Jimp.AUTO);
+    mask.resize(136, Jimp.AUTO);
+    border.resize(136, Jimp.AUTO);
+    avatar.mask(mask, 0, 0);
+    avatar.composite(border, 0, 0);
+    canvas.blit(avatar, 5, 5);
+    canvas.print(fontLarge, 155, 10, 'welcome'.toUpperCase());
+    canvas.print(fontMedium, 160, 60, `you are the ${ordinal(member.guild.memberCount)} member`.toUpperCase());
+    canvas.print(fontMedium, 160, 80, `of ${member.guild.name}`.toUpperCase());
+  
+    const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG),
+      embedAttachment = new MessageAttachment(buffer, 'joinimg.png');
+  
+    newMemberEmbed
+      .attachFiles([embedAttachment])
+      .setColor('#80F31F')
+      .setTitle('NEW MEMBER!')
+      .setDescription(`Please give a warm welcome to __**${member.displayName}**__  (\`${member.id}\`)`)
+      .setImage('attachment://joinimg.png');
+  
+    return member.guild.channels.get(member.guild.settings.get('joinmsgchannel')).send(`welcome <@${member.id}> 🎗️!`, {embed: newMemberEmbed});
+  } catch (err) {
+    return null;
+  }
 };
 
 const leaveMessage = async (member) => {
-  const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
-    border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
-    canvas = await Jimp.read(500, 150),
-    leaveMemberEmbed = new MessageEmbed(),
-    fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt')),
-    fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
-    mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
-
-  avatar.resize(136, Jimp.AUTO);
-  mask.resize(136, Jimp.AUTO);
-  border.resize(136, Jimp.AUTO);
-  avatar.mask(mask, 0, 0);
-  avatar.composite(border, 0, 0);
-  canvas.blit(avatar, 5, 5);
-  canvas.print(fontLarge, 155, 10, 'goodbye'.toUpperCase());
-  canvas.print(fontMedium, 160, 60, `there are now ${member.guild.memberCount} members`.toUpperCase());
-  canvas.print(fontMedium, 160, 80, `on ${member.guild.name}`.toUpperCase());
-
-  // eslint-disable-next-line one-var
-  const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG),
-    embedAttachment = new MessageAttachment(buffer, 'leaveimg.png');
-
-  leaveMemberEmbed
-    .attachFiles([embedAttachment])
-    .setColor('#F4BF42')
-    .setTitle('Member Left 😢')
-    .setDescription(`You will be missed __**${member.displayName}**__ (\`${member.id}\`)`)
-    .setImage('attachment://leaveimg.png');
-
-  member.guild.channels.get(member.guild.settings.get('leavemsgchannel')).send('', {embed: leaveMemberEmbed});
+  try {
+    const avatar = await Jimp.read(member.user.displayAvatarURL({format: 'png'})),
+      border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
+      canvas = await Jimp.read(500, 150),
+      leaveMemberEmbed = new MessageEmbed(),
+      fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
+      fontLarge = await Jimp.loadFont(Jimp.FONT_SANS_32_WHITE),
+      mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
+  
+    avatar.resize(136, Jimp.AUTO);
+    mask.resize(136, Jimp.AUTO);
+    border.resize(136, Jimp.AUTO);
+    avatar.mask(mask, 0, 0);
+    avatar.composite(border, 0, 0);
+    canvas.blit(avatar, 5, 5);
+    canvas.print(fontLarge, 155, 10, 'goodbye'.toUpperCase());
+    canvas.print(fontMedium, 160, 60, `there are now ${member.guild.memberCount} members`.toUpperCase());
+    canvas.print(fontMedium, 160, 80, `on ${member.guild.name}`.toUpperCase());
+  
+    // eslint-disable-next-line one-var
+    const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG),
+      embedAttachment = new MessageAttachment(buffer, 'leaveimg.png');
+  
+    leaveMemberEmbed
+      .attachFiles([embedAttachment])
+      .setColor('#F4BF42')
+      .setTitle('Member Left 😢')
+      .setDescription(`You will be missed __**${member.displayName}**__ (\`${member.id}\`)`)
+      .setImage('attachment://leaveimg.png');
+  
+    return member.guild.channels.get(member.guild.settings.get('leavemsgchannel')).send('', {embed: leaveMemberEmbed});
+  } catch (err) {
+    return null;
+  }
 };
 
 const lotto = (client) => {
