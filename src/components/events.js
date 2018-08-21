@@ -238,7 +238,7 @@ const joinMessage = async (member) => {
       border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
       canvas = await Jimp.read(500, 150),
       newMemberEmbed = new MessageEmbed(),
-      fontLarge = await Jimp.loadFont(Jimp.FONT_SANS_32_WHITE),
+      fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt')),
       fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
       mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
   
@@ -275,7 +275,7 @@ const leaveMessage = async (member) => {
       canvas = await Jimp.read(500, 150),
       leaveMemberEmbed = new MessageEmbed(),
       fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt')),
-      fontLarge = await Jimp.loadFont(Jimp.FONT_SANS_32_WHITE),
+      fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt')),
       mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
   
     avatar.resize(136, Jimp.AUTO);
