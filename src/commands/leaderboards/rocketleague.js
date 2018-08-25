@@ -8,6 +8,8 @@
  * @returns {MessageEmbed} Top 10 ranking players by their amount of wins
  */
 
+/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position, require-await, no-unused-vars */
+
 const fetch = require('node-fetch'),
   moment = require('moment'),
   querystring = require('querystring'),
@@ -33,9 +35,11 @@ module.exports = class RocketLeagueCommand extends Command {
       }
     });
   }
-
+  
   async run (msg) {
-    startTyping(msg);
+    return msg.reply('rocketleaguestats was taken offline by the developer 😢. This command will be back as soon as I can rework it to TRN');
+
+    /*    startTyping(msg);
 
     try {
       const res = await fetch(`https://api.rocketleaguestats.com/v1/leaderboard/stat?${querystring.stringify({type: 'goals'})}`, {headers: {Authorization: process.env.rocketleaguekey}}),
@@ -86,6 +90,6 @@ module.exports = class RocketLeagueCommand extends Command {
 
       return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
       Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
-    }
+    }*/
   }
 };
