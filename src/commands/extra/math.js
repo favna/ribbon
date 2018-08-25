@@ -4,13 +4,13 @@
  * @module
  * @category extra
  * @name math
- * @example math (PI - 1) * 3
+ * @example math (pi - 1) * 3
  * @param {StringResolvable} Equation The equation to solve
  * @returns {MessageEmbed} Your equation and its answer
  */
 
-const moment = require('moment'),
-  scalc = require('scalc'),
+const fetch = require('node-fetch'),
+  moment = require('moment'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
   {oneLine, stripIndents} = require('common-tags'),
@@ -25,7 +25,7 @@ module.exports = class MathCommand extends Command {
       aliases: ['maths', 'calc'],
       description: 'Calculate anything',
       format: 'EquationToSolve',
-      examples: ['math -10 - abs(-3) + 2^5'],
+      examples: ['math (PI - 1) * 3'],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -42,16 +42,22 @@ module.exports = class MathCommand extends Command {
     });
   }
 
-  run (msg, {equation}) {
+  async run (msg, {equation}) {
     try {
       startTyping(msg);
-      const mathEmbed = new MessageEmbed(),
-        res = scalc(equation);
+      const calculator = await fetch('http://api.mathjs.org/v4/', {
+          method: 'POST',
+          body: JSON.stringify({expr: equation})
+        }),
+        maths = await calculator.json(),
+        mathEmbed = new MessageEmbed();
+
+      if (maths.error) throw new Error('matherr');
 
       mathEmbed
         .setTitle('Calculator')
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-        .setDescription(oneLine`The answer to \`${equation.toString()}\` is \`${res}\``);
+        .setDescription(oneLine`The answer to \`${equation.toString()}\` is \`${maths.result}\``);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
@@ -60,9 +66,8 @@ module.exports = class MathCommand extends Command {
     } catch (err) {
       stopTyping(msg);
 
-      if ((/(exp\.indexOf is not a function)/i).test(err.toString())) {
-        return msg.reply(oneLine`\`${equation.toString()}\` is is not a valid equation for me.
-        Check out this readme to see how to use the supported polish notation: https://github.com/dominhhai/calculator/blob/master/README.md`);
+      if ((/(?:matherr)/i).test(err.toString())) {
+        return msg.reply(oneLine`\`${equation.toString()}\` is is not a supported equation. I use Math.js for my calculations (http://mathjs.org/)`);
       }
 
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
