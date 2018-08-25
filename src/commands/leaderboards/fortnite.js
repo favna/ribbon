@@ -83,8 +83,9 @@ module.exports = class FortniteCommand extends Command {
         Top 5s: **${stats.stats.p2.top5.value}**
         Top 10s: **${stats.stats.p2.top10.value}**
         Top 25s: **${stats.stats.p2.top25.value}**
-        `, true)
-        .addField('Duos', stripIndents`
+        `, true);
+
+      stats.stats.p10 ? fortEmbed.addField('Duos', stripIndents`
         Wins: **${stats.stats.p10.top1.value}**
         Kills: **${stats.stats.p10.kills.value}**
         KDR: **${parseFloat(stats.stats.p10.kd.value, 10) * 100}%**
@@ -93,8 +94,9 @@ module.exports = class FortniteCommand extends Command {
         Top 5s: **${stats.stats.p10.top5.value}**
         Top 10s: **${stats.stats.p10.top10.value}**
         Top 25s: **${stats.stats.p10.top25.value}**
-        `, true)
-        .addField('Squads', stripIndents`
+        `, true) : null;
+
+      stats.stats.p9 ? fortEmbed.addField('Squads', stripIndents`
         Wins: **${stats.stats.p9.top1.value}**
         Kills: **${stats.stats.p9.kills.value}**
         KDR: **${parseFloat(stats.stats.p9.kd.value, 10) * 100}%**
@@ -103,7 +105,7 @@ module.exports = class FortniteCommand extends Command {
         Top 5s: **${stats.stats.p9.top5.value}**
         Top 10s: **${stats.stats.p9.top10.value}**
         Top 25s: **${stats.stats.p9.top25.value}**
-        `, true);
+        `, true) : null;
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
