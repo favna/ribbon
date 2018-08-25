@@ -62,7 +62,7 @@ module.exports = class LeaveMessagesCommand extends Command {
     }
 
     startTyping(msg);
-    const defRoleEmbed = new MessageEmbed(),
+    const leaveMsgEmbed = new MessageEmbed(),
       description = option ? '📉 Ribbon leave messages have been enabled' : '📉 Ribbon leave messages have been disabled',
       modlogChannel = msg.guild.settings.get('modlogchannel',
         msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
@@ -70,7 +70,7 @@ module.exports = class LeaveMessagesCommand extends Command {
     msg.guild.settings.set('leavemsgs', option);
     msg.guild.settings.set('leavemsgchannel', channel.id);
 
-    defRoleEmbed
+    leaveMsgEmbed
       .setColor('#AAEFE6')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
@@ -85,12 +85,12 @@ module.exports = class LeaveMessagesCommand extends Command {
                       This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         msg.guild.settings.set('hasSentModLogMessage', true);
       }
-      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: defRoleEmbed}) : null;
+      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: leaveMsgEmbed}) : null;
     }
 
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);
 
-    return msg.embed(defRoleEmbed);
+    return msg.embed(leaveMsgEmbed);
   }
 };

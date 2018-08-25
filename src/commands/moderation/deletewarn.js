@@ -110,7 +110,7 @@ module.exports = class DeleteWarnCommand extends Command {
         return msg.reply('there were no warnings for that user yet, I created an entry and assigned 0 points');
       }
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
-                <@${this.client.owners[0].id}> Error occurred in \`warn\` command!
+                <@${this.client.owners[0].id}> Error occurred in \`deletewarn\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
