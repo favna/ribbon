@@ -13,11 +13,8 @@ const moment = require('moment'),
   scalc = require('scalc'),
   {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine,
-    stripIndents} = require('common-tags'),
-  {deleteCommandMessages,
-    stopTyping,
-    startTyping} = require('../../components/util.js');
+  {oneLine, stripIndents} = require('common-tags'),
+  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class MathCommand extends Command {
   constructor (client) {
