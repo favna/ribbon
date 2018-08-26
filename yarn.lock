@@ -89,6 +89,203 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
+"@jimp/bmp@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/bmp/-/bmp-0.3.7.tgz#fd07380b3f43f4907c37e51a1dca82396741f36f"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+    bmp-js "^0.1.0"
+
+"@jimp/core@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/core/-/core-0.3.7.tgz#e3fa74551d09077a15f693ad34d571dd93dd1d13"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+    any-base "^1.1.0"
+    buffer "^5.2.0"
+    exif-parser "^0.1.12"
+    file-type "^9.0.0"
+    load-bmfont "^1.3.1"
+    mkdirp "0.5.1"
+    phin "^2.9.1"
+    pixelmatch "^4.0.2"
+    tinycolor2 "^1.4.1"
+
+"@jimp/custom@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/custom/-/custom-0.3.7.tgz#95bdfe223330d6998bd0794147cf0a8f92e02d00"
+  dependencies:
+    "@jimp/core" "^0.3.7"
+
+"@jimp/gif@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/gif/-/gif-0.3.7.tgz#109ae234444215c5cf4903651b450b8938a2fc5b"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+    omggif "^1.0.9"
+
+"@jimp/jpeg@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/jpeg/-/jpeg-0.3.7.tgz#1afddf8e1f963f165ccb692b8d55b50a6661cf0d"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+    jpeg-js "^0.3.4"
+
+"@jimp/plugin-blit@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-blit/-/plugin-blit-0.3.7.tgz#8e666c81a050b501604515b50d528c0324612a13"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-blur@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-blur/-/plugin-blur-0.3.7.tgz#45bd346a03547332c7d9a54801c8ecec3b905fda"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-color@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-color/-/plugin-color-0.3.7.tgz#9137f9ce1fff8e25065e4af0248185f9e4d8fcb1"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+    tinycolor2 "^1.4.1"
+
+"@jimp/plugin-contain@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-contain/-/plugin-contain-0.3.7.tgz#f313d1548d231cf0f5ffac713c0875294d36974c"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-cover@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-cover/-/plugin-cover-0.3.7.tgz#2e949e1aeaeeee204a24fb52b37b900ddd646e1a"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-crop@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-crop/-/plugin-crop-0.3.7.tgz#7a78615b89957ca4913fe83de55d442cf635b6ca"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-displace@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-displace/-/plugin-displace-0.3.7.tgz#a76bdeceef8c8e97ceaa39de78d67248c57f10fa"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-dither@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-dither/-/plugin-dither-0.3.7.tgz#c4cf837363c63778abfacd3f8c391ace90436d84"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-flip@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-flip/-/plugin-flip-0.3.7.tgz#8662673c8049dfe5ac19e11d69626a059fa66110"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-gaussian@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-gaussian/-/plugin-gaussian-0.3.7.tgz#6d43deb360cfea119f79af5005aa44d1b02172a2"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-invert@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-invert/-/plugin-invert-0.3.7.tgz#597276df75edc37db1051908ccb3e7f2ff34f17c"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-mask@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-mask/-/plugin-mask-0.3.7.tgz#a7b1457ffdd75da2072d183bea04195502b0b718"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-normalize@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-normalize/-/plugin-normalize-0.3.7.tgz#3849a1576123285fc7df629b2098a61e61ea2657"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-print@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-print/-/plugin-print-0.3.7.tgz#0ce128245123fba1c0eb25e26d9ae70a669bf5fe"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+    load-bmfont "^1.3.1"
+
+"@jimp/plugin-resize@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-resize/-/plugin-resize-0.3.7.tgz#fb717f01b761550abb622abbff0d6c5b5f29c77b"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-rotate@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-rotate/-/plugin-rotate-0.3.7.tgz#8c5ba734ef1c49c02ce56bb661f89e204727158d"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugin-scale@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-scale/-/plugin-scale-0.3.7.tgz#1ffcd4420c0a34a95ce20cb51b2723588dfb1a90"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+
+"@jimp/plugins@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/plugins/-/plugins-0.3.7.tgz#28e4410ad0187a5da4f5ef4bdc3cc0e2f43626c6"
+  dependencies:
+    "@jimp/plugin-blit" "^0.3.7"
+    "@jimp/plugin-blur" "^0.3.7"
+    "@jimp/plugin-color" "^0.3.7"
+    "@jimp/plugin-contain" "^0.3.7"
+    "@jimp/plugin-cover" "^0.3.7"
+    "@jimp/plugin-crop" "^0.3.7"
+    "@jimp/plugin-displace" "^0.3.7"
+    "@jimp/plugin-dither" "^0.3.7"
+    "@jimp/plugin-flip" "^0.3.7"
+    "@jimp/plugin-gaussian" "^0.3.7"
+    "@jimp/plugin-invert" "^0.3.7"
+    "@jimp/plugin-mask" "^0.3.7"
+    "@jimp/plugin-normalize" "^0.3.7"
+    "@jimp/plugin-print" "^0.3.7"
+    "@jimp/plugin-resize" "^0.3.7"
+    "@jimp/plugin-rotate" "^0.3.7"
+    "@jimp/plugin-scale" "^0.3.7"
+    timm "^1.6.1"
+
+"@jimp/png@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/png/-/png-0.3.7.tgz#ea332b4bbde8c52ca4d027b384b5ef34c6e42bfc"
+  dependencies:
+    "@jimp/utils" "^0.3.7"
+    pngjs "^3.3.3"
+
+"@jimp/tiff@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/tiff/-/tiff-0.3.7.tgz#9d475901f49e376fdad1d778be8fcdcce72d2301"
+  dependencies:
+    utif "^2.0.0"
+
+"@jimp/types@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/types/-/types-0.3.7.tgz#e051f8b0afb7e0fe90506f2f6c6d68ba50666fea"
+  dependencies:
+    "@jimp/bmp" "^0.3.7"
+    "@jimp/gif" "^0.3.7"
+    "@jimp/jpeg" "^0.3.7"
+    "@jimp/png" "^0.3.7"
+    "@jimp/tiff" "^0.3.7"
+    timm "^1.6.1"
+
+"@jimp/utils@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@jimp/utils/-/utils-0.3.7.tgz#998aedc3afbc30f23e427244dc83d4ceb2ec4a6b"
+
 "@types/node@*":
   version "10.5.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.7.tgz#960d9feb3ade2233bcc9843c918d740b4f78a7cf"
@@ -372,7 +569,7 @@ bluebird@~3.5.0:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
-bmp-js@0.1.0:
+bmp-js@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/bmp-js/-/bmp-js-0.1.0.tgz#e05a63f796a6c1ff25f4771ec7adadc148c07233"
 
@@ -1908,25 +2105,14 @@ istanbul-reports@^1.4.1:
   dependencies:
     handlebars "^4.0.11"
 
-jimp@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/jimp/-/jimp-0.3.5.tgz#299a3648d306ca114cc302f7df53eebc4d6b8af6"
+jimp@^0.3.7:
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/jimp/-/jimp-0.3.7.tgz#7132190f7383f583fff246d5bb3ff17180f5969c"
   dependencies:
     "@babel/polyfill" "^7.0.0-rc.1"
-    any-base "^1.1.0"
-    bmp-js "0.1.0"
-    buffer "^5.2.0"
-    exif-parser "^0.1.12"
-    file-type "^9.0.0"
-    jpeg-js "^0.3.4"
-    load-bmfont "^1.3.0"
-    mkdirp "0.5.1"
-    omggif "^1.0.9"
-    phin "^2.9.1"
-    pixelmatch "^4.0.2"
-    pngjs "^3.3.3"
-    tinycolor2 "^1.4.1"
-    utif "^2.0.0"
+    "@jimp/custom" "^0.3.7"
+    "@jimp/plugins" "^0.3.7"
+    "@jimp/types" "^0.3.7"
 
 jpeg-js@^0.3.4:
   version "0.3.4"
@@ -2105,7 +2291,7 @@ libsodium@0.7.3:
   version "0.7.3"
   resolved "https://registry.yarnpkg.com/libsodium/-/libsodium-0.7.3.tgz#35faf57293ba5485049d5072d0e96feda12f1f35"
 
-load-bmfont@^1.3.0:
+load-bmfont@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/load-bmfont/-/load-bmfont-1.3.1.tgz#0e7933f66543409882127b0d0fbad7a66d5a7869"
   dependencies:
@@ -3481,6 +3667,10 @@ text-table@^0.2.0:
 through@^2.3.6:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
+
+timm@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/timm/-/timm-1.6.1.tgz#5f8aafc932248c76caf2c6af60542a32d3c30701"
 
 tinycolor2@^1.4.1:
   version "1.4.1"
