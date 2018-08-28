@@ -3596,9 +3596,9 @@ supports-color@^3.1.2:
   dependencies:
     has-flag "^1.0.0"
 
-syllable@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/syllable/-/syllable-3.0.0.tgz#568a97884dd5b444ba057d26a68d4ca637594bd1"
+syllable@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/syllable/-/syllable-3.1.0.tgz#ddf23fdfa2b0df2b832fba1da63e51d8a00a9535"
   dependencies:
     normalize-strings "^1.1.0"
     pluralize "^7.0.0"
