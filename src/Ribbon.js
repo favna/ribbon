@@ -216,9 +216,9 @@ class Ribbon {
               newActivity = {url: 'placeholder'};
             }
             if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
-              const userFetch = await fetch(`https://api.twitch.tv/helix/users?${querystring.stringify({login: newActivity.url.split('/')[3]})}`, {'Client-ID': process.env.twitchclientid}),
+              const userFetch = await fetch(`https://api.twitch.tv/helix/users?${querystring.stringify({login: newActivity.url.split('/')[3]})}`, {headers: {'Client-ID': process.env.twitchclientid}}),
                 userData = await userFetch.json(),
-                streamFetch = await fetch(`https://api.twitch.tv/helix/streams?${querystring.stringify({channel: userData.data[0].id})}`, {'Client-ID': process.env.twitchclientid}),
+                streamFetch = await fetch(`https://api.twitch.tv/helix/streams?${querystring.stringify({channel: userData.data[0].id})}`, {headers: {'Client-ID': process.env.twitchclientid}}),
                 streamData = await streamFetch.json(),
                 twitchChannel = curGuild.settings.get('twitchchannel', null),
                 twitchEmbed = new MessageEmbed();
@@ -238,7 +238,7 @@ class Ribbon {
               }
 
               if (streamFetch.ok && streamData.data.length > 0 && streamData.data[0]) {
-                const streamTime = moment(streamData.data[0].started_at).isValid() ? moment(streamData.streams[0].started_at) : null;
+                const streamTime = moment(streamData.data[0].started_at).isValid() ? moment(streamData.data[0].started_at)._d : null;
 
                 twitchEmbed.setFooter('Stream started');
                 streamTime ? twitchEmbed.setTimestamp(streamTime) : null;
@@ -248,7 +248,7 @@ class Ribbon {
               }
             }
           } catch (err) {
-            this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+            this.client.channels.resolve('395658199266623528').send(stripIndents`
               <@${this.client.owners[0].id}> Error occurred in sending a twitch live notifier!
               **Server:** ${curGuild.name} (${curGuild.id})
               **Member:** ${curUser.tag} (${curUser.id})
