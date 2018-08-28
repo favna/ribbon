@@ -216,13 +216,9 @@ class Ribbon {
               newActivity = {url: 'placeholder'};
             }
             if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
-              const headers = {
-                  Accept: 'application/vnd.twitchtv.v5+json',
-                  'Client-ID': process.env.twitchclientid
-                },
-                userFetch = await fetch(`https://api.twitch.tv/kraken/users?${querystring.stringify({login: newActivity.url.split('/')[3]})}`, {headers}),
+              const userFetch = await fetch(`https://api.twitch.tv/helix/users?${querystring.stringify({login: newActivity.url.split('/')[3]})}`, {'Client-ID': process.env.twitchclientid}),
                 userData = await userFetch.json(),
-                streamFetch = await fetch(`https://api.twitch.tv/kraken/streams?${querystring.stringify({channel: userData.users[0]._id})}`),
+                streamFetch = await fetch(`https://api.twitch.tv/helix/streams?${querystring.stringify({channel: userData.data[0].id})}`, {'Client-ID': process.env.twitchclientid}),
                 streamData = await streamFetch.json(),
                 twitchChannel = curGuild.settings.get('twitchchannel', null),
                 twitchEmbed = new MessageEmbed();
@@ -234,15 +230,15 @@ class Ribbon {
                 .setTitle(`${curDisplayName} just went live!`)
                 .setDescription(stripIndents`streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
 
-              if (userFetch.ok && userData._total > 0 && userData.users[0]) {
+              if (userFetch.ok && userData.data.length > 0 && userData.data[0]) {
                 twitchEmbed
-                  .setThumbnail(userData.users[0].logo)
-                  .setTitle(`${userData.users[0].display_name} just went live!`)
-                  .setDescription(stripIndents`${userData.users[0].display_name} just started ${twitchEmbed.description}`);
+                  .setThumbnail(userData.data[0].profile_image_url)
+                  .setTitle(`${userData.data[0].display_name} just went live!`)
+                  .setDescription(stripIndents`${userData.data[0].display_name} just started ${twitchEmbed.description}`);
               }
 
-              if (streamFetch.ok && streamData._total > 0 && streamData.streams[0]) {
-                const streamTime = moment(streamData.streams[0].created_at).isValid() ? moment(streamData.streams[0].created_at)._d : null;
+              if (streamFetch.ok && streamData.data.length > 0 && streamData.data[0]) {
+                const streamTime = moment(streamData.data[0].started_at).isValid() ? moment(streamData.streams[0].started_at) : null;
 
                 twitchEmbed.setFooter('Stream started');
                 streamTime ? twitchEmbed.setTimestamp(streamTime) : null;
