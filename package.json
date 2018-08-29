@@ -75,7 +75,7 @@
     "speedtest-net": "^1.4.3",
     "spotify-web-api-node": "^3.0.0",
     "steamapi": "2.0.2",
-    "syllable": "^3.0.0",
+    "syllable": "^3.1.0",
     "to-zalgo": "^1.0.1",
     "translate": "Marak/translate.js#modern",
     "underscore": "^1.9.1",
