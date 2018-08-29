@@ -234,7 +234,8 @@ class Ribbon {
                 twitchEmbed
                   .setThumbnail(userData.data[0].profile_image_url)
                   .setTitle(`${userData.data[0].display_name} just went live!`)
-                  .setDescription(stripIndents`${userData.data[0].display_name} just started ${twitchEmbed.description}`);
+                  .setDescription(stripIndents`${userData.data[0].display_name} just started ${twitchEmbed.description}`)
+                  .setImage(`https://static-cdn.jtvnw.net/previews-ttv/live_user_${userData.data[0].login}-1920x1080.jpg`);
               }
 
               if (streamFetch.ok && streamData.data.length > 0 && streamData.data[0]) {
