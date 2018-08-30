@@ -50,9 +50,9 @@
   version "7.0.0-beta.51"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.0.0-beta.51.tgz#27cec2df409df60af58270ed8f6aa55409ea86f6"
 
-"@babel/polyfill@^7.0.0-rc.1":
-  version "7.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.0.0-rc.1.tgz#c78e17e64c42cd6a2f5d8edf0f20e18213c0d74d"
+"@babel/polyfill@^7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@babel/polyfill/-/polyfill-7.0.0.tgz#c8ff65c9ec3be6a1ba10113ebd40e8750fb90bff"
   dependencies:
     core-js "^2.5.7"
     regenerator-runtime "^0.11.1"
@@ -150,9 +150,9 @@
     "@jimp/utils" "^0.3.9"
     core-js "^2.5.7"
 
-"@jimp/plugin-color@^0.3.9":
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/@jimp/plugin-color/-/plugin-color-0.3.9.tgz#d5fe173c03fd4b18d8a66780dad0dcb5aac89747"
+"@jimp/plugin-color@^0.3.10":
+  version "0.3.10"
+  resolved "https://registry.yarnpkg.com/@jimp/plugin-color/-/plugin-color-0.3.10.tgz#1b9eb2ea88c531576b76a0a52436677de37c1959"
   dependencies:
     "@jimp/utils" "^0.3.9"
     core-js "^2.5.7"
@@ -257,13 +257,13 @@
     "@jimp/utils" "^0.3.9"
     core-js "^2.5.7"
 
-"@jimp/plugins@^0.3.9":
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/@jimp/plugins/-/plugins-0.3.9.tgz#f637d1fc01753755786184b1a072e8e1c5ab9d5e"
+"@jimp/plugins@^0.3.10":
+  version "0.3.10"
+  resolved "https://registry.yarnpkg.com/@jimp/plugins/-/plugins-0.3.10.tgz#84254a66be3abda0bb5455b1b7b9bff82ddbb397"
   dependencies:
     "@jimp/plugin-blit" "^0.3.9"
     "@jimp/plugin-blur" "^0.3.9"
-    "@jimp/plugin-color" "^0.3.9"
+    "@jimp/plugin-color" "^0.3.10"
     "@jimp/plugin-contain" "^0.3.9"
     "@jimp/plugin-cover" "^0.3.9"
     "@jimp/plugin-crop" "^0.3.9"
@@ -2133,13 +2133,13 @@ istanbul-reports@^1.4.1:
   dependencies:
     handlebars "^4.0.11"
 
-jimp@^0.3.9:
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/jimp/-/jimp-0.3.9.tgz#8ba7235265f0357a31c254a021d077b96532e274"
+jimp@^0.3.11:
+  version "0.3.11"
+  resolved "https://registry.yarnpkg.com/jimp/-/jimp-0.3.11.tgz#187ca4633198a43705113d82a559ae850f17247a"
   dependencies:
-    "@babel/polyfill" "^7.0.0-rc.1"
+    "@babel/polyfill" "^7.0.0"
     "@jimp/custom" "^0.3.9"
-    "@jimp/plugins" "^0.3.9"
+    "@jimp/plugins" "^0.3.10"
     "@jimp/types" "^0.3.9"
     core-js "^2.5.7"
 
