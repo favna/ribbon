@@ -55,7 +55,7 @@
     "emoji-regex": "^7.0.0",
     "erlpack": "hammerandchisel/erlpack",
     "fast-levenshtein": "~2.0.4",
-    "flesch-kincaid": "^1.0.2",
+    "flesch-kincaid": "^1.0.3",
     "fuse.js": "^3.2.1",
     "igdb-api-node": "^3.1.7",
     "jimp": "^0.3.9",

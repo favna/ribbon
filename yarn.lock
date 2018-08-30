@@ -1576,9 +1576,9 @@ flat-cache@^1.2.1:
     graceful-fs "^4.1.2"
     write "^0.2.1"
 
-flesch-kincaid@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/flesch-kincaid/-/flesch-kincaid-1.0.2.tgz#0d6a7eac789417a7260db13ceee4a458b26da274"
+flesch-kincaid@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/flesch-kincaid/-/flesch-kincaid-1.0.3.tgz#8be7526ed089fdcc1bb4aaa1346a7c94ce8c6195"
 
 for-each@^0.3.2:
   version "0.3.3"
