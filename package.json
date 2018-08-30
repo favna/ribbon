@@ -58,7 +58,7 @@
     "flesch-kincaid": "^1.0.2",
     "fuse.js": "^3.2.1",
     "igdb-api-node": "^3.1.7",
-    "jimp": "^0.3.9",
+    "jimp": "^0.3.10",
     "libsodium-wrappers": "^0.7.3",
     "lodash": "^4.17.10",
     "moment": "2.22.2",
