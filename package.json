@@ -52,7 +52,7 @@
     "discord.js-commando": "favna/commando#ribbon",
     "dotenv": "^6.0.0",
     "eightball": "^1.0.1",
-    "emoji-regex": "^7.0.0",
+    "emoji-regex": "^7.0.1",
     "erlpack": "hammerandchisel/erlpack",
     "fast-levenshtein": "~2.0.4",
     "flesch-kincaid": "^1.0.3",
