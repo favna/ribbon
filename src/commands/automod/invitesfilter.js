@@ -74,7 +74,7 @@ module.exports = class InvitesFilterCommand extends Command {
               This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         msg.guild.settings.set('hasSentModLogMessage', true);
       }
-      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: ifEmbed}) : null;
+      modlogChannel && msg.guild.settings.get('modlogs', false) ? msg.guild.channels.get(modlogChannel).send('', {embed: ifEmbed}) : null;
     }
 
     deleteCommandMessages(msg, this.client);

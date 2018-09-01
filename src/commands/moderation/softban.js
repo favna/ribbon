@@ -90,7 +90,7 @@ module.exports = class SoftbanCommand extends Command {
         msg.guild.settings.set('hasSentModLogMessage', true);
       }
 
-      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: softbanEmbed}) : null;
+      modlogChannel && msg.guild.settings.get('modlogs', false) ? msg.guild.channels.get(modlogChannel).send('', {embed: softbanEmbed}) : null;
     }
     deleteCommandMessages(msg, this.client);
     stopTyping(msg);

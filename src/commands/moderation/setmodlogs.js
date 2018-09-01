@@ -48,6 +48,7 @@ module.exports = class SetModlogsCommand extends Command {
       setModLogsEmbed = new MessageEmbed();
 
     msg.guild.settings.set('modlogchannel', channel.id);
+    if (!msg.guild.settings.get('modlogs', false)) msg.guild.settings.set('modlogs', false);
 
     setModLogsEmbed
       .setColor('#3DFFE5')
@@ -65,7 +66,7 @@ module.exports = class SetModlogsCommand extends Command {
                   This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         msg.guild.settings.set('hasSentModLogMessage', true);
       }
-      modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: setModLogsEmbed}) : null;
+      modlogChannel && msg.guild.settings.get('modlogs', false) ? msg.guild.channels.get(modlogChannel).send('', {embed: setModLogsEmbed}) : null;
     }
 
     deleteCommandMessages(msg, this.client);

@@ -72,7 +72,7 @@ module.exports = class UnlockCommand extends Command {
           msg.guild.settings.set('hasSentModLogMessage', true);
         }
 
-        modlogChannel ? msg.guild.channels.get(modlogChannel).send('', {embed: unlockEmbed}) : null;
+        modlogChannel && msg.guild.settings.get('modlogs', false) ? msg.guild.channels.get(modlogChannel).send('', {embed: unlockEmbed}) : null;
       }
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
