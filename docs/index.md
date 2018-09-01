@@ -226,9 +226,6 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_pubg">pubg</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Leaderboards PubgCommand - Get statistics from a PUBG account</p>
 </dd>
-<dt><a href="#module_rocketleague">rocketleague</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Leaderboards RocketLeagueCommand - Shows Rocket League Leaderboard<br><strong>Aliases</strong>: <code>rlstats</code>, <code>rocketstats</code></p>
-</dd>
 <dt><a href="#module_showdown">showdown</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice<br><strong>Aliases</strong>: <code>showdownlb</code>, <code>pokelb</code></p>
 </dd>
@@ -894,7 +891,7 @@ Extra MathCommand - Take the effort out of calculations and let the bot do it fo
 
 **Example**  
 ```js
-math (PI - 1) * 3
+math (pi - 1) * 3
 ```
 <a name="module_oxr"></a>
 
@@ -1397,18 +1394,6 @@ Leaderboards PubgCommand - Get statistics from a PUBG account
 **Example**  
 ```js
 pubg shroud pc-na
-```
-<a name="module_rocketleague"></a>
-
-## rocketleague ⇒ <code>MessageEmbed</code>
-Leaderboards RocketLeagueCommand - Shows Rocket League Leaderboard      
-**Aliases**: `rlstats`, `rocketstats`
-
-**Returns**: <code>MessageEmbed</code> - Top 10 ranking players by their amount of wins  
-**Category**: leaderboards  
-**Example**  
-```js
-rocketleague
 ```
 <a name="module_showdown"></a>
 
