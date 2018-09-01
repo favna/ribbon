@@ -84,7 +84,7 @@ class Ribbon {
             memberJoinLogEmbed.setDescription(`Automatically assigned the role ${joinmember.guild.roles.get(joinmember.guild.settings.get('defaultRole')).name} to this member`);
           }
 
-          if (memberLogs && joinmember.guild.channels.get(memberLogs).permissionsFor(this.client.user)
+          if (memberLogs && joinmember.guild.channels.get(memberLogs) && joinmember.guild.channels.get(memberLogs).permissionsFor(this.client.user)
             .has('SEND_MESSAGES')) {
             joinmember.guild.channels.get(memberLogs).send('', {embed: memberJoinLogEmbed});
           }
@@ -128,7 +128,7 @@ class Ribbon {
             .setTimestamp()
             .setColor('#F4BF42');
 
-          if (memberLogs && leavemember.guild.channels.get(memberLogs).permissionsFor(this.client.user)
+          if (memberLogs && leavemember.guild.channels.get(memberLogs) && leavemember.guild.channels.get(memberLogs).permissionsFor(this.client.user)
             .has('SEND_MESSAGES')) {
             leavemember.guild.channels.get(memberLogs).send('', {embed: memberLeaveLogEmbed});
           }
