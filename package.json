@@ -86,7 +86,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "codecov": "^3.0.4",
+    "codecov": "^3.1.0",
     "eslint": "^5.5.0",
     "jsdoc": "^3.5.5",
     "jsdoc-to-markdown": "^4.0.1",
