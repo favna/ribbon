@@ -620,9 +620,9 @@ boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
 
-booru@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/booru/-/booru-0.4.0.tgz#eda0514398815280b196d2f24a5a3f0db7f0b183"
+booru@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/booru/-/booru-1.2.0.tgz#24ad4595a1c520cc2bc13b0b47f19b949f8d37a2"
   dependencies:
     snekfetch "^3.6.4"
     xml2js "^0.4.17"
