@@ -29,7 +29,10 @@ module.exports = class DBPostCommand extends Command {
       await fetch(`https://discordbots.org/api/bots/${this.client.user.id}/stats`, {
         method: 'POST',
         body: JSON.stringify({server_count: this.client.guilds.size}), // eslint-disable-line camelcase
-        headers: {Authorization: process.env.discordbotskey}
+        headers: {
+          Authorization: process.env.discordbotskey,
+          'Content-Type': 'application/json'
+        }
       });
 
       deleteCommandMessages(msg, this.client);

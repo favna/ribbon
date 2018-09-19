@@ -61,7 +61,7 @@ module.exports = class PlaySongCommand extends Command {
     let voiceChannel; // eslint-disable-line init-declarations
 
     if (!queue) {
-      voiceChannel = msg.member.voiceChannel; // eslint-disable-line
+      voiceChannel = msg.member.voice.channel; // eslint-disable-line
       if (!voiceChannel) {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
