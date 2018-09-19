@@ -749,9 +749,9 @@ can-promise@^0.0.1:
   dependencies:
     window-or-global "^1.0.1"
 
-canvas-constructor@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/canvas-constructor/-/canvas-constructor-1.0.1.tgz#f83af62d96532986612fc0c72a2e0c97cf043002"
+canvas-constructor@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/canvas-constructor/-/canvas-constructor-1.1.2.tgz#e36d05a318b7e205eb3cb900a37106770c0014cf"
 
 canvas@Automattic/node-canvas#v1.x:
   version "1.6.11"
