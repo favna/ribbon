@@ -81,7 +81,7 @@
     "underscore": "^1.9.1",
     "unescape-es6": "^1.0.2",
     "xdicey": "2.0.3",
-    "ytdl-core": "0.24.0",
+    "ytdl-core": "0.25.2",
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {
