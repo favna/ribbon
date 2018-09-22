@@ -1027,11 +1027,12 @@ dijkstrajs@^1.0.1:
   resolved "https://registry.yarnpkg.com/dijkstrajs/-/dijkstrajs-1.0.1.tgz#d3cd81221e3ea40742cfcde556d4e99e98ddc71b"
 
 "discord.js-commando@https://github.com/Favna/Commando#ribbon":
-  version "1.2.4-ribbon"
-  resolved "https://github.com/Favna/Commando#4ab32df1e2144ac7911ea560d8af104144664acc"
+  version "1.2.5-ribbon"
+  resolved "https://github.com/Favna/Commando#a47b9679cf35e01cf06d4a4cbf62b2cc7a2d89cf"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
+    moment "^2.22.2"
     require-all "^3.0.0"
 
 "discord.js@https://github.com/Favna/discord.js#main":
@@ -2164,7 +2165,7 @@ moment-duration-format@2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/moment-duration-format/-/moment-duration-format-2.2.2.tgz#b957612de26016c9ad9eb6087c054573e5127779"
 
-moment@2.22.2:
+moment@2.22.2, moment@^2.22.2:
   version "2.22.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
