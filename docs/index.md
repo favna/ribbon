@@ -301,6 +301,9 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_selfroles">selfroles</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation SelfRolesCommand - Sets the self assignable roles for the server members, to be used by the <code>iam</code> command<br>You can set multiple roles by delimiting with spaces (<code>role1 role2</code>)<br>You can clear the setting by giving no roles then replying <code>finish</code><br><strong>Aliases</strong>: <code>sroles</code></p>
 </dd>
+<dt><a href="#module_setannounce">setannounce</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Moderation SetAnnounceCommand - Set the channel for the announce command<br><strong>Aliases</strong>: <code>sa</code>, <code>setannouncement</code>, <code>setannouncements</code></p>
+</dd>
 <dt><a href="#module_setmemberlogs">setmemberlogs</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation SetMemberlogsCommand - Sets the channel used for member logs<br><strong>Aliases</strong>: <code>setmember</code></p>
 </dd>
@@ -1833,6 +1836,23 @@ selfroles uploader
 **Example**  
 ```js
 selfroles uploader superuploader
+```
+<a name="module_setannounce"></a>
+
+## setannounce ⇒ <code>MessageEmbed</code>
+Moderation SetAnnounceCommand - Set the channel for the announce command  
+**Aliases**: `sa`, `setannouncement`, `setannouncements`
+
+**Returns**: <code>MessageEmbed</code> - Confirmation of the setting being stored  
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnnounceChannel | <code>ChannelResolvable</code> | The channel to set the announcements to |
+
+**Example**  
+```js
+setannounce #updates
 ```
 <a name="module_setmemberlogs"></a>
 

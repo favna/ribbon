@@ -10,9 +10,9 @@
  */
 
 const moment = require('moment'),
-  {Command} = require('discord.js-commando'), 
+  {Command} = require('discord.js-commando'),
   {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'), 
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class NewsCommand extends Command {
@@ -45,17 +45,25 @@ module.exports = class NewsCommand extends Command {
     try {
       startTyping(msg);
 
+      let announce = body,
+        newsChannel = null;
+
       const announceEmbed = new MessageEmbed(),
-        newsChannel = msg.guild.channels.find(c => c.name === 'announcements') ? msg.guild.channels.find(c => c.name === 'announcements') : msg.guild.channels.find(c => c.name === 'news'),
         modlogChannel = msg.guild.settings.get('modlogchannel',
           msg.guild.channels.find(c => c.name === 'mod-logs') ? msg.guild.channels.find(c => c.name === 'mod-logs').id : null);
+
+      if (msg.guild.settings.get('announcechannel')) {
+        newsChannel = msg.guild.channels.find(c => c.id === msg.guild.settings.get('announcechannel'));
+      } else {
+        msg.guild.channels.find(c => c.name === 'announcements')
+          ? newsChannel = msg.guild.channels.find(c => c.name === 'announcements')
+          : newsChannel = msg.guild.channels.find(c => c.name === 'news');
+      }
 
       if (!newsChannel) throw new Error('nochannel');
       if (!newsChannel.permissionsFor(msg.guild.me).has(['SEND_MESSAGES', 'VIEW_CHANNEL'])) throw new Error('noperms');
 
       newsChannel.startTyping(1);
-
-      let announce = body;
 
       announce.slice(0, 4) !== 'http' ? announce = `${body.slice(0, 1).toUpperCase()}${body.slice(1)}` : null;
       msg.attachments.first() && msg.attachments.first().url ? announce += `\n${msg.attachments.first().url}` : null;
@@ -81,16 +89,16 @@ module.exports = class NewsCommand extends Command {
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
-      
+
       return msg.embed(announceEmbed);
-      
+
     } catch (err) {
       stopTyping(msg);
 
       if ((/(?:nochannel)/i).test(err.toString())) {
         return msg.reply('there is no channel for me to make the announcement in. Create channel named either `announcements` or `news`');
       } else if ((/(?:noperms)/i).test(err.toString())) {
-        return msg.reply('I do not have permission to send messages to the `announcements` or `news` channel. Better go fix that!'); 
+        return msg.reply('I do not have permission to send messages to the `announcements` or `news` channel. Better go fix that!');
       }
 
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
