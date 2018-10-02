@@ -21,7 +21,7 @@ module.exports = class defaultroleCommand extends Command {
       memberName: 'defaultrole',
       group: 'moderation',
       aliases: ['defrole'],
-      description: 'Set a default role the bot will assign to any members joining after this command',
+      description: 'Set a default role Ribbon will assign to any members joining after this command',
       details: 'Use "delete" to remove the default role',
       format: 'RoleID|RoleName(partial or full)',
       examples: ['defaultrole Member'],

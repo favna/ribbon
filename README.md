@@ -41,7 +41,7 @@
 
 ## Features
 
-- Many web searches, such as google, google image, myanimelist, youtube, steam and many more
+- Many web searches, such as Google, Google Images, Kitsu, YouTube, Steam and many more
 
 - Looking up data in the PokéDex
 

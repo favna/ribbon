@@ -1,7 +1,7 @@
 /**
  * @file Pokémon PokemonTCGCommand - Gets information on a Pokemon card  
  * At start of the command you can specify which properties you want to use for the search, the options are `name`, `types`, `subtype`, `supertype` and `hp`  
- * After specifying which options you want to use the bot will go through the options asking you the values to use for the search  
+ * After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search  
  * By default only `name` is used as argument and the supertype is set to pokemon  
  * name is the name of the pokemon card  
  * types are the types of the pokemon card (only works with pokemon as supertype)  
@@ -34,7 +34,7 @@ module.exports = class PokemonTCGCommand extends Command {
       aliases: ['ptcg', 'tcgo'],
       description: 'Gets information on a Pokemon card',
       details: stripIndents`At start of the command you can specify which properties you want to use for the search, the options are \`name\`, \`types\`, \`subtype\`, \`supertype\` and \`hp\`
-      After specifying which options you want to use the bot will go through the options asking you the values to use for the search
+      After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search
       By default only \`name\` is used as argument and the supertype is set to pokemon
       name is the name of the pokemon card
       types are the types of the pokemon card (only works with pokemon as supertype)

@@ -1,7 +1,7 @@
 /**
  * @file Music MaxLengthCommand - Set the maximum length (in minutes) of a video  
  * Give no argument to show current amount of maximum songs  
- * Use "default" as argument to set it back to the bot default  
+ * Use "default" as argument to set it back to Ribbon's default  
  * **Aliases**: `max-duration`, `max-song-length`, `max-song-duration`
  * @module
  * @category music

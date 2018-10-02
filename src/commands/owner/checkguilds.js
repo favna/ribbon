@@ -1,5 +1,5 @@
 /**
- * @file Owner CheckGuildsCommand - Lists all guilds the bot is in  
+ * @file Owner CheckGuildsCommand - Lists all guilds Ribbon is in  
  * @module
  * @category owner
  * @name checkguilds 

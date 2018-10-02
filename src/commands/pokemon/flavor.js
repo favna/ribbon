@@ -3,7 +3,7 @@
  * Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
  * Due to message limit size it fetches as many entries possible starting with generation 7 going downwards  
  * If you want to get the shiny sprite displayed add the `--shiny` at the end of the search  
- * **Aliases**: `flavors`, `dexdata`, `dexentries`, `dextext`, `dextex`, `dexter`
+ * **Aliases**: `flavors`, `dexdata`, `dexentries`, `dextext`, `dextex`, `dexter`, `flavour`, `flavours`
  * @module
  * @category pokemon
  * @name flavor
@@ -31,7 +31,7 @@ module.exports = class FlavorCommand extends Command {
       name: 'flavor',
       memberName: 'flavor',
       group: 'pokemon',
-      aliases: ['flavors', 'dexentries', 'dextext', 'dextex'],
+      aliases: ['flavors', 'dexentries', 'dextext', 'dextex', 'flavour', 'flavours'],
       description: 'Get all the available dex entries for a Pokémon',
       format: 'PokemonName',
       examples: ['flavor Dragonite'],

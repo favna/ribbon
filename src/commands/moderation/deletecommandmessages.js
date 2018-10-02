@@ -1,5 +1,5 @@
 /**
- * @file Moderation deleteCommandMessagesCommand - Configure whether the bot should delete command messages  
+ * @file Moderation deleteCommandMessagesCommand - Configure whether Ribbon should delete command messages  
  * **Aliases**: `dcm`
  * @module
  * @category moderation
@@ -21,7 +21,7 @@ module.exports = class deleteCommandMessagesCommand extends Command {
       memberName: 'deletecommandmessages',
       group: 'moderation',
       aliases: ['dcm'],
-      description: 'Configure whether the bot should delete command messages',
+      description: 'Configure whether Ribbon should delete command messages',
       format: 'BooleanResolvable',
       examples: ['deletecommandmessages enable'],
       guildOnly: true,

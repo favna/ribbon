@@ -1,5 +1,5 @@
 /**
- * @file Extra MathCommand - Take the effort out of calculations and let the bot do it for you  
+ * @file Extra MathCommand - Take the effort out of calculations and let Ribbon do it for you  
  * **Aliases**: `maths`, `calc`
  * @module
  * @category extra
