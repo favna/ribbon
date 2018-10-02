@@ -1,6 +1,6 @@
 /**
  * @file Games ShipCommand - Ship 2 members  
- * Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members
+ * Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members  
  * **Aliases**: `love`, `marry`, `engage`
  * @module
  * @category games

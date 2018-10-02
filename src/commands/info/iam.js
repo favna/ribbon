@@ -2,7 +2,7 @@
  * @file Info IamCommand - Self Assign roles  
  * **Aliases**: `self`
  * @module
- * @category 
+ * @category info
  * @name iam
  * @example iam uploader
  * @param {RoleResolvable} AnyRole The role you want to assign to yourself  

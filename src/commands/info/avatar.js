@@ -1,5 +1,5 @@
 /**
- * @file Games AvatarCommand - Get the avatar from any member on this server
+ * @file Games AvatarCommand - Get the avatar from any member on this server 
  * **Aliases**: `ava`
  * @module
  * @category info

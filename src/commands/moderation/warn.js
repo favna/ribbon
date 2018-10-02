@@ -1,6 +1,6 @@
 /**
  * @file Moderation WarnCommand - Gives a member warning points  
- * Please note that Ribbon will not auto ban when the member has a certain amount of points!
+ * Please note that Ribbon will not auto ban when the member has a certain amount of points!  
  * **Aliases**: `warning`
  * @module
  * @category moderation

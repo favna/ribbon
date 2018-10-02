@@ -1,5 +1,5 @@
 /**
- * @file Info UserInfoCommand - Get the info of any member on this server
+ * @file Info UserInfoCommand - Get the info of any member on this server  
  * **Aliases**: `user`, `uinfo`
  * @module
  * @category info
