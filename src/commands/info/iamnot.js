@@ -2,7 +2,7 @@
  * @file Info IamNotCommand - Remove self assigned roles  
  * **Aliases**: `notself`, `iamn`
  * @module
- * @category 
+ * @category info
  * @name iamnot
  * @example iamnot uploader
  * @param {RoleResolvable} AnyRole The role you want to remove from yourself  

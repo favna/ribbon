@@ -6,7 +6,7 @@
  * @name ban
  * @example ban MultiMegaMander
  * @param {GuildMemberResolvable} AnyMember The member to ban from the server
- * @param {StringResolvable} [TheReason] Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages
+ * @param {StringResolvable} [TheReason] Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent Ribbon from deleting the banned member's messages
  * @returns {MessageEmbed} Log of the ban
  */
 

@@ -56,12 +56,6 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 ## Modules
 
 <dl>
-<dt><a href="#module_iam">iam</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info IamCommand - Self Assign roles<br><strong>Aliases</strong>: <code>self</code></p>
-</dd>
-<dt><a href="#module_iamnot">iamnot</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info IamNotCommand - Remove self assigned roles<br><strong>Aliases</strong>: <code>notself</code>, <code>iamn</code></p>
-</dd>
 <dt><a href="#module_badwords">badwords</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Automod BadWordsCommand - Toggle the bad words filter<br>Please note that when adding new words to your server&#39;s filter you overwrite all your currently set words!<br><strong>Aliases</strong>: <code>badwordsfilter</code>, <code>bwf</code>, <code>bwf</code></p>
 </dd>
@@ -127,7 +121,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Extra CopyPastaListCommand - Gets all copypastas available to the server<br><strong>Aliases</strong>: <code>cplist</code>, <code>copylist</code>, <code>pastalist</code></p>
 </dd>
 <dt><a href="#module_math">math</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra MathCommand - Take the effort out of calculations and let the bot do it for you<br><strong>Aliases</strong>: <code>maths</code>, <code>calc</code></p>
+<dd><p>Extra MathCommand - Take the effort out of calculations and let Ribbon do it for you<br><strong>Aliases</strong>: <code>maths</code>, <code>calc</code></p>
 </dd>
 <dt><a href="#module_oxr">oxr</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Extra MoneyCommand - Convert one currency to another<br>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC<br>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a><br><strong>Aliases</strong>: <code>money</code>, <code>rate</code>, <code>convert</code></p>
@@ -139,7 +133,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Extra RandomColCommand - Generates a random color<br>Providing a color hex will display that color, providing none will generate a random one<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
 </dd>
 <dt><a href="#module_remind">remind</a> ⇒ <code>Message</code></dt>
-<dd><p>Extra RemindCommand - Set a reminder and the bot will remind you<br>Works by reminding you after a given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>remindme</code>, <code>reminder</code></p>
+<dd><p>Extra RemindCommand - Set a reminder and Ribbon will remind you<br>Works by reminding you after a given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>remindme</code>, <code>reminder</code></p>
 </dd>
 <dt><a href="#module_say">say</a> ⇒ <code>Message</code></dt>
 <dd><p>Extra Say - Repeats a message and deletes your message<br><strong>Aliases</strong>: <code>sayd</code>, <code>repeat</code></p>
@@ -166,8 +160,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Games EightBallCommand - Rolls a magic 8 ball using your input<br><strong>Aliases</strong>: <code>eightball</code></p>
 </dd>
 <dt><a href="#module_biscuit">biscuit</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games CookieCommand - Steal someone&#39;s 🍪 gnanahahahaha
-<strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p>
+<dd><p>Games CookieCommand - Steal someone&#39;s 🍪 gnanahahahaha<br><strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p>
 </dd>
 <dt><a href="#module_dice">dice</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!<br><strong>Aliases</strong>: <code>xdicey</code>, <code>roll</code>, <code>dicey</code>, <code>die</code></p>
@@ -182,7 +175,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization<br><strong>Aliases</strong>: <code>rockpaperscissors</code></p>
 </dd>
 <dt><a href="#module_ship">ship</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games ShipCommand - Ship 2 members<br>Leaving 1 or both parameters out will have the bot pick 1 or 2 random members<br><strong>Aliases</strong>: <code>love</code>, <code>marry</code>, <code>engage</code></p>
+<dd><p>Games ShipCommand - Ship 2 members<br>Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members<br><strong>Aliases</strong>: <code>love</code>, <code>marry</code>, <code>engage</code></p>
 </dd>
 <dt><a href="#module_strawpoll">strawpoll</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)<br>Has a very specific syntax! Be sure to adapt the example!<br><strong>Aliases</strong>: <code>straw</code>, <code>poll</code></p>
@@ -191,13 +184,20 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Info ActivityCommand - Gets the activity (presence) data from a member<br><strong>Aliases</strong>: <code>act</code>, <code>presence</code>, <code>richpresence</code></p>
 </dd>
 <dt><a href="#module_avatar">avatar</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games AvatarCommand - Get the avatar from any member<br><strong>Aliases</strong>: <code>ava</code></p>
+<dd><p>Games AvatarCommand - Get the avatar from any member on this server 
+<strong>Aliases</strong>: <code>ava</code></p>
 </dd>
 <dt><a href="#module_discordbots">discordbots</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList<br><strong>Aliases</strong>: <code>dbapi</code>, <code>db</code></p>
 </dd>
 <dt><a href="#module_emotes">emotes</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info EmotesCommand - Lists all emotes from the server<br><strong>Aliases</strong>: <code>listemo</code>, <code>emolist</code>, <code>listemoji</code>, <code>emote</code>, <code>emojis</code>, <code>emoji</code></p>
+</dd>
+<dt><a href="#module_iam">iam</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Info IamCommand - Self Assign roles<br><strong>Aliases</strong>: <code>self</code></p>
+</dd>
+<dt><a href="#module_iamnot">iamnot</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Info IamNotCommand - Remove self assigned roles<br><strong>Aliases</strong>: <code>notself</code>, <code>iamn</code></p>
 </dd>
 <dt><a href="#module_invite">invite</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Info InviteCommand - Gets the invite link for the bot<br><strong>Aliases</strong>: <code>inv</code>, <code>links</code>, <code>shill</code></p>
@@ -212,7 +212,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Info RibbonStatsCommand - Statistics about Ribbon<br><strong>Aliases</strong>: <code>botinfo</code>, <code>info</code></p>
 </dd>
 <dt><a href="#module_userinfo">userinfo</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info UserInfoCommand - Get the info from a user<br><strong>Aliases</strong>: <code>user</code>, <code>uinfo</code></p>
+<dd><p>Info UserInfoCommand - Get the info of any member on this server<br><strong>Aliases</strong>: <code>user</code>, <code>uinfo</code></p>
 </dd>
 <dt><a href="#module_fortnite">fortnite</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Leaderboards FortniteCommand - Get Player Statistics from Fortnite<br><strong>Aliases</strong>: <code>fort</code>, <code>fortshite</code></p>
@@ -230,7 +230,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice<br><strong>Aliases</strong>: <code>showdownlb</code>, <code>pokelb</code></p>
 </dd>
 <dt><a href="#module_addrole">addrole</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation AddRoleCommand - Add a role to member<br><strong>Aliases</strong>: <code>newrole</code>, <code>ar</code></p>
+<dd><p>Moderation AddRoleCommand - Add a role to a member<br><strong>Aliases</strong>: <code>newrole</code>, <code>ar</code></p>
 </dd>
 <dt><a href="#module_announce">announce</a> ⇒ <code>Message</code></dt>
 <dd><p>Moderation NewsCommand - Make an announcement to a channel named &quot;announcements&quot; or &quot;news&quot;<br><strong>Aliases</strong>: <code>news</code></p>
@@ -245,7 +245,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Moderation ConfigureMuteCommand - Configure which role to use as &quot;mute&quot; role<br><strong>Aliases</strong>: <code>cm</code>, <code>configmute</code></p>
 </dd>
 <dt><a href="#module_countdownadd">countdownadd</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation CountdownAddCommand - Store a countdown message<br>Countdown messages are sent every 24 hours in a given channel and count down to a certain event<br>For the date you should not have any spaces and it is strongly recommended to use <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a><br>They will automatically get deleted when the event time is reached<br>Optionally you can make the bot tag @everyone or @here when the event time is reached by adding `--everyone` or `--here` anywhere in the countdown content<br>You can save multiple messages for varying events and channels by using this command multiple times<br>The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the countdown<br><strong>Aliases</strong>: <code>countdownmsg</code>, <code>countdownmessage</code>, <code>countdown</code>, <code>cam</code></p>
+<dd><p>Moderation CountdownAddCommand - Store a countdown message<br>Countdown messages are sent every 24 hours in a given channel and count down to a certain event<br>For the date you should not have any spaces and it is strongly recommended to use <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a><br>They will automatically get deleted when the event time is reached<br>Optionally, you can make Ribbon tag @everyone or @here when the event time is reached by adding `--everyone` or `--here` anywhere in the countdown content<br>You can save multiple messages for varying events and channels by using this command multiple times<br>The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the countdown<br><strong>Aliases</strong>: <code>countdownmsg</code>, <code>countdownmessage</code>, <code>countdown</code>, <code>cam</code></p>
 </dd>
 <dt><a href="#module_countdownlist">countdownlist</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation CountDownList - List all stored countdown messages in the current guild<br><strong>Aliases</strong>: <code>cl</code>, <code>cdlist</code></p>
@@ -257,7 +257,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Moderation defaultroleCommand - Sets a default role that should be assigned to all new joining members<br><strong>Aliases</strong>: <code>defrole</code></p>
 </dd>
 <dt><a href="#module_deletecommandmessages">deletecommandmessages</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation deleteCommandMessagesCommand - Configure whether the bot should delete command messages<br><strong>Aliases</strong>: <code>dcm</code></p>
+<dd><p>Moderation deleteCommandMessagesCommand - Configure whether Ribbon should delete command messages<br><strong>Aliases</strong>: <code>dcm</code></p>
 </dd>
 <dt><a href="#module_deletewarn">deletewarn</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation DeleteWarnCommand - Deletes all or some warnings points from a user<br><strong>Aliases</strong>: <code>removewarn</code>, <code>unwarn</code>, <code>dw</code>, <code>uw</code></p>
@@ -278,7 +278,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Moderation ListWarnCommand - Show the amount of warning points a member has<br><strong>Aliases</strong>: <code>reqwarn</code>, <code>lw</code>, <code>rw</code></p>
 </dd>
 <dt><a href="#module_lockdown">lockdown</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation LockdownCommand - Lockdown a channel<br>Once locked it will be locked to the <code>@everyone</code> or whichever role you specified.<br>Depending on your permissions setup it may be that only people with the <code>administrator</code> role will have access to the channel.<br>This may also mean that the bot won&#39;t have access if it doesn&#39;t have administrator role so you cannot use the <code>unlock</code> command until you give it that permission!<br><strong>Aliases</strong>: <code>lock</code>, <code>ld</code></p>
+<dd><p>Moderation LockdownCommand - Lockdown a channel<br>Once locked it will be locked to the <code>@everyone</code> or whichever role you specified.<br>Depending on your permissions setup it may be that only people with the <code>administrator</code> role will have access to the channel.<br>This may also mean that Ribbon won&#39;t have access if it doesn&#39;t have administrator role so you cannot use the <code>unlock</code> command until you give it that permission!<br><strong>Aliases</strong>: <code>lock</code>, <code>ld</code></p>
 </dd>
 <dt><a href="#module_memberlogs">memberlogs</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel<br><strong>Aliases</strong>: <code>tml</code>, <code>togglemember</code>, <code>togglememberlogs</code></p>
@@ -317,7 +317,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Moderation TempBanCommand - Temporary bans a member, then unbans them when the timer expires<br>Given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>tb</code>, <code>rottenbanana</code></p>
 </dd>
 <dt><a href="#module_timeradd">timeradd</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation TimerAddCommand - Store timed messages<br>These are messages the bot will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the timed message<br>The format for the interval is in minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p>
+<dd><p>Moderation TimerAddCommand - Store timed messages<br>These are messages Ribbon will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the timed message<br>The format for the interval is in minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p>
 </dd>
 <dt><a href="#module_timerlist">timerlist</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation TimerListCommand - List all stored timed messages in the current guild<br><strong>Aliases</strong>: <code>tl</code>, <code>timelist</code></p>
@@ -329,24 +329,23 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
 </dd>
 <dt><a href="#module_unlock">unlock</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation UnlockCommand - Unlock the channel<br>Only really useful if you previously locked the channel<br>Note that the bot does need to be able to be able to access this channel to unlock it (read permissions)<br><strong>Aliases</strong>: <code>delock</code>, <code>ul</code></p>
+<dd><p>Moderation UnlockCommand - Unlock the channel<br>Only really useful if you previously locked the channel<br>Note that Ribbon does need to be able to be able to access this channel to unlock it (read permissions)<br><strong>Aliases</strong>: <code>delock</code>, <code>ul</code></p>
 </dd>
 <dt><a href="#module_unmute">unmute</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Moderation UnmuteCommand - Unmutes a previously muted member
 <strong>Aliases</strong>: <code>um</code></p>
 </dd>
 <dt><a href="#module_warn">warn</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation WarnCommand - Gives a member warning points<br>Please note that the bot will not auto ban when the member has a certain amount of points!
-<strong>Aliases</strong>: <code>warning</code></p>
+<dd><p>Moderation WarnCommand - Gives a member warning points<br>Please note that Ribbon will not auto ban when the member has a certain amount of points!<br><strong>Aliases</strong>: <code>warning</code></p>
 </dd>
 <dt><a href="#module_defaultvolume">defaultvolume</a> ⇒ <code>Message</code></dt>
 <dd><p>Music DefaultVolumeCommand - Sets the server&#39;s default volume<br><strong>Aliases</strong>: <code>defvol</code></p>
 </dd>
 <dt><a href="#module_maxlength">maxlength</a> ⇒ <code>Message</code></dt>
-<dd><p>Music MaxLengthCommand - Set the maximum length (in minutes) of a video<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to the bot default<br><strong>Aliases</strong>: <code>max-duration</code>, <code>max-song-length</code>, <code>max-song-duration</code></p>
+<dd><p>Music MaxLengthCommand - Set the maximum length (in minutes) of a video<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to Ribbon&#39;s default<br><strong>Aliases</strong>: <code>max-duration</code>, <code>max-song-length</code>, <code>max-song-duration</code></p>
 </dd>
 <dt><a href="#module_maxsongs">maxsongs</a> ⇒ <code>Message</code></dt>
-<dd><p>Music MaxSongsCommand- The maximum amount of songs any member can queue<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to the bot default<br><strong>Aliases</strong>: <code>songcap</code>, <code>songmax</code>, <code>maxsong</code></p>
+<dd><p>Music MaxSongsCommand- The maximum amount of songs any member can queue<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to Ribbon&#39;s default<br><strong>Aliases</strong>: <code>songcap</code>, <code>songmax</code>, <code>maxsong</code></p>
 </dd>
 <dt><a href="#module_pause">pause</a> ⇒ <code>Message</code></dt>
 <dd><p>Music PauseSongCommand - Pauses the currently playing track<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>shh</code>, <code>shhh</code>, <code>shhhh</code>, <code>shhhhh</code>, <code>hush</code>, <code>halt</code></p>
@@ -355,10 +354,10 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Music PlaySongCommand - Starts playing music<br>You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it<br>If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
 There are 4 ways to queue songs  </p>
 <ol>
-<li>Youtube Search Query  </li>
-<li>Youtube video URL  </li>
-<li>Youtube playlist URL</li>
-<li>Youtube video ID<br><strong>Aliases</strong>: <code>add</code>, <code>enqueue</code>, <code>start</code>, <code>join</code></li>
+<li>YouTube Search Query  </li>
+<li>YouTube video URL  </li>
+<li>YouTube playlist URL</li>
+<li>YouTube video ID<br><strong>Aliases</strong>: <code>add</code>, <code>enqueue</code>, <code>start</code>, <code>join</code></li>
 </ol>
 </dd>
 <dt><a href="#module_queue">queue</a> ⇒ <code>MessageEmbed</code></dt>
@@ -368,8 +367,7 @@ There are 4 ways to queue songs  </p>
 <dd><p>Music ResumeSongCommand - Resumes the song after pausing it<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>go</code>, <code>continue</code>, <code>ale</code>, <code>loss</code>, <code>res</code></p>
 </dd>
 <dt><a href="#module_save">save</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user
-<strong>Aliases</strong>: <code>save-songs</code>, <code>save-song-list</code>, <code>ss</code>, <code>savequeue</code></p>
+<dd><p>Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user<br><strong>Aliases</strong>: <code>save-songs</code>, <code>save-song-list</code>, <code>ss</code>, <code>savequeue</code></p>
 </dd>
 <dt><a href="#module_queue">queue</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Music ShuffleCommand - Shuffles the current queue<br>Shuffles using a <a href="https://en.wikipedia.org/wiki/Fisher–Yates_shuffle#The_modern_algorithm">modern version of the Fisher-Yates shuffle algorithm</a><br><strong>Aliases</strong>: <code>remix</code>, <code>mixtape</code></p>
@@ -384,7 +382,7 @@ There are 4 ways to queue songs  </p>
 <dd><p>Music StopMusicCommand - Stops the current queue. Bot will automatically leave the channel after this command<br>A vote to skip is started if there are 4 or more people in the voice channel with <code>(amount of members) / 3</code> as required amount of votes (bot doesn&#39;t count as a member)<br>Staff that can delete messages can force the skip by using <code>skip force</code><br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>kill</code>, <code>stfu</code>, <code>quit</code>, <code>leave</code>, <code>disconnect</code></p>
 </dd>
 <dt><a href="#module_volume">volume</a> ⇒ <code>Message</code></dt>
-<dd><p>Music ChangeVolumeCommand - Changes the volume of the currently playing song<br>If you do not  give any parameter the bot will show the current volume<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>set-volume</code>, <code>set-vol</code>, <code>vol</code></p>
+<dd><p>Music ChangeVolumeCommand - Changes the volume of the currently playing song<br>If you do not give any parameter, Ribbon will show the current volume<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>set-volume</code>, <code>set-vol</code>, <code>vol</code></p>
 </dd>
 <dt><a href="#module_e621">e621</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>nsfw E621Command - Gets a NSFW image from e621<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>eee</code></p>
@@ -402,7 +400,7 @@ There are 4 ways to queue songs  </p>
 <dd><p>nsfw Rule34Command - Gets a NSFW image from rule34<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>r34</code></p>
 </dd>
 <dt><a href="#module_checkguilds">checkguilds</a> ⇒ <code>Message</code></dt>
-<dd><p>Owner CheckGuildsCommand - Lists all guilds the bot is in</p>
+<dd><p>Owner CheckGuildsCommand - Lists all guilds Ribbon is in</p>
 </dd>
 <dt><a href="#module_customtopup">customtopup</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Owner CustomTopUpCommand - Daniël Ocean doesn&#39;t give a crap about legality<br><strong>Aliases</strong>: <code>ctu</code></p>
@@ -420,7 +418,7 @@ There are 4 ways to queue songs  </p>
 <dd><p>Pokémon DexCommand - Gets information about a Pokémon from Dexter<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>p</code>, <code>mon</code>, <code>pokemon</code>, <code>pokedex</code>, <code>df</code>, <code>dexfind</code>, <code>dexdata</code>, <code>dexter</code>, <code>rotom</code></p>
 </dd>
 <dt><a href="#module_flavor">flavor</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokémon FlavorCommand - Gets flavor text from a Pokémon<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>Due to message limit size it fetches as many entries possible starting with generation 7 going downwards<br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>flavors</code>, <code>dexdata</code>, <code>dexentries</code>, <code>dextext</code>, <code>dextex</code>, <code>dexter</code></p>
+<dd><p>Pokémon FlavorCommand - Gets flavor text from a Pokémon<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>Due to message limit size it fetches as many entries possible starting with generation 7 going downwards<br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>flavors</code>, <code>dexdata</code>, <code>dexentries</code>, <code>dextext</code>, <code>dextex</code>, <code>dexter</code>, <code>flavour</code>, <code>flavours</code></p>
 </dd>
 <dt><a href="#module_item">item</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pokémon ItemCommand - Gets information about an item in Pokémon
@@ -436,7 +434,7 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dd><p>Pokémon MoveCommand - Gets information about a move in Pokémon<br>For move names existing of multiple words (for example <code>dragon dance</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>attack</code></p>
 </dd>
 <dt><a href="#module_TCG">TCG</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokémon PokemonTCGCommand - Gets information on a Pokemon card<br>At start of the command you can specify which properties you want to use for the search, the options are <code>name</code>, <code>types</code>, <code>subtype</code>, <code>supertype</code> and <code>hp</code><br>After specifying which options you want to use the bot will go through the options asking you the values to use for the search<br>By default only <code>name</code> is used as argument and the supertype is set to pokemon<br>name is the name of the pokemon card<br>types are the types of the pokemon card (only works with pokemon as supertype)<br>subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)<br>supertype specifies the supertype of a card (pokemon, trainer or energy)<br>hp specifies the hp of a pokemon<br><strong>Aliases</strong>: <code>ptcg</code>, <code>tcgo</code></p>
+<dd><p>Pokémon PokemonTCGCommand - Gets information on a Pokemon card<br>At start of the command you can specify which properties you want to use for the search, the options are <code>name</code>, <code>types</code>, <code>subtype</code>, <code>supertype</code> and <code>hp</code><br>After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search<br>By default only <code>name</code> is used as argument and the supertype is set to pokemon<br>name is the name of the pokemon card<br>types are the types of the pokemon card (only works with pokemon as supertype)<br>subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)<br>supertype specifies the supertype of a card (pokemon, trainer or energy)<br>hp specifies the hp of a pokemon<br><strong>Aliases</strong>: <code>ptcg</code>, <code>tcgo</code></p>
 </dd>
 <dt><a href="#module_type">type</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types<br><strong>Aliases</strong>: <code>matchup</code>, <code>weakness</code>, <code>advantage</code></p>
@@ -457,10 +455,10 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 <dd><p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop<br><strong>Aliases</strong>: <code>shop</code></p>
 </dd>
 <dt><a href="#module_google">google</a> ⇒ <code>Message</code></dt>
-<dd><p>Searches GoogleCommand - Gets information through google<br>Note: prioritizes Knowledge Graphs for better searching<br><strong>Aliases</strong>: <code>search</code>, <code>g</code></p>
+<dd><p>Searches GoogleCommand - Gets information through Google<br>Note: prioritizes Knowledge Graphs for better searching<br><strong>Aliases</strong>: <code>search</code>, <code>g</code></p>
 </dd>
 <dt><a href="#module_igdb">igdb</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches IGDBCommand - Gets information about a game using IndieGamesDoneBad (IGDB)<br><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>games</code></p>
+<dd><p>Searches IGDBCommand - Gets information about a game using Internet Game Database (IGDB)<br><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>games</code></p>
 </dd>
 <dt><a href="#module_image">image</a> ⇒ <code>MessageEmbed</code></dt>
 <dd><p>Searches ImageCommand - Gets an image through Google Images<br><strong>Aliases</strong>: <code>img</code>, <code>i</code></p>
@@ -524,38 +522,6 @@ For item names existing of multiple words (for example <code>life orb</code>) yo
 </dd>
 </dl>
 
-<a name="module_iam"></a>
-
-## iam ⇒ <code>MessageEmbed</code>
-Info IamCommand - Self Assign roles  
-**Aliases**: `self`
-
-**Returns**: <code>MessageEmbed</code> - Confirmation the role has been assigned, will also be added to modlogs if enabled for the server  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| AnyRole | <code>RoleResolvable</code> | The role you want to assign to yourself |
-
-**Example**  
-```js
-iam uploader
-```
-<a name="module_iamnot"></a>
-
-## iamnot ⇒ <code>MessageEmbed</code>
-Info IamNotCommand - Remove self assigned roles  
-**Aliases**: `notself`, `iamn`
-
-**Returns**: <code>MessageEmbed</code> - Confirmation the role was removed, will also be added to modlogs if enabled for the server  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| AnyRole | <code>RoleResolvable</code> | The role you want to remove from yourself |
-
-**Example**  
-```js
-iamnot uploader
-```
 <a name="module_badwords"></a>
 
 ## badwords ⇒ <code>MessageEmbed</code>
@@ -882,7 +848,7 @@ Extra CopyPastaListCommand - Gets all copypastas available to the server
 <a name="module_math"></a>
 
 ## math ⇒ <code>MessageEmbed</code>
-Extra MathCommand - Take the effort out of calculations and let the bot do it for you  
+Extra MathCommand - Take the effort out of calculations and let Ribbon do it for you  
 **Aliases**: `maths`, `calc`
 
 **Returns**: <code>MessageEmbed</code> - Your equation and its answer  
@@ -959,7 +925,7 @@ randomcol 36B56e
 <a name="module_remind"></a>
 
 ## remind ⇒ <code>Message</code>
-Extra RemindCommand - Set a reminder and the bot will remind you  
+Extra RemindCommand - Set a reminder and Ribbon will remind you  
 Works by reminding you after a given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`  
 **Aliases**: `remindme`, `reminder`
 
@@ -969,7 +935,7 @@ Works by reminding you after a given amount of minutes, hours or days in the for
 | Param | Type | Description |
 | --- | --- | --- |
 | Time | <code>StringResolvable</code> | Amount of time you want to be reminded in |
-| Reminder | <code>StringResolvable</code> | Thing you want the bot to remind you of |
+| Reminder | <code>StringResolvable</code> | Thing you want Ribbon to remind you of |
 
 **Example**  
 ```js
@@ -981,7 +947,7 @@ remind 1h To continue developing Ribbon
 Extra Say - Repeats a message and deletes your message  
 **Aliases**: `sayd`, `repeat`
 
-**Returns**: <code>Message</code> - Your message said by the bot  
+**Returns**: <code>Message</code> - Your message said by Ribbon  
 **Category**: extra  
 
 | Param | Type | Description |
@@ -1103,7 +1069,7 @@ Games EightBallCommand - Rolls a magic 8 ball using your input
 <a name="module_biscuit"></a>
 
 ## biscuit ⇒ <code>MessageEmbed</code>
-Games CookieCommand - Steal someone's 🍪 gnanahahahaha
+Games CookieCommand - Steal someone's 🍪 gnanahahahaha  
 **Aliases**: `.biscuit`, `biscuit`
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a cookie gif  
@@ -1173,7 +1139,7 @@ rps Rock
 
 ## ship ⇒ <code>MessageEmbed</code>
 Games ShipCommand - Ship 2 members  
-Leaving 1 or both parameters out will have the bot pick 1 or 2 random members  
+Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members  
 **Aliases**: `love`, `marry`, `engage`
 
 **Returns**: <code>MessageEmbed</code> - Name of the ship  
@@ -1231,7 +1197,7 @@ activity Favna
 <a name="module_avatar"></a>
 
 ## avatar ⇒ <code>MessageEmbed</code>
-Games AvatarCommand - Get the avatar from any member  
+Games AvatarCommand - Get the avatar from any member on this server 
 **Aliases**: `ava`
 
 **Returns**: <code>MessageEmbed</code> - The avatar image and a direct link to it  
@@ -1271,6 +1237,40 @@ Info EmotesCommand - Lists all emotes from the server
 
 **Returns**: <code>MessageEmbed</code> - List of emotes  
 **Category**: info  
+<a name="module_iam"></a>
+
+## iam ⇒ <code>MessageEmbed</code>
+Info IamCommand - Self Assign roles  
+**Aliases**: `self`
+
+**Returns**: <code>MessageEmbed</code> - Confirmation the role has been assigned, will also be added to modlogs if enabled for the server  
+**Category**: info  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyRole | <code>RoleResolvable</code> | The role you want to assign to yourself |
+
+**Example**  
+```js
+iam uploader
+```
+<a name="module_iamnot"></a>
+
+## iamnot ⇒ <code>MessageEmbed</code>
+Info IamNotCommand - Remove self assigned roles  
+**Aliases**: `notself`, `iamn`
+
+**Returns**: <code>MessageEmbed</code> - Confirmation the role was removed, will also be added to modlogs if enabled for the server  
+**Category**: info  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyRole | <code>RoleResolvable</code> | The role you want to remove from yourself |
+
+**Example**  
+```js
+iamnot uploader
+```
 <a name="module_invite"></a>
 
 ## invite ⇒ <code>MessageEmbed</code>
@@ -1315,7 +1315,7 @@ Info RibbonStatsCommand - Statistics about Ribbon
 <a name="module_userinfo"></a>
 
 ## userinfo ⇒ <code>MessageEmbed</code>
-Info UserInfoCommand - Get the info from a user  
+Info UserInfoCommand - Get the info of any member on this server  
 **Aliases**: `user`, `uinfo`
 
 **Returns**: <code>MessageEmbed</code> - Info about that member  
@@ -1418,7 +1418,7 @@ showdown ou
 <a name="module_addrole"></a>
 
 ## addrole ⇒ <code>Message</code>
-Moderation AddRoleCommand - Add a role to member  
+Moderation AddRoleCommand - Add a role to a member  
 **Aliases**: `newrole`, `ar`
 
 **Returns**: <code>Message</code> - Confirmation the role was added  
@@ -1480,7 +1480,7 @@ Moderation BanCommand - Ban a bad member
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>GuildMemberResolvable</code> | The member to ban from the server |
-| [TheReason] | <code>StringResolvable</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages |
+| [TheReason] | <code>StringResolvable</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent Ribbon from deleting the banned member's messages |
 
 **Example**  
 ```js
@@ -1510,9 +1510,9 @@ Moderation CountdownAddCommand - Store a countdown message
 Countdown messages are sent every 24 hours in a given channel and count down to a certain event  
 For the date you should not have any spaces and it is strongly recommended to use [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)  
 They will automatically get deleted when the event time is reached  
-Optionally you can make the bot tag @everyone or @here when the event time is reached by adding \`--everyone\` or \`--here\` anywhere in the countdown content  
+Optionally, you can make Ribbon tag @everyone or @here when the event time is reached by adding \`--everyone\` or \`--here\` anywhere in the countdown content  
 You can save multiple messages for varying events and channels by using this command multiple times  
-The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the countdown  
+The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the countdown  
 **Aliases**: `countdownmsg`, `countdownmessage`, `countdown`, `cam`
 
 **Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
@@ -1574,7 +1574,7 @@ defaultrole Member
 <a name="module_deletecommandmessages"></a>
 
 ## deletecommandmessages ⇒ <code>MessageEmbed</code>
-Moderation deleteCommandMessagesCommand - Configure whether the bot should delete command messages  
+Moderation deleteCommandMessagesCommand - Configure whether Ribbon should delete command messages  
 **Aliases**: `dcm`
 
 **Returns**: <code>MessageEmbed</code> - DeleteCommandMessages confirmation log  
@@ -1703,7 +1703,7 @@ listwarn Biscuit
 Moderation LockdownCommand - Lockdown a channel  
 Once locked it will be locked to the `@everyone` or whichever role you specified.  
 Depending on your permissions setup it may be that only people with the `administrator` role will have access to the channel.  
-This may also mean that the bot won't have access if it doesn't have administrator role so you cannot use the `unlock` command until you give it that permission!  
+This may also mean that Ribbon won't have access if it doesn't have administrator role so you cannot use the `unlock` command until you give it that permission!  
 **Aliases**: `lock`, `ld`
 
 **Returns**: <code>Message</code> - Confirmation the channel was locked  
@@ -1921,7 +1921,7 @@ Given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`
 | --- | --- | --- |
 | AnyMember | <code>GuildMemberResolvable</code> | The member to ban from the server |
 | Time | <code>StringResolvable</code> | The amount of time this member should be banned |
-| [TheReason] | <code>StringResolvable</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent the bot from deleting the banned member's messages |
+| [TheReason] | <code>StringResolvable</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent Ribbon from deleting the banned member's messages |
 
 **Example**  
 ```js
@@ -1931,10 +1931,10 @@ tempban Kai
 
 ## timeradd ⇒ <code>MessageEmbed</code>
 Moderation TimerAddCommand - Store timed messages  
-These are messages the bot will repeat in a given channel on a given interval  
+These are messages Ribbon will repeat in a given channel on a given interval  
 Useful for repeating about rules and such  
 You can save multiple messages with varying intervals and channels by using this command multiple times  
-The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the timed message  
+The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the timed message  
 The format for the interval is in minutes, hours or days in the format of `5m`, `2h` or `1d`  
 **Aliases**: `timedmsgs`, `timedmsg`, timedmessages`, `timer`, `tm`
 
@@ -1999,7 +1999,7 @@ unknownmessages enable
 ## unlock ⇒ <code>Message</code>
 Moderation UnlockCommand - Unlock the channel  
 Only really useful if you previously locked the channel  
-Note that the bot does need to be able to be able to access this channel to unlock it (read permissions)  
+Note that Ribbon does need to be able to be able to access this channel to unlock it (read permissions)  
 **Aliases**: `delock`, `ul`
 
 **Returns**: <code>Message</code> - Confirmation the channel is unlocked  
@@ -2025,7 +2025,7 @@ unmute Muffin
 
 ## warn ⇒ <code>MessageEmbed</code>
 Moderation WarnCommand - Gives a member warning points  
-Please note that the bot will not auto ban when the member has a certain amount of points!
+Please note that Ribbon will not auto ban when the member has a certain amount of points!  
 **Aliases**: `warning`
 
 **Returns**: <code>MessageEmbed</code> - A MessageEmbed with a log of the warning  
@@ -2063,7 +2063,7 @@ defaultvolume 2
 ## maxlength ⇒ <code>Message</code>
 Music MaxLengthCommand - Set the maximum length (in minutes) of a video  
 Give no argument to show current amount of maximum songs  
-Use "default" as argument to set it back to the bot default  
+Use "default" as argument to set it back to Ribbon's default  
 **Aliases**: `max-duration`, `max-song-length`, `max-song-duration`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
@@ -2082,7 +2082,7 @@ maxlength 10
 ## maxsongs ⇒ <code>Message</code>
 Music MaxSongsCommand- The maximum amount of songs any member can queue  
 Give no argument to show current amount of maximum songs  
-Use "default" as argument to set it back to the bot default  
+Use "default" as argument to set it back to Ribbon's default  
 **Aliases**: `songcap`, `songmax`, `maxsong`
 
 **Returns**: <code>Message</code> - Confirmation the setting was stored  
@@ -2112,10 +2112,10 @@ Music PlaySongCommand - Starts playing music
 You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it  
 If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
 There are 4 ways to queue songs  
-1. Youtube Search Query  
-2. Youtube video URL  
-3. Youtube playlist URL
-4. Youtube video ID  
+1. YouTube Search Query  
+2. YouTube video URL  
+3. YouTube playlist URL
+4. YouTube video ID  
 **Aliases**: `add`, `enqueue`, `start`, `join`
 
 **Returns**: <code>MessageEmbed</code> - Title, duration and thumbnail of the video  
@@ -2159,7 +2159,7 @@ You need to be in a voice channel before you can use this command
 <a name="module_save"></a>
 
 ## save ⇒ <code>MessageEmbed</code>
-Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user
+Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user  
 **Aliases**: `save-songs`, `save-song-list`, `ss`, `savequeue`
 
 **Returns**: <code>MessageEmbed</code> - Titles, durations and total queue duration sent in a DM  
@@ -2222,7 +2222,7 @@ You need to be in a voice channel before you can use this command
 
 ## volume ⇒ <code>Message</code>
 Music ChangeVolumeCommand - Changes the volume of the currently playing song  
-If you do not  give any parameter the bot will show the current volume  
+If you do not give any parameter, Ribbon will show the current volume  
 You need to be in a voice channel before you can use this command  
 **Aliases**: `set-volume`, `set-vol`, `vol`
 
@@ -2330,7 +2330,7 @@ rule34 pyrrha_nikos
 <a name="module_checkguilds"></a>
 
 ## checkguilds ⇒ <code>Message</code>
-Owner CheckGuildsCommand - Lists all guilds the bot is in
+Owner CheckGuildsCommand - Lists all guilds Ribbon is in
 
 **Returns**: <code>Message</code> - Amount and list of guilds in code blocks  
 **Category**: owner  
@@ -2410,7 +2410,7 @@ Pokémon FlavorCommand - Gets flavor text from a Pokémon
 Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
 Due to message limit size it fetches as many entries possible starting with generation 7 going downwards  
 If you want to get the shiny sprite displayed add the `--shiny` at the end of the search  
-**Aliases**: `flavors`, `dexdata`, `dexentries`, `dextext`, `dextex`, `dexter`
+**Aliases**: `flavors`, `dexdata`, `dexentries`, `dextext`, `dextex`, `dexter`, `flavour`, `flavours`
 
 **Returns**: <code>MessageEmbed</code> - Flavor texts for the pokemon  
 **Category**: pokemon  
@@ -2511,7 +2511,7 @@ move dragon dance
 ## TCG ⇒ <code>MessageEmbed</code>
 Pokémon PokemonTCGCommand - Gets information on a Pokemon card  
 At start of the command you can specify which properties you want to use for the search, the options are `name`, `types`, `subtype`, `supertype` and `hp`  
-After specifying which options you want to use the bot will go through the options asking you the values to use for the search  
+After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search  
 By default only `name` is used as argument and the supertype is set to pokemon  
 name is the name of the pokemon card  
 types are the types of the pokemon card (only works with pokemon as supertype)  
@@ -2638,7 +2638,7 @@ eshop Breath of The Wild
 <a name="module_google"></a>
 
 ## google ⇒ <code>Message</code>
-Searches GoogleCommand - Gets information through google  
+Searches GoogleCommand - Gets information through Google  
 Note: prioritizes Knowledge Graphs for better searching  
 **Aliases**: `search`, `g`
 
@@ -2647,7 +2647,7 @@ Note: prioritizes Knowledge Graphs for better searching
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SearchQuery | <code>StringResolvable</code> | Thing to find on google |
+| SearchQuery | <code>StringResolvable</code> | Thing to find on Google |
 
 **Example**  
 ```js
@@ -2656,7 +2656,7 @@ google Pyrrha Nikos
 <a name="module_igdb"></a>
 
 ## igdb ⇒ <code>MessageEmbed</code>
-Searches IGDBCommand - Gets information about a game using IndieGamesDoneBad (IGDB)  
+Searches IGDBCommand - Gets information about a game using Internet Game Database (IGDB)  
 **Aliases**: `game`, `moby`, `games`
 
 **Returns**: <code>MessageEmbed</code> - Information about the fetched game  
@@ -2681,7 +2681,7 @@ Searches ImageCommand - Gets an image through Google Images
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ImageQuery | <code>StringResolvable</code> | Image to find on google images |
+| ImageQuery | <code>StringResolvable</code> | Image to find on Google Images |
 
 **Example**  
 ```js

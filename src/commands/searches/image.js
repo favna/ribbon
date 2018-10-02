@@ -5,7 +5,7 @@
  * @category searches
  * @name image
  * @example image Pyrrha Nikos
- * @param {StringResolvable} ImageQuery Image to find on google images
+ * @param {StringResolvable} ImageQuery Image to find on Google Images
  * @returns {MessageEmbed} Embedded image and search query
  */
 
@@ -23,7 +23,7 @@ module.exports = class ImageCommand extends Command {
       memberName: 'image',
       group: 'searches',
       aliases: ['img', 'i'],
-      description: 'Finds an image through google',
+      description: 'Finds an image through Google',
       format: 'ImageQuery',
       examples: ['image Pyrrha Nikos'],
       guildOnly: false,

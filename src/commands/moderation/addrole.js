@@ -1,5 +1,5 @@
 /**
- * @file Moderation AddRoleCommand - Add a role to member  
+ * @file Moderation AddRoleCommand - Add a role to a member  
  * **Aliases**: `newrole`, `ar`
  * @module
  * @category moderation

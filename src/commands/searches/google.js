@@ -1,12 +1,12 @@
 /**
- * @file Searches GoogleCommand - Gets information through google  
+ * @file Searches GoogleCommand - Gets information through Google  
  * Note: prioritizes Knowledge Graphs for better searching  
  * **Aliases**: `search`, `g`
  * @module
  * @category searches
  * @name google
  * @example google Pyrrha Nikos
- * @param {StringResolvable} SearchQuery Thing to find on google
+ * @param {StringResolvable} SearchQuery Thing to find on Google
  * @returns {Message} Result of your search
  */
 

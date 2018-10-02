@@ -1,5 +1,5 @@
 /**
- * @file Extra RemindCommand - Set a reminder and the bot will remind you  
+ * @file Extra RemindCommand - Set a reminder and Ribbon will remind you  
  * Works by reminding you after a given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`  
  * **Aliases**: `remindme`, `reminder`
  * @module
@@ -7,7 +7,7 @@
  * @name remind
  * @example remind 1h To continue developing Ribbon
  * @param {StringResolvable} Time Amount of time you want to be reminded in
- * @param {StringResolvable} Reminder Thing you want the bot to remind you of
+ * @param {StringResolvable} Reminder Thing you want Ribbon to remind you of
  * @returns {Message} Confirmation the reminder was stored
  */
 
@@ -26,7 +26,7 @@ module.exports = class RemindCommand extends Command {
       memberName: 'remind',
       group: 'extra',
       aliases: ['remindme', 'reminder'],
-      description: 'Set a reminder and the bot will remind you',
+      description: 'Set a reminder and Ribbon will remind you',
       details: 'Works by reminding you after a given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`',
       format: 'Time Reminder',
       examples: ['remind 1h To continue developing Ribbon'],

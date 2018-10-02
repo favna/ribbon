@@ -1,5 +1,5 @@
 /**
- * @file Games CookieCommand - Steal someone's 🍪 gnanahahahaha
+ * @file Games CookieCommand - Steal someone's 🍪 gnanahahahaha  
  * **Aliases**: `.biscuit`, `biscuit`
  * @module
  * @category games
