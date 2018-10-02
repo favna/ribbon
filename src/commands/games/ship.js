@@ -1,6 +1,6 @@
 /**
  * @file Games ShipCommand - Ship 2 members  
- * Leaving 1 or both parameters out will have the bot pick 1 or 2 random members  
+ * Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members
  * **Aliases**: `love`, `marry`, `engage`
  * @module
  * @category games
@@ -27,7 +27,7 @@ module.exports = class ShipCommand extends Command {
       group: 'games',
       aliases: ['love', 'marry', 'engage'],
       description: 'Ship 2 members',
-      details: 'Leaving 1 or both parameters out will have the bot pick 1 or 2 random members',
+      details: 'Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members',
       format: 'ShipMemberOne ShipMemberTwo',
       examples: ['ship Biscuit Rei'],
       guildOnly: false,

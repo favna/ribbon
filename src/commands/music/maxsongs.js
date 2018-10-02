@@ -1,7 +1,7 @@
 /**
  * @file Music MaxSongsCommand- The maximum amount of songs any member can queue  
  * Give no argument to show current amount of maximum songs  
- * Use "default" as argument to set it back to the bot default  
+ * Use "default" as argument to set it back to Ribbon's default  
  * **Aliases**: `songcap`, `songmax`, `maxsong`
  * @module
  * @category music

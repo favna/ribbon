@@ -55,7 +55,7 @@ module.exports = class DefaultVolumeCommand extends Command {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
 
-      return msg.reply(`set the default volume level to the bot's default (currently ${process.env.DEFAULT_VOLUME}).`);
+      return msg.reply(`set the default volume level to Ribbon's default (currently ${process.env.DEFAULT_VOLUME}).`);
     }
 
     const defaultVolume = parseInt(volume, 10);

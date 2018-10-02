@@ -3,9 +3,9 @@
  * Countdown messages are sent every 24 hours in a given channel and count down to a certain event  
  * For the date you should not have any spaces and it is strongly recommended to use [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)  
  * They will automatically get deleted when the event time is reached  
- * Optionally you can make the bot tag @everyone or @here when the event time is reached by adding \`--everyone\` or \`--here\` anywhere in the countdown content  
+ * Optionally, you can make Ribbon tag @everyone or @here when the event time is reached by adding \`--everyone\` or \`--here\` anywhere in the countdown content  
  * You can save multiple messages for varying events and channels by using this command multiple times  
- * The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the countdown  
+ * The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the countdown  
  * **Aliases**: `countdownmsg`, `countdownmessage`, `countdown`, `cam`
  * @module
  * @category moderation
@@ -38,9 +38,9 @@ module.exports = class CountdownAddCommand extends Command {
                 Countdown messages are sent every 24 hours in a given channel and count down to a certain event
                 For the date you should not have any spaces and it is strongly recommended to use [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
                 They will automatically get deleted when the event time is reached
-                Optionally you can make the bot tag @everyone or @here when the event time is reached by adding \`--everyone\` or \`--here\` anywhere in the countdown content
+                Optionally, you can make Ribbon tag @everyone or @here when the event time is reached by adding \`--everyone\` or \`--here\` anywhere in the countdown content
                 You can save multiple messages for varying events and channels by using this command multiple times
-                The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the countdown`,
+                The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the countdown`,
       format: 'DateTime Channel Message',
       examples: ['countdownadd 2018-12-31T18:00 #general New years day!'],
       guildOnly: true,

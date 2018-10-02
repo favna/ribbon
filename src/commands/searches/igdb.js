@@ -1,5 +1,5 @@
 /**
- * @file Searches IGDBCommand - Gets information about a game using IndieGamesDoneBad (IGDB)  
+ * @file Searches IGDBCommand - Gets information about a game using Internet Game Database (IGDB)  
  * **Aliases**: `game`, `moby`, `games`
  * @module
  * @category searches
@@ -22,7 +22,7 @@ module.exports = class IGDBCommand extends Command {
       memberName: 'igdb',
       group: 'searches',
       aliases: ['game', 'moby', 'games'],
-      description: 'Gets information about a game using IndieGamesDoneBad (IGDB)',
+      description: 'Gets information about a game using Internet Game Database (IGDB)',
       format: 'GameName',
       examples: ['igdb Tales of Berseria'],
       guildOnly: false,

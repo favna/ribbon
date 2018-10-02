@@ -1,9 +1,9 @@
 /**
  * @file Moderation TimerAddCommand - Store timed messages  
- * These are messages the bot will repeat in a given channel on a given interval  
+ * These are messages Ribbon will repeat in a given channel on a given interval  
  * Useful for repeating about rules and such  
  * You can save multiple messages with varying intervals and channels by using this command multiple times  
- * The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the timed message  
+ * The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the timed message  
  * The format for the interval is in minutes, hours or days in the format of `5m`, `2h` or `1d`  
  * **Aliases**: `timedmsgs`, `timedmsg`, timedmessages`, `timer`, `tm`
  * @module
@@ -33,10 +33,10 @@ module.exports = class TimerAddCommand extends Command {
       group: 'moderation',
       aliases: ['timedmsgs', 'timedmsg', 'timedmessages', 'timer', 'tm'],
       description: 'Store timed messages',
-      details: stripIndents`These are messages the bot will repeat in a given channel on a given interval
+      details: stripIndents`These are messages Ribbon will repeat in a given channel on a given interval
       Useful for repeating about rules and such
       You can save multiple messages with varying intervals and channels by using this command multiple times
-      The first time the message will be send is the next periodic check the bot will do (which is every 3 minutes) after adding the timed message
+      The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the timed message
       The format for the interval is in minutes, hours or days in the format of \`5m\`, \`2h\` or \`1d\``,
       format: 'Interval Channel Message',
       examples: ['timeradd #general 1d Please read the rules everyone!'],
