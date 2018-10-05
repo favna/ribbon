@@ -262,7 +262,7 @@ const joinMessage = async (member) => {
       .setDescription(`Please give a warm welcome to __**${member.displayName}**__  (\`${member.id}\`)`)
       .setImage('attachment://joinimg.png');
   
-    return member.guild.channels.get(member.guild.settings.get('joinmsgchannel')).send(`welcome <@${member.id}> 🎗️!`, {embed: newMemberEmbed});
+    return member.guild.channels.get(member.guild.settings.get('joinmsgchannel')).send(`Welcome <@${member.id}> 🎗️!`, {embed: newMemberEmbed});
   } catch (err) {
     return null;
   }
