@@ -40,10 +40,10 @@ module.exports = class nekoCommand extends Command {
       stopTyping(msg);
 
       return msg.embed({
-        description: `Here is your cute cat girl ${msg.member.displayName} 😍!`,
-        image: nekoImg.url,
+        description: `Here is your cute cat girl ${msg.member.displayName} 😻!`,
+        image: {url: nekoImg.url},
         color: msg.guild ? msg.guild.me.displayColor : 10610610
-      }, `<@${msg.author.id}>`);
+      }, `<:cat:498198858032218143> <@${msg.author.id}> <:cat:498198858032218143>`);
     } catch (err) {
       stopTyping(msg);
 
