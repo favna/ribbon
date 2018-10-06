@@ -124,8 +124,8 @@ module.exports = class MoneyCommand extends Command {
       oxrEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
         .setAuthor('🌐 Currency Converter')
-        .addField(`:flag_${curOne.slice(0, 2).toLowerCase()}: Money in ${curOne}`, `${currencySymbol(curOne)}${value}`, true)
-        .addField(`:flag_${curTwo.slice(0, 2).toLowerCase()}: Money in ${curTwo}`, `${currencySymbol(curTwo)}${this.converter(value, curOne, curTwo)}`, true)
+        .addField(`:flag_${curOne.slice(0, 2).toLowerCase()}: Money in ${curOne}`, `${currencySymbol(curOne) ? currencySymbol(curOne) : ''}${value}`, true)
+        .addField(`:flag_${curTwo.slice(0, 2).toLowerCase()}: Money in ${curTwo}`, `${currencySymbol(curTwo) ? currencySymbol(curOne) : ''}${this.converter(value, curOne, curTwo)}`, true)
         .setTimestamp();
 
       deleteCommandMessages(msg, this.client);
