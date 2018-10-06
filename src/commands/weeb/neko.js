@@ -17,6 +17,7 @@ module.exports = class nekoCommand extends Command {
       name: 'neko',
       memberName: 'neko',
       group: 'weeb',
+      aliases: ['catgirl'],
       description: 'Get a random cute cat girl 😍',
       examples: ['neko'],
       guildOnly: true,
