@@ -142,7 +142,7 @@
     pixelmatch "^4.0.2"
     tinycolor2 "^1.4.1"
 
-"@jimp/custom@^0.5.0":
+"@jimp/custom@^0.5.3":
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@jimp/custom/-/custom-0.5.3.tgz#b932241e62d628bd465541efafaaddb0a720def6"
   integrity sha512-qcW7bJXbMX8o27ZGQ2p8oTC3Z74cN/3tmhUimZdBXlZZpNNmFj3kSNSdLVIwRHazI4E3LKJ+QLKk1q8LndojIQ==
@@ -306,7 +306,7 @@
     "@jimp/utils" "^0.5.0"
     core-js "^2.5.7"
 
-"@jimp/plugins@^0.5.0":
+"@jimp/plugins@^0.5.3":
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@jimp/plugins/-/plugins-0.5.3.tgz#c9a5000c1d7051c715683c1c8ed61a290a75bc97"
   integrity sha512-DgIwrQBi/MmneYy76pRrW8njhopxJ56Ch2KKLUHwKK+R743J+mqrYK8WlHzmhR2PaUPzix9vuY7Lob9G6GCeMg==
@@ -348,7 +348,7 @@
     core-js "^2.5.7"
     utif "^2.0.1"
 
-"@jimp/types@^0.5.0":
+"@jimp/types@^0.5.3":
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@jimp/types/-/types-0.5.3.tgz#bd3b2a9cf26e0b59a94a882bfd4b4f767592bd95"
   integrity sha512-85rAO3nV877ZTAWyY5kYg6pNdMAML/M+nO0XIn0fVMtVgrGBSjbSBE9ttG0owcck9Obzz2P5L9fseTdSTfOtwg==
@@ -2039,15 +2039,15 @@ istanbul-reports@^2.0.0:
   dependencies:
     handlebars "^4.0.11"
 
-jimp@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/jimp/-/jimp-0.5.0.tgz#ffc1c833d32ba2ab3589ffa9719eee0676b20bf3"
-  integrity sha512-kj942ZSBBwCVwz9oDPR+8Snwq5O/uDxqiUtVEr6G8uMnYk8fC/eCkMJSeGezKwBinQpMbp9r0Z3M+RaoKFNUeQ==
+jimp@0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/jimp/-/jimp-0.5.3.tgz#6f411ee4eb459686f6f8e11a31faa08c6dfac922"
+  integrity sha512-cPiAIvsnbqIc81ZL6MQ0bjOw8YVTWuJl+HLiu/Qljy54he6E/oM1zDMI+trUin6WybB0Xv8aiECY8Svy2q6g3A==
   dependencies:
     "@babel/polyfill" "^7.0.0"
-    "@jimp/custom" "^0.5.0"
-    "@jimp/plugins" "^0.5.0"
-    "@jimp/types" "^0.5.0"
+    "@jimp/custom" "^0.5.3"
+    "@jimp/plugins" "^0.5.3"
+    "@jimp/types" "^0.5.3"
     core-js "^2.5.7"
 
 jpeg-js@^0.3.4:
