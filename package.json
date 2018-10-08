@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "better-sqlite3": "^4.1.4",
-    "booru": "1.2.0",
+    "booru": "1.3.3",
     "bufferutil": "^4.0.0",
     "canvas": "Automattic/node-canvas#v1.x",
     "canvas-constructor": "1.1.2",
@@ -58,7 +58,7 @@
     "flesch-kincaid": "^1.0.3",
     "fuse.js": "^3.2.1",
     "igdb-api-node": "^3.1.7",
-    "jimp": "0.5.0",
+    "jimp": "0.5.3",
     "libsodium-wrappers": "^0.7.3",
     "lodash": "^4.17.11",
     "moment": "2.22.2",
@@ -81,7 +81,7 @@
     "underscore": "^1.9.1",
     "unescape-es6": "^1.0.2",
     "xdicey": "2.0.3",
-    "ytdl-core": "0.25.2",
+    "ytdl-core": "0.26.1",
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {

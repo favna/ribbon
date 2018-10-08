@@ -59,6 +59,8 @@
 
 - Timed repeating messages
 
+- Basic support for being self-hosted. Installation instructions [can be found on the wiki](https://github.com/Favna/Ribbon/wiki/Self-hosting-Installation)
+
 - Many other commands. See [All Commands on the Wiki](https://github.com/Favna/Ribbon/wiki/All-Commands) for the full list
 
 ## Special Thanks
