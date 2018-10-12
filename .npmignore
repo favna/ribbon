@@ -23,6 +23,7 @@ src/commands/owner/test.js
 # Stuff that doesn't need to be on NPM
 .circleci/
 .github/
+.git/
 docs/
 test/
 yarn.lock
