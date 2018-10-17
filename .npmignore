@@ -1,15 +1,29 @@
-.circleci/
-.github/
-.nyc_output/
-.vscode/
-coverage/
-docs/
-test/
+# Node modules need to be installed through yarn
 node_modules/
+
+# Environment variables
 .env
+
+# Any logs created
 *.log
 *.stackdump
-yarn.lock
+
+# Data folders
 src/data/databases/*
-src/commands/owner/test.js
+
+# Folder keep
 !**/*.gitkeep
+
+# VSCode settings
+.vscode/
+
+# My own stuff
+src/commands/owner/test.js
+
+# Stuff that doesn't need to be on NPM
+.circleci/
+.github/
+.git/
+docs/
+test/
+yarn.lock

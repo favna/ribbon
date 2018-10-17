@@ -1,6 +1,6 @@
 /**
  * @file Moderation AutomodCommand - General toggle for all automod features  
- * **Aliases**: `botmod`, `skynetmod` 
+ * **Aliases**: `botmod`, `skynetmod`  
  * @module
  * @category moderation
  * @name automod
@@ -10,9 +10,9 @@
  * @returns {MessageEmbed} automod confirmation log
  */
 
-const {Command} = require('discord.js-commando'), 
-  {MessageEmbed} = require('discord.js'), 
-  {oneLine, stripIndents} = require('common-tags'), 
+const {Command} = require('discord.js-commando'),
+  {MessageEmbed} = require('discord.js'),
+  {oneLine, stripIndents} = require('common-tags'),
   {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
 
 module.exports = class AutomodCommand extends Command {
@@ -50,7 +50,7 @@ module.exports = class AutomodCommand extends Command {
           key: 'roles',
           prompt: 'What roles, if any, should be exempt from automod? End with `finish` when you replied all role names (if any)',
           type: 'role',
-          default: 'none',
+          default: '',
           infinite: true
         }
       ],
@@ -76,8 +76,8 @@ module.exports = class AutomodCommand extends Command {
       .setColor('#3DFFE5')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`**Action:** Automod features are now ${option ? 'enabled' : 'disabled'}
-      ${roles ? `Roles that are exempted from automod: ${roles.map(val => `\`${val.name}\``).join(', ')}` : null}
-      **Notice:** Be sure to enable your desired individual features, they are all off by default!`)
+      **Notice:** Be sure to enable your desired individual features, they are all off by default!
+      ${roles ? `**Roles exempted from automod**: ${roles.map(val => `\`${val.name}\``).join(', ')}` : ''}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {

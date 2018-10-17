@@ -41,11 +41,21 @@ class Ribbon {
   onCmdErr () {
     return (cmd, err, msg) => {
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
-      Caught general error!
+      Caught **Command Error**!
       **Command:** ${cmd.name}
       **Server:** ${msg.guild.name} (${msg.guild.id})
       **Author:** ${msg.author.tag} (${msg.author.id})
       **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Error Message:** ${err}
+      `);
+    };
+  }
+
+  onErr () {
+    return (err) => {
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      Caught **WebSocket Error**!
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       **Error Message:** ${err}
       `);
     };
@@ -295,6 +305,20 @@ class Ribbon {
     };
   }
 
+  onRateLimit () {
+    return (info) => {
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      Ran into a **rate limit**!
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Timeout**: ${info.timeout}
+      **Limit**: ${info.limit}
+      **HTTP Method**: ${info.method}
+      **Path**: ${info.path}
+      **Route**: ${info.route}
+      `);
+    };
+  }
+
   onUnknownCommand () {
     return (msg) => {
       const {guild} = msg;
@@ -309,20 +333,31 @@ class Ribbon {
     };
   }
 
+  onWarn () {
+    return (warn) => {
+      this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
+      Caught **General Warning**!
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Warning Message:** ${warn}
+      `);
+    };
+  }
+
   init () {
     this.client
       .on('commandError', this.onCmdErr())
       .on('debug', console.log) // eslint-disable-line no-console
-      .on('error', console.error) // eslint-disable-line no-console
+      .on('error', this.onErr())
       .on('guildCreate', this.onGuildJoin())
       .on('guildDelete', this.onGuildLeave())
       .on('guildMemberAdd', this.onGuildMemberAdd())
       .on('guildMemberRemove', this.onGuildMemberRemove())
       .on('message', this.onMessage())
       .on('presenceUpdate', this.onPresenceUpdate())
+      .on('rateLimit', this.onRateLimit())
       .on('ready', this.onReady())
       .on('unknownCommand', this.onUnknownCommand())
-      .on('warn', console.warn); // eslint-disable-line no-console
+      .on('warn', this.onWarn());
 
     const db = new Database(path.join(__dirname, 'data/databases/settings.sqlite3'));
 

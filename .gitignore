@@ -17,7 +17,5 @@ src/data/databases/*
 # VSCode settings
 .vscode/
 
-# Code coverage results
-coverage/
-.nyc_output/
+# My own stuff
 src/commands/owner/test.js
