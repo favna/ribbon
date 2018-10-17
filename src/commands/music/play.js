@@ -331,9 +331,11 @@ module.exports = class PlaySongCommand extends Command {
     }
 
     if (!song) {
-      queue.textChannel.send('We\'ve run out of songs! Better queue up some more tunes.');
-      queue.voiceChannel.leave();
-      this.queue.delete(guild.id);
+      if (queue) {
+        queue.textChannel.send('We\'ve run out of songs! Better queue up some more tunes.');
+        queue.voiceChannel.leave();
+        this.queue.delete(guild.id);
+      }
 
       return;
     }
