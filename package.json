@@ -54,7 +54,7 @@
     "erlpack": "hammerandchisel/erlpack",
     "fast-levenshtein": "~2.0.4",
     "flesch-kincaid": "^1.0.3",
-    "fuse.js": "^3.2.1",
+    "fuse.js": "^3.3.0",
     "igdb-api-node": "^3.1.7",
     "jimp": "0.5.3",
     "libsodium-wrappers": "^0.7.3",
