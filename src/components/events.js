@@ -643,9 +643,9 @@ const handleReady = (client) => {
     forceEshopUpdate(bot);
   }, ms('24h'));
 
-  fs.watch(path.join(__dirname, 'data/dex/formats.json'), (eventType, filename) => {
+  fs.watch(path.join(__dirname, '../data/dex/formats.json'), (eventType, filename) => {
     if (filename) {
-      decache(path.join(__dirname, 'data/dex/formats.json'));
+      decache(path.join(__dirname, '../data/dex/formats.json'));
       client.registry.resolveCommand('pokemon:dex').reload();
     }
   });
