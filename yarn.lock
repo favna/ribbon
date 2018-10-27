@@ -3404,10 +3404,10 @@ yargs@^8.0.2:
     y18n "^3.2.1"
     yargs-parser "^7.0.0"
 
-ytdl-core@0.26.1:
-  version "0.26.1"
-  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.26.1.tgz#dc50c7ee8da10616d8933b62ae3cf1e7259c6e99"
-  integrity sha512-p6mZQRI704Tl/yZoYB3j1rSJj7sSKSLJ567FUUbRkqNhmAXgASIERjROBzo9eYwrV/ZNbZ0+jSG6kvK3MASf2Q==
+ytdl-core@0.26.3:
+  version "0.26.3"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.26.3.tgz#33b5b8991dff0d5b6a1ffea3edf4a4e945b46549"
+  integrity sha512-KD0SLFqVNhH8N4Ie+qdusqfFmyX7SB6+y+S1MCI7vY9zS/wjRxH/zgoYRUwpP+YfXaiWzBPVIzy/5wK5asVUXQ==
   dependencies:
     html-entities "^1.1.3"
     m3u8stream "^0.4.2"
