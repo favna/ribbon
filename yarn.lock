@@ -940,10 +940,10 @@ debug@^4.0.1:
   dependencies:
     ms "^2.1.1"
 
-decache@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/decache/-/decache-4.4.0.tgz#6f6df6b85d7e7c4410a932ffc26489b78e9acd13"
-  integrity sha1-b232uF1+fEQQqTL/wmSJt46azRM=
+decache@^4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/decache/-/decache-4.4.1.tgz#65dbb116f07d081320de412a2019b35a1ecc754e"
+  integrity sha512-Gq5gbmdCefuIdlP8BFfzCgxU5qGeQws6lA72Hk0wzz9+PQ3rwYRcZXphFev52ZhHrcGMkP1LQO7i27c5D584Sw==
   dependencies:
     callsite "^1.0.0"
 
