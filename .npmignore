@@ -14,7 +14,8 @@ src/data/databases/*
 # Folder keep
 !**/*.gitkeep
 
-# VSCode settings
+# IDE settings
+.idea/
 .vscode/
 
 # My own stuff
