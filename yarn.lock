@@ -2886,10 +2886,10 @@ sshpk@^1.7.0:
     jsbn "~0.1.0"
     tweetnacl "~0.14.0"
 
-steamapi@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/steamapi/-/steamapi-2.0.2.tgz#28ba264613e902879425ded6363b91f0ac88396b"
-  integrity sha512-rTUMsXyUvdzHd/ej0ubgSROLoBvt6EbEYxA+v/meHUJwVuYXiVjG6s3cxrxCA6V6kg78hD3T8cLC8H9c7E0z6w==
+steamapi@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/steamapi/-/steamapi-2.0.3.tgz#76b8257ce6c012fffa9183b1ab74b41b2fbc1c4c"
+  integrity sha512-OWgz4YrM3UVAH3dO9sGn0eYbMeqxtMosQtB0D3ZuBnJdVXAlcRdKNNNd/PblT1OUAFR2qKcNNidXYFJRdgZJOg==
 
 stream-connect@^1.0.2:
   version "1.0.2"

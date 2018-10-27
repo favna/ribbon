@@ -72,7 +72,7 @@
     "snekfetch": "^4.0.4",
     "speedtest-net": "^1.4.3",
     "spotify-web-api-node": "4.0.0",
-    "steamapi": "2.0.2",
+    "steamapi": "2.0.3",
     "syllable": "^3.1.0",
     "to-zalgo": "^1.0.1",
     "translate": "Marak/translate.js#modern",
