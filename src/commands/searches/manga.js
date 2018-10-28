@@ -69,9 +69,8 @@ module.exports = class MangaCommand extends Command {
         .setThumbnail('https://favna.xyz/images/ribbonhost/kitsulogo.png')
         .addField('Canonical Title', hit.canonicalTitle, true)
         .addField('Score', `${hit.averageRating}%`, true)
-        .addField('Age Rating', hit.ageRating, true)
-        .addField('First Publish Date', moment.unix(hit.startDate).format('MMMM Do YYYY'), true)
-        .addField('Genres', hit.categories.slice(0, 5).join(', '), false);
+        .addField('Age Rating', hit.ageRating ? hit.ageRating : 'None', true)
+        .addField('First Publish Date', moment.unix(hit.startDate).format('MMMM Do YYYY'), true);
 
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
