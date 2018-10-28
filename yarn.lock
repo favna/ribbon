@@ -1006,8 +1006,8 @@ dijkstrajs@^1.0.1:
   integrity sha1-082BIh4+pAdCz83lVtTpnpjdxxs=
 
 discord.js-commando@favna/commando#ribbon:
-  version "1.2.6-ribbon"
-  resolved "https://codeload.github.com/favna/commando/tar.gz/6f619e7372c815b3ff4bd05c1f38171958ca0060"
+  version "1.2.7-ribbon"
+  resolved "https://codeload.github.com/favna/commando/tar.gz/d3253140faf7cfd496b1b25d02192fa127c55a20"
   dependencies:
     common-tags "^1.0.0"
     escape-string-regexp "^1.0.0"
