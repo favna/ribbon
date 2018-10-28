@@ -10,10 +10,10 @@
  * @returns {MessageEmbed} The avatar image and a direct link to it
  */
 
-const {Command} = require('discord.js-commando'), 
-  {MessageEmbed} = require('discord.js'),
-  {stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando'; 
+import {MessageEmbed} from 'discord.js';
+import {stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class AvatarCommand extends Command {
   constructor (client) {

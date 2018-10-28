@@ -7,11 +7,11 @@
  * @returns {MessageEmbed} Info on who used the "say" command last
  */
 
-const moment = require('moment'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import moment from 'moment';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class SayWutCommand extends Command {
   constructor (client) {

@@ -9,12 +9,12 @@
  * @returns {MessageEmbed} Information about the fetched TV serie
  */
 
-const fetch = require('node-fetch'),
-  moment = require('moment'),
-  querystring = require('querystring'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import moment from 'moment';
+import querystring from 'querystring';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {deleteCommandMessages, roundNumber, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class TVCommand extends Command {
   constructor (client) {

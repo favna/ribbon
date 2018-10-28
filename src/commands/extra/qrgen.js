@@ -9,12 +9,12 @@
  * @returns {MessageEmbed} Embedded QR code and original image URL
  */
 
-const moment = require('moment'),
-  qr = require('qrcode'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed, MessageAttachment} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import moment from 'moment';
+import qr from 'qrcode';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed, MessageAttachment} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class QRGenCommand extends Command {
   constructor (client) {

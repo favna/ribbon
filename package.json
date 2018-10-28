@@ -19,8 +19,9 @@
     "docs:deploy": "yarn run docs && yarn run docs:json && git commit -am documentation && git push && cd ../Ribbon.wiki/ && git commit -am documentation && git push && cd ../favna.xyz/ && git commit -am documentation && git push",
     "lint": "eslint src/commands/**/*.js src/Ribbon.js src/components/*.js",
     "lint:fix": "eslint --fix src/commands/**/*.js src/Ribbon.js src/components/*.js",
-    "start": "node src/app.js bow",
-    "start:ribbon": "node src/app.js",
+    "start": "node -r esm --experimental-modules src/app.js bow",
+    "start:ribbon": "node -r esm --experimental-modules src/app.js",
+    "start:debug": "node -r esm --inspect --experimental-modules src/app.js bow",
     "test": "yarn lint && mocha"
   },
   "keywords": [
@@ -33,14 +34,12 @@
     "NodeJS"
   ],
   "engines": {
-    "node": ">=8.0.0 <9.0"
+    "node": ">=8.0.0"
   },
   "dependencies": {
     "better-sqlite3": "^5.0.1",
     "booru": "1.3.3",
     "bufferutil": "^4.0.0",
-    "canvas": "Automattic/node-canvas#v1.x",
-    "canvas-constructor": "1.1.2",
     "cheerio": "^1.0.0-rc.2",
     "common-tags": "^1.8.0",
     "currency-symbol-map": "4.0.4",
@@ -52,6 +51,7 @@
     "eightball": "^1.0.1",
     "emoji-regex": "^7.0.1",
     "erlpack": "discordapp/erlpack",
+    "esm": "^3.0.84",
     "fast-levenshtein": "^2.0.6",
     "flesch-kincaid": "^1.0.3",
     "fuse.js": "^3.3.0",
@@ -85,6 +85,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "eslint": "^5.8.0",
+    "eslint-plugin-import": "^2.14.0",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.2.0"
   },

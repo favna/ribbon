@@ -12,13 +12,13 @@
  * @returns {MessageEmbed} The input and output of the translation
  */
 
-const moment = require('moment'),
-  translate = require('translate'),
-  unescape = require('unescape-es6'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import moment from 'moment';
+import translate from 'translate';
+import unescape from 'unescape-es6';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class TranslateCommand extends Command {
   constructor (client) {

@@ -9,8 +9,8 @@
  * @returns {MessageEmbed} A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔
  */
 
-const {Command} = require('discord.js-commando'), 
-  {stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando'; 
+import {stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class KaiCommand extends Command {
   constructor (client) {

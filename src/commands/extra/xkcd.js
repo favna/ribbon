@@ -7,10 +7,10 @@
  * @returns {MessageEmbed} Embedded image and info about it
  */
 
-const fetch = require('node-fetch'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class xkcdCommand extends Command {
   constructor (client) {

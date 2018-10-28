@@ -8,9 +8,9 @@
  * @returns {MessageEmbed} The tickling and a cute image ❤
  */
 
-const fetch = require('node-fetch'),
-  {Command} = require('discord.js-commando'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import {Command} from 'discord.js-commando';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class TickleCommand extends Command {
   constructor (client) {

@@ -9,14 +9,14 @@
  * @returns {MessageEmbed} Information about the fetched game
  */
 
-const SteamAPI = require('steamapi'),
-  cheerio = require('cheerio'),
-  currencySymbol = require('currency-symbol-map'),
-  fetch = require('node-fetch'),
-  querystring = require('querystring'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import SteamAPI from 'steamapi';
+import cheerio from 'cheerio';
+import currencySymbol from 'currency-symbol-map';
+import fetch from 'node-fetch';
+import querystring from 'querystring';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class SteamCommand extends Command {
   constructor (client) {

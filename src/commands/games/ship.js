@@ -12,12 +12,12 @@
  */
 
 /* eslint-disable no-unused-vars*/
-const Jimp = require('jimp'),
-  {promisify} = require('util'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed, MessageAttachment} = require('discord.js'),
-  {oneLine} = require('common-tags'),
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
+import Jimp from 'jimp/es';
+import {promisify} from 'util';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed, MessageAttachment} from 'discord.js';
+import {oneLine} from 'common-tags';
+import {deleteCommandMessages, roundNumber, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class ShipCommand extends Command {
   constructor (client) {

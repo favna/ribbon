@@ -9,12 +9,12 @@
  * @returns {MessageEmbed} Statistics of that user
  */
 
-const fetch = require('node-fetch'),
-  moment = require('moment'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import moment from 'moment';
+import {deleteCommandMessages, startTyping, stopTyping} from '../../components/util.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
 
 module.exports = class PubgCommand extends Command {
   constructor (client) {
@@ -194,6 +194,9 @@ module.exports = class PubgCommand extends Command {
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       stopTyping(msg);
+      if ((/(?:Cannot read property)/i).test(err.toString())) {
+        return msg.reply(`no player found with username \`${user}\` in \`${shard}\``);
+      }
 
       this.client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       <@${this.client.owners[0].id}> Error occurred in \`pubg\` command!

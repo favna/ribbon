@@ -10,14 +10,14 @@
  * @returns {MessageEmbed} Copypasta content. In a normal message if more than 1024 characters
  */
 
-const Database = require('better-sqlite3'),
-  dym = require('didyoumean2'),
-  moment = require('moment'),
-  path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {splitMessage, MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Database from 'better-sqlite3';
+import dym from 'didyoumean2';
+import moment from 'moment';
+import path from 'path';
+import {Command} from 'discord.js-commando';
+import {splitMessage, MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class CopyPastaCommand extends Command {
   constructor (client) {

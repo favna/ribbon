@@ -11,18 +11,17 @@
  * @returns {MessageEmbed} Lots of information about the pokemon
  */
 
-const Fuse = require('fuse.js'),
-  dexEntries = require('../../data/dex/flavorText.json'),
-  moment = require('moment'),
-  smogonFormats = require('../../data/dex/formats.json'),
-  path = require('path'),
-  zalgo = require('to-zalgo'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {PokeAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
-  {BattlePokedex} = require(path.join(__dirname, '../../data/dex/pokedex')),
-  {oneLine, stripIndents} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Fuse from 'fuse.js';
+import dexEntries from '../../data/dex/flavorText.json';
+import moment from 'moment';
+import smogonFormats from '../../data/dex/formats.json';
+import zalgo from 'to-zalgo';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {PokeAliases} from '../../data/dex/aliases';
+import {BattlePokedex} from '../../data/dex/pokedex';
+import {oneLine, stripIndents} from 'common-tags';
+import {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class DexCommand extends Command {
   constructor (client) {

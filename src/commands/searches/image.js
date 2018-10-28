@@ -4,17 +4,17 @@
  * @module
  * @category searches
  * @name image
- * @example image Pyrrha Nikos
+ * @example image Pyrrha Nikos'
  * @param {StringResolvable} ImageQuery Image to find on Google Images
  * @returns {MessageEmbed} Embedded image and search query
  */
 
-const cheerio = require('cheerio'),
-  fetch = require('node-fetch'),
-  querystring = require('querystring'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import cheerio from 'cheerio';
+import fetch from 'node-fetch';
+import querystring from 'querystring';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class ImageCommand extends Command {
   constructor (client) {

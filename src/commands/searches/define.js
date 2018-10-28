@@ -9,11 +9,11 @@
  * @returns {MessageEmbed} Possible definitions for that word
  */
 
-const fetch = require('node-fetch'),
-  querystring = require('querystring'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import querystring from 'querystring';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class DefineCommand extends Command {
   constructor (client) {

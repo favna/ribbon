@@ -10,11 +10,11 @@
  * @returns {MessageEmbed} Score, Link and preview of the image
  */
 
-const booru = require('booru'),
-  {MessageEmbed} = require('discord.js'),
-  {Command} = require('discord.js-commando'),
-  {stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import booru from 'booru';
+import {MessageEmbed} from 'discord.js';
+import {Command} from 'discord.js-commando';
+import {stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class PahealCommand extends Command {
   constructor (client) {

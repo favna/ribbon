@@ -7,12 +7,12 @@
  * @returns {Message} Confirmation the data was fetched 
  */
 
-const decache = require('decache'),
-  eshop = require('nintendo-switch-eshop'),
-  fs = require('fs'),
-  path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import decache from 'decache';
+import eshop from 'nintendo-switch-eshop';
+import fs from 'fs';
+import path from 'path';
+import {Command} from 'discord.js-commando';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class EShopFetchCommand extends Command {
   constructor (client) {

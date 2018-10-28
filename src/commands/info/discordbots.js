@@ -9,11 +9,11 @@
  * @returns {MessageEmbed} Info about a bot
  */
 
-const fetch = require('node-fetch'),
-  moment = require('moment'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import moment from 'moment';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class DiscordBotsCommand extends Command {
   constructor (client) {

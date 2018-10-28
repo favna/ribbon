@@ -5,12 +5,12 @@
  */
 
 /* eslint-disable no-mixed-requires, one-var */
-const path = require('path');
+import dotenv from 'dotenv';
+import path from 'path';
+import Ribbon from './Ribbon';
 
-require('dotenv').config({path: path.join(__dirname, '.env')});
-const Ribbon = require(path.join(__dirname, 'Ribbon.js')),
-  start = function () {
-    new Ribbon(process.argv[2] ? process.env.stripetoken : process.env.ribbontoken).init();
-  };
+dotenv.config({path: path.join(__dirname, '.env')});
+
+const start = () => new Ribbon((/(?:bow)/i).test(process.argv[2]) ? process.env.stripetoken : process.env.ribbontoken).init();
 
 start();

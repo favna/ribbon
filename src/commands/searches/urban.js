@@ -9,11 +9,11 @@
  * @returns {MessageEmbed} Top definition for the fetched phrase
  */
 
-const fetch = require('node-fetch'),
-  querystring = require('querystring'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import querystring from 'querystring';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class UrbanCommand extends Command {
   constructor (client) {

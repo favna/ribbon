@@ -11,13 +11,13 @@
  * @returns {MessageEmbed} Various statistics about the current forecast
  */
 
-const fetch = require('node-fetch'),
-  moment = require('moment'),
-  querystring = require('querystring'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import moment from 'moment';
+import querystring from 'querystring';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, roundNumber, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class WeatherCommand extends Command {
   constructor (client) {

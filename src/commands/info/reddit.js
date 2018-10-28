@@ -9,15 +9,15 @@
  * @returns {MessageEmbed} Statistics of the reddit user
  */
 
-const countSyllable = require('syllable'),
-  fetch = require('node-fetch'),
-  fleschKincaid = require('flesch-kincaid'),
-  moment = require('moment'),
-  querystring = require('querystring'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
+import countSyllable from 'syllable';
+import fetch from 'node-fetch';
+import fleschKincaid from 'flesch-kincaid';
+import moment from 'moment';
+import querystring from 'querystring';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, roundNumber, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class RedditCommand extends Command {
   constructor (client) {

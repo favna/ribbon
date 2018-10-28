@@ -10,9 +10,9 @@
  * @returns {Message} Sad face about stopping the music
  */
 
-const {Command} = require('discord.js-commando'), 
-  {oneLine} = require('common-tags'), 
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando'; 
+import {oneLine} from 'common-tags'; 
+import {deleteCommandMessages, roundNumber, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class StopMusicCommand extends Command {
   constructor (client) {

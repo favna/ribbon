@@ -7,9 +7,9 @@
  * @returns {MessageEmbed} Title, URL of and progress into the song
  */
 
-const {Command} = require('discord.js-commando'), 
-  {stripIndents} = require('common-tags'), 
-  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando';
+import {stripIndents} from 'common-tags';
+import {deleteCommandMessages, Song, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class MusicStatusCommand extends Command {
   constructor (client) {

@@ -7,14 +7,14 @@
  * @returns {MessageEmbed} List of all timed messages
  */
 
-const Database = require('better-sqlite3'),
-  moment = require('moment'),
-  ms = require('ms'),
-  path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {splitMessage} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Database from 'better-sqlite3';
+import moment from 'moment';
+import ms from 'ms';
+import path from 'path';
+import {Command} from 'discord.js-commando';
+import {splitMessage} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class TimerListCommand extends Command {
   constructor (client) {

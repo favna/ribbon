@@ -9,11 +9,11 @@
  * @returns {MessageEmbed} Information about the fetched game
  */
 
-const igdbapi = require('igdb-api-node').default,
-  moment = require('moment'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
+import igdb from 'igdb-api-node';
+import moment from 'moment';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {deleteCommandMessages, roundNumber, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class IGDBCommand extends Command {
   constructor (client) {
@@ -59,23 +59,23 @@ module.exports = class IGDBCommand extends Command {
     try {
 
       const gameEmbed = new MessageEmbed(),
-        igdb = igdbapi(process.env.igdbkey),
-        gameInfo = await igdb.games({
+        igdbApp = igdb(process.env.igdbkey),
+        gameInfo = await igdbApp.games({
           search: game,
           fields: ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'],
           limit: 1,
           offset: 0
         }),
         coverImg = await gameInfo.body[0].cover.url.includes('http') ? gameInfo.body[0].cover.url : `https:${gameInfo.body[0].cover.url}`,
-        developerInfo = await igdb.companies({
+        developerInfo = await igdbApp.companies({
           ids: gameInfo.body[0].developers,
           fields: ['name']
         }),
-        genreInfo = await igdb.genres({
+        genreInfo = await igdbApp.genres({
           ids: gameInfo.body[0].genres,
           fields: ['name']
         }),
-        platformInfo = await igdb.platforms({
+        platformInfo = await igdbApp.platforms({
           ids: gameInfo.body[0].platforms,
           fields: ['name']
         }),

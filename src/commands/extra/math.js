@@ -9,12 +9,12 @@
  * @returns {MessageEmbed} Your equation and its answer
  */
 
-const fetch = require('node-fetch'),
-  moment = require('moment'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import moment from 'moment';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class MathCommand extends Command {
   constructor (client) {

@@ -10,9 +10,9 @@
  * @returns {MessageEmbed} List of queued songs with their duration and total duration of the queue
  */
 
-const {Command, util} = require('discord.js-commando'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../components/util.js');
+import {Command, util} from 'discord.js-commando';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, Song, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class ViewQueueCommand extends Command {
   constructor (client) {

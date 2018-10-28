@@ -10,11 +10,11 @@
  * @returns {MessageEmbed} URL, duration and embedded thumbnail
  */
 
-const fetch = require('node-fetch'),
-  querystring = require('querystring'),
-  {MessageEmbed} = require('discord.js'),
-  {Command} = require('discord.js-commando'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import querystring from 'querystring';
+import {MessageEmbed} from 'discord.js';
+import {Command} from 'discord.js-commando';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class PornVidsCommand extends Command {
   constructor (client) {

@@ -14,11 +14,11 @@
  * @returns {MessageEmbed} Color of embed matches generated color
  */
 
-const {Canvas} = require('canvas-constructor'), 
-  {Command} = require('discord.js-commando'), 
-  {MessageEmbed, MessageAttachment} = require('discord.js'), 
-  {stripIndents} = require('common-tags'), 
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Jimp from 'jimp/es';
+import {Command} from 'discord.js-commando'; 
+import {MessageEmbed, MessageAttachment} from 'discord.js'; 
+import {stripIndents} from 'common-tags'; 
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class RandomColCommand extends Command {
   constructor (client) {
@@ -74,15 +74,13 @@ module.exports = class RandomColCommand extends Command {
     };
   }
 
-  run (msg, {col}) {
+  async run (msg, {col}) {
     startTyping(msg);
     const embed = new MessageEmbed(),
       hex = col !== 'random' ? col : `#${Math.floor(Math.random() * 16777215).toString(16)}`,
-      canv = new Canvas(80, 60)
-        .setColor(hex)
-        .addRect(0, 0, 100, 60)
-        .toBuffer(),
-      embedAttachment = new MessageAttachment(canv, 'canvas.png');
+      canvas = await Jimp.read(80, 50, this.hextodec(hex.replace('#', '0x').concat('FF'))),
+      buffer = await canvas.getBufferAsync(Jimp.MIME_PNG),
+      embedAttachment = new MessageAttachment(buffer, 'canvas.png');
 
     embed
       .attachFiles([embedAttachment])

@@ -14,9 +14,9 @@
  * @returns {Message} Confirmation the song was skipped
  */
 
-const {Command} = require('discord.js-commando'), 
-  {oneLine} = require('common-tags'), 
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando'; 
+import {oneLine} from 'common-tags'; 
+import {deleteCommandMessages, roundNumber, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class SkipSongCommand extends Command {
   constructor (client) {

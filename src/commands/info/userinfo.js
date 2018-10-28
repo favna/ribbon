@@ -9,10 +9,10 @@
  * @returns {MessageEmbed} Info about that member
  */
 
-const moment = require('moment'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {arrayClean, capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import moment from 'moment';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {arrayClean, capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class UserInfoCommand extends Command {
   constructor (client) {

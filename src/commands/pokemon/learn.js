@@ -16,13 +16,12 @@
  * @returns {MessageEmbed} Info on whether the Pokemon can learn the move and how or not
  */
 
-const moment = require('moment'),
-  path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {BattleLearnsets} = require(path.join(__dirname, '../../data/dex/learnsets')),
-  {oneLine, stripIndents} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import moment from 'moment';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {BattleLearnsets} from '../../data/dex/learnsets';
+import {oneLine, stripIndents} from 'common-tags';
+import {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class LearnCommand extends Command {
   constructor (client) {

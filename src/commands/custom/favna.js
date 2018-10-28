@@ -9,9 +9,9 @@
  * @returns {MessageEmbed} A MessageEmbed with the joke text
  */
 
-const {Command} = require('discord.js-commando'), 
-  {oneLine} = require('common-tags'), 
-  {stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando'; 
+import {oneLine} from 'common-tags'; 
+import {stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class FavnaCommand extends Command {
   constructor (client) {

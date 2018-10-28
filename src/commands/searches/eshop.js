@@ -9,13 +9,13 @@
  * @returns {MessageEmbed} Information about the fetched game
  */
 
-const Fuse = require('fuse.js'),
-  fs = require('fs'),
-  moment = require('moment'),
-  path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Fuse from 'fuse.js';
+import fs from 'fs';
+import moment from 'moment';
+import path from 'path';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class EShopCommand extends Command {
   constructor (client) {

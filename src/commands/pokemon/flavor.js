@@ -13,17 +13,16 @@
  */
 
 /* eslint-disable max-statements */
-const Fuse = require('fuse.js'),
-  dexEntries = require('../../data/dex/flavorText.json'),
-  moment = require('moment'),
-  path = require('path'),
-  zalgo = require('to-zalgo'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {PokeAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
-  {BattlePokedex} = require(path.join(__dirname, '../../data/dex/pokedex')),
-  {stripIndents} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Fuse from 'fuse.js';
+import dexEntries from '../../data/dex/flavorText.json';
+import moment from 'moment';
+import zalgo from 'to-zalgo';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {PokeAliases} from '../../data/dex/aliases';
+import {BattlePokedex} from '../../data/dex/pokedex';
+import {stripIndents} from 'common-tags';
+import {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class FlavorCommand extends Command {
   constructor (client) {

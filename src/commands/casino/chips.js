@@ -8,14 +8,14 @@
  * @returns {MessageEmbed} Information about your current balance
  */
 
-const Database = require('better-sqlite3'),
-  duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-  moment = require('moment'),
-  path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Database from 'better-sqlite3';
+import duration from 'moment-duration-format'; // eslint-disable-line no-unused-vars
+import moment from 'moment';
+import path from 'path';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class ChipsCommand extends Command {
   constructor (client) {

@@ -9,14 +9,13 @@
  * @returns {MessageEmbed} All weaknesses, advantages
  */
 
-const moment = require('moment'),
-  path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {BattleTypeChart} = require(path.join(__dirname, '../../data/dex/typechart')),
-  {oneLine, stripIndents} = require('common-tags'),
-  {cloneDeep} = require('lodash'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import moment from 'moment';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {BattleTypeChart} from '../../data/dex/typechart';
+import {oneLine, stripIndents} from 'common-tags';
+import {cloneDeep} from 'lodash';
+import {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class TypeCommand extends Command {
   constructor (client) {

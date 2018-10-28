@@ -7,9 +7,9 @@
  * @returns {MessageEmbed} Side the coin landed on
  */
 
-const {Command} = require('discord.js-commando'), 
-  {MessageEmbed} = require('discord.js'), 
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando'; 
+import {MessageEmbed} from 'discord.js'; 
+import {deleteCommandMessages, roundNumber, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class DndCCommand extends Command {
   constructor (client) {

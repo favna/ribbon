@@ -10,15 +10,14 @@
  * @returns {MessageEmbed} Details about the move
  */
 
-const Fuse = require('fuse.js'),
-  moment = require('moment'),
-  path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {BattleMovedex} = require(path.join(__dirname, '../../data/dex/moves')),
-  {MoveAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
-  {oneLine, stripIndents} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Fuse from 'fuse.js';
+import moment from 'moment';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {BattleMovedex} from '../../data/dex/moves';
+import {MoveAliases} from '../../data/dex/aliases';
+import {oneLine, stripIndents} from 'common-tags';
+import {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class MoveCommand extends Command {
   constructor (client) {

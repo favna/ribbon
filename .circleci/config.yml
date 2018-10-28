@@ -39,7 +39,7 @@ jobs:
           command: echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
       - run:
           name: Update apt and add build dependencies
-          command: sudo apt-get update && sudo apt-get install -y yarn build-essential libcairo2-dev libjpeg-dev libpango1.0-dev libgif-dev
+          command: sudo apt-get update && sudo apt-get install -y yarn build-essential
       - run:
           name: Install global node modules
           command: sudo npm install -g node-pre-gyp node-gyp

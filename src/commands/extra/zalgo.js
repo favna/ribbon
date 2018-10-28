@@ -10,10 +10,10 @@
  * @returns {Message} Your text zalgo-fied
  */
 
-const banish = require('to-zalgo/banish'),
-  zalgo = require('to-zalgo'),
-  {Command} = require('discord.js-commando'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import banish from 'to-zalgo/banish';
+import zalgo from 'to-zalgo';
+import {Command} from 'discord.js-commando';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class zalgoCommand extends Command {
   constructor (client) {

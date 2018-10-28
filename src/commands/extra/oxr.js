@@ -13,15 +13,15 @@
  * @returns {MessageEmbed} Input and output currency's and the amount your input is worth in both
  */
 
-const currencySymbol = require('currency-symbol-map'),
-  fetch = require('node-fetch'),
-  fx = require('money'),
-  moment = require('moment'),
-  querystring = require('querystring'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import currencySymbol from 'currency-symbol-map';
+import fetch from 'node-fetch';
+import fx from 'money';
+import moment from 'moment';
+import querystring from 'querystring';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class MoneyCommand extends Command {
   constructor (client) {

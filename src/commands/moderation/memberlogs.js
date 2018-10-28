@@ -9,10 +9,10 @@
  * @returns {MessageEmbed} Memberlogs confirmation log
  */
 
-const {Command} = require('discord.js-commando'), 
-  {MessageEmbed} = require('discord.js'), 
-  {oneLine, stripIndents} = require('common-tags'), 
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando'; 
+import {MessageEmbed} from 'discord.js'; 
+import {oneLine, stripIndents} from 'common-tags'; 
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class MemberLogsCommand extends Command {
   constructor (client) {

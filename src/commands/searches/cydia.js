@@ -11,15 +11,15 @@
  * @returns {MessageEmbed} Information about the tweak
  */
 
-const Fuse = require('fuse.js'),
-  cheerio = require('cheerio'),
-  fetch = require('node-fetch'),
-  moment = require('moment'),
-  querystring = require('querystring'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Fuse from 'fuse.js';
+import cheerio from 'cheerio';
+import fetch from 'node-fetch';
+import moment from 'moment';
+import querystring from 'querystring';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class CydiaCommand extends Command {
   constructor (client) {

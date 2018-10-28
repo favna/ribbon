@@ -9,10 +9,10 @@
  * @returns {MessageEmbed} Your question and its answer
  */
 
-const predict = require('eightball'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import predict from 'eightball';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class EightBallCommand extends Command {
   constructor (client) {

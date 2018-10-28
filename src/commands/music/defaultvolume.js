@@ -9,8 +9,8 @@
  * @returns {Message} Confirmation the setting was stored 
  */
 
-const {Command} = require('discord.js-commando'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class DefaultVolumeCommand extends Command {
   constructor (client) {

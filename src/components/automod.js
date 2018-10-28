@@ -5,12 +5,11 @@
  */
 
 /* eslint-disable one-var */
-const levenshtein = require('fast-levenshtein'),
-  moment = require('moment'),
-  path = require('path'),
-  {numberBetween, countCaps, countEmojis, countMentions} = require(path.join(__dirname, 'util.js'));
+import levenshtein from 'fast-levenshtein';
+import moment from 'moment';
+import {countCaps, countEmojis, countMentions, numberBetween} from './util';
 
-const badwords = function (msg, words, client) {
+export const badwords = (msg, words, client) => {
   if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
@@ -21,7 +20,7 @@ const badwords = function (msg, words, client) {
   return false;
 };
 
-const duptext = function (msg, within, equals, distance, client) {
+export const duptext = (msg, within, equals, distance, client) => {
   if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
@@ -52,7 +51,7 @@ const duptext = function (msg, within, equals, distance, client) {
   return false;
 };
 
-const caps = function (msg, threshold, minlength, client) {
+export const caps = (msg, threshold, minlength, client) => {
   if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
@@ -65,7 +64,7 @@ const caps = function (msg, threshold, minlength, client) {
   return false;
 };
 
-const emojis = function (msg, threshold, minlength, client) {
+export const emojis = (msg, threshold, minlength, client) => {
   if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
@@ -78,7 +77,7 @@ const emojis = function (msg, threshold, minlength, client) {
   return false;
 };
 
-const mentions = function (msg, threshold, client) {
+export const mentions = (msg, threshold, client) => {
   if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
@@ -89,7 +88,7 @@ const mentions = function (msg, threshold, client) {
   return false;
 };
 
-const links = function (msg, client) {
+export const links = (msg, client) => {
   if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
@@ -100,7 +99,7 @@ const links = function (msg, client) {
   return false;
 };
 
-const invites = function (msg, client) {
+export const invites = (msg, client) => {
   if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
@@ -111,7 +110,7 @@ const invites = function (msg, client) {
   return false;
 };
 
-const slowmode = function (msg, within, client) {
+export const slowmode = (msg, within, client) => {
   if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
@@ -136,15 +135,4 @@ const slowmode = function (msg, within, client) {
   }
 
   return false;
-};
-
-module.exports = {
-  badwords,
-  caps,
-  duptext,
-  emojis,
-  invites,
-  links,
-  mentions,
-  slowmode
 };

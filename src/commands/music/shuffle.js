@@ -9,10 +9,10 @@
  * @returns {MessageEmbed} The new queue order (limited to the first 10 entries)
  */
 
-const {Command, util} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../components/util.js');
+import {Command, util} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, Song, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class ShuffleCommand extends Command {
   constructor (client) {

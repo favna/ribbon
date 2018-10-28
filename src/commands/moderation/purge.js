@@ -9,8 +9,8 @@
  * @returns {Message} Confirmation of the amount of messages deleted - will self delete after 1 second.
  */
 
-const {Command} = require('discord.js-commando'), 
-  {stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando'; 
+import {stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class PurgeCommand extends Command {
   constructor (client) {

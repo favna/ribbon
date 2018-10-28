@@ -10,12 +10,12 @@
  * @returns {MessageEmbed} Player Statistics from that player
  */
 
-const fetch = require('node-fetch'),
-  moment = require('moment'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import moment from 'moment';
+import {deleteCommandMessages, startTyping, stopTyping} from '../../components/util';
+import {oneLine, stripIndents} from 'common-tags';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
 
 module.exports = class FortniteCommand extends Command {
   constructor (client) {

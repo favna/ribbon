@@ -4,7 +4,7 @@ module.exports = {
         "node": true,
         "mocha": true
     },
-    "extends": ["eslint:recommended"],
+    "extends": ["eslint:recommended", "plugin:import/errors", "plugin:import/warnings"],
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 9
@@ -280,7 +280,7 @@ module.exports = {
             "error",
             "last"
         ],
-        "sort-imports": "error",
+        "sort-imports": "off",
         "sort-keys": "off",
         "sort-vars": "off",
         "space-before-blocks": "error",

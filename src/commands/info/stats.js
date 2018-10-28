@@ -7,14 +7,14 @@
  * @returns {MessageEmbed} Ribbon's statistics
  */
 
-const duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-  moment = require('moment'),
-  process = require('process'),
-  speedTest = require('speedtest-net'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine} = require('common-tags'),
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
+import duration from 'moment-duration-format'; // eslint-disable-line no-unused-vars
+import moment from 'moment';
+import process from 'process';
+import speedTest from 'speedtest-net';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine} from 'common-tags';
+import {deleteCommandMessages, roundNumber, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class RibbonStatsCommand extends Command {
   constructor (client) {

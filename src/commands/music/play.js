@@ -16,13 +16,13 @@
  * @returns {MessageEmbed} Title, duration and thumbnail of the video
  */
 
-const YouTube = require('simple-youtube-api'),
-  moment = require('moment'),
-  ytdl = require('ytdl-core'),
-  {Command} = require('discord.js-commando'),
-  {escapeMarkdown} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, Song, stopTyping, startTyping} = require('../../components/util.js');
+import YouTube from 'simple-youtube-api';
+import moment from 'moment';
+import ytdl from 'ytdl-core';
+import {Command} from 'discord.js-commando';
+import {escapeMarkdown} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, Song, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class PlaySongCommand extends Command {
   constructor (client) {

@@ -1,20 +1,11 @@
-const Database = require('better-sqlite3'),
-  path = require('path'),
-  {Client, SyncSQLiteProvider} = require('discord.js-commando'),
-  {handleGuildJoin,
-    handleGuildLeave,
-    handleCmdErr,
-    handleErr,
-    handleMsg,
-    handlePresenceUpdate,
-    handleRateLimit,
-    handleReady,
-    handleUnknownCmd,
-    handleWarn,
-    handleMemberJoin,
-    handleMemberLeave} = require(path.join(__dirname, 'components/events.js'));
+import path from 'path';
+import {Client, SyncSQLiteProvider} from 'discord.js-commando';
+import {handleCmdErr, handleDebug, handleErr, handleGuildJoin, handleGuildLeave,
+  handleMemberJoin, handleMemberLeave, handleMsg, handlePresenceUpdate,
+  handleRateLimit, handleReady, handleUnknownCmd, handleWarn} from './components/events';
+import Database from 'better-sqlite3';
 
-class Ribbon {
+export default class Ribbon {
   constructor (token) {
     this.token = token;
     this.client = new Client({
@@ -43,7 +34,7 @@ class Ribbon {
   init () {
     this.client
       .on('commandError', (cmd, err, msg) => handleCmdErr(this.client, cmd, err, msg))
-      .on('debug', console.log) // eslint-disable-line no-console
+      .on('debug', info => handleDebug(info))
       .on('error', err => handleErr(this.client, err))
       .on('guildCreate', guild => handleGuildJoin(this.client, guild))
       .on('guildDelete', guild => handleGuildLeave(this.client, guild))
@@ -94,5 +85,3 @@ class Ribbon {
     return this.client.login(this.token);
   }
 }
-
-module.exports = Ribbon;

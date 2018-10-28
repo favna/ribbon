@@ -9,14 +9,14 @@
  * @returns {MessageEmbed} Outcome of the spin
  */
 
-const Database = require('better-sqlite3'),
-  moment = require('moment'),
-  path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {SlotMachine, SlotSymbol} = require('slot-machine'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Database from 'better-sqlite3';
+import moment from 'moment';
+import path from 'path';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {SlotMachine, SlotSymbol} from 'slot-machine';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class SlotsCommand extends Command {
   constructor (client) {

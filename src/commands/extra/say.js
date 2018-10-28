@@ -9,10 +9,9 @@
  * @returns {Message} Your message said by Ribbon
  */
 
-const path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {stopTyping, startTyping} = require(path.join(__dirname, '../../components/util.js')),
-  {badwords, duptext, caps, emojis, mentions, links, invites} = require(path.join(__dirname, '../../components/automod.js'));
+import {Command} from 'discord.js-commando';
+import {stopTyping, startTyping} from '../../components/util.js';
+import {badwords, duptext, caps, emojis, mentions, links, invites} from '../../components/automod.js';
 
 module.exports = class SayCommand extends Command {
   constructor (client) {

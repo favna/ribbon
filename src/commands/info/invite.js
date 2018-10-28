@@ -7,10 +7,10 @@
  * @returns {MessageEmbed} Invite link along with other links
  */
 
-const {MessageEmbed} = require('discord.js'), 
-  {Command} = require('discord.js-commando'), 
-  {stripIndents} = require('common-tags'), 
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import {MessageEmbed} from 'discord.js'; 
+import {Command} from 'discord.js-commando'; 
+import {stripIndents} from 'common-tags'; 
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class InviteCommand extends Command {
   constructor (client) {

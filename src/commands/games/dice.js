@@ -10,10 +10,10 @@
  * @returns {MessageEmbed} The eyes rolled for each dice as well as the total of all rolls
  */
 
-const xdicey = require('xdicey'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import xdicey from 'xdicey';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class DiceCommand extends Command {
   constructor (client) {

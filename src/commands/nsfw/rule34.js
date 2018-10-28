@@ -10,11 +10,11 @@
  * @returns {MessageEmbed} Score, Link and preview of the image
  */
 
-const booru = require('booru'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import booru from 'booru';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class Rule34Command extends Command {
   constructor (client) {

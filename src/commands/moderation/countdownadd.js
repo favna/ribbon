@@ -17,14 +17,14 @@
  * @returns {MessageEmbed} Confirmation the setting was stored
  */
 
-const Database = require('better-sqlite3'),
-  moment = require('moment'),
-  momentduration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-  path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Database from 'better-sqlite3';
+import moment from 'moment';
+import momentduration from 'moment-duration-format'; // eslint-disable-line no-unused-vars
+import path from 'path';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class CountdownAddCommand extends Command {
   constructor (client) {

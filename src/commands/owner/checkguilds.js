@@ -6,8 +6,8 @@
  * @returns {Message} Amount and list of guilds in code blocks
  */
 
-const {Command} = require('discord.js-commando'),
-  {stripIndents} = require('common-tags');
+import {Command} from 'discord.js-commando';
+import {stripIndents} from 'common-tags';
 
 module.exports = class CheckGuildsCommand extends Command {
   constructor (client) {

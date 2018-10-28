@@ -9,14 +9,14 @@
  * @returns {MessageEmbed} Stats of the player
  */
 
-const _ = require('underscore'),
-  fetch = require('node-fetch'),
-  querystring = require('querystring'),
-  moment = require('moment'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, roundNumber, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import moment from 'moment';
+import querystring from 'querystring';
+import {deleteCommandMessages, roundNumber, startTyping, stopTyping} from '../../components/util';
+import {oneLine, stripIndents} from 'common-tags';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {values} from 'underscore';
 
 module.exports = class OsuCommand extends Command {
   constructor (client) {
@@ -56,7 +56,7 @@ module.exports = class OsuCommand extends Command {
         osu = await res.json(),
         osuEmbed = new MessageEmbed();
 
-      if (_.values(osu[0]).includes(null)) throw new Error('noplayer');
+      if (values(osu[0]).includes(null)) throw new Error('noplayer');
 
       osuEmbed
         .setTitle(`OSU! Player Stats for ${osu[0].username} (${osu[0].user_id})`)

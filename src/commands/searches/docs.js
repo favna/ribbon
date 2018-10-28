@@ -9,12 +9,12 @@
  * @returns {MessageEmbed} Info about the entry from the library
  */
 
-const Fuse = require('fuse.js'),
-  fetch = require('node-fetch'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, startTyping, stopTyping} = require('../../components/util.js');
+import Fuse from 'fuse.js';
+import fetch from 'node-fetch';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, startTyping, stopTyping} from '../../components/util.js';
 
 module.exports = class DocsCommand extends Command {
   constructor (client) {

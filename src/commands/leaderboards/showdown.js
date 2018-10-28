@@ -9,17 +9,13 @@
  * @returns {MessageEmbed} List of top 10 ranking players in given tier
  */
 
-const Fuse = require('fuse.js'),
-  fetch = require('node-fetch'),
-  path = require('path'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {TierAliases} = require(path.join(__dirname, '../../data/dex/aliases')),
-  {stripIndents} = require('common-tags'),
-  {deleteCommandMessages,
-    roundNumber,
-    stopTyping,
-    startTyping} = require('../../components/util.js');
+import Fuse from 'fuse.js';
+import fetch from 'node-fetch';
+import {deleteCommandMessages, roundNumber, startTyping, stopTyping} from '../../components/util.js';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {TierAliases} from '../../data/dex/aliases';
+import {stripIndents} from 'common-tags';
 
 module.exports = class ShowdownCommand extends Command {
   constructor (client) {
@@ -59,8 +55,8 @@ module.exports = class ShowdownCommand extends Command {
           minMatchCharLength: 1,
           keys: ['alias']
         },
-        fuse = new Fuse(TierAliases, fsoptions),
-        results = fuse.search(tier),
+        fuseTable = new Fuse(TierAliases, fsoptions),
+        results = fuseTable.search(tier),
         ladders = await fetch(`https://pokemonshowdown.com/ladder/${results[0].tier}.json`),
         json = await ladders.json(),
         data = {

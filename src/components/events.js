@@ -6,21 +6,21 @@
 
 /* eslint-disable one-var */
 
-const Database = require('better-sqlite3'),
-  Jimp = require('jimp'),
-  decache = require('decache'),
-  eshop = require('nintendo-switch-eshop'),
-  fetch = require('node-fetch'),
-  fs = require('fs'),
-  moment = require('moment'),
-  momentduration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-  ms = require('ms'),
-  path = require('path'),
-  querystring = require('querystring'),
-  {MessageEmbed, MessageAttachment} = require('discord.js'),
-  {ordinal} = require(path.join(__dirname, 'util.js')),
-  {stripIndents, oneLine} = require('common-tags'),
-  {badwords, duptext, caps, emojis, mentions, links, invites, slowmode} = require(path.join(__dirname, 'automod.js'));
+import {badwords, caps, duptext, emojis, invites, links, mentions, slowmode} from './automod';
+import {MessageAttachment, MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {ordinal} from './util';
+import Database from 'better-sqlite3';
+import Jimp from 'jimp/es';
+import decache from 'decache';
+import duration from 'moment-duration-format'; // eslint-disable-line no-unused-vars
+import eshop from 'nintendo-switch-eshop';
+import fetch from 'node-fetch';
+import fs from 'fs';
+import moment from 'moment';
+import ms from 'ms';
+import path from 'path';
+import querystring from 'querystring';
 
 const renderReminderMessage = async (client) => {
   const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
@@ -307,7 +307,7 @@ const forceStopTyping = (client) => {
   }
 };
 
-const handleCmdErr = (client, cmd, err, msg) => {
+export const handleCmdErr = (client, cmd, err, msg) => {
   client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
   Caught **Command Error**!
   **Command:** ${cmd.name}
@@ -318,7 +318,11 @@ const handleCmdErr = (client, cmd, err, msg) => {
   `);
 };
 
-const handleErr = (client, err) => {
+export const handleDebug = (info) => {
+  console.log(info); // eslint-disable-line no-console
+};
+
+export const handleErr = (client, err) => {
   client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
   Caught **WebSocket Error**!
   **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -326,7 +330,7 @@ const handleErr = (client, err) => {
   `);
 };
 
-const handleGuildJoin = async (client, guild) => {
+export const handleGuildJoin = async (client, guild) => {
   try {
     const avatar = await Jimp.read(client.user.displayAvatarURL({format: 'png'})),
       border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png'),
@@ -367,7 +371,7 @@ const handleGuildJoin = async (client, guild) => {
   }
 };
 
-const handleGuildLeave = (client, guild) => {
+export const handleGuildLeave = (client, guild) => {
   guild.settings.clear();
   const casinoConn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3')),
     pastasConn = new Database(path.join(__dirname, '../data/databases/pastas.sqlite3')),
@@ -415,7 +419,7 @@ const handleGuildLeave = (client, guild) => {
   }
 };
 
-const handleMemberJoin = (client, joinMember) => {
+export const handleMemberJoin = (client, joinMember) => {
   const memberJoinLogEmbed = new MessageEmbed();
 
   try {
@@ -467,7 +471,7 @@ const handleMemberJoin = (client, joinMember) => {
   }
 };
 
-const handleMemberLeave = (client, leaveMember) => {
+export const handleMemberLeave = (client, leaveMember) => {
   try {
     if (leaveMember.guild.settings.get('memberlogs', true)) {
       const memberLeaveLogEmbed = new MessageEmbed(),
@@ -520,7 +524,7 @@ const handleMemberLeave = (client, leaveMember) => {
 };
 
 // eslint-disable-next-line complexity, consistent-return
-const handleMsg = (client, msg) => {
+export const handleMsg = (client, msg) => {
   if (msg.guild && msg.deletable && msg.guild.settings.get('automod', false).enabled) {
     if (msg.member.roles.some(ro => msg.guild.settings.get('automod', []).filterroles.includes(ro.id))) return null;
     if (msg.guild.settings.get('caps', false).enabled) {
@@ -546,7 +550,7 @@ const handleMsg = (client, msg) => {
   }
 };
 
-const handlePresenceUpdate = async (client, oldMember, newMember) => {
+export const handlePresenceUpdate = async (client, oldMember, newMember) => {
   if (newMember.guild.settings.get('twitchnotifiers', false)) {
     if (newMember.guild.settings.get('twitchmonitors', []).includes(newMember.id)) {
       const curDisplayName = newMember.displayName,
@@ -610,7 +614,7 @@ const handlePresenceUpdate = async (client, oldMember, newMember) => {
   }
 };
 
-const handleRateLimit = (client, info) => {
+export const handleRateLimit = (client, info) => {
   client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       Ran into a **rate limit**!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -622,7 +626,7 @@ const handleRateLimit = (client, info) => {
       `);
 };
 
-const handleReady = (client) => {
+export const handleReady = (client) => {
   // eslint-disable-next-line no-console
   console.log(oneLine`Client ready at ${moment().format('HH:mm:ss')};
         logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})`);
@@ -651,7 +655,7 @@ const handleReady = (client) => {
   });
 };
 
-const handleUnknownCmd = (client, msg) => {
+export const handleUnknownCmd = (client, msg) => {
   const {guild} = msg;
 
   if (guild && guild.settings.get('unknownmessages', true)) {
@@ -663,25 +667,10 @@ const handleUnknownCmd = (client, msg) => {
   }
 };
 
-const handleWarn = (client, warn) => {
+export const handleWarn = (client, warn) => {
   client.channels.resolve(process.env.ribbonlogchannel).send(stripIndents`
       Caught **General Warning**!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
       **Warning Message:** ${warn}
       `);
-};
-
-module.exports = {
-  handleGuildJoin,
-  handleGuildLeave,
-  handleCmdErr,
-  handleErr,
-  handleMsg,
-  handlePresenceUpdate,
-  handleRateLimit,
-  handleReady,
-  handleUnknownCmd,
-  handleWarn,
-  handleMemberJoin,
-  handleMemberLeave
 };

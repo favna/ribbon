@@ -9,14 +9,14 @@
  * @returns {MessageEmbed} Activity from that member
  */
 
-const Spotify = require('spotify-web-api-node'),
-  duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-  fetch = require('node-fetch'),
-  moment = require('moment'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import Spotify from 'spotify-web-api-node';
+import duration from 'moment-duration-format'; // eslint-disable-line no-unused-vars
+import fetch from 'node-fetch';
+import moment from 'moment';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
+import {oneLine, stripIndents} from 'common-tags';
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class ActivityCommand extends Command {
   constructor (client) {

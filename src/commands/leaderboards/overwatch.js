@@ -9,14 +9,14 @@
  * @returns {MessageEmbed} Stats of the player
  */
 
-const duration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-  fetch = require('node-fetch'),
-  moment = require('moment'),
-  ms = require('ms'),
-  {Command} = require('discord.js-commando'),
-  {MessageEmbed} = require('discord.js'),
-  {oneLine, stripIndents} = require('common-tags'),
-  {capitalizeFirstLetter, deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import duration from 'moment-duration-format'; // eslint-disable-line no-unused-vars
+import fetch from 'node-fetch';
+import moment from 'moment';
+import ms from 'ms';
+import {capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping} from '../../components/util';
+import {oneLine, stripIndents} from 'common-tags';
+import {Command} from 'discord.js-commando';
+import {MessageEmbed} from 'discord.js';
 
 module.exports = class OverwatchCommand extends Command {
   constructor (client) {

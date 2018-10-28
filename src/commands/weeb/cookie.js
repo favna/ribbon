@@ -1,22 +1,22 @@
 /**
- * @file Games CookieCommand - Steal someone's 🍪 gnanahahahaha  
+ * @file Weeb CookieCommand - Steal someone's 🍪 gnanahahahaha  
  * **Aliases**: `.biscuit`, `biscuit`
  * @module
- * @category games
+ * @category weeb
  * @name biscuit
  * @returns {MessageEmbed} A MessageEmbed with a cookie gif
  */
 
-const {Command} = require('discord.js-commando'), 
-  {MessageEmbed} = require('discord.js'), 
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando'; 
+import {MessageEmbed} from 'discord.js'; 
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class CookieCommand extends Command {
   constructor (client) {
     super(client, {
       name: 'cookie',
       memberName: 'cookie',
-      group: 'games',
+      group: 'weeb',
       aliases: ['biscuit'],
       description: 'Steal someone\'s 🍪 gnanahahahaha',
       guildOnly: false,

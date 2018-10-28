@@ -9,9 +9,9 @@
  * @returns {Message} Confirmation the setting was stored
  */
 
-const {Command} = require('discord.js-commando'), 
-  {oneLine} = require('common-tags'), 
-  {deleteCommandMessages, stopTyping, startTyping} = require('../../components/util.js');
+import {Command} from 'discord.js-commando'; 
+import {oneLine} from 'common-tags'; 
+import {deleteCommandMessages, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class TwitchOutputCommand extends Command {
   constructor (client) {

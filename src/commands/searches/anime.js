@@ -9,12 +9,12 @@
  * @returns {MessageEmbed} Information about the fetched anime
  */
 
-const fetch = require('node-fetch'),
-  moment = require('moment'),
-  momentduration = require('moment-duration-format'), // eslint-disable-line no-unused-vars
-  {MessageEmbed} = require('discord.js'),
-  {Command} = require('discord.js-commando'),
-  {deleteCommandMessages, removeDiacritics, stopTyping, startTyping} = require('../../components/util.js');
+import fetch from 'node-fetch';
+import moment from 'moment';
+import momentduration from 'moment-duration-format'; // eslint-disable-line no-unused-vars
+import {MessageEmbed} from 'discord.js';
+import {Command} from 'discord.js-commando';
+import {deleteCommandMessages, removeDiacritics, stopTyping, startTyping} from '../../components/util.js';
 
 module.exports = class AnimeCommand extends Command {
   constructor (client) {
