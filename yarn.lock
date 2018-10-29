@@ -3076,10 +3076,10 @@ supports-color@^5.3.0:
   dependencies:
     has-flag "^3.0.0"
 
-syllable@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/syllable/-/syllable-3.1.0.tgz#ddf23fdfa2b0df2b832fba1da63e51d8a00a9535"
-  integrity sha512-4aXs1sCzYeu9guLBUFSEekmnrOvjJV1LnH1u9iECie3EfiCx+mlgPElHzTrl0RFpPNt2kCH4iCYnlBARXvkAsQ==
+syllable@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/syllable/-/syllable-3.2.0.tgz#194952a2ca3acc77977b389b2f247f23a1f977a0"
+  integrity sha512-IpD3tyyDYKNA5f/axT1xVBZ35eIehgOgC8B0IGJGA6mCQ1y5wXaKBOzYn0AA8g1v3LDivOajT5CgDGza8gLA7Q==
   dependencies:
     normalize-strings "^1.1.0"
     pluralize "^7.0.0"
