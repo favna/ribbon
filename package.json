@@ -73,13 +73,13 @@
     "speedtest-net": "^1.4.3",
     "spotify-web-api-node": "4.0.0",
     "steamapi": "^2.0.3",
-    "syllable": "^3.1.0",
+    "syllable": "^3.2.0",
     "to-zalgo": "^1.0.1",
     "translate": "Marak/translate.js#modern",
     "underscore": "^1.9.1",
     "unescape-es6": "^1.0.2",
     "xdicey": "2.0.3",
-    "ytdl-core": "^0.26.3",
+    "ytdl-core": "^0.27.1",
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {
