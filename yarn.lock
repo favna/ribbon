@@ -2077,10 +2077,10 @@ lru-cache@^4.0.1:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
-m3u8stream@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/m3u8stream/-/m3u8stream-0.4.2.tgz#c93aefde522e4eaeac7e942cfab83973675a4f11"
-  integrity sha512-VZeobA83iQdd2TY12K2DNLuUmE1XNjN660SYU9s6A4kP7ZhFEp/bQPUpOWU2EbkFYwsonyaFT+RxLDr1OhPTRA==
+m3u8stream@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/m3u8stream/-/m3u8stream-0.6.0.tgz#a78378d491b66a1207e206f368a9259b074a0c7b"
+  integrity sha512-h78ollIa7zeq0nzx1+wI/EH0soUpe9A7sC6zw/+/tuRwYdIXedOytvI69+6eP/FU4Ph0cT6kQsw73j5tKXIbgg==
   dependencies:
     miniget "^1.4.0"
     sax "^1.2.4"
@@ -3494,13 +3494,13 @@ yargs@^8.0.2:
     y18n "^3.2.1"
     yargs-parser "^7.0.0"
 
-ytdl-core@^0.27.1:
-  version "0.27.1"
-  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.27.1.tgz#66218766c8c454ca7768b59cfb28eebf774cbfee"
-  integrity sha512-NH+AUb598cJK/FJQ17PLlSrv9NNwUOioP2cJ71S3fQgqKSFBobvurnpzhfkQWRQVLj4gve5H6ZupOAD60zZ1Xg==
+ytdl-core@^0.28.0:
+  version "0.28.0"
+  resolved "https://registry.yarnpkg.com/ytdl-core/-/ytdl-core-0.28.0.tgz#5f1ed2c9071f13c9c55e6e7187941f4ed32a2efe"
+  integrity sha512-pk1nd0MPZLyMOENUOCFLBJ/m59XFqSWPzSY2UhdG7PHBwYtROAY5QRLoYEG0V21h7i3KUeHbnFq8czio5gPKYA==
   dependencies:
     html-entities "^1.1.3"
-    m3u8stream "^0.4.2"
+    m3u8stream "^0.6.0"
     miniget "^1.4.0"
     sax "^1.1.3"
 
