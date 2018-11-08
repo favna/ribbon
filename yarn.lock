@@ -3280,10 +3280,10 @@ underscore@~1.8.3:
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
   integrity sha1-Tz+1OxBuYJf8+ctBCfKl6b36UCI=
 
-unescape-es6@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/unescape-es6/-/unescape-es6-1.1.0.tgz#763794b0ae0129f0e00f2701ecc30de493015798"
-  integrity sha512-N8k0zSJ0fYJdsOBWxwlardHZSqqi/nVjBi8komtHpx8eglyMqr+fiw5zS5AxgYDmLMdjacQiQUBDvmb5EVyZwg==
+unescape-es6@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/unescape-es6/-/unescape-es6-1.1.1.tgz#af1946aa3fb27f90ea76a6b580465554650a3903"
+  integrity sha512-xWM+kgz5K807AXl+fLRpD+32rJjyt9Qq12L1W8JcVYDuW29uGqFEkr/AOq89el6eE+77EeoGtoD2i2DUcs+mMA==
 
 unicode-string@^1.0.0:
   version "1.1.1"

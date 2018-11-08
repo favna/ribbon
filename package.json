@@ -77,7 +77,7 @@
     "to-zalgo": "^1.0.1",
     "translate": "Marak/translate.js#modern",
     "underscore": "^1.9.1",
-    "unescape-es6": "^1.1.0",
+    "unescape-es6": "^1.1.1",
     "xdicey": "2.0.3",
     "ytdl-core": "^0.27.1",
     "zlib-sync": "^0.1.4"
