@@ -1,7 +1,7 @@
 {
   "name": "discord-ribbon",
   "version": "8.0.0",
-  "description": "feature rich, modular Discord.JS-Commando server bot",
+  "description": "feature rich, modular Discord.JS-Commando server bot written in TypeScript",
   "author": "Favna <sharkie.jeroen@gmail.com> (https://favna.xyz/home)",
   "license": "GPL-3.0",
   "main": "src/app.ts",
@@ -14,8 +14,8 @@
     "url": "https://github.com/favna/ribbon/issues"
   },
   "scripts": {
-    "docs": "jsdoc2md --template ./docs/template.hbs --files ./src/commands/**/*.ts | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
-    "docs:json": "jsdoc2md --json --files ./src/commands/**/*.ts > ../favna.xyz/public/dist/ribbondocs.json",
+    "docs": "jsdoc2md --configure ./jsdoc2md.json --template ./docs/template.hbs --files ./src/commands/**/*.ts | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
+    "docs:json": "jsdoc2md --configure ./jsdoc2md.json --json --files ./src/commands/**/*.ts > ../favna.xyz/public/dist/ribbondocs.json",
     "docs:deploy": "yarn run docs && yarn run docs:json && git commit -am documentation && git push && cd ../Ribbon.wiki/ && git commit -am documentation && git push && cd ../favna.xyz/ && git commit -am documentation && git push",
     "lint": "tslint -p . -c tslint.json src/commands/**/*.ts src/components/*.ts src/*.ts",
     "lint:fix": "yarn lint --fix",
@@ -79,9 +79,16 @@
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {
+    "@babel/cli": "7.0.0-beta.40",
+    "@babel/core": "7.0.0-beta.40",
+    "@babel/plugin-proposal-class-properties": "7.0.0-beta.40",
+    "@babel/plugin-proposal-object-rest-spread": "7.0.0-beta.40",
+    "@babel/preset-env": "7.0.0-beta.40",
+    "@babel/preset-typescript": "7.0.0-beta.40",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
     "chai": "^4.2.0",
+    "jsdoc-babel": "0.4.0-alpha.0",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.2.0",
     "mocha-typescript": "^1.1.17",

@@ -15,7 +15,7 @@ Build-In HelpCommand - Displays a list of available commands, or detailed inform
 | [all] or [command] | <code>string</code> | use `all` to view all regardless of permissions or specify a command to get additional info on that command |
 
 **Example**  
-```js
+```ts
 help
 -OR-
 help prefix
@@ -37,7 +37,7 @@ Omitting the parameter will simply print your current one.
 | [prefix] | <code>string</code> | new prefix to set |
 
 **Example**  
-```js
+```ts
 prefix !
 -OR-
 prefix default
@@ -78,7 +78,7 @@ Command-Management EnableCommand - Enables a command or command group
 | Name/ID (partial or whole) of a command or command group | <code>string</code> | Command or Command Group to enable |
 
 **Example**  
-```js
+```ts
 enable userinfo
 ```
 
@@ -96,7 +96,7 @@ Command-Management DisableCommand - Disables a command or command group
 | Name/ID (partial or whole) of a command or command group | <code>string</code> | Command or Command Group to disable |
 
 **Example**  
-```js
+```ts
 disable userinfo
 ```
 
@@ -114,7 +114,7 @@ Command-Management ReloadCommand - Reloads a command or command group
 | Name/ID (partial or whole) of a command or command group | <code>string</code> | Command or Command Group to reload |
 
 **Example**  
-```js
+```ts
 reload userinfo
 ```
 
@@ -132,7 +132,7 @@ Command-Management LoadCommand - Loads a new command
 | commandGroup:commandMemberName | <code>string</code> | Command to load |
 
 **Example**  
-```js
+```ts
 load searches:github
 ```
 
@@ -150,7 +150,7 @@ Command-Management UnloadCommand - Unloads a command
 | Name/ID (partial or whole) of a command | <code>string</code> | Command to unload |
 
 **Example**  
-```js
+```ts
 unload searches:google
 ```
 
