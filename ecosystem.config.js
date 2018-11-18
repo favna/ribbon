@@ -1,11 +1,9 @@
-/* eslint-disable camelcase */
-
 module.exports = {
   apps: [
     {
-      name: 'Ribbon',
-      script: './src/app.js',
-      node_args: '-r esm --experimental-modules'
-    }
-  ]
+      args: "./src/app.ts",
+      name: "ribbon",
+      script: "./node_modules/ts-node/dist/bin.js",
+    },
+  ],
 };

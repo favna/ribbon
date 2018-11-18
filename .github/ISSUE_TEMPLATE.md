@@ -8,7 +8,7 @@ This issue tracker is only for bug reports and enhancement suggestions. You won'
 **Please describe the problem you are having in as much detail as possible:**
 
 **Include a reproducible code sample here, if possible:**
-```js
+```ts
 
 ```
 
@@ -19,15 +19,22 @@ This issue tracker is only for bug reports and enhancement suggestions. You won'
 
 - Priority this issue should have – please be realistic and elaborate if possible:
 
+&nbsp;
+
+---
 
 **If you have self hosted my code please go through the following options**
 
 - [ ] I have self hosted the code for Ribbon
 - [ ] I use yarn
+  - yarn version:
 - [ ] I use npm
+  - npm version:
 - node.js version:
+- typescript version:
 - Operating system:
 - [ ] I am on the latest commit of the bot
+  - Commit Hash:
 
 
 

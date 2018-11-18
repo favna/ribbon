@@ -5,26 +5,18 @@
   </p>
 
   <p>
-   <a href="https://depfu.com/repos/Favna/Ribbon"><img src="https://img.shields.io/depfu/Favna/Ribbon.svg?style=for-the-badge" alt="Depfu" /></a><!--
---><a href="https://circleci.com/gh/Favna/Ribbon/tree/master"><img src="https://img.shields.io/circleci/project/github/Favna/Ribbon.svg?style=for-the-badge" alt="CircleCI"></a><!--
---><a href="https://github.com/Favna/Ribbon/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/favna/ribbon.svg?style=for-the-badge" alt="License"></a><!--
---><a href="https://www.npmjs.com/package/discord-ribbon"><img src="https://img.shields.io/node/v/discord-ribbon.svg?style=for-the-badge" alt="Node Version"></a>
+   <a href="https://depfu.com/repos/Favna/Ribbon"><img src="https://img.shields.io/depfu/Favna/Ribbon.svg?style=flat-square" alt="Depfu" /></a><!--
+--><a href="https://github.com/Favna/Ribbon/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/favna/ribbon.svg?style=flat-square" alt="License"></a><!--
+--><a href="https://www.npmjs.com/package/discord-ribbon"><img src="https://img.shields.io/node/v/discord-ribbon.svg?style=flat-square" alt="Node Version"></a>
   </p>
   <p>
-<a href="https://twitter.com/Favna_"><img src="https://img.shields.io/twitter/follow/espadrine.svg?style=for-the-badge&label=Follow" alt="Twitter Follow"></a><!--
---><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XMAYCF9SDHZ34"><img src="https://img.shields.io/badge/Donate-PayPal-547ab8.svg?style=for-the-badge" alt="donate" title="Donate with PayPal" /></a><!--
---><a href="https://www.patreon.com/bePatron?u=9336537"><img src="https://i.imgur.com/05PzBRU.png" alt="patreon badge" title="Become a Patron"></a>
+<a href="https://twitter.com/Favna_"><img src="https://img.shields.io/twitter/follow/espadrine.svg?style=flat-square&label=Follow" alt="Twitter Follow"></a><!--
+--><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XMAYCF9SDHZ34"><img src="https://img.shields.io/badge/Donate-PayPal-547ab8.svg?style=flat-square" alt="donate" title="Donate with PayPal" /></a><!--
+--><a href="https://www.patreon.com/bePatron?u=9336537"><img src="hthttps://img.shields.io/badge/Patreon-Donate-Orange.svg?logo=patreon&logoColor=white&colorB=000000&colorA=F96854&longCache=true&style=flat-square&link=https://www.patreon.com/bePatron?u=9336537" alt="patreon badge" title="Become a Patron"></a>
   </p>
   
   <p>
-  <img src="https://forthebadge.com/images/badges/uses-badges.svg" alt="Uses Badges"><!--
---><img src="https://forthebadge.com/images/badges/built-with-love.svg" alt="Built with Love"><!--
---><img src="https://forthebadge.com/images/badges/made-with-javascript.svg" alt="Made with JavaScript"><!--
---><img src="https://forthebadge.com/images/badges/powered-by-electricity.svg" alt="Powered by Electricity">
-  </p>
-
-  <p>
-    <a href="https://favna.xyz/redirect/server"><img src="https://canary.discordapp.com/api/guilds/512303595966824458/widget.png?style=banner2" alt="Join Discord Server"/></a>
+    <a href="https://favna.xyz/redirect/server"><img src="https://discordapp.com/api/guilds/512303595966824458/widget.png?style=banner2" alt="Join Discord Server"/></a>
   </p>
 </div>
 
