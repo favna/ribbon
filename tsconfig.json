@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"outDir": "out/",
+		"outDir": "dist/",
 		"rootDir": "./src",
 		"allowSyntheticDefaultImports": true,
 		"allowJs": false,
@@ -18,9 +18,9 @@
 		"removeComments": true,
 		"skipLibCheck": false,
 		"types": ["node", "mocha"],
-		"sourceMap": true,
+		"sourceMap": false,
 		"resolveJsonModule": true
 	},
-	"include": ["src/commands/**/*", "src/data/**/*", "src/components/*", "src/*"],
-	"exclude": ["node_modules", "dist", "build", "docs", ".github", "test"]
+	"include": ["src/commands/**/*", "src/data/**/*", "src/components/*", "src/*", "src/data/fonts/*", "src/data/databases/*", "src/.env"],
+	"exclude": ["node_modules", "dist", "build", "docs", ".github", "test", "src/commands/owner/test.ts", "src/commands/leaderboards/overwatch.ts"]
 }
