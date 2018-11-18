@@ -12,7 +12,7 @@
   <p>
 <a href="https://twitter.com/Favna_"><img src="https://img.shields.io/twitter/follow/espadrine.svg?style=flat-square&label=Follow" alt="Twitter Follow"></a><!--
 --><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XMAYCF9SDHZ34"><img src="https://img.shields.io/badge/Donate-PayPal-547ab8.svg?style=flat-square" alt="donate" title="Donate with PayPal" /></a><!--
---><a href="https://www.patreon.com/bePatron?u=9336537"><img src="hthttps://img.shields.io/badge/Patreon-Donate-Orange.svg?logo=patreon&logoColor=white&colorB=000000&colorA=F96854&longCache=true&style=flat-square&link=https://www.patreon.com/bePatron?u=9336537" alt="patreon badge" title="Become a Patron"></a>
+--><a href="https://www.patreon.com/bePatron?u=9336537"><img src="https://img.shields.io/badge/Patreon-Donate-Orange.svg?logo=patreon&logoColor=white&colorB=000000&colorA=F96854&longCache=true&style=flat-square&link=https://www.patreon.com/bePatron?u=9336537" alt="patreon badge" title="Become a Patron"></a>
   </p>
   
   <p>
