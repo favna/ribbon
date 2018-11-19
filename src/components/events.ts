@@ -728,7 +728,7 @@ export const handleUnknownCmd = (client: CommandoClient, msg: CommandoMessage) =
     if (guild && guild.settings.get('unknownmessages', true)) {
         msg.reply(stripIndents`${oneLine`That is not a registered command.
 				Use \`${guild ? guild.commandPrefix : client.commandPrefix}help\`
-				or @Ribbon#2325 help to view the list of all commands.`}
+				or ${client.user.tag} help to view the list of all commands.`}
 				${oneLine`Server staff (those who can manage other's messages) can disable these replies by using
 				\`${guild ? guild.commandPrefix : client.commandPrefix}unknownmessages disable\``}`);
     }
