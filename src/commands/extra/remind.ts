@@ -41,11 +41,17 @@ export default class RemindCommand extends Command {
           prompt: 'Reply with the time in which you want to be reminded?',
           type: 'string',
           validate: (t: string) => {
-            if ((/^(?:[0-9]{1,3}(?:m|h|hr|d){1})$/i).test(t)) {
+            if ((/^(?:[0-9]{1,3}(?:m|min|mins|minute|minutes|h|hr|hour|hours|d|day|days){1})$/i).test(t)) {
               return true;
             }
 
-            return 'Has to be in the pattern of `50m`, `2h`, `3hr` or `01d` wherein `m` would be minutes, `h` (or `hr`) would be hours and `d` would be days';
+            return stripIndents`Time until reminder has to be a formatting of \`Number\` \`Specification\`. Specification can have various option:
+              - \`m\` , \`min\`, \`mins\`, \`minute\` or \`minutes\` for minutes
+              - \`h\`, \`hr\`, \`hour\` or \`hours\` for hours
+              - \`d\`, \`day\` or \`days\` for days
+
+              Example: \`5m\` for 5 minutes from now; \`1d\` for 1 day from now
+              Please reply with your properly formatted time until reminder or`;
           },
           parse: (t: string) => {
             const match = t.match(/[a-z]+|[^a-z]+/gi);
@@ -53,13 +59,21 @@ export default class RemindCommand extends Command {
 
             switch (match[1]) {
             case 'm':
+            case 'min':
+            case 'mins':
+            case 'minute':
+            case 'minutes':
               multiplier = 1;
               break;
             case 'h':
             case 'hr':
+            case 'hour':
+            case 'hours':
               multiplier = 60;
               break;
             case 'd':
+            case 'day':
+            case 'days':
               multiplier = 1440;
               break;
             default:
