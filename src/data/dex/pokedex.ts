@@ -23965,6 +23965,7 @@ export const BattlePokedex: any = [{
     heightm: 0.2,
     weightkg: 8,
     color: 'Gray',
+    evos: ['melmetal'],
     eggGroups: ['Undiscovered'],
   },
   {
@@ -23986,6 +23987,8 @@ export const BattlePokedex: any = [{
     heightm: 2.5,
     weightkg: 800,
     color: 'Gray',
+    prevo: 'meltan',
+    evoLevel: 'feed 400 Meltan Candy in Pokémon GO',
     eggGroups: ['Undiscovered'],
   },
   {
