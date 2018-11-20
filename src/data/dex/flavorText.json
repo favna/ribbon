@@ -2573,6 +2573,12 @@
 			"flavor_text": "While sleeping, it generates electricity in the sacs in its cheeks. If it's not getting enough sleep, it will be able to use only weak electricity."
 		}
 	],
+	"25starter": [
+		{
+			"version_id": "Let's Go",
+			"flavor_text": "This forest-dwelling Pokémon stores electricity in its cheeks, so you'll feel a tingly shock if you touch it."
+		}
+	],
 	"26": [{
 			"version_id": "Red",
 			"flavor_text": "Its long tail serves as a ground to protect itself from its own high voltage power."
@@ -14207,6 +14213,12 @@
 		{
 			"version_id": "Ultra Moon",
 			"flavor_text": "Its genes are easily influenced by its surroundings. Even its face starts to look like that of its Trainer."
+		}
+	],
+	"133starter": [
+		{
+		"version_id": "Let's Go",
+		"flavor_text": "It can evolve into a variety of forms. Eevee's genes are the key to solving the mysteries of Pokémon evolution."
 		}
 	],
 	"134": [{
@@ -50774,6 +50786,16 @@
 			"version_id": "Ultra Moon",
 			"flavor_text": "It approaches its enemies at the speed of lightning, then tears them limb from limb with its sharp claws."
 		}
+	],
+	"808": [{
+		"version_id": "Let's Go",
+		"flavor_text": "It melts particles of iron and other metals found in the subsoil, so it can absorb them into its body of molten steel."
+	}
+	],
+	"809": [{
+		"version_id": "Let's Go",
+		"flavor_text": "Revered long ago for its capacity to create iron from nothing, for some reason it has come back to life after 3,000 years."
+	}
 	],
 	"19alola": [{
 			"version_id": "Sun",
