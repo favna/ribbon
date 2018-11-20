@@ -1,5 +1,4 @@
-export const BattleMovedex: any = [
-  {
+export const BattleMovedex: any = [{
     num: 719,
     accuracy: true,
     basePower: 195,
@@ -34,7 +33,7 @@ export const BattleMovedex: any = [
       mirror: 1,
       heal: 1,
     },
-    drain: [ 1, 2 ],
+    drain: [1, 2],
     secondary: false,
     target: 'normal',
     type: 'Grass',
@@ -81,7 +80,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { spd: -1 },
+      boosts: {
+        spd: -1
+      },
     },
     target: 'allAdjacentFoes',
     type: 'Poison',
@@ -99,8 +100,12 @@ export const BattleMovedex: any = [
     name: 'Acid Armor',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { def: 2 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      def: 2
+    },
     secondary: false,
     target: 'self',
     type: 'Poison',
@@ -144,7 +149,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { spd: -2 },
+      boosts: {
+        spd: -2
+      },
     },
     target: 'normal',
     type: 'Poison',
@@ -259,7 +266,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -274,8 +283,12 @@ export const BattleMovedex: any = [
     name: 'Agility',
     pp: 30,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { spe: 2 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      spe: 2
+    },
     secondary: false,
     target: 'self',
     type: 'Psychic',
@@ -363,7 +376,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Psychic',
-    zMoveBoost: { spe: 2 },
+    zMoveBoost: {
+      spe: 2
+    },
     contestType: 'Clever',
   },
   {
@@ -377,8 +392,12 @@ export const BattleMovedex: any = [
     name: 'Amnesia',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { spd: 2 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      spd: 2
+    },
     secondary: false,
     target: 'self',
     type: 'Psychic',
@@ -469,12 +488,16 @@ export const BattleMovedex: any = [
     name: 'Aqua Ring',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     volatileStatus: 'aquaring',
     secondary: false,
     target: 'self',
     type: 'Water',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -516,7 +539,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Fighting',
@@ -555,12 +578,18 @@ export const BattleMovedex: any = [
     name: 'Aromatic Mist',
     pp: 20,
     priority: 0,
-    flags: { authentic: 1 },
-    boosts: { spd: 1 },
+    flags: {
+      authentic: 1
+    },
+    boosts: {
+      spd: 1
+    },
     secondary: false,
     target: 'adjacentAlly',
     type: 'Fairy',
-    zMoveBoost: { spd: 2 },
+    zMoveBoost: {
+      spd: 2
+    },
     contestType: 'Beautiful',
   },
   {
@@ -716,7 +745,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { atk: -1 },
+      boosts: {
+        atk: -1
+      },
     },
     target: 'normal',
     type: 'Ice',
@@ -735,12 +766,16 @@ export const BattleMovedex: any = [
     name: 'Aurora Veil',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     sideCondition: 'auroraveil',
     secondary: false,
     target: 'allySide',
     type: 'Ice',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -755,8 +790,12 @@ export const BattleMovedex: any = [
     name: 'Autotomize',
     pp: 15,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { spe: 2 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      spe: 2
+    },
     volatileStatus: 'autotomize',
     secondary: false,
     target: 'self',
@@ -804,12 +843,35 @@ export const BattleMovedex: any = [
       mirror: 1,
       mystery: 1,
     },
-    boosts: { atk: -1 },
+    boosts: {
+      atk: -1
+    },
     secondary: false,
     target: 'normal',
     type: 'Fairy',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cute',
+  },
+  {
+    num: 737,
+    accuracy: 100,
+    basePower: 90,
+    category: 'Special',
+    desc: 'This move summons Reflect for 5 turns upon use.',
+    shortDesc: 'Summons Reflect.',
+    id: 'baddybad',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Baddy Bad',
+    pp: 15,
+    priority: 0,
+    secondary: null,
+    target: 'normal',
+    type: 'Dark',
+    contestType: 'Clever',
   },
   {
     num: 661,
@@ -829,7 +891,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Poison',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -848,7 +912,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -866,8 +930,12 @@ export const BattleMovedex: any = [
     name: 'Barrier',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { def: 2 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      def: 2
+    },
     secondary: false,
     target: 'self',
     type: 'Psychic',
@@ -945,7 +1013,9 @@ export const BattleMovedex: any = [
     name: 'Belch',
     pp: 10,
     priority: 0,
-    flags: { protect: 1 },
+    flags: {
+      protect: 1
+    },
     secondary: false,
     target: 'normal',
     type: 'Poison',
@@ -963,7 +1033,9 @@ export const BattleMovedex: any = [
     name: 'Belly Drum',
     pp: 10,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -989,7 +1061,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spe: 2 },
+    zMoveBoost: {
+      spe: 2
+    },
     contestType: 'Cute',
   },
   {
@@ -1098,7 +1172,9 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { volatileStatus: 'mustrecharge' },
+    self: {
+      volatileStatus: 'mustrecharge'
+    },
     secondary: false,
     target: 'normal',
     type: 'Fire',
@@ -1175,7 +1251,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -1313,7 +1391,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Ground',
@@ -1378,22 +1456,28 @@ export const BattleMovedex: any = [
     name: 'Bounce',
     pp: 5,
     priority: 0,
-    flags: {
-      contact: 1,
-      charge: 1,
-      protect: 1,
-      mirror: 1,
-      gravity: 1,
-      distance: 1,
-    },
-    secondary: {
-      chance: 30,
-      status: 'par',
-    },
     target: 'any',
     type: 'Flying',
     zMovePower: 160,
     contestType: 'Cute',
+  },
+  {
+    num: 733,
+    accuracy: 100,
+    basePower: 90,
+    category: 'Special',
+    desc: 'The user recovers 1/2 the HP lost by the target, rounded half up. If Big Root is held by the user, the HP recovered is 1.3x normal, rounded half down.',
+    shortDesc: 'User recovers 50% of the damage dealt.',
+    id: 'bouncybubble',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Bouncy Bubble',
+    pp: 15,
+    priority: 0,
+    target: 'normal',
+    type: 'Water',
+    contestType: 'Clever',
   },
   {
     num: 413,
@@ -1413,7 +1497,7 @@ export const BattleMovedex: any = [
       mirror: 1,
       distance: 1,
     },
-    recoil: [ 33, 100 ],
+    recoil: [33, 100],
     secondary: false,
     target: 'any',
     type: 'Flying',
@@ -1521,7 +1605,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { spe: -1 },
+      boosts: {
+        spe: -1
+      },
     },
     target: 'allAdjacentFoes',
     type: 'Water',
@@ -1545,7 +1631,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { spe: -1 },
+      boosts: {
+        spe: -1
+      },
     },
     target: 'normal',
     type: 'Water',
@@ -1594,7 +1682,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { spd: -1 },
+      boosts: {
+        spd: -1
+      },
     },
     target: 'normal',
     type: 'Bug',
@@ -1613,7 +1703,9 @@ export const BattleMovedex: any = [
     name: 'Bulk Up',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     boosts: {
       atk: 1,
       def: 1,
@@ -1621,7 +1713,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Fighting',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -1642,7 +1736,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { spe: -1 },
+      boosts: {
+        spe: -1
+      },
     },
     target: 'allAdjacent',
     type: 'Ground',
@@ -1690,7 +1786,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Grass',
@@ -1715,6 +1811,24 @@ export const BattleMovedex: any = [
     contestType: 'Clever',
   },
   {
+    num: 734,
+    accuracy: 100,
+    basePower: 90,
+    category: 'Special',
+    desc: 'Has a 100% chance to paralyze the foe.',
+    shortDesc: '100% chance to paralyze the foe.',
+    id: 'buzzybuzz',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Buzzy Buzz',
+    pp: 15,
+    priority: 0,
+    target: 'normal',
+    type: 'Electric',
+    contestType: 'Clever',
+  },
+  {
     num: 347,
     accuracy: true,
     basePower: 0,
@@ -1726,7 +1840,9 @@ export const BattleMovedex: any = [
     name: 'Calm Mind',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     boosts: {
       spa: 1,
       spd: 1,
@@ -1748,11 +1864,15 @@ export const BattleMovedex: any = [
     name: 'Camouflage',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { evasion: 1 },
+    zMoveBoost: {
+      evasion: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -1771,11 +1891,15 @@ export const BattleMovedex: any = [
       reflectable: 1,
       mirror: 1,
     },
-    boosts: { spa: -2 },
+    boosts: {
+      spa: -2
+    },
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Normal',
-    zMoveBoost: { spd: 2 },
+    zMoveBoost: {
+      spd: 2
+    },
     contestType: 'Cute',
   },
   {
@@ -1789,7 +1913,9 @@ export const BattleMovedex: any = [
     name: 'Catastropika',
     pp: 1,
     priority: 0,
-    flags: { contact: 1 },
+    flags: {
+      contact: 1
+    },
     isZ: 'pikaniumz',
     secondary: false,
     target: 'normal',
@@ -1831,13 +1957,19 @@ export const BattleMovedex: any = [
     name: 'Charge',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     volatileStatus: 'charge',
-    boosts: { spd: 1 },
+    boosts: {
+      spd: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Electric',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -1857,7 +1989,11 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 70,
-      self: { boosts: { spa: 1 } },
+      self: {
+        boosts: {
+          spa: 1
+        }
+      },
     },
     target: 'normal',
     type: 'Electric',
@@ -1881,11 +2017,15 @@ export const BattleMovedex: any = [
       mirror: 1,
       mystery: 1,
     },
-    boosts: { atk: -2 },
+    boosts: {
+      atk: -2
+    },
     secondary: false,
     target: 'normal',
     type: 'Fairy',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -2005,7 +2145,11 @@ export const BattleMovedex: any = [
       sound: 1,
       authentic: 1,
     },
-    selfBoost: { boosts: { def: -1 } },
+    selfBoost: {
+      boosts: {
+        def: -1
+      }
+    },
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Dragon',
@@ -2105,7 +2249,9 @@ export const BattleMovedex: any = [
     name: 'Coil',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     boosts: {
       atk: 1,
       def: 1,
@@ -2134,7 +2280,7 @@ export const BattleMovedex: any = [
       mirror: 1,
       punch: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -2158,11 +2304,15 @@ export const BattleMovedex: any = [
       sound: 1,
       authentic: 1,
     },
-    boosts: { spa: -1 },
+    boosts: {
+      spa: -1
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -2185,7 +2335,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Ghost',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -2230,7 +2382,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { spe: -1 },
+      boosts: {
+        spe: -1
+      },
     },
     target: 'normal',
     type: 'Normal',
@@ -2266,7 +2420,9 @@ export const BattleMovedex: any = [
     name: 'Conversion',
     pp: 30,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -2290,7 +2446,9 @@ export const BattleMovedex: any = [
     name: 'Conversion 2',
     pp: 30,
     priority: 0,
-    flags: { authentic: 1 },
+    flags: {
+      authentic: 1
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -2312,7 +2470,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { accuracy: 1 },
+    zMoveBoost: {
+      accuracy: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -2366,7 +2526,9 @@ export const BattleMovedex: any = [
     name: 'Cosmic Power',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     boosts: {
       def: 1,
       spd: 1,
@@ -2374,7 +2536,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Psychic',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -2389,8 +2553,12 @@ export const BattleMovedex: any = [
     name: 'Cotton Guard',
     pp: 10,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { def: 3 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      def: 3
+    },
     secondary: false,
     target: 'self',
     type: 'Grass',
@@ -2414,7 +2582,9 @@ export const BattleMovedex: any = [
       reflectable: 1,
       mirror: 1,
     },
-    boosts: { spe: -2 },
+    boosts: {
+      spe: -2
+    },
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Grass',
@@ -2504,7 +2674,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'allySide',
     type: 'Fairy',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -2577,7 +2749,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 20,
-      boosts: { def: -1 },
+      boosts: {
+        def: -1
+      },
     },
     target: 'normal',
     type: 'Dark',
@@ -2602,7 +2776,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 50,
-      boosts: { def: -1 },
+      boosts: {
+        def: -1
+      },
     },
     target: 'normal',
     type: 'Normal',
@@ -2642,7 +2818,9 @@ export const BattleMovedex: any = [
     name: 'Curse',
     pp: 10,
     priority: 0,
-    flags: { authentic: 1 },
+    flags: {
+      authentic: 1
+    },
     volatileStatus: 'curse',
     secondary: false,
     target: 'normal',
@@ -2783,7 +2961,9 @@ export const BattleMovedex: any = [
     name: 'Defend Order',
     pp: 10,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     boosts: {
       def: 1,
       spd: 1,
@@ -2791,7 +2971,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Bug',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -2805,13 +2987,19 @@ export const BattleMovedex: any = [
     name: 'Defense Curl',
     pp: 40,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { def: 1 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      def: 1
+    },
     volatileStatus: 'defensecurl',
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { accuracy: 1 },
+    zMoveBoost: {
+      accuracy: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -2835,7 +3023,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Flying',
-    zMoveBoost: { accuracy: 1 },
+    zMoveBoost: {
+      accuracy: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -2850,7 +3040,9 @@ export const BattleMovedex: any = [
     name: 'Destiny Bond',
     pp: 5,
     priority: 0,
-    flags: { authentic: 1 },
+    flags: {
+      authentic: 1
+    },
     volatileStatus: 'destinybond',
     secondary: false,
     target: 'self',
@@ -2876,7 +3068,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Fighting',
-    zMoveBoost: { evasion: 1 },
+    zMoveBoost: {
+      evasion: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -2914,7 +3108,11 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 50,
-      self: { boosts: { def: 2 } },
+      self: {
+        boosts: {
+          def: 2
+        }
+      },
     },
     target: 'allAdjacentFoes',
     type: 'Rock',
@@ -3104,7 +3302,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    recoil: [ 33, 100 ],
+    recoil: [33, 100],
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -3133,6 +3331,25 @@ export const BattleMovedex: any = [
     type: 'Normal',
     zMovePower: 140,
     contestType: 'Cool',
+  },
+  {
+    num: 742,
+    accuracy: 100,
+    basePower: 60,
+    category: 'Physical',
+    desc: 'Hits twice. If the first hit breaks the target\'s substitute, it will take damage for the second hit. Has a 30% chance to flinch the target.',
+    shortDesc: 'Hits twice. 30% chance to flinch.',
+    id: 'doubleironbash',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Double Iron Bash',
+    pp: 5,
+    priority: 0,
+    target: 'normal',
+    type: 'Steel',
+    zMovePower: 180,
+    contestType: 'Clever',
   },
   {
     num: 24,
@@ -3173,7 +3390,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -3191,8 +3408,12 @@ export const BattleMovedex: any = [
     name: 'Double Team',
     pp: 15,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { evasion: 1 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      evasion: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -3215,7 +3436,11 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { boosts: { spa: -2 } },
+    self: {
+      boosts: {
+        spa: -2
+      }
+    },
     secondary: false,
     target: 'normal',
     type: 'Dragon',
@@ -3458,7 +3683,7 @@ export const BattleMovedex: any = [
       mirror: 1,
       heal: 1,
     },
-    drain: [ 3, 4 ],
+    drain: [3, 4],
     secondary: false,
     target: 'normal',
     type: 'Fairy',
@@ -3484,7 +3709,7 @@ export const BattleMovedex: any = [
       punch: 1,
       heal: 1,
     },
-    drain: [ 1, 2 ],
+    drain: [1, 2],
     secondary: false,
     target: 'normal',
     type: 'Fighting',
@@ -3507,7 +3732,7 @@ export const BattleMovedex: any = [
       mirror: 1,
       heal: 1,
     },
-    drain: [ 1, 2 ],
+    drain: [1, 2],
     secondary: false,
     target: 'normal',
     type: 'Psychic',
@@ -3630,7 +3855,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { spd: -1 },
+      boosts: {
+        spd: -1
+      },
     },
     target: 'normal',
     type: 'Ground',
@@ -3699,11 +3926,15 @@ export const BattleMovedex: any = [
       reflectable: 1,
       mirror: 1,
     },
-    boosts: { spa: -2 },
+    boosts: {
+      spa: -2
+    },
     secondary: false,
     target: 'normal',
     type: 'Electric',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -3739,12 +3970,16 @@ export const BattleMovedex: any = [
     name: 'Electric Terrain',
     pp: 10,
     priority: 0,
-    flags: { nonsky: 1 },
+    flags: {
+      nonsky: 1
+    },
     terrain: 'electricterrain',
     secondary: false,
     target: 'all',
     type: 'Electric',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -3767,7 +4002,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Electric',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -3809,7 +4046,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { spe: -1 },
+      boosts: {
+        spe: -1
+      },
     },
     target: 'allAdjacentFoes',
     type: 'Electric',
@@ -3836,7 +4075,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Dark',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -3885,7 +4126,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -3950,7 +4193,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { spd: -1 },
+      boosts: {
+        spd: -1
+      },
     },
     target: 'normal',
     type: 'Grass',
@@ -3977,7 +4222,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -4164,7 +4411,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'all',
     type: 'Fairy',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -4231,11 +4480,15 @@ export const BattleMovedex: any = [
       mirror: 1,
       mystery: 1,
     },
-    boosts: { spd: -2 },
+    boosts: {
+      spd: -2
+    },
     secondary: false,
     target: 'normal',
     type: 'Dark',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -4279,11 +4532,15 @@ export const BattleMovedex: any = [
       mystery: 1,
       dance: 1,
     },
-    boosts: { atk: -2 },
+    boosts: {
+      atk: -2
+    },
     secondary: false,
     target: 'normal',
     type: 'Flying',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -4297,7 +4554,9 @@ export const BattleMovedex: any = [
     name: 'Feint',
     pp: 10,
     priority: 2,
-    flags: { mirror: 1 },
+    flags: {
+      mirror: 1
+    },
     breaksProtect: true,
 
     secondary: false,
@@ -4347,7 +4606,11 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 50,
-      self: { boosts: { spa: 1 } },
+      self: {
+        boosts: {
+          spa: 1
+        }
+      },
     },
     target: 'normal',
     type: 'Fire',
@@ -4366,7 +4629,9 @@ export const BattleMovedex: any = [
     name: 'Final Gambit',
     pp: 5,
     priority: 0,
-    flags: { protect: 1 },
+    flags: {
+      protect: 1
+    },
     selfdestruct: 'ifHit',
     secondary: false,
     target: 'normal',
@@ -4417,15 +4682,13 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    secondaries: [
-      {
-        chance: 10,
-        status: 'brn',
-      }, {
-        chance: 10,
-        volatileStatus: 'flinch',
-      }
-    ],
+    secondaries: [{
+      chance: 10,
+      status: 'brn',
+    }, {
+      chance: 10,
+      volatileStatus: 'flinch',
+    }],
     target: 'normal',
     type: 'Fire',
     zMovePower: 120,
@@ -4450,7 +4713,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { def: -1 },
+      boosts: {
+        def: -1
+      },
     },
     target: 'normal',
     type: 'Fire',
@@ -4636,7 +4901,11 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      self: { boosts: { spe: 1 } },
+      self: {
+        boosts: {
+          spe: 1
+        }
+      },
     },
     target: 'normal',
     type: 'Fire',
@@ -4712,7 +4981,7 @@ export const BattleMovedex: any = [
       mirror: 1,
       defrost: 1,
     },
-    recoil: [ 33, 100 ],
+    recoil: [33, 100],
     secondary: {
       chance: 10,
       status: 'brn',
@@ -4738,11 +5007,15 @@ export const BattleMovedex: any = [
       reflectable: 1,
       mirror: 1,
     },
-    boosts: { accuracy: -1 },
+    boosts: {
+      accuracy: -1
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { evasion: 1 },
+    zMoveBoost: {
+      evasion: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -4763,7 +5036,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { spd: -1 },
+      boosts: {
+        spd: -1
+      },
     },
     target: 'normal',
     type: 'Steel',
@@ -4788,11 +5063,15 @@ export const BattleMovedex: any = [
       mystery: 1,
     },
     volatileStatus: 'confusion',
-    boosts: { spa: 1 },
+    boosts: {
+      spa: 1
+    },
     secondary: false,
     target: 'normal',
     type: 'Dark',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -4811,7 +5090,11 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { boosts: { spa: -2 } },
+    self: {
+      boosts: {
+        spa: -2
+      }
+    },
     secondary: false,
     target: 'normal',
     type: 'Fairy',
@@ -4839,6 +5122,24 @@ export const BattleMovedex: any = [
     type: 'Dark',
     zMovePower: 100,
     contestType: 'Cute',
+  },
+  {
+    num: 731,
+    accuracy: 95,
+    basePower: 90,
+    category: 'Physical',
+    desc: 'Has a 30% chance to flinch the target.',
+    shortDesc: '30% chance to flinch the target.',
+    id: 'floatyfall',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Floaty Fall',
+    pp: 15,
+    priority: 0,
+    target: 'normal',
+    type: 'Flying',
+    contestType: 'Cool',
   },
   {
     num: 666,
@@ -4874,11 +5175,15 @@ export const BattleMovedex: any = [
     name: 'Flower Shield',
     pp: 10,
     priority: 0,
-    flags: { distance: 1 },
+    flags: {
+      distance: 1
+    },
     secondary: false,
     target: 'all',
     type: 'Fairy',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -4950,7 +5255,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { spd: -1 },
+      boosts: {
+        spd: -1
+      },
     },
     target: 'normal',
     type: 'Fighting',
@@ -4968,12 +5275,16 @@ export const BattleMovedex: any = [
     name: 'Focus Energy',
     pp: 30,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     volatileStatus: 'focusenergy',
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { accuracy: 1 },
+    zMoveBoost: {
+      accuracy: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -5171,6 +5482,24 @@ export const BattleMovedex: any = [
     contestType: 'Beautiful',
   },
   {
+    num: 739,
+    accuracy: 100,
+    basePower: 90,
+    category: 'Special',
+    desc: 'Resets the stat stages of all active Pokemon to 0.',
+    shortDesc: 'Eliminates all stat changes.',
+    id: 'freezyfrost',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Freezy Frost',
+    pp: 15,
+    priority: 0,
+    target: 'normal',
+    type: 'Ice',
+    contestType: 'Clever',
+  },
+  {
     num: 338,
     accuracy: 90,
     basePower: 150,
@@ -5187,7 +5516,9 @@ export const BattleMovedex: any = [
       mirror: 1,
       nonsky: 1,
     },
-    self: { volatileStatus: 'mustrecharge' },
+    self: {
+      volatileStatus: 'mustrecharge'
+    },
     secondary: false,
     target: 'normal',
     type: 'Grass',
@@ -5255,7 +5586,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -5295,7 +5626,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -5390,7 +5721,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Poison',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -5435,7 +5768,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'allySide',
     type: 'Steel',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -5505,7 +5840,7 @@ export const BattleMovedex: any = [
       mirror: 1,
       heal: 1,
     },
-    drain: [ 1, 2 ],
+    drain: [1, 2],
     secondary: false,
     target: 'normal',
     type: 'Grass',
@@ -5529,7 +5864,9 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { volatileStatus: 'mustrecharge' },
+    self: {
+      volatileStatus: 'mustrecharge'
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -5571,7 +5908,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { spe: -1 },
+      boosts: {
+        spe: -1
+      },
     },
     target: 'allAdjacentFoes',
     type: 'Ice',
@@ -5599,8 +5938,29 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Tough',
+  },
+  {
+    num: 736,
+    accuracy: 100,
+    basePower: 90,
+    category: 'Special',
+    desc: 'This move summons Light Screen for 5 turns upon use.',
+    shortDesc: 'Summons Light Screen.',
+    id: 'glitzyglow',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Glitzy Glow',
+    pp: 15,
+    priority: 0,
+    secondary: null,
+    target: 'normal',
+    type: 'Psychic',
+    contestType: 'Clever',
   },
   {
     num: 447,
@@ -5670,7 +6030,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Grass',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -5684,12 +6046,16 @@ export const BattleMovedex: any = [
     name: 'Grassy Terrain',
     pp: 10,
     priority: 0,
-    flags: { nonsky: 1 },
+    flags: {
+      nonsky: 1
+    },
     terrain: 'grassyterrain',
     secondary: false,
     target: 'all',
     type: 'Grass',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -5703,12 +6069,16 @@ export const BattleMovedex: any = [
     name: 'Gravity',
     pp: 5,
     priority: 0,
-    flags: { nonsky: 1 },
+    flags: {
+      nonsky: 1
+    },
     pseudoWeather: 'gravity',
     secondary: false,
     target: 'all',
     type: 'Psychic',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -5729,11 +6099,15 @@ export const BattleMovedex: any = [
       sound: 1,
       authentic: 1,
     },
-    boosts: { atk: -1 },
+    boosts: {
+      atk: -1
+    },
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Normal',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -5747,7 +6121,9 @@ export const BattleMovedex: any = [
     name: 'Growth',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     boosts: {
       atk: 1,
       spa: 1,
@@ -5755,7 +6131,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -5769,7 +6147,9 @@ export const BattleMovedex: any = [
     name: 'Grudge',
     pp: 5,
     priority: 0,
-    flags: { authentic: 1 },
+    flags: {
+      authentic: 1
+    },
     volatileStatus: 'grudge',
     secondary: false,
     target: 'self',
@@ -5795,7 +6175,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -5818,7 +6200,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -5949,7 +6333,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'all',
     type: 'Ice',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -5970,7 +6356,11 @@ export const BattleMovedex: any = [
       mirror: 1,
       punch: 1,
     },
-    self: { boosts: { spe: -1 } },
+    self: {
+      boosts: {
+        spe: -1
+      }
+    },
     secondary: false,
     target: 'normal',
     type: 'Fighting',
@@ -6012,12 +6402,18 @@ export const BattleMovedex: any = [
     name: 'Harden',
     pp: 30,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { def: 1 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      def: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -6032,7 +6428,9 @@ export const BattleMovedex: any = [
     name: 'Haze',
     pp: 30,
     priority: 0,
-    flags: { authentic: 1 },
+    flags: {
+      authentic: 1
+    },
     secondary: false,
     target: 'all',
     type: 'Ice',
@@ -6056,7 +6454,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    recoil: [ 1, 4 ],
+    recoil: [1, 4],
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -6080,7 +6478,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    recoil: [ 1, 2 ],
+    recoil: [1, 2],
     secondary: false,
     target: 'normal',
     type: 'Rock',
@@ -6144,7 +6542,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Psychic',
-    zMoveBoost: { spa: 2 },
+    zMoveBoost: {
+      spa: 2
+    },
     contestType: 'Clever',
   },
   {
@@ -6163,7 +6563,7 @@ export const BattleMovedex: any = [
       snatch: 1,
       heal: 1,
     },
-    heal: [ 1, 2 ],
+    heal: [1, 2],
     secondary: false,
     target: 'self',
     type: 'Bug',
@@ -6349,7 +6749,9 @@ export const BattleMovedex: any = [
     name: 'Helping Hand',
     pp: 20,
     priority: 5,
-    flags: { authentic: 1 },
+    flags: {
+      authentic: 1
+    },
     volatileStatus: 'helpinghand',
     secondary: false,
     target: 'adjacentAlly',
@@ -6806,7 +7208,9 @@ export const BattleMovedex: any = [
     name: 'Hold Hands',
     pp: 40,
     priority: 0,
-    flags: { authentic: 1 },
+    flags: {
+      authentic: 1
+    },
     secondary: false,
     target: 'adjacentAlly',
     type: 'Normal',
@@ -6831,7 +7235,9 @@ export const BattleMovedex: any = [
     name: 'Hone Claws',
     pp: 15,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     boosts: {
       atk: 1,
       accuracy: 1,
@@ -6839,7 +7245,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Dark',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -6905,7 +7313,7 @@ export const BattleMovedex: any = [
       mirror: 1,
       heal: 1,
     },
-    drain: [ 1, 2 ],
+    drain: [1, 2],
     secondary: false,
     target: 'normal',
     type: 'Grass',
@@ -6923,12 +7331,18 @@ export const BattleMovedex: any = [
     name: 'Howl',
     pp: 40,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { atk: 1 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      atk: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -6973,7 +7387,9 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { volatileStatus: 'mustrecharge' },
+    self: {
+      volatileStatus: 'mustrecharge'
+    },
     secondary: false,
     target: 'normal',
     type: 'Water',
@@ -7036,7 +7452,9 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { volatileStatus: 'mustrecharge' },
+    self: {
+      volatileStatus: 'mustrecharge'
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -7086,7 +7504,11 @@ export const BattleMovedex: any = [
       authentic: 1,
     },
     breaksProtect: true,
-    self: { boosts: { def: -1 } },
+    self: {
+      boosts: {
+        def: -1
+      }
+    },
     secondary: false,
     target: 'normal',
     type: 'Dark',
@@ -7159,7 +7581,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -7253,15 +7677,13 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    secondaries: [
-      {
-        chance: 10,
-        status: 'frz',
-      }, {
-        chance: 10,
-        volatileStatus: 'flinch',
-      }
-    ],
+    secondaries: [{
+      chance: 10,
+      status: 'frz',
+    }, {
+      chance: 10,
+      volatileStatus: 'flinch',
+    }],
     target: 'normal',
     type: 'Ice',
     zMovePower: 120,
@@ -7285,7 +7707,11 @@ export const BattleMovedex: any = [
       mirror: 1,
       punch: 1,
     },
-    self: { boosts: { spe: -1 } },
+    self: {
+      boosts: {
+        spe: -1
+      }
+    },
     secondary: false,
     target: 'normal',
     type: 'Ice',
@@ -7382,7 +7808,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Ice',
@@ -7406,7 +7832,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { spe: -1 },
+      boosts: {
+        spe: -1
+      },
     },
     target: 'allAdjacentFoes',
     type: 'Ice',
@@ -7433,7 +7861,9 @@ export const BattleMovedex: any = [
     pressureTarget: 'foeSide',
     target: 'self',
     type: 'Psychic',
-    zMoveBoost: { spd: 2 },
+    zMoveBoost: {
+      spd: 2
+    },
     contestType: 'Clever',
   },
   {
@@ -7541,7 +7971,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Grass',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -7558,7 +7990,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -7577,7 +8011,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'all',
     type: 'Electric',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -7591,8 +8027,12 @@ export const BattleMovedex: any = [
     name: 'Iron Defense',
     pp: 15,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { def: 2 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      def: 2
+    },
     secondary: false,
     target: 'self',
     type: 'Steel',
@@ -7643,7 +8083,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 30,
-      boosts: { def: -1 },
+      boosts: {
+        def: -1
+      },
     },
     target: 'normal',
     type: 'Steel',
@@ -7736,11 +8178,15 @@ export const BattleMovedex: any = [
       reflectable: 1,
       mirror: 1,
     },
-    boosts: { accuracy: -1 },
+    boosts: {
+      accuracy: -1
+    },
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { evasion: 1 },
+    zMoveBoost: {
+      evasion: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -7821,12 +8267,16 @@ export const BattleMovedex: any = [
     name: 'Laser Focus',
     pp: 30,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     volatileStatus: 'laserfocus',
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -7916,7 +8366,11 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { boosts: { spa: -2 } },
+    self: {
+      boosts: {
+        spa: -2
+      }
+    },
     secondary: false,
     target: 'normal',
     type: 'Grass',
@@ -7940,7 +8394,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 50,
-      boosts: { accuracy: -1 },
+      boosts: {
+        accuracy: -1
+      },
     },
     target: 'normal',
     type: 'Grass',
@@ -7986,7 +8442,7 @@ export const BattleMovedex: any = [
       mirror: 1,
       heal: 1,
     },
-    drain: [ 1, 2 ],
+    drain: [1, 2],
     secondary: false,
     target: 'normal',
     type: 'Bug',
@@ -8033,11 +8489,15 @@ export const BattleMovedex: any = [
       reflectable: 1,
       mirror: 1,
     },
-    boosts: { def: -1 },
+    boosts: {
+      def: -1
+    },
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Normal',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -8051,7 +8511,9 @@ export const BattleMovedex: any = [
     name: 'Let\'s Snuggle Forever',
     pp: 1,
     priority: 0,
-    flags: { contact: 1 },
+    flags: {
+      contact: 1
+    },
     isZ: 'mimikiumz',
     secondary: false,
     target: 'normal',
@@ -8100,7 +8562,7 @@ export const BattleMovedex: any = [
       mirror: 1,
     },
     isUnreleased: true,
-    recoil: [ 1, 2 ],
+    recoil: [1, 2],
     secondary: false,
     target: 'normal',
     type: 'Fairy',
@@ -8119,12 +8581,16 @@ export const BattleMovedex: any = [
     name: 'Light Screen',
     pp: 30,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     sideCondition: 'lightscreen',
     secondary: false,
     target: 'allySide',
     type: 'Psychic',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -8165,7 +8631,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 20,
-      boosts: { def: -1 },
+      boosts: {
+        def: -1
+      },
     },
     target: 'normal',
     type: 'Water',
@@ -8190,7 +8658,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -8214,7 +8684,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -8258,7 +8730,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { spe: -1 },
+      boosts: {
+        spe: -1
+      },
     },
     target: 'normal',
     type: 'Fighting',
@@ -8276,12 +8750,16 @@ export const BattleMovedex: any = [
     name: 'Lucky Chant',
     pp: 30,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     sideCondition: 'luckychant',
     secondary: false,
     target: 'allySide',
     type: 'Normal',
-    zMoveBoost: { evasion: 1 },
+    zMoveBoost: {
+      evasion: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -8322,7 +8800,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { atk: -1 },
+      boosts: {
+        atk: -1
+      },
     },
     target: 'normal',
     type: 'Bug',
@@ -8346,7 +8826,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 50,
-      boosts: { spd: -1 },
+      boosts: {
+        spd: -1
+      },
     },
     target: 'normal',
     type: 'Psychic',
@@ -8394,7 +8876,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Psychic',
-    zMoveBoost: { spd: 2 },
+    zMoveBoost: {
+      spd: 2
+    },
     contestType: 'Beautiful',
   },
   {
@@ -8408,12 +8892,16 @@ export const BattleMovedex: any = [
     name: 'Magic Room',
     pp: 10,
     priority: 0,
-    flags: { mirror: 1 },
+    flags: {
+      mirror: 1
+    },
     pseudoWeather: 'magicroom',
     secondary: false,
     target: 'all',
     type: 'Psychic',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -8501,7 +8989,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'allySide',
     type: 'Electric',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -8520,10 +9010,12 @@ export const BattleMovedex: any = [
       gravity: 1,
     },
     volatileStatus: 'magnetrise',
-   secondary: false,
+    secondary: false,
     target: 'self',
     type: 'Electric',
-    zMoveBoost: { evasion: 1 },
+    zMoveBoost: {
+      evasion: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -8559,7 +9051,9 @@ export const BattleMovedex: any = [
     name: 'Malicious Moonsault',
     pp: 1,
     priority: 0,
-    flags: { contact: 1 },
+    flags: {
+      contact: 1
+    },
     isZ: 'inciniumz',
     secondary: false,
     target: 'normal',
@@ -8586,7 +9080,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'allySide',
     type: 'Fighting',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -8607,7 +9103,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'adjacentFoe',
     type: 'Normal',
-    zMoveBoost: { spe: 2 },
+    zMoveBoost: {
+      spe: 2
+    },
     contestType: 'Clever',
   },
   {
@@ -8628,7 +9126,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -8642,12 +9142,18 @@ export const BattleMovedex: any = [
     name: 'Meditate',
     pp: 40,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { atk: 1 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      atk: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Psychic',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -8666,7 +9172,7 @@ export const BattleMovedex: any = [
       mirror: 1,
       heal: 1,
     },
-    drain: [ 1, 2 ],
+    drain: [1, 2],
     secondary: false,
     target: 'normal',
     type: 'Grass',
@@ -8826,7 +9332,11 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      self: { boosts: { atk: 1 } },
+      self: {
+        boosts: {
+          atk: 1
+        }
+      },
     },
     target: 'normal',
     type: 'Steel',
@@ -8852,11 +9362,15 @@ export const BattleMovedex: any = [
       authentic: 1,
       mystery: 1,
     },
-    boosts: { spd: -2 },
+    boosts: {
+      spd: -2
+    },
     secondary: false,
     target: 'normal',
     type: 'Steel',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -8879,7 +9393,11 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 20,
-      self: { boosts: { atk: 1 } },
+      self: {
+        boosts: {
+          atk: 1
+        }
+      },
     },
     target: 'normal',
     type: 'Steel',
@@ -8898,7 +9416,7 @@ export const BattleMovedex: any = [
     pp: 10,
     priority: 0,
     flags: {},
-    noMetronome: [ 'afteryou', 'assist', 'banefulbunker', 'beakblast', 'belch', 'bestow', 'celebrate', 'chatter', 'copycat', 'counter', 'covet', 'craftyshield', 'destinybond', 'detect', 'diamondstorm', 'dragonascent', 'endure', 'feint', 'fleurcannon', 'focuspunch', 'followme', 'freezeshock', 'helpinghand', 'holdhands', 'hyperspacefury', 'hyperspacehole', 'iceburn', 'instruct', 'kingsshield', 'lightofruin', 'matblock', 'mefirst', 'metronome', 'mimic', 'mindblown', 'mirrorcoat', 'mirrormove', 'naturepower', 'originpulse', 'photongeyser', 'plasmafists', 'precipiceblades', 'protect', 'quash', 'quickguard', 'ragepowder', 'relicsong', 'secretsword', 'shelltrap', 'sketch', 'sleeptalk', 'snarl', 'snatch', 'snore', 'spectralthief', 'spikyshield', 'spotlight', 'steameruption', 'struggle', 'switcheroo', 'technoblast', 'thief', 'thousandarrows', 'thousandwaves', 'transform', 'trick', 'vcreate', 'wideguard' ],
+    noMetronome: ['afteryou', 'assist', 'banefulbunker', 'beakblast', 'belch', 'bestow', 'celebrate', 'chatter', 'copycat', 'counter', 'covet', 'craftyshield', 'destinybond', 'detect', 'diamondstorm', 'dragonascent', 'endure', 'feint', 'fleurcannon', 'focuspunch', 'followme', 'freezeshock', 'helpinghand', 'holdhands', 'hyperspacefury', 'hyperspacehole', 'iceburn', 'instruct', 'kingsshield', 'lightofruin', 'matblock', 'mefirst', 'metronome', 'mimic', 'mindblown', 'mirrorcoat', 'mirrormove', 'naturepower', 'originpulse', 'photongeyser', 'plasmafists', 'precipiceblades', 'protect', 'quash', 'quickguard', 'ragepowder', 'relicsong', 'secretsword', 'shelltrap', 'sketch', 'sleeptalk', 'snarl', 'snatch', 'snore', 'spectralthief', 'spikyshield', 'spotlight', 'steameruption', 'struggle', 'switcheroo', 'technoblast', 'thief', 'thousandarrows', 'thousandwaves', 'transform', 'trick', 'vcreate', 'wideguard'],
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -8920,7 +9438,7 @@ export const BattleMovedex: any = [
       snatch: 1,
       heal: 1,
     },
-    heal: [ 1, 2 ],
+    heal: [1, 2],
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -8946,7 +9464,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { accuracy: 1 },
+    zMoveBoost: {
+      accuracy: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -8990,7 +9510,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -9004,9 +9526,13 @@ export const BattleMovedex: any = [
     name: 'Minimize',
     pp: 10,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     volatileStatus: 'minimize',
-    boosts: { evasion: 2 },
+    boosts: {
+      evasion: 2
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -9034,7 +9560,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -9048,7 +9576,9 @@ export const BattleMovedex: any = [
     name: 'Mirror Coat',
     pp: 20,
     priority: -5,
-    flags: { protect: 1 },
+    flags: {
+      protect: 1
+    },
     secondary: false,
     target: 'scripted',
     type: 'Psychic',
@@ -9070,7 +9600,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Flying',
-    zMoveBoost: { atk: 2 },
+    zMoveBoost: {
+      atk: 2
+    },
     contestType: 'Clever',
   },
   {
@@ -9090,7 +9622,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 30,
-      boosts: { accuracy: -1 },
+      boosts: {
+        accuracy: -1
+      },
     },
     target: 'normal',
     type: 'Steel',
@@ -9108,7 +9642,9 @@ export const BattleMovedex: any = [
     name: 'Mist',
     pp: 30,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     sideCondition: 'mist',
     secondary: false,
     target: 'allySide',
@@ -9134,7 +9670,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 50,
-      boosts: { spa: -1 },
+      boosts: {
+        spa: -1
+      },
     },
     target: 'normal',
     type: 'Psychic',
@@ -9152,12 +9690,16 @@ export const BattleMovedex: any = [
     name: 'Misty Terrain',
     pp: 10,
     priority: 0,
-    flags: { nonsky: 1 },
+    flags: {
+      nonsky: 1
+    },
     terrain: 'mistyterrain',
     secondary: false,
     target: 'all',
     type: 'Fairy',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -9178,7 +9720,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 30,
-      boosts: { spa: -1 },
+      boosts: {
+        spa: -1
+      },
     },
     target: 'normal',
     type: 'Fairy',
@@ -9269,7 +9813,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { accuracy: -1 },
+      boosts: {
+        accuracy: -1
+      },
     },
     target: 'normal',
     type: 'Ground',
@@ -9294,7 +9840,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 30,
-      boosts: { accuracy: -1 },
+      boosts: {
+        accuracy: -1
+      },
     },
     target: 'normal',
     type: 'Ground',
@@ -9318,7 +9866,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { spe: -1 },
+      boosts: {
+        spe: -1
+      },
     },
     target: 'normal',
     type: 'Ground',
@@ -9336,12 +9886,16 @@ export const BattleMovedex: any = [
     name: 'Mud Sport',
     pp: 15,
     priority: 0,
-    flags: { nonsky: 1 },
+    flags: {
+      nonsky: 1
+    },
     pseudoWeather: 'mudsport',
     secondary: false,
     target: 'all',
     type: 'Ground',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -9362,7 +9916,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 30,
-      boosts: { accuracy: -1 },
+      boosts: {
+        accuracy: -1
+      },
     },
     target: 'allAdjacentFoes',
     type: 'Water',
@@ -9409,7 +9965,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { spa: -1 },
+      boosts: {
+        spa: -1
+      },
     },
     target: 'normal',
     type: 'Fire',
@@ -9428,8 +9986,12 @@ export const BattleMovedex: any = [
     name: 'Nasty Plot',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { spa: 2 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      spa: 2
+    },
     secondary: false,
     target: 'self',
     type: 'Dark',
@@ -9557,7 +10119,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 40,
-      boosts: { accuracy: -1 },
+      boosts: {
+        accuracy: -1
+      },
     },
     target: 'normal',
     type: 'Dark',
@@ -9630,7 +10194,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Ghost',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -9658,7 +10224,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -9705,7 +10273,7 @@ export const BattleMovedex: any = [
       distance: 1,
       heal: 1,
     },
-    drain: [ 3, 4 ],
+    drain: [3, 4],
     secondary: false,
     target: 'any',
     type: 'Flying',
@@ -9748,7 +10316,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 50,
-      boosts: { accuracy: -1 },
+      boosts: {
+        accuracy: -1
+      },
     },
     target: 'normal',
     type: 'Water',
@@ -9777,7 +10347,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -9851,7 +10423,9 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { volatileStatus: 'lockedmove' },
+    self: {
+      volatileStatus: 'lockedmove'
+    },
     secondary: false,
     target: 'randomNormal',
     type: 'Dragon',
@@ -9874,7 +10448,11 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { boosts: { spa: -2 } },
+    self: {
+      boosts: {
+        spa: -2
+      }
+    },
     secondary: false,
     target: 'normal',
     type: 'Fire',
@@ -9901,7 +10479,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -9920,7 +10500,7 @@ export const BattleMovedex: any = [
       mirror: 1,
       heal: 1,
     },
-    drain: [ 1, 2 ],
+    drain: [1, 2],
     secondary: false,
     target: 'allAdjacent',
     type: 'Electric',
@@ -10080,7 +10660,9 @@ export const BattleMovedex: any = [
       mirror: 1,
       dance: 1,
     },
-    self: { volatileStatus: 'lockedmove' },
+    self: {
+      volatileStatus: 'lockedmove'
+    },
     secondary: false,
     target: 'randomNormal',
     type: 'Grass',
@@ -10124,6 +10706,28 @@ export const BattleMovedex: any = [
     contestType: 'Cool',
   },
   {
+    num: 732,
+    accuracy: true,
+    basePower: '(happiness * 10) / 25',
+    category: 'Special',
+    desc: 'Power is equal to the greater of (user\'s Happiness * 2/5), rounded down, or 1.',
+    shortDesc: 'Max happiness: 102 power. Can\t miss.',
+    id: 'pikapapow',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Pika Papow',
+    pp: 20,
+    priority: 0,
+    flags: {
+      protect: 1
+    },
+    secondary: null,
+    target: 'normal',
+    type: 'Electric',
+    contestType: 'Cute',
+  },
+  {
     num: 42,
     accuracy: 95,
     basePower: 25,
@@ -10138,7 +10742,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Bug',
@@ -10187,11 +10791,15 @@ export const BattleMovedex: any = [
       mirror: 1,
       authentic: 1,
     },
-    boosts: { atk: -1 },
+    boosts: {
+      atk: -1
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -10213,7 +10821,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { atk: -1 },
+      boosts: {
+        atk: -1
+      },
     },
     target: 'normal',
     type: 'Fairy',
@@ -10289,7 +10899,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Poison',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -10339,7 +10951,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Poison',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -10458,7 +11072,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Bug',
-    zMoveBoost: { spd: 2 },
+    zMoveBoost: {
+      spd: 2
+    },
     contestType: 'Clever',
   },
   {
@@ -10525,7 +11141,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -10548,7 +11166,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -10562,12 +11182,16 @@ export const BattleMovedex: any = [
     name: 'Power Trick',
     pp: 10,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     volatileStatus: 'powertrick',
     secondary: false,
     target: 'self',
     type: 'Psychic',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -10612,7 +11236,11 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      self: { boosts: { atk: 1 } },
+      self: {
+        boosts: {
+          atk: 1
+        }
+      },
     },
     target: 'normal',
     type: 'Fighting',
@@ -10701,7 +11329,9 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { volatileStatus: 'mustrecharge' },
+    self: {
+      volatileStatus: 'mustrecharge'
+    },
     secondary: false,
     target: 'normal',
     type: 'Psychic',
@@ -10792,7 +11422,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      boosts: { spd: -1 },
+      boosts: {
+        spd: -1
+      },
     },
     target: 'normal',
     type: 'Psychic',
@@ -10834,12 +11466,16 @@ export const BattleMovedex: any = [
     name: 'Psychic Terrain',
     pp: 10,
     priority: 0,
-    flags: { nonsky: 1 },
+    flags: {
+      nonsky: 1
+    },
     terrain: 'psychicterrain',
     secondary: false,
     target: 'all',
     type: 'Psychic',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -10858,7 +11494,11 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { boosts: { spa: -2 } },
+    self: {
+      boosts: {
+        spa: -2
+      }
+    },
     secondary: false,
     target: 'normal',
     type: 'Psychic',
@@ -10906,7 +11546,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spa: 2 },
+    zMoveBoost: {
+      spa: 2
+    },
     contestType: 'Clever',
   },
   {
@@ -10987,7 +11629,9 @@ export const BattleMovedex: any = [
     name: 'Pulverizing Pancake',
     pp: 1,
     priority: 0,
-    flags: { contact: 1 },
+    flags: {
+      contact: 1
+    },
     isZ: 'snorliumz',
     secondary: false,
     target: 'normal',
@@ -10998,7 +11642,7 @@ export const BattleMovedex: any = [
     num: 386,
     accuracy: 100,
     basePower: 0,
-   category: 'Physical',
+    category: 'Physical',
     desc: 'Power is equal to 60+(X*20), where X is the target\'s total stat stage changes that are greater than 0, but not more than 200 power.',
     shortDesc: '60 power +20 for each of the target\'s stat boosts.',
     id: 'punishment',
@@ -11085,7 +11729,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Dark',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -11122,12 +11768,16 @@ export const BattleMovedex: any = [
     name: 'Quick Guard',
     pp: 15,
     priority: 3,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     sideCondition: 'quickguard',
     secondary: false,
     target: 'allySide',
     type: 'Fighting',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -11173,7 +11823,9 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { volatileStatus: 'rage' },
+    self: {
+      volatileStatus: 'rage'
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -11191,7 +11843,9 @@ export const BattleMovedex: any = [
     name: 'Rage Powder',
     pp: 20,
     priority: 2,
-    flags: { powder: 1 },
+    flags: {
+      powder: 1
+    },
     volatileStatus: 'ragepowder',
     secondary: false,
     target: 'self',
@@ -11215,7 +11869,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'all',
     type: 'Water',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -11282,7 +11938,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 50,
-      boosts: { def: -1 },
+      boosts: {
+        def: -1
+      },
     },
     target: 'normal',
     type: 'Water',
@@ -11328,7 +11986,7 @@ export const BattleMovedex: any = [
       snatch: 1,
       heal: 1,
     },
-    heal: [ 1, 2 ],
+    heal: [1, 2],
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -11346,11 +12004,15 @@ export const BattleMovedex: any = [
     name: 'Recycle',
     pp: 10,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { spe: 2 },
+    zMoveBoost: {
+      spe: 2
+    },
     contestType: 'Clever',
   },
   {
@@ -11365,12 +12027,16 @@ export const BattleMovedex: any = [
     name: 'Reflect',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     sideCondition: 'reflect',
     secondary: false,
     target: 'allySide',
     type: 'Psychic',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -11392,7 +12058,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -11407,7 +12075,9 @@ export const BattleMovedex: any = [
     name: 'Refresh',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -11599,7 +12269,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -11618,7 +12290,9 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { volatileStatus: 'mustrecharge' },
+    self: {
+      volatileStatus: 'mustrecharge'
+    },
     secondary: false,
     target: 'normal',
     type: 'Dragon',
@@ -11642,7 +12316,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Rock',
@@ -11686,8 +12360,12 @@ export const BattleMovedex: any = [
     name: 'Rock Polish',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { spe: 2 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      spe: 2
+    },
     secondary: false,
     target: 'self',
     type: 'Rock',
@@ -11737,7 +12415,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 50,
-      boosts: { def: -1 },
+      boosts: {
+        def: -1
+      },
     },
     target: 'normal',
     type: 'Fighting',
@@ -11782,7 +12462,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { spe: -1 },
+      boosts: {
+        spe: -1
+      },
     },
     target: 'normal',
     type: 'Rock',
@@ -11806,7 +12488,9 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { volatileStatus: 'mustrecharge' },
+    self: {
+      volatileStatus: 'mustrecharge'
+    },
     secondary: false,
     target: 'normal',
     type: 'Rock',
@@ -11831,7 +12515,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -11897,8 +12583,10 @@ export const BattleMovedex: any = [
       snatch: 1,
       heal: 1,
     },
-    heal: [ 1, 2 ],
-    self: { volatileStatus: 'roost' },
+    heal: [1, 2],
+    self: {
+      volatileStatus: 'roost'
+    },
     secondary: false,
     target: 'self',
     type: 'Flying',
@@ -11923,7 +12611,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'all',
     type: 'Ground',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -12011,12 +12701,16 @@ export const BattleMovedex: any = [
     name: 'Safeguard',
     pp: 25,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     sideCondition: 'safeguard',
     secondary: false,
     target: 'allySide',
     type: 'Normal',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -12035,11 +12729,15 @@ export const BattleMovedex: any = [
       reflectable: 1,
       mirror: 1,
     },
-    boosts: { accuracy: -1 },
+    boosts: {
+      accuracy: -1
+    },
     secondary: false,
     target: 'normal',
     type: 'Ground',
-    zMoveBoost: { evasion: 1 },
+    zMoveBoost: {
+      evasion: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -12080,8 +12778,33 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'all',
     type: 'Rock',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Tough',
+  },
+  {
+    num: 738,
+    accuracy: 100,
+    basePower: 90,
+    category: 'Physical',
+    desc: 'This move summons Leech Seed on the foe.',
+    shortDesc: 'Summons Leech Seed.',
+    id: 'sappyseed',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Sappy Seed',
+    pp: 15,
+    priority: 0,
+    flags: {
+      protect: 1,
+      reflectable: 1
+    },
+    secondary: null,
+    target: 'normal',
+    type: 'Grass',
+    contestType: 'Clever',
   },
   {
     num: 634,
@@ -12144,11 +12867,15 @@ export const BattleMovedex: any = [
       mirror: 1,
       mystery: 1,
     },
-    boosts: { spe: -2 },
+    boosts: {
+      spe: -2
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -12192,11 +12919,15 @@ export const BattleMovedex: any = [
       authentic: 1,
       mystery: 1,
     },
-    boosts: { def: -2 },
+    boosts: {
+      def: -2
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -12236,7 +12967,9 @@ export const BattleMovedex: any = [
     name: 'Searing Sunraze Smash',
     pp: 1,
     priority: 0,
-    flags: { contact: 1 },
+    flags: {
+      contact: 1
+    },
     isZ: 'solganiumz',
     ignoreAbility: true,
     secondary: false,
@@ -12332,7 +13065,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 40,
-      boosts: { spd: -2 },
+      boosts: {
+        spd: -2
+      },
     },
     target: 'normal',
     type: 'Grass',
@@ -12405,7 +13140,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 20,
-      boosts: { spd: -1 },
+      boosts: {
+        spd: -1
+      },
     },
     target: 'normal',
     type: 'Ghost',
@@ -12430,7 +13167,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 20,
-      boosts: { def: -1 },
+      boosts: {
+        def: -1
+      },
     },
     target: 'normal',
     type: 'Ghost',
@@ -12542,12 +13281,18 @@ export const BattleMovedex: any = [
     name: 'Sharpen',
     pp: 30,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { atk: 1 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      atk: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -12602,7 +13347,9 @@ export const BattleMovedex: any = [
     name: 'Shell Smash',
     pp: 15,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     boosts: {
       def: -1,
       spd: -1,
@@ -12627,7 +13374,9 @@ export const BattleMovedex: any = [
     name: 'Shell Trap',
     pp: 5,
     priority: -3,
-    flags: { protect: 1 },
+    flags: {
+      protect: 1
+    },
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Fire',
@@ -12646,7 +13395,9 @@ export const BattleMovedex: any = [
     name: 'Shift Gear',
     pp: 10,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     boosts: {
       spe: 2,
       atk: 1,
@@ -12777,7 +13528,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -12802,7 +13555,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -12822,6 +13577,24 @@ export const BattleMovedex: any = [
     target: 'normal',
     type: 'Ghost',
     contestType: 'Cool',
+  },
+  {
+    num: 735,
+    accuracy: 100,
+    basePower: 90,
+    category: 'Physical',
+    desc: 'Has a 100% chance to burn the foe.',
+    shortDesc: '100% chance to burn the foe.',
+    id: 'sizzlyslide',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Sizzly Slide',
+    pp: 15,
+    priority: 0,
+    target: 'normal',
+    type: 'Fire',
+    contestType: 'Clever',
   },
   {
     num: 166,
@@ -12865,7 +13638,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -12965,7 +13740,7 @@ export const BattleMovedex: any = [
       snatch: 1,
       heal: 1,
     },
-    heal: [ 1, 2 ],
+    heal: [1, 2],
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -13040,7 +13815,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Grass',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -13245,11 +14022,15 @@ export const BattleMovedex: any = [
       reflectable: 1,
       mirror: 1,
     },
-    boosts: { accuracy: -1 },
+    boosts: {
+      accuracy: -1
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { evasion: 1 },
+    zMoveBoost: {
+      evasion: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -13271,7 +14052,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { spa: -1 },
+      boosts: {
+        spa: -1
+      },
     },
     target: 'allAdjacentFoes',
     type: 'Dark',
@@ -13289,13 +14072,17 @@ export const BattleMovedex: any = [
     name: 'Snatch',
     pp: 10,
     priority: 4,
-    flags: { authentic: 1 },
+    flags: {
+      authentic: 1
+    },
     volatileStatus: 'snatch',
     secondary: false,
     pressureTarget: 'foeSide',
     target: 'self',
     type: 'Dark',
-    zMoveBoost: { spe: 2 },
+    zMoveBoost: {
+      spe: 2
+    },
     contestType: 'Clever',
   },
   {
@@ -13371,7 +14158,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -13392,7 +14181,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Grass',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -13436,7 +14227,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Water',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -13455,7 +14248,7 @@ export const BattleMovedex: any = [
       snatch: 1,
       heal: 1,
     },
-    heal: [ 1, 2 ],
+    heal: [1, 2],
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -13540,7 +14333,9 @@ export const BattleMovedex: any = [
     name: 'Soul-Stealing 7-Star Strike',
     pp: 1,
     priority: 0,
-    flags: { contact: 1 },
+    flags: {
+      contact: 1
+    },
     isZ: 'marshadiumz',
     secondary: false,
     target: 'normal',
@@ -13618,6 +14413,28 @@ export const BattleMovedex: any = [
     contestType: 'Tough',
   },
   {
+    num: 740,
+    accuracy: 100,
+    basePower: 90,
+    category: 'Special',
+    desc: 'Every Pokemon in the user\'s party is cured of its major status condition.',
+    shortDesc: 'Cures the user\'s party of all status conditions.',
+    id: 'sparklyswirl',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Sparkly Swirl',
+    pp: 15,
+    priority: 0,
+    flags: {
+      protect: 1
+    },
+    secondary: null,
+    target: 'normal',
+    type: 'Fairy',
+    contestType: 'Clever',
+  },
+  {
     num: 169,
     accuracy: true,
     basePower: 0,
@@ -13636,7 +14453,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Bug',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -13654,7 +14473,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -13681,7 +14500,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'foeSide',
     type: 'Ground',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -13695,7 +14516,9 @@ export const BattleMovedex: any = [
     name: 'Spit Up',
     pp: 10,
     priority: 0,
-    flags: { protect: 1 },
+    flags: {
+      protect: 1
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -13736,11 +14559,15 @@ export const BattleMovedex: any = [
     name: 'Splash',
     pp: 40,
     priority: 0,
-    flags: { gravity: 1 },
+    flags: {
+      gravity: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { atk: 3 },
+    zMoveBoost: {
+      atk: 3
+    },
     contestType: 'Cute',
   },
   {
@@ -13759,6 +14586,24 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Rock',
+    contestType: 'Cool',
+  },
+  {
+    num: 730,
+    accuracy: 100,
+    basePower: 90,
+    category: 'Special',
+    desc: 'Has a 30% chance to paralyze the target.',
+    shortDesc: '30% chance to paralyze the target.',
+    id: 'splishysplash',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Splishy Splash',
+    pp: 15,
+    priority: 0,
+    target: 'allAdjacentFoes',
+    type: 'Water',
     contestType: 'Cool',
   },
   {
@@ -13806,7 +14651,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -13821,12 +14668,16 @@ export const BattleMovedex: any = [
     name: 'Stealth Rock',
     pp: 20,
     priority: 0,
-    flags: { reflectable: 1 },
+    flags: {
+      reflectable: 1
+    },
     sideCondition: 'stealthrock',
     secondary: false,
     target: 'foeSide',
     type: 'Rock',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -13874,7 +14725,11 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 10,
-      self: { boosts: { def: 1 } },
+      self: {
+        boosts: {
+          def: 1
+        }
+      },
     },
     target: 'normal',
     type: 'Steel',
@@ -13893,12 +14748,16 @@ export const BattleMovedex: any = [
     name: 'Sticky Web',
     pp: 20,
     priority: 0,
-    flags: { reflectable: 1 },
+    flags: {
+      reflectable: 1
+    },
     sideCondition: 'stickyweb',
     secondary: false,
     target: 'foeSide',
     type: 'Bug',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -13912,7 +14771,9 @@ export const BattleMovedex: any = [
     name: 'Stockpile',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -14124,7 +14985,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Grass',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -14143,11 +15006,15 @@ export const BattleMovedex: any = [
       reflectable: 1,
       mirror: 1,
     },
-    boosts: { spe: -2 },
+    boosts: {
+      spe: -2
+    },
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Bug',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -14191,7 +15058,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { spa: -1 },
+      boosts: {
+        spa: -1
+      },
     },
     target: 'allAdjacentFoes',
     type: 'Bug',
@@ -14219,7 +15088,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Grass',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -14238,7 +15109,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    recoil: [ 1, 4 ],
+    recoil: [1, 4],
     secondary: false,
     target: 'normal',
     type: 'Fighting',
@@ -14324,7 +15195,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'all',
     type: 'Fire',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -14425,7 +15298,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -14487,7 +15362,9 @@ export const BattleMovedex: any = [
       mystery: 1,
     },
     volatileStatus: 'confusion',
-    boosts: { atk: 2 },
+    boosts: {
+      atk: 2
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -14535,7 +15412,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Fairy',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -14554,11 +15433,15 @@ export const BattleMovedex: any = [
       reflectable: 1,
       mirror: 1,
     },
-    boosts: { evasion: -2 },
+    boosts: {
+      evasion: -2
+    },
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Normal',
-    zMoveBoost: { accuracy: 1 },
+    zMoveBoost: {
+      accuracy: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -14602,7 +15485,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Dark',
-    zMoveBoost: { spe: 2 },
+    zMoveBoost: {
+      spe: 2
+    },
     contestType: 'Clever',
   },
   {
@@ -14621,7 +15506,9 @@ export const BattleMovedex: any = [
       snatch: 1,
       dance: 1,
     },
-    boosts: { atk: 2 },
+    boosts: {
+      atk: 2
+    },
     secondary: false,
     target: 'self',
     type: 'Normal',
@@ -14705,8 +15592,12 @@ export const BattleMovedex: any = [
     name: 'Tail Glow',
     pp: 20,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { spa: 3 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      spa: 3
+    },
     secondary: false,
     target: 'self',
     type: 'Bug',
@@ -14730,7 +15621,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -14753,11 +15644,15 @@ export const BattleMovedex: any = [
       reflectable: 1,
       mirror: 1,
     },
-    boosts: { def: -1 },
+    boosts: {
+      def: -1
+    },
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Normal',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -14772,7 +15667,9 @@ export const BattleMovedex: any = [
     name: 'Tailwind',
     pp: 15,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     sideCondition: 'tailwind',
     secondary: false,
     target: 'allySide',
@@ -14796,7 +15693,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    recoil: [ 1, 4 ],
+    recoil: [1, 4],
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -14825,7 +15722,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Dark',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -14850,7 +15749,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -14913,7 +15814,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'allAdjacent',
     type: 'Normal',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -14938,7 +15841,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spa: 1 },
+    zMoveBoost: {
+      spa: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -14999,7 +15904,9 @@ export const BattleMovedex: any = [
       nonsky: 1,
     },
     volatileStatus: 'smackdown',
-    ignoreImmunity: { Ground: true },
+    ignoreImmunity: {
+      Ground: true
+    },
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Ground',
@@ -15044,7 +15951,9 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    self: { volatileStatus: 'lockedmove' },
+    self: {
+      volatileStatus: 'lockedmove'
+    },
     secondary: false,
     target: 'randomNormal',
     type: 'Normal',
@@ -15110,15 +16019,13 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    secondaries: [
-      {
-        chance: 10,
-        status: 'par',
-      }, {
-        chance: 10,
-        volatileStatus: 'flinch',
-      }
-    ],
+    secondaries: [{
+      chance: 10,
+      status: 'par',
+    }, {
+      chance: 10,
+      volatileStatus: 'flinch',
+    }],
     target: 'normal',
     type: 'Electric',
     zMovePower: 120,
@@ -15197,7 +16104,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Electric',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Cool',
   },
   {
@@ -15249,7 +16158,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -15272,7 +16183,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Dark',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -15296,7 +16209,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Dark',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -15321,7 +16236,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Poison',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -15344,7 +16261,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'foeSide',
     type: 'Poison',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -15365,11 +16284,15 @@ export const BattleMovedex: any = [
       mirror: 1,
     },
     status: 'psn',
-    boosts: { spe: -1 },
+    boosts: {
+      spe: -1
+    },
     secondary: false,
     target: 'normal',
     type: 'Poison',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -15383,7 +16306,9 @@ export const BattleMovedex: any = [
     name: 'Transform',
     pp: 10,
     priority: 0,
-    flags: { mystery: 1 },
+    flags: {
+      mystery: 1
+    },
     secondary: false,
     target: 'normal',
     type: 'Normal',
@@ -15431,7 +16356,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Psychic',
-    zMoveBoost: { spe: 2 },
+    zMoveBoost: {
+      spe: 2
+    },
     contestType: 'Clever',
   },
   {
@@ -15474,12 +16401,16 @@ export const BattleMovedex: any = [
     name: 'Trick Room',
     pp: 5,
     priority: -7,
-    flags: { mirror: 1 },
+    flags: {
+      mirror: 1
+    },
     pseudoWeather: 'trickroom',
     secondary: false,
     target: 'all',
     type: 'Psychic',
-    zMoveBoost: { accuracy: 1 },
+    zMoveBoost: {
+      accuracy: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -15524,7 +16455,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 100,
-      boosts: { atk: -1 },
+      boosts: {
+        atk: -1
+      },
     },
     target: 'normal',
     type: 'Grass',
@@ -15662,7 +16595,9 @@ export const BattleMovedex: any = [
       sound: 1,
       authentic: 1,
     },
-    self: { volatileStatus: 'uproar' },
+    self: {
+      volatileStatus: 'uproar'
+    },
     secondary: false,
     target: 'randomNormal',
     type: 'Normal',
@@ -15721,6 +16656,29 @@ export const BattleMovedex: any = [
     contestType: 'Cool',
   },
   {
+    num: 741,
+    accuracy: true,
+    basePower: '(happiness * 10) / 25',
+    category: 'Physical',
+    desc: 'Power is equal to the greater of (user\'s Happiness * 2/5), rounded down, or 1.',
+    shortDesc: 'Max happiness: 102 power. Can\'t miss.',
+    id: 'veeveevolley',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Veevee Volley',
+    pp: 20,
+    priority: 0,
+    flags: {
+      contact: 1,
+      protect: 1
+    },
+    secondary: null,
+    target: 'normal',
+    type: 'Normal',
+    contestType: 'Cute',
+  },
+  {
     num: 599,
     accuracy: 100,
     basePower: 0,
@@ -15739,7 +16697,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'allAdjacentFoes',
     type: 'Poison',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -15870,7 +16830,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    recoil: [ 33, 100 ],
+    recoil: [33, 100],
     secondary: {
       chance: 10,
       status: 'par',
@@ -15982,12 +16942,16 @@ export const BattleMovedex: any = [
     name: 'Water Sport',
     pp: 15,
     priority: 0,
-    flags: { nonsky: 1 },
+    flags: {
+      nonsky: 1
+    },
     pseudoWeather: 'watersport',
     secondary: false,
     target: 'all',
     type: 'Water',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -16054,7 +17018,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    multihit: [ 2, 5 ],
+    multihit: [2, 5],
     secondary: false,
     target: 'normal',
     type: 'Water',
@@ -16122,7 +17086,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -16136,12 +17102,16 @@ export const BattleMovedex: any = [
     name: 'Wide Guard',
     pp: 10,
     priority: 3,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     sideCondition: 'wideguard',
     secondary: false,
     target: 'allySide',
     type: 'Rock',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -16161,7 +17131,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    recoil: [ 1, 4 ],
+    recoil: [1, 4],
     secondary: false,
     target: 'normal',
     type: 'Electric',
@@ -16189,7 +17159,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Fire',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Beautiful',
   },
   {
@@ -16235,7 +17207,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -16249,12 +17223,18 @@ export const BattleMovedex: any = [
     name: 'Withdraw',
     pp: 40,
     priority: 0,
-    flags: { snatch: 1 },
-    boosts: { def: 1 },
+    flags: {
+      snatch: 1
+    },
+    boosts: {
+      def: 1
+    },
     secondary: false,
     target: 'self',
     type: 'Water',
-    zMoveBoost: { def: 1 },
+    zMoveBoost: {
+      def: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -16268,12 +17248,16 @@ export const BattleMovedex: any = [
     name: 'Wonder Room',
     pp: 10,
     priority: 0,
-    flags: { mirror: 1 },
+    flags: {
+      mirror: 1
+    },
     pseudoWeather: 'wonderroom',
     secondary: false,
     target: 'all',
     type: 'Psychic',
-    zMoveBoost: { spd: 1 },
+    zMoveBoost: {
+      spd: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -16293,7 +17277,7 @@ export const BattleMovedex: any = [
       protect: 1,
       mirror: 1,
     },
-    recoil: [ 33, 100 ],
+    recoil: [33, 100],
     secondary: false,
     target: 'normal',
     type: 'Grass',
@@ -16311,7 +17295,9 @@ export const BattleMovedex: any = [
     name: 'Work Up',
     pp: 30,
     priority: 0,
-    flags: { snatch: 1 },
+    flags: {
+      snatch: 1
+    },
     boosts: {
       atk: 1,
       spa: 1,
@@ -16319,7 +17305,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'self',
     type: 'Normal',
-    zMoveBoost: { atk: 1 },
+    zMoveBoost: {
+      atk: 1
+    },
     contestType: 'Tough',
   },
   {
@@ -16336,7 +17324,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Grass',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Clever',
   },
   {
@@ -16427,7 +17417,9 @@ export const BattleMovedex: any = [
     secondary: false,
     target: 'normal',
     type: 'Normal',
-    zMoveBoost: { spe: 1 },
+    zMoveBoost: {
+      spe: 1
+    },
     contestType: 'Cute',
   },
   {
@@ -16493,18 +17485,27 @@ export const BattleMovedex: any = [
     name: 'Zing Zap',
     pp: 10,
     priority: 0,
-    flags: {
-      contact: 1,
-      protect: 1,
-      mirror: 1,
-    },
-    secondary: {
-      chance: 30,
-      volatileStatus: 'flinch',
-    },
     target: 'normal',
     type: 'Electric',
     zMovePower: 160,
+    contestType: 'Cool',
+  },
+  {
+    num: 729,
+    accuracy: 100,
+    basePower: 50,
+    category: 'Physical',
+    desc: 'Will always result in a critical hit.',
+    shortDesc: 'Nearly always goes first. Always crits.',
+    id: 'zippyzap',
+    isNonstandard: true,
+    isUnreleased: true,
+    isViable: true,
+    name: 'Zippy Zap',
+    pp: 15,
+    priority: 2,
+    target: 'normal',
+    type: 'Electric',
     contestType: 'Cool',
   },
   {
@@ -16526,7 +17527,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 20,
-      boosts: { atk: -1 },
+      boosts: {
+        atk: -1
+      },
     },
     target: 'normal',
     type: 'Rock',
@@ -16553,7 +17556,9 @@ export const BattleMovedex: any = [
     },
     secondary: {
       chance: 50,
-      boosts: { def: -1 },
+      boosts: {
+        def: -1
+      },
     },
     target: 'normal',
     type: 'Ghost',
@@ -16580,7 +17585,7 @@ export const BattleMovedex: any = [
       heal: 1,
     },
     noSketch: true,
-    drain: [ 1, 2 ],
+    drain: [1, 2],
     stealsBoosts: true,
     target: 'normal',
     type: 'Water',
