@@ -606,15 +606,35 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
             const curDisplayName = newMember.displayName;
             const curGuild = newMember.guild as CommandoGuild;
             const curUser = newMember.user;
-            const newActivity = newMember.presence.activity;
-            const oldActivity = oldMember.presence.activity;
+            let newActivity = newMember.presence.activity;
+            let oldActivity = oldMember.presence.activity;
 
             try {
                 if (!oldActivity) {
-                    oldActivity.url = 'placeholder';
+                    oldActivity = {
+                        applicationID: '',
+                        assets: {largeImage: '', largeText: '', smallImage: '', smallText: '', largeImageURL: () => null, smallImageURL: () => null},
+                        details: '',
+                        name: '',
+                        party: {id: '', size: [0, 0]},
+                        state: '',
+                        timestamps: {start: new Date(), end: new Date()},
+                        type: 'STREAMING',
+                        url: 'placeholder',
+                        equals: () => null};
                 }
                 if (!newActivity) {
-                    newActivity.url = 'placeholder';
+                    newActivity = {
+                        applicationID: '',
+                        assets: {largeImage: '', largeText: '', smallImage: '', smallText: '', largeImageURL: () => null, smallImageURL: () => null},
+                        details: '',
+                        name: '',
+                        party: {id: '', size: [0, 0]},
+                        state: '',
+                        timestamps: {start: new Date(), end: new Date()},
+                        type: 'STREAMING',
+                        url: 'placeholder',
+                        equals: () => null};
                 }
                 if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
                     const userFetch = await fetch(`https://api.twitch.tv/helix/users?${stringify({login: newActivity.url.split('/')[3]})}`,
