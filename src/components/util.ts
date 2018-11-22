@@ -42,9 +42,11 @@ export const deleteCommandMessages = (msg: CommandoMessage, client: CommandoClie
 
 export const modLogMessage = (msg: CommandoMessage, guild: CommandoGuild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed) => {
   if (!guild.settings.get('hasSentModLogMessage', false)) {
-    msg.reply(oneLine`📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
-    (or some other name configured by the ${guild.commandPrefix}setmodlogs command) and give me access to it.
-    This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+    msg.reply(oneLine`
+      📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+      (or some other name configured by the ${guild.commandPrefix}setmodlogs command) and give me access to it.
+      This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`
+    );
     guild.settings.set('hasSentModLogMessage', true);
   }
 
@@ -116,8 +118,9 @@ export const validateBool = (bool: boolean) => {
 
   if (validBools.includes(bool.toString())) return true;
 
-  return stripIndents`Has to be one of ${validBools.map(val => `\`${val}\``).join(', ')}
-   Respond with your new selection or`;
+  return stripIndents`
+    Has to be one of ${validBools.map(val => `\`${val}\``).join(', ')}
+    Respond with your new selection or`;
 };
 
 export class Song {

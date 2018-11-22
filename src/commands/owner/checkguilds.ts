@@ -22,9 +22,11 @@ export default class CheckGuildsCommand extends Command {
   }
 
   public run (msg: CommandoMessage) {
+    const guildList = this.client.guilds.map(m => `${m.name} (${m.id})`);
+
     return msg.say(stripIndents`\`\`\`The current guild count: ${this.client.guilds.size}
 
         Guild list:
-        ${this.client.guilds.map(m => m.name).join('\n')}\`\`\``, { split: true });
+        ${guildList.join('\n')}\`\`\``, { split: true });
   }
 }

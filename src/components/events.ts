@@ -55,10 +55,10 @@ const renderReminderMessage = async (client: CommandoClient) => {
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-      <@${client.owners[0].id}> Error occurred sending someone their reminder!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}
-      `);
+            <@${client.owners[0].id}> Error occurred sending someone their reminder!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 };
 
@@ -86,11 +86,11 @@ const renderCountdownMessage = (client: CommandoClient) => {
                         .setColor(me.displayHexColor)
                         .setTimestamp()
                         .setDescription(stripIndents`
-            Event on: ${moment(rows[row].datetime).format('MMMM Do YYYY [at] HH:mm')}
-            That is: ${moment.duration(moment(rows[row].datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+                            Event on: ${moment(rows[row].datetime).format('MMMM Do YYYY [at] HH:mm')}
+                            That is: ${moment.duration(moment(rows[row].datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
 
-            **__${rows[row].content}__**
-            `);
+                            **__${rows[row].content}__**
+                        `);
 
                     if (moment(rows[row].datetime).diff(new Date(), 'hours') >= 24) {
                         conn.prepare(`UPDATE "${tables[table].name}" SET lastsend=$lastsend WHERE id=$id;`).run({
@@ -121,10 +121,10 @@ const renderCountdownMessage = (client: CommandoClient) => {
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-    <@${client.owners[0].id}> Error occurred sending a countdown!
-    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    **Error Message:** ${err}
-    `);
+            <@${client.owners[0].id}> Error occurred sending a countdown!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 };
 
@@ -213,42 +213,44 @@ const renderLottoMessage = (client: CommandoClient) => {
         const tables = conn.prepare('SELECT name FROM sqlite_master WHERE type=\'table\'').all();
 
         for (const table in tables) {
-            const rows = conn.prepare(`SELECT * FROM "${tables[table].name}"`).all();
-            const winner = Math.floor(Math.random() * rows.length);
-            const prevBal = rows[winner].balance;
+            if (client.guilds.get(tables[table].name)) {
+                const rows = conn.prepare(`SELECT * FROM "${tables[table].name}"`).all();
+                const winner = Math.floor(Math.random() * rows.length);
+                const prevBal = rows[winner].balance;
 
-            rows[winner].balance += 2000;
+                rows[winner].balance += 2000;
 
-            conn.prepare(`UPDATE "${tables[table].name}" SET balance=$balance WHERE userID="${rows[winner].userID}"`).run({balance: rows[winner].balance});
+                conn.prepare(`UPDATE "${tables[table].name}" SET balance=$balance WHERE userID="${rows[winner].userID}"`).run({balance: rows[winner].balance});
 
-            const defaultChannel = client.guilds.get(tables[table].name).systemChannel;
-            const winnerEmbed = new MessageEmbed();
-            const winnerLastMessage = client.guilds.get(tables[table].name).members.get(rows[winner].userID).lastMessageChannelID;
-            const winnerLastMessageChannel = winnerLastMessage ? client.guilds.get(tables[table].name).channels.get(winnerLastMessage) as TextChannel : null;
-            const winnerLastMessageChannelPermitted = winnerLastMessageChannel ? winnerLastMessageChannel.permissionsFor(client.user).has('SEND_MESSAGES') : false;
+                const defaultChannel = client.guilds.get(tables[table].name).systemChannel;
+                const winnerEmbed = new MessageEmbed();
+                const winnerLastMessage = client.guilds.get(tables[table].name).members.get(rows[winner].userID).lastMessageChannelID;
+                const winnerLastMessageChannel = winnerLastMessage ? client.guilds.get(tables[table].name).channels.get(winnerLastMessage) as TextChannel : null;
+                const winnerLastMessageChannelPermitted = winnerLastMessageChannel ? winnerLastMessageChannel.permissionsFor(client.user).has('SEND_MESSAGES') : false;
 
-            winnerEmbed
-                .setColor('#7CFC00')
-                .setDescription(`Congratulations <@${rows[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
-                .setAuthor(client.guilds.get(tables[table].name).members.get(rows[winner].userID).displayName,
-                    client.guilds.get(tables[table].name).members.get(rows[winner].userID).user.displayAvatarURL({format: 'png'}))
-                .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png')
-                .addField('Balance', `${prevBal} ➡ ${rows[winner].balance}`);
+                winnerEmbed
+                    .setColor('#7CFC00')
+                    .setDescription(`Congratulations <@${rows[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
+                    .setAuthor(client.guilds.get(tables[table].name).members.get(rows[winner].userID).displayName,
+                        client.guilds.get(tables[table].name).members.get(rows[winner].userID).user.displayAvatarURL({format: 'png'}))
+                    .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png')
+                    .addField('Balance', `${prevBal} ➡ ${rows[winner].balance}`);
 
-            if (winnerLastMessageChannelPermitted) {
-                winnerLastMessageChannel.send(`<@${rows[winner].userID}>`, {embed: winnerEmbed});
-            } else if (defaultChannel) {
-                defaultChannel.send(`<@${rows[winner].userID}>`, {embed: winnerEmbed});
+                if (winnerLastMessageChannelPermitted) {
+                    winnerLastMessageChannel.send(`<@${rows[winner].userID}>`, {embed: winnerEmbed});
+                } else if (defaultChannel) {
+                    defaultChannel.send(`<@${rows[winner].userID}>`, {embed: winnerEmbed});
+                }
             }
         }
     } catch (err) {
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-    <@${client.owners[0].id}> Error occurred giving someone their lotto payout!
-    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    **Error Message:** ${err}
-    `);
+            <@${client.owners[0].id}> Error occurred giving someone their lotto payout!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 };
 
@@ -289,10 +291,10 @@ const renderTimerMessage = (client: CommandoClient) => {
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-    <@${client.owners[0].id}> Error occurred sending a timed message!
-    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    **Error Message:** ${err}
-    `);
+            <@${client.owners[0].id}> Error occurred sending a timed message!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 };
 
@@ -325,13 +327,13 @@ export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, m
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
     channel.send(stripIndents`
-  Caught **Command Error**!
-  **Command:** ${cmd.name}
-  **Server:** ${msg.guild.name} (${msg.guild.id})
-  **Author:** ${msg.author.tag} (${msg.author.id})
-  **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-  **Error Message:** ${err}
-  `);
+        Caught **Command Error**!
+        **Command:** ${cmd.name}
+        **Server:** ${msg.guild.name} (${msg.guild.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Error Message:** ${err}
+    `);
 };
 
 export const handleDebug = (info: string) => {
@@ -342,10 +344,10 @@ export const handleErr = (client: CommandoClient, err: string) => {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
     channel.send(stripIndents`
-  Caught **WebSocket Error**!
-  **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-  **Error Message:** ${err}
-  `);
+        Caught **WebSocket Error**!
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Error Message:** ${err}
+    `);
 };
 
 export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGuild) => {
@@ -375,12 +377,12 @@ export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGui
             .setColor('#80F31F')
             .setTitle('Ribbon is here!')
             .setDescription(stripIndents`
-      I'm an all-purpose bot and I hope I can make your server better!
-      I've got many commands, you can see them all by using \`${client.commandPrefix}help\`
-      Don't like the prefix? The admins can change my prefix by using \`${client.commandPrefix}prefix [new prefix]\`
+                I'm an all-purpose bot and I hope I can make your server better!
+                I've got many commands, you can see them all by using \`${client.commandPrefix}help\`
+                Don't like the prefix? The admins can change my prefix by using \`${client.commandPrefix}prefix [new prefix]\`
 
-      **All these commands can also be called by mentioning me instead of using a prefix, for example \`@${client.user.tag} help\`**
-      `)
+                **All these commands can also be called by mentioning me instead of using a prefix, for example \`@${client.user.tag} help\`**
+            `)
             .setImage('attachment://added.png');
 
         return channel ? channel.send('', {embed: newGuildEmbed}) : null;
@@ -402,10 +404,10 @@ export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild) =
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the casino database!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}
-      `);
+            <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the casino database!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 
     try {
@@ -414,10 +416,10 @@ export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild) =
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the pastas database!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}
-      `);
+            <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the pastas database!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 
     try {
@@ -426,10 +428,10 @@ export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild) =
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the timers database!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}
-      `);
+            <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the timers database!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 
     try {
@@ -438,10 +440,10 @@ export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild) =
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the warnings database!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}
-      `);
+            <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the warnings database!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 };
 
@@ -481,11 +483,11 @@ export const handleMemberJoin = (client: CommandoClient, joinMember: GuildMember
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-  <@${client.owners[0].id}> An error sending the member join memberlog message!
-  **Server:** ${joinMember.guild.name} (${joinMember.guild.id})
-  **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-  **Error Message:** ${err}
-  `);
+            <@${client.owners[0].id}> An error sending the member join memberlog message!
+            **Server:** ${joinMember.guild.name} (${joinMember.guild.id})
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 
     try {
@@ -496,11 +498,11 @@ export const handleMemberJoin = (client: CommandoClient, joinMember: GuildMember
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-  <@${client.owners[0].id}> An error occurred sending the member join image!
-  **Server:** ${joinMember.guild.name} (${joinMember.guild.id})
-  **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-  **Error Message:** ${err}
-  `);
+            <@${client.owners[0].id}> An error occurred sending the member join image!
+            **Server:** ${joinMember.guild.name} (${joinMember.guild.id})
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 };
 
@@ -529,11 +531,11 @@ export const handleMemberLeave = (client: CommandoClient, leaveMember: GuildMemb
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-    <@${client.owners[0].id}> An error occurred sending the member left memberlog message!
-    **Server:** ${leaveMember.guild.name} (${leaveMember.guild.id})
-    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    **Error Message:** ${err}
-    `);
+            <@${client.owners[0].id}> An error occurred sending the member left memberlog message!
+            **Server:** ${leaveMember.guild.name} (${leaveMember.guild.id})
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 
     try {
@@ -544,14 +546,16 @@ export const handleMemberLeave = (client: CommandoClient, leaveMember: GuildMemb
             conn.prepare(`DELETE FROM "${leaveMember.guild.id}" WHERE userID = ?`).run(leaveMember.id);
         }
     } catch (err) {
-        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+        if (!(/(?:no such table)/i.test(err.toString()))) {
+            const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
-        channel.send(stripIndents`
-    <@${client.owners[0].id}> An error occurred removing ${leaveMember.user.tag} (${leaveMember.id}) casino data when they left the server!
-    **Server:** ${leaveMember.guild.name} (${leaveMember.guild.id})
-    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    **Error Message:** ${err}
-    `);
+            channel.send(stripIndents`
+                <@${client.owners[0].id}> An error occurred removing ${leaveMember.user.tag} (${leaveMember.id}) casino data when they left the server!
+                **Server:** ${leaveMember.guild.name} (${leaveMember.guild.id})
+                **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                **Error Message:** ${err}
+            `);
+        }
     }
 
     try {
@@ -562,11 +566,11 @@ export const handleMemberLeave = (client: CommandoClient, leaveMember: GuildMemb
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
         channel.send(stripIndents`
-    <@${client.owners[0].id}> An error occurred sending the member leave image!
-    **Server:** ${leaveMember.guild.name} (${leaveMember.guild.id})
-    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    **Error Message:** ${err}
-    `);
+            <@${client.owners[0].id}> An error occurred sending the member leave image!
+            **Server:** ${leaveMember.guild.name} (${leaveMember.guild.id})
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 };
 
@@ -675,14 +679,14 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
                 const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
                 channel.send(stripIndents`
-              <@${client.owners[0].id}> Error occurred in sending a twitch live notifier!
-              **Server:** ${curGuild.name} (${curGuild.id})
-              **Member:** ${curUser.tag} (${curUser.id})
-              **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-              **Old Activity:** ${oldActivity.url}
-              **New Activity:** ${newActivity.url}
-              **Error Message:** ${err}
-              `);
+                    <@${client.owners[0].id}> Error occurred in sending a twitch live notifier!
+                    **Server:** ${curGuild.name} (${curGuild.id})
+                    **Member:** ${curUser.tag} (${curUser.id})
+                    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                    **Old Activity:** ${oldActivity.url}
+                    **New Activity:** ${newActivity.url}
+                    **Error Message:** ${err}
+                `);
             }
         }
     }
@@ -692,14 +696,14 @@ export const handleRateLimit = (client: CommandoClient, info: RateLimitData) => 
     const channel = client.channels.get(process.env.RATELIMIT_LOG_CHANNEL_ID) as TextChannel;
 
     channel.send(stripIndents`
-      Ran into a **rate limit**!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Timeout**: ${info.timeout}
-      **Limit**: ${info.limit}
-      **HTTP Method**: ${info.method}
-      **Path**: ${info.path}
-      **Route**: ${info.route}
-      `);
+        Ran into a **rate limit**!
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Timeout**: ${info.timeout}
+        **Limit**: ${info.limit}
+        **HTTP Method**: ${info.method}
+        **Path**: ${info.path}
+        **Route**: ${info.route}
+    `);
 };
 
 export const handleReady = (client: CommandoClient) => {
@@ -726,7 +730,7 @@ export const handleReady = (client: CommandoClient) => {
     fs.watch(path.join(__dirname, '../data/dex/formats.json'), (eventType, filename) => {
         if (filename) {
             decache(path.join(__dirname, '../data/dex/formats.json'));
-            client.registry.resolveCommand('casino:chips').reload();
+            client.registry.resolveCommand('pokemon:dex').reload();
         }
     });
 };
@@ -735,11 +739,11 @@ export const handleRejection = (client: CommandoClient, reason: Error | any, p: 
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
     channel.send(stripIndents`
-      Caught **Unhandled Rejection **!
-      **At:** ${p}
-      **Reason:** ${reason}
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      `);
+        Caught **Unhandled Rejection **!
+        **At:** ${p}
+        **Reason:** ${reason}
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    `);
 };
 
 export const handleUnknownCmd = (client: CommandoClient, msg: CommandoMessage) => {
@@ -758,8 +762,8 @@ export const handleWarn = (client: CommandoClient, warn: string) => {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
     channel.send(stripIndents`
-      Caught **General Warning**!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Warning Message:** ${warn}
-      `);
+        Caught **General Warning**!
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Warning Message:** ${warn}
+    `);
 };
