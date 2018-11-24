@@ -64,7 +64,7 @@ export default class DefineCommand extends Command {
           .replace(/<b>/g, '[')
           .replace(/<\/b>/g, ']')
           .replace(/<i>|<\/i>/g, '_');
-        final.push(`**${index + 1}:** ${item}`);
+        final.push(`**${Number(index) + 1}:** ${item}`);
       }
       defineEmbed
         .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
