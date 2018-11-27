@@ -24,8 +24,7 @@ export default class Ribbon {
       },
       typescript: true,
       unknownCommandResponse: false,
-    }
-   );
+    });
   }
 
   public init () {

@@ -21,6 +21,6 @@
 		"sourceMap": false,
 		"resolveJsonModule": true
 	},
-	"include": ["src/commands/**/*", "src/data/**/*", "src/components/*", "src/*", "src/data/fonts/*", "src/data/databases/*", "src/.env"],
-	"exclude": ["node_modules", "dist", "build", "docs", ".github", "test", "src/commands/owner/test.ts", "src/commands/leaderboards/overwatch.ts"]
+	"include": ["src/commands/**/*", "src/data/**/*", "src/components/*", "src/*"],
+	"exclude": ["node_modules", "dist", "build", "docs", ".github", "test", "src/commands/owner/test.ts"]
 }
