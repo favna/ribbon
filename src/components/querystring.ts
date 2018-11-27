@@ -14,9 +14,7 @@ const stringifyPrimitive = (v: any): string => {
     }
   };
 
-const hasOwnProperty = (obj: object, prop: any) => {
-  return Object.prototype.hasOwnProperty.call(obj, prop);
-};
+const hasOwnProperty = (obj: object, prop: any) => Object.prototype.hasOwnProperty.call(obj, prop);
 
 export const stringify = (obj: any, sep: string = '&', eq: string = '='): string => {
     if (obj === null) {
@@ -24,22 +22,24 @@ export const stringify = (obj: any, sep: string = '&', eq: string = '='): string
     }
 
     if (typeof obj === 'object') {
-      return Object.keys(obj).map(k => {
-        const ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
-        if (Array.isArray(obj[k])) {
-          return obj[k].map((v: string) => {
-            return ks + encodeURIComponent(stringifyPrimitive(v));
-          }).join(sep);
+      return Object.keys(obj).map(key => {
+        const ks = encodeURIComponent(stringifyPrimitive(key)) + eq;
+        if (obj[key] === undefined) return '';
+        if (obj[key] === null) return encodeURIComponent(key);
+        if (Array.isArray(obj[key])) {
+          return obj[key].map((v: string) => ks + encodeURIComponent(stringifyPrimitive(v))).join(sep);
         } else {
-          return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+          return ks + encodeURIComponent(stringifyPrimitive(obj[key]));
         }
       }).filter(Boolean).join(sep);
     }
 
-    return eq + encodeURIComponent(stringifyPrimitive(obj));
+    return encodeURIComponent(stringifyPrimitive(obj));
   };
 
-export const parse = (qs: any, sep: string = '&', eq: string = '='): any => {
+export const parse = (qs: any = '', sep: string = '&', eq: string = '='): any => {
+    if (qs === '') return {};
+    if (qs.startsWith('?')) qs = qs.slice(1);
     const obj: any = {};
     const regexp = /\+/g;
     qs = qs.split(sep);
@@ -56,8 +56,6 @@ export const parse = (qs: any, sep: string = '&', eq: string = '='): any => {
       const idx = x.indexOf(eq);
       let kstr;
       let vstr;
-      let k;
-      let v;
 
       if (idx >= 0) {
         kstr = x.substr(0, idx);
@@ -67,8 +65,8 @@ export const parse = (qs: any, sep: string = '&', eq: string = '='): any => {
         vstr = '';
       }
 
-      k = decodeURIComponent(kstr);
-      v = decodeURIComponent(vstr);
+      const k = decodeURIComponent(kstr);
+      const v = decodeURIComponent(vstr);
 
       if (!hasOwnProperty(obj, k)) {
         obj[k] = v;
