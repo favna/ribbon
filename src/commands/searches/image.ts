@@ -6,7 +6,6 @@
  * @name image
  * @example image Pyrrha Nikos'
  * @param {StringResolvable} ImageQuery Image to find on Google Images
- * @returns {MessageEmbed} Embedded image and search query
  */
 
 import * as cheerio from 'cheerio';

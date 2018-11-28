@@ -8,7 +8,6 @@
  * @example deletewarn favna
  * @param {MemberResolvable} AnyMember The member to remove warning points from
  * @param {Number} [AmountOfWarnPoints] The amount of warning points to remove
- * @returns {MessageEmbed} Confirmation of the action and the new warning points that user has
  */
 
 import * as Database from 'better-sqlite3';

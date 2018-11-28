@@ -6,7 +6,6 @@
  * @name userinfo
  * @example userinfo Favna
  * @param {GuildMemberResolvable} AnyMember Member you want to get info about
- * @returns {MessageEmbed} Info about that member
  */
 
 import { GuildMember, MessageEmbed } from 'discord.js';

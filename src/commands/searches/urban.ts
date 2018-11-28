@@ -6,7 +6,6 @@
  * @name urban
  * @example urban Everclear
  * @param {StringResolvable} PhraseQuery Phrase that you want to define
- * @returns {MessageEmbed} Top definition for the fetched phrase
  */
 
 import { MessageEmbed } from 'discord.js';

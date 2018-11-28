@@ -6,7 +6,6 @@
  * @name tmdb
  * @example tmdb Pokemon 2000
  * @param {StringResolvable} MovieName Name of the movie you want to find
- * @returns {MessageEmbed} Information about the fetched movie
  */
 
 import { MessageEmbed } from 'discord.js';

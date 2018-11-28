@@ -7,7 +7,6 @@
  * @example avatar Favna
  * @param {GuildMemberResolvable} MemberName Member to get the avatar from
  * @param {GuildMemberResolvable} [ImageSize] Optional: Size of the avatar to get. Defaults to 1024
- * @returns {MessageEmbed} The avatar image and a direct link to it
  */
 
 import { stripIndents } from 'common-tags';

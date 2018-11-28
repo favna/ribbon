@@ -6,7 +6,6 @@
  * @name unknownmessages
  * @example unknownmessages enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Unknownmessages confirmation log
  */
 
 import { oneLine } from 'common-tags';

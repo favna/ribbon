@@ -10,7 +10,6 @@
  * @param {Number} MoneyAmount Amount of money to convert
  * @param {StringResolvable} OriginCurrency Currency to convert from
  * @param {StringResolvable} TargetCurrency Currency to convert to
- * @returns {MessageEmbed} Input and output currency's and the amount your input is worth in both
  */
 
 import { stripIndents } from 'common-tags';

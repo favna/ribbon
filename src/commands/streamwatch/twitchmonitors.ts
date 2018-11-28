@@ -6,7 +6,6 @@
  * @name twitchmonitors
  * @example twitchmonitors techagent favna
  * @param {StringResolvable} AnyMembers List of members to monitor space delimited
- * @returns {Message} Confirmation the setting was stored
  */
 
 import {stripIndents} from 'common-tags';

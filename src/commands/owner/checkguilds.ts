@@ -3,7 +3,6 @@
  * @module
  * @category owner
  * @name checkguilds 
- * @returns {Message} Amount and list of guilds in code blocks
  */
 
 import { stripIndents } from 'common-tags';

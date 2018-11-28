@@ -6,7 +6,6 @@
  * @name slots
  * @example slots 5
  * @param {Number} ChipsAmount The amount of chips you want to gamble
- * @returns {MessageEmbed} Outcome of the spin
  */
 
 import * as Database from 'better-sqlite3';

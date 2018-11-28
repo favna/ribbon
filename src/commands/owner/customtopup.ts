@@ -7,7 +7,6 @@
  * @example ctu Biscuit 1000
  * @param {GuildMemberResolvable} AnyMember The member you want to give some chips
  * @param {Number} ChipsAmount The amount of chips you want to give
- * @returns {MessageEmbed} New balance for the member
  */
 
 import * as Database from 'better-sqlite3';

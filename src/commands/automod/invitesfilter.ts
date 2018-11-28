@@ -6,7 +6,6 @@
  * @name invitesfilter
  * @example invitesfilter enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Invites Filter confirmation log
  */
 
 import { stripIndents } from 'common-tags';

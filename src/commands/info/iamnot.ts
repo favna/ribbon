@@ -6,7 +6,6 @@
  * @name iamnot
  * @example iamnot uploader
  * @param {RoleResolvable} AnyRole The role you want to remove from yourself  
- * @returns {MessageEmbed} Confirmation the role was removed, will also be added to modlogs if enabled for the server
  */
 
 import { oneLine, stripIndents } from 'common-tags';

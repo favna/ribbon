@@ -8,7 +8,6 @@
  * @name volume
  * @example volume 2
  * @param {Number} [Volume] The new volume to set
- * @returns {Message} Confirmation of the change of volume
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

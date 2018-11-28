@@ -7,7 +7,6 @@
  * @example fight Pyrrha Ruby
  * @param {StringResolvable} FighterOne The first combatant
  * @param {StringResolvable} FighterTwo The second combatant
- * @returns {MessageEmbed} Result of the combat
  */
 
 import { MessageEmbed } from 'discord.js';

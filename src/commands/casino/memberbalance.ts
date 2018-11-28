@@ -6,7 +6,6 @@
  * @name memberbalance
  * @example mchips Rohul
  * @param {GuildMemberResolvable} AnyMember Member to get the balance for
- * @returns {MessageEmbed} Information about the current balance of the member
  */
 
 import * as Database from 'better-sqlite3';

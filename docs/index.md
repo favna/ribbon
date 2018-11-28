@@ -15,7 +15,7 @@ Build-In HelpCommand - Displays a list of available commands, or detailed inform
 | [all] or [command] | <code>string</code> | use `all` to view all regardless of permissions or specify a command to get additional info on that command |
 
 **Example**  
-```js
+```ts
 help
 -OR-
 help prefix
@@ -37,7 +37,7 @@ Omitting the parameter will simply print your current one.
 | [prefix] | <code>string</code> | new prefix to set |
 
 **Example**  
-```js
+```ts
 prefix !
 -OR-
 prefix default
@@ -56,485 +56,293 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 ## Modules
 
 <dl>
-<dt><a href="#module_badwords">badwords</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod BadWordsCommand - Toggle the bad words filter<br>Please note that when adding new words to your server&#39;s filter you overwrite all your currently set words!<br><strong>Aliases</strong>: <code>badwordsfilter</code>, <code>bwf</code>, <code>bwf</code></p>
-</dd>
-<dt><a href="#module_duptext">duptext</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod DuplicateTextCommand - Toggle the duplicate text filter<br>Uses the Levenshtein Distance Algorithm to determine similarity. If the distance is less than 10 the messages are considered duplicate.<br>You can specify the minutes within messages should be checked (defaults to 3), the amount of allowed similar messages (defaults to 2) and the Levenshtein distance (defaults to 20)
-<strong>Aliases</strong>: <code>duplicatefilter</code>, <code>duplicatetextfilter</code>, <code>dtf</code></p>
-</dd>
-<dt><a href="#module_excessivecaps">excessivecaps</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod ExcessiveCapsCommand - Toggle the excessive caps filter<br><strong>Aliases</strong>: <code>spammedcaps</code>, <code>manycaps</code>, <code>caps</code></p>
-</dd>
-<dt><a href="#module_excessiveemojis">excessiveemojis</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod ExcessiveEmojisCommand - Toggle the excessive emojis filter<br><strong>Aliases</strong>: <code>ef</code>, <code>emojifilter</code>, <code>spammedemojis</code>, <code>manyemojis</code></p>
-</dd>
-<dt><a href="#module_excessivementions">excessivementions</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter<br><strong>Aliases</strong>: <code>emf</code>, <code>mfilter</code>,  <code>spammedmentions</code>, <code>manymentions</code></p>
-</dd>
-<dt><a href="#module_externallinks">externallinks</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod ExternalLinksCommand - Toggle the external links filter<br><strong>Aliases</strong>: <code>extlinks</code>, <code>extlinksfilter</code>, <code>elf</code></p>
-</dd>
-<dt><a href="#module_invitesfilter">invitesfilter</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod InvitesFilterCommand - Toggle the Discord server invites filter<br><strong>Aliases</strong>: <code>if</code>, <code>noinvites</code></p>
-</dd>
-<dt><a href="#module_slowmode">slowmode</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Automod SlowmodeCommand - Toggle slowmode on this server<br><strong>Aliases</strong>: <code>slowdown</code></p>
-</dd>
-<dt><a href="#module_chips">chips</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Casino ChipsCommand - Retrieves your current amount of chips for the casino<br><strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p>
-</dd>
-<dt><a href="#module_coin">coin</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Casino CoinCommand - Gamble your chips in a coin flip<br>Payout is 1:2<br><strong>Aliases</strong>: <code>flip</code>, <code>cflip</code></p>
-</dd>
-<dt><a href="#module_daily">daily</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Casino DailyCommand - Receive your daily 500 chips top up<br><strong>Aliases</strong>: <code>topup</code>, <code>bonus</code></p>
-</dd>
-<dt><a href="#module_give">give</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Casino GiveCommand - Give another player some chips<br><strong>Aliases</strong>: <code>donate</code></p>
-</dd>
-<dt><a href="#module_leaderboard">leaderboard</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Casino LeaderboardCommand - Shows the top 5 ranking players for your server<br><strong>Aliases</strong>: <code>lb</code>, <code>casinolb</code>, <code>leaderboards</code></p>
-</dd>
-<dt><a href="#module_memberbalance">memberbalance</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Casino MemberBalanceCommand - Retrieves the amount of chips another member has for the casino<br><strong>Aliases</strong>: <code>mbal</code>, <code>mcash</code>, <code>mbalance</code>, <code>mchips</code></p>
-</dd>
-<dt><a href="#module_slots">slots</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Casino SlotsCommand - Gamble your chips at the slot machine<br><strong>Aliases</strong>: <code>slot</code>, <code>fruits</code></p>
-</dd>
-<dt><a href="#module_wheeloffortune">wheeloffortune</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune<br><strong>Aliases</strong>: <code>wheel</code>, <code>wof</code></p>
-</dd>
-<dt><a href="#module_favna">favna</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Custom FavnaCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to praise Favna<br>Server admins can disable this command entirely by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>.favna</code></p>
-</dd>
-<dt><a href="#module_kai">kai</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Custom KaiCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br>Server admins can disable this command entirely by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>.kai</code></p>
-</dd>
-<dt><a href="#module_copypasta">copypasta</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra CopyPastaCommand - Sends a copypasta to the chat<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
-</dd>
-<dt><a href="#module_copypastaadd">copypastaadd</a> ⇒ <code>Message</code></dt>
-<dd><p>Extra CopyPastaAddCommand - Adds a new copypasta for your server<br><strong>Aliases</strong>: <code>cpadd</code>, <code>pastaadd</code></p>
-</dd>
-<dt><a href="#module_copypastalist">copypastalist</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra CopyPastaListCommand - Gets all copypastas available to the server<br><strong>Aliases</strong>: <code>cplist</code>, <code>copylist</code>, <code>pastalist</code></p>
-</dd>
-<dt><a href="#module_math">math</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra MathCommand - Take the effort out of calculations and let Ribbon do it for you<br><strong>Aliases</strong>: <code>maths</code>, <code>calc</code></p>
-</dd>
-<dt><a href="#module_oxr">oxr</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra MoneyCommand - Convert one currency to another<br>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC<br>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a><br><strong>Aliases</strong>: <code>money</code>, <code>rate</code>, <code>convert</code></p>
-</dd>
-<dt><a href="#module_qrgen">qrgen</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra QRGenCommand - Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code>, <code>qrcode</code></p>
-</dd>
-<dt><a href="#module_randomcol">randomcol</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra RandomColCommand - Generates a random color<br>Providing a color hex will display that color, providing none will generate a random one<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
-</dd>
-<dt><a href="#module_remind">remind</a> ⇒ <code>Message</code></dt>
-<dd><p>Extra RemindCommand - Set a reminder and Ribbon will remind you<br>Works by reminding you after a given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>remindme</code>, <code>reminder</code></p>
-</dd>
-<dt><a href="#module_say">say</a> ⇒ <code>Message</code></dt>
-<dd><p>Extra Say - Repeats a message and deletes your message<br><strong>Aliases</strong>: <code>sayd</code>, <code>repeat</code></p>
-</dd>
-<dt><a href="#module_saywut">saywut</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra SayWutCommand - Bust the last &quot;say&quot; user<br><strong>Aliases</strong>: <code>saywat</code>, <code>saywot</code></p>
-</dd>
-<dt><a href="#module_time">time</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra Time - Gets the current time in any place<br>Uses Google&#39;s Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>citytime</code></p>
-</dd>
-<dt><a href="#module_translate">translate</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra TranslateCommand - Translate any word from any language to any other language<br>Language specifications can be either 1 or 2 letter ISO 639 or full names<br><strong>Aliases</strong>: <code>tr</code></p>
-</dd>
-<dt><a href="#module_weather">weather</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra Weather - Get the current weather forecast in any city<br>Potentially you&#39;ll have to specify city if the city is in multiple countries, i.e. <code>weather amsterdam</code> will not be the same as <code>weather amsterdam missouri</code><br>Uses Google&#39;s Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>temp</code>, <code>forecast</code>, <code>fc</code>, <code>wth</code></p>
-</dd>
-<dt><a href="#module_xkcd">xkcd</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Extra xkcdCommand - Gets a random image from xkcd<br><strong>Aliases</strong>: <code>devjoke</code>, <code>comicjoke</code></p>
-</dd>
-<dt><a href="#module_zalgo">zalgo</a> ⇒ <code>Message</code></dt>
-<dd><p>Extra Zalgo - Create zalgo-fied text from your input<br>First banishes any existing zalgo to ensure proper result<br><strong>Aliases</strong>: <code>trash</code></p>
-</dd>
-<dt><a href="#module_8ball">8ball</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games EightBallCommand - Rolls a magic 8 ball using your input<br><strong>Aliases</strong>: <code>eightball</code></p>
-</dd>
-<dt><a href="#module_biscuit">biscuit</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games CookieCommand - Steal someone&#39;s 🍪 gnanahahahaha<br><strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p>
-</dd>
-<dt><a href="#module_dice">dice</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!<br><strong>Aliases</strong>: <code>xdicey</code>, <code>roll</code>, <code>dicey</code>, <code>die</code></p>
-</dd>
-<dt><a href="#module_dndc">dndc</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games DndCCommand - Flips a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code>, <code>dcoin</code></p>
-</dd>
-<dt><a href="#module_fight">fight</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games FightCommand - Pit two things against each other in a fight to the death.<br><strong>Aliases</strong>: <code>combat</code></p>
-</dd>
-<dt><a href="#module_rps">rps</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization<br><strong>Aliases</strong>: <code>rockpaperscissors</code></p>
-</dd>
-<dt><a href="#module_ship">ship</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games ShipCommand - Ship 2 members<br>Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members<br><strong>Aliases</strong>: <code>love</code>, <code>marry</code>, <code>engage</code></p>
-</dd>
-<dt><a href="#module_strawpoll">strawpoll</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)<br>Has a very specific syntax! Be sure to adapt the example!<br><strong>Aliases</strong>: <code>straw</code>, <code>poll</code></p>
-</dd>
-<dt><a href="#module_activity">activity</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info ActivityCommand - Gets the activity (presence) data from a member<br><strong>Aliases</strong>: <code>act</code>, <code>presence</code>, <code>richpresence</code></p>
-</dd>
-<dt><a href="#module_avatar">avatar</a> ⇒ <code>MessageEmbed</code></dt>
+<dt><a href="#module_badwords">badwords</a></dt>
+<dd><p>Automod BadWordsCommand - Toggle the bad words filter<br>Please note that when adding new words to your server&#39;s filter you overwrite all your currently set words!<br><strong>Aliases</strong>: <code>badwordsfilter</code>, <code>bwf</code>, <code>bwf</code></p></dd>
+<dt><a href="#module_duptext">duptext</a></dt>
+<dd><p>Automod DuplicateTextCommand - Toggle the duplicate text filter<br>Uses the Levenshtein Distance Algorithm to determine similarity. If the distance is less than 10 the messages are considered duplicate.<br>You can specify the minutes within messages should be checked (defaults to 3), the amount of allowed similar messages (defaults to 2) and the Levenshtein distance (defaults to 20)<br><strong>Aliases</strong>: <code>duplicatefilter</code>, <code>duplicatetextfilter</code>, <code>dtf</code></p></dd>
+<dt><a href="#module_excessivecaps">excessivecaps</a></dt>
+<dd><p>Automod ExcessiveCapsCommand - Toggle the excessive caps filter<br><strong>Aliases</strong>: <code>spammedcaps</code>, <code>manycaps</code>, <code>caps</code></p></dd>
+<dt><a href="#module_excessiveemojis">excessiveemojis</a></dt>
+<dd><p>Automod ExcessiveEmojisCommand - Toggle the excessive emojis filter<br><strong>Aliases</strong>: <code>ef</code>, <code>emojifilter</code>, <code>spammedemojis</code>, <code>manyemojis</code></p></dd>
+<dt><a href="#module_excessivementions">excessivementions</a></dt>
+<dd><p>Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter<br><strong>Aliases</strong>: <code>emf</code>, <code>mfilter</code>,  <code>spammedmentions</code>, <code>manymentions</code></p></dd>
+<dt><a href="#module_externallinks">externallinks</a></dt>
+<dd><p>Automod ExternalLinksCommand - Toggle the external links filter<br><strong>Aliases</strong>: <code>extlinks</code>, <code>extlinksfilter</code>, <code>elf</code></p></dd>
+<dt><a href="#module_invitesfilter">invitesfilter</a></dt>
+<dd><p>Automod InvitesFilterCommand - Toggle the Discord server invites filter<br><strong>Aliases</strong>: <code>if</code>, <code>noinvites</code></p></dd>
+<dt><a href="#module_slowmode">slowmode</a></dt>
+<dd><p>Automod SlowmodeCommand - Toggle slowmode on this server<br><strong>Aliases</strong>: <code>slowdown</code></p></dd>
+<dt><a href="#module_chips">chips</a></dt>
+<dd><p>Casino ChipsCommand - Retrieves your current amount of chips for the casino<br><strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p></dd>
+<dt><a href="#module_coin">coin</a></dt>
+<dd><p>Casino CoinCommand - Gamble your chips in a coin flip<br>Payout is 1:2<br><strong>Aliases</strong>: <code>flip</code>, <code>cflip</code></p></dd>
+<dt><a href="#module_daily">daily</a></dt>
+<dd><p>Casino DailyCommand - Receive your daily 500 chips top up<br><strong>Aliases</strong>: <code>topup</code>, <code>bonus</code></p></dd>
+<dt><a href="#module_give">give</a></dt>
+<dd><p>Casino GiveCommand - Give another player some chips<br><strong>Aliases</strong>: <code>donate</code></p></dd>
+<dt><a href="#module_leaderboard">leaderboard</a></dt>
+<dd><p>Casino LeaderboardCommand - Shows the top 5 ranking players for your server<br><strong>Aliases</strong>: <code>lb</code>, <code>casinolb</code>, <code>leaderboards</code></p></dd>
+<dt><a href="#module_memberbalance">memberbalance</a></dt>
+<dd><p>Casino MemberBalanceCommand - Retrieves the amount of chips another member has for the casino<br><strong>Aliases</strong>: <code>mbal</code>, <code>mcash</code>, <code>mbalance</code>, <code>mchips</code></p></dd>
+<dt><a href="#module_slots">slots</a></dt>
+<dd><p>Casino SlotsCommand - Gamble your chips at the slot machine<br><strong>Aliases</strong>: <code>slot</code>, <code>fruits</code></p></dd>
+<dt><a href="#module_wheeloffortune">wheeloffortune</a></dt>
+<dd><p>Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune<br><strong>Aliases</strong>: <code>wheel</code>, <code>wof</code></p></dd>
+<dt><a href="#module_favna">favna</a></dt>
+<dd><p>Custom FavnaCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to praise Favna<br>Server admins can disable this command entirely by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>.favna</code></p></dd>
+<dt><a href="#module_kai">kai</a></dt>
+<dd><p>Custom KaiCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br>Server admins can disable this command entirely by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>.kai</code></p></dd>
+<dt><a href="#module_copypasta">copypasta</a></dt>
+<dd><p>Extra CopyPastaCommand - Sends a copypasta to the chat<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p></dd>
+<dt><a href="#module_copypastaadd">copypastaadd</a></dt>
+<dd><p>Extra CopyPastaAddCommand - Adds a new copypasta for your server<br><strong>Aliases</strong>: <code>cpadd</code>, <code>pastaadd</code></p></dd>
+<dt><a href="#module_copypastalist">copypastalist</a></dt>
+<dd><p>Extra CopyPastaListCommand - Gets all copypastas available to the server<br><strong>Aliases</strong>: <code>cplist</code>, <code>copylist</code>, <code>pastalist</code></p></dd>
+<dt><a href="#module_math">math</a></dt>
+<dd><p>Extra MathCommand - Take the effort out of calculations and let Ribbon do it for you<br><strong>Aliases</strong>: <code>maths</code>, <code>calc</code></p></dd>
+<dt><a href="#module_oxr">oxr</a></dt>
+<dd><p>Extra MoneyCommand - Convert one currency to another<br>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC<br>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a><br><strong>Aliases</strong>: <code>money</code>, <code>rate</code>, <code>convert</code></p></dd>
+<dt><a href="#module_qrgen">qrgen</a></dt>
+<dd><p>Extra QRGenCommand - Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code>, <code>qrcode</code></p></dd>
+<dt><a href="#module_randomcol">randomcol</a></dt>
+<dd><p>Extra RandomColCommand - Generates a random colour<br>Providing a colour hex will display that colour, providing none will generate a random one<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolour</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p></dd>
+<dt><a href="#module_remind">remind</a></dt>
+<dd><p>Extra RemindCommand - Set a reminder and Ribbon will remind you<br>Works by reminding you after a given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>remindme</code>, <code>reminder</code></p></dd>
+<dt><a href="#module_say">say</a></dt>
+<dd><p>Extra Say - Repeats a message and deletes your message<br><strong>Aliases</strong>: <code>sayd</code>, <code>repeat</code></p></dd>
+<dt><a href="#module_saywut">saywut</a></dt>
+<dd><p>Extra SayWutCommand - Bust the last &quot;say&quot; user<br><strong>Aliases</strong>: <code>saywat</code>, <code>saywot</code></p></dd>
+<dt><a href="#module_time">time</a></dt>
+<dd><p>Extra Time - Gets the current time in any place<br>Uses Google&#39;s Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>citytime</code></p></dd>
+<dt><a href="#module_translate">translate</a></dt>
+<dd><p>Extra TranslateCommand - Translate any word from any language to any other language<br>Language specifications can be either 1 or 2 letter ISO 639 or full names<br><strong>Aliases</strong>: <code>tr</code></p></dd>
+<dt><a href="#module_weather">weather</a></dt>
+<dd><p>Extra Weather - Get the current weather forecast in any city<br>Potentially you&#39;ll have to specify city if the city is in multiple countries, i.e. <code>weather amsterdam</code> will not be the same as <code>weather amsterdam missouri</code><br>Uses Google&#39;s Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>temp</code>, <code>forecast</code>, <code>fc</code>, <code>wth</code></p></dd>
+<dt><a href="#module_xkcd">xkcd</a></dt>
+<dd><p>Extra XKCDCommand - Gets a random image from xkcd<br><strong>Aliases</strong>: <code>devjoke</code>, <code>comicjoke</code></p></dd>
+<dt><a href="#module_zalgo">zalgo</a></dt>
+<dd><p>Extra ZalgoCommand - Create zalgo-fied text from your input<br>First banishes any existing zalgo to ensure proper result<br><strong>Aliases</strong>: <code>trash</code></p></dd>
+<dt><a href="#module_dice">dice</a></dt>
+<dd><p>Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!<br><strong>Aliases</strong>: <code>xdicey</code>, <code>roll</code>, <code>dicey</code>, <code>die</code></p></dd>
+<dt><a href="#module_dndc">dndc</a></dt>
+<dd><p>Games DndCCommand - Flips a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code>, <code>dcoin</code></p></dd>
+<dt><a href="#module_fight">fight</a></dt>
+<dd><p>Games FightCommand - Pit two things against each other in a fight to the death.<br><strong>Aliases</strong>: <code>combat</code></p></dd>
+<dt><a href="#module_rps">rps</a></dt>
+<dd><p>Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization<br><strong>Aliases</strong>: <code>rockpaperscissors</code></p></dd>
+<dt><a href="#module_ship">ship</a></dt>
+<dd><p>Games ShipCommand - Ship 2 members<br>Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members<br><strong>Aliases</strong>: <code>love</code>, <code>marry</code>, <code>engage</code></p></dd>
+<dt><a href="#module_strawpoll">strawpoll</a></dt>
+<dd><p>Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)<br>Has a very specific syntax! Be sure to adapt the example!<br><strong>Aliases</strong>: <code>straw</code>, <code>poll</code></p></dd>
+<dt><a href="#module_activity">activity</a></dt>
+<dd><p>Info ActivityCommand - Gets the activity (presence) data from a member<br><strong>Aliases</strong>: <code>act</code>, <code>presence</code>, <code>richpresence</code></p></dd>
+<dt><a href="#module_avatar">avatar</a></dt>
 <dd><p>Games AvatarCommand - Get the avatar from any member on this server 
-<strong>Aliases</strong>: <code>ava</code></p>
-</dd>
-<dt><a href="#module_discordbots">discordbots</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList<br><strong>Aliases</strong>: <code>dbapi</code>, <code>db</code></p>
-</dd>
-<dt><a href="#module_emotes">emotes</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info EmotesCommand - Lists all emotes from the server<br><strong>Aliases</strong>: <code>listemo</code>, <code>emolist</code>, <code>listemoji</code>, <code>emote</code>, <code>emojis</code>, <code>emoji</code></p>
-</dd>
-<dt><a href="#module_iam">iam</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info IamCommand - Self Assign roles<br><strong>Aliases</strong>: <code>self</code></p>
-</dd>
-<dt><a href="#module_iamnot">iamnot</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info IamNotCommand - Remove self assigned roles<br><strong>Aliases</strong>: <code>notself</code>, <code>iamn</code></p>
-</dd>
-<dt><a href="#module_invite">invite</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info InviteCommand - Gets the invite link for the bot<br><strong>Aliases</strong>: <code>inv</code>, <code>links</code>, <code>shill</code></p>
-</dd>
-<dt><a href="#module_Reddit">Reddit</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info RedditCommand - Gets statistics on a Reddit user<br><strong>Aliases</strong>: <code>red</code>, <code>redditor</code></p>
-</dd>
-<dt><a href="#module_server">server</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info ServerInfoCommand - Gets information about the current server<br><strong>Aliases</strong>: <code>serverinfo</code>, <code>sinfo</code></p>
-</dd>
-<dt><a href="#module_stats">stats</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info RibbonStatsCommand - Statistics about Ribbon<br><strong>Aliases</strong>: <code>botinfo</code>, <code>info</code></p>
-</dd>
-<dt><a href="#module_userinfo">userinfo</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Info UserInfoCommand - Get the info of any member on this server<br><strong>Aliases</strong>: <code>user</code>, <code>uinfo</code></p>
-</dd>
-<dt><a href="#module_fortnite">fortnite</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Leaderboards FortniteCommand - Get Player Statistics from Fortnite<br><strong>Aliases</strong>: <code>fort</code>, <code>fortshite</code></p>
-</dd>
-<dt><a href="#module_osu">osu</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Leaderboards OsuCommand - Shows Player Stats for a given OSU player<br><strong>Aliases</strong>: <code>osustats</code></p>
-</dd>
+<strong>Aliases</strong>: <code>ava</code></p></dd>
+<dt><a href="#module_discordbots">discordbots</a></dt>
+<dd><p>Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList<br><strong>Aliases</strong>: <code>dbapi</code>, <code>db</code></p></dd>
+<dt><a href="#module_emotes">emotes</a></dt>
+<dd><p>Info EmotesCommand - Lists all emotes from the server<br><strong>Aliases</strong>: <code>listemo</code>, <code>emolist</code>, <code>listemoji</code>, <code>emote</code>, <code>emojis</code>, <code>emoji</code></p></dd>
+<dt><a href="#module_iam">iam</a></dt>
+<dd><p>Info IamCommand - Self Assign roles<br><strong>Aliases</strong>: <code>self</code></p></dd>
+<dt><a href="#module_iamnot">iamnot</a></dt>
+<dd><p>Info IamNotCommand - Remove self assigned roles<br><strong>Aliases</strong>: <code>notself</code>, <code>iamn</code></p></dd>
+<dt><a href="#module_invite">invite</a></dt>
+<dd><p>Info InviteCommand - Gets the invite link for the bot<br><strong>Aliases</strong>: <code>inv</code>, <code>links</code>, <code>shill</code></p></dd>
+<dt><a href="#module_server">server</a></dt>
+<dd><p>Info ServerInfoCommand - Gets information about the current server<br><strong>Aliases</strong>: <code>serverinfo</code>, <code>sinfo</code></p></dd>
+<dt><a href="#module_stats">stats</a></dt>
+<dd><p>Info RibbonStatsCommand - Statistics about Ribbon<br><strong>Aliases</strong>: <code>botinfo</code>, <code>info</code></p></dd>
+<dt><a href="#module_userinfo">userinfo</a></dt>
+<dd><p>Info UserInfoCommand - Get the info of any member on this server<br><strong>Aliases</strong>: <code>user</code>, <code>uinfo</code></p></dd>
+<dt><a href="#module_fortnite">fortnite</a></dt>
+<dd><p>Leaderboards FortniteCommand - Get Player Statistics from Fortnite<br><strong>Aliases</strong>: <code>fort</code>, <code>fortshite</code></p></dd>
+<dt><a href="#module_osu">osu</a></dt>
+<dd><p>Leaderboards OsuCommand - Shows Player Stats for a given OSU player<br><strong>Aliases</strong>: <code>osustats</code></p></dd>
 <dt><a href="#module_overwatch">overwatch</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleTag<br><strong>Aliases</strong>: <code>owstats</code></p>
-</dd>
-<dt><a href="#module_pubg">pubg</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Leaderboards PubgCommand - Get statistics from a PUBG account</p>
-</dd>
-<dt><a href="#module_showdown">showdown</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice<br><strong>Aliases</strong>: <code>showdownlb</code>, <code>pokelb</code></p>
-</dd>
-<dt><a href="#module_addrole">addrole</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation AddRoleCommand - Add a role to a member<br><strong>Aliases</strong>: <code>newrole</code>, <code>ar</code></p>
-</dd>
-<dt><a href="#module_announce">announce</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation NewsCommand - Make an announcement to a channel named &quot;announcements&quot; or &quot;news&quot;<br><strong>Aliases</strong>: <code>news</code></p>
-</dd>
-<dt><a href="#module_automod">automod</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation AutomodCommand - General toggle for all automod features<br><strong>Aliases</strong>: <code>botmod</code>, <code>skynetmod</code></p>
-</dd>
-<dt><a href="#module_ban">ban</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation BanCommand - Ban a bad member<br><strong>Aliases</strong>: <code>b</code>, <code>banana</code></p>
-</dd>
-<dt><a href="#module_confmute">confmute</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation ConfigureMuteCommand - Configure which role to use as &quot;mute&quot; role<br><strong>Aliases</strong>: <code>cm</code>, <code>configmute</code></p>
-</dd>
-<dt><a href="#module_countdownadd">countdownadd</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation CountdownAddCommand - Store a countdown message<br>Countdown messages are sent every 24 hours in a given channel and count down to a certain event<br>For the date you should not have any spaces and it is strongly recommended to use <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a><br>They will automatically get deleted when the event time is reached<br>Optionally, you can make Ribbon tag @everyone or @here when the event time is reached by adding `--everyone` or `--here` anywhere in the countdown content<br>You can save multiple messages for varying events and channels by using this command multiple times<br>The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the countdown<br><strong>Aliases</strong>: <code>countdownmsg</code>, <code>countdownmessage</code>, <code>countdown</code>, <code>cam</code></p>
-</dd>
-<dt><a href="#module_countdownlist">countdownlist</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation CountDownList - List all stored countdown messages in the current guild<br><strong>Aliases</strong>: <code>cl</code>, <code>cdlist</code></p>
-</dd>
-<dt><a href="#module_countdownremove">countdownremove</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation CountDownRemove - Remove a specified countdown<br>Use the countdownlist command to find the ID for deleting<br><strong>Aliases</strong>: <code>cdremove</code>, <code>countdowndelete</code>, <code>cddelete</code>, <code>cdd</code>, <code>cdr</code></p>
-</dd>
-<dt><a href="#module_defaultrole">defaultrole</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation defaultroleCommand - Sets a default role that should be assigned to all new joining members<br><strong>Aliases</strong>: <code>defrole</code></p>
-</dd>
-<dt><a href="#module_deletecommandmessages">deletecommandmessages</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation deleteCommandMessagesCommand - Configure whether Ribbon should delete command messages<br><strong>Aliases</strong>: <code>dcm</code></p>
-</dd>
-<dt><a href="#module_deletewarn">deletewarn</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation DeleteWarnCommand - Deletes all or some warnings points from a user<br><strong>Aliases</strong>: <code>removewarn</code>, <code>unwarn</code>, <code>dw</code>, <code>uw</code></p>
-</dd>
-<dt><a href="#module_delrole">delrole</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation DeleteRoleCommand - Delete the role of a member<br><strong>Aliases</strong>: <code>deleterole</code>, <code>dr</code>, <code>remrole</code>, <code>removerole</code></p>
-</dd>
-<dt><a href="#module_joinmessages">joinmessages</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join<br><strong>Aliases</strong>: <code>jmt</code>, <code>joinmessagestoggle</code></p>
-</dd>
-<dt><a href="#module_kick">kick</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation KickCommand - Kicks a somewhat bad member<br><strong>Aliases</strong>: <code>k</code></p>
-</dd>
-<dt><a href="#module_leavemessages">leavemessages</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave<br><strong>Aliases</strong>: <code>lmt</code>, <code>leavemessagestoggle</code></p>
-</dd>
-<dt><a href="#module_listwarn">listwarn</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation ListWarnCommand - Show the amount of warning points a member has<br><strong>Aliases</strong>: <code>reqwarn</code>, <code>lw</code>, <code>rw</code></p>
-</dd>
-<dt><a href="#module_lockdown">lockdown</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation LockdownCommand - Lockdown a channel<br>Once locked it will be locked to the <code>@everyone</code> or whichever role you specified.<br>Depending on your permissions setup it may be that only people with the <code>administrator</code> role will have access to the channel.<br>This may also mean that Ribbon won&#39;t have access if it doesn&#39;t have administrator role so you cannot use the <code>unlock</code> command until you give it that permission!<br><strong>Aliases</strong>: <code>lock</code>, <code>ld</code></p>
-</dd>
-<dt><a href="#module_memberlogs">memberlogs</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel<br><strong>Aliases</strong>: <code>tml</code>, <code>togglemember</code>, <code>togglememberlogs</code></p>
-</dd>
-<dt><a href="#module_modlogs">modlogs</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation ModLogsCommand - Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel<br><strong>Aliases</strong>: <code>togglemod</code></p>
-</dd>
-<dt><a href="#module_mute">mute</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation MuteCommand - Mute a member<br>Requires either a role named <code>muted</code> on the server, or first having set the mute role with confmute<br>You can optionally specify a duration for how long this mute will last. Not specifying any will mean it will last until manually unmuted.<br>The format for duration is in minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>silent</code></p>
-</dd>
-<dt><a href="#module_nickname">nickname</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation NickCommand - Nickname a single member<br><strong>Aliases</strong>: <code>nick</code></p>
-</dd>
-<dt><a href="#module_purge">purge</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation PurgeCommand - Quickly delete a certain amount of messages<br><strong>Aliases</strong>: <code>prune</code>, <code>delete</code></p>
-</dd>
-<dt><a href="#module_regexmatchtoggle">regexmatchtoggle</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this server<br><strong>Aliases</strong>: <code>rmt</code>, <code>regexmatch</code></p>
-</dd>
-<dt><a href="#module_selfroles">selfroles</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation SelfRolesCommand - Sets the self assignable roles for the server members, to be used by the <code>iam</code> command<br>You can set multiple roles by delimiting with spaces (<code>role1 role2</code>)<br>You can clear the setting by giving no roles then replying <code>finish</code><br><strong>Aliases</strong>: <code>sroles</code></p>
-</dd>
-<dt><a href="#module_setannounce">setannounce</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation SetAnnounceCommand - Set the channel for the announce command<br><strong>Aliases</strong>: <code>sa</code>, <code>setannouncement</code>, <code>setannouncements</code></p>
-</dd>
-<dt><a href="#module_setmemberlogs">setmemberlogs</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation SetMemberlogsCommand - Sets the channel used for member logs<br><strong>Aliases</strong>: <code>setmember</code></p>
-</dd>
-<dt><a href="#module_setmodlogs">setmodlogs</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation SetModlogsCommand - Sets the channel used for mod logs<br><strong>Aliases</strong>: <code>setmod</code></p>
-</dd>
-<dt><a href="#module_softban">softban</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation SoftbanCommand - Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)<br>This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours<br><strong>Aliases</strong>: <code>sb</code>, <code>sban</code></p>
-</dd>
-<dt><a href="#module_tempban">tempban</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation TempBanCommand - Temporary bans a member, then unbans them when the timer expires<br>Given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>tb</code>, <code>rottenbanana</code></p>
-</dd>
-<dt><a href="#module_timeradd">timeradd</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation TimerAddCommand - Store timed messages<br>These are messages Ribbon will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the timed message<br>The format for the interval is in minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p>
-</dd>
-<dt><a href="#module_timerlist">timerlist</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation TimerListCommand - List all stored timed messages in the current guild<br><strong>Aliases</strong>: <code>tl</code>, <code>timelist</code></p>
-</dd>
-<dt><a href="#module_timerremove">timerremove</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation TimerRemoveCommand - Remove a specified timed message<br>Use the timerlist command to find the ID for deleting<br><strong>Aliases</strong>: <code>timeremove</code>, <code>timerdelete</code>, <code>timedelete</code></p>
-</dd>
-<dt><a href="#module_unknownmessages">unknownmessages</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
-</dd>
-<dt><a href="#module_unlock">unlock</a> ⇒ <code>Message</code></dt>
-<dd><p>Moderation UnlockCommand - Unlock the channel<br>Only really useful if you previously locked the channel<br>Note that Ribbon does need to be able to be able to access this channel to unlock it (read permissions)<br><strong>Aliases</strong>: <code>delock</code>, <code>ul</code></p>
-</dd>
-<dt><a href="#module_unmute">unmute</a> ⇒ <code>MessageEmbed</code></dt>
+<dd><p>Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleTag<br><strong>Aliases</strong>: <code>owstats</code></p></dd>
+<dt><a href="#module_pubg">pubg</a></dt>
+<dd><p>Leaderboards PubgCommand - Get statistics from a PUBG account</p></dd>
+<dt><a href="#module_showdown">showdown</a></dt>
+<dd><p>Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice<br><strong>Aliases</strong>: <code>showdownlb</code>, <code>pokelb</code></p></dd>
+<dt><a href="#module_addrole">addrole</a></dt>
+<dd><p>Moderation AddRoleCommand - Add a role to a member<br><strong>Aliases</strong>: <code>newrole</code>, <code>ar</code></p></dd>
+<dt><a href="#module_announce">announce</a></dt>
+<dd><p>Moderation NewsCommand - Make an announcement to a channel named &quot;announcements&quot; or &quot;news&quot;<br><strong>Aliases</strong>: <code>news</code></p></dd>
+<dt><a href="#module_automod">automod</a></dt>
+<dd><p>Moderation AutomodCommand - General toggle for all automod features<br><strong>Aliases</strong>: <code>botmod</code>, <code>skynetmod</code></p></dd>
+<dt><a href="#module_ban">ban</a></dt>
+<dd><p>Moderation BanCommand - Ban a bad member<br><strong>Aliases</strong>: <code>b</code>, <code>banana</code></p></dd>
+<dt><a href="#module_confmute">confmute</a></dt>
+<dd><p>Moderation ConfigureMuteCommand - Configure which role to use as &quot;mute&quot; role<br><strong>Aliases</strong>: <code>cm</code>, <code>configmute</code></p></dd>
+<dt><a href="#module_countdownadd">countdownadd</a></dt>
+<dd><p>Moderation CountdownAddCommand - Store a countdown message<br>Countdown messages are sent every 24 hours in a given channel and count down to a certain event<br>For the date you should not have any spaces and it is strongly recommended to use <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a><br>They will automatically get deleted when the event time is reached<br>Optionally, you can make Ribbon tag @everyone or @here when the event time is reached by adding <code>--everyone</code> or <code>--here</code> anywhere in the countdown content<br>You can save multiple messages for varying events and channels by using this command multiple times<br>The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the countdown<br><strong>Aliases</strong>: <code>countdownmsg</code>, <code>countdownmessage</code>, <code>countdown</code>, <code>cam</code></p></dd>
+<dt><a href="#module_countdownlist">countdownlist</a></dt>
+<dd><p>Moderation CountDownList - List all stored countdown messages in the current guild<br><strong>Aliases</strong>: <code>cl</code>, <code>cdlist</code></p></dd>
+<dt><a href="#module_countdownremove">countdownremove</a></dt>
+<dd><p>Moderation CountDownRemove - Remove a specified countdown<br>Use the countdownlist command to find the ID for deleting<br><strong>Aliases</strong>: <code>cdremove</code>, <code>countdowndelete</code>, <code>cddelete</code>, <code>cdd</code>, <code>cdr</code></p></dd>
+<dt><a href="#module_defaultrole">defaultrole</a></dt>
+<dd><p>Moderation DefaultroleCommand - Sets a default role that should be assigned to all new joining members<br><strong>Aliases</strong>: <code>defrole</code></p></dd>
+<dt><a href="#module_deletecommandmessages">deletecommandmessages</a></dt>
+<dd><p>Moderation DeleteCommandMessagesCommand - Configure whether Ribbon should delete command messages<br><strong>Aliases</strong>: <code>dcm</code></p></dd>
+<dt><a href="#module_deletewarn">deletewarn</a></dt>
+<dd><p>Moderation DeleteWarnCommand - Deletes all or some warnings points from a user<br><strong>Aliases</strong>: <code>removewarn</code>, <code>unwarn</code>, <code>dw</code>, <code>uw</code></p></dd>
+<dt><a href="#module_delrole">delrole</a></dt>
+<dd><p>Moderation DeleteRoleCommand - Delete the role of a member<br><strong>Aliases</strong>: <code>deleterole</code>, <code>dr</code>, <code>remrole</code>, <code>removerole</code></p></dd>
+<dt><a href="#module_joinmessages">joinmessages</a></dt>
+<dd><p>Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join<br><strong>Aliases</strong>: <code>jmt</code>, <code>joinmessagestoggle</code></p></dd>
+<dt><a href="#module_kick">kick</a></dt>
+<dd><p>Moderation KickCommand - Kicks a somewhat bad member<br><strong>Aliases</strong>: <code>k</code></p></dd>
+<dt><a href="#module_leavemessages">leavemessages</a></dt>
+<dd><p>Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave<br><strong>Aliases</strong>: <code>lmt</code>, <code>leavemessagestoggle</code></p></dd>
+<dt><a href="#module_listwarn">listwarn</a></dt>
+<dd><p>Moderation ListWarnCommand - Show the amount of warning points a member has<br><strong>Aliases</strong>: <code>reqwarn</code>, <code>lw</code>, <code>rw</code></p></dd>
+<dt><a href="#module_lockdown">lockdown</a></dt>
+<dd><p>Moderation LockdownCommand - Lockdown a channel<br>Once locked it will be locked to the <code>@everyone</code> or whichever role you specified.<br>Depending on your permissions setup it may be that only people with the <code>administrator</code> role will have access to the channel.<br>This may also mean that Ribbon won&#39;t have access if it doesn&#39;t have administrator role so you cannot use the <code>unlock</code> command until you give it that permission!<br><strong>Aliases</strong>: <code>lock</code>, <code>ld</code></p></dd>
+<dt><a href="#module_memberlogs">memberlogs</a></dt>
+<dd><p>Moderation MemberLogsCommand - Toggle member logs in the configured channel<br><strong>Aliases</strong>: <code>tml</code>, <code>togglemember</code>, <code>togglememberlogs</code></p></dd>
+<dt><a href="#module_modlogs">modlogs</a></dt>
+<dd><p>Moderation ModLogsCommand - Toggle mod logs in the configured channel<br><strong>Aliases</strong>: <code>togglemod</code></p></dd>
+<dt><a href="#module_nickname">nickname</a></dt>
+<dd><p>Moderation NickCommand - Nickname a single member<br><strong>Aliases</strong>: <code>nick</code></p></dd>
+<dt><a href="#module_purge">purge</a></dt>
+<dd><p>Moderation PurgeCommand - Quickly delete a certain amount of messages<br><strong>Aliases</strong>: <code>prune</code>, <code>delete</code></p></dd>
+<dt><a href="#module_regexmatchtoggle">regexmatchtoggle</a></dt>
+<dd><p>Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this server<br><strong>Aliases</strong>: <code>rmt</code>, <code>regexmatch</code></p></dd>
+<dt><a href="#module_selfroles">selfroles</a></dt>
+<dd><p>Moderation SelfRolesCommand - Sets the self assignable roles for the server members, to be used by the <code>iam</code> command<br>You can set multiple roles by delimiting with spaces (<code>role1 role2</code>)<br>You can clear the setting by giving no roles then replying <code>finish</code><br><strong>Aliases</strong>: <code>sroles</code></p></dd>
+<dt><a href="#module_setannounce">setannounce</a></dt>
+<dd><p>Moderation SetAnnounceCommand - Set the channel for the announce command<br><strong>Aliases</strong>: <code>sa</code>, <code>setannouncement</code>, <code>setannouncements</code></p></dd>
+<dt><a href="#module_softban">softban</a></dt>
+<dd><p>Moderation SoftbanCommand - Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)<br>This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours<br><strong>Aliases</strong>: <code>sb</code>, <code>sban</code></p></dd>
+<dt><a href="#module_tempban">tempban</a></dt>
+<dd><p>Moderation TempBanCommand - Temporary bans a member, then unbans them when the timer expires<br>Given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>tb</code>, <code>rottenbanana</code></p></dd>
+<dt><a href="#module_timeradd">timeradd</a></dt>
+<dd><p>Moderation TimerAddCommand - Store timed messages<br>These are messages Ribbon will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the timed message<br>The format for the interval is in minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p></dd>
+<dt><a href="#module_timerlist">timerlist</a></dt>
+<dd><p>Moderation TimerListCommand - List all stored timed messages in the current guild<br><strong>Aliases</strong>: <code>tl</code>, <code>timelist</code></p></dd>
+<dt><a href="#module_timerremove">timerremove</a></dt>
+<dd><p>Moderation TimerRemoveCommand - Remove a specified timed message<br>Use the timerlist command to find the ID for deleting<br><strong>Aliases</strong>: <code>timeremove</code>, <code>timerdelete</code>, <code>timedelete</code></p></dd>
+<dt><a href="#module_unknownmessages">unknownmessages</a></dt>
+<dd><p>Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p></dd>
+<dt><a href="#module_unlock">unlock</a></dt>
+<dd><p>Moderation UnlockCommand - Unlock the channel<br>Only really useful if you previously locked the channel<br>Note that Ribbon does need to be able to be able to access this channel to unlock it (read permissions)<br><strong>Aliases</strong>: <code>delock</code>, <code>ul</code></p></dd>
+<dt><a href="#module_unmute">unmute</a></dt>
 <dd><p>Moderation UnmuteCommand - Unmutes a previously muted member
-<strong>Aliases</strong>: <code>um</code></p>
-</dd>
-<dt><a href="#module_warn">warn</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Moderation WarnCommand - Gives a member warning points<br>Please note that Ribbon will not auto ban when the member has a certain amount of points!<br><strong>Aliases</strong>: <code>warning</code></p>
-</dd>
-<dt><a href="#module_defaultvolume">defaultvolume</a> ⇒ <code>Message</code></dt>
-<dd><p>Music DefaultVolumeCommand - Sets the server&#39;s default volume<br><strong>Aliases</strong>: <code>defvol</code></p>
-</dd>
-<dt><a href="#module_maxlength">maxlength</a> ⇒ <code>Message</code></dt>
-<dd><p>Music MaxLengthCommand - Set the maximum length (in minutes) of a video<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to Ribbon&#39;s default<br><strong>Aliases</strong>: <code>max-duration</code>, <code>max-song-length</code>, <code>max-song-duration</code></p>
-</dd>
-<dt><a href="#module_maxsongs">maxsongs</a> ⇒ <code>Message</code></dt>
-<dd><p>Music MaxSongsCommand- The maximum amount of songs any member can queue<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to Ribbon&#39;s default<br><strong>Aliases</strong>: <code>songcap</code>, <code>songmax</code>, <code>maxsong</code></p>
-</dd>
-<dt><a href="#module_pause">pause</a> ⇒ <code>Message</code></dt>
-<dd><p>Music PauseSongCommand - Pauses the currently playing track<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>shh</code>, <code>shhh</code>, <code>shhhh</code>, <code>shhhhh</code>, <code>hush</code>, <code>halt</code></p>
-</dd>
-<dt><a href="#module_play">play</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Music PlaySongCommand - Starts playing music<br>You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it<br>If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
-There are 4 ways to queue songs  </p>
-<ol>
-<li>YouTube Search Query  </li>
-<li>YouTube video URL  </li>
-<li>YouTube playlist URL</li>
-<li>YouTube video ID<br><strong>Aliases</strong>: <code>add</code>, <code>enqueue</code>, <code>start</code>, <code>join</code></li>
-</ol>
-</dd>
-<dt><a href="#module_queue">queue</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Music ViewQueueCommand - Shows the current queue of songs<br>Songs are paginated in sets of 5<br><strong>Aliases</strong>: <code>songs</code>, <code>song-list</code>, <code>list</code>, <code>listqueue</code></p>
-</dd>
-<dt><a href="#module_resume">resume</a> ⇒ <code>Message</code></dt>
-<dd><p>Music ResumeSongCommand - Resumes the song after pausing it<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>go</code>, <code>continue</code>, <code>ale</code>, <code>loss</code>, <code>res</code></p>
-</dd>
-<dt><a href="#module_save">save</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user<br><strong>Aliases</strong>: <code>save-songs</code>, <code>save-song-list</code>, <code>ss</code>, <code>savequeue</code></p>
-</dd>
-<dt><a href="#module_queue">queue</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Music ShuffleCommand - Shuffles the current queue<br>Shuffles using a <a href="https://en.wikipedia.org/wiki/Fisher–Yates_shuffle#The_modern_algorithm">modern version of the Fisher-Yates shuffle algorithm</a><br><strong>Aliases</strong>: <code>remix</code>, <code>mixtape</code></p>
-</dd>
-<dt><a href="#module_skip">skip</a> ⇒ <code>Message</code></dt>
-<dd><p>Music SkipSongCommand - Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue<br>A vote to skip is started if there are 4 or more people in the voice channel with <code>(amount of members) / 3</code> as required amount of votes (bot doesn&#39;t count as a member)<br>Staff that can delete messages can force the skip by using <code>skip force</code><br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>next</code></p>
-</dd>
-<dt><a href="#module_status">status</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Music MusicStatusCommand - Gets status about the currently playing song<br><strong>Aliases</strong>: <code>song</code>, <code>playing</code>, <code>current-song</code>, <code>now-playing</code></p>
-</dd>
-<dt><a href="#module_stop">stop</a> ⇒ <code>Message</code></dt>
-<dd><p>Music StopMusicCommand - Stops the current queue. Bot will automatically leave the channel after this command<br>A vote to skip is started if there are 4 or more people in the voice channel with <code>(amount of members) / 3</code> as required amount of votes (bot doesn&#39;t count as a member)<br>Staff that can delete messages can force the skip by using <code>skip force</code><br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>kill</code>, <code>stfu</code>, <code>quit</code>, <code>leave</code>, <code>disconnect</code></p>
-</dd>
-<dt><a href="#module_volume">volume</a> ⇒ <code>Message</code></dt>
-<dd><p>Music ChangeVolumeCommand - Changes the volume of the currently playing song<br>If you do not give any parameter, Ribbon will show the current volume<br>You need to be in a voice channel before you can use this command<br><strong>Aliases</strong>: <code>set-volume</code>, <code>set-vol</code>, <code>vol</code></p>
-</dd>
-<dt><a href="#module_e621">e621</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>nsfw E621Command - Gets a NSFW image from e621<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>eee</code></p>
-</dd>
-<dt><a href="#module_gelbooru">gelbooru</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>nsfw GelbooruCommand - Gets a NSFW image from gelbooru<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>gel</code>, <code>booru</code></p>
-</dd>
-<dt><a href="#module_paheal">paheal</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>nsfw PahealCommand - Gets a NSFW image from paheal<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>pa</code>, <code>heal</code></p>
-</dd>
-<dt><a href="#module_pornvids">pornvids</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>nsfw PornVidsCommand - Gets a NSFW video from pornhub<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>porn</code>, <code>nsfwvids</code></p>
-</dd>
-<dt><a href="#module_rule34">rule34</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>nsfw Rule34Command - Gets a NSFW image from rule34<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>r34</code></p>
-</dd>
-<dt><a href="#module_checkguilds">checkguilds</a> ⇒ <code>Message</code></dt>
-<dd><p>Owner CheckGuildsCommand - Lists all guilds Ribbon is in</p>
-</dd>
-<dt><a href="#module_customtopup">customtopup</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Owner CustomTopUpCommand - Daniël Ocean doesn&#39;t give a crap about legality<br><strong>Aliases</strong>: <code>ctu</code></p>
-</dd>
-<dt><a href="#module_dbpost">dbpost</a> ⇒ <code>Message</code></dt>
-<dd><p>Owner DBPostCommand - Posts current guild count to discordbotlist</p>
-</dd>
-<dt><a href="#module_eshopfetch">eshopfetch</a> ⇒ <code>Message</code></dt>
-<dd><p>Owner EShopFetchCommand - Fetch the latest data for the eShop command<br><strong>Aliases</strong>: <code>efetch</code></p>
-</dd>
-<dt><a href="#module_tagmember">tagmember</a> ⇒ <code>Message</code></dt>
-<dd><p>Owner TagMemberCommand - Tags a member by ID<br>Primarily meant for mobile and when members have annoying untaggable names</p>
-</dd>
-<dt><a href="#module_dex">dex</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokémon DexCommand - Gets information about a Pokémon from Dexter<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>p</code>, <code>mon</code>, <code>pokemon</code>, <code>pokedex</code>, <code>df</code>, <code>dexfind</code>, <code>dexdata</code>, <code>dexter</code>, <code>rotom</code></p>
-</dd>
-<dt><a href="#module_flavor">flavor</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokémon FlavorCommand - Gets flavor text from a Pokémon<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>Due to message limit size it fetches as many entries possible starting with generation 7 going downwards<br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>flavors</code>, <code>dexdata</code>, <code>dexentries</code>, <code>dextext</code>, <code>dextex</code>, <code>dexter</code>, <code>flavour</code>, <code>flavours</code></p>
-</dd>
-<dt><a href="#module_item">item</a> ⇒ <code>MessageEmbed</code></dt>
+<strong>Aliases</strong>: <code>um</code></p></dd>
+<dt><a href="#module_warn">warn</a></dt>
+<dd><p>Moderation WarnCommand - Gives a member warning points<br>Please note that Ribbon will not auto ban when the member has a certain amount of points!<br><strong>Aliases</strong>: <code>warning</code></p></dd>
+<dt><a href="#module_defaultvolume">defaultvolume</a></dt>
+<dd><p>Music DefaultVolumeCommand - Sets the server&#39;s default volume<br><strong>Aliases</strong>: <code>defvol</code></p></dd>
+<dt><a href="#module_maxlength">maxlength</a></dt>
+<dd><p>Music MaxLengthCommand - Set the maximum length (in minutes) of a video<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to Ribbon&#39;s default<br><strong>Aliases</strong>: <code>max-duration</code>, <code>max-song-length</code>, <code>max-song-duration</code></p></dd>
+<dt><a href="#module_maxsongs">maxsongs</a></dt>
+<dd><p>Music MaxSongsCommand- The maximum amount of songs any member can queue<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to Ribbon&#39;s default<br><strong>Aliases</strong>: <code>songcap</code>, <code>songmax</code>, <code>maxsong</code></p></dd>
+<dt><a href="#module_e621">e621</a></dt>
+<dd><p>nsfw E621Command - Gets a NSFW image from e621<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>eee</code></p></dd>
+<dt><a href="#module_gelbooru">gelbooru</a></dt>
+<dd><p>nsfw GelbooruCommand - Gets a NSFW image from gelbooru<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>gel</code>, <code>booru</code></p></dd>
+<dt><a href="#module_paheal">paheal</a></dt>
+<dd><p>nsfw PahealCommand - Gets a NSFW image from paheal<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>pa</code>, <code>heal</code></p></dd>
+<dt><a href="#module_pornvids">pornvids</a></dt>
+<dd><p>nsfw PornVidsCommand - Gets a NSFW video from pornhub<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>porn</code>, <code>nsfwvids</code></p></dd>
+<dt><a href="#module_rule34">rule34</a></dt>
+<dd><p>nsfw Rule34Command - Gets a NSFW image from rule34<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>r34</code></p></dd>
+<dt><a href="#module_checkguilds">checkguilds</a></dt>
+<dd><p>Owner CheckGuildsCommand - Lists all guilds Ribbon is in</p></dd>
+<dt><a href="#module_customtopup">customtopup</a></dt>
+<dd><p>Owner CustomTopUpCommand - Daniël Ocean doesn&#39;t give a crap about legality<br><strong>Aliases</strong>: <code>ctu</code></p></dd>
+<dt><a href="#module_dbpost">dbpost</a></dt>
+<dd><p>Owner DBPostCommand - Posts current guild count to discordbotlist</p></dd>
+<dt><a href="#module_eshopfetch">eshopfetch</a></dt>
+<dd><p>Owner EShopFetchCommand - Fetch the latest data for the eShop command<br><strong>Aliases</strong>: <code>efetch</code></p></dd>
+<dt><a href="#module_tagmember">tagmember</a></dt>
+<dd><p>Owner TagMemberCommand - Tags a member by ID<br>Primarily meant for mobile and when members have annoying untaggable names</p></dd>
+<dt><a href="#module_dex">dex</a></dt>
+<dd><p>Pokémon DexCommand - Gets information about a Pokémon from Dexter<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>p</code>, <code>mon</code>, <code>pokemon</code>, <code>pokedex</code>, <code>df</code>, <code>dexfind</code>, <code>dexdata</code>, <code>dexter</code>, <code>rotom</code></p></dd>
+<dt><a href="#module_flavor">flavor</a></dt>
+<dd><p>Pokémon FlavorCommand - Gets flavor text from a Pokémon<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>Due to message limit size it fetches as many entries possible starting with generation 7 going downwards<br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>flavors</code>, <code>dexdata</code>, <code>dexentries</code>, <code>dextext</code>, <code>dextex</code>, <code>dexter</code>, <code>flavour</code>, <code>flavours</code></p></dd>
+<dt><a href="#module_item">item</a></dt>
 <dd><p>Pokémon ItemCommand - Gets information about an item in Pokémon
-For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p>
-</dd>
-<dt><a href="#module_learn">learn</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all<br>Moves split on every <code>,</code>. See examples for usages.<br>You can specify a generation for the match by adding <code>--gen [1-7]</code> anywhere in the list of moves, with <code>[1-7]</code> being a number in that range. Generation defaults to 7<br><strong>Aliases</strong>: <code>learnset</code>, <code>learnall</code></p>
-</dd>
-<dt><a href="#module_ability">ability</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokémon AbilityCommand - Gets information on an ability in Pokémon<br><strong>Aliases</strong>: <code>abilities</code>, <code>abi</code></p>
-</dd>
-<dt><a href="#module_move">move</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokémon MoveCommand - Gets information about a move in Pokémon<br>For move names existing of multiple words (for example <code>dragon dance</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>attack</code></p>
-</dd>
-<dt><a href="#module_TCG">TCG</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokémon PokemonTCGCommand - Gets information on a Pokemon card<br>At start of the command you can specify which properties you want to use for the search, the options are <code>name</code>, <code>types</code>, <code>subtype</code>, <code>supertype</code> and <code>hp</code><br>After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search<br>By default only <code>name</code> is used as argument and the supertype is set to pokemon<br>name is the name of the pokemon card<br>types are the types of the pokemon card (only works with pokemon as supertype)<br>subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)<br>supertype specifies the supertype of a card (pokemon, trainer or energy)<br>hp specifies the hp of a pokemon<br><strong>Aliases</strong>: <code>ptcg</code>, <code>tcgo</code></p>
-</dd>
-<dt><a href="#module_type">type</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types<br><strong>Aliases</strong>: <code>matchup</code>, <code>weakness</code>, <code>advantage</code></p>
-</dd>
-<dt><a href="#module_anime">anime</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches AnimeCommand - Gets information about any anime from kitsu.io<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code>, <code>kitsu</code></p>
-</dd>
-<dt><a href="#module_cydia">cydia</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories<br>Can also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak subreddit</a> and <a href="https://discord.gg/jb">its discord server</a><br>Server admins can enable the <code>[[]]</code> matching by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>cy</code></p>
-</dd>
-<dt><a href="#module_define">define</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches DefineCommand - Define a word using glosbe<br><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p>
-</dd>
-<dt><a href="#module_docs">docs</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches DocsCommand - Get an entry from the Discord.JS documentation<br><strong>Aliases</strong>: <code>djsguide</code>, <code>guide</code>, <code>djs</code></p>
-</dd>
-<dt><a href="#module_eshop">eshop</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop<br><strong>Aliases</strong>: <code>shop</code></p>
-</dd>
-<dt><a href="#module_google">google</a> ⇒ <code>Message</code></dt>
-<dd><p>Searches GoogleCommand - Gets information through Google<br>Note: prioritizes Knowledge Graphs for better searching<br><strong>Aliases</strong>: <code>search</code>, <code>g</code></p>
-</dd>
-<dt><a href="#module_igdb">igdb</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches IGDBCommand - Gets information about a game using Internet Game Database (IGDB)<br><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>games</code></p>
-</dd>
-<dt><a href="#module_image">image</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches ImageCommand - Gets an image through Google Images<br><strong>Aliases</strong>: <code>img</code>, <code>i</code></p>
-</dd>
-<dt><a href="#module_itunes">itunes</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches iTunesCommand - Search iTunes for music tracks<br><strong>Aliases</strong>: <code>apple</code>, <code>tunes</code></p>
-</dd>
-<dt><a href="#module_lmgtfy">lmgtfy</a> ⇒ <code>Message</code></dt>
-<dd><p>Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url<br><strong>Aliases</strong>: <code>dumb</code></p>
-</dd>
-<dt><a href="#module_manga">manga</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches MangaCommand - Gets information about any manga from kitsu.io<br><strong>Aliases</strong>: <code>cartoon</code>, <code>man</code></p>
-</dd>
-<dt><a href="#module_steam">steam</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches SteamCommand - Gets information about a game using Steam<br><strong>Aliases</strong>: <code>valve</code></p>
-</dd>
-<dt><a href="#module_tmdb">tmdb</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches MovieCommand - Find information about a movie using TheMovieDatabase<br><strong>Aliases</strong>: <code>movie</code></p>
-</dd>
-<dt><a href="#module_tvdb">tvdb</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches TVCommand - Find information about a TV series using TheMovieDatabase<br><strong>Aliases</strong>: <code>tv</code>, <code>show</code>, <code>serie</code>, <code>series</code></p>
-</dd>
-<dt><a href="#module_urban">urban</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches UrbanCommand - Define a word using UrbanDictionary<br><strong>Aliases</strong>: <code>ub</code>, <code>ud</code></p>
-</dd>
-<dt><a href="#module_youtube">youtube</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Searches YouTubeCommand - Find a video on YouTube<br>By default returns MessageEmbed. use <code>yts</code> to return just the URL and have in-client playback<br><strong>Aliases</strong>: <code>yt</code>, <code>tube</code>, <code>yts</code></p>
-</dd>
-<dt><a href="#module_twitchmonitors">twitchmonitors</a> ⇒ <code>Message</code></dt>
-<dd><p>Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor<br><strong>Aliases</strong>: <code>monitors</code>, <code>monitor</code>, <code>twitchmonitor</code></p>
-</dd>
-<dt><a href="#module_twitchoutput">twitchoutput</a> ⇒ <code>Message</code></dt>
-<dd><p>Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send<br><strong>Aliases</strong>: <code>output</code>, <code>twitchout</code>, <code>twitchchannel</code></p>
-</dd>
-<dt><a href="#module_twitchtoggle">twitchtoggle</a> ⇒ <code>Message</code></dt>
-<dd><p>Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications<br><strong>Aliases</strong>: <code>twitchon</code>, <code>twitchoff</code></p>
-</dd>
-<dt><a href="#module_cuddle">cuddle</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Weeb CuddleCommand - Cuuuuddlleeesss!! 💕!</p>
-</dd>
-<dt><a href="#module_feed">feed</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Weeb FeedCommand - Feed someone licious food 🍜 😋!</p>
-</dd>
-<dt><a href="#module_hug">hug</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Weeb HugCommand - Give someone a hug ❤!</p>
-</dd>
-<dt><a href="#module_kiss">kiss</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Weeb KissCommand - Give someone a kiss ❤!</p>
-</dd>
-<dt><a href="#module_pat">pat</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Weeb PatCommand - Pat a good person 🐇!</p>
-</dd>
-<dt><a href="#module_poke">poke</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Weeb PokeCommand - Poke an annoying person 👉!</p>
-</dd>
-<dt><a href="#module_slap">slap</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Weeb SlapCommand - Slap a dumb person 💢!</p>
-</dd>
-<dt><a href="#module_tickle">tickle</a> ⇒ <code>MessageEmbed</code></dt>
-<dd><p>Weeb TickleCommand - TICKLE WAR 😂!!</p>
-</dd>
+For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p></dd>
+<dt><a href="#module_learn">learn</a></dt>
+<dd><p>Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all<br>Moves split on every <code>,</code>. See examples for usages.<br>You can specify a generation for the match by adding <code>--gen [1-7]</code> anywhere in the list of moves, with <code>[1-7]</code> being a number in that range. Generation defaults to 7<br><strong>Aliases</strong>: <code>learnset</code>, <code>learnall</code></p></dd>
+<dt><a href="#module_ability">ability</a></dt>
+<dd><p>Pokémon AbilityCommand - Gets information on an ability in Pokémon<br><strong>Aliases</strong>: <code>abilities</code>, <code>abi</code></p></dd>
+<dt><a href="#module_move">move</a></dt>
+<dd><p>Pokémon MoveCommand - Gets information about a move in Pokémon<br>For move names existing of multiple words (for example <code>dragon dance</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>attack</code></p></dd>
+<dt><a href="#module_TCG">TCG</a></dt>
+<dd><p>Pokémon PokemonTCGCommand - Gets information on a Pokemon card<br>At start of the command you can specify which properties you want to use for the search, the options are <code>name</code>, <code>types</code>, <code>subtype</code>, <code>supertype</code> and <code>hp</code><br>After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search<br>By default only <code>name</code> is used as argument and the supertype is set to pokemon<br>name is the name of the pokemon card<br>types are the types of the pokemon card (only works with pokemon as supertype)<br>subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)<br>supertype specifies the supertype of a card (pokemon, trainer or energy)<br>hp specifies the hp of a pokemon<br><strong>Aliases</strong>: <code>ptcg</code>, <code>tcgo</code></p></dd>
+<dt><a href="#module_type">type</a></dt>
+<dd><p>Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types<br><strong>Aliases</strong>: <code>matchup</code>, <code>weakness</code>, <code>advantage</code></p></dd>
+<dt><a href="#module_anime">anime</a></dt>
+<dd><p>Searches AnimeCommand - Gets information about any anime from kitsu.io<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code>, <code>kitsu</code></p></dd>
+<dt><a href="#module_cydia">cydia</a></dt>
+<dd><p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories<br>Can also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak subreddit</a> and <a href="https://discord.gg/jb">its discord server</a><br>Server admins can enable the <code>[[]]</code> matching by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>cy</code></p></dd>
+<dt><a href="#module_define">define</a></dt>
+<dd><p>Searches DefineCommand - Define a word using glosbe<br><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p></dd>
+<dt><a href="#module_eshop">eshop</a></dt>
+<dd><p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop<br><strong>Aliases</strong>: <code>shop</code></p></dd>
+<dt><a href="#module_google">google</a></dt>
+<dd><p>Searches GoogleCommand - Gets information through Google<br>Note: prioritizes Knowledge Graphs for better searching<br><strong>Aliases</strong>: <code>search</code>, <code>g</code></p></dd>
+<dt><a href="#module_igdb">igdb</a></dt>
+<dd><p>Searches IGDBCommand - Gets information about a game using Internet Game Database (IGDB)<br><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>games</code></p></dd>
+<dt><a href="#module_image">image</a></dt>
+<dd><p>Searches ImageCommand - Gets an image through Google Images<br><strong>Aliases</strong>: <code>img</code>, <code>i</code></p></dd>
+<dt><a href="#module_itunes">itunes</a></dt>
+<dd><p>Searches iTunesCommand - Search iTunes for music tracks<br><strong>Aliases</strong>: <code>apple</code>, <code>tunes</code></p></dd>
+<dt><a href="#module_lmgtfy">lmgtfy</a></dt>
+<dd><p>Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url<br><strong>Aliases</strong>: <code>dumb</code></p></dd>
+<dt><a href="#module_manga">manga</a></dt>
+<dd><p>Searches MangaCommand - Gets information about any manga from kitsu.io<br><strong>Aliases</strong>: <code>cartoon</code>, <code>man</code></p></dd>
+<dt><a href="#module_steam">steam</a></dt>
+<dd><p>Searches SteamCommand - Gets information about a game using Steam<br><strong>Aliases</strong>: <code>valve</code></p></dd>
+<dt><a href="#module_tmdb">tmdb</a></dt>
+<dd><p>Searches MovieCommand - Find information about a movie using TheMovieDatabase<br><strong>Aliases</strong>: <code>movie</code></p></dd>
+<dt><a href="#module_tvdb">tvdb</a></dt>
+<dd><p>Searches TVCommand - Find information about a TV series using TheMovieDatabase<br><strong>Aliases</strong>: <code>tv</code>, <code>show</code>, <code>serie</code>, <code>series</code></p></dd>
+<dt><a href="#module_urban">urban</a></dt>
+<dd><p>Searches UrbanCommand - Define a word using UrbanDictionary<br><strong>Aliases</strong>: <code>ub</code>, <code>ud</code></p></dd>
+<dt><a href="#module_youtube">youtube</a></dt>
+<dd><p>Searches YouTubeCommand - Find a video on YouTube<br>By default returns MessageEmbed. use <code>yts</code> to return just the URL and have in-client playback<br><strong>Aliases</strong>: <code>yt</code>, <code>tube</code>, <code>yts</code></p></dd>
+<dt><a href="#module_twitchmonitors">twitchmonitors</a></dt>
+<dd><p>Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor<br><strong>Aliases</strong>: <code>monitors</code>, <code>monitor</code>, <code>twitchmonitor</code></p></dd>
+<dt><a href="#module_twitchoutput">twitchoutput</a></dt>
+<dd><p>Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send<br><strong>Aliases</strong>: <code>output</code>, <code>twitchout</code>, <code>twitchchannel</code></p></dd>
+<dt><a href="#module_twitchtoggle">twitchtoggle</a></dt>
+<dd><p>Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications<br><strong>Aliases</strong>: <code>twitchon</code>, <code>twitchoff</code></p></dd>
+<dt><a href="#module_biscuit">biscuit</a></dt>
+<dd><p>Weeb CookieCommand - Steal someone&#39;s 🍪 gnanahahahaha<br><strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p></dd>
+<dt><a href="#module_cuddle">cuddle</a></dt>
+<dd><p>Weeb CuddleCommand - Cuuuuddlleeesss!! 💕!</p></dd>
+<dt><a href="#module_feed">feed</a></dt>
+<dd><p>Weeb FeedCommand - Feed someone licious food 🍜 😋!</p></dd>
+<dt><a href="#module_hug">hug</a></dt>
+<dd><p>Weeb HugCommand - Give someone a hug ❤!</p></dd>
+<dt><a href="#module_kiss">kiss</a></dt>
+<dd><p>Weeb KissCommand - Give someone a kiss ❤!</p></dd>
+<dt><a href="#module_neko">neko</a></dt>
+<dd><p>Weeb NekoCommand - Get a random cute cat girl 😍!<br><strong>Aliases</strong>: <code>catgirl</code></p></dd>
+<dt><a href="#module_pat">pat</a></dt>
+<dd><p>Weeb PatCommand - Pat a good person 🐇!</p></dd>
+<dt><a href="#module_poke">poke</a></dt>
+<dd><p>Weeb PokeCommand - Poke an annoying person 👉!</p></dd>
+<dt><a href="#module_slap">slap</a></dt>
+<dd><p>Weeb SlapCommand - Slap a dumb person 💢!</p></dd>
+<dt><a href="#module_tickle">tickle</a></dt>
+<dd><p>Weeb TickleCommand - TICKLE WAR 😂!!</p></dd>
 </dl>
 
 <a name="module_badwords"></a>
 
-## badwords ⇒ <code>MessageEmbed</code>
-Automod BadWordsCommand - Toggle the bad words filter  
-Please note that when adding new words to your server's filter you overwrite all your currently set words!  
-**Aliases**: `badwordsfilter`, `bwf`, `bwf`
+## badwords
+<p>Automod BadWordsCommand - Toggle the bad words filter<br>Please note that when adding new words to your server's filter you overwrite all your currently set words!<br><strong>Aliases</strong>: <code>badwordsfilter</code>, <code>bwf</code>, <code>bwf</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Bad words filter confirmation log  
 **Category**: automod  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -542,18 +350,14 @@ badwords enable
 ```
 <a name="module_duptext"></a>
 
-## duptext ⇒ <code>MessageEmbed</code>
-Automod DuplicateTextCommand - Toggle the duplicate text filter  
-Uses the Levenshtein Distance Algorithm to determine similarity. If the distance is less than 10 the messages are considered duplicate.  
-You can specify the minutes within messages should be checked (defaults to 3), the amount of allowed similar messages (defaults to 2) and the Levenshtein distance (defaults to 20)
-**Aliases**: `duplicatefilter`, `duplicatetextfilter`, `dtf`
+## duptext
+<p>Automod DuplicateTextCommand - Toggle the duplicate text filter<br>Uses the Levenshtein Distance Algorithm to determine similarity. If the distance is less than 10 the messages are considered duplicate.<br>You can specify the minutes within messages should be checked (defaults to 3), the amount of allowed similar messages (defaults to 2) and the Levenshtein distance (defaults to 20)<br><strong>Aliases</strong>: <code>duplicatefilter</code>, <code>duplicatetextfilter</code>, <code>dtf</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Duplicate text filter confirmation log  
 **Category**: automod  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -561,16 +365,14 @@ duptext enable
 ```
 <a name="module_excessivecaps"></a>
 
-## excessivecaps ⇒ <code>MessageEmbed</code>
-Automod ExcessiveCapsCommand - Toggle the excessive caps filter  
-**Aliases**: `spammedcaps`, `manycaps`, `caps`
+## excessivecaps
+<p>Automod ExcessiveCapsCommand - Toggle the excessive caps filter<br><strong>Aliases</strong>: <code>spammedcaps</code>, <code>manycaps</code>, <code>caps</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Excessive Caps filter confirmation log  
 **Category**: automod  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -578,16 +380,14 @@ excessivecaps enable
 ```
 <a name="module_excessiveemojis"></a>
 
-## excessiveemojis ⇒ <code>MessageEmbed</code>
-Automod ExcessiveEmojisCommand - Toggle the excessive emojis filter  
-**Aliases**: `ef`, `emojifilter`, `spammedemojis`, `manyemojis`
+## excessiveemojis
+<p>Automod ExcessiveEmojisCommand - Toggle the excessive emojis filter<br><strong>Aliases</strong>: <code>ef</code>, <code>emojifilter</code>, <code>spammedemojis</code>, <code>manyemojis</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Excessive Emojis filter confirmation log  
 **Category**: automod  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -595,16 +395,14 @@ excessiveemojis enable
 ```
 <a name="module_excessivementions"></a>
 
-## excessivementions ⇒ <code>MessageEmbed</code>
-Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter  
-**Aliases**: `emf`, `mfilter`,  `spammedmentions`, `manymentions`
+## excessivementions
+<p>Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter<br><strong>Aliases</strong>: <code>emf</code>, <code>mfilter</code>,  <code>spammedmentions</code>, <code>manymentions</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Excessive Emojis filter confirmation log  
 **Category**: automod  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -616,16 +414,14 @@ emf enable 3
 ```
 <a name="module_externallinks"></a>
 
-## externallinks ⇒ <code>MessageEmbed</code>
-Automod ExternalLinksCommand - Toggle the external links filter  
-**Aliases**: `extlinks`, `extlinksfilter`, `elf`
+## externallinks
+<p>Automod ExternalLinksCommand - Toggle the external links filter<br><strong>Aliases</strong>: <code>extlinks</code>, <code>extlinksfilter</code>, <code>elf</code></p>
 
-**Returns**: <code>MessageEmbed</code> - External Links filter confirmation log  
 **Category**: automod  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -633,16 +429,14 @@ externallinks enable
 ```
 <a name="module_invitesfilter"></a>
 
-## invitesfilter ⇒ <code>MessageEmbed</code>
-Automod InvitesFilterCommand - Toggle the Discord server invites filter  
-**Aliases**: `if`, `noinvites`
+## invitesfilter
+<p>Automod InvitesFilterCommand - Toggle the Discord server invites filter<br><strong>Aliases</strong>: <code>if</code>, <code>noinvites</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Invites Filter confirmation log  
 **Category**: automod  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -650,16 +444,14 @@ invitesfilter enable
 ```
 <a name="module_slowmode"></a>
 
-## slowmode ⇒ <code>MessageEmbed</code>
-Automod SlowmodeCommand - Toggle slowmode on this server  
-**Aliases**: `slowdown`
+## slowmode
+<p>Automod SlowmodeCommand - Toggle slowmode on this server<br><strong>Aliases</strong>: <code>slowdown</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Server invites filter confirmation log  
 **Category**: automod  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -667,11 +459,9 @@ slowmode enable
 ```
 <a name="module_chips"></a>
 
-## chips ⇒ <code>MessageEmbed</code>
-Casino ChipsCommand - Retrieves your current amount of chips for the casino  
-**Aliases**: `bal`, `cash`, `balance`
+## chips
+<p>Casino ChipsCommand - Retrieves your current amount of chips for the casino<br><strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Information about your current balance  
 **Category**: casino  
 **Example**  
 ```js
@@ -679,18 +469,15 @@ chips
 ```
 <a name="module_coin"></a>
 
-## coin ⇒ <code>MessageEmbed</code>
-Casino CoinCommand - Gamble your chips in a coin flip  
-Payout is 1:2  
-**Aliases**: `flip`, `cflip`
+## coin
+<p>Casino CoinCommand - Gamble your chips in a coin flip<br>Payout is 1:2<br><strong>Aliases</strong>: <code>flip</code>, <code>cflip</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Outcome of the coin flip  
 **Category**: casino  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AmountOfChips | <code>Number</code> | Amount of chips you want to gamble |
-| CoinSide | <code>StringResolvable</code> | The side of the coin you want to bet on |
+| AmountOfChips | <code>Number</code> | <p>Amount of chips you want to gamble</p> |
+| CoinSide | <code>StringResolvable</code> | <p>The side of the coin you want to bet on</p> |
 
 **Example**  
 ```js
@@ -698,25 +485,21 @@ coin 10 heads
 ```
 <a name="module_daily"></a>
 
-## daily ⇒ <code>MessageEmbed</code>
-Casino DailyCommand - Receive your daily 500 chips top up  
-**Aliases**: `topup`, `bonus`
+## daily
+<p>Casino DailyCommand - Receive your daily 500 chips top up<br><strong>Aliases</strong>: <code>topup</code>, <code>bonus</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Your new balance  
 **Category**: casino  
 <a name="module_give"></a>
 
-## give ⇒ <code>MessageEmbed</code>
-Casino GiveCommand - Give another player some chips  
-**Aliases**: `donate`
+## give
+<p>Casino GiveCommand - Give another player some chips<br><strong>Aliases</strong>: <code>donate</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Changed balances of the two players  
 **Category**: casino  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | The member you want to give some chips |
-| ChipsAmount | <code>Number</code> | The amount of chips you want to give |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>The member you want to give some chips</p> |
+| ChipsAmount | <code>Number</code> | <p>The amount of chips you want to give</p> |
 
 **Example**  
 ```js
@@ -724,24 +507,20 @@ give Favna 10
 ```
 <a name="module_leaderboard"></a>
 
-## leaderboard ⇒ <code>MessageEmbed</code>
-Casino LeaderboardCommand - Shows the top 5 ranking players for your server  
-**Aliases**: `lb`, `casinolb`, `leaderboards`
+## leaderboard
+<p>Casino LeaderboardCommand - Shows the top 5 ranking players for your server<br><strong>Aliases</strong>: <code>lb</code>, <code>casinolb</code>, <code>leaderboards</code></p>
 
-**Returns**: <code>MessageEmbed</code> - List of top ranking players  
 **Category**: casino  
 <a name="module_memberbalance"></a>
 
-## memberbalance ⇒ <code>MessageEmbed</code>
-Casino MemberBalanceCommand - Retrieves the amount of chips another member has for the casino  
-**Aliases**: `mbal`, `mcash`, `mbalance`, `mchips`
+## memberbalance
+<p>Casino MemberBalanceCommand - Retrieves the amount of chips another member has for the casino<br><strong>Aliases</strong>: <code>mbal</code>, <code>mcash</code>, <code>mbalance</code>, <code>mchips</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Information about the current balance of the member  
 **Category**: casino  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | Member to get the balance for |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>Member to get the balance for</p> |
 
 **Example**  
 ```js
@@ -749,16 +528,14 @@ mchips Rohul
 ```
 <a name="module_slots"></a>
 
-## slots ⇒ <code>MessageEmbed</code>
-Casino SlotsCommand - Gamble your chips at the slot machine  
-**Aliases**: `slot`, `fruits`
+## slots
+<p>Casino SlotsCommand - Gamble your chips at the slot machine<br><strong>Aliases</strong>: <code>slot</code>, <code>fruits</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Outcome of the spin  
 **Category**: casino  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ChipsAmount | <code>Number</code> | The amount of chips you want to gamble |
+| ChipsAmount | <code>Number</code> | <p>The amount of chips you want to gamble</p> |
 
 **Example**  
 ```js
@@ -766,16 +543,14 @@ slots 5
 ```
 <a name="module_wheeloffortune"></a>
 
-## wheeloffortune ⇒ <code>MessageEmbed</code>
-Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune  
-**Aliases**: `wheel`, `wof`
+## wheeloffortune
+<p>Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune<br><strong>Aliases</strong>: <code>wheel</code>, <code>wof</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Outcome of the game  
 **Category**: casino  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ChipsAmount | <code>Number</code> | The amount of chips you want to gamble |
+| ChipsAmount | <code>Number</code> | <p>The amount of chips you want to gamble</p> |
 
 **Example**  
 ```js
@@ -783,37 +558,26 @@ wof 5
 ```
 <a name="module_favna"></a>
 
-## favna ⇒ <code>MessageEmbed</code>
-Custom FavnaCommand - Custom Command exclusive to ChaosGamez server  
-A joke command to praise Favna  
-Server admins can disable this command entirely by using the `rmt off` command  
-**Aliases**: `.favna`
+## favna
+<p>Custom FavnaCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to praise Favna<br>Server admins can disable this command entirely by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>.favna</code></p>
 
-**Returns**: <code>MessageEmbed</code> - A MessageEmbed with the joke text  
 **Category**: custom  
 <a name="module_kai"></a>
 
-## kai ⇒ <code>MessageEmbed</code>
-Custom KaiCommand - Custom Command exclusive to ChaosGamez server  
-A joke command to spite Kai  
-Server admins can disable this command entirely by using the `rmt off` command  
-**Aliases**: `.kai`
+## kai
+<p>Custom KaiCommand - Custom Command exclusive to ChaosGamez server<br>A joke command to spite Kai<br>Server admins can disable this command entirely by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>.kai</code></p>
 
-**Returns**: <code>MessageEmbed</code> - A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔  
 **Category**: custom  
 <a name="module_copypasta"></a>
 
-## copypasta ⇒ <code>MessageEmbed</code>
-Extra CopyPastaCommand - Sends a copypasta to the chat  
-Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!  
-**Aliases**: `cp`, `pasta`
+## copypasta
+<p>Extra CopyPastaCommand - Sends a copypasta to the chat<br>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!<br><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Copypasta content. In a normal message if more than 1024 characters  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PastaName | <code>StringResolvable</code> | Name of the copypasta to send |
+| PastaName | <code>StringResolvable</code> | <p>Name of the copypasta to send</p> |
 
 **Example**  
 ```js
@@ -821,42 +585,36 @@ copypasta navy
 ```
 <a name="module_copypastaadd"></a>
 
-## copypastaadd ⇒ <code>Message</code>
-Extra CopyPastaAddCommand - Adds a new copypasta for your server  
-**Aliases**: `cpadd`, `pastaadd`
+## copypastaadd
+<p>Extra CopyPastaAddCommand - Adds a new copypasta for your server<br><strong>Aliases</strong>: <code>cpadd</code>, <code>pastaadd</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the copypasta was added  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PasteName | <code>StringResolvable</code> | Name for the new pasta |
-| PastaContent | <code>StringResolvable</code> | Content for the new pasta |
+| PasteName | <code>StringResolvable</code> | <p>Name for the new pasta</p> |
+| PastaContent | <code>StringResolvable</code> | <p>Content for the new pasta</p> |
 
 **Example**  
 ```js
-copypastaadd lipsum Lorem ipsum dolor sit amet. 
+copypastaadd lipsum Lorem ipsum dolor sit amet.
 ```
 <a name="module_copypastalist"></a>
 
-## copypastalist ⇒ <code>MessageEmbed</code>
-Extra CopyPastaListCommand - Gets all copypastas available to the server  
-**Aliases**: `cplist`, `copylist`, `pastalist`
+## copypastalist
+<p>Extra CopyPastaListCommand - Gets all copypastas available to the server<br><strong>Aliases</strong>: <code>cplist</code>, <code>copylist</code>, <code>pastalist</code></p>
 
-**Returns**: <code>MessageEmbed</code> - List of all available copypastas  
 **Category**: extra  
 <a name="module_math"></a>
 
-## math ⇒ <code>MessageEmbed</code>
-Extra MathCommand - Take the effort out of calculations and let Ribbon do it for you  
-**Aliases**: `maths`, `calc`
+## math
+<p>Extra MathCommand - Take the effort out of calculations and let Ribbon do it for you<br><strong>Aliases</strong>: <code>maths</code>, <code>calc</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Your equation and its answer  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Equation | <code>StringResolvable</code> | The equation to solve |
+| Equation | <code>StringResolvable</code> | <p>The equation to solve</p> |
 
 **Example**  
 ```js
@@ -864,20 +622,16 @@ math (pi - 1) * 3
 ```
 <a name="module_oxr"></a>
 
-## oxr ⇒ <code>MessageEmbed</code>
-Extra MoneyCommand - Convert one currency to another  
-Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC  
-For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)  
-**Aliases**: `money`, `rate`, `convert`
+## oxr
+<p>Extra MoneyCommand - Convert one currency to another<br>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC<br>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a><br><strong>Aliases</strong>: <code>money</code>, <code>rate</code>, <code>convert</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Input and output currency's and the amount your input is worth in both  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MoneyAmount | <code>Number</code> | Amount of money to convert |
-| OriginCurrency | <code>StringResolvable</code> | Currency to convert from |
-| TargetCurrency | <code>StringResolvable</code> | Currency to convert to |
+| MoneyAmount | <code>Number</code> | <p>Amount of money to convert</p> |
+| OriginCurrency | <code>StringResolvable</code> | <p>Currency to convert from</p> |
+| TargetCurrency | <code>StringResolvable</code> | <p>Currency to convert to</p> |
 
 **Example**  
 ```js
@@ -885,16 +639,14 @@ oxr 1 EUR USD
 ```
 <a name="module_qrgen"></a>
 
-## qrgen ⇒ <code>MessageEmbed</code>
-Extra QRGenCommand - Generates a QR code from text (like a URL)  
-**Aliases**: `qr`, `qrcode`
+## qrgen
+<p>Extra QRGenCommand - Generates a QR code from text (like a URL)<br><strong>Aliases</strong>: <code>qr</code>, <code>qrcode</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Embedded QR code and original image URL  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| URL | <code>StringResolvable</code> | URL you want to encode into a QR image |
+| URL | <code>StringResolvable</code> | <p>URL you want to encode into a QR image</p> |
 
 **Example**  
 ```js
@@ -902,40 +654,34 @@ qrgen https://favna.xyz/ribbon
 ```
 <a name="module_randomcol"></a>
 
-## randomcol ⇒ <code>MessageEmbed</code>
-Extra RandomColCommand - Generates a random color  
-Providing a color hex will display that color, providing none will generate a random one  
-**Aliases**: `randhex`, `rhex`, `randomcolor`, `randcol`, `randomhex`
+## randomcol
+<p>Extra RandomColCommand - Generates a random colour<br>Providing a colour hex will display that colour, providing none will generate a random one<br><strong>Aliases</strong>: <code>randhex</code>, <code>rhex</code>, <code>randomcolour</code>, <code>randomcolor</code>, <code>randcol</code>, <code>randomhex</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Color of embed matches generated color  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [hex] | <code>StringResolvable</code> | Optional: Color hex to display |
+| [hex] | <code>StringResolvable</code> | <p>Optional: colour hex to display</p> |
 
 **Example**  
 ```js
-randomcol  
--OR-  
-randomcol #990000  
--OR-  
+randomcol
+-OR-
+randomcol #990000
+-OR-
 randomcol 36B56e
 ```
 <a name="module_remind"></a>
 
-## remind ⇒ <code>Message</code>
-Extra RemindCommand - Set a reminder and Ribbon will remind you  
-Works by reminding you after a given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`  
-**Aliases**: `remindme`, `reminder`
+## remind
+<p>Extra RemindCommand - Set a reminder and Ribbon will remind you<br>Works by reminding you after a given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>remindme</code>, <code>reminder</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the reminder was stored  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Time | <code>StringResolvable</code> | Amount of time you want to be reminded in |
-| Reminder | <code>StringResolvable</code> | Thing you want Ribbon to remind you of |
+| Time | <code>StringResolvable</code> | <p>Amount of time you want to be reminded in</p> |
+| Reminder | <code>StringResolvable</code> | <p>Thing you want Ribbon to remind you of</p> |
 
 **Example**  
 ```js
@@ -943,16 +689,14 @@ remind 1h To continue developing Ribbon
 ```
 <a name="module_say"></a>
 
-## say ⇒ <code>Message</code>
-Extra Say - Repeats a message and deletes your message  
-**Aliases**: `sayd`, `repeat`
+## say
+<p>Extra Say - Repeats a message and deletes your message<br><strong>Aliases</strong>: <code>sayd</code>, <code>repeat</code></p>
 
-**Returns**: <code>Message</code> - Your message said by Ribbon  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Text | <code>StringResolvable</code> | Message you want to have repeated |
+| Text | <code>StringResolvable</code> | <p>Message you want to have repeated</p> |
 
 **Example**  
 ```js
@@ -960,25 +704,20 @@ say Favna is a great coder!
 ```
 <a name="module_saywut"></a>
 
-## saywut ⇒ <code>MessageEmbed</code>
-Extra SayWutCommand - Bust the last "say" user  
-**Aliases**: `saywat`, `saywot`
+## saywut
+<p>Extra SayWutCommand - Bust the last &quot;say&quot; user<br><strong>Aliases</strong>: <code>saywat</code>, <code>saywot</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Info on who used the "say" command last  
 **Category**: extra  
 <a name="module_time"></a>
 
-## time ⇒ <code>MessageEmbed</code>
-Extra Time - Gets the current time in any place  
-Uses Google's Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.  
-**Aliases**: `citytime`
+## time
+<p>Extra Time - Gets the current time in any place<br>Uses Google's Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>citytime</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Current date, current time, country and DST offset  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Location | <code>StringResolvable</code> | Place where you want to get the current time for |
+| Location | <code>StringResolvable</code> | <p>Place where you want to get the current time for</p> |
 
 **Example**  
 ```js
@@ -986,19 +725,16 @@ time Amsterdam
 ```
 <a name="module_translate"></a>
 
-## translate ⇒ <code>MessageEmbed</code>
-Extra TranslateCommand - Translate any word from any language to any other language  
-Language specifications can be either 1 or 2 letter ISO 639 or full names  
-**Aliases**: `tr`
+## translate
+<p>Extra TranslateCommand - Translate any word from any language to any other language<br>Language specifications can be either 1 or 2 letter ISO 639 or full names<br><strong>Aliases</strong>: <code>tr</code></p>
 
-**Returns**: <code>MessageEmbed</code> - The input and output of the translation  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| FromLanguage | <code>StringResolvable</code> | The language to translate from |
-| ToLanguage | <code>StringResolvable</code> | The language to translate to |
-| Text | <code>StringResolvable</code> | The word or text to translate |
+| FromLanguage | <code>StringResolvable</code> | <p>The language to translate from</p> |
+| ToLanguage | <code>StringResolvable</code> | <p>The language to translate to</p> |
+| Text | <code>StringResolvable</code> | <p>The word or text to translate</p> |
 
 **Example**  
 ```js
@@ -1006,18 +742,14 @@ translate en nl Hello World
 ```
 <a name="module_weather"></a>
 
-## weather ⇒ <code>MessageEmbed</code>
-Extra Weather - Get the current weather forecast in any city  
-Potentially you'll have to specify city if the city is in multiple countries, i.e. `weather amsterdam` will not be the same as `weather amsterdam missouri`  
-Uses Google's Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.  
-**Aliases**: `temp`, `forecast`, `fc`, `wth`
+## weather
+<p>Extra Weather - Get the current weather forecast in any city<br>Potentially you'll have to specify city if the city is in multiple countries, i.e. <code>weather amsterdam</code> will not be the same as <code>weather amsterdam missouri</code><br>Uses Google's Geocoding to determine the correct location therefore supports any location indication, country, city or even as exact as a street.<br><strong>Aliases</strong>: <code>temp</code>, <code>forecast</code>, <code>fc</code>, <code>wth</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Various statistics about the current forecast  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| CityName | <code>StringResolvable</code> | Name of the city to get the weather forecast for |
+| CityName | <code>StringResolvable</code> | <p>Name of the city to get the weather forecast for</p> |
 
 **Example**  
 ```js
@@ -1025,68 +757,36 @@ weather Amsterdam
 ```
 <a name="module_xkcd"></a>
 
-## xkcd ⇒ <code>MessageEmbed</code>
-Extra xkcdCommand - Gets a random image from xkcd  
-**Aliases**: `devjoke`, `comicjoke`
+## xkcd
+<p>Extra XKCDCommand - Gets a random image from xkcd<br><strong>Aliases</strong>: <code>devjoke</code>, <code>comicjoke</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Embedded image and info about it  
 **Category**: extra  
 <a name="module_zalgo"></a>
 
-## zalgo ⇒ <code>Message</code>
-Extra Zalgo - Create zalgo-fied text from your input  
-First banishes any existing zalgo to ensure proper result  
-**Aliases**: `trash`
+## zalgo
+<p>Extra ZalgoCommand - Create zalgo-fied text from your input<br>First banishes any existing zalgo to ensure proper result<br><strong>Aliases</strong>: <code>trash</code></p>
 
-**Returns**: <code>Message</code> - Your text zalgo-fied  
 **Category**: extra  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SomeText | <code>StringResolvable</code> | Your input to transform with Zalgo |
+| SomeText | <code>StringResolvable</code> | <p>Your input to transform with Zalgo</p> |
 
 **Example**  
 ```js
-zalgo HE COMES 
+zalgo HE COMES
 ```
-<a name="module_8ball"></a>
-
-## 8ball ⇒ <code>MessageEmbed</code>
-Games EightBallCommand - Rolls a magic 8 ball using your input  
-**Aliases**: `eightball`
-
-**Returns**: <code>MessageEmbed</code> - Your question and its answer  
-**Category**: games  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| question | <code>StringResolvable</code> | Question you want the 8 ball to answer |
-
-**Example**  
-```js
-8ball is Favna a genius coder?
-```
-<a name="module_biscuit"></a>
-
-## biscuit ⇒ <code>MessageEmbed</code>
-Games CookieCommand - Steal someone's 🍪 gnanahahahaha  
-**Aliases**: `.biscuit`, `biscuit`
-
-**Returns**: <code>MessageEmbed</code> - A MessageEmbed with a cookie gif  
-**Category**: games  
 <a name="module_dice"></a>
 
-## dice ⇒ <code>MessageEmbed</code>
-Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!  
-**Aliases**: `xdicey`, `roll`, `dicey`, `die`
+## dice
+<p>Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!<br><strong>Aliases</strong>: <code>xdicey</code>, <code>roll</code>, <code>dicey</code>, <code>die</code></p>
 
-**Returns**: <code>MessageEmbed</code> - The eyes rolled for each dice as well as the total of all rolls  
 **Category**: games  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| DiceSides | <code>StringResolvable</code> | The amount of sides the dice should have |
-| AmountOfRolls | <code>StringResolvable</code> | The amount of dice to roll |
+| DiceSides | <code>StringResolvable</code> | <p>The amount of sides the dice should have</p> |
+| AmountOfRolls | <code>StringResolvable</code> | <p>The amount of dice to roll</p> |
 
 **Example**  
 ```js
@@ -1094,25 +794,21 @@ dice 5 6
 ```
 <a name="module_dndc"></a>
 
-## dndc ⇒ <code>MessageEmbed</code>
-Games DndCCommand - Flips a coin  
-**Aliases**: `coinflip`, `dndc`, `dcoin`
+## dndc
+<p>Games DndCCommand - Flips a coin<br><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code>, <code>dcoin</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Side the coin landed on  
 **Category**: games  
 <a name="module_fight"></a>
 
-## fight ⇒ <code>MessageEmbed</code>
-Games FightCommand - Pit two things against each other in a fight to the death.  
-**Aliases**: `combat`
+## fight
+<p>Games FightCommand - Pit two things against each other in a fight to the death.<br><strong>Aliases</strong>: <code>combat</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Result of the combat  
 **Category**: games  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| FighterOne | <code>StringResolvable</code> | The first combatant |
-| FighterTwo | <code>StringResolvable</code> | The second combatant |
+| FighterOne | <code>StringResolvable</code> | <p>The first combatant</p> |
+| FighterTwo | <code>StringResolvable</code> | <p>The second combatant</p> |
 
 **Example**  
 ```js
@@ -1120,16 +816,14 @@ fight Pyrrha Ruby
 ```
 <a name="module_rps"></a>
 
-## rps ⇒ <code>MessageEmbed</code>
-Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization  
-**Aliases**: `rockpaperscissors`
+## rps
+<p>Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org randomization<br><strong>Aliases</strong>: <code>rockpaperscissors</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Result of the conflict  
 **Category**: games  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| HandToPlay | <code>StringResolvable</code> | The hand that you want to play |
+| HandToPlay | <code>StringResolvable</code> | <p>The hand that you want to play</p> |
 
 **Example**  
 ```js
@@ -1137,18 +831,15 @@ rps Rock
 ```
 <a name="module_ship"></a>
 
-## ship ⇒ <code>MessageEmbed</code>
-Games ShipCommand - Ship 2 members  
-Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members  
-**Aliases**: `love`, `marry`, `engage`
+## ship
+<p>Games ShipCommand - Ship 2 members<br>Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members<br><strong>Aliases</strong>: <code>love</code>, <code>marry</code>, <code>engage</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Name of the ship  
 **Category**: games  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [ShipMemberOne] | <code>StringResolvable</code> | The first member to ship |
-| [ShipMemberTwo] | <code>StringResolvable</code> | The second member to ship |
+| [ShipMemberOne] | <code>StringResolvable</code> | <p>The first member to ship</p> |
+| [ShipMemberTwo] | <code>StringResolvable</code> | <p>The second member to ship</p> |
 
 **Example**  
 ```js
@@ -1156,18 +847,15 @@ ship Biscuit Rei
 ```
 <a name="module_strawpoll"></a>
 
-## strawpoll ⇒ <code>MessageEmbed</code>
-Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)  
-Has a very specific syntax! Be sure to adapt the example!  
-**Aliases**: `straw`, `poll`
+## strawpoll
+<p>Games StrawpollCommand - Create a strawpoll and find out what people really think (hopefully)<br>Has a very specific syntax! Be sure to adapt the example!<br><strong>Aliases</strong>: <code>straw</code>, <code>poll</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Poll url, title, options and preview image  
 **Category**: games  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Question | <code>StringResolvable</code> | The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or `' '`) to allow spaces |
-| Options | <code>StringResolvable</code> | The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to allow spaces. Splits on every \`|\` |
+| Question | <code>StringResolvable</code> | <p>The question that the strawpoll needs to answer. Recommended to wrap in <code>&quot; &quot;</code> (or <code>' '</code>) to allow spaces</p> |
+| Options | <code>StringResolvable</code> | <p>The options the strawpoll should have. Recommended to wrap in <code>&quot; &quot;</code> (or <code>' '</code>) to allow spaces. Splits on every `|`</p> |
 
 **Example**  
 ```js
@@ -1179,16 +867,14 @@ strawpoll 'Best coding language?' JavaScript C# C++
 ```
 <a name="module_activity"></a>
 
-## activity ⇒ <code>MessageEmbed</code>
-Info ActivityCommand - Gets the activity (presence) data from a member  
-**Aliases**: `act`, `presence`, `richpresence`
+## activity
+<p>Info ActivityCommand - Gets the activity (presence) data from a member<br><strong>Aliases</strong>: <code>act</code>, <code>presence</code>, <code>richpresence</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Activity from that member  
 **Category**: info  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| member | <code>GuildMemberResolvable</code> | Member to get the activity for |
+| member | <code>GuildMemberResolvable</code> | <p>Member to get the activity for</p> |
 
 **Example**  
 ```js
@@ -1196,17 +882,16 @@ activity Favna
 ```
 <a name="module_avatar"></a>
 
-## avatar ⇒ <code>MessageEmbed</code>
-Games AvatarCommand - Get the avatar from any member on this server 
-**Aliases**: `ava`
+## avatar
+<p>Games AvatarCommand - Get the avatar from any member on this server 
+<strong>Aliases</strong>: <code>ava</code></p>
 
-**Returns**: <code>MessageEmbed</code> - The avatar image and a direct link to it  
 **Category**: info  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MemberName | <code>GuildMemberResolvable</code> | Member to get the avatar from |
-| [ImageSize] | <code>GuildMemberResolvable</code> | Optional: Size of the avatar to get. Defaults to 1024 |
+| MemberName | <code>GuildMemberResolvable</code> | <p>Member to get the avatar from</p> |
+| [ImageSize] | <code>GuildMemberResolvable</code> | <p>Optional: Size of the avatar to get. Defaults to 1024</p> |
 
 **Example**  
 ```js
@@ -1214,16 +899,14 @@ avatar Favna
 ```
 <a name="module_discordbots"></a>
 
-## discordbots ⇒ <code>MessageEmbed</code>
-Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList  
-**Aliases**: `dbapi`, `db`
+## discordbots
+<p>Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList<br><strong>Aliases</strong>: <code>dbapi</code>, <code>db</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Info about a bot  
 **Category**: info  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| BotID | <code>StringResolvable</code> | the user ID of the bot you want to get info about |
+| BotID | <code>StringResolvable</code> | <p>the user ID of the bot you want to get info about</p> |
 
 **Example**  
 ```js
@@ -1231,24 +914,20 @@ discordbots 376520643862331396
 ```
 <a name="module_emotes"></a>
 
-## emotes ⇒ <code>MessageEmbed</code>
-Info EmotesCommand - Lists all emotes from the server  
-**Aliases**: `listemo`, `emolist`, `listemoji`, `emote`, `emojis`, `emoji`
+## emotes
+<p>Info EmotesCommand - Lists all emotes from the server<br><strong>Aliases</strong>: <code>listemo</code>, <code>emolist</code>, <code>listemoji</code>, <code>emote</code>, <code>emojis</code>, <code>emoji</code></p>
 
-**Returns**: <code>MessageEmbed</code> - List of emotes  
 **Category**: info  
 <a name="module_iam"></a>
 
-## iam ⇒ <code>MessageEmbed</code>
-Info IamCommand - Self Assign roles  
-**Aliases**: `self`
+## iam
+<p>Info IamCommand - Self Assign roles<br><strong>Aliases</strong>: <code>self</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Confirmation the role has been assigned, will also be added to modlogs if enabled for the server  
 **Category**: info  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyRole | <code>RoleResolvable</code> | The role you want to assign to yourself |
+| AnyRole | <code>RoleResolvable</code> | <p>The role you want to assign to yourself</p> |
 
 **Example**  
 ```js
@@ -1256,16 +935,14 @@ iam uploader
 ```
 <a name="module_iamnot"></a>
 
-## iamnot ⇒ <code>MessageEmbed</code>
-Info IamNotCommand - Remove self assigned roles  
-**Aliases**: `notself`, `iamn`
+## iamnot
+<p>Info IamNotCommand - Remove self assigned roles<br><strong>Aliases</strong>: <code>notself</code>, <code>iamn</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Confirmation the role was removed, will also be added to modlogs if enabled for the server  
 **Category**: info  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyRole | <code>RoleResolvable</code> | The role you want to remove from yourself |
+| AnyRole | <code>RoleResolvable</code> | <p>The role you want to remove from yourself</p> |
 
 **Example**  
 ```js
@@ -1273,57 +950,32 @@ iamnot uploader
 ```
 <a name="module_invite"></a>
 
-## invite ⇒ <code>MessageEmbed</code>
-Info InviteCommand - Gets the invite link for the bot  
-**Aliases**: `inv`, `links`, `shill`
+## invite
+<p>Info InviteCommand - Gets the invite link for the bot<br><strong>Aliases</strong>: <code>inv</code>, <code>links</code>, <code>shill</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Invite link along with other links  
 **Category**: info  
-<a name="module_Reddit"></a>
-
-## Reddit ⇒ <code>MessageEmbed</code>
-Info RedditCommand - Gets statistics on a Reddit user  
-**Aliases**: `red`, `redditor`
-
-**Returns**: <code>MessageEmbed</code> - Statistics of the reddit user  
-**Category**: info  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| RedditUser | <code>StringResolvable</code> | The Reddit user you want to look up |
-
-**Example**  
-```js
-reddit favna
-```
 <a name="module_server"></a>
 
-## server ⇒ <code>MessageEmbed</code>
-Info ServerInfoCommand - Gets information about the current server  
-**Aliases**: `serverinfo`, `sinfo`
+## server
+<p>Info ServerInfoCommand - Gets information about the current server<br><strong>Aliases</strong>: <code>serverinfo</code>, <code>sinfo</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Info about the server  
 **Category**: info  
 <a name="module_stats"></a>
 
-## stats ⇒ <code>MessageEmbed</code>
-Info RibbonStatsCommand - Statistics about Ribbon  
-**Aliases**: `botinfo`, `info`
+## stats
+<p>Info RibbonStatsCommand - Statistics about Ribbon<br><strong>Aliases</strong>: <code>botinfo</code>, <code>info</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Ribbon's statistics  
 **Category**: info  
 <a name="module_userinfo"></a>
 
-## userinfo ⇒ <code>MessageEmbed</code>
-Info UserInfoCommand - Get the info of any member on this server  
-**Aliases**: `user`, `uinfo`
+## userinfo
+<p>Info UserInfoCommand - Get the info of any member on this server<br><strong>Aliases</strong>: <code>user</code>, <code>uinfo</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Info about that member  
 **Category**: info  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | Member you want to get info about |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>Member you want to get info about</p> |
 
 **Example**  
 ```js
@@ -1331,17 +983,15 @@ userinfo Favna
 ```
 <a name="module_fortnite"></a>
 
-## fortnite ⇒ <code>MessageEmbed</code>
-Leaderboards FortniteCommand - Get Player Statistics from Fortnite  
-**Aliases**: `fort`, `fortshite`
+## fortnite
+<p>Leaderboards FortniteCommand - Get Player Statistics from Fortnite<br><strong>Aliases</strong>: <code>fort</code>, <code>fortshite</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Player Statistics from that player  
 **Category**: leaderboards  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Username | <code>StringResolvable</code> | The Epic Username of the player you want to find |
-| Platform | <code>StringResolvable</code> | The platform the player plays on (pc, xbox or psn) |
+| Username | <code>StringResolvable</code> | <p>The Epic Username of the player you want to find</p> |
+| Platform | <code>StringResolvable</code> | <p>The platform the player plays on (pc, xbox or psn)</p> |
 
 **Example**  
 ```js
@@ -1349,16 +999,14 @@ fortnite darkentz014 pc
 ```
 <a name="module_osu"></a>
 
-## osu ⇒ <code>MessageEmbed</code>
-Leaderboards OsuCommand - Shows Player Stats for a given OSU player  
-**Aliases**: `osustats`
+## osu
+<p>Leaderboards OsuCommand - Shows Player Stats for a given OSU player<br><strong>Aliases</strong>: <code>osustats</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Stats of the player  
 **Category**: leaderboards  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PlayerName | <code>StringResolvable</code> | Name of the OSU player |
+| PlayerName | <code>StringResolvable</code> | <p>Name of the OSU player</p> |
 
 **Example**  
 ```js
@@ -1367,15 +1015,14 @@ osu WubWoofWolf
 <a name="module_overwatch"></a>
 
 ## overwatch ⇒ <code>MessageEmbed</code>
-Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleTag  
-**Aliases**: `owstats`
+<p>Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleTag<br><strong>Aliases</strong>: <code>owstats</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Stats of the player  
+**Returns**: <code>MessageEmbed</code> - <p>Stats of the player</p>  
 **Category**: leaderboards  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| BattleTag | <code>StringResolvable</code> | BattleTag for that overwatch player |
+| BattleTag | <code>StringResolvable</code> | <p>BattleTag for that overwatch player</p> |
 
 **Example**  
 ```js
@@ -1383,16 +1030,15 @@ overwatch Camoflouge#1267
 ```
 <a name="module_pubg"></a>
 
-## pubg ⇒ <code>MessageEmbed</code>
-Leaderboards PubgCommand - Get statistics from a PUBG account
+## pubg
+<p>Leaderboards PubgCommand - Get statistics from a PUBG account</p>
 
-**Returns**: <code>MessageEmbed</code> - Statistics of that user  
 **Category**: leaderboards  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PubgUsername | <code>StringResolvable</code> | The username you want to find statistics for |
-| Shard | <code>StringResolvable</code> | A combination of platform and region to look through, for example `pc-na` for PC in North America |
+| PubgUsername | <code>StringResolvable</code> | <p>The username you want to find statistics for</p> |
+| Shard | <code>StringResolvable</code> | <p>A combination of platform and region to look through, for example <code>pc-na</code> for PC in North America</p> |
 
 **Example**  
 ```js
@@ -1400,16 +1046,14 @@ pubg shroud pc-na
 ```
 <a name="module_showdown"></a>
 
-## showdown ⇒ <code>MessageEmbed</code>
-Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice  
-**Aliases**: `showdownlb`, `pokelb`
+## showdown
+<p>Leaderboards ShowdownCommand - Show the top ranking players in your tier of choice<br><strong>Aliases</strong>: <code>showdownlb</code>, <code>pokelb</code></p>
 
-**Returns**: <code>MessageEmbed</code> - List of top 10 ranking players in given tier  
 **Category**: leaderboards  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| TierName | <code>StringResolvable</code> | Name of the tier to view the leaderboard for |
+| TierName | <code>StringResolvable</code> | <p>Name of the tier to view the leaderboard for</p> |
 
 **Example**  
 ```js
@@ -1417,17 +1061,15 @@ showdown ou
 ```
 <a name="module_addrole"></a>
 
-## addrole ⇒ <code>Message</code>
-Moderation AddRoleCommand - Add a role to a member  
-**Aliases**: `newrole`, `ar`
+## addrole
+<p>Moderation AddRoleCommand - Add a role to a member<br><strong>Aliases</strong>: <code>newrole</code>, <code>ar</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the role was added  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | Member to give a role |
-| AnyRole | <code>RoleResolvable</code> | Role to give |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>Member to give a role</p> |
+| AnyRole | <code>RoleResolvable</code> | <p>Role to give</p> |
 
 **Example**  
 ```js
@@ -1435,16 +1077,14 @@ addrole Favna Member
 ```
 <a name="module_announce"></a>
 
-## announce ⇒ <code>Message</code>
-Moderation NewsCommand - Make an announcement to a channel named "announcements" or "news"  
-**Aliases**: `news`
+## announce
+<p>Moderation NewsCommand - Make an announcement to a channel named &quot;announcements&quot; or &quot;news&quot;<br><strong>Aliases</strong>: <code>news</code></p>
 
-**Returns**: <code>Message</code> - Announcement you wrote in the announcement / news channel  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Announcement | <code>StringResolvable</code> | The announcement you want to make |
+| Announcement | <code>StringResolvable</code> | <p>The announcement you want to make</p> |
 
 **Example**  
 ```js
@@ -1452,17 +1092,15 @@ announce Pokemon Switch has released!
 ```
 <a name="module_automod"></a>
 
-## automod ⇒ <code>MessageEmbed</code>
-Moderation AutomodCommand - General toggle for all automod features  
-**Aliases**: `botmod`, `skynetmod`
+## automod
+<p>Moderation AutomodCommand - General toggle for all automod features<br><strong>Aliases</strong>: <code>botmod</code>, <code>skynetmod</code></p>
 
-**Returns**: <code>MessageEmbed</code> - automod confirmation log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
-| [Roles] | <code>RoleResolvable</code> | Roles that are exempted from automod |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
+| [Roles] | <code>RoleResolvable</code> | <p>Roles that are exempted from automod</p> |
 
 **Example**  
 ```js
@@ -1470,17 +1108,15 @@ automod enable
 ```
 <a name="module_ban"></a>
 
-## ban ⇒ <code>MessageEmbed</code>
-Moderation BanCommand - Ban a bad member  
-**Aliases**: `b`, `banana`
+## ban
+<p>Moderation BanCommand - Ban a bad member<br><strong>Aliases</strong>: <code>b</code>, <code>banana</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Log of the ban  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | The member to ban from the server |
-| [TheReason] | <code>StringResolvable</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent Ribbon from deleting the banned member's messages |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>The member to ban from the server</p> |
+| [TheReason] | <code>StringResolvable</code> | <p>Reason for this banishment. Include <code>--no-delete</code> anywhere in the reason to prevent Ribbon from deleting the banned member's messages</p> |
 
 **Example**  
 ```js
@@ -1488,16 +1124,14 @@ ban MultiMegaMander
 ```
 <a name="module_confmute"></a>
 
-## confmute ⇒ <code>MessageEmbed</code>
-Moderation ConfigureMuteCommand - Configure which role to use as "mute" role  
-**Aliases**: `cm`, `configmute`
+## confmute
+<p>Moderation ConfigureMuteCommand - Configure which role to use as &quot;mute&quot; role<br><strong>Aliases</strong>: <code>cm</code>, <code>configmute</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Configuration log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Role | <code>RoleResolvable</code> | Role to set as mute role |
+| Role | <code>RoleResolvable</code> | <p>Role to set as mute role</p> |
 
 **Example**  
 ```js
@@ -1505,24 +1139,16 @@ confmute mute
 ```
 <a name="module_countdownadd"></a>
 
-## countdownadd ⇒ <code>MessageEmbed</code>
-Moderation CountdownAddCommand - Store a countdown message  
-Countdown messages are sent every 24 hours in a given channel and count down to a certain event  
-For the date you should not have any spaces and it is strongly recommended to use [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)  
-They will automatically get deleted when the event time is reached  
-Optionally, you can make Ribbon tag @everyone or @here when the event time is reached by adding \`--everyone\` or \`--here\` anywhere in the countdown content  
-You can save multiple messages for varying events and channels by using this command multiple times  
-The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the countdown  
-**Aliases**: `countdownmsg`, `countdownmessage`, `countdown`, `cam`
+## countdownadd
+<p>Moderation CountdownAddCommand - Store a countdown message<br>Countdown messages are sent every 24 hours in a given channel and count down to a certain event<br>For the date you should not have any spaces and it is strongly recommended to use <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a><br>They will automatically get deleted when the event time is reached<br>Optionally, you can make Ribbon tag @everyone or @here when the event time is reached by adding `--everyone` or `--here` anywhere in the countdown content<br>You can save multiple messages for varying events and channels by using this command multiple times<br>The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the countdown<br><strong>Aliases</strong>: <code>countdownmsg</code>, <code>countdownmessage</code>, <code>countdown</code>, <code>cam</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| DateTime | <code>StringResolvable</code> | The date (and time) of the event |
-| Channel | <code>ChannelResolvable</code> | The channel to send countdown reminders in |
-| Message | <code>StringResolvable</code> | The message to repeat |
+| DateTime | <code>StringResolvable</code> | <p>The date (and time) of the event</p> |
+| Channel | <code>ChannelResolvable</code> | <p>The channel to send countdown reminders in</p> |
+| Message | <code>StringResolvable</code> | <p>The message to repeat</p> |
 
 **Example**  
 ```js
@@ -1530,25 +1156,20 @@ countdownadd 2018-12-31T18:00 #general New years day!
 ```
 <a name="module_countdownlist"></a>
 
-## countdownlist ⇒ <code>MessageEmbed</code>
-Moderation CountDownList - List all stored countdown messages in the current guild  
-**Aliases**: `cl`, `cdlist`
+## countdownlist
+<p>Moderation CountDownList - List all stored countdown messages in the current guild<br><strong>Aliases</strong>: <code>cl</code>, <code>cdlist</code></p>
 
-**Returns**: <code>MessageEmbed</code> - List of all countdowns  
 **Category**: moderation  
 <a name="module_countdownremove"></a>
 
-## countdownremove ⇒ <code>MessageEmbed</code>
-Moderation CountDownRemove - Remove a specified countdown  
-Use the countdownlist command to find the ID for deleting  
-**Aliases**: `cdremove`, `countdowndelete`, `cddelete`, `cdd`, `cdr`
+## countdownremove
+<p>Moderation CountDownRemove - Remove a specified countdown<br>Use the countdownlist command to find the ID for deleting<br><strong>Aliases</strong>: <code>cdremove</code>, <code>countdowndelete</code>, <code>cddelete</code>, <code>cdd</code>, <code>cdr</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Confirmation the countdown was removed  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| CountdownID | <code>StringResolvable</code> | The ID of the Countdown to remove |
+| CountdownID | <code>StringResolvable</code> | <p>The ID of the Countdown to remove</p> |
 
 **Example**  
 ```js
@@ -1556,16 +1177,14 @@ countdownremove 1
 ```
 <a name="module_defaultrole"></a>
 
-## defaultrole ⇒ <code>Message</code>
-Moderation defaultroleCommand - Sets a default role that should be assigned to all new joining members  
-**Aliases**: `defrole`
+## defaultrole
+<p>Moderation DefaultroleCommand - Sets a default role that should be assigned to all new joining members<br><strong>Aliases</strong>: <code>defrole</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyRole | <code>RoleResolvable</code> | Role to assign to all new joining members |
+| AnyRole | <code>RoleResolvable</code> | <p>Role to assign to all new joining members</p> |
 
 **Example**  
 ```js
@@ -1573,16 +1192,14 @@ defaultrole Member
 ```
 <a name="module_deletecommandmessages"></a>
 
-## deletecommandmessages ⇒ <code>MessageEmbed</code>
-Moderation deleteCommandMessagesCommand - Configure whether Ribbon should delete command messages  
-**Aliases**: `dcm`
+## deletecommandmessages
+<p>Moderation DeleteCommandMessagesCommand - Configure whether Ribbon should delete command messages<br><strong>Aliases</strong>: <code>dcm</code></p>
 
-**Returns**: <code>MessageEmbed</code> - DeleteCommandMessages confirmation log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -1590,17 +1207,15 @@ deletecommandmessages enable
 ```
 <a name="module_deletewarn"></a>
 
-## deletewarn ⇒ <code>MessageEmbed</code>
-Moderation DeleteWarnCommand - Deletes all or some warnings points from a user  
-**Aliases**: `removewarn`, `unwarn`, `dw`, `uw`
+## deletewarn
+<p>Moderation DeleteWarnCommand - Deletes all or some warnings points from a user<br><strong>Aliases</strong>: <code>removewarn</code>, <code>unwarn</code>, <code>dw</code>, <code>uw</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Confirmation of the action and the new warning points that user has  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>MemberResolvable</code> | The member to remove warning points from |
-| [AmountOfWarnPoints] | <code>Number</code> | The amount of warning points to remove |
+| AnyMember | <code>MemberResolvable</code> | <p>The member to remove warning points from</p> |
+| [AmountOfWarnPoints] | <code>Number</code> | <p>The amount of warning points to remove</p> |
 
 **Example**  
 ```js
@@ -1612,17 +1227,15 @@ deletewarn favna
 ```
 <a name="module_delrole"></a>
 
-## delrole ⇒ <code>MessageEmbed</code>
-Moderation DeleteRoleCommand - Delete the role of a member  
-**Aliases**: `deleterole`, `dr`, `remrole`, `removerole`
+## delrole
+<p>Moderation DeleteRoleCommand - Delete the role of a member<br><strong>Aliases</strong>: <code>deleterole</code>, <code>dr</code>, <code>remrole</code>, <code>removerole</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Delete role log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | The member to remove a role from |
-| AnyRole | <code>RoleResolvable</code> | The role to remove |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>The member to remove a role from</p> |
+| AnyRole | <code>RoleResolvable</code> | <p>The role to remove</p> |
 
 **Example**  
 ```js
@@ -1630,16 +1243,14 @@ delrole Favna Member
 ```
 <a name="module_joinmessages"></a>
 
-## joinmessages ⇒ <code>MessageEmbed</code>
-Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join  
-**Aliases**: `jmt`, `joinmessagestoggle`
+## joinmessages
+<p>Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greeting messages when members join<br><strong>Aliases</strong>: <code>jmt</code>, <code>joinmessagestoggle</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -1647,17 +1258,15 @@ joinmessages enable
 ```
 <a name="module_kick"></a>
 
-## kick ⇒ <code>MessageEmbed</code>
-Moderation KickCommand - Kicks a somewhat bad member  
-**Aliases**: `k`
+## kick
+<p>Moderation KickCommand - Kicks a somewhat bad member<br><strong>Aliases</strong>: <code>k</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Log of the kick  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | The member to kick from the server |
-| TheReason | <code>StringResolvable</code> | Reason for this kick. |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>The member to kick from the server</p> |
+| TheReason | <code>StringResolvable</code> | <p>Reason for this kick.</p> |
 
 **Example**  
 ```js
@@ -1665,16 +1274,14 @@ kick ThunderKai
 ```
 <a name="module_leavemessages"></a>
 
-## leavemessages ⇒ <code>MessageEmbed</code>
-Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave  
-**Aliases**: `lmt`, `leavemessagestoggle`
+## leavemessages
+<p>Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leave messages when members leave<br><strong>Aliases</strong>: <code>lmt</code>, <code>leavemessagestoggle</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -1682,16 +1289,14 @@ leavemessages enable
 ```
 <a name="module_listwarn"></a>
 
-## listwarn ⇒ <code>MessageEmbed</code>
-Moderation ListWarnCommand - Show the amount of warning points a member has  
-**Aliases**: `reqwarn`, `lw`, `rw`
+## listwarn
+<p>Moderation ListWarnCommand - Show the amount of warning points a member has<br><strong>Aliases</strong>: <code>reqwarn</code>, <code>lw</code>, <code>rw</code></p>
 
-**Returns**: <code>MessageEmbed</code> - The warnings that member has  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | The member of whom to list the warning points |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>The member of whom to list the warning points</p> |
 
 **Example**  
 ```js
@@ -1699,27 +1304,20 @@ listwarn Biscuit
 ```
 <a name="module_lockdown"></a>
 
-## lockdown ⇒ <code>Message</code>
-Moderation LockdownCommand - Lockdown a channel  
-Once locked it will be locked to the `@everyone` or whichever role you specified.  
-Depending on your permissions setup it may be that only people with the `administrator` role will have access to the channel.  
-This may also mean that Ribbon won't have access if it doesn't have administrator role so you cannot use the `unlock` command until you give it that permission!  
-**Aliases**: `lock`, `ld`
+## lockdown
+<p>Moderation LockdownCommand - Lockdown a channel<br>Once locked it will be locked to the <code>@everyone</code> or whichever role you specified.<br>Depending on your permissions setup it may be that only people with the <code>administrator</code> role will have access to the channel.<br>This may also mean that Ribbon won't have access if it doesn't have administrator role so you cannot use the <code>unlock</code> command until you give it that permission!<br><strong>Aliases</strong>: <code>lock</code>, <code>ld</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the channel was locked  
 **Category**: moderation  
 <a name="module_memberlogs"></a>
 
-## memberlogs ⇒ <code>MessageEmbed</code>
-Moderation MemberLogsCommand - Toggle member logs in the member-logs (or by you configured with setmemberlogs) channel  
-**Aliases**: `tml`, `togglemember`, `togglememberlogs`
+## memberlogs
+<p>Moderation MemberLogsCommand - Toggle member logs in the configured channel<br><strong>Aliases</strong>: <code>tml</code>, <code>togglemember</code>, <code>togglememberlogs</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Memberlogs confirmation log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -1727,54 +1325,30 @@ memberlogs enable
 ```
 <a name="module_modlogs"></a>
 
-## modlogs ⇒ <code>MessageEmbed</code>
-Moderation ModLogsCommand - Toggle mod logs in the mod-logs (or by you configured with setmodlogs) channel  
-**Aliases**: `togglemod`
+## modlogs
+<p>Moderation ModLogsCommand - Toggle mod logs in the configured channel<br><strong>Aliases</strong>: <code>togglemod</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Modlogs confirmation log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
 modlogs enable
 ```
-<a name="module_mute"></a>
-
-## mute ⇒ <code>MessageEmbed</code>
-Moderation MuteCommand - Mute a member  
-Requires either a role named `muted` on the server, or first having set the mute role with confmute  
-You can optionally specify a duration for how long this mute will last. Not specifying any will mean it will last until manually unmuted.  
-The format for duration is in minutes, hours or days in the format of `5m`, `2h` or `1d`  
-**Aliases**: `silent`
-
-**Returns**: <code>MessageEmbed</code> - Mute log  
-**Category**: moderation  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | Member to mute |
-
-**Example**  
-```js
-mute Muffin
-```
 <a name="module_nickname"></a>
 
-## nickname ⇒ <code>MessageEmbed</code>
-Moderation NickCommand - Nickname a single member  
-**Aliases**: `nick`
+## nickname
+<p>Moderation NickCommand - Nickname a single member<br><strong>Aliases</strong>: <code>nick</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Nickname log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | Member to give a nickname |
-| NewNickname | <code>StringResolvable</code> | Nickname to assign |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>Member to give a nickname</p> |
+| NewNickname | <code>StringResolvable</code> | <p>Nickname to assign</p> |
 
 **Example**  
 ```js
@@ -1782,16 +1356,14 @@ nick Muffin Cupcake
 ```
 <a name="module_purge"></a>
 
-## purge ⇒ <code>Message</code>
-Moderation PurgeCommand - Quickly delete a certain amount of messages  
-**Aliases**: `prune`, `delete`
+## purge
+<p>Moderation PurgeCommand - Quickly delete a certain amount of messages<br><strong>Aliases</strong>: <code>prune</code>, <code>delete</code></p>
 
-**Returns**: <code>Message</code> - Confirmation of the amount of messages deleted - will self delete after 1 second.  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MessageAmount | <code>Number</code> | The amount of messages to delete, between 1 and 99 |
+| MessageAmount | <code>Number</code> | <p>The amount of messages to delete, between 1 and 99</p> |
 
 **Example**  
 ```js
@@ -1799,16 +1371,14 @@ purge 10
 ```
 <a name="module_regexmatchtoggle"></a>
 
-## regexmatchtoggle ⇒ <code>MessageEmbed</code>
-Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this server  
-**Aliases**: `rmt`, `regexmatch`
+## regexmatchtoggle
+<p>Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this server<br><strong>Aliases</strong>: <code>rmt</code>, <code>regexmatch</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -1816,18 +1386,14 @@ regexmatchtoggle enable
 ```
 <a name="module_selfroles"></a>
 
-## selfroles ⇒ <code>Message</code>
-Moderation SelfRolesCommand - Sets the self assignable roles for the server members, to be used by the `iam` command  
-You can set multiple roles by delimiting with spaces (`role1 role2`)  
-You can clear the setting by giving no roles then replying `finish`  
-**Aliases**: `sroles`
+## selfroles
+<p>Moderation SelfRolesCommand - Sets the self assignable roles for the server members, to be used by the <code>iam</code> command<br>You can set multiple roles by delimiting with spaces (<code>role1 role2</code>)<br>You can clear the setting by giving no roles then replying <code>finish</code><br><strong>Aliases</strong>: <code>sroles</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyRole | <code>RoleResolvable</code> | Role to set, can be multiple split by spaces |
+| AnyRole | <code>RoleResolvable</code> | <p>Role to set, can be multiple split by spaces</p> |
 
 **Example**  
 ```js
@@ -1839,69 +1405,30 @@ selfroles uploader superuploader
 ```
 <a name="module_setannounce"></a>
 
-## setannounce ⇒ <code>MessageEmbed</code>
-Moderation SetAnnounceCommand - Set the channel for the announce command  
-**Aliases**: `sa`, `setannouncement`, `setannouncements`
+## setannounce
+<p>Moderation SetAnnounceCommand - Set the channel for the announce command<br><strong>Aliases</strong>: <code>sa</code>, <code>setannouncement</code>, <code>setannouncements</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Confirmation of the setting being stored  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnnounceChannel | <code>ChannelResolvable</code> | The channel to set the announcements to |
+| AnnounceChannel | <code>ChannelResolvable</code> | <p>The channel to set the announcements to</p> |
 
 **Example**  
 ```js
 setannounce #updates
 ```
-<a name="module_setmemberlogs"></a>
-
-## setmemberlogs ⇒ <code>MessageEmbed</code>
-Moderation SetMemberlogsCommand - Sets the channel used for member logs  
-**Aliases**: `setmember`
-
-**Returns**: <code>MessageEmbed</code> - Setmemberlogs confirmation log  
-**Category**: moderation  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| LogChannel | <code>ChannelResolvable</code> | The channel to use for member logs |
-
-**Example**  
-```js
-setmemberlogs logs
-```
-<a name="module_setmodlogs"></a>
-
-## setmodlogs ⇒ <code>MessageEmbed</code>
-Moderation SetModlogsCommand - Sets the channel used for mod logs  
-**Aliases**: `setmod`
-
-**Returns**: <code>MessageEmbed</code> - Setmodlogs confirmation log  
-**Category**: moderation  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| LogChannel | <code>ChannelResolvable</code> | The channel to use for mod logs |
-
-**Example**  
-```js
-setmodlogs logs
-```
 <a name="module_softban"></a>
 
-## softban ⇒ <code>MessageEmbed</code>
-Moderation SoftbanCommand - Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)  
-This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours  
-**Aliases**: `sb`, `sban`
+## softban
+<p>Moderation SoftbanCommand - Bans a member deleting their messages and then unbans them allowing them to rejoin (no invite link is shared)<br>This is essentially a kick with the added effect of deleting all their past messages from the last 24 hours<br><strong>Aliases</strong>: <code>sb</code>, <code>sban</code></p>
 
-**Returns**: <code>MessageEmbed</code> - A MessageEmbed with a log of the softban  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | The member to softban from the server |
-| TheReason | <code>StringResolvable</code> | Reason for this softban. |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>The member to softban from the server</p> |
+| TheReason | <code>StringResolvable</code> | <p>Reason for this softban.</p> |
 
 **Example**  
 ```js
@@ -1909,19 +1436,16 @@ softban ImmortalZypther
 ```
 <a name="module_tempban"></a>
 
-## tempban ⇒ <code>MessageEmbed</code>
-Moderation TempBanCommand - Temporary bans a member, then unbans them when the timer expires  
-Given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`  
-**Aliases**: `tb`, `rottenbanana`
+## tempban
+<p>Moderation TempBanCommand - Temporary bans a member, then unbans them when the timer expires<br>Given amount of minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>tb</code>, <code>rottenbanana</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Log of the ban  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | The member to ban from the server |
-| Time | <code>StringResolvable</code> | The amount of time this member should be banned |
-| [TheReason] | <code>StringResolvable</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to prevent Ribbon from deleting the banned member's messages |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>The member to ban from the server</p> |
+| Time | <code>StringResolvable</code> | <p>The amount of time this member should be banned</p> |
+| [TheReason] | <code>StringResolvable</code> | <p>Reason for this banishment. Include <code>--no-delete</code> anywhere in the reason to prevent Ribbon from deleting the banned member's messages</p> |
 
 **Example**  
 ```js
@@ -1929,49 +1453,37 @@ tempban Kai
 ```
 <a name="module_timeradd"></a>
 
-## timeradd ⇒ <code>MessageEmbed</code>
-Moderation TimerAddCommand - Store timed messages  
-These are messages Ribbon will repeat in a given channel on a given interval  
-Useful for repeating about rules and such  
-You can save multiple messages with varying intervals and channels by using this command multiple times  
-The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the timed message  
-The format for the interval is in minutes, hours or days in the format of `5m`, `2h` or `1d`  
-**Aliases**: `timedmsgs`, `timedmsg`, timedmessages`, `timer`, `tm`
+## timeradd
+<p>Moderation TimerAddCommand - Store timed messages<br>These are messages Ribbon will repeat in a given channel on a given interval<br>Useful for repeating about rules and such<br>You can save multiple messages with varying intervals and channels by using this command multiple times<br>The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the timed message<br>The format for the interval is in minutes, hours or days in the format of <code>5m</code>, <code>2h</code> or <code>1d</code><br><strong>Aliases</strong>: <code>timedmsgs</code>, <code>timedmsg</code>, timedmessages<code>,</code>timer<code>,</code>tm`</p>
 
-**Returns**: <code>MessageEmbed</code> - Confirmation the setting was stored  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Interval | <code>StringResolvable</code> | The interval at which the message(s) should be repeated |
-| Channel | <code>ChannelResolvable</code> | The channel to send the timed message in |
-| Message | <code>StringResolvable</code> | The message(s) to repeat |
+| Interval | <code>StringResolvable</code> | <p>The interval at which the message(s) should be repeated</p> |
+| Channel | <code>ChannelResolvable</code> | <p>The channel to send the timed message in</p> |
+| Message | <code>StringResolvable</code> | <p>The message(s) to repeat</p> |
 
 **Example**  
 ```js
-timeradd #general 1d Please read the rules everyone!
+timeradd 1d #general Please read the rules everyone!
 ```
 <a name="module_timerlist"></a>
 
-## timerlist ⇒ <code>MessageEmbed</code>
-Moderation TimerListCommand - List all stored timed messages in the current guild  
-**Aliases**: `tl`, `timelist`
+## timerlist
+<p>Moderation TimerListCommand - List all stored timed messages in the current guild<br><strong>Aliases</strong>: <code>tl</code>, <code>timelist</code></p>
 
-**Returns**: <code>MessageEmbed</code> - List of all timed messages  
 **Category**: moderation  
 <a name="module_timerremove"></a>
 
-## timerremove ⇒ <code>MessageEmbed</code>
-Moderation TimerRemoveCommand - Remove a specified timed message  
-Use the timerlist command to find the ID for deleting  
-**Aliases**: `timeremove`, `timerdelete`, `timedelete`
+## timerremove
+<p>Moderation TimerRemoveCommand - Remove a specified timed message<br>Use the timerlist command to find the ID for deleting<br><strong>Aliases</strong>: <code>timeremove</code>, <code>timerdelete</code>, <code>timedelete</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Confirmation the timed message was removed  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| TimerID | <code>StringResolvable</code> | The ID of the timed message to remove |
+| TimerID | <code>StringResolvable</code> | <p>The ID of the timed message to remove</p> |
 
 **Example**  
 ```js
@@ -1979,16 +1491,14 @@ timerremove 1
 ```
 <a name="module_unknownmessages"></a>
 
-## unknownmessages ⇒ <code>MessageEmbed</code>
-Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off  
-**Aliases**: `unknowns`, `unkmsg`
+## unknownmessages
+<p>Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off<br><strong>Aliases</strong>: <code>unknowns</code>, <code>unkmsg</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Unknownmessages confirmation log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
@@ -1996,26 +1506,21 @@ unknownmessages enable
 ```
 <a name="module_unlock"></a>
 
-## unlock ⇒ <code>Message</code>
-Moderation UnlockCommand - Unlock the channel  
-Only really useful if you previously locked the channel  
-Note that Ribbon does need to be able to be able to access this channel to unlock it (read permissions)  
-**Aliases**: `delock`, `ul`
+## unlock
+<p>Moderation UnlockCommand - Unlock the channel<br>Only really useful if you previously locked the channel<br>Note that Ribbon does need to be able to be able to access this channel to unlock it (read permissions)<br><strong>Aliases</strong>: <code>delock</code>, <code>ul</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the channel is unlocked  
 **Category**: moderation  
 <a name="module_unmute"></a>
 
-## unmute ⇒ <code>MessageEmbed</code>
-Moderation UnmuteCommand - Unmutes a previously muted member
-**Aliases**: `um`
+## unmute
+<p>Moderation UnmuteCommand - Unmutes a previously muted member
+<strong>Aliases</strong>: <code>um</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Unmute log  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | The member to remove a role from |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>The member to remove a role from</p> |
 
 **Example**  
 ```js
@@ -2023,19 +1528,16 @@ unmute Muffin
 ```
 <a name="module_warn"></a>
 
-## warn ⇒ <code>MessageEmbed</code>
-Moderation WarnCommand - Gives a member warning points  
-Please note that Ribbon will not auto ban when the member has a certain amount of points!  
-**Aliases**: `warning`
+## warn
+<p>Moderation WarnCommand - Gives a member warning points<br>Please note that Ribbon will not auto ban when the member has a certain amount of points!<br><strong>Aliases</strong>: <code>warning</code></p>
 
-**Returns**: <code>MessageEmbed</code> - A MessageEmbed with a log of the warning  
 **Category**: moderation  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | The member to give warning points |
-| WarningPoints | <code>Number</code> | The amount of warning points to give |
-| TheReason | <code>StringResolvable</code> | Reason for warning |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>The member to give warning points</p> |
+| WarningPoints | <code>Number</code> | <p>The amount of warning points to give</p> |
+| TheReason | <code>StringResolvable</code> | <p>Reason for warning</p> |
 
 **Example**  
 ```js
@@ -2043,16 +1545,14 @@ warn Biscuit 5 Not giving everyone cookies
 ```
 <a name="module_defaultvolume"></a>
 
-## defaultvolume ⇒ <code>Message</code>
-Music DefaultVolumeCommand - Sets the server's default volume  
-**Aliases**: `defvol`
+## defaultvolume
+<p>Music DefaultVolumeCommand - Sets the server's default volume<br><strong>Aliases</strong>: <code>defvol</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: music  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| VolumeToSet | <code>number/&quot;show&quot;</code> | The volume to set or use "show" to show current default volume |
+| VolumeToSet | <code>number/&quot;show&quot;</code> | <p>The volume to set or use &quot;show&quot; to show current default volume</p> |
 
 **Example**  
 ```js
@@ -2060,18 +1560,14 @@ defaultvolume 2
 ```
 <a name="module_maxlength"></a>
 
-## maxlength ⇒ <code>Message</code>
-Music MaxLengthCommand - Set the maximum length (in minutes) of a video  
-Give no argument to show current amount of maximum songs  
-Use "default" as argument to set it back to Ribbon's default  
-**Aliases**: `max-duration`, `max-song-length`, `max-song-duration`
+## maxlength
+<p>Music MaxLengthCommand - Set the maximum length (in minutes) of a video<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to Ribbon's default<br><strong>Aliases</strong>: <code>max-duration</code>, <code>max-song-length</code>, <code>max-song-duration</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: music  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MaxVideoLength] | <code>number/&quot;default&quot;</code> | New maximum length in minutes |
+| [MaxVideoLength] | <code>number/&quot;default&quot;</code> | <p>New maximum length in minutes</p> |
 
 **Example**  
 ```js
@@ -2079,177 +1575,29 @@ maxlength 10
 ```
 <a name="module_maxsongs"></a>
 
-## maxsongs ⇒ <code>Message</code>
-Music MaxSongsCommand- The maximum amount of songs any member can queue  
-Give no argument to show current amount of maximum songs  
-Use "default" as argument to set it back to Ribbon's default  
-**Aliases**: `songcap`, `songmax`, `maxsong`
+## maxsongs
+<p>Music MaxSongsCommand- The maximum amount of songs any member can queue<br>Give no argument to show current amount of maximum songs<br>Use &quot;default&quot; as argument to set it back to Ribbon's default<br><strong>Aliases</strong>: <code>songcap</code>, <code>songmax</code>, <code>maxsong</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: music  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [NumberOfSongs] | <code>number/&quot;default&quot;</code> | New maximum number of songs |
+| [NumberOfSongs] | <code>number/&quot;default&quot;</code> | <p>New maximum number of songs</p> |
 
 **Example**  
 ```js
 maxsongs 2
 ```
-<a name="module_pause"></a>
-
-## pause ⇒ <code>Message</code>
-Music PauseSongCommand - Pauses the currently playing track  
-You need to be in a voice channel before you can use this command  
-**Aliases**: `shh`, `shhh`, `shhhh`, `shhhhh`, `hush`, `halt`
-
-**Returns**: <code>Message</code> - Confirmation the music was paused  
-**Category**: music  
-<a name="module_play"></a>
-
-## play ⇒ <code>MessageEmbed</code>
-Music PlaySongCommand - Starts playing music  
-You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it  
-If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
-There are 4 ways to queue songs  
-1. YouTube Search Query  
-2. YouTube video URL  
-3. YouTube playlist URL
-4. YouTube video ID  
-**Aliases**: `add`, `enqueue`, `start`, `join`
-
-**Returns**: <code>MessageEmbed</code> - Title, duration and thumbnail of the video  
-**Category**: music  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| Video | <code>StringResolvable</code> | One of the options linking to a video to play |
-
-**Example**  
-```js
-play
-```
-<a name="module_queue"></a>
-
-## queue ⇒ <code>MessageEmbed</code>
-Music ViewQueueCommand - Shows the current queue of songs  
-Songs are paginated in sets of 5  
-**Aliases**: `songs`, `song-list`, `list`, `listqueue`
-
-**Returns**: <code>MessageEmbed</code> - List of queued songs with their duration and total duration of the queue  
-**Category**: music  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [Page] | <code>StringResolvable</code> | Page to show |
-
-**Example**  
-```js
-queue 2
-```
-<a name="module_resume"></a>
-
-## resume ⇒ <code>Message</code>
-Music ResumeSongCommand - Resumes the song after pausing it  
-You need to be in a voice channel before you can use this command  
-**Aliases**: `go`, `continue`, `ale`, `loss`, `res`
-
-**Returns**: <code>Message</code> - Confirmation the song is resumed  
-**Category**: music  
-<a name="module_save"></a>
-
-## save ⇒ <code>MessageEmbed</code>
-Music SaveQueueCommand - DMs the 10 upcoming songs from the queue to the user  
-**Aliases**: `save-songs`, `save-song-list`, `ss`, `savequeue`
-
-**Returns**: <code>MessageEmbed</code> - Titles, durations and total queue duration sent in a DM  
-**Category**: music  
-<a name="module_queue"></a>
-
-## queue ⇒ <code>MessageEmbed</code>
-Music ShuffleCommand - Shuffles the current queue  
-Shuffles using a [modern version of the Fisher-Yates shuffle algorithm](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle#The_modern_algorithm)  
-**Aliases**: `remix`, `mixtape`
-
-**Returns**: <code>MessageEmbed</code> - The new queue order (limited to the first 10 entries)  
-**Category**: music  
-**Example**  
-```js
-queue 2
-```
-<a name="module_skip"></a>
-
-## skip ⇒ <code>Message</code>
-Music SkipSongCommand - Skips the currently playing song and jumps to the next in queue or stops if it is the last song of the queue  
-A vote to skip is started if there are 4 or more people in the voice channel with `(amount of members) / 3` as required amount of votes (bot doesn't count as a member)  
-Staff that can delete messages can force the skip by using `skip force`  
-You need to be in a voice channel before you can use this command  
-**Aliases**: `next`
-
-**Returns**: <code>Message</code> - Confirmation the song was skipped  
-**Category**: music  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [force] | <code>StringResolvable</code> | Force the skip if you are the requester or a server moderator |
-
-**Example**  
-```js
-skip  
--OR-
-skip force
-```
-<a name="module_status"></a>
-
-## status ⇒ <code>MessageEmbed</code>
-Music MusicStatusCommand - Gets status about the currently playing song  
-**Aliases**: `song`, `playing`, `current-song`, `now-playing`
-
-**Returns**: <code>MessageEmbed</code> - Title, URL of and progress into the song  
-**Category**: music  
-<a name="module_stop"></a>
-
-## stop ⇒ <code>Message</code>
-Music StopMusicCommand - Stops the current queue. Bot will automatically leave the channel after this command  
-A vote to skip is started if there are 4 or more people in the voice channel with `(amount of members) / 3` as required amount of votes (bot doesn't count as a member)  
-Staff that can delete messages can force the skip by using `skip force`  
-You need to be in a voice channel before you can use this command  
-**Aliases**: `kill`, `stfu`, `quit`, `leave`, `disconnect`
-
-**Returns**: <code>Message</code> - Sad face about stopping the music  
-**Category**: music  
-<a name="module_volume"></a>
-
-## volume ⇒ <code>Message</code>
-Music ChangeVolumeCommand - Changes the volume of the currently playing song  
-If you do not give any parameter, Ribbon will show the current volume  
-You need to be in a voice channel before you can use this command  
-**Aliases**: `set-volume`, `set-vol`, `vol`
-
-**Returns**: <code>Message</code> - Confirmation of the change of volume  
-**Category**: music  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [Volume] | <code>Number</code> | The new volume to set |
-
-**Example**  
-```js
-volume 2
-```
 <a name="module_e621"></a>
 
-## e621 ⇒ <code>MessageEmbed</code>
-nsfw E621Command - Gets a NSFW image from e621  
-Can only be used in NSFW marked channels!  
-**Aliases**: `eee`
+## e621
+<p>nsfw E621Command - Gets a NSFW image from e621<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>eee</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>StringResolvable</code> | Something you want to find |
+| Query | <code>StringResolvable</code> | <p>Something you want to find</p> |
 
 **Example**  
 ```js
@@ -2257,17 +1605,14 @@ e621 pyrrha_nikos
 ```
 <a name="module_gelbooru"></a>
 
-## gelbooru ⇒ <code>MessageEmbed</code>
-nsfw GelbooruCommand - Gets a NSFW image from gelbooru  
-Can only be used in NSFW marked channels!  
-**Aliases**: `gel`, `booru`
+## gelbooru
+<p>nsfw GelbooruCommand - Gets a NSFW image from gelbooru<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>gel</code>, <code>booru</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>StringResolvable</code> | Something you want to find |
+| Query | <code>StringResolvable</code> | <p>Something you want to find</p> |
 
 **Example**  
 ```js
@@ -2275,17 +1620,14 @@ gelbooru pyrrha_nikos
 ```
 <a name="module_paheal"></a>
 
-## paheal ⇒ <code>MessageEmbed</code>
-nsfw PahealCommand - Gets a NSFW image from paheal  
-Can only be used in NSFW marked channels!  
-**Aliases**: `pa`, `heal`
+## paheal
+<p>nsfw PahealCommand - Gets a NSFW image from paheal<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>pa</code>, <code>heal</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>StringResolvable</code> | Something you want to find |
+| Query | <code>StringResolvable</code> | <p>Something you want to find</p> |
 
 **Example**  
 ```js
@@ -2293,17 +1635,14 @@ paheal pyrrha_nikos
 ```
 <a name="module_pornvids"></a>
 
-## pornvids ⇒ <code>MessageEmbed</code>
-nsfw PornVidsCommand - Gets a NSFW video from pornhub  
-Can only be used in NSFW marked channels!  
-**Aliases**: `porn`, `nsfwvids`
+## pornvids
+<p>nsfw PornVidsCommand - Gets a NSFW video from pornhub<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>porn</code>, <code>nsfwvids</code></p>
 
-**Returns**: <code>MessageEmbed</code> - URL, duration and embedded thumbnail  
 **Category**: nsfw  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>StringResolvable</code> | Something you want to find |
+| Query | <code>StringResolvable</code> | <p>Something you want to find</p> |
 
 **Example**  
 ```js
@@ -2311,17 +1650,14 @@ pornvids babe
 ```
 <a name="module_rule34"></a>
 
-## rule34 ⇒ <code>MessageEmbed</code>
-nsfw Rule34Command - Gets a NSFW image from rule34  
-Can only be used in NSFW marked channels!  
-**Aliases**: `r34`
+## rule34
+<p>nsfw Rule34Command - Gets a NSFW image from rule34<br>Can only be used in NSFW marked channels!<br><strong>Aliases</strong>: <code>r34</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Score, Link and preview of the image  
 **Category**: nsfw  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>StringResolvable</code> | Something you want to find |
+| Query | <code>StringResolvable</code> | <p>Something you want to find</p> |
 
 **Example**  
 ```js
@@ -2329,24 +1665,21 @@ rule34 pyrrha_nikos
 ```
 <a name="module_checkguilds"></a>
 
-## checkguilds ⇒ <code>Message</code>
-Owner CheckGuildsCommand - Lists all guilds Ribbon is in
+## checkguilds
+<p>Owner CheckGuildsCommand - Lists all guilds Ribbon is in</p>
 
-**Returns**: <code>Message</code> - Amount and list of guilds in code blocks  
 **Category**: owner  
 <a name="module_customtopup"></a>
 
-## customtopup ⇒ <code>MessageEmbed</code>
-Owner CustomTopUpCommand - Daniël Ocean doesn't give a crap about legality  
-**Aliases**: `ctu`
+## customtopup
+<p>Owner CustomTopUpCommand - Daniël Ocean doesn't give a crap about legality<br><strong>Aliases</strong>: <code>ctu</code></p>
 
-**Returns**: <code>MessageEmbed</code> - New balance for the member  
 **Category**: owner  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | The member you want to give some chips |
-| ChipsAmount | <code>Number</code> | The amount of chips you want to give |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>The member you want to give some chips</p> |
+| ChipsAmount | <code>Number</code> | <p>The amount of chips you want to give</p> |
 
 **Example**  
 ```js
@@ -2354,31 +1687,26 @@ ctu Biscuit 1000
 ```
 <a name="module_dbpost"></a>
 
-## dbpost ⇒ <code>Message</code>
-Owner DBPostCommand - Posts current guild count to discordbotlist
+## dbpost
+<p>Owner DBPostCommand - Posts current guild count to discordbotlist</p>
 
-**Returns**: <code>Message</code> - Confirmation the update was made  
 **Category**: owner  
 <a name="module_eshopfetch"></a>
 
-## eshopfetch ⇒ <code>Message</code>
-Owner EShopFetchCommand - Fetch the latest data for the eShop command  
-**Aliases**: `efetch`
+## eshopfetch
+<p>Owner EShopFetchCommand - Fetch the latest data for the eShop command<br><strong>Aliases</strong>: <code>efetch</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the data was fetched  
 **Category**: owner  
 <a name="module_tagmember"></a>
 
-## tagmember ⇒ <code>Message</code>
-Owner TagMemberCommand - Tags a member by ID  
-Primarily meant for mobile and when members have annoying untaggable names
+## tagmember
+<p>Owner TagMemberCommand - Tags a member by ID<br>Primarily meant for mobile and when members have annoying untaggable names</p>
 
-**Returns**: <code>Message</code> - Mention of the member wrapped between carets  
 **Category**: owner  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMember | <code>GuildMemberResolvable</code> | Member to make a mention to |
+| AnyMember | <code>GuildMemberResolvable</code> | <p>Member to make a mention to</p> |
 
 **Example**  
 ```js
@@ -2386,18 +1714,14 @@ tagmember ☜(⌒▽⌒)☞guy
 ```
 <a name="module_dex"></a>
 
-## dex ⇒ <code>MessageEmbed</code>
-Pokémon DexCommand - Gets information about a Pokémon from Dexter  
-Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
-If you want to get the shiny sprite displayed add the `--shiny` at the end of the search  
-**Aliases**: `p`, `mon`, `pokemon`, `pokedex`, `df`, `dexfind`, `dexdata`, `dexter`, `rotom`
+## dex
+<p>Pokémon DexCommand - Gets information about a Pokémon from Dexter<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>p</code>, <code>mon</code>, <code>pokemon</code>, <code>pokedex</code>, <code>df</code>, <code>dexfind</code>, <code>dexdata</code>, <code>dexter</code>, <code>rotom</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Lots of information about the pokemon  
 **Category**: pokemon  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PokemonName | <code>StringResolvable</code> | The name of the pokemon you want to find |
+| PokemonName | <code>StringResolvable</code> | <p>The name of the pokemon you want to find</p> |
 
 **Example**  
 ```js
@@ -2405,19 +1729,14 @@ dex dragonite
 ```
 <a name="module_flavor"></a>
 
-## flavor ⇒ <code>MessageEmbed</code>
-Pokémon FlavorCommand - Gets flavor text from a Pokémon  
-Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example `necrozmaduskmane` or `metagrossmega`  
-Due to message limit size it fetches as many entries possible starting with generation 7 going downwards  
-If you want to get the shiny sprite displayed add the `--shiny` at the end of the search  
-**Aliases**: `flavors`, `dexdata`, `dexentries`, `dextext`, `dextex`, `dexter`, `flavour`, `flavours`
+## flavor
+<p>Pokémon FlavorCommand - Gets flavor text from a Pokémon<br>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example <code>necrozmaduskmane</code> or <code>metagrossmega</code><br>Due to message limit size it fetches as many entries possible starting with generation 7 going downwards<br>If you want to get the shiny sprite displayed add the <code>--shiny</code> at the end of the search<br><strong>Aliases</strong>: <code>flavors</code>, <code>dexdata</code>, <code>dexentries</code>, <code>dextext</code>, <code>dextex</code>, <code>dexter</code>, <code>flavour</code>, <code>flavours</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Flavor texts for the pokemon  
 **Category**: pokemon  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PokemonName | <code>StringResolvable</code> | The name of the pokemon you want to get flavor text for |
+| PokemonName | <code>StringResolvable</code> | <p>The name of the pokemon you want to get flavor text for</p> |
 
 **Example**  
 ```js
@@ -2425,17 +1744,15 @@ flavor dragonite
 ```
 <a name="module_item"></a>
 
-## item ⇒ <code>MessageEmbed</code>
-Pokémon ItemCommand - Gets information about an item in Pokémon
-For item names existing of multiple words (for example `life orb`) you can either type it with or without the space  
-**Aliases**: `it`, `bag`
+## item
+<p>Pokémon ItemCommand - Gets information about an item in Pokémon
+For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Description and external links for the item  
 **Category**: pokemon  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ItemName | <code>StringResolvable</code> | Name of the item to find |
+| ItemName | <code>StringResolvable</code> | <p>Name of the item to find</p> |
 
 **Example**  
 ```js
@@ -2443,21 +1760,17 @@ item assault vest
 ```
 <a name="module_learn"></a>
 
-## learn ⇒ <code>MessageEmbed</code>
-Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all  
-Moves split on every `,`. See examples for usages.  
-You can specify a generation for the match by adding `--gen [1-7]` anywhere in the list of moves, with `[1-7]` being a number in that range. Generation defaults to 7  
-**Aliases**: `learnset`, `learnall`
+## learn
+<p>Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all<br>Moves split on every <code>,</code>. See examples for usages.<br>You can specify a generation for the match by adding <code>--gen [1-7]</code> anywhere in the list of moves, with <code>[1-7]</code> being a number in that range. Generation defaults to 7<br><strong>Aliases</strong>: <code>learnset</code>, <code>learnall</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Info on whether the Pokemon can learn the move and how or not  
 **Category**: pokemon  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PokemonName | <code>StringResolvable</code> | Name of the pokemon to get the match for |
-| [MoveName] | <code>StringResolvable</code> | Name of the move you want to find out about |
-| [AnotherMoveName] | <code>StringResolvable</code> | Any additional moves you also want to find out about |
-| [Generation] | <code>StringResolvable</code> | The generation to find the match for |
+| PokemonName | <code>StringResolvable</code> | <p>Name of the pokemon to get the match for</p> |
+| [MoveName] | <code>StringResolvable</code> | <p>Name of the move you want to find out about</p> |
+| [AnotherMoveName] | <code>StringResolvable</code> | <p>Any additional moves you also want to find out about</p> |
+| [Generation] | <code>StringResolvable</code> | <p>The generation to find the match for</p> |
 
 **Example**  
 ```js
@@ -2473,16 +1786,14 @@ learn dragonite dragon dance, dragon claw --gen 6
 ```
 <a name="module_ability"></a>
 
-## ability ⇒ <code>MessageEmbed</code>
-Pokémon AbilityCommand - Gets information on an ability in Pokémon  
-**Aliases**: `abilities`, `abi`
+## ability
+<p>Pokémon AbilityCommand - Gets information on an ability in Pokémon<br><strong>Aliases</strong>: <code>abilities</code>, <code>abi</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Description and external links for the ability  
 **Category**: pokémon  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AbilityName | <code>StringResolvable</code> | The name of the ability you  want to find |
+| AbilityName | <code>StringResolvable</code> | <p>The name of the ability you  want to find</p> |
 
 **Example**  
 ```js
@@ -2490,17 +1801,14 @@ ability multiscale
 ```
 <a name="module_move"></a>
 
-## move ⇒ <code>MessageEmbed</code>
-Pokémon MoveCommand - Gets information about a move in Pokémon  
-For move names existing of multiple words (for example `dragon dance`) you can either type it with or without the space  
-**Aliases**: `attack`
+## move
+<p>Pokémon MoveCommand - Gets information about a move in Pokémon<br>For move names existing of multiple words (for example <code>dragon dance</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>attack</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Details about the move  
 **Category**: pokémon  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MoveName | <code>StringResolvable</code> | The move you want to find |
+| MoveName | <code>StringResolvable</code> | <p>The move you want to find</p> |
 
 **Example**  
 ```js
@@ -2508,24 +1816,14 @@ move dragon dance
 ```
 <a name="module_TCG"></a>
 
-## TCG ⇒ <code>MessageEmbed</code>
-Pokémon PokemonTCGCommand - Gets information on a Pokemon card  
-At start of the command you can specify which properties you want to use for the search, the options are `name`, `types`, `subtype`, `supertype` and `hp`  
-After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search  
-By default only `name` is used as argument and the supertype is set to pokemon  
-name is the name of the pokemon card  
-types are the types of the pokemon card (only works with pokemon as supertype)  
-subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)  
-supertype specifies the supertype of a card (pokemon, trainer or energy)  
-hp specifies the hp of a pokemon  
-**Aliases**: `ptcg`, `tcgo`
+## TCG
+<p>Pokémon PokemonTCGCommand - Gets information on a Pokemon card<br>At start of the command you can specify which properties you want to use for the search, the options are <code>name</code>, <code>types</code>, <code>subtype</code>, <code>supertype</code> and <code>hp</code><br>After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search<br>By default only <code>name</code> is used as argument and the supertype is set to pokemon<br>name is the name of the pokemon card<br>types are the types of the pokemon card (only works with pokemon as supertype)<br>subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)<br>supertype specifies the supertype of a card (pokemon, trainer or energy)<br>hp specifies the hp of a pokemon<br><strong>Aliases</strong>: <code>ptcg</code>, <code>tcgo</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Pokemon TCG card details  
 **Category**: pokémon  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Properties | <code>StringResolvable</code> | Properties you want to use for your search |
+| Properties | <code>StringResolvable</code> | <p>Properties you want to use for your search</p> |
 
 **Example**  
 ```js
@@ -2533,16 +1831,14 @@ tcg name types subtype
 ```
 <a name="module_type"></a>
 
-## type ⇒ <code>MessageEmbed</code>
-Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types  
-**Aliases**: `matchup`, `weakness`, `advantage`
+## type
+<p>Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types<br><strong>Aliases</strong>: <code>matchup</code>, <code>weakness</code>, <code>advantage</code></p>
 
-**Returns**: <code>MessageEmbed</code> - All weaknesses, advantages  
 **Category**: pokémon  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Types | <code>StringResolvable</code> | One or two types to find the matchup for |
+| Types | <code>StringResolvable</code> | <p>One or two types to find the matchup for</p> |
 
 **Example**  
 ```js
@@ -2550,16 +1846,14 @@ type dragon flying
 ```
 <a name="module_anime"></a>
 
-## anime ⇒ <code>MessageEmbed</code>
-Searches AnimeCommand - Gets information about any anime from kitsu.io  
-**Aliases**: `ani`, `mal`, `kitsu`
+## anime
+<p>Searches AnimeCommand - Gets information about any anime from kitsu.io<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code>, <code>kitsu</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Information about the fetched anime  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnimeName | <code>StringResolvable</code> | anime to look up |
+| AnimeName | <code>StringResolvable</code> | <p>anime to look up</p> |
 
 **Example**  
 ```js
@@ -2567,18 +1861,14 @@ anime Yu-Gi-Oh Dual Monsters
 ```
 <a name="module_cydia"></a>
 
-## cydia ⇒ <code>MessageEmbed</code>
-Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories  
-Can also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)  
-Server admins can enable the `[[]]` matching by using the `rmt off` command  
-**Aliases**: `cy`
+## cydia
+<p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories<br>Can also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak subreddit</a> and <a href="https://discord.gg/jb">its discord server</a><br>Server admins can enable the <code>[[]]</code> matching by using the <code>rmt off</code> command<br><strong>Aliases</strong>: <code>cy</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Information about the tweak  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| TweakName | <code>StringResolvable</code> | Name of the tweak to find |
+| TweakName | <code>StringResolvable</code> | <p>Name of the tweak to find</p> |
 
 **Example**  
 ```js
@@ -2586,50 +1876,29 @@ cydia Anemone
 ```
 <a name="module_define"></a>
 
-## define ⇒ <code>MessageEmbed</code>
-Searches DefineCommand - Define a word using glosbe  
-**Aliases**: `def`, `dict`
+## define
+<p>Searches DefineCommand - Define a word using glosbe<br><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Possible definitions for that word  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Word | <code>StringResolvable</code> | the word you want to define |
+| Word | <code>StringResolvable</code> | <p>the word you want to define</p> |
 
 **Example**  
 ```js
 define Google
 ```
-<a name="module_docs"></a>
-
-## docs ⇒ <code>MessageEmbed</code>
-Searches DocsCommand - Get an entry from the Discord.JS documentation  
-**Aliases**: `djsguide`, `guide`, `djs`
-
-**Returns**: <code>MessageEmbed</code> - Info about the entry from the library  
-**Category**: searches  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| DocEntry | <code>StringResolvable</code> | The entry from the docs you want to get info about |
-
-**Example**  
-```js
-docs ClientUser
-```
 <a name="module_eshop"></a>
 
-## eshop ⇒ <code>MessageEmbed</code>
-Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop  
-**Aliases**: `shop`
+## eshop
+<p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop<br><strong>Aliases</strong>: <code>shop</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Information about the fetched game  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| GameName | <code>StringResolvable</code> | Game that you want to find in the eShop |
+| GameName | <code>StringResolvable</code> | <p>Game that you want to find in the eShop</p> |
 
 **Example**  
 ```js
@@ -2637,17 +1906,14 @@ eshop Breath of The Wild
 ```
 <a name="module_google"></a>
 
-## google ⇒ <code>Message</code>
-Searches GoogleCommand - Gets information through Google  
-Note: prioritizes Knowledge Graphs for better searching  
-**Aliases**: `search`, `g`
+## google
+<p>Searches GoogleCommand - Gets information through Google<br>Note: prioritizes Knowledge Graphs for better searching<br><strong>Aliases</strong>: <code>search</code>, <code>g</code></p>
 
-**Returns**: <code>Message</code> - Result of your search  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SearchQuery | <code>StringResolvable</code> | Thing to find on Google |
+| SearchQuery | <code>StringResolvable</code> | <p>Thing to find on Google</p> |
 
 **Example**  
 ```js
@@ -2655,16 +1921,14 @@ google Pyrrha Nikos
 ```
 <a name="module_igdb"></a>
 
-## igdb ⇒ <code>MessageEmbed</code>
-Searches IGDBCommand - Gets information about a game using Internet Game Database (IGDB)  
-**Aliases**: `game`, `moby`, `games`
+## igdb
+<p>Searches IGDBCommand - Gets information about a game using Internet Game Database (IGDB)<br><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>games</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Information about the fetched game  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| GameName | <code>StringResolvable</code> | The name of any game that you want to find |
+| GameName | <code>StringResolvable</code> | <p>The name of any game that you want to find</p> |
 
 **Example**  
 ```js
@@ -2672,33 +1936,29 @@ igdb Tales of Berseria
 ```
 <a name="module_image"></a>
 
-## image ⇒ <code>MessageEmbed</code>
-Searches ImageCommand - Gets an image through Google Images  
-**Aliases**: `img`, `i`
+## image
+<p>Searches ImageCommand - Gets an image through Google Images<br><strong>Aliases</strong>: <code>img</code>, <code>i</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Embedded image and search query  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ImageQuery | <code>StringResolvable</code> | Image to find on Google Images |
+| ImageQuery | <code>StringResolvable</code> | <p>Image to find on Google Images</p> |
 
 **Example**  
 ```js
-image Pyrrha Nikos
+image Pyrrha Nikos'
 ```
 <a name="module_itunes"></a>
 
-## itunes ⇒ <code>MessageEmbed</code>
-Searches iTunesCommand - Search iTunes for music tracks  
-**Aliases**: `apple`, `tunes`
+## itunes
+<p>Searches iTunesCommand - Search iTunes for music tracks<br><strong>Aliases</strong>: <code>apple</code>, <code>tunes</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Information about the music track  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| TrackQuery | <code>StringResolvable</code> | The music track to look up |
+| TrackQuery | <code>StringResolvable</code> | <p>The music track to look up</p> |
 
 **Example**  
 ```js
@@ -2706,16 +1966,14 @@ itunes dash berlin symphony
 ```
 <a name="module_lmgtfy"></a>
 
-## lmgtfy ⇒ <code>Message</code>
-Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url  
-**Aliases**: `dumb`
+## lmgtfy
+<p>Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url<br><strong>Aliases</strong>: <code>dumb</code></p>
 
-**Returns**: <code>Message</code> - LMGTFY url  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SearchQuery | <code>StringResolvable</code> | The dumb sh*t people need to use google for |
+| SearchQuery | <code>StringResolvable</code> | <p>The dumb sh*t people need to use google for</p> |
 
 **Example**  
 ```js
@@ -2723,16 +1981,14 @@ lmgtfy is it legal to kill an ant???
 ```
 <a name="module_manga"></a>
 
-## manga ⇒ <code>MessageEmbed</code>
-Searches MangaCommand - Gets information about any manga from kitsu.io  
-**Aliases**: `cartoon`, `man`
+## manga
+<p>Searches MangaCommand - Gets information about any manga from kitsu.io<br><strong>Aliases</strong>: <code>cartoon</code>, <code>man</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Information about the fetched manga  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyManga | <code>StringResolvable</code> | manga to look up |
+| AnyManga | <code>StringResolvable</code> | <p>manga to look up</p> |
 
 **Example**  
 ```js
@@ -2740,16 +1996,14 @@ manga Yu-Gi-Oh
 ```
 <a name="module_steam"></a>
 
-## steam ⇒ <code>MessageEmbed</code>
-Searches SteamCommand - Gets information about a game using Steam  
-**Aliases**: `valve`
+## steam
+<p>Searches SteamCommand - Gets information about a game using Steam<br><strong>Aliases</strong>: <code>valve</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Information about the fetched game  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| GameName | <code>StringResolvable</code> | The name of any game that you want to find |
+| GameName | <code>StringResolvable</code> | <p>The name of any game that you want to find</p> |
 
 **Example**  
 ```js
@@ -2757,16 +2011,14 @@ steam Tales of Berseria
 ```
 <a name="module_tmdb"></a>
 
-## tmdb ⇒ <code>MessageEmbed</code>
-Searches MovieCommand - Find information about a movie using TheMovieDatabase  
-**Aliases**: `movie`
+## tmdb
+<p>Searches MovieCommand - Find information about a movie using TheMovieDatabase<br><strong>Aliases</strong>: <code>movie</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Information about the fetched movie  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MovieName | <code>StringResolvable</code> | Name of the movie you want to find |
+| MovieName | <code>StringResolvable</code> | <p>Name of the movie you want to find</p> |
 
 **Example**  
 ```js
@@ -2774,16 +2026,14 @@ tmdb Pokemon 2000
 ```
 <a name="module_tvdb"></a>
 
-## tvdb ⇒ <code>MessageEmbed</code>
-Searches TVCommand - Find information about a TV series using TheMovieDatabase  
-**Aliases**: `tv`, `show`, `serie`, `series`
+## tvdb
+<p>Searches TVCommand - Find information about a TV series using TheMovieDatabase<br><strong>Aliases</strong>: <code>tv</code>, <code>show</code>, <code>serie</code>, <code>series</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Information about the fetched TV serie  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SeriesName | <code>StringResolvable</code> | Name of the TV serie you want to find |
+| SeriesName | <code>StringResolvable</code> | <p>Name of the TV serie you want to find</p> |
 
 **Example**  
 ```js
@@ -2791,16 +2041,14 @@ tvdb Pokemon
 ```
 <a name="module_urban"></a>
 
-## urban ⇒ <code>MessageEmbed</code>
-Searches UrbanCommand - Define a word using UrbanDictionary  
-**Aliases**: `ub`, `ud`
+## urban
+<p>Searches UrbanCommand - Define a word using UrbanDictionary<br><strong>Aliases</strong>: <code>ub</code>, <code>ud</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Top definition for the fetched phrase  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PhraseQuery | <code>StringResolvable</code> | Phrase that you want to define |
+| PhraseQuery | <code>StringResolvable</code> | <p>Phrase that you want to define</p> |
 
 **Example**  
 ```js
@@ -2808,17 +2056,14 @@ urban Everclear
 ```
 <a name="module_youtube"></a>
 
-## youtube ⇒ <code>MessageEmbed</code>
-Searches YouTubeCommand - Find a video on YouTube  
-By default returns MessageEmbed. use `yts` to return just the URL and have in-client playback  
-**Aliases**: `yt`, `tube`, `yts`
+## youtube
+<p>Searches YouTubeCommand - Find a video on YouTube<br>By default returns MessageEmbed. use <code>yts</code> to return just the URL and have in-client playback<br><strong>Aliases</strong>: <code>yt</code>, <code>tube</code>, <code>yts</code></p>
 
-**Returns**: <code>MessageEmbed</code> - Title, Channel, Publication Date and Description of the video  
 **Category**: searches  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| VideoQuery | <code>StringResolvable</code> | Video to find on YouTube |
+| VideoQuery | <code>StringResolvable</code> | <p>Video to find on YouTube</p> |
 
 **Example**  
 ```js
@@ -2826,16 +2071,14 @@ youtube Voldemort Origins of the heir
 ```
 <a name="module_twitchmonitors"></a>
 
-## twitchmonitors ⇒ <code>Message</code>
-Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor  
-**Aliases**: `monitors`, `monitor`, `twitchmonitor`
+## twitchmonitors
+<p>Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor<br><strong>Aliases</strong>: <code>monitors</code>, <code>monitor</code>, <code>twitchmonitor</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: streamwatch  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMembers | <code>StringResolvable</code> | List of members to monitor space delimited |
+| AnyMembers | <code>StringResolvable</code> | <p>List of members to monitor space delimited</p> |
 
 **Example**  
 ```js
@@ -2843,16 +2086,14 @@ twitchmonitors techagent favna
 ```
 <a name="module_twitchoutput"></a>
 
-## twitchoutput ⇒ <code>Message</code>
-Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send  
-**Aliases**: `output`, `twitchout`, `twitchchannel`
+## twitchoutput
+<p>Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send<br><strong>Aliases</strong>: <code>output</code>, <code>twitchout</code>, <code>twitchchannel</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: streamwatch  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyChannel | <code>ChannelResolvable</code> | Channel to output notifs to |
+| AnyChannel | <code>ChannelResolvable</code> | <p>Channel to output notifs to</p> |
 
 **Example**  
 ```js
@@ -2860,32 +2101,35 @@ twitchoutput #twitch-notifications
 ```
 <a name="module_twitchtoggle"></a>
 
-## twitchtoggle ⇒ <code>Message</code>
-Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications  
-**Aliases**: `twitchon`, `twitchoff`
+## twitchtoggle
+<p>Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications<br><strong>Aliases</strong>: <code>twitchon</code>, <code>twitchoff</code></p>
 
-**Returns**: <code>Message</code> - Confirmation the setting was stored  
 **Category**: streamwatch  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>BooleanResolvable</code> | <p>True or False</p> |
 
 **Example**  
 ```js
 twitchtoggle enable
 ```
+<a name="module_biscuit"></a>
+
+## biscuit
+<p>Weeb CookieCommand - Steal someone's 🍪 gnanahahahaha<br><strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p>
+
+**Category**: weeb  
 <a name="module_cuddle"></a>
 
-## cuddle ⇒ <code>MessageEmbed</code>
-Weeb CuddleCommand - Cuuuuddlleeesss!! 💕!
+## cuddle
+<p>Weeb CuddleCommand - Cuuuuddlleeesss!! 💕!</p>
 
-**Returns**: <code>MessageEmbed</code> - The cuddle and a cute image 💕  
 **Category**: weeb  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MemberToCuddle] | <code>GuildMemberResolvable</code> | Name of the member you want to cuddle |
+| [MemberToCuddle] | <code>GuildMemberResolvable</code> | <p>Name of the member you want to cuddle</p> |
 
 **Example**  
 ```js
@@ -2893,15 +2137,14 @@ cuddle Velvet
 ```
 <a name="module_feed"></a>
 
-## feed ⇒ <code>MessageEmbed</code>
-Weeb FeedCommand - Feed someone licious food 🍜 😋!
+## feed
+<p>Weeb FeedCommand - Feed someone licious food 🍜 😋!</p>
 
-**Returns**: <code>MessageEmbed</code> - Feeding and a cute image 🍜 😋  
 **Category**: weeb  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MemberToFeed] | <code>GuildMemberResolvable</code> | Name of the member you want to feed |
+| [MemberToFeed] | <code>GuildMemberResolvable</code> | <p>Name of the member you want to feed</p> |
 
 **Example**  
 ```js
@@ -2909,15 +2152,14 @@ feed Ren
 ```
 <a name="module_hug"></a>
 
-## hug ⇒ <code>MessageEmbed</code>
-Weeb HugCommand - Give someone a hug ❤!
+## hug
+<p>Weeb HugCommand - Give someone a hug ❤!</p>
 
-**Returns**: <code>MessageEmbed</code> - The hug and a cute image ❤  
 **Category**: weeb  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MemberToHug] | <code>GuildMemberResolvable</code> | Name of the member you want to give a hug |
+| [MemberToHug] | <code>GuildMemberResolvable</code> | <p>Name of the member you want to give a hug</p> |
 
 **Example**  
 ```js
@@ -2925,31 +2167,39 @@ hug Nora
 ```
 <a name="module_kiss"></a>
 
-## kiss ⇒ <code>MessageEmbed</code>
-Weeb KissCommand - Give someone a kiss ❤!
+## kiss
+<p>Weeb KissCommand - Give someone a kiss ❤!</p>
 
-**Returns**: <code>MessageEmbed</code> - The kiss and a cute image ❤  
 **Category**: weeb  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MemberToKiss] | <code>GuildMemberResolvable</code> | Name of the member you want to give a kiss |
+| [MemberToKiss] | <code>GuildMemberResolvable</code> | <p>Name of the member you want to give a kiss</p> |
 
 **Example**  
 ```js
 kiss Pyrrha
 ```
+<a name="module_neko"></a>
+
+## neko
+<p>Weeb NekoCommand - Get a random cute cat girl 😍!<br><strong>Aliases</strong>: <code>catgirl</code></p>
+
+**Category**: weeb  
+**Example**  
+```js
+neko
+```
 <a name="module_pat"></a>
 
-## pat ⇒ <code>MessageEmbed</code>
-Weeb PatCommand - Pat a good person 🐇!
+## pat
+<p>Weeb PatCommand - Pat a good person 🐇!</p>
 
-**Returns**: <code>MessageEmbed</code> - The pat and an image  
 **Category**: weeb  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MemberToPat] | <code>GuildMemberResolvable</code> | Name of the member you want to pat |
+| [MemberToPat] | <code>GuildMemberResolvable</code> | <p>Name of the member you want to pat</p> |
 
 **Example**  
 ```js
@@ -2957,15 +2207,14 @@ pat Ruby
 ```
 <a name="module_poke"></a>
 
-## poke ⇒ <code>MessageEmbed</code>
-Weeb PokeCommand - Poke an annoying person 👉!
+## poke
+<p>Weeb PokeCommand - Poke an annoying person 👉!</p>
 
-**Returns**: <code>MessageEmbed</code> - The poke and an image  
 **Category**: weeb  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MemberToPoke] | <code>GuildMemberResolvable</code> | Name of the member you want to poke |
+| [MemberToPoke] | <code>GuildMemberResolvable</code> | <p>Name of the member you want to poke</p> |
 
 **Example**  
 ```js
@@ -2973,15 +2222,14 @@ poke Weiss
 ```
 <a name="module_slap"></a>
 
-## slap ⇒ <code>MessageEmbed</code>
-Weeb SlapCommand - Slap a dumb person 💢!
+## slap
+<p>Weeb SlapCommand - Slap a dumb person 💢!</p>
 
-**Returns**: <code>MessageEmbed</code> - The slap and an image  
 **Category**: weeb  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MemberToSlap] | <code>GuildMemberResolvable</code> | Name of the member you want to slap |
+| [MemberToSlap] | <code>GuildMemberResolvable</code> | <p>Name of the member you want to slap</p> |
 
 **Example**  
 ```js
@@ -2989,15 +2237,14 @@ slap Cinder
 ```
 <a name="module_tickle"></a>
 
-## tickle ⇒ <code>MessageEmbed</code>
-Weeb TickleCommand - TICKLE WAR 😂!!
+## tickle
+<p>Weeb TickleCommand - TICKLE WAR 😂!!</p>
 
-**Returns**: <code>MessageEmbed</code> - The tickling and a cute image ❤  
 **Category**: weeb  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MemberToTickle] | <code>GuildMemberResolvable</code> | Name of the member you want to tickle |
+| [MemberToTickle] | <code>GuildMemberResolvable</code> | <p>Name of the member you want to tickle</p> |
 
 **Example**  
 ```js
@@ -3027,7 +2274,7 @@ Command-Management EnableCommand - Enables a command or command group
 | Name/ID (partial or whole) of a command or command group | <code>string</code> | Command or Command Group to enable |
 
 **Example**  
-```js
+```ts
 enable userinfo
 ```
 
@@ -3045,7 +2292,7 @@ Command-Management DisableCommand - Disables a command or command group
 | Name/ID (partial or whole) of a command or command group | <code>string</code> | Command or Command Group to disable |
 
 **Example**  
-```js
+```ts
 disable userinfo
 ```
 
@@ -3063,7 +2310,7 @@ Command-Management ReloadCommand - Reloads a command or command group
 | Name/ID (partial or whole) of a command or command group | <code>string</code> | Command or Command Group to reload |
 
 **Example**  
-```js
+```ts
 reload userinfo
 ```
 
@@ -3081,7 +2328,7 @@ Command-Management LoadCommand - Loads a new command
 | commandGroup:commandMemberName | <code>string</code> | Command to load |
 
 **Example**  
-```js
+```ts
 load searches:github
 ```
 
@@ -3099,7 +2346,7 @@ Command-Management UnloadCommand - Unloads a command
 | Name/ID (partial or whole) of a command | <code>string</code> | Command to unload |
 
 **Example**  
-```js
+```ts
 unload searches:google
 ```
 

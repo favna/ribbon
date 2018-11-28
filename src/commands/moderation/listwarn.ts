@@ -6,7 +6,6 @@
  * @name listwarn
  * @example listwarn Biscuit
  * @param {GuildMemberResolvable} AnyMember The member of whom to list the warning points
- * @returns {MessageEmbed} The warnings that member has
  */
 
 import * as Database from 'better-sqlite3';

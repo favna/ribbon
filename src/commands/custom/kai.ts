@@ -6,7 +6,6 @@
  * @module
  * @category custom
  * @name kai
- * @returns {MessageEmbed} A MessageEmbed with a spiteful image and a mention to kai. Also deletes the other kai spites 🤔
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

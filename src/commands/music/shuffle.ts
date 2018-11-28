@@ -6,7 +6,6 @@
  * @category music
  * @name queue
  * @example queue 2
- * @returns {MessageEmbed} The new queue order (limited to the first 10 entries)
  */
 
 import { oneLine, stripIndents } from 'common-tags';

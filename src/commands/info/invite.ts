@@ -4,7 +4,6 @@
  * @module
  * @category info
  * @name invite
- * @returns {MessageEmbed} Invite link along with other links
  */
 
 import { stripIndents } from 'common-tags';

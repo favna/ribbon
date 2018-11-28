@@ -6,7 +6,6 @@
  * @name joinmessages
  * @example joinmessages enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Confirmation the setting was stored
  */
 
 import { stripIndents } from 'common-tags';

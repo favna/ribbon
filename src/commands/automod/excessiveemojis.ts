@@ -6,7 +6,6 @@
  * @name excessiveemojis
  * @example excessiveemojis enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Excessive Emojis filter confirmation log
  */
 
 import { stripIndents } from 'common-tags';

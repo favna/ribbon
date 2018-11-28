@@ -9,7 +9,6 @@
  * @name mute
  * @example mute Muffin
  * @param {GuildMemberResolvable} AnyMember Member to mute
- * @returns {MessageEmbed} Mute log
  */
 
 import { oneLine, stripIndents } from 'common-tags';

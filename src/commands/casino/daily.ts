@@ -4,7 +4,6 @@
  * @module
  * @category casino
  * @name daily
- * @returns {MessageEmbed} Your new balance
  */
 
 import * as Database from 'better-sqlite3';

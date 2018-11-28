@@ -9,7 +9,6 @@
  * @example selfroles uploader
  * @example selfroles uploader superuploader
  * @param {RoleResolvable} AnyRole Role to set, can be multiple split by spaces
- * @returns {Message} Confirmation the setting was stored
  */
 
 import { oneLine, stripIndents } from 'common-tags';

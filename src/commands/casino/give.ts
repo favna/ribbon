@@ -7,7 +7,6 @@
  * @example give Favna 10
  * @param {GuildMemberResolvable} AnyMember The member you want to give some chips
  * @param {Number} ChipsAmount The amount of chips you want to give
- * @returns {MessageEmbed} Changed balances of the two players
  */
 
 import * as Database from 'better-sqlite3';

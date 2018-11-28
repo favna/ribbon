@@ -6,7 +6,6 @@
  * @name activity
  * @example activity Favna
  * @param {GuildMemberResolvable} member Member to get the activity for
- * @returns {MessageEmbed} Activity from that member
  */
 
 import { oneLine, stripIndents } from 'common-tags';

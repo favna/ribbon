@@ -6,7 +6,6 @@
  * @name defaultrole
  * @example defaultrole Member
  * @param {RoleResolvable} AnyRole Role to assign to all new joining members
- * @returns {Message} Confirmation the setting was stored
  */
 
 import { oneLine, stripIndents } from 'common-tags';

@@ -13,7 +13,6 @@
  * @name play
  * @example play
  * @param {StringResolvable} Video One of the options linking to a video to play
- * @returns {MessageEmbed} Title, duration and thumbnail of the video
  */
 
 import { oneLine, stripIndents } from 'common-tags';

@@ -7,7 +7,6 @@
  * @name item
  * @example item assault vest
  * @param {StringResolvable} ItemName Name of the item to find
- * @returns {MessageEmbed} Description and external links for the item
  */
 
 import { oneLine, stripIndents } from 'common-tags';

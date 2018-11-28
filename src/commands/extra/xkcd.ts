@@ -4,7 +4,6 @@
  * @module
  * @category extra
  * @name xkcd
- * @returns {MessageEmbed} Embedded image and info about it
  */
 
 import { MessageEmbed } from 'discord.js';

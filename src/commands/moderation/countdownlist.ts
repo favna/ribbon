@@ -4,7 +4,6 @@
  * @module
  * @category moderation
  * @name countdownlist
- * @returns {MessageEmbed} List of all countdowns
  */
 
 import * as Database from 'better-sqlite3';

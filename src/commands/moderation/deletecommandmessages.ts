@@ -6,7 +6,6 @@
  * @name deletecommandmessages
  * @example deletecommandmessages enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} DeleteCommandMessages confirmation log
  */
 
 import { oneLine } from 'common-tags';

@@ -7,7 +7,6 @@
  * @name time
  * @example time Amsterdam
  * @param {StringResolvable} Location Place where you want to get the current time for
- * @returns {MessageEmbed} Current date, current time, country and DST offset
  */
 
 import { stripIndents } from 'common-tags';

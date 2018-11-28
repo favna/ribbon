@@ -6,7 +6,6 @@
  * @name iam
  * @example iam uploader
  * @param {RoleResolvable} AnyRole The role you want to assign to yourself  
- * @returns {MessageEmbed} Confirmation the role has been assigned, will also be added to modlogs if enabled for the server
  */
 
 import { oneLine, stripIndents } from 'common-tags';

@@ -7,7 +7,6 @@
  * @name youtube
  * @example youtube Voldemort Origins of the heir
  * @param {StringResolvable} VideoQuery Video to find on YouTube
- * @returns {MessageEmbed} Title, Channel, Publication Date and Description of the video
  */
 
 import { MessageEmbed } from 'discord.js';

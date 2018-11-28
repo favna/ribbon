@@ -6,7 +6,6 @@
  * @name modlogs
  * @example modlogs enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Modlogs confirmation log
  */
 
 import { stripIndents } from 'common-tags';

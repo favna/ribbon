@@ -4,7 +4,6 @@
  * @module
  * @category info
  * @name emotes
- * @returns {MessageEmbed} List of emotes
  */
 
 import { MessageEmbed } from 'discord.js';

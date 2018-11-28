@@ -13,7 +13,6 @@
  * @param {StringResolvable} [MoveName] Name of the move you want to find out about
  * @param {StringResolvable} [AnotherMoveName] Any additional moves you also want to find out about
  * @param {StringResolvable} [Generation] The generation to find the match for
- * @returns {MessageEmbed} Info on whether the Pokemon can learn the move and how or not
  */
 
 import { oneLine, stripIndents } from 'common-tags';

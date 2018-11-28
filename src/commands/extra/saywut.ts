@@ -4,7 +4,6 @@
  * @module
  * @category extra
  * @name saywut
- * @returns {MessageEmbed} Info on who used the "say" command last
  */
 
 import { oneLine } from 'common-tags';

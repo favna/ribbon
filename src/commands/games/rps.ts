@@ -6,7 +6,6 @@
  * @name rps
  * @example rps Rock
  * @param {StringResolvable} HandToPlay The hand that you want to play
- * @returns {MessageEmbed} Result of the conflict
  */
 
 import { MessageEmbed } from 'discord.js';

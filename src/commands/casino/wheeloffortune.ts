@@ -6,7 +6,6 @@
  * @name wheeloffortune
  * @example wof 5
  * @param {Number} ChipsAmount The amount of chips you want to gamble
- * @returns {MessageEmbed} Outcome of the game
  */
 
 import * as Database from 'better-sqlite3';

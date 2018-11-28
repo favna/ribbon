@@ -9,7 +9,6 @@
  * @param {GuildMemberResolvable} AnyMember The member to give warning points
  * @param {Number} WarningPoints The amount of warning points to give
  * @param {StringResolvable} TheReason Reason for warning
- * @returns {MessageEmbed} A MessageEmbed with a log of the warning
  */
 
 import * as Database from 'better-sqlite3';

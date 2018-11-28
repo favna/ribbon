@@ -6,7 +6,6 @@
  * @name igdb
  * @example igdb Tales of Berseria
  * @param {StringResolvable} GameName The name of any game that you want to find
- * @returns {MessageEmbed} Information about the fetched game
  */
 
 import { MessageEmbed } from 'discord.js';

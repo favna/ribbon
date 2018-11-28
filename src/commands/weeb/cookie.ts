@@ -4,7 +4,6 @@
  * @module
  * @category weeb
  * @name biscuit
- * @returns {MessageEmbed} A MessageEmbed with a cookie gif
  */
 
 import {GuildMember, MessageEmbed} from 'discord.js';

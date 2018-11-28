@@ -6,7 +6,6 @@
  * @name announce
  * @example announce Pokemon Switch has released!
  * @param {StringResolvable} Announcement The announcement you want to make
- * @returns {Message} Announcement you wrote in the announcement / news channel
  */
 
 import { oneLine, stripIndents } from 'common-tags';

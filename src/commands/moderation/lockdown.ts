@@ -7,7 +7,6 @@
  * @module
  * @category moderation
  * @name lockdown
- * @returns {Message} Confirmation the channel was locked
  */
 
 import { stripIndents } from 'common-tags';

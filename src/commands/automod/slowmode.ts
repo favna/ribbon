@@ -6,7 +6,6 @@
  * @name slowmode
  * @example slowmode enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Server invites filter confirmation log
  */
 
 import { stripIndents } from 'common-tags';

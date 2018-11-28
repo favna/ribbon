@@ -7,7 +7,6 @@
  * @example excessivementions enable
  * @example emf enable 3
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Excessive Emojis filter confirmation log
  */
 
 import { stripIndents } from 'common-tags';

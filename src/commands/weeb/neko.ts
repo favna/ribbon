@@ -5,7 +5,6 @@
  * @category weeb
  * @name neko
  * @example neko
- * @returns {MessageEmbed} The neko and an image
  */
 
 import {Command, CommandoClient, CommandoMessage} from 'discord.js-commando';

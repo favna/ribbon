@@ -5,7 +5,6 @@
  * @name tickle
  * @example tickle Yang
  * @param {GuildMemberResolvable} [MemberToTickle] Name of the member you want to tickle
- * @returns {MessageEmbed} The tickling and a cute image ❤
  */
 
 import { GuildMember } from 'discord.js';

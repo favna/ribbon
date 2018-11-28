@@ -7,7 +7,6 @@
  * @name pornvids
  * @example pornvids babe
  * @param {StringResolvable} Query Something you want to find
- * @returns {MessageEmbed} URL, duration and embedded thumbnail
  */
 
 import { MessageEmbed } from 'discord.js';

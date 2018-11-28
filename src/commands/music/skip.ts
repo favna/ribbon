@@ -11,7 +11,6 @@
  * -OR-
  * skip force
  * @param {StringResolvable} [force] Force the skip if you are the requester or a server moderator
- * @returns {Message} Confirmation the song was skipped
  */
 
 import { oneLine } from 'common-tags';

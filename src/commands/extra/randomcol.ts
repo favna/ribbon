@@ -11,13 +11,12 @@
  * -OR-
  * randomcol 36B56e
  * @param {StringResolvable} [hex] Optional: colour hex to display
- * @returns {MessageEmbed} colour of embed matches generated colour
  */
 
 import { stripIndents } from 'common-tags';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import Jimp = require('jimp');
+import * as Jimp from 'jimp';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
 
 export default class RandomColCommand extends Command {

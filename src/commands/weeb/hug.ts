@@ -5,7 +5,6 @@
  * @name hug
  * @example hug Nora
  * @param {GuildMemberResolvable} [MemberToHug] Name of the member you want to give a hug
- * @returns {MessageEmbed} The hug and a cute image ❤
  */
 
 import { GuildMember } from 'discord.js';

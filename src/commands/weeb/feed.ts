@@ -5,7 +5,6 @@
  * @name feed
  * @example feed Ren
  * @param {GuildMemberResolvable} [MemberToFeed] Name of the member you want to feed
- * @returns {MessageEmbed} Feeding and a cute image 🍜 😋
  */
 
 import { GuildMember } from 'discord.js';

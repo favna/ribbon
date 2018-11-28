@@ -4,7 +4,6 @@
  * @module
  * @category owner
  * @name eshopfetch
- * @returns {Message} Confirmation the data was fetched 
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

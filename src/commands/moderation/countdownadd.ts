@@ -14,7 +14,6 @@
  * @param {StringResolvable} DateTime The date (and time) of the event
  * @param {ChannelResolvable} Channel The channel to send countdown reminders in
  * @param {StringResolvable} Message  The message to repeat
- * @returns {MessageEmbed} Confirmation the setting was stored
  */
 
 import * as Database from 'better-sqlite3';

@@ -6,13 +6,11 @@
  * @name type
  * @example type dragon flying
  * @param {StringResolvable} Types One or two types to find the matchup for
- * @returns {MessageEmbed} All weaknesses, advantages
  */
 
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { cloneDeep } from 'lodash';
 import * as moment from 'moment';
 import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
 import { BattleTypeChart } from '../../data/dex/typechart';
@@ -81,7 +79,7 @@ export default class TypeCommand extends Command {
           normalTypes: [],
           resistedTypes: [],
         };
-      const def = cloneDeep(atk);
+      const def = JSON.parse(JSON.stringify(atk));
       const embed = new MessageEmbed();
 
       for (const type of types) {

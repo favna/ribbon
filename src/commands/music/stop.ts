@@ -7,7 +7,6 @@
  * @module
  * @category music
  * @name stop
- * @returns {Message} Sad face about stopping the music
  */
 
 import { oneLine } from 'common-tags';

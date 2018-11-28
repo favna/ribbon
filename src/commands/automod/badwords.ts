@@ -7,7 +7,6 @@
  * @name badwords
  * @example badwords enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Bad words filter confirmation log
  */
 
 import { stripIndents } from 'common-tags';

@@ -6,7 +6,6 @@
  * @name math
  * @example math (pi - 1) * 3
  * @param {StringResolvable} Equation The equation to solve
- * @returns {MessageEmbed} Your equation and its answer
  */
 
 import { oneLine, stripIndents } from 'common-tags';

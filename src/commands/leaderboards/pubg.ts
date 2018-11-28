@@ -6,7 +6,6 @@
  * @example pubg shroud pc-na
  * @param {StringResolvable} PubgUsername The username you want to find statistics for
  * @param {StringResolvable} Shard A combination of platform and region to look through, for example `pc-na` for PC in North America
- * @returns {MessageEmbed} Statistics of that user
  */
 
 import { oneLine, stripIndents } from 'common-tags';

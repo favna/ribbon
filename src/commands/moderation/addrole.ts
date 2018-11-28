@@ -7,7 +7,6 @@
  * @example addrole Favna Member
  * @param {GuildMemberResolvable} AnyMember Member to give a role
  * @param {RoleResolvable} AnyRole Role to give
- * @returns {Message} Confirmation the role was added
  */
 
 import { oneLine, stripIndents } from 'common-tags';

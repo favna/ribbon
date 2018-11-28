@@ -4,7 +4,6 @@
  * @module
  * @category extra
  * @name copypastalist
- * @returns {MessageEmbed} List of all available copypastas
  */
 
 import * as Database from 'better-sqlite3';

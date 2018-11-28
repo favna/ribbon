@@ -4,7 +4,6 @@
  * @module
  * @category info
  * @name server
- * @returns {MessageEmbed} Info about the server
  */
 
 import { MessageEmbed } from 'discord.js';

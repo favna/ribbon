@@ -6,7 +6,6 @@
  * @name discordbots
  * @example discordbots 376520643862331396
  * @param {StringResolvable} BotID the user ID of the bot you want to get info about
- * @returns {MessageEmbed} Info about a bot
  */
 
 import { MessageEmbed } from 'discord.js';

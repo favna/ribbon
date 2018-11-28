@@ -7,7 +7,6 @@
  * @name timerremove
  * @example timerremove 1
  * @param {StringResolvable} TimerID The ID of the timed message to remove
- * @returns {MessageEmbed} Confirmation the timed message was removed
  */
 
 import * as Database from 'better-sqlite3';

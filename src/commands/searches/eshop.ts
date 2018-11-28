@@ -6,7 +6,6 @@
  * @name eshop
  * @example eshop Breath of The Wild
  * @param {StringResolvable} GameName Game that you want to find in the eShop
- * @returns {MessageEmbed} Information about the fetched game
  */
 
 import { MessageEmbed } from 'discord.js';

@@ -7,7 +7,6 @@
  * @name copypasta
  * @example copypasta navy
  * @param {StringResolvable} PastaName Name of the copypasta to send
- * @returns {MessageEmbed} Copypasta content. In a normal message if more than 1024 characters
  */
 
 import * as Database from 'better-sqlite3';

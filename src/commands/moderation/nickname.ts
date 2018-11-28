@@ -7,7 +7,6 @@
  * @example nick Muffin Cupcake
  * @param {GuildMemberResolvable} AnyMember Member to give a nickname
  * @param {StringResolvable} NewNickname Nickname to assign
- * @returns {MessageEmbed} Nickname log
  */
 
 import { oneLine, stripIndents } from 'common-tags';

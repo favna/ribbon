@@ -5,7 +5,6 @@
  * @name pat
  * @example pat Ruby
  * @param {GuildMemberResolvable} [MemberToPat] Name of the member you want to pat
- * @returns {MessageEmbed} The pat and an image
  */
 
 import { GuildMember } from 'discord.js';

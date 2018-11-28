@@ -7,7 +7,6 @@
  * @example fortnite darkentz014 pc
  * @param {StringResolvable} Username The Epic Username of the player you want to find
  * @param {StringResolvable} Platform The platform the player plays on (pc, xbox or psn)
- * @returns {MessageEmbed} Player Statistics from that player
  */
 
 import {oneLine, stripIndents} from 'common-tags';

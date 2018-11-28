@@ -7,7 +7,6 @@
  * @name queue
  * @example queue 2
  * @param {StringResolvable} [Page] Page to show
- * @returns {MessageEmbed} List of queued songs with their duration and total duration of the queue
  */
 
 import { oneLine, stripIndents } from 'common-tags';

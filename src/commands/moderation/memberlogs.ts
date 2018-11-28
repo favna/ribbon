@@ -6,7 +6,6 @@
  * @name memberlogs
  * @example memberlogs enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Memberlogs confirmation log
  */
 
 import { stripIndents } from 'common-tags';

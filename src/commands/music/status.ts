@@ -4,7 +4,6 @@
  * @module
  * @category music
  * @name status
- * @returns {MessageEmbed} Title, URL of and progress into the song
  */
 
 import { stripIndents } from 'common-tags';

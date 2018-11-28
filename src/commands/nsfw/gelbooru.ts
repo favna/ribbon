@@ -7,7 +7,6 @@
  * @name gelbooru
  * @example gelbooru pyrrha_nikos
  * @param {StringResolvable} Query Something you want to find
- * @returns {MessageEmbed} Score, Link and preview of the image
  */
 
 import * as booru from 'booru';

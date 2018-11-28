@@ -7,7 +7,6 @@
  * @example delrole Favna Member
  * @param {GuildMemberResolvable} AnyMember The member to remove a role from
  * @param {RoleResolvable} AnyRole The role to remove
- * @returns {MessageEmbed} Delete role log
  */
 
 import { oneLine, stripIndents } from 'common-tags';

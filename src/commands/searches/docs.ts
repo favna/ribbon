@@ -6,7 +6,6 @@
  * @name docs
  * @example docs ClientUser
  * @param {StringResolvable} DocEntry The entry from the docs you want to get info about
- * @returns {MessageEmbed} Info about the entry from the library
  */
 
 import { oneLine, stripIndents } from 'common-tags';

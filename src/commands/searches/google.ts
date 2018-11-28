@@ -7,7 +7,6 @@
  * @name google
  * @example google Pyrrha Nikos
  * @param {StringResolvable} SearchQuery Thing to find on Google
- * @returns {Message} Result of your search
  */
 
 import * as cheerio from 'cheerio';

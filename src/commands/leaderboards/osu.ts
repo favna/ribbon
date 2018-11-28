@@ -6,7 +6,6 @@
  * @name osu
  * @example osu WubWoofWolf
  * @param {StringResolvable} PlayerName Name of the OSU player
- * @returns {MessageEmbed} Stats of the player
  */
 
 import {oneLine, stripIndents} from 'common-tags';

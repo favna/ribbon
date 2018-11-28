@@ -6,7 +6,6 @@
  * @name anime
  * @example anime Yu-Gi-Oh Dual Monsters
  * @param {StringResolvable} AnimeName anime to look up
- * @returns {MessageEmbed} Information about the fetched anime
  */
 
 import { MessageEmbed } from 'discord.js';

@@ -8,7 +8,6 @@
  * @name maxlength
  * @example maxlength 10
  * @param {number/"default"} [MaxVideoLength] New maximum length in minutes
- * @returns {Message} Confirmation the setting was stored
  */
 
 import { oneLine } from 'common-tags';

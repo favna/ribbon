@@ -6,7 +6,6 @@
  * @name qrgen
  * @example qrgen https://favna.xyz/ribbon
  * @param {StringResolvable} URL URL you want to encode into a QR image
- * @returns {MessageEmbed} Embedded QR code and original image URL
  */
 
 import { oneLine, stripIndents } from 'common-tags';

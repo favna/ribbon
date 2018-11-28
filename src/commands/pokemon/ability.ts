@@ -6,7 +6,6 @@
  * @name ability
  * @example ability multiscale
  * @param {StringResolvable} AbilityName The name of the ability you  want to find
- * @returns {MessageEmbed} Description and external links for the ability
  */
 
 import { oneLine, stripIndents } from 'common-tags';

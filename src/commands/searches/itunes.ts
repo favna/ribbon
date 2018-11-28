@@ -6,7 +6,6 @@
  * @name itunes
  * @example itunes dash berlin symphony
  * @param {StringResolvable} TrackQuery The music track to look up
- * @returns {MessageEmbed} Information about the music track
  */
 
 import { oneLine, stripIndents } from 'common-tags';

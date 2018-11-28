@@ -4,7 +4,6 @@
  * @module
  * @category games
  * @name dndc
- * @returns {MessageEmbed} Side the coin landed on
  */
 
 import { MessageEmbed } from 'discord.js';

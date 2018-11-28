@@ -14,7 +14,6 @@
  * @name TCG
  * @example tcg name types subtype
  * @param {StringResolvable} Properties Properties you want to use for your search
- * @returns {MessageEmbed} Pokemon TCG card details
  */
 
 import { oneLine, stripIndents } from 'common-tags';

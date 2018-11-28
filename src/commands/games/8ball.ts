@@ -6,7 +6,6 @@
  * @name 8ball
  * @example 8ball is Favna a genius coder?
  * @param {StringResolvable} question Question you want the 8 ball to answer
- * @returns {MessageEmbed} Your question and its answer
  */
 
 import { MessageEmbed } from 'discord.js';

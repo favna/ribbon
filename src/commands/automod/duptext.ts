@@ -8,7 +8,6 @@
  * @name duptext
  * @example duptext enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Duplicate text filter confirmation log
  */
 
 import { stripIndents } from 'common-tags';

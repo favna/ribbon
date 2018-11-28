@@ -9,7 +9,6 @@
  * @param {StringResolvable} FromLanguage The language to translate from
  * @param {StringResolvable} ToLanguage The language to translate to
  * @param {StringResolvable} Text The word or text to translate
- * @returns {MessageEmbed} The input and output of the translation
  */
 
 import { oneLine, stripIndents } from 'common-tags';

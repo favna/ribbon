@@ -3,7 +3,6 @@
  * @module
  * @category owner
  * @name dbpost
- * @returns {Message} Confirmation the update was made
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

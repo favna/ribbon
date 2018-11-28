@@ -6,7 +6,6 @@
  * @name manga
  * @example manga Yu-Gi-Oh
  * @param {StringResolvable} AnyManga manga to look up
- * @returns {MessageEmbed} Information about the fetched manga
  */
 
 import { MessageEmbed } from 'discord.js';

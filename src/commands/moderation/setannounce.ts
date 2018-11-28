@@ -6,7 +6,6 @@
  * @name setannounce
  * @example setannounce #updates
  * @param {ChannelResolvable} AnnounceChannel The channel to set the announcements to
- * @returns {MessageEmbed} Confirmation of the setting being stored
  */
 
 import { stripIndents } from 'common-tags';

@@ -4,7 +4,6 @@
  * @module
  * @category moderation
  * @name timerlist
- * @returns {MessageEmbed} List of all timed messages
  */
 
 import * as Database from 'better-sqlite3';

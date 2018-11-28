@@ -8,7 +8,6 @@
  * @example remind 1h To continue developing Ribbon
  * @param {StringResolvable} Time Amount of time you want to be reminded in
  * @param {StringResolvable} Reminder Thing you want Ribbon to remind you of
- * @returns {Message} Confirmation the reminder was stored
  */
 
 import * as Database from 'better-sqlite3';

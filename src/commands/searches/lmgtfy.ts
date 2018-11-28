@@ -6,7 +6,6 @@
  * @name lmgtfy
  * @example lmgtfy is it legal to kill an ant???
  * @param {StringResolvable} SearchQuery The dumb sh*t people need to use google for
- * @returns {Message} LMGTFY url
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

@@ -5,7 +5,6 @@
  * @name poke
  * @example poke Weiss
  * @param {GuildMemberResolvable} [MemberToPoke] Name of the member you want to poke
- * @returns {MessageEmbed} The poke and an image
  */
 
 import { GuildMember } from 'discord.js';

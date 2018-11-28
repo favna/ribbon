@@ -5,7 +5,6 @@
  * @category casino
  * @name chips
  * @example chips
- * @returns {MessageEmbed} Information about your current balance
  */
 
 import * as Database from 'better-sqlite3';

@@ -6,7 +6,6 @@
  * @name externallinks
  * @example externallinks enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} External Links filter confirmation log
  */
 
 import { stripIndents } from 'common-tags';

@@ -6,7 +6,6 @@
  * @name tagmember
  * @example tagmember ☜(⌒▽⌒)☞guy
  * @param {GuildMemberResolvable} AnyMember Member to make a mention to
- * @returns {Message} Mention of the member wrapped between carets
  */
 
 import { GuildMember } from 'discord.js';

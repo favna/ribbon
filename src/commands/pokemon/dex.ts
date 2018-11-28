@@ -8,7 +8,6 @@
  * @name dex
  * @example dex dragonite
  * @param {StringResolvable} PokemonName The name of the pokemon you want to find
- * @returns {MessageEmbed} Lots of information about the pokemon
  */
 
 import { oneLine, stripIndents } from 'common-tags';

@@ -5,7 +5,6 @@
  * @name kiss
  * @example kiss Pyrrha
  * @param {GuildMemberResolvable} [MemberToKiss] Name of the member you want to give a kiss
- * @returns {MessageEmbed} The kiss and a cute image ❤
  */
 
 import { GuildMember } from 'discord.js';

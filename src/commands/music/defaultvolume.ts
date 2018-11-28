@@ -6,7 +6,6 @@
  * @name defaultvolume
  * @example defaultvolume 2
  * @param {number/"show"} VolumeToSet The volume to set or use "show" to show current default volume
- * @returns {Message} Confirmation the setting was stored 
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

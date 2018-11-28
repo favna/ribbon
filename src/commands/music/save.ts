@@ -4,7 +4,6 @@
  * @module
  * @category music
  * @name save
- * @returns {MessageEmbed} Titles, durations and total queue duration sent in a DM
  */
 
 import { oneLine, stripIndents } from 'common-tags';

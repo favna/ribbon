@@ -6,7 +6,6 @@
  * @name twitchtoggle
  * @example twitchtoggle enable
  * @param {BooleanResolvable} Option True or False
- * @returns {Message} Confirmation the setting was stored
  */
 
 import {oneLine} from 'common-tags';

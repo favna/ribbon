@@ -8,7 +8,6 @@
  * @example softban ImmortalZypther
  * @param {GuildMemberResolvable} AnyMember The member to softban from the server
  * @param {StringResolvable} TheReason Reason for this softban.
- * @returns {MessageEmbed} A MessageEmbed with a log of the softban
  */
 
 import { stripIndents } from 'common-tags';

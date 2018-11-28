@@ -7,7 +7,6 @@
  * @name move
  * @example move dragon dance
  * @param {StringResolvable} MoveName The move you want to find
- * @returns {MessageEmbed} Details about the move
  */
 
 import { oneLine, stripIndents } from 'common-tags';

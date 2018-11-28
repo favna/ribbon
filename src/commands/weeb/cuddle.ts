@@ -5,7 +5,6 @@
  * @name cuddle
  * @example cuddle Velvet
  * @param {GuildMemberResolvable} [MemberToCuddle] Name of the member you want to cuddle
- * @returns {MessageEmbed} The cuddle and a cute image 💕
  */
 
 import { GuildMember } from 'discord.js';

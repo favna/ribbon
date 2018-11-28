@@ -9,7 +9,6 @@
  * @name flavor
  * @example flavor dragonite
  * @param {StringResolvable} PokemonName The name of the pokemon you want to get flavor text for
- * @returns {MessageEmbed} Flavor texts for the pokemon
  */
 
 import { stripIndents } from 'common-tags';

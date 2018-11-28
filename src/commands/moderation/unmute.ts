@@ -6,7 +6,6 @@
  * @name unmute
  * @example unmute Muffin
  * @param {GuildMemberResolvable} AnyMember The member to remove a role from
- * @returns {MessageEmbed} Unmute log
  */
 
 import { oneLine, stripIndents } from 'common-tags';

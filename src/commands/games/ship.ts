@@ -8,13 +8,12 @@
  * @example ship Biscuit Rei
  * @param {StringResolvable} [ShipMemberOne] The first member to ship
  * @param {StringResolvable} [ShipMemberTwo] The second member to ship
- * @returns {MessageEmbed} Name of the ship
  */
 
 import { oneLine } from 'common-tags';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import Jimp = require('jimp');
+import * as Jimp from 'jimp';
 import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components/util';
 
 export default class ShipCommand extends Command {

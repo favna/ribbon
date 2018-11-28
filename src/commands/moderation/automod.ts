@@ -7,7 +7,6 @@
  * @example automod enable
  * @param {BooleanResolvable} Option True or False
  * @param {RoleResolvable} [Roles] Roles that are exempted from automod
- * @returns {MessageEmbed} automod confirmation log
  */
 
 import { stripIndents } from 'common-tags';

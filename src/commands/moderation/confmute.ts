@@ -6,7 +6,6 @@
  * @name confmute
  * @example confmute mute
  * @param {RoleResolvable} Role Role to set as mute role
- * @returns {MessageEmbed} Configuration log
  */
 
 import { stripIndents } from 'common-tags';

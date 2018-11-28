@@ -5,7 +5,6 @@
  * @module
  * @category music
  * @name pause
- * @returns {Message} Confirmation the music was paused
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

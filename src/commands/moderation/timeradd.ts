@@ -13,7 +13,6 @@
  * @param {StringResolvable} Interval The interval at which the message(s) should be repeated
  * @param {ChannelResolvable} Channel The channel to send the timed message in
  * @param {StringResolvable} Message  The message(s) to repeat
- * @returns {MessageEmbed} Confirmation the setting was stored
  */
 
 import * as Database from 'better-sqlite3';

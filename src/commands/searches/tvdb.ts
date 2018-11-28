@@ -6,7 +6,6 @@
  * @name tvdb
  * @example tvdb Pokemon
  * @param {StringResolvable} SeriesName Name of the TV serie you want to find
- * @returns {MessageEmbed} Information about the fetched TV serie
  */
 
 import { MessageEmbed } from 'discord.js';

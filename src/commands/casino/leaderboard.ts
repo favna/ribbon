@@ -4,7 +4,6 @@
  * @module
  * @category casino
  * @name leaderboard
- * @returns {MessageEmbed} List of top ranking players
  */
 
 import * as Database from 'better-sqlite3';

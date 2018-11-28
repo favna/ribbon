@@ -4,7 +4,6 @@
  * @module
  * @category info
  * @name stats
- * @returns {MessageEmbed} Ribbon's statistics
  */
 
 import { oneLine } from 'common-tags';

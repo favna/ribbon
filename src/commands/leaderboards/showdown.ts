@@ -6,7 +6,6 @@
  * @name showdown
  * @example showdown ou
  * @param {StringResolvable} TierName Name of the tier to view the leaderboard for
- * @returns {MessageEmbed} List of top 10 ranking players in given tier
  */
 
 import { stripIndents } from 'common-tags';

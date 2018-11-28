@@ -5,7 +5,6 @@
  * @module
  * @category music
  * @name resume
- * @returns {Message} Confirmation the song is resumed
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

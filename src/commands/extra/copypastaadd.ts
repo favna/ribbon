@@ -7,7 +7,6 @@
  * @example copypastaadd lipsum Lorem ipsum dolor sit amet.
  * @param {StringResolvable} PasteName Name for the new pasta
  * @param {StringResolvable} PastaContent Content for the new pasta
- * @returns {Message} Confirmation the copypasta was added
  */
 
 import * as Database from 'better-sqlite3';

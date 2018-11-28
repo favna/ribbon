@@ -5,7 +5,6 @@
  * @name slap
  * @example slap Cinder
  * @param {GuildMemberResolvable} [MemberToSlap] Name of the member you want to slap
- * @returns {MessageEmbed} The slap and an image
  */
 
 import { GuildMember } from 'discord.js';

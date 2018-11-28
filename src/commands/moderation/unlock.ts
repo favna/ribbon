@@ -6,7 +6,6 @@
  * @module
  * @category moderation
  * @name unlock
- * @returns {Message} Confirmation the channel is unlocked
  */
 
 import { oneLine } from 'common-tags';

@@ -8,7 +8,6 @@
  * @name cydia
  * @example cydia Anemone
  * @param {StringResolvable} TweakName Name of the tweak to find
- * @returns {MessageEmbed} Information about the tweak
  */
 
 import * as cheerio from 'cheerio';

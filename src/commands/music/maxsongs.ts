@@ -8,7 +8,6 @@
  * @name maxsongs
  * @example maxsongs 2
  * @param {number/"default"} [NumberOfSongs] New maximum number of songs
- * @returns {Message} Confirmation the setting was stored
  */
 
 import { oneLine } from 'common-tags';

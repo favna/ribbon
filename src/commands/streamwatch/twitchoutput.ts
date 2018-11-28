@@ -6,7 +6,6 @@
  * @name twitchoutput
  * @example twitchoutput #twitch-notifications
  * @param {ChannelResolvable} AnyChannel Channel to output notifs to
- * @returns {Message} Confirmation the setting was stored
  */
 
 import {oneLine} from 'common-tags';

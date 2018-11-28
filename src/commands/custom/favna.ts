@@ -6,7 +6,6 @@
  * @module
  * @category custom
  * @name favna
- * @returns {MessageEmbed} A MessageEmbed with the joke text
  */
 
 import { oneLine } from 'common-tags';

@@ -6,7 +6,6 @@
  * @name regexmatchtoggle
  * @example regexmatchtoggle enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Confirmation the setting was stored
  */
 
 import { oneLine } from 'common-tags';

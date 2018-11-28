@@ -8,7 +8,6 @@
  * @example coin 10 heads
  * @param {Number} AmountOfChips Amount of chips you want to gamble
  * @param {StringResolvable} CoinSide The side of the coin you want to bet on
- * @returns {MessageEmbed} Outcome of the coin flip
  */
 
 import * as Database from 'better-sqlite3';

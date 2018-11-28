@@ -9,7 +9,7 @@ import {oneLine, stripIndents} from 'common-tags';
 import {GuildMember, MessageAttachment, MessageEmbed, RateLimitData, TextChannel} from 'discord.js';
 import {Command, CommandoClient, CommandoGuild, CommandoMessage} from 'discord.js-commando';
 import * as fs from 'fs';
-import Jimp = require('jimp');
+import * as Jimp from 'jimp';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import eshop from 'nintendo-switch-eshop';

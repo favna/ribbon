@@ -6,7 +6,6 @@
  * @name excessivecaps
  * @example excessivecaps enable
  * @param {BooleanResolvable} Option True or False
- * @returns {MessageEmbed} Excessive Caps filter confirmation log
  */
 
 import { stripIndents } from 'common-tags';

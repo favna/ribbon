@@ -9,7 +9,6 @@
  * @example strawpoll 'Best coding language?' JavaScript C# C++
  * @param {StringResolvable} Question The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or `' '`) to allow spaces
  * @param {StringResolvable} Options The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to allow spaces. Splits on every \`|\`
- * @returns {MessageEmbed} Poll url, title, options and preview image
  */
 
 import { MessageEmbed } from 'discord.js';

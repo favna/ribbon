@@ -7,7 +7,6 @@
  * @name countdownremove
  * @example countdownremove 1
  * @param {StringResolvable} CountdownID The ID of the Countdown to remove
- * @returns {MessageEmbed} Confirmation the countdown was removed
  */
 
 import * as Database from 'better-sqlite3';

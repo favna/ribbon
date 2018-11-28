@@ -6,7 +6,6 @@
  * @name Reddit
  * @example reddit favna
  * @param {StringResolvable} RedditUser The Reddit user you want to look up
- * @returns {MessageEmbed} Statistics of the reddit user
  */
 
 import { oneLine, stripIndents } from 'common-tags';

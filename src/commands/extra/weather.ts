@@ -8,7 +8,6 @@
  * @name weather
  * @example weather Amsterdam
  * @param {StringResolvable} CityName Name of the city to get the weather forecast for
- * @returns {MessageEmbed} Various statistics about the current forecast
  */
 
 import { oneLine, stripIndents } from 'common-tags';
