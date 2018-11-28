@@ -49,7 +49,6 @@ export default class CopyPastaCommand extends Command {
     const pastaEmbed = new MessageEmbed();
 
     try {
-      msg.say('test');
       startTyping(msg);
       const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE name = ?;`).get(name);
 
@@ -109,7 +108,7 @@ export default class CopyPastaCommand extends Command {
           **Author:** ${msg.author.tag} (${msg.author.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Error Message:** ${err}
-          `);
+      `);
 
       return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
           Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
