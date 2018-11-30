@@ -619,26 +619,28 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
                         applicationID: '',
                         assets: {largeImage: '', largeText: '', smallImage: '', smallText: '', largeImageURL: () => null, smallImageURL: () => null},
                         details: '',
+                        equals: () => null,
                         name: '',
                         party: {id: '', size: [0, 0]},
                         state: '',
                         timestamps: {start: new Date(), end: new Date()},
                         type: 'STREAMING',
                         url: 'placeholder',
-                        equals: () => null};
+                    };
                 }
                 if (!newActivity) {
                     newActivity = {
                         applicationID: '',
                         assets: {largeImage: '', largeText: '', smallImage: '', smallText: '', largeImageURL: () => null, smallImageURL: () => null},
                         details: '',
+                        equals: () => null,
                         name: '',
                         party: {id: '', size: [0, 0]},
                         state: '',
                         timestamps: {start: new Date(), end: new Date()},
                         type: 'STREAMING',
                         url: 'placeholder',
-                        equals: () => null};
+                    };
                 }
                 if (!(/(twitch)/i).test(oldActivity.url) && (/(twitch)/i).test(newActivity.url)) {
                     const userFetch = await fetch(`https://api.twitch.tv/helix/users?${stringify({login: newActivity.url.split('/')[3]})}`,
