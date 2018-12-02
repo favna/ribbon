@@ -10,7 +10,7 @@
 
 import {oneLine} from 'common-tags';
 import {Command, CommandoClient, CommandoMessage} from 'discord.js-commando';
-import {deleteCommandMessages, startTyping, stopTyping, validateBool} from '../../components/util';
+import {deleteCommandMessages, startTyping, stopTyping, validateBool} from '../../components';
 
 export default class TwitchToggleCommand extends Command {
   constructor (client: CommandoClient) {

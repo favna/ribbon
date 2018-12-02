@@ -14,9 +14,8 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
-import { ItemAliases } from '../../data/dex/aliases';
-import { BattleItems } from '../../data/dex/items';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { BattleItems, ItemAliases } from '../../data/dex';
 
 export default class ItemCommand extends Command {
   constructor (client: CommandoClient) {

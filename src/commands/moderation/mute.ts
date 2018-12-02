@@ -15,8 +15,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import { GuildMember, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
-import { formatMs } from '../../components/ms';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
 
 export default class MuteCommand extends Command {
   private logs: boolean;
@@ -99,7 +98,7 @@ export default class MuteCommand extends Command {
           .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
           .setDescription(stripIndents`
             **Action:** Muted <@${member.id}>
-            **Duration:** ${duration ? formatMs(duration) : 'Until manually removed'}`)
+            **Duration:** ${duration ? ms(duration, {long: true}) : 'Until manually removed'}`)
           .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
@@ -141,7 +140,7 @@ export default class MuteCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Input:** \`${member.user.username} (${member.id})\` ${duration ? ` || \`${formatMs(duration)}` : null}
+        **Input:** \`${member.user.username} (${member.id})\` ${duration ? ` || \`${ms(duration, {long: true})}` : null}
         **Error Message:** ${err}
         `);
 

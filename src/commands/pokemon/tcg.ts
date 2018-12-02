@@ -21,8 +21,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { ArgumentCollector, Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { stringify } from '../../components/querystring';
-import { startTyping, stopTyping } from '../../components/util';
+import { startTyping, stopTyping, stringify } from '../../components';
 
 interface ICardProps {
   name: string;

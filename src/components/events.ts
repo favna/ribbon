@@ -1,12 +1,12 @@
 /**
- * @file Ribbon Modules - Event modules for Ribbon
+ * @file Ribbon Events - Events handled by Ribbon
  * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
  * @copyright © 2017-2018 Favna
  */
 
 import * as Database from 'better-sqlite3';
 import {oneLine, stripIndents} from 'common-tags';
-import {GuildMember, MessageAttachment, MessageEmbed, RateLimitData, TextChannel} from 'discord.js';
+import {GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel} from 'discord.js';
 import {Command, CommandoClient, CommandoGuild, CommandoMessage} from 'discord.js-commando';
 import * as fs from 'fs';
 import * as Jimp from 'jimp';
@@ -15,11 +15,7 @@ import 'moment-duration-format';
 import eshop from 'nintendo-switch-eshop';
 import fetch from 'node-fetch';
 import * as path from 'path';
-import {badwords, caps, duptext, emojis, invites, links, mentions, slowmode} from './automod';
-import {decache} from './decache';
-import ms from './ms';
-import {stringify} from './querystring';
-import {ordinal} from './util';
+import {badwords, caps, decache, duptext, emojis, invites, links, mentions, ms, ordinal, slowmode, stringify} from '.';
 
 const renderReminderMessage = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
@@ -78,10 +74,10 @@ const renderCountdownMessage = (client: CommandoClient) => {
                 if (dura.asMinutes() <= 0) {
                     const guild = client.guilds.get(tables[table].name);
                     const channel = guild.channels.get(rows[row].channel) as TextChannel;
-                    const timerEmbed = new MessageEmbed();
+                    const countdownEmbed = new MessageEmbed();
                     const {me} = client.guilds.get(tables[table].name);
 
-                    timerEmbed
+                    countdownEmbed
                         .setAuthor('Countdown Reminder', me.user.displayAvatarURL({format: 'png'}))
                         .setColor(me.displayHexColor)
                         .setTimestamp()
@@ -98,19 +94,19 @@ const renderCountdownMessage = (client: CommandoClient) => {
                             lastsend: moment().format('YYYY-MM-DD HH:mm'),
                         });
 
-                        channel.send('', {embed: timerEmbed});
+                        channel.send('', {embed: countdownEmbed});
                     } else {
                         conn.prepare(`DELETE FROM "${tables[table].name}" WHERE id=$id;`).run({id: rows[row].id});
 
                         switch (rows[row].tag) {
                             case 'everyone':
-                                channel.send('@everyone GET HYPE IT IS TIME!', {embed: timerEmbed});
+                                channel.send('@everyone GET HYPE IT IS TIME!', {embed: countdownEmbed});
                                 break;
                             case 'here':
-                                channel.send('@here GET HYPE IT IS TIME!', {embed: timerEmbed});
+                                channel.send('@here GET HYPE IT IS TIME!', {embed: countdownEmbed});
                                 break;
                             default:
-                                channel.send('GET HYPE IT IS TIME!', {embed: timerEmbed});
+                                channel.send('GET HYPE IT IS TIME!', {embed: countdownEmbed});
                                 break;
                         }
                     }
@@ -224,15 +220,17 @@ const renderLottoMessage = (client: CommandoClient) => {
 
                 const defaultChannel = client.guilds.get(tables[table].name).systemChannel;
                 const winnerEmbed = new MessageEmbed();
-                const winnerLastMessage = client.guilds.get(tables[table].name).members.get(rows[winner].userID).lastMessageChannelID;
-                const winnerLastMessageChannel = winnerLastMessage ? client.guilds.get(tables[table].name).channels.get(winnerLastMessage) as TextChannel : null;
-                const winnerLastMessageChannelPermitted = winnerLastMessageChannel ? winnerLastMessageChannel.permissionsFor(client.user).has('SEND_MESSAGES') : false;
+                const winnerMember: GuildMember = client.guilds.get(tables[table].name).members.get(rows[winner].userID);
+                if (!winnerMember) continue;
+                const winnerLastMessageChannelId: Snowflake = winnerMember.lastMessageChannelID;
+                const winnerLastMessageChannel: TextChannel = winnerLastMessageChannelId ? client.guilds.get(tables[table].name).channels.get(winnerLastMessageChannelId) as TextChannel : null;
+                const winnerLastMessageChannelPermitted: boolean = winnerLastMessageChannel ? winnerLastMessageChannel.permissionsFor(client.user).has('SEND_MESSAGES') : false;
 
                 winnerEmbed
                     .setColor('#7CFC00')
                     .setDescription(`Congratulations <@${rows[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
-                    .setAuthor(client.guilds.get(tables[table].name).members.get(rows[winner].userID).displayName,
-                        client.guilds.get(tables[table].name).members.get(rows[winner].userID).user.displayAvatarURL({format: 'png'}))
+                    .setAuthor(winnerMember.displayName,
+                        winnerMember.user.displayAvatarURL({format: 'png'}))
                     .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png')
                     .addField('Balance', `${prevBal} ➡ ${rows[winner].balance}`);
 
@@ -276,6 +274,7 @@ const renderTimerMessage = (client: CommandoClient) => {
                     const channel = guild.channels.get(rows[row].channel) as TextChannel;
                     const timerEmbed = new MessageEmbed();
                     const {me} = client.guilds.get(tables[table].name);
+                    const memberMentions = rows[row].members ? rows[row].members.split(';').map((member: Snowflake) => `<@${member}>`).join(' ') : null;
 
                     timerEmbed
                         .setAuthor('Ribbon Timed Message', me.user.displayAvatarURL({format: 'png'}))
@@ -283,7 +282,7 @@ const renderTimerMessage = (client: CommandoClient) => {
                         .setDescription(rows[row].content)
                         .setTimestamp();
 
-                    channel.send('', {embed: timerEmbed});
+                    channel.send(memberMentions ? memberMentions : '', {embed: timerEmbed});
                 }
             }
         }

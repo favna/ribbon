@@ -11,7 +11,7 @@
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage, util } from 'discord.js-commando';
-import { deleteCommandMessages, Song, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, Song, startTyping, stopTyping } from '../../components';
 
 export default class ShuffleCommand extends Command {
   private songQueue: any;

@@ -1,5 +1,3 @@
-import * as moment from 'moment';
-
 const s = 1000;
 const m = s * 60;
 const h = m * 60;
@@ -7,14 +5,23 @@ const d = h * 24;
 const w = d * 7;
 const y = d * 365.25;
 
+interface ILongObject {
+  long?: boolean;
+}
+
 const parse = (str: string) => {
-  const match = (/^((?:\d+)?\-?\d?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i).exec(
+  str = String(str);
+  if (str.length > 100) {
+    return null;
+  }
+  const match = /^((?:\d+)?-?\d?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
     str
   );
-
+  if (!match) {
+    return null;
+  }
   const n = parseFloat(match[1]);
   const type = (match[2] || 'ms').toLowerCase();
-
   switch (type) {
     case 'years':
     case 'year':
@@ -59,16 +66,34 @@ const parse = (str: string) => {
   }
 };
 
-export default (val: string) => {
-  if (val.length > 0) {
-    return parse(val);
-  }
+const plural = (singleMs: number, msAbs: number, n: number, name: string) => {
+    const isPlural = msAbs >= n * 1.5;
 
-  throw new Error(`val is an empty string. val=${JSON.stringify(val)}`);
+    return `${Math.round(singleMs / n)} name ${isPlural ? 's' : ''}`;
 };
 
-export const formatMs = (ms: number) => {
-  const duration = moment.duration(ms);
+const fmtShort = (fmtShortMs: number) => {
+  const msAbs = Math.abs(fmtShortMs);
 
-  return Math.floor(duration.asHours()) + moment.utc(duration.asMilliseconds()).format(':mm:ss');
+  if (msAbs >= d) return `${Math.round(fmtShortMs / d)}d`;
+  if (msAbs >= h) return `${Math.round(fmtShortMs / h)}h`;
+  if (msAbs >= m) return `${Math.round(fmtShortMs / m)}m`;
+  if (msAbs >= s) return `${Math.round(fmtShortMs / s)}s`;
+
+  return `${fmtShortMs}ms`;
+};
+
+const fmtLong = (fmtLongMs: number) => {
+  const msAbs = Math.abs(fmtLongMs);
+  if (msAbs >= d) return plural(fmtLongMs, msAbs, d, 'day');
+  if (msAbs >= h) return plural(fmtLongMs, msAbs, h, 'hour');
+  if (msAbs >= s) return plural(fmtLongMs, msAbs, s, 'second');
+
+  return  + `${fmtLongMs} ms`;
+};
+
+export const ms = (val: any, options: ILongObject = {}): any => {
+  if (typeof val === 'string' && val.length > 0) return parse(val);
+  if (typeof val === 'number' && !isNaN(val))  return options.long ? fmtLong(val) : fmtShort(val);
+  throw new Error(`val is not a non-empty string or valid number. val=${JSON.stringify((val))}`);
 };

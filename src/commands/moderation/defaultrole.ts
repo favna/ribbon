@@ -11,7 +11,7 @@
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, Role, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class DefaultroleCommand extends Command {
   constructor (client: CommandoClient) {

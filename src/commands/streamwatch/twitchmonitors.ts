@@ -11,7 +11,7 @@
 import {stripIndents} from 'common-tags';
 import { GuildMember } from 'discord.js';
 import {Command, CommandoClient, CommandoMessage} from 'discord.js-commando';
-import {deleteCommandMessages, startTyping, stopTyping} from '../../components/util';
+import {deleteCommandMessages, startTyping, stopTyping} from '../../components';
 
 export default class TwitchMonitorsCommand extends Command {
   constructor (client: CommandoClient) {

@@ -1,5 +1,6 @@
 /**
- * @file Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!  
+ * @file Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!
+ *
  * **Aliases**: `xdicey`, `roll`, `dicey`, `die`
  * @module
  * @category games
@@ -11,76 +12,76 @@
 
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class DiceCommand extends Command {
-  constructor (client: CommandoClient) {
-    super(client, {
-      name: 'dice',
-      aliases: [ 'xdicey', 'roll', 'dicey', 'die' ],
-      group: 'games',
-      memberName: 'dice',
-      description: 'Rolls some dice with some sides. Great for the DnD players!',
-      format: 'SidesOfTheDice AmountOfRolls',
-      examples: [ 'dice 6 5' ],
-      guildOnly: false,
-      throttling: {
-        usages: 2,
-        duration: 3,
-      },
-      args: [
-        {
-          key: 'sides',
-          prompt: 'How many sides does your die have?',
-          type: 'integer',
-          max: 20,
-          min: 4,
-        },
-        {
-          key: 'rolls',
-          prompt: 'How many times should the die be rolled?',
-          type: 'integer',
-          max: 40,
-          min: 1,
+    constructor (client: CommandoClient) {
+        super(client, {
+            name: 'dice',
+            aliases: ['xdicey', 'roll', 'dicey', 'die'],
+            group: 'games',
+            memberName: 'dice',
+            description: 'Rolls some dice with some sides. Great for the DnD players!',
+            format: 'SidesOfTheDice AmountOfRolls',
+            examples: ['dice 6 5'],
+            guildOnly: false,
+            throttling: {
+                usages: 2,
+                duration: 3,
+            },
+            args: [
+                {
+                    key: 'sides',
+                    prompt: 'How many sides does your die have?',
+                    type: 'integer',
+                    max: 20,
+                    min: 4,
+                },
+                {
+                    key: 'rolls',
+                    prompt: 'How many times should the die be rolled?',
+                    type: 'integer',
+                    max: 40,
+                    min: 1,
+                }
+            ],
+        });
+    }
+
+    public run (msg: CommandoMessage, { sides, rolls }: { sides: number, rolls: number }) {
+        startTyping(msg);
+        const diceEmbed = new MessageEmbed();
+        const res = [];
+        const throwDice = this.xdicey(rolls, sides);
+
+        for (const i in throwDice.individual) {
+            res.push(`${throwDice.individual[i]}`);
         }
-      ],
-    });
-  }
 
-  public run (msg: CommandoMessage, { sides, rolls }: {sides: number, rolls: number}) {
-    startTyping(msg);
-    const diceEmbed = new MessageEmbed();
-    const res = [];
-    const throwDice = this.xdicey(rolls, sides);
+        diceEmbed
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+            .setTitle('🎲 Dice Rolls 🎲')
+            .setDescription(`| ${res.join(' | ')} |`)
+            .addField('Total', throwDice.total, false);
 
-    for (const i in throwDice.individual) {
-      res.push(`${throwDice.individual[i]}`);
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.embed(diceEmbed);
     }
 
-    diceEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-      .setTitle('🎲 Dice Rolls 🎲')
-      .setDescription(`| ${res.join(' | ')} |`)
-      .addField('Total', throwDice.total, false);
+    private xdicey (rolls: number, sides: number) {
+        const result = [];
 
-    deleteCommandMessages(msg, this.client);
-    stopTyping(msg);
+        for (let i = 1; i < Math.abs(rolls); i++) {
+            result[i - 1] = Math.floor(Math.random() * Math.floor(Math.abs(sides))) + 1;
+        }
 
-    return msg.embed(diceEmbed);
-  }
+        const totalAmount = result.reduce((total, current) => total + current, 0);
 
-  private xdicey (rolls: number, sides: number) {
-    const result = [];
-
-    for (let i = 1; i < Math.abs(rolls); i++) {
-      result[i - 1] = Math.floor(Math.random() * Math.floor(Math.abs(sides))) + 1;
+        return {
+            individual: result,
+            total: totalAmount,
+        };
     }
-
-    const totalAmount = result.reduce((total, current) => total + current, 0);
-
-    return {
-      individual: result,
-      total: totalAmount,
-    };
-  }
 }

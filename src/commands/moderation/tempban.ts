@@ -14,8 +14,7 @@
 import { stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { formatMs } from '../../components/ms';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
 
 export default class TempBanCommand extends Command {
   constructor (client: CommandoClient) {
@@ -117,7 +116,7 @@ export default class TempBanCommand extends Command {
       .setDescription(stripIndents`
       **Member:** ${member.user.tag} (${member.id})
       **Action:** Temporary Ban
-      **Duration:** ${formatMs(time)}
+      **Duration:** ${ms(time, {long: true})}
       **Reason:** ${reason !== '' ? reason : 'No reason given by staff'}`)
       .setTimestamp();
 

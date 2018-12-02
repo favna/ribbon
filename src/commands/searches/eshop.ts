@@ -14,9 +14,9 @@ import * as fs from 'fs';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
 import * as path from 'path';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
-export default class EShopCommand extends Command {
+export class EShopCommand extends Command {
   constructor (client: CommandoClient) {
     super(client, {
       name: 'eshop',

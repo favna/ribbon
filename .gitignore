@@ -10,12 +10,12 @@ node_modules/
 
 # Data folders
 src/data/databases/*
+dist/
 
 # Folder keep
 !**/*.gitkeep
 
 # IDE settings
-.idea/
 .vscode/
 
 # My own stuff

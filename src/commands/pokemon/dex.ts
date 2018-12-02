@@ -15,12 +15,10 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
-import {zalgolize} from '../../components/zalgolize';
-import { PokeAliases } from '../../data/dex/aliases';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping, zalgolize } from '../../components';
+import { BattlePokedex, PokeAliases } from '../../data/dex';
 import * as dexEntries from '../../data/dex/flavorText.json';
 import * as smogonFormats from '../../data/dex/formats.json';
-import { BattlePokedex } from '../../data/dex/pokedex';
 
 interface IPokeData {
   abilities: string;
@@ -70,28 +68,20 @@ export default class DexCommand extends Command {
         pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
       }
 
-      const aliasoptions: Fuse.FuseOptions<any> = {
-          shouldSort: true,
-          keys: [{name: 'alias', getfn: t => t.alias, weight: 1}],
-          location: 0,
-          distance: 100,
-          threshold: 0.2,
-          maxPatternLength: 32,
-          minMatchCharLength: 1,
-        };
       const pokeoptions: Fuse.FuseOptions<any> = {
           shouldSort: true,
           keys: [
+            {name: 'alias', getfn: t => t.alias, weight: 0.2},
             {name: 'species', getfn: t => t.species, weight: 1},
-            {name: 'num', getfn: t => t.num, weight: 0.6}
+            {name: 'num', getfn: t => t.num, weight: 0.7}
           ],
           location: 0,
           distance: 100,
           threshold: 0.2,
           maxPatternLength: 32,
           minMatchCharLength: 1,
-        };
-      const aliasFuse: any = new Fuse(PokeAliases, aliasoptions);
+      };
+      const aliasFuse: any = new Fuse(PokeAliases, pokeoptions);
       const pokeFuse: any = new Fuse(BattlePokedex, pokeoptions);
       const firstSearch: any = pokeFuse.search(pokemon);
       const aliasSearch: any = !firstSearch.length ? aliasFuse.search(pokemon) : null;

@@ -10,7 +10,7 @@
 
 import { Message } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { startTyping, stopTyping } from '../../components/util';
+import { startTyping, stopTyping } from '../../components';
 
 export default class PurgeCommand extends Command {
   constructor (client: CommandoClient) {

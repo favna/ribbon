@@ -4,7 +4,7 @@ import { Client, CommandoClient, CommandoGuild, CommandoMessage, SyncSQLiteProvi
 import * as path from 'path';
 import { handleCmdErr, handleDebug, handleErr, handleGuildJoin, handleGuildLeave,
   handleMemberJoin, handleMemberLeave, handleMsg, handlePresenceUpdate, handleRateLimit,
-  handleReady, handleRejection, handleUnknownCmd, handleWarn } from './components/events';
+  handleReady, handleRejection, handleUnknownCmd, handleWarn } from './components';
 
 export default class Ribbon {
   public token: string;

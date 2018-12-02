@@ -12,8 +12,8 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 import { stringify } from '../../components/querystring';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components/util';
 import { IGenre } from './tmdb';
 
 export default class TVCommand extends Command {

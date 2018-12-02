@@ -8,7 +8,7 @@
 
 import { stripIndents } from 'common-tags';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, Song, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, Song, startTyping, stopTyping } from '../../components';
 
 export default class MusicStatusCommand extends Command {
   private songQueue: any;

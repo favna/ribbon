@@ -7,7 +7,7 @@
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class DBPostCommand extends Command {
   constructor (client: CommandoClient) {

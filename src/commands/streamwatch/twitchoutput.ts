@@ -11,7 +11,7 @@
 import {oneLine} from 'common-tags';
 import { TextChannel } from 'discord.js';
 import {Command, CommandoClient, CommandoMessage} from 'discord.js-commando';
-import {deleteCommandMessages, startTyping, stopTyping} from '../../components/util';
+import {deleteCommandMessages, startTyping, stopTyping} from '../../components';
 
 export default class TwitchOutputCommand extends Command {
   constructor (client: CommandoClient) {

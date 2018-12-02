@@ -1,4 +1,4 @@
-import { roundNumber } from './util';
+import { roundNumber } from '.';
 
 const chars: any = {
   all: null,

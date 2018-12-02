@@ -9,7 +9,7 @@
 
 import {Command, CommandoClient, CommandoMessage} from 'discord.js-commando';
 import fetch from 'node-fetch';
-import {deleteCommandMessages, startTyping, stopTyping} from '../../components/util';
+import {deleteCommandMessages, startTyping, stopTyping} from '../../components';
 
 export default class NekoCommand extends Command {
   constructor (client: CommandoClient) {

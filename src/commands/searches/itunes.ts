@@ -13,8 +13,8 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 import { stringify } from '../../components/querystring';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
 
 export default class ITunesCommand extends Command {
   constructor (client: CommandoClient) {

@@ -8,12 +8,11 @@
 
 import * as Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
-import { TextChannel, Util } from 'discord.js';
+import { Snowflake, TextChannel, Util } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { formatMs } from '../../components/ms';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, ms, startTyping, stopTyping } from '../../components';
 
 export default class TimerListCommand extends Command {
   constructor (client: CommandoClient) {
@@ -44,10 +43,11 @@ export default class TimerListCommand extends Command {
       for (const row in rows) {
         body += `${stripIndents`
         **id:** ${rows[row].id}
-        **interval:** ${formatMs(rows[row].interval)}
+        **interval:** ${ms(rows[row].interval, {long: true})}
         **channel:** <#${rows[row].channel}>
         **content:** ${rows[row].content}
-        **last sent at:** ${moment(rows[row].lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}`}\n\n`;
+        **last sent at:** ${moment(rows[row].lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}`}
+        **members tagged on send:** ${rows[row].members.split(';').map((member: Snowflake) => `<@${member}>`).join(' ')}\n\n`;
       }
 
       deleteCommandMessages(msg, this.client);

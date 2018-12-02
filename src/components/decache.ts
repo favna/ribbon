@@ -1,3 +1,9 @@
+/**
+ * @file Ribbon Decache - Decache modules loaded in Node
+ * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @copyright © 2017-2018 Favna
+ */
+
 import * as path from 'path';
 
 const find = (moduleName: string) => {

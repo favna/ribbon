@@ -21,8 +21,8 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
 import * as ytdl from 'ytdl-core';
+import { deleteCommandMessages, Song, startTyping, stopTyping } from '../../components';
 import { parse, stringify } from '../../components/querystring';
-import { deleteCommandMessages, Song, startTyping, stopTyping } from '../../components/util';
 
 interface IQueue {
   textChannel: GuildChannel;

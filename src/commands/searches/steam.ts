@@ -13,9 +13,9 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
 import * as striptags from 'striptags';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 import { currencymap } from '../../components/money';
 import { stringify } from '../../components/querystring';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
 
 export default class SteamCommand extends Command {
   constructor (client: CommandoClient) {

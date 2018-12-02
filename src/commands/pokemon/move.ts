@@ -14,9 +14,8 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
-import { MoveAliases } from '../../data/dex/aliases';
-import { BattleMovedex } from '../../data/dex/moves';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { BattleMovedex, MoveAliases } from '../../data/dex';
 
 export default class MoveCommand extends Command {
   constructor (client: CommandoClient) {
@@ -47,21 +46,12 @@ export default class MoveCommand extends Command {
   public run (msg: CommandoMessage, { move }: {move: string}) {
     try {
       startTyping(msg);
-      const aliasOptions: Fuse.FuseOptions<any> = {
-          shouldSort: true,
-          keys: [
-            {name: 'alias', getfn: t => t.alias, weight: 1},
-            {name: 'move', getfn: t => t.item, weight: 1}
-          ],
-          location: 0,
-          distance: 100,
-          threshold: 0.2,
-          maxPatternLength: 32,
-          minMatchCharLength: 1,
-        };
+
       const moveOptions: Fuse.FuseOptions<any> = {
           shouldSort: true,
           keys: [
+            {name: 'alias', getfn: t => t.alias, weight: 0.2},
+            {name: 'move', getfn: t => t.item, weight: 0.2},
             {name: 'id', getfn: t => t.id, weight: 1},
             {name: 'name', getfn: t => t.name, weight: 1}
           ],
@@ -70,8 +60,8 @@ export default class MoveCommand extends Command {
           threshold: 0.2,
           maxPatternLength: 32,
           minMatchCharLength: 1,
-        };
-      const aliasFuse = new Fuse(MoveAliases, aliasOptions);
+      };
+      const aliasFuse = new Fuse(MoveAliases, moveOptions);
       const moveFuse = new Fuse(BattleMovedex, moveOptions);
       const aliasSearch = aliasFuse.search(move);
       const moveSearch = aliasSearch.length ? moveFuse.search(aliasSearch[0].move) : moveFuse.search(move);

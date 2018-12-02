@@ -14,10 +14,13 @@
     "url": "https://github.com/favna/ribbon/issues"
   },
   "scripts": {
-    "lint": "tslint -p . -c tslint.json src/commands/**/*.ts src/components/*.ts src/*.ts",
+    "lint": "tslint -p . -c tslint.json src/**/*.ts",
     "lint:fix": "yarn lint --fix",
     "test": "yarn lint && mocha",
-    "build": "rm -rf dist/ && tsc",
+    "clean": "rimraf dist/",
+    "prebuild": "yarn clean",
+    "build": "tsc",
+    "postbuild": "copyfiles -u 1 ./src/data/fonts/* ./src/data/databases/* ./dist/",
     "docs": "yarn docs:md && yarn docs:json",
     "docs:md": "jsdoc2md --configure ./jsdoc2md.json --template ./docs/template.hbs --files ./src/commands/**/*.ts | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
     "docs:json": "jsdoc2md --configure ./jsdoc2md.json --json --files ./src/commands/**/*.ts > ../favna.xyz/public/dist/ribbondocs.json",
@@ -87,6 +90,7 @@
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
     "chai": "^4.2.0",
+    "copyfiles": "^2.1.0",
     "jsdoc-babel": "^0.5.0",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.2.0",

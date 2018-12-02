@@ -8,7 +8,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class ResumeSongCommand extends Command {
   private songQueue: any;

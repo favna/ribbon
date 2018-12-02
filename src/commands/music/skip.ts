@@ -15,7 +15,7 @@
 
 import { oneLine } from 'common-tags';
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export interface IVote {
   count: number;

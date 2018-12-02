@@ -13,7 +13,7 @@ import * as booru from 'booru';
 import { stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class PahealCommand extends Command {
   constructor (client: CommandoClient) {

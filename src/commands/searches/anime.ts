@@ -13,7 +13,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, removeDiacritics, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, removeDiacritics, startTyping, stopTyping } from '../../components';
 
 export default class AnimeCommand extends Command {
   constructor (client: CommandoClient) {

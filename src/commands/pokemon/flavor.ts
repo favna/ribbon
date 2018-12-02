@@ -16,11 +16,9 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components/util';
-import {zalgolize} from '../../components/zalgolize';
-import { PokeAliases } from '../../data/dex/aliases';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping, zalgolize } from '../../components';
+import { BattlePokedex, PokeAliases } from '../../data/dex';
 import * as dexEntries from '../../data/dex/flavorText.json';
-import { BattlePokedex } from '../../data/dex/pokedex';
 
 interface IPokeData {
   entries: Array<any>;

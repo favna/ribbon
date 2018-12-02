@@ -17,6 +17,6 @@
 		"removeComments": true,
 		"resolveJsonModule": true
 	},
-	"include": ["src/commands/**/*", "src/data/**/*", "src/components/*", "src/*"],
-	"exclude": ["node_modules", "dist", "build", "docs", ".github", "test", "src/commands/owner/test.ts"]
+	"include": ["src/**/*.ts"],
+	"exclude": ["node_modules", "dist", "src/**/*.js"]
 }

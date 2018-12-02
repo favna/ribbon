@@ -8,7 +8,7 @@
 
 import {GuildMember, MessageEmbed} from 'discord.js';
 import {Command, CommandoClient, CommandoMessage} from 'discord.js-commando';
-import {deleteCommandMessages, startTyping, stopTyping} from '../../components/util';
+import {deleteCommandMessages, startTyping, stopTyping} from '../../components';
 
 export default class CookieCommand extends Command {
   constructor (client: CommandoClient) {

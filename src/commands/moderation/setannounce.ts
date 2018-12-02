@@ -11,7 +11,7 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components/util';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class SetAnnounceCommand extends Command {
   constructor (client: CommandoClient) {
