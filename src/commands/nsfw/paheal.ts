@@ -1,6 +1,6 @@
 /**
- * @file nsfw PahealCommand - Gets a NSFW image from paheal  
- * Can only be used in NSFW marked channels!  
+ * @file nsfw PahealCommand - Gets a NSFW image from paheal
+ * Can only be used in NSFW marked channels!
  * **Aliases**: `pa`, `heal`
  * @module
  * @category nsfw
@@ -25,7 +25,9 @@ export default class PahealCommand extends Command {
       description: 'Find NSFW Content on Rule34 - Paheal',
       format: 'NSFWToLookUp',
       examples: [ 'paheal Pyrrha Nikos' ],
-      nsfw: true,
+      nsfw: {
+          explicit: true,
+      },
       guildOnly: false,
       throttling: {
         usages: 2,

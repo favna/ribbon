@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Mocha Tests" type="mocha-javascript-test-runner" factoryName="Mocha">
+    <node-interpreter>project</node-interpreter>
+    <node-options />
+    <working-directory>$PROJECT_DIR$</working-directory>
+    <pass-parent-env>true</pass-parent-env>
+    <ui>mocha-typescript</ui>
+    <extra-mocha-options>--opts ./test/mocha.opts</extra-mocha-options>
+    <test-kind>PATTERN</test-kind>
+    <test-pattern />
+    <method v="2" />
+  </configuration>
+</component>

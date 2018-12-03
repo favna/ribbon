@@ -11,6 +11,7 @@
       <option name="SPACES_WITHIN_IMPORTS" value="true" />
     </TypeScriptCodeStyleSettings>
     <codeStyleSettings language="TypeScript">
+      <option name="RIGHT_MARGIN" value="200" />
       <option name="SPACE_BEFORE_METHOD_PARENTHESES" value="true" />
       <option name="METHOD_CALL_CHAIN_WRAP" value="5" />
       <option name="WRAP_COMMENTS" value="true" />

@@ -1,6 +1,6 @@
 /**
- * @file nsfw E621Command - Gets a NSFW image from e621  
- * Can only be used in NSFW marked channels!  
+ * @file nsfw E621Command - Gets a NSFW image from e621
+ * Can only be used in NSFW marked channels!
  * **Aliases**: `eee`
  * @module
  * @category nsfw
@@ -25,7 +25,9 @@ export default class E621Command extends Command {
       description: 'Find NSFW Content on e621',
       format: 'NSFWToLookUp',
       examples: [ 'e621 Pyrrha Nikos' ],
-      nsfw: true,
+      nsfw: {
+          explicit: true,
+      },
       guildOnly: false,
       throttling: {
         usages: 2,

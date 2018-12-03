@@ -25,7 +25,9 @@ export default class PornVidsCommand extends Command {
       description: 'Search porn videos',
       format: 'NSFWToLookUp',
       examples: [ 'pornvids babe' ],
-      nsfw: true,
+      nsfw: {
+          explicit: true,
+      },
       guildOnly: false,
       throttling: {
         usages: 2,

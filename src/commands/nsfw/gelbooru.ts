@@ -1,6 +1,6 @@
 /**
- * @file nsfw GelbooruCommand - Gets a NSFW image from gelbooru  
- * Can only be used in NSFW marked channels!  
+ * @file nsfw GelbooruCommand - Gets a NSFW image from gelbooru
+ * Can only be used in NSFW marked channels!
  * **Aliases**: `gel`, `booru`
  * @module
  * @category nsfw
@@ -25,7 +25,9 @@ export default class GelbooruCommand extends Command {
       description: 'Find NSFW Content on gelbooru',
       format: 'NSFWToLookUp',
       examples: [ 'gelbooru Pyrrha Nikos' ],
-      nsfw: true,
+      nsfw: {
+          explicit: true,
+      },
       guildOnly: false,
       throttling: {
         usages: 2,
