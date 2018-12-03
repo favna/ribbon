@@ -20,7 +20,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
 
-export class DuplicateTextCommand extends Command {
+export default class DuplicateTextCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'duptext',

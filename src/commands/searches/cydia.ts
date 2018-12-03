@@ -20,7 +20,7 @@ import * as moment from 'moment';
 import fetch from 'node-fetch';
 import {deleteCommandMessages, startTyping, stopTyping, stringify} from '../../components';
 
-export class CydiaCommand extends Command {
+export default class CydiaCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'cydia',

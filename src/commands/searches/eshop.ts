@@ -1,5 +1,5 @@
 /**
- * @file Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop  
+ * @file Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop
  * **Aliases**: `shop`
  * @module
  * @category searches
@@ -16,7 +16,7 @@ import * as moment from 'moment';
 import * as path from 'path';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
-export class EShopCommand extends Command {
+export default class EShopCommand extends Command {
   constructor (client: CommandoClient) {
     super(client, {
       name: 'eshop',
