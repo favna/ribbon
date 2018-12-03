@@ -79,7 +79,7 @@ export default class Ribbon {
       })
       .registerCommandsIn({
         dirname: path.join(__dirname, 'commands'),
-        filter: (fileName: string) => (/\^(?:.*)\.(ts)$/).test(fileName) ? fileName : undefined,
+        filter: (fileName: string) => (/^.+\.ts$/).test(fileName) ? fileName : undefined,
       });
 
     return this.client.login(this.token);

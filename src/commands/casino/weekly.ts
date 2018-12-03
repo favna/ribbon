@@ -1,10 +1,10 @@
 /**
- * @file Casino DailyCommand - Receive your daily 500 chips top up
+ * @file Casino WeeklyCommand - Receive your weekly 3500 chips top up
  *
- * **Aliases**: `topup`, `bonus`
+ * **Aliases**: `weeklytopup`, `weeklybonus`
  * @module
  * @category casino
- * @name daily
+ * @name weekly
  */
 
 import * as Database from 'better-sqlite3';
@@ -15,14 +15,14 @@ import * as moment from 'moment';
 import * as path from 'path';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
-export default class DailyCommand extends Command {
+export default class WeeklyCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
-            name: 'daily',
-            aliases: ['topup', 'bonus'],
+            name: 'weekly',
+            aliases: ['weeklytopup', 'weeklybonus'],
             group: 'casino',
-            memberName: 'daily',
-            description: 'Receive your daily cash top up of 500 chips',
+            memberName: 'weekly',
+            description: 'Receive your weekly cash top up of 3500 chips',
             guildOnly: true,
             throttling: {
                 usages: 2,
@@ -47,7 +47,7 @@ export default class DailyCommand extends Command {
             const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
             if (query) {
-                const topupdate = moment(query.lasttopup).add(24, 'hours');
+                const topupdate = moment(query.lasttopup).add(7, 'days');
                 const dura = moment.duration(topupdate.diff(moment()));
 
                 let chipStr = '';
@@ -55,23 +55,23 @@ export default class DailyCommand extends Command {
 
                 if (dura.asHours() <= 0) {
                     conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance, lasttopup=$date WHERE userID="${msg.author.id}";`).run({
-                        balance: query.balance + 500,
+                        balance: query.balance + 3500,
                         date: moment().format('YYYY-MM-DD HH:mm'),
                     });
 
-                    chipStr = `${query.balance} ➡ ${query.balance + 500}`;
-                    resetStr = 'in 24 hours';
-                    returnMsg = 'Topped up your balance with your daily 500 chips!';
+                    chipStr = `${query.balance} ➡ ${query.balance + 3500}`;
+                    resetStr = 'in 7 days';
+                    returnMsg = 'Topped up your balance with your weekly 3500 chips!';
                 } else {
                     chipStr = query.balance;
-                    resetStr = dura.format('[in] HH[ hour and] mm[ minute]');
-                    returnMsg = 'Sorry but you are not due to get your daily chips yet, here is your current balance';
+                    resetStr = dura.format('[in] d[ day and] HH[ hour]');
+                    returnMsg = 'Sorry but you are not due to get your weekly chips yet, here is your current balance';
                 }
 
                 balEmbed.setDescription(stripIndents`
                     **Balance**
                     ${chipStr}
-                    **Daily Reset**
+                    **Weekly Reset**
                     ${resetStr}
                 `);
 
@@ -82,7 +82,7 @@ export default class DailyCommand extends Command {
             }
             stopTyping(msg);
             conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
-                balance: '500',
+                balance: '3500',
                 date: moment().format('YYYY-MM-DD HH:mm'),
                 userid: msg.author.id,
             });
@@ -92,7 +92,7 @@ export default class DailyCommand extends Command {
                 conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`).run();
 
                 conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`).run({
-                    balance: '500',
+                    balance: '3500',
                     date: moment().format('YYYY-MM-DD HH:mm'),
                     userid: msg.author.id,
                 });
@@ -100,7 +100,7 @@ export default class DailyCommand extends Command {
                 const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
                 channel.send(stripIndents`
-                    <@${this.client.owners[0].id}> Error occurred in \`daily\` command!
+                    <@${this.client.owners[0].id}> Error occurred in \`weekly\` command!
                     **Server:** ${msg.guild.name} (${msg.guild.id})
                     **Author:** ${msg.author.tag} (${msg.author.id})
                     **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -114,13 +114,13 @@ export default class DailyCommand extends Command {
 
         balEmbed.setDescription(stripIndents`
             **Balance**
-            500
-            **Daily Reset**
-            in 24 hours
+            3500
+            **Weekly Reset**
+            in 7 days
         `);
 
         deleteCommandMessages(msg, this.client);
 
-        return msg.embed(balEmbed, 'You didn\'t have any chips yet so here\'s your first 500. Spend them wisely!');
+        return msg.embed(balEmbed, 'You didn\'t have any chips yet so here\'s your first 3500. Spend them wisely!');
     }
 }

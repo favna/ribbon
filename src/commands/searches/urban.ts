@@ -24,9 +24,8 @@ export default class UrbanCommand extends Command {
             description: 'Find definitions on urban dictionary',
             format: 'Term',
             examples: ['urban ugt'],
-            nsfw: {
-                explicit: false,
-            },
+            nsfw: true,
+            explicit: false,
             guildOnly: false,
             throttling: {
                 usages: 2,

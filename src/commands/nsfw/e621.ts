@@ -25,9 +25,8 @@ export default class E621Command extends Command {
       description: 'Find NSFW Content on e621',
       format: 'NSFWToLookUp',
       examples: [ 'e621 Pyrrha Nikos' ],
-      nsfw: {
-          explicit: true,
-      },
+      nsfw: true,
+      explicit: true,
       guildOnly: false,
       throttling: {
         usages: 2,

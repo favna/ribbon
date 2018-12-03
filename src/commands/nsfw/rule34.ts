@@ -1,6 +1,6 @@
 /**
- * @file nsfw Rule34Command - Gets a NSFW image from rule34  
- * Can only be used in NSFW marked channels!  
+ * @file nsfw Rule34Command - Gets a NSFW image from rule34
+ * Can only be used in NSFW marked channels!
  * **Aliases**: `r34`
  * @module
  * @category nsfw
@@ -25,9 +25,8 @@ export default class Rule34Command extends Command {
       description: 'Find NSFW Content on Rule34',
       format: 'NSFWToLookUp',
       examples: [ 'rule34 Pyrrha Nikos' ],
-      nsfw: {
-          explicit: true,
-      },
+      nsfw: true,
+      explicit: true,
       guildOnly: false,
       throttling: {
         usages: 2,

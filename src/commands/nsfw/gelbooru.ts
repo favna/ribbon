@@ -25,9 +25,8 @@ export default class GelbooruCommand extends Command {
       description: 'Find NSFW Content on gelbooru',
       format: 'NSFWToLookUp',
       examples: [ 'gelbooru Pyrrha Nikos' ],
-      nsfw: {
-          explicit: true,
-      },
+      nsfw: true,
+      explicit: true,
       guildOnly: false,
       throttling: {
         usages: 2,

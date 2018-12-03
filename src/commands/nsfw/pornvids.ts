@@ -1,6 +1,6 @@
 /**
- * @file nsfw PornVidsCommand - Gets a NSFW video from pornhub  
- * Can only be used in NSFW marked channels!  
+ * @file nsfw PornVidsCommand - Gets a NSFW video from pornhub
+ * Can only be used in NSFW marked channels!
  * **Aliases**: `porn`, `nsfwvids`
  * @module
  * @category nsfw
@@ -25,9 +25,8 @@ export default class PornVidsCommand extends Command {
       description: 'Search porn videos',
       format: 'NSFWToLookUp',
       examples: [ 'pornvids babe' ],
-      nsfw: {
-          explicit: true,
-      },
+      nsfw: true,
+      explicit: true,
       guildOnly: false,
       throttling: {
         usages: 2,

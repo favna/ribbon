@@ -25,9 +25,8 @@ export default class PahealCommand extends Command {
       description: 'Find NSFW Content on Rule34 - Paheal',
       format: 'NSFWToLookUp',
       examples: [ 'paheal Pyrrha Nikos' ],
-      nsfw: {
-          explicit: true,
-      },
+      nsfw: true,
+      explicit: true,
       guildOnly: false,
       throttling: {
         usages: 2,
