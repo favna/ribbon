@@ -6,3 +6,4 @@ export * from './ms';
 export * from './querystring';
 export * from './util';
 export * from './zalgolize';
+export * from './interfaces';

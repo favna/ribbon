@@ -1,6 +1,8 @@
 /**
  * @file nsfw GelbooruCommand - Gets a NSFW image from gelbooru
+ *
  * Can only be used in NSFW marked channels!
+ *
  * **Aliases**: `gel`, `booru`
  * @module
  * @category nsfw
@@ -43,41 +45,40 @@ export default class GelbooruCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { tags }: {tags: Array<string>}) {
-    try {
-      startTyping(msg);
+    public async run (msg: CommandoMessage, { tags }: { tags: Array<string> }) {
+        try {
+            startTyping(msg);
 
-      const search = await booru.search('gelbooru', tags, {
-          limit: 1,
-          random: true,
-        });
-      const common = await booru.commonfy(search);
-      const embed = new MessageEmbed();
-      const imageTags = [];
+            const search = await booru.search('gelbooru', tags, {
+                limit: 1,
+                random: true,
+            });
+            const common = await booru.commonfy(search);
+            const embed = new MessageEmbed();
+            const imageTags = [];
 
-      for (const tag in common[0].common.tags) {
-        imageTags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
-      }
+            for (const tag in common[0].common.tags) {
+                imageTags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
+            }
 
-      embed
-        .setTitle(`gelbooru image for ${tags.join(', ')}`)
-        .setURL(common[0].common.file_url)
-        .setColor('#FFB6C1')
-        .setDescription(stripIndents`${imageTags.slice(0, 5).join(' ')}
+            embed
+                .setTitle(`gelbooru image for ${tags.join(', ')}`)
+                .setURL(common[0].common.file_url)
+                .setColor('#FFB6C1')
+                .setDescription(stripIndents`${imageTags.slice(0, 5).join(' ')}
+    				**Score**: ${common[0].common.score}`)
+                .setImage(common[0].common.file_url);
 
-				**Score**: ${common[0].common.score}`)
-        .setImage(common[0].common.file_url);
+            deleteCommandMessages(msg, this.client);
+            stopTyping(msg);
 
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
+            return msg.embed(embed);
 
-      return msg.embed(embed);
+        } catch (err) {
+            deleteCommandMessages(msg, this.client);
+            stopTyping(msg);
 
-    } catch (err) {
-      deleteCommandMessages(msg, this.client);
-      stopTyping(msg);
-
-      return msg.reply(`no juicy images found for \`${tags}\``);
+            return msg.reply(`no juicy images found for \`${tags}\``);
+        }
     }
-  }
 }
