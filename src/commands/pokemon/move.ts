@@ -71,9 +71,14 @@ export default class MoveCommand extends Command {
             const aliasFuse = new Fuse(MoveAliases, moveOptions);
             const moveFuse = new Fuse(BattleMovedex, moveOptions);
             const aliasSearch = aliasFuse.search(move);
-            const moveSearch = aliasSearch.length
-                ? moveFuse.search(aliasSearch[0].move)
-                : moveFuse.search(move);
+            let moveSearch = moveFuse.search(move);
+            if (!moveSearch.length) {
+                moveSearch = aliasSearch.length
+                    ? moveFuse.search(aliasSearch[0].move)
+                    : [];
+            }
+            if (!moveSearch.length) throw new Error('no_move');
+            const hit = moveSearch[0];
             const moveEmbed = new MessageEmbed();
 
             moveEmbed
@@ -81,42 +86,34 @@ export default class MoveCommand extends Command {
                 .setThumbnail(
                     'https://favna.xyz/images/ribbonhost/unovadexclosedv2.png'
                 )
-                .addField(
-                    'Description',
-                    moveSearch[0].desc
-                        ? moveSearch[0].desc
-                        : moveSearch[0].shortDesc
-                )
-                .addField('Type', moveSearch[0].type, true)
-                .addField('Base Power', moveSearch[0].basePower, true)
-                .addField('PP', moveSearch[0].pp, true)
-                .addField('Category', moveSearch[0].category, true)
+                .addField('Description', hit.desc ? hit.desc : hit.shortDesc)
+                .addField('Type', hit.type, true)
+                .addField('Base Power', hit.basePower, true)
+                .addField('PP', hit.pp, true)
+                .addField('Category', hit.category, true)
                 .addField(
                     'Accuracy',
-                    typeof moveSearch[0].accuracy === 'boolean'
+                    typeof hit.accuracy === 'boolean'
                         ? 'Certain Success'
-                        : moveSearch[0].accuracy,
+                        : hit.accuracy,
                     true
                 )
-                .addField('Priority', moveSearch[0].priority, true)
+                .addField('Priority', hit.priority, true)
                 .addField(
                     'Target',
-                    moveSearch[0].target === 'normal'
+                    hit.target === 'normal'
                         ? 'One Enemy'
                         : capitalizeFirstLetter(
-                              moveSearch[0].target.replace(/([A-Z])/g, ' $1')
+                              hit.target.replace(/([A-Z])/g, ' $1')
                           ),
                     true
                 )
-                .addField('Contest Condition', moveSearch[0].contestType, true)
+                .addField('Contest Condition', hit.contestType, true)
                 .addField(
                     'Z-Crystal',
-                    moveSearch[0].isZ
+                    hit.isZ
                         ? `${capitalizeFirstLetter(
-                              moveSearch[0].isZ.substring(
-                                  0,
-                                  moveSearch[0].isZ.length - 1
-                              )
+                              hit.isZ.substring(0, hit.isZ.length - 1)
                           )}Z`
                         : 'None',
                     true
@@ -124,15 +121,15 @@ export default class MoveCommand extends Command {
                 .addField(
                     'External Resources',
                     oneLine`
-                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${moveSearch[0].name.replace(
+                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${hit.name.replace(
                         / /g,
                         '_'
                     )}_(move\\))
-                    |  [Smogon](http://www.smogon.com/dex/sm/moves/${moveSearch[0].name.replace(
+                    |  [Smogon](http://www.smogon.com/dex/sm/moves/${hit.name.replace(
                         / /g,
                         '_'
                     )})
-                    |  [PokémonDB](http://pokemondb.net/move/${moveSearch[0].name.replace(
+                    |  [PokémonDB](http://pokemondb.net/move/${hit.name.replace(
                         / /g,
                         '-'
                     )})`
@@ -143,17 +140,13 @@ export default class MoveCommand extends Command {
 
             return msg.embed(
                 moveEmbed,
-                `**${capitalizeFirstLetter(moveSearch[0].name)}**`
+                `**${capitalizeFirstLetter(hit.name)}**`
             );
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            if (
-                /(?:Cannot read property 'desc' of undefined)/i.test(
-                    err.toString()
-                )
-            ) {
+            if (/(?:no_move)/i.test(err.toString())) {
                 return msg.reply(stripIndents`no move found for \`${move}\``);
             }
             const channel = this.client.channels.get(

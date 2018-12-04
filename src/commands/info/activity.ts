@@ -15,7 +15,12 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+    stringify,
+} from '../../components';
 
 export default class ActivityCommand extends Command {
     constructor(client: CommandoClient) {

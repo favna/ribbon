@@ -13,7 +13,12 @@ import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import {
+    capitalizeFirstLetter,
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+} from '../../components';
 import { BattleTypeChart } from '../../data/dex';
 
 export default class TypeCommand extends Command {

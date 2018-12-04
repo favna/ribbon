@@ -10,7 +10,17 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { badwords, caps, duptext, emojis, invites, links, mentions, startTyping, stopTyping } from '../../components';
+import {
+    badwords,
+    caps,
+    duptext,
+    emojis,
+    invites,
+    links,
+    mentions,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class SayCommand extends Command {
     constructor(client: CommandoClient) {

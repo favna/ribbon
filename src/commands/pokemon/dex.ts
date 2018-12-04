@@ -18,7 +18,14 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, IPokeData, startTyping, stopTyping, zalgolize } from '../../components';
+import {
+    capitalizeFirstLetter,
+    deleteCommandMessages,
+    IPokeData,
+    startTyping,
+    stopTyping,
+    zalgolize,
+} from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
 import * as dexEntries from '../../data/dex/flavorText.json';
 import * as smogonFormats from '../../data/dex/formats.json';
@@ -212,9 +219,9 @@ export default class DexCommand extends Command {
                         // @ts-ignore
                         dexEntries[`${poke.num}${poke.forme.toLowerCase()}`][
                             // @ts-ignore
-                        dexEntries[`${poke.num}${poke.forme.toLowerCase()}`]
-                            .length - 1
-                            ].flavor_text;
+                            dexEntries[`${poke.num}${poke.forme.toLowerCase()}`]
+                                .length - 1
+                        ].flavor_text;
                 } else {
                     pokeData.flavors =
                         // @ts-ignore
