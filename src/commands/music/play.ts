@@ -18,28 +18,12 @@
  */
 
 import { oneLine, stripIndents } from 'common-tags';
-import {
-    Guild,
-    GuildChannel,
-    Message,
-    TextChannel,
-    Util,
-    VoiceChannel,
-} from 'discord.js';
+import { Guild, GuildChannel, Message, TextChannel, Util, VoiceChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
 import * as ytdl from 'ytdl-core';
-import {
-    deleteCommandMessages,
-    IMusicCommand,
-    IQueue,
-    parse,
-    Song,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, IMusicCommand, IQueue, parse, Song, startTyping, stopTyping, stringify } from '../../components';
 
 export default class PlaySongCommand extends Command {
     public queue: Map<any, any>;
@@ -184,8 +168,9 @@ export default class PlaySongCommand extends Command {
                 );
             }
 
-            if (!this.queue.get(msg.guild.id).playing)
+            if (!this.queue.get(msg.guild.id).playing) {
                 this.play(msg.guild, this.queue.get(msg.guild.id).songs[0]);
+            }
 
             return null;
         }

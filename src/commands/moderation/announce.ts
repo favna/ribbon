@@ -13,12 +13,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
-import {
-    deleteCommandMessages,
-    modLogMessage,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class NewsCommand extends Command {
     constructor(client: CommandoClient) {
@@ -78,15 +73,18 @@ export default class NewsCommand extends Command {
                 !newsChannel
                     .permissionsFor(msg.guild.me)
                     .has(['SEND_MESSAGES', 'VIEW_CHANNEL'])
-            )
+            ) {
                 throw new Error('noperms');
+            }
 
             newsChannel.startTyping(1);
 
-            if (announce.slice(0, 4) !== 'http')
+            if (announce.slice(0, 4) !== 'http') {
                 announce = `${body.slice(0, 1).toUpperCase()}${body.slice(1)}`;
-            if (msg.attachments.first() && msg.attachments.first().url)
+            }
+            if (msg.attachments.first() && msg.attachments.first().url) {
                 announce += `\n${msg.attachments.first().url}`;
+            }
 
             announceEmbed
                 .setColor('#AAEFE6')

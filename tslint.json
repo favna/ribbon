@@ -80,22 +80,8 @@
         "prefer-object-spread": true,
         "prefer-template": true,
         "promise-function-async": false,
-        "quotemark": [true, "single", "jsx-single"],
         "radix": true,
-        "semicolon": [true, "always"],
-        "space-before-function-paren": [true, "always"],
-        "space-within-parens": [true, 0],
         "switch-default": true,
-        "trailing-comma": [true, {
-            "multiline": {
-                "objects": "always",
-                "arrays": "never",
-                "functions": "never",
-                "typeLiterals": "ignore"
-            },
-            "esSpecCompliant": true,
-            "singleline": "never"
-        }],
         "triple-equals": true
     }
 }

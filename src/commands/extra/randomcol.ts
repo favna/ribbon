@@ -19,11 +19,7 @@ import { stripIndents } from 'common-tags';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Jimp from 'jimp';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class RandomColCommand extends Command {
     constructor(client: CommandoClient) {
@@ -115,12 +111,10 @@ export default class RandomColCommand extends Command {
             colour
         );
 
+        /* tslint:disable:object-literal-sort-keys */
         return {
             r: parseInt(result[1], 16),
-            g: parseInt(
-                result[2],
-                16
-            ) /* tslint:disable-line:object-literal-sort-keys */,
+            g: parseInt(result[2], 16),
             b: parseInt(result[3], 16),
         };
     }

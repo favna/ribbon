@@ -14,13 +14,7 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    modLogMessage,
-    startTyping,
-    stopTyping,
-    validateBool,
-} from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
 
 export default class BadWordsCommand extends Command {
     constructor(client: CommandoClient) {
@@ -107,7 +101,7 @@ export default class BadWordsCommand extends Command {
             )
             .setTimestamp();
 
-        if (msg.guild.settings.get('modlogs', true))
+        if (msg.guild.settings.get('modlogs', true)) {
             modLogMessage(
                 msg,
                 msg.guild,
@@ -115,6 +109,7 @@ export default class BadWordsCommand extends Command {
                 msg.guild.channels.get(modlogChannel) as TextChannel,
                 bwfEmbed
             );
+        }
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);

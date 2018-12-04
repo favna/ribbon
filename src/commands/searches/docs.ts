@@ -14,11 +14,7 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class DocsCommand extends Command {
     private docs: any;
@@ -42,7 +38,7 @@ export default class DocsCommand extends Command {
                     key: 'query',
                     prompt: 'what would you like to find?\n',
                     type: 'string',
-                    parse: (p: string) => p.split(/[\#\.]/),
+                    parse: (p: string) => p.split(/[#.]/),
                 },
                 {
                     key: 'version',
@@ -276,26 +272,30 @@ export default class DocsCommand extends Command {
           }`}
           ${hit.description}`);
 
-                if (hit.props)
+                if (hit.props) {
                     docsEmbed.addField(
                         'Properties',
                         `\`${hit.props.map((p: any) => p.name).join('` `')}\``
                     );
-                if (hit.methods)
+                }
+                if (hit.methods) {
                     docsEmbed.addField(
                         'Methods',
                         `\`${hit.methods.map((m: any) => m.name).join('` `')}\``
                     );
-                if (hit.events)
+                }
+                if (hit.events) {
                     docsEmbed.addField(
                         'Events',
                         `\`${hit.events.map((e: any) => e.name).join('` `')}\``
                     );
-                if (hit.type)
+                }
+                if (hit.type) {
                     docsEmbed.addField(
                         'Type',
                         this.joinType(hit.type, version, docs)
                     );
+                }
 
                 docsEmbed.addField(
                     '\u200b',
@@ -344,7 +344,7 @@ export default class DocsCommand extends Command {
         return text
             .replace(/\n/g, ' ')
             .replace(/<\/?(?:info|warn)>/g, '')
-            .replace(/\{@link (.+?)\}/g, '`$1`');
+            .replace(/{@link (.+?)}/g, '`$1`');
     }
 
     private joinType(types: any, version: string, docs: DocsCommand['docs']) {

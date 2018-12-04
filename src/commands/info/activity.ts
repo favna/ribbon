@@ -15,12 +15,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class ActivityCommand extends Command {
     constructor(client: CommandoClient) {
@@ -112,24 +107,26 @@ export default class ActivityCommand extends Command {
                 spotifyData = songInfo.tracks.items[0];
             }
 
-            if (gameIcon)
+            if (gameIcon) {
                 embed.setThumbnail(
                     `https://cdn.discordapp.com/game-assets/${gameIcon.id}/${
                         gameIcon.icon
                     }.png`
                 );
+            }
             embed.addField(
                 this.convertType(activity.type),
                 activity.name,
                 true
             );
 
-            if (activity.url)
+            if (activity.url) {
                 embed.addField(
                     'URL',
                     `[${activity.url.slice(8)}](${activity.url})`,
                     true
                 );
+            }
 
             if (activity.details) {
                 if (

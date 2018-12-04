@@ -17,12 +17,7 @@ import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import {
-    deleteCommandMessages,
-    modLogMessage,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class DeleteWarnCommand extends Command {
     constructor(client: CommandoClient) {
@@ -81,8 +76,9 @@ export default class DeleteWarnCommand extends Command {
                 )
                 .get(member.id);
 
-            if (!query)
+            if (!query) {
                 return msg.reply('that user has no warnings points yet');
+            }
 
             const previousPoints = query.points;
             let newPoints = points === 999999 ? 0 : query.points - points;

@@ -18,14 +18,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import {
-    capitalizeFirstLetter,
-    deleteCommandMessages,
-    IPokeData,
-    startTyping,
-    stopTyping,
-    zalgolize,
-} from '../../components';
+import { capitalizeFirstLetter, deleteCommandMessages, IPokeData, startTyping, stopTyping, zalgolize } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
 import * as dexEntries from '../../data/dex/flavorText.json';
 import * as smogonFormats from '../../data/dex/formats.json';
@@ -122,7 +115,7 @@ export default class DexCommand extends Command {
                 tier: smogonFormats.find(
                     (s: any) =>
                         s.name ===
-                        poke.species.toLowerCase().replace(/(-|%| )/gm, '')
+                        poke.species.toLowerCase().replace(/([-% ])/gm, '')
                 ).tier,
             };
 
@@ -134,7 +127,7 @@ export default class DexCommand extends Command {
                         ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})`
                         : ''
                 }
-        → ${pokeData.evos} **(${poke.evoLevel})**`;
+                → ${pokeData.evos} **(${poke.evoLevel})**`;
 
                 if (
                     pokeFuse.search(poke.prevo).length &&
@@ -210,21 +203,23 @@ export default class DexCommand extends Command {
             }
 
             if (poke.num >= 0) {
-                // @ts-ignore
                 if (
                     poke.forme &&
+                    // @ts-ignore
                     dexEntries[`${poke.num}${poke.forme.toLowerCase()}`]
                 ) {
-                    // @ts-ignore
                     pokeData.flavors =
+                        // @ts-ignore
                         dexEntries[`${poke.num}${poke.forme.toLowerCase()}`][
-                            dexEntries[`${poke.num}${poke.forme.toLowerCase()}`]
-                                .length - 1
-                        ].flavor_text;
+                            // @ts-ignore
+                        dexEntries[`${poke.num}${poke.forme.toLowerCase()}`]
+                            .length - 1
+                            ].flavor_text;
                 } else {
-                    // @ts-ignore
                     pokeData.flavors =
+                        // @ts-ignore
                         dexEntries[poke.num][
+                            // @ts-ignore
                             dexEntries[poke.num].length - 1
                         ].flavor_text;
                 }
@@ -235,11 +230,11 @@ export default class DexCommand extends Command {
                     'https://favna.xyz/images/ribbonhost/pokesprites/unknown.png';
             } else if (shines) {
                 pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${poke.species
-                    .replace(/(%| )/g, '')
+                    .replace(/([% ])/g, '')
                     .toLowerCase()}.png`;
             } else {
                 pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${poke.species
-                    .replace(/(%| )/g, '')
+                    .replace(/([% ])/g, '')
                     .toLowerCase()}.png`;
             }
 
@@ -255,7 +250,7 @@ export default class DexCommand extends Command {
                 .setImage(
                     `https://play.pokemonshowdown.com/sprites/${
                         shines ? 'xyani-shiny' : 'xyani'
-                    }/${poke.species.toLowerCase().replace(/(%| )/g, '')}.gif`
+                    }/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`
                 )
                 .addField('Type(s)', poke.types.join(', '), true)
                 .addField('Abilities', pokeData.abilities, true)
@@ -268,12 +263,13 @@ export default class DexCommand extends Command {
                 .addField('Height', `${poke.heightm}m`, true)
                 .addField('Weight', `${poke.weightkg}kg`, true)
                 .addField('Egg Groups', poke.eggGroups.join(', '), true);
-            if (poke.otherFormes)
+            if (poke.otherFormes) {
                 dexEmbed.addField(
                     'Other Formes',
                     poke.otherFormes.join(', '),
                     true
                 );
+            }
             dexEmbed
                 .addField('Evolutionary Line', pokeData.evos, false)
                 .addField(

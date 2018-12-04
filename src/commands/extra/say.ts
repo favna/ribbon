@@ -10,17 +10,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    badwords,
-    caps,
-    duptext,
-    emojis,
-    invites,
-    links,
-    mentions,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { badwords, caps, duptext, emojis, invites, links, mentions, startTyping, stopTyping } from '../../components';
 
 export default class SayCommand extends Command {
     constructor(client: CommandoClient) {
@@ -71,12 +61,13 @@ export default class SayCommand extends Command {
         ) {
             if (msg.guild.settings.get('caps', false).enabled) {
                 const opts = msg.guild.settings.get('caps');
-                if (caps(msg, opts.threshold, opts.minlength, this.client))
+                if (caps(msg, opts.threshold, opts.minlength, this.client)) {
                     return msg.reply(
                         `you cannot use \`${
                             msg.guild.commandPrefix
                         }say\` to bypass the no excessive capitals filter`
                     );
+                }
             }
             if (msg.guild.settings.get('duptext', false).enabled) {
                 const opts = msg.guild.settings.get('duptext');
@@ -88,21 +79,23 @@ export default class SayCommand extends Command {
                         opts.distance,
                         this.client
                     )
-                )
+                ) {
                     return msg.reply(
                         `you cannot use \`${
                             msg.guild.commandPrefix
                         }say\` to bypass the no duplicate text filter`
                     );
+                }
             }
             if (msg.guild.settings.get('emojis', false).enabled) {
                 const opts = msg.guild.settings.get('emojis');
-                if (emojis(msg, opts.threshold, opts.minlength, this.client))
+                if (emojis(msg, opts.threshold, opts.minlength, this.client)) {
                     return msg.reply(
                         `you cannot use \`${
                             msg.guild.commandPrefix
                         }say\` to bypass the no excessive emojis filter`
                     );
+                }
             }
             /* tslint:disable:max-line-length */
             if (
@@ -112,30 +105,33 @@ export default class SayCommand extends Command {
                     msg.guild.settings.get('badwords').words,
                     this.client
                 )
-            )
+            ) {
                 return msg.reply(
                     `you cannot use \`${
                         msg.guild.commandPrefix
                     }say\` to bypass the no bad words filter`
                 );
+            }
             if (
                 msg.guild.settings.get('invites', false) &&
                 invites(msg, this.client)
-            )
+            ) {
                 return msg.reply(
                     `you cannot use \`${
                         msg.guild.commandPrefix
                     }say\` to bypass the no server invites filter`
                 );
+            }
             if (
                 msg.guild.settings.get('links', false) &&
                 links(msg, this.client)
-            )
+            ) {
                 return msg.reply(
                     `you cannot use \`${
                         msg.guild.commandPrefix
                     }say\` to bypass the no external links filter`
                 );
+            }
             if (
                 msg.guild.settings.get('mentions', false).enabled &&
                 mentions(
@@ -143,12 +139,13 @@ export default class SayCommand extends Command {
                     msg.guild.settings.get('mentions').threshold,
                     this.client
                 )
-            )
+            ) {
                 return msg.reply(
                     `you cannot use \`${
                         msg.guild.commandPrefix
                     }say\` to bypass the no excessive mentions filter`
                 );
+            }
             /* tslint:enable:max-line-length */
         }
 

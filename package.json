@@ -14,9 +14,10 @@
     "url": "https://github.com/favna/ribbon/issues"
   },
   "scripts": {
-    "lint": "tslint -p . -c tslint.json src/**/*.ts",
+    "lint": "tslint -p . -c ./tslint.json src/commands/**/*.ts",
     "lint:fix": "yarn lint --fix",
-    "prettier": "prettier --write --config ./.prettierrc ./src/**/*",
+    "prettier": "prettier --write --config ./.prettierrc ./src/commands/**/*.ts",
+    "format": "yarn prettier && yarn lint:fix",
     "test": "yarn lint && mocha",
     "clean": "rimraf dist/",
     "prebuild": "yarn clean",
@@ -25,8 +26,8 @@
     "docs": "yarn docs:md && yarn docs:json",
     "docs:md": "jsdoc2md --configure ./jsdoc2md.json --template ./docs/template.hbs --files ./src/commands/**/*.ts | tee docs/index.md ../Ribbon.wiki/All-Commands.md > NUL",
     "docs:json": "jsdoc2md --configure ./jsdoc2md.json --json --files ./src/commands/**/*.ts > ../favna.xyz/public/dist/ribbondocs.json",
-    "start": "ts-node src/app.ts test",
-    "start:ribbon": "ts-node src/app.ts"
+    "start": "ts-node ./src/app.ts test",
+    "start:ribbon": "ts-node ./src/app.ts"
   },
   "keywords": [
     "bot",

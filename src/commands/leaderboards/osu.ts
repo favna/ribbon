@@ -14,13 +14,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    roundNumber,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping, stringify } from '../../components';
 
 export default class OsuCommand extends Command {
     constructor(client: CommandoClient) {
@@ -63,8 +57,9 @@ export default class OsuCommand extends Command {
             const osu = await res.json();
             const osuEmbed = new MessageEmbed();
 
-            if (Object.values(osu[0]).includes(null))
+            if (Object.values(osu[0]).includes(null)) {
                 throw new Error('noplayer');
+            }
 
             osuEmbed
                 .setTitle(
