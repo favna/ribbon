@@ -1,4 +1,3 @@
-/* tslint:disable */
 export const BattleAbilities: any = [
     {
         shortDesc: 'Does nothing.',

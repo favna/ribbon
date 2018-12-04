@@ -11,14 +11,7 @@
   "parser": "typescript",
   "overrides": [
     {
-      "files": "*.html",
-      "options": {
-        "parser": "html",
-        "htmlWhitespaceSensitivity": "css"
-      }
-    },
-    {
-      "files": ".prettierrc",
+      "files": [".prettierrc"],
       "options": { "parser": "json" }
     },
     {
@@ -37,12 +30,6 @@
       "files": "*.md",
       "options": {
         "parser": "markdown"
-      }
-    },
-    {
-      "files": "*.scss",
-      "options": {
-        "parser": "scss"
       }
     }
   ]

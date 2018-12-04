@@ -94,8 +94,9 @@ const fmtLong = (fmtLongMs: number) => {
 
 export const ms = (val: any, options: ILongObject = {}): any => {
     if (typeof val === 'string' && val.length > 0) return parse(val);
-    if (typeof val === 'number' && !isNaN(val))
+    if (typeof val === 'number' && !isNaN(val)) {
         return options.long ? fmtLong(val) : fmtShort(val);
+    }
     throw new Error(
         `val is not a non-empty string or valid number. val=${JSON.stringify(
             val

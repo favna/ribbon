@@ -164,7 +164,7 @@ export const validateBool = (bool: boolean) => {
         'disable',
         'disabled',
         '0',
-        '-',
+        '-'
     ];
 
     if (validBools.includes(bool.toString())) return true;
@@ -182,7 +182,7 @@ export class Song {
     public dispatcher: any;
     public playing: boolean;
 
-    constructor(video: any, member: GuildMember) {
+    constructor (video: any, member: GuildMember) {
         this.name = Util.escapeMarkdown(video.title);
         this.id = video.id;
         this.length = video.durationSeconds;
@@ -191,29 +191,29 @@ export class Song {
         this.playing = false;
     }
 
-    get url() {
+    get url () {
         return `https://www.youtube.com/watch?v=${this.id}`;
     }
 
-    get thumbnail() {
+    get thumbnail () {
         return `https://img.youtube.com/vi/${this.id}/mqdefault.jpg`;
     }
 
-    get username() {
+    get username () {
         return Util.escapeMarkdown(
             `${this.member.user.tag} (${this.member.user.id})`
         );
     }
 
-    get avatar() {
+    get avatar () {
         return `${this.member.user.displayAvatarURL({ format: 'png' })}`;
     }
 
-    get lengthString() {
+    get lengthString () {
         return Song.timeString(this.length);
     }
 
-    public static timeString(seconds: number, forceHours = false) {
+    public static timeString (seconds: number, forceHours = false) {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor((seconds % 3600) / 60);
 
@@ -224,11 +224,11 @@ export class Song {
 		`;
     }
 
-    public timeLeft(currentTime: number) {
+    public timeLeft (currentTime: number) {
         return Song.timeString(this.length - currentTime);
     }
 
-    public toString() {
+    public toString () {
         return `${this.name} (${this.lengthString})`;
     }
 }

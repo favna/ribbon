@@ -42,7 +42,7 @@ const chars: any = {
         '͖',
         '͙',
         '͚',
-        '̣',
+        '̣'
     ],
     middle: [
         '̕',
@@ -67,7 +67,7 @@ const chars: any = {
         '̸',
         '̷',
         '͡',
-        '҉',
+        '҉'
     ],
     pattern: null,
     up: [
@@ -120,7 +120,7 @@ const chars: any = {
         '̾',
         '͛',
         '͆',
-        '̚',
+        '̚'
     ],
 };
 

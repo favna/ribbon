@@ -104,7 +104,7 @@ const renderCountdownMessage = (client: CommandoClient) => {
     try {
         const tables = conn
             .prepare(
-                "SELECT name FROM sqlite_master WHERE type='table' AND name != 'sqlite_sequence';"
+                'SELECT name FROM sqlite_master WHERE type=\'table\' AND name != \'sqlite_sequence\';'
             )
             .all();
 
@@ -344,7 +344,7 @@ const renderLottoMessage = (client: CommandoClient) => {
 
     try {
         const tables = conn
-            .prepare("SELECT name FROM sqlite_master WHERE type='table'")
+            .prepare('SELECT name FROM sqlite_master WHERE type=\'table\'')
             .all();
 
         for (const table in tables) {
@@ -440,7 +440,7 @@ const renderTimerMessage = (client: CommandoClient) => {
     try {
         const tables = conn
             .prepare(
-                "SELECT name FROM sqlite_master WHERE type='table' AND name != 'sqlite_sequence';"
+                'SELECT name FROM sqlite_master WHERE type=\'table\' AND name != \'sqlite_sequence\';'
             )
             .all();
 
@@ -957,8 +957,9 @@ export const handleMsg = (
             msg.member.roles.some(ro =>
                 guild.settings.get('automod', []).filterroles.includes(ro.id)
             )
-        )
+        ) {
             return null;
+        }
         if (guild.settings.get('caps', false).enabled) {
             const opts = guild.settings.get('caps');
 
@@ -967,34 +968,41 @@ export const handleMsg = (
         if (guild.settings.get('duptext', false).enabled) {
             const opts = guild.settings.get('duptext');
 
-            if (duptext(msg, opts.within, opts.equals, opts.distance, client))
+            if (duptext(msg, opts.within, opts.equals, opts.distance, client)) {
                 msg.delete();
+            }
         }
         if (guild.settings.get('emojis', false).enabled) {
             const opts = guild.settings.get('emojis');
 
-            if (emojis(msg, opts.threshold, opts.minlength, client))
+            if (emojis(msg, opts.threshold, opts.minlength, client)) {
                 msg.delete();
+            }
         }
         if (
             guild.settings.get('badwords', false).enabled &&
             badwords(msg, guild.settings.get('badwords').words, client)
-        )
+        ) {
             msg.delete();
-        if (guild.settings.get('invites', false) && invites(msg, client))
+        }
+        if (guild.settings.get('invites', false) && invites(msg, client)) {
             msg.delete();
-        if (guild.settings.get('links', false) && links(msg, client))
+        }
+        if (guild.settings.get('links', false) && links(msg, client)) {
             msg.delete();
+        }
         if (
             guild.settings.get('mentions', false).enabled &&
             mentions(msg, guild.settings.get('mentions').threshold, client)
-        )
+        ) {
             msg.delete();
+        }
         if (
             guild.settings.get('slowmode', false).enabled &&
             slowmode(msg, guild.settings.get('slowmode').within, client)
-        )
+        ) {
             msg.delete();
+        }
     }
 };
 
@@ -1019,11 +1027,11 @@ export const handlePresenceUpdate = async (
                         applicationID: '',
                         assets: {
                             largeImage: '',
+                            largeImageURL: () => null,
                             largeText: '',
                             smallImage: '',
-                            smallText: '',
-                            largeImageURL: () => null,
                             smallImageURL: () => null,
+                            smallText: '',
                         },
                         details: '',
                         equals: () => null,
@@ -1040,11 +1048,11 @@ export const handlePresenceUpdate = async (
                         applicationID: '',
                         assets: {
                             largeImage: '',
+                            largeImageURL: () => null,
                             largeText: '',
                             smallImage: '',
-                            smallText: '',
-                            largeImageURL: () => null,
                             smallImageURL: () => null,
+                            smallText: '',
                         },
                         details: '',
                         equals: () => null,
