@@ -12,16 +12,21 @@
 
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class DiceCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'dice',
             aliases: ['xdicey', 'roll', 'dicey', 'die'],
             group: 'games',
             memberName: 'dice',
-            description: 'Rolls some dice with some sides. Great for the DnD players!',
+            description:
+                'Rolls some dice with some sides. Great for the DnD players!',
             format: 'SidesOfTheDice AmountOfRolls',
             examples: ['dice 6 5'],
             guildOnly: false,
@@ -43,12 +48,15 @@ export default class DiceCommand extends Command {
                     type: 'integer',
                     max: 40,
                     min: 1,
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { sides, rolls }: { sides: number, rolls: number }) {
+    public run(
+        msg: CommandoMessage,
+        { sides, rolls }: { sides: number; rolls: number }
+    ) {
         startTyping(msg);
         const diceEmbed = new MessageEmbed();
         const res = [];
@@ -70,14 +78,18 @@ export default class DiceCommand extends Command {
         return msg.embed(diceEmbed);
     }
 
-    private xdicey (rolls: number, sides: number) {
+    private xdicey(rolls: number, sides: number) {
         const result = [];
 
         for (let i = 1; i < Math.abs(rolls); i++) {
-            result[i - 1] = Math.floor(Math.random() * Math.floor(Math.abs(sides))) + 1;
+            result[i - 1] =
+                Math.floor(Math.random() * Math.floor(Math.abs(sides))) + 1;
         }
 
-        const totalAmount = result.reduce((total, current) => total + current, 0);
+        const totalAmount = result.reduce(
+            (total, current) => total + current,
+            0
+        );
 
         return {
             individual: result,

@@ -11,7 +11,12 @@
 
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    roundNumber,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class EightBallCommand extends Command {
     private predictions = [
@@ -30,14 +35,14 @@ export default class EightBallCommand extends Command {
         'Better not tell you now',
         'Cannot predict now',
         'Concentrate and ask again',
-        'Don\'t count on it',
+        "Don't count on it",
         'My reply is no',
         'My sources say no',
         'Outlook not so good',
-        'Very doubtful'
+        'Very doubtful',
     ];
 
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: '8ball',
             aliases: ['eightball'],
@@ -56,19 +61,25 @@ export default class EightBallCommand extends Command {
                     key: 'question',
                     prompt: 'For what question should I roll a magic 8ball?',
                     type: 'string',
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { question }: { question: string }) {
+    public run(msg: CommandoMessage, { question }: { question: string }) {
         startTyping(msg);
         const eightBallEmbed = new MessageEmbed();
 
         eightBallEmbed
             .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
             .addField(':question: Question', question, false)
-            .addField(':8ball: 8ball', this.predictions[roundNumber(Math.random() * this.predictions.length)], false);
+            .addField(
+                ':8ball: 8ball',
+                this.predictions[
+                    roundNumber(Math.random() * this.predictions.length)
+                ],
+                false
+            );
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);

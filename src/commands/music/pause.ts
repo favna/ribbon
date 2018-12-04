@@ -10,12 +10,17 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, IMusicCommand, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    IMusicCommand,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class PauseSongCommand extends Command {
     private songQueue: any;
 
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'pause',
             aliases: ['shh', 'shhh', 'shhhh', 'shhhhh', 'hush', 'halt'],
@@ -31,15 +36,17 @@ export default class PauseSongCommand extends Command {
         });
     }
 
-    get queue () {
+    get queue() {
         if (!this.songQueue) {
-            this.songQueue = (this.client.registry.resolveCommand('music:play') as IMusicCommand).queue;
+            this.songQueue = (this.client.registry.resolveCommand(
+                'music:play'
+            ) as IMusicCommand).queue;
         }
 
         return this.songQueue;
     }
 
-    public run (msg: CommandoMessage) {
+    public run(msg: CommandoMessage) {
         startTyping(msg);
         const queue = this.queue.get(msg.guild.id);
 
@@ -47,13 +54,17 @@ export default class PauseSongCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply('I am not playing any music right now, why not get me to start something?');
+            return msg.reply(
+                'I am not playing any music right now, why not get me to start something?'
+            );
         }
         if (!queue.songs[0].dispatcher) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply('I can\'t pause a song that hasn\'t even begun playing yet.');
+            return msg.reply(
+                "I can't pause a song that hasn't even begun playing yet."
+            );
         }
         if (!queue.songs[0].playing) {
             deleteCommandMessages(msg, this.client);
@@ -67,6 +78,10 @@ export default class PauseSongCommand extends Command {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
-        return msg.reply(`paused the music. Use \`${msg.guild.commandPrefix}resume\` to continue playing.`);
+        return msg.reply(
+            `paused the music. Use \`${
+                msg.guild.commandPrefix
+            }resume\` to continue playing.`
+        );
     }
 }

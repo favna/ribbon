@@ -10,10 +10,20 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { badwords, caps, duptext, emojis, invites, links, mentions, startTyping, stopTyping } from '../../components';
+import {
+    badwords,
+    caps,
+    duptext,
+    emojis,
+    invites,
+    links,
+    mentions,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class SayCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'say',
             aliases: ['sayd', 'repeat'],
@@ -33,10 +43,12 @@ export default class SayCommand extends Command {
                     prompt: 'What should I say?',
                     type: 'string',
                     validate: (text: string, msg: CommandoMessage) => {
-                        if (msg.content.toLowerCase().includes('@here') ||
+                        if (
+                            msg.content.toLowerCase().includes('@here') ||
                             msg.content.toLowerCase().includes('@everyone') ||
                             msg.cleanContent.toLowerCase().includes('@here') ||
-                            msg.cleanContent.toLowerCase().includes('@everyone')) {
+                            msg.cleanContent.toLowerCase().includes('@everyone')
+                        ) {
                             if (msg.deletable) {
                                 msg.delete();
                             }
@@ -46,31 +58,97 @@ export default class SayCommand extends Command {
 
                         return true;
                     },
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { txt }: { txt: string }) {
-        if (msg.guild && msg.deletable && msg.guild.settings.get('automod', false)) {
-
+    public run(msg: CommandoMessage, { txt }: { txt: string }) {
+        if (
+            msg.guild &&
+            msg.deletable &&
+            msg.guild.settings.get('automod', false)
+        ) {
             if (msg.guild.settings.get('caps', false).enabled) {
                 const opts = msg.guild.settings.get('caps');
-                if (caps(msg, opts.threshold, opts.minlength, this.client)) return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no excessive capitals filter`);
+                if (caps(msg, opts.threshold, opts.minlength, this.client))
+                    return msg.reply(
+                        `you cannot use \`${
+                            msg.guild.commandPrefix
+                        }say\` to bypass the no excessive capitals filter`
+                    );
             }
             if (msg.guild.settings.get('duptext', false).enabled) {
                 const opts = msg.guild.settings.get('duptext');
-                if (duptext(msg, opts.within, opts.equals, opts.distance, this.client)) return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no duplicate text filter`);
+                if (
+                    duptext(
+                        msg,
+                        opts.within,
+                        opts.equals,
+                        opts.distance,
+                        this.client
+                    )
+                )
+                    return msg.reply(
+                        `you cannot use \`${
+                            msg.guild.commandPrefix
+                        }say\` to bypass the no duplicate text filter`
+                    );
             }
             if (msg.guild.settings.get('emojis', false).enabled) {
                 const opts = msg.guild.settings.get('emojis');
-                if (emojis(msg, opts.threshold, opts.minlength, this.client)) return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no excessive emojis filter`);
+                if (emojis(msg, opts.threshold, opts.minlength, this.client))
+                    return msg.reply(
+                        `you cannot use \`${
+                            msg.guild.commandPrefix
+                        }say\` to bypass the no excessive emojis filter`
+                    );
             }
             /* tslint:disable:max-line-length */
-            if (msg.guild.settings.get('badwords', false).enabled && badwords(msg, msg.guild.settings.get('badwords').words, this.client)) return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no bad words filter`);
-            if (msg.guild.settings.get('invites', false) && invites(msg, this.client)) return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no server invites filter`);
-            if (msg.guild.settings.get('links', false) && links(msg, this.client)) return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no external links filter`);
-            if (msg.guild.settings.get('mentions', false).enabled && mentions(msg, msg.guild.settings.get('mentions').threshold, this.client)) return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no excessive mentions filter`);
+            if (
+                msg.guild.settings.get('badwords', false).enabled &&
+                badwords(
+                    msg,
+                    msg.guild.settings.get('badwords').words,
+                    this.client
+                )
+            )
+                return msg.reply(
+                    `you cannot use \`${
+                        msg.guild.commandPrefix
+                    }say\` to bypass the no bad words filter`
+                );
+            if (
+                msg.guild.settings.get('invites', false) &&
+                invites(msg, this.client)
+            )
+                return msg.reply(
+                    `you cannot use \`${
+                        msg.guild.commandPrefix
+                    }say\` to bypass the no server invites filter`
+                );
+            if (
+                msg.guild.settings.get('links', false) &&
+                links(msg, this.client)
+            )
+                return msg.reply(
+                    `you cannot use \`${
+                        msg.guild.commandPrefix
+                    }say\` to bypass the no external links filter`
+                );
+            if (
+                msg.guild.settings.get('mentions', false).enabled &&
+                mentions(
+                    msg,
+                    msg.guild.settings.get('mentions').threshold,
+                    this.client
+                )
+            )
+                return msg.reply(
+                    `you cannot use \`${
+                        msg.guild.commandPrefix
+                    }say\` to bypass the no excessive mentions filter`
+                );
             /* tslint:enable:max-line-length */
         }
 

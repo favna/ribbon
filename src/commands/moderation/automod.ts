@@ -13,10 +13,16 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, Role, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
+import {
+    deleteCommandMessages,
+    modLogMessage,
+    startTyping,
+    stopTyping,
+    validateBool,
+} from '../../components';
 
 export default class AutomodCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'automod',
             aliases: ['botmod', 'skynetmod'],
@@ -41,16 +47,20 @@ export default class AutomodCommand extends Command {
                 },
                 {
                     key: 'roles',
-                    prompt: 'What roles, if any, should be exempt from automod? End with `finish` when you replied all role names (if any)',
+                    prompt:
+                        'What roles, if any, should be exempt from automod? End with `finish` when you replied all role names (if any)',
                     type: 'role',
                     default: '',
                     infinite: true,
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { option, roles }: { option: boolean, roles: Array<Role> }) {
+    public run(
+        msg: CommandoMessage,
+        { option, roles }: { option: boolean; roles: Array<Role> }
+    ) {
         startTyping(msg);
 
         const automodEmbed = new MessageEmbed();
@@ -65,13 +75,29 @@ export default class AutomodCommand extends Command {
         automodEmbed
             .setColor('#3DFFE5')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(stripIndents`**Action:** Automod features are now ${option ? 'enabled' : 'disabled'}
+            .setDescription(
+                stripIndents`**Action:** Automod features are now ${
+                    option ? 'enabled' : 'disabled'
+                }
                 **Notice:** Be sure to enable your desired individual features, they are all off by default!
-                ${roles ? `**Roles exempted from automod**: ${roles.map(val => `\`${val.name}\``).join(', ')}` : ''}`)
+                ${
+                    roles
+                        ? `**Roles exempted from automod**: ${roles
+                              .map(val => `\`${val.name}\``)
+                              .join(', ')}`
+                        : ''
+                }`
+            )
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, automodEmbed);
+            modLogMessage(
+                msg,
+                msg.guild,
+                modlogChannel,
+                msg.guild.channels.get(modlogChannel) as TextChannel,
+                automodEmbed
+            );
         }
 
         deleteCommandMessages(msg, this.client);

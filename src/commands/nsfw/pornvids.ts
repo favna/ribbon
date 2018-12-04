@@ -14,41 +14,50 @@
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+    stringify,
+} from '../../components';
 
 export default class PornVidsCommand extends Command {
-  constructor (client: CommandoClient) {
-    super(client, {
-      name: 'pornvids',
-      aliases: [ 'porn', 'nsfwvids' ],
-      group: 'nsfw',
-      memberName: 'pornvids',
-      description: 'Search porn videos',
-      format: 'NSFWToLookUp',
-      examples: [ 'pornvids babe' ],
-      nsfw: true,
-      explicit: true,
-      guildOnly: false,
-      throttling: {
-        usages: 2,
-        duration: 3,
-      },
-      args: [
-        {
-          key: 'porn',
-          prompt: 'What pornography do you want to find?',
-          type: 'string',
-        }
-      ],
-    });
-  }
+    constructor(client: CommandoClient) {
+        super(client, {
+            name: 'pornvids',
+            aliases: ['porn', 'nsfwvids'],
+            group: 'nsfw',
+            memberName: 'pornvids',
+            description: 'Search porn videos',
+            format: 'NSFWToLookUp',
+            examples: ['pornvids babe'],
+            nsfw: true,
+            explicit: true,
+            guildOnly: false,
+            throttling: {
+                usages: 2,
+                duration: 3,
+            },
+            args: [
+                {
+                    key: 'porn',
+                    prompt: 'What pornography do you want to find?',
+                    type: 'string',
+                },
+            ],
+        });
+    }
 
-    public async run (msg: CommandoMessage, { porn }: { porn: string }) {
+    public async run(msg: CommandoMessage, { porn }: { porn: string }) {
         try {
             startTyping(msg);
 
             const pornEmbed = new MessageEmbed();
-            const res = await fetch(`https://www.pornhub.com/webmasters/search?${stringify({ search: porn })}`);
+            const res = await fetch(
+                `https://www.pornhub.com/webmasters/search?${stringify({
+                    search: porn,
+                })}`
+            );
             const vid = await res.json();
             const vidRandom = Math.floor(Math.random() * vid.videos.length);
 
@@ -57,8 +66,16 @@ export default class PornVidsCommand extends Command {
                 .setTitle(vid.videos[vidRandom].title)
                 .setImage(vid.videos[vidRandom].default_thumb)
                 .setColor('#FFB6C1')
-                .addField('Porn video URL', `[Click Here](${vid.videos[vidRandom].url})`, true)
-                .addField('Porn video duration', `${vid.videos[vidRandom].duration} minutes`, true);
+                .addField(
+                    'Porn video URL',
+                    `[Click Here](${vid.videos[vidRandom].url})`,
+                    true
+                )
+                .addField(
+                    'Porn video duration',
+                    `${vid.videos[vidRandom].duration} minutes`,
+                    true
+                );
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

@@ -1,12 +1,14 @@
 /**
  * @file Music PlaySongCommand - Starts playing music
- * You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it
- * If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing
- * There are 4 ways to queue songs
+ *
+ * You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it.
+ * If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing.
+ * There are 4 ways to queue songs.
  * 1. YouTube Search Query
  * 2. YouTube video URL
  * 3. YouTube playlist URL
  * 4. YouTube video ID
+ *
  * **Aliases**: `add`, `enqueue`, `start`, `join`
  * @module
  * @category music
@@ -16,7 +18,14 @@
  */
 
 import { oneLine, stripIndents } from 'common-tags';
-import { Guild, GuildChannel, Message, TextChannel, Util, VoiceChannel } from 'discord.js';
+import {
+    Guild,
+    GuildChannel,
+    Message,
+    TextChannel,
+    Util,
+    VoiceChannel,
+} from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
@@ -36,7 +45,7 @@ export default class PlaySongCommand extends Command {
     public queue: Map<any, any>;
     private queueVotes: any;
 
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'play',
             aliases: ['add', 'enqueue', 'start', 'join'],
@@ -63,15 +72,20 @@ export default class PlaySongCommand extends Command {
         this.queue = new Map();
     }
 
-    get votes () {
+    get votes() {
         if (!this.queueVotes) {
-            this.queueVotes = (this.client.registry.resolveCommand('music:skip') as IMusicCommand).votes;
+            this.queueVotes = (this.client.registry.resolveCommand(
+                'music:skip'
+            ) as IMusicCommand).votes;
         }
 
         return this.queueVotes;
     }
 
-    public async run (msg: CommandoMessage, { videoQuery }: { videoQuery: string }) {
+    public async run(
+        msg: CommandoMessage,
+        { videoQuery }: { videoQuery: string }
+    ) {
         startTyping(msg);
         const queue = this.queue.get(msg.guild.id);
 
@@ -83,7 +97,9 @@ export default class PlaySongCommand extends Command {
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);
 
-                return msg.reply('please join a voice channel before issuing this command.');
+                return msg.reply(
+                    'please join a voice channel before issuing this command.'
+                );
             }
 
             const permissions = voiceChannel.permissionsFor(msg.client.user);
@@ -92,36 +108,53 @@ export default class PlaySongCommand extends Command {
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);
 
-                return msg.reply('I don\'t have permission to join your voice channel. Fix your server\'s permissions');
+                return msg.reply(
+                    "I don't have permission to join your voice channel. Fix your server's permissions"
+                );
             }
             if (!permissions.has('SPEAK')) {
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);
 
-                return msg.reply('I don\'t have permission to speak in your voice channel. Fix your server\'s permissions');
+                return msg.reply(
+                    "I don't have permission to speak in your voice channel. Fix your server's permissions"
+                );
             }
         } else if (!queue.voiceChannel.members.has(msg.author.id)) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply('please join a voice channel before issuing this command.');
+            return msg.reply(
+                'please join a voice channel before issuing this command.'
+            );
         }
 
-        const statusMsg = (await msg.reply('obtaining video details...') as Message);
+        const statusMsg = (await msg.reply(
+            'obtaining video details...'
+        )) as Message;
 
-        if (videoQuery.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
-            await statusMsg.edit('obtaining playlist videos... (this can take a while for long lists)');
+        if (
+            videoQuery.match(
+                /^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/
+            )
+        ) {
+            await statusMsg.edit(
+                'obtaining playlist videos... (this can take a while for long lists)'
+            );
 
             const playlist = this.getPlaylistID(videoQuery);
             const videos = await this.getPlaylistVideos(playlist);
 
             if (!queue) {
                 const listQueue: IQueue = {
-                    textChannel: (msg.channel as GuildChannel),
+                    textChannel: msg.channel as GuildChannel,
                     voiceChannel,
                     connection: null,
                     songs: [],
-                    volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME),
+                    volume: msg.guild.settings.get(
+                        'defaultVolume',
+                        process.env.DEFAULT_VOLUME
+                    ),
                 };
 
                 this.queue.set(msg.guild.id, listQueue);
@@ -131,7 +164,9 @@ export default class PlaySongCommand extends Command {
                     listQueue.connection = await listQueue.voiceChannel.join();
                 } catch (error) {
                     this.queue.delete(msg.guild.id);
-                    statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
+                    statusMsg.edit(
+                        `${msg.author}, unable to join your voice channel.`
+                    );
                     stopTyping(msg);
 
                     return null;
@@ -139,10 +174,18 @@ export default class PlaySongCommand extends Command {
             }
 
             for (const video of videos) {
-                await this.handlePlaylist(video, playlist, queue, voiceChannel, msg, statusMsg);
+                await this.handlePlaylist(
+                    video,
+                    playlist,
+                    queue,
+                    voiceChannel,
+                    msg,
+                    statusMsg
+                );
             }
 
-            if (!this.queue.get(msg.guild.id).playing) this.play(msg.guild, this.queue.get(msg.guild.id).songs[0]);
+            if (!this.queue.get(msg.guild.id).playing)
+                this.play(msg.guild, this.queue.get(msg.guild.id).songs[0]);
 
             return null;
         }
@@ -158,23 +201,41 @@ export default class PlaySongCommand extends Command {
                 const videoId = await this.getVideoByName(videoQuery);
 
                 if (!videoId) {
-                    return statusMsg.edit(`${msg.author}, there were no search results.`);
+                    return statusMsg.edit(
+                        `${msg.author}, there were no search results.`
+                    );
                 }
 
                 const video = await this.getVideo(videoId);
                 deleteCommandMessages(msg, this.client);
 
-                return this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
+                return this.handleVideo(
+                    video,
+                    queue,
+                    voiceChannel,
+                    msg,
+                    statusMsg
+                );
             } catch (err) {
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);
 
-                return statusMsg.edit(`${msg.author}, couldn't obtain the search result video's details.`);
+                return statusMsg.edit(
+                    `${
+                        msg.author
+                    }, couldn't obtain the search result video's details.`
+                );
             }
         }
     }
 
-    private async handleVideo (video: any, queue: IQueue, voiceChannel: VoiceChannel, msg: CommandoMessage, statusMsg: Message): Promise<any> {
+    private async handleVideo(
+        video: any,
+        queue: IQueue,
+        voiceChannel: VoiceChannel,
+        msg: CommandoMessage,
+        statusMsg: Message
+    ): Promise<any> {
         if (video.durationSeconds === 0) {
             statusMsg.edit(`${msg.author}, you can't play live streams.`);
             stopTyping(msg);
@@ -184,11 +245,14 @@ export default class PlaySongCommand extends Command {
 
         if (!queue) {
             queue = {
-                textChannel: (msg.channel as TextChannel),
+                textChannel: msg.channel as TextChannel,
                 voiceChannel,
                 connection: null,
                 songs: [],
-                volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME),
+                volume: msg.guild.settings.get(
+                    'defaultVolume',
+                    process.env.DEFAULT_VOLUME
+                ),
             };
             this.queue.set(msg.guild.id, queue);
 
@@ -220,7 +284,9 @@ export default class PlaySongCommand extends Command {
                 return null;
             } catch (error) {
                 this.queue.delete(msg.guild.id);
-                statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
+                statusMsg.edit(
+                    `${msg.author}, unable to join your voice channel.`
+                );
                 stopTyping(msg);
 
                 return null;
@@ -243,9 +309,20 @@ export default class PlaySongCommand extends Command {
         }
     }
 
-    private async handlePlaylist (video: any, playlist: any, queue: any, voiceChannel: VoiceChannel, msg: CommandoMessage, statusMsg: Message): Promise<any> {
+    private async handlePlaylist(
+        video: any,
+        playlist: any,
+        queue: any,
+        voiceChannel: VoiceChannel,
+        msg: CommandoMessage,
+        statusMsg: Message
+    ): Promise<any> {
         if (video.durationSeconds === 0) {
-            statusMsg.edit(`${msg.author}, looks like that playlist has a livestream and I cannot play livestreams`);
+            statusMsg.edit(
+                `${
+                    msg.author
+                }, looks like that playlist has a livestream and I cannot play livestreams`
+            );
             stopTyping(msg);
 
             return null;
@@ -271,8 +348,14 @@ export default class PlaySongCommand extends Command {
         statusMsg.edit('', {
             embed: {
                 description: stripIndents`
-                    Adding playlist [${playlist.title}](https://www.youtube.com/playlist?list=${playlist.id}) to the queue!
-                    Check what's been added with: \`${msg.guild.commandPrefix}queue\`!
+                    Adding playlist [${
+                        playlist.title
+                    }](https://www.youtube.com/playlist?list=${
+                    playlist.id
+                }) to the queue!
+                    Check what's been added with: \`${
+                        msg.guild.commandPrefix
+                    }queue\`!
                 `,
                 color: 3447003,
                 author: {
@@ -286,7 +369,7 @@ export default class PlaySongCommand extends Command {
         return null;
     }
 
-    private addSong (msg: CommandoMessage, video: any) {
+    private addSong(msg: CommandoMessage, video: any) {
         const queue = this.queue.get(msg.guild.id);
         const songNumerator = (prev: any, curSong: any) => {
             if (curSong.member.id === msg.author.id) {
@@ -297,22 +380,39 @@ export default class PlaySongCommand extends Command {
         };
 
         if (!this.client.isOwner(msg.author)) {
-            const songMaxLength = msg.guild.settings.get('maxLength', process.env.MAX_LENGTH);
-            const songMaxSongs = msg.guild.settings.get('maxSongs', process.env.MAX_SONGS);
+            const songMaxLength = msg.guild.settings.get(
+                'maxLength',
+                process.env.MAX_LENGTH
+            );
+            const songMaxSongs = msg.guild.settings.get(
+                'maxSongs',
+                process.env.MAX_SONGS
+            );
 
-            if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
+            if (
+                songMaxLength > 0 &&
+                video.durationSeconds > songMaxLength * 60
+            ) {
                 return oneLine`
 					👎 ${Util.escapeMarkdown(video.title)}
 					(${Song.timeString(video.durationSeconds)})
 					is too long. No songs longer than ${songMaxLength} minutes!
 				`;
             }
-            if (queue.songs.some((songIterator: Song) => songIterator.id === video.id)) {
-                return `👎 ${Util.escapeMarkdown(video.title)} is already queued.`;
+            if (
+                queue.songs.some(
+                    (songIterator: Song) => songIterator.id === video.id
+                )
+            ) {
+                return `👎 ${Util.escapeMarkdown(
+                    video.title
+                )} is already queued.`;
             }
 
-            if (songMaxSongs > 0 &&
-                queue.songs.reduce(songNumerator, 0) >= songMaxSongs) {
+            if (
+                songMaxSongs > 0 &&
+                queue.songs.reduce(songNumerator, 0) >= songMaxSongs
+            ) {
                 return `👎 you already have ${songMaxSongs} songs in the queue. Don't hog all the airtime!`;
             }
         }
@@ -326,7 +426,7 @@ export default class PlaySongCommand extends Command {
             `;
     }
 
-    private play (guild: Guild, song: any) {
+    private play(guild: Guild, song: any) {
         const queue = this.queue.get(guild.id);
         const vote = this.votes.get(guild.id);
 
@@ -337,7 +437,9 @@ export default class PlaySongCommand extends Command {
 
         if (!song) {
             if (queue) {
-                queue.textChannel.send('We\'ve run out of songs! Better queue up some more tunes.');
+                queue.textChannel.send(
+                    "We've run out of songs! Better queue up some more tunes."
+                );
                 queue.voiceChannel.leave();
                 this.queue.delete(guild.id);
             }
@@ -361,18 +463,20 @@ export default class PlaySongCommand extends Command {
             quality: 'highestaudio',
             filter: 'audioonly',
             highWaterMark: 12,
-        })
-            .on('error', () => {
-                streamErrored = true;
-                playing.then((msg: CommandoMessage) => msg.edit(`❌ Couldn't play ${song}. What a drag!`));
-                queue.songs.shift();
-                this.play(guild, queue.songs[0]);
-            });
+        }).on('error', () => {
+            streamErrored = true;
+            playing.then((msg: CommandoMessage) =>
+                msg.edit(`❌ Couldn't play ${song}. What a drag!`)
+            );
+            queue.songs.shift();
+            this.play(guild, queue.songs[0]);
+        });
 
-        const dispatcher = queue.connection.play(stream, {
-            fec: true,
-            passes: Number(process.env.PASSES),
-        })
+        const dispatcher = queue.connection
+            .play(stream, {
+                fec: true,
+                passes: Number(process.env.PASSES),
+            })
             .on('end', () => {
                 if (streamErrored) {
                     return;
@@ -381,7 +485,9 @@ export default class PlaySongCommand extends Command {
                 this.play(guild, queue.songs[0]);
             })
             .on('error', (err: any) => {
-                queue.textChannel.send(`An error occurred while playing the song: \`${err}\``);
+                queue.textChannel.send(
+                    `An error occurred while playing the song: \`${err}\``
+                );
             });
 
         dispatcher.setVolumeLogarithmic(queue.volume / 5);
@@ -390,18 +496,22 @@ export default class PlaySongCommand extends Command {
         queue.playing = true;
     }
 
-    private getPlaylistID (url: string) {
+    private getPlaylistID(url: string) {
         return parse(url.split('?')[1]).list;
     }
 
-    private async getPlaylistVideos (id: string) {
+    private async getPlaylistVideos(id: string) {
         try {
-            const request = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?${stringify({
-                key: process.env.GOOGLE_API_KEY,
-                maxResults: 25,
-                part: 'snippet,contentDetails',
-                playlistId: id,
-            })}`);
+            const request = await fetch(
+                `https://www.googleapis.com/youtube/v3/playlistItems?${stringify(
+                    {
+                        key: process.env.GOOGLE_API_KEY,
+                        maxResults: 25,
+                        part: 'snippet,contentDetails',
+                        playlistId: id,
+                    }
+                )}`
+            );
 
             const data = await request.json();
             const arr = [];
@@ -417,15 +527,17 @@ export default class PlaySongCommand extends Command {
         }
     }
 
-    private async getVideoByName (name: string): Promise<string> {
+    private async getVideoByName(name: string): Promise<string> {
         try {
-            const request = await fetch(`https://www.googleapis.com/youtube/v3/search?${stringify({
-                key: process.env.GOOGLE_API_KEY,
-                maxResults: '1',
-                part: 'snippet',
-                q: name,
-                type: 'video',
-            })}`);
+            const request = await fetch(
+                `https://www.googleapis.com/youtube/v3/search?${stringify({
+                    key: process.env.GOOGLE_API_KEY,
+                    maxResults: '1',
+                    part: 'snippet',
+                    q: name,
+                    type: 'video',
+                })}`
+            );
             const data = await request.json();
             const video = data.items[0];
 
@@ -435,7 +547,7 @@ export default class PlaySongCommand extends Command {
         }
     }
 
-    private getVideoID (url: string) {
+    private getVideoID(url: string) {
         if (/youtu\.be/i.test(url)) {
             return this.getVideo(url.match(/\/[a-zA-Z0-9-_]+$/i)[0].slice(1));
         }
@@ -443,20 +555,24 @@ export default class PlaySongCommand extends Command {
         return this.getVideo(parse(url.split('?')[1]).v);
     }
 
-    private async getVideo (id: string) {
+    private async getVideo(id: string) {
         try {
-            const request = await fetch(`https://www.googleapis.com/youtube/v3/videos?${stringify({
-                id,
-                key: process.env.GOOGLE_API_KEY,
-                maxResults: 1,
-                part: 'snippet,contentDetails',
-            })}`);
+            const request = await fetch(
+                `https://www.googleapis.com/youtube/v3/videos?${stringify({
+                    id,
+                    key: process.env.GOOGLE_API_KEY,
+                    maxResults: 1,
+                    part: 'snippet,contentDetails',
+                })}`
+            );
 
             const data = await request.json();
 
             return {
                 duration: data.items[0].contentDetails.duration,
-                durationSeconds: moment.duration(data.items[0].contentDetails.duration).asSeconds(),
+                durationSeconds: moment
+                    .duration(data.items[0].contentDetails.duration)
+                    .asSeconds(),
                 id: data.items[0].id,
                 kind: data.items[0].kind,
                 title: data.items[0].snippet.title,

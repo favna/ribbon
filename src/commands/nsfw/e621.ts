@@ -15,10 +15,14 @@ import * as booru from 'booru';
 import { stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class E621Command extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'e621',
             aliases: ['eee'],
@@ -45,7 +49,7 @@ export default class E621Command extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { tags }: { tags: Array<string> }) {
+    public async run(msg: CommandoMessage, { tags }: { tags: Array<string> }) {
         try {
             startTyping(msg);
 
@@ -58,15 +62,21 @@ export default class E621Command extends Command {
             const imageTags = [];
 
             for (const tag in common[0].common.tags) {
-                imageTags.push(`[#${common[0].common.tags[tag]}](${common[0].common.file_url})`);
+                imageTags.push(
+                    `[#${common[0].common.tags[tag]}](${
+                        common[0].common.file_url
+                    })`
+                );
             }
 
             embed
                 .setTitle(`e621 image for ${tags.join(', ')}`)
                 .setURL(common[0].common.file_url)
                 .setColor('#FFB6C1')
-                .setDescription(stripIndents`${imageTags.slice(0, 5).join(' ')}
-                    **Score**: ${common[0].common.score}`)
+                .setDescription(
+                    stripIndents`${imageTags.slice(0, 5).join(' ')}
+                    **Score**: ${common[0].common.score}`
+                )
                 .setImage(common[0].common.file_url);
 
             deleteCommandMessages(msg, this.client);

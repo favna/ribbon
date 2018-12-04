@@ -10,10 +10,14 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class InviteCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'invite',
             aliases: ['inv', 'links', 'shill'],
@@ -29,7 +33,7 @@ export default class InviteCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage) {
+    public run(msg: CommandoMessage) {
         startTyping(msg);
         const inviteEmbed = new MessageEmbed();
 
@@ -49,6 +53,9 @@ export default class InviteCommand extends Command {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
-        return msg.embed(inviteEmbed, 'Find information on Ribbon here: https://favna.xyz/ribbon');
+        return msg.embed(
+            inviteEmbed,
+            'Find information on Ribbon here: https://favna.xyz/ribbon'
+        );
     }
 }

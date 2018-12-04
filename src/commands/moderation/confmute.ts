@@ -12,10 +12,15 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, Role, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    modLogMessage,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class ConfigureMuteCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'confmute',
             aliases: ['cm', 'configmute'],
@@ -36,12 +41,12 @@ export default class ConfigureMuteCommand extends Command {
                     key: 'role',
                     prompt: 'Which role should be set as the mute role?',
                     type: 'role',
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { role }: { role: Role }) {
+    public run(msg: CommandoMessage, { role }: { role: Role }) {
         startTyping(msg);
 
         const confMuteEmbed = new MessageEmbed();
@@ -52,12 +57,20 @@ export default class ConfigureMuteCommand extends Command {
         confMuteEmbed
             .setColor('#3DFFE5')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(stripIndents`
-                **Action:** Configured mute role to \`${role.name}\``)
+            .setDescription(
+                stripIndents`
+                **Action:** Configured mute role to \`${role.name}\``
+            )
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, confMuteEmbed);
+            modLogMessage(
+                msg,
+                msg.guild,
+                modlogChannel,
+                msg.guild.channels.get(modlogChannel) as TextChannel,
+                confMuteEmbed
+            );
         }
 
         deleteCommandMessages(msg, this.client);

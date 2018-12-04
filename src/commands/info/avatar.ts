@@ -13,10 +13,14 @@
 import { stripIndents } from 'common-tags';
 import { GuildMember, ImageSize, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class AvatarCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'avatar',
             aliases: ['ava'],
@@ -38,25 +42,37 @@ export default class AvatarCommand extends Command {
                 },
                 {
                     key: 'size',
-                    prompt: 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
+                    prompt:
+                        'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
                     type: 'integer',
                     default: 1024,
                     validate: (size: number) => {
-                        const validSizes = ['128', '256', '512', '1024', '2048'];
+                        const validSizes = [
+                            '128',
+                            '256',
+                            '512',
+                            '1024',
+                            '2048',
+                        ];
 
                         if (validSizes.includes(size.toString())) {
                             return true;
                         }
 
-                        return stripIndents`Has to be one of ${validSizes.map(val => `\`${val}\``).join(', ')}
+                        return stripIndents`Has to be one of ${validSizes
+                            .map(val => `\`${val}\``)
+                            .join(', ')}
                             Respond with your new selection or`;
                     },
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { member, size }: { member: GuildMember, size?: ImageSize }) {
+    public run(
+        msg: CommandoMessage,
+        { member, size }: { member: GuildMember; size?: ImageSize }
+    ) {
         startTyping(msg);
         const ava = member.user.displayAvatarURL({ size });
         const embed = new MessageEmbed();
@@ -75,7 +91,7 @@ export default class AvatarCommand extends Command {
         return msg.embed(embed);
     }
 
-    private fetchExt (str: string) {
+    private fetchExt(str: string) {
         return str.substring(str.length - 14, str.length - 8);
     }
 }

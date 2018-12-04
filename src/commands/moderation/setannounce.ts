@@ -12,10 +12,15 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    modLogMessage,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class SetAnnounceCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'setannounce',
             aliases: ['sa', 'setannouncement', 'setannouncements'],
@@ -33,14 +38,15 @@ export default class SetAnnounceCommand extends Command {
             args: [
                 {
                     key: 'channel',
-                    prompt: 'To what channel should I change the announcements?',
+                    prompt:
+                        'To what channel should I change the announcements?',
                     type: 'channel',
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { channel }: { channel: TextChannel }) {
+    public run(msg: CommandoMessage, { channel }: { channel: TextChannel }) {
         startTyping(msg);
 
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
@@ -51,19 +57,26 @@ export default class SetAnnounceCommand extends Command {
         setAnnouncementEmbed
             .setColor('#3DFFE5')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(stripIndents`
+            .setDescription(
+                stripIndents`
                 **Action:** Announcements Channel channel changed
-                **Channel:** <#${channel.id}>`)
+                **Channel:** <#${channel.id}>`
+            )
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, setAnnouncementEmbed);
+            modLogMessage(
+                msg,
+                msg.guild,
+                modlogChannel,
+                msg.guild.channels.get(modlogChannel) as TextChannel,
+                setAnnouncementEmbed
+            );
         }
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
         return msg.embed(setAnnouncementEmbed);
-
     }
 }

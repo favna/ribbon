@@ -18,10 +18,16 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
+import {
+    deleteCommandMessages,
+    modLogMessage,
+    startTyping,
+    stopTyping,
+    validateBool,
+} from '../../components';
 
 export default class DuplicateTextCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'duptext',
             aliases: ['duplicatefilter', 'duplicatetextfilter', 'dtf'],
@@ -49,13 +55,15 @@ export default class DuplicateTextCommand extends Command {
                 },
                 {
                     key: 'within',
-                    prompt: 'Within how many minutes should duplicate messages be checked?',
+                    prompt:
+                        'Within how many minutes should duplicate messages be checked?',
                     type: 'integer',
                     default: 3,
                 },
                 {
                     key: 'equals',
-                    prompt: 'How many similar messages can a member send before any being deleted?',
+                    prompt:
+                        'How many similar messages can a member send before any being deleted?',
                     type: 'integer',
                     default: 2,
                 },
@@ -64,12 +72,20 @@ export default class DuplicateTextCommand extends Command {
                     prompt: 'What is the levenshtein distance you want to use?',
                     type: 'integer',
                     default: 20,
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { option, within, equals, distance }: { option: boolean, within: number, equals: number, distance: number }) {
+    public run(
+        msg: CommandoMessage,
+        {
+            option,
+            within,
+            equals,
+            distance,
+        }: { option: boolean; within: number; equals: number; distance: number }
+    ) {
         startTyping(msg);
 
         const dtfEmbed = new MessageEmbed();
@@ -86,15 +102,43 @@ export default class DuplicateTextCommand extends Command {
         dtfEmbed
             .setColor('#439DFF')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(stripIndents`**Action:** Duplicate text filter has been ${option ? 'enabled' : 'disabled'}
-      ${option ? `**Timeout:** Duplicate text is checked between messages sent in the past ${within} minutes` : ''}
-      ${option ? `**Duplicates:** Members can send ${equals} duplicate messages before any others are deleted` : ''}
-      ${option ? `**Distance:** Messages are deleted if they have a levenshtein distance of at least ${distance}` : ''}
-      ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`)
+            .setDescription(
+                stripIndents`**Action:** Duplicate text filter has been ${
+                    option ? 'enabled' : 'disabled'
+                }
+      ${
+          option
+              ? `**Timeout:** Duplicate text is checked between messages sent in the past ${within} minutes`
+              : ''
+      }
+      ${
+          option
+              ? `**Duplicates:** Members can send ${equals} duplicate messages before any others are deleted`
+              : ''
+      }
+      ${
+          option
+              ? `**Distance:** Messages are deleted if they have a levenshtein distance of at least ${distance}`
+              : ''
+      }
+      ${
+          !msg.guild.settings.get('automod', false)
+              ? `**Notice:** Be sure to enable the general automod toggle with the \`${
+                    msg.guild.commandPrefix
+                }automod\` command!`
+              : ''
+      }`
+            )
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, dtfEmbed);
+            modLogMessage(
+                msg,
+                msg.guild,
+                modlogChannel,
+                msg.guild.channels.get(modlogChannel) as TextChannel,
+                dtfEmbed
+            );
         }
 
         deleteCommandMessages(msg, this.client);

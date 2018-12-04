@@ -1,23 +1,127 @@
 import { roundNumber } from '.';
 
 const chars: any = {
-  all: null,
-  down: [
-    '̖', '̗', '̘', '̙', '̜', '̝', '̞', '̟', '̠', '̤', '̥', '̦', '̩', '̪',
-    '̫', '̬', '̭', '̮', '̯', '̰', '̱', '̲', '̳', '̹', '̺', '̻', '̼', 'ͅ',
-    '͇', '͈', '͉', '͍', '͎', '͓', '͔', '͕', '͖', '͙', '͚', '̣'
-  ],
-  middle: [
-    '̕', '̛', '̀', '́', '͘', '̡', '̢', '̧', '̨', '̴', '̵', '̶', '͏', '͜',
-    '͝', '͞', '͟', '͠', '͢', '̸', '̷', '͡', '҉'
-  ],
-  pattern: null,
-  up: [
-    '̍', '̎', '̄', '̅', '̿', '̑', '̆', '̐', '͒', '͗', '͑', '̇', '̈', '̊',
-    '͂', '̓', '̈́', '͊', '͋', '͌', '̃', '̂', '̌', '͐', '̀', '́', '̋', '̏',
-    '̒', '̓', '̔', '̽', '̉', 'ͣ', 'ͤ', 'ͥ', 'ͦ', 'ͧ', 'ͨ', 'ͩ', 'ͪ', 'ͫ',
-    'ͬ', 'ͭ', 'ͮ', 'ͯ', '̾', '͛', '͆', '̚'
-  ],
+    all: null,
+    down: [
+        '̖',
+        '̗',
+        '̘',
+        '̙',
+        '̜',
+        '̝',
+        '̞',
+        '̟',
+        '̠',
+        '̤',
+        '̥',
+        '̦',
+        '̩',
+        '̪',
+        '̫',
+        '̬',
+        '̭',
+        '̮',
+        '̯',
+        '̰',
+        '̱',
+        '̲',
+        '̳',
+        '̹',
+        '̺',
+        '̻',
+        '̼',
+        'ͅ',
+        '͇',
+        '͈',
+        '͉',
+        '͍',
+        '͎',
+        '͓',
+        '͔',
+        '͕',
+        '͖',
+        '͙',
+        '͚',
+        '̣',
+    ],
+    middle: [
+        '̕',
+        '̛',
+        '̀',
+        '́',
+        '͘',
+        '̡',
+        '̢',
+        '̧',
+        '̨',
+        '̴',
+        '̵',
+        '̶',
+        '͏',
+        '͜',
+        '͝',
+        '͞',
+        '͟',
+        '͠',
+        '͢',
+        '̸',
+        '̷',
+        '͡',
+        '҉',
+    ],
+    pattern: null,
+    up: [
+        '̍',
+        '̎',
+        '̄',
+        '̅',
+        '̿',
+        '̑',
+        '̆',
+        '̐',
+        '͒',
+        '͗',
+        '͑',
+        '̇',
+        '̈',
+        '̊',
+        '͂',
+        '̓',
+        '̈́',
+        '͊',
+        '͋',
+        '͌',
+        '̃',
+        '̂',
+        '̌',
+        '͐',
+        '̀',
+        '́',
+        '̋',
+        '̏',
+        '̒',
+        '̓',
+        '̔',
+        '̽',
+        '̉',
+        'ͣ',
+        'ͤ',
+        'ͥ',
+        'ͦ',
+        'ͧ',
+        'ͨ',
+        'ͩ',
+        'ͪ',
+        'ͫ',
+        'ͬ',
+        'ͭ',
+        'ͮ',
+        'ͯ',
+        '̾',
+        '͛',
+        '͆',
+        '̚',
+    ],
 };
 
 chars.all = [].concat(chars.up, chars.middle, chars.down);
@@ -28,19 +132,19 @@ const multichars = /([\uD800-\uDBFF])([\uDC00-\uDFFF])([\uD800-\uDBFF])?([\uDC00
 const sub = '•';
 
 const split = (str: string) => {
-  const characters = str.replace(multichars, sub).split('');
+    const characters = str.replace(multichars, sub).split('');
 
-  let m = null;
-  let ri = 0;
+    let m = null;
+    let ri = 0;
 
-  /* tslint:disable-next-line:no-conditional-assignment*/
-  while (m = multichars.exec(str)) {
-    m.index -= ri;
-    ri += m[0].length - 1;
-    characters.splice(m.index, 1, m[0]);
-  }
+    /* tslint:disable-next-line:no-conditional-assignment*/
+    while ((m = multichars.exec(str))) {
+        m.index -= ri;
+        ri += m[0].length - 1;
+        characters.splice(m.index, 1, m[0]);
+    }
 
-  return characters;
+    return characters;
 };
 
 const rand = (max: number) => roundNumber(Math.random() * max);
@@ -48,35 +152,35 @@ const rand = (max: number) => roundNumber(Math.random() * max);
 export const banish = (zalgo: string) => zalgo.replace(chars.pattern, '');
 
 export const zalgolize = (text: any) => {
-  text = split(text);
+    text = split(text);
 
-  let result = '';
-  const types: Array<string> = [ 'up', 'middle', 'down' ];
-  const counts: any = {
-    down: rand(8) + 1,
-    middle: rand(3),
-    up: rand(8) + 1,
-  };
+    let result = '';
+    const types: Array<string> = ['up', 'middle', 'down'];
+    const counts: any = {
+        down: rand(8) + 1,
+        middle: rand(3),
+        up: rand(8) + 1,
+    };
 
-  for (const letter of text) {
-    if (chars.pattern.test(letter)) continue;
-    if (letter.length > 1) {
-      result += letter;
-      continue;
+    for (const letter of text) {
+        if (chars.pattern.test(letter)) continue;
+        if (letter.length > 1) {
+            result += letter;
+            continue;
+        }
+
+        result += letter;
+
+        for (const type of types) {
+            const tchars = chars[type];
+            const max = tchars.length - 1;
+            let count = counts[type];
+
+            while (count--) {
+                result += tchars[rand(max)];
+            }
+        }
     }
 
-    result += letter;
-
-    for (const type of types) {
-      const tchars = chars[type];
-      const max = tchars.length - 1;
-      let count = counts[type];
-
-      while (count--) {
-        result += tchars[rand(max)];
-      }
-    }
-  }
-
-  return result;
+    return result;
 };

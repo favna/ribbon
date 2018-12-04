@@ -9,7 +9,7 @@ import { stripIndents } from 'common-tags';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 
 export default class CheckGuildsCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'checkguilds',
             group: 'owner',
@@ -20,12 +20,17 @@ export default class CheckGuildsCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage) {
+    public run(msg: CommandoMessage) {
         const guildList = this.client.guilds.map(m => `${m.name} (${m.id})`);
 
-        return msg.say(stripIndents`\`\`\`The current guild count: ${this.client.guilds.size}
+        return msg.say(
+            stripIndents`\`\`\`The current guild count: ${
+                this.client.guilds.size
+            }
 
         Guild list:
-        ${guildList.join('\n')}\`\`\``, { split: true });
+        ${guildList.join('\n')}\`\`\``,
+            { split: true }
+        );
     }
 }

@@ -13,12 +13,17 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, IMusicCommand, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    IMusicCommand,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class ChangeVolumeCommand extends Command {
     private songQueue: any;
 
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'volume',
             aliases: ['set-volume', 'set-vol', 'vol'],
@@ -26,7 +31,8 @@ export default class ChangeVolumeCommand extends Command {
             memberName: 'volume',
             description: 'Changes the volume.',
             format: '[level]',
-            details: 'The volume level ranges from 0-10. You may specify "up" or "down" to modify the volume level by 2.',
+            details:
+                'The volume level ranges from 0-10. You may specify "up" or "down" to modify the volume level by 2.',
             examples: ['volume', 'volume 7', 'volume up', 'volume down'],
             guildOnly: true,
             throttling: {
@@ -36,15 +42,17 @@ export default class ChangeVolumeCommand extends Command {
         });
     }
 
-    get queue () {
+    get queue() {
         if (!this.songQueue) {
-            this.songQueue = (this.client.registry.resolveCommand('music:play') as IMusicCommand).queue;
+            this.songQueue = (this.client.registry.resolveCommand(
+                'music:play'
+            ) as IMusicCommand).queue;
         }
 
         return this.songQueue;
     }
 
-    public run (msg: CommandoMessage, args: any) {
+    public run(msg: CommandoMessage, args: any) {
         startTyping(msg);
         const queue = this.queue.get(msg.guild.id);
         let volume = null;
@@ -53,7 +61,9 @@ export default class ChangeVolumeCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply('there isn\'t any music playing to change the volume of. Better queue some up!');
+            return msg.reply(
+                "there isn't any music playing to change the volume of. Better queue some up!"
+            );
         }
         if (!args) {
             deleteCommandMessages(msg, this.client);
@@ -65,7 +75,9 @@ export default class ChangeVolumeCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
+            return msg.reply(
+                "you're not in the voice channel. You better not be trying to mess with their mojo, man."
+            );
         }
 
         if (isNaN(volume)) {
@@ -78,7 +90,9 @@ export default class ChangeVolumeCommand extends Command {
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);
 
-                return msg.reply('invalid volume level. The dial goes from 0-10, baby.');
+                return msg.reply(
+                    'invalid volume level. The dial goes from 0-10, baby.'
+                );
             }
         }
 
@@ -91,6 +105,12 @@ export default class ChangeVolumeCommand extends Command {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
-        return msg.reply(`${volume === 11 ? 'this one goes to 11!' : `set the dial to ${volume}.`}`);
+        return msg.reply(
+            `${
+                volume === 11
+                    ? 'this one goes to 11!'
+                    : `set the dial to ${volume}.`
+            }`
+        );
     }
 }

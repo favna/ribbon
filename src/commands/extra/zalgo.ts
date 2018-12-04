@@ -12,10 +12,16 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { banish, deleteCommandMessages, startTyping, stopTyping, zalgolize } from '../../components';
+import {
+    banish,
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+    zalgolize,
+} from '../../components';
 
 export default class ZalgoCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'zalgo',
             aliases: ['trash'],
@@ -34,12 +40,12 @@ export default class ZalgoCommand extends Command {
                     key: 'txt',
                     prompt: 'What should I zalgolize?',
                     type: 'string',
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { txt }: { txt: string }) {
+    public run(msg: CommandoMessage, { txt }: { txt: string }) {
         startTyping(msg);
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);

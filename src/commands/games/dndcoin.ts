@@ -9,10 +9,15 @@
 
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    roundNumber,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class DndCCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'dndcoin',
             aliases: ['coinflip', 'dndc', 'dcoin'],
@@ -28,14 +33,18 @@ export default class DndCCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage) {
+    public run(msg: CommandoMessage) {
         startTyping(msg);
         const coinEmbed = new MessageEmbed();
         const flip = roundNumber(Math.random());
 
         coinEmbed
             .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-            .setImage(flip === 1 ? 'https://favna.xyz/images/ribbonhost/dndheads.png' : 'https://favna.xyz/images/ribbonhost/dndtails.png')
+            .setImage(
+                flip === 1
+                    ? 'https://favna.xyz/images/ribbonhost/dndheads.png'
+                    : 'https://favna.xyz/images/ribbonhost/dndtails.png'
+            )
             .setTitle(`Flipped ${flip === 1 ? 'heads' : 'tails'}`);
 
         deleteCommandMessages(msg, this.client);

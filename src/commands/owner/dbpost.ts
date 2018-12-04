@@ -7,10 +7,14 @@
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class DBPostCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'dbpost',
             group: 'owner',
@@ -21,18 +25,23 @@ export default class DBPostCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage) {
+    public async run(msg: CommandoMessage) {
         try {
             startTyping(msg);
 
-            await fetch(`https://discordbots.org/api/bots/${this.client.user.id}/stats`, {
-                body: JSON.stringify({ server_count: this.client.guilds.size }),
-                headers: {
-                    Authorization: process.env.DISCORD_BOTS_API_KEY,
-                    'Content-Type': 'application/json',
-                },
-                method: 'POST',
-            });
+            await fetch(
+                `https://discordbots.org/api/bots/${this.client.user.id}/stats`,
+                {
+                    body: JSON.stringify({
+                        server_count: this.client.guilds.size,
+                    }),
+                    headers: {
+                        Authorization: process.env.DISCORD_BOTS_API_KEY,
+                        'Content-Type': 'application/json',
+                    },
+                    method: 'POST',
+                }
+            );
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -42,7 +51,9 @@ export default class DBPostCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply('an error occurred updating discordbots.org stats.');
+            return msg.reply(
+                'an error occurred updating discordbots.org stats.'
+            );
         }
     }
 }

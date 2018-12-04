@@ -10,10 +10,14 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class DefaultVolumeCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'defaultvolume',
             aliases: ['defvol'],
@@ -31,18 +35,22 @@ export default class DefaultVolumeCommand extends Command {
             args: [
                 {
                     key: 'volume',
-                    prompt: 'What is the default volume I should set? (\'default\' to reset)',
+                    prompt:
+                        "What is the default volume I should set? ('default' to reset)",
                     type: 'string',
                     default: 'show',
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { volume }: { volume: string }) {
+    public run(msg: CommandoMessage, { volume }: { volume: string }) {
         startTyping(msg);
         if (volume === 'show') {
-            const defaultVolume = msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME);
+            const defaultVolume = msg.guild.settings.get(
+                'defaultVolume',
+                process.env.DEFAULT_VOLUME
+            );
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -53,22 +61,34 @@ export default class DefaultVolumeCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply(`set the default volume level to Ribbon's default (currently ${process.env.DEFAULT_VOLUME}).`);
+            return msg.reply(
+                `set the default volume level to Ribbon's default (currently ${
+                    process.env.DEFAULT_VOLUME
+                }).`
+            );
         } else {
             const defaultVolume = parseInt(volume, 10);
 
-            if (isNaN(defaultVolume) || defaultVolume <= 0 || defaultVolume > 10) {
+            if (
+                isNaN(defaultVolume) ||
+                defaultVolume <= 0 ||
+                defaultVolume > 10
+            ) {
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);
 
-                return msg.reply('invalid number provided. It must be in the range of 0-10.');
+                return msg.reply(
+                    'invalid number provided. It must be in the range of 0-10.'
+                );
             }
 
             msg.guild.settings.set('defaultVolume', defaultVolume);
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply(`set the default volume level to ${defaultVolume}.`);
+            return msg.reply(
+                `set the default volume level to ${defaultVolume}.`
+            );
         }
     }
 }

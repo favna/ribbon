@@ -107,6 +107,9 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_slots">slots</a></dt>
 <dd><p>Casino SlotsCommand - Gamble your chips at the slot machine</p>
 <p><strong>Aliases</strong>: <code>slot</code>, <code>fruits</code></p></dd>
+<dt><a href="#module_weekly">weekly</a></dt>
+<dd><p>Casino WeeklyCommand - Receive your weekly 3500 chips top up</p>
+<p><strong>Aliases</strong>: <code>weeklytopup</code>, <code>weeklybonus</code></p></dd>
 <dt><a href="#module_wheeloffortune">wheeloffortune</a></dt>
 <dd><p>Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune</p>
 <p><strong>Aliases</strong>: <code>wheel</code>, <code>wof</code></p></dd>
@@ -324,6 +327,13 @@ Server admins can disable this command entirely by using the <code>rmt off</code
 <dt><a href="#module_setannounce">setannounce</a></dt>
 <dd><p>Moderation SetAnnounceCommand - Set the channel for the announce command</p>
 <p><strong>Aliases</strong>: <code>sa</code>, <code>setannouncement</code>, <code>setannouncements</code></p></dd>
+<dt><a href="#module_setnonexplicitblock">setnonexplicitblock</a></dt>
+<dd><p>Moderation SetNonExplicitBlockCommand - Toggle whether the bot should block non explicit commands or not</p>
+<p>Some commands can potentially give NSFW results, however they do not show NSFW images (for example, certain definitions on Urban Dictionary).
+    These type of commands are considered non explicit, as opposed to full nsfw commands.
+    By default these commands are blocked outside of NSFW channels, however at staff
+    digression they can be allowed outside of NSFW channels by toggling this option off</p>
+<p><strong>Aliases</strong>: <code>sub</code>, <code>sneb</code>, <code>seb</code>, <code>allowub</code></p></dd>
 <dt><a href="#module_softban">softban</a></dt>
 <dd><p>Moderation SoftbanCommand - Bans a member deleting their messages and then unbans them allowing them to rejoin
     (no invite link is shared)</p>
@@ -424,61 +434,99 @@ Only really useful if you previously locked the channel</p>
     the search</p>
 <p><strong>Aliases</strong>: <code>flavors</code>, <code>dexdata</code>, <code>dexentries</code>, <code>dextext</code>, <code>dextex</code>, <code>dexter</code>, <code>flavour</code>, <code>flavours</code></p></dd>
 <dt><a href="#module_item">item</a></dt>
-<dd><p>Pokémon ItemCommand - Gets information about an item in Pokémon
-For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p></dd>
+<dd><p>Pokémon ItemCommand - Gets information about an item in Pokémon</p>
+<p>For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space</p>
+<p><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p></dd>
 <dt><a href="#module_learn">learn</a></dt>
-<dd><p>Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all<br>Moves split on every <code>,</code>. See examples for usages.<br>You can specify a generation for the match by adding <code>--gen [1-7]</code> anywhere in the list of moves, with <code>[1-7]</code> being a number in that range. Generation defaults to 7<br><strong>Aliases</strong>: <code>learnset</code>, <code>learnall</code></p></dd>
+<dd><p>Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all</p>
+<p>Moves split on every <code>,</code>. See examples for usages.
+You can specify a generation for the match by adding <code>--gen [1-7]</code> anywhere in the list of moves, with <code>[1-7]</code> being a number in that range. Generation defaults to 7</p>
+<p><strong>Aliases</strong>: <code>learnset</code>, <code>learnall</code></p></dd>
 <dt><a href="#module_ability">ability</a></dt>
 <dd><p>Pokémon AbilityCommand - Gets information on an ability in Pokémon</p>
 <p><strong>Aliases</strong>: <code>abilities</code>, <code>abi</code></p></dd>
 <dt><a href="#module_move">move</a></dt>
-<dd><p>Pokémon MoveCommand - Gets information about a move in Pokémon<br>For move names existing of multiple words (for example <code>dragon dance</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>attack</code></p></dd>
+<dd><p>Pokémon MoveCommand - Gets information about a move in Pokémon</p>
+<p>For move names existing of multiple words (for example <code>dragon dance</code>) you can either type it with or without the space</p>
+<p><strong>Aliases</strong>: <code>attack</code></p></dd>
 <dt><a href="#module_TCG">TCG</a></dt>
-<dd><p>Pokémon PokemonTCGCommand - Gets information on a Pokemon card<br>At start of the command you can specify which properties you want to use for the search, the options are <code>name</code>, <code>types</code>, <code>subtype</code>, <code>supertype</code> and <code>hp</code><br>After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search<br>By default only <code>name</code> is used as argument and the supertype is set to pokemon<br>name is the name of the pokemon card<br>types are the types of the pokemon card (only works with pokemon as supertype)<br>subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)<br>supertype specifies the supertype of a card (pokemon, trainer or energy)<br>hp specifies the hp of a pokemon<br><strong>Aliases</strong>: <code>ptcg</code>, <code>tcgo</code></p></dd>
+<dd><p>Pokémon PokemonTCGCommand - Gets information on a Pokemon card</p>
+<p>At start of the command you can specify which properties you want to use for the search, the options are <code>name</code>, <code>types</code>, <code>subtype</code>, <code>supertype</code> and <code>hp</code>.
+After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search.
+By default only <code>name</code> is used as argument and the supertype is set to pokemon</p>
+<ul>
+<li>name is the name of the pokemon card</li>
+<li>types are the types of the pokemon card (only works with pokemon as supertype)</li>
+<li>subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)</li>
+<li>supertype specifies the supertype of a card (pokemon, trainer or energy)</li>
+<li>hp specifies the hp of a pokemon</li>
+</ul>
+<p><strong>Aliases</strong>: <code>ptcg</code>, <code>tcgo</code></p></dd>
 <dt><a href="#module_type">type</a></dt>
-<dd><p>Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types<br><strong>Aliases</strong>: <code>matchup</code>, <code>weakness</code>, <code>advantage</code></p></dd>
+<dd><p>Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types</p>
+<p><strong>Aliases</strong>: <code>matchup</code>, <code>weakness</code>, <code>advantage</code></p></dd>
 <dt><a href="#module_anime">anime</a></dt>
-<dd><p>Searches AnimeCommand - Gets information about any anime from kitsu.io<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code>, <code>kitsu</code></p></dd>
+<dd><p>Searches AnimeCommand - Gets information about any anime from kitsu.io</p>
+<p><strong>Aliases</strong>: <code>ani</code>, <code>mal</code>, <code>kitsu</code></p></dd>
 <dt><a href="#module_cydia">cydia</a></dt>
-<dd><p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories
-Can also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak
+<dd><p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories</p>
+<p>Can also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak
     subreddit</a> and <a href="https://discord.gg/jb">its discord server</a> Server admins can
-    enable the <code>[[]]</code> matching by using the <code>rmt off</code> command
-<strong>Aliases</strong>: <code>cy</code></p></dd>
+    enable the <code>[[]]</code> matching by using the <code>rmt off</code> command</p>
+<p><strong>Aliases</strong>: <code>cy</code></p></dd>
 <dt><a href="#module_define">define</a></dt>
-<dd><p>Searches DefineCommand - Define a word using glosbe<br><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p></dd>
+<dd><p>Searches DefineCommand - Define a word using glosbe</p>
+<p><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p></dd>
 <dt><a href="#module_eshop">eshop</a></dt>
-<dd><p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop<br><strong>Aliases</strong>: <code>shop</code></p></dd>
+<dd><p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop</p>
+<p><strong>Aliases</strong>: <code>shop</code></p></dd>
 <dt><a href="#module_google">google</a></dt>
-<dd><p>Searches GoogleCommand - Gets information through Google<br>Note: prioritizes Knowledge Graphs for better searching<br><strong>Aliases</strong>: <code>search</code>, <code>g</code></p></dd>
+<dd><p>Searches GoogleCommand - Gets information through Google</p>
+<p>Note: prioritizes Knowledge Graphs for better searching</p>
+<p><strong>Aliases</strong>: <code>search</code>, <code>g</code></p></dd>
 <dt><a href="#module_igdb">igdb</a></dt>
-<dd><p>Searches IGDBCommand - Gets information about a game using Internet Game Database (IGDB)<br><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>games</code></p></dd>
+<dd><p>Searches IGDBCommand - Gets information about a game using Internet Game Database (IGDB)</p>
+<p><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>games</code></p></dd>
 <dt><a href="#module_image">image</a></dt>
-<dd><p>Searches ImageCommand - Gets an image through Google Images<br><strong>Aliases</strong>: <code>img</code>, <code>i</code></p></dd>
+<dd><p>Searches ImageCommand - Gets an image through Google Images</p>
+<p><strong>Aliases</strong>: <code>img</code>, <code>i</code></p></dd>
 <dt><a href="#module_itunes">itunes</a></dt>
-<dd><p>Searches iTunesCommand - Search iTunes for music tracks<br><strong>Aliases</strong>: <code>apple</code>, <code>tunes</code></p></dd>
+<dd><p>Searches iTunesCommand - Search iTunes for music tracks</p>
+<p><strong>Aliases</strong>: <code>apple</code>, <code>tunes</code></p></dd>
 <dt><a href="#module_lmgtfy">lmgtfy</a></dt>
-<dd><p>Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url<br><strong>Aliases</strong>: <code>dumb</code></p></dd>
+<dd><p>Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url</p>
+<p><strong>Aliases</strong>: <code>dumb</code></p></dd>
 <dt><a href="#module_manga">manga</a></dt>
-<dd><p>Searches MangaCommand - Gets information about any manga from kitsu.io<br><strong>Aliases</strong>: <code>cartoon</code>, <code>man</code></p></dd>
+<dd><p>Searches MangaCommand - Gets information about any manga from kitsu.io</p>
+<p><strong>Aliases</strong>: <code>cartoon</code>, <code>man</code></p></dd>
 <dt><a href="#module_steam">steam</a></dt>
-<dd><p>Searches SteamCommand - Gets information about a game using Steam<br><strong>Aliases</strong>: <code>valve</code></p></dd>
+<dd><p>Searches SteamCommand - Gets information about a game using Steam</p>
+<p><strong>Aliases</strong>: <code>valve</code></p></dd>
 <dt><a href="#module_tmdb">tmdb</a></dt>
-<dd><p>Searches MovieCommand - Find information about a movie using TheMovieDatabase<br><strong>Aliases</strong>: <code>movie</code></p></dd>
+<dd><p>Searches MovieCommand - Find information about a movie using TheMovieDatabase</p>
+<p><strong>Aliases</strong>: <code>movie</code></p></dd>
 <dt><a href="#module_tvdb">tvdb</a></dt>
-<dd><p>Searches TVCommand - Find information about a TV series using TheMovieDatabase<br><strong>Aliases</strong>: <code>tv</code>, <code>show</code>, <code>serie</code>, <code>series</code></p></dd>
+<dd><p>Searches TVCommand - Find information about a TV series using TheMovieDatabase</p>
+<p><strong>Aliases</strong>: <code>tv</code>, <code>show</code>, <code>serie</code>, <code>series</code></p></dd>
 <dt><a href="#module_urban">urban</a></dt>
-<dd><p>Searches UrbanCommand - Define a word using UrbanDictionary<br><strong>Aliases</strong>: <code>ub</code>, <code>ud</code></p></dd>
+<dd><p>Searches UrbanCommand - Define a word using UrbanDictionary</p>
+<p><strong>Aliases</strong>: <code>ub</code>, <code>ud</code></p></dd>
 <dt><a href="#module_youtube">youtube</a></dt>
-<dd><p>Searches YouTubeCommand - Find a video on YouTube<br>By default returns MessageEmbed. use <code>yts</code> to return just the URL and have in-client playback<br><strong>Aliases</strong>: <code>yt</code>, <code>tube</code>, <code>yts</code></p></dd>
+<dd><p>Searches YouTubeCommand - Find a video on YouTube</p>
+<p>By default returns MessageEmbed. use <code>yts</code> to return just the URL and have in-client playback</p>
+<p><strong>Aliases</strong>: <code>yt</code>, <code>tube</code>, <code>yts</code></p></dd>
 <dt><a href="#module_twitchmonitors">twitchmonitors</a></dt>
-<dd><p>Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor<br><strong>Aliases</strong>: <code>monitors</code>, <code>monitor</code>, <code>twitchmonitor</code></p></dd>
+<dd><p>Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor</p>
+<p><strong>Aliases</strong>: <code>monitors</code>, <code>monitor</code>, <code>twitchmonitor</code></p></dd>
 <dt><a href="#module_twitchoutput">twitchoutput</a></dt>
-<dd><p>Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send<br><strong>Aliases</strong>: <code>output</code>, <code>twitchout</code>, <code>twitchchannel</code></p></dd>
+<dd><p>Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send</p>
+<p><strong>Aliases</strong>: <code>output</code>, <code>twitchout</code>, <code>twitchchannel</code></p></dd>
 <dt><a href="#module_twitchtoggle">twitchtoggle</a></dt>
-<dd><p>Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications<br><strong>Aliases</strong>: <code>twitchon</code>, <code>twitchoff</code></p></dd>
+<dd><p>Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications</p>
+<p><strong>Aliases</strong>: <code>twitchon</code>, <code>twitchoff</code></p></dd>
 <dt><a href="#module_biscuit">biscuit</a></dt>
-<dd><p>Weeb CookieCommand - Steal someone&#39;s 🍪 gnanahahahaha<br><strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p></dd>
+<dd><p>Weeb CookieCommand - Steal someone&#39;s 🍪 gnanahahahaha</p>
+<p><strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p></dd>
 <dt><a href="#module_cuddle">cuddle</a></dt>
 <dd><p>Weeb CuddleCommand - Cuuuuddlleeesss!! 💕!</p></dd>
 <dt><a href="#module_feed">feed</a></dt>
@@ -488,7 +536,8 @@ Can also listens to the pattern of <code>[[SomePackageName]]</code> as is custom
 <dt><a href="#module_kiss">kiss</a></dt>
 <dd><p>Weeb KissCommand - Give someone a kiss ❤!</p></dd>
 <dt><a href="#module_neko">neko</a></dt>
-<dd><p>Weeb NekoCommand - Get a random cute cat girl 😍!<br><strong>Aliases</strong>: <code>catgirl</code></p></dd>
+<dd><p>Weeb NekoCommand - Get a random cute cat girl 😍!
+<strong>Aliases</strong>: <code>catgirl</code></p></dd>
 <dt><a href="#module_pat">pat</a></dt>
 <dd><p>Weeb PatCommand - Pat a good person 🐇!</p></dd>
 <dt><a href="#module_poke">poke</a></dt>
@@ -728,6 +777,13 @@ mchips Rohul
 ```js
 slots 5
 ```
+<a name="module_weekly"></a>
+
+## weekly
+<p>Casino WeeklyCommand - Receive your weekly 3500 chips top up</p>
+<p><strong>Aliases</strong>: <code>weeklytopup</code>, <code>weeklybonus</code></p>
+
+**Category**: casino  
 <a name="module_wheeloffortune"></a>
 
 ## wheeloffortune
@@ -1666,6 +1722,26 @@ selfroles uploader superuploader
 ```js
 setannounce #updates
 ```
+<a name="module_setnonexplicitblock"></a>
+
+## setnonexplicitblock
+<p>Moderation SetNonExplicitBlockCommand - Toggle whether the bot should block non explicit commands or not</p>
+<p>Some commands can potentially give NSFW results, however they do not show NSFW images (for example, certain definitions on Urban Dictionary).
+    These type of commands are considered non explicit, as opposed to full nsfw commands.
+    By default these commands are blocked outside of NSFW channels, however at staff
+    digression they can be allowed outside of NSFW channels by toggling this option off</p>
+<p><strong>Aliases</strong>: <code>sub</code>, <code>sneb</code>, <code>seb</code>, <code>allowub</code></p>
+
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Option | <code>BooleanResolvable</code> | <p>On or Off</p> |
+
+**Example**  
+```js
+setnonexplicitblock off
+```
 <a name="module_softban"></a>
 
 ## softban
@@ -2043,8 +2119,9 @@ flavor dragonite
 <a name="module_item"></a>
 
 ## item
-<p>Pokémon ItemCommand - Gets information about an item in Pokémon
-For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p>
+<p>Pokémon ItemCommand - Gets information about an item in Pokémon</p>
+<p>For item names existing of multiple words (for example <code>life orb</code>) you can either type it with or without the space</p>
+<p><strong>Aliases</strong>: <code>it</code>, <code>bag</code></p>
 
 **Category**: pokemon  
 
@@ -2059,7 +2136,10 @@ item assault vest
 <a name="module_learn"></a>
 
 ## learn
-<p>Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all<br>Moves split on every <code>,</code>. See examples for usages.<br>You can specify a generation for the match by adding <code>--gen [1-7]</code> anywhere in the list of moves, with <code>[1-7]</code> being a number in that range. Generation defaults to 7<br><strong>Aliases</strong>: <code>learnset</code>, <code>learnall</code></p>
+<p>Pokemon LearnCommand - Displays how a Pokemon can learn given moves, if at all</p>
+<p>Moves split on every <code>,</code>. See examples for usages.
+You can specify a generation for the match by adding <code>--gen [1-7]</code> anywhere in the list of moves, with <code>[1-7]</code> being a number in that range. Generation defaults to 7</p>
+<p><strong>Aliases</strong>: <code>learnset</code>, <code>learnall</code></p>
 
 **Category**: pokemon  
 
@@ -2101,7 +2181,9 @@ ability multiscale
 <a name="module_move"></a>
 
 ## move
-<p>Pokémon MoveCommand - Gets information about a move in Pokémon<br>For move names existing of multiple words (for example <code>dragon dance</code>) you can either type it with or without the space<br><strong>Aliases</strong>: <code>attack</code></p>
+<p>Pokémon MoveCommand - Gets information about a move in Pokémon</p>
+<p>For move names existing of multiple words (for example <code>dragon dance</code>) you can either type it with or without the space</p>
+<p><strong>Aliases</strong>: <code>attack</code></p>
 
 **Category**: pokémon  
 
@@ -2116,7 +2198,18 @@ move dragon dance
 <a name="module_TCG"></a>
 
 ## TCG
-<p>Pokémon PokemonTCGCommand - Gets information on a Pokemon card<br>At start of the command you can specify which properties you want to use for the search, the options are <code>name</code>, <code>types</code>, <code>subtype</code>, <code>supertype</code> and <code>hp</code><br>After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search<br>By default only <code>name</code> is used as argument and the supertype is set to pokemon<br>name is the name of the pokemon card<br>types are the types of the pokemon card (only works with pokemon as supertype)<br>subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)<br>supertype specifies the supertype of a card (pokemon, trainer or energy)<br>hp specifies the hp of a pokemon<br><strong>Aliases</strong>: <code>ptcg</code>, <code>tcgo</code></p>
+<p>Pokémon PokemonTCGCommand - Gets information on a Pokemon card</p>
+<p>At start of the command you can specify which properties you want to use for the search, the options are <code>name</code>, <code>types</code>, <code>subtype</code>, <code>supertype</code> and <code>hp</code>.
+After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search.
+By default only <code>name</code> is used as argument and the supertype is set to pokemon</p>
+<ul>
+<li>name is the name of the pokemon card</li>
+<li>types are the types of the pokemon card (only works with pokemon as supertype)</li>
+<li>subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)</li>
+<li>supertype specifies the supertype of a card (pokemon, trainer or energy)</li>
+<li>hp specifies the hp of a pokemon</li>
+</ul>
+<p><strong>Aliases</strong>: <code>ptcg</code>, <code>tcgo</code></p>
 
 **Category**: pokémon  
 
@@ -2131,7 +2224,8 @@ tcg name types subtype
 <a name="module_type"></a>
 
 ## type
-<p>Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types<br><strong>Aliases</strong>: <code>matchup</code>, <code>weakness</code>, <code>advantage</code></p>
+<p>Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types</p>
+<p><strong>Aliases</strong>: <code>matchup</code>, <code>weakness</code>, <code>advantage</code></p>
 
 **Category**: pokémon  
 
@@ -2146,7 +2240,8 @@ type dragon flying
 <a name="module_anime"></a>
 
 ## anime
-<p>Searches AnimeCommand - Gets information about any anime from kitsu.io<br><strong>Aliases</strong>: <code>ani</code>, <code>mal</code>, <code>kitsu</code></p>
+<p>Searches AnimeCommand - Gets information about any anime from kitsu.io</p>
+<p><strong>Aliases</strong>: <code>ani</code>, <code>mal</code>, <code>kitsu</code></p>
 
 **Category**: searches  
 
@@ -2161,11 +2256,11 @@ anime Yu-Gi-Oh Dual Monsters
 <a name="module_cydia"></a>
 
 ## cydia
-<p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories
-Can also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak
+<p>Searches CydiaCommand - Gets info from a package on Cydia, only supports default repositories</p>
+<p>Can also listens to the pattern of <code>[[SomePackageName]]</code> as is custom on the <a href="https://www.reddit.com/r/jailbreak">/r/jailbreak
     subreddit</a> and <a href="https://discord.gg/jb">its discord server</a> Server admins can
-    enable the <code>[[]]</code> matching by using the <code>rmt off</code> command
-<strong>Aliases</strong>: <code>cy</code></p>
+    enable the <code>[[]]</code> matching by using the <code>rmt off</code> command</p>
+<p><strong>Aliases</strong>: <code>cy</code></p>
 
 **Category**: searches  
 
@@ -2180,7 +2275,8 @@ cydia Anemone
 <a name="module_define"></a>
 
 ## define
-<p>Searches DefineCommand - Define a word using glosbe<br><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p>
+<p>Searches DefineCommand - Define a word using glosbe</p>
+<p><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p>
 
 **Category**: searches  
 
@@ -2195,7 +2291,8 @@ define Google
 <a name="module_eshop"></a>
 
 ## eshop
-<p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop<br><strong>Aliases</strong>: <code>shop</code></p>
+<p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop</p>
+<p><strong>Aliases</strong>: <code>shop</code></p>
 
 **Category**: searches  
 
@@ -2210,7 +2307,9 @@ eshop Breath of The Wild
 <a name="module_google"></a>
 
 ## google
-<p>Searches GoogleCommand - Gets information through Google<br>Note: prioritizes Knowledge Graphs for better searching<br><strong>Aliases</strong>: <code>search</code>, <code>g</code></p>
+<p>Searches GoogleCommand - Gets information through Google</p>
+<p>Note: prioritizes Knowledge Graphs for better searching</p>
+<p><strong>Aliases</strong>: <code>search</code>, <code>g</code></p>
 
 **Category**: searches  
 
@@ -2225,7 +2324,8 @@ google Pyrrha Nikos
 <a name="module_igdb"></a>
 
 ## igdb
-<p>Searches IGDBCommand - Gets information about a game using Internet Game Database (IGDB)<br><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>games</code></p>
+<p>Searches IGDBCommand - Gets information about a game using Internet Game Database (IGDB)</p>
+<p><strong>Aliases</strong>: <code>game</code>, <code>moby</code>, <code>games</code></p>
 
 **Category**: searches  
 
@@ -2240,7 +2340,8 @@ igdb Tales of Berseria
 <a name="module_image"></a>
 
 ## image
-<p>Searches ImageCommand - Gets an image through Google Images<br><strong>Aliases</strong>: <code>img</code>, <code>i</code></p>
+<p>Searches ImageCommand - Gets an image through Google Images</p>
+<p><strong>Aliases</strong>: <code>img</code>, <code>i</code></p>
 
 **Category**: searches  
 
@@ -2255,7 +2356,8 @@ image Pyrrha Nikos'
 <a name="module_itunes"></a>
 
 ## itunes
-<p>Searches iTunesCommand - Search iTunes for music tracks<br><strong>Aliases</strong>: <code>apple</code>, <code>tunes</code></p>
+<p>Searches iTunesCommand - Search iTunes for music tracks</p>
+<p><strong>Aliases</strong>: <code>apple</code>, <code>tunes</code></p>
 
 **Category**: searches  
 
@@ -2270,7 +2372,8 @@ itunes dash berlin symphony
 <a name="module_lmgtfy"></a>
 
 ## lmgtfy
-<p>Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url<br><strong>Aliases</strong>: <code>dumb</code></p>
+<p>Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That For You) url</p>
+<p><strong>Aliases</strong>: <code>dumb</code></p>
 
 **Category**: searches  
 
@@ -2285,7 +2388,8 @@ lmgtfy is it legal to kill an ant???
 <a name="module_manga"></a>
 
 ## manga
-<p>Searches MangaCommand - Gets information about any manga from kitsu.io<br><strong>Aliases</strong>: <code>cartoon</code>, <code>man</code></p>
+<p>Searches MangaCommand - Gets information about any manga from kitsu.io</p>
+<p><strong>Aliases</strong>: <code>cartoon</code>, <code>man</code></p>
 
 **Category**: searches  
 
@@ -2300,7 +2404,8 @@ manga Yu-Gi-Oh
 <a name="module_steam"></a>
 
 ## steam
-<p>Searches SteamCommand - Gets information about a game using Steam<br><strong>Aliases</strong>: <code>valve</code></p>
+<p>Searches SteamCommand - Gets information about a game using Steam</p>
+<p><strong>Aliases</strong>: <code>valve</code></p>
 
 **Category**: searches  
 
@@ -2315,7 +2420,8 @@ steam Tales of Berseria
 <a name="module_tmdb"></a>
 
 ## tmdb
-<p>Searches MovieCommand - Find information about a movie using TheMovieDatabase<br><strong>Aliases</strong>: <code>movie</code></p>
+<p>Searches MovieCommand - Find information about a movie using TheMovieDatabase</p>
+<p><strong>Aliases</strong>: <code>movie</code></p>
 
 **Category**: searches  
 
@@ -2330,7 +2436,8 @@ tmdb Pokemon 2000
 <a name="module_tvdb"></a>
 
 ## tvdb
-<p>Searches TVCommand - Find information about a TV series using TheMovieDatabase<br><strong>Aliases</strong>: <code>tv</code>, <code>show</code>, <code>serie</code>, <code>series</code></p>
+<p>Searches TVCommand - Find information about a TV series using TheMovieDatabase</p>
+<p><strong>Aliases</strong>: <code>tv</code>, <code>show</code>, <code>serie</code>, <code>series</code></p>
 
 **Category**: searches  
 
@@ -2345,7 +2452,8 @@ tvdb Pokemon
 <a name="module_urban"></a>
 
 ## urban
-<p>Searches UrbanCommand - Define a word using UrbanDictionary<br><strong>Aliases</strong>: <code>ub</code>, <code>ud</code></p>
+<p>Searches UrbanCommand - Define a word using UrbanDictionary</p>
+<p><strong>Aliases</strong>: <code>ub</code>, <code>ud</code></p>
 
 **Category**: searches  
 
@@ -2360,7 +2468,9 @@ urban Everclear
 <a name="module_youtube"></a>
 
 ## youtube
-<p>Searches YouTubeCommand - Find a video on YouTube<br>By default returns MessageEmbed. use <code>yts</code> to return just the URL and have in-client playback<br><strong>Aliases</strong>: <code>yt</code>, <code>tube</code>, <code>yts</code></p>
+<p>Searches YouTubeCommand - Find a video on YouTube</p>
+<p>By default returns MessageEmbed. use <code>yts</code> to return just the URL and have in-client playback</p>
+<p><strong>Aliases</strong>: <code>yt</code>, <code>tube</code>, <code>yts</code></p>
 
 **Category**: searches  
 
@@ -2375,7 +2485,8 @@ youtube Voldemort Origins of the heir
 <a name="module_twitchmonitors"></a>
 
 ## twitchmonitors
-<p>Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor<br><strong>Aliases</strong>: <code>monitors</code>, <code>monitor</code>, <code>twitchmonitor</code></p>
+<p>Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor</p>
+<p><strong>Aliases</strong>: <code>monitors</code>, <code>monitor</code>, <code>twitchmonitor</code></p>
 
 **Category**: streamwatch  
 
@@ -2390,7 +2501,8 @@ twitchmonitors techagent favna
 <a name="module_twitchoutput"></a>
 
 ## twitchoutput
-<p>Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send<br><strong>Aliases</strong>: <code>output</code>, <code>twitchout</code>, <code>twitchchannel</code></p>
+<p>Streamwatch TwitchOutputCommand - Configures the channel in which twitch notifications are send</p>
+<p><strong>Aliases</strong>: <code>output</code>, <code>twitchout</code>, <code>twitchchannel</code></p>
 
 **Category**: streamwatch  
 
@@ -2405,7 +2517,8 @@ twitchoutput #twitch-notifications
 <a name="module_twitchtoggle"></a>
 
 ## twitchtoggle
-<p>Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications<br><strong>Aliases</strong>: <code>twitchon</code>, <code>twitchoff</code></p>
+<p>Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications</p>
+<p><strong>Aliases</strong>: <code>twitchon</code>, <code>twitchoff</code></p>
 
 **Category**: streamwatch  
 
@@ -2420,7 +2533,8 @@ twitchtoggle enable
 <a name="module_biscuit"></a>
 
 ## biscuit
-<p>Weeb CookieCommand - Steal someone's 🍪 gnanahahahaha<br><strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p>
+<p>Weeb CookieCommand - Steal someone's 🍪 gnanahahahaha</p>
+<p><strong>Aliases</strong>: <code>.biscuit</code>, <code>biscuit</code></p>
 
 **Category**: weeb  
 <a name="module_cuddle"></a>
@@ -2486,7 +2600,8 @@ kiss Pyrrha
 <a name="module_neko"></a>
 
 ## neko
-<p>Weeb NekoCommand - Get a random cute cat girl 😍!<br><strong>Aliases</strong>: <code>catgirl</code></p>
+<p>Weeb NekoCommand - Get a random cute cat girl 😍!
+<strong>Aliases</strong>: <code>catgirl</code></p>
 
 **Category**: weeb  
 **Example**  

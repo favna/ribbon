@@ -16,10 +16,15 @@ import { stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+    stringify,
+} from '../../components';
 
 export default class TimeCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'time',
             aliases: ['citytime'],
@@ -36,33 +41,42 @@ export default class TimeCommand extends Command {
             args: [
                 {
                     key: 'location',
-                    prompt: 'For which location do you want to know the current time?',
+                    prompt:
+                        'For which location do you want to know the current time?',
                     type: 'string',
-                }
+                },
             ],
         });
     }
 
-    public async run (msg: CommandoMessage, { location }: { location: string }) {
+    public async run(msg: CommandoMessage, { location }: { location: string }) {
         try {
             startTyping(msg);
             const cords = await this.getCords(location);
-            const res = await fetch(`http://api.timezonedb.com/v2/get-time-zone?${stringify({
-                by: 'position',
-                format: 'json',
-                key: process.env.TIMEZONE_DB_API_KEY,
-                lat: cords.lat,
-                lng: cords.long,
-            })}`);
+            const res = await fetch(
+                `http://api.timezonedb.com/v2/get-time-zone?${stringify({
+                    by: 'position',
+                    format: 'json',
+                    key: process.env.TIMEZONE_DB_API_KEY,
+                    lat: cords.lat,
+                    lng: cords.long,
+                })}`
+            );
             const time = await res.json();
             const timeEmbed = new MessageEmbed();
 
             timeEmbed
-                .setTitle(`:flag_${time.countryCode.toLowerCase()}: ${cords.address}`)
-                .setDescription(stripIndents`**Current Time:** ${time.formatted.split(' ')[1]}
+                .setTitle(
+                    `:flag_${time.countryCode.toLowerCase()}: ${cords.address}`
+                )
+                .setDescription(
+                    stripIndents`**Current Time:** ${
+                        time.formatted.split(' ')[1]
+                    }
 					**Current Date:** ${time.formatted.split(' ')[0]}
 					**Country:** ${time.countryName}
-					**DST:** ${time.dst}`)
+					**DST:** ${time.dst}`
+                )
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00');
 
             deleteCommandMessages(msg, this.client);
@@ -73,15 +87,19 @@ export default class TimeCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply(`i wasn't able to find a location for \`${location}\``);
+            return msg.reply(
+                `i wasn't able to find a location for \`${location}\``
+            );
         }
     }
 
-    private async getCords (location: string) {
-        const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?${stringify({
-            address: location,
-            key: process.env.GOOGLE_API_KEY,
-        })}`);
+    private async getCords(location: string) {
+        const res = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?${stringify({
+                address: location,
+                key: process.env.GOOGLE_API_KEY,
+            })}`
+        );
         const cords = await res.json();
 
         return {

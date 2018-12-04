@@ -13,14 +13,20 @@ import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping, stringify } from '../../components';
+import {
+    deleteCommandMessages,
+    roundNumber,
+    startTyping,
+    stopTyping,
+    stringify,
+} from '../../components';
 
 export default class RedditCommand extends Command {
     private comments: Array<any>;
     private submitted: Array<any>;
     private about: any;
 
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'reddit',
             aliases: ['red', 'redditor'],
@@ -36,70 +42,123 @@ export default class RedditCommand extends Command {
             args: [
                 {
                     key: 'user',
-                    prompt: 'For what Reddit user do you want to view statistics?',
+                    prompt:
+                        'For what Reddit user do you want to view statistics?',
                     type: 'string',
                     validate: (v: string) => {
-                        if ((/[A-z0-9_-]/).test(v)) {
+                        if (/[A-z0-9_-]/.test(v)) {
                             return true;
                         }
 
                         return 'that is not a valid username, please provide a valid reddit usernmame';
                     },
-                }
+                },
             ],
         });
         this.comments = [];
         this.submitted = [];
     }
 
-    public async run (msg: CommandoMessage, { user }: { user: string }) {
+    public async run(msg: CommandoMessage, { user }: { user: string }) {
         try {
             startTyping(msg);
-            const reply: Message | Array<Message> = await msg.say('`fetching and calculating statistics...`');
+            const reply: Message | Array<Message> = await msg.say(
+                '`fetching and calculating statistics...`'
+            );
 
             await this.fetchData(user);
             this.comments.sort((a: any, b: any) => b.data.score - a.data.score);
 
             const bestComment = {
                 content: this.comments[0].data.body,
-                permalink: `https://reddit.com${this.comments[0].data.permalink}`,
+                permalink: `https://reddit.com${
+                    this.comments[0].data.permalink
+                }`,
                 score: this.comments[0].data.score,
                 subreddit: this.comments[0].data.subreddit,
                 when: moment.unix(this.comments[0].data.created).fromNow(),
             };
             const complexity = roundNumber(this.calculateTextComplexity(), 2);
-            const complexityLevels = ['very low', 'low', 'medium', 'high', 'very high', 'very high'];
+            const complexityLevels = [
+                'very low',
+                'low',
+                'medium',
+                'high',
+                'very high',
+                'very high',
+            ];
             const redditEmbed = new MessageEmbed();
             const worstComment = {
                 content: this.comments[this.comments.length - 1].data.body,
-                permalink: `https://reddit.com${this.comments[this.comments.length - 1].data.permalink}`,
+                permalink: `https://reddit.com${
+                    this.comments[this.comments.length - 1].data.permalink
+                }`,
                 score: this.comments[this.comments.length - 1].data.score,
-                subreddit: this.comments[this.comments.length - 1].data.subreddit,
-                when: moment.unix(this.comments[this.comments.length - 1].data.created).fromNow(),
+                subreddit: this.comments[this.comments.length - 1].data
+                    .subreddit,
+                when: moment
+                    .unix(this.comments[this.comments.length - 1].data.created)
+                    .fromNow(),
             };
 
             redditEmbed
                 .setTitle(`Overview for /u/${user}`)
                 .setURL(`https://www.reddit.com/u/${user}`)
                 .setColor('#FF4500')
-                .setDescription(`Joined Reddit ${moment.unix(this.about.created).format('MMMM Do[,] YYYY')}`)
-                .setFooter('Data is available for the past 1000 comments and submissions (Reddit API limitation)')
+                .setDescription(
+                    `Joined Reddit ${moment
+                        .unix(this.about.created)
+                        .format('MMMM Do[,] YYYY')}`
+                )
+                .setFooter(
+                    'Data is available for the past 1000 comments and submissions (Reddit API limitation)'
+                )
                 .addField('Link Karma', this.about.link_karma, true)
                 .addField('Comment Karma', this.about.comment_karma, true)
                 .addField('Total Comments', this.comments.length, true)
                 .addField('Total Submissions', this.submitted.length, true)
-                .addField('Comment Controversiality', `${roundNumber(this.calculateControversiality(), 1)}%`, true)
-                .addField('Text Complexity', `${complexityLevels[Math.floor(complexity / 20)]} (${roundNumber(complexity, 1)}%)`, true)
+                .addField(
+                    'Comment Controversiality',
+                    `${roundNumber(this.calculateControversiality(), 1)}%`,
+                    true
+                )
+                .addField(
+                    'Text Complexity',
+                    `${
+                        complexityLevels[Math.floor(complexity / 20)]
+                    } (${roundNumber(complexity, 1)}%)`,
+                    true
+                )
                 .addBlankField()
-                .addField('Top 5 Subreddits (by submissions)', this.calculateTopSubredditsSubmissions(), true)
-                .addField('Top 5 Subreddits (by comments)', this.calculateTopSubredditsComments(), true)
+                .addField(
+                    'Top 5 Subreddits (by submissions)',
+                    this.calculateTopSubredditsSubmissions(),
+                    true
+                )
+                .addField(
+                    'Top 5 Subreddits (by comments)',
+                    this.calculateTopSubredditsComments(),
+                    true
+                )
                 .addBlankField()
-                .addField('Best Comment', stripIndents`
-                        ${bestComment.subreddit} **${bestComment.score}** ${bestComment.when} [Permalink](${bestComment.permalink})
-                        ${bestComment.content.slice(0, 900)}`, true)
-                .addField('Worst Comment', stripIndents`
-                        ${worstComment.subreddit} **${worstComment.score}** ${worstComment.when} [Permalink](${worstComment.permalink})
-                        ${worstComment.content.slice(0, 900)}`, true);
+                .addField(
+                    'Best Comment',
+                    stripIndents`
+                        ${bestComment.subreddit} **${bestComment.score}** ${
+                        bestComment.when
+                    } [Permalink](${bestComment.permalink})
+                        ${bestComment.content.slice(0, 900)}`,
+                    true
+                )
+                .addField(
+                    'Worst Comment',
+                    stripIndents`
+                        ${worstComment.subreddit} **${worstComment.score}** ${
+                        worstComment.when
+                    } [Permalink](${worstComment.permalink})
+                        ${worstComment.content.slice(0, 900)}`,
+                    true
+                );
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -110,31 +169,43 @@ export default class RedditCommand extends Command {
         } catch (err) {
             stopTyping(msg);
 
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get(
+                process.env.ISSUE_LOG_CHANNEL_ID
+            ) as TextChannel;
 
             channel.send(stripIndents`
-                <@${this.client.owners[0].id}> Error occurred in \`reddit\` command!
+                <@${
+                    this.client.owners[0].id
+                }> Error occurred in \`reddit\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                **Time:** ${moment(msg.createdTimestamp).format(
+                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
+                )}
                 **User:** ${user}
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
-              Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+            return msg.reply(oneLine`An error occurred but I notified ${
+                this.client.owners[0].username
+            }
+              Want to know more about the error? Join the support server by getting an invite by using the \`${
+                  msg.guild.commandPrefix
+              }invite\` command `);
         }
     }
 
-    private async fetchData (user: any) {
+    private async fetchData(user: any) {
         await this.fetchAbout(user);
         await this.fetchComments(user);
         await this.fetchSubmissions(user);
     }
 
-    private async fetchAbout (user: any): Promise<any> {
+    private async fetchAbout(user: any): Promise<any> {
         try {
-            const res = await fetch(`https://www.reddit.com/user/${user}/about/.json`);
+            const res = await fetch(
+                `https://www.reddit.com/user/${user}/about/.json`
+            );
             const json = await res.json();
             this.about = json.data;
         } catch (err) {
@@ -142,12 +213,14 @@ export default class RedditCommand extends Command {
         }
     }
 
-    private async fetchComments (user: any, after = ''): Promise<any> {
+    private async fetchComments(user: any, after = ''): Promise<any> {
         try {
-            const res = await fetch(`https://www.reddit.com/user/${user}/comments.json?${stringify({
-                after,
-                limit: 100,
-            })}`);
+            const res = await fetch(
+                `https://www.reddit.com/user/${user}/comments.json?${stringify({
+                    after,
+                    limit: 100,
+                })}`
+            );
             const json = await res.json();
             const arr = json.data.children;
 
@@ -163,12 +236,16 @@ export default class RedditCommand extends Command {
         }
     }
 
-    private async fetchSubmissions (user: any, after = ''): Promise<any> {
+    private async fetchSubmissions(user: any, after = ''): Promise<any> {
         try {
-            const res = await fetch(`https://www.reddit.com/user/${user}/submitted.json?${stringify({
-                after,
-                limit: 100,
-            })}`);
+            const res = await fetch(
+                `https://www.reddit.com/user/${user}/submitted.json?${stringify(
+                    {
+                        after,
+                        limit: 100,
+                    }
+                )}`
+            );
             const json = await res.json();
             const arr = json.data.children;
 
@@ -184,7 +261,7 @@ export default class RedditCommand extends Command {
         }
     }
 
-    private calculateControversiality (): number {
+    private calculateControversiality(): number {
         if (!this.comments.length) return 0;
         if (this.comments.length < 5) return 0;
         let count = 0;
@@ -195,10 +272,10 @@ export default class RedditCommand extends Command {
             }
         });
 
-        return count / this.comments.length * 100;
+        return (count / this.comments.length) * 100;
     }
 
-    private calculateTextComplexity () {
+    private calculateTextComplexity() {
         let sentenceCount = 0;
         let syllableCount = 0;
         let wordCount = 0;
@@ -218,7 +295,7 @@ export default class RedditCommand extends Command {
         return this.calculateKincaid(sentenceCount, wordCount, syllableCount);
     }
 
-    private calculateTopSubredditsSubmissions () {
+    private calculateTopSubredditsSubmissions() {
         const subredditCounts: any = [];
         const subreddits: any = {};
 
@@ -240,11 +317,21 @@ export default class RedditCommand extends Command {
         subredditCounts.sort((a: any, b: any) => b.count - a.count);
         subredditCounts.splice(5);
 
-        return stripIndents(subredditCounts.map((val: any, index: any) => `**${index + 1}:** [/r/${val.name}](https://wwww.reddit.com/r/${val.name}) (${val.count})`)
-            .join('\n'));
+        return stripIndents(
+            subredditCounts
+                .map(
+                    (val: any, index: any) =>
+                        `**${index + 1}:** [/r/${
+                            val.name
+                        }](https://wwww.reddit.com/r/${val.name}) (${
+                            val.count
+                        })`
+                )
+                .join('\n')
+        );
     }
 
-    private calculateTopSubredditsComments () {
+    private calculateTopSubredditsComments() {
         const subredditCounts: any = [];
         const subreddits: any = {};
 
@@ -266,11 +353,21 @@ export default class RedditCommand extends Command {
         subredditCounts.sort((a: any, b: any) => b.count - a.count);
         subredditCounts.splice(5);
 
-        return stripIndents(subredditCounts.map((val: any, index: any) => `**${index + 1}:** [/r/${val.name}](https://wwww.reddit.com/r/${val.name}) (${val.count})`)
-            .join('\n'));
+        return stripIndents(
+            subredditCounts
+                .map(
+                    (val: any, index: any) =>
+                        `**${index + 1}:** [/r/${
+                            val.name
+                        }](https://wwww.reddit.com/r/${val.name}) (${
+                            val.count
+                        })`
+                )
+                .join('\n')
+        );
     }
 
-    private calculateSyllables (word: string) {
+    private calculateSyllables(word: string) {
         word = word.toLowerCase();
         if (word.length <= 3) return 1;
         word = word.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '');
@@ -280,7 +377,11 @@ export default class RedditCommand extends Command {
         return syl ? syl.length : 1;
     }
 
-    private calculateKincaid (sentences: number, words: number, syllables: number) {
+    private calculateKincaid(
+        sentences: number,
+        words: number,
+        syllables: number
+    ) {
         const sentenceWeight = 0.39;
         const wordWeight = 11.8;
         const adjustment = 15.59;

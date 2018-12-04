@@ -20,10 +20,16 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping, stringify } from '../../components';
+import {
+    deleteCommandMessages,
+    roundNumber,
+    startTyping,
+    stopTyping,
+    stringify,
+} from '../../components';
 
 export default class WeatherCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'weather',
             aliases: ['temp', 'forecast', 'fc', 'wth'],
@@ -45,25 +51,30 @@ export default class WeatherCommand extends Command {
             args: [
                 {
                     key: 'location',
-                    prompt: 'For which location do you want to know the weather forecast?',
+                    prompt:
+                        'For which location do you want to know the weather forecast?',
                     type: 'string',
-                }
+                },
             ],
         });
     }
 
-    public mileify (speed: number) {
+    public mileify(speed: number) {
         return speed * 0.6214;
     }
 
-    public async run (msg: CommandoMessage, { location }: { location: string }) {
+    public async run(msg: CommandoMessage, { location }: { location: string }) {
         try {
             startTyping(msg);
             const cords = await this.getCords(location);
-            const res = await fetch(`https://api.darksky.net/forecast/${process.env.DARK_SKY_API_KEY}/${cords.lat},${cords.long}?${stringify({
-                exclude: ['minutely', 'hourly', 'alerts', 'flags'],
-                units: 'si',
-            })}`);
+            const res = await fetch(
+                `https://api.darksky.net/forecast/${
+                    process.env.DARK_SKY_API_KEY
+                }/${cords.lat},${cords.long}?${stringify({
+                    exclude: ['minutely', 'hourly', 'alerts', 'flags'],
+                    units: 'si',
+                })}`
+            );
             const weather = await res.json();
             const weatherEmbed = new MessageEmbed();
 
@@ -72,34 +83,116 @@ export default class WeatherCommand extends Command {
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
                 .setFooter('Powered by DarkSky')
                 .setTimestamp()
-                .setThumbnail(`https://favna.xyz/images/ribbonhost/weather/${weather.currently.icon}.png`)
+                .setThumbnail(
+                    `https://favna.xyz/images/ribbonhost/weather/${
+                        weather.currently.icon
+                    }.png`
+                )
                 .setDescription(weather.daily.summary)
-                .addField('<:windspeed:513156337237098521> Wind Speed', `${weather.currently.windSpeed} km/h (${roundNumber(this.mileify(weather.currently.windSpeed), 2)} mph)`, true)
-                .addField('<:humidity:513156336997892121> Humidity', `${weather.currently.humidity * 100}%`, true)
-                .addField('<:sunrise:513156337325047835> Sunrise', moment(weather.daily.data[0].sunriseTime * 1000)
-                    .format('HH:mm'), true)
-                .addField('<:sunset:513156337287299072> Sunset', moment(weather.daily.data[0].sunsetTime * 1000)
-                    .format('HH:mm'), true)
-                .addField('<:todayhigh:513156337379704832> Today\'s High',
-                    `${weather.daily.data[0].temperatureHigh} °C | ${roundNumber(this.fahrenify(weather.daily.data[0].temperatureHigh), 2)} °F`, true)
-                .addField('<:todaylow:513156337732157440> Today\'s Low',
-                    `${weather.daily.data[0].temperatureLow} °C | ${roundNumber(this.fahrenify(weather.daily.data[0].temperatureLow), 2)} °F`, true)
-                .addField('<:temperature:513156336964337697> Temperature', `${weather.currently.temperature} °C | ${roundNumber(this.fahrenify(weather.currently.temperature), 2)} °F`, true)
-                .addField('<:feelslike:513156337975164928> Feels Like',
-                    `${weather.currently.apparentTemperature} °C | ${roundNumber(this.fahrenify(weather.currently.apparentTemperature), 2)} °F`, true)
-                .addField('<:condition:513156337220190209> Condition', weather.daily.data[0].summary, true)
                 .addField(
-                    `<:forecast:513156337321115667> Forecast ${moment.unix(weather.daily.data[1].time)
-                    .format('dddd MMMM Do')}`,
-                    oneLine`High: ${weather.daily.data[1].temperatureHigh} °C (${roundNumber(this.fahrenify(weather.daily.data[1].temperatureHigh), 2)} °F)
-                            | Low: ${weather.daily.data[1].temperatureLow} °C (${roundNumber(this.fahrenify(weather.daily.data[1].temperatureLow), 2)} °F)`,
-                    false)
+                    '<:windspeed:513156337237098521> Wind Speed',
+                    `${weather.currently.windSpeed} km/h (${roundNumber(
+                        this.mileify(weather.currently.windSpeed),
+                        2
+                    )} mph)`,
+                    true
+                )
                 .addField(
-                    `<:forecast:513156337321115667> Forecast ${moment.unix(weather.daily.data[2].time)
-                    .format('dddd MMMM Do')}`,
-                    oneLine`High: ${weather.daily.data[2].temperatureHigh} °C (${roundNumber(this.fahrenify(weather.daily.data[2].temperatureHigh), 2)} °F)
-                            | Low: ${weather.daily.data[2].temperatureLow} °C (${roundNumber(this.fahrenify(weather.daily.data[2].temperatureLow), 2)} °F)`,
-                    false);
+                    '<:humidity:513156336997892121> Humidity',
+                    `${weather.currently.humidity * 100}%`,
+                    true
+                )
+                .addField(
+                    '<:sunrise:513156337325047835> Sunrise',
+                    moment(weather.daily.data[0].sunriseTime * 1000).format(
+                        'HH:mm'
+                    ),
+                    true
+                )
+                .addField(
+                    '<:sunset:513156337287299072> Sunset',
+                    moment(weather.daily.data[0].sunsetTime * 1000).format(
+                        'HH:mm'
+                    ),
+                    true
+                )
+                .addField(
+                    "<:todayhigh:513156337379704832> Today's High",
+                    `${
+                        weather.daily.data[0].temperatureHigh
+                    } °C | ${roundNumber(
+                        this.fahrenify(weather.daily.data[0].temperatureHigh),
+                        2
+                    )} °F`,
+                    true
+                )
+                .addField(
+                    "<:todaylow:513156337732157440> Today's Low",
+                    `${weather.daily.data[0].temperatureLow} °C | ${roundNumber(
+                        this.fahrenify(weather.daily.data[0].temperatureLow),
+                        2
+                    )} °F`,
+                    true
+                )
+                .addField(
+                    '<:temperature:513156336964337697> Temperature',
+                    `${weather.currently.temperature} °C | ${roundNumber(
+                        this.fahrenify(weather.currently.temperature),
+                        2
+                    )} °F`,
+                    true
+                )
+                .addField(
+                    '<:feelslike:513156337975164928> Feels Like',
+                    `${
+                        weather.currently.apparentTemperature
+                    } °C | ${roundNumber(
+                        this.fahrenify(weather.currently.apparentTemperature),
+                        2
+                    )} °F`,
+                    true
+                )
+                .addField(
+                    '<:condition:513156337220190209> Condition',
+                    weather.daily.data[0].summary,
+                    true
+                )
+                .addField(
+                    `<:forecast:513156337321115667> Forecast ${moment
+                        .unix(weather.daily.data[1].time)
+                        .format('dddd MMMM Do')}`,
+                    oneLine`High: ${
+                        weather.daily.data[1].temperatureHigh
+                    } °C (${roundNumber(
+                        this.fahrenify(weather.daily.data[1].temperatureHigh),
+                        2
+                    )} °F)
+                            | Low: ${
+                                weather.daily.data[1].temperatureLow
+                            } °C (${roundNumber(
+                        this.fahrenify(weather.daily.data[1].temperatureLow),
+                        2
+                    )} °F)`,
+                    false
+                )
+                .addField(
+                    `<:forecast:513156337321115667> Forecast ${moment
+                        .unix(weather.daily.data[2].time)
+                        .format('dddd MMMM Do')}`,
+                    oneLine`High: ${
+                        weather.daily.data[2].temperatureHigh
+                    } °C (${roundNumber(
+                        this.fahrenify(weather.daily.data[2].temperatureHigh),
+                        2
+                    )} °F)
+                            | Low: ${
+                                weather.daily.data[2].temperatureLow
+                            } °C (${roundNumber(
+                        this.fahrenify(weather.daily.data[2].temperatureLow),
+                        2
+                    )} °F)`,
+                    false
+                );
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -108,15 +201,19 @@ export default class WeatherCommand extends Command {
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
-            return msg.reply(`i wasn't able to find a location for \`${location}\``);
+            return msg.reply(
+                `i wasn't able to find a location for \`${location}\``
+            );
         }
     }
 
-    private async getCords (location: string) {
-        const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?${stringify({
-            address: location,
-            key: process.env.GOOGLE_API_KEY,
-        })}`);
+    private async getCords(location: string) {
+        const res = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?${stringify({
+                address: location,
+                key: process.env.GOOGLE_API_KEY,
+            })}`
+        );
         const cords = await res.json();
 
         return {
@@ -126,7 +223,7 @@ export default class WeatherCommand extends Command {
         };
     }
 
-    private fahrenify (temp: number) {
+    private fahrenify(temp: number) {
         return temp * 1.8 + 32;
     }
 }

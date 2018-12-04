@@ -33,3 +33,7 @@ export interface IPokeData {
     tier?: string;
     entries?: Array<any>;
 }
+
+export interface IGenre {
+    name: string;
+}

@@ -14,10 +14,14 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class MathCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'math',
             aliases: ['maths', 'calc'],
@@ -37,12 +41,12 @@ export default class MathCommand extends Command {
                     prompt: 'What is the equation to solve?',
                     type: 'string',
                     parse: (p: string) => p.toLowerCase().replace(/x/gim, '*'),
-                }
+                },
             ],
         });
     }
 
-    public async run (msg: CommandoMessage, { equation }: { equation: string }) {
+    public async run(msg: CommandoMessage, { equation }: { equation: string }) {
         try {
             startTyping(msg);
             const calculator = await fetch('http://api.mathjs.org/v4/', {
@@ -57,7 +61,11 @@ export default class MathCommand extends Command {
             mathEmbed
                 .setTitle('Calculator')
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-                .setDescription(oneLine`The answer to \`${equation.toString()}\` is \`${maths.result}\``);
+                .setDescription(
+                    oneLine`The answer to \`${equation.toString()}\` is \`${
+                        maths.result
+                    }\``
+                );
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -66,23 +74,35 @@ export default class MathCommand extends Command {
         } catch (err) {
             stopTyping(msg);
 
-            if ((/(?:matherr)/i).test(err.toString())) {
-                return msg.reply(oneLine`\`${equation.toString()}\` is is not a supported equation. I use Math.js for my calculations (http://mathjs.org/)`);
+            if (/(?:matherr)/i.test(err.toString())) {
+                return msg.reply(
+                    oneLine`\`${equation.toString()}\` is is not a supported equation. I use Math.js for my calculations (http://mathjs.org/)`
+                );
             }
 
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get(
+                process.env.ISSUE_LOG_CHANNEL_ID
+            ) as TextChannel;
 
             channel.send(stripIndents`
-                <@${this.client.owners[0].id}> Error occurred in \`math\` command!
+                <@${
+                    this.client.owners[0].id
+                }> Error occurred in \`math\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                **Time:** ${moment(msg.createdTimestamp).format(
+                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
+                )}
                 **Input:** \`${equation}\`
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
-                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+            return msg.reply(oneLine`An error occurred but I notified ${
+                this.client.owners[0].username
+            }
+                Want to know more about the error? Join the support server by getting an invite by using the \`${
+                    msg.guild.commandPrefix
+                }invite\` command `);
         }
     }
 }

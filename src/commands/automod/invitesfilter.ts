@@ -12,10 +12,16 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
+import {
+    deleteCommandMessages,
+    modLogMessage,
+    startTyping,
+    stopTyping,
+    validateBool,
+} from '../../components';
 
 export default class InvitesFilterCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'invitesfilter',
             aliases: ['if', 'noinvites'],
@@ -37,12 +43,12 @@ export default class InvitesFilterCommand extends Command {
                     prompt: 'Enable or disable the external links filter?',
                     type: 'boolean',
                     validate: (bool: boolean) => validateBool(bool),
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { option }: { option: boolean }) {
+    public run(msg: CommandoMessage, { option }: { option: boolean }) {
         startTyping(msg);
 
         const ifEmbed = new MessageEmbed();
@@ -53,12 +59,28 @@ export default class InvitesFilterCommand extends Command {
         ifEmbed
             .setColor('#439DFF')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(stripIndents`**Action:** Discord Server invites filter has been ${option ? 'enabled' : 'disabled'}
-      ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`)
+            .setDescription(
+                stripIndents`**Action:** Discord Server invites filter has been ${
+                    option ? 'enabled' : 'disabled'
+                }
+      ${
+          !msg.guild.settings.get('automod', false)
+              ? `**Notice:** Be sure to enable the general automod toggle with the \`${
+                    msg.guild.commandPrefix
+                }automod\` command!`
+              : ''
+      }`
+            )
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, ifEmbed);
+            modLogMessage(
+                msg,
+                msg.guild,
+                modlogChannel,
+                msg.guild.channels.get(modlogChannel) as TextChannel,
+                ifEmbed
+            );
         }
 
         deleteCommandMessages(msg, this.client);

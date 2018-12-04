@@ -18,10 +18,15 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import * as path from 'path';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    modLogMessage,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class CountDownRemove extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'countdownremove',
             aliases: ['cdremove', 'countdowndelete', 'cddelete', 'cdd', 'cdr'],
@@ -29,7 +34,8 @@ export default class CountDownRemove extends Command {
             memberName: 'countdownremove',
             description: 'Remove a specified countdown',
             format: 'CountdownID',
-            details: 'Use the countdownlist command to find the ID for deleting',
+            details:
+                'Use the countdownlist command to find the ID for deleting',
             examples: ['countdownremove 1'],
             guildOnly: true,
             userPermissions: ['MANAGE_MESSAGES'],
@@ -43,44 +49,77 @@ export default class CountDownRemove extends Command {
                     prompt: 'Which countdowns should I delete?',
                     type: 'integer',
                     validate: (v: string, msg: CommandoMessage) => {
-                        const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
-                        const rows = conn.prepare(`SELECT id FROM "${msg.guild.id}";`).all();
+                        const conn = new Database(
+                            path.join(
+                                __dirname,
+                                '../../data/databases/countdowns.sqlite3'
+                            )
+                        );
+                        const rows = conn
+                            .prepare(`SELECT id FROM "${msg.guild.id}";`)
+                            .all();
 
                         if (rows.some(el => el.id === Number(v))) return true;
 
-                        return `that is not an ID of a countdown stored for this guild. You can view all the stored countdowns with the \`${msg.guild.commandPrefix}countdownlist\` command`;
+                        return `that is not an ID of a countdown stored for this guild. You can view all the stored countdowns with the \`${
+                            msg.guild.commandPrefix
+                        }countdownlist\` command`;
                     },
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { id }: { id: string }) {
+    public run(msg: CommandoMessage, { id }: { id: string }) {
         try {
             startTyping(msg);
 
-            const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
+            const conn = new Database(
+                path.join(__dirname, '../../data/databases/countdowns.sqlite3')
+            );
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
             const cdrEmbed = new MessageEmbed();
-            const countdown = conn.prepare(`SELECT * from "${msg.guild.id}" WHERE id=$id`).get({ id });
+            const countdown = conn
+                .prepare(`SELECT * from "${msg.guild.id}" WHERE id=$id`)
+                .get({ id });
 
-            conn.prepare(`DELETE FROM "${msg.guild.id}" WHERE id=$id`).run({ id });
+            conn.prepare(`DELETE FROM "${msg.guild.id}" WHERE id=$id`).run({
+                id,
+            });
 
             cdrEmbed
                 .setColor('#F7F79D')
                 .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-                .setDescription(stripIndents`
+                .setDescription(
+                    stripIndents`
                     **Action:** Countdown removed
-                    **Event was at:** ${moment(countdown.datetime).format('YYYY-MM-DD HH:mm')}
-                    **Countdown Duration:** ${moment.duration(moment(countdown.datetime).diff(moment(), 'days'), 'days')
-                              .format('w [weeks][, ] d [days] [and] h [hours]')}
-                    **Tag on event:** ${countdown.tag === 'none' ? 'No one' : `@${countdown.tag}`}
+                    **Event was at:** ${moment(countdown.datetime).format(
+                        'YYYY-MM-DD HH:mm'
+                    )}
+                    **Countdown Duration:** ${moment
+                        .duration(
+                            moment(countdown.datetime).diff(moment(), 'days'),
+                            'days'
+                        )
+                        .format('w [weeks][, ] d [days] [and] h [hours]')}
+                    **Tag on event:** ${
+                        countdown.tag === 'none'
+                            ? 'No one'
+                            : `@${countdown.tag}`
+                    }
                     **Channel:** <#${countdown.channel}>
-                    **Message:** ${countdown.content}`)
+                    **Message:** ${countdown.content}`
+                )
                 .setTimestamp();
 
             if (msg.guild.settings.get('modlogs', true)) {
-                modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, cdrEmbed);
+                modLogMessage(
+                    msg,
+                    msg.guild,
+                    modlogChannel,
+                    msg.guild.channels.get(modlogChannel) as TextChannel,
+                    cdrEmbed
+                );
             }
 
             deleteCommandMessages(msg, this.client);
@@ -89,21 +128,35 @@ export default class CountDownRemove extends Command {
             return msg.embed(cdrEmbed);
         } catch (err) {
             stopTyping(msg);
-            if ((/(?:no such table)/i).test(err.toString())) {
-                return msg.reply(`no countdowns found for this server. Start saving your first with ${msg.guild.commandPrefix}countdownadd`);
+            if (/(?:no such table)/i.test(err.toString())) {
+                return msg.reply(
+                    `no countdowns found for this server. Start saving your first with ${
+                        msg.guild.commandPrefix
+                    }countdownadd`
+                );
             }
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get(
+                process.env.ISSUE_LOG_CHANNEL_ID
+            ) as TextChannel;
 
             channel.send(stripIndents`
-                <@${this.client.owners[0].id}> Error occurred in validating the ID for the \`countdownremove\` command!
+                <@${
+                    this.client.owners[0].id
+                }> Error occurred in validating the ID for the \`countdownremove\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                **Time:** ${moment(msg.createdTimestamp).format(
+                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
+                )}
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
-                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+            return msg.reply(oneLine`An error occurred but I notified ${
+                this.client.owners[0].username
+            }
+                Want to know more about the error? Join the support server by getting an invite by using the \`${
+                    msg.guild.commandPrefix
+                }invite\` command `);
         }
     }
 }

@@ -15,10 +15,14 @@ import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class ListWarnCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'listwarn',
             aliases: ['reqwarn', 'lw', 'rw'],
@@ -38,13 +42,15 @@ export default class ListWarnCommand extends Command {
                     key: 'member',
                     prompt: 'Which member should I show warning points for?',
                     type: 'member',
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { member }: { member: GuildMember }) {
-        const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));
+    public run(msg: CommandoMessage, { member }: { member: GuildMember }) {
+        const conn = new Database(
+            path.join(__dirname, '../../data/databases/warnings.sqlite3')
+        );
         const embed = new MessageEmbed();
 
         embed
@@ -54,9 +60,13 @@ export default class ListWarnCommand extends Command {
 
         try {
             startTyping(msg);
-            const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE id= ?;`).get(member.id);
+            const query = conn
+                .prepare(`SELECT * FROM "${msg.guild.id}" WHERE id= ?;`)
+                .get(member.id);
 
-            embed.setDescription(stripIndents`**Member:** ${query.tag} (${query.id})
+            embed.setDescription(stripIndents`**Member:** ${query.tag} (${
+                query.id
+            })
                       **Current warning Points:** ${query.points}`);
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -64,28 +74,48 @@ export default class ListWarnCommand extends Command {
             return msg.embed(embed);
         } catch (err) {
             stopTyping(msg);
-            if ((/(?:no such table)/i).test(err.toString())) {
-                return msg.reply(`no warnpoints found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
+            if (/(?:no such table)/i.test(err.toString())) {
+                return msg.reply(
+                    `no warnpoints found for this server, it will be created the first time you use the \`${
+                        msg.guild.commandPrefix
+                    }warn\` command`
+                );
             }
-            if ((/(?:TypeError: Cannot read property 'tag')/i).test(err.toString())) {
-                embed.setDescription(stripIndents`**Member:** ${member.user.tag} (${member.id})
+            if (
+                /(?:TypeError: Cannot read property 'tag')/i.test(
+                    err.toString()
+                )
+            ) {
+                embed.setDescription(stripIndents`**Member:** ${
+                    member.user.tag
+                } (${member.id})
                     **Current warning Points:** 0`);
 
                 return msg.embed(embed);
             }
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get(
+                process.env.ISSUE_LOG_CHANNEL_ID
+            ) as TextChannel;
 
             channel.send(stripIndents`
-                <@${this.client.owners[0].id}> Error occurred in \`listwarn\` command!
+                <@${
+                    this.client.owners[0].id
+                }> Error occurred in \`listwarn\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                **Time:** ${moment(msg.createdTimestamp).format(
+                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
+                )}
                 **Input:** \`${member.user.tag} (${member.id})\`
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
-                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+            return msg.reply(oneLine`An error occurred but I notified ${
+                this.client.owners[0].username
+            }
+                Want to know more about the error? Join the support server by getting an invite by using the \`${
+                    msg.guild.commandPrefix
+                }invite\` command `);
         }
     }
 }

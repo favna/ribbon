@@ -13,10 +13,15 @@
 import { stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    modLogMessage,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class KickCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'kick',
             aliases: ['k'],
@@ -43,24 +48,29 @@ export default class KickCommand extends Command {
                     prompt: 'What is the reason for this kick?',
                     type: 'string',
                     default: '',
-                }
+                },
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { member, reason }: { member: GuildMember, reason: string }) {
+    public run(
+        msg: CommandoMessage,
+        { member, reason }: { member: GuildMember; reason: string }
+    ) {
         startTyping(msg);
 
         if (member.id === msg.author.id) {
             stopTyping(msg);
 
-            return msg.reply('I don\'t think you want to kick yourself.');
+            return msg.reply("I don't think you want to kick yourself.");
         }
 
         if (!member.kickable) {
             stopTyping(msg);
 
-            return msg.reply('I cannot kick that member, their role is probably higher than my own!');
+            return msg.reply(
+                'I cannot kick that member, their role is probably higher than my own!'
+            );
         }
 
         member.kick(reason !== '' ? reason : 'No reason given by staff');
@@ -70,14 +80,24 @@ export default class KickCommand extends Command {
         kickEmbed
             .setColor('#FF8300')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(stripIndents`
+            .setDescription(
+                stripIndents`
                 **Member:** ${member.user.tag} (${member.id})
                 **Action:** Kick
-                **Reason:** ${reason !== '' ? reason : 'No reason given by staff'}`)
+                **Reason:** ${
+                    reason !== '' ? reason : 'No reason given by staff'
+                }`
+            )
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, kickEmbed);
+            modLogMessage(
+                msg,
+                msg.guild,
+                modlogChannel,
+                msg.guild.channels.get(modlogChannel) as TextChannel,
+                kickEmbed
+            );
         }
 
         deleteCommandMessages(msg, this.client);

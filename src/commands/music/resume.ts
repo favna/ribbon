@@ -10,12 +10,17 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, IMusicCommand, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    IMusicCommand,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class ResumeSongCommand extends Command {
     private songQueue: any;
 
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'resume',
             aliases: ['go', 'continue', 'ale', 'loss', 'res'],
@@ -31,15 +36,17 @@ export default class ResumeSongCommand extends Command {
         });
     }
 
-    get queue () {
+    get queue() {
         if (!this.songQueue) {
-            this.songQueue = (this.client.registry.resolveCommand('music:play') as IMusicCommand).queue;
+            this.songQueue = (this.client.registry.resolveCommand(
+                'music:play'
+            ) as IMusicCommand).queue;
         }
 
         return this.songQueue;
     }
 
-    public run (msg: CommandoMessage) {
+    public run(msg: CommandoMessage) {
         startTyping(msg);
         const queue = this.queue.get(msg.guild.id);
 
@@ -47,19 +54,25 @@ export default class ResumeSongCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply('there isn\'t any music playing to resume, oh brilliant one.');
+            return msg.reply(
+                "there isn't any music playing to resume, oh brilliant one."
+            );
         }
         if (!queue.songs[0].dispatcher) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply('pretty sure a song that hasn\'t actually begun playing yet could be considered "resumed".');
+            return msg.reply(
+                'pretty sure a song that hasn\'t actually begun playing yet could be considered "resumed".'
+            );
         }
         if (queue.songs[0].playing) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply('resuming a song that isn\'t paused is a great move. Really fantastic.');
+            return msg.reply(
+                "resuming a song that isn't paused is a great move. Really fantastic."
+            );
         }
         queue.songs[0].dispatcher.resume();
         queue.songs[0].playing = true;
@@ -67,6 +80,6 @@ export default class ResumeSongCommand extends Command {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
-        return msg.reply('resumed the music. This party ain\'t over yet!');
+        return msg.reply("resumed the music. This party ain't over yet!");
     }
 }

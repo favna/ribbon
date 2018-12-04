@@ -11,10 +11,14 @@ import { oneLine } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class SayWutCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'saywut',
             aliases: ['saywat', 'saywot'],
@@ -30,7 +34,7 @@ export default class SayWutCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage) {
+    public run(msg: CommandoMessage) {
         startTyping(msg);
         const saydata = msg.guild.settings.get('saydata', null);
         const wutEmbed = new MessageEmbed();
@@ -39,7 +43,10 @@ export default class SayWutCommand extends Command {
             wutEmbed
                 .setColor(saydata.memberHexColor)
                 .setTitle(`Last ${saydata.commandPrefix}say message author`)
-                .setAuthor(oneLine`${saydata.authorTag} (${saydata.authorID})`, saydata.avatarURL)
+                .setAuthor(
+                    oneLine`${saydata.authorTag} (${saydata.authorID})`,
+                    saydata.avatarURL
+                )
                 .setDescription(saydata.argString)
                 .setTimestamp(moment(saydata.messageDate).toDate());
 
@@ -51,6 +58,10 @@ export default class SayWutCommand extends Command {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
-        return msg.reply(`couldn't fetch message for your server. Has anyone used the ${msg.guild.commandPrefix}say command before?`);
+        return msg.reply(
+            `couldn't fetch message for your server. Has anyone used the ${
+                msg.guild.commandPrefix
+            }say command before?`
+        );
     }
 }

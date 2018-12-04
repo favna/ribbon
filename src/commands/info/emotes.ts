@@ -9,13 +9,24 @@
 
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import {
+    deleteCommandMessages,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class EmotesCommand extends Command {
-    constructor (client: CommandoClient) {
+    constructor(client: CommandoClient) {
         super(client, {
             name: 'emotes',
-            aliases: ['listemo', 'emolist', 'listemoji', 'emote', 'emojis', 'emoji'],
+            aliases: [
+                'listemo',
+                'emolist',
+                'listemoji',
+                'emote',
+                'emojis',
+                'emoji',
+            ],
             group: 'info',
             memberName: 'emotes',
             description: 'Gets all available custom emotes from the server',
@@ -28,7 +39,7 @@ export default class EmotesCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage) {
+    public run(msg: CommandoMessage) {
         startTyping(msg);
         const embed = new MessageEmbed();
         const animEmotes: Array<string> = [];
@@ -37,16 +48,33 @@ export default class EmotesCommand extends Command {
         let description = '';
 
         msg.guild.emojis.forEach(e => {
-            e.animated ? animEmotes.push(`<a:${e.name}:${e.id}>`) : staticEmotes.push(`<:${e.name}:${e.id}>`);
+            e.animated
+                ? animEmotes.push(`<a:${e.name}:${e.id}>`)
+                : staticEmotes.push(`<:${e.name}:${e.id}>`);
         });
 
         embed
             .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-            .setAuthor(`${staticEmotes.length + animEmotes.length} ${msg.guild.name} Emotes`, msg.guild.iconURL({ format: 'png' }))
+            .setAuthor(
+                `${staticEmotes.length + animEmotes.length} ${
+                    msg.guild.name
+                } Emotes`,
+                msg.guild.iconURL({ format: 'png' })
+            )
             .setTimestamp();
 
-        description += staticEmotes.length !== 0 ? `__**${staticEmotes.length} Static Emotes**__\n${staticEmotes.join('')}` : '';
-        description += animEmotes.length !== 0 ? `\n\n__**${animEmotes.length} Animated Emotes**__\n${animEmotes.join('')}` : '';
+        description +=
+            staticEmotes.length !== 0
+                ? `__**${
+                      staticEmotes.length
+                  } Static Emotes**__\n${staticEmotes.join('')}`
+                : '';
+        description +=
+            animEmotes.length !== 0
+                ? `\n\n__**${
+                      animEmotes.length
+                  } Animated Emotes**__\n${animEmotes.join('')}`
+                : '';
 
         embed.setDescription(description);
 
