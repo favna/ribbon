@@ -37,3 +37,9 @@ export interface IPokeData {
 export interface IGenre {
     name: string;
 }
+
+export interface ICasinoRowTyoe {
+    userID: string,
+    balance: number,
+    lasttopup: string
+}

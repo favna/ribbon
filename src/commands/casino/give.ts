@@ -18,6 +18,7 @@ import * as moment from 'moment';
 import * as path from 'path';
 import {
     deleteCommandMessages,
+    ICasinoRowTyoe,
     roundNumber,
     startTyping,
     stopTyping,
@@ -49,7 +50,7 @@ export default class GiveCommand extends Command {
                     prompt: 'How many chips do you want to give?',
                     type: 'integer',
                     validate: (chips: string) =>
-                        Number(chips) >= 1 && Number(chips) <= 1000000
+                        Number(chips) >= 1 && Number(chips) <= 10000
                             ? true
                             : 'Reply with a chips amount between 1 and 10000. Example: `10`',
                     parse: (chips: string) => roundNumber(Number(chips)),
@@ -85,25 +86,21 @@ export default class GiveCommand extends Command {
                     playerid: player.id,
                 });
 
-            if (query.length !== 2) {
-                return msg.reply(
-                    `looks like either you or the person you want to donate to has no balance yet. Use \`${
-                        msg.guild.commandPrefix
-                    }chips\` to get some`
-                );
-            }
+            if (query.length !== 2) throw new Error('no_balance');
+
+            query.forEach((row: ICasinoRowTyoe) => {
+                if (row.userID === msg.author.id && chips > row.balance) {
+                    throw new Error('insufficient_balance');
+                }
+            });
 
             let giverEntry = 0;
             let receiverEntry = 0;
 
-            for (const row in query) {
-                if (query[row].userID === msg.author.id) {
-                    giverEntry = Number(row);
-                }
-                if (query[row].userID === player.id) {
-                    receiverEntry = Number(row);
-                }
-            }
+            query.forEach((row: ICasinoRowTyoe, index: number) => {
+                if (row.userID === msg.author.id) giverEntry = Number(index);
+                if (row.userID === player.id) receiverEntry = Number(index);
+            });
 
             const oldGiverBalance = query[giverEntry].balance;
             const oldReceiverEntry = query[receiverEntry].balance;
@@ -147,26 +144,45 @@ export default class GiveCommand extends Command {
                     }chips\` command to get your first 500`
                 );
             }
+
+            if (/(?:no_balance)/i.test(err.toString())) {
+                return msg.reply(
+                    `looks like either you or the person you want to donate to has no balance yet. Use \`${
+                        msg.guild.commandPrefix
+                    }chips\` to get some`
+                );
+            }
+
+            if (/(?:insufficient_balance)/i.test(err.toString())) {
+                return msg.reply(
+                    `you don\'t have that many chips to donate. Use \`${
+                        msg.guild.commandPrefix
+                    }chips\` to check your current balance.`
+                );
+            }
+
             const channel = this.client.channels.get(
                 process.env.ISSUE_LOG_CHANNEL_ID
             ) as TextChannel;
 
             channel.send(stripIndents`
-      <@${this.client.owners[0].id}> Error occurred in \`give\` command!
-      **Server:** ${msg.guild.name} (${msg.guild.id})
-      **Author:** ${msg.author.tag} (${msg.author.id})
-      **Time:** ${moment(msg.createdTimestamp).format(
-          'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-      )}
-      **Error Message:** ${err}
-      `);
+                <@${
+                    this.client.owners[0].id
+                }> Error occurred in \`give\` command!
+                **Server:** ${msg.guild.name} (${msg.guild.id})
+                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Time:** ${moment(msg.createdTimestamp).format(
+                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
+                )}
+                **Error Message:** ${err}
+            `);
 
             return msg.reply(oneLine`An error occurred but I notified ${
                 this.client.owners[0].username
             }
-      Want to know more about the error? Join the support server by getting an invite by using the \`${
-          msg.guild.commandPrefix
-      }invite\` command `);
+                Want to know more about the error? Join the support server by getting an invite by using the \`${
+                    msg.guild.commandPrefix
+                }invite\` command `);
         }
     }
 }

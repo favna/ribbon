@@ -52,7 +52,7 @@ export default class CoinCommand extends Command {
                     prompt: 'How many chips do you want to gamble?',
                     type: 'integer',
                     validate: (chips: string) =>
-                        Number(chips) >= 1 && Number(chips) <= 1000000
+                        Number(chips) >= 1 && Number(chips) <= 10000
                             ? true
                             : 'Reply with a chips amount between 1 and 10000. Example: `10`',
                     parse: (chips: string) => roundNumber(Number(chips)),
