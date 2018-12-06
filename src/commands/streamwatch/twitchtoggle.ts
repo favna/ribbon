@@ -11,15 +11,10 @@
 
 import { oneLine } from 'common-tags';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-    validateBool,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping, validateBool } from '../../components';
 
 export default class TwitchToggleCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'twitchtoggle',
             aliases: ['twitchon', 'twitchoff'],
@@ -41,12 +36,12 @@ export default class TwitchToggleCommand extends Command {
                     prompt: 'Enable or disable twitch monitoring?',
                     type: 'boolean',
                     validate: (bool: boolean) => validateBool(bool),
-                },
+                }
             ],
         });
     }
 
-    public run(msg: CommandoMessage, { option }: { option: boolean }) {
+    public run (msg: CommandoMessage, { option }: { option: boolean }) {
         startTyping(msg);
         msg.guild.settings.set('twitchnotifiers', option);
 
@@ -54,16 +49,10 @@ export default class TwitchToggleCommand extends Command {
         stopTyping(msg);
 
         return msg.reply(oneLine`Twitch Notifiers have been
-    ${
-        option
+            ${option
             ? `enabled.
-                Please make sure to set the output channel with \`${
-                    msg.guild.commandPrefix
-                }twitchoutput\`
-                and configure which users to monitor with \`${
-                    msg.guild.commandPrefix
-                }twitchmonitors\` `
-            : 'disabled.'
-    }.`);
+                    Please make sure to set the output channel with \`${msg.guild.commandPrefix}twitchoutput\`and configure which users to monitor with \`${msg.guild.commandPrefix}twitchmonitors\` `
+            : 'disabled.'}.
+        `);
     }
 }

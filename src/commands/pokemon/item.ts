@@ -16,16 +16,11 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import {
-    capitalizeFirstLetter,
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 import { BattleItems, ItemAliases } from '../../data/dex';
 
 export default class ItemCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'item',
             aliases: ['it', 'bag'],
@@ -45,21 +40,21 @@ export default class ItemCommand extends Command {
                     prompt: 'Get info on which item?',
                     type: 'string',
                     parse: (p: string) => p.toLowerCase().replace(/ /g, ''),
-                },
+                }
             ],
         });
     }
 
-    public run(msg: CommandoMessage, { item }: { item: string }) {
+    public run (msg: CommandoMessage, { item }: { item: string }) {
         try {
             startTyping(msg);
-            const fsoptions: Fuse.FuseOptions<any> = {
+            const itemOptions: Fuse.FuseOptions<any> = {
                 shouldSort: true,
                 keys: [
                     { name: 'alias', getfn: t => t.alias, weight: 1 },
                     { name: 'item', getfn: t => t.item, weight: 1 },
                     { name: 'id', getfn: t => t.id, weight: 1 },
-                    { name: 'name', getfn: t => t.name, weight: 1 },
+                    { name: 'name', getfn: t => t.name, weight: 1 }
                 ],
                 location: 0,
                 distance: 100,
@@ -67,83 +62,52 @@ export default class ItemCommand extends Command {
                 maxPatternLength: 32,
                 minMatchCharLength: 1,
             };
-            const aliasFuse = new Fuse(ItemAliases, fsoptions);
-            const itemFuse = new Fuse(BattleItems, fsoptions);
+            const aliasFuse = new Fuse(ItemAliases, itemOptions);
+            const itemFuse = new Fuse(BattleItems, itemOptions);
             const aliasSearch = aliasFuse.search(item);
-            const itemSearch = aliasSearch.length
-                ? itemFuse.search(aliasSearch[0].item)
-                : itemFuse.search(item);
+            const itemSearch = aliasSearch.length ? itemFuse.search(aliasSearch[0].item) : itemFuse.search(item);
             const itemEmbed = new MessageEmbed();
+
+            if (!itemSearch.length) throw new Error('no_item');
 
             itemEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-                .setThumbnail(
-                    'https://favna.xyz/images/ribbonhost/unovadexclosedv2.png'
-                )
+                .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
                 .setAuthor(
                     `${capitalizeFirstLetter(itemSearch[0].name)}`,
-                    `https://play.pokemonshowdown.com/sprites/itemicons/${itemSearch[0].name
-                        .toLowerCase()
-                        .replace(/ /g, '-')}.png`
+                    `https://play.pokemonshowdown.com/sprites/itemicons/${itemSearch[0].name.toLowerCase().replace(/ /g, '-')}.png`
                 )
                 .addField('Description', itemSearch[0].desc)
                 .addField('Generation Introduced', itemSearch[0].gen)
                 .addField(
-                    'External Resources',
-                    oneLine`
-			[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(
-                itemSearch[0].name.replace(' ', '_').replace("'", '')
-            )})
-			|  [Smogon](http://www.smogon.com/dex/sm/items/${itemSearch[0].name
-                .toLowerCase()
-                .replace(' ', '_')
-                .replace("'", '')})
-			|  [PokémonDB](http://pokemondb.net/item/${itemSearch[0].name
-                .toLowerCase()
-                .replace(' ', '-')
-                .replace("'", '')})`
+                    'External Resources', oneLine`
+			        [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(itemSearch[0].name.replace(' ', '_').replace('\'', ''))})
+			        |  [Smogon](http://www.smogon.com/dex/sm/items/${itemSearch[0].name.toLowerCase().replace(' ', '_').replace('\'', '')})
+			        |  [PokémonDB](http://pokemondb.net/item/${itemSearch[0].name.toLowerCase().replace(' ', '-').replace('\'', '')})`
                 );
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.embed(
-                itemEmbed,
-                `**${capitalizeFirstLetter(itemSearch[0].name)}**`
-            );
+            return msg.embed(itemEmbed, `**${capitalizeFirstLetter(itemSearch[0].name)}**`);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            if (
-                /(?:Cannot read property 'name' of undefined)/i.test(
-                    err.toString()
-                )
-            ) {
-                return msg.reply(stripIndents`no item found for \`${item}\``);
-            }
-            const channel = this.client.channels.get(
-                process.env.ISSUE_LOG_CHANNEL_ID
-            ) as TextChannel;
+            if (/(?:no_item)/i.test(err.toString())) return msg.reply(stripIndents`no item found for \`${item}\``);
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-      <@${this.client.owners[0].id}> Error occurred in \`item\` command!
-      **Server:** ${msg.guild.name} (${msg.guild.id})
-      **Author:** ${msg.author.tag} (${msg.author.id})
-      **Time:** ${moment(msg.createdTimestamp).format(
-          'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-      )}
-      **Input:** ${item}
-      **Error Message:** ${err}
-      `);
+                <@${this.client.owners[0].id}> Error occurred in \`item\` command!
+                **Server:** ${msg.guild.name} (${msg.guild.id})
+                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                **Input:** ${item}
+                **Error Message:** ${err}
+            `);
 
-            return msg.reply(stripIndents`no item found for \`${item}\`. Be sure it is an item that has an effect in battles!
-      If it was an error that occurred then I notified ${
-          this.client.owners[0].username
-      } about it
-      and you can find out more by joining the support server using the \`${
-          msg.guild.commandPrefix
-      }invite\` command`);
+            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+                    Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }
 }

@@ -9,16 +9,13 @@
  * @param {GuildMemberResolvable} AnyMember Member to make a mention to
  */
 
+import { oneLine } from 'common-tags';
 import { GuildMember } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class TagMemberCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'tagmember',
             group: 'owner',
@@ -33,16 +30,22 @@ export default class TagMemberCommand extends Command {
                     key: 'member',
                     prompt: 'What user would you like to snoop on?',
                     type: 'member',
-                },
+                }
             ],
         });
     }
 
-    public run(msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         startTyping(msg);
+
+        const emote = '<:literallyThis:519988005507956752>';
+
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
-        return msg.say(`^^^^ <@${member.id}> ^^^^`);
+        return msg.say(oneLine`
+        ${emote}${emote}${emote}${emote}
+        <@${member.id}>
+        ${emote}${emote}${emote}${emote}`);
     }
 }

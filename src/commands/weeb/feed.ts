@@ -10,14 +10,10 @@
 import { GuildMember } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class FeedCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'feed',
             group: 'weeb',
@@ -36,20 +32,18 @@ export default class FeedCommand extends Command {
                     prompt: 'Who do you want to feed?',
                     type: 'member',
                     default: '',
-                },
+                }
             ],
         });
     }
 
-    public async run(
-        msg: CommandoMessage,
-        { member }: { member: GuildMember }
-    ) {
+    public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         try {
             startTyping(msg);
 
             const feedFetch = await fetch('https://nekos.life/api/v2/img/feed');
             const feedImg = await feedFetch.json();
+            if (member.id === msg.member.id) member = null;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -58,17 +52,9 @@ export default class FeedCommand extends Command {
                 {
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
                     description: member
-                        ? `${member.displayName}! You were fed by ${
-                              msg.member.displayName
-                          } 🍜 😋!`
-                        : `${
-                              msg.member.displayName
-                          } you must feel alone... Have a 🐈`,
-                    image: {
-                        url: member
-                            ? feedImg.url
-                            : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif',
-                    },
+                        ? `${member.displayName}! You were fed by ${msg.member.displayName} 🍜 😋!`
+                        : `${msg.member.displayName} you must feel alone... Have a 🐈`,
+                    image: { url: member ? feedImg.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif' },
                 },
                 `<@${member ? member.id : msg.author.id}>`
             );

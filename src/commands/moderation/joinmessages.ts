@@ -12,23 +12,16 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    modLogMessage,
-    startTyping,
-    stopTyping,
-    validateBool,
-} from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
 
 export default class JoinMessagesCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'joinmessages',
             aliases: ['jmt', 'joinmessagestoggle'],
             group: 'moderation',
             memberName: 'joinmessages',
-            description:
-                'Toggle whether Ribbon should send special greeting messages when members join',
+            description: 'Toggle whether Ribbon should send special greeting messages when members join',
             format: 'BooleanResolvable [Channel]',
             examples: ['joinmessages enable'],
             guildOnly: true,
@@ -49,19 +42,14 @@ export default class JoinMessagesCommand extends Command {
                     prompt: 'In which channel should I greet people?',
                     type: 'channel',
                     default: 'off',
-                },
+                }
             ],
         });
     }
 
-    public run(
-        msg: CommandoMessage,
-        { channel, option }: { channel: TextChannel | any; option: boolean }
-    ) {
+    public run (msg: CommandoMessage, { channel, option }: { channel: TextChannel | any; option: boolean }) {
         if (option && channel === 'off') {
-            return msg.reply(
-                'when activating join messages you need to provide a channel for me to output the messages to!'
-            );
+            return msg.reply('when activating join messages you need to provide a channel for me to output the messages to!');
         }
 
         startTyping(msg);
@@ -77,21 +65,14 @@ export default class JoinMessagesCommand extends Command {
         joinMsgEmbed
             .setColor('#AAEFE6')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(
-                stripIndents`
+            .setDescription(stripIndents`
                 **Action:** ${description}
                 ${option ? `**Channel:** <#${channel.id}>` : ''}`
             )
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(
-                msg,
-                msg.guild,
-                modlogChannel,
-                msg.guild.channels.get(modlogChannel) as TextChannel,
-                joinMsgEmbed
-            );
+            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, joinMsgEmbed);
         }
 
         deleteCommandMessages(msg, this.client);

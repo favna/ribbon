@@ -11,29 +11,23 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as fs from 'fs';
 import * as eshop from 'nintendo-switch-eshop';
 import * as path from 'path';
-import {
-    decache,
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { decache, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class EShopFetchCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'eshopfetch',
             aliases: ['efetch'],
             group: 'owner',
             memberName: 'eshopfetch',
-            description:
-                'Fetches latest games list from the Nintendo Switch eShop',
+            description: 'Fetches latest games list from the Nintendo Switch eShop',
             examples: ['eshopfetch'],
             guildOnly: false,
             ownerOnly: true,
         });
     }
 
-    public async run(msg: CommandoMessage) {
+    public async run (msg: CommandoMessage) {
         startTyping(msg);
         fs.writeFileSync(
             path.join(__dirname, '../../data/databases/eshop.json'),
@@ -43,11 +37,7 @@ export default class EShopFetchCommand extends Command {
         decache(path.join(__dirname, '../../data/databases/eshop.json'));
         this.client.registry.resolveCommand('searches:eshop').reload();
 
-        if (
-            fs.existsSync(
-                path.join(__dirname, '../../data/databases/eshop.json')
-            )
-        ) {
+        if (fs.existsSync(path.join(__dirname, '../../data/databases/eshop.json'))) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 

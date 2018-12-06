@@ -20,15 +20,10 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class CydiaCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'cydia',
             aliases: ['cy'],
@@ -50,23 +45,18 @@ export default class CydiaCommand extends Command {
                     key: 'deb',
                     prompt: 'What package do you want to find on Cydia?',
                     type: 'string',
-                },
+                }
             ],
             patterns: [/\[\[[a-zA-Z0-9 ]+]]/im],
         });
     }
 
-    public async run(msg: CommandoMessage, { deb }: { deb: string }) {
+    public async run (msg: CommandoMessage, { deb }: { deb: string }) {
         try {
             startTyping(msg);
             if (msg.patternMatches) {
-                if (!msg.guild.settings.get('regexmatches', false)) {
-                    return null;
-                }
-                deb = msg.patternMatches[0].substring(
-                    2,
-                    msg.patternMatches[0].length - 2
-                );
+                if (!msg.guild.settings.get('regexmatches', false)) return null;
+                deb = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
             }
 
             const baseURL = 'https://cydia.saurik.com/';
@@ -75,7 +65,7 @@ export default class CydiaCommand extends Command {
                 shouldSort: true,
                 keys: [
                     { name: 'display', getfn: t => t.display, weight: 0.8 },
-                    { name: 'name', getfn: t => t.name, weight: 1 },
+                    { name: 'name', getfn: t => t.name, weight: 1 }
                 ],
                 location: 0,
                 distance: 100,
@@ -83,14 +73,12 @@ export default class CydiaCommand extends Command {
                 maxPatternLength: 32,
                 minMatchCharLength: 1,
             };
-            const res = await fetch(
-                `${baseURL}api/macciti?${stringify({ query: deb })}`
-            );
+            const res = await fetch(`${baseURL}api/macciti?${stringify({ query: deb })}`);
             const packages = await res.json();
             const fuzzyList = new Fuse(packages.results, fsoptions);
             const search = fuzzyList.search(deb);
 
-            if (!search.length) throw new Error('noPackages');
+            if (!search.length) throw new Error('no_packages');
 
             cydiaEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
@@ -104,9 +92,7 @@ export default class CydiaCommand extends Command {
                 );
 
             try {
-                const siteReq = await fetch(
-                    `${baseURL}package/${search[0].name}`
-                );
+                const siteReq = await fetch(`${baseURL}package/${search[0].name}`);
                 const site = await siteReq.text();
                 const $ = cheerio.load(site);
 
@@ -114,21 +100,13 @@ export default class CydiaCommand extends Command {
                     .addField('Source', $('.source-name').html(), true)
                     .addField('Section', $('#section').html(), true)
                     .addField('Size', $('#extra').text(), true)
-                    .setThumbnail(
-                        `${baseURL}${$('#header > #icon > div > span > img')
-                            .attr('src')
-                            .slice(1)}`
-                    );
+                    .setThumbnail(`${baseURL}${$('#header > #icon > div > span > img').attr('src').slice(1)}`);
             } catch {
                 // Intentionally empty
             }
 
             try {
-                const priceReq = await fetch(
-                    `${baseURL}api/ibbignerd?${stringify({
-                        query: search[0].name,
-                    })}`
-                );
+                const priceReq = await fetch(`${baseURL}api/ibbignerd?${stringify({ query: search[0].name })}`);
                 const price = await priceReq.json();
 
                 cydiaEmbed.addField('Price', price ? price.msrp : 'Free', true);
@@ -138,42 +116,28 @@ export default class CydiaCommand extends Command {
 
             cydiaEmbed.addField('Package Name', search[0].name, false);
 
-            if (!msg.patternMatches) {
-                deleteCommandMessages(msg, this.client);
-            }
+            if (!msg.patternMatches) deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.embed(cydiaEmbed);
         } catch (err) {
             stopTyping(msg);
 
-            if (/(noPackages)/i.test(err.toString())) {
-                return msg.say(`**Tweak/Theme \`${deb}\` not found!**`);
-            }
-            const channel = this.client.channels.get(
-                process.env.ISSUE_LOG_CHANNEL_ID
-            ) as TextChannel;
+            if (/(no_packages)/i.test(err.toString())) return msg.say(`**Tweak/Theme \`${deb}\` not found!**`);
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-              <@${
-                  this.client.owners[0].id
-              }> Error occurred in \`cydia\` command!
+              <@${this.client.owners[0].id}> Error occurred in \`cydia\` command!
               **Server:** ${msg.guild.name} (${msg.guild.id})
               **Author:** ${msg.author.tag} (${msg.author.id})
-              **Time:** ${moment(msg.createdTimestamp).format(
-                  'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-              )}
+              **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
               **Package:** ${deb}
               **Regex Match:** \`${msg.patternMatches ? 'yes' : 'no'}\`
               **Error Message:** ${err}
           `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${
-                this.client.owners[0].username
-            }
-                Want to know more about the error? Join the support server by getting an invite by using the \`${
-                    msg.guild.commandPrefix
-                }invite\` command `);
+            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }
 }

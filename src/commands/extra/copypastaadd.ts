@@ -16,14 +16,10 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CopyPastaAddCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'copypastaadd',
             aliases: ['cpadd', 'pastaadd'],
@@ -31,9 +27,7 @@ export default class CopyPastaAddCommand extends Command {
             memberName: 'copypastaadd',
             description: 'Saves a copypasta to local file',
             format: 'CopypastaName CopypastaContent',
-            examples: [
-                'copypasta navy what the fuck did you just say to me ... (etc.)',
-            ],
+            examples: ['copypasta navy what the fuck did you just say to me ... (etc.)'],
             guildOnly: true,
             throttling: {
                 usages: 2,
@@ -42,8 +36,7 @@ export default class CopyPastaAddCommand extends Command {
             args: [
                 {
                     key: 'name',
-                    prompt:
-                        'What is the name of the copypasta you want to save?',
+                    prompt: 'What is the name of the copypasta you want to save?',
                     type: 'string',
                     parse: (p: string) => p.toLowerCase(),
                 },
@@ -51,25 +44,17 @@ export default class CopyPastaAddCommand extends Command {
                     key: 'content',
                     prompt: 'What should be stored in the copypasta?',
                     type: 'string',
-                },
+                }
             ],
         });
     }
 
-    public run(
-        msg: CommandoMessage,
-        { name, content }: { name: string; content: string }
-    ) {
-        const conn = new Database(
-            path.join(__dirname, '../../data/databases/pastas.sqlite3')
-        );
+    public run (msg: CommandoMessage, { name, content }: { name: string; content: string }) {
+        const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
         const pastaAddEmbed = new MessageEmbed();
 
         pastaAddEmbed
-            .setAuthor(
-                msg.member.displayName,
-                msg.author.displayAvatarURL({ format: 'png' })
-            )
+            .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
             .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
             .setDescription(content);
 
@@ -80,14 +65,8 @@ export default class CopyPastaAddCommand extends Command {
                 .get(name);
 
             if (query) {
-                conn.prepare(
-                    `UPDATE "${
-                        msg.guild.id
-                    }" SET content=$content WHERE name=$name`
-                ).run({
-                    content,
-                    name,
-                });
+                conn.prepare(`UPDATE "${msg.guild.id}" SET content=$content WHERE name=$name`)
+                    .run({ content, name });
 
                 pastaAddEmbed.setTitle(`Copypasta \`${name}\` Updated`);
 
@@ -96,12 +75,8 @@ export default class CopyPastaAddCommand extends Command {
 
                 return msg.embed(pastaAddEmbed);
             }
-            conn.prepare(
-                `INSERT INTO "${msg.guild.id}" VALUES ($name, $content);`
-            ).run({
-                content,
-                name,
-            });
+            conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($name, $content);`)
+                .run({ content, name });
             pastaAddEmbed.setTitle(`Copypasta \`${name}\` Added`);
 
             stopTyping(msg);
@@ -110,18 +85,11 @@ export default class CopyPastaAddCommand extends Command {
         } catch (err) {
             stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(
-                    `CREATE TABLE IF NOT EXISTS "${
-                        msg.guild.id
-                    }" (name TEXT PRIMARY KEY, content TEXT);`
-                ).run();
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (name TEXT PRIMARY KEY, content TEXT);`)
+                    .run();
 
-                conn.prepare(
-                    `INSERT INTO "${msg.guild.id}" VALUES ($name, $content);`
-                ).run({
-                    content,
-                    name,
-                });
+                conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($name, $content);`)
+                    .run({ content, name });
                 pastaAddEmbed.setTitle(`Copypasta \`${name}\` Added`);
 
                 stopTyping(msg);
@@ -129,28 +97,18 @@ export default class CopyPastaAddCommand extends Command {
                 return msg.embed(pastaAddEmbed);
             }
 
-            const channel = this.client.channels.get(
-                process.env.ISSUE_LOG_CHANNEL_ID
-            ) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-                <@${
-                    this.client.owners[0].id
-                }> Error occurred in \`copypastaadd\` command!
+                <@${this.client.owners[0].id}> Error occurred in \`copypastaadd\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format(
-                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-                )}
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${
-                this.client.owners[0].username
-            }
-                Want to know more about the error? Join the support server by getting an invite by using the \`${
-                    msg.guild.commandPrefix
-                }invite\` command `);
+            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }
 }

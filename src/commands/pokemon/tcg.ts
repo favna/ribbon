@@ -21,26 +21,13 @@
 
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
-import {
-    ArgumentCollector,
-    Command,
-    CommandoClient,
-    CommandoMessage,
-} from 'discord.js-commando';
+import { ArgumentCollector, Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { startTyping, stopTyping, stringify } from '../../components';
-
-interface ICardProps {
-    name: string;
-    types: string;
-    subtype: string;
-    supertype?: string;
-    hp: string;
-}
+import { ITCGProps, startTyping, stopTyping, stringify } from '../../components';
 
 export default class PokemonTCGCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'tcg',
             aliases: ['ptcg', 'tcgo'],
@@ -72,38 +59,25 @@ export default class PokemonTCGCommand extends Command {
                     default: ['name'],
                     validate: (vals: string) => {
                         const props = vals.split(' ');
-                        const validProps = [
-                            'name',
-                            'types',
-                            'subtype',
-                            'supertype',
-                            'hp',
-                        ];
+                        const validProps = ['name', 'types', 'subtype', 'supertype', 'hp'];
 
-                        if (
-                            props.every(prop => validProps.indexOf(prop) !== -1)
-                        ) {
+                        if (props.every(prop => validProps.indexOf(prop) !== -1)) {
                             return true;
                         }
 
-                        return stripIndents`Has to be any combination of ${validProps
-                            .map(val => `\`${val}\``)
-                            .join(', ')}
+                        return stripIndents`Has to be any combination of ${validProps.map(val => `\`${val}\``).join(', ')}
                             Respond with your new selection or`;
                     },
                     parse: (p: string) => p.split(' '),
-                },
+                }
             ],
         });
     }
 
-    public async run(
-        msg: CommandoMessage,
-        { props }: { props: Array<string> }
-    ) {
+    public async run (msg: CommandoMessage, { props }: { props: string[] }) {
         startTyping(msg);
         const command = msg;
-        const properties: ICardProps = {
+        const properties: ITCGProps = {
             name: '',
             types: '',
             subtype: '',
@@ -115,16 +89,15 @@ export default class PokemonTCGCommand extends Command {
         let messagesDeletable = false;
 
         if (props.includes('name')) {
-            const namePicker = new ArgumentCollector(
-                command.client,
+            const namePicker = new ArgumentCollector(command.client,
                 [
                     {
                         key: 'name',
                         prompt: stripIndents`Name of the card to find?
-                        **Note:** Do not specify "EX" and such here, that goes in the \`subtype\``,
+                            **Note:** Do not specify "EX" and such here, that goes in the \`subtype\``,
                         type: 'string',
                         parse: (p: string) => p.toLowerCase(),
-                    },
+                    }
                 ],
                 1
             );
@@ -140,17 +113,15 @@ export default class PokemonTCGCommand extends Command {
         }
 
         if (props.includes('types')) {
-            const typePicker = new ArgumentCollector(
-                command.client,
+            const typePicker = new ArgumentCollector(command.client,
                 [
                     {
                         key: 'types',
                         prompt:
                             'Which types can the Pokemon be (ex. Fire, Fighting, Psychic, etc.)?',
                         type: 'string',
-                        parse: (p: string) =>
-                            p.replace(/ /gm, ',').toLowerCase(),
-                    },
+                        parse: (p: string) => p.replace(/ /gm, ',').toLowerCase(),
+                    }
                 ],
                 1
             );
@@ -162,16 +133,14 @@ export default class PokemonTCGCommand extends Command {
         }
 
         if (props.includes('subtype')) {
-            const subTypePicker = new ArgumentCollector(
-                command.client,
+            const subTypePicker = new ArgumentCollector(command.client,
                 [
                     {
                         key: 'subtype',
-                        prompt:
-                            "What can the card's subtype be (ex. MEGA, Stage 1, BREAK, Supporter etc.)?",
+                        prompt: 'What can the card\'s subtype be (ex. MEGA, Stage 1, BREAK, Supporter etc.)?',
                         type: 'string',
                         parse: (p: string) => p.toLowerCase(),
-                    },
+                    }
                 ],
                 1
             );
@@ -192,8 +161,7 @@ export default class PokemonTCGCommand extends Command {
                 [
                     {
                         key: 'supertype',
-                        prompt:
-                            "What can the card's super be (one of pokemon, trainer or energy)?",
+                        prompt: 'What can the card\'s super be (one of pokemon, trainer or energy)?',
                         type: 'string',
                         validate: (type: string) => {
                             const validTypes = ['pokemon', 'trainer', 'energy'];
@@ -202,13 +170,11 @@ export default class PokemonTCGCommand extends Command {
                                 return true;
                             }
 
-                            return stripIndents`Has to be one of ${validTypes
-                                .map(val => `\`${val}\``)
-                                .join(', ')}
+                            return stripIndents`Has to be one of ${validTypes.map(val => `\`${val}\``).join(', ')}
                             Respond with your new selection or`;
                         },
                         parse: (p: string) => p.toLowerCase(),
-                    },
+                    }
                 ],
                 1
             );
@@ -231,7 +197,7 @@ export default class PokemonTCGCommand extends Command {
                         key: 'hp',
                         prompt: 'How much HP does the pokemon have?',
                         type: 'integer',
-                    },
+                    }
                 ],
                 1
             );
@@ -267,13 +233,9 @@ export default class PokemonTCGCommand extends Command {
                 }
 
                 const selectionEmbed: any = await command.embed({
-                    color: command.guild
-                        ? command.member.displayColor
-                        : 14827841,
+                    color: command.guild ? command.member.displayColor : 14827841,
                     description: body,
-                    thumbnail: {
-                        url: 'https://favna.xyz/images/ribbonhost/tcglogo.png',
-                    },
+                    thumbnail: { url: 'https://favna.xyz/images/ribbonhost/tcglogo.png' },
                 });
 
                 const cardChooser = new ArgumentCollector(
@@ -281,24 +243,19 @@ export default class PokemonTCGCommand extends Command {
                     [
                         {
                             key: 'card',
-                            prompt:
-                                'Send number to see details or cancel to cancel',
+                            prompt: 'Send number to see details or cancel to cancel',
                             type: 'integer',
                             validate: (v: string) =>
                                 Number(v) >= 1 && Number(v) <= 10
                                     ? true
                                     : 'Please choose a number between 1 and 10',
                             parse: (p: string) => Number(p) - 1,
-                        },
+                        }
                     ],
                     1
                 );
 
-                const cardSelection: any = await cardChooser.obtain(
-                    command,
-                    [],
-                    1
-                );
+                const cardSelection: any = await cardChooser.obtain(command, [], 1);
                 const selection = cardSelection.values.card;
 
                 cardSelection.prompts[0].delete();
@@ -306,15 +263,9 @@ export default class PokemonTCGCommand extends Command {
                 if (messagesDeletable) cardSelection.answers[0].delete();
 
                 tcgEmbed
-                    .setColor(
-                        msg.guild ? msg.member.displayHexColor : '#7CFC00'
-                    )
-                    .setThumbnail(
-                        'https://favna.xyz/images/ribbonhost/tcglogo.png'
-                    )
-                    .setTitle(
-                        `${cards[selection].name} (${cards[selection].id})`
-                    )
+                    .setColor(msg.guild ? msg.member.displayHexColor : '#7CFC00')
+                    .setThumbnail('https://favna.xyz/images/ribbonhost/tcglogo.png')
+                    .setTitle(`${cards[selection].name} (${cards[selection].id})`)
                     .setImage(cards[selection].imageUrl)
                     .addField('Series', cards[selection].series, true)
                     .addField('Set', cards[selection].set, true);
@@ -325,26 +276,20 @@ export default class PokemonTCGCommand extends Command {
                     const { weaknesses } = cards[selection];
 
                     attacks.forEach((item: any, attackIndex: any) => {
-                        tcgEmbed.addField(
-                            `Attack ${Number(attackIndex) + 1}`,
-                            stripIndents`
+                        tcgEmbed.addField(`Attack ${Number(attackIndex) + 1}`, stripIndents`
                             **Name:** ${item.name}
                             **Description:** ${item.text}
                             **Damage:** ${item.damage}
-                            **Cost:** ${item.cost.join(', ')}
-                        `,
+                            **Cost:** ${item.cost.join(', ')}`,
                             true
                         );
                     });
 
                     if (resistances) {
                         resistances.forEach((item: any, resistIndex: any) => {
-                            tcgEmbed.addField(
-                                `Resistance ${Number(resistIndex) + 1}`,
-                                stripIndents`
+                            tcgEmbed.addField(`Resistance ${Number(resistIndex) + 1}`, stripIndents`
                                 **Type:** ${item.type}
-                                **Multiplier:** ${item.value}
-                            `,
+                                **Multiplier:** ${item.value}`,
                                 true
                             );
                         });
@@ -352,12 +297,9 @@ export default class PokemonTCGCommand extends Command {
 
                     if (weaknesses) {
                         weaknesses.forEach((item: any, weaknessIndex: any) => {
-                            tcgEmbed.addField(
-                                `Weakness ${Number(weaknessIndex) + 1}`,
-                                stripIndents`
+                            tcgEmbed.addField(`Weakness ${Number(weaknessIndex) + 1}`, stripIndents`
                                 **Type:** ${item.type}
-                                **Multiplier:** ${item.value}
-                            `,
+                                **Multiplier:** ${item.value}`,
                                 true
                             );
                         });
@@ -367,18 +309,10 @@ export default class PokemonTCGCommand extends Command {
                     tcgEmbed.fields.shift();
 
                     tcgEmbed
-                        .addField(
-                            'Type(s)',
-                            cards[selection].types.join(', '),
-                            true
-                        )
+                        .addField('Type(s)', cards[selection].types.join(', '), true)
                         .addField('Subtype', cards[selection].subtype, true)
                         .addField('HP', cards[selection].hp, true)
-                        .addField(
-                            'Retreat Cost',
-                            cards[selection].convertedRetreatCost,
-                            true
-                        )
+                        .addField('Retreat Cost', cards[selection].convertedRetreatCost, true)
                         .addField('Series', cards[selection].series, true)
                         .addField('Set', cards[selection].set, true);
                 } else if (properties.supertype === 'trainer') {
@@ -391,22 +325,16 @@ export default class PokemonTCGCommand extends Command {
             stopTyping(msg);
 
             return command.reply(stripIndents`no cards were found for that query.
-        Be sure to check the command help (\`${
-            msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix
-        }help tcg\`) if you want to know how to use this command `);
+                Be sure to check the command help (\`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help tcg\`) if you want to know how to use this command `);
         } catch (err) {
             stopTyping(msg);
-            const channel = this.client.channels.get(
-                process.env.ISSUE_LOG_CHANNEL_ID
-            ) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-            <@${this.client.owners[0].id}> Error occurred in \`tcg\` command!
+                <@${this.client.owners[0].id}> Error occurred in \`tcg\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format(
-                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-                )}
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Props:** ${props.map(val => `\`${val}\``).join(', ')}
                 **Name:** \`${properties.name}\`
                 **Types:** \`${properties.types}\`
@@ -416,12 +344,8 @@ export default class PokemonTCGCommand extends Command {
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${
-                this.client.owners[0].username
-            }
-                Want to know more about the error? Join the support server by getting an invite by using the \`${
-                    msg.guild.commandPrefix
-                }invite\` command `);
+            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }
 }

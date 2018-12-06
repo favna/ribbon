@@ -14,14 +14,10 @@
 
 import { oneLine } from 'common-tags';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class MaxSongsCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'maxsongs',
             aliases: ['songcap', 'songmax', 'maxsong'],
@@ -43,30 +39,21 @@ export default class MaxSongsCommand extends Command {
         });
     }
 
-    public run(msg: CommandoMessage, args: any) {
+    public run (msg: CommandoMessage, args: any) {
         startTyping(msg);
         if (!args) {
-            const maxSongs = msg.guild.settings.get(
-                'maxSongs',
-                process.env.MAX_SONGS
-            );
+            const maxSongs = msg.guild.settings.get('maxSongs', process.env.MAX_SONGS);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply(
-                `the maximum songs a user may have in the queue at one time is ${maxSongs}.`
-            );
+            return msg.reply(`the maximum songs a user may have in the queue at one time is ${maxSongs}.`);
         } else if (args.toLowerCase() === 'default') {
             msg.guild.settings.remove('maxSongs');
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply(
-                `set the maximum songs to the default (currently ${
-                    process.env.MAX_SONGS
-                }).`
-            );
+            return msg.reply(`set the maximum songs to the default (currently ${process.env.MAX_SONGS}).`);
         } else {
             const maxSongs = parseInt(args, 10);
 

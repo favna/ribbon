@@ -15,14 +15,10 @@ import * as fs from 'fs';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
 import * as path from 'path';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class EShopCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'eshop',
             aliases: ['shop'],
@@ -37,20 +33,17 @@ export default class EShopCommand extends Command {
                     key: 'game',
                     prompt: 'What game to find?',
                     type: 'string',
-                },
+                }
             ],
         });
     }
 
-    public run(
-        msg: CommandoMessage,
-        { game, price = 'TBA' }: { game: string; price?: string }
-    ) {
+    public run (msg: CommandoMessage, { game, price = 'TBA' }: { game: string; price?: string }) {
         try {
             startTyping(msg);
 
             const embed = new MessageEmbed();
-            const fsoptions: Fuse.FuseOptions<any> = {
+            const eShopOptions: Fuse.FuseOptions<any> = {
                 shouldSort: true,
                 keys: [{ name: 'title', getfn: t => t.title, weight: 1 }],
                 location: 0,
@@ -60,21 +53,13 @@ export default class EShopCommand extends Command {
                 minMatchCharLength: 1,
             };
             const games = JSON.parse(
-                fs.readFileSync(
-                    path.join(__dirname, '../../data/databases/eshop.json'),
-                    'utf8'
-                )
+                fs.readFileSync(path.join(__dirname, '../../data/databases/eshop.json'), 'utf8')
             );
-            const fuse = new Fuse(games, fsoptions);
+            const fuse = new Fuse(games, eShopOptions);
             const results = fuse.search(game);
             const hit: any = results[0];
 
-            if (hit.eshop_price) {
-                price =
-                    hit.eshop_price === '0.00'
-                        ? 'free'
-                        : `$${hit.eshop_price} USD`;
-            }
+            if (hit.eshop_price) price = hit.eshop_price === '0.00' ? 'free' : `$${hit.eshop_price} USD`;
 
             embed
                 .setTitle(hit.title)
@@ -82,23 +67,11 @@ export default class EShopCommand extends Command {
                 .setThumbnail(hit.front_box_art)
                 .setColor('#FFA600')
                 .addField('eShop Price', price, true)
-                .addField(
-                    'Release Date',
-                    moment(hit.release_date, 'MMM DD YYYY').format(
-                        'MMMM Do YYYY'
-                    ),
-                    true
-                )
+                .addField('Release Date', moment(hit.release_date, 'MMM DD YYYY').format('MMMM Do YYYY'), true)
                 .addField('Number of Players', hit.number_of_players, true)
                 .addField('Game Code', hit.game_code, true)
                 .addField('NSUID', hit.nsuid ? hit.nsuid : 'TBD', true)
-                .addField(
-                    'Categories',
-                    typeof hit.categories.category === 'object'
-                        ? hit.categories.category.join(', ')
-                        : hit.categories.category,
-                    true
-                );
+                .addField('Categories', typeof hit.categories.category === 'object' ? hit.categories.category.join(', ') : hit.categories.category, true);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

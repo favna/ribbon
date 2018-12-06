@@ -12,15 +12,10 @@
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, IDefineWord, startTyping, stopTyping, stringify } from '../../components';
 
 export default class DefineCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'define',
             aliases: ['def', 'dict'],
@@ -40,12 +35,12 @@ export default class DefineCommand extends Command {
                     prompt: 'What word do you want to define?',
                     type: 'string',
                     parse: (p: string) => p.replace(/[^a-zA-Z]/g, ''),
-                },
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { query }: { query: string }) {
+    public async run (msg: CommandoMessage, { query }: { query: string }) {
         try {
             startTyping(msg);
             const defineEmbed = new MessageEmbed();
@@ -60,21 +55,17 @@ export default class DefineCommand extends Command {
             const words = await res.json();
             const final = [`**Definitions for __${query}__:**`];
 
-            for (let [index, item] of Object.entries(
-                words.tuc
-                    .filter((tuc: any) => tuc.meanings)[0]
-                    .meanings.slice(0, 5)
-            )) {
-                // @ts-ignore
-                item = item.text
+            words.tuc[0].meanings.slice(0, 5).forEach((word: IDefineWord, index: number) => {
+                const definition = word.text
                     .replace(/\[(\w+)[^\]]*](.*?)\[\/\1]/g, '_')
                     .replace(/&quot;/g, '"')
-                    .replace(/&#39;/g, "'")
+                    .replace(/&#39;/g, '\'')
                     .replace(/<b>/g, '[')
                     .replace(/<\/b>/g, ']')
                     .replace(/<i>|<\/i>/g, '_');
-                final.push(`**${Number(index) + 1}:** ${item}`);
-            }
+                final.push(`**${index + 1}:** ${definition}`);
+            });
+
             defineEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
                 .setDescription(final);

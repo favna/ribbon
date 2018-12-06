@@ -33,15 +33,10 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import * as path from 'path';
-import {
-    deleteCommandMessages,
-    modLogMessage,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class CountdownAddCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'countdownadd',
             aliases: ['countdownmsg', 'countdownmessage', 'countdown', 'cam'],
@@ -72,10 +67,12 @@ export default class CountdownAddCommand extends Command {
                     validate: (v: string) =>
                         moment(v).isValid()
                             ? true
-                            : stripIndents`timestamp has to be a valid ISO 8601 timestamp, please see https://en.wikipedia.org/wiki/ISO_8601.
-                            __Examples:__
-                            \`2018-12-31 18:00\` (\`YYYY-MM-DD HH:mm\`)
-                            \`2018-12-31 6:00 PM\` (\`YYYY-MM-DD hh:mm\`)`,
+                            : stripIndents`
+                                timestamp has to be a valid ISO 8601 timestamp, please see https://en.wikipedia.org/wiki/ISO_8601.
+                                __Examples:__
+                                \`2018-12-31 18:00\` (\`YYYY-MM-DD HH:mm\`)
+                                \`2018-12-31 6:00 PM\` (\`YYYY-MM-DD hh:mm\`)
+                            `,
                     parse: (p: string) => moment(p).format('YYYY-MM-DD HH:mm'),
                 },
                 {
@@ -87,29 +84,14 @@ export default class CountdownAddCommand extends Command {
                     key: 'content',
                     prompt: 'To what should I count down?',
                     type: 'string',
-                },
+                }
             ],
         });
     }
 
-    public run(
-        msg: CommandoMessage,
-        {
-            datetime,
-            cdChannel,
-            content,
-            tag = 'none',
-        }: {
-            datetime: string;
-            cdChannel: TextChannel;
-            content: string;
-            tag?: string;
-        }
-    ) {
+    public run (msg: CommandoMessage, { datetime, cdChannel, content, tag = 'none' }: { datetime: string; cdChannel: TextChannel; content: string; tag?: string; }) {
         startTyping(msg);
-        const conn = new Database(
-            path.join(__dirname, '../../data/databases/countdowns.sqlite3')
-        );
+        const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const countdownEmbed = new MessageEmbed();
 
@@ -117,128 +99,71 @@ export default class CountdownAddCommand extends Command {
             startTyping(msg);
 
             if (/(?:--everyone)/i.test(content)) {
+                tag = 'everyone';
                 content =
                     content.substring(0, content.indexOf('--everyone')) +
-                    content.substring(
-                        content.indexOf('--everyone') + '--everyone'.length + 1
-                    );
-                tag = 'everyone';
+                    content.substring(content.indexOf('--everyone') + '--everyone'.length + 1);
             } else if (/(?:--here)/i.test(content)) {
+                tag = 'here';
                 content =
                     content.substring(0, content.indexOf('--here')) +
-                    content.substring(
-                        content.indexOf('--here') + '--here'.length + 1
-                    );
-                tag = 'here';
+                    content.substring(content.indexOf('--here') + '--here'.length + 1);
             }
 
-            conn.prepare(
-                `INSERT INTO "${
-                    msg.guild.id
-                }" (datetime, channel, content, tag, lastsend) VALUES ($datetime, $channel, $content, $tag, $lastsend);`
-            ).run({
-                datetime,
-                tag,
-                channel: cdChannel.id,
-                content: stripIndents`${content}`,
-                lastsend: moment()
-                    .subtract(1, 'hour')
-                    .format('YYYY-MM-DD HH:mm'),
-            });
-
-            return this.sendRes(
-                this.client,
-                msg,
-                datetime,
-                cdChannel,
-                content,
-                tag,
-                countdownEmbed,
-                modlogChannel
-            );
-        } catch (err) {
-            stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(
-                    `CREATE TABLE IF NOT EXISTS "${
-                        msg.guild.id
-                    }" (id INTEGER PRIMARY KEY AUTOINCREMENT, datetime TEXT, channel TEXT, content TEXT, tag TEXT, lastsend TEXT);`
-                ).run();
-
-                conn.prepare(
-                    `INSERT INTO "${
-                        msg.guild.id
-                    }" (datetime, channel, content, tag, lastsend) VALUES ($datetime, $channel, $content, $tag, $lastsend);`
-                ).run({
-                    content,
+            conn.prepare(`INSERT INTO "${msg.guild.id}" (datetime, channel, content, tag, lastsend) VALUES ($datetime, $channel, $content, $tag, $lastsend);`)
+                .run({
                     datetime,
                     tag,
                     channel: cdChannel.id,
-                    lastsend: moment()
-                        .subtract(1, 'hour')
-                        .format('YYYY-MM-DD HH:mm'),
+                    content: stripIndents`${content}`,
+                    lastsend: moment().subtract(1, 'hour').format('YYYY-MM-DD HH:mm'),
                 });
 
-                return this.sendRes(
-                    this.client,
-                    msg,
-                    datetime,
-                    cdChannel,
-                    content,
-                    tag,
-                    countdownEmbed,
-                    modlogChannel
-                );
+            return this.sendRes(this.client, msg, datetime, cdChannel, content, tag, countdownEmbed, modlogChannel);
+        } catch (err) {
+            stopTyping(msg);
+            if (/(?:no such table)/i.test(err.toString())) {
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id INTEGER PRIMARY KEY AUTOINCREMENT, datetime TEXT, channel TEXT, content TEXT, tag TEXT, lastsend TEXT);`)
+                    .run();
+
+                conn.prepare(`INSERT INTO "${msg.guild.id}" (datetime, channel, content, tag, lastsend) VALUES ($datetime, $channel, $content, $tag, $lastsend);`)
+                    .run({
+                        content,
+                        datetime,
+                        tag,
+                        channel: cdChannel.id,
+                        lastsend: moment().subtract(1, 'hour').format('YYYY-MM-DD HH:mm'),
+                    });
+
+                return this.sendRes(this.client, msg, datetime, cdChannel, content, tag, countdownEmbed, modlogChannel);
             }
 
-            const channel = this.client.channels.get(
-                process.env.ISSUE_LOG_CHANNEL_ID
-            ) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-                <@${
-                    this.client.owners[0].id
-                }> Error occurred in \`countdownadd\` command!
+                <@${this.client.owners[0].id}> Error occurred in \`countdownadd\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format(
-                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-                )}
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **datetime:** ${moment(datetime).format('YYYY-MM-DD HH:mm')}
                 **Channel:** ${channel.name} (${channel.id})>
                 **Message:** ${content}
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${
-                this.client.owners[0].username
-            }
-                Want to know more about the error? Join the support server by getting an invite by using the \`${
-                    msg.guild.commandPrefix
-                }invite\` command `);
+            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }
 
-    private sendRes(
-        client: CommandoClient,
-        msg: CommandoMessage,
-        datetime: string,
-        channel: TextChannel,
-        content: string,
-        tag: string,
-        embed: MessageEmbed,
-        logCh: string
-    ) {
+    private sendRes (client: CommandoClient, msg: CommandoMessage, datetime: string, channel: TextChannel, content: string, tag: string, embed: MessageEmbed, logCh: string) {
         embed
             .setColor('#9EF7C1')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(
-                stripIndents`
+            .setDescription(stripIndents`
                 **Action:** Countdown stored
                 **Event at:** ${moment(datetime).format('YYYY-MM-DD HH:mm')}
-                **Countdown Duration:** ${moment
-                    .duration(moment(datetime).diff(moment(), 'days'), 'days')
-                    .format('w [weeks][, ] d [days] [and] h [hours]')}
+                **Countdown Duration:** ${moment.duration(moment(datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
                 **Tag on event:** ${tag === 'none' ? 'No one' : `@${tag}`}
                 **Channel:** <#${channel.id}>
                 **Message:** ${content}`
@@ -246,13 +171,7 @@ export default class CountdownAddCommand extends Command {
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(
-                msg,
-                msg.guild,
-                logCh,
-                msg.guild.channels.get(logCh) as TextChannel,
-                embed
-            );
+            modLogMessage(msg, msg.guild, logCh, msg.guild.channels.get(logCh) as TextChannel, embed);
         }
 
         deleteCommandMessages(msg, client);

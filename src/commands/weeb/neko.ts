@@ -9,14 +9,10 @@
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class NekoCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'neko',
             aliases: ['catgirl'],
@@ -32,7 +28,7 @@ export default class NekoCommand extends Command {
         });
     }
 
-    public async run(msg: CommandoMessage) {
+    public async run (msg: CommandoMessage) {
         try {
             startTyping(msg);
 
@@ -42,17 +38,11 @@ export default class NekoCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.embed(
-                {
+            return msg.embed({
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
-                    description: `Here is your cute cat girl ${
-                        msg.member.displayName
-                    } 😻!`,
+                    description: `Here is your cute cat girl ${msg.member.displayName} 😻!`,
                     image: { url: nekoImg.url },
-                },
-                `<:cat:498198858032218143> <@${
-                    msg.author.id
-                }> <:cat:498198858032218143>`
+                }, `<:cat:498198858032218143> <@${msg.author.id}> <:cat:498198858032218143>`
             );
         } catch (err) {
             stopTyping(msg);

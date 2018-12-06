@@ -863,7 +863,7 @@ export const BattlePokedex: any = [
             'pikachukalos',
             'pikachualola',
             'pikachupartner',
-            'pikachustarter',
+            'pikachustarter'
         ],
     },
     {
@@ -2999,7 +2999,7 @@ export const BattlePokedex: any = [
     },
     {
         num: 83,
-        species: "Farfetch'd",
+        species: 'Farfetch\'d',
         types: ['Normal', 'Flying'],
         baseStats: {
             hp: 52,
@@ -4436,7 +4436,7 @@ export const BattlePokedex: any = [
             'umbreon',
             'leafeon',
             'glaceon',
-            'sylveon',
+            'sylveon'
         ],
         eggGroups: ['Field'],
         otherFormes: ['eeveestarter'],
@@ -5909,7 +5909,7 @@ export const BattlePokedex: any = [
         weightkg: 33.9,
         color: 'Green',
         prevo: 'poliwhirl',
-        evoLevel: "Trade while holding King's Rock",
+        evoLevel: 'Trade while holding King\'s Rock',
         eggGroups: ['Water 1'],
     },
     {
@@ -6222,7 +6222,7 @@ export const BattlePokedex: any = [
         weightkg: 79.5,
         color: 'Pink',
         prevo: 'slowpoke',
-        evoLevel: "Trade while holding King's Rock",
+        evoLevel: 'Trade while holding King\'s Rock',
         eggGroups: ['Monster', 'Water 1'],
     },
     {
@@ -6294,7 +6294,7 @@ export const BattlePokedex: any = [
             'unowny',
             'unownz',
             'unownexclamation',
-            'unownquestion',
+            'unownquestion'
         ],
     },
     {
@@ -13908,7 +13908,7 @@ export const BattlePokedex: any = [
             'rotomwash',
             'rotomfrost',
             'rotomfan',
-            'rotommow',
+            'rotommow'
         ],
     },
     {
@@ -14397,7 +14397,7 @@ export const BattlePokedex: any = [
             'arceuspsychic',
             'arceusrock',
             'arceussteel',
-            'arceuswater',
+            'arceuswater'
         ],
     },
     {
@@ -18795,7 +18795,7 @@ export const BattlePokedex: any = [
             'genesectdouse',
             'genesectshock',
             'genesectburn',
-            'genesectchill',
+            'genesectchill'
         ],
     },
     {
@@ -19366,7 +19366,7 @@ export const BattlePokedex: any = [
             'vivillonsandstorm',
             'vivillonsavanna',
             'vivillonsun',
-            'vivillontundra',
+            'vivillontundra'
         ],
         otherFormes: ['vivillonfancy', 'vivillonpokeball'],
     },
@@ -19500,7 +19500,7 @@ export const BattlePokedex: any = [
             'flabebeblue',
             'flabebeorange',
             'flabebewhite',
-            'flabebeyellow',
+            'flabebeyellow'
         ],
     },
     {
@@ -19532,7 +19532,7 @@ export const BattlePokedex: any = [
             'floetteblue',
             'floetteorange',
             'floettewhite',
-            'floetteyellow',
+            'floetteyellow'
         ],
         otherFormes: ['floetteeternal'],
     },
@@ -19588,7 +19588,7 @@ export const BattlePokedex: any = [
             'florgesblue',
             'florgesorange',
             'florgeswhite',
-            'florgesyellow',
+            'florgesyellow'
         ],
     },
     {
@@ -19711,7 +19711,7 @@ export const BattlePokedex: any = [
             'furfroulareine',
             'furfroumatron',
             'furfroupharaoh',
-            'furfroustar',
+            'furfroustar'
         ],
     },
     {
@@ -21657,9 +21657,9 @@ export const BattlePokedex: any = [
     },
     {
         num: 741,
-        species: "Oricorio-Pa'u",
+        species: 'Oricorio-Pa\'u',
         baseSpecies: 'Oricorio',
-        forme: "Pa'u",
+        forme: 'Pa\'u',
         formeLetter: 'P',
         types: ['Psychic', 'Flying'],
         genderRatio: {
@@ -22644,7 +22644,7 @@ export const BattlePokedex: any = [
             'silvallypsychic',
             'silvallyrock',
             'silvallysteel',
-            'silvallywater',
+            'silvallywater'
         ],
     },
     {
@@ -23117,7 +23117,7 @@ export const BattlePokedex: any = [
             'miniorgreen',
             'miniorblue',
             'miniorindigo',
-            'miniorviolet',
+            'miniorviolet'
         ],
     },
     {
@@ -25348,7 +25348,7 @@ export const BattlePokedex: any = [
         otherForms: [
             'pokestargiant2',
             'pokestargiantpropo1',
-            'pokestargiantpropo2',
+            'pokestargiantpropo2'
         ],
     },
     {
@@ -25544,5 +25544,5 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-    },
+    }
 ];

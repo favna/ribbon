@@ -9,18 +9,12 @@
 
 import { stripIndents } from 'common-tags';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    IMusicCommand,
-    Song,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, IMusicCommand, Song, startTyping, stopTyping } from '../../components';
 
 export default class MusicStatusCommand extends Command {
     private songQueue: any;
 
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'status',
             aliases: ['song', 'playing', 'current-song', 'now-playing'],
@@ -35,32 +29,21 @@ export default class MusicStatusCommand extends Command {
         });
     }
 
-    get queue() {
+    get queue () {
         if (!this.songQueue) {
-            this.songQueue = (this.client.registry.resolveCommand(
-                'music:play'
-            ) as IMusicCommand).queue;
+            this.songQueue = (this.client.registry.resolveCommand('music:play') as IMusicCommand).queue;
         }
 
         return this.songQueue;
     }
 
-    public run(msg: CommandoMessage) {
-        startTyping(msg);
+    public run (msg: CommandoMessage) {
         const queue = this.queue.get(msg.guild.id);
+        if (!queue) return msg.say('There isn\'t any music playing right now. You should get on that.');
 
-        if (!queue) {
-            deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
-
-            return msg.say(
-                "There isn't any music playing right now. You should get on that."
-            );
-        }
+        startTyping(msg);
         const song = queue.songs[0];
-        const currentTime = song.dispatcher
-            ? song.dispatcher.streamTime / 1000
-            : 0;
+        const currentTime = song.dispatcher ? song.dispatcher.streamTime / 1000 : 0;
         const embed = {
             author: {
                 iconURL: song.avatar,
@@ -70,9 +53,7 @@ export default class MusicStatusCommand extends Command {
             description: stripIndents`
 				[${song}](${`${song.url}`})
 
-				We are ${Song.timeString(currentTime)} into the song, and have ${song.timeLeft(
-                currentTime
-            )} left.
+				We are ${Song.timeString(currentTime)} into the song, and have ${song.timeLeft(currentTime)} left.
 				${!song.playing ? 'The music is paused.' : ''}
 			`,
             image: { url: song.thumbnail },

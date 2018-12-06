@@ -10,14 +10,10 @@
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class XKCDCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'xkcd',
             aliases: ['devjoke', 'comicjoke'],
@@ -33,15 +29,13 @@ export default class XKCDCommand extends Command {
         });
     }
 
-    public async run(msg: CommandoMessage) {
+    public async run (msg: CommandoMessage) {
         try {
             startTyping(msg);
             const count = await fetch('https://xkcd.com/info.0.json');
             const totalImages = await count.json();
             const randomNum = Math.floor(Math.random() * totalImages.num) + 1;
-            const res = await fetch(
-                `https://xkcd.com/${randomNum}/info.0.json`
-            );
+            const res = await fetch(`https://xkcd.com/${randomNum}/info.0.json`);
             const randomImage = await res.json();
             const xkcdEmbed = new MessageEmbed();
 
@@ -57,9 +51,7 @@ export default class XKCDCommand extends Command {
             return msg.embed(xkcdEmbed);
         } catch (err) {
             stopTyping(msg);
-            return msg.reply(
-                "woops, couldn't get a random xkcd image. Have a 🎀 instead!"
-            );
+            return msg.reply('woops, couldn\'t get a random xkcd image. Have a 🎀 instead!');
         }
     }
 }

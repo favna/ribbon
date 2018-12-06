@@ -6,24 +6,15 @@
 
 import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel, Util } from 'discord.js';
-import {
-    CommandoClient,
-    CommandoGuild,
-    CommandoMessage,
-} from 'discord.js-commando';
+import { CommandoClient, CommandoGuild, CommandoMessage } from 'discord.js-commando';
 import emojis from 'emoji-regex';
-import { diacriticsMap } from './maps';
+import { diacriticsMap, validBooleansMap } from '.';
 
-export const arrayClean = (
-    deleteValue: string | number | undefined | any,
-    array: Array<string | number | undefined | any>
-) => array.filter(element => element !== deleteValue);
+export const arrayClean = (deleteValue: string | number | undefined | any, array: Array<string | number | undefined | any>) => array.filter(element => element !== deleteValue);
 
-export const capitalizeFirstLetter = (str: string) =>
-    str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
-export const countCaps = (capcount: string, total: string): number =>
-    (capcount.replace(/[^A-Z]/g, '').length / total.length) * 100;
+export const countCaps = (capcount: string, total: string): number => (capcount.replace(/[^A-Z]/g, '').length / total.length) * 100;
 
 export const countEmojis = (str: string) => {
     const customEmojis = /<a?:[\S]+:[0-9]{18}>/gim;
@@ -48,27 +39,16 @@ export const countMentions = (str: string) => {
     return counter;
 };
 
-export const deleteCommandMessages = (
-    msg: CommandoMessage,
-    client: CommandoClient
-) =>
-    msg.deletable &&
-    client.provider.get(msg.guild, 'deletecommandmessages', false)
-        ? msg.delete()
-        : null;
+export const deleteCommandMessages = (msg: CommandoMessage, client: CommandoClient) => {
+    if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) msg.delete();
+};
 
-export const modLogMessage = (
-    msg: CommandoMessage,
-    guild: CommandoGuild,
-    outChannelID: string,
-    outChannel: TextChannel,
-    embed: MessageEmbed
-) => {
+export const modLogMessage = (msg: CommandoMessage, guild: CommandoGuild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed) => {
     if (!guild.settings.get('hasSentModLogMessage', false)) {
         msg.reply(oneLine`
             📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
             (or some other name configured by the ${
-                guild.commandPrefix
+            guild.commandPrefix
             }setmodlogs command) and give me access to it.
             This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         guild.settings.set('hasSentModLogMessage', true);
@@ -79,12 +59,7 @@ export const modLogMessage = (
         : null;
 };
 
-export const numberBetween = (
-    num: number,
-    lower: number,
-    upper: number,
-    inclusive: boolean
-) => {
+export const numberBetween = (num: number, lower: number, upper: number, inclusive: boolean) => {
     const max = Math.max(lower, upper);
     const min = Math.min(lower, upper);
 
@@ -130,11 +105,7 @@ export const roundNumber = (num: number, scale = 0) => {
         sig = '+';
     }
 
-    return Number(
-        `${Math.round(
-            Number(`${Number(arr[0])}e${sig}${Number(arr[1]) + scale}`)
-        )}e-${scale}`
-    );
+    return Number(`${Math.round(Number(`${Number(arr[0])}e${sig}${Number(arr[1]) + scale}`))}e-${scale}`);
 };
 
 export const stopTyping = (msg: CommandoMessage) => {
@@ -146,31 +117,10 @@ export const startTyping = (msg: CommandoMessage) => {
 };
 
 export const validateBool = (bool: boolean) => {
-    const validBools = [
-        'true',
-        't',
-        'yes',
-        'y',
-        'on',
-        'enable',
-        'enabled',
-        '1',
-        '+',
-        'false',
-        'f',
-        'no',
-        'n',
-        'off',
-        'disable',
-        'disabled',
-        '0',
-        '-'
-    ];
-
-    if (validBools.includes(bool.toString())) return true;
+    if (validBooleansMap.includes(bool.toString())) return true;
 
     return stripIndents`
-        Has to be one of ${validBools.map(val => `\`${val}\``).join(', ')}
+        Has to be one of ${validBooleansMap.map(val => `\`${val}\``).join(', ')}
         Respond with your new selection or`;
 };
 
@@ -182,6 +132,7 @@ export class Song {
     public dispatcher: any;
     public playing: boolean;
 
+    // TODO: Video Interface Type
     constructor (video: any, member: GuildMember) {
         this.name = Util.escapeMarkdown(video.title);
         this.id = video.id;
@@ -200,9 +151,7 @@ export class Song {
     }
 
     get username () {
-        return Util.escapeMarkdown(
-            `${this.member.user.tag} (${this.member.user.id})`
-        );
+        return Util.escapeMarkdown(`${this.member.user.tag} (${this.member.user.id})`);
     }
 
     get avatar () {

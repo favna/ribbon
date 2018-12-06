@@ -14,16 +14,12 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, gobalObjectsMap, startTyping, stopTyping } from '../../components';
 
 export default class DocsCommand extends Command {
-    private docs: any;
+    private readonly docs: any;
 
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'docs',
             aliases: ['djsguide', 'guide', 'djs'],
@@ -46,14 +42,12 @@ export default class DocsCommand extends Command {
                 },
                 {
                     key: 'version',
-                    prompt:
-                        'which version of docs would you like (stable, master, commando)?',
+                    prompt: 'which version of docs would you like (stable, master, commando)?',
                     type: 'string',
                     default: 'stable',
-                    validate: (value: string) =>
-                        ['master', 'stable', 'commando'].includes(value),
+                    validate: (value: string) => ['master', 'stable', 'commando'].includes(value),
                     parse: (value: string) => value.toLowerCase(),
-                },
+                }
             ],
         });
 
@@ -61,10 +55,7 @@ export default class DocsCommand extends Command {
     }
 
     /* tslint:disable: cyclomatic-complexity*/
-    public async run(
-        msg: CommandoMessage,
-        { query, version }: { query: Array<string>; version: string }
-    ) {
+    public async run (msg: CommandoMessage, { query, version }: { query: string[]; version: string }) {
         try {
             startTyping(msg);
 
@@ -73,8 +64,8 @@ export default class DocsCommand extends Command {
                 version === 'commando'
                     ? 'commando/blob/master'
                     : `discord.js/blob/${version}`
-            }`;
-            const hitOpts: Fuse.FuseOptions<any> = {
+                }`;
+            const docOptions: Fuse.FuseOptions<any> = {
                 shouldSort: true,
                 keys: [{ name: 'name', getfn: t => t.name, weight: 1 }],
                 location: 0,
@@ -87,10 +78,7 @@ export default class DocsCommand extends Command {
                 main: query[0],
                 sub: query[1] ? query[1].replace(/(\(.*\))/gm, '') : null,
             };
-            const docsFuse = new Fuse(
-                docs.classes.concat(docs.typedefs),
-                hitOpts
-            );
+            const docsFuse = new Fuse(docs.classes.concat(docs.typedefs), docOptions);
             const docsEmbed = new MessageEmbed();
             const docsSearch = docsFuse.search(input.main);
             const hit = docsSearch[0];
@@ -105,7 +93,7 @@ export default class DocsCommand extends Command {
                 );
 
             if (input.sub) {
-                const subopts: Fuse.FuseOptions<any> = {
+                const subOptions: Fuse.FuseOptions<any> = {
                     shouldSort: true,
                     keys: [{ name: 'name', getfn: t => t.name, weight: 1 }],
                     location: 5,
@@ -114,15 +102,9 @@ export default class DocsCommand extends Command {
                     maxPatternLength: 32,
                     minMatchCharLength: 1,
                 };
-                const propsFuse = hit.props
-                    ? new Fuse(hit.props, subopts)
-                    : null;
-                const methodFuse = hit.methods
-                    ? new Fuse(hit.methods, subopts)
-                    : null;
-                const eventsFuse = hit.events
-                    ? new Fuse(hit.events, subopts)
-                    : null;
+                const propsFuse = hit.props ? new Fuse(hit.props, subOptions) : null;
+                const methodFuse = hit.methods ? new Fuse(hit.methods, subOptions) : null;
+                const eventsFuse = hit.events ? new Fuse(hit.events, subOptions) : null;
                 const subHit: any = {
                     events: eventsFuse ? eventsFuse.search(input.sub) : [],
                     methods: methodFuse ? methodFuse.search(input.sub) : [],
@@ -133,180 +115,79 @@ export default class DocsCommand extends Command {
                     if (subHit[sub].length) {
                         const res: any = subHit[sub][0];
 
-                        Array.prototype.toString = function() {
+                        Array.prototype.toString = function () {
                             return this.join('');
                         };
 
                         switch (sub) {
                             case 'props':
                                 docsEmbed
-                                    .setDescription(
-                                        stripIndents`${oneLine`[__**${
-                                            hit.name
-                                        }.${res.name}**__](${this.docifyLink(
-                                            hit.name,
-                                            version,
-                                            docs
-                                        )}?scrollTo=${res.name})`}
+                                    .setDescription(stripIndents`
+                                        ${oneLine`[__**${hit.name}.${res.name}**__](${this.docifyLink(hit.name, version, docs)}?scrollTo=${res.name})`}
                                         ${hit.description}`
                                     )
                                     .addField(
                                         'Type',
-                                        `${this.joinType(
-                                            res.type,
-                                            version,
-                                            docs
-                                        )}`
+                                        `${this.joinType(res.type, version, docs)}`
                                     );
                                 break subLoop;
                             case 'methods':
                                 docsEmbed
-                                    .setDescription(
-                                        stripIndents`${oneLine`[__**${
-                                            hit.name
-                                        }.${res.name}()**__](${this.docifyLink(
-                                            hit.name,
-                                            version,
-                                            docs
-                                        )}?scrollTo=${res.name})`}
-                                        ${hit.description}`
-                                    )
-                                    .addField(
+                                    .setDescription(stripIndents`
+                                        ${oneLine`[__**${hit.name}.${res.name}()**__](${this.docifyLink(hit.name, version, docs)}?scrollTo=${res.name})`}
+                                        ${hit.description}
+                                    `);
+
+                                if (res.params) {
+                                    docsEmbed.addField(
                                         'Parameters',
-                                        res.params.map(
-                                            (param: any) =>
-                                                `\`${
-                                                    param.optional
-                                                        ? `[${param.name}]`
-                                                        : param.name
-                                                }:\` **${this.joinType(
-                                                    param.type,
-                                                    version,
-                                                    docs
-                                                ).join(' | ')}**\n${this.clean(
-                                                    param.description
-                                                )}\n`
-                                        )
-                                    )
-                                    .addField(
-                                        'Returns',
-                                        oneLine`${
-                                            res.returns.description
-                                                ? `${this.clean(
-                                                      res.returns.description
-                                                  )}`
-                                                : ''
-                                        } **⇒**
-                                        **${this.joinType(
-                                            res.returns.types || res.returns,
-                                            version,
-                                            docs
-                                        )}**`
-                                    )
-                                    .addField(
-                                        'Example(s)',
-                                        `\`\`\`js\n${res.examples.join(
-                                            '```\n```js\n'
-                                        )}\`\`\``
-                                    )
-                                    .addField(
-                                        '\u200b',
-                                        `[View Source](${sourceBaseURL}/${
-                                            res.meta.path
-                                        }/${res.meta.file}#L${res.meta.line})`
+                                        res.params.map((param: any) => oneLine`\`${param.optional ? `[${param.name}]` : param.name}:\`
+                                            **${this.joinType(param.type, version, docs)}**
+                                            \n${this.clean(param.description)}\n`)
                                     );
+                                }
+
+                                docsEmbed.addField('Returns',
+                                    oneLine`${res.returns.description
+                                        ? `${this.clean(res.returns.description)}`
+                                        : ''} **⇒** **${this.joinType(res.returns.types || res.returns, version, docs)}**`);
+
+                                if (res.examples) docsEmbed.addField('Example(s)', `\`\`\`js\n${res.examples.join('```\n```js\n')}\`\`\``);
+
+                                docsEmbed.addField('\u200b', `[View Source](${sourceBaseURL}/${res.meta.path}/${res.meta.file}#L${res.meta.line})`);
                                 break subLoop;
                             case 'events':
                                 docsEmbed
-                                    .setDescription(
-                                        stripIndents`${oneLine`[__**${
-                                            hit.name
-                                        }.on('${
-                                            res.name
-                                        }' … )**__](${this.docifyLink(
-                                            hit.name,
-                                            version,
-                                            docs
-                                        )}?scrollTo=${res.name})`}
-                                        ${hit.description}`
+                                    .setDescription(stripIndents`
+                                        ${oneLine`[__**${hit.name}.on('${res.name}' … )**__](${this.docifyLink(hit.name, version, docs)}?scrollTo=${res.name})`}
+                                        ${hit.description}
+                                    `)
+                                    .addField('Parameters',
+                                        res.params.map((param: any) => oneLine`\`${param.optional ? `[${param.name}]` : param.name}:\`
+                                            **${this.joinType(param.type, version, docs)}**
+                                            \n${this.clean(param.description)}\n
+                                        `)
                                     )
-                                    .addField(
-                                        'Parameters',
-                                        res.params.map(
-                                            (param: any) => oneLine`\`${
-                                                param.optional
-                                                    ? `[${param.name}]`
-                                                    : param.name
-                                            }:\`
-                                            **${this.joinType(
-                                                param.type,
-                                                version,
-                                                docs
-                                            )}**\n${this.clean(
-                                                param.description
-                                            )}\n`
-                                        )
-                                    )
-                                    .addField(
-                                        '\u200b',
-                                        `[View Source](${sourceBaseURL}/${
-                                            res.meta.path
-                                        }/${res.meta.file}#L${res.meta.line})`
-                                    );
+                                    .addField('\u200b', `[View Source](${sourceBaseURL}/${res.meta.path}/${res.meta.file}#L${res.meta.line})`);
                                 break subLoop;
                             default:
                                 throw new Error('none found');
                         }
-                    } else if (sub === 'events') {
-                        throw new Error('none found');
                     }
                 }
             } else {
-                docsEmbed.setDescription(stripIndents`${oneLine`[__**${
-                    hit.name
-                }**__](${this.docifyLink(hit.name, version, docs)})
-          ${
-              hit.extends
-                  ? ` (extends [**${hit.extends}**](${this.docifyLink(
-                        hit.extends[0],
-                        version,
-                        docs
-                    )}))`
-                  : ''
-          }`}
-          ${hit.description}`);
+                docsEmbed.setDescription(stripIndents`
+                    ${oneLine`[__**${hit.name}**__](${this.docifyLink(hit.name, version, docs)})
+                        ${hit.extends ? ` (extends [**${hit.extends}**](${this.docifyLink(hit.extends[0], version, docs)}))` : ''}`}
+                    ${hit.description}
+                `);
 
-                if (hit.props) {
-                    docsEmbed.addField(
-                        'Properties',
-                        `\`${hit.props.map((p: any) => p.name).join('` `')}\``
-                    );
-                }
-                if (hit.methods) {
-                    docsEmbed.addField(
-                        'Methods',
-                        `\`${hit.methods.map((m: any) => m.name).join('` `')}\``
-                    );
-                }
-                if (hit.events) {
-                    docsEmbed.addField(
-                        'Events',
-                        `\`${hit.events.map((e: any) => e.name).join('` `')}\``
-                    );
-                }
-                if (hit.type) {
-                    docsEmbed.addField(
-                        'Type',
-                        this.joinType(hit.type, version, docs)
-                    );
-                }
+                if (hit.props) docsEmbed.addField('Properties', `\`${hit.props.map((p: any) => p.name).join('` `')}\``);
+                if (hit.methods) docsEmbed.addField('Methods', `\`${hit.methods.map((m: any) => m.name).join('` `')}\``);
+                if (hit.events) docsEmbed.addField('Events', `\`${hit.events.map((e: any) => e.name).join('` `')}\``);
+                if (hit.type) docsEmbed.addField('Type', this.joinType(hit.type, version, docs));
 
-                docsEmbed.addField(
-                    '\u200b',
-                    `[View Source](${sourceBaseURL}/${hit.meta.path}/${
-                        hit.meta.file
-                    }#L${hit.meta.line})`
-                );
+                docsEmbed.addField('\u200b', `[View Source](${sourceBaseURL}/${hit.meta.path}/${hit.meta.file}#L${hit.meta.line})`);
             }
 
             deleteCommandMessages(msg, this.client);
@@ -317,17 +198,11 @@ export default class DocsCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply(
-                `could not find an item for \`${query.join('.')}\` in the ${
-                    version === 'commando'
-                        ? 'Commando'
-                        : `Discord.JS ${version}`
-                } docs.`
-            );
+            return msg.reply(`could not find an item for \`${query.join('.')}\` in the ${version === 'commando' ? 'Commando' : `Discord.JS ${version}`} docs.`);
         }
     }
 
-    private async fetchDocs(version: string) {
+    private async fetchDocs (version: string) {
         if (this.docs[version]) {
             return this.docs[version];
         }
@@ -344,48 +219,43 @@ export default class DocsCommand extends Command {
         return json;
     }
 
-    private clean(text: string) {
+    private clean (text: string) {
         return text
             .replace(/\n/g, ' ')
             .replace(/<\/?(?:info|warn)>/g, '')
             .replace(/{@link (.+?)}/g, '`$1`');
     }
 
-    private joinType(types: any, version: string, docs: DocsCommand['docs']) {
-        return types.map((type: Array<any>) =>
-            type.map((t: Array<any>) => {
-                if (t.length === 1) {
-                    return `[${t[0]}](${this.docifyLink(t[0], version, docs)})`;
-                } else if (t[1] === '>') {
-                    return `[<${t[0]}>](${this.docifyLink(
-                        t[0],
-                        version,
-                        docs
-                    )})`;
-                }
+    private joinType (types: any, version: string, docs: DocsCommand['docs']) {
+        let final = '';
 
-                return `[${
-                    t[0]
-                }](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/${
-                    t[0]
-                })`;
-            })
-        );
+        types.forEach((typeBits: any[], outerIndex: number, thisArr: any[]) => {
+            typeBits.forEach((t: string) => {
+                if (gobalObjectsMap.includes(t[0].toLowerCase()) && !(/(?:Global_Objects)/).test(final)) {
+                    final += '[';
+                    final += t[0];
+                    if (t[1]) final += t[1];
+                    if (thisArr[0][1]) final += thisArr[0][1].join('');
+                    final += `](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/${t[0]})`;
+                } else if (t.length === 1) {
+                    final += `[${t[0]}](${this.docifyLink(t[0], version, docs)})`;
+                } else if (!(/(?:discord.js.org|Global_Objects)/).test(final)) {
+                    if (thisArr[0][2]) final += `[${t[0]}<${thisArr[0][2][0]}>](${this.docifyLink(t[0], version, docs)})`;
+                    else final += `[${t[0]}<${thisArr[0][1][0]}>](${this.docifyLink(t[0], version, docs)})`;
+                }
+            });
+        });
+
+        return final;
     }
 
-    private docifyLink(prop: any, version: string, docs: DocsCommand['docs']) {
+    private docifyLink (prop: any, version: string, docs: DocsCommand['docs']) {
         let section = 'classes';
-        const docsBaseURL = `https://discord.js.org/#/docs/${
-            version === 'commando' ? 'commando/master' : `main/${version}`
-        }`;
+        const docsBaseURL = `https://discord.js.org/#/docs/${version === 'commando' ? 'commando/master' : `main/${version}`}`;
         const matchCheck = docs[section].find((el: any) => el.name === prop);
 
-        if (!matchCheck || matchCheck.name !== prop) {
-            section = 'typedefs';
-        }
+        if (!matchCheck || matchCheck.name !== prop) section = 'typedefs';
 
-        return `${docsBaseURL}/${
-            section === 'classes' ? 'class' : 'typedef'
-        }/${prop}`;
+        return `${docsBaseURL}/${section === 'classes' ? 'class' : 'typedef'}/${prop}`;
     }
 }

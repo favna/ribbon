@@ -10,14 +10,10 @@
 import { GuildMember } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class PatCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'pat',
             group: 'weeb',
@@ -36,12 +32,12 @@ export default class PatCommand extends Command {
                     prompt: 'Who do you want to pat?',
                     type: 'member',
                     default: '',
-                },
+                }
             ],
         });
     }
 
-    public async run(
+    public async run (
         msg: CommandoMessage,
         { member }: { member: GuildMember }
     ) {
@@ -50,25 +46,17 @@ export default class PatCommand extends Command {
 
             const patFetch = await fetch('https://nekos.life/api/v2/img/pat');
             const petImg = await patFetch.json();
+            if (member.id === msg.member.id) member = null;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.embed(
-                {
+            return msg.embed({
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
                     description: member
-                        ? `${member.displayName}! You got patted by ${
-                              msg.member.displayName
-                          } 🐇!`
-                        : `${
-                              msg.member.displayName
-                          } you must feel alone... Have a 🐈`,
-                    image: {
-                        url: member
-                            ? petImg.url
-                            : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif',
-                    },
+                        ? `${member.displayName}! You got patted by ${msg.member.displayName} 🐇!`
+                        : `${msg.member.displayName} you must feel alone... Have a 🐈`,
+                    image: { url: member ? petImg.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif' },
                 },
                 `<@${member ? member.id : msg.author.id}>`
             );

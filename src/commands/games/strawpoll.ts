@@ -18,27 +18,21 @@
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class StrawpollCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'strawpoll',
             aliases: ['straw', 'poll'],
             group: 'games',
             memberName: 'strawpoll',
-            description:
-                'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
-            format: "'Title Of Strawpoll' OptionA OptionB OptionC...",
-            details:
-                'Has a very specific syntax! Be sure to adapt the example!',
+            description: 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
+            format: '\'Title Of Strawpoll\' OptionA OptionB OptionC...',
+            details: 'Has a very specific syntax! Be sure to adapt the example!',
             examples: [
-                "strawpoll 'Best RWBY girl?' 'Pyrrha Nikos' 'Ruby Rose'",
-                "strawpoll 'Best coding language?' JavaScript C# C++",
+                'strawpoll \'Best RWBY girl?\' \'Pyrrha Nikos\' \'Ruby Rose\'',
+                'strawpoll \'Best coding language?\' JavaScript C# C++'
             ],
             guildOnly: false,
             throttling: {
@@ -53,19 +47,15 @@ export default class StrawpollCommand extends Command {
                 },
                 {
                     key: 'options',
-                    prompt:
-                        'What are the messages for the strawpoll (minimum is 2)? Send 1 option per message and end with `finish`',
+                    prompt: 'What are the messages for the strawpoll (minimum is 2)? Send 1 option per message and end with `finish`',
                     type: 'string',
                     infinite: true,
-                },
+                }
             ],
         });
     }
 
-    public async run(
-        msg: CommandoMessage,
-        { title, options }: { title: string; options: string }
-    ) {
+    public async run (msg: CommandoMessage, { title, options }: { title: string; options: string }) {
         if (options.length < 2) {
             return msg.reply(
                 'a poll needs to have at least 2 options to pick from'
@@ -94,24 +84,13 @@ export default class StrawpollCommand extends Command {
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
                 .setTitle(strawpoll.title)
                 .setURL(`http://www.strawpoll.me/${strawpoll.id}`)
-                .setImage(
-                    `http://www.strawpoll.me/images/poll-results/${
-                        strawpoll.id
-                    }.png`
-                )
-                .setDescription(
-                    `Options on this poll: ${strawpoll.options
-                        .map((val: string) => `\`${val}\``)
-                        .join(', ')}`
-                );
+                .setImage(`http://www.strawpoll.me/images/poll-results/${strawpoll.id}.png`)
+                .setDescription(`Options on this poll: ${strawpoll.options.map((val: string) => `\`${val}\``).join(', ')}`);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.embed(
-                pollEmbed,
-                `http://www.strawpoll.me/${strawpoll.id}`
-            );
+            return msg.embed(pollEmbed, `http://www.strawpoll.me/${strawpoll.id}`);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

@@ -9,33 +9,15 @@ import levenshtein from 'fast-levenshtein';
 import * as moment from 'moment';
 import { countCaps, countEmojis, countMentions, numberBetween } from './util';
 
-export const badwords = (
-    msg: CommandoMessage,
-    words: Array<string>,
-    client: CommandoClient
-) => {
-    if (
-        msg.author.bot ||
-        client.isOwner(msg.author) ||
-        msg.member.hasPermission('MANAGE_MESSAGES')
-    ) {
+export const badwords = (msg: CommandoMessage, words: string[], client: CommandoClient) => {
+    if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
         return false;
     }
     return words.some((v: string) => msg.content.indexOf(v) >= 0);
 };
 
-export const duptext = (
-    msg: CommandoMessage,
-    within: number,
-    equals: number,
-    distance: number,
-    client: CommandoClient
-) => {
-    if (
-        msg.author.bot ||
-        client.isOwner(msg.author) ||
-        msg.member.hasPermission('MANAGE_MESSAGES')
-    ) {
+export const duptext = (msg: CommandoMessage, within: number, equals: number, distance: number, client: CommandoClient) => {
+    if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
         return false;
     }
     const authorMessages = msg.channel.messages.filter(m => {
@@ -63,17 +45,8 @@ export const duptext = (
     return levdist <= distance;
 };
 
-export const caps = (
-    msg: CommandoMessage,
-    threshold: number,
-    minlength: number,
-    client: CommandoClient
-) => {
-    if (
-        msg.author.bot ||
-        client.isOwner(msg.author) ||
-        msg.member.hasPermission('MANAGE_MESSAGES')
-    ) {
+export const caps = (msg: CommandoMessage, threshold: number, minlength: number, client: CommandoClient) => {
+    if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
         return false;
     }
     if (msg.cleanContent.length >= minlength) {
@@ -85,17 +58,8 @@ export const caps = (
     return false;
 };
 
-export const emojis = (
-    msg: CommandoMessage,
-    threshold: number,
-    minlength: number,
-    client: CommandoClient
-) => {
-    if (
-        msg.author.bot ||
-        client.isOwner(msg.author) ||
-        msg.member.hasPermission('MANAGE_MESSAGES')
-    ) {
+export const emojis = (msg: CommandoMessage, threshold: number, minlength: number, client: CommandoClient) => {
+    if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
         return false;
     }
     if (msg.cleanContent.length >= minlength) {
@@ -107,27 +71,15 @@ export const emojis = (
     return false;
 };
 
-export const mentions = (
-    msg: CommandoMessage,
-    threshold: number,
-    client: CommandoClient
-) => {
-    if (
-        msg.author.bot ||
-        client.isOwner(msg.author) ||
-        msg.member.hasPermission('MANAGE_MESSAGES')
-    ) {
+export const mentions = (msg: CommandoMessage, threshold: number, client: CommandoClient) => {
+    if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
         return false;
     }
     return countMentions(msg.content) >= threshold;
 };
 
 export const links = (msg: CommandoMessage, client: CommandoClient) => {
-    if (
-        msg.author.bot ||
-        client.isOwner(msg.author) ||
-        msg.member.hasPermission('MANAGE_MESSAGES')
-    ) {
+    if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
         return false;
     }
     return /https?:\/\/(?!discordapp\.com|discord.gg)[^\s]+/gim.test(
@@ -136,26 +88,14 @@ export const links = (msg: CommandoMessage, client: CommandoClient) => {
 };
 
 export const invites = (msg: CommandoMessage, client: CommandoClient) => {
-    if (
-        msg.author.bot ||
-        client.isOwner(msg.author) ||
-        msg.member.hasPermission('MANAGE_MESSAGES')
-    ) {
+    if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
         return false;
     }
     return /(?:discord\.gg|discordapp.com\/invite)/gim.test(msg.content);
 };
 
-export const slowmode = (
-    msg: CommandoMessage,
-    within: number,
-    client: CommandoClient
-) => {
-    if (
-        msg.author.bot ||
-        client.isOwner(msg.author) ||
-        msg.member.hasPermission('MANAGE_MESSAGES')
-    ) {
+export const slowmode = (msg: CommandoMessage, within: number, client: CommandoClient) => {
+    if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
         return false;
     }
     const authorMessages = msg.channel.messages.filter(m => {

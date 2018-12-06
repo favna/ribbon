@@ -28,16 +28,10 @@ import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import {
-    deleteCommandMessages,
-    modLogMessage,
-    ms,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
 
 export default class TimerAddCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'timeradd',
             aliases: ['timedmsgs', 'timedmsg', 'timedmessages', 'timer', 'tm'],
@@ -60,18 +54,10 @@ export default class TimerAddCommand extends Command {
             args: [
                 {
                     key: 'interval',
-                    prompt:
-                        'At which interval should the message(s) be repeated?',
+                    prompt: 'At which interval should the message(s) be repeated?',
                     type: 'string',
                     validate: (t: string) => {
-                        if (
-                            /^(?:[0-9]{1,3}(?:m|min|mins|minute|minutes|h|hr|hour|hours|d|day|days){1})$/i.test(
-                                t
-                            )
-                        ) {
-                            return true;
-                        }
-
+                        if (/^(?:[0-9]{1,3}(?:m|min|mins|minute|minutes|h|hr|hour|hours|d|day|days){1})$/i.test(t)) return true;
                         return stripIndents`
                             Time until reminder has to be a formatting of \`Number\` \`Specification\`. Specification can have various option:
                             - \`m\` , \`min\`, \`mins\`, \`minute\` or \`minutes\` for minutes
@@ -119,64 +105,21 @@ export default class TimerAddCommand extends Command {
                     type: 'member',
                     default: [],
                     infinite: true,
-                },
+                }
             ],
         });
     }
 
-    public run(
-        msg: CommandoMessage,
-        {
-            interval,
-            timerChannel,
-            content,
-            members,
-        }: {
-            interval: number;
-            timerChannel: TextChannel;
-            content: string;
-            members?: Array<GuildMember>;
-        }
-    ) {
+    public run (msg: CommandoMessage, { interval, timerChannel, content, members }: { interval: number; timerChannel: TextChannel; content: string; members?: GuildMember[]; }) {
         startTyping(msg);
-        const conn = new Database(
-            path.join(__dirname, '../../data/databases/timers.sqlite3')
-        );
+        const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const timedMsgEmbed = new MessageEmbed();
 
         try {
             startTyping(msg);
-            conn.prepare(
-                `INSERT INTO "${
-                    msg.guild.id
-                }" (interval, channel, content, lastsend, members) VALUES ($interval, $channel, $content, $lastsend, $members);`
-            ).run({
-                content,
-                interval,
-                channel: timerChannel.id,
-                lastsend: moment()
-                    .subtract(interval, 'ms')
-                    .format('YYYY-MM-DD HH:mm'),
-                members: members.length
-                    ? members.map(member => member.id).join(';')
-                    : '',
-            });
-            stopTyping(msg);
-        } catch (err) {
-            stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(
-                    `CREATE TABLE IF NOT EXISTS "${
-                        msg.guild.id
-                    }" (id INTEGER PRIMARY KEY AUTOINCREMENT, interval INTEGER, channel TEXT, content TEXT, lastsend TEXT, members TEXT);`
-                ).run();
-
-                conn.prepare(
-                    `INSERT INTO "${
-                        msg.guild.id
-                    }" (interval, channel, content, lastsend, members) VALUES ($interval, $channel, $content, $lastsend, $members);`
-                ).run({
+            conn.prepare(`INSERT INTO "${msg.guild.id}" (interval, channel, content, lastsend, members) VALUES ($interval, $channel, $content, $lastsend, $members);`)
+                .run({
                     content,
                     interval,
                     channel: timerChannel.id,
@@ -187,40 +130,48 @@ export default class TimerAddCommand extends Command {
                         ? members.map(member => member.id).join(';')
                         : '',
                 });
+            stopTyping(msg);
+        } catch (err) {
+            stopTyping(msg);
+            if (/(?:no such table)/i.test(err.toString())) {
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id INTEGER PRIMARY KEY AUTOINCREMENT, interval INTEGER, channel TEXT, content TEXT, lastsend TEXT, members TEXT);`)
+                    .run();
+
+                conn.prepare(`INSERT INTO "${msg.guild.id}" (interval, channel, content, lastsend, members) VALUES ($interval, $channel, $content, $lastsend, $members);`)
+                    .run({
+                        content,
+                        interval,
+                        channel: timerChannel.id,
+                        lastsend: moment()
+                            .subtract(interval, 'ms')
+                            .format('YYYY-MM-DD HH:mm'),
+                        members: members.length
+                            ? members.map(member => member.id).join(';')
+                            : '',
+                    });
             } else {
-                const channel = this.client.channels.get(
-                    process.env.ISSUE_LOG_CHANNEL_ID
-                ) as TextChannel;
+                const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
                 channel.send(stripIndents`
-                    <@${
-                        this.client.owners[0].id
-                    }> Error occurred in \`timeradd\` command!
+                    <@${this.client.owners[0].id}> Error occurred in \`timeradd\` command!
                     **Server:** ${msg.guild.name} (${msg.guild.id})
                     **Author:** ${msg.author.tag} (${msg.author.id})
-                    **Time:** ${moment(msg.createdTimestamp).format(
-                        'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-                    )}
+                    **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                     **Interval:** ${ms(interval, { long: true })}
                     **Channel:** ${channel.name} (${channel.id})>
                     **Message:** ${content}
                     **Error Message:** ${err}
                 `);
 
-                return msg.reply(oneLine`An error occurred but I notified ${
-                    this.client.owners[0].username
-                }
-                    Want to know more about the error? Join the support server by getting an invite by using the \`${
-                        msg.guild.commandPrefix
-                    }invite\` command `);
+                return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+                    Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
             }
         }
 
         timedMsgEmbed
             .setColor('#9EF7C1')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(
-                stripIndents`
+            .setDescription(stripIndents`
                 **Action:** Timed message stored
                 **Interval:** ${ms(interval, { long: true })}
                 **Channel:** <#${timerChannel.id}>
@@ -229,13 +180,7 @@ export default class TimerAddCommand extends Command {
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(
-                msg,
-                msg.guild,
-                modlogChannel,
-                msg.guild.channels.get(modlogChannel) as TextChannel,
-                timedMsgEmbed
-            );
+            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, timedMsgEmbed);
         }
 
         deleteCommandMessages(msg, this.client);

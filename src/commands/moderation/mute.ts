@@ -20,18 +20,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import { GuildMember, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
-import {
-    deleteCommandMessages,
-    modLogMessage,
-    ms,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
 
 export default class MuteCommand extends Command {
-    private logs: boolean;
-
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'mute',
             aliases: ['silent'],
@@ -89,28 +81,19 @@ export default class MuteCommand extends Command {
 
                         return Number(match[0]) * multiplier * 60000;
                     },
-                },
+                }
             ],
         });
     }
 
-    public async run(
-        msg: CommandoMessage,
-        { member, duration }: { member: GuildMember; duration: number }
-    ) {
+    public async run (msg: CommandoMessage, { member, duration, logs }: { member: GuildMember; duration: number, logs: boolean }) {
         if (member.manageable) {
             startTyping(msg);
             try {
-                const modlogChannel = msg.guild.settings.get(
-                    'modlogchannel',
-                    null
-                );
+                const modlogChannel = msg.guild.settings.get('modlogchannel', null);
                 const muteRole = msg.guild.settings.get(
                     'muterole',
-                    msg.guild.roles.find(r => r.name === 'muted')
-                        ? msg.guild.roles.find(r => r.name === 'muted')
-                        : null
-                );
+                    msg.guild.roles.find(r => r.name === 'muted') ? msg.guild.roles.find(r => r.name === 'muted') : null);
                 const muteEmbed = new MessageEmbed();
 
                 await member.roles.add(muteRole);
@@ -118,47 +101,30 @@ export default class MuteCommand extends Command {
                 muteEmbed
                     .setColor('#AAEFE6')
                     .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-                    .setDescription(
-                        stripIndents`
+                    .setDescription(stripIndents`
                         **Action:** Muted <@${member.id}>
-                        **Duration:** ${
-                            duration
-                                ? ms(duration, { long: true })
-                                : 'Until manually removed'
-                        }`
+                        **Duration:** ${duration ? ms(duration, { long: true }) : 'Until manually removed'}`
                     )
                     .setTimestamp();
 
                 if (msg.guild.settings.get('modlogs', true)) {
-                    modLogMessage(
-                        msg,
-                        msg.guild,
-                        modlogChannel,
-                        msg.guild.channels.get(modlogChannel) as TextChannel,
-                        muteEmbed
-                    );
-                    this.logs = true;
+                    modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, muteEmbed);
+                    logs = true;
                 }
 
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);
 
-                const muteMessage: Message = (await msg.embed(
-                    muteEmbed
-                )) as Message;
+                const muteMessage: Message = await msg.embed(muteEmbed) as Message;
 
                 if (duration) {
                     setTimeout(async () => {
                         await member.roles.remove(muteRole);
-                        muteEmbed.setDescription(
-                            stripIndents`**Action:** Mute duration ended, unmuted ${
-                                member.displayName
-                            } (<@${member.id}>)`
+                        muteEmbed.setDescription(stripIndents`
+                            **Action:** Mute duration ended, unmuted ${member.displayName} (<@${member.id}>)`
                         );
-                        if (this.logs) {
-                            const logChannel: TextChannel = msg.guild.channels.get(
-                                modlogChannel
-                            ) as TextChannel;
+                        if (logs) {
+                            const logChannel: TextChannel = msg.guild.channels.get(modlogChannel) as TextChannel;
                             logChannel.send('', { embed: muteEmbed });
                         }
 
@@ -171,44 +137,28 @@ export default class MuteCommand extends Command {
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);
                 if (/(?:Missing Permissions)/i.test(err.toString())) {
-                    return msg.reply(stripIndents`an error occurred muting \`${
-                        member.displayName
-                    }\`.
+                    return msg.reply(stripIndents`an error occurred muting \`${member.displayName}\`.
                         Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
                 }
-                const channel = this.client.channels.get(
-                    process.env.ISSUE_LOG_CHANNEL_ID
-                ) as TextChannel;
+                const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
                 channel.send(stripIndents`
-                    <@${
-                        this.client.owners[0].id
-                    }> Error occurred in \`addrole\` command!
+                    <@${this.client.owners[0].id}> Error occurred in \`addrole\` command!
                     **Server:** ${msg.guild.name} (${msg.guild.id})
                     **Author:** ${msg.author.tag} (${msg.author.id})
-                    **Time:** ${moment(msg.createdTimestamp).format(
-                        'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-                    )}
-                    **Input:** \`${member.user.username} (${member.id})\` ${
-                    duration ? ` || \`${ms(duration, { long: true })}` : null
-                }
+                    **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                    **Input:** \`${member.user.username} (${member.id})\` ${duration ? ` || \`${ms(duration, { long: true })}` : null}
                     **Error Message:** ${err}
                 `);
 
-                return msg.reply(oneLine`An error occurred but I notified ${
-                    this.client.owners[0].username
-                }
-                    Want to know more about the error? Join the support server by getting an invite by using the \`${
-                        msg.guild.commandPrefix
-                    }invite\` command `);
+                return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+                    Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
             }
         }
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
-        return msg.reply(stripIndents`an error occurred muting \`${
-            member.displayName
-        }\`.
+        return msg.reply(stripIndents`an error occurred muting \`${member.displayName}\`.
 		    Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
     }
 }

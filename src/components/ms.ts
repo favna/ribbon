@@ -11,15 +11,9 @@ interface ILongObject {
 
 const parse = (str: string) => {
     str = String(str);
-    if (str.length > 100) {
-        return null;
-    }
-    const match = /^((?:\d+)?-?\d?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
-        str
-    );
-    if (!match) {
-        return null;
-    }
+    if (str.length > 100) return null;
+    const match = /^((?:\d+)?-?\d?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(str);
+    if (!match) return null;
     const n = parseFloat(match[1]);
     const type = (match[2] || 'ms').toLowerCase();
     switch (type) {
@@ -69,7 +63,7 @@ const parse = (str: string) => {
 const plural = (singleMs: number, msAbs: number, n: number, name: string) => {
     const isPlural = msAbs >= n * 1.5;
 
-    return `${Math.round(singleMs / n)} name ${isPlural ? 's' : ''}`;
+    return `${Math.round(singleMs / n)} ${name} ${isPlural ? 's' : ''}`;
 };
 
 const fmtShort = (fmtShortMs: number) => {
@@ -97,9 +91,6 @@ export const ms = (val: any, options: ILongObject = {}): any => {
     if (typeof val === 'number' && !isNaN(val)) {
         return options.long ? fmtLong(val) : fmtShort(val);
     }
-    throw new Error(
-        `val is not a non-empty string or valid number. val=${JSON.stringify(
-            val
-        )}`
+    throw new Error(`val is not a non-empty string or valid number. val=${JSON.stringify(val)}`
     );
 };

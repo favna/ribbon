@@ -9,17 +9,12 @@
  * @param {ChannelResolvable} AnyChannel Channel to output notifs to
  */
 
-import { oneLine } from 'common-tags';
 import { TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class TwitchOutputCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'twitchoutput',
             aliases: ['output', 'twitchout', 'twitchchannel'],
@@ -37,24 +32,20 @@ export default class TwitchOutputCommand extends Command {
             args: [
                 {
                     key: 'channel',
-                    prompt:
-                        'What channel should I set for twitch notifications? (make sure to start with a # when going by name)',
+                    prompt: 'What channel should I set for twitch notifications? (make sure to start with a # when going by name)',
                     type: 'channel',
-                },
+                }
             ],
         });
     }
 
-    public run(msg: CommandoMessage, { channel }: { channel: TextChannel }) {
+    public run (msg: CommandoMessage, { channel }: { channel: TextChannel }) {
         startTyping(msg);
         msg.guild.settings.set('twitchchannel', channel.id);
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
-        return msg.reply(
-            oneLine`📹 the channel to use for the twitch notifications has been set to <#${
-                channel.id
-            }>`
+        return msg.reply(`📹 the channel to use for the twitch notifications has been set to <#${channel.id}>`
         );
     }
 }

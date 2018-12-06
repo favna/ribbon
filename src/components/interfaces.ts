@@ -1,6 +1,30 @@
-import { GuildChannel, VoiceChannel } from 'discord.js';
+import { GuildChannel, VoiceChannel, VoiceConnection } from 'discord.js';
 import { Command } from 'discord.js-commando';
 import { Song } from './util';
+
+interface IPokeGenderRatio {
+    M: number;
+    F: number;
+}
+
+interface IPokeStats {
+    hp: number;
+    atk: number;
+    def: number;
+    spa: number;
+    spd: number;
+    spe: number;
+
+    [propName: string]: string | number | undefined;
+}
+
+interface IPokeAbilities {
+    0: string;
+    1?: string;
+    H?: string;
+
+    [propName: string]: string | number | undefined;
+}
 
 export interface IMusicCommand extends Command {
     queue: any;
@@ -9,7 +33,7 @@ export interface IMusicCommand extends Command {
 
 export interface IVote {
     count: number;
-    users: Array<string>;
+    users: string[];
     queue: any;
     guild: string;
     start: number;
@@ -19,8 +43,8 @@ export interface IVote {
 export interface IQueue {
     textChannel: GuildChannel;
     voiceChannel: VoiceChannel;
-    connection: any;
-    songs: Array<Song>;
+    connection: VoiceConnection;
+    songs: Song[];
     volume: number;
 }
 
@@ -31,15 +55,79 @@ export interface IPokeData {
     genders?: string;
     sprite: string;
     tier?: string;
-    entries?: Array<any>;
+    entries?: any[];
 }
 
 export interface IGenre {
     name: string;
 }
 
-export interface ICasinoRowTyoe {
-    userID: string,
-    balance: number,
-    lasttopup: string
+export interface ICasinoRowType {
+    userID: string;
+    balance: number;
+    lasttopup: string;
+}
+
+export interface IPoke {
+    num: number;
+    name: string;
+    species: string;
+    baseForme?: string;
+    baseSpecies?: string;
+    forme?: string;
+    formeLetter?: string;
+    types: string[];
+    gender?: string;
+    genderRatio?: IPokeGenderRatio;
+    baseStats: IPokeStats;
+    abilities: IPokeAbilities;
+    heightm: number;
+    weightkg: number;
+    color: string;
+    prevo?: string;
+    evos?: string[];
+    evoLevel?: number;
+    eggGroups?: string[];
+    otherFormes?: string[];
+}
+
+export interface IPokeAliases {
+    alias: string;
+    tier?: string;
+    item?: string;
+    ability?: string;
+    name?: string;
+    move?: string;
+}
+
+export interface ITCGProps {
+    name: string;
+    types: string;
+    subtype: string;
+    supertype?: string;
+    hp: string;
+}
+
+export interface IDefineWord {
+    language: string;
+    text: string;
+}
+
+export interface ISteamGenre {
+    description: string;
+    id: string;
+}
+
+export interface IUrbanDefinition {
+    author: string;
+    current_vote: string;
+    defid: number;
+    definition: string;
+    example: string;
+    permalink: string;
+    sound_urls: string[];
+    thumbs_down: number;
+    thumbs_up: number;
+    word: string;
+    written_on: string;
 }

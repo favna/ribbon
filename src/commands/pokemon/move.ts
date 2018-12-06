@@ -16,16 +16,11 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import {
-    capitalizeFirstLetter,
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 import { BattleMovedex, MoveAliases } from '../../data/dex';
 
 export default class MoveCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'move',
             aliases: ['attack'],
@@ -45,12 +40,12 @@ export default class MoveCommand extends Command {
                     prompt: 'Get info on which move?',
                     type: 'string',
                     parse: (p: string) => p.toLowerCase(),
-                },
+                }
             ],
         });
     }
 
-    public run(msg: CommandoMessage, { move }: { move: string }) {
+    public run (msg: CommandoMessage, { move }: { move: string }) {
         try {
             startTyping(msg);
 
@@ -60,7 +55,7 @@ export default class MoveCommand extends Command {
                     { name: 'alias', getfn: t => t.alias, weight: 0.2 },
                     { name: 'move', getfn: t => t.item, weight: 0.2 },
                     { name: 'id', getfn: t => t.id, weight: 1 },
-                    { name: 'name', getfn: t => t.name, weight: 1 },
+                    { name: 'name', getfn: t => t.name, weight: 1 }
                 ],
                 location: 0,
                 distance: 100,
@@ -72,20 +67,15 @@ export default class MoveCommand extends Command {
             const moveFuse = new Fuse(BattleMovedex, moveOptions);
             const aliasSearch = aliasFuse.search(move);
             let moveSearch = moveFuse.search(move);
-            if (!moveSearch.length) {
-                moveSearch = aliasSearch.length
-                    ? moveFuse.search(aliasSearch[0].move)
-                    : [];
-            }
+            if (!moveSearch.length) moveSearch = aliasSearch.length ? moveFuse.search(aliasSearch[0].move) : [];
             if (!moveSearch.length) throw new Error('no_move');
             const hit = moveSearch[0];
             const moveEmbed = new MessageEmbed();
 
             moveEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-                .setThumbnail(
-                    'https://favna.xyz/images/ribbonhost/unovadexclosedv2.png'
-                )
+                .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
+                .setTitle(capitalizeFirstLetter(hit.name))
                 .addField('Description', hit.desc ? hit.desc : hit.shortDesc)
                 .addField('Type', hit.type, true)
                 .addField('Base Power', hit.basePower, true)
@@ -103,76 +93,47 @@ export default class MoveCommand extends Command {
                     'Target',
                     hit.target === 'normal'
                         ? 'One Enemy'
-                        : capitalizeFirstLetter(
-                              hit.target.replace(/([A-Z])/g, ' $1')
-                          ),
+                        : capitalizeFirstLetter(hit.target.replace(/([A-Z])/g, ' $1')
+                        ),
                     true
                 )
                 .addField('Contest Condition', hit.contestType, true)
                 .addField(
                     'Z-Crystal',
                     hit.isZ
-                        ? `${capitalizeFirstLetter(
-                              hit.isZ.substring(0, hit.isZ.length - 1)
-                          )}Z`
+                        ? `${capitalizeFirstLetter(hit.isZ.substring(0, hit.isZ.length - 1))}Z`
                         : 'None',
                     true
                 )
-                .addField(
-                    'External Resources',
-                    oneLine`
-                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${hit.name.replace(
-                        / /g,
-                        '_'
-                    )}_(move\\))
-                    |  [Smogon](http://www.smogon.com/dex/sm/moves/${hit.name.replace(
-                        / /g,
-                        '_'
-                    )})
-                    |  [PokémonDB](http://pokemondb.net/move/${hit.name.replace(
-                        / /g,
-                        '-'
-                    )})`
+                .addField('External Resources', oneLine`
+                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${hit.name.replace(/ /g, '_')}_(move\\))
+                    |  [Smogon](http://www.smogon.com/dex/sm/moves/${hit.name.replace(/ /g, '_')})
+                    |  [PokémonDB](http://pokemondb.net/move/${hit.name.replace(/ /g, '-')})
+                    `
                 );
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.embed(
-                moveEmbed,
-                `**${capitalizeFirstLetter(hit.name)}**`
-            );
+            return msg.embed(moveEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            if (/(?:no_move)/i.test(err.toString())) {
-                return msg.reply(stripIndents`no move found for \`${move}\``);
-            }
-            const channel = this.client.channels.get(
-                process.env.ISSUE_LOG_CHANNEL_ID
-            ) as TextChannel;
+            if (/(?:no_move)/i.test(err.toString())) return msg.reply(stripIndents`no move found for \`${move}\``);
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-                <@${
-                    this.client.owners[0].id
-                }> Error occurred in \`move\` command!
+		        <@${this.client.owners[0].id}> Error occurred in \`move\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format(
-                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-                )}
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Input:** ${move}
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(stripIndents`no move found for \`${move}\`. Be sure it is a move that has an effect in battles!
-                If it was an error that occurred then I notified ${
-                    this.client.owners[0].username
-                } about it
-                and you can find out more by joining the support server using the \`${
-                    msg.guild.commandPrefix
-                }invite\` command`);
+            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }
 }

@@ -13,16 +13,10 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    modLogMessage,
-    startTyping,
-    stopTyping,
-    validateBool,
-} from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
 
 export default class ExcessiveMentionsCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'excessivementions',
             aliases: ['emf', 'mfilter', 'spammedmentions', 'manymentions'],
@@ -50,56 +44,32 @@ export default class ExcessiveMentionsCommand extends Command {
                     prompt: 'How many mentions are allowed in 1 message?',
                     type: 'integer',
                     default: 5,
-                },
+                }
             ],
         });
     }
 
-    public run(
-        msg: CommandoMessage,
-        { option, threshold }: { option: boolean; threshold: number }
-    ) {
+    public run (msg: CommandoMessage, { option, threshold }: { option: boolean; threshold: number }) {
         startTyping(msg);
 
         const emEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-        const options = {
-            threshold,
-            enabled: option,
-        };
+        const options = { threshold, enabled: option };
 
         msg.guild.settings.set('mentions', options);
 
         emEmbed
             .setColor('#439DFF')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(
-                stripIndents`**Action:** Mentions filter has been ${
-                    option ? 'enabled' : 'disabled'
-                }
-      ${
-          option
-              ? `**Threshold:** Messages that have at least ${threshold} mentions will be deleted`
-              : ''
-      }
-      ${
-          !msg.guild.settings.get('automod', false)
-              ? `**Notice:** Be sure to enable the general automod toggle with the \`${
-                    msg.guild.commandPrefix
-                }automod\` command!`
-              : ''
-      }`
+            .setDescription(stripIndents`
+                **Action:** Mentions filter has been ${option ? 'enabled' : 'disabled'}
+                ${option ? `**Threshold:** Messages that have at least ${threshold} mentions will be deleted` : ''}
+                ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
             )
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(
-                msg,
-                msg.guild,
-                modlogChannel,
-                msg.guild.channels.get(modlogChannel) as TextChannel,
-                emEmbed
-            );
+            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, emEmbed);
         }
 
         deleteCommandMessages(msg, this.client);

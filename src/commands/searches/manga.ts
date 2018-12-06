@@ -14,15 +14,10 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    removeDiacritics,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, removeDiacritics, startTyping, stopTyping } from '../../components';
 
 export default class MangaCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'manga',
             aliases: ['cartoon', 'man'],
@@ -42,26 +37,18 @@ export default class MangaCommand extends Command {
                     prompt: 'What manga do you want to find?',
                     type: 'string',
                     default: 'pokemon',
-                    parse: (p: string) =>
-                        removeDiacritics(
-                            p.toLowerCase().replace(/([^a-zA-Z0-9_\- ])/gm, '')
-                        ),
-                },
+                    parse: (p: string) => removeDiacritics(p.toLowerCase().replace(/([^a-zA-Z0-9_\- ])/gm, '')),
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { manga }: { manga: string }) {
+    public async run (msg: CommandoMessage, { manga }: { manga: string }) {
         try {
             startTyping(msg);
-            const mangaList = await fetch(
-                `https://${
-                    process.env.KITSU_ID
-                }-dsn.algolia.net/1/indexes/production_media/query`,
+            const mangaList = await fetch(`https://${process.env.KITSU_ID}-dsn.algolia.net/1/indexes/production_media/query`,
                 {
-                    body: JSON.stringify({
-                        params: `query=${manga}&facetFilters=[\"kind:manga\"]`,
-                    }),
+                    body: JSON.stringify({ params: `query=${manga}&facetFilters=[\"kind:manga\"]` }),
                     headers: {
                         'Content-Type': 'application/json',
                         'X-Algolia-API-Key': process.env.KITSU_KEY,
@@ -78,27 +65,13 @@ export default class MangaCommand extends Command {
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
                 .setTitle(hit.titles.en ? hit.titles.en : hit.canonicalTitle)
                 .setURL(`https://kitsu.io/anime/${hit.id}`)
-                .setDescription(
-                    hit.synopsis
-                        .replace(/(.+)(?:\r|\n|\t)(.+)/gim, '$1 $2')
-                        .split('\r\n')[0]
-                )
+                .setDescription(hit.synopsis.replace(/(.+)(?:\r|\n|\t)(.+)/gim, '$1 $2').split('\r\n')[0])
                 .setImage(hit.posterImage.original)
-                .setThumbnail(
-                    'https://favna.xyz/images/ribbonhost/kitsulogo.png'
-                )
+                .setThumbnail('https://favna.xyz/images/ribbonhost/kitsulogo.png')
                 .addField('Canonical Title', hit.canonicalTitle, true)
                 .addField('Score', `${hit.averageRating}%`, true)
-                .addField(
-                    'Age Rating',
-                    hit.ageRating ? hit.ageRating : 'None',
-                    true
-                )
-                .addField(
-                    'First Publish Date',
-                    moment.unix(hit.startDate).format('MMMM Do YYYY'),
-                    true
-                );
+                .addField('Age Rating', hit.ageRating ? hit.ageRating : 'None', true)
+                .addField('First Publish Date', moment.unix(hit.startDate).format('MMMM Do YYYY'), true);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

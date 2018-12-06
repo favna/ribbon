@@ -12,24 +12,13 @@
  */
 
 import { oneLine, stripIndents } from 'common-tags';
-import {
-    Command,
-    CommandoClient,
-    CommandoMessage,
-    util,
-} from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    IMusicCommand,
-    Song,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { Command, CommandoClient, CommandoMessage, util } from 'discord.js-commando';
+import { deleteCommandMessages, IMusicCommand, Song, startTyping, stopTyping } from '../../components';
 
 export default class ViewQueueCommand extends Command {
     private songQueue: any;
 
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'queue',
             aliases: ['songs', 'song-list', 'list', 'listqueue'],
@@ -49,22 +38,20 @@ export default class ViewQueueCommand extends Command {
                     prompt: 'what page would you like to view?',
                     type: 'integer',
                     default: 1,
-                },
+                }
             ],
         });
     }
 
-    get queue() {
+    get queue () {
         if (!this.songQueue) {
-            this.songQueue = (this.client.registry.resolveCommand(
-                'music:play'
-            ) as IMusicCommand).queue;
+            this.songQueue = (this.client.registry.resolveCommand('music:play') as IMusicCommand).queue;
         }
 
         return this.songQueue;
     }
 
-    public run(msg: CommandoMessage, { page }: { page: number }) {
+    public run (msg: CommandoMessage, { page }: { page: number }) {
         startTyping(msg);
         const queue = this.queue.get(msg.guild.id);
 
@@ -78,18 +65,9 @@ export default class ViewQueueCommand extends Command {
         }
 
         const currentSong = queue.songs[0];
-        const currentTime = currentSong.dispatcher
-            ? currentSong.dispatcher.streamTime / 1000
-            : 0;
-        const paginated = util.paginate(
-            queue.songs,
-            page,
-            Math.floor(Number(process.env.PAGINATED_ITEMS))
-        );
-        const totalLength = queue.songs.reduce(
-            (prev: any, song: any) => prev + song.length,
-            0
-        );
+        const currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0;
+        const paginated = util.paginate(queue.songs, page, Math.floor(Number(process.env.PAGINATED_ITEMS)));
+        const totalLength = queue.songs.reduce((prev: any, song: any) => prev + song.length, 0);
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
@@ -104,40 +82,27 @@ export default class ViewQueueCommand extends Command {
             description: stripIndents`
                 __**Song queue, page ${paginated.page}**__
                 ${paginated.items
-                    .map(
-                        (song: Song) =>
-                            `**-** ${
-                                !isNaN(song.id)
-                                    ? `${song.name} (${song.lengthString})`
-                                    : `[${
-                                          song.name
-                                      }](${`https://www.youtube.com/watch?v=${
-                                          song.id
-                                      }`})`
-                            } (${song.lengthString})`
-                    )
-                    .join('\n')}
+                .map((song: Song) =>
+                    `**-** ${
+                        !isNaN(song.id)
+                            ? `${song.name} (${song.lengthString})`
+                            : `[${song.name}](${`https://www.youtube.com/watch?v=${song.id}`})`
+                        } (${song.lengthString})`
+                ).join('\n')}
                 ${
-                    paginated.maxPage > 1
-                        ? `\nUse ${msg.usage()} to view a specific page.\n`
-                        : ''
+                paginated.maxPage > 1
+                    ? `\nUse ${msg.usage()} to view a specific page.\n`
+                    : ''
                 }
 
                 **Now playing:** ${
-                    !isNaN(currentSong.id)
-                        ? `${currentSong.name}`
-                        : `[${
-                              currentSong.name
-                          }](${`https://www.youtube.com/watch?v=${
-                              currentSong.id
-                          }`})`
+                !isNaN(currentSong.id)
+                    ? `${currentSong.name}`
+                    : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`
                 }
                 ${oneLine`
                     **Progress:**
-                    ${!currentSong.playing ? 'Paused: ' : ''}${Song.timeString(
-                    currentTime
-                )} /
-                    ${currentSong.lengthString}
+                    ${!currentSong.playing ? 'Paused: ' : ''}${Song.timeString(currentTime)} / ${currentSong.lengthString}
                     (${currentSong.timeLeft(currentTime)} left)
                 `}
                 **Total queue time:** ${Song.timeString(totalLength)}

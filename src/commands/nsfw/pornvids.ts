@@ -14,15 +14,10 @@
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class PornVidsCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'pornvids',
             aliases: ['porn', 'nsfwvids'],
@@ -43,21 +38,17 @@ export default class PornVidsCommand extends Command {
                     key: 'porn',
                     prompt: 'What pornography do you want to find?',
                     type: 'string',
-                },
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { porn }: { porn: string }) {
+    public async run (msg: CommandoMessage, { porn }: { porn: string }) {
         try {
             startTyping(msg);
 
             const pornEmbed = new MessageEmbed();
-            const res = await fetch(
-                `https://www.pornhub.com/webmasters/search?${stringify({
-                    search: porn,
-                })}`
-            );
+            const res = await fetch(`https://www.pornhub.com/webmasters/search?${stringify({ search: porn })}`);
             const vid = await res.json();
             const vidRandom = Math.floor(Math.random() * vid.videos.length);
 

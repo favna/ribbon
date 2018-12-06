@@ -12,16 +12,10 @@
 import { oneLine } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    modLogMessage,
-    startTyping,
-    stopTyping,
-    validateBool,
-} from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
 
 export default class DeleteCommandMessagesCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'deletecommandmessages',
             aliases: ['dcm'],
@@ -44,12 +38,12 @@ export default class DeleteCommandMessagesCommand extends Command {
                     prompt: 'Enable or disable deleting of command messages?',
                     type: 'boolean',
                     validate: (bool: boolean) => validateBool(bool),
-                },
+                }
             ],
         });
     }
 
-    public run(msg: CommandoMessage, { option }: { option: boolean }) {
+    public run (msg: CommandoMessage, { option }: { option: boolean }) {
         startTyping(msg);
 
         const dcmEmbed = new MessageEmbed();
@@ -60,21 +54,11 @@ export default class DeleteCommandMessagesCommand extends Command {
         dcmEmbed
             .setColor('#3DFFE5')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(
-                oneLine`**Action:** Deleting of command messages is now ${
-                    option ? 'enabled' : 'disabled'
-                }`
-            )
+            .setDescription(oneLine`**Action:** Deleting of command messages is now ${option ? 'enabled' : 'disabled'}`)
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(
-                msg,
-                msg.guild,
-                modlogChannel,
-                msg.guild.channels.get(modlogChannel) as TextChannel,
-                dcmEmbed
-            );
+            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, dcmEmbed);
         }
 
         deleteCommandMessages(msg, this.client);

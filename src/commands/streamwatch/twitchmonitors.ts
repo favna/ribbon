@@ -12,14 +12,10 @@
 import { stripIndents } from 'common-tags';
 import { GuildMember } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class TwitchMonitorsCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'twitchmonitors',
             aliases: ['monitors', 'monitor', 'twitchmonitor'],
@@ -40,15 +36,12 @@ export default class TwitchMonitorsCommand extends Command {
                     prompt: 'Which members to monitor?',
                     type: 'member',
                     infinite: true,
-                },
+                }
             ],
         });
     }
 
-    public run(
-        msg: CommandoMessage,
-        { members }: { members: Array<GuildMember> }
-    ) {
+    public run (msg: CommandoMessage, { members }: { members: GuildMember[] }) {
         startTyping(msg);
         const memberIDs = members.map(m => m.id);
         const memberNames = members.map(m => m.displayName);
@@ -57,14 +50,10 @@ export default class TwitchMonitorsCommand extends Command {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
-        return msg.reply(stripIndents`🕵 Started spying on the stream status of ${memberNames
-            .map(val => `\`${val}\``)
-            .join(', ')}
-        Use \`${
-            msg.guild.commandPrefix
-        }twitchtoggle\` to toggle twitch notifiers on or off
-        Use \`${
-            msg.guild.commandPrefix
-        }twitchoutput\` to set the channel the notifiers should be sent to`);
+        return msg.reply(stripIndents`
+            🕵 Started spying on the stream status of ${memberNames.map(val => `\`${val}\``).join(', ')}
+            Use \`${msg.guild.commandPrefix}twitchtoggle\` to toggle twitch notifiers on or off
+            Use \`${msg.guild.commandPrefix}twitchoutput\` to set the channel the notifiers should be sent to
+        `);
     }
 }

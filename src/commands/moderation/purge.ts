@@ -14,7 +14,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { startTyping, stopTyping } from '../../components';
 
 export default class PurgeCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'purge',
             aliases: ['prune', 'delete'],
@@ -33,19 +33,17 @@ export default class PurgeCommand extends Command {
                     type: 'integer',
                     max: 100,
                     min: 1,
-                },
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { amount }: { amount: number }) {
+    public async run (msg: CommandoMessage, { amount }: { amount: number }) {
         startTyping(msg);
         amount = amount === 100 ? 99 : amount;
         msg.channel.bulkDelete(amount + 1, true);
 
-        const reply = (await msg.say(
-            `\`Deleted ${amount} messages\``
-        )) as Message;
+        const reply = (await msg.say(`\`Deleted ${amount} messages\``)) as Message;
 
         stopTyping(msg);
 

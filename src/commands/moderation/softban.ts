@@ -16,24 +16,17 @@
 import { stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    modLogMessage,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class SoftbanCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'softban',
             aliases: ['sb', 'sban'],
             group: 'moderation',
             memberName: 'softban',
-            description:
-                'Kicks a member while also purging messages from the last 24 hours',
-            format:
-                'MemberID|MemberName(partial or full) [ReasonForSoftbanning]',
+            description: 'Kicks a member while also purging messages from the last 24 hours',
+            format: 'MemberID|MemberName(partial or full) [ReasonForSoftbanning]',
             examples: ['softban JohnDoe annoying'],
             guildOnly: true,
             clientPermissions: ['BAN_MEMBERS'],
@@ -52,29 +45,15 @@ export default class SoftbanCommand extends Command {
                     key: 'reason',
                     prompt: 'What is the reason for this softban?',
                     type: 'string',
-                },
+                }
             ],
         });
     }
 
-    public run(
-        msg: CommandoMessage,
-        { member, reason }: { member: GuildMember; reason: string }
-    ) {
+    public run (msg: CommandoMessage, { member, reason }: { member: GuildMember; reason: string }) {
+        if (member.id === msg.author.id) return msg.reply('I don\'t think you want to softban yourself.');
+        if (!member.bannable) return msg.reply('I cannot softban that member, their role is probably higher than my own!');
         startTyping(msg);
-        if (member.id === msg.author.id) {
-            stopTyping(msg);
-
-            return msg.reply("I don't think you want to softban yourself.");
-        }
-
-        if (!member.bannable) {
-            stopTyping(msg);
-
-            return msg.reply(
-                'I cannot softban that member, their role is probably higher than my own!'
-            );
-        }
 
         member.ban({
             days: 1,
@@ -89,8 +68,7 @@ export default class SoftbanCommand extends Command {
         softbanEmbed
             .setColor('#FF8300')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(
-                stripIndents`
+            .setDescription(stripIndents`
                 **Member:** ${member.user.tag} (${member.id})
                 **Action:** Softban
                 **Reason:** ${reason}`
@@ -98,13 +76,7 @@ export default class SoftbanCommand extends Command {
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(
-                msg,
-                msg.guild,
-                modlogChannel,
-                msg.guild.channels.get(modlogChannel) as TextChannel,
-                softbanEmbed
-            );
+            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, softbanEmbed);
         }
 
         deleteCommandMessages(msg, this.client);

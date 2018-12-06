@@ -13,14 +13,10 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class DiscordBotsCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'discordbots',
             aliases: ['dbapi', 'db'],
@@ -40,12 +36,12 @@ export default class DiscordBotsCommand extends Command {
                     prompt: 'ID of the bot to get stats from?',
                     type: 'string',
                     default: '512150391471996930',
-                },
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { bot }: { bot: string }) {
+    public async run (msg: CommandoMessage, { bot }: { bot: string }) {
         try {
             startTyping(msg);
             const res = await fetch(`https://discordbots.org/api/bots/${bot}`, {
@@ -56,21 +52,11 @@ export default class DiscordBotsCommand extends Command {
 
             infoEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-                .setTitle(
-                    `Discord Bots Info for ${info.username}#${
-                        info.discriminator
-                    } (${info.clientid})`
-                )
+                .setTitle(`Discord Bots Info for ${info.username}#${info.discriminator} (${info.clientid})`)
                 .setURL(`https://discordbots.org/bot/${info.clientid}`)
-                .setThumbnail(
-                    `https://images.discordapp.net/avatars/${info.clientid}/${
-                        info.avatar
-                    }.png`
-                )
+                .setThumbnail(`https://images.discordapp.net/avatars/${info.clientid}/${info.avatar}.png`)
                 .setDescription(info.shortdesc)
-                .setFooter(
-                    `${info.username}#${info.discriminator} was submitted`
-                )
+                .setFooter(`${info.username}#${info.discriminator} was submitted`)
                 .setTimestamp(moment(info.date).toDate())
                 .addField('Default Prefix', info.prefix, true)
                 .addField('Library', info.lib, true)
@@ -81,17 +67,12 @@ export default class DiscordBotsCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.embed(
-                infoEmbed,
-                `https://discordbots.org/bot/${info.clientid}`
-            );
+            return msg.embed(infoEmbed, `https://discordbots.org/bot/${info.clientid}`);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply(
-                'an error occurred getting info from that bot, are you sure it exists on the website?'
-            );
+            return msg.reply('an error occurred getting info from that bot, are you sure it exists on the website?');
         }
     }
 }

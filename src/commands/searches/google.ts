@@ -12,18 +12,14 @@
  */
 
 import * as cheerio from 'cheerio';
+import { oneLine } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class GoogleCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'google',
             aliases: ['search', 'g'],
@@ -42,27 +38,17 @@ export default class GoogleCommand extends Command {
                     key: 'query',
                     prompt: 'What do you want to google?',
                     type: 'string',
-                    parse: (p: string) =>
-                        p
-                            .replace(
-                                /(who|what|when|where) ?(was|is|were|are) ?/gi,
-                                ''
-                            )
-                            .split(' ')
-                            .map(uriComponent =>
-                                encodeURIComponent(uriComponent)
-                            )
-                            .join('+'),
-                },
+                    parse: (p: string) => p.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
+                        .split(' ')
+                        .map(uriComponent => encodeURIComponent(uriComponent))
+                        .join('+'),
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { query }: { query: string }) {
-        const nsfwAllowed =
-            msg.channel.type === 'text'
-                ? (msg.channel as TextChannel).nsfw
-                : true;
+    public async run (msg: CommandoMessage, { query }: { query: string }) {
+        const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
         try {
             startTyping(msg);
 
@@ -80,28 +66,16 @@ export default class GoogleCommand extends Command {
             const { result } = knowledgeData.itemListElement[0];
             const knowledgeGraphEmbed = new MessageEmbed();
 
-            let types = result['@type'].map((t: string) =>
-                t.replace(/([a-z])([A-Z])/g, '$1 $2')
-            );
+            let types = result['@type'].map((t: string) => t.replace(/([a-z])([A-Z])/g, '$1 $2'));
 
-            if (types.length > 1) {
-                types = types.filter((t: string) => t !== 'Thing');
-            }
+            if (types.length > 1) types = types.filter((t: string) => t !== 'Thing');
 
             knowledgeGraphEmbed
                 .setURL(result.detailedDescription.url)
-                .setTitle(
-                    `${result.name} ${
-                        types.length === 0 ? '' : `(${types.join(', ')})`
-                    }`
-                )
+                .setTitle(`${result.name} ${types.length === 0 ? '' : `(${types.join(', ')})`}`)
                 .setImage(result.image.contentUrl)
-                .setDescription(
-                    `${
-                        result.detailedDescription.articleBody
-                    } [Learn More...](${result.detailedDescription.url
-                        .replace(/\(/, '%28')
-                        .replace(/\)/, '%29')})`
+                .setDescription(oneLine`${result.detailedDescription.articleBody}
+                    [Learn More...](${result.detailedDescription.url.replace(/\(/, '%28').replace(/\)/, '%29')})`
                 );
 
             deleteCommandMessages(msg, this.client);
@@ -150,9 +124,7 @@ export default class GoogleCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply(
-                `error occurred or nothing found for \`${query}\``
-            );
+            return msg.reply(`error occurred or nothing found for \`${query}\``);
         }
     }
 }

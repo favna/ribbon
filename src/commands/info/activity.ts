@@ -15,15 +15,10 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class ActivityCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'activity',
             aliases: ['act', 'presence', 'richpresence'],
@@ -43,30 +38,23 @@ export default class ActivityCommand extends Command {
                     prompt:
                         'What user would you like to get the activity from?',
                     type: 'member',
-                },
+                }
             ],
         });
     }
 
     /* tslint:disable: cyclomatic-complexity*/
-    public async run(
-        msg: CommandoMessage,
-        { member }: { member: GuildMember }
-    ) {
+    public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         try {
             startTyping(msg);
             const activity = member.presence.activity;
             const ava = member.user.displayAvatarURL();
             const embed = new MessageEmbed();
             const ext = this.fetchExt(ava);
-            const games = await fetch(
-                'https://canary.discordapp.com/api/v6/applications'
-            );
+            const games = await fetch('https://canary.discordapp.com/api/v6/applications');
             const gameList = await games.json();
-            const gameIcon = gameList.find(
-                (g: any) => g.name === activity.name
-            );
-
+            const gameIcon = gameList.find((g: any) => g.name === activity.name);
+            const listeningToSpotify = activity.type === 'LISTENING' && activity.name === 'Spotify';
             let spotifyData: any = {};
 
             embed
@@ -75,21 +63,14 @@ export default class ActivityCommand extends Command {
                 .setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
 
             if (!activity) throw new Error('noActivity');
-            if (activity.type === 'LISTENING' && activity.name === 'Spotify') {
+            if (listeningToSpotify) {
                 const tokenReq = await fetch(
                     'https://accounts.spotify.com/api/token',
                     {
-                        body: stringify({
-                            grant_type: 'client_credentials',
-                        }),
+                        body: stringify({ grant_type: 'client_credentials' }),
                         headers: {
-                            Authorization: `Basic ${Buffer.from(
-                                `${process.env.SPOTIFY_ID}:${
-                                    process.env.SPOTIFY_SECRET
-                                }`
-                            ).toString('base64')}`,
-                            'Content-Type':
-                                'application/x-www-form-urlencoded;charset=UTF-8',
+                            Authorization: `Basic ${Buffer.from(`${process.env.SPOTIFY_ID}:${process.env.SPOTIFY_SECRET}`).toString('base64')}`,
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
                         },
                         method: 'POST',
                     }
@@ -102,9 +83,7 @@ export default class ActivityCommand extends Command {
                         type: 'track',
                     })}`,
                     {
-                        headers: {
-                            Authorization: `Bearer ${tokenRes.access_token}`,
-                        },
+                        headers: { Authorization: `Bearer ${tokenRes.access_token}` },
                         method: 'GET',
                     }
                 );
@@ -113,55 +92,25 @@ export default class ActivityCommand extends Command {
             }
 
             if (gameIcon) {
-                embed.setThumbnail(
-                    `https://cdn.discordapp.com/game-assets/${gameIcon.id}/${
-                        gameIcon.icon
-                    }.png`
-                );
+                embed.setThumbnail(`https://cdn.discordapp.com/game-assets/${gameIcon.id}/${gameIcon.icon}.png`);
             }
-            embed.addField(
-                this.convertType(activity.type),
-                activity.name,
-                true
-            );
+            embed.addField(this.convertType(activity.type), activity.name, true);
 
             if (activity.url) {
-                embed.addField(
-                    'URL',
-                    `[${activity.url.slice(8)}](${activity.url})`,
-                    true
-                );
+                embed.addField('URL', `[${activity.url.slice(8)}](${activity.url})`, true);
             }
 
             if (activity.details) {
-                if (
-                    activity.type === 'LISTENING' &&
-                    activity.name === 'Spotify'
-                ) {
-                    embed.addField(
-                        'Track',
-                        `[${activity.details}](${
-                            spotifyData.external_urls.spotify
-                        })`,
-                        true
-                    );
+                if (listeningToSpotify) {
+                    embed.addField('Track', `[${activity.details}](${spotifyData.external_urls.spotify})`, true);
                 } else {
                     embed.addField('Details', activity.details, true);
                 }
             }
 
             if (activity.state) {
-                if (
-                    activity.type === 'LISTENING' &&
-                    activity.name === 'Spotify'
-                ) {
-                    embed.addField(
-                        'Artist(s)',
-                        `${spotifyData.artists
-                            .map((artist: any) => `${artist.name}`)
-                            .join(', ')}`,
-                        true
-                    );
+                if (listeningToSpotify) {
+                    embed.addField('Artist(s)', `${spotifyData.artists.map((artist: any) => `${artist.name}`).join(', ')}`, true);
                 } else {
                     embed.addField('State', activity.state, true);
                 }
@@ -179,11 +128,11 @@ export default class ActivityCommand extends Command {
                 embed.setThumbnail(
                     !activity.assets.largeImage.includes('spotify')
                         ? `https://cdn.discordapp.com/app-assets/${
-                              activity.applicationID
-                          }/${activity.assets.largeImage}.png`
+                            activity.applicationID
+                            }/${activity.assets.largeImage}.png`
                         : `https://i.scdn.co/image/${
-                              activity.assets.largeImage.split(':')[1]
-                          }`
+                            activity.assets.largeImage.split(':')[1]
+                            }`
                 );
             }
 
@@ -194,13 +143,7 @@ export default class ActivityCommand extends Command {
                 if (activity.timestamps.end) {
                     embed.addField(
                         'End Time',
-                        `${moment
-                            .duration(
-                                moment(activity.timestamps.end).diff(Date.now())
-                            )
-                            .format(
-                                'H [hours], m [minutes] [and] s [seconds]'
-                            )}`,
+                        `${moment.duration(moment(activity.timestamps.end).diff(Date.now())).format('H [hours], m [minutes] [and] s [seconds]')}`,
                         true
                     );
                 }
@@ -210,31 +153,22 @@ export default class ActivityCommand extends Command {
                 embed.setFooter(
                     activity.assets.smallText
                         ? activity.timestamps && activity.timestamps.start
-                            ? `${activity.assets.smallText} | Start Time`
-                            : activity.assets.smallText
+                        ? `${activity.assets.smallText} | Start Time`
+                        : activity.assets.smallText
                         : activity.timestamps && activity.timestamps.start
                         ? 'Start Time'
                         : '​',
                     !activity.assets.smallImage.includes('spotify')
-                        ? `https://cdn.discordapp.com/app-assets/${
-                              activity.applicationID
-                          }/${activity.assets.smallImage}.png`
-                        : `https://i.scdn.co/image/${
-                              activity.assets.smallImage.split(':')[1]
-                          }`
+                        ? `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`
+                        : `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`
                 );
             }
 
             if (activity.assets && activity.assets.largeText) {
-                if (
-                    activity.type === 'LISTENING' &&
-                    activity.name === 'Spotify'
-                ) {
+                if (listeningToSpotify) {
                     embed.addField(
                         'Album',
-                        `[${activity.assets.largeText}](${
-                            spotifyData.album.external_urls.spotify
-                        })`,
+                        `[${activity.assets.largeText}](${spotifyData.album.external_urls.spotify})`,
                         true
                     );
                 } else {
@@ -252,11 +186,7 @@ export default class ActivityCommand extends Command {
             return msg.embed(embed);
         } catch (err) {
             stopTyping(msg);
-            if (
-                /(noActivity|Cannot read property 'name' of null)/i.test(
-                    err.toString()
-                )
-            ) {
+            if (/(noActivity|Cannot read property 'name' of null)/i.test(err.toString())) {
                 return msg.embed({
                     author: {
                         name: member.user.tag,
@@ -269,44 +199,34 @@ export default class ActivityCommand extends Command {
                             name: 'Activity',
                             value: 'Nothing',
                             inline: true,
-                        },
+                        }
                     ],
                     thumbnail: { url: member.user.displayAvatarURL() },
                 });
             }
-            const channel = this.client.channels.get(
-                process.env.ISSUE_LOG_CHANNEL_ID
-            ) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-                <@${
-                    this.client.owners[0].id
-                }> Error occurred in \`fortnite\` command!
+                <@${this.client.owners[0].id}> Error occurred in \`fortnite\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format(
-                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-                )}
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Member:** ${member.user.tag} (${member.id})
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${
-                this.client.owners[0].username
-            }
-                Want to know more about the error? Join the support server by getting an invite by using the \`${
-                    msg.guild.commandPrefix
-                }invite\` command `);
+            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }
 
-    private convertType(type: string) {
+    private convertType (type: string) {
         return type.toLowerCase() !== 'listening'
             ? type.charAt(0).toUpperCase() + type.slice(1)
             : 'Listening to';
     }
 
-    private fetchExt(str: string) {
+    private fetchExt (str: string) {
         return str.slice(-4);
     }
 }

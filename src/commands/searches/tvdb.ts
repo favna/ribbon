@@ -13,17 +13,10 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    IGenre,
-    roundNumber,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, IGenre, roundNumber, startTyping, stopTyping, stringify } from '../../components';
 
 export default class TVCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'tvdb',
             aliases: ['tv'],
@@ -42,25 +35,22 @@ export default class TVCommand extends Command {
                     key: 'name',
                     prompt: 'What TV serie do you want to find?',
                     type: 'string',
-                },
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { name }: { name: string }) {
+    public async run (msg: CommandoMessage, { name }: { name: string }) {
         try {
             startTyping(msg);
-            const movieSearch = await fetch(
-                `https://api.themoviedb.org/3/search/tv?${stringify({
+            const movieSearch = await fetch(`https://api.themoviedb.org/3/search/tv?${stringify({
                     api_key: process.env.MOVIEDB_API_KEY,
                     query: name,
                 })}`
             );
             const showList = await movieSearch.json();
-            const showStats = await fetch(
-                `https://api.themoviedb.org/3/tv/${
-                    showList.results[0].id
-                }?${stringify({ api_key: process.env.MOVIEDB_API_KEY })}`
+            const showStats = await fetch(`https://api.themoviedb.org/3/tv/${showList.results[0].id}?${stringify(
+                { api_key: process.env.MOVIEDB_API_KEY })}`
             );
             const show = await showStats.json();
             const showEmbed = new MessageEmbed();
@@ -69,36 +59,16 @@ export default class TVCommand extends Command {
                 .setTitle(show.name)
                 .setURL(`https://www.themoviedb.org/tv/${show.id}`)
                 .setColor(msg.guild ? msg.member.displayHexColor : '#7CFC00')
-                .setImage(
-                    `https://image.tmdb.org/t/p/original${show.backdrop_path}`
-                )
-                .setThumbnail(
-                    `https://image.tmdb.org/t/p/original${show.poster_path}`
-                )
+                .setImage(`https://image.tmdb.org/t/p/original${show.backdrop_path}`)
+                .setThumbnail(`https://image.tmdb.org/t/p/original${show.poster_path}`)
                 .setDescription(show.overview)
-                .addField(
-                    'Episode Runtime',
-                    `${show.episode_run_time} minutes`,
-                    true
-                )
-                .addField(
-                    'Popularity',
-                    `${roundNumber(show.popularity, 2)}%`,
-                    true
-                )
+                .addField('Episode Runtime', `${show.episode_run_time} minutes`, true)
+                .addField('Popularity', `${roundNumber(show.popularity, 2)}%`, true)
                 .addField('Status', show.status, true)
-                .addField(
-                    'First air Date',
-                    moment(show.first_air_date).format('MMMM Do YYYY'),
-                    true
-                )
+                .addField('First air Date', moment(show.first_air_date).format('MMMM Do YYYY'), true)
                 .addField(
                     'Genres',
-                    show.genres.length
-                        ? show.genres
-                              .map((genre: IGenre) => genre.name)
-                              .join(', ')
-                        : 'None on TheMovieDB'
+                    show.genres.length ? show.genres.map((genre: IGenre) => genre.name).join(', ') : 'None on TheMovieDB'
                 );
 
             deleteCommandMessages(msg, this.client);

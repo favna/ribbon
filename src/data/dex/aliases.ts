@@ -1,4 +1,6 @@
-export const TierAliases: any = [
+import { IPokeAliases } from '../../components';
+
+export const TierAliases: IPokeAliases[] = [
     { alias: 'randbats', tier: 'gen7randombattle' },
     { alias: 'randoms', tier: 'gen7randombattle' },
     { alias: 'random battles', tier: 'gen7randombattle' },
@@ -52,10 +54,10 @@ export const TierAliases: any = [
     { alias: 'mix and mega', tier: 'gen7mixandmega' },
     { alias: 'almostanyability', tier: 'gen7almostanyability' },
     { alias: 'aaa', tier: 'gen7almostanyability' },
-    { alias: 'almost any ability', tier: 'gen7almostanyability' },
+    { alias: 'almost any ability', tier: 'gen7almostanyability' }
 ];
 
-export const PokeAliases: any = [
+export const PokeAliases: IPokeAliases[] = [
     { alias: 'maero', name: 'Aerodactyl-Mega' },
     { alias: 'megaaero', name: 'Aerodactyl-Mega' },
     { alias: 'megabee', name: 'Beedrill-Mega' },
@@ -310,8 +312,8 @@ export const PokeAliases: any = [
     { alias: 'oricoriog', name: 'Oricorio-Sensu' },
     { alias: 'oricorioghost', name: 'Oricorio-Sensu' },
     { alias: 'oricorios', name: 'Oricorio-Sensu' },
-    { alias: 'oricoriop', name: "Oricorio-Pa'u" },
-    { alias: 'oricoriopsychic', name: "Oricorio-Pa'u" },
+    { alias: 'oricoriop', name: 'Oricorio-Pa\'u' },
+    { alias: 'oricoriopsychic', name: 'Oricorio-Pa\'u' },
     { alias: 'lycanrocmidday', name: 'Lycanroc' },
     { alias: 'lycanrocday', name: 'Lycanroc' },
     { alias: 'lycanrocn', name: 'Lycanroc-Midnight' },
@@ -700,15 +702,15 @@ export const PokeAliases: any = [
     { alias: 'shinboraa', name: 'Sigilyph' },
     { alias: 'barujiina', name: 'Mandibuzz' },
     { alias: 'rankurusu', name: 'Reuniclus' },
-    { alias: 'borutorosu', name: 'Thundurus' },
+    { alias: 'borutorosu', name: 'Thundurus' }
 ];
 
-export const AbilityAliases: any = [
+export const AbilityAliases: IPokeAliases[] = [
     { alias: 'ph', ability: 'Poison Heal' },
-    { alias: 'stag', ability: 'Shadow Tag' },
+    { alias: 'stag', ability: 'Shadow Tag' }
 ];
 
-export const ItemAliases: any = [
+export const ItemAliases: IPokeAliases[] = [
     { alias: 'assvest', item: 'Assault Vest' },
     { alias: 'av', item: 'Assault Vest' },
     { alias: 'band', item: 'Choice Band' },
@@ -733,10 +735,10 @@ export const ItemAliases: any = [
     { alias: 'sitrus', item: 'Sitrus Berry' },
     { alias: 'specs', item: 'Choice Specs' },
     { alias: 'wp', item: 'Weakness Policy' },
-    { alias: 'yache', item: 'Yache Berry' },
+    { alias: 'yache', item: 'Yache Berry' }
 ];
 
-export const MoveAliases: any = [
+export const MoveAliases: IPokeAliases[] = [
     { alias: 'bb', move: 'Brave Bird' },
     { alias: 'bd', move: 'Belly Drum' },
     { alias: 'bpass', move: 'Baton Pass' },
@@ -798,9 +800,9 @@ export const MoveAliases: any = [
     { alias: 'goa', move: 'Guardian of Alola' },
     { alias: 'gs', move: 'Genesis Supernova' },
     { alias: 'guardian', move: 'Guardian of Alola' },
-    { alias: 'lets', move: "Let's Snuggle Forever" },
+    { alias: 'lets', move: 'Let\'s Snuggle Forever' },
     { alias: 'light', move: 'Light That Burns the Sky' },
-    { alias: 'lsf', move: "Let's Snuggle Forever" },
+    { alias: 'lsf', move: 'Let\'s Snuggle Forever' },
     { alias: 'ltbts', move: 'Light That Burns the Sky' },
     { alias: 'malicious', move: 'Malicious Moonsault' },
     { alias: 'menacing', move: 'Menacing Moonraze Maelstrom' },
@@ -853,7 +855,7 @@ export const MoveAliases: any = [
     { alias: 'znaturesmadness', move: 'Guardian of Alola' },
     { alias: 'zmarshadow', move: 'Soul-Stealing 7-Star Strike' },
     { alias: 'zmew', move: 'Genesis Supernova' },
-    { alias: 'zmimikyu', move: "Let's Snuggle Forever" },
+    { alias: 'zmimikyu', move: 'Let\'s Snuggle Forever' },
     { alias: 'zmoongeistbeam', move: 'Menacing Moonraze Maelstrom' },
     { alias: 'znecrozma', move: 'Light That Burns the Sky' },
     { alias: 'znormal', move: 'Breakneck Blitz' },
@@ -861,7 +863,7 @@ export const MoveAliases: any = [
     { alias: 'zphotongeyser', move: 'Light That Burns the Sky' },
     { alias: 'zpikachu', move: 'Catastropika' },
     { alias: 'zpikachucap', move: '10,000,000 Volt Thunderbolt' },
-    { alias: 'zplayrough', move: "Let's Snuggle Forever" },
+    { alias: 'zplayrough', move: 'Let\'s Snuggle Forever' },
     { alias: 'zpoison', move: 'Acid Downpour' },
     { alias: 'zprimarina', move: 'Oceanic Operetta' },
     { alias: 'zpsychic', move: 'Shattered Psyche' },
@@ -878,5 +880,5 @@ export const MoveAliases: any = [
     { alias: 'zthunderbolt', move: '10,000,000 Volt Thunderbolt' },
     { alias: 'zultranecrozma', move: 'Light That Burns the Sky' },
     { alias: 'zvolttackle', move: 'Catastropika' },
-    { alias: 'zwater', move: 'Hydro Vortex' },
+    { alias: 'zwater', move: 'Hydro Vortex' }
 ];

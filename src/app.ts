@@ -14,11 +14,6 @@ config({
     debug: false,
 });
 
-const start = () =>
-    new Ribbon(
-        /(?:test)/i.test(process.argv[2])
-            ? process.env.TEST_TOKEN
-            : process.env.BOT_TOKEN
-    ).init();
+const start = () => new Ribbon(/(?:test)/i.test(process.argv[2]) ? process.env.TEST_TOKEN : process.env.BOT_TOKEN).init();
 
 start();

@@ -24,10 +24,7 @@ const searchCache = (moduleName: string, callback: (arg: any) => void) => {
             visited[current.id] = true;
 
             current.children.forEach((child: any) => {
-                if (
-                    path.extname(child.filename) !== '.node' &&
-                    !visited[child.id]
-                ) {
+                if (path.extname(child.filename) !== '.node' && !visited[child.id]) {
                     run(child);
                 }
             });
@@ -48,11 +45,13 @@ export const decache = (moduleName: string) => {
         delete require.cache[mod.id];
     });
 
-    // @ts-ignore
-    return Object.keys(module.constructor._pathCache).forEach(cacheKey => {
+    return Object.keys((module.constructor as IModuleFunction)._pathCache).forEach(cacheKey => {
         if (cacheKey.indexOf(moduleName) > 0) {
-            // @ts-ignore
-            delete module.constructor._pathCache[cacheKey];
+            delete (module.constructor as IModuleFunction)._pathCache[cacheKey];
         }
     });
 };
+
+interface IModuleFunction extends Function {
+    _pathCache: any;
+}

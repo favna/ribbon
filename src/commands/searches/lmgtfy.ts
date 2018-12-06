@@ -10,14 +10,10 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class LmgtfyCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'lmgtfy',
             aliases: ['dumb'],
@@ -25,10 +21,7 @@ export default class LmgtfyCommand extends Command {
             memberName: 'lmgtfy',
             description: 'Produce a lmgtfy (let me google that for you) URL',
             format: 'Query',
-            examples: [
-                'lmgtfy is it legal to kill an ant???',
-                'lmgtfy are there birds in canada?',
-            ],
+            examples: ['lmgtfy is it legal to kill an ant???', 'lmgtfy are there birds in canada?'],
             guildOnly: false,
             throttling: {
                 usages: 2,
@@ -40,12 +33,12 @@ export default class LmgtfyCommand extends Command {
                     prompt: 'What does the idiot want to find?',
                     type: 'string',
                     parse: (p: string) => p.replace(/ /gim, '+'),
-                },
+                }
             ],
         });
     }
 
-    public run(msg: CommandoMessage, { question }: { question: string }) {
+    public run (msg: CommandoMessage, { question }: { question: string }) {
         startTyping(msg);
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);

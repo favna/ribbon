@@ -14,15 +14,10 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class ITunesCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'itunes',
             aliases: ['apple', 'tunes'],
@@ -41,12 +36,12 @@ export default class ITunesCommand extends Command {
                     prompt: 'What track should I search on iTunes?',
                     type: 'string',
                     parse: (p: string) => p.replace(/ /gm, '+'),
-                },
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { music }: { music: string }) {
+    public async run (msg: CommandoMessage, { music }: { music: string }) {
         try {
             startTyping(msg);
 
@@ -72,27 +67,11 @@ export default class ITunesCommand extends Command {
                 .setTitle(song.trackName)
                 .setURL(song.trackViewUrl)
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-                .addField(
-                    'Artist',
-                    `[${song.artistName}](${song.artistViewUrl})`,
-                    true
-                )
-                .addField(
-                    'Collection',
-                    `[${song.collectionName}](${song.collectionViewUrl})`,
-                    true
-                )
-                .addField(
-                    'Collection Price (USD)',
-                    `$${song.collectionPrice}`,
-                    true
-                )
+                .addField('Artist', `[${song.artistName}](${song.artistViewUrl})`, true)
+                .addField('Collection', `[${song.collectionName}](${song.collectionViewUrl})`, true)
+                .addField('Collection Price (USD)', `$${song.collectionPrice}`, true)
                 .addField('Track price (USD)', `$${song.trackPrice}`, true)
-                .addField(
-                    'Track Release Date',
-                    moment(song.releaseDate).format('MMMM Do YYYY'),
-                    true
-                )
+                .addField('Track Release Date', moment(song.releaseDate).format('MMMM Do YYYY'), true)
                 .addField('# Tracks in Collection', song.trackCount, true)
                 .addField('Primary Genre', song.primaryGenreName, true)
                 .addField('Preview', `[Click Here](${song.previewUrl})`, true);
@@ -105,33 +84,21 @@ export default class ITunesCommand extends Command {
             stopTyping(msg);
 
             if (/(?:nosong)/i.test(err.toString())) {
-                return msg.reply(
-                    `no song found for \`${music.replace(/\+/g, ' ')}\``
-                );
+                return msg.reply(`no song found for \`${music.replace(/\+/g, ' ')}\``);
             }
-            const channel = this.client.channels.get(
-                process.env.ISSUE_LOG_CHANNEL_ID
-            ) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-                <@${
-                    this.client.owners[0].id
-                }> Error occurred in \`itunes\` command!
+		        <@${this.client.owners[0].id}> Error occurred in \`itunes\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format(
-                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-                )}
-                **Input:** ${music}
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+		        **Input:** ${music}
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${
-                this.client.owners[0].username
-            }
-                Want to know more about the error? Join the support server by getting an invite by using the \`${
-                    msg.guild.commandPrefix
-                }invite\` command `);
+            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }
 }

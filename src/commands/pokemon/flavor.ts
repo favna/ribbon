@@ -14,34 +14,20 @@
  * @param {StringResolvable} PokemonName The name of the pokemon you want to get flavor text for
  */
 
-import { stripIndents } from 'common-tags';
+import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import {
-    capitalizeFirstLetter,
-    deleteCommandMessages,
-    IPokeData,
-    startTyping,
-    stopTyping,
-    zalgolize,
-} from '../../components';
+import { capitalizeFirstLetter, deleteCommandMessages, IPoke, IPokeAliases, IPokeData, startTyping, stopTyping, zalgolize } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
 import * as dexEntries from '../../data/dex/flavorText.json';
 
 export default class FlavorCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'flavor',
-            aliases: [
-                'flavors',
-                'dexentries',
-                'dextext',
-                'dextex',
-                'flavour',
-                'flavours',
-            ],
+            aliases: ['flavors', 'dexentries', 'dextext', 'dextex', 'flavour', 'flavours'],
             group: 'pokemon',
             memberName: 'flavor',
             description: 'Get all the available dex entries for a Pokémon',
@@ -58,47 +44,30 @@ export default class FlavorCommand extends Command {
                     prompt: 'Get info from which Pokémon?',
                     type: 'string',
                     parse: (p: string) => p.toLowerCase(),
-                },
+                }
             ],
         });
     }
 
     /* tslint:disable:prefer-conditional-expression*/
-    public run(
-        msg: CommandoMessage,
-        { pokemon, shines }: { pokemon: string; shines: boolean }
-    ) {
+    public run (msg: CommandoMessage, { pokemon, shines }: { pokemon: string; shines: boolean }) {
         try {
             startTyping(msg);
             if (/(?:--shiny)/i.test(pokemon)) {
-                pokemon = (
-                    pokemon.substring(0, pokemon.indexOf('--shiny')) +
-                    pokemon.substring(
-                        pokemon.indexOf('--shiny') + '--shiny'.length
-                    )
-                ).replace(/ /g, '');
+                pokemon = (pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length) as string)
+                    .replace(/ /g, '');
                 shines = true;
             }
             if (pokemon.split(' ')[0] === 'mega') {
-                pokemon = `${pokemon.substring(
-                    pokemon.split(' ')[0].length + 1
-                )}mega`;
+                pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
             }
 
-            const aliasoptions: Fuse.FuseOptions<any> = {
-                shouldSort: true,
-                keys: [{ name: 'alias', getfn: t => t.alias, weight: 1 }],
-                location: 0,
-                distance: 100,
-                threshold: 0.2,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
-            };
             const pokeoptions: Fuse.FuseOptions<any> = {
                 shouldSort: true,
                 keys: [
+                    { name: 'alias', getfn: t => t.alias, weight: 0.2 },
                     { name: 'species', getfn: t => t.species, weight: 1 },
-                    { name: 'num', getfn: t => t.num, weight: 0.6 },
+                    { name: 'num', getfn: t => t.num, weight: 0.7 }
                 ],
                 location: 0,
                 distance: 100,
@@ -106,17 +75,15 @@ export default class FlavorCommand extends Command {
                 maxPatternLength: 32,
                 minMatchCharLength: 1,
             };
-            const aliasFuse = new Fuse(PokeAliases, aliasoptions);
-            const pokeFuse = new Fuse(BattlePokedex, pokeoptions);
-            const firstSearch = pokeFuse.search(pokemon);
-            const aliasSearch = !firstSearch.length
-                ? aliasFuse.search(pokemon)
-                : null;
-            const pokeSearch =
-                !firstSearch.length && aliasSearch.length
-                    ? pokeFuse.search(aliasSearch[0].name)
-                    : firstSearch;
+            const aliasFuse: Fuse<any> = new Fuse(PokeAliases, pokeoptions);
+            const pokeFuse: Fuse<any> = new Fuse(BattlePokedex, pokeoptions);
+            const firstSearch: IPoke[] = pokeFuse.search(pokemon);
+            const aliasSearch: IPokeAliases[] = !firstSearch.length ? aliasFuse.search(pokemon) : null;
+            const pokeSearch: IPoke[] = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch;
             const dataEmbed = new MessageEmbed();
+
+            if (!pokeSearch.length) throw new Error('no_pokemon');
+
             const poke = pokeSearch[0];
             const pokeData: IPokeData = {
                 sprite: '',
@@ -127,9 +94,7 @@ export default class FlavorCommand extends Command {
 
             if (poke.forme) {
                 // @ts-ignore
-                for (const entry of dexEntries[
-                    `${poke.num}${poke.forme.toLowerCase()}`
-                ]) {
+                for (const entry of dexEntries[`${poke.num}${poke.forme.toLowerCase()}`]) {
                     pokeData.entries.push({
                         game: entry.version_id,
                         text: entry.flavor_text,
@@ -168,36 +133,16 @@ export default class FlavorCommand extends Command {
                 i -= 1;
             } while (i !== -1);
 
-            if (poke.num < 0) {
-                pokeData.sprite =
-                    'https://favna.xyz/images/ribbonhost/pokesprites/unknown.png';
-            } else if (shines) {
-                pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${poke.species
-                    .replace(/(%| )/g, '')
-                    .toLowerCase()}.png`;
-            } else {
-                pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${poke.species
-                    .replace(/(%| )/g, '')
-                    .toLowerCase()}.png`;
-            }
+            if (poke.num < 0) pokeData.sprite = 'https://favna.xyz/images/ribbonhost/pokesprites/unknown.png';
+            else if (shines) pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
+            else pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
 
             dataEmbed
                 .setColor(this.fetchColor(poke.color))
-                .setThumbnail(
-                    'https://favna.xyz/images/ribbonhost/unovadexclosedv2.png'
-                )
-                .setAuthor(
-                    `#${poke.num} - ${capitalizeFirstLetter(poke.species)}`,
-                    pokeData.sprite
-                )
-                .setImage(
-                    `https://play.pokemonshowdown.com/sprites/${
-                        shines ? 'xyani-shiny' : 'xyani'
-                    }/${poke.species.toLowerCase().replace(/(%| )/g, '')}.gif`
-                )
-                .setDescription(
-                    'Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.'
-                );
+                .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
+                .setAuthor(`#${poke.num} - ${capitalizeFirstLetter(poke.species)}`, pokeData.sprite)
+                .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/(%| )/g, '')}.gif`)
+                .setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.');
 
             if (poke.num === 0) {
                 const fields = [];
@@ -213,9 +158,7 @@ export default class FlavorCommand extends Command {
                 dataEmbed.description = zalgolize(dataEmbed.description);
                 dataEmbed.author.name = zalgolize(dataEmbed.author.name);
                 dataEmbed.fields = fields;
-                dataEmbed.setImage(
-                    'https://favna.xyz/images/ribbonhost/missingno.png'
-                );
+                dataEmbed.setImage('https://favna.xyz/images/ribbonhost/missingno.png');
             }
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -225,44 +168,27 @@ export default class FlavorCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            if (
-                /(?:Cannot read property 'forme' of undefined|Cannot read property 'length' of undefined)/i.test(
-                    err.toString()
-                )
-            ) {
-                return msg.reply(
-                    stripIndents`no Pokémon or flavor texts found for \`${pokemon}\``
-                );
+            if (/(?:no_pokemon)/i.test(err.toString())) {
+                return msg.reply(stripIndents`no Pokémon or flavor texts found for \`${pokemon}\``);
             }
-            const channel = this.client.channels.get(
-                process.env.ISSUE_LOG_CHANNEL_ID
-            ) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-                <@${
-                    this.client.owners[0].id
-                }> Error occurred in \`flavor\` command!
+                <@${this.client.owners[0].id}> Error occurred in \`flavor\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format(
-                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-                )}
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Input:** ${pokemon}
                 **Shiny?:** ${shines ? 'yes' : 'no'}
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(stripIndents`no Pokémon found for \`${pokemon}\`.
-                If it was an error that occurred then I notified ${
-                    this.client.owners[0].username
-                } about it
-                and you can find out more by joining the support server using the \`${
-                    msg.guild.commandPrefix
-                }invite\` command`);
+            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+                    Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }
 
-    private fetchColor(col: string) {
+    private fetchColor (col: string) {
         switch (col) {
             case 'Black':
                 return '#323232';

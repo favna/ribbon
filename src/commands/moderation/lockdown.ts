@@ -18,15 +18,10 @@
 import { stripIndents } from 'common-tags';
 import { GuildChannel, MessageEmbed, Role, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    modLogMessage,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class LockdownCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'lockdown',
             aliases: ['lock', 'ld'],
@@ -50,15 +45,12 @@ export default class LockdownCommand extends Command {
                     prompt: 'Which role to apply the lockdown to?',
                     type: 'role',
                     default: 'everyone',
-                },
+                }
             ],
         });
     }
 
-    public async run(
-        msg: CommandoMessage,
-        { lockrole }: { lockrole: Role | any }
-    ) {
+    public async run (msg: CommandoMessage, { lockrole }: { lockrole: Role | any }) {
         startTyping(msg);
         const lockEmbed = new MessageEmbed();
         const channel = msg.channel as GuildChannel;
@@ -71,12 +63,11 @@ export default class LockdownCommand extends Command {
                 },
                 {
                     deny: ['SEND_MESSAGES'],
-                    id: msg.guild.roles.find(n =>
-                        lockrole === 'everyone'
-                            ? n.name === '@everyone'
-                            : n.name === lockrole.name
+                    id: msg.guild.roles.find(n => lockrole === 'everyone'
+                        ? n.name === '@everyone'
+                        : n.name === lockrole.name
                     ).id,
-                },
+                }
             ],
             reason: 'Channel Lockdown',
         });
@@ -84,24 +75,15 @@ export default class LockdownCommand extends Command {
         lockEmbed
             .setColor('#983553')
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-            .setDescription(
-                stripIndents`
+            .setDescription(stripIndents`
                 **Action:** 🔒 locked the \`${channel.name}\` channel.
-                **Details:** Only staff can now access this channel. Use \`${
-                    msg.guild.commandPrefix
-                }unlock\` in this channel to unlock the channel`
+                **Details:** Only staff can now access this channel. Use \`${msg.guild.commandPrefix}unlock\` in this channel to unlock the channel`
             )
             .setTimestamp();
 
         if (overwrite) {
             if (msg.guild.settings.get('modlogs', true)) {
-                modLogMessage(
-                    msg,
-                    msg.guild,
-                    modlogChannel,
-                    msg.guild.channels.get(modlogChannel) as TextChannel,
-                    lockEmbed
-                );
+                modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, lockEmbed);
             }
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

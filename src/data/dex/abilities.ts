@@ -1,3 +1,4 @@
+/* tslint:disable:max-line-length */
 export const BattleAbilities: any = [
     {
         shortDesc: 'Does nothing.',
@@ -9,9 +10,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's moves that match one of its types have a same-type attack bonus (STAB) of 2 instead of 1.5.",
+            'This Pokemon\'s moves that match one of its types have a same-type attack bonus (STAB) of 2 instead of 1.5.',
         shortDesc:
-            "This Pokemon's same-type attack bonus (STAB) is 2 instead of 1.5.",
+            'This Pokemon\'s same-type attack bonus (STAB) is 2 instead of 1.5.',
         id: 'adaptability',
         name: 'Adaptability',
         rating: 4,
@@ -19,9 +20,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If this Pokemon is knocked out with a contact move, that move's user loses 1/4 of its maximum HP, rounded down. If any active Pokemon has the Ability Damp, this effect is prevented.",
+            'If this Pokemon is knocked out with a contact move, that move\'s user loses 1/4 of its maximum HP, rounded down. If any active Pokemon has the Ability Damp, this effect is prevented.',
         shortDesc:
-            "If this Pokemon is KOed with a contact move, that move's user loses 1/4 its max HP.",
+            'If this Pokemon is KOed with a contact move, that move\'s user loses 1/4 its max HP.',
         id: 'aftermath',
         name: 'Aftermath',
         rating: 2.5,
@@ -29,9 +30,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's Normal-type moves become Flying-type moves and have their power multiplied by 1.2. This effect comes after other effects that change a move's type, but before Ion Deluge and Electrify's effects.",
+            'This Pokemon\'s Normal-type moves become Flying-type moves and have their power multiplied by 1.2. This effect comes after other effects that change a move\'s type, but before Ion Deluge and Electrify\'s effects.',
         shortDesc:
-            "This Pokemon's Normal-type moves become Flying type and have 1.2x power.",
+            'This Pokemon\'s Normal-type moves become Flying type and have 1.2x power.',
         id: 'aerilate',
         name: 'Aerilate',
         rating: 4,
@@ -48,9 +49,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "The power of this Pokemon's move is multiplied by 1.3 if it is the last to move in a turn. Does not affect Doom Desire and Future Sight.",
+            'The power of this Pokemon\'s move is multiplied by 1.3 if it is the last to move in a turn. Does not affect Doom Desire and Future Sight.',
         shortDesc:
-            "This Pokemon's attacks have 1.3x power if it is the last to move in a turn.",
+            'This Pokemon\'s attacks have 1.3x power if it is the last to move in a turn.',
         onBasePowerPriority: 8,
         id: 'analytic',
         name: 'Analytic',
@@ -119,7 +120,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's allies have the power of their special attacks multiplied by 1.3.",
+            'This Pokemon\'s allies have the power of their special attacks multiplied by 1.3.',
         onBasePowerPriority: 8,
         id: 'battery',
         name: 'Battery',
@@ -147,9 +148,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's highest stat is raised by 1 stage if it attacks and knocks out another Pokemon.",
+            'This Pokemon\'s highest stat is raised by 1 stage if it attacks and knocks out another Pokemon.',
         shortDesc:
-            "This Pokemon's highest stat is raised by 1 if it attacks and KOes another Pokemon.",
+            'This Pokemon\'s highest stat is raised by 1 if it attacks and KOes another Pokemon.',
         id: 'beastboost',
         name: 'Beast Boost',
         rating: 3.5,
@@ -159,7 +160,7 @@ export const BattleAbilities: any = [
         desc:
             'When this Pokemon has more than 1/2 its maximum HP and takes damage from an attack bringing it to 1/2 or less of its maximum HP, its Special Attack is raised by 1 stage. This effect applies after all hits from a multi-hit move; Sheer Force prevents it from activating if the move has a secondary effect.',
         shortDesc:
-            "This Pokemon's Sp. Atk is raised by 1 when it reaches 1/2 or less of its max HP.",
+            'This Pokemon\'s Sp. Atk is raised by 1 when it reaches 1/2 or less of its max HP.',
         id: 'berserk',
         name: 'Berserk',
         rating: 2.5,
@@ -167,7 +168,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "Prevents other Pokemon from lowering this Pokemon's Defense stat stage.",
+            'Prevents other Pokemon from lowering this Pokemon\'s Defense stat stage.',
         id: 'bigpecks',
         name: 'Big Pecks',
         rating: 0.5,
@@ -177,7 +178,7 @@ export const BattleAbilities: any = [
         desc:
             'When this Pokemon has 1/3 or less of its maximum HP, rounded down, its attacking stat is multiplied by 1.5 while using a Fire-type attack.',
         shortDesc:
-            "At 1/3 or less of its max HP, this Pokemon's attacking stat is 1.5x with Fire attacks.",
+            'At 1/3 or less of its max HP, this Pokemon\'s attacking stat is 1.5x with Fire attacks.',
         id: 'blaze',
         name: 'Blaze',
         rating: 2,
@@ -195,16 +196,16 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If this Pokemon eats a Berry, it restores 1/3 of its maximum HP, rounded down, in addition to the Berry's effect.",
+            'If this Pokemon eats a Berry, it restores 1/3 of its maximum HP, rounded down, in addition to the Berry\'s effect.',
         shortDesc:
-            "If this Pokemon eats a Berry, it restores 1/3 of its max HP after the Berry's effect.",
+            'If this Pokemon eats a Berry, it restores 1/3 of its max HP after the Berry\'s effect.',
         id: 'cheekpouch',
         name: 'Cheek Pouch',
         rating: 2,
         num: 167,
     },
     {
-        shortDesc: "If Sunny Day is active, this Pokemon's Speed is doubled.",
+        shortDesc: 'If Sunny Day is active, this Pokemon\'s Speed is doubled.',
         id: 'chlorophyll',
         name: 'Chlorophyll',
         rating: 3,
@@ -212,7 +213,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "Prevents other Pokemon from lowering this Pokemon's stat stages.",
+            'Prevents other Pokemon from lowering this Pokemon\'s stat stages.',
         id: 'clearbody',
         name: 'Clear Body',
         rating: 2,
@@ -229,9 +230,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's type changes to match the type of the last move that hit it, unless that type is already one of its types. This effect applies after all hits from a multi-hit move; Sheer Force prevents it from activating if the move has a secondary effect.",
+            'This Pokemon\'s type changes to match the type of the last move that hit it, unless that type is already one of its types. This effect applies after all hits from a multi-hit move; Sheer Force prevents it from activating if the move has a secondary effect.',
         shortDesc:
-            "This Pokemon's type changes to the type of a move it's hit by, unless it has the type.",
+            'This Pokemon\'s type changes to the type of a move it\'s hit by, unless it has the type.',
         id: 'colorchange',
         name: 'Color Change',
         rating: 1,
@@ -250,9 +251,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's Special Attack is raised by 2 stages for each of its stat stages that is lowered by an opposing Pokemon.",
+            'This Pokemon\'s Special Attack is raised by 2 stages for each of its stat stages that is lowered by an opposing Pokemon.',
         shortDesc:
-            "This Pokemon's Sp. Atk is raised by 2 for each of its stats that is lowered by a foe.",
+            'This Pokemon\'s Sp. Atk is raised by 2 for each of its stats that is lowered by a foe.',
         id: 'competitive',
         name: 'Competitive',
         rating: 2.5,
@@ -260,7 +261,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's moves have their accuracy multiplied by 1.3.",
+            'This Pokemon\'s moves have their accuracy multiplied by 1.3.',
         id: 'compoundeyes',
         name: 'Compound Eyes',
         rating: 3.5,
@@ -284,7 +285,7 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If this Pokemon is hit by an attack, there is a 30% chance that move gets disabled unless one of the attacker's moves is already disabled.",
+            'If this Pokemon is hit by an attack, there is a 30% chance that move gets disabled unless one of the attacker\'s moves is already disabled.',
         shortDesc:
             'If this Pokemon is hit by an attack, there is a 30% chance that move gets disabled.',
         id: 'cursedbody',
@@ -355,9 +356,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's Attack is raised by 2 stages for each of its stat stages that is lowered by an opposing Pokemon.",
+            'This Pokemon\'s Attack is raised by 2 stages for each of its stat stages that is lowered by an opposing Pokemon.',
         shortDesc:
-            "This Pokemon's Attack is raised by 2 for each of its stats that is lowered by a foe.",
+            'This Pokemon\'s Attack is raised by 2 for each of its stats that is lowered by a foe.',
         id: 'defiant',
         name: 'Defiant',
         rating: 2.5,
@@ -396,9 +397,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "On switch-in, this Pokemon's Attack or Special Attack is raised by 1 stage based on the weaker combined defensive stat of all opposing Pokemon. Attack is raised if their Defense is lower, and Special Attack is raised if their Special Defense is the same or lower.",
+            'On switch-in, this Pokemon\'s Attack or Special Attack is raised by 1 stage based on the weaker combined defensive stat of all opposing Pokemon. Attack is raised if their Defense is lower, and Special Attack is raised if their Special Defense is the same or lower.',
         shortDesc:
-            "On switch-in, Attack or Sp. Atk is raised 1 stage based on the foes' weaker Defense.",
+            'On switch-in, Attack or Sp. Atk is raised 1 stage based on the foes\' weaker Defense.',
         id: 'download',
         name: 'Download',
         rating: 4,
@@ -429,7 +430,7 @@ export const BattleAbilities: any = [
         num: 87,
     },
     {
-        shortDesc: "This Pokemon's sleep counter drops by 2 instead of 1.",
+        shortDesc: 'This Pokemon\'s sleep counter drops by 2 instead of 1.',
         id: 'earlybird',
         name: 'Early Bird',
         rating: 2,
@@ -503,7 +504,7 @@ export const BattleAbilities: any = [
         desc:
             'This Pokemon is immune to Fire-type moves. The first time it is hit by a Fire-type move, its attacking stat is multiplied by 1.5 while using a Fire-type attack as long as it remains active and has this Ability. If this Pokemon is frozen, it cannot be defrosted by Fire-type attacks.',
         shortDesc:
-            "This Pokemon's Fire attacks do 1.5x damage if hit by one Fire move; Fire immunity.",
+            'This Pokemon\'s Fire attacks do 1.5x damage if hit by one Fire move; Fire immunity.',
         id: 'flashfire',
         name: 'Flash Fire',
         rating: 3,
@@ -513,7 +514,7 @@ export const BattleAbilities: any = [
         desc:
             'If this Pokemon is a Cherrim and Sunny Day is active, it changes to Sunshine Form and the Attack and Special Defense of it and its allies are multiplied by 1.5.',
         shortDesc:
-            "If user is Cherrim and Sunny Day is active, it and allies' Attack and Sp. Def are 1.5x.",
+            'If user is Cherrim and Sunny Day is active, it and allies\' Attack and Sp. Def are 1.5x.',
         id: 'flowergift',
         name: 'Flower Gift',
         rating: 2.5,
@@ -521,9 +522,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "Grass-type Pokemon on this Pokemon's side cannot have their stat stages lowered by other Pokemon or have a major status condition inflicted on them by other Pokemon.",
+            'Grass-type Pokemon on this Pokemon\'s side cannot have their stat stages lowered by other Pokemon or have a major status condition inflicted on them by other Pokemon.',
         shortDesc:
-            "This side's Grass types can't have stats lowered or status inflicted by other Pokemon.",
+            'This side\'s Grass types can\'t have stats lowered or status inflicted by other Pokemon.',
         id: 'flowerveil',
         name: 'Flower Veil',
         rating: 0,
@@ -541,9 +542,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If this Pokemon is a Castform, its type changes to the current weather condition's type, except Sandstorm.",
+            'If this Pokemon is a Castform, its type changes to the current weather condition\'s type, except Sandstorm.',
         shortDesc:
-            "Castform's type changes to the current weather condition's type, except Sandstorm.",
+            'Castform\'s type changes to the current weather condition\'s type, except Sandstorm.',
         id: 'forecast',
         name: 'Forecast',
         rating: 3,
@@ -553,7 +554,7 @@ export const BattleAbilities: any = [
         desc:
             'On switch-in, this Pokemon is alerted to the move with the highest power, at random, known by an opposing Pokemon.',
         shortDesc:
-            "On switch-in, this Pokemon is alerted to the foes' move with the highest power.",
+            'On switch-in, this Pokemon is alerted to the foes\' move with the highest power.',
         id: 'forewarn',
         name: 'Forewarn',
         rating: 1,
@@ -561,7 +562,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's allies receive 3/4 damage from other Pokemon's attacks.",
+            'This Pokemon\'s allies receive 3/4 damage from other Pokemon\'s attacks.',
         id: 'friendguard',
         name: 'Friend Guard',
         rating: 0,
@@ -577,9 +578,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "Prevents other Pokemon from lowering this Pokemon's stat stages. Moongeist Beam, Sunsteel Strike, and the Abilities Mold Breaker, Teravolt, and Turboblaze cannot ignore this Ability.",
+            'Prevents other Pokemon from lowering this Pokemon\'s stat stages. Moongeist Beam, Sunsteel Strike, and the Abilities Mold Breaker, Teravolt, and Turboblaze cannot ignore this Ability.',
         shortDesc:
-            "Prevents other Pokemon from lowering this Pokemon's stat stages.",
+            'Prevents other Pokemon from lowering this Pokemon\'s stat stages.',
         isUnbreakable: true,
         id: 'fullmetalbody',
         name: 'Full Metal Body',
@@ -587,7 +588,7 @@ export const BattleAbilities: any = [
         num: 230,
     },
     {
-        shortDesc: "This Pokemon's Defense is doubled.",
+        shortDesc: 'This Pokemon\'s Defense is doubled.',
         onModifyDefPriority: 6,
         id: 'furcoat',
         name: 'Fur Coat',
@@ -604,9 +605,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's Normal-type moves become Electric-type moves and have their power multiplied by 1.2. This effect comes after other effects that change a move's type, but before Ion Deluge and Electrify's effects.",
+            'This Pokemon\'s Normal-type moves become Electric-type moves and have their power multiplied by 1.2. This effect comes after other effects that change a move\'s type, but before Ion Deluge and Electrify\'s effects.',
         shortDesc:
-            "This Pokemon's Normal-type moves become Electric type and have 1.2x power.",
+            'This Pokemon\'s Normal-type moves become Electric type and have 1.2x power.',
         id: 'galvanize',
         name: 'Galvanize',
         rating: 4,
@@ -630,7 +631,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "If Grassy Terrain is active, this Pokemon's Defense is multiplied by 1.5.",
+            'If Grassy Terrain is active, this Pokemon\'s Defense is multiplied by 1.5.',
         id: 'grasspelt',
         name: 'Grass Pelt',
         rating: 1,
@@ -645,7 +646,7 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If this Pokemon has a major status condition, its Attack is multiplied by 1.5; burn's physical damage halving is ignored.",
+            'If this Pokemon has a major status condition, its Attack is multiplied by 1.5; burn\'s physical damage halving is ignored.',
         shortDesc:
             'If this Pokemon is statused, its Attack is 1.5x; ignores burn halving physical damage.',
         id: 'guts',
@@ -665,9 +666,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "There is a 30% chance of curing an adjacent ally's major status condition at the end of each turn.",
+            'There is a 30% chance of curing an adjacent ally\'s major status condition at the end of each turn.',
         shortDesc:
-            "30% chance of curing an adjacent ally's status at the end of each turn.",
+            '30% chance of curing an adjacent ally\'s status at the end of each turn.',
         id: 'healer',
         name: 'Healer',
         rating: 0,
@@ -684,7 +685,7 @@ export const BattleAbilities: any = [
         num: 85,
     },
     {
-        shortDesc: "This Pokemon's weight is doubled.",
+        shortDesc: 'This Pokemon\'s weight is doubled.',
         id: 'heavymetal',
         name: 'Heavy Metal',
         rating: -1,
@@ -698,7 +699,7 @@ export const BattleAbilities: any = [
         num: 118,
     },
     {
-        shortDesc: "This Pokemon's Attack is doubled.",
+        shortDesc: 'This Pokemon\'s Attack is doubled.',
         onModifyAtkPriority: 5,
         id: 'hugepower',
         name: 'Huge Power',
@@ -707,9 +708,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's Attack is multiplied by 1.5 and the accuracy of its physical attacks is multiplied by 0.8.",
+            'This Pokemon\'s Attack is multiplied by 1.5 and the accuracy of its physical attacks is multiplied by 0.8.',
         shortDesc:
-            "This Pokemon's Attack is 1.5x and accuracy of its physical attacks is 0.8x.",
+            'This Pokemon\'s Attack is 1.5x and accuracy of its physical attacks is 0.8x.',
         id: 'hustle',
         name: 'Hustle',
         rating: 3,
@@ -727,7 +728,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "Prevents other Pokemon from lowering this Pokemon's Attack stat stage.",
+            'Prevents other Pokemon from lowering this Pokemon\'s Attack stat stage.',
         id: 'hypercutter',
         name: 'Hyper Cutter',
         rating: 1.5,
@@ -752,7 +753,7 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "When this Pokemon switches in, it appears as the last unfainted Pokemon in its party until it takes direct damage from another Pokemon's attack. This Pokemon's actual level and HP are displayed instead of those of the mimicked Pokemon.",
+            'When this Pokemon switches in, it appears as the last unfainted Pokemon in its party until it takes direct damage from another Pokemon\'s attack. This Pokemon\'s actual level and HP are displayed instead of those of the mimicked Pokemon.',
         shortDesc:
             'This Pokemon appears as the last Pokemon in the party until it takes direct damage.',
         isUnbreakable: true,
@@ -781,9 +782,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's moves ignore substitutes and the opposing side's Reflect, Light Screen, Safeguard, Mist and Aurora Veil.",
+            'This Pokemon\'s moves ignore substitutes and the opposing side\'s Reflect, Light Screen, Safeguard, Mist and Aurora Veil.',
         shortDesc:
-            "Moves ignore substitutes and foe's Reflect/Light Screen/Safeguard/Mist/Aurora Veil.",
+            'Moves ignore substitutes and foe\'s Reflect/Light Screen/Safeguard/Mist/Aurora Veil.',
         id: 'infiltrator',
         name: 'Infiltrator',
         rating: 3,
@@ -791,9 +792,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If this Pokemon is knocked out with a move, that move's user loses HP equal to the amount of damage inflicted on this Pokemon.",
+            'If this Pokemon is knocked out with a move, that move\'s user loses HP equal to the amount of damage inflicted on this Pokemon.',
         shortDesc:
-            "If this Pokemon is KOed with a move, that move's user loses an equal amount of HP.",
+            'If this Pokemon is KOed with a move, that move\'s user loses an equal amount of HP.',
         id: 'innardsout',
         name: 'Innards Out',
         rating: 2.5,
@@ -837,9 +838,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's punch-based attacks have their power multiplied by 1.2.",
+            'This Pokemon\'s punch-based attacks have their power multiplied by 1.2.',
         shortDesc:
-            "This Pokemon's punch-based attacks have 1.2x power. Sucker Punch is not boosted.",
+            'This Pokemon\'s punch-based attacks have 1.2x power. Sucker Punch is not boosted.',
         id: 'ironfist',
         name: 'Iron Fist',
         rating: 3,
@@ -847,7 +848,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's Attack is raised by 1 stage after it is damaged by a Dark-type move.",
+            'This Pokemon\'s Attack is raised by 1 stage after it is damaged by a Dark-type move.',
         id: 'justified',
         name: 'Justified',
         rating: 2,
@@ -855,9 +856,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "Prevents other Pokemon from lowering this Pokemon's accuracy stat stage. This Pokemon ignores a target's evasiveness stat stage.",
+            'Prevents other Pokemon from lowering this Pokemon\'s accuracy stat stage. This Pokemon ignores a target\'s evasiveness stat stage.',
         shortDesc:
-            "This Pokemon's accuracy can't be lowered by others; ignores their evasiveness stat.",
+            'This Pokemon\'s accuracy can\'t be lowered by others; ignores their evasiveness stat.',
         id: 'keeneye',
         name: 'Keen Eye',
         rating: 1,
@@ -865,9 +866,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's held item has no effect. This Pokemon cannot use Fling successfully. Macho Brace, Power Anklet, Power Band, Power Belt, Power Bracer, Power Lens, and Power Weight still have their effects.",
+            'This Pokemon\'s held item has no effect. This Pokemon cannot use Fling successfully. Macho Brace, Power Anklet, Power Band, Power Belt, Power Bracer, Power Lens, and Power Weight still have their effects.',
         shortDesc:
-            "This Pokemon's held item has no effect, except Macho Brace. Fling cannot be used.",
+            'This Pokemon\'s held item has no effect, except Macho Brace. Fling cannot be used.',
         id: 'klutz',
         name: 'Klutz',
         rating: -1,
@@ -894,7 +895,7 @@ export const BattleAbilities: any = [
         num: 26,
     },
     {
-        shortDesc: "This Pokemon's weight is halved.",
+        shortDesc: 'This Pokemon\'s weight is halved.',
         id: 'lightmetal',
         name: 'Light Metal',
         rating: 1,
@@ -928,8 +929,8 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's sound-based moves become Water-type moves. This effect comes after other effects that change a move's type, but before Ion Deluge and Electrify's effects.",
-        shortDesc: "This Pokemon's sound-based moves become Water type.",
+            'This Pokemon\'s sound-based moves become Water-type moves. This effect comes after other effects that change a move\'s type, but before Ion Deluge and Electrify\'s effects.',
+        shortDesc: 'This Pokemon\'s sound-based moves become Water type.',
         onModifyMovePriority: -1,
         id: 'liquidvoice',
         name: 'Liquid Voice',
@@ -938,7 +939,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's attacks do not make contact with the target.",
+            'This Pokemon\'s attacks do not make contact with the target.',
         id: 'longreach',
         name: 'Long Reach',
         rating: 1.5,
@@ -1003,9 +1004,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's pulse moves have their power multiplied by 1.5. Heal Pulse restores 3/4 of a target's maximum HP, rounded half down.",
+            'This Pokemon\'s pulse moves have their power multiplied by 1.5. Heal Pulse restores 3/4 of a target\'s maximum HP, rounded half down.',
         shortDesc:
-            "This Pokemon's pulse moves have 1.5x power. Heal Pulse heals 3/4 target's max HP.",
+            'This Pokemon\'s pulse moves have 1.5x power. Heal Pulse heals 3/4 target\'s max HP.',
         onBasePowerPriority: 8,
 
         id: 'megalauncher',
@@ -1015,7 +1016,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's attacks are critical hits if the target is poisoned.",
+            'This Pokemon\'s attacks are critical hits if the target is poisoned.',
 
         id: 'merciless',
         name: 'Merciless',
@@ -1024,9 +1025,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If an active ally has this Ability or the Ability Plus, this Pokemon's Special Attack is multiplied by 1.5.",
+            'If an active ally has this Ability or the Ability Plus, this Pokemon\'s Special Attack is multiplied by 1.5.',
         shortDesc:
-            "If an active ally has this Ability or the Ability Plus, this Pokemon's Sp. Atk is 1.5x.",
+            'If an active ally has this Ability or the Ability Plus, this Pokemon\'s Sp. Atk is 1.5x.',
         id: 'minus',
         name: 'Minus',
         rating: 0,
@@ -1042,7 +1043,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's moves and their effects ignore the Abilities of other Pokemon.",
+            'This Pokemon\'s moves and their effects ignore the Abilities of other Pokemon.',
         id: 'moldbreaker',
         name: 'Mold Breaker',
         rating: 3.5,
@@ -1062,7 +1063,7 @@ export const BattleAbilities: any = [
         desc:
             'This Pokemon is immune to Electric-type moves and raises its Speed by 1 stage when hit by an Electric-type move.',
         shortDesc:
-            "This Pokemon's Speed is raised 1 stage if hit by an Electric move; Electric immunity.",
+            'This Pokemon\'s Speed is raised 1 stage if hit by an Electric move; Electric immunity.',
         id: 'motordrive',
         name: 'Motor Drive',
         rating: 3,
@@ -1070,9 +1071,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's Attack is raised by 1 stage if it attacks and knocks out another Pokemon.",
+            'This Pokemon\'s Attack is raised by 1 stage if it attacks and knocks out another Pokemon.',
         shortDesc:
-            "This Pokemon's Attack is raised by 1 stage if it attacks and KOes another Pokemon.",
+            'This Pokemon\'s Attack is raised by 1 stage if it attacks and KOes another Pokemon.',
         id: 'moxie',
         name: 'Moxie',
         rating: 3.5,
@@ -1114,7 +1115,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's attacks that are super effective against the target do 1.25x damage.",
+            'This Pokemon\'s attacks that are super effective against the target do 1.25x damage.',
         id: 'neuroforce',
         name: 'Neuroforce',
         rating: 3,
@@ -1130,9 +1131,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's moves are changed to be Normal type and have their power multiplied by 1.2. This effect comes before other effects that change a move's type.",
+            'This Pokemon\'s moves are changed to be Normal type and have their power multiplied by 1.2. This effect comes before other effects that change a move\'s type.',
         shortDesc:
-            "This Pokemon's moves are changed to be Normal type and have 1.2x power.",
+            'This Pokemon\'s moves are changed to be Normal type and have 1.2x power.',
         onBasePowerPriority: 8,
         id: 'normalize',
         name: 'Normalize',
@@ -1161,7 +1162,7 @@ export const BattleAbilities: any = [
         desc:
             'When this Pokemon has 1/3 or less of its maximum HP, rounded down, its attacking stat is multiplied by 1.5 while using a Grass-type attack.',
         shortDesc:
-            "At 1/3 or less of its max HP, this Pokemon's attacking stat is 1.5x with Grass attacks.",
+            'At 1/3 or less of its max HP, this Pokemon\'s attacking stat is 1.5x with Grass attacks.',
         onModifyAtkPriority: 5,
         id: 'overgrow',
         name: 'Overgrow',
@@ -1178,9 +1179,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's damaging moves become multi-hit moves that hit twice. The second hit has its damage quartered. Does not affect multi-hit moves or moves that have multiple targets.",
+            'This Pokemon\'s damaging moves become multi-hit moves that hit twice. The second hit has its damage quartered. Does not affect multi-hit moves or moves that have multiple targets.',
         shortDesc:
-            "This Pokemon's damaging moves hit twice. The second hit has its damage quartered.",
+            'This Pokemon\'s damaging moves hit twice. The second hit has its damage quartered.',
         id: 'parentalbond',
         name: 'Parental Bond',
         rating: 5,
@@ -1206,9 +1207,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's Normal-type moves become Fairy-type moves and have their power multiplied by 1.2. This effect comes after other effects that change a move's type, but before Ion Deluge and Electrify's effects.",
+            'This Pokemon\'s Normal-type moves become Fairy-type moves and have their power multiplied by 1.2. This effect comes after other effects that change a move\'s type, but before Ion Deluge and Electrify\'s effects.',
         shortDesc:
-            "This Pokemon's Normal-type moves become Fairy type and have 1.2x power.",
+            'This Pokemon\'s Normal-type moves become Fairy type and have 1.2x power.',
         onBasePowerPriority: 8,
         id: 'pixilate',
         name: 'Pixilate',
@@ -1217,9 +1218,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If an active ally has this Ability or the Ability Minus, this Pokemon's Special Attack is multiplied by 1.5.",
+            'If an active ally has this Ability or the Ability Minus, this Pokemon\'s Special Attack is multiplied by 1.5.',
         shortDesc:
-            "If an active ally has this Ability or the Ability Minus, this Pokemon's Sp. Atk is 1.5x.",
+            'If an active ally has this Ability or the Ability Minus, this Pokemon\'s Sp. Atk is 1.5x.',
         onModifySpAPriority: 5,
         id: 'plus',
         name: 'Plus',
@@ -1246,7 +1247,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's contact moves have a 30% chance of poisoning.",
+            'This Pokemon\'s contact moves have a 30% chance of poisoning.',
         id: 'poisontouch',
         name: 'Poison Touch',
         rating: 2,
@@ -1273,7 +1274,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's Status moves have priority raised by 1, but Dark types are immune.",
+            'This Pokemon\'s Status moves have priority raised by 1, but Dark types are immune.',
         id: 'prankster',
         name: 'Prankster',
         rating: 4,
@@ -1281,9 +1282,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If this Pokemon is the target of an opposing Pokemon's move, that move loses one additional PP.",
+            'If this Pokemon is the target of an opposing Pokemon\'s move, that move loses one additional PP.',
         shortDesc:
-            "If this Pokemon is the target of a foe's move, that move loses one additional PP.",
+            'If this Pokemon is the target of a foe\'s move, that move loses one additional PP.',
         id: 'pressure',
         name: 'Pressure',
         rating: 2,
@@ -1312,9 +1313,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's type changes to match the type of the move it is about to use. This effect comes after all effects that change a move's type.",
+            'This Pokemon\'s type changes to match the type of the move it is about to use. This effect comes after all effects that change a move\'s type.',
         shortDesc:
-            "This Pokemon's type changes to match the type of the move it is about to use.",
+            'This Pokemon\'s type changes to match the type of the move it is about to use.',
         id: 'protean',
         name: 'Protean',
         rating: 4,
@@ -1329,7 +1330,7 @@ export const BattleAbilities: any = [
         num: 227,
     },
     {
-        shortDesc: "This Pokemon's Attack is doubled.",
+        shortDesc: 'This Pokemon\'s Attack is doubled.',
         onModifyAtkPriority: 5,
         id: 'purepower',
         name: 'Pure Power',
@@ -1368,9 +1369,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's Speed is raised by 1 stage if hit by a Bug-, Dark-, or Ghost-type attack.",
+            'This Pokemon\'s Speed is raised by 1 stage if hit by a Bug-, Dark-, or Ghost-type attack.',
         shortDesc:
-            "This Pokemon's Speed is raised 1 stage if hit by a Bug-, Dark-, or Ghost-type attack.",
+            'This Pokemon\'s Speed is raised 1 stage if hit by a Bug-, Dark-, or Ghost-type attack.',
         id: 'rattled',
         name: 'Rattled',
         rating: 1.5,
@@ -1387,9 +1388,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's attacks with recoil or crash damage have their power multiplied by 1.2. Does not affect Struggle.",
+            'This Pokemon\'s attacks with recoil or crash damage have their power multiplied by 1.2. Does not affect Struggle.',
         shortDesc:
-            "This Pokemon's attacks with recoil or crash damage have 1.2x power; not Struggle.",
+            'This Pokemon\'s attacks with recoil or crash damage have 1.2x power; not Struggle.',
         onBasePowerPriority: 8,
         id: 'reckless',
         name: 'Reckless',
@@ -1398,9 +1399,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's Normal-type moves become Ice-type moves and have their power multiplied by 1.2. This effect comes after other effects that change a move's type, but before Ion Deluge and Electrify's effects.",
+            'This Pokemon\'s Normal-type moves become Ice-type moves and have their power multiplied by 1.2. This effect comes after other effects that change a move\'s type, but before Ion Deluge and Electrify\'s effects.',
         shortDesc:
-            "This Pokemon's Normal-type moves become Ice type and have 1.2x power.",
+            'This Pokemon\'s Normal-type moves become Ice type and have 1.2x power.',
         onBasePowerPriority: 8,
         id: 'refrigerate',
         name: 'Refrigerate',
@@ -1417,9 +1418,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's attacks have their power multiplied by 1.25 against targets of the same gender or multiplied by 0.75 against targets of the opposite gender. There is no modifier if either this Pokemon or the target is genderless.",
+            'This Pokemon\'s attacks have their power multiplied by 1.25 against targets of the same gender or multiplied by 0.75 against targets of the opposite gender. There is no modifier if either this Pokemon or the target is genderless.',
         shortDesc:
-            "This Pokemon's attacks do 1.25x on same gender targets; 0.75x on opposite gender.",
+            'This Pokemon\'s attacks do 1.25x on same gender targets; 0.75x on opposite gender.',
         onBasePowerPriority: 8,
         id: 'rivalry',
         name: 'Rivalry',
@@ -1463,9 +1464,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If Sandstorm is active, this Pokemon's Ground-, Rock-, and Steel-type attacks have their power multiplied by 1.3. This Pokemon takes no damage from Sandstorm.",
+            'If Sandstorm is active, this Pokemon\'s Ground-, Rock-, and Steel-type attacks have their power multiplied by 1.3. This Pokemon takes no damage from Sandstorm.',
         shortDesc:
-            "This Pokemon's Ground/Rock/Steel attacks do 1.3x in Sandstorm; immunity to it.",
+            'This Pokemon\'s Ground/Rock/Steel attacks do 1.3x in Sandstorm; immunity to it.',
         id: 'sandforce',
         name: 'Sand Force',
         rating: 2,
@@ -1473,9 +1474,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If Sandstorm is active, this Pokemon's Speed is doubled. This Pokemon takes no damage from Sandstorm.",
+            'If Sandstorm is active, this Pokemon\'s Speed is doubled. This Pokemon takes no damage from Sandstorm.',
         shortDesc:
-            "If Sandstorm is active, this Pokemon's Speed is doubled; immunity to Sandstorm.",
+            'If Sandstorm is active, this Pokemon\'s Speed is doubled; immunity to Sandstorm.',
         id: 'sandrush',
         name: 'Sand Rush',
         rating: 3,
@@ -1490,9 +1491,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If Sandstorm is active, this Pokemon's evasiveness is multiplied by 1.25. This Pokemon takes no damage from Sandstorm.",
+            'If Sandstorm is active, this Pokemon\'s evasiveness is multiplied by 1.25. This Pokemon takes no damage from Sandstorm.',
         shortDesc:
-            "If Sandstorm is active, this Pokemon's evasiveness is 1.25x; immunity to Sandstorm.",
+            'If Sandstorm is active, this Pokemon\'s evasiveness is 1.25x; immunity to Sandstorm.',
         id: 'sandveil',
         name: 'Sand Veil',
         rating: 1.5,
@@ -1502,7 +1503,7 @@ export const BattleAbilities: any = [
         desc:
             'This Pokemon is immune to Grass-type moves and raises its Attack by 1 stage when hit by a Grass-type move.',
         shortDesc:
-            "This Pokemon's Attack is raised 1 stage if hit by a Grass move; Grass immunity.",
+            'This Pokemon\'s Attack is raised 1 stage if hit by a Grass move; Grass immunity.',
         id: 'sapsipper',
         name: 'Sap Sipper',
         rating: 3.5,
@@ -1529,7 +1530,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's moves have their secondary effect chance doubled.",
+            'This Pokemon\'s moves have their secondary effect chance doubled.',
         onModifyMovePriority: -2,
         id: 'serenegrace',
         name: 'Serene Grace',
@@ -1569,9 +1570,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's attacks with secondary effects have their power multiplied by 1.3, but the secondary effects are removed.",
+            'This Pokemon\'s attacks with secondary effects have their power multiplied by 1.3, but the secondary effects are removed.',
         shortDesc:
-            "This Pokemon's attacks with secondary effects have 1.3x power; nullifies the effects.",
+            'This Pokemon\'s attacks with secondary effects have 1.3x power; nullifies the effects.',
         onBasePowerPriority: 8,
         id: 'sheerforce',
         name: 'Sheer Force',
@@ -1588,7 +1589,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon is not affected by the secondary effect of another Pokemon's attack.",
+            'This Pokemon is not affected by the secondary effect of another Pokemon\'s attack.',
         id: 'shielddust',
         name: 'Shield Dust',
         rating: 2.5,
@@ -1607,7 +1608,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "When this Pokemon's stat stages are raised or lowered, the effect is doubled instead.",
+            'When this Pokemon\'s stat stages are raised or lowered, the effect is doubled instead.',
         id: 'simple',
         name: 'Simple',
         rating: 4,
@@ -1615,7 +1616,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's multi-hit attacks always hit the maximum number of times.",
+            'This Pokemon\'s multi-hit attacks always hit the maximum number of times.',
         id: 'skilllink',
         name: 'Skill Link',
         rating: 4,
@@ -1623,14 +1624,14 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "On switch-in, this Pokemon's Attack and Speed are halved for 5 turns.",
+            'On switch-in, this Pokemon\'s Attack and Speed are halved for 5 turns.',
         id: 'slowstart',
         name: 'Slow Start',
         rating: -2,
         num: 112,
     },
     {
-        shortDesc: "If Hail is active, this Pokemon's Speed is doubled.",
+        shortDesc: 'If Hail is active, this Pokemon\'s Speed is doubled.',
         id: 'slushrush',
         name: 'Slush Rush',
         rating: 2.5,
@@ -1646,9 +1647,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If Hail is active, this Pokemon's evasiveness is multiplied by 1.25. This Pokemon takes no damage from Hail.",
+            'If Hail is active, this Pokemon\'s evasiveness is multiplied by 1.25. This Pokemon takes no damage from Hail.',
         shortDesc:
-            "If Hail is active, this Pokemon's evasiveness is 1.25x; immunity to Hail.",
+            'If Hail is active, this Pokemon\'s evasiveness is 1.25x; immunity to Hail.',
         id: 'snowcloak',
         name: 'Snow Cloak',
         rating: 1.5,
@@ -1663,9 +1664,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If Sunny Day is active, this Pokemon's Special Attack is multiplied by 1.5 and it loses 1/8 of its maximum HP, rounded down, at the end of each turn.",
+            'If Sunny Day is active, this Pokemon\'s Special Attack is multiplied by 1.5 and it loses 1/8 of its maximum HP, rounded down, at the end of each turn.',
         shortDesc:
-            "If Sunny Day is active, this Pokemon's Sp. Atk is 1.5x; loses 1/8 max HP per turn.",
+            'If Sunny Day is active, this Pokemon\'s Sp. Atk is 1.5x; loses 1/8 max HP per turn.',
         id: 'solarpower',
         name: 'Solar Power',
         rating: 1.5,
@@ -1681,9 +1682,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's Special Attack is raised by 1 stage when another Pokemon faints.",
+            'This Pokemon\'s Special Attack is raised by 1 stage when another Pokemon faints.',
         shortDesc:
-            "This Pokemon's Sp. Atk is raised by 1 stage when another Pokemon faints.",
+            'This Pokemon\'s Sp. Atk is raised by 1 stage when another Pokemon faints.',
         id: 'soulheart',
         name: 'Soul-Heart',
         rating: 3.5,
@@ -1699,9 +1700,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's Speed is raised by 1 stage at the end of each full turn it has been on the field.",
+            'This Pokemon\'s Speed is raised by 1 stage at the end of each full turn it has been on the field.',
         shortDesc:
-            "This Pokemon's Speed is raised 1 stage at the end of each full turn on the field.",
+            'This Pokemon\'s Speed is raised 1 stage at the end of each full turn on the field.',
         id: 'speedboost',
         name: 'Speed Boost',
         rating: 4.5,
@@ -1709,7 +1710,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's attacking stat is doubled against a target that switched in this turn.",
+            'This Pokemon\'s attacking stat is doubled against a target that switched in this turn.',
         id: 'stakeout',
         name: 'Stakeout',
         rating: 2.5,
@@ -1725,7 +1726,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's Defense is raised by 1 stage after it is damaged by a move.",
+            'This Pokemon\'s Defense is raised by 1 stage after it is damaged by a move.',
         id: 'stamina',
         name: 'Stamina',
         rating: 3,
@@ -1733,9 +1734,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If this Pokemon is an Aegislash, it changes to Blade Forme before attempting to use an attacking move, and changes to Shield Forme before attempting to use King's Shield.",
+            'If this Pokemon is an Aegislash, it changes to Blade Forme before attempting to use an attacking move, and changes to Shield Forme before attempting to use King\'s Shield.',
         shortDesc:
-            "If Aegislash, changes Forme to Blade before attacks and Shield before King's Shield.",
+            'If Aegislash, changes Forme to Blade before attacks and Shield before King\'s Shield.',
         id: 'stancechange',
         name: 'Stance Change',
         rating: 5,
@@ -1758,7 +1759,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's attacking stat is multiplied by 1.5 while using a Steel-type attack.",
+            'This Pokemon\'s attacking stat is multiplied by 1.5 while using a Steel-type attack.',
         id: 'steelworker',
         name: 'Steelworker',
         rating: 3,
@@ -1766,7 +1767,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's attacks without a chance to flinch have a 10% chance to flinch.",
+            'This Pokemon\'s attacks without a chance to flinch have a 10% chance to flinch.',
         onModifyMovePriority: -1,
         id: 'stench',
         name: 'Stench',
@@ -1775,7 +1776,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon cannot lose its held item due to another Pokemon's attack.",
+            'This Pokemon cannot lose its held item due to another Pokemon\'s attack.',
         id: 'stickyhold',
         name: 'Sticky Hold',
         rating: 1.5,
@@ -1793,9 +1794,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's bite-based attacks have their power multiplied by 1.5.",
+            'This Pokemon\'s bite-based attacks have their power multiplied by 1.5.',
         shortDesc:
-            "This Pokemon's bite-based attacks have 1.5x power. Bug Bite is not boosted.",
+            'This Pokemon\'s bite-based attacks have 1.5x power. Bug Bite is not boosted.',
         onBasePowerPriority: 8,
         id: 'strongjaw',
         name: 'Strong Jaw',
@@ -1814,7 +1815,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon cannot be forced to switch out by another Pokemon's attack or item.",
+            'This Pokemon cannot be forced to switch out by another Pokemon\'s attack or item.',
         onDragOutPriority: 1,
         id: 'suctioncups',
         name: 'Suction Cups',
@@ -1822,7 +1823,7 @@ export const BattleAbilities: any = [
         num: 21,
     },
     {
-        shortDesc: "This Pokemon's critical hit ratio is raised by 1 stage.",
+        shortDesc: 'This Pokemon\'s critical hit ratio is raised by 1 stage.',
         id: 'superluck',
         name: 'Super Luck',
         rating: 1.5,
@@ -1830,7 +1831,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "If Electric Terrain is active, this Pokemon's Speed is doubled.",
+            'If Electric Terrain is active, this Pokemon\'s Speed is doubled.',
         id: 'surgesurfer',
         name: 'Surge Surfer',
         rating: 2,
@@ -1840,7 +1841,7 @@ export const BattleAbilities: any = [
         desc:
             'When this Pokemon has 1/3 or less of its maximum HP, rounded down, its attacking stat is multiplied by 1.5 while using a Bug-type attack.',
         shortDesc:
-            "At 1/3 or less of its max HP, this Pokemon's attacking stat is 1.5x with Bug attacks.",
+            'At 1/3 or less of its max HP, this Pokemon\'s attacking stat is 1.5x with Bug attacks.',
         id: 'swarm',
         name: 'Swarm',
         rating: 2,
@@ -1854,7 +1855,7 @@ export const BattleAbilities: any = [
         num: 175,
     },
     {
-        shortDesc: "If Rain Dance is active, this Pokemon's Speed is doubled.",
+        shortDesc: 'If Rain Dance is active, this Pokemon\'s Speed is doubled.',
         id: 'swiftswim',
         name: 'Swift Swim',
         rating: 3,
@@ -1862,7 +1863,7 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If an ally uses its item, this Pokemon gives its item to that ally immediately. Does not activate if the ally's item was stolen or knocked off.",
+            'If an ally uses its item, this Pokemon gives its item to that ally immediately. Does not activate if the ally\'s item was stolen or knocked off.',
         shortDesc:
             'If an ally uses its item, this Pokemon gives its item to that ally immediately.',
         id: 'symbiosis',
@@ -1882,7 +1883,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's evasiveness is doubled as long as it is confused.",
+            'This Pokemon\'s evasiveness is doubled as long as it is confused.',
         id: 'tangledfeet',
         name: 'Tangled Feet',
         rating: 1,
@@ -1898,9 +1899,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's moves of 60 power or less have their power multiplied by 1.5. Does affect Struggle.",
+            'This Pokemon\'s moves of 60 power or less have their power multiplied by 1.5. Does affect Struggle.',
         shortDesc:
-            "This Pokemon's moves of 60 power or less have 1.5x power. Includes Struggle.",
+            'This Pokemon\'s moves of 60 power or less have 1.5x power. Includes Struggle.',
         id: 'technician',
         name: 'Technician',
         rating: 4,
@@ -1916,7 +1917,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's moves and their effects ignore the Abilities of other Pokemon.",
+            'This Pokemon\'s moves and their effects ignore the Abilities of other Pokemon.',
         id: 'teravolt',
         name: 'Teravolt',
         rating: 3.5,
@@ -1924,7 +1925,7 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If a Pokemon uses a Fire- or Ice-type attack against this Pokemon, that Pokemon's attacking stat is halved when calculating the damage to this Pokemon.",
+            'If a Pokemon uses a Fire- or Ice-type attack against this Pokemon, that Pokemon\'s attacking stat is halved when calculating the damage to this Pokemon.',
         shortDesc:
             'Fire/Ice-type moves against this Pokemon deal damage with a halved attacking stat.',
         onModifyAtkPriority: 6,
@@ -1935,7 +1936,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's attacks that are not very effective on a target deal double damage.",
+            'This Pokemon\'s attacks that are not very effective on a target deal double damage.',
         id: 'tintedlens',
         name: 'Tinted Lens',
         rating: 3.5,
@@ -1945,7 +1946,7 @@ export const BattleAbilities: any = [
         desc:
             'When this Pokemon has 1/3 or less of its maximum HP, rounded down, its attacking stat is multiplied by 1.5 while using a Water-type attack.',
         shortDesc:
-            "At 1/3 or less of its max HP, this Pokemon's attacking stat is 1.5x with Water attacks.",
+            'At 1/3 or less of its max HP, this Pokemon\'s attacking stat is 1.5x with Water attacks.',
         onModifyAtkPriority: 5,
         id: 'torrent',
         name: 'Torrent',
@@ -1965,7 +1966,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's contact moves have their power multiplied by 1.3.",
+            'This Pokemon\'s contact moves have their power multiplied by 1.3.',
         onBasePowerPriority: 8,
         id: 'toughclaws',
         name: 'Tough Claws',
@@ -1976,7 +1977,7 @@ export const BattleAbilities: any = [
         desc:
             'On switch-in, or when this Pokemon acquires this ability, this Pokemon copies a random adjacent opposing Pokemon\'s Ability. However, if one or more adjacent Pokemon has the Ability "No Ability", Trace won\'t copy anything even if there is another valid Ability it could normally copy. Otherwise, if there is no Ability that can be copied at that time, this Ability will activate as soon as an Ability can be copied. Abilities that cannot be copied are the previously mentioned "No Ability", as well as Comatose, Disguise, Flower Gift, Forecast, Illusion, Imposter, Multitype, Schooling, Stance Change, Trace, and Zen Mode.',
         shortDesc:
-            "On switch-in, or when it can, this Pokemon copies a random adjacent foe's Ability.",
+            'On switch-in, or when it can, this Pokemon copies a random adjacent foe\'s Ability.',
         id: 'trace',
         name: 'Trace',
         rating: 3,
@@ -1984,7 +1985,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's healing moves have their priority increased by 3.",
+            'This Pokemon\'s healing moves have their priority increased by 3.',
         id: 'triage',
         name: 'Triage',
         rating: 3.5,
@@ -2000,7 +2001,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's moves and their effects ignore the Abilities of other Pokemon.",
+            'This Pokemon\'s moves and their effects ignore the Abilities of other Pokemon.',
         id: 'turboblaze',
         name: 'Turboblaze',
         rating: 3.5,
@@ -2008,9 +2009,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon ignores other Pokemon's Attack, Special Attack, and accuracy stat stages when taking damage, and ignores other Pokemon's Defense, Special Defense, and evasiveness stat stages when dealing damage.",
+            'This Pokemon ignores other Pokemon\'s Attack, Special Attack, and accuracy stat stages when taking damage, and ignores other Pokemon\'s Defense, Special Defense, and evasiveness stat stages when dealing damage.',
         shortDesc:
-            "This Pokemon ignores other Pokemon's stat stages when taking or doing damage.",
+            'This Pokemon ignores other Pokemon\'s stat stages when taking or doing damage.',
         id: 'unaware',
         name: 'Unaware',
         rating: 3,
@@ -2037,7 +2038,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon and its allies' moves have their accuracy multiplied by 1.1.",
+            'This Pokemon and its allies\' moves have their accuracy multiplied by 1.1.',
         id: 'victorystar',
         name: 'Victory Star',
         rating: 3,
@@ -2073,9 +2074,9 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "This Pokemon's attacking stat is doubled while using a Water-type attack. If a Pokemon uses a Fire-type attack against this Pokemon, that Pokemon's attacking stat is halved when calculating the damage to this Pokemon. This Pokemon cannot be burned. Gaining this Ability while burned cures it.",
+            'This Pokemon\'s attacking stat is doubled while using a Water-type attack. If a Pokemon uses a Fire-type attack against this Pokemon, that Pokemon\'s attacking stat is halved when calculating the damage to this Pokemon. This Pokemon cannot be burned. Gaining this Ability while burned cures it.',
         shortDesc:
-            "This Pokemon's Water power is 2x; it can't be burned; Fire power against it is halved.",
+            'This Pokemon\'s Water power is 2x; it can\'t be burned; Fire power against it is halved.',
         id: 'waterbubble',
         name: 'Water Bubble',
         rating: 4,
@@ -2083,7 +2084,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "This Pokemon's Defense is raised 2 stages after it is damaged by a Water-type move.",
+            'This Pokemon\'s Defense is raised 2 stages after it is damaged by a Water-type move.',
         id: 'watercompaction',
         name: 'Water Compaction',
         rating: 2,
@@ -2109,7 +2110,7 @@ export const BattleAbilities: any = [
     },
     {
         shortDesc:
-            "Prevents other Pokemon from lowering this Pokemon's stat stages.",
+            'Prevents other Pokemon from lowering this Pokemon\'s stat stages.',
         id: 'whitesmoke',
         name: 'White Smoke',
         rating: 2,
@@ -2146,7 +2147,7 @@ export const BattleAbilities: any = [
     },
     {
         desc:
-            "If this Pokemon is a Darmanitan, it changes to Zen Mode if it has 1/2 or less of its maximum HP at the end of a turn. If Darmanitan's HP is above 1/2 of its maximum HP at the end of a turn, it changes back to Standard Mode. If Darmanitan loses this Ability while in Zen Mode it reverts to Standard Mode immediately.",
+            'If this Pokemon is a Darmanitan, it changes to Zen Mode if it has 1/2 or less of its maximum HP at the end of a turn. If Darmanitan\'s HP is above 1/2 of its maximum HP at the end of a turn, it changes back to Standard Mode. If Darmanitan loses this Ability while in Zen Mode it reverts to Standard Mode immediately.',
         shortDesc:
             'If Darmanitan, at end of turn changes Mode to Standard if > 1/2 max HP, else Zen.',
         id: 'zenmode',
@@ -2184,5 +2185,5 @@ export const BattleAbilities: any = [
         name: 'Persistent',
         rating: 3.5,
         num: -4,
-    },
+    }
 ];

@@ -1,134 +1,18 @@
-import { roundNumber } from '.';
+import { multiCharsRegex, roundNumber, zalgoDownMap, zalgoMiddleMap, zalgoUpMap } from '.';
 
 const chars: any = {
     all: null,
-    down: [
-        '̖',
-        '̗',
-        '̘',
-        '̙',
-        '̜',
-        '̝',
-        '̞',
-        '̟',
-        '̠',
-        '̤',
-        '̥',
-        '̦',
-        '̩',
-        '̪',
-        '̫',
-        '̬',
-        '̭',
-        '̮',
-        '̯',
-        '̰',
-        '̱',
-        '̲',
-        '̳',
-        '̹',
-        '̺',
-        '̻',
-        '̼',
-        'ͅ',
-        '͇',
-        '͈',
-        '͉',
-        '͍',
-        '͎',
-        '͓',
-        '͔',
-        '͕',
-        '͖',
-        '͙',
-        '͚',
-        '̣'
-    ],
-    middle: [
-        '̕',
-        '̛',
-        '̀',
-        '́',
-        '͘',
-        '̡',
-        '̢',
-        '̧',
-        '̨',
-        '̴',
-        '̵',
-        '̶',
-        '͏',
-        '͜',
-        '͝',
-        '͞',
-        '͟',
-        '͠',
-        '͢',
-        '̸',
-        '̷',
-        '͡',
-        '҉'
-    ],
+    down: zalgoDownMap,
+    middle: zalgoMiddleMap,
     pattern: null,
-    up: [
-        '̍',
-        '̎',
-        '̄',
-        '̅',
-        '̿',
-        '̑',
-        '̆',
-        '̐',
-        '͒',
-        '͗',
-        '͑',
-        '̇',
-        '̈',
-        '̊',
-        '͂',
-        '̓',
-        '̈́',
-        '͊',
-        '͋',
-        '͌',
-        '̃',
-        '̂',
-        '̌',
-        '͐',
-        '̀',
-        '́',
-        '̋',
-        '̏',
-        '̒',
-        '̓',
-        '̔',
-        '̽',
-        '̉',
-        'ͣ',
-        'ͤ',
-        'ͥ',
-        'ͦ',
-        'ͧ',
-        'ͨ',
-        'ͩ',
-        'ͪ',
-        'ͫ',
-        'ͬ',
-        'ͭ',
-        'ͮ',
-        'ͯ',
-        '̾',
-        '͛',
-        '͆',
-        '̚'
-    ],
+    up: zalgoUpMap,
 };
 
 chars.all = [].concat(chars.up, chars.middle, chars.down);
 chars.pattern = RegExp(`(${chars.all.join('|')})`, 'g');
 
 /* tslint:disable-next-line:max-line-length */
-const multichars = /([\uD800-\uDBFF])([\uDC00-\uDFFF])([\uD800-\uDBFF])?([\uDC00-\uDFFF])?|([0-9])?([\0-\u02FF\u0370-\u1AAF\u1B00-\u1DBF\u1E00-\u20CF\u2100-\uD7FF\uE000-\uFE1F\uFE30-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF])([\u0300-\u036F\u1AB0-\u1AFF\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F\uFE0F]+)/g;
+const multichars = multiCharsRegex;
 const sub = '•';
 
 const split = (str: string) => {
@@ -155,7 +39,7 @@ export const zalgolize = (text: any) => {
     text = split(text);
 
     let result = '';
-    const types: Array<string> = ['up', 'middle', 'down'];
+    const types: string[] = ['up', 'middle', 'down'];
     const counts: any = {
         down: rand(8) + 1,
         middle: rand(3),

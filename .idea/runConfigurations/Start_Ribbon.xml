@@ -1,12 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Start Ribbon" type="js.build_tools.npm" factoryName="npm">
-    <package-json value="$PROJECT_DIR$/package.json" />
-    <command value="run" />
-    <scripts>
-      <script value="start:ribbon" />
-    </scripts>
-    <node-interpreter value="project" />
-    <envs />
+  <configuration default="false" name="Start Ribbon" type="NodeJSConfigurationType" factoryName="Node.js" node-parameters="--require ts-node/register ./src/app.ts" working-dir="$PROJECT_DIR$">
     <method v="2" />
   </configuration>
 </component>

@@ -13,14 +13,10 @@ import { TextChannel, Util } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CopyPastaListCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'copypastalist',
             aliases: ['cplist', 'copylist', 'pastalist'],
@@ -35,10 +31,8 @@ export default class CopyPastaListCommand extends Command {
         });
     }
 
-    public async run(msg: CommandoMessage) {
-        const conn = new Database(
-            path.join(__dirname, '../../data/databases/pastas.sqlite3')
-        );
+    public async run (msg: CommandoMessage) {
+        const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
 
         try {
             startTyping(msg);
@@ -85,32 +79,19 @@ export default class CopyPastaListCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
-                return msg.reply(
-                    `no pastas saved for this server. Start saving your first with \`${
-                        msg.guild.commandPrefix
-                    }copypastaadd <name> <content>\``
-                );
+                return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);
             }
-            const channel = this.client.channels.get(
-                process.env.ISSUE_LOG_CHANNEL_ID
-            ) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-                <@${
-                    this.client.owners[0].id
-                }> Error occurred in \`copypastalist\` command!
+                <@${this.client.owners[0].id}> Error occurred in \`copypastalist\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
-                **Time:** ${moment(msg.createdTimestamp).format(
-                    'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-                )}
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(
-                `no copypastas found for this server. Start saving your first with \`${
-                    msg.guild.commandPrefix
-                }copypastaadd\`!`
+            return msg.reply(`no copypastas found for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd\`!`
             );
         }
     }

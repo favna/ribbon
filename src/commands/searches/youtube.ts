@@ -15,15 +15,10 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class YouTubeCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'youtube',
             aliases: ['yt', 'tube', 'yts'],
@@ -42,17 +37,16 @@ export default class YouTubeCommand extends Command {
                     key: 'query',
                     prompt: 'Which video do you want to find?',
                     type: 'string',
-                },
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { query }: { query: string }) {
+    public async run (msg: CommandoMessage, { query }: { query: string }) {
         try {
             startTyping(msg);
 
-            const tubeSearch = await fetch(
-                `https://www.googleapis.com/youtube/v3/search?${stringify({
+            const tubeSearch = await fetch(`https://www.googleapis.com/youtube/v3/search?${stringify({
                     key: process.env.GOOGLE_API_KEY,
                     maxResults: '1',
                     part: 'snippet',
@@ -65,20 +59,10 @@ export default class YouTubeCommand extends Command {
             const videoEmbed = new MessageEmbed();
 
             deleteCommandMessages(msg, this.client);
-            if (
-                msg.content
-                    .split(' ')[0]
-                    .slice(
-                        msg.guild
-                            ? msg.guild.commandPrefix.length
-                            : this.client.commandPrefix.length
-                    ) === 'yts'
-            ) {
+            if (msg.content.split(' ')[0].slice(msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length) === 'yts') {
                 stopTyping(msg);
 
-                return msg.say(
-                    `https://www.youtube.com/watch?v=${video.id.videoId}`
-                );
+                return msg.say(`https://www.youtube.com/watch?v=${video.id.videoId}`);
             }
 
             videoEmbed
@@ -87,42 +71,14 @@ export default class YouTubeCommand extends Command {
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
                 .setImage(video.snippet.thumbnails.high.url)
                 .addField('Title', video.snippet.title, true)
-                .addField(
-                    'URL',
-                    `[Click Here](https://www.youtube.com/watch?v=${
-                        video.id.videoId
-                    })`,
-                    true
-                )
-                .addField(
-                    'Channel',
-                    `[${
-                        video.snippet.channelTitle
-                    }](https://www.youtube.com/channel/${
-                        video.snippet.channelId
-                    })`,
-                    true
-                )
-                .addField(
-                    'Published At',
-                    moment(video.snippet.publishedAt).format(
-                        'MMMM Do YYYY [at] HH:mm:ss [UTC]Z'
-                    ),
-                    false
-                )
-                .addField(
-                    'Description',
-                    video.snippet.description
-                        ? video.snippet.description
-                        : 'No Description',
-                    false
-                );
+                .addField('URL', `[Click Here](https://www.youtube.com/watch?v=${video.id.videoId})`, true)
+                .addField('Channel', `[${video.snippet.channelTitle}](https://www.youtube.com/channel/${video.snippet.channelId})`, true)
+                .addField('Published At', moment(video.snippet.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
+                .addField('Description', video.snippet.description ? video.snippet.description : 'No Description', false);
+
             stopTyping(msg);
 
-            return msg.embed(
-                videoEmbed,
-                `https://www.youtube.com/watch?v=${video.id.videoId}`
-            );
+            return msg.embed(videoEmbed, `https://www.youtube.com/watch?v=${video.id.videoId}`);
         } catch (err) {
             stopTyping(msg);
 

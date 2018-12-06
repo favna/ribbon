@@ -15,14 +15,10 @@ import * as booru from 'booru';
 import { stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class PahealCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'paheal',
             aliases: ['pa', 'heal'],
@@ -44,12 +40,12 @@ export default class PahealCommand extends Command {
                     prompt: 'What do you want to find NSFW for?',
                     type: 'string',
                     parse: (p: string) => p.split(' '),
-                },
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { tags }: { tags: Array<string> }) {
+    public async run (msg: CommandoMessage, { tags }: { tags: string[] }) {
         try {
             startTyping(msg);
 
@@ -57,32 +53,27 @@ export default class PahealCommand extends Command {
                 limit: 1,
                 random: true,
             });
-            const common = await booru.commonfy(search);
-            const embed = new MessageEmbed();
-            const imageTags = [];
+            const parsed = await booru.commonfy(search);
+            const hit = parsed[0].common;
+            const pahealEmbed = new MessageEmbed();
+            const imageTags: string[] = [];
 
-            for (const tag in common[0].common.tags) {
-                imageTags.push(
-                    `[#${common[0].common.tags[tag]}](${
-                        common[0].common.file_url
-                    })`
-                );
-            }
+            hit.tags.forEach((tag: string) => imageTags.push(`[#${tag}](${hit.file_url})`));
 
-            embed
+            pahealEmbed
                 .setTitle(`paheal image for ${tags.join(', ')}`)
-                .setURL(common[0].common.file_url)
+                .setURL(hit.file_url)
                 .setColor('#FFB6C1')
-                .setDescription(
-                    stripIndents`${imageTags.slice(0, 5).join(' ')}
-                    **Score**: ${common[0].common.score}`
-                )
-                .setImage(common[0].common.file_url);
+                .setDescription(stripIndents`
+                    ${imageTags.slice(0, 5).join(' ')}
+                    **Score**: ${hit.score}
+                `)
+                .setImage(hit.file_url);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.embed(embed);
+            return msg.embed(pahealEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

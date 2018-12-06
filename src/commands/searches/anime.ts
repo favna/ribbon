@@ -14,15 +14,10 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    removeDiacritics,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { deleteCommandMessages, removeDiacritics, startTyping, stopTyping } from '../../components';
 
 export default class AnimeCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'anime',
             aliases: ['ani', 'mal', 'kitsu'],
@@ -41,26 +36,19 @@ export default class AnimeCommand extends Command {
                     key: 'anime',
                     prompt: 'What anime do you want to find?',
                     type: 'string',
-                    parse: (p: string) =>
-                        removeDiacritics(
-                            p.toLowerCase().replace(/([^a-zA-Z0-9_\- ])/gm, '')
-                        ),
-                },
+                    parse: (p: string) => removeDiacritics(p.toLowerCase().replace(/([^a-zA-Z0-9_\- ])/gm, '')),
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { anime }: { anime: string }) {
+    public async run (msg: CommandoMessage, { anime }: { anime: string }) {
         try {
             startTyping(msg);
             const animeList = await fetch(
-                `https://${
-                    process.env.KITSU_ID
-                }-dsn.algolia.net/1/indexes/production_media/query`,
+                `https://${process.env.KITSU_ID}-dsn.algolia.net/1/indexes/production_media/query`,
                 {
-                    body: JSON.stringify({
-                        params: `query=${anime}&facetFilters=[\"kind:anime\"]`,
-                    }),
+                    body: JSON.stringify({ params: `query=${anime}&facetFilters=[\"kind:anime\"]` }),
                     headers: {
                         'Content-Type': 'application/json',
                         'X-Algolia-API-Key': process.env.KITSU_KEY,
@@ -77,15 +65,9 @@ export default class AnimeCommand extends Command {
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
                 .setTitle(hit.titles.en ? hit.titles.en : hit.canonicalTitle)
                 .setURL(`https://kitsu.io/anime/${hit.id}`)
-                .setDescription(
-                    hit.synopsis
-                        .replace(/(.+)(?:\r|\n|\t)(.+)/gim, '$1 $2')
-                        .split('\r\n')[0]
-                )
+                .setDescription(hit.synopsis.replace(/(.+)(?:\r|\n|\t)(.+)/gim, '$1 $2').split('\r\n')[0])
                 .setImage(hit.posterImage.original)
-                .setThumbnail(
-                    'https://favna.xyz/images/ribbonhost/kitsulogo.png'
-                )
+                .setThumbnail('https://favna.xyz/images/ribbonhost/kitsulogo.png')
                 .addField('Canonical Title', hit.canonicalTitle, true)
                 .addField('Score', `${hit.averageRating}%`, true)
                 .addField(
@@ -95,11 +77,7 @@ export default class AnimeCommand extends Command {
                 )
                 .addField(
                     'Episode Length',
-                    hit.episodeLength
-                        ? moment
-                              .duration(hit.episodeLength, 'minutes')
-                              .format('h [hours] [and] m [minutes]')
-                        : 'unknown',
+                    hit.episodeLength ? moment.duration(hit.episodeLength, 'minutes').format('h [hours] [and] m [minutes]') : 'unknown',
                     true
                 )
                 .addField('Age Rating', hit.ageRating, true)

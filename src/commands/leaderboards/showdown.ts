@@ -14,16 +14,11 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    roundNumber,
-    startTyping,
-    stopTyping,
-} from '../../components';
-import { TierAliases } from '../../data/dex/aliases';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
+import { TierAliases } from '../../data/dex';
 
 export default class ShowdownCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'showdown',
             aliases: ['showdownlb', 'pokelb'],
@@ -43,12 +38,12 @@ export default class ShowdownCommand extends Command {
                     prompt: 'Respond with the Showdown tier',
                     type: 'string',
                     parse: (p: string) => p.toLowerCase(),
-                },
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { tier }: { tier: string }) {
+    public async run (msg: CommandoMessage, { tier }: { tier: string }) {
         try {
             startTyping(msg);
             const fsoptions: Fuse.FuseOptions<any> = {
@@ -62,43 +57,32 @@ export default class ShowdownCommand extends Command {
             };
             const fuseTable = new Fuse(TierAliases, fsoptions);
             const results = fuseTable.search(tier);
-            const ladders = await fetch(
-                `https://pokemonshowdown.com/ladder/${results[0].tier}.json`
-            );
+            const ladders = await fetch(`https://pokemonshowdown.com/ladder/${results[0].tier}.json`);
             const json = await ladders.json();
             const data = {
-                elo: json.toplist
-                    .map((e: any) => roundNumber(e.elo))
-                    .slice(0, 10),
+                elo: json.toplist.map((e: any) => roundNumber(e.elo)).slice(0, 10),
                 losses: json.toplist.map((l: any) => l.l).slice(0, 10),
-                usernames: json.toplist
-                    .map((u: any) => u.username)
-                    .slice(0, 10),
+                usernames: json.toplist.map((u: any) => u.username).slice(0, 10),
                 wins: json.toplist.map((w: any) => w.w).slice(0, 10),
             };
             const showdownEmbed = new MessageEmbed();
 
             showdownEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-                .setThumbnail(
-                    'https://favna.xyz/images/ribbonhost/showdown.png'
-                );
+                .setThumbnail('https://favna.xyz/images/ribbonhost/showdown.png')
+                .setTitle(`Pokemon Showdown ${results[0].tier} Leaderboard`);
 
             for (const rank in data.usernames) {
                 showdownEmbed.addField(
                     `${Number(rank) + 1}: ${data.usernames[rank]}`,
                     stripIndents`
-                    **Wins**:${data.wins[rank]}
-                    **Losses**:${data.losses[rank]}
-                    **ELO**:${data.elo[rank]}
+                        **Wins**:${data.wins[rank]}
+                        **Losses**:${data.losses[rank]}
+                        **ELO**:${data.elo[rank]}
                    `,
                     true
                 );
             }
-
-            showdownEmbed.setTitle(
-                `Pokemon Showdown ${results[0].tier} Leaderboard`
-            );
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -109,22 +93,23 @@ export default class ShowdownCommand extends Command {
             stopTyping(msg);
 
             return msg.say(stripIndents`
-              __**Unknown tier, has to be one of the following**__
-              \`\`\`
-              ╔════════════════╤══════════╤════════════╗
-              ║ random battles │ randdubs │ ou         ║
-              ╟────────────────┼──────────┼────────────╢
-              ║ uber           │ uu       │ ru         ║
-              ╟────────────────┼──────────┼────────────╢
-              ║ nu             │ pu       │ lc         ║
-              ╟────────────────┼──────────┼────────────╢
-              ║ mono           │ ag       │ double     ║
-              ╟────────────────┼──────────┼────────────╢
-              ║ vgc            │ hackmons │ 1v1        ║
-              ╟────────────────┼──────────┼────────────╢
-              ║ mega           │ aaa      │ anyability ║
-              ╚════════════════╧══════════╧════════════╝
-              \`\`\``);
+                __**Unknown tier, has to be one of the following**__
+                \`\`\`
+                ╔════════════════╤══════════╤════════════╗
+                ║ random battles │ randdubs │ ou         ║
+                ╟────────────────┼──────────┼────────────╢
+                ║ uber           │ uu       │ ru         ║
+                ╟────────────────┼──────────┼────────────╢
+                ║ nu             │ pu       │ lc         ║
+                ╟────────────────┼──────────┼────────────╢
+                ║ mono           │ ag       │ double     ║
+                ╟────────────────┼──────────┼────────────╢
+                ║ vgc            │ hackmons │ 1v1        ║
+                ╟────────────────┼──────────┼────────────╢
+                ║ mega           │ aaa      │ anyability ║
+                ╚════════════════╧══════════╧════════════╝
+                \`\`\`
+            `);
         }
     }
 }

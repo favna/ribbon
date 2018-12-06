@@ -13,15 +13,10 @@ import * as cheerio from 'cheerio';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class ImageCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'image',
             aliases: ['img', 'i'],
@@ -40,26 +35,18 @@ export default class ImageCommand extends Command {
                     key: 'query',
                     prompt: 'What do you want to find images of?',
                     type: 'string',
-                    parse: (p: string) =>
-                        p
-                            .replace(
-                                /(who|what|when|where) ?(was|is|were|are) ?/gi,
-                                ''
-                            )
-                            .split(' ')
-                            .map(x => encodeURIComponent(x))
-                            .join('+'),
-                },
+                    parse: (p: string) => p.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
+                        .split(' ')
+                        .map(x => encodeURIComponent(x))
+                        .join('+'),
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { query }: { query: string }) {
+    public async run (msg: CommandoMessage, { query }: { query: string }) {
         const embed = new MessageEmbed();
-        const nsfwAllowed =
-            msg.channel.type === 'text'
-                ? (msg.channel as TextChannel).nsfw
-                : true;
+        const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
 
         try {
             startTyping(msg);

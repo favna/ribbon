@@ -13,23 +13,16 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import {
-    deleteCommandMessages,
-    roundNumber,
-    startTyping,
-    stopTyping,
-    stringify,
-} from '../../components';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping, stringify } from '../../components';
 
 export default class IGDBCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'igdb',
             aliases: ['game', 'moby', 'games'],
             group: 'searches',
             memberName: 'igdb',
-            description:
-                'Gets information about a game using Internet Game Database (IGDB)',
+            description: 'Gets information about a game using Internet Game Database (IGDB)',
             format: 'GameName',
             examples: ['igdb Tales of Berseria'],
             guildOnly: false,
@@ -42,12 +35,12 @@ export default class IGDBCommand extends Command {
                     key: 'game',
                     prompt: 'Which game do you want to look up on IGDB?',
                     type: 'string',
-                },
+                }
             ],
         });
     }
 
-    public async run(msg: CommandoMessage, { game }: { game: string }) {
+    public async run (msg: CommandoMessage, { game }: { game: string }) {
         startTyping(msg);
         try {
             const gameEmbed = new MessageEmbed();
@@ -60,19 +53,7 @@ export default class IGDBCommand extends Command {
 
             const gameSearch = await fetch(
                 `https://api-endpoint.igdb.com/games/?${stringify({
-                    fields: [
-                        'name',
-                        'url',
-                        'summary',
-                        'rating',
-                        'developers',
-                        'genres',
-                        'release_dates',
-                        'platforms',
-                        'cover',
-                        'esrb',
-                        'pegi',
-                    ].join(),
+                    fields: ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'].join(),
                     limit: 1,
                     offset: 0,
                     search: game,
@@ -83,9 +64,7 @@ export default class IGDBCommand extends Command {
             const coverImg = (await gameInfo[0].cover.url.includes('http'))
                 ? gameInfo[0].cover.url
                 : `https:${gameInfo[0].cover.url}`;
-            const releaseDate = moment(
-                gameInfo[0].release_dates[0].date
-            ).format('MMMM Do YYYY');
+            const releaseDate = moment(gameInfo[0].release_dates[0].date).format('MMMM Do YYYY');
 
             const companyFetch = await fetch(
                 `https://api-endpoint.igdb.com/companies/${gameInfo[0].developers.join()}?${stringify(
@@ -100,21 +79,13 @@ export default class IGDBCommand extends Command {
             const companyInfo = await companyFetch.json();
 
             const genreFetch = await fetch(
-                `https://api-endpoint.igdb.com/genres/${gameInfo[0].genres.join()}?${stringify(
-                    {
-                        fields: ['name'].join(),
-                    }
-                )}`,
+                `https://api-endpoint.igdb.com/genres/${gameInfo[0].genres.join()}?${stringify({ fields: ['name'].join() })}`,
                 headers
             );
             const genreInfo = await genreFetch.json();
 
             const platformFetch = await fetch(
-                `https://api-endpoint.igdb.com/platforms/${gameInfo[0].platforms.join()}?${stringify(
-                    {
-                        fields: ['name'].join(),
-                    }
-                )}`,
+                `https://api-endpoint.igdb.com/platforms/${gameInfo[0].platforms.join()}?${stringify({ fields: ['name'].join() })}`,
                 headers
             );
             const platformInfo = await platformFetch.json();
@@ -124,11 +95,7 @@ export default class IGDBCommand extends Command {
                 .setTitle(gameInfo[0].name)
                 .setURL(gameInfo[0].url)
                 .setThumbnail(coverImg)
-                .addField(
-                    'User Score',
-                    roundNumber(gameInfo[0].rating, 1),
-                    true
-                )
+                .addField('User Score', roundNumber(gameInfo[0].rating, 1), true)
                 .addField(
                     `${gameInfo[0].pegi ? 'PEGI' : 'ESRB'} rating`,
                     gameInfo[0].pegi
@@ -154,7 +121,7 @@ export default class IGDBCommand extends Command {
         }
     }
 
-    private extractNames(arr: Array<any>) {
+    private extractNames (arr: any[]) {
         let res = '';
 
         for (let i = 0; i < arr.length; ++i) {

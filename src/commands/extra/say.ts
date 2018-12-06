@@ -10,20 +10,10 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import {
-    badwords,
-    caps,
-    duptext,
-    emojis,
-    invites,
-    links,
-    mentions,
-    startTyping,
-    stopTyping,
-} from '../../components';
+import { badwords, caps, duptext, emojis, invites, links, mentions, startTyping, stopTyping } from '../../components';
 
 export default class SayCommand extends Command {
-    constructor(client: CommandoClient) {
+    constructor (client: CommandoClient) {
         super(client, {
             name: 'say',
             aliases: ['sayd', 'repeat'],
@@ -58,12 +48,12 @@ export default class SayCommand extends Command {
 
                         return true;
                     },
-                },
+                }
             ],
         });
     }
 
-    public run(msg: CommandoMessage, { txt }: { txt: string }) {
+    public run (msg: CommandoMessage, { txt }: { txt: string }) {
         if (
             msg.guild &&
             msg.deletable &&
@@ -75,7 +65,7 @@ export default class SayCommand extends Command {
                     return msg.reply(
                         `you cannot use \`${
                             msg.guild.commandPrefix
-                        }say\` to bypass the no excessive capitals filter`
+                            }say\` to bypass the no excessive capitals filter`
                     );
                 }
             }
@@ -93,7 +83,7 @@ export default class SayCommand extends Command {
                     return msg.reply(
                         `you cannot use \`${
                             msg.guild.commandPrefix
-                        }say\` to bypass the no duplicate text filter`
+                            }say\` to bypass the no duplicate text filter`
                     );
                 }
             }
@@ -103,7 +93,7 @@ export default class SayCommand extends Command {
                     return msg.reply(
                         `you cannot use \`${
                             msg.guild.commandPrefix
-                        }say\` to bypass the no excessive emojis filter`
+                            }say\` to bypass the no excessive emojis filter`
                     );
                 }
             }
@@ -119,7 +109,7 @@ export default class SayCommand extends Command {
                 return msg.reply(
                     `you cannot use \`${
                         msg.guild.commandPrefix
-                    }say\` to bypass the no bad words filter`
+                        }say\` to bypass the no bad words filter`
                 );
             }
             if (
@@ -129,7 +119,7 @@ export default class SayCommand extends Command {
                 return msg.reply(
                     `you cannot use \`${
                         msg.guild.commandPrefix
-                    }say\` to bypass the no server invites filter`
+                        }say\` to bypass the no server invites filter`
                 );
             }
             if (
@@ -139,7 +129,7 @@ export default class SayCommand extends Command {
                 return msg.reply(
                     `you cannot use \`${
                         msg.guild.commandPrefix
-                    }say\` to bypass the no external links filter`
+                        }say\` to bypass the no external links filter`
                 );
             }
             if (
@@ -153,7 +143,7 @@ export default class SayCommand extends Command {
                 return msg.reply(
                     `you cannot use \`${
                         msg.guild.commandPrefix
-                    }say\` to bypass the no excessive mentions filter`
+                        }say\` to bypass the no excessive mentions filter`
                 );
             }
             /* tslint:enable:max-line-length */
