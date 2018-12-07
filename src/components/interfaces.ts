@@ -131,3 +131,8 @@ export interface IUrbanDefinition {
     word: string;
     written_on: string;
 }
+
+export interface IOverwatchHeroMapped {
+    hero: string;
+    time: number;
+}

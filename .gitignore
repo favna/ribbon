@@ -34,4 +34,3 @@ dist/
 
 # My own stuff
 src/commands/owner/test.ts
-src/commands/leaderboards/overwatch.ts

@@ -20,7 +20,6 @@ src/data/databases/*
 
 # My own stuff
 src/commands/owner/test.ts
-src/commands/leaderboards/overwatch.ts
 
 # Stuff that doesn't need to be on NPM
 .github/
@@ -28,3 +27,5 @@ src/commands/leaderboards/overwatch.ts
 docs/
 test/
 yarn.lock
+ecosystem.config.js
+.gitignore
