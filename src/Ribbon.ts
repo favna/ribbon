@@ -1,7 +1,7 @@
 import * as Database from 'better-sqlite3';
 import { GuildMember, RateLimitData } from 'discord.js';
 import {
-    Client, CommandoClient, CommandoGuild,
+    Client, Command, CommandoClient, CommandoGuild,
     CommandoMessage, SyncSQLiteProvider,
 } from 'discord.js-commando';
 import * as path from 'path';
@@ -34,9 +34,9 @@ export default class Ribbon {
 
     public init () {
         this.client
-            .on('commandError', (cmd, err, msg) => handleCmdErr(this.client, cmd, err, msg))
+            .on('commandError', (cmd: Command, err: Error, msg: CommandoMessage) => handleCmdErr(this.client, cmd, err, msg))
             .on('debug', (info: string) => handleDebug(info))
-            .on('error', (err: string) => handleErr(this.client, err))
+            .on('error', (err: Error) => handleErr(this.client, err))
             .on('guildCreate', (guild: CommandoGuild) => handleGuildJoin(this.client, guild))
             .on('guildDelete', (guild: CommandoGuild) => handleGuildLeave(this.client, guild))
             .on('guildMemberAdd', (member: GuildMember) => handleMemberJoin(this.client, member))

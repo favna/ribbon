@@ -381,7 +381,7 @@ export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, m
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}
+        **Error Message:** ${err.message}
     `);
 };
 
@@ -390,13 +390,13 @@ export const handleDebug = (info: string) => {
     console.log(info);
 };
 
-export const handleErr = (client: CommandoClient, err: string) => {
+export const handleErr = (client: CommandoClient, err: Error) => {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
     channel.send(stripIndents`
         Caught **WebSocket Error**!
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}
+        **Error Message:** ${err.message}
     `);
 };
 
@@ -853,6 +853,7 @@ export const handleReady = (client: CommandoClient) => {
 
 export const handleRejection = (client: CommandoClient, reason: Error | any, p: Promise<any>) => {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+    if (reason instanceof Error) reason = reason.message;
 
     channel.send(stripIndents`
         Caught **Unhandled Rejection **!
