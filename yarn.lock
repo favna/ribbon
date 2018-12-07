@@ -935,7 +935,7 @@ dijkstrajs@^1.0.1:
 
 discord.js-commando@favna/commando#ribbon:
   version "1.3.4-ribbon"
-  resolved "https://codeload.github.com/favna/commando/tar.gz/962f2247a0a25ca1291fe3ae5e70deb72524d664"
+  resolved "https://codeload.github.com/favna/commando/tar.gz/f14f55e292cc15e3b1333a73091981ac7a5ed34c"
   dependencies:
     common-tags "^1.8.0"
     escape-string-regexp "^1.0.0"
