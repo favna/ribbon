@@ -16,7 +16,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
 import { SlotMachine, SlotSymbol } from 'slot-machine';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class SlotsCommand extends Command {
     constructor (client: CommandoClient) {
@@ -38,16 +38,8 @@ export default class SlotsCommand extends Command {
                     key: 'chips',
                     prompt: 'How many chips do you want to gamble?',
                     type: 'integer',
-                    validate: (chips: string) =>
-                        Number(chips) === 1 ||
-                        Number(chips) === 2 ||
-                        Number(chips) === 3
-                            ? true
-                            : stripIndents`Reply with a chips amount
-                           Has to be either 1, 2 or 3
-                           1 to just win on the middle horizontal line
-                           2 to win on all horizontal lines
-                           3 to win on all horizontal lines **and** the two diagonal lines`,
+                    oneOf: [1, 2, 3],
+                    parse: (p: number) => roundNumber(Number(p))
                 }
             ],
         });

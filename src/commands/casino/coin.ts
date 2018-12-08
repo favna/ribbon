@@ -41,10 +41,15 @@ export default class CoinCommand extends Command {
                     key: 'chips',
                     prompt: 'How many chips do you want to gamble?',
                     type: 'integer',
-                    validate: (chips: string) =>
-                        Number(chips) >= 1 && Number(chips) <= 10000
-                            ? true
-                            : 'Reply with a chips amount between 1 and 10000. Example: `10`',
+                    validate: (input: string, msg: CommandoMessage) => {
+                      const lowerLimit = msg.guild.settings.get('casinoLowerLimit', 1);
+                      const upperLimit = msg.guild.settings.get('casinoUpperLimit', 10000);
+                      const chips = Number(input);
+
+                      return chips >= lowerLimit && chips <= upperLimit
+                          ? true
+                          : `Reply with a chips amount between ${lowerLimit} and ${upperLimit}. Example: \`${roundNumber((lowerLimit + upperLimit) / 2)}\``
+                    },
                     parse: (chips: string) => roundNumber(Number(chips)),
                 },
                 {
