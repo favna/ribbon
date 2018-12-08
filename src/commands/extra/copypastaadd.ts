@@ -75,7 +75,7 @@ export default class CopyPastaAddCommand extends Command {
 
                 return msg.embed(pastaAddEmbed);
             }
-            conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($name, $content);`)
+            conn.prepare(`INSERT INTO "${msg.guild.id}" (name, content) VALUES ($name, $content);`)
                 .run({ content, name });
             pastaAddEmbed.setTitle(`Copypasta \`${name}\` Added`);
 
@@ -85,10 +85,10 @@ export default class CopyPastaAddCommand extends Command {
         } catch (err) {
             stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (name TEXT PRIMARY KEY, content TEXT);`)
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT , content TEXT);`)
                     .run();
 
-                conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($name, $content);`)
+                conn.prepare(`INSERT INTO "${msg.guild.id}" (name, content) VALUES ($name, $content);`)
                     .run({ content, name });
                 pastaAddEmbed.setTitle(`Copypasta \`${name}\` Added`);
 

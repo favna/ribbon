@@ -1,4 +1,4 @@
-import { GuildChannel, VoiceChannel, VoiceConnection } from 'discord.js';
+import { GuildChannel, Snowflake, VoiceChannel, VoiceConnection } from 'discord.js';
 import { Command } from 'discord.js-commando';
 import { Song } from './util';
 
@@ -135,4 +135,18 @@ export interface IUrbanDefinition {
 export interface IOverwatchHeroMapped {
     hero: string;
     time: number;
+}
+
+export interface ICopyPastaListObject {
+    id: number;
+    name: string;
+}
+
+export interface ITimerListRow {
+    id: number;
+    interval: number;
+    channel: Snowflake;
+    content: string;
+    lastsend: string;
+    members: string;
 }

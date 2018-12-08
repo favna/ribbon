@@ -13,7 +13,7 @@ import { Snowflake, TextChannel, Util } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { deleteCommandMessages, ms, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, ITimerListRow, ms, startTyping, stopTyping } from '../../components';
 
 export default class TimerListCommand extends Command {
     constructor (client: CommandoClient) {
@@ -38,38 +38,32 @@ export default class TimerListCommand extends Command {
 
         try {
             startTyping(msg);
-            const rows = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
+            const list = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
             let body = '';
 
-            for (const row in rows) {
+            list.forEach((row: ITimerListRow) =>
                 body += `${stripIndents`
-                    **id:** ${rows[row].id}
-                    **interval:** ${ms(rows[row].interval, { long: true })}
-                    **channel:** <#${rows[row].channel}>
-                    **content:** ${rows[row].content}
-                    **last sent at:** ${moment(rows[row].lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}`}
-                    **members tagged on send:** ${rows[row].members
-                    .split(';')
-                    .map((member: Snowflake) => `<@${member}>`)
-                    .join(' ')}\n\n
-                `;
-            }
+                    **id:** ${row.id}
+                    **interval:** ${ms(row.interval, { long: true })}
+                    **channel:** <#${row.channel}>
+                    **content:** ${row.content}
+                    **last sent at:** ${moment(row.lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}
+                    ${row.members ? `**members tagged on send:** ${row.members.split(';').map((member: Snowflake) => `<@${member}>`).join(' ')}` : ''}`}
+                \n`,
+            );
 
             deleteCommandMessages(msg, this.client);
 
             if (body.length >= 1800) {
-                const splitContent: any = Util.splitMessage(body, {
-                    maxLength: 1800,
-                });
+                const splitContent: string[] = Util.splitMessage(body, { maxLength: 1800, }) as string[];
 
-                for (const part in splitContent) {
-                    await msg.embed({
-                        color: msg.guild.me.displayColor,
-                        description: splitContent[part],
-                    });
-                }
+                splitContent.forEach((part) => msg.embed({
+                    color: msg.guild.me.displayColor,
+                    description: part,
+                    title: 'Timed messages stored on this server',
+                }));
+
                 stopTyping(msg);
-
                 return null;
             }
 

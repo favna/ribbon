@@ -13,7 +13,7 @@ import { TextChannel, Util } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, ICopyPastaListObject, startTyping, stopTyping } from '../../components';
 
 export default class CopyPastaListCommand extends Command {
     constructor (client: CommandoClient) {
@@ -37,34 +37,30 @@ export default class CopyPastaListCommand extends Command {
         try {
             startTyping(msg);
 
-            const list = conn
-                .prepare(`SELECT name FROM "${msg.guild.id}";`)
-                .all()
-                .map(p => p.name);
+            const list = conn.prepare(`SELECT id, name FROM "${msg.guild.id}";`).all();
+            if (!list.length) throw new Error('no_pastas');
 
-            if (list && list.length) {
-                for (const entry in list) {
-                    list[entry] = `- \`${list[entry]}\``;
-                }
-            }
+            let body = '';
+
+            list.forEach((row: ICopyPastaListObject) =>
+                body += `${stripIndents`
+                    **id:** ${row.id}
+                    **name:** ${row.name}`}
+                \n`
+            );
 
             deleteCommandMessages(msg, this.client);
 
-            if (list.join('\n').length >= 1800) {
-                const splitTotal = Util.splitMessage(
-                    stripIndents`${list.join('\n')}`,
-                    { maxLength: 1800 }
-                );
+            if (body.length >= 1800) {
+                const splitContent: string[] = Util.splitMessage(body, { maxLength: 1800 }) as string[];
 
-                for (const part of splitTotal) {
-                    await msg.embed({
-                        color: msg.guild.me.displayColor,
-                        description: part,
-                        title: 'Copypastas available on this server',
-                    });
-                }
+                splitContent.forEach(part => msg.embed({
+                    color: msg.guild.me.displayColor,
+                    description: part,
+                    title: 'Copypastas available on this server',
+                }));
+
                 stopTyping(msg);
-
                 return null;
             }
 
@@ -72,13 +68,13 @@ export default class CopyPastaListCommand extends Command {
 
             return msg.embed({
                 color: msg.guild.me.displayColor,
-                description: list.join('\n'),
+                description: body,
                 title: 'Copypastas available on this server',
             });
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
+            if (/(?:no such table|no_pastas)/i.test(err.toString())) {
                 return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);
             }
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
@@ -91,7 +87,7 @@ export default class CopyPastaListCommand extends Command {
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(`no copypastas found for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd\`!`
+            return msg.reply(`no copypastas found for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd\`!`,
             );
         }
     }

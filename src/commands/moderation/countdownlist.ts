@@ -50,21 +50,21 @@ export default class CountDownList extends Command {
                     **Tag on event:** ${rows[row].tag === 'none' ? 'No one' : `@${rows[row].tag}`}
                     **Channel:** <#${rows[row].channel}> (\`${rows[row].channel}\`)
                     **Content:** ${rows[row].content}
-                    **Last sent at:** ${moment(rows[row].lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}`}\n\n
+                    **Last sent at:** ${moment(rows[row].lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}`}
+                    \n\n
                 `;
             }
 
             deleteCommandMessages(msg, this.client);
 
             if (body.length >= 1800) {
-                const splitContent: any = Util.splitMessage(body, { maxLength: 1800 });
+                const splitContent: string[] = Util.splitMessage(body, { maxLength: 1800 }) as string[];
 
-                for (const part in splitContent) {
-                    await msg.embed({
-                        color: msg.guild.me.displayColor,
-                        description: splitContent[part],
-                    });
-                }
+                splitContent.forEach(part => msg.embed({
+                    color: msg.guild.me.displayColor,
+                    description: part,
+                    title: 'Countdowns stored on this server',
+                }));
                 stopTyping(msg);
                 return null;
             }

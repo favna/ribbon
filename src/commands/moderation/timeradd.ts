@@ -123,12 +123,8 @@ export default class TimerAddCommand extends Command {
                     content,
                     interval,
                     channel: timerChannel.id,
-                    lastsend: moment()
-                        .subtract(interval, 'ms')
-                        .format('YYYY-MM-DD HH:mm'),
-                    members: members.length
-                        ? members.map(member => member.id).join(';')
-                        : '',
+                    lastsend: moment().subtract(interval, 'ms').format('YYYY-MM-DD HH:mm'),
+                    members: members.length ? members.map(member => member.id).join(';') : '',
                 });
             stopTyping(msg);
         } catch (err) {
