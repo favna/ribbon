@@ -6,7 +6,7 @@
  * @category searches
  * @name itunes
  * @example itunes dash berlin symphony
- * @param {StringResolvable} TrackQuery The music track to look up
+ * @param {string} TrackQuery The music track to look up
  */
 
 import { oneLine, stripIndents } from 'common-tags';

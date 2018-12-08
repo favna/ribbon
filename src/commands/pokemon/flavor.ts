@@ -11,7 +11,7 @@
  * @category pokemon
  * @name flavor
  * @example flavor dragonite
- * @param {StringResolvable} PokemonName The name of the pokemon you want to get flavor text for
+ * @param {string} PokemonName The name of the pokemon you want to get flavor text for
  */
 
 import { oneLine, stripIndents } from 'common-tags';

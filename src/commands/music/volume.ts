@@ -9,7 +9,7 @@
  * @category music
  * @name volume
  * @example volume 2
- * @param {Number} [Volume] The new volume to set
+ * @param {number} [Volume] The new volume to set
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

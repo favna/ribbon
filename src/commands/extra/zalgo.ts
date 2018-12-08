@@ -8,7 +8,7 @@
  * @category extra
  * @name zalgo
  * @example zalgo HE COMES
- * @param {StringResolvable} SomeText Your input to transform with Zalgo
+ * @param {string} SomeText Your input to transform with Zalgo
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

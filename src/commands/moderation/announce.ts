@@ -6,7 +6,7 @@
  * @category moderation
  * @name announce
  * @example announce Pokemon Switch has released!
- * @param {StringResolvable} Announcement The announcement you want to make
+ * @param {string} Announcement The announcement you want to make
  */
 
 import { oneLine, stripIndents } from 'common-tags';

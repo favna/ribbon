@@ -9,7 +9,7 @@
  * @category extra
  * @name time
  * @example time Amsterdam
- * @param {StringResolvable} Location Place where you want to get the current time for
+ * @param {string} Location Place where you want to get the current time for
  */
 
 import { stripIndents } from 'common-tags';

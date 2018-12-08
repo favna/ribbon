@@ -6,7 +6,7 @@
  * @category leaderboards
  * @name showdown
  * @example showdown ou
- * @param {StringResolvable} TierName Name of the tier to view the leaderboard for
+ * @param {string} TierName Name of the tier to view the leaderboard for
  */
 
 import { stripIndents } from 'common-tags';

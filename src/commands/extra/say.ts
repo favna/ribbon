@@ -6,7 +6,7 @@
  * @category extra
  * @name say
  * @example say Favna is a great coder!
- * @param {StringResolvable} Text Message you want to have repeated
+ * @param {string} Text Message you want to have repeated
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

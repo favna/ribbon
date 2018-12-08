@@ -6,7 +6,7 @@
  * @category moderation
  * @name purge
  * @example purge 10
- * @param {Number} MessageAmount The amount of messages to delete, between 1 and 99
+ * @param {number} MessageAmount The amount of messages to delete, between 1 and 99
  */
 
 import { Message } from 'discord.js';

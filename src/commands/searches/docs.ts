@@ -6,7 +6,8 @@
  * @category searches
  * @name docs
  * @example docs ClientUser
- * @param {StringResolvable} DocEntry The entry from the docs you want to get info about
+ * @param {string} DocEntry The entry from the docs you want to get info about
+ * @param {string} [version] The Doc version to pick, one of `stable`, `master` or `commando`
  */
 
 import { oneLine, stripIndents } from 'common-tags';
@@ -45,7 +46,7 @@ export default class DocsCommand extends Command {
                     prompt: 'which version of docs would you like (stable, master, commando)?',
                     type: 'string',
                     default: 'stable',
-                    validate: (value: string) => ['master', 'stable', 'commando'].includes(value),
+                    oneOf: ['stable', 'master', 'commando'],
                     parse: (value: string) => value.toLowerCase(),
                 }
             ],

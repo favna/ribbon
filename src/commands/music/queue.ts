@@ -8,7 +8,7 @@
  * @category music
  * @name queue
  * @example queue 2
- * @param {StringResolvable} [Page] Page to show
+ * @param {string} [Page] Page to show
  */
 
 import { oneLine, stripIndents } from 'common-tags';

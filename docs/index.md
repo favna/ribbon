@@ -154,6 +154,11 @@ Server admins can disable this command entirely by using the <code>rmt off</code
 <dd><p>Extra CopyPastaListCommand - Gets all copypastas available to the server</p>
 <p><strong>Aliases</strong>: <code>cplist</code>, <code>copylist</code>, <code>pastalist</code></p>
 </dd>
+<dt><a href="#module_copypastaremove">copypastaremove</a></dt>
+<dd><p>Extra CopyPastaRemoveCommand - Remove a specified copypasta</p>
+<p>Use the copypastalist command to find the ID for deleting</p>
+<p><strong>Aliases</strong>: <code>cpremove</code>, <code>copypastadelete</code>, <code>cpdelete</code>, <code>cpd</code>, <code>cpr</code>, <code>pastadelete</code>, <code>pasteremove</code></p>
+</dd>
 <dt><a href="#module_math">math</a></dt>
 <dd><p>Extra MathCommand - Take the effort out of calculations and let Ribbon do it for you</p>
 <p><strong>Aliases</strong>: <code>maths</code>, <code>calc</code></p>
@@ -296,6 +301,10 @@ Server admins can disable this command entirely by using the <code>rmt off</code
 <dd><p>Leaderboards OsuCommand - Shows Player Stats for a given OSU player</p>
 <p><strong>Aliases</strong>: <code>osustats</code></p>
 </dd>
+<dt><a href="#module_overwatch">overwatch</a></dt>
+<dd><p>Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleTag</p>
+<p><strong>Aliases</strong>: <code>owstats</code></p>
+</dd>
 <dt><a href="#module_pubg">pubg</a></dt>
 <dd><p>Leaderboards PubgCommand - Get statistics from a PUBG account</p>
 </dd>
@@ -318,6 +327,10 @@ Server admins can disable this command entirely by using the <code>rmt off</code
 <dt><a href="#module_ban">ban</a></dt>
 <dd><p>Moderation BanCommand - Ban a bad member</p>
 <p><strong>Aliases</strong>: <code>b</code>, <code>banana</code></p>
+</dd>
+<dt><a href="#module_casinolimit">casinolimit</a></dt>
+<dd><p>Moderation CasinoLimitCommand - Configure what the upper limit for any casino command should be</p>
+<p><strong>Aliases</strong>: <code>cl</code></p>
 </dd>
 <dt><a href="#module_confmute">confmute</a></dt>
 <dd><p>Moderation ConfigureMuteCommand - Configure which role to use as &quot;mute&quot; role</p>
@@ -785,7 +798,8 @@ Please note that when adding new words to your server's filter you overwrite all
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
+| [words] | <code>string</code> | Optional: comma separated list of words to filter |
 
 **Example**  
 ```js
@@ -808,7 +822,10 @@ You can specify the minutes within messages should be checked (defaults to 3), t
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
+| [within] | <code>number</code> | Amount of minutes between which text is checked |
+| [equals] | <code>number</code> | Amount of similar messages before purging |
+| [distance] | <code>number</code> | Levenshtein distance for similarity |
 
 **Example**  
 ```js
@@ -825,7 +842,9 @@ Automod ExcessiveCapsCommand - Toggle the excessive caps filter
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
+| [threshold] | <code>string</code> | How much percent of a message should be caps to delete |
+| [minlength] | <code>number</code> | Minimum length of message before it is checked |
 
 **Example**  
 ```js
@@ -842,7 +861,9 @@ Automod ExcessiveEmojisCommand - Toggle the excessive emojis filter
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
+| [threshold] | <code>string</code> | How much percent of a message should be emojis to delete |
+| [minlength] | <code>number</code> | Minimum length of message before it is checked |
 
 **Example**  
 ```js
@@ -859,7 +880,8 @@ Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
+| [threshold] | <code>string</code> | How many mentions allowed in 1 message |
 
 **Example**  
 ```js
@@ -880,7 +902,7 @@ Automod ExternalLinksCommand - Toggle the external links filter
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
 
 **Example**  
 ```js
@@ -897,7 +919,7 @@ Automod InvitesFilterCommand - Toggle the Discord server invites filter
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
 
 **Example**  
 ```js
@@ -914,7 +936,8 @@ Automod SlowmodeCommand - Toggle slowmode on this server
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
+| [Within] | <code>number</code> | Optional: Boundaries for slowmode |
 
 **Example**  
 ```js
@@ -944,8 +967,8 @@ Payout is 1:2
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AmountOfChips | <code>Number</code> | Amount of chips you want to gamble |
-| CoinSide | <code>StringResolvable</code> | The side of the coin you want to bet on |
+| AmountOfChips | <code>number</code> | Amount of chips you want to gamble |
+| CoinSide | <code>string</code> | The side of the coin you want to bet on |
 
 **Example**  
 ```js
@@ -971,7 +994,7 @@ Casino GiveCommand - Give another player some chips
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>GuildMemberResolvable</code> | The member you want to give some chips |
-| ChipsAmount | <code>Number</code> | The amount of chips you want to give |
+| ChipsAmount | <code>number</code> | The amount of chips you want to give |
 
 **Example**  
 ```js
@@ -1013,7 +1036,7 @@ Casino SlotsCommand - Gamble your chips at the slot machine
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ChipsAmount | <code>Number</code> | The amount of chips you want to gamble |
+| ChipsAmount | <code>number</code> | The amount of chips you want to gamble |
 
 **Example**  
 ```js
@@ -1038,7 +1061,7 @@ Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ChipsAmount | <code>Number</code> | The amount of chips you want to gamble |
+| ChipsAmount | <code>number</code> | The amount of chips you want to gamble |
 
 **Example**  
 ```js
@@ -1077,7 +1100,7 @@ Note: It is possible to get copypastas with more than 2000 characters. Ask me to
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PastaName | <code>StringResolvable</code> | Name of the copypasta to send |
+| PastaName | <code>string</code> | Name of the copypasta to send |
 
 **Example**  
 ```js
@@ -1094,8 +1117,8 @@ Extra CopyPastaAddCommand - Adds a new copypasta for your server
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PasteName | <code>StringResolvable</code> | Name for the new pasta |
-| PastaContent | <code>StringResolvable</code> | Content for the new pasta |
+| PasteName | <code>string</code> | Name for the new pasta |
+| PastaContent | <code>string</code> | Content for the new pasta |
 
 **Example**  
 ```js
@@ -1109,6 +1132,25 @@ Extra CopyPastaListCommand - Gets all copypastas available to the server
 **Aliases**: `cplist`, `copylist`, `pastalist`
 
 **Category**: extra  
+<a name="module_copypastaremove"></a>
+
+## copypastaremove
+Extra CopyPastaRemoveCommand - Remove a specified copypasta
+
+Use the copypastalist command to find the ID for deleting
+
+**Aliases**: `cpremove`, `copypastadelete`, `cpdelete`, `cpd`, `cpr`, `pastadelete`, `pasteremove`
+
+**Category**: extra  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| CopyPastaID | <code>string</code> | The ID of the Copypasta to remove |
+
+**Example**  
+```js
+copypastaremove 1
+```
 <a name="module_math"></a>
 
 ## math
@@ -1120,7 +1162,7 @@ Extra MathCommand - Take the effort out of calculations and let Ribbon do it for
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Equation | <code>StringResolvable</code> | The equation to solve |
+| Equation | <code>string</code> | The equation to solve |
 
 **Example**  
 ```js
@@ -1141,9 +1183,9 @@ For a full list of supported currencies see [this url](https://docs.openexchange
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MoneyAmount | <code>Number</code> | Amount of money to convert |
-| OriginCurrency | <code>StringResolvable</code> | Currency to convert from |
-| TargetCurrency | <code>StringResolvable</code> | Currency to convert to |
+| MoneyAmount | <code>number</code> | Amount of money to convert |
+| OriginCurrency | <code>string</code> | Currency to convert from |
+| TargetCurrency | <code>string</code> | Currency to convert to |
 
 **Example**  
 ```js
@@ -1160,7 +1202,7 @@ Extra QRGenCommand - Generates a QR code from text (like a URL)
 
 | Param | Type | Description |
 | --- | --- | --- |
-| URL | <code>StringResolvable</code> | URL you want to encode into a QR image |
+| URL | <code>string</code> | URL you want to encode into a QR image |
 
 **Example**  
 ```js
@@ -1179,7 +1221,7 @@ Providing a colour hex will display that colour, providing none will generate a 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [hex] | <code>StringResolvable</code> | Optional: colour hex to display |
+| [hex] | <code>string</code> | Optional: colour hex to display |
 
 **Example**  
 ```js
@@ -1202,8 +1244,8 @@ Works by reminding you after a given amount of minutes, hours or days in the for
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Time | <code>StringResolvable</code> | Amount of time you want to be reminded in |
-| Reminder | <code>StringResolvable</code> | Thing you want Ribbon to remind you of |
+| Time | <code>string</code> | Amount of time you want to be reminded in |
+| Reminder | <code>string</code> | Thing you want Ribbon to remind you of |
 
 **Example**  
 ```js
@@ -1220,7 +1262,7 @@ Extra Say - Repeats a message and deletes your message
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Text | <code>StringResolvable</code> | Message you want to have repeated |
+| Text | <code>string</code> | Message you want to have repeated |
 
 **Example**  
 ```js
@@ -1248,7 +1290,7 @@ Uses Google's Geocoding to determine the correct location therefore supports any
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Location | <code>StringResolvable</code> | Place where you want to get the current time for |
+| Location | <code>string</code> | Place where you want to get the current time for |
 
 **Example**  
 ```js
@@ -1267,9 +1309,9 @@ Language specifications can be either 1 or 2 letter ISO 639 or full names
 
 | Param | Type | Description |
 | --- | --- | --- |
-| FromLanguage | <code>StringResolvable</code> | The language to translate from |
-| ToLanguage | <code>StringResolvable</code> | The language to translate to |
-| Text | <code>StringResolvable</code> | The word or text to translate |
+| FromLanguage | <code>string</code> | The language to translate from |
+| ToLanguage | <code>string</code> | The language to translate to |
+| Text | <code>string</code> | The word or text to translate |
 
 **Example**  
 ```js
@@ -1292,7 +1334,7 @@ Uses Google's Geocoding to determine the correct location therefore supports any
 
 | Param | Type | Description |
 | --- | --- | --- |
-| CityName | <code>StringResolvable</code> | Name of the city to get the weather forecast for |
+| CityName | <code>string</code> | Name of the city to get the weather forecast for |
 
 **Example**  
 ```js
@@ -1319,7 +1361,7 @@ First banishes any existing zalgo to ensure proper result
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SomeText | <code>StringResolvable</code> | Your input to transform with Zalgo |
+| SomeText | <code>string</code> | Your input to transform with Zalgo |
 
 **Example**  
 ```js
@@ -1336,7 +1378,7 @@ Games EightBallCommand - Rolls a magic 8 ball using your input
 
 | Param | Type | Description |
 | --- | --- | --- |
-| question | <code>StringResolvable</code> | Question you want the 8 ball to answer |
+| question | <code>string</code> | Question you want the 8 ball to answer |
 
 **Example**  
 ```js
@@ -1353,8 +1395,8 @@ Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| DiceSides | <code>StringResolvable</code> | The amount of sides the dice should have |
-| AmountOfRolls | <code>StringResolvable</code> | The amount of dice to roll |
+| DiceSides | <code>string</code> | The amount of sides the dice should have |
+| AmountOfRolls | <code>string</code> | The amount of dice to roll |
 
 **Example**  
 ```js
@@ -1379,8 +1421,8 @@ Games FightCommand - Pit two things against each other in a fight to the death.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| FighterOne | <code>StringResolvable</code> | The first combatant |
-| FighterTwo | <code>StringResolvable</code> | The second combatant |
+| FighterOne | <code>string</code> | The first combatant |
+| FighterTwo | <code>string</code> | The second combatant |
 
 **Example**  
 ```js
@@ -1397,7 +1439,7 @@ Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org rand
 
 | Param | Type | Description |
 | --- | --- | --- |
-| HandToPlay | <code>StringResolvable</code> | The hand that you want to play |
+| HandToPlay | <code>string</code> | The hand that you want to play |
 
 **Example**  
 ```js
@@ -1416,8 +1458,8 @@ Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [ShipMemberOne] | <code>StringResolvable</code> | The first member to ship |
-| [ShipMemberTwo] | <code>StringResolvable</code> | The second member to ship |
+| [ShipMemberOne] | <code>string</code> | The first member to ship |
+| [ShipMemberTwo] | <code>string</code> | The second member to ship |
 
 **Example**  
 ```js
@@ -1436,8 +1478,8 @@ Has a very specific syntax! Be sure to adapt the example!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Question | <code>StringResolvable</code> | The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or     `' '`) to allow spaces |
-| Options | <code>StringResolvable</code> | The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to     allow spaces. Splits on every \`|\` |
+| Question | <code>string</code> | The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or     `' '`) to allow spaces |
+| Options | <code>string</code> | The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to     allow spaces. Splits on every \`|\` |
 
 **Example**  
 ```js
@@ -1493,7 +1535,7 @@ Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList
 
 | Param | Type | Description |
 | --- | --- | --- |
-| BotID | <code>StringResolvable</code> | the user ID of the bot you want to get info about |
+| [BotID] | <code>string</code> | the user ID of the bot you want to get info about |
 
 **Example**  
 ```js
@@ -1559,7 +1601,7 @@ Info RedditCommand - Gets statistics on a Reddit user
 
 | Param | Type | Description |
 | --- | --- | --- |
-| RedditUser | <code>StringResolvable</code> | The Reddit user you want to look up |
+| RedditUser | <code>string</code> | The Reddit user you want to look up |
 
 **Example**  
 ```js
@@ -1608,8 +1650,8 @@ Leaderboards FortniteCommand - Get Player Statistics from Fortnite
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Username | <code>StringResolvable</code> | The Epic Username of the player you want to find |
-| Platform | <code>StringResolvable</code> | The platform the player plays on (pc, xbox or psn) |
+| Username | <code>string</code> | The Epic Username of the player you want to find |
+| Platform | <code>string</code> | The platform the player plays on (pc, xbox or psn) |
 
 **Example**  
 ```js
@@ -1626,11 +1668,30 @@ Leaderboards OsuCommand - Shows Player Stats for a given OSU player
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PlayerName | <code>StringResolvable</code> | Name of the OSU player |
+| PlayerName | <code>string</code> | Name of the OSU player |
 
 **Example**  
 ```js
 osu WubWoofWolf
+```
+<a name="module_overwatch"></a>
+
+## overwatch
+Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleTag
+
+**Aliases**: `owstats`
+
+**Category**: leaderboards  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| BattleTag | <code>string</code> | BattleTag for that overwatch player |
+| [platform] | <code>string</code> | Optiona: The platform the player is on. One of pc, psn or xbl |
+| [region] | <code>string</code> | Optional: The region the player plays in. Of of us, eu, asia |
+
+**Example**  
+```js
+overwatch Camoflouge#1267
 ```
 <a name="module_pubg"></a>
 
@@ -1641,8 +1702,8 @@ Leaderboards PubgCommand - Get statistics from a PUBG account
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PubgUsername | <code>StringResolvable</code> | The username you want to find statistics for |
-| Shard | <code>StringResolvable</code> | A combination of platform and region to look through, for example `pc-na` for PC in     North America |
+| PubgUsername | <code>string</code> | The username you want to find statistics for |
+| Shard | <code>string</code> | A combination of platform and region to look through, for example `pc-na` for PC in     North America |
 
 **Example**  
 ```js
@@ -1659,7 +1720,7 @@ Leaderboards ShowdownCommand - Show the top ranking players in your tier of choi
 
 | Param | Type | Description |
 | --- | --- | --- |
-| TierName | <code>StringResolvable</code> | Name of the tier to view the leaderboard for |
+| TierName | <code>string</code> | Name of the tier to view the leaderboard for |
 
 **Example**  
 ```js
@@ -1694,7 +1755,7 @@ Moderation NewsCommand - Make an announcement to a channel named "announcements"
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Announcement | <code>StringResolvable</code> | The announcement you want to make |
+| Announcement | <code>string</code> | The announcement you want to make |
 
 **Example**  
 ```js
@@ -1711,7 +1772,7 @@ Moderation AutomodCommand - General toggle for all automod features
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
 | [Roles] | <code>RoleResolvable</code> | Roles that are exempted from automod |
 
 **Example**  
@@ -1730,11 +1791,33 @@ Moderation BanCommand - Ban a bad member
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>GuildMemberResolvable</code> | The member to ban from the server |
-| [TheReason] | <code>StringResolvable</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to     prevent Ribbon from deleting the banned member's messages |
+| [TheReason] | <code>string</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to     prevent Ribbon from deleting the banned member's messages |
 
 **Example**  
 ```js
 ban MultiMegaMander
+```
+<a name="module_casinolimit"></a>
+
+## casinolimit
+Moderation CasinoLimitCommand - Configure what the upper limit for any casino command should be
+
+**Aliases**: `cl`
+
+**Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| UpperLimit | <code>number</code> | The new upper limit to set |
+| [LowerLimit] | <code>number</code> | Optional: The new lower limit |
+
+**Example**  
+```js
+casinolimit 20000
+```
+**Example**  
+```js
+casinolimit 20000 1000
 ```
 <a name="module_confmute"></a>
 
@@ -1779,9 +1862,9 @@ The first time the message will be send is the next periodic check Ribbon will d
 
 | Param | Type | Description |
 | --- | --- | --- |
-| DateTime | <code>StringResolvable</code> | The date (and time) of the event |
+| DateTime | <code>string</code> | The date (and time) of the event |
 | Channel | <code>ChannelResolvable</code> | The channel to send countdown reminders in |
-| Message | <code>StringResolvable</code> | The message to repeat |
+| Message | <code>string</code> | The message to repeat |
 
 **Example**  
 ```js
@@ -1808,7 +1891,7 @@ Use the countdownlist command to find the ID for deleting
 
 | Param | Type | Description |
 | --- | --- | --- |
-| CountdownID | <code>StringResolvable</code> | The ID of the Countdown to remove |
+| CountdownID | <code>string</code> | The ID of the Countdown to remove |
 
 **Example**  
 ```js
@@ -1842,7 +1925,7 @@ Moderation DeleteCommandMessagesCommand - Configure whether Ribbon should delete
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
 
 **Example**  
 ```js
@@ -1860,7 +1943,7 @@ Moderation DeleteWarnCommand - Deletes all or some warnings points from a user
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>MemberResolvable</code> | The member to remove warning points from |
-| [AmountOfWarnPoints] | <code>Number</code> | The amount of warning points to remove |
+| [AmountOfWarnPoints] | <code>number</code> | The amount of warning points to remove |
 
 **Example**  
 ```js
@@ -1899,7 +1982,8 @@ Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greet
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
+| [Channel] | <code>TextChannel</code> | TextChannel the Join Message is sent to, required when enabling |
 
 **Example**  
 ```js
@@ -1917,7 +2001,7 @@ Moderation KickCommand - Kicks a somewhat bad member
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>GuildMemberResolvable</code> | The member to kick from the server |
-| TheReason | <code>StringResolvable</code> | Reason for this kick. |
+| [TheReason] | <code>string</code> | Reason for this kick. |
 
 **Example**  
 ```js
@@ -1934,7 +2018,8 @@ Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leav
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
+| [Channel] | <code>TextChannel</code> | TextChannel the Leave Message is sent to, required when enabling |
 
 **Example**  
 ```js
@@ -1973,6 +2058,11 @@ This may also mean that Ribbon won't have access if it doesn't have administrato
 **Aliases**: `lock`, `ld`
 
 **Category**: moderation  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [LockRole] | <code>RoleResolvable</code> | Optional: A role the lockdown is applied to, defaults to @everyone |
+
 <a name="module_memberlogs"></a>
 
 ## memberlogs
@@ -1984,7 +2074,8 @@ Moderation MemberLogsCommand - Toggle member logs in the configured channel
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
+| [Channel] | <code>TextChannel</code> | TextChannel the Member Logs are sent to, required when enabling |
 
 **Example**  
 ```js
@@ -2001,7 +2092,8 @@ Moderation ModLogsCommand - Toggle mod logs in the configured channel
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
+| [Channel] | <code>TextChannel</code> | TextChannel the Mod Logs are sent to, required when enabling |
 
 **Example**  
 ```js
@@ -2043,7 +2135,7 @@ Moderation NickCommand - Nickname a single member
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>GuildMemberResolvable</code> | Member to give a nickname |
-| NewNickname | <code>StringResolvable</code> | Nickname to assign |
+| NewNickname | <code>string</code> | Nickname to assign |
 
 **Example**  
 ```js
@@ -2060,7 +2152,7 @@ Moderation PurgeCommand - Quickly delete a certain amount of messages
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MessageAmount | <code>Number</code> | The amount of messages to delete, between 1 and 99 |
+| MessageAmount | <code>number</code> | The amount of messages to delete, between 1 and 99 |
 
 **Example**  
 ```js
@@ -2077,7 +2169,7 @@ Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
 
 **Example**  
 ```js
@@ -2099,7 +2191,7 @@ You can clear the setting by giving no roles then replying `finish`
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyRole | <code>RoleResolvable</code> | Role to set, can be multiple split by spaces |
+| [AnyRole] | <code>RoleResolvable</code> | Role to set, can be multiple split by spaces |
 
 **Example**  
 ```js
@@ -2142,7 +2234,7 @@ Some commands can potentially give NSFW results, however they do not show NSFW i
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | On or Off |
+| Option | <code>boolean</code> | On or Off |
 
 **Example**  
 ```js
@@ -2163,7 +2255,7 @@ This is essentially a kick with the added effect of deleting all their past mess
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>GuildMemberResolvable</code> | The member to softban from the server |
-| TheReason | <code>StringResolvable</code> | Reason for this softban. |
+| TheReason | <code>string</code> | Reason for this softban. |
 
 **Example**  
 ```js
@@ -2183,8 +2275,8 @@ Given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>GuildMemberResolvable</code> | The member to ban from the server |
-| Time | <code>StringResolvable</code> | The amount of time this member should be banned |
-| [TheReason] | <code>StringResolvable</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to     prevent Ribbon from deleting the banned member's messages |
+| Time | <code>string</code> | The amount of time this member should be banned |
+| [TheReason] | <code>string</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to     prevent Ribbon from deleting the banned member's messages |
 
 **Example**  
 ```js
@@ -2212,9 +2304,9 @@ The format for the interval is in minutes, hours or days in the format of `5m`, 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Interval | <code>StringResolvable</code> | The interval at which the message(s) should be repeated |
+| Interval | <code>string</code> | The interval at which the message(s) should be repeated |
 | Channel | <code>ChannelResolvable</code> | The channel to send the timed message in |
-| Message | <code>StringResolvable</code> | The message(s) to repeat |
+| Message | <code>string</code> | The message(s) to repeat |
 
 **Example**  
 ```js
@@ -2241,7 +2333,7 @@ Use the timerlist command to find the ID for deleting
 
 | Param | Type | Description |
 | --- | --- | --- |
-| TimerID | <code>StringResolvable</code> | The ID of the timed message to remove |
+| TimerID | <code>string</code> | The ID of the timed message to remove |
 
 **Example**  
 ```js
@@ -2258,7 +2350,7 @@ Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
 
 **Example**  
 ```js
@@ -2305,8 +2397,8 @@ Please note that Ribbon will not auto ban when the member has a certain amount o
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>GuildMemberResolvable</code> | The member to give warning points |
-| WarningPoints | <code>Number</code> | The amount of warning points to give |
-| TheReason | <code>StringResolvable</code> | Reason for warning |
+| WarningPoints | <code>number</code> | The amount of warning points to give |
+| TheReason | <code>string</code> | Reason for warning |
 
 **Example**  
 ```js
@@ -2323,7 +2415,7 @@ Music DefaultVolumeCommand - Sets the server's default volume
 
 | Param | Type | Description |
 | --- | --- | --- |
-| VolumeToSet | <code>number/&quot;show&quot;</code> | The volume to set or use "show" to show current default volume |
+| [VolumeToSet] | <code>number/&quot;show&quot;</code> | The volume to set or use "show" to show current default volume |
 
 **Example**  
 ```js
@@ -2343,7 +2435,7 @@ Give no argument to show current amount of maximum songs. Use "default" as argum
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [MaxVideoLength] | <code>number/&quot;default&quot;</code> | New maximum length in minutes |
+| [MaxVideoLength] | <code>number</code> \| <code>&quot;default&quot;</code> | New maximum length in minutes |
 
 **Example**  
 ```js
@@ -2363,7 +2455,7 @@ Give no argument to show current amount of maximum songs. Use "default" as argum
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [NumberOfSongs] | <code>number/&quot;default&quot;</code> | New maximum number of songs |
+| [NumberOfSongs] | <code>number</code> \| <code>&quot;default&quot;</code> | New maximum number of songs |
 
 **Example**  
 ```js
@@ -2398,7 +2490,7 @@ There are 4 ways to queue songs.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Video | <code>StringResolvable</code> | One of the options linking to a video to play |
+| Video | <code>string</code> | One of the options linking to a video to play |
 
 **Example**  
 ```js
@@ -2417,7 +2509,7 @@ Songs are paginated in sets of 5
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [Page] | <code>StringResolvable</code> | Page to show |
+| [Page] | <code>string</code> | Page to show |
 
 **Example**  
 ```js
@@ -2472,7 +2564,7 @@ A vote to skip is started if there are 4 or more people in the voice channel wit
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [force] | <code>StringResolvable</code> | Force the skip if you are the requester or a server moderator |
+| [force] | <code>string</code> | Force the skip if you are the requester or a server moderator |
 
 **Example**  
 ```js
@@ -2514,7 +2606,7 @@ You need to be in a voice channel before you can use this command
 
 | Param | Type | Description |
 | --- | --- | --- |
-| [Volume] | <code>Number</code> | The new volume to set |
+| [Volume] | <code>number</code> | The new volume to set |
 
 **Example**  
 ```js
@@ -2533,7 +2625,7 @@ Can only be used in NSFW marked channels!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>StringResolvable</code> | Something you want to find |
+| Query | <code>string</code> | Something you want to find |
 
 **Example**  
 ```js
@@ -2552,7 +2644,7 @@ Can only be used in NSFW marked channels!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>StringResolvable</code> | Something you want to find |
+| Query | <code>string</code> | Something you want to find |
 
 **Example**  
 ```js
@@ -2571,7 +2663,7 @@ Can only be used in NSFW marked channels!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>StringResolvable</code> | Something you want to find |
+| Query | <code>string</code> | Something you want to find |
 
 **Example**  
 ```js
@@ -2590,7 +2682,7 @@ Can only be used in NSFW marked channels!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>StringResolvable</code> | Something you want to find |
+| Query | <code>string</code> | Something you want to find |
 
 **Example**  
 ```js
@@ -2609,7 +2701,7 @@ Can only be used in NSFW marked channels!
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Query | <code>StringResolvable</code> | Something you want to find |
+| Query | <code>string</code> | Something you want to find |
 
 **Example**  
 ```js
@@ -2633,7 +2725,7 @@ Owner CustomTopUpCommand - Daniël Ocean doesn't give a crap about legality
 | Param | Type | Description |
 | --- | --- | --- |
 | AnyMember | <code>GuildMemberResolvable</code> | The member you want to give some chips |
-| ChipsAmount | <code>Number</code> | The amount of chips you want to give |
+| ChipsAmount | <code>number</code> | The amount of chips you want to give |
 
 **Example**  
 ```js
@@ -2685,7 +2777,7 @@ Different forms are supported. Generally you want to write it all as 1 word with
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PokemonName | <code>StringResolvable</code> | The name of the pokemon you want to find |
+| PokemonName | <code>string</code> | The name of the pokemon you want to find |
 
 **Example**  
 ```js
@@ -2707,7 +2799,7 @@ Different forms are supported. Generally you want to write it all as 1 word with
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PokemonName | <code>StringResolvable</code> | The name of the pokemon you want to get flavor text for |
+| PokemonName | <code>string</code> | The name of the pokemon you want to get flavor text for |
 
 **Example**  
 ```js
@@ -2726,7 +2818,7 @@ For item names existing of multiple words (for example `life orb`) you can eithe
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ItemName | <code>StringResolvable</code> | Name of the item to find |
+| ItemName | <code>string</code> | Name of the item to find |
 
 **Example**  
 ```js
@@ -2746,10 +2838,10 @@ You can specify a generation for the match by adding `--gen [1-7]` anywhere in t
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PokemonName | <code>StringResolvable</code> | Name of the pokemon to get the match for |
-| [MoveName] | <code>StringResolvable</code> | Name of the move you want to find out about |
-| [AnotherMoveName] | <code>StringResolvable</code> | Any additional moves you also want to find out about |
-| [Generation] | <code>StringResolvable</code> | The generation to find the match for |
+| PokemonName | <code>string</code> | Name of the pokemon to get the match for |
+| [MoveName] | <code>string</code> | Name of the move you want to find out about |
+| [AnotherMoveName] | <code>string</code> | Any additional moves you also want to find out about |
+| [Generation] | <code>string</code> | The generation to find the match for |
 
 **Example**  
 ```js
@@ -2774,7 +2866,7 @@ Pokémon AbilityCommand - Gets information on an ability in Pokémon
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AbilityName | <code>StringResolvable</code> | The name of the ability you  want to find |
+| AbilityName | <code>string</code> | The name of the ability you  want to find |
 
 **Example**  
 ```js
@@ -2793,7 +2885,7 @@ For move names existing of multiple words (for example `dragon dance`) you can e
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MoveName | <code>StringResolvable</code> | The move you want to find |
+| MoveName | <code>string</code> | The move you want to find |
 
 **Example**  
 ```js
@@ -2820,7 +2912,7 @@ By default only `name` is used as argument and the supertype is set to pokemon
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Properties | <code>StringResolvable</code> | Properties you want to use for your search |
+| [Properties] | <code>string</code> | Properties you want to use for your search |
 
 **Example**  
 ```js
@@ -2837,7 +2929,7 @@ Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Types | <code>StringResolvable</code> | One or two types to find the matchup for |
+| Types | <code>string</code> | One or two types to find the matchup for |
 
 **Example**  
 ```js
@@ -2854,7 +2946,7 @@ Searches AnimeCommand - Gets information about any anime from kitsu.io
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnimeName | <code>StringResolvable</code> | anime to look up |
+| AnimeName | <code>string</code> | anime to look up |
 
 **Example**  
 ```js
@@ -2875,7 +2967,7 @@ Can also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r
 
 | Param | Type | Description |
 | --- | --- | --- |
-| TweakName | <code>StringResolvable</code> | Name of the tweak to find |
+| TweakName | <code>string</code> | Name of the tweak to find |
 
 **Example**  
 ```js
@@ -2892,7 +2984,7 @@ Searches DefineCommand - Define a word using glosbe
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Word | <code>StringResolvable</code> | the word you want to define |
+| Word | <code>string</code> | the word you want to define |
 
 **Example**  
 ```js
@@ -2909,7 +3001,8 @@ Searches DocsCommand - Get an entry from the Discord.JS documentation
 
 | Param | Type | Description |
 | --- | --- | --- |
-| DocEntry | <code>StringResolvable</code> | The entry from the docs you want to get info about |
+| DocEntry | <code>string</code> | The entry from the docs you want to get info about |
+| [version] | <code>string</code> | The Doc version to pick, one of `stable`, `master` or `commando` |
 
 **Example**  
 ```js
@@ -2926,7 +3019,7 @@ Searches EShopCommand - Gets information about a game in the Nintendo Switch eSh
 
 | Param | Type | Description |
 | --- | --- | --- |
-| GameName | <code>StringResolvable</code> | Game that you want to find in the eShop |
+| GameName | <code>string</code> | Game that you want to find in the eShop |
 
 **Example**  
 ```js
@@ -2945,7 +3038,7 @@ Note: prioritizes Knowledge Graphs for better searching
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SearchQuery | <code>StringResolvable</code> | Thing to find on Google |
+| SearchQuery | <code>string</code> | Thing to find on Google |
 
 **Example**  
 ```js
@@ -2962,7 +3055,7 @@ Searches IGDBCommand - Gets information about a game using Internet Game Databas
 
 | Param | Type | Description |
 | --- | --- | --- |
-| GameName | <code>StringResolvable</code> | The name of any game that you want to find |
+| GameName | <code>string</code> | The name of any game that you want to find |
 
 **Example**  
 ```js
@@ -2979,7 +3072,7 @@ Searches ImageCommand - Gets an image through Google Images
 
 | Param | Type | Description |
 | --- | --- | --- |
-| ImageQuery | <code>StringResolvable</code> | Image to find on Google Images |
+| ImageQuery | <code>string</code> | Image to find on Google Images |
 
 **Example**  
 ```js
@@ -2996,7 +3089,7 @@ Searches iTunesCommand - Search iTunes for music tracks
 
 | Param | Type | Description |
 | --- | --- | --- |
-| TrackQuery | <code>StringResolvable</code> | The music track to look up |
+| TrackQuery | <code>string</code> | The music track to look up |
 
 **Example**  
 ```js
@@ -3013,7 +3106,7 @@ Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SearchQuery | <code>StringResolvable</code> | The dumb sh*t people need to use google for |
+| SearchQuery | <code>string</code> | The dumb sh*t people need to use google for |
 
 **Example**  
 ```js
@@ -3030,7 +3123,7 @@ Searches MangaCommand - Gets information about any manga from kitsu.io
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyManga | <code>StringResolvable</code> | manga to look up |
+| AnyManga | <code>string</code> | manga to look up |
 
 **Example**  
 ```js
@@ -3047,7 +3140,7 @@ Searches SteamCommand - Gets information about a game using Steam
 
 | Param | Type | Description |
 | --- | --- | --- |
-| GameName | <code>StringResolvable</code> | The name of any game that you want to find |
+| GameName | <code>string</code> | The name of any game that you want to find |
 
 **Example**  
 ```js
@@ -3064,7 +3157,7 @@ Searches MovieCommand - Find information about a movie using TheMovieDatabase
 
 | Param | Type | Description |
 | --- | --- | --- |
-| MovieName | <code>StringResolvable</code> | Name of the movie you want to find |
+| MovieName | <code>string</code> | Name of the movie you want to find |
 
 **Example**  
 ```js
@@ -3081,7 +3174,7 @@ Searches TVCommand - Find information about a TV series using TheMovieDatabase
 
 | Param | Type | Description |
 | --- | --- | --- |
-| SeriesName | <code>StringResolvable</code> | Name of the TV serie you want to find |
+| SeriesName | <code>string</code> | Name of the TV serie you want to find |
 
 **Example**  
 ```js
@@ -3098,7 +3191,7 @@ Searches UrbanCommand - Define a word using UrbanDictionary
 
 | Param | Type | Description |
 | --- | --- | --- |
-| PhraseQuery | <code>StringResolvable</code> | Phrase that you want to define |
+| PhraseQuery | <code>string</code> | Phrase that you want to define |
 
 **Example**  
 ```js
@@ -3117,7 +3210,7 @@ By default returns MessageEmbed. use `yts` to return just the URL and have in-cl
 
 | Param | Type | Description |
 | --- | --- | --- |
-| VideoQuery | <code>StringResolvable</code> | Video to find on YouTube |
+| VideoQuery | <code>string</code> | Video to find on YouTube |
 
 **Example**  
 ```js
@@ -3134,7 +3227,7 @@ Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor
 
 | Param | Type | Description |
 | --- | --- | --- |
-| AnyMembers | <code>StringResolvable</code> | List of members to monitor space delimited |
+| AnyMembers | <code>string</code> | List of members to monitor space delimited |
 
 **Example**  
 ```js
@@ -3168,7 +3261,7 @@ Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Option | <code>BooleanResolvable</code> | True or False |
+| Option | <code>boolean</code> | True or False |
 
 **Example**  
 ```js
@@ -3182,6 +3275,11 @@ Weeb CookieCommand - Steal someone's 🍪 gnanahahahaha
 **Aliases**: `.biscuit`, `biscuit`
 
 **Category**: weeb  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| [member] | <code>MemberResolvable</code> | Optional: Member to steal a cookie from |
+
 <a name="module_cuddle"></a>
 
 ## cuddle

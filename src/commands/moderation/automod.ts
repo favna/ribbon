@@ -6,7 +6,7 @@
  * @category moderation
  * @name automod
  * @example automod enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
  * @param {RoleResolvable} [Roles] Roles that are exempted from automod
  */
 
@@ -23,7 +23,7 @@ export default class AutomodCommand extends Command {
             group: 'moderation',
             memberName: 'automod',
             description: 'General toggle for all automod features',
-            format: 'BooleanResolvable [RoleResolvable(s)]',
+            format: 'boolean [RoleResolvable(s)]',
             examples: ['automod enable'],
             guildOnly: true,
             clientPermissions: ['MANAGE_MESSAGES'],

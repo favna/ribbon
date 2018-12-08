@@ -6,7 +6,7 @@
  * @category streamwatch
  * @name twitchtoggle
  * @example twitchtoggle enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
  */
 
 import { oneLine } from 'common-tags';
@@ -21,7 +21,7 @@ export default class TwitchToggleCommand extends Command {
             group: 'streamwatch',
             memberName: 'twitchtoggle',
             description: 'Configures whether Twitch Notifications are enabled',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             details: 'This is a killswitch for the entire module!',
             examples: ['twitchtoggle enable'],
             guildOnly: true,

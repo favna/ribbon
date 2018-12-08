@@ -6,7 +6,7 @@
  * @category extra
  * @name qrgen
  * @example qrgen https://favna.xyz/ribbon
- * @param {StringResolvable} URL URL you want to encode into a QR image
+ * @param {string} URL URL you want to encode into a QR image
  */
 
 import { oneLine, stripIndents } from 'common-tags';

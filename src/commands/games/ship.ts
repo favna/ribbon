@@ -8,8 +8,8 @@
  * @category games
  * @name ship
  * @example ship Biscuit Rei
- * @param {StringResolvable} [ShipMemberOne] The first member to ship
- * @param {StringResolvable} [ShipMemberTwo] The second member to ship
+ * @param {string} [ShipMemberOne] The first member to ship
+ * @param {string} [ShipMemberTwo] The second member to ship
  */
 
 import { oneLine } from 'common-tags';

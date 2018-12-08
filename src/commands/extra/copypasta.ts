@@ -8,7 +8,7 @@
  * @category extra
  * @name copypasta
  * @example copypasta navy
- * @param {StringResolvable} PastaName Name of the copypasta to send
+ * @param {string} PastaName Name of the copypasta to send
  */
 
 import * as Database from 'better-sqlite3';

@@ -6,7 +6,9 @@
  * @category automod
  * @name excessiveemojis
  * @example excessiveemojis enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
+ * @param {string} [threshold] How much percent of a message should be emojis to delete
+ * @param {number} [minlength] Minimum length of message before it is checked
  */
 
 import { stripIndents } from 'common-tags';
@@ -22,7 +24,7 @@ export default class ExcessiveEmojisCommand extends Command {
             group: 'automod',
             memberName: 'excessiveemojis',
             description: 'Toggle the excessive emojis filter',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             examples: ['excessiveemojis enable'],
             guildOnly: true,
             clientPermissions: ['MANAGE_MESSAGES'],

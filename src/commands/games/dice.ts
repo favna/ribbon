@@ -6,8 +6,8 @@
  * @category games
  * @name dice
  * @example dice 5 6
- * @param {StringResolvable} DiceSides The amount of sides the dice should have
- * @param {StringResolvable} AmountOfRolls The amount of dice to roll
+ * @param {string} DiceSides The amount of sides the dice should have
+ * @param {string} AmountOfRolls The amount of dice to roll
  */
 
 import { MessageEmbed } from 'discord.js';

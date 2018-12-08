@@ -9,8 +9,8 @@
  * @name warn
  * @example warn Biscuit 5 Not giving everyone cookies
  * @param {GuildMemberResolvable} AnyMember The member to give warning points
- * @param {Number} WarningPoints The amount of warning points to give
- * @param {StringResolvable} TheReason Reason for warning
+ * @param {number} WarningPoints The amount of warning points to give
+ * @param {string} TheReason Reason for warning
  */
 
 import * as Database from 'better-sqlite3';

@@ -6,8 +6,9 @@
  * @category leaderboards
  * @name overwatch
  * @example overwatch Camoflouge#1267
- * @param {StringResolvable} BattleTag BattleTag for that overwatch player
- * @returns {MessageEmbed} Stats of the player
+ * @param {string} BattleTag BattleTag for that overwatch player
+ * @param {string} [platform] Optiona: The platform the player is on. One of pc, psn or xbl
+ * @param {string} [region] Optional: The region the player plays in. Of of us, eu, asia
  */
 
 import { oneLine, stripIndents } from 'common-tags';
@@ -26,7 +27,7 @@ export default class OverwatchCommand extends Command {
             group: 'leaderboards',
             memberName: 'overwatch',
             description: 'Shows Player Stats for a given Overwatch player',
-            format: 'BattleTag',
+            format: 'BattleTag, [platform], [region]',
             examples: ['overwatch Camoflouge#1267'],
             guildOnly: false,
             throttling: {
@@ -39,7 +40,7 @@ export default class OverwatchCommand extends Command {
                     prompt: 'Respond with the player\'s BattleTag',
                     type: 'string',
                     validate: (tag: string) => {
-                        if (/[a-zA-Z0-9]+((?:#|-)[0-9]{4,5}){0,1}/i.test(tag)) {
+                        if (/[a-zA-Z0-9]+([#\-][0-9]{4,5})?/i.test(tag)) {
                             return true;
                         }
 
@@ -52,13 +53,7 @@ export default class OverwatchCommand extends Command {
                     prompt: 'Respond with the platform that player plays on',
                     type: 'string',
                     default: 'pc',
-                    validate: (plat: string) => {
-                        if (/(?:pc|psn|xbl)/i.test(plat)) {
-                            return true;
-                        }
-
-                        return 'Has to be `pc`, `psn` or `xbl` for PC, Playstation or Xbox respectively';
-                    },
+                    oneOf: ['pc', 'psn', 'xbl'],
                     parse: (plat: string) => plat.toLowerCase(),
                 },
                 {
@@ -66,13 +61,7 @@ export default class OverwatchCommand extends Command {
                     prompt: 'Respond with the region that player is playing in',
                     type: 'string',
                     default: 'us',
-                    validate: (reg: string) => {
-                        if (/(?:us|eu|asia)/.test(reg)) {
-                            return true;
-                        }
-
-                        return 'Has to be `us`, `eu` or `asia` for USA, Europe or Asia respectively';
-                    },
+                    oneOf: ['us', 'eu', 'asia'],
                     parse: (reg: string) => reg.toLowerCase(),
                 }
             ],

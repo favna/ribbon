@@ -6,7 +6,8 @@
  * @category moderation
  * @name leavemessages
  * @example leavemessages enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
+ * @param {TextChannel} [Channel] TextChannel the Leave Message is sent to, required when enabling
  */
 
 import { stripIndents } from 'common-tags';
@@ -22,7 +23,7 @@ export default class LeaveMessagesCommand extends Command {
             group: 'moderation',
             memberName: 'leavemessages',
             description: 'Toggle whether Ribbon should send special leave messages when members leave',
-            format: 'BooleanResolvable  [Channel]',
+            format: 'boolean  [Channel]',
             examples: ['leavemessages enable'],
             guildOnly: true,
             userPermissions: ['MANAGE_MESSAGES'],

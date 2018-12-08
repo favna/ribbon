@@ -11,7 +11,7 @@
  * @category moderation
  * @name setnonexplicitblock
  * @example setnonexplicitblock off
- * @param {BooleanResolvable} Option On or Off
+ * @param {boolean} Option On or Off
  */
 
 import { stripIndents } from 'common-tags';
@@ -27,7 +27,7 @@ export default class SetNonExplicitBlockCommand extends Command {
             group: 'moderation',
             memberName: 'setnonexplicitblock',
             description: 'Toggle Unknown Command messages on or off',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             details: stripIndents`Some commands can potentially give NSFW results, however they do not show NSFW images (for example, certain definitions on Urban Dictionary).
                 These type of commands are considered non explicit, as opposed to full nsfw commands. By default these commands are blocked outside of NSFW channels,
                 however at staff digression they can be allowed outside of NSFW channels by toggling this option off`,

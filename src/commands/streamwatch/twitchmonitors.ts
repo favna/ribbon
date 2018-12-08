@@ -6,7 +6,7 @@
  * @category streamwatch
  * @name twitchmonitors
  * @example twitchmonitors techagent favna
- * @param {StringResolvable} AnyMembers List of members to monitor space delimited
+ * @param {string} AnyMembers List of members to monitor space delimited
  */
 
 import { stripIndents } from 'common-tags';

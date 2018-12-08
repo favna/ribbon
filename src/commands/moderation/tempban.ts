@@ -9,8 +9,8 @@
  * @name tempban
  * @example tempban Kai
  * @param {GuildMemberResolvable} AnyMember The member to ban from the server
- * @param {StringResolvable} Time The amount of time this member should be banned
- * @param {StringResolvable} [TheReason] Reason for this banishment. Include `--no-delete` anywhere in the reason to
+ * @param {string} Time The amount of time this member should be banned
+ * @param {string} [TheReason] Reason for this banishment. Include `--no-delete` anywhere in the reason to
  *     prevent Ribbon from deleting the banned member's messages
  */
 

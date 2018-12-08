@@ -6,7 +6,7 @@
  * @category searches
  * @name manga
  * @example manga Yu-Gi-Oh
- * @param {StringResolvable} AnyManga manga to look up
+ * @param {string} AnyManga manga to look up
  */
 
 import { MessageEmbed } from 'discord.js';
@@ -36,7 +36,6 @@ export default class MangaCommand extends Command {
                     key: 'manga',
                     prompt: 'What manga do you want to find?',
                     type: 'string',
-                    default: 'pokemon',
                     parse: (p: string) => removeDiacritics(p.toLowerCase().replace(/([^a-zA-Z0-9_\- ])/gm, '')),
                 }
             ],

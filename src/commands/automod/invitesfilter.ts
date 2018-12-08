@@ -6,7 +6,7 @@
  * @category automod
  * @name invitesfilter
  * @example invitesfilter enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
  */
 
 import { stripIndents } from 'common-tags';
@@ -22,7 +22,7 @@ export default class InvitesFilterCommand extends Command {
             group: 'automod',
             memberName: 'invitesfilter',
             description: 'Toggle the Discord server invites filter',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             examples: ['invitesfilter enable'],
             guildOnly: true,
             clientPermissions: ['MANAGE_MESSAGES'],

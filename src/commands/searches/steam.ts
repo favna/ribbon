@@ -6,7 +6,7 @@
  * @category searches
  * @name steam
  * @example steam Tales of Berseria
- * @param {StringResolvable} GameName The name of any game that you want to find
+ * @param {string} GameName The name of any game that you want to find
  */
 
 import * as cheerio from 'cheerio';

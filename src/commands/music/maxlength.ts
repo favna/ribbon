@@ -9,7 +9,7 @@
  * @category music
  * @name maxlength
  * @example maxlength 10
- * @param {number/"default"} [MaxVideoLength] New maximum length in minutes
+ * @param {number | "default"} [MaxVideoLength] New maximum length in minutes
  */
 
 import { oneLine } from 'common-tags';

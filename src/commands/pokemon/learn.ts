@@ -11,10 +11,10 @@
  * @example learn dragonite dragon dance
  * @example learn dragonite dragon dance,dragon claw
  * @example learn dragonite dragon dance, dragon claw --gen 6
- * @param {StringResolvable} PokemonName Name of the pokemon to get the match for
- * @param {StringResolvable} [MoveName] Name of the move you want to find out about
- * @param {StringResolvable} [AnotherMoveName] Any additional moves you also want to find out about
- * @param {StringResolvable} [Generation] The generation to find the match for
+ * @param {string} PokemonName Name of the pokemon to get the match for
+ * @param {string} [MoveName] Name of the move you want to find out about
+ * @param {string} [AnotherMoveName] Any additional moves you also want to find out about
+ * @param {string} [Generation] The generation to find the match for
  */
 
 import { oneLine, stripIndents } from 'common-tags';

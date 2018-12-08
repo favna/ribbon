@@ -17,9 +17,9 @@
  * @category moderation
  * @name timeradd
  * @example timeradd 1d #general Please read the rules everyone!
- * @param {StringResolvable} Interval The interval at which the message(s) should be repeated
+ * @param {string} Interval The interval at which the message(s) should be repeated
  * @param {ChannelResolvable} Channel The channel to send the timed message in
- * @param {StringResolvable} Message  The message(s) to repeat
+ * @param {string} Message  The message(s) to repeat
  */
 
 import * as Database from 'better-sqlite3';

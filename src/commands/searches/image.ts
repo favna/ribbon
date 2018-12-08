@@ -6,7 +6,7 @@
  * @category searches
  * @name image
  * @example image Pyrrha Nikos'
- * @param {StringResolvable} ImageQuery Image to find on Google Images
+ * @param {string} ImageQuery Image to find on Google Images
  */
 
 import * as cheerio from 'cheerio';

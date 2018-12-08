@@ -8,7 +8,7 @@
  * @category pokémon
  * @name move
  * @example move dragon dance
- * @param {StringResolvable} MoveName The move you want to find
+ * @param {string} MoveName The move you want to find
  */
 
 import { oneLine, stripIndents } from 'common-tags';

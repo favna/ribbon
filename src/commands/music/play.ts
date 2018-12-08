@@ -14,7 +14,7 @@
  * @category music
  * @name play
  * @example play
- * @param {StringResolvable} Video One of the options linking to a video to play
+ * @param {string} Video One of the options linking to a video to play
  */
 
 import { oneLine, stripIndents } from 'common-tags';

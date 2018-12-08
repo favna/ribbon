@@ -12,7 +12,7 @@
  * @category extra
  * @name weather
  * @example weather Amsterdam
- * @param {StringResolvable} CityName Name of the city to get the weather forecast for
+ * @param {string} CityName Name of the city to get the weather forecast for
  */
 
 import { oneLine, stripIndents } from 'common-tags';

@@ -6,7 +6,7 @@
  * @category music
  * @name defaultvolume
  * @example defaultvolume 2
- * @param {number/"show"} VolumeToSet The volume to set or use "show" to show current default volume
+ * @param {number/"show"} [VolumeToSet] The volume to set or use "show" to show current default volume
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

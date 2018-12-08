@@ -8,7 +8,7 @@
  * @category nsfw
  * @name gelbooru
  * @example gelbooru pyrrha_nikos
- * @param {StringResolvable} Query Something you want to find
+ * @param {string} Query Something you want to find
  */
 
 import * as booru from 'booru';

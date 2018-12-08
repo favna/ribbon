@@ -16,7 +16,7 @@
  * @category pokémon
  * @name TCG
  * @example tcg name types subtype
- * @param {StringResolvable} Properties Properties you want to use for your search
+ * @param {string} [Properties] Properties you want to use for your search
  */
 
 import { oneLine, stripIndents } from 'common-tags';

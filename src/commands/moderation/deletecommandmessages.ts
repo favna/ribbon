@@ -6,7 +6,7 @@
  * @category moderation
  * @name deletecommandmessages
  * @example deletecommandmessages enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
  */
 
 import { oneLine } from 'common-tags';
@@ -23,7 +23,7 @@ export default class DeleteCommandMessagesCommand extends Command {
             memberName: 'deletecommandmessages',
             description:
                 'Configure whether Ribbon should delete command messages',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             examples: ['deletecommandmessages enable'],
             guildOnly: true,
             clientPermissions: ['MANAGE_MESSAGES'],

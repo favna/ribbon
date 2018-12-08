@@ -6,7 +6,7 @@
  * @category casino
  * @name slots
  * @example slots 5
- * @param {Number} ChipsAmount The amount of chips you want to gamble
+ * @param {number} ChipsAmount The amount of chips you want to gamble
  */
 
 import * as Database from 'better-sqlite3';

@@ -8,7 +8,8 @@
  * @category automod
  * @name badwords
  * @example badwords enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
+ * @param {string} [words] Optional: comma separated list of words to filter
  */
 
 import { stripIndents } from 'common-tags';
@@ -24,7 +25,7 @@ export default class BadWordsCommand extends Command {
             group: 'automod',
             memberName: 'badwords',
             description: 'Toggle the bad words filter',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             details: 'Please note that when adding new words to your server\'s filter you overwrite all your currently set words!',
             examples: ['badwords enable'],
             guildOnly: true,

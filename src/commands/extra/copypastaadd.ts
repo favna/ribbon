@@ -6,8 +6,8 @@
  * @category extra
  * @name copypastaadd
  * @example copypastaadd lipsum Lorem ipsum dolor sit amet.
- * @param {StringResolvable} PasteName Name for the new pasta
- * @param {StringResolvable} PastaContent Content for the new pasta
+ * @param {string} PasteName Name for the new pasta
+ * @param {string} PastaContent Content for the new pasta
  */
 
 import * as Database from 'better-sqlite3';

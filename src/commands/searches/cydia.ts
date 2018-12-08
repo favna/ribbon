@@ -10,7 +10,7 @@
  * @category searches
  * @name cydia
  * @example cydia Anemone
- * @param {StringResolvable} TweakName Name of the tweak to find
+ * @param {string} TweakName Name of the tweak to find
  */
 
 import * as cheerio from 'cheerio';

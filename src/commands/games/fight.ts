@@ -6,8 +6,8 @@
  * @category games
  * @name fight
  * @example fight Pyrrha Ruby
- * @param {StringResolvable} FighterOne The first combatant
- * @param {StringResolvable} FighterTwo The second combatant
+ * @param {string} FighterOne The first combatant
+ * @param {string} FighterTwo The second combatant
  */
 
 import { MessageEmbed } from 'discord.js';

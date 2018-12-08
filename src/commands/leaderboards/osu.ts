@@ -6,7 +6,7 @@
  * @category leaderboards
  * @name osu
  * @example osu WubWoofWolf
- * @param {StringResolvable} PlayerName Name of the OSU player
+ * @param {string} PlayerName Name of the OSU player
  */
 
 import { oneLine, stripIndents } from 'common-tags';

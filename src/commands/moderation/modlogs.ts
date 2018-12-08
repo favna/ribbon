@@ -6,7 +6,8 @@
  * @category moderation
  * @name modlogs
  * @example modlogs enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
+ * @param {TextChannel} [Channel] TextChannel the Mod Logs are sent to, required when enabling
  */
 
 import { stripIndents } from 'common-tags';
@@ -22,7 +23,7 @@ export default class ModLogsCommand extends Command {
             group: 'moderation',
             memberName: 'modlogs',
             description: 'Toggle mod logs in the configured channel',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             examples: ['modlogs {option}', 'modlogs enable'],
             guildOnly: true,
             userPermissions: ['ADMINISTRATOR'],

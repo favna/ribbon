@@ -6,7 +6,7 @@
  * @category pokémon
  * @name ability
  * @example ability multiscale
- * @param {StringResolvable} AbilityName The name of the ability you  want to find
+ * @param {string} AbilityName The name of the ability you  want to find
  */
 
 import { oneLine, stripIndents } from 'common-tags';

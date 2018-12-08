@@ -7,7 +7,7 @@
  * @name kick
  * @example kick ThunderKai
  * @param {GuildMemberResolvable} AnyMember The member to kick from the server
- * @param {StringResolvable} TheReason Reason for this kick.
+ * @param {string} [TheReason] Reason for this kick.
  */
 
 import { stripIndents } from 'common-tags';

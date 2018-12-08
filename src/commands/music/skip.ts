@@ -13,7 +13,7 @@
  * @example skip
  * -OR-
  * skip force
- * @param {StringResolvable} [force] Force the skip if you are the requester or a server moderator
+ * @param {string} [force] Force the skip if you are the requester or a server moderator
  */
 
 import { oneLine } from 'common-tags';

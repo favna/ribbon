@@ -12,7 +12,7 @@
  * @name selfroles
  * @example selfroles uploader
  * @example selfroles uploader superuploader
- * @param {RoleResolvable} AnyRole Role to set, can be multiple split by spaces
+ * @param {RoleResolvable} [AnyRole] Role to set, can be multiple split by spaces
  */
 
 import { oneLine, stripIndents } from 'common-tags';

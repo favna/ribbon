@@ -7,7 +7,7 @@
  * @name give
  * @example give Favna 10
  * @param {GuildMemberResolvable} AnyMember The member you want to give some chips
- * @param {Number} ChipsAmount The amount of chips you want to give
+ * @param {number} ChipsAmount The amount of chips you want to give
  */
 
 import * as Database from 'better-sqlite3';

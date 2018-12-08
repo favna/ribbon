@@ -5,8 +5,10 @@
  * @module
  * @category moderation
  * @name casinolimit
- * @example confmute 20000
- * @param {Number} Limit The new limit to set
+ * @example casinolimit 20000
+ * @example casinolimit 20000 1000
+ * @param {number} UpperLimit The new upper limit to set
+ * @param {number} [LowerLimit] Optional: The new lower limit
  */
 
 import { stripIndents } from 'common-tags';
@@ -21,9 +23,9 @@ export default class CasinoLimitCommand extends Command {
             aliases: ['cl'],
             group: 'moderation',
             memberName: 'casinolimit',
-            description: 'Configure what the upper limit for any casino command should be',
-            format: 'Number',
-            examples: ['casinolimit 20000'],
+            description: 'Configure what the limits for any casino command should be',
+            format: 'casinoUpperLimit casinoLowerLimit',
+            examples: ['casinolimit 20000', 'casinolimit 20000 1000'],
             guildOnly: true,
             userPermissions: ['MANAGE_MESSAGES'],
             throttling: {

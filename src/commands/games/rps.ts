@@ -6,7 +6,7 @@
  * @category games
  * @name rps
  * @example rps Rock
- * @param {StringResolvable} HandToPlay The hand that you want to play
+ * @param {string} HandToPlay The hand that you want to play
  */
 
 import { MessageEmbed } from 'discord.js';

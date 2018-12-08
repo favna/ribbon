@@ -12,7 +12,7 @@
  * randomcol #990000
  * -OR-
  * randomcol 36B56e
- * @param {StringResolvable} [hex] Optional: colour hex to display
+ * @param {string} [hex] Optional: colour hex to display
  */
 
 import { stripIndents } from 'common-tags';

@@ -6,7 +6,7 @@
  * @category searches
  * @name igdb
  * @example igdb Tales of Berseria
- * @param {StringResolvable} GameName The name of any game that you want to find
+ * @param {string} GameName The name of any game that you want to find
  */
 
 import { MessageEmbed } from 'discord.js';

@@ -8,7 +8,7 @@
  * @category moderation
  * @name countdownremove
  * @example countdownremove 1
- * @param {StringResolvable} CountdownID The ID of the Countdown to remove
+ * @param {string} CountdownID The ID of the Countdown to remove
  */
 
 import * as Database from 'better-sqlite3';

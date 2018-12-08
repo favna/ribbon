@@ -10,7 +10,7 @@
  * @name softban
  * @example softban ImmortalZypther
  * @param {GuildMemberResolvable} AnyMember The member to softban from the server
- * @param {StringResolvable} TheReason Reason for this softban.
+ * @param {string} TheReason Reason for this softban.
  */
 
 import { stripIndents } from 'common-tags';

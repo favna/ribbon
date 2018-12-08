@@ -6,7 +6,7 @@
  * @category automod
  * @name externallinks
  * @example externallinks enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
  */
 
 import { stripIndents } from 'common-tags';
@@ -22,7 +22,7 @@ export default class ExternalLinksCommand extends Command {
             group: 'automod',
             memberName: 'externallinks',
             description: 'Toggle the external links filter',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             examples: ['externallinks enable'],
             guildOnly: true,
             clientPermissions: ['MANAGE_MESSAGES'],

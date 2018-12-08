@@ -9,7 +9,7 @@
  * @category music
  * @name maxsongs
  * @example maxsongs 2
- * @param {number/"default"} [NumberOfSongs] New maximum number of songs
+ * @param {number | "default"} [NumberOfSongs] New maximum number of songs
  */
 
 import { oneLine } from 'common-tags';

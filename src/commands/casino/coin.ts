@@ -7,8 +7,8 @@
  * @category casino
  * @name coin
  * @example coin 10 heads
- * @param {Number} AmountOfChips Amount of chips you want to gamble
- * @param {StringResolvable} CoinSide The side of the coin you want to bet on
+ * @param {number} AmountOfChips Amount of chips you want to gamble
+ * @param {string} CoinSide The side of the coin you want to bet on
  */
 
 import * as Database from 'better-sqlite3';

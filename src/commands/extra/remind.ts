@@ -8,8 +8,8 @@
  * @category extra
  * @name remind
  * @example remind 1h To continue developing Ribbon
- * @param {StringResolvable} Time Amount of time you want to be reminded in
- * @param {StringResolvable} Reminder Thing you want Ribbon to remind you of
+ * @param {string} Time Amount of time you want to be reminded in
+ * @param {string} Reminder Thing you want Ribbon to remind you of
  */
 
 import * as Database from 'better-sqlite3';

@@ -6,7 +6,7 @@
  * @category searches
  * @name urban
  * @example urban Everclear
- * @param {StringResolvable} PhraseQuery Phrase that you want to define
+ * @param {string} PhraseQuery Phrase that you want to define
  */
 
 import { MessageEmbed } from 'discord.js';

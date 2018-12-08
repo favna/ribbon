@@ -8,7 +8,7 @@
  * @category nsfw
  * @name pornvids
  * @example pornvids babe
- * @param {StringResolvable} Query Something you want to find
+ * @param {string} Query Something you want to find
  */
 
 import { MessageEmbed } from 'discord.js';

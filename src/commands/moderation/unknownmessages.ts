@@ -6,7 +6,7 @@
  * @category moderation
  * @name unknownmessages
  * @example unknownmessages enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
  */
 
 import { MessageEmbed, TextChannel } from 'discord.js';
@@ -21,7 +21,7 @@ export default class UnknownMessagesCommand extends Command {
             group: 'moderation',
             memberName: 'unknownmessages',
             description: 'Toggle Unknown Command messages on or off',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             examples: ['unknownmessages enable'],
             guildOnly: true,
             userPermissions: ['MANAGE_MESSAGES'],

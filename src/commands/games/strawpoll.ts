@@ -9,9 +9,9 @@
  * @name strawpoll
  * @example strawpoll 'Best RWBY girl?' 'Pyrrha Nikos' 'Ruby Rose'
  * @example strawpoll 'Best coding language?' JavaScript C# C++
- * @param {StringResolvable} Question The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or
+ * @param {string} Question The question that the strawpoll needs to answer. Recommended to wrap in `" "` (or
  *     `' '`) to allow spaces
- * @param {StringResolvable} Options The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to
+ * @param {string} Options The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to
  *     allow spaces. Splits on every \`|\`
  */
 

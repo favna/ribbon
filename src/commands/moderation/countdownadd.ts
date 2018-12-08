@@ -21,9 +21,9 @@
  * @category moderation
  * @name countdownadd
  * @example countdownadd 2018-12-31T18:00 #general New years day!
- * @param {StringResolvable} DateTime The date (and time) of the event
+ * @param {string} DateTime The date (and time) of the event
  * @param {ChannelResolvable} Channel The channel to send countdown reminders in
- * @param {StringResolvable} Message  The message to repeat
+ * @param {string} Message  The message to repeat
  */
 
 import * as Database from 'better-sqlite3';

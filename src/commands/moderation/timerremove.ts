@@ -8,7 +8,7 @@
  * @category moderation
  * @name timerremove
  * @example timerremove 1
- * @param {StringResolvable} TimerID The ID of the timed message to remove
+ * @param {string} TimerID The ID of the timed message to remove
  */
 
 import * as Database from 'better-sqlite3';

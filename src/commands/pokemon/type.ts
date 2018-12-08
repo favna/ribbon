@@ -6,7 +6,7 @@
  * @category pokémon
  * @name type
  * @example type dragon flying
- * @param {StringResolvable} Types One or two types to find the matchup for
+ * @param {string} Types One or two types to find the matchup for
  */
 
 import { oneLine, stripIndents } from 'common-tags';

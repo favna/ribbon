@@ -13,6 +13,7 @@
  * @module
  * @category moderation
  * @name lockdown
+ * @param {RoleResolvable} [LockRole] Optional: A role the lockdown is applied to, defaults to @everyone
  */
 
 import { stripIndents } from 'common-tags';

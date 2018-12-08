@@ -6,7 +6,7 @@
  * @category searches
  * @name define
  * @example define Google
- * @param {StringResolvable} Word the word you want to define
+ * @param {string} Word the word you want to define
  */
 
 import { MessageEmbed } from 'discord.js';

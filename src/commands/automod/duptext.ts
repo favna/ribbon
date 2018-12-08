@@ -12,7 +12,10 @@
  * @category automod
  * @name duptext
  * @example duptext enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
+ * @param {number} [within] Amount of minutes between which text is checked
+ * @param {number} [equals] Amount of similar messages before purging
+ * @param {number} [distance] Levenshtein distance for similarity
  */
 
 import { stripIndents } from 'common-tags';
@@ -28,7 +31,7 @@ export default class DuplicateTextCommand extends Command {
             group: 'automod',
             memberName: 'duptext',
             description: 'Toggle the duplicate text filter',
-            format: 'BooleanResolvable',
+            format: 'Option [within] [equals] [distance]',
             details: stripIndents`
                 Uses the Levenshtein Distance Algorithm to determine similarity.
                 If the distance is less than 10 the messages are considered duplicate.

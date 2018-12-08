@@ -10,9 +10,9 @@
  * @category extra
  * @name oxr
  * @example oxr 1 EUR USD
- * @param {Number} MoneyAmount Amount of money to convert
- * @param {StringResolvable} OriginCurrency Currency to convert from
- * @param {StringResolvable} TargetCurrency Currency to convert to
+ * @param {number} MoneyAmount Amount of money to convert
+ * @param {string} OriginCurrency Currency to convert from
+ * @param {string} TargetCurrency Currency to convert to
  */
 
 import { stripIndents } from 'common-tags';

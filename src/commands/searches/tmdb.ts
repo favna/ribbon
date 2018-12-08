@@ -6,7 +6,7 @@
  * @category searches
  * @name tmdb
  * @example tmdb Pokemon 2000
- * @param {StringResolvable} MovieName Name of the movie you want to find
+ * @param {string} MovieName Name of the movie you want to find
  */
 
 import { MessageEmbed } from 'discord.js';

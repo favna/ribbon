@@ -5,6 +5,7 @@
  * @module
  * @category weeb
  * @name biscuit
+ * @param {MemberResolvable} [member] Optional: Member to steal a cookie from
  */
 
 import { GuildMember, MessageEmbed } from 'discord.js';

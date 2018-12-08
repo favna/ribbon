@@ -6,7 +6,8 @@
  * @category moderation
  * @name joinmessages
  * @example joinmessages enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
+ * @param {TextChannel} [Channel] TextChannel the Join Message is sent to, required when enabling
  */
 
 import { stripIndents } from 'common-tags';
@@ -22,7 +23,7 @@ export default class JoinMessagesCommand extends Command {
             group: 'moderation',
             memberName: 'joinmessages',
             description: 'Toggle whether Ribbon should send special greeting messages when members join',
-            format: 'BooleanResolvable [Channel]',
+            format: 'boolean [Channel]',
             examples: ['joinmessages enable'],
             guildOnly: true,
             userPermissions: ['MANAGE_MESSAGES'],

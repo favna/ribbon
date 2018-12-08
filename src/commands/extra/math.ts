@@ -6,7 +6,7 @@
  * @category extra
  * @name math
  * @example math (pi - 1) * 3
- * @param {StringResolvable} Equation The equation to solve
+ * @param {string} Equation The equation to solve
  */
 
 import { oneLine, stripIndents } from 'common-tags';

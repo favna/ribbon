@@ -8,7 +8,7 @@
  * @category extra
  * @name copypastaremove
  * @example copypastaremove 1
- * @param {StringResolvable} CopyPastaID The ID of the Copypasta to remove
+ * @param {string} CopyPastaID The ID of the Copypasta to remove
  */
 
 import * as Database from 'better-sqlite3';

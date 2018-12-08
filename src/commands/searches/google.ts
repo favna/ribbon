@@ -8,7 +8,7 @@
  * @category searches
  * @name google
  * @example google Pyrrha Nikos
- * @param {StringResolvable} SearchQuery Thing to find on Google
+ * @param {string} SearchQuery Thing to find on Google
  */
 
 import * as cheerio from 'cheerio';

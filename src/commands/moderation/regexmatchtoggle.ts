@@ -6,7 +6,7 @@
  * @category moderation
  * @name regexmatchtoggle
  * @example regexmatchtoggle enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
  */
 
 import { MessageEmbed, TextChannel } from 'discord.js';
@@ -21,7 +21,7 @@ export default class RegexMatchToggleCommand extends Command {
             group: 'moderation',
             memberName: 'regexmatchtoggle',
             description: 'Toggle commands matching on regex for this server',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             examples: ['regexmatchtoggle enable'],
             guildOnly: true,
             userPermissions: ['MANAGE_MESSAGES'],

@@ -8,7 +8,7 @@
  * @category pokemon
  * @name item
  * @example item assault vest
- * @param {StringResolvable} ItemName Name of the item to find
+ * @param {string} ItemName Name of the item to find
  */
 
 import { oneLine, stripIndents } from 'common-tags';

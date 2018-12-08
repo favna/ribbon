@@ -7,7 +7,7 @@
  * @name nickname
  * @example nick Muffin Cupcake
  * @param {GuildMemberResolvable} AnyMember Member to give a nickname
- * @param {StringResolvable} NewNickname Nickname to assign
+ * @param {string} NewNickname Nickname to assign
  */
 
 import { oneLine, stripIndents } from 'common-tags';

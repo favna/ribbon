@@ -6,7 +6,7 @@
  * @category searches
  * @name anime
  * @example anime Yu-Gi-Oh Dual Monsters
- * @param {StringResolvable} AnimeName anime to look up
+ * @param {string} AnimeName anime to look up
  */
 
 import { MessageEmbed } from 'discord.js';

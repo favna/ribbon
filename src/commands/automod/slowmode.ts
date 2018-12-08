@@ -6,7 +6,8 @@
  * @category automod
  * @name slowmode
  * @example slowmode enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
+ * @param {number} [Within] Optional: Boundaries for slowmode
  */
 
 import { stripIndents } from 'common-tags';
@@ -22,7 +23,7 @@ export default class SlowmodeCommand extends Command {
             group: 'automod',
             memberName: 'slowmode',
             description: 'Toggle the server invites filter',
-            format: 'BooleanResolvable',
+            format: 'Option [Within]',
             examples: ['slowmode enable'],
             guildOnly: true,
             clientPermissions: ['MANAGE_MESSAGES'],

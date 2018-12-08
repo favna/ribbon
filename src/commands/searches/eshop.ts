@@ -6,7 +6,7 @@
  * @category searches
  * @name eshop
  * @example eshop Breath of The Wild
- * @param {StringResolvable} GameName Game that you want to find in the eShop
+ * @param {string} GameName Game that you want to find in the eShop
  */
 
 import { MessageEmbed } from 'discord.js';

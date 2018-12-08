@@ -7,7 +7,8 @@
  * @name excessivementions
  * @example excessivementions enable
  * @example emf enable 3
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
+ * @param {string} [threshold] How many mentions allowed in 1 message
  */
 
 import { stripIndents } from 'common-tags';
@@ -23,7 +24,7 @@ export default class ExcessiveMentionsCommand extends Command {
             group: 'automod',
             memberName: 'excessivementions',
             description: 'Toggle the excessive mentions filter',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             examples: ['excessivementions enable', 'emf enable 3'],
             guildOnly: true,
             clientPermissions: ['MANAGE_MESSAGES'],

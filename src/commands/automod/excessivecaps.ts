@@ -6,7 +6,9 @@
  * @category automod
  * @name excessivecaps
  * @example excessivecaps enable
- * @param {BooleanResolvable} Option True or False
+ * @param {boolean} Option True or False
+ * @param {string} [threshold] How much percent of a message should be caps to delete
+ * @param {number} [minlength] Minimum length of message before it is checked
  */
 
 import { stripIndents } from 'common-tags';
@@ -22,7 +24,7 @@ export default class ExcessiveCapsCommand extends Command {
             group: 'automod',
             memberName: 'excessivecaps',
             description: 'Toggle the excessive caps filter',
-            format: 'BooleanResolvable',
+            format: 'boolean',
             examples: ['excessivecaps enable'],
             guildOnly: true,
             clientPermissions: ['MANAGE_MESSAGES'],

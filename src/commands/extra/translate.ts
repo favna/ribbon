@@ -8,9 +8,9 @@
  * @category extra
  * @name translate
  * @example translate en nl Hello World
- * @param {StringResolvable} FromLanguage The language to translate from
- * @param {StringResolvable} ToLanguage The language to translate to
- * @param {StringResolvable} Text The word or text to translate
+ * @param {string} FromLanguage The language to translate from
+ * @param {string} ToLanguage The language to translate to
+ * @param {string} Text The word or text to translate
  */
 
 import { oneLine, stripIndents } from 'common-tags';
