@@ -37,7 +37,7 @@ export default class CopyPastaListCommand extends Command {
         try {
             startTyping(msg);
 
-            const list = conn.prepare(`SELECT id, name FROM "${msg.guild.id}";`).all();
+            const list: ICopyPastaListObject[] = conn.prepare(`SELECT id, name FROM "${msg.guild.id}";`).all();
             if (!list.length) throw new Error('no_pastas');
 
             let body = '';

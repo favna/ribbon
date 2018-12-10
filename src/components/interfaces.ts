@@ -150,3 +150,17 @@ export interface ITimerListRow {
     lastsend: string;
     members: string;
 }
+
+export interface IFortniteStatsRow {
+    key: string;
+    value: string;
+}
+
+export interface ICountdownListRow {
+    id: number;
+    channel: string;
+    content: string;
+    datetime: string;
+    lastsend: string;
+    tag: string;
+}

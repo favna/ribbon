@@ -16,7 +16,7 @@
  * The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after
  *     adding the countdown
  *
- * **Aliases**: `countdownmsg`, `countdownmessage`, `countdown`, `cam`
+ * **Aliases**: `countdownmsg`, `countdownmessage`, `countdown`, `cam`, `cdadd`
  * @module
  * @category moderation
  * @name countdownadd
@@ -39,7 +39,7 @@ export default class CountdownAddCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'countdownadd',
-            aliases: ['countdownmsg', 'countdownmessage', 'countdown', 'cam'],
+            aliases: ['countdownmsg', 'countdownmessage', 'countdown', 'cam', 'cdadd'],
             group: 'moderation',
             memberName: 'countdownadd',
             description: 'Store a countdown message',

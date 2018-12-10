@@ -38,7 +38,7 @@ export default class TimerListCommand extends Command {
 
         try {
             startTyping(msg);
-            const list = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
+            const list: ITimerListRow[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
             let body = '';
 
             list.forEach((row: ITimerListRow) =>

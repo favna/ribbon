@@ -15,7 +15,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, IFortniteStatsRow, startTyping, stopTyping } from '../../components';
 
 export default class FortniteCommand extends Command {
     constructor (client: CommandoClient) {
@@ -42,7 +42,7 @@ export default class FortniteCommand extends Command {
                     key: 'platform',
                     prompt: 'What platform do they play on (`pc`, `xbox` or `psn`)?',
                     type: 'string',
-                    validate: (v: string) => /(pc|xbox|psn)/i.test(v) ? true : 'has to be a valid platform, one of `pc`, `xbox` or `psn`',
+                    oneOf: ['pc', 'xbox', 'psn'],
                     parse: (p: string) => p.toLowerCase(),
                 }
             ],
@@ -70,14 +70,14 @@ export default class FortniteCommand extends Command {
                 .addField(
                     'Lifetime Stats',
                     stripIndents`
-                    Wins: **${stats.lifeTimeStats.filter((el: any) => el.key.toLowerCase() === 'wins')[0].value}**
-                    Kills: **${stats.lifeTimeStats.filter((el: any) => el.key.toLowerCase() === 'kills')[0].value}**
-                    KDR: **${parseFloat(stats.lifeTimeStats.filter((el: any) => el.key.toLowerCase() === 'k/d')[0].value) * 100}%**
-                    Matches Played: **${stats.lifeTimeStats.filter((el: any) => el.key.toLowerCase() === 'matches played')[0].value}**
-                    Top 3s: **${stats.lifeTimeStats.filter((el: any) => el.key.toLowerCase() === 'top 3s')[0].value}**
-                    Top 5s: **${stats.lifeTimeStats.filter((el: any) => el.key.toLowerCase() === 'top 5s')[0].value}**
-                    Top 10s: **${stats.lifeTimeStats.filter((el: any) => el.key.toLowerCase() === 'top 10')[0].value}**
-                    Top 25s: **${stats.lifeTimeStats.filter((el: any) => el.key.toLowerCase() === 'top 25s')[0].value}**
+                        Wins: **${stats.lifeTimeStats.filter((el: IFortniteStatsRow) => el.key.toLowerCase() === 'wins')[0].value}**
+                        Kills: **${stats.lifeTimeStats.filter((el: IFortniteStatsRow) => el.key.toLowerCase() === 'kills')[0].value}**
+                        KDR: **${parseFloat(stats.lifeTimeStats.filter((el: IFortniteStatsRow) => el.key.toLowerCase() === 'k/d')[0].value) * 100}%**
+                        Matches Played: **${stats.lifeTimeStats.filter((el: IFortniteStatsRow) => el.key.toLowerCase() === 'matches played')[0].value}**
+                        Top 3s: **${stats.lifeTimeStats.filter((el: IFortniteStatsRow) => el.key.toLowerCase() === 'top 3s')[0].value}**
+                        Top 5s: **${stats.lifeTimeStats.filter((el: IFortniteStatsRow) => el.key.toLowerCase() === 'top 5s')[0].value}**
+                        Top 10s: **${stats.lifeTimeStats.filter((el: IFortniteStatsRow) => el.key.toLowerCase() === 'top 10')[0].value}**
+                        Top 25s: **${stats.lifeTimeStats.filter((el: IFortniteStatsRow) => el.key.toLowerCase() === 'top 25s')[0].value}**
                     `,
                     true
                 )

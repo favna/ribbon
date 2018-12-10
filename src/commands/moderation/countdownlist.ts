@@ -14,7 +14,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import * as path from 'path';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, ICountdownListRow, startTyping, stopTyping } from '../../components';
 
 export default class CountDownList extends Command {
     constructor (client: CommandoClient) {
@@ -39,21 +39,20 @@ export default class CountDownList extends Command {
 
         try {
             startTyping(msg);
-            const rows = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
-            let body = '';
+            const list: ICountdownListRow[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
+            let body: string = '';
 
-            for (const row in rows) {
+            list.forEach((row: ICountdownListRow) =>
                 body += `${stripIndents`
-                    **id:** ${rows[row].id}
-                    **Event at:** ${moment(rows[row].datetime).format('YYYY-MM-DD HH:mm')}
-                    **Countdown Duration:** ${moment.duration(moment(rows[row].datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
-                    **Tag on event:** ${rows[row].tag === 'none' ? 'No one' : `@${rows[row].tag}`}
-                    **Channel:** <#${rows[row].channel}> (\`${rows[row].channel}\`)
-                    **Content:** ${rows[row].content}
-                    **Last sent at:** ${moment(rows[row].lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}`}
-                    \n\n
-                `;
-            }
+                    **id:** ${row.id}
+                    **Event at:** ${moment(row.datetime).format('YYYY-MM-DD HH:mm')}
+                    **Countdown Duration:** ${moment.duration(moment(row.datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+                    **Tag on event:** ${row.tag === 'none' ? 'No one' : `@${row.tag}`}
+                    **Channel:** <#${row.channel}> (\`${row.channel}\`)
+                    **Content:** ${row.content}
+                    **Last sent at:** ${moment(row.lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}`}
+                \n`,
+            );
 
             deleteCommandMessages(msg, this.client);
 

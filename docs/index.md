@@ -347,7 +347,7 @@ Server admins can disable this command entirely by using the <code>rmt off</code
 <p>You can save multiple messages for varying events and channels by using this command multiple times</p>
 <p>The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after
     adding the countdown</p>
-<p><strong>Aliases</strong>: <code>countdownmsg</code>, <code>countdownmessage</code>, <code>countdown</code>, <code>cam</code></p>
+<p><strong>Aliases</strong>: <code>countdownmsg</code>, <code>countdownmessage</code>, <code>countdown</code>, <code>cam</code>, <code>cdadd</code></p>
 </dd>
 <dt><a href="#module_countdownlist">countdownlist</a></dt>
 <dd><p>Moderation CountDownList - List all stored countdown messages in the current guild</p>
@@ -1856,7 +1856,7 @@ You can save multiple messages for varying events and channels by using this com
 The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after
     adding the countdown
 
-**Aliases**: `countdownmsg`, `countdownmessage`, `countdown`, `cam`
+**Aliases**: `countdownmsg`, `countdownmessage`, `countdown`, `cam`, `cdadd`
 
 **Category**: moderation  
 
