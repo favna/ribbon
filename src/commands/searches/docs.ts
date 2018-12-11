@@ -45,8 +45,8 @@ export default class DocsCommand extends Command {
                     key: 'version',
                     prompt: 'which version of docs would you like (stable, master, commando)?',
                     type: 'string',
-                    default: 'stable',
                     oneOf: ['stable', 'master', 'commando'],
+                    default: 'stable',
                     parse: (value: string) => value.toLowerCase(),
                 }
             ],

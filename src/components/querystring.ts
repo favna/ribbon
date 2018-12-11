@@ -11,8 +11,7 @@ const stringifyPrimitive = (v: any): string => {
     }
 };
 
-const hasOwnProperty = (obj: object, prop: any) =>
-    Object.prototype.hasOwnProperty.call(obj, prop);
+const hasOwnProperty = (obj: object, prop: any) => Object.prototype.hasOwnProperty.call(obj, prop);
 
 export const stringify = (obj: any, sep: string = '&', eq: string = '='): string => {
     if (obj === null) obj = undefined;

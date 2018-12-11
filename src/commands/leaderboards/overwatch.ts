@@ -52,16 +52,16 @@ export default class OverwatchCommand extends Command {
                     key: 'platform',
                     prompt: 'Respond with the platform that player plays on',
                     type: 'string',
-                    default: 'pc',
                     oneOf: ['pc', 'psn', 'xbl'],
+                    default: 'pc',
                     parse: (plat: string) => plat.toLowerCase(),
                 },
                 {
                     key: 'region',
                     prompt: 'Respond with the region that player is playing in',
                     type: 'string',
-                    default: 'us',
                     oneOf: ['us', 'eu', 'asia'],
+                    default: 'us',
                     parse: (reg: string) => reg.toLowerCase(),
                 }
             ],
@@ -82,25 +82,27 @@ export default class OverwatchCommand extends Command {
             const topCompetitiveHeroes = Object.keys(data.competitiveStats.topHeroes)
                 .map((r: string) => {
                     const timePlayed = data.competitiveStats.topHeroes[r].timePlayed.split(':');
-                    let seconds: number = 0;
+                    let seconds: number;
 
-                    if (timePlayed.length === 3) seconds = Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0]);
-                    else seconds = Number(timePlayed[0] * 60) + Number(timePlayed[1]);
+                    seconds = timePlayed.length === 3
+                        ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
+                        : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
 
-                    return { hero: r, time: ms(`${seconds}s`) }
+                    return { hero: r, time: ms(`${seconds}s`) };
                 })
-                .sort((a:IOverwatchHeroMapped, b:IOverwatchHeroMapped) => a.time - b.time).reverse().slice(0,3);
+                .sort((a: IOverwatchHeroMapped, b: IOverwatchHeroMapped) => a.time - b.time).reverse().slice(0, 3);
             const topQuickPlayHeroes = Object.keys(data.quickPlayStats.topHeroes)
                 .map((r: string) => {
                     const timePlayed = data.quickPlayStats.topHeroes[r].timePlayed.split(':');
-                    let seconds: number = 0;
+                    let seconds: number;
 
-                    if (timePlayed.length === 3) seconds = Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0]);
-                    else seconds = Number(timePlayed[0] * 60) + Number(timePlayed[1]);
+                    seconds = timePlayed.length === 3
+                        ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
+                        : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
 
-                    return { hero: r, time: ms(`${seconds}s`) }
+                    return { hero: r, time: ms(`${seconds}s`) };
                 })
-                .sort((a: IOverwatchHeroMapped, b: IOverwatchHeroMapped) => a.time - b.time).reverse().slice(0,3);
+                .sort((a: IOverwatchHeroMapped, b: IOverwatchHeroMapped) => a.time - b.time).reverse().slice(0, 3);
             const quickPlayStats = data.quickPlayStats.careerStats;
             const competitiveStats = data.competitiveStats.careerStats;
 

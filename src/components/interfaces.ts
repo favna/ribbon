@@ -26,6 +26,11 @@ interface IPokeAbilities {
     [propName: string]: string | number | undefined;
 }
 
+interface IFlavorTextEntities {
+    version_id: string;
+    flavor_text: string;
+}
+
 export interface IMusicCommand extends Command {
     queue: any;
     votes: any;
@@ -163,4 +168,12 @@ export interface ICountdownListRow {
     datetime: string;
     lastsend: string;
     tag: string;
+}
+
+export interface IFlavorJson {
+    [propName: string]: IFlavorTextEntities[];
+}
+
+export interface IFormatsJson {
+    [propName: string]: string;
 }

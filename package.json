@@ -46,7 +46,7 @@
     "@discordjs/uws": "^10.149.0",
     "@types/better-sqlite3": "^5.0.0",
     "@types/cheerio": "^0.22.10",
-    "@types/common-tags": "^1.4.0",
+    "@types/common-tags": "^1.8.0",
     "@types/dotenv": "^6.1.0",
     "@types/emoji-regex": "^7.0.0",
     "@types/fast-levenshtein": "^0.0.1",

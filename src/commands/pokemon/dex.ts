@@ -18,10 +18,10 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, IPoke, IPokeAliases, IPokeData, startTyping, stopTyping, zalgolize } from '../../components';
+import { capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IFormatsJson, IPoke, IPokeAliases, IPokeData, startTyping, stopTyping, zalgolize } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
-import * as dexEntries from '../../data/dex/flavorText.json';
-import * as smogonFormats from '../../data/dex/formats.json';
+import * as entries from '../../data/dex/flavorText.json';
+import * as formats from '../../data/dex/formats.json';
 
 export default class DexCommand extends Command {
     constructor (client: CommandoClient) {
@@ -80,6 +80,8 @@ export default class DexCommand extends Command {
             const firstSearch: IPoke[] = pokeFuse.search(pokemon);
             const aliasSearch: IPokeAliases[] = !firstSearch.length ? aliasFuse.search(pokemon) : null;
             const pokeSearch: IPoke[] = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch;
+            const tiers: IFormatsJson = formats as IFormatsJson;
+            const flavors: IFlavorJson = entries as IFlavorJson;
             const dexEmbed: MessageEmbed = new MessageEmbed();
 
             if (!pokeSearch.length) throw new Error('no_pokemon');
@@ -91,7 +93,7 @@ export default class DexCommand extends Command {
                 flavors: '*PokéDex data not found for this Pokémon*',
                 genders: '',
                 sprite: '',
-                tier: smogonFormats.find((s: any) => s.name === poke.species.toLowerCase().replace(/([-% ])/gm, '')).tier,
+                tier: tiers[poke.species.toLowerCase().replace(/([-% ])/gm, '')],
             };
 
             if (poke.prevo) {
@@ -149,25 +151,10 @@ export default class DexCommand extends Command {
             }
 
             if (poke.num >= 0) {
-                if (
-                    poke.forme &&
-                    // @ts-ignore
-                    dexEntries[`${poke.num}${poke.forme.toLowerCase()}`]
-                ) {
-                    pokeData.flavors =
-                        // @ts-ignore
-                        dexEntries[`${poke.num}${poke.forme.toLowerCase()}`][
-                            // @ts-ignore
-                        dexEntries[`${poke.num}${poke.forme.toLowerCase()}`]
-                            .length - 1
-                            ].flavor_text;
+                if (poke.forme && flavors[`${poke.num}${poke.forme.toLowerCase()}`]) {
+                    pokeData.flavors = flavors[`${poke.num}${poke.forme.toLowerCase()}`][flavors[`${poke.num}${poke.forme.toLowerCase()}`].length - 1].flavor_text;
                 } else {
-                    pokeData.flavors =
-                        // @ts-ignore
-                        dexEntries[poke.num][
-                            // @ts-ignore
-                        dexEntries[poke.num].length - 1
-                            ].flavor_text;
+                    pokeData.flavors = flavors[poke.num][flavors[poke.num].length - 1].flavor_text;
                 }
             }
 

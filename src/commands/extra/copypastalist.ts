@@ -87,7 +87,7 @@ export default class CopyPastaListCommand extends Command {
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(`no copypastas found for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd\`!`,
+            return msg.reply(`no copypastas found for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd\`!`
             );
         }
     }

@@ -853,8 +853,6 @@ export const handleReady = (client: CommandoClient) => {
 
 export const handleRejection = (client: CommandoClient, reason: Error | any, p: Promise<any>) => {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
-    console.error('Logging a full rejection error:', moment().format('MMMM Do YYYY [at] HH:mm:ssZ'));
-    console.error(reason);
     if (reason instanceof Error) reason = reason.message;
 
     channel.send(stripIndents`

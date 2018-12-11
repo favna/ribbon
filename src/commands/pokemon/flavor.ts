@@ -19,9 +19,9 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, IPoke, IPokeAliases, IPokeData, startTyping, stopTyping, zalgolize } from '../../components';
+import { capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IPoke, IPokeAliases, IPokeData, startTyping, stopTyping, zalgolize } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
-import * as dexEntries from '../../data/dex/flavorText.json';
+import * as entries from '../../data/dex/flavorText.json';
 
 export default class FlavorCommand extends Command {
     constructor (client: CommandoClient) {
@@ -80,6 +80,7 @@ export default class FlavorCommand extends Command {
             const firstSearch: IPoke[] = pokeFuse.search(pokemon);
             const aliasSearch: IPokeAliases[] = !firstSearch.length ? aliasFuse.search(pokemon) : null;
             const pokeSearch: IPoke[] = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch;
+            const flavors: IFlavorJson = entries as IFlavorJson;
             const dataEmbed = new MessageEmbed();
 
             if (!pokeSearch.length) throw new Error('no_pokemon');
@@ -93,16 +94,14 @@ export default class FlavorCommand extends Command {
             let totalEntriesLength = 0;
 
             if (poke.forme) {
-                // @ts-ignore
-                for (const entry of dexEntries[`${poke.num}${poke.forme.toLowerCase()}`]) {
+                for (const entry of flavors[`${poke.num}${poke.forme.toLowerCase()}`]) {
                     pokeData.entries.push({
                         game: entry.version_id,
                         text: entry.flavor_text,
                     });
                 }
             } else {
-                // @ts-ignore
-                for (const entry of dexEntries[poke.num]) {
+                for (const entry of flavors[poke.num]) {
                     pokeData.entries.push({
                         game: entry.version_id,
                         text: entry.flavor_text,

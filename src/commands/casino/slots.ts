@@ -39,7 +39,7 @@ export default class SlotsCommand extends Command {
                     prompt: 'How many chips do you want to gamble?',
                     type: 'integer',
                     oneOf: [1, 2, 3],
-                    parse: (p: number) => roundNumber(Number(p))
+                    parse: (p: number) => roundNumber(Number(p)),
                 }
             ],
         });

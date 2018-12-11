@@ -44,7 +44,7 @@ export default class WheelOfFortuneCommand extends Command {
 
                         return chips >= lowerLimit && chips <= upperLimit
                             ? true
-                            : `Reply with a chips amount between ${lowerLimit} and ${upperLimit}. Example: \`${roundNumber((lowerLimit + upperLimit) / 2)}\``
+                            : `Reply with a chips amount between ${lowerLimit} and ${upperLimit}. Example: \`${roundNumber((lowerLimit + upperLimit) / 2)}\``;
                     },
                     parse: (chips: string) => roundNumber(Number(chips)),
                 }

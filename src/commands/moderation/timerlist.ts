@@ -49,15 +49,15 @@ export default class TimerListCommand extends Command {
                     **content:** ${row.content}
                     **last sent at:** ${moment(row.lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}
                     ${row.members ? `**members tagged on send:** ${row.members.split(';').map((member: Snowflake) => `<@${member}>`).join(' ')}` : ''}`}
-                \n`,
+                \n`
             );
 
             deleteCommandMessages(msg, this.client);
 
             if (body.length >= 1800) {
-                const splitContent: string[] = Util.splitMessage(body, { maxLength: 1800, }) as string[];
+                const splitContent: string[] = Util.splitMessage(body, { maxLength: 1800 }) as string[];
 
-                splitContent.forEach((part) => msg.embed({
+                splitContent.forEach(part => msg.embed({
                     color: msg.guild.me.displayColor,
                     description: part,
                     title: 'Timed messages stored on this server',

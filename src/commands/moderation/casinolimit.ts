@@ -43,7 +43,7 @@ export default class CasinoLimitCommand extends Command {
                     prompt: 'What should the new casino lower limit be?',
                     type: 'integer',
                     default: 1,
-                },
+                }
             ],
         });
     }

@@ -52,7 +52,7 @@ export default class CopyPastaRemoveCommand extends Command {
                             return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);
                         }
                     },
-                },
+                }
             ],
         });
     }
@@ -74,7 +74,7 @@ export default class CopyPastaRemoveCommand extends Command {
                 .setDescription(stripIndents`
                     **Action:** Copypasta removed
                     **Name was:** ${pasta.name}
-                    **Content was:** ${pasta.content.length <= 1800 ? pasta.content : `${pasta.content.slice(0, 1800)}...`}`,
+                    **Content was:** ${pasta.content.length <= 1800 ? pasta.content : `${pasta.content.slice(0, 1800)}...`}`
                 )
                 .setTimestamp();
 

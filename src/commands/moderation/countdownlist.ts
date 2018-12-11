@@ -51,7 +51,7 @@ export default class CountDownList extends Command {
                     **Channel:** <#${row.channel}> (\`${row.channel}\`)
                     **Content:** ${row.content}
                     **Last sent at:** ${moment(row.lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}`}
-                \n`,
+                \n`
             );
 
             deleteCommandMessages(msg, this.client);
