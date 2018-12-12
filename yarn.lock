@@ -1243,6 +1243,10 @@ fuse.js@ceymard/fuse#individual-getfn:
   version "3.2.1"
   resolved "https://codeload.github.com/ceymard/fuse/tar.gz/f9896f00177d882da39dceb96a5c0e243979fafd"
 
+fuse.js@favna/fuse:
+  version "3.2.1"
+  resolved "https://codeload.github.com/favna/fuse/tar.gz/52b7df5b11bafba268bf345abfac5b8a83d2808a"
+
 get-caller-file@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/get-caller-file/-/get-caller-file-1.0.3.tgz#f978fa4c90d1dfe7ff2d6beda2a515e713bdcf4a"

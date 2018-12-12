@@ -13,7 +13,7 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, IGenre, startTyping, stopTyping, stringify } from '../../components';
+import { deleteCommandMessages, IMovieGenre, startTyping, stopTyping, stringify } from '../../components';
 
 export default class MovieCommand extends Command {
     constructor (client: CommandoClient) {
@@ -83,7 +83,7 @@ export default class MovieCommand extends Command {
                 )
                 .addField(
                     'Genres',
-                    movie.genres.length ? movie.genres.map((genre: IGenre) => genre.name).join(', ') : 'None on TheMovieDB',
+                    movie.genres.length ? movie.genres.map((genre: IMovieGenre) => genre.name).join(', ') : 'None on TheMovieDB',
                     false
                 );
 

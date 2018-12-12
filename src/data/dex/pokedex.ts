@@ -1,4 +1,6 @@
-export const BattlePokedex: any = [
+import { IPokeDex } from '../../components';
+
+export const BattlePokedex: IPokeDex[] = [
     {
         num: 1,
         species: 'Bulbasaur',
@@ -863,7 +865,7 @@ export const BattlePokedex: any = [
             'pikachukalos',
             'pikachualola',
             'pikachupartner',
-            'pikachustarter'
+            'pikachustarter',
         ],
     },
     {
@@ -4115,7 +4117,7 @@ export const BattlePokedex: any = [
         color: 'Pink',
         prevo: 'mimejr',
         evoLevel: 'Level up while knowing Mimic',
-        evoMove: 'Mimic',
+
         eggGroups: ['Human-Like'],
     },
     {
@@ -4436,7 +4438,7 @@ export const BattlePokedex: any = [
             'umbreon',
             'leafeon',
             'glaceon',
-            'sylveon'
+            'sylveon',
         ],
         eggGroups: ['Field'],
         otherFormes: ['eeveestarter'],
@@ -5885,7 +5887,7 @@ export const BattlePokedex: any = [
         color: 'Brown',
         prevo: 'bonsly',
         evoLevel: 'Level up while knowing Mimic',
-        evoMove: 'Mimic',
+
         eggGroups: ['Mineral'],
     },
     {
@@ -6267,7 +6269,7 @@ export const BattlePokedex: any = [
         weightkg: 5,
         color: 'Black',
         eggGroups: ['Undiscovered'],
-        otherForms: [
+        otherFormes: [
             'unownb',
             'unownc',
             'unownd',
@@ -6294,7 +6296,7 @@ export const BattlePokedex: any = [
             'unowny',
             'unownz',
             'unownexclamation',
-            'unownquestion'
+            'unownquestion',
         ],
     },
     {
@@ -8668,7 +8670,6 @@ export const BattlePokedex: any = [
             spd: 30,
             spe: 40,
         },
-        maxHP: 1,
         abilities: {
             0: 'Wonder Guard',
         },
@@ -12087,7 +12088,7 @@ export const BattlePokedex: any = [
         color: 'Green',
         evos: ['wormadam', 'wormadamsandy', 'wormadamtrash', 'mothim'],
         eggGroups: ['Bug'],
-        otherForms: ['burmysandy', 'burmytrash'],
+        otherFormes: ['burmysandy', 'burmytrash'],
     },
     {
         num: 413,
@@ -12403,7 +12404,7 @@ export const BattlePokedex: any = [
         color: 'Purple',
         evos: ['gastrodon'],
         eggGroups: ['Water 1', 'Amorphous'],
-        otherForms: ['shelloseast'],
+        otherFormes: ['shelloseast'],
     },
     {
         num: 423,
@@ -12429,7 +12430,7 @@ export const BattlePokedex: any = [
         prevo: 'shellos',
         evoLevel: 30,
         eggGroups: ['Water 1', 'Amorphous'],
-        otherForms: ['gastrodoneast'],
+        otherFormes: ['gastrodoneast'],
     },
     {
         num: 424,
@@ -12453,7 +12454,7 @@ export const BattlePokedex: any = [
         color: 'Purple',
         prevo: 'aipom',
         evoLevel: 'Level up while knowing Double Hit',
-        evoMove: 'Double Hit',
+
         eggGroups: ['Field'],
     },
     {
@@ -13476,7 +13477,7 @@ export const BattlePokedex: any = [
         color: 'Pink',
         prevo: 'lickitung',
         evoLevel: 'Level up while knowing Rollout',
-        evoMove: 'Rollout',
+
         eggGroups: ['Monster'],
     },
     {
@@ -13525,7 +13526,7 @@ export const BattlePokedex: any = [
         color: 'Blue',
         prevo: 'tangela',
         evoLevel: 'Level up while knowing Ancient Power',
-        evoMove: 'AncientPower',
+
         eggGroups: ['Grass'],
     },
     {
@@ -13632,7 +13633,7 @@ export const BattlePokedex: any = [
         color: 'Green',
         prevo: 'yanma',
         evoLevel: 'Level up while knowing Ancient Power',
-        evoMove: 'AncientPower',
+
         eggGroups: ['Bug'],
     },
     {
@@ -13735,7 +13736,7 @@ export const BattlePokedex: any = [
         color: 'Brown',
         prevo: 'piloswine',
         evoLevel: 'Level up while knowing Ancient Power',
-        evoMove: 'AncientPower',
+
         eggGroups: ['Field'],
     },
     {
@@ -13908,7 +13909,7 @@ export const BattlePokedex: any = [
             'rotomwash',
             'rotomfrost',
             'rotomfan',
-            'rotommow'
+            'rotommow',
         ],
     },
     {
@@ -14397,7 +14398,7 @@ export const BattlePokedex: any = [
             'arceuspsychic',
             'arceusrock',
             'arceussteel',
-            'arceuswater'
+            'arceuswater',
         ],
     },
     {
@@ -17148,7 +17149,7 @@ export const BattlePokedex: any = [
         color: 'Pink',
         evos: ['sawsbuck'],
         eggGroups: ['Field'],
-        otherForms: ['deerlingsummer', 'deerlingautumn', 'deerlingwinter'],
+        otherFormes: ['deerlingsummer', 'deerlingautumn', 'deerlingwinter'],
     },
     {
         num: 586,
@@ -17174,7 +17175,7 @@ export const BattlePokedex: any = [
         prevo: 'deerling',
         evoLevel: 34,
         eggGroups: ['Field'],
-        otherForms: ['sawsbucksummer', 'sawsbuckautumn', 'sawsbuckwinter'],
+        otherFormes: ['sawsbucksummer', 'sawsbuckautumn', 'sawsbuckwinter'],
     },
     {
         num: 587,
@@ -18795,7 +18796,7 @@ export const BattlePokedex: any = [
             'genesectdouse',
             'genesectshock',
             'genesectburn',
-            'genesectchill'
+            'genesectchill',
         ],
     },
     {
@@ -19349,7 +19350,7 @@ export const BattlePokedex: any = [
         prevo: 'spewpa',
         evoLevel: 12,
         eggGroups: ['Bug'],
-        otherForms: [
+        otherFormes: [
             'vivillonarchipelago',
             'vivilloncontinental',
             'vivillonelegant',
@@ -19366,9 +19367,10 @@ export const BattlePokedex: any = [
             'vivillonsandstorm',
             'vivillonsavanna',
             'vivillonsun',
-            'vivillontundra'
+            'vivillontundra',
+            'vivillonfancy',
+            'vivillonpokeball',
         ],
-        otherFormes: ['vivillonfancy', 'vivillonpokeball'],
     },
     {
         num: 666,
@@ -19496,11 +19498,11 @@ export const BattlePokedex: any = [
         color: 'White',
         evos: ['floette'],
         eggGroups: ['Fairy'],
-        otherForms: [
+        otherFormes: [
             'flabebeblue',
             'flabebeorange',
             'flabebewhite',
-            'flabebeyellow'
+            'flabebeyellow',
         ],
     },
     {
@@ -19528,13 +19530,13 @@ export const BattlePokedex: any = [
         evos: ['florges'],
         evoLevel: 19,
         eggGroups: ['Fairy'],
-        otherForms: [
+        otherFormes: [
             'floetteblue',
             'floetteorange',
             'floettewhite',
-            'floetteyellow'
+            'floetteyellow',
+            'floetteeternal',
         ],
-        otherFormes: ['floetteeternal'],
     },
     {
         num: 670,
@@ -19584,11 +19586,11 @@ export const BattlePokedex: any = [
         prevo: 'floette',
         evoLevel: 19,
         eggGroups: ['Fairy'],
-        otherForms: [
+        otherFormes: [
             'florgesblue',
             'florgesorange',
             'florgeswhite',
-            'florgesyellow'
+            'florgesyellow',
         ],
     },
     {
@@ -19702,7 +19704,7 @@ export const BattlePokedex: any = [
         weightkg: 28,
         color: 'White',
         eggGroups: ['Field'],
-        otherForms: [
+        otherFormes: [
             'furfroudandy',
             'furfroudebutante',
             'furfroudiamond',
@@ -19711,7 +19713,7 @@ export const BattlePokedex: any = [
             'furfroulareine',
             'furfroumatron',
             'furfroupharaoh',
-            'furfroustar'
+            'furfroustar',
         ],
     },
     {
@@ -22402,7 +22404,7 @@ export const BattlePokedex: any = [
         color: 'Purple',
         prevo: 'steenee',
         evoLevel: 'Level 19 while knowing Stomp',
-        evoMove: 'Stomp',
+
         eggGroups: ['Grass'],
     },
     {
@@ -22644,7 +22646,7 @@ export const BattlePokedex: any = [
             'silvallypsychic',
             'silvallyrock',
             'silvallysteel',
-            'silvallywater'
+            'silvallywater',
         ],
     },
     {
@@ -23110,14 +23112,14 @@ export const BattlePokedex: any = [
         weightkg: 0.3,
         color: 'Red',
         eggGroups: ['Mineral'],
-        otherFormes: ['miniormeteor'],
-        otherForms: [
+        otherFormes: [
+            'miniormeteor',
             'miniororange',
             'minioryellow',
             'miniorgreen',
             'miniorblue',
             'miniorindigo',
-            'miniorviolet'
+            'miniorviolet',
         ],
     },
     {
@@ -25210,8 +25212,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarufopropu1'],
-        otherFormes: ['pokestarufo2', 'pokestarufopropu2'],
+        otherFormes: ['pokestarufopropu1', 'pokestarufo2', 'pokestarufopropu2'],
     },
     {
         num: -5001,
@@ -25257,7 +25258,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarbrycenmanprop'],
+        otherFormes: ['pokestarbrycenmanprop'],
     },
     {
         num: -5003,
@@ -25279,7 +25280,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarmtprop'],
+        otherFormes: ['pokestarmtprop'],
     },
     {
         num: -5004,
@@ -25301,7 +25302,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarmt2prop'],
+        otherFormes: ['pokestarmt2prop'],
     },
     {
         num: -5005,
@@ -25323,7 +25324,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestartransportprop'],
+        otherFormes: ['pokestartransportprop'],
     },
     {
         num: -5006,
@@ -25345,10 +25346,10 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: [
+        otherFormes: [
             'pokestargiant2',
             'pokestargiantpropo1',
-            'pokestargiantpropo2'
+            'pokestargiantpropo2',
         ],
     },
     {
@@ -25370,7 +25371,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarhumanoidprop'],
+        otherFormes: ['pokestarhumanoidprop'],
     },
     {
         num: -5008,
@@ -25391,7 +25392,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarmonsterprop'],
+        otherFormes: ['pokestarmonsterprop'],
     },
     {
         num: -5009,
@@ -25412,7 +25413,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarf00prop'],
+        otherFormes: ['pokestarf00prop'],
     },
     {
         num: -5010,
@@ -25433,7 +25434,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarf002prop'],
+        otherFormes: ['pokestarf002prop'],
     },
     {
         num: -5011,
@@ -25454,7 +25455,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarspiritprop'],
+        otherFormes: ['pokestarspiritprop'],
     },
     {
         num: -5012,
@@ -25476,7 +25477,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarblackdoorprop'],
+        otherFormes: ['pokestarblackdoorprop'],
     },
     {
         num: -5013,
@@ -25498,7 +25499,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarwhitedoorprop'],
+        otherFormes: ['pokestarwhitedoorprop'],
     },
     {
         num: -5014,
@@ -25520,7 +25521,7 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-        otherForms: ['pokestarblackbeltprop'],
+        otherFormes: ['pokestarblackbeltprop'],
     },
     {
         num: -5001,
@@ -25544,5 +25545,5 @@ export const BattlePokedex: any = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-    }
+    },
 ];

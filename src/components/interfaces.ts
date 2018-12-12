@@ -2,12 +2,12 @@ import { GuildChannel, Snowflake, VoiceChannel, VoiceConnection } from 'discord.
 import { Command } from 'discord.js-commando';
 import { Song } from './util';
 
-interface IPokeGenderRatio {
+interface IPokeGenderProp {
     M: number;
     F: number;
 }
 
-interface IPokeStats {
+interface IPokeStatProp {
     hp: number;
     atk: number;
     def: number;
@@ -18,7 +18,7 @@ interface IPokeStats {
     [propName: string]: string | number | undefined;
 }
 
-interface IPokeAbilities {
+interface IPokeAbilityProp {
     0: string;
     1?: string;
     H?: string;
@@ -26,9 +26,13 @@ interface IPokeAbilities {
     [propName: string]: string | number | undefined;
 }
 
-interface IFlavorTextEntities {
+interface IFlavorTextEntity {
     version_id: string;
     flavor_text: string;
+}
+
+interface IPokeAlias {
+    alias: string;
 }
 
 export interface IMusicCommand extends Command {
@@ -45,7 +49,7 @@ export interface IVote {
     timeout?: any;
 }
 
-export interface IQueue {
+export interface ISongQueue {
     textChannel: GuildChannel;
     voiceChannel: VoiceChannel;
     connection: VoiceConnection;
@@ -63,46 +67,91 @@ export interface IPokeData {
     entries?: any[];
 }
 
-export interface IGenre {
+export interface IMovieGenre {
     name: string;
 }
 
-export interface ICasinoRowType {
+export interface ICasinoRow {
     userID: string;
     balance: number;
     lasttopup: string;
 }
 
-export interface IPoke {
+export interface IPokeDex {
     num: number;
-    name: string;
     species: string;
+    types: string[];
+    genderRatio?: IPokeGenderProp;
+    baseStats: IPokeStatProp;
+    abilities: IPokeAbilityProp;
+    heightm: number;
+    weightkg: number;
+    color: string;
+    name?: string;
     baseForme?: string;
     baseSpecies?: string;
     forme?: string;
     formeLetter?: string;
-    types: string[];
     gender?: string;
-    genderRatio?: IPokeGenderRatio;
-    baseStats: IPokeStats;
-    abilities: IPokeAbilities;
-    heightm: number;
-    weightkg: number;
-    color: string;
     prevo?: string;
     evos?: string[];
-    evoLevel?: number;
+    evoLevel?: number | string;
     eggGroups?: string[];
     otherFormes?: string[];
 }
 
-export interface IPokeAliases {
-    alias: string;
-    tier?: string;
-    item?: string;
-    ability?: string;
-    name?: string;
-    move?: string;
+export interface IPokeAbility {
+    shortDesc: string;
+    id: string;
+    name: string;
+    num: number;
+    desc?: string;
+}
+
+export interface IPokeItem {
+    id: string;
+    name: string;
+    desc: string;
+    gen: number;
+    num: number;
+    shortDesc?: string;
+}
+
+export interface IPokeMove {
+    id: string;
+    num: number;
+    name: string;
+    shortDesc: string;
+    type: string;
+    basePower: string | number;
+    pp: number;
+    category: string;
+    accuracy: boolean | string | number;
+    priority: number;
+    target: string;
+    contestType: string;
+    isZ?: string;
+    desc?: string;
+}
+
+export interface IPokeAbilityAliases extends IPokeAlias {
+    ability: string;
+}
+
+export interface IPokeTierAliases extends IPokeAlias {
+    tier: string;
+}
+
+export interface IPokeDexAliases extends IPokeAlias {
+    name: string;
+}
+
+export interface IPokeItemAliases extends IPokeAlias {
+    item: string;
+}
+
+export interface IPokeMoveAliases extends IPokeAlias {
+    move: string;
 }
 
 export interface ITCGProps {
@@ -171,9 +220,14 @@ export interface ICountdownListRow {
 }
 
 export interface IFlavorJson {
-    [propName: string]: IFlavorTextEntities[];
+    [propName: string]: IFlavorTextEntity[];
 }
 
 export interface IFormatsJson {
     [propName: string]: string;
 }
+
+export type UnionPokeAlias = IPokeAbility & IPokeAbilityAliases;
+export type UnionPokeDex = IPokeDex & IPokeDexAliases;
+export type UnionPokeItem = IPokeItem & IPokeItemAliases;
+export type UnionPokeMove = IPokeMove & IPokeMoveAliases;

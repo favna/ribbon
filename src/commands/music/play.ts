@@ -24,7 +24,7 @@ import * as moment from 'moment';
 import fetch from 'node-fetch';
 import { Readable } from 'stream';
 import * as ytdl from 'ytdl-core';
-import { deleteCommandMessages, IMusicCommand, IQueue, parse, Song, startTyping, stopTyping, stringify } from '../../components';
+import { deleteCommandMessages, IMusicCommand, ISongQueue, parse, Song, startTyping, stopTyping, stringify } from '../../components';
 
 export default class PlaySongCommand extends Command {
     public queue: Map<any, any>;
@@ -92,7 +92,7 @@ export default class PlaySongCommand extends Command {
             const videos = await this.getPlaylistVideos(playlist);
 
             if (!queue) {
-                const listQueue: IQueue = {
+                const listQueue: ISongQueue = {
                     textChannel: msg.channel as GuildChannel,
                     voiceChannel,
                     connection: null,
@@ -154,7 +154,7 @@ export default class PlaySongCommand extends Command {
     }
 
     // TODO: Video Interface Type
-    private async handleVideo (video: any, queue: IQueue, voiceChannel: VoiceChannel, msg: CommandoMessage, statusMsg: Message): Promise<any> {
+    private async handleVideo (video: any, queue: ISongQueue, voiceChannel: VoiceChannel, msg: CommandoMessage, statusMsg: Message): Promise<any> {
         if (video.durationSeconds === 0) {
             statusMsg.edit(`${msg.author}, you can't play live streams.`);
             stopTyping(msg);

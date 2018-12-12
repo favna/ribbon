@@ -65,7 +65,7 @@
     "dotenv": "^6.1.0",
     "emoji-regex": "^7.0.1",
     "fast-levenshtein": "^2.0.6",
-    "fuse.js": "ceymard/fuse#individual-getfn",
+    "fuse.js": "favna/fuse",
     "jimp": "^0.6.0",
     "libsodium-wrappers": "^0.7.3",
     "moment": "favna/moment#fix/typing_declaration",

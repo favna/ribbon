@@ -19,7 +19,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IPoke, IPokeAliases, IPokeData, startTyping, stopTyping, zalgolize } from '../../components';
+import { capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IPokeData, startTyping, stopTyping, UnionPokeDex, zalgolize } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
 import * as entries from '../../data/dex/flavorText.json';
 
@@ -62,7 +62,7 @@ export default class FlavorCommand extends Command {
                 pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
             }
 
-            const pokeoptions: Fuse.FuseOptions<any> = {
+            const pokeoptions: Fuse.FuseOptions<UnionPokeDex> = {
                 shouldSort: true,
                 keys: [
                     { name: 'alias', getfn: t => t.alias, weight: 0.2 },
@@ -75,11 +75,11 @@ export default class FlavorCommand extends Command {
                 maxPatternLength: 32,
                 minMatchCharLength: 1,
             };
-            const aliasFuse: Fuse<any> = new Fuse(PokeAliases, pokeoptions);
-            const pokeFuse: Fuse<any> = new Fuse(BattlePokedex, pokeoptions);
-            const firstSearch: IPoke[] = pokeFuse.search(pokemon);
-            const aliasSearch: IPokeAliases[] = !firstSearch.length ? aliasFuse.search(pokemon) : null;
-            const pokeSearch: IPoke[] = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch;
+            const aliasFuse = new Fuse(PokeAliases, pokeoptions);
+            const pokeFuse = new Fuse(BattlePokedex, pokeoptions);
+            const firstSearch = pokeFuse.search(pokemon);
+            const aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null;
+            const pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch;
             const flavors: IFlavorJson = entries as IFlavorJson;
             const dataEmbed = new MessageEmbed();
 

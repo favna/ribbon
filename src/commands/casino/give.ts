@@ -16,7 +16,7 @@ import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { deleteCommandMessages, ICasinoRowType, roundNumber, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, ICasinoRow, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class GiveCommand extends Command {
     constructor (client: CommandoClient) {
@@ -75,7 +75,7 @@ export default class GiveCommand extends Command {
 
             if (query.length !== 2) throw new Error('no_balance');
 
-            query.forEach((row: ICasinoRowType) => {
+            query.forEach((row: ICasinoRow) => {
                 if (row.userID === msg.author.id && chips > row.balance) {
                     throw new Error('insufficient_balance');
                 }
@@ -84,7 +84,7 @@ export default class GiveCommand extends Command {
             let giverEntry = 0;
             let receiverEntry = 0;
 
-            query.forEach((row: ICasinoRowType, index: number) => {
+            query.forEach((row: ICasinoRow, index: number) => {
                 if (row.userID === msg.author.id) giverEntry = Number(index);
                 if (row.userID === player.id) receiverEntry = Number(index);
             });

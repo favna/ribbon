@@ -16,7 +16,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping, UnionPokeItem } from '../../components';
 import { BattleItems, ItemAliases } from '../../data/dex';
 
 export default class ItemCommand extends Command {
@@ -48,7 +48,7 @@ export default class ItemCommand extends Command {
     public run (msg: CommandoMessage, { item }: { item: string }) {
         try {
             startTyping(msg);
-            const itemOptions: Fuse.FuseOptions<any> = {
+            const itemOptions: Fuse.FuseOptions<UnionPokeItem> = {
                 shouldSort: true,
                 keys: [
                     { name: 'alias', getfn: t => t.alias, weight: 1 },

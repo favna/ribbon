@@ -16,7 +16,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping, UnionPokeMove } from '../../components';
 import { BattleMovedex, MoveAliases } from '../../data/dex';
 
 export default class MoveCommand extends Command {
@@ -49,11 +49,11 @@ export default class MoveCommand extends Command {
         try {
             startTyping(msg);
 
-            const moveOptions: Fuse.FuseOptions<any> = {
+            const moveOptions: Fuse.FuseOptions<UnionPokeMove> = {
                 shouldSort: true,
                 keys: [
                     { name: 'alias', getfn: t => t.alias, weight: 0.2 },
-                    { name: 'move', getfn: t => t.item, weight: 0.2 },
+                    { name: 'move', getfn: t => t.move, weight: 0.2 },
                     { name: 'id', getfn: t => t.id, weight: 1 },
                     { name: 'name', getfn: t => t.name, weight: 1 }
                 ],

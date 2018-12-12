@@ -13,7 +13,7 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, IGenre, roundNumber, startTyping, stopTyping, stringify } from '../../components';
+import { deleteCommandMessages, IMovieGenre, roundNumber, startTyping, stopTyping, stringify } from '../../components';
 
 export default class TVCommand extends Command {
     constructor (client: CommandoClient) {
@@ -68,7 +68,7 @@ export default class TVCommand extends Command {
                 .addField('First air Date', moment(show.first_air_date).format('MMMM Do YYYY'), true)
                 .addField(
                     'Genres',
-                    show.genres.length ? show.genres.map((genre: IGenre) => genre.name).join(', ') : 'None on TheMovieDB'
+                    show.genres.length ? show.genres.map((genre: IMovieGenre) => genre.name).join(', ') : 'None on TheMovieDB'
                 );
 
             deleteCommandMessages(msg, this.client);
