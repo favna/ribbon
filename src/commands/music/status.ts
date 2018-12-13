@@ -9,10 +9,10 @@
 
 import { stripIndents } from 'common-tags';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, IMusicCommand, Song, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, IMusicCommand, IMusicQueue, Song, startTyping, stopTyping } from '../../components';
 
 export default class MusicStatusCommand extends Command {
-    private songQueue: any;
+    private songQueue: Map<string, IMusicQueue>;
 
     constructor (client: CommandoClient) {
         super(client, {

@@ -10,10 +10,10 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, IMusicCommand, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, IMusicCommand, IMusicQueue, startTyping, stopTyping } from '../../components';
 
 export default class ResumeSongCommand extends Command {
-    private songQueue: any;
+    private songQueue: Map<string, IMusicQueue>;
 
     constructor (client: CommandoClient) {
         super(client, {

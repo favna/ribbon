@@ -1,6 +1,7 @@
-import { GuildChannel, Snowflake, VoiceChannel, VoiceConnection } from 'discord.js';
+import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'discord.js';
 import { Command } from 'discord.js-commando';
 import { Song } from './util';
+import Timeout = NodeJS.Timeout;
 
 interface IPokeGenderProp {
     M: number;
@@ -35,26 +36,67 @@ interface IPokeAlias {
     alias: string;
 }
 
+interface IYoutubeVideoContentDetails {
+    videoId: string;
+    videoPublishedAt: string;
+}
+
+interface IYoutubeVideoSnippet {
+    channelId: string;
+    channelTitle: string;
+    description: string;
+    playlistId?: string;
+    position?: number;
+    publishedAt: string;
+    resourceId: IYoutubeVideoResource;
+    thumbnails: IYoutubeVideoThumbnails;
+    title: string;
+}
+
+interface IYoutubeVideoThumbnails {
+    default: string;
+    high?: string;
+    medium?: string;
+    standard?: string;
+}
+
+interface IYoutubeVideoResource {
+    kind: string;
+    videoId: string;
+}
+
 export interface IMusicCommand extends Command {
     queue: any;
     votes: any;
 }
 
-export interface IVote {
-    count: number;
-    users: string[];
-    queue: any;
-    guild: string;
-    start: number;
-    timeout?: any;
-}
-
-export interface ISongQueue {
-    textChannel: GuildChannel;
+export interface IMusicQueue {
+    textChannel: TextChannel;
     voiceChannel: VoiceChannel;
     connection: VoiceConnection;
     songs: Song[];
     volume: number;
+    playing: boolean;
+    stopByCommand?: boolean;
+}
+
+export interface IMusicVote {
+    count: number;
+    users: Snowflake[];
+    queue: IMusicQueue;
+    guild: Snowflake;
+    start: number;
+    timeout: Timeout;
+}
+
+export interface IYoutubeVideo {
+    id: string;
+    title: string;
+    kind: string;
+    etag?: string;
+    durationSeconds: number;
+    contentDetails?: IYoutubeVideoContentDetails;
+    snippet?: IYoutubeVideoSnippet;
 }
 
 export interface IPokeData {

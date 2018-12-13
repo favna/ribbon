@@ -10,10 +10,10 @@
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage, util } from 'discord.js-commando';
-import { deleteCommandMessages, IMusicCommand, Song, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, IMusicCommand, IMusicQueue, Song, startTyping, stopTyping } from '../../components';
 
 export default class SaveQueueCommand extends Command {
-    private songQueue: any;
+    private songQueue: Map<string, IMusicQueue>;
 
     constructor (client: CommandoClient) {
         super(client, {

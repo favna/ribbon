@@ -8,7 +8,7 @@ import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel, Util } from 'discord.js';
 import { CommandoClient, CommandoGuild, CommandoMessage } from 'discord.js-commando';
 import emojis from 'emoji-regex';
-import { diacriticsMap, validBooleansMap } from '.';
+import { diacriticsMap, IYoutubeVideo, validBooleansMap } from '.';
 
 export const arrayClean = (deleteValue: string | number | undefined | any, array: Array<string | number | undefined | any>) => array.filter(element => element !== deleteValue);
 
@@ -133,7 +133,7 @@ export class Song {
     public playing: boolean;
 
     // TODO: Video Interface Type
-    constructor (video: any, member: GuildMember) {
+    constructor (video: IYoutubeVideo, member: GuildMember) {
         this.name = Util.escapeMarkdown(video.title);
         this.id = video.id;
         this.length = video.durationSeconds;

@@ -18,16 +18,16 @@
  */
 
 import { oneLine, stripIndents } from 'common-tags';
-import { Guild, GuildChannel, Message, StreamDispatcher, TextChannel, Util, VoiceChannel } from 'discord.js';
+import { Guild, Message, Snowflake, StreamDispatcher, TextChannel, Util, VoiceChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
 import { Readable } from 'stream';
 import * as ytdl from 'ytdl-core';
-import { deleteCommandMessages, IMusicCommand, ISongQueue, parse, Song, startTyping, stopTyping, stringify } from '../../components';
+import { deleteCommandMessages, IMusicCommand, IMusicQueue, IYoutubeVideo, parse, Song, startTyping, stopTyping, stringify } from '../../components';
 
 export default class PlaySongCommand extends Command {
-    public queue: Map<any, any>;
+    public queue: Map<Snowflake, IMusicQueue>;
     private queueVotes: any;
 
     constructor (client: CommandoClient) {
@@ -86,18 +86,18 @@ export default class PlaySongCommand extends Command {
         if (videoQuery.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
             await statusMsg.edit('obtaining playlist videos... (this can take a while for long lists)');
 
-            const playlist = this.getPlaylistID(videoQuery);
-
             // TODO: Video Interface Type
+            const playlist = this.getPlaylistID(videoQuery);
             const videos = await this.getPlaylistVideos(playlist);
 
             if (!queue) {
-                const listQueue: ISongQueue = {
-                    textChannel: msg.channel as GuildChannel,
+                const listQueue: IMusicQueue = {
+                    textChannel: msg.channel as TextChannel,
                     voiceChannel,
                     connection: null,
                     songs: [],
                     volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME),
+                    playing: false,
                 };
 
                 this.queue.set(msg.guild.id, listQueue);
@@ -114,8 +114,7 @@ export default class PlaySongCommand extends Command {
                 }
             }
 
-            // TODO: Video Interface Type
-            videos.forEach(async video => this.handlePlaylist(video, playlist, queue, voiceChannel, msg, statusMsg));
+            videos.forEach(async (video: IYoutubeVideo) => this.handlePlaylist(video, playlist, msg, statusMsg));
 
             if (!this.queue.get(msg.guild.id).playing) {
                 this.play(msg.guild, this.queue.get(msg.guild.id).songs[0]);
@@ -125,14 +124,14 @@ export default class PlaySongCommand extends Command {
         }
 
         try {
-            // TODO: Video Interface Type
-            const video = await this.getVideoID(videoQuery);
+            const video: IYoutubeVideo = await this.getVideoID(videoQuery);
             if (!video) throw new Error('no_video_id');
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
+            this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
+            return null;
         } catch (error) {
             if (/(?:no_video_id)/i.test(error.toString())) {
                 try {
@@ -142,19 +141,21 @@ export default class PlaySongCommand extends Command {
                     const video = await this.getVideo(videoId);
                     deleteCommandMessages(msg, this.client);
 
-                    return this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
+                    this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
+                    return null;
                 } catch (err) {
                     deleteCommandMessages(msg, this.client);
                     stopTyping(msg);
 
-                    return statusMsg.edit(`${msg.author}, couldn't obtain the search result video's details.`);
+                    return statusMsg.edit(`<@${msg.author.id}>, couldn't obtain the search result video's details.`);
                 }
             }
+
+            return statusMsg.edit(`<@${msg.author.id}>, couldn't match a youtube result. Was that really a youtube video?`);
         }
     }
 
-    // TODO: Video Interface Type
-    private async handleVideo (video: any, queue: ISongQueue, voiceChannel: VoiceChannel, msg: CommandoMessage, statusMsg: Message): Promise<any> {
+    private async handleVideo (video: IYoutubeVideo, queue: IMusicQueue, voiceChannel: VoiceChannel, msg: CommandoMessage, statusMsg: Message): Promise<void> {
         if (video.durationSeconds === 0) {
             statusMsg.edit(`${msg.author}, you can't play live streams.`);
             stopTyping(msg);
@@ -169,10 +170,10 @@ export default class PlaySongCommand extends Command {
                 connection: null,
                 songs: [],
                 volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME),
+                playing: false,
             };
             this.queue.set(msg.guild.id, queue);
 
-            // TODO: Video Interface Type
             const result = this.addSong(msg, video);
             const resultMessage = {
                 author: {
@@ -207,7 +208,6 @@ export default class PlaySongCommand extends Command {
                 return null;
             }
         } else {
-            // TODO: Video Interface Type
             const result = this.addSong(msg, video);
             const resultMessage = {
                 author: {
@@ -225,14 +225,14 @@ export default class PlaySongCommand extends Command {
         }
     }
 
-    // TODO: Video Interface Type
-    private async handlePlaylist (video: any, playlist: any, queue: any, voiceChannel: VoiceChannel, msg: CommandoMessage, statusMsg: Message): Promise<any> {
+    private async handlePlaylist (video: IYoutubeVideo, playlistId: string, msg: CommandoMessage, statusMsg: Message): Promise<void> {
         if (video.durationSeconds === 0) {
             statusMsg.edit(`${msg.author}, looks like that playlist has a livestream and I cannot play livestreams`);
             stopTyping(msg);
 
             return null;
         }
+
         const result = this.addSong(msg, video);
         const resultMessage = {
             author: {
@@ -254,7 +254,7 @@ export default class PlaySongCommand extends Command {
         statusMsg.edit('', {
             embed: {
                 description: stripIndents`
-                    Adding playlist [${playlist.title}](https://www.youtube.com/playlist?list=${playlist.id}) to the queue!
+                    Adding [the playlist](https://www.youtube.com/playlist?list=${playlistId}) to the queue!
                     Check what's been added with: \`${msg.guild.commandPrefix}queue\`!
                 `,
                 color: 3447003,
@@ -269,8 +269,7 @@ export default class PlaySongCommand extends Command {
         return null;
     }
 
-    // TODO: Video Interface Type
-    private addSong (msg: CommandoMessage, video: any) {
+    private addSong (msg: CommandoMessage, video: IYoutubeVideo) {
         const queue = this.queue.get(msg.guild.id);
         const songNumerator = (prev: any, curSong: any) => {
             if (curSong.member.id === msg.author.id) {
@@ -317,7 +316,7 @@ export default class PlaySongCommand extends Command {
         }
 
         if (!song) {
-            if (queue) {
+            if (queue && !queue.stopByCommand) {
                 queue.textChannel.send('We\'ve run out of songs! Better queue up some more tunes.');
                 queue.voiceChannel.leave();
                 this.queue.delete(guild.id);
@@ -351,8 +350,8 @@ export default class PlaySongCommand extends Command {
 
         const dispatcher: StreamDispatcher = queue.connection
             .play(stream, {
-                fec: true,
                 passes: Number(process.env.PASSES),
+                fec: true,
             })
             .on('end', () => {
                 if (streamErrored) {
@@ -373,7 +372,7 @@ export default class PlaySongCommand extends Command {
         queue.playing = true;
     }
 
-    private getPlaylistID (url: string) {
+    private getPlaylistID (url: string): string {
         return parse(url.split('?')[1]).list;
     }
 
@@ -390,13 +389,10 @@ export default class PlaySongCommand extends Command {
             );
 
             const data = await request.json();
-            // TODO: Video Interface Type
-            const arr: any[] = [];
+            const arr: IYoutubeVideo[] = [];
             const videos = data.items;
 
-            // TODO: Video Interface Type
-            videos.forEach(async (video: any) => arr.push(await this.getVideo(video.snippet.resourceId.videoId)));
-
+            videos.forEach(async (video: IYoutubeVideo) => arr.push(await this.getVideo(video.snippet.resourceId.videoId)));
             return arr;
         } catch (err) {
             return null;
@@ -423,7 +419,7 @@ export default class PlaySongCommand extends Command {
         }
     }
 
-    private getVideoID (url: string) {
+    private getVideoID (url: string): Promise<IYoutubeVideo> {
         try {
             if (/youtu\.be/i.test(url)) {
                 return this.getVideo(url.match(/\/[a-zA-Z0-9-_]+$/i)[0].slice(1));
@@ -431,11 +427,11 @@ export default class PlaySongCommand extends Command {
 
             return this.getVideo(parse(url.split('?')[1]).v);
         } catch (err) {
-            return false;
+            return null;
         }
     }
 
-    private async getVideo (id: string) {
+    private async getVideo (id: string): Promise<IYoutubeVideo> {
         try {
             const request = await fetch(
                 `https://www.googleapis.com/youtube/v3/videos?${stringify({
@@ -449,16 +445,13 @@ export default class PlaySongCommand extends Command {
             const data = await request.json();
 
             return {
-                duration: data.items[0].contentDetails.duration,
-                durationSeconds: moment
-                    .duration(data.items[0].contentDetails.duration)
-                    .asSeconds(),
+                durationSeconds: moment.duration(data.items[0].contentDetails.duration).asSeconds(),
                 id: data.items[0].id,
                 kind: data.items[0].kind,
                 title: data.items[0].snippet.title,
             };
         } catch (err) {
-            return false;
+            return null;
         }
     }
 }
