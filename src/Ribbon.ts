@@ -1,14 +1,22 @@
 import * as Database from 'better-sqlite3';
 import { GuildMember, RateLimitData } from 'discord.js';
-import {
-    Client, Command, CommandoClient, CommandoGuild,
-    CommandoMessage, SyncSQLiteProvider,
-} from 'discord.js-commando';
+import { Client, Command, CommandoClient, CommandoGuild, CommandoMessage, SyncSQLiteProvider } from 'discord.js-commando';
 import * as path from 'path';
 import {
-    handleCmdErr, handleDebug, handleErr, handleGuildJoin, handleGuildLeave,
-    handleMemberJoin, handleMemberLeave, handleMsg, handlePresenceUpdate, handleRateLimit,
-    handleReady, handleRejection, handleUnknownCmd, handleWarn,
+    handleCmdErr,
+    handleDebug,
+    handleErr,
+    handleGuildJoin,
+    handleGuildLeave,
+    handleMemberJoin,
+    handleMemberLeave,
+    handleMsg,
+    handlePresenceUpdate,
+    handleRateLimit,
+    handleReady,
+    handleRejection,
+    handleUnknownCmd,
+    handleWarn,
 } from './components';
 
 export default class Ribbon {
@@ -19,6 +27,17 @@ export default class Ribbon {
         this.token = token;
         this.client = new Client({
             commandPrefix: '!',
+            disabledEvents: [
+                'MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE', 'MESSAGE_REACTION_REMOVE_ALL',
+                'GUILD_MEMBER_UPDATE', 'GUILD_MEMBERS_CHUNK', 'GUILD_INTEGRATIONS_UPDATE',
+                'GUILD_ROLE_CREATE', 'GUILD_ROLE_DELETE', 'GUILD_ROLE_UPDATE',
+                'CHANNEL_CREATE', 'CHANNEL_DELETE', 'CHANNEL_PINS_UPDATE',
+                'GUILD_BAN_ADD', 'GUILD_BAN_REMOVE', 'TYPING_START',
+                'CHANNEL_UPDATE', 'USER_UPDATE', 'WEBHOOKS_UPDATE',
+                'MESSAGE_DELETE_BULK', 'MESSAGE_DELETE'
+            ],
+            messageCacheLifetime: 10 * 60,
+            messageSweepInterval: 8 * 60,
             owner: ['268792781713965056', '437280139353653249'],
             presence: {
                 status: 'online',
@@ -29,6 +48,7 @@ export default class Ribbon {
             },
             typescript: true,
             unknownCommandResponse: false,
+            ws: { compress: true },
         });
     }
 

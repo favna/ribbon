@@ -10,7 +10,6 @@
  * @param {GuildMemberResolvable} [ImageSize] Optional: Size of the avatar to get. Defaults to 1024
  */
 
-import { stripIndents } from 'common-tags';
 import { GuildMember, ImageSize, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
@@ -40,19 +39,8 @@ export default class AvatarCommand extends Command {
                     key: 'size',
                     prompt: 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
                     type: 'integer',
+                    oneOf: [128, 256, 512, 1024, 2048],
                     default: 1024,
-                    validate: (size: string) => {
-                        const validSizes = ['128', '256', '512', '1024', '2048'];
-
-                        if (validSizes.includes(String(size))) {
-                            return true;
-                        }
-
-                        return stripIndents`Has to be one of ${validSizes
-                            .map(val => `\`${val}\``)
-                            .join(', ')}
-                            Respond with your new selection or`;
-                    },
                 }
             ],
         });
