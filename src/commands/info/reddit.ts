@@ -36,8 +36,7 @@ export default class RedditCommand extends Command {
             args: [
                 {
                     key: 'user',
-                    prompt:
-                        'For what Reddit user do you want to view statistics?',
+                    prompt: 'For what Reddit user do you want to view statistics?',
                     type: 'string',
                     validate: (v: string) => {
                         if (/[A-z0-9_-]/.test(v)) {
@@ -59,6 +58,7 @@ export default class RedditCommand extends Command {
             const reply: Message | Message[] = await msg.say('`fetching and calculating statistics...`');
 
             await this.fetchData(user);
+            if (!this.comments.length || !this.submitted.length) throw new Error('no_user');
             this.comments.sort((a: any, b: any) => b.data.score - a.data.score);
 
             const bestComment = {
@@ -130,6 +130,11 @@ export default class RedditCommand extends Command {
             return msg.embed(redditEmbed);
         } catch (err) {
             stopTyping(msg);
+
+            if (/(?:no_user)/i.test(err.toString())) {
+                return msg.reply(oneLine`Either there is no Reddit user \`${user}\`
+                    or they do not have enough content to show`);
+            }
 
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 

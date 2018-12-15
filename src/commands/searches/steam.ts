@@ -13,7 +13,7 @@ import * as cheerio from 'cheerio';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import * as striptags from 'striptags';
+import { unescape } from 'unescape-es6';
 import { currencymap, deleteCommandMessages, ISteamGenre, startTyping, stopTyping, stringify } from '../../components';
 
 export default class SteamCommand extends Command {
@@ -78,7 +78,7 @@ export default class SteamCommand extends Command {
                 .setTitle(steamData.name)
                 .setURL(`http://store.steampowered.com/app/${steamData.steam_appid}/`)
                 .setImage(steamData.header_image)
-                .setDescription(striptags(steamData.short_description))
+                .setDescription(unescape(steamData.short_description))
                 .addField(
                     steamData.price_overview ? `Price in ${steamData.price_overview.currency}` : 'Price',
                     steamData.price_overview

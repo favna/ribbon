@@ -25,6 +25,8 @@ export default class ImageCommand extends Command {
             description: 'Finds an image through Google',
             format: 'ImageQuery',
             examples: ['image Pyrrha Nikos'],
+            nsfw: true,
+            explicit: false,
             guildOnly: false,
             throttling: {
                 usages: 2,
@@ -45,8 +47,8 @@ export default class ImageCommand extends Command {
     }
 
     public async run (msg: CommandoMessage, { query }: { query: string }) {
-        const embed = new MessageEmbed();
         const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
+        const imageEmbed = new MessageEmbed();
 
         try {
             startTyping(msg);
@@ -55,13 +57,13 @@ export default class ImageCommand extends Command {
                     cx: process.env.IMAGE_KEY,
                     key: process.env.GOOGLE_API_KEY,
                     q: query,
-                    safe: nsfwAllowed ? 'off' : 'medium',
+                    safe: nsfwAllowed ? 'off' : 'active',
                     searchType: 'image',
                 })}`
             );
             const imageData = await imageSearch.json();
 
-            embed
+            imageEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
                 .setImage(imageData.items[0].link)
                 .setFooter(`Search query: "${query.replace(/\+/g, ' ')}"`);
@@ -69,7 +71,7 @@ export default class ImageCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.embed(embed);
+            return msg.embed(imageEmbed);
         } catch (err) {
             // Intentionally empty
         }
@@ -79,7 +81,7 @@ export default class ImageCommand extends Command {
                 `https://www.google.com/search?${stringify({
                     gs_l: 'img',
                     q: query,
-                    safe: nsfwAllowed ? 'off' : 'medium',
+                    safe: nsfwAllowed ? 'off' : 'active',
                     tbm: 'isch',
                 })}`
             );
@@ -89,7 +91,7 @@ export default class ImageCommand extends Command {
                 .first()
                 .attr('src');
 
-            embed
+            imageEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
                 .setImage(src)
                 .setFooter(`Search query: "${query}"`);
@@ -97,7 +99,7 @@ export default class ImageCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.embed(embed);
+            return msg.embed(imageEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

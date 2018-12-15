@@ -2672,11 +2672,6 @@ strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-striptags@^3.1.1:
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/striptags/-/striptags-3.1.1.tgz#c8c3e7fdd6fb4bb3a32a3b752e5b5e3e38093ebd"
-  integrity sha1-yMPn/db7S7OjKjt1LltePjgJPr0=
-
 supports-color@5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.4.0.tgz#1c6b337402c2137605efe19f10fec390f6faab54"
@@ -2902,6 +2897,11 @@ underscore@~1.8.3:
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
   integrity sha1-Tz+1OxBuYJf8+ctBCfKl6b36UCI=
+
+unescape-es6@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/unescape-es6/-/unescape-es6-2.0.7.tgz#ce65362c3077d80c1dd6c02b5b8d1a222bd6e3c0"
+  integrity sha512-97yW+XONmSJVG5bXiEzlGVB/6hwH4jX0vNxqvUJebMghcRmTPVMQoNlSz17gPc4hv9gcvBh35pAXJVEgL8C1IQ==
 
 uri-js@^4.2.2:
   version "4.2.2"

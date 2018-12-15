@@ -57,9 +57,7 @@ export default class OsuCommand extends Command {
             const osu = await res.json();
             const osuEmbed = new MessageEmbed();
 
-            if (Object.values(osu[0]).includes(null)) {
-                throw new Error('noplayer');
-            }
+            if (!osu.length) throw new Error('no_player');
 
             osuEmbed
                 .setTitle(`OSU! Player Stats for ${osu[0].username} (${osu[0].user_id})`)
@@ -92,13 +90,15 @@ export default class OsuCommand extends Command {
         } catch (err) {
             stopTyping(msg);
 
-            if (/(noplayer)/i.test(err.toString())) return msg.reply(`no user found with username \`${player}\`.`);
+            if (/(?:no_player)/i.test(err.toString())) {
+                return msg.reply(`no OSU player found with username \`${player}\`.`);
+            }
 
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id
-                }> Error occurred in \`fortnite\` command!
+                }> Error occurred in \`osu\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
