@@ -25,18 +25,11 @@ export default class DBPostCommand extends Command {
         try {
             startTyping(msg);
 
-            await fetch(
-                `https://discordbots.org/api/bots/${this.client.user.id}/stats`,
-                {
-                    body: JSON.stringify({
-                        server_count: this.client.guilds.size,
-                    }),
-                    headers: {
-                        Authorization: process.env.DISCORD_BOTS_API_KEY,
-                        'Content-Type': 'application/json',
-                    },
+            await fetch(`https://discordbots.org/api/bots/${this.client.user.id}/stats`, {
+                    body: JSON.stringify({ server_count: this.client.guilds.size }),
+                    headers: { Authorization: process.env.DISCORD_BOTS_API_KEY, 'Content-Type': 'application/json' },
                     method: 'POST',
-                }
+                },
             );
 
             deleteCommandMessages(msg, this.client);
