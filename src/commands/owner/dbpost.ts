@@ -29,7 +29,7 @@ export default class DBPostCommand extends Command {
                     body: JSON.stringify({ server_count: this.client.guilds.size }),
                     headers: { Authorization: process.env.DISCORD_BOTS_API_KEY, 'Content-Type': 'application/json' },
                     method: 'POST',
-                },
+                }
             );
 
             deleteCommandMessages(msg, this.client);
