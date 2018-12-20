@@ -269,6 +269,22 @@ export interface IFormatsJson {
     [propName: string]: string;
 }
 
+export interface IIGDBProp {
+    id: number;
+    name?: string;
+}
+
+export interface IIGDBInvolvedCompany extends IIGDBProp {
+    id: number;
+    company: IIGDBProp;
+    developer: boolean;
+}
+
+export interface IIGDBAgeRating extends IIGDBProp {
+    category: number;
+    rating: number;
+}
+
 export type UnionPokeAlias = IPokeAbility & IPokeAbilityAliases;
 export type UnionPokeDex = IPokeDex & IPokeDexAliases;
 export type UnionPokeItem = IPokeItem & IPokeItemAliases;

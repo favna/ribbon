@@ -9,11 +9,12 @@
  * @param {string} GameName The name of any game that you want to find
  */
 
+import { oneLine } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping, stringify } from '../../components';
+import { deleteCommandMessages, IGBDAgeRatings, IIGDBAgeRating, IIGDBInvolvedCompany, IIGDBProp, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class IGDBCommand extends Command {
     constructor (client: CommandoClient) {
@@ -45,69 +46,39 @@ export default class IGDBCommand extends Command {
         try {
             const gameEmbed = new MessageEmbed();
             const headers = {
-                headers: {
-                    Accept: 'application/json',
-                    'user-key': process.env.IGDB_API_KEY,
-                },
+                Accept: 'application/json',
+                'user-key': process.env.IGDB_API_KEY,
             };
 
-            const gameSearch = await fetch(
-                `https://api-endpoint.igdb.com/games/?${stringify({
-                    fields: ['name', 'url', 'summary', 'rating', 'developers', 'genres', 'release_dates', 'platforms', 'cover', 'esrb', 'pegi'].join(),
-                    limit: 1,
-                    offset: 0,
-                    search: game,
-                })}`,
-                headers
-            );
-            const gameInfo = await gameSearch.json();
-            const coverImg = (await gameInfo[0].cover.url.includes('http'))
-                ? gameInfo[0].cover.url
-                : `https:${gameInfo[0].cover.url}`;
-            const releaseDate = moment(gameInfo[0].release_dates[0].date).format('MMMM Do YYYY');
-
-            const companyFetch = await fetch(
-                `https://api-endpoint.igdb.com/companies/${gameInfo[0].developers.join()}?${stringify(
-                    {
-                        fields: ['name'].join(),
-                        limit: 1,
-                        offset: 0,
-                    }
-                )}`,
-                headers
-            );
-            const companyInfo = await companyFetch.json();
-
-            const genreFetch = await fetch(
-                `https://api-endpoint.igdb.com/genres/${gameInfo[0].genres.join()}?${stringify({ fields: ['name'].join() })}`,
-                headers
-            );
-            const genreInfo = await genreFetch.json();
-
-            const platformFetch = await fetch(
-                `https://api-endpoint.igdb.com/platforms/${gameInfo[0].platforms.join()}?${stringify({ fields: ['name'].join() })}`,
-                headers
-            );
-            const platformInfo = await platformFetch.json();
+            const igdbSearch = await fetch('https://api-v3.igdb.com/games', {
+                body: oneLine`
+                    search "${game}";
+                    fields name, url, summary, rating, involved_companies.developer,
+                           involved_companies.company.name, genres.name, release_dates.date,
+                           platforms.name, cover.url, age_ratings.rating, age_ratings.category;
+                    where age_ratings != n;
+                    limit 1;
+                    offset 0;
+                `,
+                headers,
+                method: 'POST',
+            });
+            const gameInfo = await igdbSearch.json();
+            const hit = gameInfo[0];
+            const coverImg = /https?:/i.test(hit.cover.url) ? hit.cover.url : `https:${hit.cover.url}`;
 
             gameEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
-                .setTitle(gameInfo[0].name)
-                .setURL(gameInfo[0].url)
+                .setTitle(hit.name)
+                .setURL(hit.url)
                 .setThumbnail(coverImg)
-                .addField('User Score', roundNumber(gameInfo[0].rating, 1), true)
-                .addField(
-                    `${gameInfo[0].pegi ? 'PEGI' : 'ESRB'} rating`,
-                    gameInfo[0].pegi
-                        ? gameInfo[0].pegi.rating
-                        : gameInfo[0].esrb.rating,
-                    true
-                )
-                .addField('Release Date', releaseDate, true)
-                .addField('Genres', this.extractNames(genreInfo), true)
-                .addField('Developer', companyInfo[0].name, true)
-                .addField('Platforms', this.extractNames(platformInfo), true)
-                .setDescription(gameInfo[0].summary);
+                .addField('User Score', roundNumber(hit.rating, 1), true)
+                .addField('Age Rating(s)', hit.age_ratings.map((e: IIGDBAgeRating) => `${e.category === 1 ? 'ESRB' : 'PEGI'}: ${IGBDAgeRatings[e.rating]}`), true)
+                .addField('Release Date', moment.unix(hit.release_dates[0].date).format('MMMM Do YYYY'), true)
+                .addField('Genre(s)', hit.genres.map((genre: IIGDBProp) => genre.name).join(', '), true)
+                .addField('Developer(s)', hit.involved_companies.map((e: IIGDBInvolvedCompany) => e.developer ? e.company.name : null).filter(Boolean).join(', '), true)
+                .addField('Platform(s)', hit.platforms.map((e: IIGDBProp) => e.name).join(', '), true)
+                .setDescription(hit.summary);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -119,19 +90,5 @@ export default class IGDBCommand extends Command {
 
             return msg.reply(`nothing found for \`${game}\``);
         }
-    }
-
-    private extractNames (arr: any[]) {
-        let res = '';
-
-        for (let i = 0; i < arr.length; ++i) {
-            if (i !== arr.length - 1) {
-                res += `${arr[i].name}, `;
-            } else {
-                res += `${arr[i].name}`;
-            }
-        }
-
-        return res;
     }
 }

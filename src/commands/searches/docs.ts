@@ -15,7 +15,7 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, gobalObjectsMap, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, globalObjectsMap, startTyping, stopTyping } from '../../components';
 
 export default class DocsCommand extends Command {
     private readonly docs: any;
@@ -232,7 +232,7 @@ export default class DocsCommand extends Command {
 
         types.forEach((typeBits: any[], outerIndex: number, thisArr: any[]) => {
             typeBits.forEach((t: string) => {
-                if (gobalObjectsMap.includes(t[0].toLowerCase()) && !(/(?:Global_Objects)/).test(final)) {
+                if (globalObjectsMap.includes(t[0].toLowerCase()) && !(/(?:Global_Objects)/).test(final)) {
                     final += '[';
                     final += t[0];
                     if (t[1]) final += t[1];
