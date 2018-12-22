@@ -86,7 +86,6 @@ export default class PlaySongCommand extends Command {
         if (videoQuery.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
             await statusMsg.edit('obtaining playlist videos... (this can take a while for long lists)');
 
-            // TODO: Video Interface Type
             const playlist = this.getPlaylistID(videoQuery);
             const videos = await this.getPlaylistVideos(playlist);
 

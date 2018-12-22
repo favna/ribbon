@@ -385,10 +385,8 @@ export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, m
     `);
 };
 
-export const handleDebug = (info: string) => {
-    /* tslint:disable-next-line:no-console */
-    console.log(info);
-};
+/* tslint:disable-next-line:no-console */
+export const handleDebug = (info: string) => console.log(info);
 
 export const handleErr = (client: CommandoClient, err: Error) => {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
