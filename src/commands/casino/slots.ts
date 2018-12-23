@@ -31,7 +31,7 @@ export default class SlotsCommand extends Command {
             guildOnly: true,
             throttling: {
                 usages: 2,
-                duration: 5,
+                duration: 3,
             },
             args: [
                 {
@@ -39,7 +39,7 @@ export default class SlotsCommand extends Command {
                     prompt: 'How many chips do you want to gamble?',
                     type: 'integer',
                     oneOf: [1, 2, 3],
-                    parse: (p: number) => roundNumber(Number(p)),
+                    parse: (p: string) => roundNumber(Number(p)),
                 }
             ],
         });
@@ -50,18 +50,16 @@ export default class SlotsCommand extends Command {
         const slotEmbed = new MessageEmbed();
 
         slotEmbed
-            .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
+            .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
             .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
             .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
         try {
             startTyping(msg);
-            const query = conn
-                .prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`)
-                .get(msg.author.id);
+            let { balance } = conn.prepare(`SELECT balance, userID FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
-            if (query) {
-                if (chips > query.balance) {
+            if (balance >= 0) {
+                if (chips > balance) {
                     return msg.reply(`you don\'t have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
                 }
 
@@ -97,7 +95,7 @@ export default class SlotsCommand extends Command {
                 });
 
                 const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven, watermelon]);
-                const prevBal = query.balance;
+                const prevBal = balance;
                 const result = machine.play();
 
                 let titleString: string;
@@ -126,11 +124,11 @@ export default class SlotsCommand extends Command {
                 }
 
                 winningPoints !== 0
-                    ? (query.balance += winningPoints - chips)
-                    : (query.balance -= chips);
+                    ? (balance += winningPoints - chips)
+                    : (balance -= chips);
 
                 conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`)
-                    .run({ balance: query.balance });
+                    .run({ balance });
 
                 titleString =
                     chips === winningPoints
@@ -141,12 +139,12 @@ export default class SlotsCommand extends Command {
                                 ? `(slots gave back ${winningPoints})`
                                 : ''
                             }`
-                        : `won ${query.balance - prevBal} chips`;
+                        : `won ${balance - prevBal} chips`;
 
                 slotEmbed
                     .setTitle(`${msg.author.tag} ${titleString}`)
                     .addField('Previous Balance', prevBal, true)
-                    .addField('New Balance', query.balance, true)
+                    .addField('New Balance', balance, true)
                     .setDescription(result.visualize());
 
                 deleteCommandMessages(msg, this.client);
@@ -156,11 +154,13 @@ export default class SlotsCommand extends Command {
             }
             stopTyping(msg);
 
-            return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
+            return msg.reply(oneLine`looks like you either don't have any chips yet or you used them all
+                Run \`${msg.guild.commandPrefix}chips\` to get your first 500
+                or run \`${msg.guild.commandPrefix}withdraw\` to withdraw some chips from your vault.`);
         } catch (err) {
             stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`)
+            if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();
 
                 return msg.reply(`looks like you don\'t have any chips yet, please use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);

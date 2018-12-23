@@ -71,7 +71,7 @@ export default class WarnCommand extends Command {
 
         try {
             startTyping(msg);
-            const query = conn.prepare(`SELECT id,points FROM "${msg.guild.id}" WHERE id = ?;`).get(member.id);
+            const query = conn.prepare(`SELECT points FROM "${msg.guild.id}" WHERE id = ?;`).get(member.id);
             let newPoints = points;
             let previousPoints = null;
 
@@ -104,7 +104,7 @@ export default class WarnCommand extends Command {
             return msg.embed(warnEmbed);
         } catch (err) {
             stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
+            if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
                 conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id TEXT PRIMARY KEY, tag TEXT, points INTEGER);`)
                     .run();
 

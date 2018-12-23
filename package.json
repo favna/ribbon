@@ -62,7 +62,7 @@
     "discord.js": "favna/discord.js#main",
     "discord.js-commando": "favna/commando#ribbon",
     "dotenv": "^6.1.0",
-    "emoji-regex": "^7.0.2",
+    "emoji-regex": "^7.0.3",
     "fast-levenshtein": "^2.0.6",
     "fuse.js": "favna/fuse",
     "jimp": "^0.6.0",

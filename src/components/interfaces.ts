@@ -116,7 +116,9 @@ export interface IMovieGenre {
 export interface ICasinoRow {
     userID: string;
     balance: number;
-    lasttopup: string;
+    lastdaily: string;
+    lastweekly: string;
+    vault: number;
 }
 
 export interface IPokeDex {

@@ -54,11 +54,11 @@ export default class ListWarnCommand extends Command {
 
         try {
             startTyping(msg);
-            const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE id= ?;`).get(member.id);
+            const { id, points, tag } = conn.prepare(`SELECT id, points, tag FROM "${msg.guild.id}" WHERE id= ?;`).get(member.id);
 
             embed.setDescription(stripIndents`
-                **Member:** ${query.tag} (${query.id})
-                **Current warning Points:** ${query.points}
+                **Member:** ${tag} (${id})
+                **Current warning Points:** ${points}
             `);
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

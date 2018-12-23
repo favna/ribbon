@@ -70,7 +70,7 @@ export default class GiveCommand extends Command {
         try {
             startTyping(msg);
             const query = conn
-                .prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = $authorid OR userID = $playerid;`)
+                .prepare(`SELECT userID, balance FROM "${msg.guild.id}" WHERE userID = $authorid OR userID = $playerid;`)
                 .all({ authorid: msg.author.id, playerid: player.id });
 
             if (query.length !== 2) throw new Error('no_balance');
@@ -110,11 +110,11 @@ export default class GiveCommand extends Command {
             return msg.embed(giveEmbed);
         } catch (err) {
             stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`)
+            if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();
 
-                return msg.reply(`looks like you don\'t have any chips yet, please use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
+                return msg.reply(`looks like you don't have any chips yet, please use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
             }
 
             if (/(?:no_balance)/i.test(err.toString())) {
@@ -122,7 +122,7 @@ export default class GiveCommand extends Command {
             }
 
             if (/(?:insufficient_balance)/i.test(err.toString())) {
-                return msg.reply(`you don\'t have that many chips to donate. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
+                return msg.reply(`you don't have that many chips to donate. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
             }
 
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;

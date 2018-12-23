@@ -1061,10 +1061,10 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
-emoji-regex@^7.0.2:
-  version "7.0.2"
-  resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.2.tgz#7e08c8797b2f7ecf422fe62714b6214f0256be42"
-  integrity sha512-I+SKlWNCfHZZakO0+3HOM8RdrfByyKb4HGf+QfpQq2qwyThq2wyEIyZnt9OINAe8ug2PvoqJBXqDM7/ApjuXBw==
+emoji-regex@^7.0.3:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"
+  integrity sha512-CwBLREIQ7LvYFB0WyRvwhq5N5qPhc6PMjD6bYggFlI5YyDgl+0vxq5VHbMOFqLg7hfWzmu8T5Z1QofhmTIhItA==
 
 entities@^1.1.1, entities@~1.1.1:
   version "1.1.2"

@@ -44,28 +44,28 @@ export default class WeeklyCommand extends Command {
 
         try {
             startTyping(msg);
-            const query = conn
-                .prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`)
-                .get(msg.author.id);
+            let { balance, lastweekly } = conn.prepare(`SELECT balance, lastweekly FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
-            if (query) {
-                const topupdate = moment(query.lasttopup).add(7, 'days');
-                const dura = moment.duration(topupdate.diff(moment()));
+            if (balance >= 0) {
+                const weeklyDura = moment.duration(moment(lastweekly).add(7, 'days').diff(moment()));
+                const prevBal = balance;
 
                 let chipStr = '';
                 let resetStr = '';
 
-                if (dura.asHours() <= 0) {
-                    conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance, lasttopup=$date WHERE userID="${msg.author.id}";`)
-                        .run({ balance: query.balance + 3500, date: moment().format('YYYY-MM-DD HH:mm') });
+                balance += 2000;
 
-                    chipStr = `${query.balance} ➡ ${query.balance + 3500}`;
+                if (weeklyDura.asDays() <= 0) {
+                    conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance, lastweekly=$date WHERE userID="${msg.author.id}";`)
+                        .run({ balance, date: moment().format('YYYY-MM-DD HH:mm') });
+
+                    chipStr = `${prevBal} ➡ ${balance}`;
                     resetStr = 'in 7 days';
-                    returnMsg = 'Topped up your balance with your weekly 3500 chips!';
+                    returnMsg = 'Topped up your balance with your weekly bonus of 2000 chips!';
                 } else {
-                    chipStr = query.balance;
-                    resetStr = dura.format('[in] d[ day and] HH[ hour]');
-                    returnMsg = 'Sorry but you are not due to get your weekly chips yet, here is your current balance';
+                    chipStr = prevBal;
+                    resetStr = weeklyDura.format('[in] d[ day and] HH[ hour]');
+                    returnMsg = 'Sorry but you are not due to get your weekly bonus chips yet, here is your current balance';
                 }
 
                 balEmbed.setDescription(stripIndents`
@@ -81,16 +81,28 @@ export default class WeeklyCommand extends Command {
                 return msg.embed(balEmbed, returnMsg);
             }
             stopTyping(msg);
-            conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`)
-                .run({ balance: '3500', date: moment().format('YYYY-MM-DD HH:mm'), userid: msg.author.id });
+            conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $dailydate, $weeklydate, $vault);`)
+                .run({
+                    balance: 2000,
+                    dailydate: moment().format('YYYY-MM-DD HH:mm'),
+                    userid: msg.author.id,
+                    vault: 0,
+                    weeklydate: moment().format('YYYY-MM-DD HH:mm'),
+                });
         } catch (err) {
             stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`)
+            if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();
 
-                conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`)
-                    .run({ balance: '3500', date: moment().format('YYYY-MM-DD HH:mm'), userid: msg.author.id });
+                conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $dailydate, $weeklydate, $vault);`)
+                    .run({
+                        balance: 500,
+                        dailydate: moment().format('YYYY-MM-DD HH:mm'),
+                        userid: msg.author.id,
+                        vault: 0,
+                        weeklydate: moment().format('YYYY-MM-DD HH:mm'),
+                    });
             } else {
                 const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
@@ -109,13 +121,13 @@ export default class WeeklyCommand extends Command {
 
         balEmbed.setDescription(stripIndents`
             **Balance**
-            3500
+            500
             **Weekly Reset**
             in 7 days
         `);
 
         deleteCommandMessages(msg, this.client);
 
-        return msg.embed(balEmbed, 'You didn\'t have any chips yet so here\'s your first 3500. Spend them wisely!');
+        return msg.embed(balEmbed, 'You didn\'t have any chips yet so here\'s your first 500. Spend them wisely!');
     }
 }

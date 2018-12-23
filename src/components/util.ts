@@ -7,7 +7,7 @@
 import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel, Util } from 'discord.js';
 import { CommandoClient, CommandoGuild, CommandoMessage } from 'discord.js-commando';
-import emojis from 'emoji-regex';
+import emojiRegex from 'emoji-regex';
 import { diacriticsMap, IYoutubeVideo, validBooleansMap } from '.';
 
 export const arrayClean = (deleteValue: string | number | undefined | any, array: Array<string | number | undefined | any>) => array.filter(element => element !== deleteValue);
@@ -19,7 +19,7 @@ export const countCaps = (capcount: string, total: string): number => (capcount.
 export const countEmojis = (str: string) => {
     const customEmojis = /<a?:[\S]+:[0-9]{18}>/gim;
     const customMatch = str.match(customEmojis);
-    const unicodeEmojis = emojis();
+    const unicodeEmojis = emojiRegex();
     const unicodeMatch = str.match(unicodeEmojis);
     let counter = 0;
 
@@ -122,6 +122,15 @@ export const validateBool = (bool: boolean) => {
     return stripIndents`
         Has to be one of ${validBooleansMap.map(val => `\`${val}\``).join(', ')}
         Respond with your new selection or`;
+};
+
+export const validateCasinoLimit = (input: string, msg: CommandoMessage) => {
+    const lowerLimit = msg.guild.settings.get('casinoLowerLimit', 1);
+    const upperLimit = msg.guild.settings.get('casinoUpperLimit', 10000);
+    const chips = Number(input);
+
+    if (chips >= lowerLimit && chips <= upperLimit) return true;
+    return `Reply with a chips amount between ${lowerLimit} and ${upperLimit}. Example: \`${roundNumber((lowerLimit + upperLimit) / 2)}\``;
 };
 
 export class Song {

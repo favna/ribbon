@@ -84,20 +84,20 @@ export default class TimerRemoveCommand extends Command {
         }
 
         try {
-            const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-            const timedMessage = conn.prepare(`SELECT * from "${msg.guild.id}" WHERE id=$id`).get({ id });
             const timerRemoveEmbed = new MessageEmbed();
+            const modlogChannel = msg.guild.settings.get('modlogchannel', null);
+            const { interval, channel, content } = conn.prepare(`SELECT interval, channel, content from "${msg.guild.id}" WHERE id = ?`).get(id);
 
-            conn.prepare(`DELETE FROM "${msg.guild.id}" WHERE id=$id`).run({ id });
+            conn.prepare(`DELETE FROM "${msg.guild.id}" WHERE id = ?`).run(id);
 
             timerRemoveEmbed
                 .setColor('#F7F79D')
                 .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
                 .setDescription(stripIndents`
                     **Action:** Timed message removed
-                    **Interval:** ${ms(timedMessage.interval, { long: true })}
-                    **Channel:** <#${timedMessage.channel}>
-                    **Message:** ${timedMessage.content}`
+                    **Interval:** ${ms(interval, { long: true })}
+                    **Channel:** <#${channel}>
+                    **Message:** ${content}`
                 )
                 .setTimestamp();
 

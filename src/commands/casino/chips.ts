@@ -44,19 +44,19 @@ export default class ChipsCommand extends Command {
 
         try {
             startTyping(msg);
-            const query = conn
-                .prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`)
-                .get(msg.author.id);
+            const { balance, lastdaily, lastweekly } = conn.prepare(`SELECT balance, lastdaily, lastweekly FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
-            if (query) {
-                const topupdate = moment(query.lasttopup).add(24, 'hours');
-                const dura = moment.duration(topupdate.diff(moment()));
+            if (balance >= 0) {
+                const dailyDura = moment.duration(moment(lastdaily).add(24, 'hours').diff(moment()));
+                const weeklyDura = moment.duration(moment(lastweekly).add(7, 'days').diff(moment()));
 
                 balEmbed.setDescription(stripIndents`
                     **Balance**
-                    ${query.balance}
+                    ${balance}
                     **Daily Reset**
-                    ${!(dura.asMilliseconds() <= 0) ? dura.format('[in] HH[ hour(s) and ]mm[ minute(s)]') : 'Right now!'}
+                    ${!(dailyDura.asHours() <= 0) ? dailyDura.format('[in] HH[ hour(s) and ]mm[ minute(s)]') : 'Right now!'}
+                    **Weekly Reset**
+                    ${!(weeklyDura.asDays() <= 0) ? weeklyDura.format('[in] d[ day and] HH[ hour]') : 'Right now!'}
                 `);
 
                 deleteCommandMessages(msg, this.client);
@@ -64,17 +64,29 @@ export default class ChipsCommand extends Command {
 
                 return msg.embed(balEmbed);
             }
-            conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`)
-                .run({ balance: '500', date: moment().format('YYYY-MM-DD HH:mm'), userid: msg.author.id });
+            conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $dailydate, $weeklydate, $vault);`)
+                .run({
+                    balance: 500,
+                    dailydate: moment().format('YYYY-MM-DD HH:mm'),
+                    userid: msg.author.id,
+                    vault: 0,
+                    weeklydate: moment().format('YYYY-MM-DD HH:mm'),
+                });
             stopTyping(msg);
         } catch (err) {
             stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`)
+            if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();
 
-                conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`)
-                    .run({ balance: '500', date: moment().format('YYYY-MM-DD HH:mm'), userid: msg.author.id });
+                conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $dailydate, $weeklydate, $vault);`)
+                    .run({
+                        balance: 500,
+                        dailydate: moment().format('YYYY-MM-DD HH:mm'),
+                        userid: msg.author.id,
+                        vault: 0,
+                        weeklydate: moment().format('YYYY-MM-DD HH:mm'),
+                    });
             } else {
                 const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
@@ -96,6 +108,8 @@ export default class ChipsCommand extends Command {
             500
             **Daily Reset**
             in 24 hours
+            **Weekly Reset**
+            in 7 days
         `);
 
         deleteCommandMessages(msg, this.client);

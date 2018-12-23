@@ -13,7 +13,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, ICasinoRow, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class LeaderboardCommand extends Command {
     constructor (client: CommandoClient) {
@@ -28,31 +28,42 @@ export default class LeaderboardCommand extends Command {
                 usages: 2,
                 duration: 3,
             },
+            args: [
+                {
+                    key: 'limit',
+                    prompt: 'How many players should I show?',
+                    type: 'integer',
+                    max: 20,
+                    min: 1,
+                    default: 5,
+                    parse: (limit: string) => roundNumber(Number(limit)),
+                }
+            ],
         });
     }
 
-    public run (msg: CommandoMessage) {
+    public run (msg: CommandoMessage, { limit }: { limit: number }) {
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
         const lbEmbed = new MessageEmbed();
 
         lbEmbed
-            .setTitle('Top 5 players')
+            .setTitle(`Top ${limit} players`)
             .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
             .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
         try {
             startTyping(msg);
             const query = conn
-                .prepare(`SELECT * FROM "${msg.guild.id}" ORDER BY balance DESC LIMIT 5;`)
-                .all();
+                .prepare(`SELECT userID, balance FROM "${msg.guild.id}" ORDER BY balance DESC LIMIT ?;`)
+                .all(limit);
 
             if (query) {
-                for (const player in query) {
+                query.forEach((player: ICasinoRow, index: number) => {
                     lbEmbed.addField(
-                        `#${Number(player) + 1} ${msg.guild.members.get(query[player].userID).displayName}`,
-                        `Chips: ${query[player].balance}`
+                        `#${index + 1} ${msg.guild.members.get(player.userID).displayName}`,
+                        `Chips: ${player.balance}`
                     );
-                }
+                });
 
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);
@@ -64,8 +75,8 @@ export default class LeaderboardCommand extends Command {
             return msg.reply(`looks like there aren't any casino players in this server yet, use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
         } catch (err) {
             stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`)
+            if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();
 
                 return msg.reply(`looks like there aren't any casino players in this server yet, use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);

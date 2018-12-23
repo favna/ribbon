@@ -44,27 +44,26 @@ export default class DailyCommand extends Command {
 
         try {
             startTyping(msg);
-            const query = conn
-                .prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`)
-                .get(msg.author.id);
+            let { balance, lastdaily } = conn.prepare(`SELECT balance, lastdaily FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
-            if (query) {
-                const topupdate = moment(query.lasttopup).add(24, 'hours');
-                const dura = moment.duration(topupdate.diff(moment()));
+            if (balance >= 0) {
+                const dailyDura = moment.duration(moment(lastdaily).add(24, 'hours').diff(moment()));
+                const prevBal = balance;
 
                 let chipStr = '';
                 let resetStr = '';
+                balance += 300;
 
-                if (dura.asHours() <= 0) {
-                    conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance, lasttopup=$date WHERE userID="${msg.author.id}";`)
-                        .run({ balance: query.balance + 500, date: moment().format('YYYY-MM-DD HH:mm') });
+                if (dailyDura.asHours() <= 0) {
+                    conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance, lastdaily=$date WHERE userID="${msg.author.id}";`)
+                        .run({ balance, date: moment().format('YYYY-MM-DD HH:mm') });
 
-                    chipStr = `${query.balance} ➡ ${query.balance + 500}`;
+                    chipStr = `${prevBal} ➡ ${balance}`;
                     resetStr = 'in 24 hours';
-                    returnMsg = 'Topped up your balance with your daily 500 chips!';
+                    returnMsg = 'Topped up your balance with your daily 300 chips!';
                 } else {
-                    chipStr = query.balance;
-                    resetStr = dura.format('[in] HH[ hour and] mm[ minute]');
+                    chipStr = prevBal;
+                    resetStr = dailyDura.format('[in] HH[ hour and] mm[ minute]');
                     returnMsg = 'Sorry but you are not due to get your daily chips yet, here is your current balance';
                 }
 
@@ -81,16 +80,28 @@ export default class DailyCommand extends Command {
                 return msg.embed(balEmbed, returnMsg);
             }
             stopTyping(msg);
-            conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`)
-                .run({ balance: '500', date: moment().format('YYYY-MM-DD HH:mm'), userid: msg.author.id });
+            conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $dailydate, $weeklydate, $vault);`)
+                .run({
+                    balance: 500,
+                    dailydate: moment().format('YYYY-MM-DD HH:mm'),
+                    userid: msg.author.id,
+                    vault: 0,
+                    weeklydate: moment().format('YYYY-MM-DD HH:mm'),
+                });
         } catch (err) {
             stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`)
+            if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();
 
-                conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $date);`)
-                    .run({ balance: '500', date: moment().format('YYYY-MM-DD HH:mm'), userid: msg.author.id });
+                conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $dailydate, $weeklydate, $vault);`)
+                    .run({
+                        balance: 500,
+                        dailydate: moment().format('YYYY-MM-DD HH:mm'),
+                        userid: msg.author.id,
+                        vault: 0,
+                        weeklydate: moment().format('YYYY-MM-DD HH:mm'),
+                    });
             } else {
                 const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 

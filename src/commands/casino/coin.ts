@@ -17,9 +17,8 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
+import { CoinSide, deleteCommandMessages, roundNumber, startTyping, stopTyping, validateCasinoLimit } from '../../components';
 
-enum CoinSide { heads = 'heads', head = 'heads', tails = 'tails', tail = 'tails' }
 
 export default class CoinCommand extends Command {
     constructor (client: CommandoClient) {
@@ -34,22 +33,14 @@ export default class CoinCommand extends Command {
             guildOnly: true,
             throttling: {
                 usages: 2,
-                duration: 5,
+                duration: 3,
             },
             args: [
                 {
                     key: 'chips',
                     prompt: 'How many chips do you want to gamble?',
                     type: 'integer',
-                    validate: (input: string, msg: CommandoMessage) => {
-                      const lowerLimit = msg.guild.settings.get('casinoLowerLimit', 1);
-                      const upperLimit = msg.guild.settings.get('casinoUpperLimit', 10000);
-                      const chips = Number(input);
-
-                      return chips >= lowerLimit && chips <= upperLimit
-                          ? true
-                          : `Reply with a chips amount between ${lowerLimit} and ${upperLimit}. Example: \`${roundNumber((lowerLimit + upperLimit) / 2)}\``;
-                    },
+                    validate: (input: string, msg: CommandoMessage) => validateCasinoLimit(input, msg),
                     parse: (chips: string) => roundNumber(Number(chips)),
                 },
                 {
@@ -78,33 +69,35 @@ export default class CoinCommand extends Command {
 
         try {
             startTyping(msg);
-            const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
+            let { balance } = conn.prepare(`SELECT balance FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
-            if (query) {
-                if (chips > query.balance) {
-                    return msg.reply(`you don\'t have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
+            if (balance >= 0) {
+                if (chips > balance) {
+                    return msg.reply(oneLine`you don\'t have enough chips to make that bet.
+                    Use \`${msg.guild.commandPrefix}chips\` to check your current balance.
+                    or withdraw some chips from your vault with \`${msg.guild.commandPrefix}withdraw\``);
                 }
 
                 if (side === 'head') side = 'heads';
                 if (side === 'tail') side = 'tails';
 
                 const flip = Math.random() >= 0.5;
-                const prevBal = query.balance;
+                const prevBal = balance;
                 const res = side === 'heads';
 
-                query.balance -= chips;
+                balance -= chips;
 
-                if (flip === res) query.balance += chips * 2;
+                if (flip === res) balance += chips * 2;
 
-                query.balance = roundNumber(query.balance);
+                balance = roundNumber(balance);
 
                 conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`)
-                    .run({ balance: query.balance });
+                    .run({ balance });
 
                 coinEmbed
                     .setTitle(`${msg.author.tag} ${flip === res ? 'won' : 'lost'} ${chips} chips`)
                     .addField('Previous Balance', prevBal, true)
-                    .addField('New Balance', query.balance, true)
+                    .addField('New Balance', balance, true)
                     .setImage(flip === res
                         ? `https://favna.xyz/images/ribbonhost/coin${side.toLowerCase()}.png`
                         : `https://favna.xyz/images/ribbonhost/coin${side.toLowerCase() === 'heads' ? 'tails' : 'heads'}.png`
@@ -117,14 +110,16 @@ export default class CoinCommand extends Command {
             }
             stopTyping(msg);
 
-            return msg.reply(`looks like you didn\'t get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
+            return msg.reply(oneLine`looks like you either don't have any chips yet or you used them all
+                Run \`${msg.guild.commandPrefix}chips\` to get your first 500
+                or run \`${msg.guild.commandPrefix}withdraw\` to withdraw some chips from your vault.`);
         } catch (err) {
             stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`)
+            if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();
 
-                return msg.reply(`looks like you don\'t have any chips yet, please use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
+                return msg.reply(`looks like you don't have any chips yet, please use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
             }
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 

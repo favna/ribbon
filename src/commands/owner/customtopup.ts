@@ -57,20 +57,20 @@ export default class CustomTopUpCommand extends Command {
             .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
         try {
-            const query = conn.prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`).get(player.id);
+            let { balance } = conn.prepare(`SELECT balance FROM "${msg.guild.id}" WHERE userID = ?;`).get(player.id);
 
-            if (query) {
-                const prevBal = query.balance;
+            if (balance >= 0) {
+                const prevBal = balance;
 
-                query.balance += chips;
+                balance += chips;
 
                 conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${player.id}";`)
-                    .run({ balance: query.balance });
+                    .run({ balance });
 
                 coinEmbed
-                    .setTitle('Daniël Ocean has stolen chips from Benedict for you')
+                    .setTitle('Daniël Ocean has stolen chips for you')
                     .addField('Previous Balance', prevBal, true)
-                    .addField('New Balance', query.balance, true);
+                    .addField('New Balance', balance, true);
 
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);

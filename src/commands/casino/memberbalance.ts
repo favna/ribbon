@@ -47,20 +47,18 @@ export default class MemberBalanceCommand extends Command {
         const mbalEmbed = new MessageEmbed();
 
         mbalEmbed
-            .setAuthor(player.displayName, player.user.displayAvatarURL({ format: 'png' }))
+            .setAuthor(player.displayName, player.user.displayAvatarURL())
             .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
             .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
         try {
             startTyping(msg);
-            const query = conn
-                .prepare(`SELECT * FROM "${msg.guild.id}" WHERE userID = ?;`)
-                .get(player.id);
+            const { balance } = conn.prepare(`SELECT balance FROM "${msg.guild.id}" WHERE userID = ?;`).get(player.id);
 
-            if (query) {
+            if (balance >= 0) {
                 mbalEmbed.setDescription(stripIndents`
                     **Balance**
-                    ${query.balance}
+                    ${balance}
                 `);
 
                 deleteCommandMessages(msg, this.client);
@@ -73,8 +71,8 @@ export default class MemberBalanceCommand extends Command {
             return msg.reply(`looks like ${player.displayName} doesn't have any chips yet, they can use the \`${msg.guild.commandPrefix}chips\` command to get their first 500`);
         } catch (err) {
             stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER, lasttopup TEXT);`)
+            if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
+                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();
 
                 return msg.reply(`looks like ${player.displayName} doesn't have any chips yet, they can use the \`${msg.guild.commandPrefix}chips\` command to get their first 500`);

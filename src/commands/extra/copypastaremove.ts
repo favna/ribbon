@@ -64,17 +64,17 @@ export default class CopyPastaRemoveCommand extends Command {
             const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
             const cprEmbed = new MessageEmbed();
-            const pasta = conn.prepare(`SELECT name, content from "${msg.guild.id}" WHERE id=$id`).get({ id });
+            const { name, content } = conn.prepare(`SELECT name, content from "${msg.guild.id}" WHERE id = ?`).get(id);
 
-            conn.prepare(`DELETE FROM "${msg.guild.id}" WHERE id=$id`).run({ id });
+            conn.prepare(`DELETE FROM "${msg.guild.id}" WHERE id = ?`).run(id);
 
             cprEmbed
                 .setColor('#F7F79D')
                 .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
                 .setDescription(stripIndents`
                     **Action:** Copypasta removed
-                    **Name was:** ${pasta.name}
-                    **Content was:** ${pasta.content.length <= 1800 ? pasta.content : `${pasta.content.slice(0, 1800)}...`}`
+                    **Name was:** ${name}
+                    **Content was:** ${content.length <= 1800 ? content : `${content.slice(0, 1800)}...`}`
                 )
                 .setTimestamp();
 

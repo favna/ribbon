@@ -112,7 +112,7 @@ const renderCountdownMessage = (client: CommandoClient) => {
 
                         channel.send('', { embed: countdownEmbed });
                     } else {
-                        conn.prepare(`DELETE FROM "${tables[table].name}" WHERE id=$id;`).run({ id: rows[row].id });
+                        conn.prepare(`DELETE FROM "${tables[table].name}" WHERE id = ?;`).run(rows[row].id);
 
                         switch (rows[row].tag) {
                             case 'everyone':

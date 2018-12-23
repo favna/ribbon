@@ -62,20 +62,20 @@ export default class CountDownRemove extends Command {
             const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
             const cdrEmbed = new MessageEmbed();
-            const countdown = conn.prepare(`SELECT * from "${msg.guild.id}" WHERE id=$id`).get({ id });
+            const { datetime, tag, channel, content } = conn.prepare(`SELECT datetime, tag, channel, content from "${msg.guild.id}" WHERE id = ?`).get(id);
 
-            conn.prepare(`DELETE FROM "${msg.guild.id}" WHERE id=$id`).run({ id });
+            conn.prepare(`DELETE FROM "${msg.guild.id}" WHERE id = ?`).run(id);
 
             cdrEmbed
                 .setColor('#F7F79D')
                 .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
                 .setDescription(stripIndents`
                     **Action:** Countdown removed
-                    **Event was at:** ${moment(countdown.datetime).format('YYYY-MM-DD HH:mm')}
-                    **Countdown Duration:** ${moment.duration(moment(countdown.datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
-                    **Tag on event:** ${countdown.tag === 'none' ? 'No one' : `@${countdown.tag}`}
-                    **Channel:** <#${countdown.channel}>
-                    **Message:** ${countdown.content}`
+                    **Event was at:** ${moment(datetime).format('YYYY-MM-DD HH:mm')}
+                    **Countdown Duration:** ${moment.duration(moment(datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+                    **Tag on event:** ${tag === 'none' ? 'No one' : `@${tag}`}
+                    **Channel:** <#${channel}>
+                    **Message:** ${content}`
                 )
                 .setTimestamp();
 
@@ -89,7 +89,7 @@ export default class CountDownRemove extends Command {
             return msg.embed(cdrEmbed);
         } catch (err) {
             stopTyping(msg);
-            if (/(?:no such table)/i.test(err.toString())) {
+            if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
                 return msg.reply(`no countdowns found for this server. Start saving your first with ${msg.guild.commandPrefix}countdownadd`);
             }
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
