@@ -62,7 +62,7 @@ export default class WheelOfFortuneCommand extends Command {
 
             if (balance >= 0) {
                 if (chips > balance) {
-                    return msg.reply(`you don\'t have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
+                    return msg.reply(`you don't have enough chips to make that bet. Use \`${msg.guild.commandPrefix}chips\` to check your current balance.`);
                 }
 
                 const prevBal = balance;
@@ -107,7 +107,7 @@ export default class WheelOfFortuneCommand extends Command {
                 conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();
 
-                return msg.reply(`looks like you don\'t have any chips yet, please use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
+                return msg.reply(`looks like you don't have any chips yet, please use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
             }
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 

@@ -73,7 +73,7 @@ export default class CoinCommand extends Command {
 
             if (balance >= 0) {
                 if (chips > balance) {
-                    return msg.reply(oneLine`you don\'t have enough chips to make that bet.
+                    return msg.reply(oneLine`you don't have enough chips to make that bet.
                     Use \`${msg.guild.commandPrefix}chips\` to check your current balance.
                     or withdraw some chips from your vault with \`${msg.guild.commandPrefix}withdraw\``);
                 }
