@@ -77,7 +77,7 @@ export default class DocsCommand extends Command {
             };
             const input = {
                 main: query[0],
-                sub: query[1] ? query[1].replace(/(\(.*\))/gm, '') : null,
+                sub: query[1] ? (query[1] as string).replace(/(\(.*\))/gm, '') : null,
             };
             const docsFuse = new Fuse(docs.classes.concat(docs.typedefs), docOptions);
             const docsEmbed = new MessageEmbed();
@@ -85,7 +85,7 @@ export default class DocsCommand extends Command {
             const hit = docsSearch[0];
 
             docsEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setAuthor(
                     version === 'commando'
                         ? 'Commando Docs'

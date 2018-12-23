@@ -64,7 +64,7 @@ export default class ImageCommand extends Command {
             const imageData = await imageSearch.json();
 
             imageEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setImage(imageData.items[0].link)
                 .setFooter(`Search query: "${query.replace(/\+/g, ' ')}"`);
 
@@ -92,7 +92,7 @@ export default class ImageCommand extends Command {
                 .attr('src');
 
             imageEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setImage(src)
                 .setFooter(`Search query: "${query}"`);
 

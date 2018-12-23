@@ -58,7 +58,7 @@ export default class FightCommand extends Command {
                 : fighterTwo;
 
             fighterEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setTitle('🥊 Fight Results 🥊')
                 .setThumbnail('https://favna.xyz/images/ribbonhost/dbxlogo.png');
 

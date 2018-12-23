@@ -80,7 +80,7 @@ export default class MoneyCommand extends Command {
             const result = convert(response.rates, fromCurrency, toCurrency, value);
 
             oxrEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setAuthor('🌐 Currency Converter')
                 .addField(
                     `:flag_${fromCurrency

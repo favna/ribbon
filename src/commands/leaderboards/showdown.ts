@@ -68,7 +68,7 @@ export default class ShowdownCommand extends Command {
             const showdownEmbed = new MessageEmbed();
 
             showdownEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setThumbnail('https://favna.xyz/images/ribbonhost/showdown.png')
                 .setTitle(`Pokemon Showdown ${results[0].tier} Leaderboard`);
 

@@ -48,7 +48,7 @@ export default class LeaderboardCommand extends Command {
 
         lbEmbed
             .setTitle(`Top ${limit} players`)
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
             .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
         try {

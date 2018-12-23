@@ -82,7 +82,7 @@ export default class RockPaperScissorCommand extends Command {
             else if (hand === 'scissor' && randoms === 3) resString = 'It\'s a draw 😶! Both picked ✂';
 
             rpsEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setTitle('Rock Paper Scissors')
                 .setDescription(resString);
 

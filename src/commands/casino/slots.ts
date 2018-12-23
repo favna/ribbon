@@ -51,7 +51,7 @@ export default class SlotsCommand extends Command {
 
         slotEmbed
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
             .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
 
         try {

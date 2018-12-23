@@ -60,7 +60,7 @@ export default class DiceCommand extends Command {
         }
 
         diceEmbed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
             .setTitle('🎲 Dice Rolls 🎲')
             .setDescription(`| ${res.join(' | ')} |`)
             .addField('Total', throwDice.total, false);

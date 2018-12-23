@@ -62,7 +62,7 @@ export default class AnimeCommand extends Command {
             const animeEmbed = new MessageEmbed();
 
             animeEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setTitle(hit.titles.en ? hit.titles.en : hit.canonicalTitle)
                 .setURL(`https://kitsu.io/anime/${hit.id}`)
                 .setDescription(hit.synopsis.replace(/(.+)(?:\r|\n|\t)(.+)/gim, '$1 $2').split('\r\n')[0])

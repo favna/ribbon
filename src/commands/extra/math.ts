@@ -56,7 +56,7 @@ export default class MathCommand extends Command {
 
             mathEmbed
                 .setTitle('Calculator')
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setDescription(oneLine`The answer to \`${equation.toString()}\` is \`${maths.result}\``);
 
             deleteCommandMessages(msg, this.client);

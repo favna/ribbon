@@ -75,7 +75,7 @@ export default class OsuCommand extends Command {
                         xpbarhex: true,
                     })}`
                 )
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .addField('Perfects', osu[0].count300, true)
                 .addField('Greats', osu[0].count100, true)
                 .addField('Poors', osu[0].count50, true)

@@ -48,7 +48,7 @@ export default class ServerInfoCommand extends Command {
         }
 
         serverEmbed
-            .setColor(msg.guild.owner ? msg.guild.owner.displayHexColor : '#7CFC00')
+            .setColor(msg.guild.owner ? msg.guild.owner.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
             .setAuthor('Server Info', 'https://favna.xyz/images/ribbonhost/discordlogo.png')
             .setThumbnail(msg.guild.iconURL({ format: 'png' }))
             .setFooter(`Server ID: ${msg.guild.id}`)

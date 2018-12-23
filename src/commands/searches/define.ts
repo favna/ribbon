@@ -67,7 +67,7 @@ export default class DefineCommand extends Command {
             });
 
             defineEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setDescription(final);
 
             deleteCommandMessages(msg, this.client);

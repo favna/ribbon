@@ -74,7 +74,7 @@ export default class SteamCommand extends Command {
             });
 
             steamEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setTitle(steamData.name)
                 .setURL(`http://store.steampowered.com/app/${steamData.steam_appid}/`)
                 .setImage(steamData.header_image)

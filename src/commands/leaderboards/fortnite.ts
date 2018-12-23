@@ -66,7 +66,7 @@ export default class FortniteCommand extends Command {
                 .setTitle(`Fortnite Player Statistics for ${stats.epicUserHandle}`)
                 .setURL(`https://fortnitetracker.com/profile/${stats.platformName}/${stats.epicUserHandle}`)
                 .setThumbnail('https://nintendowire.com/wp-content/uploads/2018/06/FortniteSwitch.jpg')
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .addField(
                     'Lifetime Stats',
                     stripIndents`

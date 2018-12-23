@@ -41,7 +41,7 @@ export default class XKCDCommand extends Command {
 
             xkcdEmbed
                 .setTitle(randomImage.safe_title)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setDescription(randomImage.alt)
                 .setImage(randomImage.img)
                 .setURL(`https://xkcd.com/${randomNum}/`);

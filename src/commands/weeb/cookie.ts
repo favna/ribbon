@@ -45,7 +45,7 @@ export default class CookieCommand extends Command {
 
         cookieEmbed
             .setImage(this.fetchImage())
-            .setColor(msg.guild ? msg.guild.me.displayColor : '#7CFC00')
+            .setColor(msg.guild ? msg.guild.me.displayColor : process.env.DEFAULT_EMBED_COLOR)
             .setDescription(member ? `Gnanahahahaha eating your cookie <@${member.id}>` : 'You won\'t steal my cookie!!');
 
         deleteCommandMessages(msg, this.client);

@@ -81,7 +81,7 @@ export default class StrawpollCommand extends Command {
             const strawpoll = await pollPost.json();
 
             pollEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setTitle(strawpoll.title)
                 .setURL(`http://www.strawpoll.me/${strawpoll.id}`)
                 .setImage(`http://www.strawpoll.me/images/poll-results/${strawpoll.id}.png`)

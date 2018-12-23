@@ -76,7 +76,7 @@ export default class PubgCommand extends Command {
             pubEmbed
                 .setTitle(`PUBG Player Statistics for ${playerName}`)
                 .setThumbnail('https://favna.xyz/images/ribbonhost/pubgicon.png')
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .addField(
                     'Duos Stats',
                     stripIndents`

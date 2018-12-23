@@ -66,7 +66,7 @@ export default class ITunesCommand extends Command {
                 .setThumbnail(song.artworkUrl100)
                 .setTitle(song.trackName)
                 .setURL(song.trackViewUrl)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .addField('Artist', `[${song.artistName}](${song.artistViewUrl})`, true)
                 .addField('Collection', `[${song.collectionName}](${song.collectionViewUrl})`, true)
                 .addField('Collection Price (USD)', `$${song.collectionPrice}`, true)

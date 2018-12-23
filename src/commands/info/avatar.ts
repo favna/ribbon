@@ -53,7 +53,7 @@ export default class AvatarCommand extends Command {
         const ext = this.fetchExt(ava);
 
         embed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
             .setImage(ext.includes('gif') ? `${ava}&f=.gif` : ava)
             .setTitle(member.displayName)
             .setURL(ava)

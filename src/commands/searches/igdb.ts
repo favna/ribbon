@@ -68,7 +68,7 @@ export default class IGDBCommand extends Command {
             const coverImg = /https?:/i.test(hit.cover.url) ? hit.cover.url : `https:${hit.cover.url}`;
 
             gameEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setTitle(hit.name)
                 .setURL(hit.url)
                 .setThumbnail(coverImg)

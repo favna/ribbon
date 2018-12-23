@@ -263,7 +263,7 @@ export default class PokemonTCGCommand extends Command {
                 if (messagesDeletable) cardSelection.answers[0].delete();
 
                 tcgEmbed
-                    .setColor(msg.guild ? msg.member.displayHexColor : '#7CFC00')
+                    .setColor(msg.guild ? msg.member.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                     .setThumbnail('https://favna.xyz/images/ribbonhost/tcglogo.png')
                     .setTitle(`${cards[selection].name} (${cards[selection].id})`)
                     .setImage(cards[selection].imageUrl)

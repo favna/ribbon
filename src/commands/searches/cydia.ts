@@ -81,7 +81,7 @@ export default class CydiaCommand extends Command {
             if (!search.length) throw new Error('no_packages');
 
             cydiaEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setTitle(search[0].display)
                 .setDescription(search[0].summary)
                 .addField('Version', search[0].version, true)

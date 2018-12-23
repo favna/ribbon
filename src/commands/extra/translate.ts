@@ -75,7 +75,7 @@ export default class TranslateCommand extends Command {
             if (response.error) throw new Error('invalid_request');
 
             transEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setTitle(`__Translating from ${fromlang.toUpperCase()} to ${tolang.toUpperCase()}__`)
                 .setDescription(stripIndents`
                     \`${text}\`

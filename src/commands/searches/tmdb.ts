@@ -58,7 +58,7 @@ export default class MovieCommand extends Command {
             movieEmbed
                 .setTitle(movie.title)
                 .setURL(`https://www.themoviedb.org/movie/${movie.id}`)
-                .setColor(msg.guild ? msg.member.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.member.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setImage(`https://image.tmdb.org/t/p/original${movie.backdrop_path}`)
                 .setThumbnail(`https://image.tmdb.org/t/p/original${movie.poster_path}`)
                 .setDescription(movie.overview)

@@ -59,7 +59,7 @@ export default class RibbonStatsCommand extends Command {
         };
 
         statsEmbed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
             .setAuthor(`${this.client.user.username} Stats`, 'https://favna.xyz/images/appIcons/ribbon.png')
             .addField('Guilds', this.client.guilds.size, true)
             .addField('Channels', this.client.channels.size, true)

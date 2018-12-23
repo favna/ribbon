@@ -130,7 +130,7 @@ export default class LearnCommand extends Command {
             });
 
             learnEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
                 .setAuthor(
                     `${capitalizeFirstLetter(pokemon)} - Generation ${gen}`,

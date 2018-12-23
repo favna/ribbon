@@ -34,7 +34,7 @@ export default class DndCCommand extends Command {
         const flip = roundNumber(Math.random());
 
         coinEmbed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
             .setImage(
                 flip === 1
                     ? 'https://favna.xyz/images/ribbonhost/dndheads.png'

@@ -110,7 +110,7 @@ export default class OverwatchCommand extends Command {
                 .setAuthor('Overwatch Player Statistics', 'https://favna.xyz/images/ribbonhost/overwatch.png')
                 .setURL(`https://playoverwatch.com/en-us/career/${platform}/${player}`)
                 .setThumbnail(data.icon)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .addField('Account Stats',
                     stripIndents`
                         Level: **${data.level}**

@@ -69,7 +69,7 @@ export default class AbilityCommand extends Command {
             if (!abilitySearch.length) throw new Error('no_ability');
 
             abilityEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
                 .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
                 .setTitle(capitalizeFirstLetter(abilitySearch[0].name))
                 .addField('Description', abilitySearch[0].desc ? abilitySearch[0].desc : abilitySearch[0].shortDesc)

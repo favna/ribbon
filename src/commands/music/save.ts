@@ -50,7 +50,7 @@ export default class SaveQueueCommand extends Command {
         const paginated = util.paginate(queue.songs, 1, Math.floor(10));
 
         embed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : '#7CFC00')
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
             .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({ format: 'png' }))
             .setImage(currentSong.thumbnail)
             .setDescription(stripIndents`
