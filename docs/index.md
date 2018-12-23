@@ -93,6 +93,10 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Automod SlowmodeCommand - Toggle slowmode on this server</p>
 <p><strong>Aliases</strong>: <code>slowdown</code></p>
 </dd>
+<dt><a href="#module_bank">bank</a></dt>
+<dd><p>Casino BankCommand - View your vault content</p>
+<p><strong>Aliases</strong>: <code>vault</code></p>
+</dd>
 <dt><a href="#module_chips">chips</a></dt>
 <dd><p>Casino ChipsCommand - Retrieves your current amount of chips for the casino</p>
 <p><strong>Aliases</strong>: <code>bal</code>, <code>cash</code>, <code>balance</code></p>
@@ -105,6 +109,10 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_daily">daily</a></dt>
 <dd><p>Casino DailyCommand - Receive your daily 500 chips top up</p>
 <p><strong>Aliases</strong>: <code>topup</code>, <code>bonus</code></p>
+</dd>
+<dt><a href="#module_deposit">deposit</a></dt>
+<dd><p>Casino DepositCommand - Deposit chips into your vault</p>
+<p><strong>Aliases</strong>: <code>depo</code></p>
 </dd>
 <dt><a href="#module_give">give</a></dt>
 <dd><p>Casino GiveCommand - Give another player some chips</p>
@@ -129,6 +137,10 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_wheeloffortune">wheeloffortune</a></dt>
 <dd><p>Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune</p>
 <p><strong>Aliases</strong>: <code>wheel</code>, <code>wof</code></p>
+</dd>
+<dt><a href="#module_withdraw">withdraw</a></dt>
+<dd><p>Casino WithdrawCommand} - Withdraw chips from your vault</p>
+<p><strong>Aliases</strong>: <code>wdraw</code></p>
 </dd>
 <dt><a href="#module_favna">favna</a></dt>
 <dd><p>Custom FavnaCommand - Custom Command exclusive to ChaosGamez server</p>
@@ -533,6 +545,10 @@ There are 4 ways to queue songs.</p>
 <dd><p>Music ViewQueueCommand - Shows the current queue of songs</p>
 <p>Songs are paginated in sets of 5</p>
 <p><strong>Aliases</strong>: <code>songs</code>, <code>song-list</code>, <code>list</code>, <code>listqueue</code></p>
+</dd>
+<dt><a href="#module_record">record</a></dt>
+<dd><p>Music RecordCommand - Start recording voice chat</p>
+<p><strong>Aliases</strong>: <code>rec</code>, <code>startrec</code></p>
 </dd>
 <dt><a href="#module_resume">resume</a></dt>
 <dd><p>Music ResumeSongCommand - Resumes the song after pausing it</p>
@@ -943,6 +959,18 @@ Automod SlowmodeCommand - Toggle slowmode on this server
 ```js
 slowmode enable
 ```
+<a name="module_bank"></a>
+
+## bank
+Casino BankCommand - View your vault content
+
+**Aliases**: `vault`
+
+**Category**: casino  
+**Example**  
+```js
+bank
+```
 <a name="module_chips"></a>
 
 ## chips
@@ -982,6 +1010,23 @@ Casino DailyCommand - Receive your daily 500 chips top up
 **Aliases**: `topup`, `bonus`
 
 **Category**: casino  
+<a name="module_deposit"></a>
+
+## deposit
+Casino DepositCommand - Deposit chips into your vault
+
+**Aliases**: `depo`
+
+**Category**: casino  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ChipsAmount | <code>number</code> | The amount of chips to deposit |
+
+**Example**  
+```js
+deposit 100
+```
 <a name="module_give"></a>
 
 ## give
@@ -1066,6 +1111,23 @@ Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune
 **Example**  
 ```js
 wof 5
+```
+<a name="module_withdraw"></a>
+
+## withdraw
+Casino WithdrawCommand} - Withdraw chips from your vault
+
+**Aliases**: `wdraw`
+
+**Category**: casino  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| ChipsAmount | <code>number</code> | The amount of chips to withdraw |
+
+**Example**  
+```js
+withdraw 100
 ```
 <a name="module_favna"></a>
 
@@ -2514,6 +2576,23 @@ Songs are paginated in sets of 5
 **Example**  
 ```js
 queue 2
+```
+<a name="module_record"></a>
+
+## record
+Music RecordCommand - Start recording voice chat
+
+**Aliases**: `rec`, `startrec`
+
+**Category**: music  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AnyMembers | <code>string</code> | List of members to monitor, space delimited |
+
+**Example**  
+```js
+record favna ribbon biscuit
 ```
 <a name="module_resume"></a>
 
