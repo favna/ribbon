@@ -373,13 +373,12 @@ const forceStopTyping = (client: CommandoClient) => {
 };
 
 export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, msg: CommandoMessage) => {
-    console.error(err);
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
     channel.send(stripIndents`
         Caught **Command Error**!
         **Command:** ${cmd.name}
-        ${msg.guild? `**Server:** ${msg.guild.name} (${msg.guild.id})`: null}
+        ${msg.guild ? `**Server:** ${msg.guild.name} (${msg.guild.id})` : null}
         **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err.message}
