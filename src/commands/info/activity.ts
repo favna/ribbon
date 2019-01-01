@@ -15,7 +15,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import { currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, IDiscordGameParsed, IDiscordGameSku, IDiscordStoreGameData, startTyping, stopTyping, stringify } from '../../components';
 
 export default class ActivityCommand extends Command {
     constructor (client: CommandoClient) {
@@ -51,10 +51,40 @@ export default class ActivityCommand extends Command {
             const ava = member.user.displayAvatarURL();
             const embed = new MessageEmbed();
             const ext = this.fetchExt(ava);
+            const isSpotifyMusic = activity.type === 'LISTENING' && activity.name === 'Spotify';
             const games = await fetch('https://canary.discordapp.com/api/v6/applications');
             const gameList = await games.json();
-            const gameIcon = gameList.find((g: any) => g.name === activity.name);
-            const listeningToSpotify = activity.type === 'LISTENING' && activity.name === 'Spotify';
+
+            let isDiscordStoreGame: boolean = false;
+            let discordGameData: IDiscordGameParsed = { id: '', icon: '' };
+
+            for (const game of gameList) {
+                if (game.name === activity.name) {
+                    discordGameData = { id: game.id, icon: game.icon };
+
+                    const skuId = game.distributor_applications.filter((y: IDiscordGameSku) => y.distributor === 'discord')[0].sku;
+
+                    const storeCheck = await fetch(`https://canary.discordapp.com/api/v6/store/published-listings/skus/${skuId}`);
+                    const storeData: IDiscordStoreGameData = await storeCheck.json();
+
+                    isDiscordStoreGame = !storeData.code;
+
+                    if (isDiscordStoreGame) {
+                        discordGameData = {
+                            id: game.id,
+                            icon: game.icon,
+                            name: storeData.sku.name,
+                            store_link: `https://discordapp.com/store/skus/${skuId}`,
+                            developers: game.developers,
+                            publishers: game.publishers,
+                            summary: storeData.summary,
+                            price: `${currencymap(storeData.sku.price.currency)}${String(storeData.sku.price.amount).slice(0, 2)}.${String(storeData.sku.price.amount).slice(2)}`,
+                            thumbnail: `https://cdn.discordapp.com/app-assets/${game.id}/store/${storeData.thumbnail.id}.png?${stringify({ size: 1024 })}`,
+                        };
+                    }
+                }
+            }
+
             let spotifyData: any = {};
 
             embed
@@ -63,7 +93,7 @@ export default class ActivityCommand extends Command {
                 .setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
 
             if (!activity) throw new Error('noActivity');
-            if (listeningToSpotify) {
+            if (isSpotifyMusic) {
                 const tokenReq = await fetch(
                     'https://accounts.spotify.com/api/token',
                     {
@@ -91,17 +121,16 @@ export default class ActivityCommand extends Command {
                 spotifyData = songInfo.tracks.items[0];
             }
 
-            if (gameIcon) {
-                embed.setThumbnail(`https://cdn.discordapp.com/game-assets/${gameIcon.id}/${gameIcon.icon}.png`);
+            if (!isDiscordStoreGame) {
+                embed.addField(this.convertType(activity.type), activity.name, true);
             }
-            embed.addField(this.convertType(activity.type), activity.name, true);
 
             if (activity.url) {
                 embed.addField('URL', `[${activity.url.slice(8)}](${activity.url})`, true);
             }
 
             if (activity.details) {
-                if (listeningToSpotify) {
+                if (isSpotifyMusic) {
                     embed.addField('Track', `[${activity.details}](${spotifyData.external_urls.spotify})`, true);
                 } else {
                     embed.addField('Details', activity.details, true);
@@ -109,7 +138,7 @@ export default class ActivityCommand extends Command {
             }
 
             if (activity.state) {
-                if (listeningToSpotify) {
+                if (isSpotifyMusic) {
                     embed.addField('Artist(s)', `${spotifyData.artists.map((artist: any) => `${artist.name}`).join(', ')}`, true);
                 } else {
                     embed.addField('State', activity.state, true);
@@ -165,7 +194,7 @@ export default class ActivityCommand extends Command {
             }
 
             if (activity.assets && activity.assets.largeText) {
-                if (listeningToSpotify) {
+                if (isSpotifyMusic) {
                     embed.addField(
                         'Album',
                         `[${activity.assets.largeText}](${spotifyData.album.external_urls.spotify})`,
@@ -178,6 +207,22 @@ export default class ActivityCommand extends Command {
                         true
                     );
                 }
+            }
+
+            if (discordGameData.id && discordGameData.icon) {
+                embed.setThumbnail(`https://cdn.discordapp.com/game-assets/${discordGameData.id}/${discordGameData.icon}.png`);
+            }
+
+            if (isDiscordStoreGame) {
+                embed
+                    .setURL(discordGameData.store_link)
+                    .setTitle(`${discordGameData.name} on Discord Game Store`)
+                    .setDescription(discordGameData.summary)
+                    .setImage(discordGameData.thumbnail)
+                    .addField('Discord Store URL', `[Click Here](${discordGameData.store_link})`, true)
+                    .addField('Price', discordGameData.price, true)
+                    .addField('Game Developer(s)', discordGameData.developers.join(', '), true)
+                    .addField('Game Publisher(s)', discordGameData.publishers.join(', '), true);
             }
 
             deleteCommandMessages(msg, this.client);
@@ -207,7 +252,7 @@ export default class ActivityCommand extends Command {
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-                <@${this.client.owners[0].id}> Error occurred in \`fortnite\` command!
+                <@${this.client.owners[0].id}> Error occurred in \`activity\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}

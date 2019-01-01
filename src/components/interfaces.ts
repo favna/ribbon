@@ -65,6 +65,11 @@ interface IYoutubeVideoResource {
     videoId: string;
 }
 
+interface IDiscordGameExecutable {
+    name: string;
+    os: string;
+}
+
 export interface IMusicCommand extends Command {
     queue: any;
     votes: any;
@@ -285,6 +290,53 @@ export interface IIGDBInvolvedCompany extends IIGDBProp {
 export interface IIGDBAgeRating extends IIGDBProp {
     category: number;
     rating: number;
+}
+
+export interface IDiscordGameSku {
+    distributor: string;
+    sku: string;
+}
+
+export interface IDiscordGame {
+    description: string;
+    developers: string[];
+    distributor_applications: IDiscordGameSku[];
+    executables: IDiscordGameExecutable[];
+    icon: string;
+    id: string;
+    name: string;
+    publishers: string[];
+    splash: string;
+    summary: string;
+    third_party_skus: IDiscordGameSku[];
+}
+
+export interface IDiscordGameParsed {
+    id: string;
+    icon: string;
+    name?: string;
+    store_link?: string;
+    developers?: string[];
+    publishers?: string[];
+    summary?: string;
+    price?: string;
+    thumbnail?: string;
+}
+
+export interface IDiscordStoreGameData {
+    code?: string;
+    id?: string;
+    summary?: string;
+    sku?: {
+        name: string;
+        price: {
+            currency: string;
+            amount: number;
+        }
+    };
+    thumbnail?: {
+        id: string;
+    };
 }
 
 export type UnionPokeAlias = IPokeAbility & IPokeAbilityAliases;
