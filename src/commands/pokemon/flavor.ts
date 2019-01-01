@@ -19,7 +19,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IPokeData, startTyping, stopTyping, UnionPokeDex, zalgolize } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IPokeData, startTyping, stopTyping, UnionPokeDex, zalgolize } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
 import * as entries from '../../data/dex/flavorText.json';
 
@@ -132,15 +132,15 @@ export default class FlavorCommand extends Command {
                 i -= 1;
             } while (i !== -1);
 
-            if (poke.num < 0) pokeData.sprite = 'https://favna.xyz/images/ribbonhost/pokesprites/unknown.png';
+            if (poke.num < 0) pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/unknown.png`;
             else if (shines) pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
             else pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
 
             dataEmbed
                 .setColor(this.fetchColor(poke.color))
-                .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setAuthor(`#${poke.num} - ${capitalizeFirstLetter(poke.species)}`, pokeData.sprite)
-                .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/(%| )/g, '')}.gif`)
+                .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
                 .setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.');
 
             if (poke.num === 0) {
@@ -157,7 +157,7 @@ export default class FlavorCommand extends Command {
                 dataEmbed.description = zalgolize(dataEmbed.description);
                 dataEmbed.author.name = zalgolize(dataEmbed.author.name);
                 dataEmbed.fields = fields;
-                dataEmbed.setImage('https://favna.xyz/images/ribbonhost/missingno.png');
+                dataEmbed.setImage(`${ASSET_BASE_PATH}/ribbon/missingno.png`);
             }
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

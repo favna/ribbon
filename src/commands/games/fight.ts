@@ -12,7 +12,7 @@
 
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class FightCommand extends Command {
     constructor (client: CommandoClient) {
@@ -58,9 +58,9 @@ export default class FightCommand extends Command {
                 : fighterTwo;
 
             fighterEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setTitle('🥊 Fight Results 🥊')
-                .setThumbnail('https://favna.xyz/images/ribbonhost/dbxlogo.png');
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/dbxlogo.png`);
 
             if (fighterOne.toLowerCase() === 'chuck norris' || fighterTwo.toLowerCase() === 'chuck norris') {
                 if (fighterOne.toLowerCase() === 'favna' || fighterTwo.toLowerCase() === 'favna') {
@@ -69,14 +69,14 @@ export default class FightCommand extends Command {
                             'All right, you asked for it...',
                             '***The universe was destroyed due to this battle between two unstoppable forces. Good Job.***'
                         )
-                        .setImage('https://favna.xyz/images/ribbonhost/universeblast.png');
+                        .setImage(`${ASSET_BASE_PATH}/ribbon/universeblast.png`);
                 } else {
                     fighterEmbed
                         .addField(
                             'You fokn wot m8',
                             '***Chuck Norris cannot be beaten***'
                         )
-                        .setImage('https://favna.xyz/images/ribbonhost/chucknorris.png');
+                        .setImage(`${ASSET_BASE_PATH}/ribbon/chucknorris.png`);
                 }
 
                 deleteCommandMessages(msg, this.client);

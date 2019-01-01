@@ -14,7 +14,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class ITunesCommand extends Command {
     constructor (client: CommandoClient) {
@@ -66,7 +66,7 @@ export default class ITunesCommand extends Command {
                 .setThumbnail(song.artworkUrl100)
                 .setTitle(song.trackName)
                 .setURL(song.trackViewUrl)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .addField('Artist', `[${song.artistName}](${song.artistViewUrl})`, true)
                 .addField('Collection', `[${song.collectionName}](${song.collectionViewUrl})`, true)
                 .addField('Collection Price (USD)', `$${song.collectionPrice}`, true)

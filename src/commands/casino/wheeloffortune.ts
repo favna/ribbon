@@ -15,7 +15,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping, validateCasinoLimit } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping, validateCasinoLimit } from '../../components';
 
 export default class WheelOfFortuneCommand extends Command {
     constructor (client: CommandoClient) {
@@ -53,8 +53,8 @@ export default class WheelOfFortuneCommand extends Command {
 
         wofEmbed
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-            .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
         try {
             startTyping(msg);
@@ -77,8 +77,8 @@ export default class WheelOfFortuneCommand extends Command {
                 wofEmbed
                     .setTitle(`
                         ${msg.author.tag} ${multipliers[spin] < 1
-                        ? `lost ${roundNumber(chips - chips * multipliers[spin])}`
-                        : `won ${roundNumber(chips * multipliers[spin] - chips)}`
+                            ? `lost ${roundNumber(chips - chips * multipliers[spin])}`
+                            : `won ${roundNumber(chips * multipliers[spin] - chips)}`
                         } chips
                     `)
                     .addField('Previous Balance', prevBal, true)

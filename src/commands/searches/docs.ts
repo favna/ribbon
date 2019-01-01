@@ -15,7 +15,7 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, globalObjectsMap, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, globalObjectsMap, startTyping, stopTyping } from '../../components';
 
 export default class DocsCommand extends Command {
     private readonly docs: any;
@@ -85,7 +85,7 @@ export default class DocsCommand extends Command {
             const hit = docsSearch[0];
 
             docsEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setAuthor(
                     version === 'commando'
                         ? 'Commando Docs'

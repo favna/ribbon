@@ -18,7 +18,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class TranslateCommand extends Command {
     constructor (client: CommandoClient) {
@@ -75,7 +75,7 @@ export default class TranslateCommand extends Command {
             if (response.error) throw new Error('invalid_request');
 
             transEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setTitle(`__Translating from ${fromlang.toUpperCase()} to ${tolang.toUpperCase()}__`)
                 .setDescription(stripIndents`
                     \`${text}\`

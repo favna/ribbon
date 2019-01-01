@@ -10,7 +10,7 @@
 
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CookieCommand extends Command {
     constructor (client: CommandoClient) {
@@ -45,7 +45,7 @@ export default class CookieCommand extends Command {
 
         cookieEmbed
             .setImage(this.fetchImage())
-            .setColor(msg.guild ? msg.guild.me.displayColor : process.env.DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me.displayColor : DEFAULT_EMBED_COLOR)
             .setDescription(member ? `Gnanahahahaha eating your cookie <@${member.id}>` : 'You won\'t steal my cookie!!');
 
         deleteCommandMessages(msg, this.client);

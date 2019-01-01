@@ -2371,7 +2371,7 @@ export const BattleItems: IPokeItem[] = [
         name: 'Stick',
         num: 259,
         gen: 2,
-        desc: "If held by a Farfetch'd, its critical hit ratio is raised by 2 stages.",
+        desc: 'If held by a Farfetch\'d, its critical hit ratio is raised by 2 stages.',
     },
     {
         id: 'stickybarb',
@@ -2407,14 +2407,14 @@ export const BattleItems: IPokeItem[] = [
         name: 'Tamato Berry',
         num: 174,
         gen: 3,
-        desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck.",
+        desc: 'Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck.',
     },
     {
         id: 'tangaberry',
         name: 'Tanga Berry',
         num: 194,
         gen: 4,
-        desc: "Halves damage taken from a supereffective Bug-type attack. Single use.",
+        desc: 'Halves damage taken from a supereffective Bug-type attack. Single use.',
     },
     {
         id: 'tapuniumz',
@@ -2435,7 +2435,7 @@ export const BattleItems: IPokeItem[] = [
         name: 'Thick Club',
         num: 258,
         gen: 2,
-        desc: "If held by a Cubone or a Marowak, its Attack is doubled.",
+        desc: 'If held by a Cubone or a Marowak, its Attack is doubled.',
     },
     {
         id: 'thunderstone',
@@ -2457,7 +2457,7 @@ export const BattleItems: IPokeItem[] = [
         name: 'Toxic Orb',
         num: 272,
         gen: 4,
-        desc: "At the end of every turn, this item attempts to badly poison the holder.",
+        desc: 'At the end of every turn, this item attempts to badly poison the holder.',
     },
     {
         id: 'toxicplate',
@@ -2549,7 +2549,7 @@ export const BattleItems: IPokeItem[] = [
         name: 'Watmel Berry',
         num: 181,
         gen: 3,
-        desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck.",
+        desc: 'Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck.',
     },
     {
         id: 'waveincense',
@@ -2570,7 +2570,7 @@ export const BattleItems: IPokeItem[] = [
         name: 'Wepear Berry',
         num: 167,
         gen: 3,
-        desc: "Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck.",
+        desc: 'Cannot be eaten by the holder. No effect when eaten with Bug Bite or Pluck.',
     },
     {
         id: 'whippeddream',
@@ -2591,14 +2591,14 @@ export const BattleItems: IPokeItem[] = [
         name: 'Wide Lens',
         num: 265,
         gen: 4,
-        desc: "The accuracy of attacks by the holder is 1.1x.",
+        desc: 'The accuracy of attacks by the holder is 1.1x.',
     },
     {
         id: 'wikiberry',
         name: 'Wiki Berry',
         num: 160,
         gen: 3,
-        desc: "Restores 1/2 max HP at 1/4 max HP or less; confuses if -SpA Nature. Single use.",
+        desc: 'Restores 1/2 max HP at 1/4 max HP or less; confuses if -SpA Nature. Single use.',
     },
     {
         id: 'wiseglasses',
@@ -2633,7 +2633,7 @@ export const BattleItems: IPokeItem[] = [
         name: 'Berserk Gene',
         num: 0,
         gen: 2,
-        desc: "(Gen 2) On switch-in, raises holder's Attack by 2 and confuses it. Single use.",
+        desc: '(Gen 2) On switch-in, raises holder\'s Attack by 2 and confuses it. Single use.',
     },
     {
         id: 'berry',
@@ -2696,7 +2696,7 @@ export const BattleItems: IPokeItem[] = [
         name: 'Pink Bow',
         num: 251,
         gen: 2,
-        desc: "(Gen 2) Holder's Normal-type attacks have 1.1x power.",
+        desc: '(Gen 2) Holder\'s Normal-type attacks have 1.1x power.',
     },
     {
         id: 'polkadotbow',

@@ -12,7 +12,7 @@ import { Message, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 /* tslint:disable-next-line:no-var-requires */
 const speedTest = require('speedtest-net');
@@ -59,7 +59,7 @@ export default class RibbonStatsCommand extends Command {
         };
 
         statsEmbed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
             .setAuthor(`${this.client.user.username} Stats`, 'https://favna.xyz/images/appIcons/ribbon.png')
             .addField('Guilds', this.client.guilds.size, true)
             .addField('Channels', this.client.channels.size, true)

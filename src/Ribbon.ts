@@ -34,7 +34,7 @@ export default class Ribbon {
                 'CHANNEL_CREATE', 'CHANNEL_DELETE', 'CHANNEL_PINS_UPDATE',
                 'GUILD_BAN_ADD', 'GUILD_BAN_REMOVE', 'TYPING_START',
                 'CHANNEL_UPDATE', 'USER_UPDATE', 'WEBHOOKS_UPDATE',
-                'MESSAGE_DELETE_BULK', 'MESSAGE_DELETE',
+                'MESSAGE_DELETE_BULK', 'MESSAGE_DELETE'
             ],
             messageCacheLifetime: 10 * 60,
             messageSweepInterval: 8 * 60,
@@ -89,7 +89,7 @@ export default class Ribbon {
                 ['streamwatch', 'Streamwatch - Spy on members and get notified when they go live'],
                 ['custom', 'Custom - Server specific commands'],
                 ['nsfw', 'NSFW - For all you dirty minds ( ͡° ͜ʖ ͡°)'],
-                ['owner', 'Owner - Exclusive to the bot owner(s)'],
+                ['owner', 'Owner - Exclusive to the bot owner(s)']
             ])
             .registerDefaultGroups()
             .registerDefaultTypes()

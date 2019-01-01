@@ -16,7 +16,7 @@ import { oneLine } from 'common-tags';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Jimp from 'jimp';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class ShipCommand extends Command {
     constructor (client: CommandoClient) {
@@ -60,7 +60,7 @@ export default class ShipCommand extends Command {
         const avaTwo = await Jimp.read(juliet.displayAvatarURL({ format: 'png' }));
         const boat = new MessageEmbed();
         const canvas = await Jimp.read(384, 128);
-        const heart = await Jimp.read('https://favna.xyz/images/ribbonhost/heart.png');
+        const heart = await Jimp.read(`${ASSET_BASE_PATH}/ribbon/heart.png`);
         const randLengthRomeo = roundNumber(Math.random() * 4 + 2);
         const randLengthJuliet = roundNumber(Math.random() * 4 + 2);
 
@@ -75,7 +75,7 @@ export default class ShipCommand extends Command {
         const embedAttachment = new MessageAttachment(buffer, 'ship.png');
 
         boat.attachFiles([embedAttachment])
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
             .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
             .setDescription(oneLine`
                 I call it...

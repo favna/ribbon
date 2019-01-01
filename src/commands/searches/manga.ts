@@ -14,7 +14,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, removeDiacritics, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, removeDiacritics, startTyping, stopTyping } from '../../components';
 
 export default class MangaCommand extends Command {
     constructor (client: CommandoClient) {
@@ -61,12 +61,12 @@ export default class MangaCommand extends Command {
             const mangaEmbed = new MessageEmbed();
 
             mangaEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setTitle(hit.titles.en ? hit.titles.en : hit.canonicalTitle)
                 .setURL(`https://kitsu.io/anime/${hit.id}`)
-                .setDescription(hit.synopsis.replace(/(.+)(?:\r|\n|\t)(.+)/gim, '$1 $2').split('\r\n')[0])
+                .setDescription(hit.synopsis.replace(/(.+)[\r\n\t](.+)/gim, '$1 $2').split('\r\n')[0])
                 .setImage(hit.posterImage.original)
-                .setThumbnail('https://favna.xyz/images/ribbonhost/kitsulogo.png')
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/kitsulogo.png`)
                 .addField('Canonical Title', hit.canonicalTitle, true)
                 .addField('Score', `${hit.averageRating}%`, true)
                 .addField('Age Rating', hit.ageRating ? hit.ageRating : 'None', true)

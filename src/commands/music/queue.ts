@@ -13,7 +13,7 @@
 
 import { oneLine, stripIndents } from 'common-tags';
 import { Command, CommandoClient, CommandoMessage, util } from 'discord.js-commando';
-import { deleteCommandMessages, IMusicCommand, IMusicQueue, Song, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, IMusicCommand, IMusicQueue, PAGINATED_ITEMS, Song, startTyping, stopTyping } from '../../components';
 
 export default class ViewQueueCommand extends Command {
     private songQueue: Map<string, IMusicQueue>;
@@ -66,7 +66,7 @@ export default class ViewQueueCommand extends Command {
 
         const currentSong = queue.songs[0];
         const currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0;
-        const paginated = util.paginate(queue.songs, page, Math.floor(Number(process.env.PAGINATED_ITEMS)));
+        const paginated = util.paginate(queue.songs, page, Math.floor(Number(PAGINATED_ITEMS)));
         const totalLength = queue.songs.reduce((prev: any, song: any) => prev + song.length, 0);
 
         deleteCommandMessages(msg, this.client);

@@ -10,7 +10,7 @@
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class ServerInfoCommand extends Command {
     constructor (client: CommandoClient) {
@@ -48,8 +48,8 @@ export default class ServerInfoCommand extends Command {
         }
 
         serverEmbed
-            .setColor(msg.guild.owner ? msg.guild.owner.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-            .setAuthor('Server Info', 'https://favna.xyz/images/ribbonhost/discordlogo.png')
+            .setColor(msg.guild.owner ? msg.guild.owner.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setAuthor('Server Info', `${ASSET_BASE_PATH}/ribbon/discordlogo.png`)
             .setThumbnail(msg.guild.iconURL({ format: 'png' }))
             .setFooter(`Server ID: ${msg.guild.id}`)
             .addField('Server Name', msg.guild.name, true)

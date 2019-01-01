@@ -11,7 +11,7 @@
 
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, eightBallPredictionsMap, roundNumber, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, eightBallPredictionsMap, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class EightBallCommand extends Command {
     constructor (client: CommandoClient) {
@@ -43,7 +43,7 @@ export default class EightBallCommand extends Command {
         const eightBallEmbed = new MessageEmbed();
 
         eightBallEmbed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
             .addField(':question: Question', question, false)
             .addField(
                 ':8ball: 8ball',

@@ -9,7 +9,7 @@
 
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class DndCCommand extends Command {
     constructor (client: CommandoClient) {
@@ -34,11 +34,11 @@ export default class DndCCommand extends Command {
         const flip = roundNumber(Math.random());
 
         coinEmbed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
             .setImage(
                 flip === 1
-                    ? 'https://favna.xyz/images/ribbonhost/dndheads.png'
-                    : 'https://favna.xyz/images/ribbonhost/dndtails.png'
+                    ? `${ASSET_BASE_PATH}/ribbon/dndheads.png`
+                    : `${ASSET_BASE_PATH}/ribbon/dndtails.png`
             )
             .setTitle(`Flipped ${flip === 1 ? 'heads' : 'tails'}`);
 

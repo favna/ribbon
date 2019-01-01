@@ -14,7 +14,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping, UnionPokeAlias } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, UnionPokeAlias } from '../../components';
 import { AbilityAliases, BattleAbilities } from '../../data/dex';
 
 export default class AbilityCommand extends Command {
@@ -69,8 +69,8 @@ export default class AbilityCommand extends Command {
             if (!abilitySearch.length) throw new Error('no_ability');
 
             abilityEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-                .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setTitle(capitalizeFirstLetter(abilitySearch[0].name))
                 .addField('Description', abilitySearch[0].desc ? abilitySearch[0].desc : abilitySearch[0].shortDesc)
                 .addField('External Resource', oneLine`

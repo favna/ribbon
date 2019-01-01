@@ -16,7 +16,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
 import { SlotMachine, SlotSymbol } from 'slot-machine';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class SlotsCommand extends Command {
     constructor (client: CommandoClient) {
@@ -51,8 +51,8 @@ export default class SlotsCommand extends Command {
 
         slotEmbed
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-            .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
         try {
             startTyping(msg);
@@ -134,12 +134,12 @@ export default class SlotsCommand extends Command {
                     chips === winningPoints
                         ? 'won back their exact input'
                         : chips > winningPoints
-                        ? `lost ${chips - winningPoints} chips ${
+                            ? `lost ${chips - winningPoints} chips ${
                             winningPoints !== 0
                                 ? `(slots gave back ${winningPoints})`
                                 : ''
                             }`
-                        : `won ${balance - prevBal} chips`;
+                            : `won ${balance - prevBal} chips`;
 
                 slotEmbed
                     .setTitle(`${msg.author.tag} ${titleString}`)

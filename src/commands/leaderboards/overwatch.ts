@@ -17,7 +17,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { capitalizeFirstLetter, deleteCommandMessages, IOverwatchHeroMapped, ms, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IOverwatchHeroMapped, ms, startTyping, stopTyping } from '../../components';
 
 export default class OverwatchCommand extends Command {
     constructor (client: CommandoClient) {
@@ -107,10 +107,10 @@ export default class OverwatchCommand extends Command {
             const competitiveStats = data.competitiveStats.careerStats;
 
             owEmbed
-                .setAuthor('Overwatch Player Statistics', 'https://favna.xyz/images/ribbonhost/overwatch.png')
+                .setAuthor('Overwatch Player Statistics', `${ASSET_BASE_PATH}/ribbon/overwatch.png`)
                 .setURL(`https://playoverwatch.com/en-us/career/${platform}/${player}`)
                 .setThumbnail(data.icon)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .addField('Account Stats',
                     stripIndents`
                         Level: **${data.level}**

@@ -14,7 +14,7 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
 import { unescape } from 'unescape-es6';
-import { currencymap, deleteCommandMessages, ISteamGenre, startTyping, stopTyping, stringify } from '../../components';
+import { currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, ISteamGenre, startTyping, stopTyping, stringify } from '../../components';
 
 export default class SteamCommand extends Command {
     constructor (client: CommandoClient) {
@@ -74,7 +74,7 @@ export default class SteamCommand extends Command {
             });
 
             steamEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setTitle(steamData.name)
                 .setURL(`http://store.steampowered.com/app/${steamData.steam_appid}/`)
                 .setImage(steamData.header_image)

@@ -24,7 +24,7 @@ import * as moment from 'moment';
 import fetch from 'node-fetch';
 import { Readable } from 'stream';
 import * as ytdl from 'ytdl-core';
-import { deleteCommandMessages, IMusicCommand, IMusicQueue, IYoutubeVideo, parse, Song, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_VOLUME, deleteCommandMessages, IMusicCommand, IMusicQueue, IYoutubeVideo, MAX_LENGTH, MAX_SONGS, parse, PASSES, Song, startTyping, stopTyping, stringify } from '../../components';
 
 export default class PlaySongCommand extends Command {
     public queue: Map<Snowflake, IMusicQueue>;
@@ -95,7 +95,7 @@ export default class PlaySongCommand extends Command {
                     voiceChannel,
                     connection: null,
                     songs: [],
-                    volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME),
+                    volume: msg.guild.settings.get('defaultVolume', DEFAULT_VOLUME),
                     playing: false,
                 };
 
@@ -168,7 +168,7 @@ export default class PlaySongCommand extends Command {
                 voiceChannel,
                 connection: null,
                 songs: [],
-                volume: msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME),
+                volume: msg.guild.settings.get('defaultVolume', DEFAULT_VOLUME),
                 playing: false,
             };
             this.queue.set(msg.guild.id, queue);
@@ -279,8 +279,8 @@ export default class PlaySongCommand extends Command {
         };
 
         if (!this.client.isOwner(msg.author)) {
-            const songMaxLength = msg.guild.settings.get('maxLength', process.env.MAX_LENGTH);
-            const songMaxSongs = msg.guild.settings.get('maxSongs', process.env.MAX_SONGS);
+            const songMaxLength = msg.guild.settings.get('maxLength', MAX_LENGTH);
+            const songMaxSongs = msg.guild.settings.get('maxSongs', MAX_SONGS);
 
             if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
                 return oneLine`
@@ -349,7 +349,7 @@ export default class PlaySongCommand extends Command {
 
         const dispatcher: StreamDispatcher = queue.connection
             .play(stream, {
-                passes: Number(process.env.PASSES),
+                passes: Number(PASSES),
                 fec: true,
             })
             .on('end', () => {

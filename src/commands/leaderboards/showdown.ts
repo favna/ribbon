@@ -14,7 +14,7 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 import { TierAliases } from '../../data/dex';
 
 export default class ShowdownCommand extends Command {
@@ -68,8 +68,8 @@ export default class ShowdownCommand extends Command {
             const showdownEmbed = new MessageEmbed();
 
             showdownEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-                .setThumbnail('https://favna.xyz/images/ribbonhost/showdown.png')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/showdown.png`)
                 .setTitle(`Pokemon Showdown ${results[0].tier} Leaderboard`);
 
             for (const rank in data.usernames) {

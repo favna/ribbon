@@ -20,7 +20,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class CydiaCommand extends Command {
     constructor (client: CommandoClient) {
@@ -81,7 +81,7 @@ export default class CydiaCommand extends Command {
             if (!search.length) throw new Error('no_packages');
 
             cydiaEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setTitle(search[0].display)
                 .setDescription(search[0].summary)
                 .addField('Version', search[0].version, true)

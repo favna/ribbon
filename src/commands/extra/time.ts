@@ -16,7 +16,7 @@ import { stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class TimeCommand extends Command {
     constructor (client: CommandoClient) {
@@ -67,7 +67,7 @@ export default class TimeCommand extends Command {
 					**Country:** ${time.countryName}
 					**DST:** ${time.dst}`
                 )
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR);
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

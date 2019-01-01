@@ -18,7 +18,7 @@
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class StrawpollCommand extends Command {
     constructor (client: CommandoClient) {
@@ -81,7 +81,7 @@ export default class StrawpollCommand extends Command {
             const strawpoll = await pollPost.json();
 
             pollEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setTitle(strawpoll.title)
                 .setURL(`http://www.strawpoll.me/${strawpoll.id}`)
                 .setImage(`http://www.strawpoll.me/images/poll-results/${strawpoll.id}.png`)

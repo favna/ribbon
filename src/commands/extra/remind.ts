@@ -18,7 +18,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class RemindCommand extends Command {
     constructor (client: CommandoClient) {
@@ -142,8 +142,8 @@ export default class RemindCommand extends Command {
         }
         remindEmbed
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-            .setThumbnail('https://favna.xyz/images/ribbonhost/reminders.png')
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/reminders.png`)
             .setTitle('Your reminder was stored!')
             .setDescription(reminder)
             .setFooter('Reminder will be sent')

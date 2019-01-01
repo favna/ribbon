@@ -15,7 +15,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, IFortniteStatsRow, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IFortniteStatsRow, startTyping, stopTyping } from '../../components';
 
 export default class FortniteCommand extends Command {
     constructor (client: CommandoClient) {
@@ -66,7 +66,7 @@ export default class FortniteCommand extends Command {
                 .setTitle(`Fortnite Player Statistics for ${stats.epicUserHandle}`)
                 .setURL(`https://fortnitetracker.com/profile/${stats.platformName}/${stats.epicUserHandle}`)
                 .setThumbnail('https://nintendowire.com/wp-content/uploads/2018/06/FortniteSwitch.jpg')
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .addField(
                     'Lifetime Stats',
                     stripIndents`

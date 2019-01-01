@@ -21,7 +21,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 import { BattleLearnsets } from '../../data/dex';
 
 export default class LearnCommand extends Command {
@@ -74,14 +74,13 @@ export default class LearnCommand extends Command {
     public run (msg: CommandoMessage, { pokemon, moves, gen = 7 }: { pokemon: string; moves: string; gen?: number }) {
         try {
             startTyping(msg);
-            moves = String(moves);
             if (/(?:--gen)/i.test(moves)) {
                 gen = moves.match(/[1-7]/gm) ? Number(moves.match(/[1-7]/gm)[0]) : 7;
                 moves =
                     moves.substring(0, moves.indexOf('--gen')) +
                     moves.substring(moves.indexOf('--gen') + '--gen'.length + 1);
             }
-            moves = moves.toLowerCase().replace(/(-)/gm, '');
+            moves = (moves as string).toLowerCase().replace(/(-)/gm, '');
 
             const { learnset } = BattleLearnsets[pokemon];
             const movesArray = moves.includes(',') ? moves.split(',') : [moves];
@@ -89,15 +88,15 @@ export default class LearnCommand extends Command {
             const methods: string[] = [];
             const response: string[] = [];
 
-            movesArray.forEach((move: string) => {
+            movesArray.forEach((move: string): any => {
                 if (move in learnset) {
-                    learnset[move].forEach((learn: string) => {
+                    learnset[move].forEach((learn: string): any => {
                         if (learn.charAt(0) === gen.toString()) {
                             methods.push(learn);
                         }
                     });
 
-                    methods.forEach(method => {
+                    methods.forEach((method: string): any => {
                         // tslint:disable-next-line:switch-default
                         switch (method.slice(1, 2)) {
                             case 'L':
@@ -130,8 +129,8 @@ export default class LearnCommand extends Command {
             });
 
             learnEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-                .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setAuthor(
                     `${capitalizeFirstLetter(pokemon)} - Generation ${gen}`,
                     `https://favna.xyz/images/ribbonhost/pokesprites/regular/${pokemon}.png`

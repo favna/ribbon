@@ -27,9 +27,4 @@ suite('Verify Environment Variables', () => {
     test('Twitch Client ID should be accessible', () => expect(typeof process.env.TWITCH_CLIENT_ID).to.equal('string'));
     test('Spotify ID should be accessible', () => expect(typeof process.env.SPOTIFY_ID).to.equal('string'));
     test('Spotify Secret should be accessible', () => expect(typeof process.env.SPOTIFY_SECRET).to.equal('string'));
-    test('Default volume should be accessible', () => expect(typeof process.env.DEFAULT_VOLUME).to.equal('string'));
-    test('Max Length should be accessible', () => expect(typeof process.env.MAX_LENGTH).to.equal('string'));
-    test('Max Songs should be accessible', () => expect(typeof process.env.MAX_SONGS).to.equal('string'));
-    test('Paginated Items should be accessible', () => expect(typeof process.env.PAGINATED_ITEMS).to.equal('string'));
-    test('Passes should be accessible', () => expect(typeof process.env.PASSES).to.equal('string'));
 });

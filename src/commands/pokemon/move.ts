@@ -16,7 +16,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping, UnionPokeMove } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, UnionPokeMove } from '../../components';
 import { BattleMovedex, MoveAliases } from '../../data/dex';
 
 export default class MoveCommand extends Command {
@@ -73,8 +73,8 @@ export default class MoveCommand extends Command {
             const moveEmbed = new MessageEmbed();
 
             moveEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-                .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setTitle(capitalizeFirstLetter(hit.name))
                 .addField('Description', hit.desc ? hit.desc : hit.shortDesc)
                 .addField('Type', hit.type, true)

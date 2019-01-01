@@ -12,7 +12,7 @@
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, IDefineWord, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IDefineWord, startTyping, stopTyping, stringify } from '../../components';
 
 export default class DefineCommand extends Command {
     constructor (client: CommandoClient) {
@@ -67,7 +67,7 @@ export default class DefineCommand extends Command {
             });
 
             defineEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setDescription(final);
 
             deleteCommandMessages(msg, this.client);

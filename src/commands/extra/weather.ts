@@ -20,7 +20,7 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping, stringify } from '../../components';
 
 export default class WeatherCommand extends Command {
     constructor (client: CommandoClient) {
@@ -69,7 +69,7 @@ export default class WeatherCommand extends Command {
 
             weatherEmbed
                 .setTitle(`Weather forecast for ${cords.address}`)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setFooter('Powered by DarkSky')
                 .setTimestamp()
                 .setThumbnail(`https://favna.xyz/images/ribbonhost/weather/${weather.currently.icon}.png`)

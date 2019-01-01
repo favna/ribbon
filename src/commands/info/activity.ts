@@ -15,7 +15,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class ActivityCommand extends Command {
     constructor (client: CommandoClient) {
@@ -58,7 +58,7 @@ export default class ActivityCommand extends Command {
             let spotifyData: any = {};
 
             embed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setAuthor(member.user.tag, ava, `${ava}?size2048`)
                 .setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
 

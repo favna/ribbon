@@ -15,7 +15,7 @@ import 'moment-duration-format';
 import eshop from 'nintendo-switch-eshop';
 import fetch from 'node-fetch';
 import * as path from 'path';
-import { badwords, caps, decache, duptext, emojis, invites, links, mentions, ms, ordinal, slowmode, stringify } from '.';
+import { ASSET_BASE_PATH, badwords, caps, decache, DEFAULT_EMBED_COLOR, duptext, emojis, invites, links, mentions, ms, ordinal, slowmode, stringify } from '.';
 
 const renderReminderMessage = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
@@ -42,7 +42,7 @@ const renderReminderMessage = async (client: CommandoClient) => {
                         description: query[row].remindText,
                         thumbnail: {
                             url:
-                                'https://favna.xyz/images/ribbonhost/reminders.png',
+                                `${ASSET_BASE_PATH}/ribbon/reminders.png`,
                         },
                     },
                 });
@@ -257,10 +257,10 @@ const renderLottoMessage = (client: CommandoClient) => {
                 const winnerLastMessageChannelPermitted: boolean = winnerLastMessageChannel ? winnerLastMessageChannel.permissionsFor(client.user).has('SEND_MESSAGES') : false;
 
                 winnerEmbed
-                    .setColor(process.env.DEFAULT_EMBED_COLOR)
+                    .setColor(DEFAULT_EMBED_COLOR)
                     .setDescription(`Congratulations <@${rows[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
                     .setAuthor(winnerMember.displayName, winnerMember.user.displayAvatarURL({ format: 'png' }))
-                    .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png')
+                    .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`)
                     .addField('Balance', `${prevBal} ➡ ${rows[winner].balance}`);
 
                 if (winnerLastMessageChannelPermitted) {

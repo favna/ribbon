@@ -13,7 +13,7 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, IMovieGenre, roundNumber, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IMovieGenre, roundNumber, startTyping, stopTyping, stringify } from '../../components';
 
 export default class TVCommand extends Command {
     constructor (client: CommandoClient) {
@@ -58,7 +58,7 @@ export default class TVCommand extends Command {
             showEmbed
                 .setTitle(show.name)
                 .setURL(`https://www.themoviedb.org/tv/${show.id}`)
-                .setColor(msg.guild ? msg.member.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.member.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setImage(`https://image.tmdb.org/t/p/original${show.backdrop_path}`)
                 .setThumbnail(`https://image.tmdb.org/t/p/original${show.poster_path}`)
                 .setDescription(show.overview)

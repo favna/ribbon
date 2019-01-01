@@ -16,7 +16,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as Fuse from 'fuse.js';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping, UnionPokeItem } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, UnionPokeItem } from '../../components';
 import { BattleItems, ItemAliases } from '../../data/dex';
 
 export default class ItemCommand extends Command {
@@ -71,8 +71,8 @@ export default class ItemCommand extends Command {
             if (!itemSearch.length) throw new Error('no_item');
 
             itemEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-                .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setAuthor(
                     `${capitalizeFirstLetter(itemSearch[0].name)}`,
                     `https://play.pokemonshowdown.com/sprites/itemicons/${itemSearch[0].name.toLowerCase().replace(/ /g, '-')}.png`

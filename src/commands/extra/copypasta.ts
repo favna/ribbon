@@ -18,7 +18,7 @@ import { MessageEmbed, TextChannel, Util } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CopyPastaCommand extends Command {
     constructor (client: CommandoClient) {
@@ -61,7 +61,7 @@ export default class CopyPastaCommand extends Command {
 
                 if (image) {
                     pastaEmbed.setImage(image[0]);
-                    query.content = query.content.replace(/(<|>)/gm, '');
+                    query.content = query.content.replace(/([<>])/gm, '');
                     query.content =
                         query.content.substring(0, image.index - 1) +
                         query.content.substring(image.index + image[0].length);
@@ -81,7 +81,7 @@ export default class CopyPastaCommand extends Command {
                 }
 
                 pastaEmbed
-                    .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                    .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                     .setTitle(query.name)
                     .setDescription(query.content);
 

@@ -10,7 +10,7 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class InviteCommand extends Command {
     constructor (client: CommandoClient) {
@@ -37,7 +37,7 @@ export default class InviteCommand extends Command {
             .setTitle('Ribbon by Favna')
             .setThumbnail('https://favna.xyz/images/appIcons/ribbon.png')
             .setURL('https://favna.xyz/ribbon')
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
             .setDescription(stripIndents`Enrich your Discord server with a fully modular Discord bot with many many commands\n
                 [Add me to your server](https://favna.xyz/redirect/ribbon)
                 [Join the Support Server](https://favna.xyz/redirect/server)

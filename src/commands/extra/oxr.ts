@@ -20,7 +20,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { convert, currencymap, deleteCommandMessages, startTyping, stopTyping, stringify, validCurrenciesMap } from '../../components';
+import { convert, currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, stringify, validCurrenciesMap } from '../../components';
 
 export default class MoneyCommand extends Command {
     constructor (client: CommandoClient) {
@@ -80,7 +80,7 @@ export default class MoneyCommand extends Command {
             const result = convert(response.rates, fromCurrency, toCurrency, value);
 
             oxrEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setAuthor('🌐 Currency Converter')
                 .addField(
                     `:flag_${fromCurrency

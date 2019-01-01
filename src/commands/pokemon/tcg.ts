@@ -24,7 +24,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { ArgumentCollector, Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { ITCGProps, startTyping, stopTyping, stringify } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, ITCGProps, startTyping, stopTyping, stringify } from '../../components';
 
 export default class PokemonTCGCommand extends Command {
     constructor (client: CommandoClient) {
@@ -235,7 +235,7 @@ export default class PokemonTCGCommand extends Command {
                 const selectionEmbed: any = await command.embed({
                     color: command.guild ? command.member.displayColor : 14827841,
                     description: body,
-                    thumbnail: { url: 'https://favna.xyz/images/ribbonhost/tcglogo.png' },
+                    thumbnail: { url: `${ASSET_BASE_PATH}/ribbon/tcglogo.png` },
                 });
 
                 const cardChooser = new ArgumentCollector(
@@ -263,8 +263,8 @@ export default class PokemonTCGCommand extends Command {
                 if (messagesDeletable) cardSelection.answers[0].delete();
 
                 tcgEmbed
-                    .setColor(msg.guild ? msg.member.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-                    .setThumbnail('https://favna.xyz/images/ribbonhost/tcglogo.png')
+                    .setColor(msg.guild ? msg.member.displayHexColor : DEFAULT_EMBED_COLOR)
+                    .setThumbnail(`${ASSET_BASE_PATH}/ribbon/tcglogo.png`)
                     .setTitle(`${cards[selection].name} (${cards[selection].id})`)
                     .setImage(cards[selection].imageUrl)
                     .addField('Series', cards[selection].series, true)

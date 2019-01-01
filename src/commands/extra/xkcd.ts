@@ -10,7 +10,7 @@
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class XKCDCommand extends Command {
     constructor (client: CommandoClient) {
@@ -41,7 +41,7 @@ export default class XKCDCommand extends Command {
 
             xkcdEmbed
                 .setTitle(randomImage.safe_title)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setDescription(randomImage.alt)
                 .setImage(randomImage.img)
                 .setURL(`https://xkcd.com/${randomNum}/`);

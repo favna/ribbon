@@ -17,7 +17,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { CoinSide, deleteCommandMessages, roundNumber, startTyping, stopTyping, validateCasinoLimit } from '../../components';
+import { ASSET_BASE_PATH, CoinSide, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping, validateCasinoLimit } from '../../components';
 
 
 export default class CoinCommand extends Command {
@@ -64,8 +64,8 @@ export default class CoinCommand extends Command {
 
         coinEmbed
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-            .setThumbnail('https://favna.xyz/images/ribbonhost/casinologo.png');
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
         try {
             startTyping(msg);

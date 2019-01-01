@@ -12,7 +12,7 @@
 
 import { GuildMember, ImageSize, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class AvatarCommand extends Command {
     constructor (client: CommandoClient) {
@@ -53,7 +53,7 @@ export default class AvatarCommand extends Command {
         const ext = this.fetchExt(ava);
 
         embed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
             .setImage(ext.includes('gif') ? `${ava}&f=.gif` : ava)
             .setTitle(member.displayName)
             .setURL(ava)

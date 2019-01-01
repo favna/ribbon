@@ -14,7 +14,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping, stringify } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping, stringify } from '../../components';
 
 export default class OsuCommand extends Command {
     constructor (client: CommandoClient) {
@@ -62,7 +62,7 @@ export default class OsuCommand extends Command {
             osuEmbed
                 .setTitle(`OSU! Player Stats for ${osu[0].username} (${osu[0].user_id})`)
                 .setURL(`https://new.ppy.sh/u/${osu[0].username}`)
-                .setThumbnail('https://favna.xyz/images/ribbonhost/osulogo.png')
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/osulogo.png`)
                 .setImage(
                     `http://lemmy.pw/osusig/sig.php?${stringify({
                         avatarrounding: 4,
@@ -75,7 +75,7 @@ export default class OsuCommand extends Command {
                         xpbarhex: true,
                     })}`
                 )
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .addField('Perfects', osu[0].count300, true)
                 .addField('Greats', osu[0].count100, true)
                 .addField('Poors', osu[0].count50, true)

@@ -13,7 +13,7 @@ import * as cheerio from 'cheerio';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
 
 export default class ImageCommand extends Command {
     constructor (client: CommandoClient) {
@@ -64,7 +64,7 @@ export default class ImageCommand extends Command {
             const imageData = await imageSearch.json();
 
             imageEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setImage(imageData.items[0].link)
                 .setFooter(`Search query: "${query.replace(/\+/g, ' ')}"`);
 
@@ -92,7 +92,7 @@ export default class ImageCommand extends Command {
                 .attr('src');
 
             imageEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setImage(src)
                 .setFooter(`Search query: "${query}"`);
 

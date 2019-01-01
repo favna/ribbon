@@ -13,7 +13,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 import { BattleTypeChart } from '../../data/dex';
 
 export default class TypeCommand extends Command {
@@ -177,8 +177,8 @@ export default class TypeCommand extends Command {
             }
 
             embed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
-                .setThumbnail('https://favna.xyz/images/ribbonhost/unovadexclosedv2.png')
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setAuthor(`Type effectiveness for ${types.join(' ')}`)
                 .addField('__Offensive__', stripIndents`
                     Supereffective against: ${atk.doubleEffectiveTypes.map((el: string) => `${el} (x4)`).concat(atk.effectiveTypes.map((el: string) => `${el} (x2)`)).join(', ')}

@@ -10,7 +10,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { DEFAULT_VOLUME, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class DefaultVolumeCommand extends Command {
     constructor (client: CommandoClient) {
@@ -42,7 +42,7 @@ export default class DefaultVolumeCommand extends Command {
     public run (msg: CommandoMessage, { volume }: { volume: string }) {
         startTyping(msg);
         if (volume === 'show') {
-            const defaultVolume = msg.guild.settings.get('defaultVolume', process.env.DEFAULT_VOLUME);
+            const defaultVolume = msg.guild.settings.get('defaultVolume', DEFAULT_VOLUME);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -53,7 +53,7 @@ export default class DefaultVolumeCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply(`set the default volume level to Ribbon's default (currently ${process.env.DEFAULT_VOLUME}).`);
+            return msg.reply(`set the default volume level to Ribbon's default (currently ${DEFAULT_VOLUME}).`);
         } else {
             const defaultVolume = parseInt(volume, 10);
 

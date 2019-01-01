@@ -10,7 +10,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, startTyping, stopTyping } from '../../components';
 
 export default class KaiCommand extends Command {
     constructor (client: CommandoClient) {
@@ -46,16 +46,16 @@ export default class KaiCommand extends Command {
 
     private fetchImage () {
         const images = [
-            'https://favna.xyz/images/ribbonhost/kai/antikai01.png',
-            'https://favna.xyz/images/ribbonhost/kai/antikai02.png',
-            'https://favna.xyz/images/ribbonhost/kai/antikai03.png',
-            'https://favna.xyz/images/ribbonhost/kai/antikai04.png',
-            'https://favna.xyz/images/ribbonhost/kai/antikai05.png',
-            'https://favna.xyz/images/ribbonhost/kai/antikai06.gif',
-            'https://favna.xyz/images/ribbonhost/kai/antikai07.png',
-            'https://favna.xyz/images/ribbonhost/kai/antikai08.png',
-            'https://favna.xyz/images/ribbonhost/kai/antikai09.png',
-            'https://favna.xyz/images/ribbonhost/kai/antikai10.png'
+            `${ASSET_BASE_PATH}/ribbon/kai/antikai01.png`,
+            `${ASSET_BASE_PATH}/ribbon/kai/antikai02.png`,
+            `${ASSET_BASE_PATH}/ribbon/kai/antikai03.png`,
+            `${ASSET_BASE_PATH}/ribbon/kai/antikai04.png`,
+            `${ASSET_BASE_PATH}/ribbon/kai/antikai05.png`,
+            `${ASSET_BASE_PATH}/ribbon/kai/antikai06.gif`,
+            `${ASSET_BASE_PATH}/ribbon/kai/antikai07.png`,
+            `${ASSET_BASE_PATH}/ribbon/kai/antikai08.png`,
+            `${ASSET_BASE_PATH}/ribbon/kai/antikai09.png`,
+            `${ASSET_BASE_PATH}/ribbon/kai/antikai10.png`
         ];
         const curImage = Math.floor(Math.random() * images.length);
         return images[curImage];

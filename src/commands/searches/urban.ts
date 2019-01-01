@@ -12,7 +12,7 @@
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { capitalizeFirstLetter, deleteCommandMessages, IUrbanDefinition, startTyping, stopTyping, stringify } from '../../components';
+import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IUrbanDefinition, startTyping, stopTyping, stringify } from '../../components';
 
 export default class UrbanCommand extends Command {
     constructor (client: CommandoClient) {
@@ -54,7 +54,7 @@ export default class UrbanCommand extends Command {
             urbanEmbed
                 .setTitle(`Urban Search - ${hit.word}`)
                 .setURL(hit.permalink)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setDescription(capitalizeFirstLetter(hit.definition.replace(/[\[]]/gim, '')))
                 .addField(
                     'Example',

@@ -16,7 +16,7 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import * as path from 'path';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CopyPastaAddCommand extends Command {
     constructor (client: CommandoClient) {
@@ -55,7 +55,7 @@ export default class CopyPastaAddCommand extends Command {
 
         pastaAddEmbed
             .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : process.env.DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
             .setDescription(content);
 
         try {

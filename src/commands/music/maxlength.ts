@@ -14,7 +14,7 @@
 
 import { oneLine } from 'common-tags';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, MAX_LENGTH, startTyping, stopTyping } from '../../components';
 
 export default class MaxLengthCommand extends Command {
     constructor (client: CommandoClient) {
@@ -27,7 +27,7 @@ export default class MaxLengthCommand extends Command {
             format: '[minutes|"default"]',
             details: oneLine`
                 This is the maximum length of a song that users may queue, in minutes.
-                The default is ${process.env.MAX_LENGTH}.
+                The default is ${MAX_LENGTH}.
                 Only administrators may change this setting.`,
             examples: ['maxlength 10'],
             guildOnly: true,
@@ -42,7 +42,7 @@ export default class MaxLengthCommand extends Command {
     public run (msg: CommandoMessage, args: any) {
         startTyping(msg);
         if (!args) {
-            const maxLength = msg.guild.settings.get('maxLength', process.env.MAX_LENGTH);
+            const maxLength = msg.guild.settings.get('maxLength', MAX_LENGTH);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -53,7 +53,7 @@ export default class MaxLengthCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply(`set the maximum song length to the default (currently ${process.env.MAX_LENGTH} minutes).`);
+            return msg.reply(`set the maximum song length to the default (currently ${MAX_LENGTH} minutes).`);
         } else {
             const maxLength = parseInt(args, 10);
 
