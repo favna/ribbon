@@ -71,60 +71,52 @@ export default class LearnCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { pokemon, moves, gen = 7 }: { pokemon: string; moves: string; gen?: number }) {
+    public run (msg: CommandoMessage, { pokemon, moves }: { pokemon: string; moves: string; }) {
         try {
             startTyping(msg);
-            if (/(?:--gen)/i.test(moves)) {
-                gen = moves.match(/[1-7]/gm) ? Number(moves.match(/[1-7]/gm)[0]) : 7;
-                moves =
-                    moves.substring(0, moves.indexOf('--gen')) +
-                    moves.substring(moves.indexOf('--gen') + '--gen'.length + 1);
-            }
             moves = (moves as string).toLowerCase().replace(/(-)/gm, '');
 
             const { learnset } = BattleLearnsets[pokemon];
-            const movesArray = moves.includes(',') ? moves.split(',') : [moves];
             const learnEmbed = new MessageEmbed();
+            const movesArray: string[] = moves.includes(',') ? moves.split(',') : [moves];
             const methods: string[] = [];
             const response: string[] = [];
 
             movesArray.forEach((move: string): any => {
                 if (move in learnset) {
                     learnset[move].forEach((learn: string): any => {
-                        if (learn.charAt(0) === gen.toString()) {
                             methods.push(learn);
-                        }
                     });
 
                     methods.forEach((method: string): any => {
                         // tslint:disable-next-line:switch-default
                         switch (method.slice(1, 2)) {
                             case 'L':
-                                response.push(`${pokemon} **__can__** learn ${move} by level up at level ${method.slice(2)}`);
+                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** by level up at level ${method.slice(2)}`);
                                 break;
                             case 'V':
-                                response.push(`${pokemon} **__can__** learn ${move} through virtual console transfer`);
+                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** through virtual console transfer`);
                                 break;
                             case 'T':
-                                response.push(`${pokemon} **__can__** learn ${move} through transferring from a previous generation`);
+                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** through a move tutor`);
                                 break;
                             case 'M':
-                                response.push(`${pokemon} **__can__** learn ${move} through TM`);
+                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** through TM`);
                                 break;
                             case 'E':
-                                response.push(`${pokemon} **__can__** learn ${move} as Egg Move`);
+                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** as Egg Move`);
                                 break;
                             case 'S':
-                                response.push(`${pokemon} **__can__** learn ${move} through an event`);
+                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** through an event`);
                                 break;
                             case 'D':
-                                response.push(`${pokemon} **__can__** learn ${move} through Dream World`);
+                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** through Dream World`);
                                 break;
                         }
                     });
                     methods.length = 0;
                 } else {
-                    response.push(`${pokemon} **__cannot__** learn ${move}`);
+                    response.push(`${capitalizeFirstLetter(pokemon)} **__cannot__** learn **${move}**`);
                 }
             });
 
@@ -132,14 +124,13 @@ export default class LearnCommand extends Command {
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setAuthor(
-                    `${capitalizeFirstLetter(pokemon)} - Generation ${gen}`,
+                    `${capitalizeFirstLetter(pokemon)}`,
                     `https://favna.xyz/images/ribbonhost/pokesprites/regular/${pokemon}.png`
                 )
                 .setDescription(
                     response.length
-                        ? response.join('\n')
-                        : stripIndents`${capitalizeFirstLetter(pokemon)} cannot learn ${movesArray.map((val: string) => `\`${val}\``).join(', ')} in generation ${gen}.
-                         Use \`--genX\` (for example\`--gen6\`) to specify the generation`
+                        ? response.join('\n\n')
+                        : stripIndents`${capitalizeFirstLetter(pokemon)} cannot learn ${movesArray.map((val: string) => `\`${val}\``).join(', ')}`
                 );
 
             deleteCommandMessages(msg, this.client);
@@ -157,7 +148,6 @@ export default class LearnCommand extends Command {
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
 		        **Pokemon:** ${pokemon}
                 **Moves:** ${moves}
-                **Gen:** ${gen}
                 **Error Message:** ${err}
             `);
 
