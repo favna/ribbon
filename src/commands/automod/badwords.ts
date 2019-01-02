@@ -65,6 +65,7 @@ export default class BadWordsCommand extends Command {
         const bwfEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const options = { words, enabled: option };
+        console.log('woops');
 
         msg.guild.settings.set('badwords', options);
         bwfEmbed

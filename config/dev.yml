@@ -1,6 +1,0 @@
-apps:
-  script: ./node_modules/ts-node/dist/bin.js
-  name: 'tsdev'
-  args: './src/app.ts'
-  env:
-    NODE_ENV: development

@@ -1,5 +1,0 @@
---ui mocha-typescript
---require ts-node/register
---require source-map-support/register
---file ./test/testSetup.spec.ts
---recursive ./test/**/*.spec.ts

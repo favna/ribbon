@@ -1,6 +1,7 @@
 apps:
-  script: ./config/run.sh
+  script: ./node_modules/ts-node/dist/bin.js
   name: 'ribbon'
+  args: './src/app.ts'
   env:
     NODE_ENV: development
   env_production:

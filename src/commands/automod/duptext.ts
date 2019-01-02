@@ -80,6 +80,11 @@ export default class DuplicateTextCommand extends Command {
         const dtfEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const options = { distance, equals, within, enabled: option };
+        console.log('another');
+        console.log('test');
+        console.log('test');
+        console.log('test');
+
 
         msg.guild.settings.set('duptext', options);
 
