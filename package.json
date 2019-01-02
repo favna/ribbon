@@ -28,8 +28,9 @@
     "docs:index": "jsdoc2md --template ./docs/template.hbs --files ./dist/commands/**/*.js > docs/index.md",
     "docs:wiki": "jsdoc2md --template ./docs/template.hbs --files ./dist/commands/**/*.js > ../wikiribbon/All-Commands.md",
     "docs:json": "jsdoc2md --json --files ./dist/commands/**/*.js > ../homesite/src/assets/docs/ribbon.json",
-    "start": "ts-node ./src/app.ts test",
-    "start:ribbon": "ts-node ./src/app.ts"
+    "start": "cross-env NODE_ENV=development ts-node ./src/app.ts",
+    "start:ribbon": "cross-env NODE_ENV=production ts-node ./src/app.ts",
+    "serve": "pm2 start ./config/pm2.yml --env production"
   },
   "keywords": [
     "bot",
@@ -89,6 +90,7 @@
     "chai": "^4.2.0",
     "concurrently": "^4.1.0",
     "copyfiles": "^2.1.0",
+    "cross-env": "^5.2.0",
     "jsdoc-to-markdown": "^4.0.1",
     "mocha": "^5.2.0",
     "mocha-typescript": "^1.1.17",
