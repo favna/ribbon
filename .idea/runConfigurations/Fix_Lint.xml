@@ -1,12 +1,12 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Docs" type="js.build_tools.gulp">
+  <configuration default="false" name="Fix Lint" type="js.build_tools.gulp">
     <node-interpreter>project</node-interpreter>
     <node-options />
     <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
     <tasks>
-      <task>docs</task>
+      <task>lint</task>
     </tasks>
-    <arguments />
+    <arguments>--fix</arguments>
     <envs />
     <method v="2" />
   </configuration>

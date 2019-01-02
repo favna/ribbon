@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Docs" type="js.build_tools.gulp">
+  <configuration default="false" name="Watch" type="js.build_tools.gulp">
     <node-interpreter>project</node-interpreter>
     <node-options />
     <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
     <tasks>
-      <task>docs</task>
+      <task>watch</task>
     </tasks>
     <arguments />
     <envs />
