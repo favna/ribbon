@@ -85,7 +85,6 @@
     "cross-env": "^5.2.0",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
-    "gulp-cli": "^2.0.1",
     "gulp-mocha": "^6.0.0",
     "gulp-string-replace": "^1.1.2",
     "gulp-tslint": "^8.1.3",

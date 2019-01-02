@@ -9,7 +9,7 @@ node_modules/
 *.stackdump
 
 # Data folders
-src/data/databases/*
+dist/data/databases/*
 
 # Folder keep
 !**/*.gitkeep
@@ -18,14 +18,11 @@ src/data/databases/*
 .idea/
 .vscode/
 
-# My own stuff
-src/commands/owner/test.ts
-
 # Stuff that doesn't need to be on NPM
 .github/
 .git/
 docs/
+src/
 test/
 yarn.lock
-config/
 .gitignore
