@@ -9,10 +9,11 @@
  * @param {string} PhraseQuery Phrase that you want to define
  */
 
+import { stringify } from 'awesome-querystring';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IUrbanDefinition, startTyping, stopTyping, stringify } from '../../components';
+import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IUrbanDefinition, startTyping, stopTyping } from '../../components';
 
 export default class UrbanCommand extends Command {
     constructor (client: CommandoClient) {

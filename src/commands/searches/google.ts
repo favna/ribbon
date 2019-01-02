@@ -11,12 +11,13 @@
  * @param {string} SearchQuery Thing to find on Google
  */
 
+import { stringify } from 'awesome-querystring';
 import * as cheerio from 'cheerio';
 import { oneLine } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class GoogleCommand extends Command {
     constructor (client: CommandoClient) {

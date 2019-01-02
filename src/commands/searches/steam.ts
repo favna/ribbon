@@ -9,12 +9,13 @@
  * @param {string} GameName The name of any game that you want to find
  */
 
+import { stringify } from 'awesome-querystring';
 import * as cheerio from 'cheerio';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
 import { unescape } from 'unescape-es6';
-import { currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, ISteamGenre, startTyping, stopTyping, stringify } from '../../components';
+import { currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, ISteamGenre, startTyping, stopTyping } from '../../components';
 
 export default class SteamCommand extends Command {
     constructor (client: CommandoClient) {

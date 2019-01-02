@@ -17,6 +17,7 @@
  * @param {string} Video One of the options linking to a video to play
  */
 
+import { parse, stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import { Guild, Message, Snowflake, StreamDispatcher, TextChannel, Util, VoiceChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
@@ -24,7 +25,7 @@ import * as moment from 'moment';
 import fetch from 'node-fetch';
 import { Readable } from 'stream';
 import * as ytdl from 'ytdl-core';
-import { DEFAULT_VOLUME, deleteCommandMessages, IMusicCommand, IMusicQueue, IYoutubeVideo, MAX_LENGTH, MAX_SONGS, parse, PASSES, Song, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_VOLUME, deleteCommandMessages, IMusicCommand, IMusicQueue, IYoutubeVideo, MAX_LENGTH, MAX_SONGS, PASSES, Song, startTyping, stopTyping } from '../../components';
 
 export default class PlaySongCommand extends Command {
     public queue: Map<Snowflake, IMusicQueue>;

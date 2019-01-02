@@ -19,12 +19,13 @@
  * @param {string} [Properties] Properties you want to use for your search
  */
 
+import { stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { ArgumentCollector, Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, ITCGProps, startTyping, stopTyping, stringify } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, ITCGProps, startTyping, stopTyping } from '../../components';
 
 export default class PokemonTCGCommand extends Command {
     constructor (client: CommandoClient) {

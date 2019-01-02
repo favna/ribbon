@@ -471,6 +471,11 @@ asynckit@^0.4.0:
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
   integrity sha1-x57Zf380y48robyXkLzDZkdLS3k=
 
+awesome-querystring@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/awesome-querystring/-/awesome-querystring-1.1.2.tgz#3506846c79f3ee3adf4fe41d96e042482466cf4b"
+  integrity sha512-BX2ufb9AdNlFVmIci3oK84NMXK1PCcjk426/iIkkSvjm7SoHStmJpDHgvQKF7rYHYznhyiDqetAgVpJ7Q2RR7w==
+
 aws-sign2@~0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.7.0.tgz#b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8"

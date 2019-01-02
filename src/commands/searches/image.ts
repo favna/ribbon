@@ -9,11 +9,12 @@
  * @param {string} ImageQuery Image to find on Google Images
  */
 
+import { stringify } from 'awesome-querystring';
 import * as cheerio from 'cheerio';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, stringify } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class ImageCommand extends Command {
     constructor (client: CommandoClient) {

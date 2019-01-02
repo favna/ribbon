@@ -9,13 +9,14 @@
  * @param {GuildMemberResolvable} member Member to get the activity for
  */
 
+import { stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, IDiscordGameParsed, IDiscordGameSku, IDiscordStoreGameData, startTyping, stopTyping, stringify } from '../../components';
+import { currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, IDiscordGameParsed, IDiscordGameSku, IDiscordStoreGameData, startTyping, stopTyping } from '../../components';
 
 export default class ActivityCommand extends Command {
     constructor (client: CommandoClient) {

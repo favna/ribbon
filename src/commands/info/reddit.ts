@@ -8,12 +8,13 @@
  * @param {string} RedditUser The Reddit user you want to look up
  */
 
+import { stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping, stringify } from '../../components';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class RedditCommand extends Command {
     private comments: any[];

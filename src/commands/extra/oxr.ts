@@ -15,12 +15,13 @@
  * @param {string} TargetCurrency Currency to convert to
  */
 
+import { stringify } from 'awesome-querystring';
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { convert, currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, stringify, validCurrenciesMap } from '../../components';
+import { convert, currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, validCurrenciesMap } from '../../components';
 
 export default class MoneyCommand extends Command {
     constructor (client: CommandoClient) {

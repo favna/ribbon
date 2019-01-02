@@ -546,10 +546,6 @@ There are 4 ways to queue songs.</p>
 <p>Songs are paginated in sets of 5</p>
 <p><strong>Aliases</strong>: <code>songs</code>, <code>song-list</code>, <code>list</code>, <code>listqueue</code></p>
 </dd>
-<dt><a href="#module_record">record</a></dt>
-<dd><p>Music RecordCommand - Start recording voice chat</p>
-<p><strong>Aliases</strong>: <code>rec</code>, <code>startrec</code></p>
-</dd>
 <dt><a href="#module_resume">resume</a></dt>
 <dd><p>Music ResumeSongCommand - Resumes the song after pausing it</p>
 <p>You need to be in a voice channel before you can use this command</p>
@@ -2576,23 +2572,6 @@ Songs are paginated in sets of 5
 **Example**  
 ```js
 queue 2
-```
-<a name="module_record"></a>
-
-## record
-Music RecordCommand - Start recording voice chat
-
-**Aliases**: `rec`, `startrec`
-
-**Category**: music  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| AnyMembers | <code>string</code> | List of members to monitor, space delimited |
-
-**Example**  
-```js
-record favna ribbon biscuit
 ```
 <a name="module_resume"></a>
 

@@ -15,7 +15,8 @@ import 'moment-duration-format';
 import eshop from 'nintendo-switch-eshop';
 import fetch from 'node-fetch';
 import * as path from 'path';
-import { ASSET_BASE_PATH, badwords, caps, decache, DEFAULT_EMBED_COLOR, duptext, emojis, invites, links, mentions, ms, ordinal, slowmode, stringify } from '.';
+import { ASSET_BASE_PATH, badwords, caps, decache, DEFAULT_EMBED_COLOR, duptext, emojis, invites, links, mentions, ms, ordinal, slowmode } from '.';
+import { stringify } from 'awesome-querystring';
 
 const renderReminderMessage = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
