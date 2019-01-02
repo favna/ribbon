@@ -1,6 +1,6 @@
 apps:
-  name: ribbon
   script: ./config/run.sh
+  name: 'ribbon'
   env:
     NODE_ENV: development
   env_production:

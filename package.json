@@ -22,15 +22,16 @@
     "build": "tsc",
     "postbuild": "concurrently \"yarn copyfiles\" \"yarn replace\" && yarn uglify",
     "uglify": "uglifyjs-folder dist/ -yeo dist -x .js",
-    "copyfiles": "copyfiles -u 1 ./src/data/fonts/* ./src/data/databases/* ./src/.env ./config/ecosystem.config.js ./dist/",
-    "replace": "replace 'typescript: true,' 'typescript: false,' dist/Ribbon.js && replace '.registerCommandsIn\\(\\{\\n\\s+dirname.+\\n\\s+filter.+\\n\\s+}\\);' '.registerCommandsIn(path.join(__dirname, \"commands\"));' dist/Ribbon.js && replace '\\/\\(\\?:test\\)\\/i\\.test\\(process\\.argv\\[2\\]\\)\\?process\\.env\\.TEST_TOKEN:process\\.env\\.BOT_TOKEN' 'process.env.BOT_TOKEN' dist/app.js",
+    "copyfiles": "copyfiles -u 1 ./src/data/fonts/* ./src/data/databases/* ./src/.env ./dist/",
+    "replace": "replace 'typescript: true,' 'typescript: false,' dist/Ribbon.js && replace '.registerCommandsIn\\(\\{\\n\\s+dirname.+\\n\\s+filter.+\\n\\s+}\\);' '.registerCommandsIn(path.join(__dirname, \"commands\"));' dist/Ribbon.js",
     "docs": "yarn build --removeComments false && concurrently \"yarn docs:index\" \"yarn docs:wiki\" \"yarn docs:json\" && yarn clean",
     "docs:index": "jsdoc2md --template ./docs/template.hbs --files ./dist/commands/**/*.js > docs/index.md",
     "docs:wiki": "jsdoc2md --template ./docs/template.hbs --files ./dist/commands/**/*.js > ../wikiribbon/All-Commands.md",
     "docs:json": "jsdoc2md --json --files ./dist/commands/**/*.js > ../homesite/src/assets/docs/ribbon.json",
     "start": "cross-env NODE_ENV=development ts-node ./src/app.ts",
     "start:ribbon": "cross-env NODE_ENV=production ts-node ./src/app.ts",
-    "serve": "pm2 start ./config/pm2.yml --env production"
+    "serve": "pm2 start ./config/prod.yml --env production",
+    "serve:test": "pm2 start ./config/dev.yml"
   },
   "keywords": [
     "bot",

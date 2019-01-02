@@ -27,5 +27,5 @@ src/commands/owner/test.ts
 docs/
 test/
 yarn.lock
-ecosystem.config.js
+config/
 .gitignore
