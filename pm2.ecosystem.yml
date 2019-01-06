@@ -1,7 +1,6 @@
 apps:
-  script: node
+  script: './dist/app.js'
   name: 'ribbon'
-  args: './dist/app.js'
   env:
     NODE_ENV: development
   env_production:
