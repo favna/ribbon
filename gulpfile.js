@@ -42,8 +42,10 @@ const minifyCode = () => {
 
 const generateDocs = (done) => {
     const docs = jsdoc.renderSync(jsdocOptions);
+    // const docsJSON = jsdoc.renderSync({json: true, ...jsdocOptions});
     fs.writeFileSync('./docs/index.md', docs);
     fs.writeFileSync('../wikiribbon/All-Commands.md', docs);
+    // fs.writeFileSync('../homesite/src/assets/docs/ribbon.json', docsJSON);
     return done();
 };
 
@@ -126,6 +128,7 @@ gulp.task('watch', () => {
 
 gulp.task('docs', gulp.series('clean', compileForDocs, generateDocs, 'clean'));
 gulp.task('build', gulp.series('clean', compileToJavaScript, gulp.parallel(copyAdditionalFiles, makeJavaScriptRunnable), minifyCode));
+gulp.task('build:docs', gulp.series('clean', compileForDocs));
 gulp.task('rebuild', gulp.series(compileSingleToJavaScript));
 gulp.task('reload', gulp.series('rebuild'));
 gulp.task('default', gulp.parallel('watch', 'lint'));

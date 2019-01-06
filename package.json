@@ -17,7 +17,8 @@
     "start": "cross-env NODE_ENV=development ts-node ./src/app.ts",
     "start:ribbon": "cross-env NODE_ENV=production ts-node ./src/app.ts",
     "serve": "pm2 start pm2.ecosystem.yml --env production",
-    "serve:test": "pm2 start pm2.ecosystem.yml"
+    "serve:test": "pm2 start pm2.ecosystem.yml",
+    "docs:json": "gulp build:docs && jsdoc2md --json --files ./dist/commands/*/*.js > ../homesite/src/assets/docs/ribbon.json && gulp clean"
   },
   "keywords": [
     "bot",
