@@ -42,13 +42,14 @@ export default class AvatarCommand extends Command {
                     type: 'integer',
                     oneOf: [128, 256, 512, 1024, 2048],
                     default: 1024,
-                },
+                }
             ],
         });
     }
 
     public run (msg: CommandoMessage, { member, size }: { member: GuildMember; size: ImageSize }) {
         startTyping(msg);
+
         if (member as unknown as string === 'me') member = msg.member;
         const ava = member.user.displayAvatarURL({ size: size as ImageSize });
         const embed = new MessageEmbed();
