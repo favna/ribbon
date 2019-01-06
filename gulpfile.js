@@ -40,10 +40,11 @@ const minifyCode = () => {
         .pipe(gulp.dest('./dist'));
 };
 
-const generateDocs = () => {
+const generateDocs = (done) => {
     const docs = jsdoc.renderSync(jsdocOptions);
-    fs.writeFileSync('./docs/docs.md', docs);
-    return fs.writeFileSync('../wikiribbon/All-Commands.md', docs);
+    fs.writeFileSync('./docs/index.md', docs);
+    fs.writeFileSync('../wikiribbon/All-Commands.md', docs);
+    return done();
 };
 
 const compileForDocs = () => {

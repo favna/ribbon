@@ -814,7 +814,7 @@ Please note that when adding new words to your server's filter you overwrite all
 | [words] | <code>string</code> | Optional: comma separated list of words to filter |
 
 **Example**  
-```js
+```sh
 badwords enable
 ```
 <a name="module_duptext"></a>
@@ -840,7 +840,7 @@ You can specify the minutes within messages should be checked (defaults to 3), t
 | [distance] | <code>number</code> | Levenshtein distance for similarity |
 
 **Example**  
-```js
+```sh
 duptext enable
 ```
 <a name="module_excessivecaps"></a>
@@ -859,7 +859,7 @@ Automod ExcessiveCapsCommand - Toggle the excessive caps filter
 | [minlength] | <code>number</code> | Minimum length of message before it is checked |
 
 **Example**  
-```js
+```sh
 excessivecaps enable
 ```
 <a name="module_excessiveemojis"></a>
@@ -878,7 +878,7 @@ Automod ExcessiveEmojisCommand - Toggle the excessive emojis filter
 | [minlength] | <code>number</code> | Minimum length of message before it is checked |
 
 **Example**  
-```js
+```sh
 excessiveemojis enable
 ```
 <a name="module_excessivementions"></a>
@@ -896,11 +896,11 @@ Automod ExcessiveMentionsCommand - Toggle the excessive mentions filter
 | [threshold] | <code>string</code> | How many mentions allowed in 1 message |
 
 **Example**  
-```js
+```sh
 excessivementions enable
 ```
 **Example**  
-```js
+```sh
 emf enable 3
 ```
 <a name="module_externallinks"></a>
@@ -917,7 +917,7 @@ Automod ExternalLinksCommand - Toggle the external links filter
 | Option | <code>boolean</code> | True or False |
 
 **Example**  
-```js
+```sh
 externallinks enable
 ```
 <a name="module_invitesfilter"></a>
@@ -934,7 +934,7 @@ Automod InvitesFilterCommand - Toggle the Discord server invites filter
 | Option | <code>boolean</code> | True or False |
 
 **Example**  
-```js
+```sh
 invitesfilter enable
 ```
 <a name="module_slowmode"></a>
@@ -952,7 +952,7 @@ Automod SlowmodeCommand - Toggle slowmode on this server
 | [Within] | <code>number</code> | Optional: Boundaries for slowmode |
 
 **Example**  
-```js
+```sh
 slowmode enable
 ```
 <a name="module_bank"></a>
@@ -964,7 +964,7 @@ Casino BankCommand - View your vault content
 
 **Category**: casino  
 **Example**  
-```js
+```sh
 bank
 ```
 <a name="module_chips"></a>
@@ -976,7 +976,7 @@ Casino ChipsCommand - Retrieves your current amount of chips for the casino
 
 **Category**: casino  
 **Example**  
-```js
+```sh
 chips
 ```
 <a name="module_coin"></a>
@@ -995,7 +995,7 @@ Payout is 1:2
 | CoinSide | <code>string</code> | The side of the coin you want to bet on |
 
 **Example**  
-```js
+```sh
 coin 10 heads
 ```
 <a name="module_daily"></a>
@@ -1020,7 +1020,7 @@ Casino DepositCommand - Deposit chips into your vault
 | ChipsAmount | <code>number</code> | The amount of chips to deposit |
 
 **Example**  
-```js
+```sh
 deposit 100
 ```
 <a name="module_give"></a>
@@ -1038,7 +1038,7 @@ Casino GiveCommand - Give another player some chips
 | ChipsAmount | <code>number</code> | The amount of chips you want to give |
 
 **Example**  
-```js
+```sh
 give Favna 10
 ```
 <a name="module_leaderboard"></a>
@@ -1063,7 +1063,7 @@ Casino MemberBalanceCommand - Retrieves the amount of chips another member has f
 | AnyMember | <code>GuildMemberResolvable</code> | Member to get the balance for |
 
 **Example**  
-```js
+```sh
 mchips Rohul
 ```
 <a name="module_slots"></a>
@@ -1080,7 +1080,7 @@ Casino SlotsCommand - Gamble your chips at the slot machine
 | ChipsAmount | <code>number</code> | The amount of chips you want to gamble |
 
 **Example**  
-```js
+```sh
 slots 5
 ```
 <a name="module_weekly"></a>
@@ -1105,7 +1105,7 @@ Casino WheelOfFortuneCommand - Gamble your chips at the wheel of fortune
 | ChipsAmount | <code>number</code> | The amount of chips you want to gamble |
 
 **Example**  
-```js
+```sh
 wof 5
 ```
 <a name="module_withdraw"></a>
@@ -1122,7 +1122,7 @@ Casino WithdrawCommand} - Withdraw chips from your vault
 | ChipsAmount | <code>number</code> | The amount of chips to withdraw |
 
 **Example**  
-```js
+```sh
 withdraw 100
 ```
 <a name="module_favna"></a>
@@ -1161,7 +1161,7 @@ Note: It is possible to get copypastas with more than 2000 characters. Ask me to
 | PastaName | <code>string</code> | Name of the copypasta to send |
 
 **Example**  
-```js
+```sh
 copypasta navy
 ```
 <a name="module_copypastaadd"></a>
@@ -1179,7 +1179,7 @@ Extra CopyPastaAddCommand - Adds a new copypasta for your server
 | PastaContent | <code>string</code> | Content for the new pasta |
 
 **Example**  
-```js
+```sh
 copypastaadd lipsum Lorem ipsum dolor sit amet.
 ```
 <a name="module_copypastalist"></a>
@@ -1206,7 +1206,7 @@ Use the copypastalist command to find the ID for deleting
 | CopyPastaID | <code>string</code> | The ID of the Copypasta to remove |
 
 **Example**  
-```js
+```sh
 copypastaremove 1
 ```
 <a name="module_math"></a>
@@ -1223,7 +1223,7 @@ Extra MathCommand - Take the effort out of calculations and let Ribbon do it for
 | Equation | <code>string</code> | The equation to solve |
 
 **Example**  
-```js
+```sh
 math (pi - 1) * 3
 ```
 <a name="module_oxr"></a>
@@ -1246,7 +1246,7 @@ For a full list of supported currencies see [this url](https://docs.openexchange
 | TargetCurrency | <code>string</code> | Currency to convert to |
 
 **Example**  
-```js
+```sh
 oxr 1 EUR USD
 ```
 <a name="module_qrgen"></a>
@@ -1263,7 +1263,7 @@ Extra QRGenCommand - Generates a QR code from text (like a URL)
 | URL | <code>string</code> | URL you want to encode into a QR image |
 
 **Example**  
-```js
+```sh
 qrgen https://favna.xyz/ribbon
 ```
 <a name="module_randomcol"></a>
@@ -1282,7 +1282,7 @@ Providing a colour hex will display that colour, providing none will generate a 
 | [hex] | <code>string</code> | Optional: colour hex to display |
 
 **Example**  
-```js
+```sh
 randomcol
 -OR-
 randomcol #990000
@@ -1306,7 +1306,7 @@ Works by reminding you after a given amount of minutes, hours or days in the for
 | Reminder | <code>string</code> | Thing you want Ribbon to remind you of |
 
 **Example**  
-```js
+```sh
 remind 1h To continue developing Ribbon
 ```
 <a name="module_say"></a>
@@ -1323,7 +1323,7 @@ Extra Say - Repeats a message and deletes your message
 | Text | <code>string</code> | Message you want to have repeated |
 
 **Example**  
-```js
+```sh
 say Favna is a great coder!
 ```
 <a name="module_saywut"></a>
@@ -1351,7 +1351,7 @@ Uses Google's Geocoding to determine the correct location therefore supports any
 | Location | <code>string</code> | Place where you want to get the current time for |
 
 **Example**  
-```js
+```sh
 time Amsterdam
 ```
 <a name="module_translate"></a>
@@ -1372,7 +1372,7 @@ Language specifications can be either 1 or 2 letter ISO 639 or full names
 | Text | <code>string</code> | The word or text to translate |
 
 **Example**  
-```js
+```sh
 translate en nl Hello World
 ```
 <a name="module_weather"></a>
@@ -1395,7 +1395,7 @@ Uses Google's Geocoding to determine the correct location therefore supports any
 | CityName | <code>string</code> | Name of the city to get the weather forecast for |
 
 **Example**  
-```js
+```sh
 weather Amsterdam
 ```
 <a name="module_xkcd"></a>
@@ -1422,7 +1422,7 @@ First banishes any existing zalgo to ensure proper result
 | SomeText | <code>string</code> | Your input to transform with Zalgo |
 
 **Example**  
-```js
+```sh
 zalgo HE COMES
 ```
 <a name="module_8ball"></a>
@@ -1439,7 +1439,7 @@ Games EightBallCommand - Rolls a magic 8 ball using your input
 | question | <code>string</code> | Question you want the 8 ball to answer |
 
 **Example**  
-```js
+```sh
 8ball is Favna a genius coder?
 ```
 <a name="module_dice"></a>
@@ -1457,7 +1457,7 @@ Games DiceCommand - Rolls some dice with some sides. Great for the DnD players!
 | AmountOfRolls | <code>string</code> | The amount of dice to roll |
 
 **Example**  
-```js
+```sh
 dice 5 6
 ```
 <a name="module_dndc"></a>
@@ -1483,7 +1483,7 @@ Games FightCommand - Pit two things against each other in a fight to the death.
 | FighterTwo | <code>string</code> | The second combatant |
 
 **Example**  
-```js
+```sh
 fight Pyrrha Ruby
 ```
 <a name="module_rps"></a>
@@ -1500,7 +1500,7 @@ Games RockPaperScissorCommand - Play Rock Paper Scissors against random.org rand
 | HandToPlay | <code>string</code> | The hand that you want to play |
 
 **Example**  
-```js
+```sh
 rps Rock
 ```
 <a name="module_ship"></a>
@@ -1520,7 +1520,7 @@ Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members
 | [ShipMemberTwo] | <code>string</code> | The second member to ship |
 
 **Example**  
-```js
+```sh
 ship Biscuit Rei
 ```
 <a name="module_strawpoll"></a>
@@ -1540,11 +1540,11 @@ Has a very specific syntax! Be sure to adapt the example!
 | Options | <code>string</code> | The options the strawpoll should have. Recommended to wrap in `" "` (or `' '`) to     allow spaces. Splits on every \`|\` |
 
 **Example**  
-```js
+```sh
 strawpoll 'Best RWBY girl?' 'Pyrrha Nikos' 'Ruby Rose'
 ```
 **Example**  
-```js
+```sh
 strawpoll 'Best coding language?' JavaScript C# C++
 ```
 <a name="module_activity"></a>
@@ -1561,7 +1561,7 @@ Info ActivityCommand - Gets the activity (presence) data from a member
 | member | <code>GuildMemberResolvable</code> | Member to get the activity for |
 
 **Example**  
-```js
+```sh
 activity Favna
 ```
 <a name="module_avatar"></a>
@@ -1579,7 +1579,7 @@ Games AvatarCommand - Get the avatar from any member on this server
 | [ImageSize] | <code>GuildMemberResolvable</code> | Optional: Size of the avatar to get. Defaults to 1024 |
 
 **Example**  
-```js
+```sh
 avatar Favna
 ```
 <a name="module_discordbots"></a>
@@ -1596,7 +1596,7 @@ Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList
 | [BotID] | <code>string</code> | the user ID of the bot you want to get info about |
 
 **Example**  
-```js
+```sh
 discordbots 512150391471996930
 ```
 <a name="module_emotes"></a>
@@ -1621,7 +1621,7 @@ Info IamCommand - Self Assign roles
 | AnyRole | <code>RoleResolvable</code> | The role you want to assign to yourself |
 
 **Example**  
-```js
+```sh
 iam uploader
 ```
 <a name="module_iamnot"></a>
@@ -1638,7 +1638,7 @@ Info IamNotCommand - Remove self assigned roles
 | AnyRole | <code>RoleResolvable</code> | The role you want to remove from yourself |
 
 **Example**  
-```js
+```sh
 iamnot uploader
 ```
 <a name="module_invite"></a>
@@ -1662,7 +1662,7 @@ Info RedditCommand - Gets statistics on a Reddit user
 | RedditUser | <code>string</code> | The Reddit user you want to look up |
 
 **Example**  
-```js
+```sh
 reddit favna
 ```
 <a name="module_server"></a>
@@ -1694,7 +1694,7 @@ Info UserInfoCommand - Get the info of any member on this server
 | AnyMember | <code>GuildMemberResolvable</code> | Member you want to get info about |
 
 **Example**  
-```js
+```sh
 userinfo Favna
 ```
 <a name="module_fortnite"></a>
@@ -1712,7 +1712,7 @@ Leaderboards FortniteCommand - Get Player Statistics from Fortnite
 | Platform | <code>string</code> | The platform the player plays on (pc, xbox or psn) |
 
 **Example**  
-```js
+```sh
 fortnite darkentz014 pc
 ```
 <a name="module_osu"></a>
@@ -1729,7 +1729,7 @@ Leaderboards OsuCommand - Shows Player Stats for a given OSU player
 | PlayerName | <code>string</code> | Name of the OSU player |
 
 **Example**  
-```js
+```sh
 osu WubWoofWolf
 ```
 <a name="module_overwatch"></a>
@@ -1748,7 +1748,7 @@ Leaderboards OverwatchCommand - Shows Player Stats for a given BattleNet BattleT
 | [region] | <code>string</code> | Optional: The region the player plays in. Of of us, eu, asia |
 
 **Example**  
-```js
+```sh
 overwatch Camoflouge#1267
 ```
 <a name="module_pubg"></a>
@@ -1764,7 +1764,7 @@ Leaderboards PubgCommand - Get statistics from a PUBG account
 | Shard | <code>string</code> | A combination of platform and region to look through, for example `pc-na` for PC in     North America |
 
 **Example**  
-```js
+```sh
 pubg shroud pc-na
 ```
 <a name="module_showdown"></a>
@@ -1781,7 +1781,7 @@ Leaderboards ShowdownCommand - Show the top ranking players in your tier of choi
 | TierName | <code>string</code> | Name of the tier to view the leaderboard for |
 
 **Example**  
-```js
+```sh
 showdown ou
 ```
 <a name="module_addrole"></a>
@@ -1799,7 +1799,7 @@ Moderation AddRoleCommand - Add a role to a member
 | AnyRole | <code>RoleResolvable</code> | Role to give |
 
 **Example**  
-```js
+```sh
 addrole Favna Member
 ```
 <a name="module_announce"></a>
@@ -1816,7 +1816,7 @@ Moderation NewsCommand - Make an announcement to a channel named "announcements"
 | Announcement | <code>string</code> | The announcement you want to make |
 
 **Example**  
-```js
+```sh
 announce Pokemon Switch has released!
 ```
 <a name="module_automod"></a>
@@ -1834,7 +1834,7 @@ Moderation AutomodCommand - General toggle for all automod features
 | [Roles] | <code>RoleResolvable</code> | Roles that are exempted from automod |
 
 **Example**  
-```js
+```sh
 automod enable
 ```
 <a name="module_ban"></a>
@@ -1852,7 +1852,7 @@ Moderation BanCommand - Ban a bad member
 | [TheReason] | <code>string</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to     prevent Ribbon from deleting the banned member's messages |
 
 **Example**  
-```js
+```sh
 ban MultiMegaMander
 ```
 <a name="module_casinolimit"></a>
@@ -1870,11 +1870,11 @@ Moderation CasinoLimitCommand - Configure what the upper limit for any casino co
 | [LowerLimit] | <code>number</code> | Optional: The new lower limit |
 
 **Example**  
-```js
+```sh
 casinolimit 20000
 ```
 **Example**  
-```js
+```sh
 casinolimit 20000 1000
 ```
 <a name="module_confmute"></a>
@@ -1891,7 +1891,7 @@ Moderation ConfigureMuteCommand - Configure which role to use as "mute" role
 | Role | <code>RoleResolvable</code> | Role to set as mute role |
 
 **Example**  
-```js
+```sh
 confmute mute
 ```
 <a name="module_countdownadd"></a>
@@ -1925,7 +1925,7 @@ The first time the message will be send is the next periodic check Ribbon will d
 | Message | <code>string</code> | The message to repeat |
 
 **Example**  
-```js
+```sh
 countdownadd 2018-12-31T18:00 #general New years day!
 ```
 <a name="module_countdownlist"></a>
@@ -1952,7 +1952,7 @@ Use the countdownlist command to find the ID for deleting
 | CountdownID | <code>string</code> | The ID of the Countdown to remove |
 
 **Example**  
-```js
+```sh
 countdownremove 1
 ```
 <a name="module_defaultrole"></a>
@@ -1969,7 +1969,7 @@ Moderation DefaultroleCommand - Sets a default role that should be assigned to a
 | AnyRole | <code>RoleResolvable</code> | Role to assign to all new joining members |
 
 **Example**  
-```js
+```sh
 defaultrole Member
 ```
 <a name="module_deletecommandmessages"></a>
@@ -1986,7 +1986,7 @@ Moderation DeleteCommandMessagesCommand - Configure whether Ribbon should delete
 | Option | <code>boolean</code> | True or False |
 
 **Example**  
-```js
+```sh
 deletecommandmessages enable
 ```
 <a name="module_deletewarn"></a>
@@ -2004,11 +2004,11 @@ Moderation DeleteWarnCommand - Deletes all or some warnings points from a user
 | [AmountOfWarnPoints] | <code>number</code> | The amount of warning points to remove |
 
 **Example**  
-```js
+```sh
 deletewarn favna
 ```
 **Example**  
-```js
+```sh
 deletewarn favna
 ```
 <a name="module_delrole"></a>
@@ -2026,7 +2026,7 @@ Moderation DeleteRoleCommand - Delete the role of a member
 | AnyRole | <code>RoleResolvable</code> | The role to remove |
 
 **Example**  
-```js
+```sh
 delrole Favna Member
 ```
 <a name="module_joinmessages"></a>
@@ -2044,7 +2044,7 @@ Moderation JoinMessagesCommand - Toggle whether Ribbon should send special greet
 | [Channel] | <code>TextChannel</code> | TextChannel the Join Message is sent to, required when enabling |
 
 **Example**  
-```js
+```sh
 joinmessages enable
 ```
 <a name="module_kick"></a>
@@ -2062,7 +2062,7 @@ Moderation KickCommand - Kicks a somewhat bad member
 | [TheReason] | <code>string</code> | Reason for this kick. |
 
 **Example**  
-```js
+```sh
 kick ThunderKai
 ```
 <a name="module_leavemessages"></a>
@@ -2080,7 +2080,7 @@ Moderation LeaveMessagesCommand - Toggle whether Ribbon should send special leav
 | [Channel] | <code>TextChannel</code> | TextChannel the Leave Message is sent to, required when enabling |
 
 **Example**  
-```js
+```sh
 leavemessages enable
 ```
 <a name="module_listwarn"></a>
@@ -2097,7 +2097,7 @@ Moderation ListWarnCommand - Show the amount of warning points a member has
 | AnyMember | <code>GuildMemberResolvable</code> | The member of whom to list the warning points |
 
 **Example**  
-```js
+```sh
 listwarn Biscuit
 ```
 <a name="module_lockdown"></a>
@@ -2136,7 +2136,7 @@ Moderation MemberLogsCommand - Toggle member logs in the configured channel
 | [Channel] | <code>TextChannel</code> | TextChannel the Member Logs are sent to, required when enabling |
 
 **Example**  
-```js
+```sh
 memberlogs enable
 ```
 <a name="module_modlogs"></a>
@@ -2154,7 +2154,7 @@ Moderation ModLogsCommand - Toggle mod logs in the configured channel
 | [Channel] | <code>TextChannel</code> | TextChannel the Mod Logs are sent to, required when enabling |
 
 **Example**  
-```js
+```sh
 modlogs enable
 ```
 <a name="module_mute"></a>
@@ -2178,7 +2178,7 @@ The format for duration is in minutes, hours or days in the format of `5m`, `2h`
 | AnyMember | <code>GuildMemberResolvable</code> | Member to mute |
 
 **Example**  
-```js
+```sh
 mute Muffin
 ```
 <a name="module_nickname"></a>
@@ -2196,7 +2196,7 @@ Moderation NickCommand - Nickname a single member
 | NewNickname | <code>string</code> | Nickname to assign |
 
 **Example**  
-```js
+```sh
 nick Muffin Cupcake
 ```
 <a name="module_purge"></a>
@@ -2213,7 +2213,7 @@ Moderation PurgeCommand - Quickly delete a certain amount of messages
 | MessageAmount | <code>number</code> | The amount of messages to delete, between 1 and 99 |
 
 **Example**  
-```js
+```sh
 purge 10
 ```
 <a name="module_regexmatchtoggle"></a>
@@ -2230,7 +2230,7 @@ Moderation RegexMatchToggleCommand - Toggle commands matching on regex for this 
 | Option | <code>boolean</code> | True or False |
 
 **Example**  
-```js
+```sh
 regexmatchtoggle enable
 ```
 <a name="module_selfroles"></a>
@@ -2252,11 +2252,11 @@ You can clear the setting by giving no roles then replying `finish`
 | [AnyRole] | <code>RoleResolvable</code> | Role to set, can be multiple split by spaces |
 
 **Example**  
-```js
+```sh
 selfroles uploader
 ```
 **Example**  
-```js
+```sh
 selfroles uploader superuploader
 ```
 <a name="module_setannounce"></a>
@@ -2273,7 +2273,7 @@ Moderation SetAnnounceCommand - Set the channel for the announce command
 | AnnounceChannel | <code>ChannelResolvable</code> | The channel to set the announcements to |
 
 **Example**  
-```js
+```sh
 setannounce #updates
 ```
 <a name="module_setnonexplicitblock"></a>
@@ -2295,7 +2295,7 @@ Some commands can potentially give NSFW results, however they do not show NSFW i
 | Option | <code>boolean</code> | On or Off |
 
 **Example**  
-```js
+```sh
 setnonexplicitblock off
 ```
 <a name="module_softban"></a>
@@ -2316,7 +2316,7 @@ This is essentially a kick with the added effect of deleting all their past mess
 | TheReason | <code>string</code> | Reason for this softban. |
 
 **Example**  
-```js
+```sh
 softban ImmortalZypther
 ```
 <a name="module_tempban"></a>
@@ -2337,7 +2337,7 @@ Given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`
 | [TheReason] | <code>string</code> | Reason for this banishment. Include `--no-delete` anywhere in the reason to     prevent Ribbon from deleting the banned member's messages |
 
 **Example**  
-```js
+```sh
 tempban Kai
 ```
 <a name="module_timeradd"></a>
@@ -2367,7 +2367,7 @@ The format for the interval is in minutes, hours or days in the format of `5m`, 
 | Message | <code>string</code> | The message(s) to repeat |
 
 **Example**  
-```js
+```sh
 timeradd 1d #general Please read the rules everyone!
 ```
 <a name="module_timerlist"></a>
@@ -2394,7 +2394,7 @@ Use the timerlist command to find the ID for deleting
 | TimerID | <code>string</code> | The ID of the timed message to remove |
 
 **Example**  
-```js
+```sh
 timerremove 1
 ```
 <a name="module_unknownmessages"></a>
@@ -2411,7 +2411,7 @@ Moderation UnknownMessagesCommand - Toggle Unknown Command messages on or off
 | Option | <code>boolean</code> | True or False |
 
 **Example**  
-```js
+```sh
 unknownmessages enable
 ```
 <a name="module_unlock"></a>
@@ -2438,7 +2438,7 @@ Moderation UnmuteCommand - Unmutes a previously muted member
 | AnyMember | <code>GuildMemberResolvable</code> | The member to remove a role from |
 
 **Example**  
-```js
+```sh
 unmute Muffin
 ```
 <a name="module_warn"></a>
@@ -2459,7 +2459,7 @@ Please note that Ribbon will not auto ban when the member has a certain amount o
 | TheReason | <code>string</code> | Reason for warning |
 
 **Example**  
-```js
+```sh
 warn Biscuit 5 Not giving everyone cookies
 ```
 <a name="module_defaultvolume"></a>
@@ -2476,7 +2476,7 @@ Music DefaultVolumeCommand - Sets the server's default volume
 | [VolumeToSet] | <code>number/&quot;show&quot;</code> | The volume to set or use "show" to show current default volume |
 
 **Example**  
-```js
+```sh
 defaultvolume 2
 ```
 <a name="module_maxlength"></a>
@@ -2496,7 +2496,7 @@ Give no argument to show current amount of maximum songs. Use "default" as argum
 | [MaxVideoLength] | <code>number</code> \| <code>&quot;default&quot;</code> | New maximum length in minutes |
 
 **Example**  
-```js
+```sh
 maxlength 10
 ```
 <a name="module_maxsongs"></a>
@@ -2516,7 +2516,7 @@ Give no argument to show current amount of maximum songs. Use "default" as argum
 | [NumberOfSongs] | <code>number</code> \| <code>&quot;default&quot;</code> | New maximum number of songs |
 
 **Example**  
-```js
+```sh
 maxsongs 2
 ```
 <a name="module_pause"></a>
@@ -2551,7 +2551,7 @@ There are 4 ways to queue songs.
 | Video | <code>string</code> | One of the options linking to a video to play |
 
 **Example**  
-```js
+```sh
 play
 ```
 <a name="module_queue"></a>
@@ -2570,7 +2570,7 @@ Songs are paginated in sets of 5
 | [Page] | <code>string</code> | Page to show |
 
 **Example**  
-```js
+```sh
 queue 2
 ```
 <a name="module_resume"></a>
@@ -2603,7 +2603,7 @@ Shuffles using a [modern version of the Fisher-Yates shuffle
 
 **Category**: music  
 **Example**  
-```js
+```sh
 queue 2
 ```
 <a name="module_skip"></a>
@@ -2625,7 +2625,7 @@ A vote to skip is started if there are 4 or more people in the voice channel wit
 | [force] | <code>string</code> | Force the skip if you are the requester or a server moderator |
 
 **Example**  
-```js
+```sh
 skip
 -OR-
 skip force
@@ -2667,7 +2667,7 @@ You need to be in a voice channel before you can use this command
 | [Volume] | <code>number</code> | The new volume to set |
 
 **Example**  
-```js
+```sh
 volume 2
 ```
 <a name="module_e621"></a>
@@ -2686,7 +2686,7 @@ Can only be used in NSFW marked channels!
 | Query | <code>string</code> | Something you want to find |
 
 **Example**  
-```js
+```sh
 e621 pyrrha_nikos
 ```
 <a name="module_gelbooru"></a>
@@ -2705,7 +2705,7 @@ Can only be used in NSFW marked channels!
 | Query | <code>string</code> | Something you want to find |
 
 **Example**  
-```js
+```sh
 gelbooru pyrrha_nikos
 ```
 <a name="module_paheal"></a>
@@ -2724,7 +2724,7 @@ Can only be used in NSFW marked channels!
 | Query | <code>string</code> | Something you want to find |
 
 **Example**  
-```js
+```sh
 paheal pyrrha_nikos
 ```
 <a name="module_pornvids"></a>
@@ -2743,7 +2743,7 @@ Can only be used in NSFW marked channels!
 | Query | <code>string</code> | Something you want to find |
 
 **Example**  
-```js
+```sh
 pornvids babe
 ```
 <a name="module_rule34"></a>
@@ -2762,7 +2762,7 @@ Can only be used in NSFW marked channels!
 | Query | <code>string</code> | Something you want to find |
 
 **Example**  
-```js
+```sh
 rule34 pyrrha_nikos
 ```
 <a name="module_checkguilds"></a>
@@ -2786,7 +2786,7 @@ Owner CustomTopUpCommand - Daniël Ocean doesn't give a crap about legality
 | ChipsAmount | <code>number</code> | The amount of chips you want to give |
 
 **Example**  
-```js
+```sh
 ctu Biscuit 1000
 ```
 <a name="module_dbpost"></a>
@@ -2817,7 +2817,7 @@ Primarily meant for mobile and when members have annoying untaggable names
 | AnyMember | <code>GuildMemberResolvable</code> | Member to make a mention to |
 
 **Example**  
-```js
+```sh
 tagmember ☜(⌒▽⌒)☞guy
 ```
 <a name="module_dex"></a>
@@ -2838,7 +2838,7 @@ Different forms are supported. Generally you want to write it all as 1 word with
 | PokemonName | <code>string</code> | The name of the pokemon you want to find |
 
 **Example**  
-```js
+```sh
 dex dragonite
 ```
 <a name="module_flavor"></a>
@@ -2860,7 +2860,7 @@ Different forms are supported. Generally you want to write it all as 1 word with
 | PokemonName | <code>string</code> | The name of the pokemon you want to get flavor text for |
 
 **Example**  
-```js
+```sh
 flavor dragonite
 ```
 <a name="module_item"></a>
@@ -2879,7 +2879,7 @@ For item names existing of multiple words (for example `life orb`) you can eithe
 | ItemName | <code>string</code> | Name of the item to find |
 
 **Example**  
-```js
+```sh
 item assault vest
 ```
 <a name="module_learn"></a>
@@ -2902,15 +2902,15 @@ You can specify a generation for the match by adding `--gen [1-7]` anywhere in t
 | [Generation] | <code>string</code> | The generation to find the match for |
 
 **Example**  
-```js
+```sh
 learn dragonite dragon dance
 ```
 **Example**  
-```js
+```sh
 learn dragonite dragon dance,dragon claw
 ```
 **Example**  
-```js
+```sh
 learn dragonite dragon dance, dragon claw --gen 6
 ```
 <a name="module_ability"></a>
@@ -2927,7 +2927,7 @@ Pokémon AbilityCommand - Gets information on an ability in Pokémon
 | AbilityName | <code>string</code> | The name of the ability you  want to find |
 
 **Example**  
-```js
+```sh
 ability multiscale
 ```
 <a name="module_move"></a>
@@ -2946,7 +2946,7 @@ For move names existing of multiple words (for example `dragon dance`) you can e
 | MoveName | <code>string</code> | The move you want to find |
 
 **Example**  
-```js
+```sh
 move dragon dance
 ```
 <a name="module_TCG"></a>
@@ -2973,7 +2973,7 @@ By default only `name` is used as argument and the supertype is set to pokemon
 | [Properties] | <code>string</code> | Properties you want to use for your search |
 
 **Example**  
-```js
+```sh
 tcg name types subtype
 ```
 <a name="module_type"></a>
@@ -2990,7 +2990,7 @@ Pokémon TypeCommand - Gets the type matchup of any 1 or 2 types
 | Types | <code>string</code> | One or two types to find the matchup for |
 
 **Example**  
-```js
+```sh
 type dragon flying
 ```
 <a name="module_anime"></a>
@@ -3007,7 +3007,7 @@ Searches AnimeCommand - Gets information about any anime from kitsu.io
 | AnimeName | <code>string</code> | anime to look up |
 
 **Example**  
-```js
+```sh
 anime Yu-Gi-Oh Dual Monsters
 ```
 <a name="module_cydia"></a>
@@ -3028,7 +3028,7 @@ Can also listens to the pattern of `[[SomePackageName]]` as is custom on the [/r
 | TweakName | <code>string</code> | Name of the tweak to find |
 
 **Example**  
-```js
+```sh
 cydia Anemone
 ```
 <a name="module_define"></a>
@@ -3045,7 +3045,7 @@ Searches DefineCommand - Define a word using glosbe
 | Word | <code>string</code> | the word you want to define |
 
 **Example**  
-```js
+```sh
 define Google
 ```
 <a name="module_docs"></a>
@@ -3063,7 +3063,7 @@ Searches DocsCommand - Get an entry from the Discord.JS documentation
 | [version] | <code>string</code> | The Doc version to pick, one of `stable`, `master` or `commando` |
 
 **Example**  
-```js
+```sh
 docs ClientUser
 ```
 <a name="module_eshop"></a>
@@ -3080,7 +3080,7 @@ Searches EShopCommand - Gets information about a game in the Nintendo Switch eSh
 | GameName | <code>string</code> | Game that you want to find in the eShop |
 
 **Example**  
-```js
+```sh
 eshop Breath of The Wild
 ```
 <a name="module_google"></a>
@@ -3099,7 +3099,7 @@ Note: prioritizes Knowledge Graphs for better searching
 | SearchQuery | <code>string</code> | Thing to find on Google |
 
 **Example**  
-```js
+```sh
 google Pyrrha Nikos
 ```
 <a name="module_igdb"></a>
@@ -3116,7 +3116,7 @@ Searches IGDBCommand - Gets information about a game using Internet Game Databas
 | GameName | <code>string</code> | The name of any game that you want to find |
 
 **Example**  
-```js
+```sh
 igdb Tales of Berseria
 ```
 <a name="module_image"></a>
@@ -3133,7 +3133,7 @@ Searches ImageCommand - Gets an image through Google Images
 | ImageQuery | <code>string</code> | Image to find on Google Images |
 
 **Example**  
-```js
+```sh
 image Pyrrha Nikos'
 ```
 <a name="module_itunes"></a>
@@ -3150,7 +3150,7 @@ Searches iTunesCommand - Search iTunes for music tracks
 | TrackQuery | <code>string</code> | The music track to look up |
 
 **Example**  
-```js
+```sh
 itunes dash berlin symphony
 ```
 <a name="module_lmgtfy"></a>
@@ -3167,7 +3167,7 @@ Searches LmgtfyCommand - Transform some query into a LMGTFY (Let Me Google That 
 | SearchQuery | <code>string</code> | The dumb sh*t people need to use google for |
 
 **Example**  
-```js
+```sh
 lmgtfy is it legal to kill an ant???
 ```
 <a name="module_manga"></a>
@@ -3184,7 +3184,7 @@ Searches MangaCommand - Gets information about any manga from kitsu.io
 | AnyManga | <code>string</code> | manga to look up |
 
 **Example**  
-```js
+```sh
 manga Yu-Gi-Oh
 ```
 <a name="module_steam"></a>
@@ -3201,7 +3201,7 @@ Searches SteamCommand - Gets information about a game using Steam
 | GameName | <code>string</code> | The name of any game that you want to find |
 
 **Example**  
-```js
+```sh
 steam Tales of Berseria
 ```
 <a name="module_tmdb"></a>
@@ -3218,7 +3218,7 @@ Searches MovieCommand - Find information about a movie using TheMovieDatabase
 | MovieName | <code>string</code> | Name of the movie you want to find |
 
 **Example**  
-```js
+```sh
 tmdb Pokemon 2000
 ```
 <a name="module_tvdb"></a>
@@ -3235,7 +3235,7 @@ Searches TVCommand - Find information about a TV series using TheMovieDatabase
 | SeriesName | <code>string</code> | Name of the TV serie you want to find |
 
 **Example**  
-```js
+```sh
 tvdb Pokemon
 ```
 <a name="module_urban"></a>
@@ -3252,7 +3252,7 @@ Searches UrbanCommand - Define a word using UrbanDictionary
 | PhraseQuery | <code>string</code> | Phrase that you want to define |
 
 **Example**  
-```js
+```sh
 urban Everclear
 ```
 <a name="module_youtube"></a>
@@ -3271,7 +3271,7 @@ By default returns MessageEmbed. use `yts` to return just the URL and have in-cl
 | VideoQuery | <code>string</code> | Video to find on YouTube |
 
 **Example**  
-```js
+```sh
 youtube Voldemort Origins of the heir
 ```
 <a name="module_twitchmonitors"></a>
@@ -3288,7 +3288,7 @@ Streamwatch TwitchMonitorsCommand - Configure which streamers to monitor
 | AnyMembers | <code>string</code> | List of members to monitor space delimited |
 
 **Example**  
-```js
+```sh
 twitchmonitors techagent favna
 ```
 <a name="module_twitchoutput"></a>
@@ -3305,7 +3305,7 @@ Streamwatch TwitchOutputCommand - Configures the channel in which twitch notific
 | AnyChannel | <code>ChannelResolvable</code> | Channel to output notifs to |
 
 **Example**  
-```js
+```sh
 twitchoutput #twitch-notifications
 ```
 <a name="module_twitchtoggle"></a>
@@ -3322,7 +3322,7 @@ Streamwatch TwitchToggleCommand - Killswitch for Twitch notifications
 | Option | <code>boolean</code> | True or False |
 
 **Example**  
-```js
+```sh
 twitchtoggle enable
 ```
 <a name="module_biscuit"></a>
@@ -3350,7 +3350,7 @@ Weeb CuddleCommand - Cuuuuddlleeesss!! 💕!
 | [MemberToCuddle] | <code>GuildMemberResolvable</code> | Name of the member you want to cuddle |
 
 **Example**  
-```js
+```sh
 cuddle Velvet
 ```
 <a name="module_feed"></a>
@@ -3365,7 +3365,7 @@ Weeb FeedCommand - Feed someone licious food 🍜 😋!
 | [MemberToFeed] | <code>GuildMemberResolvable</code> | Name of the member you want to feed |
 
 **Example**  
-```js
+```sh
 feed Ren
 ```
 <a name="module_hug"></a>
@@ -3380,7 +3380,7 @@ Weeb HugCommand - Give someone a hug ❤!
 | [MemberToHug] | <code>GuildMemberResolvable</code> | Name of the member you want to give a hug |
 
 **Example**  
-```js
+```sh
 hug Nora
 ```
 <a name="module_kiss"></a>
@@ -3395,7 +3395,7 @@ Weeb KissCommand - Give someone a kiss ❤!
 | [MemberToKiss] | <code>GuildMemberResolvable</code> | Name of the member you want to give a kiss |
 
 **Example**  
-```js
+```sh
 kiss Pyrrha
 ```
 <a name="module_neko"></a>
@@ -3406,7 +3406,7 @@ Weeb NekoCommand - Get a random cute cat girl 😍!
 
 **Category**: weeb  
 **Example**  
-```js
+```sh
 neko
 ```
 <a name="module_pat"></a>
@@ -3421,7 +3421,7 @@ Weeb PatCommand - Pat a good person 🐇!
 | [MemberToPat] | <code>GuildMemberResolvable</code> | Name of the member you want to pat |
 
 **Example**  
-```js
+```sh
 pat Ruby
 ```
 <a name="module_poke"></a>
@@ -3436,7 +3436,7 @@ Weeb PokeCommand - Poke an annoying person 👉!
 | [MemberToPoke] | <code>GuildMemberResolvable</code> | Name of the member you want to poke |
 
 **Example**  
-```js
+```sh
 poke Weiss
 ```
 <a name="module_slap"></a>
@@ -3451,7 +3451,7 @@ Weeb SlapCommand - Slap a dumb person 💢!
 | [MemberToSlap] | <code>GuildMemberResolvable</code> | Name of the member you want to slap |
 
 **Example**  
-```js
+```sh
 slap Cinder
 ```
 <a name="module_tickle"></a>
@@ -3466,7 +3466,7 @@ Weeb TickleCommand - TICKLE WAR 😂!!
 | [MemberToTickle] | <code>GuildMemberResolvable</code> | Name of the member you want to tickle |
 
 **Example**  
-```js
+```sh
 tickle Yang
 ```
 
