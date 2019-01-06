@@ -46,7 +46,7 @@
     "@types/node": "^10.12.18",
     "@types/node-fetch": "^2.1.4",
     "@types/qrcode": "^1.3.0",
-    "awesome-querystring": "^1.1.2",
+    "awesome-querystring": "^1.1.3",
     "better-sqlite3": "^5.2.1",
     "booru": "favna/booru",
     "cheerio": "^1.0.0-rc.2",
