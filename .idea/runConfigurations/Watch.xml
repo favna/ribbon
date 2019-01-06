@@ -4,7 +4,7 @@
     <node-options />
     <gulpfile>$PROJECT_DIR$/gulpfile.js</gulpfile>
     <tasks>
-      <task>watch</task>
+      <task>default</task>
     </tasks>
     <arguments />
     <envs />

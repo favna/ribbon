@@ -1,6 +1,5 @@
 const fs = require('fs');
 const gulp = require('gulp');
-const gulpLint = require('gulp-tslint');
 const gulpTs = require('gulp-typescript');
 const jsdoc = require('jsdoc-to-markdown');
 const tslint = require('tslint');
@@ -11,9 +10,10 @@ const mocha = require('gulp-mocha');
 const replace = require('gulp-string-replace');
 const gulpUglifyCompose = require('gulp-uglify/composer');
 const { argv } = require('yargs');
+const { milkyLint, milkyReport } = require('milky-tslint');
 
 const tsSource = ['./src/**/*.ts', './src/commands/**/*.ts'];
-const copySource = ['./src/data/fonts/*', './src/data/databases/*', './src/data/dex/*.json'];
+const copySource = ['./src/data/fonts/*', './src/data/databases/*', './src/.env', './src/data/dex/*.json'];
 const jsdocOptions = {
     template: fs.readFileSync('./docs/template.hbs', 'utf8'),
     files: './dist/commands/*/*.js',
@@ -62,22 +62,47 @@ const compileToJavaScript = () => {
         .js.pipe(gulp.dest('./dist'));
 };
 
+const compileSingleToJavaScript = (done) => {
+    if (!argv.src) {
+        console.group('error log');
+        console.error('You have to supply a comma separated list of source files to compile');
+        console.error('for example');
+        console.error('./src/commands/automod/badwords.ts');
+        console.error('./src/commands/automod/badwords.ts;./src/commands/automod/duptext.ts');
+        console.groupEnd();
+        return done();
+    }
+
+    const targetFiles = argv.src.split(',');
+
+    for (const file of targetFiles) {
+        const tsProject = gulpTs.createProject('./tsconfig.json');
+        const filePath = file.split('/');
+        let targetFolder = '';
+        if (filePath[0] === '.') targetFolder = `./dist/${filePath[2]}/${filePath[3]}`;
+        else targetFolder = `./dist/${filePath[1]}/${filePath[2]}`;
+
+        gulp.src(file)
+            .pipe(tsProject())
+            .js.pipe(minifier())
+            .pipe(gulp.dest(targetFolder));
+    }
+
+    return done();
+};
+
 gulp.task('lint', () => {
     const lintProgram = tslint.Linter.createProgram('./tsconfig.json', '.');
     ts.getPreEmitDiagnostics(lintProgram);
 
     return gulp.src(tsSource)
-        .pipe(gulpLint({
+        .pipe(milkyLint({
             configuration: './tslint.json',
-            formatter: 'stylish',
             program: lintProgram,
             tslint: tslint,
             fix: !!argv.fix,
         }))
-        .pipe(gulpLint.report({
-            emitError: false,
-            summarizeFailureOutput: true,
-        }));
+        .pipe(milkyReport());
 });
 
 gulp.task('clean', () => {
@@ -100,4 +125,6 @@ gulp.task('watch', () => {
 
 gulp.task('docs', gulp.series('clean', compileForDocs, generateDocs, 'clean'));
 gulp.task('build', gulp.series('clean', compileToJavaScript, gulp.parallel(copyAdditionalFiles, makeJavaScriptRunnable), minifyCode));
+gulp.task('rebuild', gulp.series(compileSingleToJavaScript));
+gulp.task('reload', gulp.series('rebuild'));
 gulp.task('default', gulp.parallel('watch', 'lint'));
