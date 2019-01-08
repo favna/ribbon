@@ -68,7 +68,7 @@
     "slot-machine": "^2.1.0",
     "speedtest-net": "^1.4.3",
     "unescape-es6": "^2.0.7",
-    "ytdl-core": "^0.28.3",
+    "ytdl-core": "favna/node-ytdl-core#fix/type_declarations_for_0.29.0",
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {
