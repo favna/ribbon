@@ -1,10 +1,10 @@
 /**
- * @file Weeb TickleCommand - TICKLE WAR 😂!!
+ * @file Weeb SmugCommand - You're better than them
  * @module
  * @category weeb
- * @name tickle
- * @example tickle Yang
- * @param {GuildMemberResolvable} [MemberToTickle] Name of the member you want to tickle
+ * @name smug
+ * @example smug McDonalds
+ * @param {GuildMemberResolvable} [MemberToHug] Name of the member you want to give a hug
  */
 
 import { GuildMember } from 'discord.js';
@@ -12,15 +12,15 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
 import { ASSET_BASE_PATH, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
-export default class TickleCommand extends Command {
+export default class SmugCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
-            name: 'tickle',
+            name: 'smug',
             group: 'weeb',
-            memberName: 'tickle',
-            description: 'TICKLE WAR 😂!!',
-            format: 'MemberToTickle',
-            examples: ['tickle Yang'],
+            memberName: 'smug',
+            description: 'You\'re better than them',
+            format: 'MemberToSmugAt',
+            examples: ['hug McDonalds'],
             guildOnly: true,
             throttling: {
                 usages: 2,
@@ -29,7 +29,7 @@ export default class TickleCommand extends Command {
             args: [
                 {
                     key: 'member',
-                    prompt: 'Who do you want to tickle?',
+                    prompt: 'You\'re better than who?',
                     type: 'member',
                     default: '',
                 }
@@ -41,8 +41,8 @@ export default class TickleCommand extends Command {
         try {
             startTyping(msg);
 
-            const tickleFetch = await fetch('https://nekos.life/api/v2/img/tickle');
-            const tickleImg = await tickleFetch.json();
+            const hugFetch = await fetch('https://nekos.life/api/v2/img/smug');
+            const hugImg = await hugFetch.json();
             if (member.id === msg.member.id) member = null;
 
             deleteCommandMessages(msg, this.client);
@@ -51,16 +51,16 @@ export default class TickleCommand extends Command {
             return msg.embed({
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
                     description: member
-                        ? `${member.displayName}! You were tickled by ${msg.member.displayName}, tickle them back!!!`
-                        : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-                    image: { url: member ? tickleImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
+                        ? `Hahahahaha <:smug:532309525051736064>!`
+                        : `${msg.member.displayName} you must feel alone... Let Wendy's support your smugness`,
+                    image: { url: member ? hugImg.url : `${ASSET_BASE_PATH}/ribbon/smugwendy.gif` },
                 },
                 `<@${member ? member.id : msg.author.id}>`
             );
         } catch (err) {
             stopTyping(msg);
 
-            return msg.reply('something went wrong getting a tickle image 💔');
+            return msg.reply('something went wrong getting a hug image 💔');
         }
     }
 }

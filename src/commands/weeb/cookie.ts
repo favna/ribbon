@@ -10,7 +10,7 @@
 
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CookieCommand extends Command {
     constructor (client: CommandoClient) {
@@ -56,15 +56,15 @@ export default class CookieCommand extends Command {
 
     private fetchImage () {
         const images = [
-            'https://favna.xyz/images/ribbonhost/cookie/cookie01.gif',
-            'https://favna.xyz/images/ribbonhost/cookie/cookie02.gif',
-            'https://favna.xyz/images/ribbonhost/cookie/cookie03.gif',
-            'https://favna.xyz/images/ribbonhost/cookie/cookie04.gif',
-            'https://favna.xyz/images/ribbonhost/cookie/cookie05.gif',
-            'https://favna.xyz/images/ribbonhost/cookie/cookie06.gif',
-            'https://favna.xyz/images/ribbonhost/cookie/cookie07.gif',
-            'https://favna.xyz/images/ribbonhost/cookie/cookie08.gif',
-            'https://favna.xyz/images/ribbonhost/cookie/cookie09.gif'
+            `${ASSET_BASE_PATH}/ribbon/cookie/cookie01.gif`,
+            `${ASSET_BASE_PATH}/ribbon/cookie/cookie02.gif`,
+            `${ASSET_BASE_PATH}/ribbon/cookie/cookie03.gif`,
+            `${ASSET_BASE_PATH}/ribbon/cookie/cookie04.gif`,
+            `${ASSET_BASE_PATH}/ribbon/cookie/cookie05.gif`,
+            `${ASSET_BASE_PATH}/ribbon/cookie/cookie06.gif`,
+            `${ASSET_BASE_PATH}/ribbon/cookie/cookie07.gif`,
+            `${ASSET_BASE_PATH}/ribbon/cookie/cookie08.gif`,
+            `${ASSET_BASE_PATH}/ribbon/cookie/cookie09.gif`
         ];
         const curImage = Math.floor(Math.random() * images.length);
 

@@ -10,7 +10,7 @@
 import { GuildMember } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class PatCommand extends Command {
     constructor (client: CommandoClient) {
@@ -37,10 +37,7 @@ export default class PatCommand extends Command {
         });
     }
 
-    public async run (
-        msg: CommandoMessage,
-        { member }: { member: GuildMember }
-    ) {
+    public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         try {
             startTyping(msg);
 
@@ -56,7 +53,7 @@ export default class PatCommand extends Command {
                     description: member
                         ? `${member.displayName}! You got patted by ${msg.member.displayName} 🐇!`
                         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-                    image: { url: member ? petImg.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif' },
+                    image: { url: member ? petImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
                 },
                 `<@${member ? member.id : msg.author.id}>`
             );

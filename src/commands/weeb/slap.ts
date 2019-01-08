@@ -10,7 +10,7 @@
 import { GuildMember } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class SlapCommand extends Command {
     constructor (client: CommandoClient) {
@@ -53,7 +53,7 @@ export default class SlapCommand extends Command {
                     description: member
                         ? `${member.displayName}! You got slapped by ${msg.member.displayName} 💢!`
                         : `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
-                    image: { url: member ? slapImg.url : 'https://cdn.awwni.me/mz98.gif' },
+                    image: { url: member ? slapImg.url : `${ASSET_BASE_PATH}/ribbon/baka.gif` },
                 },
                 `<@${member ? member.id : msg.author.id}>`
             );

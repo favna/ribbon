@@ -10,7 +10,7 @@
 import { GuildMember } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CuddleCommand extends Command {
     constructor (client: CommandoClient) {
@@ -54,7 +54,7 @@ export default class CuddleCommand extends Command {
                     description: member
                         ? `Awww ${msg.member.displayName} is giving ${member.displayName} cuddles 💕!`
                         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-                    image: { url: member ? cuddleImg.url : 'http://gifimage.net/wp-content/uploads/2017/06/anime-cat-gif-17.gif' },
+                    image: { url: member ? cuddleImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
                 },
                 `<@${member ? member.id : msg.author.id}>`
             );
