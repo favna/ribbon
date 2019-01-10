@@ -1,26 +1,31 @@
-const fs = require('fs');
-const gulp = require('gulp');
-const gulpTs = require('gulp-typescript');
-const jsdoc = require('jsdoc-to-markdown');
-const tslint = require('tslint');
-const ts = require('typescript');
-const uglify = require('uglify-es');
-const del = require('del');
-const mocha = require('gulp-mocha');
-const replace = require('gulp-string-replace');
-const gulpUglifyCompose = require('gulp-uglify/composer');
-const { argv } = require('yargs');
-const { milkyLint, milkyReport } = require('milky-tslint');
+import * as fs from 'fs';
+import gulp from 'gulp';
+import * as gulpTs from 'gulp-typescript';
+import { default as uglify } from 'gulp-uglify-es';
+import jsdoc2md from 'jsdoc-to-markdown';
+import * as tslint from 'tslint';
+import ts from 'typescript';
+import del from 'del';
+import mocha from 'gulp-mocha';
+import replace from 'gulp-string-replace';
+import { argv } from 'yargs';
+import { milkyLint, milkyReport } from 'milky-tslint';
 
 const tsSource = ['./src/**/*.ts', './src/commands/**/*.ts'];
 const copySource = ['./src/data/fonts/*', './src/data/databases/*', './src/.env', './src/data/dex/*.json'];
 const jsdocOptions = {
     template: fs.readFileSync('./docs/template.hbs', 'utf8'),
-    files: './dist/commands/*/*.js',
-    'example-lang': 'sh',
+    files: './src/commands/*/*.ts',
+    plugins: ['plugins/markdown', 'node_modules/jsdoc-babel',],
+    'example-lang': 'nginx',
+    babel: {
+        extensions: ['ts', 'tsx'],
+        ignore: ['**/*.(test|spec).ts'],
+        babelrc: false,
+        presets: [['@babel/preset-env', { 'targets': { 'node': 'current' } }], '@babel/typescript'],
+    },
 };
 const replaceOptions = { logs: { enabled: false } };
-const minifier = gulpUglifyCompose(uglify, console);
 
 const makeJavaScriptRunnable = () => {
     return gulp.src('./dist/Ribbon.js', { base: './dist' })
@@ -36,25 +41,8 @@ const copyAdditionalFiles = () => {
 
 const minifyCode = () => {
     return gulp.src('./dist/**/*.js')
-        .pipe(minifier())
+        .pipe(uglify())
         .pipe(gulp.dest('./dist'));
-};
-
-const generateDocs = (done) => {
-    const docs = jsdoc.renderSync(jsdocOptions);
-    const docsJSON = jsdoc.getJsdocDataSync({files: jsdocOptions.files})
-    fs.writeFileSync('./docs/index.md', docs);
-    fs.writeFileSync('../wikiribbon/All-Commands.md', docs);
-    fs.writeFileSync('../homesite/src/assets/docs/ribbon.json', JSON.stringify(docsJSON));
-    return done();
-};
-
-const compileForDocs = () => {
-    const tsProject = gulpTs.createProject('./tsconfig.json', { removeComments: false });
-
-    return tsProject.src()
-        .pipe(tsProject())
-        .js.pipe(gulp.dest('./dist'));
 };
 
 const compileToJavaScript = () => {
@@ -87,7 +75,7 @@ const compileSingleToJavaScript = (done) => {
 
         gulp.src(file)
             .pipe(tsProject())
-            .js.pipe(minifier())
+            .js.pipe(uglify())
             .pipe(gulp.dest(targetFolder));
     }
 
@@ -126,7 +114,15 @@ gulp.task('watch', () => {
     gulp.watch(tsSource, gulp.series('lint'));
 });
 
-gulp.task('docs', gulp.series('clean', compileForDocs, generateDocs, 'clean'));
+gulp.task('docs', (done) => {
+    const docs = jsdoc2md.renderSync(jsdocOptions);
+    const docsJSON = jsdoc2md.getJsdocDataSync({ files: jsdocOptions.files });
+    fs.writeFileSync('./docs/index.md', docs);
+    fs.writeFileSync('../wikiribbon/All-Commands.md', docs);
+    fs.writeFileSync('../homesite/src/assets/docs/ribbon.json', JSON.stringify(docsJSON));
+    return done();
+});
+
 gulp.task('build', gulp.series('clean', compileToJavaScript, gulp.parallel(copyAdditionalFiles, makeJavaScriptRunnable), minifyCode));
 gulp.task('rebuild', gulp.series(compileSingleToJavaScript));
 gulp.task('reload', gulp.series('rebuild'));

@@ -5,17 +5,17 @@ The default prefix is `!` and you can always use `@ribbon#2325 prefix` to find y
 <a name="module_help"></a>
 
 ## help ⇒ <code>MessageEmbed</code>
-Build-In HelpCommand - Displays a list of available commands, or detailed information for a specified command  
+Build-In HelpCommand - Displays a list of available commands, or detailed information for a specified command
 
-**Returns**: <code>[MessageEmbed]</code> - Multiple MessageEmbeds showing all commands  
-**Category**: Build-In  
+**Returns**: <code>[MessageEmbed]</code> - Multiple MessageEmbeds showing all commands
+**Category**: Build-In
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [all] or [command] | <code>string</code> | use `all` to view all regardless of permissions or specify a command to get additional info on that command |
 
-**Example**  
-```ts
+**Example**
+```nginx
 help
 -OR-
 help prefix
@@ -26,18 +26,18 @@ help all
 <a name="module_prefix"></a>
 
 ## prefix ⇒ <code>Message</code>
-BuildIn PrefixCommand - Shows or sets the command prefix  
+BuildIn PrefixCommand - Shows or sets the command prefix
 Omitting the parameter will simply print your current one.
 
-**Returns**: <code>Message</code> - Message with the current or new prefix  
-**Category**: Build-In  
+**Returns**: <code>Message</code> - Message with the current or new prefix
+**Category**: Build-In
 
 | Param | Type | Description |
 | --- | --- | --- |
 | [prefix] | <code>string</code> | new prefix to set |
 
-**Example**  
-```ts
+**Example**
+```nginx
 prefix !
 -OR-
 prefix default
@@ -50,107 +50,107 @@ prefix none
 ## ping ⇒ <code>Message</code>
 Build-In PingCommand - Checks the bot's ping to the Discord server
 
-**Returns**: <code>Message</code> - Reply message with the bot's ping  
-**Category**: Build-In  
+**Returns**: <code>Message</code> - Reply message with the bot's ping
+**Category**: Build-In
 
 {{>main}}
 
 <a name="module_groups"></a>
 
 ## groups ⇒ <code>Message</code>
-Command-Management GroupsCommand - Shows all command groups  
+Command-Management GroupsCommand - Shows all command groups
 **Aliases**: `list-groups`, `show-groups`, `listgroups`, `showgroups`
 
-**Returns**: <code>Message</code> - Reply message list of groups  
-**Category**: Command-Management  
+**Returns**: <code>Message</code> - Reply message list of groups
+**Category**: Command-Management
 
 <a name="module_enable"></a>
 
 ## enable ⇒ <code>Message</code>
-Command-Management EnableCommand - Enables a command or command group  
+Command-Management EnableCommand - Enables a command or command group
 **Aliases**: `enable-command`, `cmd-on`, `command-on`, `enablecommand`, `cmdon`, `commandon`
 
 **Returns**: <code>Message</code>
-**Category**: Command-Management  
+**Category**: Command-Management
 
 | Param | Type | Description |
 | --- | --- | --- |
 | Name/ID (partial or whole) of a command or command group | <code>string</code> | Command or Command Group to enable |
 
-**Example**  
-```ts
+**Example**
+```nginx
 enable userinfo
 ```
 
 <a name="module_disable"></a>
 
 ## disable ⇒ <code>Message</code>
-Command-Management DisableCommand - Disables a command or command group  
+Command-Management DisableCommand - Disables a command or command group
 **Aliases**: `disable-command`, `cmd-off`, `command-off`, `disablecommand`, `cmdoff`, `commandoff`
 
 **Returns**: <code>Message</code>
-**Category**: Command-Management  
+**Category**: Command-Management
 
 | Param | Type | Description |
 | --- | --- | --- |
 | Name/ID (partial or whole) of a command or command group | <code>string</code> | Command or Command Group to disable |
 
-**Example**  
-```ts
+**Example**
+```nginx
 disable userinfo
 ```
 
 <a name="module_reload"></a>
 
 ## reload ⇒ <code>Message</code>
-Command-Management ReloadCommand - Reloads a command or command group  
+Command-Management ReloadCommand - Reloads a command or command group
 **Aliases**: `reload-command`, `reloadcommand`
 
 **Returns**: <code>Message</code>
-**Category**: Command-Management  
+**Category**: Command-Management
 
 | Param | Type | Description |
 | --- | --- | --- |
 | Name/ID (partial or whole) of a command or command group | <code>string</code> | Command or Command Group to reload |
 
-**Example**  
-```ts
+**Example**
+```nginx
 reload userinfo
 ```
 
 <a name="module_load"></a>
 
 ## load ⇒ <code>Message</code>
-Command-Management LoadCommand - Loads a new command  
+Command-Management LoadCommand - Loads a new command
 **Aliases**: `load-command`, `loadcommand`
 
 **Returns**: <code>Message</code>
-**Category**: Command-Management  
+**Category**: Command-Management
 
 | Param | Type | Description |
 | --- | --- | --- |
 | commandGroup:commandMemberName | <code>string</code> | Command to load |
 
-**Example**  
-```ts
+**Example**
+```nginx
 load searches:github
 ```
 
 <a name="module_unload"></a>
 
 ## unload ⇒ <code>Message</code>
-Command-Management UnloadCommand - Unloads a command  
+Command-Management UnloadCommand - Unloads a command
 **Aliases**: `unload-command`, `unloadcommand`
 
 **Returns**: <code>Message</code>
-**Category**: Command-Management  
+**Category**: Command-Management
 
 | Param | Type | Description |
 | --- | --- | --- |
 | Name/ID (partial or whole) of a command | <code>string</code> | Command to unload |
 
-**Example**  
-```ts
+**Example**
+```nginx
 unload searches:google
 ```
 

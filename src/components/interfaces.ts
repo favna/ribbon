@@ -1,7 +1,6 @@
 import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'discord.js';
 import { Command } from 'discord.js-commando';
 import { Song } from './util';
-import Timeout = NodeJS.Timeout;
 
 interface IPokeGenderProp {
     M: number;
@@ -91,7 +90,7 @@ export interface IMusicVote {
     queue: IMusicQueue;
     guild: Snowflake;
     start: number;
-    timeout: Timeout;
+    timeout: any;
 }
 
 export interface IYoutubeVideo {
