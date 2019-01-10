@@ -15,15 +15,8 @@ const tsSource = ['./src/**/*.ts', './src/commands/**/*.ts'];
 const copySource = ['./src/data/fonts/*', './src/data/databases/*', './src/.env', './src/data/dex/*.json'];
 const jsdocOptions = {
     template: fs.readFileSync('./docs/template.hbs', 'utf8'),
-    files: './src/commands/*/*.ts',
-    plugins: ['plugins/markdown', 'node_modules/jsdoc-babel',],
+    files: './dist/commands/*/*.js',
     'example-lang': 'nginx',
-    babel: {
-        extensions: ['ts', 'tsx'],
-        ignore: ['**/*.(test|spec).ts'],
-        babelrc: false,
-        presets: [['@babel/preset-env', { 'targets': { 'node': 'current' } }], '@babel/typescript'],
-    },
 };
 const replaceOptions = { logs: { enabled: false } };
 
@@ -43,6 +36,23 @@ const minifyCode = () => {
     return gulp.src('./dist/**/*.js')
         .pipe(uglify())
         .pipe(gulp.dest('./dist'));
+};
+
+const generateDocs = (done) => {
+    const docs = jsdoc2md.renderSync(jsdocOptions);
+    const docsJSON = jsdoc2md.getJsdocDataSync({files: jsdocOptions.files})
+    fs.writeFileSync('./docs/index.md', docs);
+    fs.writeFileSync('../wikiribbon/All-Commands.md', docs);
+    fs.writeFileSync('../homesite/src/assets/docs/ribbon.json', JSON.stringify(docsJSON));
+    return done();
+};
+
+const compileForDocs = () => {
+    const tsProject = gulpTs.createProject('./tsconfig.json', { removeComments: false });
+
+    return tsProject.src()
+        .pipe(tsProject())
+        .js.pipe(gulp.dest('./dist'));
 };
 
 const compileToJavaScript = () => {
@@ -96,10 +106,6 @@ gulp.task('lint', () => {
         .pipe(milkyReport());
 });
 
-gulp.task('clean', () => {
-    return del(['./dist']);
-});
-
 gulp.task('test', () => {
     return gulp.src('./test/')
         .pipe(mocha({
@@ -110,19 +116,9 @@ gulp.task('test', () => {
         }));
 });
 
-gulp.task('watch', () => {
-    gulp.watch(tsSource, gulp.series('lint'));
-});
-
-gulp.task('docs', (done) => {
-    const docs = jsdoc2md.renderSync(jsdocOptions);
-    const docsJSON = jsdoc2md.getJsdocDataSync({ files: jsdocOptions.files });
-    fs.writeFileSync('./docs/index.md', docs);
-    fs.writeFileSync('../wikiribbon/All-Commands.md', docs);
-    fs.writeFileSync('../homesite/src/assets/docs/ribbon.json', JSON.stringify(docsJSON));
-    return done();
-});
-
+gulp.task('clean', () => del(['./dist']));
+gulp.task('watch', () => gulp.watch(tsSource, gulp.series('lint')));
+gulp.task('docs', gulp.series('clean', compileForDocs, generateDocs, 'clean'));
 gulp.task('build', gulp.series('clean', compileToJavaScript, gulp.parallel(copyAdditionalFiles, makeJavaScriptRunnable), minifyCode));
 gulp.task('rebuild', gulp.series(compileSingleToJavaScript));
 gulp.task('reload', gulp.series('rebuild'));
