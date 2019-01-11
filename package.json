@@ -16,8 +16,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development ts-node ./src/app.ts",
     "start:prod": "cross-env NODE_ENV=production ts-node ./src/app.ts",
-    "serve": "pm2 start pm2.ecosystem.yml --env production",
-    "serve:dev": "pm2 start pm2.ecosystem.yml"
+    "serve": "pm2 start ./config/pm2.ecosystem.yml --env production",
+    "serve:dev": "pm2 start ./config/pm2.ecosystem.yml"
   },
   "keywords": [
     "bot",
@@ -72,8 +72,12 @@
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
     "@babel/preset-env": "^7.2.3",
+    "@babel/preset-typescript": "^7.1.0",
     "@babel/register": "^7.0.0",
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.5",
@@ -85,6 +89,7 @@
     "gulp-string-replace": "^1.1.2",
     "gulp-typescript": "^5.0.0",
     "gulp-uglify-es": "^1.0.4",
+    "jsdoc-babel": "^0.5.0",
     "jsdoc-to-markdown": "^4.0.1",
     "milky-tslint": "^1.0.1",
     "mocha-typescript": "^1.1.17",
@@ -100,7 +105,7 @@
   },
   "babel": {
     "presets": [
-      "@babel/env"
+      "@babel/preset-env"
     ]
   }
 }

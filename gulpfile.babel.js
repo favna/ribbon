@@ -1,23 +1,18 @@
-import * as fs from 'fs';
 import gulp from 'gulp';
 import * as gulpTs from 'gulp-typescript';
 import { default as uglify } from 'gulp-uglify-es';
-import jsdoc2md from 'jsdoc-to-markdown';
 import * as tslint from 'tslint';
 import ts from 'typescript';
 import del from 'del';
 import mocha from 'gulp-mocha';
 import replace from 'gulp-string-replace';
 import { argv } from 'yargs';
+import { exec } from 'child_process';
 import { milkyLint, milkyReport } from 'milky-tslint';
+import { oneLine } from 'common-tags';
 
 const tsSource = ['./src/**/*.ts', './src/commands/**/*.ts'];
 const copySource = ['./src/data/fonts/*', './src/data/databases/*', './src/.env', './src/data/dex/*.json'];
-const jsdocOptions = {
-    template: fs.readFileSync('./docs/template.hbs', 'utf8'),
-    files: './dist/commands/*/*.js',
-    'example-lang': 'nginx',
-};
 const replaceOptions = { logs: { enabled: false } };
 
 const makeJavaScriptRunnable = () => {
@@ -36,23 +31,6 @@ const minifyCode = () => {
     return gulp.src('./dist/**/*.js')
         .pipe(uglify())
         .pipe(gulp.dest('./dist'));
-};
-
-const generateDocs = (done) => {
-    const docs = jsdoc2md.renderSync(jsdocOptions);
-    const docsJSON = jsdoc2md.getJsdocDataSync({files: jsdocOptions.files})
-    fs.writeFileSync('./docs/index.md', docs);
-    fs.writeFileSync('../wikiribbon/All-Commands.md', docs);
-    fs.writeFileSync('../homesite/src/assets/docs/ribbon.json', JSON.stringify(docsJSON));
-    return done();
-};
-
-const compileForDocs = () => {
-    const tsProject = gulpTs.createProject('./tsconfig.json', { removeComments: false });
-
-    return tsProject.src()
-        .pipe(tsProject())
-        .js.pipe(gulp.dest('./dist'));
 };
 
 const compileToJavaScript = () => {
@@ -116,9 +94,25 @@ gulp.task('test', () => {
         }));
 });
 
+gulp.task('docs', () => {
+    const opts = {
+        template: './docs/template.hbs',
+        exampleLang: 'nginx',
+        inputFiles: './src/commands/*/*.ts',
+        configFile: './config/jsdoc2md.json',
+        outFile: './docs/index.md',
+    };
+    const docsCommand = oneLine`node ./node_modules/jsdoc-to-markdown/bin/cli.js
+        --files ${opts.inputFiles}
+        --template ${opts.template}
+        --example-lang ${opts.exampleLang}
+        --configure ${opts.configFile}
+        > ${opts.outFile}`;
+    return exec(docsCommand);
+});
+
 gulp.task('clean', () => del(['./dist']));
 gulp.task('watch', () => gulp.watch(tsSource, gulp.series('lint')));
-gulp.task('docs', gulp.series('clean', compileForDocs, generateDocs, 'clean'));
 gulp.task('build', gulp.series('clean', compileToJavaScript, gulp.parallel(copyAdditionalFiles, makeJavaScriptRunnable), minifyCode));
 gulp.task('rebuild', gulp.series(compileSingleToJavaScript));
 gulp.task('reload', gulp.series('rebuild'));

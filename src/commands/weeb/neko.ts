@@ -1,5 +1,6 @@
 /**
  * @file Weeb NekoCommand - Get a random cute cat girl 😍!
+ *
  * **Aliases**: `catgirl`
  * @module
  * @category weeb
