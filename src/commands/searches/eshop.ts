@@ -42,7 +42,7 @@ export default class EShopCommand extends Command {
         try {
             startTyping(msg);
 
-            const embed = new MessageEmbed();
+            const eshopEmbed = new MessageEmbed();
             const eShopOptions: Fuse.FuseOptions<any> = {
                 shouldSort: true,
                 keys: [{ name: 'title', getfn: t => t.title, weight: 1 }],
@@ -61,7 +61,7 @@ export default class EShopCommand extends Command {
 
             if (hit.eshop_price) price = hit.eshop_price === '0.00' ? 'free' : `$${hit.eshop_price} USD`;
 
-            embed
+            eshopEmbed
                 .setTitle(hit.title)
                 .setURL(`https://www.nintendo.com/games/detail/${hit.slug}`)
                 .setThumbnail(hit.front_box_art)
@@ -76,7 +76,7 @@ export default class EShopCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.embed(embed);
+            return msg.embed(eshopEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
