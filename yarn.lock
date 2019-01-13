@@ -1308,10 +1308,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-better-sqlite3@^5.2.1:
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/better-sqlite3/-/better-sqlite3-5.2.1.tgz#30a6e3290da0f6f17482231bdb59f934dd8dd456"
-  integrity sha512-FAqPi+jUl6VBBDZpIZPtva+VcYAxw3sbXKjImNBPvK1TmU6bCuaPn42XuNk6VL6Vhjl5KBZpeIesxJlDqTFBqA==
+better-sqlite3@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/better-sqlite3/-/better-sqlite3-5.3.0.tgz#64b5614582886eb5e6c2becfec03d9949f1e101a"
+  integrity sha512-IZWjZsbS00Ys3DHeaB6WzJcJsC4SFiNP5p6doLhYfmZqGOEL84j/O2N/GjvsEmLJzTlYlBu7iVsv2CMbUPPfvg==
   dependencies:
     integer "^2.1.0"
     tar "^4.4.6"
