@@ -51,7 +51,7 @@ export default class PlaySongCommand extends Command {
                     prompt: 'what music would you like to listen to?',
                     type: 'string',
                     parse: (p: string) => p.replace(/<(.+)>/g, '$1'),
-                }
+                },
             ],
         });
 
@@ -316,13 +316,11 @@ export default class PlaySongCommand extends Command {
         }
 
         if (!song) {
-            if (queue && !queue.stopByCommand) {
+            if (queue && !queue.isTriggeredByStop) {
                 queue.textChannel.send('We\'ve run out of songs! Better queue up some more tunes.');
-                queue.voiceChannel.leave();
-                this.queue.delete(guild.id);
             }
-
-            return;
+            queue.voiceChannel.leave();
+            return this.queue.delete(guild.id);
         }
         let streamErrored = false;
 
@@ -362,14 +360,14 @@ export default class PlaySongCommand extends Command {
             })
             .on('error', (err: any) => {
                 queue.textChannel.send(
-                    `An error occurred while playing the song: \`${err}\``
+                    `An error occurred while playing the song: \`${err}\``,
                 );
             });
 
         dispatcher.setVolumeLogarithmic(queue.volume / 5);
         song.dispatcher = dispatcher;
         song.playing = true;
-        queue.playing = true;
+        return queue.playing = true;
     }
 
     private getPlaylistID (url: string): string {
@@ -384,8 +382,8 @@ export default class PlaySongCommand extends Command {
                         maxResults: 25,
                         part: 'snippet,contentDetails',
                         playlistId: id,
-                    }
-                )}`
+                    },
+                )}`,
             );
 
             const data = await request.json();
@@ -408,7 +406,7 @@ export default class PlaySongCommand extends Command {
                     part: 'snippet',
                     q: name,
                     type: 'video',
-                })}`
+                })}`,
             );
             const data = await request.json();
             const video = data.items[0];
@@ -439,7 +437,7 @@ export default class PlaySongCommand extends Command {
                     key: process.env.GOOGLE_API_KEY,
                     maxResults: 1,
                     part: 'snippet,contentDetails',
-                })}`
+                })}`,
             );
 
             const data = await request.json();

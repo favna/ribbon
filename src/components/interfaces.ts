@@ -81,7 +81,7 @@ export interface IMusicQueue {
     songs: Song[];
     volume: number;
     playing: boolean;
-    stopByCommand?: boolean;
+    isTriggeredByStop?: boolean;
 }
 
 export interface IMusicVote {

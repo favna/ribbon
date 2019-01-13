@@ -64,7 +64,7 @@ export default class StopMusicCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            queue.stopByCommand = true;
+            queue.isTriggeredByStop = true;
             this.queue.set(msg.guild.id, queue);
             return msg.reply(this.stop(msg.guild, queue));
         }
