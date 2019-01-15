@@ -1,14 +1,14 @@
-import * as fs from 'fs';
 import gulp from 'gulp';
-import * as gulpTs from 'gulp-typescript';
-import { default as uglify } from 'gulp-uglify-es';
 import jsdoc2md from 'jsdoc-to-markdown';
-import * as tslint from 'tslint';
+import jest from 'gulp-jest';
 import ts from 'typescript';
 import del from 'del';
-import mocha from 'gulp-mocha';
 import replace from 'gulp-string-replace';
+import * as fs from 'fs';
+import * as gulpTs from 'gulp-typescript';
+import * as tslint from 'tslint';
 import { argv } from 'yargs';
+import { default as uglify } from 'gulp-uglify-es';
 import { milkyLint, milkyReport } from 'milky-tslint';
 
 const tsSource = ['./src/**/*.ts', './src/commands/**/*.ts'];
@@ -40,7 +40,7 @@ const minifyCode = () => {
 
 const generateDocs = (done) => {
     const docs = jsdoc2md.renderSync(jsdocOptions);
-    const docsJSON = jsdoc2md.getJsdocDataSync({files: jsdocOptions.files})
+    const docsJSON = jsdoc2md.getJsdocDataSync({ files: jsdocOptions.files });
     fs.writeFileSync('./docs/index.md', docs);
     fs.writeFileSync('../wikiribbon/All-Commands.md', docs);
     fs.writeFileSync('../homesite/src/assets/docs/ribbon.json', JSON.stringify(docsJSON));
@@ -108,11 +108,11 @@ gulp.task('lint', () => {
 
 gulp.task('test', () => {
     return gulp.src('./test/')
-        .pipe(mocha({
-            ui: 'mocha-typescript',
-            require: ['ts-node/register', 'source-map-support/register'],
-            file: './test/testSetup.spec.ts',
-            recursive: './test/**/*.spec.ts',
+        .pipe(jest({
+            preset: 'ts-jest',
+            testEnvironment: 'node',
+            testMatch: ['**/*.spec.ts'],
+            setupTestFrameworkScriptFile: './test/jest.setup.ts',
         }));
 });
 

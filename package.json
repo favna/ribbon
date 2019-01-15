@@ -75,19 +75,18 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/register": "^7.0.0",
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.5",
-    "chai": "^4.2.0",
+    "@types/jest": "^23.3.12",
     "cross-env": "^5.2.0",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
-    "gulp-mocha": "^6.0.0",
+    "gulp-jest": "^4.0.2",
     "gulp-string-replace": "^1.1.2",
     "gulp-typescript": "^5.0.0",
     "gulp-uglify-es": "^1.0.4",
+    "jest": "^23.6.0",
     "jsdoc-to-markdown": "^4.0.1",
     "milky-tslint": "^1.0.1",
-    "mocha-typescript": "^1.1.17",
+    "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
     "tslint": "^5.12.0",
     "typescript": "^3.2.2",
@@ -97,10 +96,5 @@
     "doc": "./docs",
     "lib": "./src",
     "test": "./test"
-  },
-  "babel": {
-    "presets": [
-      "@babel/env"
-    ]
   }
 }
