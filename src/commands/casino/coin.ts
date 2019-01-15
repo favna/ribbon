@@ -19,7 +19,6 @@ import * as moment from 'moment';
 import * as path from 'path';
 import { ASSET_BASE_PATH, CoinSide, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping, validateCasinoLimit } from '../../components';
 
-
 export default class CoinCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -46,19 +45,13 @@ export default class CoinCommand extends Command {
                 {
                     key: 'side',
                     prompt: 'What side will the coin land on?',
-                    type: 'string',
-                    validate: (side: string) =>
-                        Object.keys(CoinSide).includes(side.toLowerCase())
-                            ? true
-                            : `Has to be one of ${Object.keys(CoinSide)
-                                .map(coin => `\`${coin}\``)
-                                .join(', ')}`,
+                    type: 'coinside',
                 }
             ],
         });
     }
 
-    public run (msg: CommandoMessage, { chips, side }: { chips: number; side: string }) {
+    public run (msg: CommandoMessage, { chips, side }: { chips: number; side: CoinSide }) {
         const coinEmbed = new MessageEmbed();
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
@@ -78,9 +71,6 @@ export default class CoinCommand extends Command {
                     or withdraw some chips from your vault with \`${msg.guild.commandPrefix}withdraw\``);
                 }
 
-                if (side === 'head') side = 'heads';
-                if (side === 'tail') side = 'tails';
-
                 const flip = Math.random() >= 0.5;
                 const prevBal = balance;
                 const res = side === 'heads';
@@ -99,8 +89,8 @@ export default class CoinCommand extends Command {
                     .addField('Previous Balance', prevBal, true)
                     .addField('New Balance', balance, true)
                     .setImage(flip === res
-                        ? `https://favna.xyz/images/ribbonhost/coin${side.toLowerCase()}.png`
-                        : `https://favna.xyz/images/ribbonhost/coin${side.toLowerCase() === 'heads' ? 'tails' : 'heads'}.png`
+                        ? `${ASSET_BASE_PATH}/ribbon/coin${side}.png`
+                        : `${ASSET_BASE_PATH}/ribbon/coin${side === 'heads' ? 'tails' : 'heads'}.png`
                     );
 
                 deleteCommandMessages(msg, this.client);
