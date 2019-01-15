@@ -125,7 +125,7 @@ export default class LearnCommand extends Command {
                 .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setAuthor(
                     `${capitalizeFirstLetter(pokemon)}`,
-                    `https://favna.xyz/images/ribbonhost/pokesprites/regular/${pokemon}.png`
+                    `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${pokemon}.png`
                 )
                 .setDescription(
                     response.length

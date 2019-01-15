@@ -11,7 +11,7 @@
 
 import { oneLine } from 'common-tags';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import { startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, startTyping, stopTyping } from '../../components';
 
 export default class FavnaCommand extends Command {
     constructor (client: CommandoClient) {
@@ -51,7 +51,7 @@ export default class FavnaCommand extends Command {
                 will instantly explode from their chests causing a gorey, bloody mess all over the floor and you
                 will be the only person held responsible for the death of hundredths if not millions of people.`,
             image: {
-                url: 'https://favna.xyz/images/ribbonhost/favnadedsec.gif',
+                url: `${ASSET_BASE_PATH}/ribbon/favnadedsec.gif`,
             },
         });
     }

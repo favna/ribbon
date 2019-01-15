@@ -88,7 +88,7 @@ export default class FightCommand extends Command {
             if (fighterOne.toLowerCase() === 'favna' || fighterTwo.toLowerCase() === 'favna') {
                 fighterEmbed
                     .addField('You got mega rekt', '***Favna always wins***')
-                    .setImage('https://favna.xyz/images/ribbonhost/pyrrhawins.gif');
+                    .setImage(`${ASSET_BASE_PATH}/ribbon/pyrrhawins.gif`);
 
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);

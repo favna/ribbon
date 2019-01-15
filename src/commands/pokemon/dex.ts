@@ -159,8 +159,8 @@ export default class DexCommand extends Command {
             }
 
             if (poke.num < 0) pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/unknown.png`;
-            else if (shines) pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/shiny/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
-            else pokeData.sprite = `https://favna.xyz/images/ribbonhost/pokesprites/regular/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
+            else if (shines) pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/shiny/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
+            else pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
 
             dexEmbed
                 .setColor(this.fetchColor(poke.color))

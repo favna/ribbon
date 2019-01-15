@@ -151,12 +151,12 @@ const renderCountdownMessage = (client: CommandoClient) => {
 const renderJoinMessage = async (member: GuildMember) => {
     try {
         const avatar = await Jimp.read(member.user.displayAvatarURL({ format: 'png' }));
-        const border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png');
+        const border = await Jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
         const canvas = await Jimp.read(500, 150);
         const newMemberEmbed = new MessageEmbed();
         const fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt'));
         const fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
-        const mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
+        const mask = await Jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
 
         avatar.resize(136, Jimp.AUTO);
         mask.resize(136, Jimp.AUTO);
@@ -192,12 +192,12 @@ const renderJoinMessage = async (member: GuildMember) => {
 const renderLeaveMessage = async (member: GuildMember) => {
     try {
         const avatar = await Jimp.read(member.user.displayAvatarURL({ format: 'png' }));
-        const border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png');
+        const border = await Jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
         const canvas = await Jimp.read(500, 150);
         const leaveMemberEmbed = new MessageEmbed();
         const fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
         const fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt'));
-        const mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
+        const mask = await Jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
 
         avatar.resize(136, Jimp.AUTO);
         mask.resize(136, Jimp.AUTO);
@@ -402,9 +402,9 @@ export const handleErr = (client: CommandoClient, err: Error) => {
 export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGuild) => {
     try {
         const avatar = await Jimp.read(client.user.displayAvatarURL({ format: 'png' }));
-        const border = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/border.png');
+        const border = await Jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
         const canvas = await Jimp.read(500, 150);
-        const mask = await Jimp.read('https://www.favna.xyz/images/ribbonhost/jimp/mask.png');
+        const mask = await Jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
         const fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
         const newGuildEmbed = new MessageEmbed();
         const channel = guild.systemChannel ? guild.systemChannel : null;

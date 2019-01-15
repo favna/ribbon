@@ -60,7 +60,7 @@ export default class RibbonStatsCommand extends Command {
 
         statsEmbed
             .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
-            .setAuthor(`${this.client.user.username} Stats`, 'https://favna.xyz/images/appIcons/ribbon.png')
+            .setAuthor(`${this.client.user.username} Stats`, this.client.user.displayAvatarURL({format: 'png'}))
             .addField('Guilds', this.client.guilds.size, true)
             .addField('Channels', this.client.channels.size, true)
             .addField('Users', this.client.users.size, true)
@@ -76,7 +76,7 @@ export default class RibbonStatsCommand extends Command {
             .addField('Uptime', moment.duration(this.client.uptime).format('DD [days], HH [hours and] mm [minutes]'), true)
             .addField(fields.time.name, fields.time.value)
             .addField(fields.info.name, fields.info.value)
-            .setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, 'https://favna.xyz/images/appIcons/ribbon.png');
+            .setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, this.client.user.displayAvatarURL({format: 'png'}));
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);

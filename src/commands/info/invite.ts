@@ -35,7 +35,7 @@ export default class InviteCommand extends Command {
 
         inviteEmbed
             .setTitle('Ribbon by Favna')
-            .setThumbnail('https://favna.xyz/images/appIcons/ribbon.png')
+            .setThumbnail(this.client.user.displayAvatarURL({ format: 'png' }))
             .setURL('https://favna.xyz/ribbon')
             .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
             .setDescription(stripIndents`Enrich your Discord server with a fully modular Discord bot with many many commands\n
