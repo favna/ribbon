@@ -74,9 +74,16 @@ export default class Ribbon {
         this.client.setProvider(new SyncSQLiteProvider(db));
 
         this.client.registry
+            .registerDefaultTypes()
+            .registerTypesIn({
+                dirname: path.join(__dirname, 'components/commandoTypes'),
+                filter: (fileName: string) => /^.+Type\.ts$/.test(fileName) ? fileName : undefined,
+            })
+            .registerDefaultGroups()
             .registerGroups([
                 ['games', 'Games - Play some games'],
                 ['casino', 'Casino - Gain and gamble points'],
+                ['converters', 'Converters - Unit conversion on a new level'],
                 ['info', 'Info - Discord info at your fingertips'],
                 ['music', 'Music - Let the DJ out'],
                 ['searches', 'Searches - Browse the web and find results'],
@@ -91,8 +98,6 @@ export default class Ribbon {
                 ['nsfw', 'NSFW - For all you dirty minds ( ͡° ͜ʖ ͡°)'],
                 ['owner', 'Owner - Exclusive to the bot owner(s)']
             ])
-            .registerDefaultGroups()
-            .registerDefaultTypes()
             .registerDefaultCommands({
                 help: true,
                 prefix: true,
@@ -104,6 +109,7 @@ export default class Ribbon {
                 dirname: path.join(__dirname, 'commands'),
                 filter: (fileName: string) => /^.+\.ts$/.test(fileName) ? fileName : undefined,
             });
+
 
         return this.client.login(this.token);
     }

@@ -16,7 +16,7 @@ import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, IDiscordGameParsed, IDiscordGameSku, IDiscordStoreGameData, startTyping, stopTyping } from '../../components';
+import { currencyMap, DEFAULT_EMBED_COLOR, deleteCommandMessages, IDiscordGameParsed, IDiscordGameSku, IDiscordStoreGameData, startTyping, stopTyping } from '../../components';
 
 export default class ActivityCommand extends Command {
     constructor (client: CommandoClient) {
@@ -79,7 +79,7 @@ export default class ActivityCommand extends Command {
                             developers: game.developers,
                             publishers: game.publishers,
                             summary: storeData.summary,
-                            price: `${currencymap(storeData.sku.price.currency)}${String(storeData.sku.price.amount).slice(0, 2)}.${String(storeData.sku.price.amount).slice(2)}`,
+                            price: `${currencyMap(storeData.sku.price.currency)}${String(storeData.sku.price.amount).slice(0, 2)}.${String(storeData.sku.price.amount).slice(2)}`,
                             thumbnail: `https://cdn.discordapp.com/app-assets/${game.id}/store/${storeData.thumbnail.id}.png?${stringify({ size: 1024 })}`,
                         };
                     }

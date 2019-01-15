@@ -23,6 +23,8 @@ export const PAGINATED_ITEMS = 5;
 export const PASSES = 5;
 
 // Enums
-export enum IGBDAgeRatings { Three = 1, Seven = 2, Twelve = 3, Sixteen = 4, Eighteen = 5, RP = 6, EC = 7, E = 8, E10 = 9, T = 10, M = 11, AO = 12 }
-
-export enum CoinSide { heads = 'heads', head = 'heads', tails = 'tails', tail = 'tails' }
+export enum IGBDAgeRatings{Three=1, Seven=2, Twelve=3, Sixteen=4, Eighteen=5, RP=6, EC=7, E=8, E10=9, T=10, M=11, AO=12}
+export enum CoinSide{heads='heads', head='heads', tails='tails', tail='tails'}
+export enum MassUnits{mcg='mcg', microgram='mcg', micrograms='mcg', mg='mg', milligram='mg', milligrams='mg', g='g', gram='g', grams='g', kg='kg', kilogram='kg', kilograms='kg', mt='mt', tonne='mt', tonnes='mt', 'metric-tonne'='mt', metricTonne='mt', 'metric-tonnes'='mt', metricTonnes='mt', oz='oz', ounce='oz', ounces='oz', lb='lb', pound='lb', pounds='lb', t='t', ton='t', tons='t'}
+export enum LengthUnits{mm='mm', millimeter='mm', millimeters='mm', millimetre='mm', millimetres='mm', cm='cm', centimeter='cm', centimeters='cm', centimetre='cm', centimetres='cm', dm='dm', decimeter='dm', decimeters='dm', decimetre='dm', decimetres='dm', m='m', meter='m', meters='m', metre='m', metres='m', dem='dem', dekameter='dem', dekameters='dem', dekametre='dem', dekametres='dem', decameter='dem', decameters='dem', decametre='dem', decametres='dem', hm='hm', hectometer='hm', hectometers='hm', hectometre='hm', hecometres='hm', km='km', kilometer='km', kilometers='km', kilometre='km', kilometres='km', in='in', inch='in', inches='in', yd='yd', yard='yd', yards='yd', 'ft-us'='ft-us', ft='ft', foot='ft', feet='ft', fathom='fathom', fathoms='fathom', mi='mi', mile='mi', miles='mi', nmi='nmi', neutical='nmi', 'neutical-mile'='nmi'}
+export enum TemperatureUnits{c='c', celsius='c', proper='c', k='k', kelvin='k', f='f', fahrenheit='f', idiot='f', r='r', rankine='r'}

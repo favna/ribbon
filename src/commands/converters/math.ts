@@ -1,9 +1,9 @@
 /**
- * @file Extra MathCommand - Take the effort out of calculations and let Ribbon do it for you
+ * @file Converters MathCommand - Take the effort out of calculations and let Ribbon do it for you
  *
  * **Aliases**: `maths`, `calc`
  * @module
- * @category extra
+ * @category converters
  * @name math
  * @example math (pi - 1) * 3
  * @param {string} Equation The equation to solve
@@ -21,7 +21,7 @@ export default class MathCommand extends Command {
         super(client, {
             name: 'math',
             aliases: ['maths', 'calc'],
-            group: 'extra',
+            group: 'converters',
             memberName: 'math',
             description: 'Calculate anything',
             format: 'EquationToSolve',

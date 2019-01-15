@@ -14,7 +14,7 @@ export const arrayClean = (deleteValue: string | number | undefined | any, array
 
 export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
-export const countCaps = (capcount: string, total: string): number => (capcount.replace(/[^A-Z]/g, '').length / total.length) * 100;
+export const countCaps = (stringToCheck: string, allowedLength: string): number => (stringToCheck.replace(/[^A-Z]/g, '').length / allowedLength.length) * 100;
 
 export const countEmojis = (str: string) => {
     const customEmojis = /<a?:[\S]+:[0-9]{18}>/gim;
@@ -141,7 +141,6 @@ export class Song {
     public dispatcher: any;
     public playing: boolean;
 
-    // TODO: Video Interface Type
     constructor (video: IYoutubeVideo, member: GuildMember) {
         this.name = Util.escapeMarkdown(video.title);
         this.id = video.id;

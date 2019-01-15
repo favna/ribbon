@@ -1,12 +1,10 @@
-/* tslint:disable:object-literal-sort-keys */
-
 import { currencySymbolMap } from '.';
 
-export const currencymap = (code: string) => {
+export const currencyMap = (code: string): string | null => {
     code = code.toUpperCase();
     if (!(code in currencySymbolMap)) return null;
 
     return currencySymbolMap[code];
 };
 
-export const convert = (rates: any, fromCurrency: string, toCurrency: string, value: number) => value * (rates[toCurrency] * (1 / rates[fromCurrency]));
+export const convertCurrency = (rates: any, fromCurrency: string, toCurrency: string, value: number) => value * (rates[toCurrency] * (1 / rates[fromCurrency]));

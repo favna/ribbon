@@ -1,13 +1,13 @@
 /**
- * @file Extra MoneyCommand - Convert one currency to another
+ * @file Converters MoneyCommand - Convert one currency to another
  *
  * Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC
  *
  * For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)
  *
- * **Aliases**: `money`, `rate`, `convert`
+ * **Aliases**: `money`, `rate`
  * @module
- * @category extra
+ * @category converters
  * @name oxr
  * @example oxr 1 EUR USD
  * @param {number} MoneyAmount Amount of money to convert
@@ -21,14 +21,14 @@ import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import * as moment from 'moment';
 import fetch from 'node-fetch';
-import { convert, currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, validCurrenciesMap } from '../../components';
+import { convertCurrency, currencyMap, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, validCurrenciesMap } from '../../components';
 
 export default class MoneyCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'oxr',
-            aliases: ['money', 'rate', 'convert'],
-            group: 'extra',
+            aliases: ['money', 'rate'],
+            group: 'converters',
             memberName: 'oxr',
             description: 'Currency converter - makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
             format: 'CurrencyAmount FirstValuta SecondValuta',
@@ -78,7 +78,7 @@ export default class MoneyCommand extends Command {
                 })}`
             );
             const response = await request.json();
-            const result = convert(response.rates, fromCurrency, toCurrency, value);
+            const result = convertCurrency(response.rates, fromCurrency, toCurrency, value);
 
             oxrEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
@@ -88,8 +88,8 @@ export default class MoneyCommand extends Command {
                         .slice(0, 2)
                         .toLowerCase()}: Money in ${fromCurrency}`,
                     `${
-                        currencymap(fromCurrency)
-                            ? currencymap(fromCurrency)
+                        currencyMap(fromCurrency)
+                            ? currencyMap(fromCurrency)
                             : ''
                         }${value}`,
                     true
@@ -99,7 +99,7 @@ export default class MoneyCommand extends Command {
                         .slice(0, 2)
                         .toLowerCase()}: Money in ${toCurrency}`,
                     `${
-                        currencymap(toCurrency) ? currencymap(toCurrency) : ''
+                        currencyMap(toCurrency) ? currencyMap(toCurrency) : ''
                         }${result}`,
                     true
                 )

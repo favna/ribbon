@@ -27,7 +27,7 @@ export default class WeatherCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'weather',
-            aliases: ['temp', 'forecast', 'fc', 'wth'],
+            aliases: ['forecast', 'fc', 'wth'],
             group: 'extra',
             memberName: 'weather',
             description: 'Get the weather in a city',

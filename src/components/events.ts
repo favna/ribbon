@@ -387,8 +387,7 @@ export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, m
     `);
 };
 
-/* tslint:disable-next-line:no-console */
-export const handleDebug = (info: string) => console.log(info);
+export const handleDebug = (info: string) => console.info(info);
 
 export const handleErr = (client: CommandoClient, err: Error) => {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
@@ -819,8 +818,7 @@ export const handleRateLimit = (client: CommandoClient, info: RateLimitData) => 
 };
 
 export const handleReady = (client: CommandoClient) => {
-    /* tslint:disable-next-line:no-console */
-    console.log(oneLine`Client ready at ${moment().format('HH:mm:ss')};
+    console.info(oneLine`Client ready at ${moment().format('HH:mm:ss')};
         logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})
     `);
     const bot = client;
@@ -884,9 +882,13 @@ export const handleUnknownCmd = (client: CommandoClient, msg: CommandoMessage) =
 export const handleWarn = (client: CommandoClient, warn: string) => {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
-    channel.send(stripIndents`
-        Caught **General Warning**!
-        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Warning Message:** ${warn}
-    `);
+    if (channel) {
+        return channel.send(stripIndents`
+            Caught **General Warning**!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Warning Message:** ${warn}
+        `);
+    } else {
+        return console.warn(warn);
+    }
 };

@@ -15,7 +15,7 @@ import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
 import { unescape } from 'unescape-es6';
-import { currencymap, DEFAULT_EMBED_COLOR, deleteCommandMessages, ISteamGenre, startTyping, stopTyping } from '../../components';
+import { currencyMap, DEFAULT_EMBED_COLOR, deleteCommandMessages, ISteamGenre, startTyping, stopTyping } from '../../components';
 
 export default class SteamCommand extends Command {
     constructor (client: CommandoClient) {
@@ -83,7 +83,7 @@ export default class SteamCommand extends Command {
                 .addField(
                     steamData.price_overview ? `Price in ${steamData.price_overview.currency}` : 'Price',
                     steamData.price_overview
-                        ? `${currencymap(steamData.price_overview.currency)}${this.insert(steamData.price_overview.final.toString(), ',')}`
+                        ? `${currencyMap(steamData.price_overview.currency)}${this.insert(steamData.price_overview.final.toString(), ',')}`
                         : 'Free',
                     true
                 )

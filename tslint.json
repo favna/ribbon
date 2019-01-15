@@ -35,7 +35,7 @@
         "no-boolean-literal-compare": true,
         "no-conditional-assignment": true,
         "no-consecutive-blank-lines": [true, 2],
-        "no-console": [true, "log", "error", "info", "group", "debug", "info"],
+        "no-console": [true, "log", "error", "group", "groupEnd", "groupCollapsed", "table", "trace"],
         "no-construct": true,
         "no-debugger": true,
         "no-duplicate-imports": true,

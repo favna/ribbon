@@ -900,10 +900,10 @@
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.12.tgz#7e0ced251fa94c3bc2d1023d4b84b2992fa06376"
   integrity sha512-/kQvbVzdEpOq4tEWT79yAHSM4nH4xMlhJv2GrLVQt4Qmo8yYsPdioBM1QpN/2GX1wkfMnyXvdoftvLUr0LBj7Q==
 
-"@types/libsodium-wrappers@^0.7.0":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@types/libsodium-wrappers/-/libsodium-wrappers-0.7.1.tgz#5036158da801db337b131656b5d1ed4a8fb27d05"
-  integrity sha512-qbDsIuNVOnK5UMZjnbWlEZ3ZMTH7sM9AcJpOd6+mHWu1dld2JoOsx4m1Qn6ExHNr0fE0bjr1LzuEM3sysHGGSA==
+"@types/libsodium-wrappers@^0.7.2":
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/@types/libsodium-wrappers/-/libsodium-wrappers-0.7.2.tgz#6dd9d49c0d556c2a4d2b16ad0462652e79e3acfe"
+  integrity sha512-EpNrzmFJxwDj9WY28mEmIBnrF1BMB19ExbffbF5soQ3TTU7dGi+uMp+Z+rY7h3w0oVdn+rPxnfT65a8vmPBH2g==
 
 "@types/moment-duration-format@^2.2.2":
   version "2.2.2"
@@ -1286,10 +1286,15 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-awesome-querystring@^1.1.3:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/awesome-querystring/-/awesome-querystring-1.1.4.tgz#2d51fe7dfc8f399e7831bf16f620e67b50da568f"
-  integrity sha512-F6Ebn7C7gJ38NT/5HpAxFqVnfz667pi+tez2cwmaZDhFOZPcoqXWLbvWTgT8jXJE8mAUfbiz7T/JrihVeaD8vQ==
+awesome-converter@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/awesome-converter/-/awesome-converter-1.0.3.tgz#2f413b48a25e67765bb2b28a95207c5284390740"
+  integrity sha512-E2yLslgDWCHq3VmAUchRqmDJrYjAOsAIjmg4E9w66uwzwDwUMRnxGdfIQ2kLFiM52tYnIP9ahxZuyqvuTgk6wg==
+
+awesome-querystring@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/awesome-querystring/-/awesome-querystring-1.1.5.tgz#ca72b5f49f0efbbc4a560d9443520271bef94515"
+  integrity sha512-NuKm24kxmWaUDFNbFoIJSjlNORpUc58gk0Y2z/NGpEDv749QArd2zekpSUJ92YPI9IyKaz5K2ith7PIG1FtiyA==
 
 aws-sign2@~0.7.0:
   version "0.7.0"
@@ -2276,8 +2281,8 @@ dijkstrajs@^1.0.1:
   integrity sha1-082BIh4+pAdCz83lVtTpnpjdxxs=
 
 discord.js-commando@favna/commando#ribbon:
-  version "1.3.9-ribbon"
-  resolved "https://codeload.github.com/favna/commando/tar.gz/b5c173fb57d8a413a3fc1439c446160a7b333012"
+  version "1.3.10-ribbon"
+  resolved "https://codeload.github.com/favna/commando/tar.gz/12892813b03fd9493b28a4fdc5470979d68af7b1"
   dependencies:
     common-tags "^1.8.0"
     escape-string-regexp "^1.0.0"

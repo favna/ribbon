@@ -142,6 +142,28 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Casino WithdrawCommand} - Withdraw chips from your vault</p>
 <p><strong>Aliases</strong>: <code>wdraw</code></p>
 </dd>
+<dt><a href="#module_length">length</a></dt>
+<dd><p>Converters LengthCommand - Convert various units of length</p>
+<p><strong>Aliases</strong>: <code>weight</code></p>
+</dd>
+<dt><a href="#module_length">length</a></dt>
+<dd><p>Converters MassCommand - Convert various units of mass</p>
+<p><strong>Aliases</strong>: <code>height</code></p>
+</dd>
+<dt><a href="#module_math">math</a></dt>
+<dd><p>Converters MathCommand - Take the effort out of calculations and let Ribbon do it for you</p>
+<p><strong>Aliases</strong>: <code>maths</code>, <code>calc</code></p>
+</dd>
+<dt><a href="#module_oxr">oxr</a></dt>
+<dd><p>Converters MoneyCommand - Convert one currency to another</p>
+<p>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC</p>
+<p>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a></p>
+<p><strong>Aliases</strong>: <code>money</code>, <code>rate</code></p>
+</dd>
+<dt><a href="#module_temperature">temperature</a></dt>
+<dd><p>Converters TemperatureCommand - Convert various units of temperature</p>
+<p><strong>Aliases</strong>: <code>heat</code>, <code>warmth</code>, <code>temp</code></p>
+</dd>
 <dt><a href="#module_favna">favna</a></dt>
 <dd><p>Custom FavnaCommand - Custom Command exclusive to ChaosGamez server</p>
 <p>A joke command to praise Favna
@@ -170,16 +192,6 @@ Server admins can disable this command entirely by using the <code>rmt off</code
 <dd><p>Extra CopyPastaRemoveCommand - Remove a specified copypasta</p>
 <p>Use the copypastalist command to find the ID for deleting</p>
 <p><strong>Aliases</strong>: <code>cpremove</code>, <code>copypastadelete</code>, <code>cpdelete</code>, <code>cpd</code>, <code>cpr</code>, <code>pastadelete</code>, <code>pasteremove</code></p>
-</dd>
-<dt><a href="#module_math">math</a></dt>
-<dd><p>Extra MathCommand - Take the effort out of calculations and let Ribbon do it for you</p>
-<p><strong>Aliases</strong>: <code>maths</code>, <code>calc</code></p>
-</dd>
-<dt><a href="#module_oxr">oxr</a></dt>
-<dd><p>Extra MoneyCommand - Convert one currency to another</p>
-<p>Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC</p>
-<p>For a full list of supported currencies see <a href="https://docs.openexchangerates.org/docs/supported-currencies">this url</a></p>
-<p><strong>Aliases</strong>: <code>money</code>, <code>rate</code>, <code>convert</code></p>
 </dd>
 <dt><a href="#module_qrgen">qrgen</a></dt>
 <dd><p>Extra QRGenCommand - Generates a QR code from text (like a URL)</p>
@@ -1128,6 +1140,103 @@ Casino WithdrawCommand} - Withdraw chips from your vault
 ```nginx
 withdraw 100
 ```
+<a name="module_length"></a>
+
+## length
+Converters LengthCommand - Convert various units of length
+
+**Aliases**: `weight`
+
+**Category**: converters  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AmountToConvert | <code>number</code> | The amount of something to convert |
+| FromUnit | <code>string</code> | The unit to convert from |
+| ToUnit | <code>string</code> | The unit to convert to |
+
+**Example**  
+```nginx
+length 1 gram pound
+```
+<a name="module_length"></a>
+
+## length
+Converters MassCommand - Convert various units of mass
+
+**Aliases**: `height`
+
+**Category**: converters  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AmountToConvert | <code>number</code> | The amount of something to convert |
+| FromUnit | <code>string</code> | The unit to convert from |
+| ToUnit | <code>string</code> | The unit to convert to |
+
+**Example**  
+```nginx
+length 1.7m f
+```
+<a name="module_math"></a>
+
+## math
+Converters MathCommand - Take the effort out of calculations and let Ribbon do it for you
+
+**Aliases**: `maths`, `calc`
+
+**Category**: converters  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Equation | <code>string</code> | The equation to solve |
+
+**Example**  
+```nginx
+math (pi - 1) * 3
+```
+<a name="module_oxr"></a>
+
+## oxr
+Converters MoneyCommand - Convert one currency to another
+
+Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC
+
+For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)
+
+**Aliases**: `money`, `rate`
+
+**Category**: converters  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| MoneyAmount | <code>number</code> | Amount of money to convert |
+| OriginCurrency | <code>string</code> | Currency to convert from |
+| TargetCurrency | <code>string</code> | Currency to convert to |
+
+**Example**  
+```nginx
+oxr 1 EUR USD
+```
+<a name="module_temperature"></a>
+
+## temperature
+Converters TemperatureCommand - Convert various units of temperature
+
+**Aliases**: `heat`, `warmth`, `temp`
+
+**Category**: converters  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| AmountToConvert | <code>number</code> | The amount of something to convert |
+| FromUnit | <code>string</code> | The unit to convert from |
+| ToUnit | <code>string</code> | The unit to convert to |
+
+**Example**  
+```nginx
+temperature 20 c f
+```
 <a name="module_favna"></a>
 
 ## favna
@@ -1211,46 +1320,6 @@ Use the copypastalist command to find the ID for deleting
 **Example**  
 ```nginx
 copypastaremove 1
-```
-<a name="module_math"></a>
-
-## math
-Extra MathCommand - Take the effort out of calculations and let Ribbon do it for you
-
-**Aliases**: `maths`, `calc`
-
-**Category**: extra  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| Equation | <code>string</code> | The equation to solve |
-
-**Example**  
-```nginx
-math (pi - 1) * 3
-```
-<a name="module_oxr"></a>
-
-## oxr
-Extra MoneyCommand - Convert one currency to another
-
-Note: bitcoin is BTC, Ethereum is ETH, Litecoin is LTC
-
-For a full list of supported currencies see [this url](https://docs.openexchangerates.org/docs/supported-currencies)
-
-**Aliases**: `money`, `rate`, `convert`
-
-**Category**: extra  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| MoneyAmount | <code>number</code> | Amount of money to convert |
-| OriginCurrency | <code>string</code> | Currency to convert from |
-| TargetCurrency | <code>string</code> | Currency to convert to |
-
-**Example**  
-```nginx
-oxr 1 EUR USD
 ```
 <a name="module_qrgen"></a>
 
