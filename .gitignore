@@ -31,7 +31,6 @@ dist/
 !.idea/typescript-compiler.xml
 !.idea/vcs.xml
 
-
 # My own stuff
 src/commands/owner/test.ts
 

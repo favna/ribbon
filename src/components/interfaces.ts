@@ -69,6 +69,51 @@ interface IDiscordGameExecutable {
     os: string;
 }
 
+interface IFrontLineGirlConstantStats {
+    mov: number;
+    crit_rate: number;
+    crit_dmg: number;
+    pen: number;
+
+    [propName: string]: number;
+}
+
+interface IFrontlineGirlStats {
+    hp: number;
+    ammo: number;
+    ration: number;
+    dmg: number;
+    eva: number;
+    acc: number;
+    rof: number;
+    armor: number;
+
+    [propName: string]: number;
+}
+
+interface IFrontLineGirlProductionRequirements {
+    manpower: number;
+    ammo: number;
+    rations: number;
+    parts: number;
+
+    [propName: string]: number;
+}
+
+interface IFrontLineGirlAbility {
+    name: string;
+    icon: string;
+    text: string;
+    initial: string;
+    cooldown: string[];
+    damage_value: string[];
+    hit_value: string[];
+    round_quantity: string[];
+    time_value: string[];
+
+    [propName: string]: string | string[];
+}
+
 export interface IMusicCommand extends Command {
     queue: any;
     votes: any;
@@ -335,6 +380,29 @@ export interface IDiscordStoreGameData {
     };
     thumbnail?: {
         id: string;
+    };
+}
+
+export interface IFrontlineGirl {
+    url: string;
+    num: number;
+    name: string;
+    type: string;
+    rating: number;
+    constStats: IFrontLineGirlConstantStats;
+    baseStats: IFrontlineGirlStats;
+    maxStats: IFrontlineGirlStats;
+    ability: IFrontLineGirlAbility;
+    tile_bonus: string;
+    bonus_desc: string;
+    img: string;
+    production: {
+        stage?: string;
+        reward?: string;
+        timer?: string;
+        placebo: boolean;
+        normal: IFrontLineGirlProductionRequirements;
+        heavy: IFrontLineGirlProductionRequirements;
     };
 }
 
