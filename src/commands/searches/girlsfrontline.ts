@@ -64,6 +64,10 @@ export default class EShopCommand extends Command {
             if (hit.production.timer) howObtain.push(`**Production Timer:** ${hit.production.timer}`);
             if (hit.production.placebo) howObtain.push('_Production requirements are placebo & may not increase drop rate_');
 
+            hit.ability.text.match(/\(\$([a-z0-9_])+\)%?/gm).forEach((element: string) => {
+                hit.ability.text = hit.ability.text.replace(element, (hit.ability[element.replace(/\(\$(.+)\)%?/gim, '$1')] as string[]).reverse()[0]);
+            });
+
             const wikiBasePath = 'https://en.gfwiki.com';
             const wikiFetch = await fetch(wikiBasePath.concat(hit.url));
             const $ = cheerio.load(await wikiFetch.text());
