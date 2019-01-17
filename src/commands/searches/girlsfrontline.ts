@@ -16,6 +16,8 @@ import * as fs from 'fs';
 import * as Fuse from 'fuse.js';
 import fetch from 'node-fetch';
 import * as path from 'path';
+import * as moment from 'moment';
+import 'moment-duration-format';
 import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IFrontlineGirl, startTyping, stopTyping } from '../../components';
 
 export default class EShopCommand extends Command {
@@ -58,10 +60,11 @@ export default class EShopCommand extends Command {
             const results: IFrontlineGirl[] = fuse.search(character);
             const hit = results[0];
             const howObtain: string[] = [];
+            const statIndices = ['hp','dmg','eva','acc','rof'];
 
             if (hit.production.stage) howObtain.push(`**Stage:** ${hit.production.stage}`);
             if (hit.production.reward) howObtain.push(`**Reward:** ${hit.production.reward}`);
-            if (hit.production.timer) howObtain.push(`**Production Timer:** ${hit.production.timer}`);
+            if (hit.production.timer) howObtain.push(`**Production Timer:** ${moment.duration(hit.production.timer, 'hours').format('H [hours and] mm [minutes]')}`);
             if (hit.production.placebo) howObtain.push('_Production requirements are placebo & may not increase drop rate_');
 
             hit.ability.text.match(/\(\$([a-z0-9_])+\)/gm).forEach((element: string) => {
@@ -77,7 +80,7 @@ export default class EShopCommand extends Command {
 
             gfEmbed
                 .setURL(wikiBasePath.concat(hit.url))
-                .setTitle(`No. ${hit.num} - ${hit.name} ${[...Array(hit.rating)].map(() => '★').join('')}`)
+                .setTitle(`No. ${hit.num} - ${hit.name} ${[...Array(hit.rating)].map(() => '★').join('').concat('☆☆☆☆☆'.slice(hit.rating))}`)
                 .setThumbnail(wikiBasePath.concat('/images/', thumbSrc))
                 .addField('Type', hit.type, true)
                 .addField('Constant Stats',
@@ -86,11 +89,13 @@ export default class EShopCommand extends Command {
                         .join(', '))
                 .addField('Maximum Stats',
                     Object.keys(hit.baseStats)
-                        .map(index => `${index.toUpperCase()}: **${hit.baseStats[index]}**`)
+                        .map(index => statIndices.includes(index) ? `${index.toUpperCase()}: **${hit.baseStats[index]}**` : undefined)
+                        .filter(Boolean)
                         .join(', '))
                 .addField('Base Stats',
                     Object.keys(hit.maxStats)
-                        .map(index => `${index.toUpperCase()}: **${hit.maxStats[index]}**`)
+                        .map(index => statIndices.includes(index) ? `${index.toUpperCase()}: **${hit.maxStats[index]}**` : undefined)
+                        .filter(Boolean)
                         .join(', '))
                 .addField('How To Obtain', howObtain.join('\n'));
 
