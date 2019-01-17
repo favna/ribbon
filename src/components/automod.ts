@@ -6,7 +6,7 @@
 
 import { CommandoClient, CommandoMessage } from 'discord.js-commando';
 import levenshtein from 'fast-levenshtein';
-import * as moment from 'moment';
+import moment from 'moment';
 import { countCaps, countEmojis, countMentions, numberBetween } from './util';
 
 export const badwords = (msg: CommandoMessage, words: string[], client: CommandoClient) => {

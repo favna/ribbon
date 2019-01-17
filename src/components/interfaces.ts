@@ -287,6 +287,7 @@ export interface IOverwatchHeroMapped {
 export interface ICopyPastaListObject {
     id: number;
     name: string;
+    content: string;
 }
 
 export interface ITimerListRow {

@@ -12,7 +12,7 @@ import { stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
+import moment from 'moment';
 import fetch from 'node-fetch';
 import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
@@ -238,8 +238,11 @@ export default class RedditCommand extends Command {
         const subreddits: any = {};
 
         this.submitted.forEach((item: any) => {
-            if (subreddits.hasOwnProperty(item.data.subreddit)) subreddits[item.data.subreddit] += 1;
-            else subreddits[item.data.subreddit] = 1;
+            if (subreddits.hasOwnProperty(item.data.subreddit)) {
+                subreddits[item.data.subreddit] += 1;
+            } else {
+                subreddits[item.data.subreddit] = 1;
+            }
         });
 
         for (const subreddit in subreddits) {
@@ -264,8 +267,11 @@ export default class RedditCommand extends Command {
         const subreddits: any = {};
 
         this.comments.forEach((item: any) => {
-            if (subreddits.hasOwnProperty(item.data.subreddit)) subreddits[item.data.subreddit] += 1;
-            else subreddits[item.data.subreddit] = 1;
+            if (subreddits.hasOwnProperty(item.data.subreddit)) {
+                subreddits[item.data.subreddit] += 1;
+            } else {
+                subreddits[item.data.subreddit] = 1;
+            }
         });
 
         for (const subreddit in subreddits) {

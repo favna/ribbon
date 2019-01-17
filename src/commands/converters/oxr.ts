@@ -19,7 +19,7 @@ import { stringify } from 'awesome-querystring';
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
+import moment from 'moment';
 import fetch from 'node-fetch';
 import { convertCurrency, currencyMap, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, validCurrenciesMap } from '../../components';
 

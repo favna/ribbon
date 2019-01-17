@@ -17,11 +17,11 @@
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as Fuse from 'fuse.js';
-import * as moment from 'moment';
+import Fuse from 'fuse.js';
+import moment from 'moment';
 import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IPokeData, startTyping, stopTyping, UnionPokeDex, zalgolize } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
-import * as entries from '../../data/dex/flavorText.json';
+import entries from '../../data/dex/flavorText.json';
 
 export default class FlavorCommand extends Command {
     constructor (client: CommandoClient) {
@@ -132,9 +132,13 @@ export default class FlavorCommand extends Command {
                 i -= 1;
             } while (i !== -1);
 
-            if (poke.num < 0) pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/unknown.png`;
-            else if (shines) pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/shiny/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
-            else pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
+            if (poke.num < 0) {
+                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/unknown.png`;
+            } else if (shines) {
+                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/shiny/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
+            } else {
+                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
+            }
 
             dataEmbed
                 .setColor(this.fetchColor(poke.color))

@@ -9,12 +9,12 @@
  * @param {number} ChipsAmount The amount of chips you want to gamble
  */
 
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
-import * as path from 'path';
+import moment from 'moment';
+import path from 'path';
 import { SlotMachine, SlotSymbol } from 'slot-machine';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
@@ -134,12 +134,12 @@ export default class SlotsCommand extends Command {
                     chips === winningPoints
                         ? 'won back their exact input'
                         : chips > winningPoints
-                            ? `lost ${chips - winningPoints} chips ${
+                        ? `lost ${chips - winningPoints} chips ${
                             winningPoints !== 0
                                 ? `(slots gave back ${winningPoints})`
                                 : ''
                             }`
-                            : `won ${balance - prevBal} chips`;
+                        : `won ${balance - prevBal} chips`;
 
                 slotEmbed
                     .setTitle(`${msg.author.tag} ${titleString}`)

@@ -7,13 +7,13 @@
  * @name countdownlist
  */
 
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import { TextChannel, Util } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
+import moment from 'moment';
 import 'moment-duration-format';
-import * as path from 'path';
+import path from 'path';
 import { deleteCommandMessages, ICountdownListRow, startTyping, stopTyping } from '../../components';
 
 export default class CountDownList extends Command {

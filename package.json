@@ -69,7 +69,7 @@
     "slot-machine": "^2.1.0",
     "speedtest-net": "^1.4.3",
     "unescape-es6": "^2.0.7",
-    "ytdl-core": "fent/node-ytdl-core",
+    "ytdl-core": "^0.29.1",
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {

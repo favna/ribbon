@@ -11,7 +11,7 @@
  * @param {string} Query Something you want to find
  */
 
-import * as booru from 'booru';
+import booru from 'booru';
 import { stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';

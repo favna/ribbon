@@ -1,7 +1,7 @@
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 import { GuildMember, RateLimitData } from 'discord.js';
 import { Client, Command, CommandoClient, CommandoGuild, CommandoMessage, SyncSQLiteProvider } from 'discord.js-commando';
-import * as path from 'path';
+import path from 'path';
 import {
     handleCmdErr,
     handleDebug,

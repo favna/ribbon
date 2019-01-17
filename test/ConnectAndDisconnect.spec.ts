@@ -1,6 +1,6 @@
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 import { Client, SyncSQLiteProvider } from 'discord.js-commando';
-import * as path from 'path';
+import path from 'path';
 
 test('should connect then disconnect', async () => {
     const client = new Client({

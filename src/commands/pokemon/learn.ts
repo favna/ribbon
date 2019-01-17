@@ -20,7 +20,7 @@
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
+import moment from 'moment';
 import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 import { BattleLearnsets } from '../../data/dex';
 
@@ -85,7 +85,7 @@ export default class LearnCommand extends Command {
             movesArray.forEach((move: string): any => {
                 if (move in learnset) {
                     learnset[move].forEach((learn: string): any => {
-                            methods.push(learn);
+                        methods.push(learn);
                     });
 
                     methods.forEach((method: string): any => {

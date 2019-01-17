@@ -9,12 +9,12 @@
  * @param {number} ChipsAmount The amount of chips you want to gamble
  */
 
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 import { oneLine, stripIndent, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
-import * as path from 'path';
+import moment from 'moment';
+import path from 'path';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping, validateCasinoLimit } from '../../components';
 
 export default class WheelOfFortuneCommand extends Command {
@@ -77,8 +77,8 @@ export default class WheelOfFortuneCommand extends Command {
                 wofEmbed
                     .setTitle(`
                         ${msg.author.tag} ${multipliers[spin] < 1
-                            ? `lost ${roundNumber(chips - chips * multipliers[spin])}`
-                            : `won ${roundNumber(chips * multipliers[spin] - chips)}`
+                        ? `lost ${roundNumber(chips - chips * multipliers[spin])}`
+                        : `won ${roundNumber(chips * multipliers[spin] - chips)}`
                         } chips
                     `)
                     .addField('Previous Balance', prevBal, true)

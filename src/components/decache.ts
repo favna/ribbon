@@ -5,7 +5,7 @@
  */
 /* tslint:disable:no-dynamic-delete no-conditional-assignment*/
 
-import * as path from 'path';
+import path from 'path';
 
 const find = (moduleName: string) => {
     try {

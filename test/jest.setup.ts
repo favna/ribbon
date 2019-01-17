@@ -1,6 +1,6 @@
 
 import { config } from 'dotenv';
-import * as path from 'path';
+import path from 'path';
 
 config({
     path: path.join(__dirname, '../src/.env'),

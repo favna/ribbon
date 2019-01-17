@@ -13,7 +13,7 @@
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as Fuse from 'fuse.js';
+import Fuse from 'fuse.js';
 import fetch from 'node-fetch';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, globalObjectsMap, startTyping, stopTyping } from '../../components';
 
@@ -241,8 +241,11 @@ export default class DocsCommand extends Command {
                 } else if (t.length === 1) {
                     final += `[${t[0]}](${this.docifyLink(t[0], version, docs)})`;
                 } else if (!(/(?:discord.js.org|Global_Objects)/).test(final)) {
-                    if (thisArr[0][2]) final += `[${t[0]}<${thisArr[0][2][0]}>](${this.docifyLink(t[0], version, docs)})`;
-                    else final += `[${t[0]}<${thisArr[0][1][0]}>](${this.docifyLink(t[0], version, docs)})`;
+                    if (thisArr[0][2]) {
+                        final += `[${t[0]}<${thisArr[0][2][0]}>](${this.docifyLink(t[0], version, docs)})`;
+                    } else {
+                        final += `[${t[0]}<${thisArr[0][1][0]}>](${this.docifyLink(t[0], version, docs)})`;
+                    }
                 }
             });
         });

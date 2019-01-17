@@ -13,7 +13,7 @@ import { stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
+import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
 import { currencyMap, DEFAULT_EMBED_COLOR, deleteCommandMessages, IDiscordGameParsed, IDiscordGameSku, IDiscordStoreGameData, startTyping, stopTyping } from '../../components';

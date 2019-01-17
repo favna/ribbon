@@ -11,7 +11,7 @@
 
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
+import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, removeDiacritics, startTyping, stopTyping } from '../../components';

@@ -14,12 +14,12 @@
  */
 
 import { stringify } from 'awesome-querystring';
-import * as cheerio from 'cheerio';
+import cheerio from 'cheerio';
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as Fuse from 'fuse.js';
-import * as moment from 'moment';
+import Fuse from 'fuse.js';
+import moment from 'moment';
 import fetch from 'node-fetch';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 

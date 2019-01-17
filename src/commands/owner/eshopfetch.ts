@@ -8,9 +8,9 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as fs from 'fs';
-import * as eshop from 'nintendo-switch-eshop';
-import * as path from 'path';
+import fs from 'fs';
+import eshop from 'nintendo-switch-eshop';
+import path from 'path';
 import { decache, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class EShopFetchCommand extends Command {

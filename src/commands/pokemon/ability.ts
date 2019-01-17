@@ -12,8 +12,8 @@
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as Fuse from 'fuse.js';
-import * as moment from 'moment';
+import Fuse from 'fuse.js';
+import moment from 'moment';
 import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, UnionPokeAlias } from '../../components';
 import { AbilityAliases, BattleAbilities } from '../../data/dex';
 

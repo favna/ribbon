@@ -9,15 +9,15 @@
  * @param {string} CharacterName Name (species), number or type of the girl you want to find
  */
 
-import * as cheerio from 'cheerio';
+import cheerio from 'cheerio';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as fs from 'fs';
-import * as Fuse from 'fuse.js';
-import fetch from 'node-fetch';
-import * as path from 'path';
-import * as moment from 'moment';
+import fs from 'fs';
+import Fuse from 'fuse.js';
+import moment from 'moment';
 import 'moment-duration-format';
+import fetch from 'node-fetch';
+import path from 'path';
 import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IFrontlineGirl, startTyping, stopTyping } from '../../components';
 
 export default class GirlsFrontlineCommand extends Command {
@@ -60,7 +60,7 @@ export default class GirlsFrontlineCommand extends Command {
             const results: IFrontlineGirl[] = fuse.search(character);
             const hit = results[0];
             const howObtain: string[] = [];
-            const statIndices = ['hp','dmg','eva','acc','rof'];
+            const statIndices = ['hp', 'dmg', 'eva', 'acc', 'rof'];
 
             if (hit.production.stage) howObtain.push(`**Stage:** ${hit.production.stage}`);
             if (hit.production.reward) howObtain.push(`**Reward:** ${hit.production.reward}`);

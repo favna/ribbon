@@ -19,7 +19,7 @@
 import { oneLine, stripIndents } from 'common-tags';
 import { GuildMember, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
+import moment from 'moment';
 import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
 
 export default class MuteCommand extends Command {

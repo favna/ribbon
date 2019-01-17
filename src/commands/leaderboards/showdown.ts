@@ -12,7 +12,7 @@
 import { stripIndents } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as Fuse from 'fuse.js';
+import Fuse from 'fuse.js';
 import fetch from 'node-fetch';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 import { TierAliases } from '../../data/dex';

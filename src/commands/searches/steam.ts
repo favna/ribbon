@@ -10,7 +10,7 @@
  */
 
 import { stringify } from 'awesome-querystring';
-import * as cheerio from 'cheerio';
+import cheerio from 'cheerio';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';

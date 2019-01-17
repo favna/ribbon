@@ -13,12 +13,12 @@
  * @param {string} TheReason Reason for warning
  */
 
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
-import * as path from 'path';
+import moment from 'moment';
+import path from 'path';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class WarnCommand extends Command {

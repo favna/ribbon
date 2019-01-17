@@ -15,7 +15,7 @@
 import { oneLine } from 'common-tags';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as Jimp from 'jimp';
+import jimp from 'jimp';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class ShipCommand extends Command {
@@ -56,22 +56,22 @@ export default class ShipCommand extends Command {
         romeo = romeo !== 'random' ? romeo.user : msg.guild.members.random().user;
         juliet = juliet !== 'random' ? juliet.user : msg.guild.members.random().user;
 
-        const avaOne = await Jimp.read(romeo.displayAvatarURL({ format: 'png' }));
-        const avaTwo = await Jimp.read(juliet.displayAvatarURL({ format: 'png' }));
+        const avaOne = await jimp.read(romeo.displayAvatarURL({ format: 'png' }));
+        const avaTwo = await jimp.read(juliet.displayAvatarURL({ format: 'png' }));
         const boat = new MessageEmbed();
-        const canvas = await Jimp.read(384, 128);
-        const heart = await Jimp.read(`${ASSET_BASE_PATH}/ribbon/heart.png`);
+        const canvas = await jimp.read(384, 128);
+        const heart = await jimp.read(`${ASSET_BASE_PATH}/ribbon/heart.png`);
         const randLengthRomeo = roundNumber(Math.random() * 4 + 2);
         const randLengthJuliet = roundNumber(Math.random() * 4 + 2);
 
-        avaOne.resize(128, Jimp.AUTO);
-        avaTwo.resize(128, Jimp.AUTO);
+        avaOne.resize(128, jimp.AUTO);
+        avaTwo.resize(128, jimp.AUTO);
 
         canvas.blit(avaOne, 0, 0);
         canvas.blit(avaTwo, 256, 0);
         canvas.blit(heart, 160, 32);
 
-        const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG);
+        const buffer = await canvas.getBufferAsync(jimp.MIME_PNG);
         const embedAttachment = new MessageAttachment(buffer, 'ship.png');
 
         boat.attachFiles([embedAttachment])

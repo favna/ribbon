@@ -2,8 +2,8 @@
 	"compilerOptions": {
 		"outDir": "dist/",
 		"rootDir": "./src",
-		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
+		"esModuleInterop": true,
 		"lib": ["esnext.array", "es2018", "dom"],
 		"target": "es6",
 		"module": "commonjs",

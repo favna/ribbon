@@ -13,7 +13,7 @@
 import { oneLine, stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
+import moment from 'moment';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class NickCommand extends Command {
@@ -57,8 +57,11 @@ export default class NickCommand extends Command {
             const oldName = member.displayName;
 
             try {
-                if (nickname === 'clear') member.setNickname('');
-                else member.setNickname(nickname);
+                if (nickname === 'clear') {
+                    member.setNickname('');
+                } else {
+                    member.setNickname(nickname);
+                }
 
                 nicknameEmbed
                     .setColor('#3DFFE5')

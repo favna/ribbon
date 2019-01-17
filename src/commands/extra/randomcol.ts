@@ -18,7 +18,7 @@
 import { stripIndents } from 'common-tags';
 import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as Jimp from 'jimp';
+import jimp from 'jimp';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class RandomColCommand extends Command {
@@ -67,8 +67,8 @@ export default class RandomColCommand extends Command {
         const hex = colour !== 'random'
             ? colour
             : `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-        const canvas = await Jimp.read(80, 50, this.hextodec(hex.replace('#', '0x').concat('FF')));
-        const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG);
+        const canvas = await jimp.read(80, 50, this.hextodec(hex.replace('#', '0x').concat('FF')));
+        const buffer = await canvas.getBufferAsync(jimp.MIME_PNG);
         const embedAttachment = new MessageAttachment(buffer, 'canvas.png');
 
         embed

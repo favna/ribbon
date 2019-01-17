@@ -11,10 +11,10 @@
 
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as fs from 'fs';
-import * as Fuse from 'fuse.js';
-import * as moment from 'moment';
-import * as path from 'path';
+import fs from 'fs';
+import Fuse from 'fuse.js';
+import moment from 'moment';
+import path from 'path';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class EShopCommand extends Command {

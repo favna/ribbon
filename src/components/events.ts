@@ -5,18 +5,18 @@
  */
 
 import { stringify } from 'awesome-querystring';
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import dym, { ReturnTypeEnums } from 'didyoumean2';
 import { GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'discord.js-commando';
-import * as fs from 'fs';
-import * as Jimp from 'jimp';
-import * as moment from 'moment';
+import fs from 'fs';
+import jimp from 'jimp';
+import moment from 'moment';
 import 'moment-duration-format';
 import eshop from 'nintendo-switch-eshop';
 import fetch from 'node-fetch';
-import * as path from 'path';
+import path from 'path';
 import { ASSET_BASE_PATH, badwords, caps, decache, DEFAULT_EMBED_COLOR, duptext, emojis, invites, links, mentions, ms, ordinal, slowmode } from '.';
 
 const renderReminderMessage = async (client: CommandoClient) => {
@@ -150,17 +150,17 @@ const renderCountdownMessage = (client: CommandoClient) => {
 
 const renderJoinMessage = async (member: GuildMember) => {
     try {
-        const avatar = await Jimp.read(member.user.displayAvatarURL({ format: 'png' }));
-        const border = await Jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
-        const canvas = await Jimp.read(500, 150);
+        const avatar = await jimp.read(member.user.displayAvatarURL({ format: 'png' }));
+        const border = await jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
+        const canvas = await jimp.read(500, 150);
         const newMemberEmbed = new MessageEmbed();
-        const fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt'));
-        const fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
-        const mask = await Jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
+        const fontLarge = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt'));
+        const fontMedium = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
+        const mask = await jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
 
-        avatar.resize(136, Jimp.AUTO);
-        mask.resize(136, Jimp.AUTO);
-        border.resize(136, Jimp.AUTO);
+        avatar.resize(136, jimp.AUTO);
+        mask.resize(136, jimp.AUTO);
+        border.resize(136, jimp.AUTO);
         avatar.mask(mask, 0, 0);
         avatar.composite(border, 0, 0);
         canvas.blit(avatar, 5, 5);
@@ -168,7 +168,7 @@ const renderJoinMessage = async (member: GuildMember) => {
         canvas.print(fontMedium, 160, 60, `you are the ${ordinal(member.guild.memberCount)} member`.toUpperCase());
         canvas.print(fontMedium, 160, 80, `of ${member.guild.name}`.toUpperCase());
 
-        const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG);
+        const buffer = await canvas.getBufferAsync(jimp.MIME_PNG);
         const embedAttachment = new MessageAttachment(buffer, 'joinimg.png');
 
         newMemberEmbed
@@ -191,17 +191,17 @@ const renderJoinMessage = async (member: GuildMember) => {
 
 const renderLeaveMessage = async (member: GuildMember) => {
     try {
-        const avatar = await Jimp.read(member.user.displayAvatarURL({ format: 'png' }));
-        const border = await Jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
-        const canvas = await Jimp.read(500, 150);
+        const avatar = await jimp.read(member.user.displayAvatarURL({ format: 'png' }));
+        const border = await jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
+        const canvas = await jimp.read(500, 150);
         const leaveMemberEmbed = new MessageEmbed();
-        const fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
-        const fontLarge = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt'));
-        const mask = await Jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
+        const fontMedium = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
+        const fontLarge = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt'));
+        const mask = await jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
 
-        avatar.resize(136, Jimp.AUTO);
-        mask.resize(136, Jimp.AUTO);
-        border.resize(136, Jimp.AUTO);
+        avatar.resize(136, jimp.AUTO);
+        mask.resize(136, jimp.AUTO);
+        border.resize(136, jimp.AUTO);
         avatar.mask(mask, 0, 0);
         avatar.composite(border, 0, 0);
         canvas.blit(avatar, 5, 5);
@@ -209,7 +209,7 @@ const renderLeaveMessage = async (member: GuildMember) => {
         canvas.print(fontMedium, 160, 60, `there are now ${member.guild.memberCount} members`.toUpperCase());
         canvas.print(fontMedium, 160, 80, `on ${member.guild.name}`.toUpperCase());
 
-        const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG);
+        const buffer = await canvas.getBufferAsync(jimp.MIME_PNG);
         const embedAttachment = new MessageAttachment(buffer, 'leaveimg.png');
 
         leaveMemberEmbed
@@ -401,24 +401,24 @@ export const handleErr = (client: CommandoClient, err: Error) => {
 
 export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGuild) => {
     try {
-        const avatar = await Jimp.read(client.user.displayAvatarURL({ format: 'png' }));
-        const border = await Jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
-        const canvas = await Jimp.read(500, 150);
-        const mask = await Jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
-        const fontMedium = await Jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
+        const avatar = await jimp.read(client.user.displayAvatarURL({ format: 'png' }));
+        const border = await jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
+        const canvas = await jimp.read(500, 150);
+        const mask = await jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
+        const fontMedium = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
         const newGuildEmbed = new MessageEmbed();
         const channel = guild.systemChannel ? guild.systemChannel : null;
 
-        avatar.resize(136, Jimp.AUTO);
-        mask.resize(136, Jimp.AUTO);
-        border.resize(136, Jimp.AUTO);
+        avatar.resize(136, jimp.AUTO);
+        mask.resize(136, jimp.AUTO);
+        border.resize(136, jimp.AUTO);
         avatar.mask(mask, 0, 0);
         avatar.composite(border, 0, 0);
         canvas.blit(avatar, 5, 5);
         canvas.print(fontMedium, 155, 55, `Currently powering up ${client.guilds.size} servers`.toUpperCase());
         canvas.print(fontMedium, 155, 75, `serving ${client.users.size} Discord users`.toUpperCase());
 
-        const buffer = await canvas.getBufferAsync(Jimp.MIME_PNG);
+        const buffer = await canvas.getBufferAsync(jimp.MIME_PNG);
         const embedAttachment = new MessageAttachment(buffer, 'added.png');
 
         newGuildEmbed

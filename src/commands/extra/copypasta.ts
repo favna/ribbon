@@ -11,14 +11,14 @@
  * @param {string} PastaName Name of the copypasta to send
  */
 
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import dym from 'didyoumean2';
 import { MessageEmbed, TextChannel, Util } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
-import * as path from 'path';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import moment from 'moment';
+import path from 'path';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, ICopyPastaListObject, startTyping, stopTyping } from '../../components';
 
 export default class CopyPastaCommand extends Command {
     constructor (client: CommandoClient) {
@@ -52,7 +52,7 @@ export default class CopyPastaCommand extends Command {
 
         try {
             startTyping(msg);
-            const query = conn
+            const query: ICopyPastaListObject = conn
                 .prepare(`SELECT * FROM "${msg.guild.id}" WHERE name = ?;`)
                 .get(name);
 
@@ -91,11 +91,7 @@ export default class CopyPastaCommand extends Command {
                 return msg.embed(pastaEmbed);
             }
 
-            const maybe = dym(
-                name,
-                conn.prepare(`SELECT name FROM "${msg.guild.id}";`).all().map(a => a.name),
-                { deburr: true }
-            );
+            const maybe = dym(name, conn.prepare(`SELECT name FROM "${msg.guild.id}";`).all().map((a: ICopyPastaListObject) => a.name), { deburr: true });
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

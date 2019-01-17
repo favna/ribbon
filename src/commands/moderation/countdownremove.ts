@@ -11,14 +11,14 @@
  * @param {string} CountdownID The ID of the Countdown to remove
  */
 
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
+import moment from 'moment';
 import 'moment-duration-format';
-import * as path from 'path';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
+import path from 'path';
+import { deleteCommandMessages, ICountdownListRow, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class CountDownRemove extends Command {
     constructor (client: CommandoClient) {
@@ -46,7 +46,7 @@ export default class CountDownRemove extends Command {
                         const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
                         const rows = conn.prepare(`SELECT id FROM "${msg.guild.id}";`).all();
 
-                        if (rows.some(el => el.id === Number(v))) return true;
+                        if (rows.some((el: ICountdownListRow) => el.id === Number(v))) return true;
 
                         return `that is not an ID of a countdown stored for this guild. You can view all the stored countdowns with the \`${msg.guild.commandPrefix}countdownlist\` command`;
                     },

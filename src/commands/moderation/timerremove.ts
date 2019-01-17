@@ -11,12 +11,12 @@
  * @param {string} TimerID The ID of the timed message to remove
  */
 
-import * as Database from 'better-sqlite3';
+import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
-import * as moment from 'moment';
-import * as path from 'path';
+import moment from 'moment';
+import path from 'path';
 import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
 
 export default class TimerRemoveCommand extends Command {
