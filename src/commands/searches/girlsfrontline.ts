@@ -1,5 +1,5 @@
 /**
- * @file Searches GirlsFrontline - Gets information about [Girls Froontline](http://gf.sunborngame.com/) characters
+ * @file Searches GirlsFrontlineCommand - Gets information about [Girls Froontline](http://gf.sunborngame.com/) characters
  *
  * **Aliases**: `gfsearch`
  * @module
@@ -20,7 +20,7 @@ import * as moment from 'moment';
 import 'moment-duration-format';
 import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IFrontlineGirl, startTyping, stopTyping } from '../../components';
 
-export default class EShopCommand extends Command {
+export default class GirlsFrontlineCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'girlsfrontline',

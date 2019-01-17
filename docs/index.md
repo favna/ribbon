@@ -717,6 +717,10 @@ By default only <code>name</code> is used as argument and the supertype is set t
 <dd><p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop</p>
 <p><strong>Aliases</strong>: <code>shop</code></p>
 </dd>
+<dt><a href="#module_girlsfrontline">girlsfrontline</a></dt>
+<dd><p>Searches GirlsFrontlineCommand - Gets information about <a href="http://gf.sunborngame.com/">Girls Froontline</a> characters</p>
+<p><strong>Aliases</strong>: <code>gfsearch</code></p>
+</dd>
 <dt><a href="#module_google">google</a></dt>
 <dd><p>Searches GoogleCommand - Gets information through Google</p>
 <p>Note: prioritizes Knowledge Graphs for better searching</p>
@@ -3154,6 +3158,23 @@ Searches EShopCommand - Gets information about a game in the Nintendo Switch eSh
 **Example**  
 ```nginx
 eshop Breath of The Wild
+```
+<a name="module_girlsfrontline"></a>
+
+## girlsfrontline
+Searches GirlsFrontlineCommand - Gets information about [Girls Froontline](http://gf.sunborngame.com/) characters
+
+**Aliases**: `gfsearch`
+
+**Category**: searches  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| CharacterName | <code>string</code> | Name (species), number or type of the girl you want to find |
+
+**Example**  
+```nginx
+girlsfrontline Negev
 ```
 <a name="module_google"></a>
 
