@@ -23,8 +23,8 @@ const replaceOptions = { logs: { enabled: false } };
 const makeJavaScriptRunnable = () => {
     return gulp.src('./dist/Ribbon.js', { base: './dist' })
         .pipe(replace('typescript: true,', 'typescript: false,', replaceOptions))
-        .pipe(replace(/.registerCommandsIn\({\n\s+dirname.+\n\s+filter.+\n\s+}\);/g, '.registerCommandsIn(path.join(__dirname, \'commands\'));', replaceOptions))
-        .pipe(replace(/.registerTypesIn\({\n\s+dirname.+\n\s+filter.+\n\s+}\)/g, '.registerTypesIn(path.join(__dirname, \'components/commandoTypes\'))', replaceOptions))
+        .pipe(replace(/.registerCommandsIn\({\n\s+dirname.+\n\s+filter.+\n\s+}\);/g, '.registerCommandsIn(path_1.default.join(__dirname, \'commands\'));', replaceOptions))
+        .pipe(replace(/.registerTypesIn\({\n\s+dirname.+\n\s+filter.+\n\s+}\)/g, '.registerTypesIn(path_1.default.join(__dirname, \'components/commandoTypes\'))', replaceOptions))
         .pipe(gulp.dest('./dist'));
 };
 
