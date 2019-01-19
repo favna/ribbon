@@ -14,7 +14,7 @@ import fs from 'fs';
 import jimp from 'jimp';
 import moment from 'moment';
 import 'moment-duration-format';
-import eshop from 'nintendo-switch-eshop';
+import { getGamesAmerica } from 'nintendo-switch-eshop';
 import fetch from 'node-fetch';
 import path from 'path';
 import { ASSET_BASE_PATH, badwords, caps, decache, DEFAULT_EMBED_COLOR, duptext, emojis, invites, links, mentions, ms, ordinal, slowmode } from '.';
@@ -349,7 +349,7 @@ const forceEshopUpdate = async (client: CommandoClient) => {
     try {
         fs.writeFileSync(
             path.join(__dirname, '../data/databases/eshop.json'),
-            JSON.stringify(await eshop.getGamesAmerica({ shop: 'all' })),
+            JSON.stringify(await getGamesAmerica({ shop: 'all' })),
             'utf8'
         );
         decache(path.join(__dirname, '../data/databases/eshop.json'));

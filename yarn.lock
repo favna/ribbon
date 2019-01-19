@@ -878,6 +878,11 @@
   resolved "https://registry.yarnpkg.com/@types/common-tags/-/common-tags-1.8.0.tgz#79d55e748d730b997be5b7fce4b74488d8b26a6b"
   integrity sha512-htRqZr5qn8EzMelhX/Xmx142z218lLyGaeZ3YR8jlze4TATRU9huKKvuBmAJEW4LCC4pnY1N6JAm6p85fMHjhg==
 
+"@types/country-data@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@types/country-data/-/country-data-0.0.0.tgz#6f5563cae3d148780c5b6539803a29bd93f8f1a1"
+  integrity sha512-lIxCk6G7AwmUagQ4gIQGxUBnvAq664prFD9nSAz6dgd1XmBXBtZABV/op+QsJsIyaP1GZsf/iXhYKHX3azSRCw==
+
 "@types/dotenv@^6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-6.1.0.tgz#fba2bfd1f28a46eadaa049f3313ebb89bdedfc53"
@@ -1199,11 +1204,6 @@ array-uniq@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/array-uniq/-/array-uniq-1.0.3.tgz#af6ac877a25cc7f74e058894753858dfdb24fdb6"
   integrity sha1-r2rId6Jcx/dOBYiUdThY39sk/bY=
-
-array-unique-x@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/array-unique-x/-/array-unique-x-1.0.5.tgz#68f835a4da815c9132b51b6195d26f9114f416c3"
-  integrity sha1-aPg1pNqBXJEytRthldJvkRT0FsM=
 
 array-unique@^0.2.1:
   version "0.2.1"
@@ -2707,6 +2707,13 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.4:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
+
+fast-xml-parser@^3.12.12:
+  version "3.12.12"
+  resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-3.12.12.tgz#f45b738f8283e42ecd193a8621de87108b4764b4"
+  integrity sha512-8fZ3+lyB36Yqxr5q4LT5T/0e9EU9IipstotFLin6EUsC1kN8iEy9wgBvie/hULX3p3YYjJxKQCf1J0UaB5jZPg==
+  dependencies:
+    nimnjs "^1.3.2"
 
 fb-watchman@^2.0.0:
   version "2.0.0"
@@ -4882,16 +4889,35 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-nintendo-switch-eshop@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/nintendo-switch-eshop/-/nintendo-switch-eshop-1.1.4.tgz#02dd998f26fcf968027534bff86ab285de948e7b"
-  integrity sha512-vvvcOc3ES/XxQKPC0fmTTqG6yvu9Y2xEzu7syh5+3G6WWASIRYEJJkayfnrxob1ATWnPmdE8doY59q0NbNoAXQ==
+nimn-date-parser@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/nimn-date-parser/-/nimn-date-parser-1.0.0.tgz#4ce55d1fd5ea206bbe82b76276f7b7c582139351"
+  integrity sha512-1Nf+x3EeMvHUiHsVuEhiZnwA8RMeOBVTQWfB1S2n9+i6PYCofHd2HRMD+WOHIHYshy4T4Gk8wQoCol7Hq3av8Q==
+
+nimn_schema_builder@^1.0.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/nimn_schema_builder/-/nimn_schema_builder-1.1.0.tgz#b370ccf5b647d66e50b2dcfb20d0aa12468cd247"
+  integrity sha512-DK5/B8CM4qwzG2URy130avcwPev4uO0ev836FbQyKo1ms6I9z/i6EJyiZ+d9xtgloxUri0W+5gfR8YbPq7SheA==
+
+nimnjs@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/nimnjs/-/nimnjs-1.3.2.tgz#a6a877968d87fad836375a4f616525e55079a5ba"
+  integrity sha512-TIOtI4iqkQrUM1tiM76AtTQem0c7e56SkDZ7sj1d1MfUsqRcq2ZWQvej/O+HBTZV7u/VKnwlKTDugK/75IRPPw==
   dependencies:
-    array-unique-x "^1.0.5"
+    nimn-date-parser "^1.0.0"
+    nimn_schema_builder "^1.0.0"
+
+nintendo-switch-eshop@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/nintendo-switch-eshop/-/nintendo-switch-eshop-2.0.1.tgz#bd19bc20ef35581ef53188ac27df44e1441567ba"
+  integrity sha512-zWq0LZYOLCf0LSZxDyuK2KG+E6DspKSQpvEHoNX0DYr46GAG/DtWpQbhwoYpwfL3dZr7aOHGhTN6Q34ecQByCw==
+  dependencies:
+    "@types/country-data" "^0.0.0"
+    "@types/node-fetch" "^2.1.4"
+    awesome-querystring "^1.1.5"
     country-data "0.0.31"
-    q "^1.5.0"
-    request "^2.81.0"
-    xml2js "^0.4.17"
+    fast-xml-parser "^3.12.12"
+    node-fetch "^2.3.0"
 
 node-fetch@^2.1.2, node-fetch@^2.2.0, node-fetch@^2.3.0:
   version "2.3.0"
@@ -5610,11 +5636,6 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
-q@^1.5.0:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
-  integrity sha1-fjL3W0E4EpHQRhHxvxQQmsAGUdc=
-
 qrcode@^1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/qrcode/-/qrcode-1.3.2.tgz#ddb816b623236b31aa8cc2efcc04e02ac0fc7742"
@@ -5921,7 +5942,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.0"
     tough-cookie ">=2.3.3"
 
-request@^2.81.0, request@^2.87.0:
+request@^2.87.0:
   version "2.88.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   integrity sha512-NAqBSrijGLZdM0WZNsInLJpkJokL72XYjUpnB0iwsRgxh7dB6COrHnTBNwN0E+lHDAJzu7kLAkDeY08z2/A0hg==

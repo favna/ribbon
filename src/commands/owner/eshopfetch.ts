@@ -9,7 +9,7 @@
 
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fs from 'fs';
-import eshop from 'nintendo-switch-eshop';
+import { getGamesAmerica } from 'nintendo-switch-eshop';
 import path from 'path';
 import { decache, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
@@ -31,7 +31,7 @@ export default class EShopFetchCommand extends Command {
         startTyping(msg);
         fs.writeFileSync(
             path.join(__dirname, '../../data/databases/eshop.json'),
-            JSON.stringify(await eshop.getGamesAmerica({ shop: 'all' })),
+            JSON.stringify(await getGamesAmerica({ shop: 'all' })),
             'utf8'
         );
         decache(path.join(__dirname, '../../data/databases/eshop.json'));
