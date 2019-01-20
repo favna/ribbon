@@ -81,7 +81,6 @@
     "del": "^3.0.0",
     "gulp": "^4.0.0",
     "gulp-jest": "^4.0.2",
-    "gulp-string-replace": "^1.1.2",
     "gulp-typescript": "^5.0.0",
     "gulp-uglify-es": "^1.0.4",
     "jest": "^23.6.0",

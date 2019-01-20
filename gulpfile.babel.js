@@ -1,30 +1,23 @@
 import gulp from 'gulp';
-import jsdoc2md from 'jsdoc-to-markdown';
 import jest from 'gulp-jest';
 import ts from 'typescript';
 import del from 'del';
-import replace from 'gulp-string-replace';
-import * as fs from 'fs';
+import replace from 'gulp-replace';
 import * as gulpTs from 'gulp-typescript';
 import * as tslint from 'tslint';
 import { argv } from 'yargs';
+import { execSync } from 'child_process';
 import { default as uglify } from 'gulp-uglify-es';
 import { milkyLint, milkyReport } from 'milky-tslint';
 
 const tsSource = ['./src/**/*.ts', './src/commands/**/*.ts'];
 const copySource = ['./src/data/fonts/*', './src/data/databases/*', './src/.env', './src/data/dex/*.json'];
-const jsdocOptions = {
-    template: fs.readFileSync('./docs/template.hbs', 'utf8'),
-    files: './dist/commands/*/*.js',
-    'example-lang': 'nginx',
-};
-const replaceOptions = { logs: { enabled: false } };
 
 const makeJavaScriptRunnable = () => {
     return gulp.src('./dist/Ribbon.js', { base: './dist' })
-        .pipe(replace('typescript: true,', 'typescript: false,', replaceOptions))
-        .pipe(replace(/.registerCommandsIn\({\n\s+dirname.+\n\s+filter.+\n\s+}\);/g, '.registerCommandsIn(path_1.default.join(__dirname, \'commands\'));', replaceOptions))
-        .pipe(replace(/.registerTypesIn\({\n\s+dirname.+\n\s+filter.+\n\s+}\)/g, '.registerTypesIn(path_1.default.join(__dirname, \'components/commandoTypes\'))', replaceOptions))
+        .pipe(replace('typescript: true,', 'typescript: false,'))
+        .pipe(replace(/.registerCommandsIn\({\n\s+dirname.+\n\s+filter.+\n\s+}\);/g, '.registerCommandsIn(path_1.default.join(__dirname, \'commands\'));'))
+        .pipe(replace(/.registerTypesIn\({\n\s+dirname.+\n\s+filter.+\n\s+}\)/g, '.registerTypesIn(path_1.default.join(__dirname, \'components/commandoTypes\'))'))
         .pipe(gulp.dest('./dist'));
 };
 
@@ -39,13 +32,47 @@ const minifyCode = () => {
         .pipe(gulp.dest('./dist'));
 };
 
-const generateDocs = (done) => {
-    const docs = jsdoc2md.renderSync(jsdocOptions);
-    const docsJSON = jsdoc2md.getJsdocDataSync({ files: jsdocOptions.files });
-    fs.writeFileSync('./docs/index.md', docs);
-    fs.writeFileSync('../wikiribbon/All-Commands.md', docs);
-    fs.writeFileSync('../homesite/src/assets/docs/ribbon.json', JSON.stringify(docsJSON));
-    return done();
+const generateRepoDocs = () => {
+    const opts = {
+        template: './docs/template.hbs',
+        files: './dist/commands/**/*.js',
+        exampleLang: 'nginx',
+        outFile: './docs/index.md',
+        outFolder: './docs'
+    };
+    execSync(`yarn jsdoc2md --template ${opts.template} --files ${opts.files} --example-lang ${opts.exampleLang} > ${opts.outFile}`);
+
+    return gulp.src(opts.outFile, { base: opts.outFolder })
+        .pipe(replace(/yarn run .+\n\$ .+\n/g, ''))
+        .pipe(gulp.dest(opts.outFolder));
+};
+
+const generateWikiDocs = () => {
+    const opts = {
+        template: './docs/template.hbs',
+        files: './dist/commands/**/*.js',
+        exampleLang: 'nginx',
+        outFile: '../wikiribbon/All-Commands.md',
+        outFolder: '../wikiribbon',
+    };
+    execSync(`yarn jsdoc2md --template ${opts.template} --files ${opts.files} --example-lang ${opts.exampleLang} > ${opts.outFile}`);
+
+    return gulp.src(opts.outFile, { base: opts.outFolder })
+        .pipe(replace(/yarn run .+\n\$ .+\n/g, ''))
+        .pipe(gulp.dest(opts.outFolder));
+};
+
+const generateSiteDocs = () => {
+    const opts = {
+        files: './dist/commands/**/*.js',
+        outFile: '../homesite/src/assets/docs/ribbon.json',
+        outFolder: '../homesite/src/assets/docs',
+    };
+    execSync(`yarn jsdoc2md --json --files ${opts.files} > ${opts.outFile}`);
+
+    return gulp.src(opts.outFile, { base: opts.outFolder })
+        .pipe(replace(/yarn run .+\n\$ .+\n/g, ''))
+        .pipe(gulp.dest(opts.outFolder));
 };
 
 const compileForDocs = () => {
@@ -119,7 +146,7 @@ gulp.task('test', () => {
 
 gulp.task('clean', () => del(['./dist']));
 gulp.task('watch', () => gulp.watch(tsSource, gulp.series('lint')));
-gulp.task('docs', gulp.series('clean', compileForDocs, generateDocs, 'clean'));
+gulp.task('docs', gulp.series('clean', compileForDocs, gulp.parallel(generateRepoDocs, generateWikiDocs, generateSiteDocs), 'clean'));
 gulp.task('build', gulp.series('clean', compileToJavaScript, gulp.parallel(copyAdditionalFiles, makeJavaScriptRunnable), minifyCode));
 gulp.task('rebuild', gulp.series(compileSingleToJavaScript));
 gulp.task('reload', gulp.series('rebuild'));
