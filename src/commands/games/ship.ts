@@ -63,6 +63,10 @@ export default class ShipCommand extends Command {
         const heart = await jimp.read(`${ASSET_BASE_PATH}/ribbon/heart.png`);
         const randLengthRomeo = roundNumber(Math.random() * 4 + 2);
         const randLengthJuliet = roundNumber(Math.random() * 4 + 2);
+        const shipName = (
+            romeo.username.substring(0, roundNumber(romeo.username.length / randLengthRomeo))
+            + juliet.username.substring(roundNumber(juliet.username.length / randLengthJuliet))
+        ).replace(/[.,\\/#!$%^&*;:{}=\-_`~() ]/g, '');
 
         avaOne.resize(128, jimp.AUTO);
         avaTwo.resize(128, jimp.AUTO);
@@ -77,11 +81,7 @@ export default class ShipCommand extends Command {
         boat.attachFiles([embedAttachment])
             .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
             .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
-            .setDescription(oneLine`
-                I call it...
-                ${romeo.username.substring(0, roundNumber(romeo.username.length / randLengthRomeo))}
-                ${juliet.username.substring(roundNumber(juliet.username.length / randLengthJuliet))}! 😘`
-            )
+            .setDescription(oneLine`I call it... ${shipName}! 😘`)
             .setImage('attachment://ship.png');
 
         deleteCommandMessages(msg, this.client);
