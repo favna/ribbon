@@ -58,6 +58,7 @@
     "emoji-regex": "^7.0.3",
     "fast-levenshtein": "^2.0.6",
     "fuse.js": "favna/fuse",
+    "gulp-replace": "^1.0.0",
     "jimp": "^0.6.0",
     "libsodium-wrappers": "^0.7.3",
     "moment": "favna/moment#fix/typing_declaration",

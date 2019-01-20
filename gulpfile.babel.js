@@ -44,6 +44,7 @@ const generateRepoDocs = () => {
 
     return gulp.src(opts.outFile, { base: opts.outFolder })
         .pipe(replace(/yarn run .+\n\$ .+\n/g, ''))
+        .pipe(replace(/(\(Favna\))Done.+/, '(Favna)'))
         .pipe(gulp.dest(opts.outFolder));
 };
 
@@ -59,6 +60,7 @@ const generateWikiDocs = () => {
 
     return gulp.src(opts.outFile, { base: opts.outFolder })
         .pipe(replace(/yarn run .+\n\$ .+\n/g, ''))
+        .pipe(replace(/(\(Favna\))Done.+/, '(Favna)'))
         .pipe(gulp.dest(opts.outFolder));
 };
 
@@ -72,6 +74,7 @@ const generateSiteDocs = () => {
 
     return gulp.src(opts.outFile, { base: opts.outFolder })
         .pipe(replace(/yarn run .+\n\$ .+\n/g, ''))
+        .pipe(replace(/\nDone.+\n/g, ''))
         .pipe(gulp.dest(opts.outFolder));
 };
 
