@@ -13,7 +13,7 @@
  */
 
 import { oneLine } from 'common-tags';
-import { MessageAttachment, MessageEmbed } from 'discord.js';
+import { GuildMember, MessageAttachment, MessageEmbed, User } from 'discord.js';
 import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import jimp from 'jimp';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
@@ -36,25 +36,25 @@ export default class ShipCommand extends Command {
             },
             args: [
                 {
-                    key: 'romeo',
+                    key: 'firstMember',
                     prompt: 'Who to ship?',
                     type: 'member',
                     default: 'random',
                 },
                 {
-                    key: 'juliet',
+                    key: 'secondMember',
                     prompt: 'And who to ship them with?',
                     type: 'member',
                     default: 'random',
-                }
+                },
             ],
         });
     }
 
-    public async run (msg: CommandoMessage, { romeo, juliet }: { romeo: any; juliet: any }) {
+    public async run (msg: CommandoMessage, { firstMember, secondMember }: { firstMember: GuildMember | string; secondMember: GuildMember | string }) {
         startTyping(msg);
-        romeo = romeo !== 'random' ? romeo.user : msg.guild.members.random().user;
-        juliet = juliet !== 'random' ? juliet.user : msg.guild.members.random().user;
+        const romeo: User = firstMember !== 'random' ? (firstMember as GuildMember).user : msg.guild.members.random().user;
+        const juliet: User = secondMember !== 'random' ? (secondMember as GuildMember).user : msg.guild.members.random().user;
 
         const avaOne = await jimp.read(romeo.displayAvatarURL({ format: 'png' }));
         const avaTwo = await jimp.read(juliet.displayAvatarURL({ format: 'png' }));
