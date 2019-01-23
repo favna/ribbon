@@ -53,7 +53,7 @@ export default class ActivityCommand extends Command {
             const embed = new MessageEmbed();
             const ext = this.fetchExt(ava);
             const isSpotifyMusic = activity.type === 'LISTENING' && activity.name === 'Spotify';
-            const games = await fetch('https://canary.discordapp.com/api/v6/applications');
+            const games = await fetch('https://canary.discordapp.com/api/v6/applications/detectable');
             const gameList = await games.json();
 
             let isDiscordStoreGame: boolean = false;
