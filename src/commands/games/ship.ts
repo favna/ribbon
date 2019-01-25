@@ -46,7 +46,7 @@ export default class ShipCommand extends Command {
                     prompt: 'And who to ship them with?',
                     type: 'member',
                     default: 'random',
-                },
+                }
             ],
         });
     }
