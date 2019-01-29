@@ -895,10 +895,10 @@
   dependencies:
     core-js "^2.5.7"
 
-"@types/better-sqlite3@^5.2.1":
-  version "5.2.1"
-  resolved "https://registry.yarnpkg.com/@types/better-sqlite3/-/better-sqlite3-5.2.1.tgz#7b90489ef88fbbbaedf0cdf03ac6782b3f63fa13"
-  integrity sha512-S1q/Noh3Bc6gMTVEQAk33yxHSfojKRxxvvpynPW6dFjuArxCXzSeRsbi7/K4E8bN6/1jeI6OxWeRrSPyLUFOsQ==
+"@types/better-sqlite3@^5.2.2":
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/@types/better-sqlite3/-/better-sqlite3-5.2.2.tgz#72e9e8adb47f4087bbe31c2d13581c1bf3012a6b"
+  integrity sha512-521elE5qUplSLZYYR/h0P6J5saY+IYXs5na8eSmiqukiVrkxyJJC0PYrIfvTe+fYTiYbPa2w3/AeYfoGVv/hSA==
   dependencies:
     "@types/integer" "*"
 
@@ -958,10 +958,15 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^10.12.18":
+"@types/node@*":
   version "10.12.18"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.18.tgz#1d3ca764718915584fcd9f6344621b7672665c67"
   integrity sha512-fh+pAqt4xRzPfqA6eh3Z2y6fyZavRIumvjhaCL753+TVkGKGhpPeyrJG2JftD0T9q4GF00KjefsQ+PQNDdWQaQ==
+
+"@types/node@^10.12.19":
+  version "10.12.19"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.19.tgz#ca1018c26be01f07e66ac7fefbeb6407e4490c61"
+  integrity sha512-2NVovndCjJQj6fUUn9jCgpP4WSqr+u1SoUZMZyJkhGeBFsm6dE46l31S7lPUYt9uQ28XI+ibrJA1f5XyH5HNtA==
 
 "@types/qrcode@^1.3.0":
   version "1.3.0"
@@ -1650,7 +1655,7 @@ chalk@^1.1.3:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chalk@^2.0.0, chalk@^2.0.1, chalk@^2.3.0:
+chalk@^2.0.0, chalk@^2.0.1, chalk@^2.3.0, chalk@^2.4.1:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"
   integrity sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==
@@ -6068,12 +6073,12 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.3.tgz#81c0ce8f21474756148bbb5f3bfc0f36bf15d76e"
   integrity sha512-uBIcIl3Ih6Phe3XHK1NqboJLdGfwr1UN3k6wSD1dZpmPsIkb8AGNbZYJ1fOBk834+Gxy8rpfDxrS6XLEMZMY2g==
 
-speedtest-net@^1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/speedtest-net/-/speedtest-net-1.4.3.tgz#5e056deb6b96e5281d37cbfc9e470b074ea1fc1a"
-  integrity sha1-XgVt62uW5SgdN8v8nkcLB06h/Bo=
+speedtest-net@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/speedtest-net/-/speedtest-net-1.4.4.tgz#6c632371c485698074158d2ec72dcc0d03d1cc49"
+  integrity sha512-y3a9p+aYRAOLYMqLPaboCx1H5VIaYNuWsmXGvGpRNoNRIRyfslE91PeMiJp/4a8nbHOcA6jhUDnv8LpM2eNldQ==
   dependencies:
-    chalk "^1.1.3"
+    chalk "^2.4.1"
     draftlog "^1.0.12"
     http-proxy-agent "^2.0.0"
     https-proxy-agent "^2.1.1"
