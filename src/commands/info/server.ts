@@ -62,12 +62,11 @@ export default class ServerInfoCommand extends Command {
             .addField('Number of roles', msg.guild.roles.size, true)
             .addField('Number of channels', guildChannels, true)
             .addField('Created At', moment(msg.guild.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
-            .addField('Verification Level', this.verificationFilter(msg.guild.verificationLevel), false)
-            .addField('Explicit Content Filter', this.contentFilter(msg.guild.explicitContentFilter), false);
+            .addField('Verification Level', ServerInfoCommand.verificationFilter(msg.guild.verificationLevel), false)
+            .addField('Explicit Content Filter', ServerInfoCommand.contentFilter(msg.guild.explicitContentFilter), false);
 
         if (selfRoles) {
-            const roleNames: string[] = [];
-            selfRoles.forEach((r: string) => roleNames.push(msg.guild.roles.get(r).name));
+            const roleNames: (string | undefined)[] = selfRoles.map((r: string) => msg.guild.roles.get(r) ? msg.guild.roles.get(r).name : undefined).filter(Boolean);
             serverEmbed.addField(
                 'Self-Assignable Roles',
                 `${roleNames.map(val => `\`${val}\``).join(', ')}`,
@@ -83,7 +82,7 @@ export default class ServerInfoCommand extends Command {
         return msg.embed(serverEmbed);
     }
 
-    private contentFilter (filter: number) {
+    private static contentFilter (filter: number) {
         switch (filter) {
             case 0:
                 return 'Content filter disabled';
@@ -96,7 +95,7 @@ export default class ServerInfoCommand extends Command {
         }
     }
 
-    private verificationFilter (filter: number) {
+    private static verificationFilter (filter: number) {
         switch (filter) {
             case 0:
                 return 'None - unrestricted';

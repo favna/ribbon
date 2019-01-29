@@ -81,7 +81,7 @@ export default class AddRoleCommand extends Command {
             stopTyping(msg);
             if (/(?:Missing Permissions)/i.test(err.toString())) {
                 return msg.reply(stripIndents`an error occurred adding the role \`${role.name}\` to \`${member.displayName}\`.
-                    Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
+                    The server staff should check that I have \`Manage Roles\` permission and I have the proper hierarchy.`);
             }
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
@@ -94,7 +94,7 @@ export default class AddRoleCommand extends Command {
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+            return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}
                 Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }

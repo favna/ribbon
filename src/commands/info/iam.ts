@@ -34,15 +34,12 @@ export default class IamCommand extends Command {
                     key: 'role',
                     prompt: 'Which role do you want to assign to yourself?',
                     type: 'role',
-                }
+                },
             ],
         });
     }
 
-    public async run (
-        msg: CommandoMessage,
-        { role, roleNames = [] }: { role: Role; roleNames: string[] }
-    ) {
+    public async run (msg: CommandoMessage, { role }: { role: Role }) {
         try {
             if (!msg.member.manageable) {
                 return msg.reply(oneLine`looks like I do not have permission to edit your roles.
@@ -53,18 +50,18 @@ export default class IamCommand extends Command {
 
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
             const roleAddEmbed = new MessageEmbed();
-            const roles = msg.guild.settings.get('selfroles', []);
+            const selfRoles = msg.guild.settings.get('selfroles', null);
 
-            if (!roles.length) {
+            if (!selfRoles) {
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);
 
                 return msg.reply('this server has no self assignable roles');
             }
 
-            roles.forEach((r: string) => roleNames.push(msg.guild.roles.get(r).name));
+            const roleNames: (string | undefined)[] = selfRoles.map((r: string) => msg.guild.roles.get(r) ? msg.guild.roles.get(r).name : undefined).filter(Boolean);
 
-            if (!roles.includes(role.id)) {
+            if (!selfRoles.includes(role.id)) {
                 deleteCommandMessages(msg, this.client);
                 stopTyping(msg);
 
@@ -77,7 +74,7 @@ export default class IamCommand extends Command {
                 .setColor('#AAEFE6')
                 .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
                 .setDescription(stripIndents`
-                    **Action:** \`${msg.member.displayName}\` (\`${msg.author.id}\`) assigned \`${role.name}\` to themselves with the \`iam\` command`
+                    **Action:** \`${msg.member.displayName}\` (\`${msg.author.id}\`) assigned \`${role.name}\` to themselves with the \`iam\` command`,
                 )
                 .setTimestamp();
 
@@ -95,7 +92,7 @@ export default class IamCommand extends Command {
 
             if (/(?:Missing Permissions)/i.test(err.toString())) {
                 return msg.reply(stripIndents`an error occurred adding the role \`${role.name}\` to you.
-                    The mods should check that I have \`Manage Roles\` permission and I am higher in hierarchy than the your roles?`);
+                    The server staff should check that I have \`Manage Roles\` permission and I have the proper hierarchy.`);
             } else if (/(?:is not an array or collection of roles)/i.test(err.toString())) {
                 return msg.reply(oneLine`it looks like you supplied an invalid role to add. If you are certain that the
                     role is valid please feel free to open an issue on the GitHub.`);
@@ -104,7 +101,7 @@ export default class IamCommand extends Command {
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
 
             channel.send(stripIndents`
-                <@${this.client.owners[0].id}> Error occurred in \`addrole\` command!
+                <@${this.client.owners[0].id}> Error occurred in \`iam\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -112,7 +109,7 @@ export default class IamCommand extends Command {
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+            return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}
                 Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }

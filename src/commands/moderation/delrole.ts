@@ -82,8 +82,8 @@ export default class DeleteRoleCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
             if (/(?:Missing Permissions)/i.test(err.toString())) {
-                return msg.reply(stripIndents`an error occurred adding the role \`${role.name}\` to \`${member.displayName}\`.
-                    Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
+                return msg.reply(stripIndents`an error occurred removing the role \`${role.name}\` from \`${member.displayName}\`.
+                    The server staff should check that I have \`Manage Roles\` permission and I have the proper hierarchy.`);
             } else if (/(?:is not an array or collection of roles)/i.test(err.toString())) {
                 return msg.reply(stripIndents`
                         it looks like you supplied an invalid role to delete.
@@ -101,7 +101,7 @@ export default class DeleteRoleCommand extends Command {
                 **Error Message:** ${err}
             `);
 
-            return msg.reply(oneLine`An error occurred but I notified ${this.client.owners[0].username}
+            return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}
                 Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }
