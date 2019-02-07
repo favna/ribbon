@@ -10,7 +10,7 @@ import moment from 'moment';
 import { countCaps, countEmojis, countMentions, numberBetween } from './util';
 
 export const badwords = (msg: CommandoMessage, words: string[], client: CommandoClient) => {
-    if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
+    if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES') || !words || !words.length) {
         return false;
     }
     return words.some((v: string) => msg.content.indexOf(v) >= 0);
