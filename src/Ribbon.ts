@@ -103,7 +103,7 @@ export default class Ribbon {
                 eval: true,
                 ping: true,
                 commandState: true,
-                unknownCommand: true
+                unknownCommand: true,
             })
             .registerCommandsIn({
                 dirname: path.join(__dirname, 'commands'),

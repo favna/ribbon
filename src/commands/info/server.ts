@@ -29,6 +29,36 @@ export default class ServerInfoCommand extends Command {
         });
     }
 
+    private static contentFilter (filter: number) {
+        switch (filter) {
+            case 0:
+                return 'Content filter disabled';
+            case 1:
+                return 'Scan messages of members without a role';
+            case 2:
+                return 'Scan messages sent by all members';
+            default:
+                return 'Content Filter unknown';
+        }
+    }
+
+    private static verificationFilter (filter: number) {
+        switch (filter) {
+            case 0:
+                return 'None - unrestricted';
+            case 1:
+                return 'Low - must have verified email on account';
+            case 2:
+                return 'Medium - must be registered on Discord for longer than 5 minutes';
+            case 3:
+                return 'High - 	(╯°□°）╯︵ ┻━┻ - must be a member of the server for longer than 10 minutes';
+            case 4:
+                return 'Very High - ┻━┻ミヽ(ಠ益ಠ)ﾉ彡┻━┻ - must have a verified phone number';
+            default:
+                return 'Verification Filter unknown';
+        }
+    }
+
     public run (msg: CommandoMessage) {
         startTyping(msg);
         const channels = msg.guild.channels.map(ty => ty.type);
@@ -66,7 +96,7 @@ export default class ServerInfoCommand extends Command {
             .addField('Explicit Content Filter', ServerInfoCommand.contentFilter(msg.guild.explicitContentFilter), false);
 
         if (selfRoles) {
-            const roleNames: (string | undefined)[] = selfRoles.map((r: string) => msg.guild.roles.get(r) ? msg.guild.roles.get(r).name : undefined).filter(Boolean);
+            const roleNames: Array<string | undefined> = selfRoles.map((r: string) => msg.guild.roles.get(r) ? msg.guild.roles.get(r).name : undefined).filter(Boolean);
             serverEmbed.addField(
                 'Self-Assignable Roles',
                 `${roleNames.map(val => `\`${val}\``).join(', ')}`,
@@ -80,35 +110,5 @@ export default class ServerInfoCommand extends Command {
         stopTyping(msg);
 
         return msg.embed(serverEmbed);
-    }
-
-    private static contentFilter (filter: number) {
-        switch (filter) {
-            case 0:
-                return 'Content filter disabled';
-            case 1:
-                return 'Scan messages of members without a role';
-            case 2:
-                return 'Scan messages sent by all members';
-            default:
-                return 'Content Filter unknown';
-        }
-    }
-
-    private static verificationFilter (filter: number) {
-        switch (filter) {
-            case 0:
-                return 'None - unrestricted';
-            case 1:
-                return 'Low - must have verified email on account';
-            case 2:
-                return 'Medium - must be registered on Discord for longer than 5 minutes';
-            case 3:
-                return 'High - 	(╯°□°）╯︵ ┻━┻ - must be a member of the server for longer than 10 minutes';
-            case 4:
-                return 'Very High - ┻━┻ミヽ(ಠ益ಠ)ﾉ彡┻━┻ - must have a verified phone number';
-            default:
-                return 'Verification Filter unknown';
-        }
     }
 }

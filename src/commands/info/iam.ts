@@ -34,7 +34,7 @@ export default class IamCommand extends Command {
                     key: 'role',
                     prompt: 'Which role do you want to assign to yourself?',
                     type: 'role',
-                },
+                }
             ],
         });
     }
@@ -59,7 +59,7 @@ export default class IamCommand extends Command {
                 return msg.reply('this server has no self assignable roles');
             }
 
-            const roleNames: (string | undefined)[] = selfRoles.map((r: string) => msg.guild.roles.get(r) ? msg.guild.roles.get(r).name : undefined).filter(Boolean);
+            const roleNames: Array<string | undefined> = selfRoles.map((r: string) => msg.guild.roles.get(r) ? msg.guild.roles.get(r).name : undefined).filter(Boolean);
 
             if (!selfRoles.includes(role.id)) {
                 deleteCommandMessages(msg, this.client);
@@ -74,7 +74,7 @@ export default class IamCommand extends Command {
                 .setColor('#AAEFE6')
                 .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
                 .setDescription(stripIndents`
-                    **Action:** \`${msg.member.displayName}\` (\`${msg.author.id}\`) assigned \`${role.name}\` to themselves with the \`iam\` command`,
+                    **Action:** \`${msg.member.displayName}\` (\`${msg.author.id}\`) assigned \`${role.name}\` to themselves with the \`iam\` command`
                 )
                 .setTimestamp();
 
