@@ -47,7 +47,6 @@ export default class Ribbon {
                 },
             },
             typescript: true,
-            unknownCommandResponse: false,
             ws: { compress: true },
         });
     }
@@ -104,12 +103,12 @@ export default class Ribbon {
                 eval: true,
                 ping: true,
                 commandState: true,
+                unknownCommand: true
             })
             .registerCommandsIn({
                 dirname: path.join(__dirname, 'commands'),
                 filter: (fileName: string) => /^.+\.ts$/.test(fileName) ? fileName : undefined,
             });
-
 
         return this.client.login(this.token);
     }
