@@ -1,6 +1,6 @@
 /**
  * @file Ribbon Applet - initiates an instance of Ribbon
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @author Jeroen Claassens (favna) <support@favna.xyz>
  * @copyright © 2017-2018 Favna
  */
 

@@ -1,6 +1,6 @@
 /**
  * @file Ribbon Decache - Decache modules loaded in Node
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @author Jeroen Claassens (favna) <support@favna.xyz>
  * @copyright © 2017-2018 Favna
  */
 /* tslint:disable:no-dynamic-delete no-conditional-assignment*/

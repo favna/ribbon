@@ -1,6 +1,6 @@
 /**
  * @file Ribbon Events - Events handled by Ribbon
- * @author Jeroen Claassens (favna) <sharkie.jeroen@gmail.com>
+ * @author Jeroen Claassens (favna) <support@favna.xyz>
  * @copyright © 2017-2018 Favna
  */
 
