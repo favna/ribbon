@@ -15,7 +15,6 @@ import {
     handleRateLimit,
     handleReady,
     handleRejection,
-    handleUnknownCmd,
     handleWarn,
 } from './components';
 
@@ -64,7 +63,6 @@ export default class Ribbon {
             .on('presenceUpdate', (oldMember: GuildMember, newMember: GuildMember) => handlePresenceUpdate(this.client, oldMember, newMember))
             .on('rateLimit', (info: RateLimitData) => handleRateLimit(this.client, info))
             .on('ready', () => handleReady(this.client))
-            .on('unknownCommand', (message: CommandoMessage) => handleUnknownCmd(this.client, message))
             .on('warn', (warn: string) => handleWarn(this.client, warn));
         process.on('unhandledRejection', (reason: Error | any, p: Promise<any>) => handleRejection(this.client, reason, p));
 
@@ -103,7 +101,7 @@ export default class Ribbon {
                 eval: true,
                 ping: true,
                 commandState: true,
-                unknownCommand: true,
+                unknownCommand: false,
             })
             .registerCommandsIn({
                 dirname: path.join(__dirname, 'commands'),

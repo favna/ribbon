@@ -7,7 +7,6 @@
 import { stringify } from 'awesome-querystring';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
-import dym, { ReturnTypeEnums } from 'didyoumean2';
 import { GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel } from 'discord.js';
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'discord.js-commando';
 import fs from 'fs';
@@ -859,24 +858,6 @@ export const handleRejection = (client: CommandoClient, reason: Error | any, p: 
         **Reason:** ${reason}
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
     `);
-};
-
-export const handleUnknownCmd = (client: CommandoClient, msg: CommandoMessage) => {
-    const guild = msg.guild as CommandoGuild;
-
-    if (guild && guild.settings.get('unknownmessages', true)) {
-        const commandsAndAliases = client.registry.commands.map((command: Command) => command.name).concat(client.registry.commands.map((command: Command) => command.aliases).flat());
-        const maybe = dym(msg.cleanContent.split(' ')[0], commandsAndAliases, { deburr: true, returnType: ReturnTypeEnums.ALL_SORTED_MATCHES }) as string[];
-        const returnStr = [
-            oneLine`That is not a registered command. Use \`${guild ? guild.commandPrefix : client.commandPrefix}help\`or ${client.user.tag} help to view the list of all commands.`,
-            '',
-            oneLine`Server staff (those who can manage other's messages) can disable these replies by using\`${guild ? guild.commandPrefix : client.commandPrefix}unknownmessages disable\``
-        ];
-
-        if (maybe.length) returnStr[1] = `Maybe you meant one of the following: ${maybe.map(val => `\`${val}\``).join(', ')}?`;
-
-        msg.reply(returnStr.filter(Boolean).join('\n'));
-    }
 };
 
 export const handleWarn = (client: CommandoClient, warn: string) => {
