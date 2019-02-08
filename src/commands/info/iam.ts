@@ -9,9 +9,9 @@
  * @param {RoleResolvable} AnyRole The role you want to assign to yourself
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { MessageEmbed, Role, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 

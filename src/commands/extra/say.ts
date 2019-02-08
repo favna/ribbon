@@ -9,7 +9,7 @@
  * @param {string} Text Message you want to have repeated
  */
 
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { badwords, caps, duptext, emojis, invites, links, mentions, startTyping, stopTyping } from '../../components';
 
 export default class SayCommand extends Command {

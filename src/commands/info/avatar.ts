@@ -10,8 +10,8 @@
  * @param {GuildMemberResolvable} [ImageSize] Optional: Size of the avatar to get. Defaults to 1024
  */
 
-import { GuildMember, ImageSize, MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { GuildMember, ImageSize, MessageEmbed } from 'awesome-djs';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class AvatarCommand extends Command {

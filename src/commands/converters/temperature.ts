@@ -11,10 +11,10 @@
  * @param {string} ToUnit The unit to convert to
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { convert } from 'awesome-converter';
+import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, TemperatureUnits } from '../../components';
 

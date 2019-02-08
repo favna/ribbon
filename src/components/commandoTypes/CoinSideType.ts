@@ -1,5 +1,5 @@
+import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
-import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { CoinSide } from '../constants';
 
 export default class CoinSideType extends ArgumentType {

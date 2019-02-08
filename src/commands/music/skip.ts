@@ -16,8 +16,8 @@
  * @param {string} [force] Force the skip if you are the requester or a server moderator
  */
 
+import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
-import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, IMusicCommand, IMusicQueue, IMusicVote, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class SkipSongCommand extends Command {

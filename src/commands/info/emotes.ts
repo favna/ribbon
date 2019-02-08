@@ -7,8 +7,8 @@
  * @name emotes
  */
 
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class EmotesCommand extends Command {

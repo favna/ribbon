@@ -9,10 +9,10 @@
  * @param {number} ChipsAmount The amount of chips to deposit
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
-import { MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import path from 'path';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';

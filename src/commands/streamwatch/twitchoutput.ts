@@ -9,8 +9,8 @@
  * @param {ChannelResolvable} AnyChannel Channel to output notifs to
  */
 
-import { TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { TextChannel } from 'awesome-djs';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class TwitchOutputCommand extends Command {

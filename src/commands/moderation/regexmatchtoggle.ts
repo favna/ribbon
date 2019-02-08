@@ -9,8 +9,8 @@
  * @param {boolean} Option True or False
  */
 
-import { MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
 
 export default class RegexMatchToggleCommand extends Command {

@@ -4,11 +4,11 @@
  * @copyright © 2017-2018 Favna
  */
 
+import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
+import { GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
-import { GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'discord.js-commando';
 import fs from 'fs';
 import jimp from 'jimp';
 import moment from 'moment';

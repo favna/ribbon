@@ -7,9 +7,9 @@
  * @name save
  */
 
+import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage, util } from 'discord.js-commando';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IMusicCommand, IMusicQueue, Song, startTyping, stopTyping } from '../../components';
 
 export default class SaveQueueCommand extends Command {

@@ -7,8 +7,8 @@
  * @name status
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, IMusicCommand, IMusicQueue, Song, startTyping, stopTyping } from '../../components';
 
 export default class MusicStatusCommand extends Command {

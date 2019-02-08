@@ -11,7 +11,7 @@
  * @param {string} SomeText Your input to transform with Zalgo
  */
 
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { banish, deleteCommandMessages, startTyping, stopTyping, zalgolize } from '../../components';
 
 export default class ZalgoCommand extends Command {

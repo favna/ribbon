@@ -1,12 +1,11 @@
+import { Client, SyncSQLiteProvider } from 'awesome-commando';
 import Database from 'better-sqlite3';
-import { Client, SyncSQLiteProvider } from 'discord.js-commando';
 import path from 'path';
 
 test('should connect then disconnect', async () => {
     const client = new Client({
         commandPrefix: 's!!',
         owner: '268792781713965056',
-        unknownCommandResponse: false,
         typescript: true,
     });
     const db = new Database(path.join(__dirname, '../src/data/databases/settings.sqlite3'));

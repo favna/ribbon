@@ -13,9 +13,9 @@
  * @param {string} PokemonName The name of the pokemon you want to find
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import Fuse from 'fuse.js';
 import moment from 'moment';
 import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IFormatsJson, IPokeData, IPokeDex, startTyping, stopTyping, UnionPokeDex, zalgolize } from '../../components';

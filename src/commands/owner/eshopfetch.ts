@@ -7,7 +7,7 @@
  * @name eshopfetch
  */
 
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import fs from 'fs';
 import { getGamesAmerica } from 'nintendo-switch-eshop';
 import path from 'path';

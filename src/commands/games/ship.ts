@@ -12,9 +12,9 @@
  * @param {string} [ShipMemberTwo] The second member to ship
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { GuildMember, MessageAttachment, MessageEmbed, User } from 'awesome-djs';
 import { oneLine } from 'common-tags';
-import { GuildMember, MessageAttachment, MessageEmbed, User } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import jimp from 'jimp';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 

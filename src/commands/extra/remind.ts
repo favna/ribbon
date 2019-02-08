@@ -12,10 +12,10 @@
  * @param {string} Reminder Thing you want Ribbon to remind you of
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
-import { MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import path from 'path';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';

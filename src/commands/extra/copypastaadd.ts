@@ -10,10 +10,10 @@
  * @param {string} PastaContent Content for the new pasta
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
-import { MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import path from 'path';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';

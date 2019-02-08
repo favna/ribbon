@@ -1,6 +1,6 @@
+import { Client, Command, CommandoClient, CommandoGuild, CommandoMessage, SyncSQLiteProvider } from 'awesome-commando';
+import { GuildMember, RateLimitData } from 'awesome-djs';
 import Database from 'better-sqlite3';
-import { GuildMember, RateLimitData } from 'discord.js';
-import { Client, Command, CommandoClient, CommandoGuild, CommandoMessage, SyncSQLiteProvider } from 'discord.js-commando';
 import path from 'path';
 import {
     handleCmdErr,

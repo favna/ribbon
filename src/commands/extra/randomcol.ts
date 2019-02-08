@@ -15,9 +15,9 @@
  * @param {string} [hex] Optional: colour hex to display
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageAttachment, MessageEmbed } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { MessageAttachment, MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import jimp from 'jimp';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 

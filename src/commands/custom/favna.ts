@@ -9,8 +9,8 @@
  * @name favna
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { ASSET_BASE_PATH, startTyping, stopTyping } from '../../components';
 
 export default class FavnaCommand extends Command {

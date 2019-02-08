@@ -9,9 +9,9 @@
  * @param {ChannelResolvable} AnnounceChannel The channel to set the announcements to
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class SetAnnounceCommand extends Command {

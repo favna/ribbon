@@ -16,9 +16,9 @@
  * @param {RoleResolvable} [LockRole] Optional: A role the lockdown is applied to, defaults to @everyone
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { GuildChannel, MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { GuildChannel, MessageEmbed, Role, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class LockdownCommand extends Command {

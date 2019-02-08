@@ -9,9 +9,9 @@
  * @param {GuildMemberResolvable} AnyMember Member to make a mention to
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { GuildMember } from 'awesome-djs';
 import { oneLine } from 'common-tags';
-import { GuildMember } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class TagMemberCommand extends Command {

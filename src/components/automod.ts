@@ -4,7 +4,7 @@
  * @copyright © 2017-2018 Favna
  */
 
-import { CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { CommandoClient, CommandoMessage } from 'awesome-commando';
 import levenshtein from 'fast-levenshtein';
 import moment from 'moment';
 import { countCaps, countEmojis, countMentions, numberBetween } from './util';

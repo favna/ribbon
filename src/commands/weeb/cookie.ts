@@ -8,8 +8,8 @@
  * @param {MemberResolvable} [member] Optional: Member to steal a cookie from
  */
 
-import { GuildMember, MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { GuildMember, MessageEmbed } from 'awesome-djs';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CookieCommand extends Command {

@@ -9,8 +9,8 @@
  * @param {string} question Question you want the 8 ball to answer
  */
 
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, eightBallPredictionsMap, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class EightBallCommand extends Command {

@@ -9,7 +9,7 @@
  * @param {string} SearchQuery The dumb sh*t people need to use google for
  */
 
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class LmgtfyCommand extends Command {

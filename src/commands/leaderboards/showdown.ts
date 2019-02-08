@@ -9,9 +9,9 @@
  * @param {string} TierName Name of the tier to view the leaderboard for
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import Fuse from 'fuse.js';
 import fetch from 'node-fetch';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';

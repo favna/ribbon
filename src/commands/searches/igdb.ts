@@ -9,9 +9,9 @@
  * @param {string} GameName The name of any game that you want to find
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IGBDAgeRatings, IIGDBAgeRating, IIGDBInvolvedCompany, IIGDBProp, roundNumber, startTyping, stopTyping } from '../../components';

@@ -12,7 +12,7 @@
  * @param {number} [Volume] The new volume to set
  */
 
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { deleteCommandMessages, IMusicCommand, IMusicQueue, startTyping, stopTyping } from '../../components';
 
 export default class ChangeVolumeCommand extends Command {

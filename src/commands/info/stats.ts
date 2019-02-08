@@ -7,9 +7,9 @@
  * @name stats
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Message, MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
-import { Message, MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import 'moment-duration-format';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';

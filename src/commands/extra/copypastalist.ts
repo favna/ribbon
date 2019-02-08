@@ -7,10 +7,10 @@
  * @name copypastalist
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { stripIndents } from 'common-tags';
-import { TextChannel, Util } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import path from 'path';
 import { deleteCommandMessages, ICopyPastaListObject, startTyping, stopTyping } from '../../components';

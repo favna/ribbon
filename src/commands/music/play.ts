@@ -17,10 +17,10 @@
  * @param {string} Video One of the options linking to a video to play
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Guild, Message, Snowflake, StreamDispatcher, TextChannel, Util, VoiceChannel } from 'awesome-djs';
 import { parse, stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
-import { Guild, Message, Snowflake, StreamDispatcher, TextChannel, Util, VoiceChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { Readable } from 'stream';

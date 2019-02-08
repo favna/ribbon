@@ -1,5 +1,5 @@
-import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'discord.js';
-import { Command } from 'discord.js-commando';
+import { Command } from 'awesome-commando';
+import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
 import { Song } from './util';
 
 interface IPokeGenderProp {

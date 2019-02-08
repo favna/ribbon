@@ -12,8 +12,8 @@
  * @param {number | "default"} [NumberOfSongs] New maximum number of songs
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, MAX_SONGS, startTyping, stopTyping } from '../../components';
 
 export default class MaxSongsCommand extends Command {

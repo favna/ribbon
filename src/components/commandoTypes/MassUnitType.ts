@@ -1,5 +1,5 @@
+import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
-import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { MassUnits } from '../constants';
 
 export default class MassUnitType extends ArgumentType {

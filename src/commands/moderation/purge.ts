@@ -9,8 +9,8 @@
  * @param {number} MessageAmount The amount of messages to delete, between 1 and 99
  */
 
-import { Message } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Message } from 'awesome-djs';
 import { startTyping, stopTyping } from '../../components';
 
 export default class PurgeCommand extends Command {

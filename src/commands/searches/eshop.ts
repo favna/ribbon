@@ -9,8 +9,8 @@
  * @param {string} GameName Game that you want to find in the eShop
  */
 
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import fs from 'fs';
 import Fuse from 'fuse.js';
 import moment from 'moment';

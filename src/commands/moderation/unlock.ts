@@ -10,9 +10,9 @@
  * @name unlock
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { GuildChannel, MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { GuildChannel, MessageEmbed, Role, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class UnlockCommand extends Command {

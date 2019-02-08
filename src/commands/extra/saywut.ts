@@ -7,9 +7,9 @@
  * @name saywut
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 

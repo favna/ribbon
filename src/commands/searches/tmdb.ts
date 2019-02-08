@@ -9,9 +9,9 @@
  * @param {string} MovieName Name of the movie you want to find
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IMovieGenre, startTyping, stopTyping } from '../../components';

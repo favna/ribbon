@@ -16,9 +16,9 @@
  * @param {GuildMemberResolvable} AnyMember Member to mute
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { GuildMember, Message, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { GuildMember, Message, MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
 

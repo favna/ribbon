@@ -11,9 +11,9 @@
  * @param {number} [LowerLimit] Optional: The new lower limit
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class CasinoLimitCommand extends Command {

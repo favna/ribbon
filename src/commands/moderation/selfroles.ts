@@ -15,9 +15,9 @@
  * @param {RoleResolvable} [AnyRole] Role to set, can be multiple split by spaces
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { MessageEmbed, Role, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class SelfRolesCommand extends Command {

@@ -8,8 +8,8 @@
  * @param {GuildMemberResolvable} AnyMember Member you want to get info about
  */
 
-import { GuildMember, MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { GuildMember, MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
 import { arrayClean, capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 

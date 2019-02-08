@@ -5,8 +5,8 @@
  * @name unknowncommand
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import dym, { ReturnTypeEnums } from 'didyoumean2';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 
 export default class UnknownCommand extends Command {
     constructor (client: CommandoClient) {

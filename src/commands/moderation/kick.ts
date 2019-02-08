@@ -10,9 +10,9 @@
  * @param {string} [TheReason] Reason for this kick.
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class KickCommand extends Command {

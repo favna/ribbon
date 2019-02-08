@@ -9,9 +9,9 @@
  * @param {string} CharacterName Name (species), number or type of the girl you want to find
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import cheerio from 'cheerio';
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fs from 'fs';
 import Fuse from 'fuse.js';
 import moment from 'moment';

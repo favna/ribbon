@@ -10,9 +10,9 @@
  * @param {string} [version] The Doc version to pick, one of `stable`, `master` or `commando`
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import Fuse from 'fuse.js';
 import fetch from 'node-fetch';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, globalObjectsMap, startTyping, stopTyping } from '../../components';

@@ -11,8 +11,8 @@
  * @name stop
  */
 
+import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
-import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, IMusicCommand, IMusicQueue, IMusicVote, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class StopMusicCommand extends Command {

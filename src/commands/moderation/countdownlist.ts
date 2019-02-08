@@ -7,10 +7,10 @@
  * @name countdownlist
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
-import { TextChannel, Util } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';

@@ -12,8 +12,8 @@
  * @param {number | "default"} [MaxVideoLength] New maximum length in minutes
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, MAX_LENGTH, startTyping, stopTyping } from '../../components';
 
 export default class MaxLengthCommand extends Command {

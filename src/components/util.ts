@@ -4,9 +4,9 @@
  * @copyright © 2017-2018 Favna
  */
 
+import { CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
+import { GuildMember, MessageEmbed, TextChannel, Util } from 'awesome-djs';
 import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
-import { GuildMember, MessageEmbed, TextChannel, Util } from 'discord.js';
-import { CommandoClient, CommandoGuild, CommandoMessage } from 'discord.js-commando';
 import emojiRegex from 'emoji-regex';
 import { diacriticsMap, IYoutubeVideo, validBooleansMap } from '.';
 

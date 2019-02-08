@@ -14,9 +14,9 @@
  *     prevent Ribbon from deleting the banned member's messages
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
 
 export default class TempBanCommand extends Command {

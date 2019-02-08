@@ -641,6 +641,9 @@ You need to be in a voice channel before you can use this command</p>
 <dd><p>Owner TagMemberCommand - Tags a member by ID</p>
 <p>Primarily meant for mobile and when members have annoying untaggable names</p>
 </dd>
+<dt><a href="#module_unknowncommand">unknowncommand</a></dt>
+<dd><p>Owner UnknownCommandCommand - Runs when an unknown command is used</p>
+</dd>
 <dt><a href="#module_dex">dex</a></dt>
 <dd><p>Pokémon DexCommand - Gets information about a Pokémon from Dexter.</p>
 <p>Different forms are supported. Generally you want to write it all as 1 word with the form appended. For example
@@ -2896,6 +2899,12 @@ Primarily meant for mobile and when members have annoying untaggable names
 ```nginx
 tagmember ☜(⌒▽⌒)☞guy
 ```
+<a name="module_unknowncommand"></a>
+
+## unknowncommand
+Owner UnknownCommandCommand - Runs when an unknown command is used
+
+**Category**: owner  
 <a name="module_dex"></a>
 
 ## dex

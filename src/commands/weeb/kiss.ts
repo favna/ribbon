@@ -7,8 +7,8 @@
  * @param {GuildMemberResolvable} [MemberToKiss] Name of the member you want to give a kiss
  */
 
-import { GuildMember } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
 import { ASSET_BASE_PATH, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 

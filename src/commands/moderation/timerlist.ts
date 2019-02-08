@@ -7,10 +7,10 @@
  * @name timerlist
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Snowflake, TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
-import { Snowflake, TextChannel, Util } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import path from 'path';
 import { deleteCommandMessages, ITimerListRow, ms, startTyping, stopTyping } from '../../components';

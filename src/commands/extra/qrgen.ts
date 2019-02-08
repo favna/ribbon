@@ -9,9 +9,9 @@
  * @param {string} URL URL you want to encode into a QR image
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageAttachment, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { MessageAttachment, MessageEmbed, TextChannel } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import moment from 'moment';
 import { toDataURL as qr } from 'qrcode';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';

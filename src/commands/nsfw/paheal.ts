@@ -11,10 +11,10 @@
  * @param {string} Query Something you want to find
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import booru from 'booru';
 import { stripIndents } from 'common-tags';
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class PahealCommand extends Command {
@@ -53,8 +53,7 @@ export default class PahealCommand extends Command {
                 limit: 1,
                 random: true,
             });
-            const parsed = await booru.commonfy(search);
-            const hit = parsed[0].common;
+            const hit = search[0];
             const pahealEmbed = new MessageEmbed();
             const imageTags: string[] = [];
 

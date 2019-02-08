@@ -8,7 +8,7 @@
  * @example neko
  */
 
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import fetch from 'node-fetch';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 

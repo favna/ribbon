@@ -11,9 +11,9 @@
  * @param {string} Query Something you want to find
  */
 
+import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
-import { MessageEmbed } from 'discord.js';
-import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import fetch from 'node-fetch';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 

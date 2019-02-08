@@ -11,8 +11,8 @@
  * @param {string} [Page] Page to show
  */
 
+import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { oneLine, stripIndents } from 'common-tags';
-import { Command, CommandoClient, CommandoMessage, util } from 'discord.js-commando';
 import { deleteCommandMessages, IMusicCommand, IMusicQueue, PAGINATED_ITEMS, Song, startTyping, stopTyping } from '../../components';
 
 export default class ViewQueueCommand extends Command {
