@@ -46,7 +46,7 @@ export default class BadWordsCommand extends Command {
                     key: 'words',
                     prompt: 'What words to filter (split on every `,`, for example `fbomb,darn`)?',
                     type: 'string',
-                    default: 'fuck',
+                    default: ['fuck'],
                     validate: (val: string) => {
                         if (/([\S ]*,[\S ]*)*/i.test(val) && val.split(',').length >= 1) {
                             return true;
