@@ -1,6 +1,6 @@
 {
   "name": "discord-ribbon",
-  "version": "8.1.0",
+  "version": "8.2.0",
   "description": "feature rich, modular Discord.JS-Commando server bot written in TypeScript",
   "author": "Jeroen \"Favna\" Claassens <support@favna.xyz> (https://favna.xyz/home)",
   "license": "GPL-3.0",
