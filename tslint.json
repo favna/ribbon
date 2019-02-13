@@ -96,6 +96,7 @@
             "esSpecCompliant": true,
             "singleline": "never"
         }],
-        "triple-equals": true
+        "triple-equals": true,
+        "interface-over-type-literal":false
     }
 }

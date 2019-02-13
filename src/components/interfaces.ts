@@ -2,12 +2,12 @@ import { Command } from 'awesome-commando';
 import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
 import { Song } from './util';
 
-interface IPokeGenderProp {
+type PokeGenderType = {
     M: number;
     F: number;
-}
+};
 
-interface IPokeStatProp {
+type PokeStatType = {
     hp: number;
     atk: number;
     def: number;
@@ -16,15 +16,38 @@ interface IPokeStatProp {
     spe: number;
 
     [propName: string]: string | number | undefined;
-}
+};
 
-interface IPokeAbilityProp {
+type PokeAbilityType = {
     0: string;
     1?: string;
     H?: string;
 
     [propName: string]: string | number | undefined;
-}
+};
+
+type PokeTypesType = {
+    bug: number;
+    dark: number;
+    dragon: number;
+    electric: number;
+    fairy: number;
+    fighting: number;
+    fire: number;
+    flying: number;
+    ghost: number;
+    grass: number;
+    ground: number;
+    ice: number;
+    normal: number;
+    poison: number;
+    psychic: number;
+    rock: number;
+    steel: number;
+    water: number;
+
+    [propName: string]: number;
+};
 
 interface IFlavorTextEntity {
     version_id: string;
@@ -174,9 +197,9 @@ export interface IPokeDex {
     num: number;
     species: string;
     types: string[];
-    genderRatio?: IPokeGenderProp;
-    baseStats: IPokeStatProp;
-    abilities: IPokeAbilityProp;
+    genderRatio?: PokeGenderType;
+    baseStats: PokeStatType;
+    abilities: PokeAbilityType;
     heightm: number;
     weightkg: number;
     color: string;
@@ -253,6 +276,16 @@ export interface ITCGProps {
     subtype: string;
     supertype?: string;
     hp: string;
+}
+
+export interface IPokeTypeData {
+    doubleEffectiveTypes: string[];
+    doubleResistedTypes: string[];
+    effectiveTypes: string[];
+    effectlessTypes: string[];
+    multi: PokeTypesType;
+    normalTypes: string[];
+    resistedTypes: string[];
 }
 
 export interface IDefineWord {

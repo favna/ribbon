@@ -38,8 +38,7 @@ export default class Rule34Command extends Command {
                 {
                     key: 'tags',
                     prompt: 'What do you want to find NSFW for?',
-                    type: 'string',
-                    parse: (p: string) => p.split(' '),
+                    type: 'stringarray',
                 }
             ],
         });

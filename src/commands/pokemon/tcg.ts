@@ -56,20 +56,8 @@ export default class PokemonTCGCommand extends Command {
                     prompt: stripIndents`Which properties to search by? Can be any combination of \`name\`, \`types\`, \`subtype\`, \`supertype\` and \`hp\`
                         Split each property with a \`space\`
                         Use the help command (\`help tcg\`) to view examples`,
-                    type: 'string',
+                    type: 'tcgprops',
                     default: ['name'],
-                    validate: (vals: string) => {
-                        const props = vals.split(' ');
-                        const validProps = ['name', 'types', 'subtype', 'supertype', 'hp'];
-
-                        if (props.every(prop => validProps.indexOf(prop) !== -1)) {
-                            return true;
-                        }
-
-                        return stripIndents`Has to be any combination of ${validProps.map(val => `\`${val}\``).join(', ')}
-                            Respond with your new selection or`;
-                    },
-                    parse: (p: string) => p.split(' '),
                 }
             ],
         });

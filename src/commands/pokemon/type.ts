@@ -13,7 +13,7 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeTypeData, startTyping, stopTyping } from '../../components';
 import { BattleTypeChart } from '../../data/dex';
 
 export default class TypeCommand extends Command {
@@ -39,6 +39,7 @@ export default class TypeCommand extends Command {
                     validate: (input: any) => {
                         input = input
                             .split(' ')
+                            .filter(Boolean)
                             .map((type: string) => capitalizeFirstLetter(type))
                             .slice(0, 2) as string[];
 
@@ -46,9 +47,9 @@ export default class TypeCommand extends Command {
                             return true;
                         }
 
-                        return `one of more of your types was invalid. Valid types are ${Object.keys(BattleTypeChart).map(val => `\`${val}\``).join(', ')}`;
+                        return `one of more of your types was invalid. Valid types are ${Object.keys(BattleTypeChart).map((val: string) => `\`${val}\``).join(', ')}`;
                     },
-                    parse: (p: string) => p.split(' ').map((type: string) => capitalizeFirstLetter(type)).slice(0, 2),
+                    parse: (p: string) => p.split(' ').filter(Boolean).map((type: string) => capitalizeFirstLetter(type)).slice(0, 2),
                 }
             ],
         });
@@ -58,35 +59,35 @@ export default class TypeCommand extends Command {
     public run (msg: CommandoMessage, { types }: { types: string[] }) {
         try {
             startTyping(msg);
-            const atk: any = {
+            const atk: IPokeTypeData = {
                 doubleEffectiveTypes: [],
                 doubleResistedTypes: [],
                 effectiveTypes: [],
                 effectlessTypes: [],
                 multi: {
-                    Bug: 1,
-                    Dark: 1,
-                    Dragon: 1,
-                    Electric: 1,
-                    Fairy: 1,
-                    Fighting: 1,
-                    Fire: 1,
-                    Flying: 1,
-                    Ghost: 1,
-                    Grass: 1,
-                    Ground: 1,
-                    Ice: 1,
-                    Normal: 1,
-                    Poison: 1,
-                    Psychic: 1,
-                    Rock: 1,
-                    Steel: 1,
-                    Water: 1,
+                    bug: 1,
+                    dark: 1,
+                    dragon: 1,
+                    electric: 1,
+                    fairy: 1,
+                    fighting: 1,
+                    fire: 1,
+                    flying: 1,
+                    ghost: 1,
+                    grass: 1,
+                    ground: 1,
+                    ice: 1,
+                    normal: 1,
+                    poison: 1,
+                    psychic: 1,
+                    rock: 1,
+                    steel: 1,
+                    water: 1,
                 },
                 normalTypes: [],
                 resistedTypes: [],
             };
-            const def = JSON.parse(JSON.stringify(atk));
+            const def: IPokeTypeData = JSON.parse(JSON.stringify(atk));
             const embed = new MessageEmbed();
 
             for (const type of types) {
