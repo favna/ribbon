@@ -49,7 +49,8 @@ export default class ActivityCommand extends Command {
                     key: 'member',
                     prompt: 'What user would you like to get the activity from?',
                     type: 'member',
-                }
+                    default: 'me',
+                },
             ],
         });
     }
@@ -80,7 +81,7 @@ export default class ActivityCommand extends Command {
         const filterObj = (obj: any, predicate: any) =>
             Object.keys(obj)
                 .filter(key => predicate(obj[key]))
-                .reduce((res, key) => ({...res,  [key]: obj[key]}), {});
+                .reduce((res, key) => ({ ...res, [key]: obj[key] }), {});
 
         const parsedStatus: ParsedClientStatus = filterObj({
             desktop: isOnDesktop ? status.desktop : '',
@@ -90,7 +91,9 @@ export default class ActivityCommand extends Command {
 
         return {
             name: fieldName,
-            value: Object.entries(parsedStatus).map((entry: string[]) => `${capitalizeFirstLetter(entry[0])}: ${capitalizeFirstLetter(entry[1])}`).join('\n'),
+            value: Object.entries(parsedStatus)
+                .map((entry: string[]) => `${capitalizeFirstLetter(entry[0])}: ${entry[1] !== 'dnd' ? capitalizeFirstLetter(entry[1]) : 'Do Not Disturb'}`)
+                .join('\n'),
         };
     }
 
@@ -98,6 +101,8 @@ export default class ActivityCommand extends Command {
     public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         try {
             startTyping(msg);
+
+            if (member as unknown as string === 'me') member = msg.member;
             const activity = member.presence.activity;
             if (!activity) throw new Error('noActivity');
             const ava = member.user.displayAvatarURL();
@@ -154,7 +159,7 @@ export default class ActivityCommand extends Command {
                             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
                         },
                         method: 'POST',
-                    }
+                    },
                 );
                 const tokenRes = await tokenReq.json();
                 const trackSearch = await fetch(
@@ -166,7 +171,7 @@ export default class ActivityCommand extends Command {
                     {
                         headers: { Authorization: `Bearer ${tokenRes.access_token}` },
                         method: 'GET',
-                    }
+                    },
                 );
                 const songInfo = await trackSearch.json();
                 spotifyData = songInfo.tracks.items[0];
@@ -200,7 +205,7 @@ export default class ActivityCommand extends Command {
                 embed.addField(
                     'Party Size',
                     `${activity.party.size[0]} of ${activity.party.size[1]}`,
-                    true
+                    true,
                 );
             }
 
@@ -212,7 +217,7 @@ export default class ActivityCommand extends Command {
                             }/${activity.assets.largeImage}.png`
                         : `https://i.scdn.co/image/${
                             activity.assets.largeImage.split(':')[1]
-                            }`
+                            }`,
                 );
             }
 
@@ -224,7 +229,7 @@ export default class ActivityCommand extends Command {
                     embed.addField(
                         'End Time',
                         `${moment.duration(moment(activity.timestamps.end).diff(Date.now())).format('H [hours], m [minutes] [and] s [seconds]')}`,
-                        true
+                        true,
                     );
                 }
             }
@@ -240,7 +245,7 @@ export default class ActivityCommand extends Command {
                         : '​',
                     !activity.assets.smallImage.includes('spotify')
                         ? `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`
-                        : `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`
+                        : `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`,
                 );
             }
 
@@ -290,7 +295,7 @@ export default class ActivityCommand extends Command {
                             value: 'Nothing',
                             inline: true,
                         },
-                        ActivityCommand.checkDeviceStatus(member)
+                        ActivityCommand.checkDeviceStatus(member),
                     ],
                     thumbnail: { url: member.user.displayAvatarURL() },
                 });
