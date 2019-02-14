@@ -1,53 +1,7 @@
 import { Command } from 'awesome-commando';
 import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
+import { DiscordGameDevPub, PokeAbilityType, PokeGenderType, PokeStatType, PokeTypesType } from './types';
 import { Song } from './util';
-
-type PokeGenderType = {
-    M: number;
-    F: number;
-};
-
-type PokeStatType = {
-    hp: number;
-    atk: number;
-    def: number;
-    spa: number;
-    spd: number;
-    spe: number;
-
-    [propName: string]: string | number | undefined;
-};
-
-type PokeAbilityType = {
-    0: string;
-    1?: string;
-    H?: string;
-
-    [propName: string]: string | number | undefined;
-};
-
-type PokeTypesType = {
-    bug: number;
-    dark: number;
-    dragon: number;
-    electric: number;
-    fairy: number;
-    fighting: number;
-    fire: number;
-    flying: number;
-    ghost: number;
-    grass: number;
-    ground: number;
-    ice: number;
-    normal: number;
-    poison: number;
-    psychic: number;
-    rock: number;
-    steel: number;
-    water: number;
-
-    [propName: string]: number;
-};
 
 interface IFlavorTextEntity {
     version_id: string;
@@ -394,8 +348,8 @@ export interface IDiscordGameParsed {
     icon: string;
     name?: string;
     store_link?: string;
-    developers?: string[];
-    publishers?: string[];
+    developers?: DiscordGameDevPub[];
+    publishers?: DiscordGameDevPub[];
     summary?: string;
     price?: string;
     thumbnail?: string;
@@ -439,9 +393,3 @@ export interface IFrontlineGirl {
         heavy: IFrontLineGirlProductionRequirements;
     };
 }
-
-export type UnionPokeAlias = IPokeAbility & IPokeAbilityAliases;
-export type UnionPokeDex = IPokeDex & IPokeDexAliases;
-export type UnionPokeItem = IPokeItem & IPokeItemAliases;
-export type UnionPokeMove = IPokeMove & IPokeMoveAliases;
-export type EmbedFieldSimple = { name: string, value: string };

@@ -19,7 +19,7 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IPokeData, startTyping, stopTyping, UnionPokeDex, zalgolize } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IPokeData, IPokeDex, IPokeDexAliases, startTyping, stopTyping, zalgolize } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
 import entries from '../../data/dex/flavorText.json';
 
@@ -62,7 +62,7 @@ export default class FlavorCommand extends Command {
                 pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
             }
 
-            const pokeoptions: Fuse.FuseOptions<UnionPokeDex> = {
+            const pokeoptions: Fuse.FuseOptions<IPokeDex & IPokeDexAliases> = {
                 shouldSort: true,
                 keys: [
                     { name: 'alias', getfn: t => t.alias, weight: 0.2 },

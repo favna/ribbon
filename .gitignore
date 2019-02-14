@@ -33,6 +33,3 @@ dist/
 
 # My own stuff
 src/commands/owner/test.ts
-
-# Files that are pending
-src/commands/music/record.ts

@@ -20,7 +20,7 @@ import {
     capitalizeFirstLetter,
     currencyMap,
     DEFAULT_EMBED_COLOR,
-    deleteCommandMessages,
+    deleteCommandMessages, DiscordGameDevPub,
     EmbedFieldSimple,
     IDiscordGameParsed,
     IDiscordGameSku,
@@ -50,7 +50,7 @@ export default class ActivityCommand extends Command {
                     prompt: 'What user would you like to get the activity from?',
                     type: 'member',
                     default: 'me',
-                },
+                }
             ],
         });
     }
@@ -109,7 +109,7 @@ export default class ActivityCommand extends Command {
             const embed = new MessageEmbed();
             const ext = ActivityCommand.fetchExt(ava);
             const isSpotifyMusic = activity.type === 'LISTENING' && activity.name === 'Spotify';
-            const games = await fetch('https://canary.discordapp.com/api/v6/applications');
+            const games = await fetch('https://canary.discordapp.com/api/v6/applications/detectable');
             const gameList = await games.json();
 
             let isDiscordStoreGame: boolean = false;
@@ -119,7 +119,7 @@ export default class ActivityCommand extends Command {
                 if (game.name === activity.name) {
                     discordGameData = { id: game.id, icon: game.icon };
 
-                    const skuId = game.distributor_applications.filter((y: IDiscordGameSku) => y.distributor === 'discord')[0].sku;
+                    const skuId = game.third_party_skus.filter((y: IDiscordGameSku) => y.distributor === 'discord')[0].sku;
 
                     const storeCheck = await fetch(`https://canary.discordapp.com/api/v6/store/published-listings/skus/${skuId}`);
                     const storeData: IDiscordStoreGameData = await storeCheck.json();
@@ -132,8 +132,8 @@ export default class ActivityCommand extends Command {
                             icon: game.icon,
                             name: storeData.sku.name,
                             store_link: `https://discordapp.com/store/skus/${skuId}`,
-                            developers: game.developers,
-                            publishers: game.publishers,
+                            developers: game.developers.map((developer: DiscordGameDevPub) => developer.name),
+                            publishers: game.publishers.map((publisher: DiscordGameDevPub) => publisher.name),
                             summary: storeData.summary,
                             price: `${currencyMap(storeData.sku.price.currency)}${String(storeData.sku.price.amount).slice(0, 2)}.${String(storeData.sku.price.amount).slice(2)}`,
                             thumbnail: `https://cdn.discordapp.com/app-assets/${game.id}/store/${storeData.thumbnail.id}.png?${stringify({ size: 1024 })}`,
@@ -159,7 +159,7 @@ export default class ActivityCommand extends Command {
                             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
                         },
                         method: 'POST',
-                    },
+                    }
                 );
                 const tokenRes = await tokenReq.json();
                 const trackSearch = await fetch(
@@ -171,7 +171,7 @@ export default class ActivityCommand extends Command {
                     {
                         headers: { Authorization: `Bearer ${tokenRes.access_token}` },
                         method: 'GET',
-                    },
+                    }
                 );
                 const songInfo = await trackSearch.json();
                 spotifyData = songInfo.tracks.items[0];
@@ -205,7 +205,7 @@ export default class ActivityCommand extends Command {
                 embed.addField(
                     'Party Size',
                     `${activity.party.size[0]} of ${activity.party.size[1]}`,
-                    true,
+                    true
                 );
             }
 
@@ -217,7 +217,7 @@ export default class ActivityCommand extends Command {
                             }/${activity.assets.largeImage}.png`
                         : `https://i.scdn.co/image/${
                             activity.assets.largeImage.split(':')[1]
-                            }`,
+                            }`
                 );
             }
 
@@ -229,7 +229,7 @@ export default class ActivityCommand extends Command {
                     embed.addField(
                         'End Time',
                         `${moment.duration(moment(activity.timestamps.end).diff(Date.now())).format('H [hours], m [minutes] [and] s [seconds]')}`,
-                        true,
+                        true
                     );
                 }
             }
@@ -245,7 +245,7 @@ export default class ActivityCommand extends Command {
                         : '​',
                     !activity.assets.smallImage.includes('spotify')
                         ? `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`
-                        : `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`,
+                        : `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`
                 );
             }
 
@@ -295,7 +295,7 @@ export default class ActivityCommand extends Command {
                             value: 'Nothing',
                             inline: true,
                         },
-                        ActivityCommand.checkDeviceStatus(member),
+                        ActivityCommand.checkDeviceStatus(member)
                     ],
                     thumbnail: { url: member.user.displayAvatarURL() },
                 });

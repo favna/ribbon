@@ -16,7 +16,7 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, UnionPokeMove } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeMove, IPokeMoveAliases, startTyping, stopTyping } from '../../components';
 import { BattleMovedex, MoveAliases } from '../../data/dex';
 
 export default class MoveCommand extends Command {
@@ -49,7 +49,7 @@ export default class MoveCommand extends Command {
         try {
             startTyping(msg);
 
-            const moveOptions: Fuse.FuseOptions<UnionPokeMove> = {
+            const moveOptions: Fuse.FuseOptions<IPokeMove & IPokeMoveAliases> = {
                 shouldSort: true,
                 keys: [
                     { name: 'alias', getfn: t => t.alias, weight: 0.2 },

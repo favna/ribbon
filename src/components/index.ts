@@ -7,3 +7,4 @@ export * from './util';
 export * from './zalgolize';
 export * from './interfaces';
 export * from './constants';
+export * from './types';

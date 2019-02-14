@@ -16,7 +16,7 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, UnionPokeItem } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeItem, IPokeItemAliases, startTyping, stopTyping } from '../../components';
 import { BattleItems, ItemAliases } from '../../data/dex';
 
 export default class ItemCommand extends Command {
@@ -48,7 +48,7 @@ export default class ItemCommand extends Command {
     public run (msg: CommandoMessage, { item }: { item: string }) {
         try {
             startTyping(msg);
-            const itemOptions: Fuse.FuseOptions<UnionPokeItem> = {
+            const itemOptions: Fuse.FuseOptions<IPokeItem & IPokeItemAliases> = {
                 shouldSort: true,
                 keys: [
                     { name: 'alias', getfn: t => t.alias, weight: 1 },
