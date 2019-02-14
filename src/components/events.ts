@@ -150,12 +150,12 @@ const renderCountdownMessage = (client: CommandoClient) => {
 const renderJoinMessage = async (member: GuildMember) => {
     try {
         const avatar = await jimp.read(member.user.displayAvatarURL({ format: 'png' }));
-        const border = await jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
+        const border = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/border.png`);
         const canvas = await jimp.read(500, 150);
         const newMemberEmbed = new MessageEmbed();
         const fontLarge = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt'));
         const fontMedium = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
-        const mask = await jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
+        const mask = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/mask.png`);
 
         avatar.resize(136, jimp.AUTO);
         mask.resize(136, jimp.AUTO);
@@ -191,12 +191,12 @@ const renderJoinMessage = async (member: GuildMember) => {
 const renderLeaveMessage = async (member: GuildMember) => {
     try {
         const avatar = await jimp.read(member.user.displayAvatarURL({ format: 'png' }));
-        const border = await jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
+        const border = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/border.png`);
         const canvas = await jimp.read(500, 150);
         const leaveMemberEmbed = new MessageEmbed();
         const fontMedium = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
         const fontLarge = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt'));
-        const mask = await jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
+        const mask = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/mask.png`);
 
         avatar.resize(136, jimp.AUTO);
         mask.resize(136, jimp.AUTO);
@@ -401,9 +401,9 @@ export const handleErr = (client: CommandoClient, err: Error) => {
 export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGuild) => {
     try {
         const avatar = await jimp.read(client.user.displayAvatarURL({ format: 'png' }));
-        const border = await jimp.read(`${ASSET_BASE_PATH}/jimp/border.png`);
+        const border = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/border.png`);
         const canvas = await jimp.read(500, 150);
-        const mask = await jimp.read(`${ASSET_BASE_PATH}/jimp/mask.png`);
+        const mask = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/mask.png`);
         const fontMedium = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
         const newGuildEmbed = new MessageEmbed();
         const channel = guild.systemChannel ? guild.systemChannel : null;
