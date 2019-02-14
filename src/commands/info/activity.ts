@@ -16,7 +16,18 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { currencyMap, DEFAULT_EMBED_COLOR, deleteCommandMessages, IDiscordGameParsed, IDiscordGameSku, IDiscordStoreGameData, startTyping, stopTyping } from '../../components';
+import {
+    capitalizeFirstLetter,
+    currencyMap,
+    DEFAULT_EMBED_COLOR,
+    deleteCommandMessages,
+    EmbedFieldSimple,
+    IDiscordGameParsed,
+    IDiscordGameSku,
+    IDiscordStoreGameData,
+    startTyping,
+    stopTyping,
+} from '../../components';
 
 export default class ActivityCommand extends Command {
     constructor (client: CommandoClient) {
@@ -36,12 +47,51 @@ export default class ActivityCommand extends Command {
             args: [
                 {
                     key: 'member',
-                    prompt:
-                        'What user would you like to get the activity from?',
+                    prompt: 'What user would you like to get the activity from?',
                     type: 'member',
                 }
             ],
         });
+    }
+
+    private static convertType (type: string) {
+        return type.toLowerCase() !== 'listening'
+            ? type.charAt(0).toUpperCase() + type.slice(1)
+            : 'Listening to';
+    }
+
+    private static fetchExt (str: string) {
+        return str.slice(-4);
+    }
+
+    private static checkDeviceStatus (member: GuildMember): EmbedFieldSimple {
+        type ParsedClientStatus = { desktop?: string; mobile?: string; web?: string; };
+
+        const status = member.presence.clientStatus;
+        const fieldName = 'Device Presence';
+
+        if (!status) return { name: fieldName, value: 'Offline' };
+
+        const onlineStatuses = ['online', 'idle', 'dnd'];
+        const isOnDesktop = onlineStatuses.includes(status.desktop);
+        const isOnMobile = onlineStatuses.includes(status.mobile);
+        const isOnWeb = onlineStatuses.includes(status.web);
+
+        const filterObj = (obj: any, predicate: any) =>
+            Object.keys(obj)
+                .filter(key => predicate(obj[key]))
+                .reduce((res, key) => ({...res,  [key]: obj[key]}), {});
+
+        const parsedStatus: ParsedClientStatus = filterObj({
+            desktop: isOnDesktop ? status.desktop : '',
+            mobile: isOnMobile ? status.mobile : '',
+            web: isOnWeb ? status.web : '',
+        }, (val: string) => val);
+
+        return {
+            name: fieldName,
+            value: Object.entries(parsedStatus).map((entry: string[]) => `${capitalizeFirstLetter(entry[0])}: ${capitalizeFirstLetter(entry[1])}`).join('\n'),
+        };
     }
 
     /* tslint:disable: cyclomatic-complexity*/
@@ -49,9 +99,10 @@ export default class ActivityCommand extends Command {
         try {
             startTyping(msg);
             const activity = member.presence.activity;
+            if (!activity) throw new Error('noActivity');
             const ava = member.user.displayAvatarURL();
             const embed = new MessageEmbed();
-            const ext = this.fetchExt(ava);
+            const ext = ActivityCommand.fetchExt(ava);
             const isSpotifyMusic = activity.type === 'LISTENING' && activity.name === 'Spotify';
             const games = await fetch('https://canary.discordapp.com/api/v6/applications');
             const gameList = await games.json();
@@ -93,7 +144,6 @@ export default class ActivityCommand extends Command {
                 .setAuthor(member.user.tag, ava, `${ava}?size2048`)
                 .setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
 
-            if (!activity) throw new Error('noActivity');
             if (isSpotifyMusic) {
                 const tokenReq = await fetch(
                     'https://accounts.spotify.com/api/token',
@@ -123,7 +173,7 @@ export default class ActivityCommand extends Command {
             }
 
             if (!isDiscordStoreGame) {
-                embed.addField(this.convertType(activity.type), activity.name, true);
+                embed.addField(ActivityCommand.convertType(activity.type), activity.name, true);
             }
 
             if (activity.url) {
@@ -196,17 +246,9 @@ export default class ActivityCommand extends Command {
 
             if (activity.assets && activity.assets.largeText) {
                 if (isSpotifyMusic) {
-                    embed.addField(
-                        'Album',
-                        `[${activity.assets.largeText}](${spotifyData.album.external_urls.spotify})`,
-                        true
-                    );
+                    embed.addField('Album', `[${activity.assets.largeText}](${spotifyData.album.external_urls.spotify})`, true);
                 } else {
-                    embed.addField(
-                        'Large Text',
-                        activity.assets.largeText,
-                        true
-                    );
+                    embed.addField('Large Text', activity.assets.largeText, true);
                 }
             }
 
@@ -225,6 +267,8 @@ export default class ActivityCommand extends Command {
                     .addField('Game Developer(s)', discordGameData.developers.join(', '), true)
                     .addField('Game Publisher(s)', discordGameData.publishers.join(', '), true);
             }
+
+            embed.fields.push(ActivityCommand.checkDeviceStatus(member));
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -245,7 +289,8 @@ export default class ActivityCommand extends Command {
                             name: 'Activity',
                             value: 'Nothing',
                             inline: true,
-                        }
+                        },
+                        ActivityCommand.checkDeviceStatus(member)
                     ],
                     thumbnail: { url: member.user.displayAvatarURL() },
                 });
@@ -264,15 +309,5 @@ export default class ActivityCommand extends Command {
             return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
                 Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
-    }
-
-    private convertType (type: string) {
-        return type.toLowerCase() !== 'listening'
-            ? type.charAt(0).toUpperCase() + type.slice(1)
-            : 'Listening to';
-    }
-
-    private fetchExt (str: string) {
-        return str.slice(-4);
     }
 }

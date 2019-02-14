@@ -444,3 +444,4 @@ export type UnionPokeAlias = IPokeAbility & IPokeAbilityAliases;
 export type UnionPokeDex = IPokeDex & IPokeDexAliases;
 export type UnionPokeItem = IPokeItem & IPokeItemAliases;
 export type UnionPokeMove = IPokeMove & IPokeMoveAliases;
+export type EmbedFieldSimple = { name: string, value: string };
