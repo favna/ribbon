@@ -13,10 +13,10 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { deleteCommandMessages, IMusicCommand, IMusicQueue, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, IMusicCommand, MusicQueueType, startTyping, stopTyping } from '../../components';
 
 export default class ChangeVolumeCommand extends Command {
-    private songQueue: Map<string, IMusicQueue>;
+    private songQueue: Map<string, MusicQueueType>;
 
     constructor (client: CommandoClient) {
         super(client, {

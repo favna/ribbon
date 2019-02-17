@@ -17,7 +17,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IOverwatchHeroMapped, ms, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, OverwatchHeroType, startTyping, stopTyping, timeparseHelper } from '../../components';
 
 export default class OverwatchCommand extends Command {
     constructor (client: CommandoClient) {
@@ -88,9 +88,9 @@ export default class OverwatchCommand extends Command {
                         ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
                         : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
 
-                    return { hero: r, time: ms(`${seconds}s`) };
+                    return { hero: r, time: timeparseHelper(`${seconds}s`) };
                 })
-                .sort((a: IOverwatchHeroMapped, b: IOverwatchHeroMapped) => a.time - b.time).reverse().slice(0, 3);
+                .sort((a: OverwatchHeroType, b: OverwatchHeroType) => a.time - b.time).reverse().slice(0, 3);
             const topQuickPlayHeroes = Object.keys(data.quickPlayStats.topHeroes)
                 .map((r: string) => {
                     const timePlayed = data.quickPlayStats.topHeroes[r].timePlayed.split(':');
@@ -100,9 +100,9 @@ export default class OverwatchCommand extends Command {
                         ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
                         : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
 
-                    return { hero: r, time: ms(`${seconds}s`) };
+                    return { hero: r, time: timeparseHelper(`${seconds}s`) };
                 })
-                .sort((a: IOverwatchHeroMapped, b: IOverwatchHeroMapped) => a.time - b.time).reverse().slice(0, 3);
+                .sort((a: OverwatchHeroType, b: OverwatchHeroType) => a.time - b.time).reverse().slice(0, 3);
             const quickPlayStats = data.quickPlayStats.careerStats;
             const competitiveStats = data.competitiveStats.careerStats;
 

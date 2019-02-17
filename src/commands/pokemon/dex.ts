@@ -18,7 +18,19 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IFormatsJson, IPokeData, IPokeDex, IPokeDexAliases, startTyping, stopTyping, zalgolize } from '../../components';
+import {
+    ASSET_BASE_PATH,
+    capitalizeFirstLetter,
+    deleteCommandMessages,
+    FlavorJSONType,
+    FormatsJSONType,
+    IPokeDexAliases,
+    PokeDataType,
+    PokedexType,
+    startTyping,
+    stopTyping,
+    zalgoHelper,
+} from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
 import entries from '../../data/dex/flavorText.json';
 import formats from '../../data/dex/formats.json';
@@ -62,32 +74,23 @@ export default class DexCommand extends Command {
                 pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
             }
 
-            const pokeoptions: Fuse.FuseOptions<IPokeDex & IPokeDexAliases> = {
-                shouldSort: true,
-                keys: [
-                    { name: 'alias', getfn: t => t.alias, weight: 0.2 },
-                    { name: 'species', getfn: t => t.species, weight: 1 },
-                    { name: 'num', getfn: t => t.num, weight: 0.7 }
-                ],
-                location: 0,
-                distance: 100,
+            const pokeoptions: Fuse.FuseOptions<PokedexType & IPokeDexAliases> = {
+                keys: ['alias', 'species', 'name', 'num'],
                 threshold: 0.2,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
             };
             const aliasFuse = new Fuse(PokeAliases, pokeoptions);
             const pokeFuse = new Fuse(BattlePokedex, pokeoptions);
             const firstSearch = pokeFuse.search(pokemon);
             const aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null;
             const pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch;
-            const tiers: IFormatsJson = formats as IFormatsJson;
-            const flavors: IFlavorJson = entries as IFlavorJson;
+            const tiers: FormatsJSONType = formats as FormatsJSONType;
+            const flavors: FlavorJSONType = entries as FlavorJSONType;
             const dexEmbed: MessageEmbed = new MessageEmbed();
 
             if (!pokeSearch.length) throw new Error('no_pokemon');
 
-            const poke: IPokeDex = pokeSearch[0];
-            const pokeData: IPokeData = {
+            const poke: PokedexType = pokeSearch[0];
+            const pokeData: PokeDataType = {
                 abilities: '',
                 evos: `**${capitalizeFirstLetter(poke.species)}**`,
                 flavors: '*PokéDex data not found for this Pokémon*',
@@ -204,13 +207,13 @@ export default class DexCommand extends Command {
                 for (const field in dexEmbed.fields) {
                     fields.push({
                         inline: dexEmbed.fields[field].inline,
-                        name: zalgolize(dexEmbed.fields[field].name),
-                        value: zalgolize(dexEmbed.fields[field].value),
+                        name: zalgoHelper(dexEmbed.fields[field].name),
+                        value: zalgoHelper(dexEmbed.fields[field].value),
                     });
                 }
 
                 dexEmbed.fields = fields;
-                dexEmbed.author.name = zalgolize(dexEmbed.author.name);
+                dexEmbed.author.name = zalgoHelper(dexEmbed.author.name);
                 dexEmbed.setImage(`${ASSET_BASE_PATH}/ribbon/missingno.png`);
             }
 

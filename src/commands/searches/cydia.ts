@@ -21,7 +21,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import Fuse from 'fuse.js';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { CydiaAPIPackageType, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CydiaCommand extends Command {
     constructor (client: CommandoClient) {
@@ -62,38 +62,31 @@ export default class CydiaCommand extends Command {
 
             const baseURL = 'https://cydia.saurik.com/';
             const cydiaEmbed = new MessageEmbed();
-            const fsoptions: Fuse.FuseOptions<any> = {
-                shouldSort: true,
-                keys: [
-                    { name: 'display', getfn: t => t.display, weight: 0.8 },
-                    { name: 'name', getfn: t => t.name, weight: 1 }
-                ],
-                location: 0,
-                distance: 100,
+            const fsoptions: Fuse.FuseOptions<CydiaAPIPackageType> = {
+                keys: ['display', 'name'],
                 threshold: 0.3,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
             };
             const res = await fetch(`${baseURL}api/macciti?${stringify({ query: deb })}`);
             const packages = await res.json();
             const fuzzyList = new Fuse(packages.results, fsoptions);
             const search = fuzzyList.search(deb);
+            const hit: CydiaAPIPackageType | undefined = search.length ? search[0] as CydiaAPIPackageType : undefined;
 
-            if (!search.length) throw new Error('no_packages');
+            if (!hit) throw new Error('no_packages');
 
             cydiaEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setTitle(search[0].display)
-                .setDescription(search[0].summary)
-                .addField('Version', search[0].version, true)
+                .setTitle(hit.display)
+                .setDescription(hit.summary)
+                .addField('Version', hit.version, true)
                 .addField(
                     'Link',
-                    `[Click Here](${baseURL}package/${search[0].name})`,
+                    `[Click Here](${baseURL}package/${hit.name})`,
                     true
                 );
 
             try {
-                const siteReq = await fetch(`${baseURL}package/${search[0].name}`);
+                const siteReq = await fetch(`${baseURL}package/${hit.name}`);
                 const site = await siteReq.text();
                 const $ = cheerio.load(site);
 
@@ -107,7 +100,7 @@ export default class CydiaCommand extends Command {
             }
 
             try {
-                const priceReq = await fetch(`${baseURL}api/ibbignerd?${stringify({ query: search[0].name })}`);
+                const priceReq = await fetch(`${baseURL}api/ibbignerd?${stringify({ query: hit.name })}`);
                 const price = await priceReq.json();
 
                 cydiaEmbed.addField('Price', price ? price.msrp : 'Free', true);
@@ -115,7 +108,7 @@ export default class CydiaCommand extends Command {
                 // Intentionally empty
             }
 
-            cydiaEmbed.addField('Package Name', search[0].name, false);
+            cydiaEmbed.addField('Package Name', hit.name, false);
 
             if (!msg.patternMatches) deleteCommandMessages(msg, this.client);
             stopTyping(msg);

@@ -17,7 +17,7 @@ import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, timeparseHelper } from '../../components';
 
 export default class TimerRemoveCommand extends Command {
     constructor (client: CommandoClient) {
@@ -95,7 +95,7 @@ export default class TimerRemoveCommand extends Command {
                 .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
                 .setDescription(stripIndents`
                     **Action:** Timed message removed
-                    **Interval:** ${ms(interval, { long: true })}
+                    **Interval:** ${timeparseHelper(interval, { long: true })}
                     **Channel:** <#${channel}>
                     **Message:** ${content}`
                 )

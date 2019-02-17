@@ -5,9 +5,9 @@ const d = h * 24;
 const w = d * 7;
 const y = d * 365.25;
 
-interface ILongObject {
+type ILongObject = {
     long?: boolean;
-}
+};
 
 const parse = (str: string) => {
     str = String(str);
@@ -86,7 +86,7 @@ const fmtLong = (fmtLongMs: number) => {
     return +`${fmtLongMs} ms`;
 };
 
-export const ms = (val: any, options: ILongObject = {}): any => {
+export const timeparseHelper = (val: any, options: ILongObject = {}): any => {
     if (typeof val === 'string' && val.length > 0) return parse(val);
     if (typeof val === 'number' && !isNaN(val)) {
         return options.long ? fmtLong(val) : fmtShort(val);

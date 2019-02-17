@@ -1,6 +1,6 @@
-import { IPokeDex } from '../../components';
+import { PokedexType } from '../../components';
 
-export const BattlePokedex: IPokeDex[] = [
+export const BattlePokedex: PokedexType[] = [
     {
         num: 1,
         species: 'Bulbasaur',

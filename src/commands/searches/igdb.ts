@@ -14,7 +14,7 @@ import { MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IGBDAgeRatings, IIGDBAgeRating, IIGDBInvolvedCompany, IIGDBProp, roundNumber, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IGBDAgeRatings, IGDBType, IIGDBAgeRating, IIGDBInvolvedCompany, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class IGDBCommand extends Command {
     constructor (client: CommandoClient) {
@@ -75,9 +75,9 @@ export default class IGDBCommand extends Command {
                 .addField('User Score', roundNumber(hit.rating, 1), true)
                 .addField('Age Rating(s)', hit.age_ratings.map((e: IIGDBAgeRating) => `${e.category === 1 ? 'ESRB' : 'PEGI'}: ${IGBDAgeRatings[e.rating]}`), true)
                 .addField('Release Date', moment.unix(hit.release_dates[0].date).format('MMMM Do YYYY'), true)
-                .addField('Genre(s)', hit.genres.map((genre: IIGDBProp) => genre.name).join(', '), true)
+                .addField('Genre(s)', hit.genres.map((genre: IGDBType) => genre.name).join(', '), true)
                 .addField('Developer(s)', hit.involved_companies.map((e: IIGDBInvolvedCompany) => e.developer ? e.company.name : null).filter(Boolean).join(', '), true)
-                .addField('Platform(s)', hit.platforms.map((e: IIGDBProp) => e.name).join(', '), true)
+                .addField('Platform(s)', hit.platforms.map((e: IGDBType) => e.name).join(', '), true)
                 .setDescription(hit.summary);
 
             deleteCommandMessages(msg, this.client);

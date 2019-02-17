@@ -25,10 +25,10 @@ import moment from 'moment';
 import fetch from 'node-fetch';
 import { Readable } from 'stream';
 import ytdl from 'ytdl-core';
-import { DEFAULT_VOLUME, deleteCommandMessages, IMusicCommand, IMusicQueue, IYoutubeVideo, MAX_LENGTH, MAX_SONGS, PASSES, Song, startTyping, stopTyping } from '../../components';
+import { DEFAULT_VOLUME, deleteCommandMessages, IMusicCommand, MAX_LENGTH, MAX_SONGS, MusicQueueType, PASSES, Song, startTyping, stopTyping, YoutubeVideoType } from '../../components';
 
 export default class PlaySongCommand extends Command {
-    public queue: Map<Snowflake, IMusicQueue>;
+    public queue: Map<Snowflake, MusicQueueType>;
     private queueVotes: any;
 
     constructor (client: CommandoClient) {
@@ -91,7 +91,7 @@ export default class PlaySongCommand extends Command {
             const videos = await this.getPlaylistVideos(playlist);
 
             if (!queue) {
-                const listQueue: IMusicQueue = {
+                const listQueue: MusicQueueType = {
                     textChannel: msg.channel as TextChannel,
                     voiceChannel,
                     connection: null,
@@ -114,7 +114,7 @@ export default class PlaySongCommand extends Command {
                 }
             }
 
-            videos.forEach(async (video: IYoutubeVideo) => this.handlePlaylist(video, playlist, msg, statusMsg));
+            videos.forEach(async (video: YoutubeVideoType) => this.handlePlaylist(video, playlist, msg, statusMsg));
 
             if (!this.queue.get(msg.guild.id).playing) {
                 this.play(msg.guild, this.queue.get(msg.guild.id).songs[0]);
@@ -124,7 +124,7 @@ export default class PlaySongCommand extends Command {
         }
 
         try {
-            const video: IYoutubeVideo = await this.getVideoID(videoQuery);
+            const video: YoutubeVideoType = await this.getVideoID(videoQuery);
             if (!video) throw new Error('no_video_id');
 
             deleteCommandMessages(msg, this.client);
@@ -155,7 +155,7 @@ export default class PlaySongCommand extends Command {
         }
     }
 
-    private async handleVideo (video: IYoutubeVideo, queue: IMusicQueue, voiceChannel: VoiceChannel, msg: CommandoMessage, statusMsg: Message): Promise<void> {
+    private async handleVideo (video: YoutubeVideoType, queue: MusicQueueType, voiceChannel: VoiceChannel, msg: CommandoMessage, statusMsg: Message): Promise<void> {
         if (video.durationSeconds === 0) {
             statusMsg.edit(`${msg.author}, you can't play live streams.`);
             stopTyping(msg);
@@ -225,7 +225,7 @@ export default class PlaySongCommand extends Command {
         }
     }
 
-    private async handlePlaylist (video: IYoutubeVideo, playlistId: string, msg: CommandoMessage, statusMsg: Message): Promise<void> {
+    private async handlePlaylist (video: YoutubeVideoType, playlistId: string, msg: CommandoMessage, statusMsg: Message): Promise<void> {
         if (video.durationSeconds === 0) {
             statusMsg.edit(`${msg.author}, looks like that playlist has a livestream and I cannot play livestreams`);
             stopTyping(msg);
@@ -269,7 +269,7 @@ export default class PlaySongCommand extends Command {
         return null;
     }
 
-    private addSong (msg: CommandoMessage, video: IYoutubeVideo) {
+    private addSong (msg: CommandoMessage, video: YoutubeVideoType) {
         const queue = this.queue.get(msg.guild.id);
         const songNumerator = (prev: any, curSong: any) => {
             if (curSong.member.id === msg.author.id) {
@@ -387,10 +387,10 @@ export default class PlaySongCommand extends Command {
             );
 
             const data = await request.json();
-            const arr: IYoutubeVideo[] = [];
+            const arr: YoutubeVideoType[] = [];
             const videos = data.items;
 
-            videos.forEach(async (video: IYoutubeVideo) => arr.push(await this.getVideo(video.snippet.resourceId.videoId)));
+            videos.forEach(async (video: YoutubeVideoType) => arr.push(await this.getVideo(video.snippet.resourceId.videoId)));
             return arr;
         } catch (err) {
             return null;
@@ -417,7 +417,7 @@ export default class PlaySongCommand extends Command {
         }
     }
 
-    private getVideoID (url: string): Promise<IYoutubeVideo> {
+    private getVideoID (url: string): Promise<YoutubeVideoType> {
         try {
             if (/youtu\.be/i.test(url)) {
                 return this.getVideo(url.match(/\/[a-zA-Z0-9-_]+$/i)[0].slice(1));
@@ -429,7 +429,7 @@ export default class PlaySongCommand extends Command {
         }
     }
 
-    private async getVideo (id: string): Promise<IYoutubeVideo> {
+    private async getVideo (id: string): Promise<YoutubeVideoType> {
         try {
             const request = await fetch(
                 `https://www.googleapis.com/youtube/v3/videos?${stringify({

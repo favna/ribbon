@@ -13,7 +13,7 @@ import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, ICasinoRow, roundNumber, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, CasinoRowType, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class LeaderboardCommand extends Command {
     constructor (client: CommandoClient) {
@@ -58,7 +58,7 @@ export default class LeaderboardCommand extends Command {
                 .all(limit);
 
             if (query) {
-                query.forEach((player: ICasinoRow, index: number) => {
+                query.forEach((player: CasinoRowType, index: number) => {
                     lbEmbed.addField(
                         `#${index + 1} ${msg.guild.members.get(player.userID).displayName}`,
                         `Chips: ${player.balance}`

@@ -19,7 +19,7 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, IFlavorJson, IPokeData, IPokeDex, IPokeDexAliases, startTyping, stopTyping, zalgolize } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType, startTyping, stopTyping, zalgoHelper } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
 import entries from '../../data/dex/flavorText.json';
 
@@ -62,31 +62,22 @@ export default class FlavorCommand extends Command {
                 pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
             }
 
-            const pokeoptions: Fuse.FuseOptions<IPokeDex & IPokeDexAliases> = {
-                shouldSort: true,
-                keys: [
-                    { name: 'alias', getfn: t => t.alias, weight: 0.2 },
-                    { name: 'species', getfn: t => t.species, weight: 1 },
-                    { name: 'num', getfn: t => t.num, weight: 0.7 }
-                ],
-                location: 0,
-                distance: 100,
+            const pokeoptions: Fuse.FuseOptions<PokedexType & IPokeDexAliases> = {
+                keys: ['alias', 'species', 'name', 'num'],
                 threshold: 0.2,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
             };
             const aliasFuse = new Fuse(PokeAliases, pokeoptions);
             const pokeFuse = new Fuse(BattlePokedex, pokeoptions);
             const firstSearch = pokeFuse.search(pokemon);
             const aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null;
             const pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch;
-            const flavors: IFlavorJson = entries as IFlavorJson;
+            const flavors: FlavorJSONType = entries as FlavorJSONType;
             const dataEmbed = new MessageEmbed();
 
             if (!pokeSearch.length) throw new Error('no_pokemon');
 
             const poke = pokeSearch[0];
-            const pokeData: IPokeData = {
+            const pokeData: PokeDataType = {
                 sprite: '',
                 entries: [],
             };
@@ -153,13 +144,13 @@ export default class FlavorCommand extends Command {
                 for (const field in dataEmbed.fields) {
                     fields.push({
                         inline: dataEmbed.fields[field].inline,
-                        name: zalgolize(dataEmbed.fields[field].name),
-                        value: zalgolize(dataEmbed.fields[field].value),
+                        name: zalgoHelper(dataEmbed.fields[field].name),
+                        value: zalgoHelper(dataEmbed.fields[field].value),
                     });
                 }
 
-                dataEmbed.description = zalgolize(dataEmbed.description);
-                dataEmbed.author.name = zalgolize(dataEmbed.author.name);
+                dataEmbed.description = zalgoHelper(dataEmbed.description);
+                dataEmbed.author.name = zalgoHelper(dataEmbed.author.name);
                 dataEmbed.fields = fields;
                 dataEmbed.setImage(`${ASSET_BASE_PATH}/ribbon/missingno.png`);
             }

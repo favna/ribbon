@@ -18,11 +18,11 @@
 
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
-import { deleteCommandMessages, IMusicCommand, IMusicQueue, IMusicVote, roundNumber, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, IMusicCommand, MusicQueueType, MusicVoteType, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class SkipSongCommand extends Command {
-    public votes: Map<string, IMusicVote>;
-    private songQueue: Map<string, IMusicQueue>;
+    public votes: Map<string, MusicVoteType>;
+    private songQueue: Map<string, MusicQueueType>;
 
     constructor (client: CommandoClient) {
         super(client, {
@@ -102,7 +102,7 @@ export default class SkipSongCommand extends Command {
 				Five more seconds on the clock! The vote will end in ${time} seconds.
 			`);
         } else {
-            const newVote: IMusicVote = {
+            const newVote: MusicVoteType = {
                 count: 1,
                 users: [msg.author.id],
                 queue,
@@ -127,7 +127,7 @@ export default class SkipSongCommand extends Command {
         }
     }
 
-    private skip (guild: CommandoGuild, queue: IMusicQueue) {
+    private skip (guild: CommandoGuild, queue: MusicQueueType) {
         if (this.votes.has(guild.id)) {
             clearTimeout(this.votes.get(guild.id).timeout);
             this.votes.delete(guild.id);
@@ -140,7 +140,7 @@ export default class SkipSongCommand extends Command {
         return `Skipped: **${song}**`;
     }
 
-    private setTimeout (vote: IMusicVote) {
+    private setTimeout (vote: MusicVoteType) {
         const time = vote.start + 15000 - Date.now() + (vote.count - 1) * 5000;
 
         clearTimeout(vote.timeout);

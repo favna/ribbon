@@ -18,7 +18,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
-import { deleteCommandMessages, ICopyPastaListObject, modLogMessage, startTyping, stopTyping } from '../../components';
+import { CopypastaType, deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class CopyPastaRemoveCommand extends Command {
     constructor (client: CommandoClient) {
@@ -46,7 +46,7 @@ export default class CopyPastaRemoveCommand extends Command {
                         try {
                             const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
                             const rows = conn.prepare(`SELECT id FROM "${msg.guild.id}";`).all();
-                            if (rows.some((el: ICopyPastaListObject) => el.id === Number(v))) return true;
+                            if (rows.some((el: CopypastaType) => el.id === Number(v))) return true;
                             return `that is not an ID of a Copypasta stored for this guild. You can view all the stored pastas with the \`${msg.guild.commandPrefix}copypastalist\` command`;
                         } catch (err) {
                             return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);

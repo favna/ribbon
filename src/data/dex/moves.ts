@@ -1,7 +1,7 @@
 /* tslint:disable:max-line-length */
-import { IPokeMove } from '../../components';
+import { PokeMoveDetailsType } from '../../components';
 
-export const BattleMovedex: IPokeMove[] = [{
+export const BattleMovedex: PokeMoveDetailsType[] = [{
     num: 719,
     accuracy: true,
     basePower: 195,

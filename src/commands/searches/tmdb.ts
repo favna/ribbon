@@ -14,7 +14,7 @@ import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IMovieGenre, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, MovieGenreType, startTyping, stopTyping } from '../../components';
 
 export default class MovieCommand extends Command {
     constructor (client: CommandoClient) {
@@ -84,7 +84,7 @@ export default class MovieCommand extends Command {
                 )
                 .addField(
                     'Genres',
-                    movie.genres.length ? movie.genres.map((genre: IMovieGenre) => genre.name).join(', ') : 'None on TheMovieDB',
+                    movie.genres.length ? movie.genres.map((genre: MovieGenreType) => genre.name).join(', ') : 'None on TheMovieDB',
                     false
                 );
 

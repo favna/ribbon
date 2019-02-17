@@ -17,7 +17,7 @@
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, timeparseHelper } from '../../components';
 
 export default class TempBanCommand extends Command {
     constructor (client: CommandoClient) {
@@ -109,7 +109,7 @@ export default class TempBanCommand extends Command {
             .setDescription(stripIndents`
                 **Member:** ${member.user.tag} (${member.id})
                 **Action:** Temporary Ban
-                **Duration:** ${ms(time, { long: true })}
+                **Duration:** ${timeparseHelper(time, { long: true })}
                 **Reason:** ${reason !== '' ? reason : 'No reason given by staff'}`
             )
             .setTimestamp();

@@ -1,6 +1,6 @@
 import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
-import { CoinSide } from '../constants';
+import { CoinSide } from '../Constants';
 
 export default class CoinSideType extends ArgumentType {
     constructor (client: CommandoClient) {

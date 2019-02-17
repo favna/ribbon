@@ -15,7 +15,7 @@ import fs from 'fs';
 import Fuse from 'fuse.js';
 import moment from 'moment';
 import path from 'path';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, eShopType, startTyping, stopTyping } from '../../components';
 
 export default class EShopCommand extends Command {
     constructor (client: CommandoClient) {
@@ -43,21 +43,11 @@ export default class EShopCommand extends Command {
             startTyping(msg);
 
             const eshopEmbed = new MessageEmbed();
-            const eShopOptions: Fuse.FuseOptions<any> = {
-                shouldSort: true,
-                keys: [{ name: 'title', getfn: t => t.title, weight: 1 }],
-                location: 0,
-                distance: 100,
-                threshold: 0.6,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
-            };
-            const games = JSON.parse(
-                fs.readFileSync(path.join(__dirname, '../../data/databases/eshop.json'), 'utf8')
-            );
+            const eShopOptions: Fuse.FuseOptions<eShopType> = { keys: ['title'] };
+            const games = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/databases/eshop.json'), 'utf8'));
             const fuse = new Fuse(games, eShopOptions);
             const results = fuse.search(game);
-            const hit: any = results[0];
+            const hit: eShopType = results[0] as eShopType;
 
             if (hit.eshop_price) price = hit.eshop_price === '0.00' ? 'free' : `$${hit.eshop_price} USD`;
 

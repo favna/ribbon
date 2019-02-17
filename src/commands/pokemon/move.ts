@@ -16,7 +16,7 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeMove, IPokeMoveAliases, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeMoveAliases, PokeMoveDetailsType, startTyping, stopTyping } from '../../components';
 import { BattleMovedex, MoveAliases } from '../../data/dex';
 
 export default class MoveCommand extends Command {
@@ -49,19 +49,9 @@ export default class MoveCommand extends Command {
         try {
             startTyping(msg);
 
-            const moveOptions: Fuse.FuseOptions<IPokeMove & IPokeMoveAliases> = {
-                shouldSort: true,
-                keys: [
-                    { name: 'alias', getfn: t => t.alias, weight: 0.2 },
-                    { name: 'move', getfn: t => t.move, weight: 0.2 },
-                    { name: 'id', getfn: t => t.id, weight: 1 },
-                    { name: 'name', getfn: t => t.name, weight: 1 }
-                ],
-                location: 0,
-                distance: 100,
+            const moveOptions: Fuse.FuseOptions<PokeMoveDetailsType & IPokeMoveAliases> = {
+                keys: ['alias', 'move', 'id', 'name'],
                 threshold: 0.2,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
             };
             const aliasFuse = new Fuse(MoveAliases, moveOptions);
             const moveFuse = new Fuse(BattleMovedex, moveOptions);

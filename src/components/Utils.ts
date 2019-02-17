@@ -1,14 +1,8 @@
-/**
- * @file Ribbon Modules - Utility modules for Ribbon
- * @author Jeroen Claassens (favna) <support@favna.xyz>
- * @copyright © 2017-2018 Favna
- */
-
 import { CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel, Util } from 'awesome-djs';
 import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
 import emojiRegex from 'emoji-regex';
-import { diacriticsMap, IYoutubeVideo, validBooleansMap } from '.';
+import { diacriticsMap, validBooleansMap, YoutubeVideoType } from '.';
 
 export const arrayClean = (deleteValue: string | number | undefined | any, array: Array<string | number | undefined | any>) => array.filter(element => element !== deleteValue);
 
@@ -141,7 +135,7 @@ export class Song {
     public dispatcher: any;
     public playing: boolean;
 
-    constructor (video: IYoutubeVideo, member: GuildMember) {
+    constructor (video: YoutubeVideoType, member: GuildMember) {
         this.name = Util.escapeMarkdown(video.title);
         this.id = video.id;
         this.length = video.durationSeconds;

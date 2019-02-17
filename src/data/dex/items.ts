@@ -1,6 +1,6 @@
-import { IPokeItem } from '../../components';
+import { PokeItemDetailsType } from '../../components';
 
-export const BattleItems: IPokeItem[] = [
+export const BattleItems: PokeItemDetailsType[] = [
     {
         id: 'abomasite',
         name: 'Abomasite',

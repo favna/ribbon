@@ -1,9 +1,3 @@
-/**
- * @file Ribbon Events - Events handled by Ribbon
- * @author Jeroen Claassens (favna) <support@favna.xyz>
- * @copyright © 2017-2018 Favna
- */
-
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -16,7 +10,7 @@ import 'moment-duration-format';
 import { getGamesAmerica } from 'nintendo-switch-eshop';
 import fetch from 'node-fetch';
 import path from 'path';
-import { ASSET_BASE_PATH, badwords, caps, decache, DEFAULT_EMBED_COLOR, duptext, emojis, invites, links, mentions, ms, ordinal, slowmode } from '.';
+import { ASSET_BASE_PATH, badwords, caps, decache, DEFAULT_EMBED_COLOR, duptext, emojis, invites, links, mentions, ordinal, slowmode, timeparseHelper } from '.';
 
 const renderReminderMessage = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
@@ -826,16 +820,16 @@ export const handleReady = (client: CommandoClient) => {
         forceStopTyping(bot);
         renderTimerMessage(bot);
         renderCountdownMessage(bot);
-    }, ms('3m'));
+    }, timeparseHelper('3m'));
 
     setInterval(() => {
         renderReminderMessage(bot);
-    }, ms('5m'));
+    }, timeparseHelper('5m'));
 
     setInterval(() => {
         renderLottoMessage(bot);
         forceEshopUpdate(bot);
-    }, ms('24h'));
+    }, timeparseHelper('24h'));
 
     fs.watch(
         path.join(__dirname, '../data/dex/formats.json'),

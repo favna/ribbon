@@ -18,7 +18,7 @@ import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
 import path from 'path';
-import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IFrontlineGirl, startTyping, stopTyping } from '../../components';
+import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, FrontlineGirlType, startTyping, stopTyping } from '../../components';
 
 export default class GirlsFrontlineCommand extends Command {
     constructor (client: CommandoClient) {
@@ -46,19 +46,11 @@ export default class GirlsFrontlineCommand extends Command {
             startTyping(msg);
 
             const gfEmbed = new MessageEmbed();
-            const gfOptions: Fuse.FuseOptions<any> = {
-                shouldSort: true,
-                keys: [{ name: 'name', getfn: t => t.name, weight: 1 }],
-                location: 0,
-                distance: 100,
-                threshold: 0.6,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
-            };
+            const gfOptions: Fuse.FuseOptions<FrontlineGirlType> = { keys: ['name'] };
             const games = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/databases/girlsfrontline.json'), 'utf8'));
             const fuse = new Fuse(games, gfOptions);
-            const results: IFrontlineGirl[] = fuse.search(character);
-            const hit = results[0];
+            const results = fuse.search(character);
+            const hit: FrontlineGirlType = results[0] as FrontlineGirlType;
             const howObtain: string[] = [];
             const statIndices = ['hp', 'dmg', 'eva', 'acc', 'rof'];
 

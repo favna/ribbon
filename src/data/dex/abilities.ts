@@ -1,7 +1,7 @@
 /* tslint:disable:max-line-length */
-import { IPokeAbility } from '../../components';
+import { PokeAbilityDetailsType } from '../../components';
 
-export const BattleAbilities: IPokeAbility[] = [
+export const BattleAbilities: PokeAbilityDetailsType[] = [
     {
         shortDesc: 'Does nothing.',
         id: 'noability',

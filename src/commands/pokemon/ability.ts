@@ -14,7 +14,7 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeAbility, IPokeAbilityAliases, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeAbilityAliases, PokeAbilityDetailsType, startTyping, stopTyping } from '../../components';
 import { AbilityAliases, BattleAbilities } from '../../data/dex';
 
 export default class AbilityCommand extends Command {
@@ -46,20 +46,7 @@ export default class AbilityCommand extends Command {
     public run (msg: CommandoMessage, { ability }: { ability: string }) {
         try {
             startTyping(msg);
-            const fsoptions: Fuse.FuseOptions<IPokeAbility & IPokeAbilityAliases> = {
-                shouldSort: true,
-                keys: [
-                    { name: 'alias', getfn: t => t.alias, weight: 0.5 },
-                    { name: 'ability', getfn: t => t.ability, weight: 1 },
-                    { name: 'id', getfn: t => t.id, weight: 0.6 },
-                    { name: 'name', getfn: t => t.name, weight: 1 }
-                ],
-                location: 0,
-                distance: 100,
-                threshold: 0.6,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
-            };
+            const fsoptions: Fuse.FuseOptions<PokeAbilityDetailsType & IPokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
             const aliasFuse = new Fuse(AbilityAliases, fsoptions);
             const abilityFuse = new Fuse(BattleAbilities, fsoptions);
             const aliasSearch = aliasFuse.search(ability);

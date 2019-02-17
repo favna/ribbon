@@ -13,7 +13,7 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeTypeData, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, PokeTypeDataType, startTyping, stopTyping } from '../../components';
 import { BattleTypeChart } from '../../data/dex';
 
 export default class TypeCommand extends Command {
@@ -59,7 +59,7 @@ export default class TypeCommand extends Command {
     public run (msg: CommandoMessage, { types }: { types: string[] }) {
         try {
             startTyping(msg);
-            const atk: IPokeTypeData = {
+            const atk: PokeTypeDataType = {
                 doubleEffectiveTypes: [],
                 doubleResistedTypes: [],
                 effectiveTypes: [],
@@ -87,7 +87,7 @@ export default class TypeCommand extends Command {
                 normalTypes: [],
                 resistedTypes: [],
             };
-            const def: IPokeTypeData = JSON.parse(JSON.stringify(atk));
+            const def: PokeTypeDataType = JSON.parse(JSON.stringify(atk));
             const embed = new MessageEmbed();
 
             for (const type of types) {

@@ -14,7 +14,7 @@ import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IMovieGenre, roundNumber, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, MovieGenreType, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class TVCommand extends Command {
     constructor (client: CommandoClient) {
@@ -69,7 +69,7 @@ export default class TVCommand extends Command {
                 .addField('First air Date', moment(show.first_air_date).format('MMMM Do YYYY'), true)
                 .addField(
                     'Genres',
-                    show.genres.length ? show.genres.map((genre: IMovieGenre) => genre.name).join(', ') : 'None on TheMovieDB'
+                    show.genres.length ? show.genres.map((genre: MovieGenreType) => genre.name).join(', ') : 'None on TheMovieDB'
                 );
 
             deleteCommandMessages(msg, this.client);

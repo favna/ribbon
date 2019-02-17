@@ -13,7 +13,7 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IDefineWord, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, WordDefinitionType } from '../../components';
 
 export default class DefineCommand extends Command {
     constructor (client: CommandoClient) {
@@ -56,7 +56,7 @@ export default class DefineCommand extends Command {
             const words = await res.json();
             const final = [`**Definitions for __${query}__:**`];
 
-            words.tuc[0].meanings.slice(0, 5).forEach((word: IDefineWord, index: number) => {
+            words.tuc[0].meanings.slice(0, 5).forEach((word: WordDefinitionType, index: number) => {
                 const definition = word.text
                     .replace(/\[(\w+)[^\]]*](.*?)\[\/\1]/g, '_')
                     .replace(/&quot;/g, '"')

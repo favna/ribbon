@@ -13,7 +13,7 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import fetch from 'node-fetch';
-import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IUrbanDefinition, startTyping, stopTyping } from '../../components';
+import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, UrbanDefinitionType } from '../../components';
 
 export default class UrbanCommand extends Command {
     constructor (client: CommandoClient) {
@@ -47,10 +47,10 @@ export default class UrbanCommand extends Command {
             startTyping(msg);
             const urbanSearch = await fetch(`https://api.urbandictionary.com/v0/define?${stringify({ term })}`);
             const definition = await urbanSearch.json();
-            const hit: IUrbanDefinition = definition.list[0];
+            const hit: UrbanDefinitionType = definition.list[0];
             const urbanEmbed = new MessageEmbed();
 
-            definition.list.sort((a: IUrbanDefinition, b: IUrbanDefinition) => b.thumbs_up - b.thumbs_down - (a.thumbs_up - a.thumbs_down));
+            definition.list.sort((a: UrbanDefinitionType, b: UrbanDefinitionType) => b.thumbs_up - b.thumbs_down - (a.thumbs_up - a.thumbs_down));
 
             urbanEmbed
                 .setTitle(`Urban Search - ${hit.word}`)

@@ -35,7 +35,7 @@ const rand = (max: number) => roundNumber(Math.random() * max);
 
 export const banish = (zalgo: string) => zalgo.replace(chars.pattern, '');
 
-export const zalgolize = (text: any) => {
+export const zalgoHelper = (text: any) => {
     text = split(text);
 
     let result = '';

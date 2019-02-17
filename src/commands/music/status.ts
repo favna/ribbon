@@ -9,10 +9,10 @@
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, IMusicCommand, IMusicQueue, Song, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, IMusicCommand, MusicQueueType, Song, startTyping, stopTyping } from '../../components';
 
 export default class MusicStatusCommand extends Command {
-    private songQueue: Map<string, IMusicQueue>;
+    private songQueue: Map<string, MusicQueueType>;
 
     constructor (client: CommandoClient) {
         super(client, {

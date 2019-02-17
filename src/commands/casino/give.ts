@@ -16,7 +16,7 @@ import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, ICasinoRow, roundNumber, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, CasinoRowType, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class GiveCommand extends Command {
     constructor (client: CommandoClient) {
@@ -75,7 +75,7 @@ export default class GiveCommand extends Command {
 
             if (query.length !== 2) throw new Error('no_balance');
 
-            query.forEach((row: ICasinoRow) => {
+            query.forEach((row: CasinoRowType) => {
                 if (row.userID === msg.author.id && chips > row.balance) {
                     throw new Error('insufficient_balance');
                 }
@@ -84,7 +84,7 @@ export default class GiveCommand extends Command {
             let giverEntry = 0;
             let receiverEntry = 0;
 
-            query.forEach((row: ICasinoRow, index: number) => {
+            query.forEach((row: CasinoRowType, index: number) => {
                 if (row.userID === msg.author.id) giverEntry = Number(index);
                 if (row.userID === player.id) receiverEntry = Number(index);
             });

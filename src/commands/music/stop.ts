@@ -13,11 +13,11 @@
 
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
-import { deleteCommandMessages, IMusicCommand, IMusicQueue, IMusicVote, roundNumber, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, IMusicCommand, MusicQueueType, MusicVoteType, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class StopMusicCommand extends Command {
-    private votes: Map<string, IMusicVote>;
-    private songQueue: Map<string, IMusicQueue>;
+    private votes: Map<string, MusicVoteType>;
+    private songQueue: Map<string, MusicQueueType>;
 
     constructor (client: CommandoClient) {
         super(client, {
@@ -100,7 +100,7 @@ export default class StopMusicCommand extends Command {
 				Five more seconds on the clock! The vote will end in ${time} seconds.
 			`);
         } else {
-            const newVote: IMusicVote = {
+            const newVote: MusicVoteType = {
                 count: 1,
                 users: [msg.author.id],
                 queue,
@@ -125,7 +125,7 @@ export default class StopMusicCommand extends Command {
         }
     }
 
-    private setTimeout (vote: IMusicVote) {
+    private setTimeout (vote: MusicVoteType) {
         const time = vote.start + 15000 - Date.now() + (vote.count - 1) * 5000;
 
         clearTimeout(vote.timeout);
@@ -139,7 +139,7 @@ export default class StopMusicCommand extends Command {
         return roundNumber(time / 1000);
     }
 
-    private stop (guild: CommandoGuild, queue: IMusicQueue) {
+    private stop (guild: CommandoGuild, queue: MusicQueueType) {
         if (this.votes.has(guild.id)) {
             clearTimeout(this.votes.get(guild.id).timeout);
             this.votes.delete(guild.id);

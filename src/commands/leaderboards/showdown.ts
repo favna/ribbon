@@ -10,12 +10,11 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
-import { stripIndents } from 'common-tags';
-import Fuse from 'fuse.js';
+import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { oneLine, stripIndents } from 'common-tags';
+import moment from 'moment';
 import fetch from 'node-fetch';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
-import { TierAliases } from '../../data/dex';
 
 export default class ShowdownCommand extends Command {
     constructor (client: CommandoClient) {
@@ -36,8 +35,7 @@ export default class ShowdownCommand extends Command {
                 {
                     key: 'tier',
                     prompt: 'Respond with the Showdown tier',
-                    type: 'string',
-                    parse: (p: string) => p.toLowerCase(),
+                    type: 'sdtier',
                 }
             ],
         });
@@ -46,18 +44,7 @@ export default class ShowdownCommand extends Command {
     public async run (msg: CommandoMessage, { tier }: { tier: string }) {
         try {
             startTyping(msg);
-            const fsoptions: Fuse.FuseOptions<any> = {
-                shouldSort: true,
-                keys: [{ name: 'alias', getfn: t => t.alias, weight: 1 }],
-                location: 0,
-                distance: 100,
-                threshold: 0.6,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
-            };
-            const fuseTable = new Fuse(TierAliases, fsoptions);
-            const results = fuseTable.search(tier);
-            const ladders = await fetch(`https://pokemonshowdown.com/ladder/${results[0].tier}.json`);
+            const ladders = await fetch(`https://pokemonshowdown.com/ladder/${tier}.json`);
             const json = await ladders.json();
             const data = {
                 elo: json.toplist.map((e: any) => roundNumber(e.elo)).slice(0, 10),
@@ -70,7 +57,7 @@ export default class ShowdownCommand extends Command {
             showdownEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setThumbnail(`${ASSET_BASE_PATH}/ribbon/showdown.png`)
-                .setTitle(`Pokemon Showdown ${results[0].tier} Leaderboard`);
+                .setTitle(`Pokemon Showdown ${tier} Leaderboard`);
 
             for (const rank in data.usernames) {
                 showdownEmbed.addField(
@@ -92,24 +79,18 @@ export default class ShowdownCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.say(stripIndents`
-                __**Unknown tier, has to be one of the following**__
-                \`\`\`
-                ╔════════════════╤══════════╤════════════╗
-                ║ random battles │ randdubs │ ou         ║
-                ╟────────────────┼──────────┼────────────╢
-                ║ uber           │ uu       │ ru         ║
-                ╟────────────────┼──────────┼────────────╢
-                ║ nu             │ pu       │ lc         ║
-                ╟────────────────┼──────────┼────────────╢
-                ║ mono           │ ag       │ double     ║
-                ╟────────────────┼──────────┼────────────╢
-                ║ vgc            │ hackmons │ 1v1        ║
-                ╟────────────────┼──────────┼────────────╢
-                ║ mega           │ aaa      │ anyability ║
-                ╚════════════════╧══════════╧════════════╝
-                \`\`\`
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+
+            channel.send(stripIndents`
+                <@${this.client.owners[0].id}> Error occurred in \`coin\` command!
+                **Server:** ${msg.guild.name} (${msg.guild.id})
+                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                **Error Message:** ${err}
             `);
+
+            return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
+                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
     }
 }

@@ -28,7 +28,7 @@ import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, timeparseHelper } from '../../components';
 
 export default class TimerAddCommand extends Command {
     constructor (client: CommandoClient) {
@@ -153,7 +153,7 @@ export default class TimerAddCommand extends Command {
                     **Server:** ${msg.guild.name} (${msg.guild.id})
                     **Author:** ${msg.author.tag} (${msg.author.id})
                     **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-                    **Interval:** ${ms(interval, { long: true })}
+                    **Interval:** ${timeparseHelper(interval, { long: true })}
                     **Channel:** ${channel.name} (${channel.id})>
                     **Message:** ${content}
                     **Error Message:** ${err}
@@ -169,7 +169,7 @@ export default class TimerAddCommand extends Command {
             .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** Timed message stored
-                **Interval:** ${ms(interval, { long: true })}
+                **Interval:** ${timeparseHelper(interval, { long: true })}
                 **Channel:** <#${timerChannel.id}>
                 **Message:** ${content}`
             )

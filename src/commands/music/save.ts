@@ -10,10 +10,10 @@
 import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IMusicCommand, IMusicQueue, Song, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IMusicCommand, MusicQueueType, Song, startTyping, stopTyping } from '../../components';
 
 export default class SaveQueueCommand extends Command {
-    private songQueue: Map<string, IMusicQueue>;
+    private songQueue: Map<string, MusicQueueType>;
 
     constructor (client: CommandoClient) {
         super(client, {

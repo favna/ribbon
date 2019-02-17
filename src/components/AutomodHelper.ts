@@ -1,13 +1,7 @@
-/**
- * @file Ribbon Automod - Automod module for Ribbon
- * @author Jeroen Claassens (favna) <support@favna.xyz>
- * @copyright © 2017-2018 Favna
- */
-
 import { CommandoClient, CommandoMessage } from 'awesome-commando';
 import levenshtein from 'fast-levenshtein';
 import moment from 'moment';
-import { countCaps, countEmojis, countMentions, numberBetween } from './util';
+import { countCaps, countEmojis, countMentions, numberBetween } from './Utils';
 
 export const badwords = (msg: CommandoMessage, words: string[], client: CommandoClient) => {
     if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES') || !words || !words.length) {

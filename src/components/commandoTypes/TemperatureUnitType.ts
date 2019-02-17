@@ -1,6 +1,6 @@
 import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
-import { TemperatureUnits } from '../constants';
+import { TemperatureUnits } from '../Constants';
 
 export default class TemperatureUnitType extends ArgumentType {
     constructor (client: CommandoClient) {

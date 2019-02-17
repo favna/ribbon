@@ -15,7 +15,7 @@ import { MessageEmbed } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse from 'fuse.js';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, globalObjectsMap, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, DjsDocsClassType, DjsDocsTypdefType, globalObjectsMap, startTyping, stopTyping } from '../../components';
 
 export default class DocsCommand extends Command {
     private readonly docs: any;
@@ -66,14 +66,9 @@ export default class DocsCommand extends Command {
                     ? 'commando/blob/master'
                     : `discord.js/blob/${version}`
                 }`;
-            const docOptions: Fuse.FuseOptions<any> = {
-                shouldSort: true,
-                keys: [{ name: 'name', getfn: t => t.name, weight: 1 }],
-                location: 0,
-                distance: 100,
+            const docOptions: Fuse.FuseOptions<DjsDocsClassType & DjsDocsTypdefType> = {
+                keys: ['name'],
                 threshold: 0.3,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
             };
             const input = {
                 main: query[0],
@@ -82,7 +77,7 @@ export default class DocsCommand extends Command {
             const docsFuse = new Fuse(docs.classes.concat(docs.typedefs), docOptions);
             const docsEmbed = new MessageEmbed();
             const docsSearch = docsFuse.search(input.main);
-            const hit = docsSearch[0];
+            const hit: DjsDocsClassType & DjsDocsTypdefType = docsSearch[0] as DjsDocsClassType & DjsDocsTypdefType;
 
             docsEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
@@ -96,7 +91,7 @@ export default class DocsCommand extends Command {
             if (input.sub) {
                 const subOptions: Fuse.FuseOptions<any> = {
                     shouldSort: true,
-                    keys: [{ name: 'name', getfn: t => t.name, weight: 1 }],
+                    keys: ['name'],
                     location: 5,
                     distance: 0,
                     threshold: 0.2,

@@ -16,7 +16,7 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeItem, IPokeItemAliases, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeItemAliases, PokeItemDetailsType, startTyping, stopTyping } from '../../components';
 import { BattleItems, ItemAliases } from '../../data/dex';
 
 export default class ItemCommand extends Command {
@@ -48,19 +48,9 @@ export default class ItemCommand extends Command {
     public run (msg: CommandoMessage, { item }: { item: string }) {
         try {
             startTyping(msg);
-            const itemOptions: Fuse.FuseOptions<IPokeItem & IPokeItemAliases> = {
-                shouldSort: true,
-                keys: [
-                    { name: 'alias', getfn: t => t.alias, weight: 1 },
-                    { name: 'item', getfn: t => t.item, weight: 1 },
-                    { name: 'id', getfn: t => t.id, weight: 1 },
-                    { name: 'name', getfn: t => t.name, weight: 1 }
-                ],
-                location: 0,
-                distance: 100,
+            const itemOptions: Fuse.FuseOptions<PokeItemDetailsType & IPokeItemAliases> = {
+                keys: ['alias', 'item', 'id', 'name'],
                 threshold: 0.3,
-                maxPatternLength: 32,
-                minMatchCharLength: 1,
             };
             const aliasFuse = new Fuse(ItemAliases, itemOptions);
             const itemFuse = new Fuse(BattleItems, itemOptions);

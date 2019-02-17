@@ -13,7 +13,7 @@ import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { deleteCommandMessages, ITimerListRow, ms, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, startTyping, stopTyping, timeparseHelper, TimerType } from '../../components';
 
 export default class TimerListCommand extends Command {
     constructor (client: CommandoClient) {
@@ -38,13 +38,13 @@ export default class TimerListCommand extends Command {
 
         try {
             startTyping(msg);
-            const list: ITimerListRow[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
+            const list: TimerType[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
             let body = '';
 
-            list.forEach((row: ITimerListRow) =>
+            list.forEach((row: TimerType) =>
                 body += `${stripIndents`
                     **id:** ${row.id}
-                    **interval:** ${ms(row.interval, { long: true })}
+                    **interval:** ${timeparseHelper(row.interval, { long: true })}
                     **channel:** <#${row.channel}>
                     **content:** ${row.content}
                     **last sent at:** ${moment(row.lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}

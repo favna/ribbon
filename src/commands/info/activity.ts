@@ -20,11 +20,12 @@ import {
     capitalizeFirstLetter,
     currencyMap,
     DEFAULT_EMBED_COLOR,
-    deleteCommandMessages, DiscordGameDevPub,
-    EmbedFieldSimple,
-    IDiscordGameParsed,
-    IDiscordGameSku,
-    IDiscordStoreGameData,
+    deleteCommandMessages,
+    DiscordGameDevType,
+    DiscordGameParsedType,
+    DiscordGameSKUType,
+    DiscordStoreGameType,
+    SimpleEmbedFieldType,
     startTyping,
     stopTyping,
 } from '../../components';
@@ -65,7 +66,7 @@ export default class ActivityCommand extends Command {
         return str.slice(-4);
     }
 
-    private static checkDeviceStatus (member: GuildMember): EmbedFieldSimple {
+    private static checkDeviceStatus (member: GuildMember): SimpleEmbedFieldType {
         type ParsedClientStatus = { desktop?: string; mobile?: string; web?: string; };
 
         const status = member.presence.clientStatus;
@@ -113,16 +114,16 @@ export default class ActivityCommand extends Command {
             const gameList = await games.json();
 
             let isDiscordStoreGame: boolean = false;
-            let discordGameData: IDiscordGameParsed = { id: '', icon: '' };
+            let discordGameData: DiscordGameParsedType = { id: '', icon: '' };
 
             for (const game of gameList) {
                 if (game.name === activity.name) {
                     discordGameData = { id: game.id, icon: game.icon };
 
-                    const skuId = game.third_party_skus.filter((y: IDiscordGameSku) => y.distributor === 'discord')[0].sku;
+                    const skuId = game.third_party_skus.filter((y: DiscordGameSKUType) => y.distributor === 'discord')[0].sku;
 
                     const storeCheck = await fetch(`https://canary.discordapp.com/api/v6/store/published-listings/skus/${skuId}`);
-                    const storeData: IDiscordStoreGameData = await storeCheck.json();
+                    const storeData: DiscordStoreGameType = await storeCheck.json();
 
                     isDiscordStoreGame = !storeData.code;
 
@@ -132,8 +133,8 @@ export default class ActivityCommand extends Command {
                             icon: game.icon,
                             name: storeData.sku.name,
                             store_link: `https://discordapp.com/store/skus/${skuId}`,
-                            developers: game.developers.map((developer: DiscordGameDevPub) => developer.name),
-                            publishers: game.publishers.map((publisher: DiscordGameDevPub) => publisher.name),
+                            developers: game.developers.map((developer: DiscordGameDevType) => developer.name),
+                            publishers: game.publishers.map((publisher: DiscordGameDevType) => publisher.name),
                             summary: storeData.summary,
                             price: `${currencyMap(storeData.sku.price.currency)}${String(storeData.sku.price.amount).slice(0, 2)}.${String(storeData.sku.price.amount).slice(2)}`,
                             thumbnail: `https://cdn.discordapp.com/app-assets/${game.id}/store/${storeData.thumbnail.id}.png?${stringify({ size: 1024 })}`,

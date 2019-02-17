@@ -14,7 +14,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
-import { deleteCommandMessages, ICountdownListRow, startTyping, stopTyping } from '../../components';
+import { CountdownType, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CountDownList extends Command {
     constructor (client: CommandoClient) {
@@ -39,10 +39,10 @@ export default class CountDownList extends Command {
 
         try {
             startTyping(msg);
-            const list: ICountdownListRow[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
+            const list: CountdownType[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
             let body: string = '';
 
-            list.forEach((row: ICountdownListRow) =>
+            list.forEach((row: CountdownType) =>
                 body += `${stripIndents`
                     **id:** ${row.id}
                     **Event at:** ${moment(row.datetime).format('YYYY-MM-DD HH:mm')}

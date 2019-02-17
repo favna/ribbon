@@ -13,7 +13,7 @@ import Database from 'better-sqlite3';
 import { stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { deleteCommandMessages, ICopyPastaListObject, startTyping, stopTyping } from '../../components';
+import { CopypastaType, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CopyPastaListCommand extends Command {
     constructor (client: CommandoClient) {
@@ -37,12 +37,12 @@ export default class CopyPastaListCommand extends Command {
         try {
             startTyping(msg);
 
-            const list: ICopyPastaListObject[] = conn.prepare(`SELECT * FROM "${msg.guild.id}";`).all();
+            const list: CopypastaType[] = conn.prepare(`SELECT * FROM "${msg.guild.id}";`).all();
             if (!list.length) throw new Error('no_pastas');
 
             let body = '';
 
-            list.forEach((row: ICopyPastaListObject) =>
+            list.forEach((row: CopypastaType) =>
                 body += `${stripIndents`
                     **id:** ${row.id}
                     **name:** ${row.name}`}

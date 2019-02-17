@@ -18,7 +18,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import dym from 'didyoumean2';
 import moment from 'moment';
 import path from 'path';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, ICopyPastaListObject, startTyping, stopTyping } from '../../components';
+import { CopypastaType, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CopyPastaCommand extends Command {
     constructor (client: CommandoClient) {
@@ -52,7 +52,7 @@ export default class CopyPastaCommand extends Command {
 
         try {
             startTyping(msg);
-            const query: ICopyPastaListObject = conn
+            const query: CopypastaType = conn
                 .prepare(`SELECT * FROM "${msg.guild.id}" WHERE name = ?;`)
                 .get(name);
 
@@ -91,7 +91,7 @@ export default class CopyPastaCommand extends Command {
                 return msg.embed(pastaEmbed);
             }
 
-            const maybe = dym(name, conn.prepare(`SELECT name FROM "${msg.guild.id}";`).all().map((a: ICopyPastaListObject) => a.name), { deburr: true });
+            const maybe = dym(name, conn.prepare(`SELECT name FROM "${msg.guild.id}";`).all().map((a: CopypastaType) => a.name), { deburr: true });
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

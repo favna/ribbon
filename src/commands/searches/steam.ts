@@ -15,7 +15,7 @@ import { stringify } from 'awesome-querystring';
 import cheerio from 'cheerio';
 import fetch from 'node-fetch';
 import { unescape } from 'unescape-es6';
-import { currencyMap, DEFAULT_EMBED_COLOR, deleteCommandMessages, ISteamGenre, startTyping, stopTyping } from '../../components';
+import { currencyMap, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, SteamGenreType, stopTyping } from '../../components';
 
 export default class SteamCommand extends Command {
     constructor (client: CommandoClient) {
@@ -70,7 +70,7 @@ export default class SteamCommand extends Command {
             if (steamData.platforms.mac) platforms.push('MacOS');
             if (steamData.platforms.linux) platforms.push('Linux');
 
-            steamData.genres.forEach((genre: ISteamGenre) => {
+            steamData.genres.forEach((genre: SteamGenreType) => {
                 genres.push(genre.description);
             });
 

@@ -20,7 +20,7 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, Message, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { deleteCommandMessages, modLogMessage, ms, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, timeparseHelper } from '../../components';
 
 export default class MuteCommand extends Command {
     constructor (client: CommandoClient) {
@@ -103,7 +103,7 @@ export default class MuteCommand extends Command {
                     .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
                     .setDescription(stripIndents`
                         **Action:** Muted <@${member.id}>
-                        **Duration:** ${duration ? ms(duration, { long: true }) : 'Until manually removed'}`
+                        **Duration:** ${duration ? timeparseHelper(duration, { long: true }) : 'Until manually removed'}`
                     )
                     .setTimestamp();
 
@@ -147,7 +147,7 @@ export default class MuteCommand extends Command {
                     **Server:** ${msg.guild.name} (${msg.guild.id})
                     **Author:** ${msg.author.tag} (${msg.author.id})
                     **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-                    **Input:** \`${member.user.username} (${member.id})\` ${duration ? ` || \`${ms(duration, { long: true })}` : null}
+                    **Input:** \`${member.user.username} (${member.id})\` ${duration ? ` || \`${timeparseHelper(duration, { long: true })}` : null}
                     **Error Message:** ${err}
                 `);
 

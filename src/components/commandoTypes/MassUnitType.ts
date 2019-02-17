@@ -1,6 +1,6 @@
 import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
-import { MassUnits } from '../constants';
+import { MassUnits } from '../Constants';
 
 export default class MassUnitType extends ArgumentType {
     constructor (client: CommandoClient) {

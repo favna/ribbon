@@ -25,7 +25,7 @@ import { stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, ITCGProps, startTyping, stopTyping } from '../../components';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, startTyping, stopTyping, TCGPropsType } from '../../components';
 
 export default class PokemonTCGCommand extends Command {
     constructor (client: CommandoClient) {
@@ -66,7 +66,7 @@ export default class PokemonTCGCommand extends Command {
     public async run (msg: CommandoMessage, { props }: { props: string[] }) {
         startTyping(msg);
         const command = msg;
-        const properties: ITCGProps = {
+        const properties: TCGPropsType = {
             name: '',
             types: '',
             subtype: '',

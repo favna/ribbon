@@ -13,10 +13,10 @@
 
 import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { oneLine, stripIndents } from 'common-tags';
-import { deleteCommandMessages, IMusicCommand, IMusicQueue, PAGINATED_ITEMS, Song, startTyping, stopTyping } from '../../components';
+import { deleteCommandMessages, IMusicCommand, MusicQueueType, PAGINATED_ITEMS, Song, startTyping, stopTyping } from '../../components';
 
 export default class ViewQueueCommand extends Command {
-    private songQueue: Map<string, IMusicQueue>;
+    private songQueue: Map<string, MusicQueueType>;
 
     constructor (client: CommandoClient) {
         super(client, {
