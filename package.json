@@ -51,7 +51,7 @@
     "gulp-replace": "^1.0.0",
     "jimp": "^0.6.0",
     "libsodium-wrappers": "^0.7.3",
-    "moment": "favna/moment#fix/typing_declaration",
+    "moment": "^2.24.0",
     "moment-duration-format": "^2.2.2",
     "nintendo-switch-eshop": "^2.0.1",
     "node-fetch": "^2.3.0",
