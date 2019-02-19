@@ -39,10 +39,7 @@ export default class GoogleCommand extends Command {
                     key: 'query',
                     prompt: 'What do you want to google?',
                     type: 'string',
-                    parse: (p: string) => p.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '')
-                        .split(' ')
-                        .map(uriComponent => encodeURIComponent(uriComponent))
-                        .join('+'),
+                    parse: (p: string) => p.replace(/(who|what|when|where) ?(was|is|were|are) ?/gi, '').replace(/ /g, '+'),
                 }
             ],
         });
