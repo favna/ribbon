@@ -51,6 +51,8 @@ export default class ImageCommand extends Command {
         const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
         const imageEmbed = new MessageEmbed();
 
+        imageEmbed.setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR);
+
         try {
             startTyping(msg);
             const imageSearch = await fetch(
@@ -65,7 +67,6 @@ export default class ImageCommand extends Command {
             const imageData = await imageSearch.json();
 
             imageEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setImage(imageData.items[0].link)
                 .setFooter(`Search query: "${query.replace(/\+/g, ' ')}"`);
 
@@ -93,9 +94,10 @@ export default class ImageCommand extends Command {
                 .attr('src');
 
             imageEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setTitle(`Google Search Result for ${query}`)
                 .setImage(src)
-                .setFooter(`Search query: "${query}"`);
+                .setURL(src)
+                .setFooter(`If you see this please contact ${this.client.owners[0].tag} (${this.client.owners[0].id}) as there is likely some issue with the Google search command`);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

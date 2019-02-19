@@ -17,7 +17,7 @@ import { stringify } from 'awesome-querystring';
 import cheerio from 'cheerio';
 import { oneLine } from 'common-tags';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
+import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class GoogleCommand extends Command {
     constructor (client: CommandoClient) {
@@ -52,23 +52,22 @@ export default class GoogleCommand extends Command {
         const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
         const googleEmbed = new MessageEmbed();
 
-        googleEmbed.setColor('#3E80F2');
+        googleEmbed.setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR);
+        startTyping(msg);
 
         try {
-            startTyping(msg);
-
             const knowledgeSearch = await fetch(
                 `https://kgsearch.googleapis.com/v1/entities:search?${stringify(
                     {
                         query,
-                        indent: true,
+                        indent: 'True',
                         key: process.env.GOOGLE_API_KEY,
                         limit: 1,
                     }
-                )}`
+                ).replace(/%2B/gm, '+')}`
             );
             const knowledgeData = await knowledgeSearch.json();
-            const { result } = knowledgeData.itemListElement[0];
+            const result = knowledgeData.itemListElement[0].result;
 
             let types = result['@type'].map((t: string) => t.replace(/([a-z])([A-Z])/g, '$1 $2'));
             if (types.length > 1) types = types.filter((t: string) => t !== 'Thing');
@@ -108,11 +107,11 @@ export default class GoogleCommand extends Command {
                 .setURL(item.link)
                 .setDescription(item.snippet);
 
-            if (
-                (nsfwAllowed && item.pagemap.cse_image[0].src) ||
-                (!msg.guild.settings.get('blockUnexplicitNsfw', true) && item.pagemap.cse_image[0].src)
-            ) {
-                googleEmbed.setImage(item.pagemap.cse_image[0].src);
+            if (item.pagemap.cse_image) {
+                if ((nsfwAllowed && item.pagemap.cse_image[0].src) ||
+                    (!msg.guild.settings.get('blockUnexplicitNsfw', true) && item.pagemap.cse_image[0].src)) {
+                    googleEmbed.setImage(item.pagemap.cse_image[0].src);
+                }
             }
 
             deleteCommandMessages(msg, this.client);
@@ -145,7 +144,10 @@ export default class GoogleCommand extends Command {
                 .setTitle(`Google Search Result for ${query}`)
                 .setDescription(href)
                 .setURL(href)
-                .setFooter(`If you see this please contact ${this.client.owners[0].tag} (${this.client.owners[0].id}) as there are issues with the Google API key`);
+                .setFooter(`If you see this please contact ${this.client.owners[0].tag} (${this.client.owners[0].id}) as there is likely some issue with the Google search command`);
+
+            deleteCommandMessages(msg, this.client);
+            stopTyping(msg);
 
             return msg.embed(googleEmbed);
         } catch (err) {
