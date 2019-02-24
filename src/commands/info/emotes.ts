@@ -28,12 +28,22 @@ export default class EmotesCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage) {
+    private static chunker (array: string[], size: number): string[][] {
+        const chunkedArray: string[][] = [[]];
+
+        do {
+            chunkedArray.push(array.splice(0, size));
+        } while (array.length > 0);
+        chunkedArray.shift();
+
+        return chunkedArray;
+    }
+
+    public async run (msg: CommandoMessage) {
         startTyping(msg);
-        const embed = new MessageEmbed();
+        const emotesEmbed = new MessageEmbed();
         const animEmotes: string[] = [];
         const staticEmotes: string[] = [];
-
         let description = '';
 
         msg.guild.emojis.forEach(emote => {
@@ -42,19 +52,39 @@ export default class EmotesCommand extends Command {
                 : staticEmotes.push(`<:${emote.name}:${emote.id}>`);
         });
 
-        embed
+        emotesEmbed
             .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
             .setAuthor(`${staticEmotes.length + animEmotes.length} ${msg.guild.name} Emotes`, msg.guild.iconURL({ format: 'png' }))
             .setTimestamp();
 
+        if (staticEmotes.length >= 40 || animEmotes.length >= 40) {
+            const chunkedStaticEmotes = EmotesCommand.chunker(staticEmotes, 50);
+            const chunkedAnimatedEmotes = EmotesCommand.chunker(animEmotes, 50);
+            emotesEmbed.setDescription('Woaw you got so many emotes I\'ll have to split them across a few messages!');
+
+            await msg.embed(emotesEmbed);
+            await msg.say('**__Static Emotes__**');
+            for (const chunk of chunkedStaticEmotes) {
+                await msg.say(chunk.join(' '));
+            }
+
+            await msg.say('**__Animated Emotes__**');
+            for (const chunk of chunkedAnimatedEmotes) {
+                await msg.say(chunk.join(' '));
+            }
+            stopTyping(msg);
+
+            return null;
+        }
+
         description += staticEmotes.length !== 0 ? `__**${staticEmotes.length} Static Emotes**__\n${staticEmotes.join('')}` : '';
         description += animEmotes.length !== 0 ? `\n\n__**${animEmotes.length} Animated Emotes**__\n${animEmotes.join('')}` : '';
 
-        embed.setDescription(description);
+        emotesEmbed.setDescription(description);
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
-        return msg.embed(embed);
+        return msg.embed(emotesEmbed);
     }
 }
