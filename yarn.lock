@@ -910,11 +910,6 @@
   resolved "https://registry.yarnpkg.com/@types/common-tags/-/common-tags-1.8.0.tgz#79d55e748d730b997be5b7fce4b74488d8b26a6b"
   integrity sha512-htRqZr5qn8EzMelhX/Xmx142z218lLyGaeZ3YR8jlze4TATRU9huKKvuBmAJEW4LCC4pnY1N6JAm6p85fMHjhg==
 
-"@types/country-data@^0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@types/country-data/-/country-data-0.0.0.tgz#6f5563cae3d148780c5b6539803a29bd93f8f1a1"
-  integrity sha512-lIxCk6G7AwmUagQ4gIQGxUBnvAq664prFD9nSAz6dgd1XmBXBtZABV/op+QsJsIyaP1GZsf/iXhYKHX3azSRCw==
-
 "@types/dotenv@^6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-6.1.0.tgz#fba2bfd1f28a46eadaa049f3313ebb89bdedfc53"
@@ -956,7 +951,7 @@
   dependencies:
     moment ">=2.14.0"
 
-"@types/node-fetch@^2.1.4", "@types/node-fetch@^2.1.6":
+"@types/node-fetch@^2.1.6":
   version "2.1.6"
   resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.1.6.tgz#4326288b49f352a142f03c63526ebce0f4c50877"
   integrity sha512-Hv1jgh3pfpUEl2F2mqUd1AfLSk1YbUCeBJFaP36t7esAO617dErqdxWb5cdG2NfJGOofkmBW36fdx0dVewxDRg==
@@ -2015,7 +2010,7 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
-country-data@0.0.31:
+country-data@^0.0.31:
   version "0.0.31"
   resolved "https://registry.yarnpkg.com/country-data/-/country-data-0.0.31.tgz#80966b8e1d147fa6d6a589d32933f8793774956d"
   integrity sha1-gJZrjh0Uf6bWpYnTKTP4eTd0lW0=
@@ -4748,15 +4743,13 @@ nimnjs@^1.3.2:
     nimn-date-parser "^1.0.0"
     nimn_schema_builder "^1.0.0"
 
-nintendo-switch-eshop@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/nintendo-switch-eshop/-/nintendo-switch-eshop-2.0.1.tgz#bd19bc20ef35581ef53188ac27df44e1441567ba"
-  integrity sha512-zWq0LZYOLCf0LSZxDyuK2KG+E6DspKSQpvEHoNX0DYr46GAG/DtWpQbhwoYpwfL3dZr7aOHGhTN6Q34ecQByCw==
+nintendo-switch-eshop@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/nintendo-switch-eshop/-/nintendo-switch-eshop-2.1.0.tgz#39531347ba2a5c4fd79aca6a9045091fd8c4fe22"
+  integrity sha512-NBGRadnIQpOqcZKN1f7wtGX+ZK0iylFp1ax/HFXOV3290/0sJYaj0nXNaefIJGp7eBHYV2MDmfIkZEylmXxGaQ==
   dependencies:
-    "@types/country-data" "^0.0.0"
-    "@types/node-fetch" "^2.1.4"
     awesome-querystring "^1.1.5"
-    country-data "0.0.31"
+    country-data "^0.0.31"
     fast-xml-parser "^3.12.12"
     node-fetch "^2.3.0"
 
