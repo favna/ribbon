@@ -5,16 +5,12 @@ import { default as uglify } from 'gulp-uglify-es';
 
 const compileSingleToJavaScript = (done) => {
     if (!argv.src) {
-        console.group('error log');
-        console.error('You have to supply a comma separated list of source files to compile');
-        console.error('for example');
-        console.error('./src/commands/automod/badwords.ts');
-        console.error('./src/commands/automod/badwords.ts;./src/commands/automod/duptext.ts');
-        console.groupEnd();
+        console.error('At least 1 file has to be specified with the --src argument, f.e. --src ./src/commands/automod/badwords.ts')
+        console.error('Specify multiple files by repeating the structure: --src ./src/commands/automod/badwords.ts --src ./src/commands/automod/duptext.ts')
         return done();
     }
 
-    const targetFiles = argv.src.split(',');
+    const targetFiles = argv.src;
 
     for (const file of targetFiles) {
         const tsProject = gulpTs.createProject('./tsconfig.json');
