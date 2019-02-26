@@ -910,6 +910,11 @@
   resolved "https://registry.yarnpkg.com/@types/common-tags/-/common-tags-1.8.0.tgz#79d55e748d730b997be5b7fce4b74488d8b26a6b"
   integrity sha512-htRqZr5qn8EzMelhX/Xmx142z218lLyGaeZ3YR8jlze4TATRU9huKKvuBmAJEW4LCC4pnY1N6JAm6p85fMHjhg==
 
+"@types/country-data@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@types/country-data/-/country-data-0.0.0.tgz#6f5563cae3d148780c5b6539803a29bd93f8f1a1"
+  integrity sha512-lIxCk6G7AwmUagQ4gIQGxUBnvAq664prFD9nSAz6dgd1XmBXBtZABV/op+QsJsIyaP1GZsf/iXhYKHX3azSRCw==
+
 "@types/dotenv@^6.1.0":
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-6.1.0.tgz#fba2bfd1f28a46eadaa049f3313ebb89bdedfc53"
@@ -4743,11 +4748,12 @@ nimnjs@^1.3.2:
     nimn-date-parser "^1.0.0"
     nimn_schema_builder "^1.0.0"
 
-nintendo-switch-eshop@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/nintendo-switch-eshop/-/nintendo-switch-eshop-2.1.0.tgz#39531347ba2a5c4fd79aca6a9045091fd8c4fe22"
-  integrity sha512-NBGRadnIQpOqcZKN1f7wtGX+ZK0iylFp1ax/HFXOV3290/0sJYaj0nXNaefIJGp7eBHYV2MDmfIkZEylmXxGaQ==
+nintendo-switch-eshop@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/nintendo-switch-eshop/-/nintendo-switch-eshop-2.1.1.tgz#4db7fa5d120d372f522fb858243e4187d7dc8997"
+  integrity sha512-n/4l7UKubdESUyT3xUF6DTjqu1fsQrcjsykPfPQl5k28uMDdBC0Fys3iPf1kqFpaugApE2aKPKS0PKE7FKvIuA==
   dependencies:
+    "@types/country-data" "^0.0.0"
     awesome-querystring "^1.1.5"
     country-data "^0.0.31"
     fast-xml-parser "^3.12.12"
