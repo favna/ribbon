@@ -33,7 +33,7 @@
         "replace:ts-flag": "replace --silent \"typescript: true,\" \"typescript: false,\" ./dist/Ribbon.js",
         "replace:commands-path": "replace --silent \".registerCommandsIn\\({\\n\\s+dirname.+\\n\\s+filter.+\\n\\s+}\\);\" \".registerCommandsIn(path_1.default.join(__dirname, 'commands'));\" ./dist/Ribbon.js",
         "replace:types-path": "replace --silent \".registerTypesIn\\({\\n\\s+dirname.+\\n\\s+filter.+\\n\\s+}\\)\" \".registerTypesIn(path_1.default.join(__dirname, 'components/commandoTypes'))\" ./dist/Ribbon.js",
-        "replace": "concurrently \"yarn replace:ts-flag\" \"yarn replace:commands-path\" \"yarn replace:types-path\"",
+        "replace": "yarn replace:ts-flag && yarn replace:commands-path && yarn replace:types-path",
         "predocs": "yarn docs:clean && yarn lint && yarn docs:build",
         "docs": "concurrently \"yarn docs:md\" \"yarn docs:json\"",
         "postdocs": "yarn docs:clean",
