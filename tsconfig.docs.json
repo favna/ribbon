@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"outDir": "docsbuild/",
+		"rootDir": "./src",
+		"forceConsistentCasingInFileNames": true,
+		"esModuleInterop": true,
+		"lib": ["esnext.array", "es2018", "dom"],
+		"target": "es6",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"newLine": "lf",
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noUnusedLocals": true,
+		"removeComments": false,
+		"resolveJsonModule": true
+	},
+	"include": ["src/**/*.ts"],
+	"exclude": ["node_modules", "dist", "src/**/*.js"]
+}

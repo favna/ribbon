@@ -15,7 +15,9 @@
 		"noImplicitThis": true,
 		"noUnusedLocals": true,
 		"removeComments": true,
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"declaration": true,
+		"declarationDir": "./dist/typings/"
 	},
 	"include": ["src/**/*.ts"],
 	"exclude": ["node_modules", "dist", "src/**/*.js"]
