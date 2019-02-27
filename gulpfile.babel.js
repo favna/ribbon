@@ -1,7 +1,7 @@
 import gulp from 'gulp';
 import * as gulpTs from 'gulp-typescript';
 import { argv } from 'yargs';
-import { default as uglify } from 'gulp-uglify-es';
+import terser from 'gulp-terser';
 
 const compileSingleToJavaScript = (done) => {
     if (!argv.src) {
@@ -10,7 +10,7 @@ const compileSingleToJavaScript = (done) => {
         return done();
     }
 
-    const targetFiles = argv.src;
+    const targetFiles = argv.src.constructor === Array ? argv.src : [argv.src];
 
     for (const file of targetFiles) {
         const tsProject = gulpTs.createProject('./tsconfig.json');
@@ -21,7 +21,7 @@ const compileSingleToJavaScript = (done) => {
 
         gulp.src(file)
             .pipe(tsProject())
-            .js.pipe(uglify())
+            .js.pipe(terser({compress: {ecma: 6, drop_console: true}}))
             .pipe(gulp.dest(targetFolder));
     }
 
