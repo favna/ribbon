@@ -31,8 +31,7 @@ export default class Ribbon {
                               'GUILD_INTEGRATIONS_UPDATE', 'GUILD_MEMBER_UPDATE', 'GUILD_ROLE_CREATE',
                               'GUILD_ROLE_DELETE', 'GUILD_ROLE_UPDATE', 'MESSAGE_DELETE_BULK',
                               'MESSAGE_DELETE', 'MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE_ALL',
-                              'MESSAGE_REACTION_REMOVE', 'TYPING_START', 'VOICE_SERVER_UPDATE',
-                              'VOICE_STATE_UPDATE', 'USER_UPDATE', 'WEBHOOKS_UPDATE'
+                              'MESSAGE_REACTION_REMOVE', 'TYPING_START', 'USER_UPDATE', 'WEBHOOKS_UPDATE'
             ],
             messageCacheLifetime: 10 * 60,
             messageSweepInterval: 8 * 60,
