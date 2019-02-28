@@ -357,7 +357,7 @@ const forceStopTyping = (client: CommandoClient) => {
     const allChannels = client.channels;
 
     for (const channel of allChannels.values()) {
-        if (channel.type === 'text' || channel.type === 'dm' || channel.type === 'group') {
+        if (channel.type === 'text' || channel.type === 'dm') {
             if (client.user.typingDurationIn(channel) > 10000) {
                 const typingChannel = channel as TextChannel;
 

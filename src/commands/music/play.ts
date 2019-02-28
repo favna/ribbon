@@ -63,6 +63,54 @@ export default class PlaySongCommand extends Command {
         return this.queueVotes;
     }
 
+    private static getPlaylistID (url: string): string {
+        return parse(url.split('?')[1]).list;
+    }
+
+    private static async getVideoByName (name: string): Promise<string> {
+        try {
+            const request = await fetch(
+                `https://www.googleapis.com/youtube/v3/search?${stringify({
+                    key: process.env.GOOGLE_API_KEY,
+                    maxResults: '1',
+                    part: 'snippet',
+                    q: name,
+                    type: 'video',
+                })}`
+            );
+            const data = await request.json();
+            const video = data.items[0];
+
+            return video.id.videoId;
+        } catch (err) {
+            return null;
+        }
+    }
+
+    private static async getVideo (id: string): Promise<YoutubeVideoType> {
+        try {
+            const request = await fetch(
+                `https://www.googleapis.com/youtube/v3/videos?${stringify({
+                    id,
+                    key: process.env.GOOGLE_API_KEY,
+                    maxResults: 1,
+                    part: 'snippet,contentDetails',
+                })}`
+            );
+
+            const data = await request.json();
+
+            return {
+                durationSeconds: moment.duration(data.items[0].contentDetails.duration).asSeconds(),
+                id: data.items[0].id,
+                kind: data.items[0].kind,
+                title: data.items[0].snippet.title,
+            };
+        } catch (err) {
+            return null;
+        }
+    }
+
     public async run (msg: CommandoMessage, { videoQuery }: { videoQuery: string }) {
         const queue = this.queue.get(msg.guild.id);
 
@@ -87,7 +135,7 @@ export default class PlaySongCommand extends Command {
         if (videoQuery.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
             await statusMsg.edit('obtaining playlist videos... (this can take a while for long lists)');
 
-            const playlist = this.getPlaylistID(videoQuery);
+            const playlist = PlaySongCommand.getPlaylistID(videoQuery);
             const videos = await this.getPlaylistVideos(playlist);
 
             if (!queue) {
@@ -135,10 +183,10 @@ export default class PlaySongCommand extends Command {
         } catch (error) {
             if (/(?:no_video_id)/i.test(error.toString())) {
                 try {
-                    const videoId = await this.getVideoByName(videoQuery);
+                    const videoId = await PlaySongCommand.getVideoByName(videoQuery);
                     if (!videoId) return statusMsg.edit(`${msg.author}, there were no search results.`);
 
-                    const video = await this.getVideo(videoId);
+                    const video = await PlaySongCommand.getVideo(videoId);
                     deleteCommandMessages(msg, this.client);
 
                     this.handleVideo(video, queue, voiceChannel, msg, statusMsg);
@@ -214,7 +262,9 @@ export default class PlaySongCommand extends Command {
                 return null;
             } catch (error) {
                 this.queue.delete(msg.guild.id);
-                statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
+                statusMsg.edit(oneLine`${msg.author}, something went wrong playing music.
+                    Please contact <@${this.client.owners[0].id}> as there is likely something wrong in the code!
+                    Use \`${msg.guild.commandPrefix}invite\` to get an invite to the support server.`);
                 stopTyping(msg);
 
                 return null;
@@ -394,10 +444,6 @@ export default class PlaySongCommand extends Command {
         return queue.playing = true;
     }
 
-    private getPlaylistID (url: string): string {
-        return parse(url.split('?')[1]).list;
-    }
-
     private async getPlaylistVideos (id: string) {
         try {
             const request = await fetch(
@@ -414,28 +460,8 @@ export default class PlaySongCommand extends Command {
             const arr: YoutubeVideoType[] = [];
             const videos = data.items;
 
-            videos.forEach(async (video: YoutubeVideoType) => arr.push(await this.getVideo(video.snippet.resourceId.videoId)));
+            videos.forEach(async (video: YoutubeVideoType) => arr.push(await PlaySongCommand.getVideo(video.snippet.resourceId.videoId)));
             return arr;
-        } catch (err) {
-            return null;
-        }
-    }
-
-    private async getVideoByName (name: string): Promise<string> {
-        try {
-            const request = await fetch(
-                `https://www.googleapis.com/youtube/v3/search?${stringify({
-                    key: process.env.GOOGLE_API_KEY,
-                    maxResults: '1',
-                    part: 'snippet',
-                    q: name,
-                    type: 'video',
-                })}`
-            );
-            const data = await request.json();
-            const video = data.items[0];
-
-            return video.id.videoId;
         } catch (err) {
             return null;
         }
@@ -444,34 +470,10 @@ export default class PlaySongCommand extends Command {
     private getVideoID (url: string): Promise<YoutubeVideoType> {
         try {
             if (/youtu\.be/i.test(url)) {
-                return this.getVideo(url.match(/\/[a-zA-Z0-9-_]+$/i)[0].slice(1));
+                return PlaySongCommand.getVideo(url.match(/\/[a-zA-Z0-9-_]+$/i)[0].slice(1));
             }
 
-            return this.getVideo(parse(url.split('?')[1]).v);
-        } catch (err) {
-            return null;
-        }
-    }
-
-    private async getVideo (id: string): Promise<YoutubeVideoType> {
-        try {
-            const request = await fetch(
-                `https://www.googleapis.com/youtube/v3/videos?${stringify({
-                    id,
-                    key: process.env.GOOGLE_API_KEY,
-                    maxResults: 1,
-                    part: 'snippet,contentDetails',
-                })}`
-            );
-
-            const data = await request.json();
-
-            return {
-                durationSeconds: moment.duration(data.items[0].contentDetails.duration).asSeconds(),
-                id: data.items[0].id,
-                kind: data.items[0].kind,
-                title: data.items[0].snippet.title,
-            };
+            return PlaySongCommand.getVideo(parse(url.split('?')[1]).v);
         } catch (err) {
             return null;
         }
