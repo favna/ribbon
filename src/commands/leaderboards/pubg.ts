@@ -61,7 +61,7 @@ export default class PubgCommand extends Command {
         try {
             startTyping(msg);
 
-            const headers = { Accept: 'application/vnd.api+json', Authorization: `Bearer ${process.env.PUBG_API_KEY}` };
+            const headers = { Accept: 'application/vnd.api+json', Authorization: `Bearer ${(process.env.PUBG_API_KEY as string)}` };
             const seasonReq = await fetch(`https://api.pubg.com/shards/${shard}/seasons`, { headers });
             const seasons = await seasonReq.json();
             const playerReq = await fetch(`https://api.pubg.com/shards/${shard}/players?filter[playerNames]=${user}`, { headers });
@@ -192,7 +192,7 @@ export default class PubgCommand extends Command {
                     `no player found with username \`${user}\` in \`${shard}\``
                 );
             }
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`pubg\` command!

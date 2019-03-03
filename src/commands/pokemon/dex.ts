@@ -81,7 +81,7 @@ export default class DexCommand extends Command {
             const aliasFuse = new Fuse(PokeAliases, pokeoptions);
             const pokeFuse = new Fuse(BattlePokedex, pokeoptions);
             const firstSearch = pokeFuse.search(pokemon);
-            const aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null;
+            const aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : [];
             const pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch;
             const tiers: FormatsJSONType = formats as FormatsJSONType;
             const flavors: FlavorJSONType = entries as FlavorJSONType;
@@ -105,8 +105,9 @@ export default class DexCommand extends Command {
                     ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})`
                     : ''} → ${pokeData.evos} **(${poke.evoLevel})**`;
 
-                if (pokeFuse.search(poke.prevo).length && pokeFuse.search(poke.prevo)[0].prevo) {
-                    pokeData.evos = `\`${capitalizeFirstLetter(pokeFuse.search(poke.prevo)[0].prevo)}\` → ${pokeData.evos}`;
+                if (pokeFuse.search(poke.prevo).length) {
+                    const prevoSearch = pokeFuse.search(poke.prevo)[0].prevo;
+                    if (prevoSearch) pokeData.evos = `\`${capitalizeFirstLetter(prevoSearch)}\` → ${pokeData.evos}`;
                 }
             }
 
@@ -117,10 +118,13 @@ export default class DexCommand extends Command {
 
                 if (poke.evos.length === 1) {
                     if (pokeFuse.search(poke.evos[0]).length && pokeFuse.search(poke.evos[0])[0].evos) {
-                        pokeData.evos = oneLine`${pokeData.evos}
-                        → ${pokeFuse.search(poke.evos[0])[0].evos.map((entry: string) =>
-                            `\`${capitalizeFirstLetter(entry)}\` (${pokeFuse.search(entry)[0].evoLevel})`
-                        ).join(', ')}`;
+                        const evosMap = pokeFuse.search(poke.evos[0])[0].evos;
+                        if (evosMap && evosMap.length) {
+                            pokeData.evos = oneLine`${pokeData.evos}
+                            → ${evosMap.map((entry: string) =>
+                                `\`${capitalizeFirstLetter(entry)}\` (${pokeFuse.search(entry)[0].evoLevel})`
+                            ).join(', ')}`;
+                        }
                     }
                 }
             }
@@ -184,7 +188,7 @@ export default class DexCommand extends Command {
                 .addField('Smogon Tier', pokeData.tier ? pokeData.tier : 'Unknown/Alt form', true)
                 .addField('Height', `${poke.heightm}m`, true)
                 .addField('Weight', `${poke.weightkg}kg`, true)
-                .addField('Egg Groups', poke.eggGroups.join(', '), true);
+                .addField('Egg Groups', poke.eggGroups ? poke.eggGroups.join(', ') : '', true);
             if (poke.otherFormes) dexEmbed.addField('Other Formes', poke.otherFormes.join(', '), true);
             dexEmbed
                 .addField('Evolutionary Line', pokeData.evos, false)
@@ -226,7 +230,7 @@ export default class DexCommand extends Command {
             stopTyping(msg);
 
             if (/(?:no_pokemon)/i.test(err.toString())) return msg.reply(stripIndents`no Pokémon found for \`${pokemon}\``);
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`dex\` command!

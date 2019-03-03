@@ -1,4 +1,5 @@
 import { CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Message } from 'awesome-djs';
 import levenshtein from 'fast-levenshtein';
 import moment from 'moment';
 import { countCaps, countEmojis, countMentions, numberBetween } from './Utils';
@@ -14,7 +15,7 @@ export const duptext = (msg: CommandoMessage, within: number, equals: number, di
     if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
         return false;
     }
-    const authorMessages = msg.channel.messages.filter((m: CommandoMessage) => {
+    const authorMessages = msg.channel.messages.filter((m: Message) => {
         const diff = moment.duration(moment(m.createdTimestamp).diff(moment()));
 
         return (
@@ -29,7 +30,7 @@ export const duptext = (msg: CommandoMessage, within: number, equals: number, di
 
     const msgArray = authorMessages.array();
 
-    msgArray.sort((x: CommandoMessage, y: CommandoMessage) => y.createdTimestamp - x.createdTimestamp);
+    msgArray.sort((x: Message, y: Message) => y.createdTimestamp - x.createdTimestamp);
 
     const levdist = levenshtein.get(
         msgArray[0].cleanContent,
@@ -92,7 +93,7 @@ export const slowmode = (msg: CommandoMessage, within: number, client: CommandoC
     if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
         return false;
     }
-    const authorMessages = msg.channel.messages.filter((m: CommandoMessage) => {
+    const authorMessages = msg.channel.messages.filter((m: Message) => {
         const diff = moment.duration(moment(m.createdTimestamp).diff(moment()));
 
         return (

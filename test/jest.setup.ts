@@ -1,3 +1,5 @@
+/* tslint:disable:no-implicit-dependencies */
+
 import '@babel/polyfill';
 import { config } from 'dotenv';
 import path from 'path';

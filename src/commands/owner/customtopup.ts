@@ -83,7 +83,7 @@ export default class CustomTopUpCommand extends Command {
             return msg.reply('looks like that member has no chips yet');
         } catch (err) {
             stopTyping(msg);
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
             channel.send(stripIndents`
 		        <@${this.client.owners[0].id}> Error occurred in \`customtopup\` command!

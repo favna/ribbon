@@ -165,7 +165,7 @@ export default class FlavorCommand extends Command {
             if (/(?:no_pokemon)/i.test(err.toString())) {
                 return msg.reply(stripIndents`no Pokémon or flavor texts found for \`${pokemon}\``);
             }
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`flavor\` command!

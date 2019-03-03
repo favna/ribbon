@@ -59,7 +59,7 @@ export default class WeatherCommand extends Command {
             const cords = await this.getCords(location);
             const res = await fetch(
                 `https://api.darksky.net/forecast/${
-                    process.env.DARK_SKY_API_KEY
+                    (process.env.DARK_SKY_API_KEY as string)
                     }/${cords.lat},${cords.long}?${stringify({
                     exclude: ['minutely', 'hourly', 'alerts', 'flags'],
                     units: 'si',
@@ -171,7 +171,7 @@ export default class WeatherCommand extends Command {
         const res = await fetch(
             `https://maps.googleapis.com/maps/api/geocode/json?${stringify({
                 address: location,
-                key: process.env.GOOGLE_API_KEY,
+                key: (process.env.GOOGLE_API_KEY as string),
             })}`
         );
         const cords = await res.json();

@@ -1,4 +1,4 @@
-import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { ArgumentType, CommandoClient } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
 import { LengthUnits } from '../Constants';
 
@@ -7,7 +7,7 @@ export default class LengthUnitType extends ArgumentType {
         super(client, 'length');
     }
 
-    public validate (unit: LengthUnits, msg: CommandoMessage, arg: Argument) {
+    public validate (unit: LengthUnits) {
         if (LengthUnits[unit]) return true;
 
         return stripIndents`Has to be one of ${Object.keys(LengthUnits).map(val => `\`${val}\``).join(', ')}

@@ -48,7 +48,7 @@ export default class YouTubeCommand extends Command {
             startTyping(msg);
 
             const tubeSearch = await fetch(`https://www.googleapis.com/youtube/v3/search?${stringify({
-                    key: process.env.GOOGLE_API_KEY,
+                    key: (process.env.GOOGLE_API_KEY as string),
                     maxResults: '1',
                     part: 'snippet',
                     q: query,

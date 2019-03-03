@@ -31,20 +31,23 @@ const searchCache = (moduleName: string, callback: (arg: any) => void) => {
     }
 };
 
-export const decache = (moduleName: string) => {
-    moduleName = find(moduleName);
+export const decache = (moduleName: string | null): void => {
 
-    if (!moduleName) return null;
+    if (moduleName) {
+        moduleName = find(moduleName);
 
-    searchCache(moduleName, mod => {
-        delete require.cache[mod.id];
-    });
+        searchCache(moduleName as string, mod => {
+            delete require.cache[mod.id];
+        });
 
-    return Object.keys((module.constructor as IModuleFunction)._pathCache).forEach(cacheKey => {
-        if (cacheKey.indexOf(moduleName) > 0) {
-            delete (module.constructor as IModuleFunction)._pathCache[cacheKey];
-        }
-    });
+        return Object.keys((module.constructor as IModuleFunction)._pathCache).forEach(cacheKey => {
+            if (cacheKey.indexOf(moduleName as string) > 0) {
+                delete (module.constructor as IModuleFunction)._pathCache[cacheKey];
+            }
+        });
+    }
+
+    return;
 };
 
 interface IModuleFunction extends Function {

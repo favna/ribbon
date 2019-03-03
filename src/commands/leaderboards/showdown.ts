@@ -79,7 +79,7 @@ export default class ShowdownCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`coin\` command!

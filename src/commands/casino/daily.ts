@@ -103,7 +103,7 @@ export default class DailyCommand extends Command {
                         weeklydate: moment().format('YYYY-MM-DD HH:mm'),
                     });
             } else {
-                const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+                const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
                 channel.send(stripIndents`
                     <@${this.client.owners[0].id}> Error occurred in \`daily\` command!

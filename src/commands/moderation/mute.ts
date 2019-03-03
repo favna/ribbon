@@ -140,7 +140,7 @@ export default class MuteCommand extends Command {
                     return msg.reply(stripIndents`an error occurred muting \`${member.displayName}\`.
                         Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
                 }
-                const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+                const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
                 channel.send(stripIndents`
                     <@${this.client.owners[0].id}> Error occurred in \`mute\` command!

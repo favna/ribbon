@@ -1,4 +1,4 @@
-import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { ArgumentType, CommandoClient } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
 import { CoinSide } from '../Constants';
 
@@ -7,7 +7,7 @@ export default class CoinSideType extends ArgumentType {
         super(client, 'coinside');
     }
 
-    public validate (side: CoinSide, msg: CommandoMessage, arg: Argument) {
+    public validate (side: CoinSide) {
         if (CoinSide[side]) return true;
 
         return stripIndents`Has to be one of ${Object.keys(CoinSide).map(val => `\`${val}\``).join(', ')}

@@ -57,8 +57,8 @@ export default class ImageCommand extends Command {
             startTyping(msg);
             const imageSearch = await fetch(
                 `https://www.googleapis.com/customsearch/v1?${stringify({
-                    cx: process.env.IMAGE_KEY,
-                    key: process.env.GOOGLE_API_KEY,
+                    cx: (process.env.IMAGE_KEY as string),
+                    key: (process.env.GOOGLE_API_KEY as string),
                     q: query,
                     safe: nsfwAllowed ? 'off' : 'active',
                     searchType: 'image',

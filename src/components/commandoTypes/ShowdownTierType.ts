@@ -1,4 +1,4 @@
-import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { ArgumentType, CommandoClient } from 'awesome-commando';
 import cheerio from 'cheerio';
 import { stripIndents } from 'common-tags';
 import Fuse from 'fuse.js';
@@ -30,7 +30,7 @@ export default class ShowdownTierType extends ArgumentType {
         return { hasMatch: !!fuseSearch.length, value: fuseSearch.length ? fuseSearch[0].tier : '' };
     }
 
-    public async validate (value: string, msg: CommandoMessage, arg: Argument) {
+    public async validate (value: string) {
         const fuseRes = ShowdownTierType.fuser(value);
         if (fuseRes.hasMatch) value = fuseRes.value;
 

@@ -58,7 +58,7 @@ export default class SteamCommand extends Command {
                 .split('/')[4];
             const steamFetch = await fetch(`https://store.steampowered.com/api/appdetails?${stringify({
                     appids: gameID,
-                    key: process.env.STEAM_API_KEY,
+                    key: (process.env.STEAM_API_KEY as string),
                 })}`, { headers: { 'User-Agent': 'Ribbon Discord Bot (https://github.com/ribbon)' } }
             );
             const steamResponse = await steamFetch.json();

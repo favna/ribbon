@@ -6,6 +6,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { ClientUser } from 'awesome-djs';
 import dym, { ReturnTypeEnums } from 'didyoumean2';
 
 export default class UnknownCommand extends Command {
@@ -26,7 +27,7 @@ export default class UnknownCommand extends Command {
             const commandsAndAliases = this.client.registry.commands.map((command: Command) => command.name).concat(this.client.registry.commands.map((command: Command) => command.aliases).flat());
             const maybe = dym(msg.cleanContent.split(' ')[0], commandsAndAliases, { deburr: true, returnType: ReturnTypeEnums.ALL_SORTED_MATCHES }) as string[];
             const returnStr = [
-                `Unknown command. Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\` or <@${this.client.user.id}> help to view the command list.`,
+                `Unknown command. Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\` or <@${(this.client.user as ClientUser).id}> help to view the command list.`,
                 '',
                 `Server staff (those who can manage other's messages) can disable these replies by using\`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}unknownmessages disable\``
             ];
@@ -35,6 +36,6 @@ export default class UnknownCommand extends Command {
             return msg.reply(returnStr.filter(Boolean).join('\n'));
         }
 
-        return msg.reply(`Unknown command. Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\` or <@${this.client.user.id}> help to view the command list.`);
+        return msg.reply(`Unknown command. Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\` or <@${(this.client.user as ClientUser).id}> help to view the command list.`);
     }
 }

@@ -8,7 +8,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { ClientUser, MessageEmbed } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
@@ -35,7 +35,7 @@ export default class InviteCommand extends Command {
 
         inviteEmbed
             .setTitle('Ribbon by Favna')
-            .setThumbnail(this.client.user.displayAvatarURL({ format: 'png' }))
+            .setThumbnail((this.client.user as ClientUser).displayAvatarURL({ format: 'png' }))
             .setURL('https://favna.xyz/ribbon')
             .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
             .setDescription(stripIndents`Enrich your Discord server with a fully modular Discord bot with many many commands\n

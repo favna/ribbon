@@ -1,11 +1,11 @@
-import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { ArgumentType, CommandoClient } from 'awesome-commando';
 
 export default class StringArrayType extends ArgumentType {
     constructor (client: CommandoClient) {
         super(client, 'stringarray');
     }
 
-    public validate (value: string, msg: CommandoMessage, arg: Argument) {
+    public validate (value: string) {
         if (/([\S ]*,[\S ]*)*/i.test(value) && value.split(',').filter(Boolean).length >= 1) {
             return true;
         }

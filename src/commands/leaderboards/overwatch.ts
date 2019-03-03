@@ -182,7 +182,7 @@ export default class OverwatchCommand extends Command {
             } else if (/(nostats)/i.test(err.toString())) {
                 return msg.reply('player has been found but the player has no statistics logged yet. Heroes never die!');
             }
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`overwatch\` command!

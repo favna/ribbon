@@ -1,4 +1,4 @@
-import { Argument, ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { ArgumentType, CommandoClient } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
 
 export default class TcgPropsType extends ArgumentType {
@@ -6,7 +6,7 @@ export default class TcgPropsType extends ArgumentType {
         super(client, 'tcgprops');
     }
 
-    public validate (value: string, msg: CommandoMessage, arg: Argument): string | true {
+    public validate (value: string): string | true {
         const props: string[] = value.split(' ').filter(Boolean);
 
         if (props.every((prop: string) => ['name', 'types', 'subtype', 'supertype', 'hp'].indexOf(prop) !== -1)) return true;

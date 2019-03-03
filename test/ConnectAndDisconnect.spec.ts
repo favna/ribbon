@@ -14,7 +14,7 @@ test('should connect then disconnect', async () => {
     let readyTracker = false;
 
     client.registry.registerDefaults();
-    await client.login(process.env.TEST_TOKEN);
+    await client.login((process.env.TEST_TOKEN as string));
 
     client.on('ready', () => {
         readyTracker = true;

@@ -52,7 +52,7 @@ export default class TimeCommand extends Command {
                 `http://api.timezonedb.com/v2/get-time-zone?${stringify({
                     by: 'position',
                     format: 'json',
-                    key: process.env.TIMEZONE_DB_API_KEY,
+                    key: (process.env.TIMEZONE_DB_API_KEY as string),
                     lat: cords.lat,
                     lng: cords.long,
                 })}`
@@ -88,7 +88,7 @@ export default class TimeCommand extends Command {
         const res = await fetch(
             `https://maps.googleapis.com/maps/api/geocode/json?${stringify({
                 address: location,
-                key: process.env.GOOGLE_API_KEY,
+                key: (process.env.GOOGLE_API_KEY as string),
             })}`
         );
         const cords = await res.json();

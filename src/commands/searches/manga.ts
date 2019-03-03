@@ -45,13 +45,13 @@ export default class MangaCommand extends Command {
     public async run (msg: CommandoMessage, { manga }: { manga: string }) {
         try {
             startTyping(msg);
-            const mangaList = await fetch(`https://${process.env.KITSU_ID}-dsn.algolia.net/1/indexes/production_media/query`,
+            const mangaList = await fetch(`https://${(process.env.KITSU_ID as string)}-dsn.algolia.net/1/indexes/production_media/query`,
                 {
                     body: JSON.stringify({ params: `query=${manga}&facetFilters=[\"kind:manga\"]` }),
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-Algolia-API-Key': process.env.KITSU_KEY,
-                        'X-Algolia-Application-Id': process.env.KITSU_ID,
+                        'X-Algolia-API-Key': (process.env.KITSU_KEY as string),
+                        'X-Algolia-Application-Id': (process.env.KITSU_ID as string),
                     },
                     method: 'POST',
                 }

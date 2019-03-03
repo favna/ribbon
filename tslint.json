@@ -69,7 +69,7 @@
         "number-literal-format": true,
         "object-literal-key-quotes": [true, "as-needed"],
         "object-literal-shorthand": [true],
-        "object-literal-sort-keys": [true, "match-declaration-order", "shorthand-first"],
+        "object-literal-sort-keys": [true, "match-declaration-order-only"],
         "one-line": [true, "check-open-brace", "check-catch", "check-else", "check-whitespace"],
         "only-arrow-functions": true,
         "ordered-imports": true,

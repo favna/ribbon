@@ -77,7 +77,7 @@ export default class MemberBalanceCommand extends Command {
 
                 return msg.reply(`looks like ${player.displayName} doesn't have any chips yet, they can use the \`${msg.guild.commandPrefix}chips\` command to get their first 500`);
             }
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`memberbalance\` command!

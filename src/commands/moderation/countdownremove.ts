@@ -92,7 +92,7 @@ export default class CountDownRemove extends Command {
             if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
                 return msg.reply(`no countdowns found for this server. Start saving your first with ${msg.guild.commandPrefix}countdownadd`);
             }
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
             channel.send(stripIndents`
 		        <@${this.client.owners[0].id}> Error occurred in validating the ID for the \`countdownremove\` command!

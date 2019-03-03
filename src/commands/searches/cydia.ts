@@ -56,13 +56,13 @@ export default class CydiaCommand extends Command {
         try {
             startTyping(msg);
             if (msg.patternMatches) {
-                if (!msg.guild.settings.get('regexmatches', false)) return null;
+                if (!msg.guild.settings.get('regexmatches', false)) return;
                 deb = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
             }
 
             const baseURL = 'https://cydia.saurik.com/';
             const cydiaEmbed = new MessageEmbed();
-            const fsoptions: Fuse.FuseOptions<CydiaAPIPackageType> = {
+            const fsoptions: any = {
                 keys: ['display', 'name'],
                 threshold: 0.3,
             };
@@ -118,7 +118,7 @@ export default class CydiaCommand extends Command {
             stopTyping(msg);
 
             if (/(no_packages)/i.test(err.toString())) return msg.say(`**Tweak/Theme \`${deb}\` not found!**`);
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID) as TextChannel;
+            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
             channel.send(stripIndents`
               <@${this.client.owners[0].id}> Error occurred in \`cydia\` command!

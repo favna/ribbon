@@ -58,7 +58,7 @@ export default class GoogleCommand extends Command {
                     {
                         query,
                         indent: 'True',
-                        key: process.env.GOOGLE_API_KEY,
+                        key: (process.env.GOOGLE_API_KEY as string),
                         limit: 1,
                     }
                 ).replace(/%2B/gm, '+')}`
@@ -90,8 +90,8 @@ export default class GoogleCommand extends Command {
         try {
             const googleSearch = await fetch(
                 `https://www.googleapis.com/customsearch/v1?${stringify({
-                    cx: process.env.SEARCH_KEY,
-                    key: process.env.GOOGLE_API_KEY,
+                    cx: (process.env.SEARCH_KEY as string),
+                    key: (process.env.GOOGLE_API_KEY as string),
                     q: query,
                     safe: nsfwAllowed ? 'off' : 'active',
                 })}`
