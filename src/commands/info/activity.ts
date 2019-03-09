@@ -74,7 +74,7 @@ export default class ActivityCommand extends Command {
 
         if (!status) return { name: fieldName, value: 'Offline' };
 
-        const onlineStatuses = ['online', 'idle', 'dnd'];
+        const onlineStatuses: (string | undefined)[] = ['online', 'idle', 'dnd'];
         const isOnDesktop = onlineStatuses.includes(status.desktop);
         const isOnMobile = onlineStatuses.includes(status.mobile);
         const isOnWeb = onlineStatuses.includes(status.web);
@@ -93,7 +93,9 @@ export default class ActivityCommand extends Command {
         return {
             name: fieldName,
             value: Object.entries(parsedStatus)
-                .map((entry: string[]) => `${capitalizeFirstLetter(entry[0])}: ${entry[1] !== 'dnd' ? capitalizeFirstLetter(entry[1]) : 'Do Not Disturb'}`)
+                .map((entry: [string, string | undefined]) => {
+                    return `${capitalizeFirstLetter(entry[0])}: ${entry[1] !== 'dnd' ? capitalizeFirstLetter(entry[1] as string) : 'Do Not Disturb'}`;
+                })
                 .join('\n'),
         };
     }
@@ -127,7 +129,7 @@ export default class ActivityCommand extends Command {
 
                     isDiscordStoreGame = !storeData.code;
 
-                    if (isDiscordStoreGame) {
+                    if (isDiscordStoreGame && storeData.sku && storeData.thumbnail) {
                         discordGameData = {
                             id: game.id,
                             icon: game.icon,
@@ -262,7 +264,11 @@ export default class ActivityCommand extends Command {
                 embed.setThumbnail(`https://cdn.discordapp.com/game-assets/${discordGameData.id}/${discordGameData.icon}.png`);
             }
 
-            if (isDiscordStoreGame) {
+            if (isDiscordStoreGame
+                && typeof discordGameData.store_link === 'string'
+                && typeof discordGameData.thumbnail === 'string'
+                && discordGameData.developers
+                && discordGameData.publishers) {
                 embed
                     .setURL(discordGameData.store_link)
                     .setTitle(`${discordGameData.name} on Discord Game Store`)

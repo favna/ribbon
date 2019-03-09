@@ -43,14 +43,14 @@ export default class TickleCommand extends Command {
 
             const tickleFetch = await fetch('https://nekos.life/api/v2/img/tickle');
             const tickleImg = await tickleFetch.json();
-            if (member.id === msg.member.id) member = null;
+            const isMemberGiven = member.id === msg.member.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.embed({
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
-                    description: member
+                    description: isMemberGiven
                         ? `${member.displayName}! You were tickled by ${msg.member.displayName}, tickle them back!!!`
                         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
                     image: { url: member ? tickleImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },

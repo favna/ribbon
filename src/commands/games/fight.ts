@@ -11,7 +11,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { GuildMember, MessageEmbed } from 'awesome-djs';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class FightCommand extends Command {
@@ -51,10 +51,10 @@ export default class FightCommand extends Command {
             const fighterEmbed = new MessageEmbed();
 
             fighterOne = /<@[0-9]{18}>/.test(fighterOne)
-                ? msg.guild.members.get(fighterOne.slice(2, 20)).displayName
+                ? (msg.guild.members.get(fighterOne.slice(2, 20)) as GuildMember).displayName
                 : fighterOne;
             fighterTwo = /<@[0-9]{18}>/.test(fighterTwo)
-                ? msg.guild.members.get(fighterTwo.slice(2, 20)).displayName
+                ? (msg.guild.members.get(fighterTwo.slice(2, 20)) as GuildMember).displayName
                 : fighterTwo;
 
             fighterEmbed

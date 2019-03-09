@@ -63,8 +63,8 @@ export default class CopyPastaCommand extends Command {
                     pastaEmbed.setImage(image[0]);
                     query.content = query.content.replace(/([<>])/gm, '');
                     query.content =
-                        query.content.substring(0, image.index - 1) +
-                        query.content.substring(image.index + image[0].length);
+                        query.content.substring(0, (image.index as number) - 1) +
+                        query.content.substring((image.index as number) + image[0].length);
                 }
 
                 if (query.content.length >= 1800) {

@@ -14,7 +14,7 @@
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import Fuse from 'fuse.js';
+import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeItemAliases, PokeItemDetailsType, startTyping, stopTyping } from '../../components';
 import { BattleItems, ItemAliases } from '../../data/dex';
@@ -48,7 +48,7 @@ export default class ItemCommand extends Command {
     public run (msg: CommandoMessage, { item }: { item: string }) {
         try {
             startTyping(msg);
-            const itemOptions: Fuse.FuseOptions<PokeItemDetailsType & IPokeItemAliases> = {
+            const itemOptions: FuseOptions<PokeItemDetailsType & IPokeItemAliases> = {
                 keys: ['alias', 'item', 'id', 'name'],
                 threshold: 0.3,
             };

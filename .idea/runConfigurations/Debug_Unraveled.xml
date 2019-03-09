@@ -1,8 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Debug Unraveled" type="NodeJSConfigurationType" node-parameters="--inspect=5858 --require ts-node/register" path-to-js-file="./src/app.ts" working-dir="$PROJECT_DIR$">
-    <envs>
-      <env name="NODE_ENV" value="development" />
-    </envs>
-    <method v="2" />
-  </configuration>
-</component>

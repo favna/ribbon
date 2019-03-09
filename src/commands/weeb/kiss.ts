@@ -43,14 +43,14 @@ export default class KissCommand extends Command {
 
             const kissFetch = await fetch('https://nekos.life/api/v2/img/kiss');
             const kissImg = await kissFetch.json();
-            if (member.id === msg.member.id) member = null;
+            const isMemberGiven = member.id === msg.member.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.embed({
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
-                    description: member
+                    description: isMemberGiven
                         ? `${member.displayName}! You were kissed by ${msg.member.displayName} 💋!`
                         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
                     image: { url: member ? kissImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },

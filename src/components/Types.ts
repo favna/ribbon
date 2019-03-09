@@ -16,7 +16,7 @@ type YoutubeVideoContentDetailsType = {
     videoPublishedAt: string;
 };
 
-type YoutubeVideoSnippetType = {
+export type YoutubeVideoSnippetType = {
     channelId: string;
     channelTitle: string;
     description: string;
@@ -67,7 +67,7 @@ type FrontlineGirlStatsType = {
     [propName: string]: number;
 };
 
-type FrontlineGirlProductionRequirementsType = {
+export type FrontlineGirlProductionRequirementsType = {
     manpower: number;
     ammo: number;
     rations: number;
@@ -80,14 +80,14 @@ type FrontlineGirlAbilityType = {
     name: string;
     icon: string;
     text: string;
-    initial: string;
-    cooldown: string[];
-    damage_value: string[];
-    hit_value: string[];
-    round_quantity: string[];
-    time_value: string[];
+    initial?: string;
+    cooldown?: string[];
+    damage_value?: string[];
+    hit_value?: string[];
+    round_quantity?: string[];
+    time_value?: string[];
 
-    [propName: string]: string | string[];
+    [propName: string]: string | string[] | undefined;
 };
 
 type PokeStatType = {
@@ -105,8 +105,9 @@ type PokeAbilityType = {
     0: string;
     1?: string;
     H?: string;
+    S?: string;
 
-    [propName: string]: string | number | undefined;
+    [propName: string]: string | undefined;
 };
 
 type PokeTypesType = {
@@ -197,7 +198,7 @@ export interface IMusicCommand extends Command {
 export type MusicQueueType = {
     textChannel: TextChannel;
     voiceChannel: VoiceChannel;
-    connection: VoiceConnection;
+    connection: VoiceConnection | null;
     songs: Song[];
     volume: number;
     playing: boolean;
@@ -230,7 +231,7 @@ export type PokeDataType = {
     genders?: string;
     sprite: string;
     tier?: string;
-    entries?: any[];
+    entries: any[];
 };
 
 export type MovieGenreType = {
@@ -250,6 +251,7 @@ export type PokedexType = {
     species: string;
     types: string[];
     genderRatio?: PokeGenderRatioType;
+    gender?: string;
     baseStats: PokeStatType;
     abilities: PokeAbilityType;
     heightm: number;
@@ -260,7 +262,6 @@ export type PokedexType = {
     baseSpecies?: string;
     forme?: string;
     formeLetter?: string;
-    gender?: string;
     prevo?: string;
     evos?: string[];
     evoLevel?: number | string;
@@ -269,11 +270,11 @@ export type PokedexType = {
 };
 
 export type PokeAbilityDetailsType = {
+    desc?: string;
     shortDesc: string;
     id: string;
     name: string;
     num: number;
-    desc?: string;
 };
 
 export type PokeItemDetailsType = {
@@ -479,17 +480,17 @@ export type FrontlineGirlType = {
     baseStats: FrontlineGirlStatsType;
     maxStats: FrontlineGirlStatsType;
     ability: FrontlineGirlAbilityType;
+    ability2?: FrontlineGirlAbilityType;
     tile_bonus: string;
     bonus_desc: string;
-    img: string;
     production: {
-        stage?: string;
-        reward?: string;
         timer?: string;
-        placebo: boolean;
-        normal: FrontlineGirlProductionRequirementsType;
-        heavy: FrontlineGirlProductionRequirementsType;
+        normal?: FrontlineGirlProductionRequirementsType;
+        heavy?: FrontlineGirlProductionRequirementsType;
+        reward?: string;
+        stage?: string;
     };
+    img?: string;
 };
 
 export type DjsDocsClassType = {

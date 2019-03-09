@@ -86,11 +86,11 @@ export default class CustomTopUpCommand extends Command {
             const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
 
             channel.send(stripIndents`
-		        <@${this.client.owners[0].id}> Error occurred in \`customtopup\` command!
+                <@${this.client.owners[0].id}> Error occurred in \`customtopup\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-		        **Error Message:** ${err}
+                **Error Message:** ${err}
             `);
 
             return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.

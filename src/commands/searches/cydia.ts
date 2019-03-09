@@ -18,7 +18,7 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import cheerio from 'cheerio';
 import { oneLine, stripIndents } from 'common-tags';
-import Fuse from 'fuse.js';
+import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { CydiaAPIPackageType, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
@@ -56,21 +56,21 @@ export default class CydiaCommand extends Command {
         try {
             startTyping(msg);
             if (msg.patternMatches) {
-                if (!msg.guild.settings.get('regexmatches', false)) return;
+                if (!msg.guild.settings.get('regexmatches', false)) return null;
                 deb = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
             }
 
             const baseURL = 'https://cydia.saurik.com/';
             const cydiaEmbed = new MessageEmbed();
-            const fsoptions: any = {
+            const fsoptions: FuseOptions<CydiaAPIPackageType> = {
                 keys: ['display', 'name'],
                 threshold: 0.3,
             };
             const res = await fetch(`${baseURL}api/macciti?${stringify({ query: deb })}`);
             const packages = await res.json();
-            const fuzzyList = new Fuse(packages.results, fsoptions);
+            const fuzzyList = new Fuse(packages.results as CydiaAPIPackageType[], fsoptions);
             const search = fuzzyList.search(deb);
-            const hit: CydiaAPIPackageType | undefined = search.length ? search[0] as CydiaAPIPackageType : undefined;
+            const hit = search[0];
 
             if (!hit) throw new Error('no_packages');
 

@@ -51,7 +51,7 @@ export default class TempBanCommand extends Command {
                         return 'Has to be in the pattern of `50m`, `2h` or `01d` wherein `m` would be minutes, `h` would be hours and `d` would be days';
                     },
                     parse: (t: string) => {
-                        const match = t.match(/[a-z]+|[^a-z]+/gi);
+                        const match = t.match(/[a-z]+|[^a-z]+/gi) as RegExpMatchArray;
                         let multiplier = 1;
 
                         switch (match[1]) {

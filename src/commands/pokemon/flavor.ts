@@ -17,7 +17,7 @@
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import Fuse from 'fuse.js';
+import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType, startTyping, stopTyping, zalgoHelper } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
@@ -62,7 +62,7 @@ export default class FlavorCommand extends Command {
                 pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
             }
 
-            const pokeoptions: Fuse.FuseOptions<PokedexType & IPokeDexAliases> = {
+            const pokeoptions: FuseOptions<PokedexType & IPokeDexAliases> = {
                 keys: ['alias', 'species', 'name', 'num'],
                 threshold: 0.2,
             };
@@ -70,7 +70,7 @@ export default class FlavorCommand extends Command {
             const pokeFuse = new Fuse(BattlePokedex, pokeoptions);
             const firstSearch = pokeFuse.search(pokemon);
             const aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null;
-            const pokeSearch = !firstSearch.length && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch;
+            const pokeSearch = !firstSearch.length && aliasSearch && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch;
             const flavors: FlavorJSONType = entries as FlavorJSONType;
             const dataEmbed = new MessageEmbed();
 

@@ -1,8 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Start Ribbon" type="NodeJSConfigurationType" node-parameters="--require ts-node/register" path-to-js-file="./src/app.ts" working-dir="$PROJECT_DIR$">
-    <envs>
-      <env name="NODE_ENV" value="production" />
-    </envs>
-    <method v="2" />
-  </configuration>
-</component>

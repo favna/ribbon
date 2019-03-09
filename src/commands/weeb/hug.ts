@@ -43,14 +43,14 @@ export default class HugCommand extends Command {
 
             const hugFetch = await fetch('https://nekos.life/api/v2/img/hug');
             const hugImg = await hugFetch.json();
-            if (member.id === msg.member.id) member = null;
+            const isMemberGiven = member.id === msg.member.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.embed({
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
-                    description: member
+                    description: isMemberGiven
                         ? `${member.displayName}! You were hugged by ${msg.member.displayName} 💖!`
                         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
                     image: { url: member ? hugImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },

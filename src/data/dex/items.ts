@@ -1,3 +1,4 @@
+/* tslint:disable:object-literal-sort-keys */
 import { PokeItemDetailsType } from '../../components';
 
 export const BattleItems: PokeItemDetailsType[] = [
@@ -2726,4 +2727,18 @@ export const BattleItems: PokeItemDetailsType[] = [
         gen: 6,
         desc: 'If held by a Crucibelle, this item allows it to Mega Evolve in battle.',
     },
+    {
+        id: 'bottlecap',
+        name: 'Bottle Cap',
+        num: 795,
+        gen: 7,
+        desc: 'Used for Hyper Training. One of a Pokemon\'s stats is calculated with an IV of 31.',
+    },
+    {
+        id: 'goldbottlecap',
+        name: 'Gold Bottle Cap',
+        num: 796,
+        gen: 7,
+        desc: 'Used for Hyper Training. All of a Pokemon\'s stats are calculated with an IV of 31.',
+    }
 ];

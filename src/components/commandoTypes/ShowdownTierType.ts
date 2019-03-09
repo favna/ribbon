@@ -1,10 +1,11 @@
 import { ArgumentType, CommandoClient } from 'awesome-commando';
 import cheerio from 'cheerio';
 import { stripIndents } from 'common-tags';
-import Fuse from 'fuse.js';
+import Fuse, { FuseOptions } from 'fuse.js';
 import fetch from 'node-fetch';
 import { table } from 'table';
 import { TierAliases } from '../../data/dex';
+import { IPokeTierAliases } from '../Types';
 
 export default class ShowdownTierType extends ArgumentType {
     constructor (client: CommandoClient) {
@@ -23,7 +24,7 @@ export default class ShowdownTierType extends ArgumentType {
     }
 
     private static fuser (searchStr: string): { hasMatch: boolean, value: string } {
-        const fuseOptions: Fuse.FuseOptions<any> = { keys: ['alias'] };
+        const fuseOptions: FuseOptions<IPokeTierAliases> = { keys: ['alias'] };
         const fuseTable = new Fuse(TierAliases, fuseOptions);
         const fuseSearch = fuseTable.search(searchStr);
 

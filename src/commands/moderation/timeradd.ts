@@ -68,7 +68,7 @@ export default class TimerAddCommand extends Command {
                             Please reply with your properly formatted time until reminder or`;
                     },
                     parse: (t: string) => {
-                        const match = t.match(/[a-z]+|[^a-z]+/gi);
+                        const match = t.match(/[a-z]+|[^a-z]+/gi) as RegExpMatchArray;
                         let multiplier = 1;
 
                         switch (match[1]) {
@@ -110,7 +110,7 @@ export default class TimerAddCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { interval, timerChannel, content, members }: { interval: number; timerChannel: TextChannel; content: string; members?: GuildMember[]; }) {
+    public run (msg: CommandoMessage, { interval, timerChannel, content, members }: { interval: number; timerChannel: TextChannel; content: string; members: GuildMember[]; }) {
         startTyping(msg);
         const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);

@@ -60,7 +60,9 @@ export default class IamNotCommand extends Command {
                 return msg.reply('this server has no self assignable roles');
             }
 
-            const roleNames: Array<string | undefined> = selfRoles.map((r: string) => msg.guild.roles.get(r) ? msg.guild.roles.get(r).name : undefined).filter(Boolean);
+            const roleNames: (string | undefined)[] = selfRoles.map((r: string) => msg.guild.roles.get(r)
+                ? (msg.guild.roles.get(r) as Role).name
+                : undefined).filter(Boolean);
 
             if (!selfRoles.includes(role.id)) {
                 deleteCommandMessages(msg, this.client);

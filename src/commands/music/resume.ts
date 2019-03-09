@@ -10,10 +10,11 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Snowflake } from 'awesome-djs';
 import { deleteCommandMessages, IMusicCommand, MusicQueueType, startTyping, stopTyping } from '../../components';
 
 export default class ResumeSongCommand extends Command {
-    private songQueue: Map<string, MusicQueueType>;
+    private songQueue: Map<Snowflake, MusicQueueType>;
 
     constructor (client: CommandoClient) {
         super(client, {
@@ -29,11 +30,12 @@ export default class ResumeSongCommand extends Command {
                 duration: 3,
             },
         });
+        this.songQueue = this.queue;
     }
 
     get queue () {
         if (!this.songQueue) {
-            this.songQueue = (this.client.registry.resolveCommand('music:play') as IMusicCommand).queue;
+            this.songQueue = (this.client.registry.resolveCommand('music:launch') as IMusicCommand).queue;
         }
 
         return this.songQueue;

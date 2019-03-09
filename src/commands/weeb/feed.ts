@@ -43,7 +43,7 @@ export default class FeedCommand extends Command {
 
             const feedFetch = await fetch('https://nekos.life/api/v2/img/feed');
             const feedImg = await feedFetch.json();
-            if (member.id === msg.member.id) member = null;
+            const isMemberGiven = member.id === msg.member.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -51,7 +51,7 @@ export default class FeedCommand extends Command {
             return msg.embed(
                 {
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
-                    description: member
+                    description: isMemberGiven
                         ? `${member.displayName}! You were fed by ${msg.member.displayName} 🍜 😋!`
                         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
                     image: { url: member ? feedImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },

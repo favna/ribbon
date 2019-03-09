@@ -10,7 +10,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { GuildChannel, MessageAttachment, MessageEmbed, Permissions, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
@@ -46,26 +46,26 @@ export default class NewsCommand extends Command {
             startTyping(msg);
 
             let announce = body;
-            let newsChannel: TextChannel = null;
+            let newsChannel: TextChannel;
 
             const announceEmbed = new MessageEmbed();
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
 
             if (msg.guild.settings.get('announcechannel')) {
-                newsChannel = msg.guild.channels.find((c: TextChannel) => c.id === msg.guild.settings.get('announcechannel')) as TextChannel;
+                newsChannel = msg.guild.channels.find((c: GuildChannel) => c.id === msg.guild.settings.get('announcechannel')) as TextChannel;
             } else {
-                msg.guild.channels.find((c: TextChannel) => c.name === 'announcements')
-                    ? (newsChannel = msg.guild.channels.find((c: TextChannel) => c.name === 'announcements') as TextChannel)
-                    : (newsChannel = msg.guild.channels.find((c: TextChannel) => c.name === 'news') as TextChannel);
+                msg.guild.channels.find((c: GuildChannel) => c.name === 'announcements')
+                    ? (newsChannel = msg.guild.channels.find((c: GuildChannel) => c.name === 'announcements') as TextChannel)
+                    : (newsChannel = msg.guild.channels.find((c: GuildChannel) => c.name === 'news') as TextChannel);
             }
 
             if (!newsChannel) throw new Error('nochannel');
-            if (!newsChannel.permissionsFor(msg.guild.me).has(['SEND_MESSAGES', 'VIEW_CHANNEL'])) throw new Error('noperms');
+            if (!(newsChannel.permissionsFor(msg.guild.me) as Readonly<Permissions>).has(['SEND_MESSAGES', 'VIEW_CHANNEL'])) throw new Error('noperms');
 
             newsChannel.startTyping(1);
 
             if (announce.slice(0, 4) !== 'http') announce = `${body.slice(0, 1).toUpperCase()}${body.slice(1)}`;
-            if (msg.attachments.first() && msg.attachments.first().url) announce += `\n${msg.attachments.first().url}`;
+            if (msg.attachments.first() && (msg.attachments.first() as MessageAttachment).url) announce += `\n${(msg.attachments.first() as MessageAttachment).url}`;
 
             announceEmbed
                 .setColor('#AAEFE6')

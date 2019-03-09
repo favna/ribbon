@@ -16,7 +16,7 @@
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import Fuse from 'fuse.js';
+import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import {
     ASSET_BASE_PATH,
@@ -74,7 +74,7 @@ export default class DexCommand extends Command {
                 pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
             }
 
-            const pokeoptions: Fuse.FuseOptions<PokedexType & IPokeDexAliases> = {
+            const pokeoptions: FuseOptions<PokedexType & IPokeDexAliases> = {
                 keys: ['alias', 'species', 'name', 'num'],
                 threshold: 0.2,
             };
@@ -97,6 +97,7 @@ export default class DexCommand extends Command {
                 genders: '',
                 sprite: '',
                 tier: tiers[poke.species.toLowerCase().replace(/([-% ])/gm, '')],
+                entries: [],
             };
 
             if (poke.prevo) {

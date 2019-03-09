@@ -523,6 +523,19 @@ Only really useful if you previously locked the channel</p>
 <dd><p>Music DefaultVolumeCommand - Sets the server&#39;s default volume</p>
 <p><strong>Aliases</strong>: <code>defvol</code></p>
 </dd>
+<dt><a href="#module_launch">launch</a></dt>
+<dd><p>Music LaunchMusicCommand - Starts playing music</p>
+<p>You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it.
+If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing.
+There are 4 ways to queue songs.</p>
+<ol>
+<li>YouTube Search Query</li>
+<li>YouTube video URL</li>
+<li>YouTube playlist URL</li>
+<li>YouTube video ID</li>
+</ol>
+<p><strong>Aliases</strong>: <code>add</code>, <code>enqueue</code>, <code>start</code>, <code>join</code>, <code>play</code></p>
+</dd>
 <dt><a href="#module_maxlength">maxlength</a></dt>
 <dd><p>Music MaxLengthCommand - Set the maximum length (in minutes) of a video</p>
 <p>Give no argument to show current amount of maximum songs. Use &quot;default&quot; as argument to set it back to Ribbon&#39;s
@@ -539,19 +552,6 @@ Only really useful if you previously locked the channel</p>
 <dd><p>Music PauseSongCommand - Pauses the currently playing track</p>
 <p>You need to be in a voice channel before you can use this command</p>
 <p><strong>Aliases</strong>: <code>shh</code>, <code>shhh</code>, <code>shhhh</code>, <code>shhhhh</code>, <code>hush</code>, <code>halt</code></p>
-</dd>
-<dt><a href="#module_play">play</a></dt>
-<dd><p>Music PlaySongCommand - Starts playing music</p>
-<p>You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it.
-If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing.
-There are 4 ways to queue songs.</p>
-<ol>
-<li>YouTube Search Query</li>
-<li>YouTube video URL</li>
-<li>YouTube playlist URL</li>
-<li>YouTube video ID</li>
-</ol>
-<p><strong>Aliases</strong>: <code>add</code>, <code>enqueue</code>, <code>start</code>, <code>join</code></p>
 </dd>
 <dt><a href="#module_queue">queue</a></dt>
 <dd><p>Music ViewQueueCommand - Shows the current queue of songs</p>
@@ -2558,6 +2558,31 @@ Music DefaultVolumeCommand - Sets the server's default volume
 ```nginx
 defaultvolume 2
 ```
+<a name="module_launch"></a>
+
+## launch
+Music LaunchMusicCommand - Starts playing music
+
+You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it.
+If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing.
+There are 4 ways to queue songs.
+1. YouTube Search Query
+2. YouTube video URL
+3. YouTube playlist URL
+4. YouTube video ID
+
+**Aliases**: `add`, `enqueue`, `start`, `join`, `play`
+
+**Category**: music  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Video | <code>string</code> | One of the options linking to a video to play |
+
+**Example**  
+```nginx
+play final fantasy one winged angel
+```
 <a name="module_maxlength"></a>
 
 ## maxlength
@@ -2608,31 +2633,6 @@ You need to be in a voice channel before you can use this command
 **Aliases**: `shh`, `shhh`, `shhhh`, `shhhhh`, `hush`, `halt`
 
 **Category**: music  
-<a name="module_play"></a>
-
-## play
-Music PlaySongCommand - Starts playing music
-
-You need to be in a voice channel before you can use this command and Ribbon needs to be allowed to join that channel as well as speak in it.
-If music is already playing this will add to the queue or otherwise it will join your voice channel and start playing.
-There are 4 ways to queue songs.
-1. YouTube Search Query
-2. YouTube video URL
-3. YouTube playlist URL
-4. YouTube video ID
-
-**Aliases**: `add`, `enqueue`, `start`, `join`
-
-**Category**: music  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| Video | <code>string</code> | One of the options linking to a video to play |
-
-**Example**  
-```nginx
-play
-```
 <a name="module_queue"></a>
 
 ## queue

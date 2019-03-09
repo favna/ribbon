@@ -17,19 +17,8 @@ dist/
 
 # IDE settings
 .vscode/
-.idea/*
-
-# Keep some IntelliJ Settings
-!.idea/codeStyles/
-!.idea/inspectionProfiles/
-!.idea/runConfigurations/
-!.idea/jsLibraryMappings.xml
-!.idea/misc.xml
-!.idea/modules.xml
-!.idea/ribbon.iml
-!.idea/sqldialects.xml
-!.idea/typescript-compiler.xml
-!.idea/vcs.xml
+.idea/
+.vs/
 
 # My own stuff
 src/commands/owner/test.ts

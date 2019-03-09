@@ -12,12 +12,13 @@
  */
 
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
+import { Snowflake } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import { deleteCommandMessages, IMusicCommand, MusicQueueType, MusicVoteType, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class StopMusicCommand extends Command {
-    private votes: Map<string, MusicVoteType>;
-    private songQueue: Map<string, MusicQueueType>;
+    private songVotes: Map<Snowflake, MusicVoteType>;
+    private songQueue: Map<Snowflake, MusicQueueType>;
 
     constructor (client: CommandoClient) {
         super(client, {
@@ -34,15 +35,24 @@ export default class StopMusicCommand extends Command {
                 duration: 3,
             },
         });
-        this.votes = new Map();
+        this.songVotes = this.votes;
+        this.songQueue = this.queue;
     }
 
     get queue () {
         if (!this.songQueue) {
-            this.songQueue = (this.client.registry.resolveCommand('music:play') as IMusicCommand).queue;
+            this.songQueue = (this.client.registry.resolveCommand('music:launch') as IMusicCommand).queue;
         }
 
         return this.songQueue;
+    }
+
+    get votes () {
+        if (!this.songVotes) {
+            this.songVotes = (this.client.registry.resolveCommand('music:launch') as IMusicCommand).votes;
+        }
+
+        return this.songVotes;
     }
 
     public run (msg: CommandoMessage, args: any) {
@@ -69,7 +79,7 @@ export default class StopMusicCommand extends Command {
             return msg.reply(this.stop(msg.guild, queue));
         }
 
-        const vote = this.votes.get(msg.guild.id);
+        const vote = this.songVotes.get(msg.guild.id);
 
         if (vote && vote.count >= 1) {
             if (vote.users.some((userId: string) => userId === msg.author.id)) {
@@ -111,7 +121,7 @@ export default class StopMusicCommand extends Command {
             const remaining = threshold - 1;
             const time = this.setTimeout(newVote);
 
-            this.votes.set(msg.guild.id, newVote);
+            this.songVotes.set(msg.guild.id, newVote);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -130,7 +140,7 @@ export default class StopMusicCommand extends Command {
 
         clearTimeout(vote.timeout);
         vote.timeout = setTimeout(() => {
-            this.votes.delete(vote.guild);
+            this.songVotes.delete(vote.guild);
             vote.queue.textChannel.send(
                 'The vote to stop the music has ended. Get outta here, party poopers.'
             );
@@ -140,9 +150,9 @@ export default class StopMusicCommand extends Command {
     }
 
     private stop (guild: CommandoGuild, queue: MusicQueueType) {
-        if (this.votes.has(guild.id)) {
-            clearTimeout(this.votes.get(guild.id).timeout);
-            this.votes.delete(guild.id);
+        if (this.songVotes.has(guild.id)) {
+            clearTimeout((this.songVotes.get(guild.id) as MusicVoteType).timeout);
+            this.songVotes.delete(guild.id);
         }
 
         const song = queue.songs[0];

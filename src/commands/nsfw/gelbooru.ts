@@ -64,7 +64,7 @@ export default class GelbooruCommand extends Command {
                 .setColor('#FFB6C1')
                 .setDescription(stripIndents`
                     ${imageTags.slice(0, 5).join(' ')}
-    				**Score**: ${hit.score}
+                    **Score**: ${hit.score}
                 `)
                 .setImage(hit.file_url);
 

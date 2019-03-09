@@ -43,7 +43,7 @@ export default class CuddleCommand extends Command {
 
             const cuddleFetch = await fetch('https://nekos.life/api/v2/img/cuddle');
             const cuddleImg = await cuddleFetch.json();
-            if (member.id === msg.member.id) member = null;
+            const isMemberGiven = member.id === msg.member.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -51,7 +51,7 @@ export default class CuddleCommand extends Command {
             return msg.embed(
                 {
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
-                    description: member
+                    description: isMemberGiven
                         ? `Awww ${msg.member.displayName} is giving ${member.displayName} cuddles 💕!`
                         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
                     image: { url: member ? cuddleImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },

@@ -12,13 +12,12 @@
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import cheerio from 'cheerio';
-import fs from 'fs';
-import Fuse from 'fuse.js';
+import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import path from 'path';
-import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, FrontlineGirlType, startTyping, stopTyping } from '../../components';
+import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, FrontlineGirlProductionRequirementsType, FrontlineGirlType, startTyping, stopTyping } from '../../components';
+import { FrontlineGirls } from '../../data/dex';
 
 export default class GirlsFrontlineCommand extends Command {
     constructor (client: CommandoClient) {
@@ -46,20 +45,18 @@ export default class GirlsFrontlineCommand extends Command {
             startTyping(msg);
 
             const gfEmbed = new MessageEmbed();
-            const gfOptions: Fuse.FuseOptions<FrontlineGirlType> = { keys: ['name'] };
-            const games = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/databases/girlsfrontline.json'), 'utf8'));
-            const fuse = new Fuse(games, gfOptions);
+            const gfOptions: FuseOptions<FrontlineGirlType> = { keys: ['name'] };
+            const fuse = new Fuse(FrontlineGirls, gfOptions);
             const results = fuse.search(character);
-            const hit: FrontlineGirlType = results[0] as FrontlineGirlType;
+            const hit = results[0];
             const howObtain: string[] = [];
             const statIndices = ['hp', 'dmg', 'eva', 'acc', 'rof'];
 
             if (hit.production.stage) howObtain.push(`**Stage:** ${hit.production.stage}`);
             if (hit.production.reward) howObtain.push(`**Reward:** ${hit.production.reward}`);
             if (hit.production.timer) howObtain.push(`**Production Timer:** ${moment.duration(hit.production.timer, 'hours').format('H [hours and] mm [minutes]')}`);
-            if (hit.production.placebo) howObtain.push('_Production requirements are placebo & may not increase drop rate_');
 
-            hit.ability.text.match(/\(\$([a-z0-9_])+\)/gm).forEach((element: string) => {
+            (hit.ability.text.match(/\(\$([a-z0-9_])+\)/gm) as RegExpMatchArray).forEach((element: string) => {
                 hit.ability.text = hit.ability.text.replace(element, (hit.ability[element.replace(/\(\$(.+)\)/gim, '$1')] as string[]).reverse()[0]);
             });
 
@@ -91,13 +88,16 @@ export default class GirlsFrontlineCommand extends Command {
                         .join(', '))
                 .addField('How To Obtain', howObtain.join('\n'));
 
-            if (hit.production.timer) {
+            if (hit.production.timer && hit.production.normal) {
+                gfEmbed.addField('Normal Production Requirement', Object.keys(hit.production.normal)
+                    .map((index: string) => `**${capitalizeFirstLetter(index)}**: ${(hit.production.normal as FrontlineGirlProductionRequirementsType)[index]}`)
+                    .join(', '));
+            }
+
+            if (hit.production.timer && hit.production.heavy) {
                 gfEmbed
-                    .addField('Normal Production Requirement', Object.keys(hit.production.normal)
-                        .map(index => `**${capitalizeFirstLetter(index)}**: ${hit.production.normal[index]}`)
-                        .join(', '))
                     .addField('Heavy Production Requirement', Object.keys(hit.production.heavy)
-                        .map(index => `**${capitalizeFirstLetter(index)}**: ${hit.production.heavy[index]}`)
+                        .map((index: string) => `**${capitalizeFirstLetter(index)}**: ${(hit.production.heavy as FrontlineGirlProductionRequirementsType)[index]}`)
                         .join(', '));
             }
 

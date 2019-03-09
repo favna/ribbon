@@ -44,11 +44,12 @@ export default class ChangeVolumeCommand extends Command {
                 }
             ],
         });
+        this.songQueue = this.queue;
     }
 
     get queue () {
         if (!this.songQueue) {
-            this.songQueue = (this.client.registry.resolveCommand('music:play') as IMusicCommand).queue;
+            this.songQueue = (this.client.registry.resolveCommand('music:launch') as IMusicCommand).queue;
         }
 
         return this.songQueue;

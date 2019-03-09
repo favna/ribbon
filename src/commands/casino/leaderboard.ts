@@ -8,7 +8,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
@@ -60,7 +60,7 @@ export default class LeaderboardCommand extends Command {
             if (query) {
                 query.forEach((player: CasinoRowType, index: number) => {
                     lbEmbed.addField(
-                        `#${index + 1} ${msg.guild.members.get(player.userID).displayName}`,
+                        `#${index + 1} ${(msg.guild.members.get(player.userID) as GuildMember).displayName}`,
                         `Chips: ${player.balance}`
                     );
                 });

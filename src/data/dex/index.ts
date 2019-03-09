@@ -6,3 +6,4 @@ export * from './learnsets';
 export * from './moves';
 export * from './pokedex';
 export * from './typechart';
+export * from './girlsfrontline';

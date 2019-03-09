@@ -12,7 +12,7 @@
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import Fuse from 'fuse.js';
+import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeAbilityAliases, PokeAbilityDetailsType, startTyping, stopTyping } from '../../components';
 import { AbilityAliases, BattleAbilities } from '../../data/dex';
@@ -46,7 +46,7 @@ export default class AbilityCommand extends Command {
     public run (msg: CommandoMessage, { ability }: { ability: string }) {
         try {
             startTyping(msg);
-            const fsoptions: Fuse.FuseOptions<PokeAbilityDetailsType & IPokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
+            const fsoptions: FuseOptions<PokeAbilityDetailsType & IPokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
             const aliasFuse = new Fuse(AbilityAliases, fsoptions);
             const abilityFuse = new Fuse(BattleAbilities, fsoptions);
             const aliasSearch = aliasFuse.search(ability);

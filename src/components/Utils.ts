@@ -4,7 +4,7 @@ import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
 import emojiRegex from 'emoji-regex';
 import { diacriticsMap, validBooleansMap, YoutubeVideoType } from '.';
 
-export const arrayClean = (deleteValue: string | number | undefined | any, array: Array<string | number | undefined | any>) => array.filter(element => element !== deleteValue);
+export const arrayClean = (deleteValue: string | number | undefined | any, array: (string | number | undefined | any)[]) => array.filter(element => element !== deleteValue);
 
 export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 

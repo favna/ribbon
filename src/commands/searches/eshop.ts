@@ -12,7 +12,7 @@
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import fs from 'fs';
-import Fuse from 'fuse.js';
+import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import path from 'path';
 import { deleteCommandMessages, eShopType, startTyping, stopTyping } from '../../components';
@@ -43,7 +43,7 @@ export default class EShopCommand extends Command {
             startTyping(msg);
 
             const eshopEmbed = new MessageEmbed();
-            const eShopOptions: Fuse.FuseOptions<eShopType> = { keys: ['title'] };
+            const eShopOptions: FuseOptions<eShopType> = { keys: ['title'] };
             const games = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/databases/eshop.json'), 'utf8'));
             const fuse = new Fuse(games, eShopOptions);
             const results = fuse.search(game);

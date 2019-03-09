@@ -56,7 +56,7 @@ export default class RemindCommand extends Command {
                         Please reply with your properly formatted time until reminder or`;
                     },
                     parse: (t: string) => {
-                        const match = t.match(/[a-z]+|[^a-z]+/gi);
+                        const match = t.match(/[a-z]+|[^a-z]+/gi) as RegExpMatchArray;
                         let multiplier = 1;
 
                         switch (match[1]) {

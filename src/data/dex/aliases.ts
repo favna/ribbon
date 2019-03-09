@@ -1,3 +1,4 @@
+/* tslint:disable:object-literal-sort-keys */
 import { IPokeAbilityAliases, IPokeDexAliases, IPokeItemAliases, IPokeMoveAliases, IPokeTierAliases } from '../../components';
 
 export const TierAliases: IPokeTierAliases[] = [
@@ -38,6 +39,9 @@ export const TierAliases: IPokeTierAliases[] = [
     { alias: 'double', tier: 'doublesou' },
     { alias: 'dou', tier: 'doublesou' },
     { alias: 'doubles ou', tier: 'doublesou' },
+    { alias: 'dubs', tier: 'doublesou' },
+    { alias: 'duu', tier: 'doublesou' },
+    { alias: 'dubsuu', tier: 'doublesou' },
     { alias: 'vgc', tier: 'vgc2018' },
     { alias: 'vgc18', tier: 'vgc2018' },
     { alias: 'hackmons', tier: 'balancedhackmons' },
@@ -54,7 +58,7 @@ export const TierAliases: IPokeTierAliases[] = [
     { alias: 'mix and mega', tier: 'mixandmega' },
     { alias: 'almostanyability', tier: 'almostanyability' },
     { alias: 'aaa', tier: 'almostanyability' },
-    { alias: 'almost any ability', tier: 'almostanyability' },
+    { alias: 'almost any ability', tier: 'almostanyability' }
 ];
 
 export const PokeAliases: IPokeDexAliases[] = [
@@ -175,6 +179,7 @@ export const PokeAliases: IPokeDexAliases[] = [
     { alias: 'alolanmuk', name: 'Muk-Alola' },
     { alias: 'exeggutora', name: 'Exeggutor-Alola' },
     { alias: 'alolanexeggutor', name: 'Exeggutor-Alola' },
+    { alias: 'neckboy', name: 'Exeggutor-Alola' },
     { alias: 'marowaka', name: 'Marowak-Alola' },
     { alias: 'alolanmarowak', name: 'Marowak-Alola' },
 
@@ -702,12 +707,12 @@ export const PokeAliases: IPokeDexAliases[] = [
     { alias: 'shinboraa', name: 'Sigilyph' },
     { alias: 'barujiina', name: 'Mandibuzz' },
     { alias: 'rankurusu', name: 'Reuniclus' },
-    { alias: 'borutorosu', name: 'Thundurus' },
+    { alias: 'borutorosu', name: 'Thundurus' }
 ];
 
 export const AbilityAliases: IPokeAbilityAliases[] = [
     { alias: 'ph', ability: 'Poison Heal' },
-    { alias: 'stag', ability: 'Shadow Tag' },
+    { alias: 'stag', ability: 'Shadow Tag' }
 ];
 
 export const ItemAliases: IPokeItemAliases[] = [
@@ -735,7 +740,7 @@ export const ItemAliases: IPokeItemAliases[] = [
     { alias: 'sitrus', item: 'Sitrus Berry' },
     { alias: 'specs', item: 'Choice Specs' },
     { alias: 'wp', item: 'Weakness Policy' },
-    { alias: 'yache', item: 'Yache Berry' },
+    { alias: 'yache', item: 'Yache Berry' }
 ];
 
 export const MoveAliases: IPokeMoveAliases[] = [
@@ -880,5 +885,5 @@ export const MoveAliases: IPokeMoveAliases[] = [
     { alias: 'zthunderbolt', move: '10,000,000 Volt Thunderbolt' },
     { alias: 'zultranecrozma', move: 'Light That Burns the Sky' },
     { alias: 'zvolttackle', move: 'Catastropika' },
-    { alias: 'zwater', move: 'Hydro Vortex' },
+    { alias: 'zwater', move: 'Hydro Vortex' }
 ];

@@ -14,7 +14,7 @@
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import Fuse from 'fuse.js';
+import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeMoveAliases, PokeMoveDetailsType, startTyping, stopTyping } from '../../components';
 import { BattleMovedex, MoveAliases } from '../../data/dex';
@@ -49,7 +49,7 @@ export default class MoveCommand extends Command {
         try {
             startTyping(msg);
 
-            const moveOptions: Fuse.FuseOptions<PokeMoveDetailsType & IPokeMoveAliases> = {
+            const moveOptions: FuseOptions<PokeMoveDetailsType & IPokeMoveAliases> = {
                 keys: ['alias', 'move', 'id', 'name'],
                 threshold: 0.2,
             };

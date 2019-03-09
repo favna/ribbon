@@ -13,7 +13,7 @@
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import Fuse from 'fuse.js';
+import Fuse, { FuseOptions } from 'fuse.js';
 import fetch from 'node-fetch';
 import { DEFAULT_EMBED_COLOR, deleteCommandMessages, DjsDocsClassType, DjsDocsTypdefType, globalObjectsMap, startTyping, stopTyping } from '../../components';
 
@@ -66,7 +66,7 @@ export default class DocsCommand extends Command {
                     ? 'commando/blob/master'
                     : `discord.js/blob/${version}`
                 }`;
-            const docOptions: Fuse.FuseOptions<DjsDocsClassType & DjsDocsTypdefType> = {
+            const docOptions: FuseOptions<DjsDocsClassType & DjsDocsTypdefType> = {
                 keys: ['name'],
                 threshold: 0.3,
             };
@@ -89,7 +89,7 @@ export default class DocsCommand extends Command {
                 );
 
             if (input.sub) {
-                const subOptions: Fuse.FuseOptions<any> = {
+                const subOptions: FuseOptions<DjsDocsClassType & DjsDocsTypdefType> = {
                     shouldSort: true,
                     keys: ['name'],
                     location: 5,
