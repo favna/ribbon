@@ -1,5 +1,5 @@
 import { CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed, TextChannel, Util } from 'awesome-djs';
+import { GuildMember, MessageEmbed, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
 import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
 import emojiRegex from 'emoji-regex';
 import { diacriticsMap, validBooleansMap, YoutubeVideoType } from '.';
@@ -132,7 +132,7 @@ export class Song {
     public id: any;
     public length: any;
     public member: GuildMember;
-    public dispatcher: any;
+    public dispatcher: StreamDispatcher | null;
     public playing: boolean;
 
     constructor (video: YoutubeVideoType, member: GuildMember) {

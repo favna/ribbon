@@ -142,12 +142,11 @@ export default class SkipSongCommand extends Command {
             clearTimeout((this.songVotes.get(guild.id) as MusicVoteType).timeout);
             this.songVotes.delete(guild.id);
         }
+        if (!queue.songs[0].dispatcher) return 'hmmm... I couldn\'t find the music you were playing. You sure you did that correctly?';
 
-        const song = queue.songs[0];
+        queue.songs[0].dispatcher.end();
 
-        song.dispatcher.end();
-
-        return `Skipped: **${song}**`;
+        return `Skipped: **${queue.songs[0]}**`;
     }
 
     private setTimeout (vote: MusicVoteType) {

@@ -63,7 +63,7 @@ export default class PauseSongCommand extends Command {
 
             return msg.reply('pauseception is not possible 🤔');
         }
-        queue.songs[0].dispatcher.pause();
+        queue.songs[0].dispatcher.pause(true);
         queue.songs[0].playing = false;
 
         deleteCommandMessages(msg, this.client);

@@ -1,5 +1,6 @@
 import { Command } from 'awesome-commando';
 import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
+import { videoFormat } from 'ytdl-core';
 import { Song } from '.';
 
 type FlavorTextType = {
@@ -530,3 +531,7 @@ export type eShopType = {
     game_code: string;
     buyonline: string;
 };
+
+export interface IPrismVideoFormat extends videoFormat {
+    audio_sample_rate?: number;
+}

@@ -23,21 +23,21 @@ import { parse, stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { Readable } from 'stream';
-import ytdl from 'ytdl-core';
+import { downloadOptions } from 'ytdl-core';
 import {
     DEFAULT_VOLUME,
     deleteCommandMessages,
     MAX_LENGTH,
     MAX_SONGS,
-    MusicQueueType, MusicVoteType,
-    PASSES,
+    MusicQueueType,
+    MusicVoteType,
     Song,
     startTyping,
     stopTyping,
     YoutubeVideoSnippetType,
     YoutubeVideoType,
 } from '../../components';
+import prismPlayer from '../../components/PrismPlayer';
 
 export default class LaunchMusicCommand extends Command {
     public queue: Map<Snowflake, MusicQueueType>;
@@ -119,6 +119,22 @@ export default class LaunchMusicCommand extends Command {
         }
     }
 
+    private static async getVideoID (url: string): Promise<YoutubeVideoType | null> {
+        try {
+            if (/youtu\.be/i.test(url)) {
+                return LaunchMusicCommand.getVideo((url.match(/\/[a-zA-Z0-9-_]+$/i) as RegExpMatchArray)[0].slice(1));
+            }
+
+            return LaunchMusicCommand.getVideo(parse(url.split('?')[1]).v);
+        } catch (err) {
+            return null;
+        }
+    }
+
+    private static async startTheJam (connection: VoiceConnection, url: string, options?: downloadOptions) {
+        return connection.play(await prismPlayer(url), { type: 'opus' });
+    }
+
     public async run (msg: CommandoMessage, { videoQuery }: { videoQuery: string }) {
         startTyping(msg);
         const queue = this.queue.get(msg.guild.id);
@@ -182,7 +198,7 @@ export default class LaunchMusicCommand extends Command {
         }
 
         try {
-            const video: YoutubeVideoType | null = await this.getVideoID(videoQuery);
+            const video: YoutubeVideoType | null = await LaunchMusicCommand.getVideoID(videoQuery);
             if (!video) throw new Error('no_video_id');
 
             deleteCommandMessages(msg, this.client);
@@ -391,7 +407,7 @@ export default class LaunchMusicCommand extends Command {
         return oneLine`👍 ${`[${song}](${`${song.url}`})`}`;
     }
 
-    private async play (guild: Guild, song: any) {
+    private async play (guild: Guild, song: any): Promise<boolean> {
         const queue = this.queue.get(guild.id);
         const vote = this.votes.get(guild.id);
 
@@ -407,8 +423,9 @@ export default class LaunchMusicCommand extends Command {
             (queue as MusicQueueType).voiceChannel.leave();
             return this.queue.delete(guild.id);
         }
-        let streamErrored = false;
 
+        let streamErrored = false;
+        let dispatcher: StreamDispatcher;
         const playing: Promise<Message> = (queue as MusicQueueType).textChannel.send({
             embed: {
                 author: {
@@ -420,39 +437,30 @@ export default class LaunchMusicCommand extends Command {
                 image: { url: song.thumbnail },
             },
         }) as Promise<Message>;
-        const stream: Readable = ytdl(song.url, {
-            quality: 'highestaudio',
-            filter: 'audioonly',
-            highWaterMark: 12,
-        }).on('error', () => {
+
+        try {
+            dispatcher = await LaunchMusicCommand.startTheJam(((queue as MusicQueueType).connection as VoiceConnection), song.url);
+
+            dispatcher.on('end', () => {
+                if (streamErrored) return;
+                (queue as MusicQueueType).songs.shift();
+                this.play(guild, (queue as MusicQueueType).songs[0]);
+            });
+
+            dispatcher.on('error', (err: Error) => {
+                (queue as MusicQueueType).textChannel.send(`An error occurred while playing the song: \`${err}\``);
+            });
+
+            dispatcher.setVolumeLogarithmic((queue as MusicQueueType).volume / 5);
+            song.dispatcher = dispatcher;
+            song.playing = true;
+            return (queue as MusicQueueType).playing = true;
+        } catch (err) {
             streamErrored = true;
             playing.then((msg: Message) => msg.edit(`❌ Couldn't play ${song}. What a drag!`));
             (queue as MusicQueueType).songs.shift();
-            this.play(guild, (queue as MusicQueueType).songs[0]);
-        });
-
-        const dispatcher: StreamDispatcher = ((queue as MusicQueueType).connection as VoiceConnection)
-            .play(stream, {
-                passes: Number(PASSES),
-                fec: true,
-            })
-            .on('end', () => {
-                if (streamErrored) {
-                    return;
-                }
-                (queue as MusicQueueType).songs.shift();
-                this.play(guild, (queue as MusicQueueType).songs[0]);
-            })
-            .on('error', (err: any) => {
-                (queue as MusicQueueType).textChannel.send(
-                    `An error occurred while playing the song: \`${err}\``
-                );
-            });
-
-        dispatcher.setVolumeLogarithmic((queue as MusicQueueType).volume / 5);
-        song.dispatcher = dispatcher;
-        song.playing = true;
-        return (queue as MusicQueueType).playing = true;
+            return this.play(guild, (queue as MusicQueueType).songs[0]);
+        }
     }
 
     private async getPlaylistVideos (id: string) {
@@ -473,18 +481,6 @@ export default class LaunchMusicCommand extends Command {
 
             videos.forEach(async (video: YoutubeVideoType) => arr.push(await LaunchMusicCommand.getVideo((video.snippet as YoutubeVideoSnippetType).resourceId.videoId)));
             return arr;
-        } catch (err) {
-            return null;
-        }
-    }
-
-    private async getVideoID (url: string): Promise<YoutubeVideoType | null> {
-        try {
-            if (/youtu\.be/i.test(url)) {
-                return LaunchMusicCommand.getVideo((url.match(/\/[a-zA-Z0-9-_]+$/i) as RegExpMatchArray)[0].slice(1));
-            }
-
-            return LaunchMusicCommand.getVideo(parse(url.split('?')[1]).v);
         } catch (err) {
             return null;
         }
