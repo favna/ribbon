@@ -18,7 +18,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { ClientUser, Guild, Message, Permissions, Snowflake, StreamDispatcher, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
+import { ClientUser, Guild, Message, Permissions, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
 import { parse, stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
@@ -31,6 +31,7 @@ import {
     MAX_SONGS,
     MusicQueueType,
     MusicVoteType,
+    PASSES,
     Song,
     startTyping,
     stopTyping,
@@ -131,8 +132,8 @@ export default class LaunchMusicCommand extends Command {
         }
     }
 
-    private static async startTheJam (connection: VoiceConnection, url: string, options?: downloadOptions) {
-        return connection.play(await prismPlayer(url), { type: 'opus' });
+    private static async startTheJam (connection: VoiceConnection, url: string, ytdlOptions?: downloadOptions, streamOptions?: StreamOptions) {
+        return connection.play(await prismPlayer(url, ytdlOptions), streamOptions);
     }
 
     public async run (msg: CommandoMessage, { videoQuery }: { videoQuery: string }) {
@@ -439,7 +440,12 @@ export default class LaunchMusicCommand extends Command {
         }) as Promise<Message>;
 
         try {
-            dispatcher = await LaunchMusicCommand.startTheJam(((queue as MusicQueueType).connection as VoiceConnection), song.url);
+            dispatcher = await LaunchMusicCommand.startTheJam(
+                ((queue as MusicQueueType).connection as VoiceConnection),
+                song.url,
+                { quality: 'highestaudio', highWaterMark: 1 << 25 },
+                { type: 'opus', passes: Number(PASSES), fec: true }
+            );
 
             dispatcher.on('end', () => {
                 if (streamErrored) return;

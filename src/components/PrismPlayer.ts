@@ -18,9 +18,9 @@ const play = (url: string, options: downloadOptions = {}): Promise<Readable> => 
             const canDemux = info.formats.find(filter) && Number(info.length_seconds) !== 0;
 
             if (canDemux) {
-                Object.assign(options, { filter });
+                options = { ...options, filter };
             } else if (Number(info.length_seconds) !== 0) {
-                Object.assign(options, { filter: 'audioonly' });
+                options = { ...options, filter: 'audioonly' };
             }
 
             const ytdlStream = ytdl.downloadFromInfo(info, options);
