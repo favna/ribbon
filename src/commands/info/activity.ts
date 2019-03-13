@@ -118,11 +118,14 @@ export default class ActivityCommand extends Command {
             let isDiscordStoreGame: boolean = false;
             let discordGameData: DiscordGameParsedType = { id: '', icon: '' };
 
-            for (const game of gameList) {
+            discordStoreData: for (const game of gameList) {
                 if (game.name === activity.name) {
                     discordGameData = { id: game.id, icon: game.icon };
 
-                    const skuId = game.third_party_skus.filter((y: DiscordGameSKUType) => y.distributor === 'discord')[0].sku;
+                    const discordSkus = game.third_party_skus.filter((y: DiscordGameSKUType) => y.distributor === 'discord'); 
+                    const skuId = discordSkus.length ? discordSkus[0].sku : null;
+                
+                    if(!skuId) break discordStoreData;
 
                     const storeCheck = await fetch(`https://canary.discordapp.com/api/v6/store/published-listings/skus/${skuId}`);
                     const storeData: DiscordStoreGameType = await storeCheck.json();
