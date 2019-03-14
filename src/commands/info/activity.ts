@@ -122,10 +122,10 @@ export default class ActivityCommand extends Command {
                 if (game.name === activity.name) {
                     discordGameData = { id: game.id, icon: game.icon };
 
-                    const discordSkus = game.third_party_skus.filter((y: DiscordGameSKUType) => y.distributor === 'discord'); 
+                    const discordSkus = game.third_party_skus.filter((y: DiscordGameSKUType) => y.distributor === 'discord');
                     const skuId = discordSkus.length ? discordSkus[0].sku : null;
-                
-                    if(!skuId) break discordStoreData;
+
+                    if (!skuId) break discordStoreData;
 
                     const storeCheck = await fetch(`https://canary.discordapp.com/api/v6/store/published-listings/skus/${skuId}`);
                     const storeData: DiscordStoreGameType = await storeCheck.json();
