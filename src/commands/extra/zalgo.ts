@@ -12,7 +12,8 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { banish, deleteCommandMessages, startTyping, stopTyping, zalgoHelper } from '../../components';
+import zalgo, { banish } from 'awesome-zalgo';
+import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class ZalgoCommand extends Command {
     constructor (client: CommandoClient) {
@@ -44,6 +45,6 @@ export default class ZalgoCommand extends Command {
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);
 
-        return msg.say(zalgoHelper(banish(txt)));
+        return msg.say(zalgo(banish(txt)));
     }
 }

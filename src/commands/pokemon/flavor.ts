@@ -16,10 +16,11 @@
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
+import zalgo from 'awesome-zalgo';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType, startTyping, stopTyping, zalgoHelper } from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType, startTyping, stopTyping } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
 import entries from '../../data/dex/flavorText.json';
 
@@ -47,6 +48,33 @@ export default class FlavorCommand extends Command {
                 }
             ],
         });
+    }
+
+    private static fetchColor (col: string) {
+        switch (col) {
+            case 'Black':
+                return '#323232';
+            case 'Blue':
+                return '#257CFF';
+            case 'Brown':
+                return '#A3501A';
+            case 'Gray':
+                return '#969696';
+            case 'Green':
+                return '#3EFF4E';
+            case 'Pink':
+                return '#FF65A5';
+            case 'Purple':
+                return '#A63DE8';
+            case 'Red':
+                return '#FF3232';
+            case 'White':
+                return '#E1E1E1';
+            case 'Yellow':
+                return '#FFF359';
+            default:
+                return '#FF0000';
+        }
     }
 
     /* tslint:disable:prefer-conditional-expression*/
@@ -131,7 +159,7 @@ export default class FlavorCommand extends Command {
             }
 
             dataEmbed
-                .setColor(this.fetchColor(poke.color))
+                .setColor(FlavorCommand.fetchColor(poke.color))
                 .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setAuthor(`#${poke.num} - ${capitalizeFirstLetter(poke.species)}`, pokeData.sprite)
                 .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
@@ -143,13 +171,13 @@ export default class FlavorCommand extends Command {
                 for (const field in dataEmbed.fields) {
                     fields.push({
                         inline: dataEmbed.fields[field].inline,
-                        name: zalgoHelper(dataEmbed.fields[field].name),
-                        value: zalgoHelper(dataEmbed.fields[field].value),
+                        name: zalgo(dataEmbed.fields[field].name),
+                        value: zalgo(dataEmbed.fields[field].value),
                     });
                 }
 
-                dataEmbed.description = zalgoHelper(dataEmbed.description);
-                dataEmbed.author.name = zalgoHelper(dataEmbed.author.name);
+                dataEmbed.description = zalgo(dataEmbed.description);
+                dataEmbed.author.name = zalgo(dataEmbed.author.name!);
                 dataEmbed.fields = fields;
                 dataEmbed.setImage(`${ASSET_BASE_PATH}/ribbon/missingno.png`);
             }
@@ -178,33 +206,6 @@ export default class FlavorCommand extends Command {
 
             return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
                     Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
-        }
-    }
-
-    private fetchColor (col: string) {
-        switch (col) {
-            case 'Black':
-                return '#323232';
-            case 'Blue':
-                return '#257CFF';
-            case 'Brown':
-                return '#A3501A';
-            case 'Gray':
-                return '#969696';
-            case 'Green':
-                return '#3EFF4E';
-            case 'Pink':
-                return '#FF65A5';
-            case 'Purple':
-                return '#A63DE8';
-            case 'Red':
-                return '#FF3232';
-            case 'White':
-                return '#E1E1E1';
-            case 'Yellow':
-                return '#FFF359';
-            default:
-                return '#FF0000';
         }
     }
 }

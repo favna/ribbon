@@ -15,22 +15,11 @@
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
+import zalgo from 'awesome-zalgo';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import {
-    ASSET_BASE_PATH,
-    capitalizeFirstLetter,
-    deleteCommandMessages,
-    FlavorJSONType,
-    FormatsJSONType,
-    IPokeDexAliases,
-    PokeDataType,
-    PokedexType,
-    startTyping,
-    stopTyping,
-    zalgoHelper,
-} from '../../components';
+import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType, startTyping, stopTyping } from '../../components';
 import { BattlePokedex, PokeAliases } from '../../data/dex';
 import entries from '../../data/dex/flavorText.json';
 import formats from '../../data/dex/formats.json';
@@ -59,6 +48,33 @@ export default class DexCommand extends Command {
                 }
             ],
         });
+    }
+
+    private static fetchColor (col: string) {
+        switch (col) {
+            case 'Black':
+                return '#323232';
+            case 'Blue':
+                return '#257CFF';
+            case 'Brown':
+                return '#A3501A';
+            case 'Gray':
+                return '#969696';
+            case 'Green':
+                return '#3EFF4E';
+            case 'Pink':
+                return '#FF65A5';
+            case 'Purple':
+                return '#A63DE8';
+            case 'Red':
+                return '#FF3232';
+            case 'White':
+                return '#E1E1E1';
+            case 'Yellow':
+                return '#FFF359';
+            default:
+                return '#FF0000';
+        }
     }
 
     /* tslint:disable:cyclomatic-complexity prefer-conditional-expression*/
@@ -178,7 +194,7 @@ export default class DexCommand extends Command {
             }
 
             dexEmbed
-                .setColor(this.fetchColor(poke.color))
+                .setColor(DexCommand.fetchColor(poke.color))
                 .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setAuthor(`#${poke.num} - ${capitalizeFirstLetter(poke.species)}`, pokeData.sprite)
                 .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
@@ -211,13 +227,13 @@ export default class DexCommand extends Command {
                 for (const field in dexEmbed.fields) {
                     fields.push({
                         inline: dexEmbed.fields[field].inline,
-                        name: zalgoHelper(dexEmbed.fields[field].name),
-                        value: zalgoHelper(dexEmbed.fields[field].value),
+                        name: zalgo(dexEmbed.fields[field].name),
+                        value: zalgo(dexEmbed.fields[field].value),
                     });
                 }
 
                 dexEmbed.fields = fields;
-                dexEmbed.author.name = zalgoHelper(dexEmbed.author.name);
+                dexEmbed.author.name = zalgo(dexEmbed.author.name!);
                 dexEmbed.setImage(`${ASSET_BASE_PATH}/ribbon/missingno.png`);
             }
 
@@ -244,33 +260,6 @@ export default class DexCommand extends Command {
 
             return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
                     Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
-        }
-    }
-
-    private fetchColor (col: string) {
-        switch (col) {
-            case 'Black':
-                return '#323232';
-            case 'Blue':
-                return '#257CFF';
-            case 'Brown':
-                return '#A3501A';
-            case 'Gray':
-                return '#969696';
-            case 'Green':
-                return '#3EFF4E';
-            case 'Pink':
-                return '#FF65A5';
-            case 'Purple':
-                return '#A63DE8';
-            case 'Red':
-                return '#FF3232';
-            case 'White':
-                return '#E1E1E1';
-            case 'Yellow':
-                return '#FFF359';
-            default:
-                return '#FF0000';
         }
     }
 }

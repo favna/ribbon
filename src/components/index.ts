@@ -4,6 +4,5 @@ export * from './EventsHelper';
 export * from './MoneyHelper';
 export * from './TimeparseHelper';
 export * from './Utils';
-export * from './ZalgoHelper';
 export * from './Types';
 export * from './Constants';
