@@ -5,7 +5,7 @@
 		"forceConsistentCasingInFileNames": true,
 		"esModuleInterop": true,
 		"lib": ["esnext.array", "es2018", "dom"],
-		"target": "esnext",
+		"target": "es6",
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"newLine": "lf",
