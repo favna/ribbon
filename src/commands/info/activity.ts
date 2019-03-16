@@ -94,7 +94,7 @@ export default class ActivityCommand extends Command {
             name: fieldName,
             value: Object.entries(parsedStatus)
                 .map((entry: [string, string | undefined]) => {
-                    return `${capitalizeFirstLetter(entry[0])}: ${entry[1] !== 'dnd' ? capitalizeFirstLetter(entry[1] as string) : 'Do Not Disturb'}`;
+                    return `${capitalizeFirstLetter(entry[0])}: ${entry[1] !== 'dnd' ? capitalizeFirstLetter(entry[1]!) : 'Do Not Disturb'}`;
                 })
                 .join('\n'),
         };
@@ -161,7 +161,7 @@ export default class ActivityCommand extends Command {
                     {
                         body: stringify({ grant_type: 'client_credentials' }),
                         headers: {
-                            Authorization: `Basic ${Buffer.from(`${(process.env.SPOTIFY_ID as string)}:${(process.env.SPOTIFY_SECRET as string)}`).toString('base64')}`,
+                            Authorization: `Basic ${Buffer.from(`${process.env.SPOTIFY_ID!}:${process.env.SPOTIFY_SECRET!}`).toString('base64')}`,
                             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
                         },
                         method: 'POST',
@@ -310,7 +310,7 @@ export default class ActivityCommand extends Command {
                     thumbnail: { url: member.user.displayAvatarURL() },
                 });
             }
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`activity\` command!

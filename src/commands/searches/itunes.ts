@@ -87,7 +87,7 @@ export default class ITunesCommand extends Command {
             if (/(?:nosong)/i.test(err.toString())) {
                 return msg.reply(`no song found for \`${music.replace(/\+/g, ' ')}\``);
             }
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
 		        <@${this.client.owners[0].id}> Error occurred in \`itunes\` command!

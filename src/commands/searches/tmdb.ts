@@ -45,13 +45,13 @@ export default class MovieCommand extends Command {
         try {
             startTyping(msg);
             const movieSearch = await fetch(`https://api.themoviedb.org/3/search/movie?${stringify({
-                    api_key: (process.env.MOVIEDB_API_KEY as string),
+                    api_key: process.env.MOVIEDB_API_KEY!,
                     query: name,
                 })}`
             );
             const movieList = await movieSearch.json();
             const movieStats = await fetch(`https://api.themoviedb.org/3/movie/${movieList.results[0].id}?${stringify(
-                { api_key: (process.env.MOVIEDB_API_KEY as string) })}`
+                { api_key: process.env.MOVIEDB_API_KEY! })}`
             );
             const movie = await movieStats.json();
             const movieEmbed = new MessageEmbed();

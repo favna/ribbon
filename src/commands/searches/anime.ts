@@ -46,13 +46,13 @@ export default class AnimeCommand extends Command {
         try {
             startTyping(msg);
             const animeList = await fetch(
-                `https://${(process.env.KITSU_ID as string)}-dsn.algolia.net/1/indexes/production_media/query`,
+                `https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,
                 {
                     body: JSON.stringify({ params: `query=${anime}&facetFilters=[\"kind:anime\"]` }),
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-Algolia-API-Key': (process.env.KITSU_KEY as string),
-                        'X-Algolia-Application-Id': (process.env.KITSU_ID as string),
+                        'X-Algolia-API-Key': process.env.KITSU_KEY!,
+                        'X-Algolia-Application-Id': process.env.KITSU_ID!,
                     },
                     method: 'POST',
                 }

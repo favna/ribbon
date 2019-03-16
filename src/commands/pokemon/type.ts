@@ -216,7 +216,7 @@ export default class TypeCommand extends Command {
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
 		        <@${this.client.owners[0].id}> Error occurred in \`type\` command!

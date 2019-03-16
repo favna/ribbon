@@ -55,7 +55,7 @@ export default class RockPaperScissorCommand extends Command {
                         jsonrpc: '2.0',
                         method: 'generateIntegers',
                         params: {
-                            apiKey: (process.env.RANDOM_ORG_API_KEY as string),
+                            apiKey: process.env.RANDOM_ORG_API_KEY!,
                             max: 3,
                             min: 1,
                             n: 1,

@@ -139,7 +139,7 @@ export default class SkipSongCommand extends Command {
 
     private skip (guild: CommandoGuild, queue: MusicQueueType) {
         if (this.songVotes.get(guild.id)) {
-            clearTimeout((this.songVotes.get(guild.id) as MusicVoteType).timeout);
+            clearTimeout(this.songVotes.get(guild.id)!.timeout);
             this.songVotes.delete(guild.id);
         }
         if (!queue.songs[0].dispatcher) return 'hmmm... I couldn\'t find the music you were playing. You sure you did that correctly?';

@@ -68,10 +68,10 @@ export default class TimerAddCommand extends Command {
                             Please reply with your properly formatted time until reminder or`;
                     },
                     parse: (t: string) => {
-                        const match = t.match(/[a-z]+|[^a-z]+/gi) as RegExpMatchArray;
+                        const match = t.match(/[a-z]+|[^a-z]+/gi);
                         let multiplier = 1;
 
-                        switch (match[1]) {
+                        switch (match![1]) {
                             case 'm':
                                 multiplier = 1;
                                 break;
@@ -86,7 +86,7 @@ export default class TimerAddCommand extends Command {
                                 break;
                         }
 
-                        return Number(match[0]) * multiplier * 60000;
+                        return Number(match![0]) * multiplier * 60000;
                     },
                 },
                 {
@@ -146,7 +146,7 @@ export default class TimerAddCommand extends Command {
                             : '',
                     });
             } else {
-                const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+                const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
                 channel.send(stripIndents`
                     <@${this.client.owners[0].id}> Error occurred in \`timeradd\` command!

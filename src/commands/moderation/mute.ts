@@ -61,10 +61,10 @@ export default class MuteCommand extends Command {
                         return 'Has to be in the pattern of `50m`, `2h` or `01d` wherein `m` would be minutes, `h` would be hours and `d` would be days';
                     },
                     parse: (t: string) => {
-                        const match = t.match(/[a-z]+|[^a-z]+/gi) as RegExpMatchArray;
+                        const match = t.match(/[a-z]+|[^a-z]+/gi);
                         let multiplier = 1;
 
-                        switch (match[1]) {
+                        switch (match![1]) {
                             case 'm':
                                 multiplier = 1;
                                 break;
@@ -79,7 +79,7 @@ export default class MuteCommand extends Command {
                                 break;
                         }
 
-                        return Number(match[0]) * multiplier * 60000;
+                        return Number(match![0]) * multiplier * 60000;
                     },
                 }
             ],
@@ -140,7 +140,7 @@ export default class MuteCommand extends Command {
                     return msg.reply(stripIndents`an error occurred muting \`${member.displayName}\`.
                         Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
                 }
-                const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+                const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
                 channel.send(stripIndents`
                     <@${this.client.owners[0].id}> Error occurred in \`mute\` command!

@@ -74,7 +74,7 @@ export default class LearnCommand extends Command {
     public run (msg: CommandoMessage, { pokemon, moves }: { pokemon: string; moves: string; }) {
         try {
             startTyping(msg);
-            moves = (moves as string).toLowerCase().replace(/(-)/gm, '');
+            moves = moves.toLowerCase().replace(/(-)/gm, '');
 
             const { learnset } = BattleLearnsets[pokemon];
             const learnEmbed = new MessageEmbed();
@@ -139,7 +139,7 @@ export default class LearnCommand extends Command {
             return msg.embed(learnEmbed);
         } catch (err) {
             stopTyping(msg);
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
 		        <@${this.client.owners[0].id}> Error occurred in \`learn\` command!

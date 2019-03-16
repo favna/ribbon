@@ -1562,5 +1562,5 @@ export const BattleAbilities: PokeAbilityDetailsType[] = [
         id: 'persistent',
         name: 'Persistent',
         num: -4,
-    }
+    },
 ];

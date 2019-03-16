@@ -55,7 +55,7 @@ export default class FortniteCommand extends Command {
 
             const res = await fetch(
                 `https://api.fortnitetracker.com/v1/profile/${platform}/${user}`,
-                { headers: { 'TRN-Api-Key': (process.env.TRN_API_KEY as string) } }
+                { headers: { 'TRN-Api-Key': process.env.TRN_API_KEY! } }
             );
             const stats = await res.json();
             const fortEmbed = new MessageEmbed();
@@ -138,7 +138,7 @@ export default class FortniteCommand extends Command {
             stopTyping(msg);
 
             if (/(noplayer)/i.test(err.toString())) return msg.reply('no player found by that name. Check the platform (`pc`, `xbox` or `psn`)');
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`fortnite\` command!

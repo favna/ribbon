@@ -26,12 +26,12 @@ export default class Ribbon {
         this.token = token;
         this.client = new Client({
             commandPrefix: '!',
-            disabledEvents: [ 'CHANNEL_CREATE', 'CHANNEL_DELETE', 'CHANNEL_PINS_UPDATE',
-                              'CHANNEL_UPDATE', 'GUILD_BAN_ADD', 'GUILD_BAN_REMOVE', 'GUILD_EMOJIS_UPDATE',
-                              'GUILD_INTEGRATIONS_UPDATE', 'GUILD_MEMBER_UPDATE', 'GUILD_ROLE_CREATE',
-                              'GUILD_ROLE_DELETE', 'GUILD_ROLE_UPDATE', 'MESSAGE_DELETE_BULK',
-                              'MESSAGE_DELETE', 'MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE_ALL',
-                              'MESSAGE_REACTION_REMOVE', 'TYPING_START', 'USER_UPDATE', 'WEBHOOKS_UPDATE'
+            disabledEvents: ['CHANNEL_CREATE', 'CHANNEL_DELETE', 'CHANNEL_PINS_UPDATE',
+                             'CHANNEL_UPDATE', 'GUILD_BAN_ADD', 'GUILD_BAN_REMOVE', 'GUILD_EMOJIS_UPDATE',
+                             'GUILD_INTEGRATIONS_UPDATE', 'GUILD_MEMBER_UPDATE', 'GUILD_ROLE_CREATE',
+                             'GUILD_ROLE_DELETE', 'GUILD_ROLE_UPDATE', 'MESSAGE_DELETE_BULK',
+                             'MESSAGE_DELETE', 'MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE_ALL',
+                             'MESSAGE_REACTION_REMOVE', 'TYPING_START', 'USER_UPDATE', 'WEBHOOKS_UPDATE'
             ],
             messageCacheLifetime: 10 * 60,
             messageSweepInterval: 8 * 60,

@@ -14,6 +14,6 @@ config({
     debug: false,
 });
 
-const start = () => new Ribbon((process.env.NODE_ENV as string) === 'development' ? (process.env.TEST_TOKEN as string) : (process.env.BOT_TOKEN as string)).init();
+const start = () => new Ribbon(process.env.NODE_ENV! === 'development' ? process.env.TEST_TOKEN! : process.env.BOT_TOKEN!).init();
 
 start();

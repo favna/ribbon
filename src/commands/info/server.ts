@@ -8,7 +8,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, Role } from 'awesome-djs';
+import { MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
@@ -87,7 +87,7 @@ export default class ServerInfoCommand extends Command {
             .addField('Members', msg.guild.memberCount, true)
             .addField('Currently Online', onlineMembers, true)
             .addField('Region', msg.guild.region, true)
-            .addField('Highest Role', (msg.guild.roles.sort((a: any, b: any) => a.position - b.position || a.id - b.id).last() as Role).name, true)
+            .addField('Highest Role', msg.guild.roles.sort((a: any, b: any) => a.position - b.position || a.id - b.id).last()!.name, true)
             .addField('Number of emojis', msg.guild.emojis.size, true)
             .addField('Number of roles', msg.guild.roles.size, true)
             .addField('Number of channels', guildChannels, true)
@@ -97,7 +97,7 @@ export default class ServerInfoCommand extends Command {
 
         if (selfRoles) {
             const roleNames: (string | undefined)[] = selfRoles.map((r: string) => msg.guild.roles.get(r)
-                ? (msg.guild.roles.get(r) as Role).name
+                ? msg.guild.roles.get(r)!.name
                 : undefined).filter(Boolean);
 
             serverEmbed.addField(

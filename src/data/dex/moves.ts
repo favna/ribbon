@@ -10791,5 +10791,5 @@ export const BattleMovedex: PokeMoveDetailsType[] = [
         target: 'normal',
         type: 'Water',
         contestType: 'Cute',
-    }
+    },
 ];

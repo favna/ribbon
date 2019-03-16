@@ -17,7 +17,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildChannel, MessageEmbed, Role, TextChannel } from 'awesome-djs';
+import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
@@ -54,7 +54,7 @@ export default class LockdownCommand extends Command {
     public async run (msg: CommandoMessage, { lockrole }: { lockrole: Role | any }) {
         startTyping(msg);
         const lockEmbed = new MessageEmbed();
-        const channel = msg.channel as GuildChannel;
+        const channel = msg.channel as TextChannel;
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const overwrite = await channel.overwritePermissions({
             permissionOverwrites: [

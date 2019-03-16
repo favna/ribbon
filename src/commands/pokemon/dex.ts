@@ -66,8 +66,7 @@ export default class DexCommand extends Command {
         try {
             startTyping(msg);
             if (/(?:--shiny)/i.test(pokemon)) {
-                pokemon = (pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length) as string)
-                    .replace(/ /g, '');
+                pokemon = pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length).replace(/ /g, '');
                 shines = true;
             }
             if (pokemon.split(' ')[0] === 'mega') {
@@ -231,7 +230,7 @@ export default class DexCommand extends Command {
             stopTyping(msg);
 
             if (/(?:no_pokemon)/i.test(err.toString())) return msg.reply(stripIndents`no Pokémon found for \`${pokemon}\``);
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`dex\` command!

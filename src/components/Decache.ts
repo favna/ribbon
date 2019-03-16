@@ -36,12 +36,12 @@ export const decache = (moduleName: string | null): void => {
     if (moduleName) {
         moduleName = find(moduleName);
 
-        searchCache(moduleName as string, mod => {
+        searchCache(moduleName!, mod => {
             delete require.cache[mod.id];
         });
 
         return Object.keys((module.constructor as IModuleFunction)._pathCache).forEach(cacheKey => {
-            if (cacheKey.indexOf(moduleName as string) > 0) {
+            if (cacheKey.indexOf(moduleName!) > 0) {
                 delete (module.constructor as IModuleFunction)._pathCache[cacheKey];
             }
         });

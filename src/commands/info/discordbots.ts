@@ -45,7 +45,7 @@ export default class DiscordBotsCommand extends Command {
         try {
             startTyping(msg);
             const res = await fetch(`https://discordbots.org/api/bots/${bot}`, {
-                headers: { Authorization: (process.env.DISCORD_BOTS_API_KEY as string) },
+                headers: { Authorization: process.env.DISCORD_BOTS_API_KEY! },
             });
             const info = await res.json();
             const infoEmbed = new MessageEmbed();

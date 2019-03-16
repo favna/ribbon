@@ -6,7 +6,6 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { ClientUser } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import dym, { ReturnTypeEnums } from 'didyoumean2';
 
@@ -32,7 +31,7 @@ export default class UnknownCommand extends Command {
             const maybe = dym(msg.cleanContent.split(' ')[0], commandsAndAliases, { deburr: true, returnType: ReturnTypeEnums.ALL_SORTED_MATCHES }) as string[];
             const returnStr = [
                 oneLine`Unknown command. Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\`
-                        or <@${(this.client.user as ClientUser).id}> help to view the command list.`,
+                        or <@${this.client.user!.id}> help to view the command list.`,
                 '',
                 oneLine`Server staff (those who can manage other's messages) can disable these replies by
                         using\`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}unknownmessages disable\``
@@ -43,6 +42,6 @@ export default class UnknownCommand extends Command {
         }
 
         return msg.reply(oneLine`Unknown command. Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\`
-                                or <@${(this.client.user as ClientUser).id}> help to view the command list.`);
+                                or <@${this.client.user!.id}> help to view the command list.`);
     }
 }

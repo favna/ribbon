@@ -49,7 +49,7 @@ export default class OsuCommand extends Command {
 
             const res = await fetch(
                 `https://osu.ppy.sh/api/get_user?${stringify({
-                    k: (process.env.OSU_API_KEY as string),
+                    k: process.env.OSU_API_KEY!,
                     type: 'string',
                     u: player,
                 })}`,
@@ -95,7 +95,7 @@ export default class OsuCommand extends Command {
                 return msg.reply(`no OSU player found with username \`${player}\`.`);
             }
 
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id

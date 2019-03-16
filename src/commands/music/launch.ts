@@ -18,7 +18,7 @@
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { ClientUser, Guild, Message, Permissions, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
+import { Guild, Message, Permissions, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
 import { parse, stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
@@ -80,7 +80,7 @@ export default class LaunchMusicCommand extends Command {
         try {
             const request = await fetch(
                 `https://www.googleapis.com/youtube/v3/search?${stringify({
-                    key: (process.env.GOOGLE_API_KEY as string),
+                    key: process.env.GOOGLE_API_KEY!,
                     maxResults: '1',
                     part: 'snippet',
                     q: name,
@@ -101,7 +101,7 @@ export default class LaunchMusicCommand extends Command {
             const request = await fetch(
                 `https://www.googleapis.com/youtube/v3/videos?${stringify({
                     id,
-                    key: (process.env.GOOGLE_API_KEY as string),
+                    key: process.env.GOOGLE_API_KEY!,
                     maxResults: 1,
                     part: 'snippet,contentDetails',
                 })}`
@@ -146,7 +146,7 @@ export default class LaunchMusicCommand extends Command {
         const statusMsg: Message = await msg.reply('obtaining video details...') as Message;
 
         if (!queue) {
-            const permissions = voiceChannel.permissionsFor(msg.client.user as ClientUser) as Readonly<Permissions>;
+            const permissions = voiceChannel.permissionsFor(msg.client.user!) as Readonly<Permissions>;
 
             if (!permissions.has('CONNECT')) return msg.reply('I don\'t have permission to join your voice channel. Fix your server\'s permissions');
             if (!permissions.has('SPEAK')) return msg.reply('I don\'t have permission to speak in your voice channel. Fix your server\'s permissions');
@@ -237,7 +237,7 @@ export default class LaunchMusicCommand extends Command {
                 Please note that this error might also be something else and there is currently additional
                 debugging information being send to <@${this.client.owners[0].id}>`);
 
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
             /* tslint:disable:no-console*/
             console.error('PLAYBACK ERROR OCCURRED: DEBUG BELOW');
             console.error(video);
@@ -321,7 +321,7 @@ export default class LaunchMusicCommand extends Command {
             statusMsg.edit(oneLine`${msg.author}, you can't play live streams.
                 Please note that this error might also be something else and there is currently additional debugging information being send to <@${this.client.owners[0].id}>`);
 
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
             /* tslint:disable:no-console*/
             console.error('PLAYBACK ERROR OCCURRED: DEBUG BELOW');
             console.error(video);
@@ -473,7 +473,7 @@ export default class LaunchMusicCommand extends Command {
         try {
             const request = await fetch(
                 `https://www.googleapis.com/youtube/v3/playlistItems?${stringify({
-                        key: (process.env.GOOGLE_API_KEY as string),
+                        key: process.env.GOOGLE_API_KEY!,
                         maxResults: 25,
                         part: 'snippet,contentDetails',
                         playlistId: id,

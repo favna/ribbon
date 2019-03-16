@@ -2740,5 +2740,5 @@ export const BattleItems: PokeItemDetailsType[] = [
         num: 796,
         gen: 7,
         desc: 'Used for Hyper Training. All of a Pokemon\'s stats are calculated with an IV of 31.',
-    }
+    },
 ];

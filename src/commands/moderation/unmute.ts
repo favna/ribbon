@@ -78,7 +78,7 @@ export default class UnmuteCommand extends Command {
                         Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?
                     `);
                 }
-                const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+                const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
                 channel.send(stripIndents`
 		            <@${this.client.owners[0].id}> Error occurred in \`deleterole\` command!

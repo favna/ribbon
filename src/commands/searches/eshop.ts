@@ -11,11 +11,10 @@
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
-import fs from 'fs';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import path from 'path';
 import { deleteCommandMessages, eShopType, startTyping, stopTyping } from '../../components';
+import shopData from '../../data/databases/eshop.json';
 
 export default class EShopCommand extends Command {
     constructor (client: CommandoClient) {
@@ -42,12 +41,12 @@ export default class EShopCommand extends Command {
         try {
             startTyping(msg);
 
+            const eshopData: eShopType[] = shopData as eShopType[];
             const eshopEmbed = new MessageEmbed();
             const eShopOptions: FuseOptions<eShopType> = { keys: ['title'] };
-            const games = JSON.parse(fs.readFileSync(path.join(__dirname, '../../data/databases/eshop.json'), 'utf8'));
-            const fuse = new Fuse(games, eShopOptions);
+            const fuse = new Fuse(eshopData, eShopOptions);
             const results = fuse.search(game);
-            const hit: eShopType = results[0] as eShopType;
+            const hit = results[0];
 
             if (hit.eshop_price) price = hit.eshop_price === '0.00' ? 'free' : `$${hit.eshop_price} USD`;
 

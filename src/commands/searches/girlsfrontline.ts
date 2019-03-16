@@ -16,7 +16,7 @@ import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, FrontlineGirlProductionRequirementsType, FrontlineGirlType, startTyping, stopTyping } from '../../components';
+import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, FrontlineGirlType, startTyping, stopTyping } from '../../components';
 import { FrontlineGirls } from '../../data/dex';
 
 export default class GirlsFrontlineCommand extends Command {
@@ -56,7 +56,7 @@ export default class GirlsFrontlineCommand extends Command {
             if (hit.production.reward) howObtain.push(`**Reward:** ${hit.production.reward}`);
             if (hit.production.timer) howObtain.push(`**Production Timer:** ${moment.duration(hit.production.timer, 'hours').format('H [hours and] mm [minutes]')}`);
 
-            (hit.ability.text.match(/\(\$([a-z0-9_])+\)/gm) as RegExpMatchArray).forEach((element: string) => {
+            hit.ability.text.match(/\(\$([a-z0-9_])+\)/gm)!.forEach((element: string) => {
                 hit.ability.text = hit.ability.text.replace(element, (hit.ability[element.replace(/\(\$(.+)\)/gim, '$1')] as string[]).reverse()[0]);
             });
 
@@ -90,14 +90,14 @@ export default class GirlsFrontlineCommand extends Command {
 
             if (hit.production.timer && hit.production.normal) {
                 gfEmbed.addField('Normal Production Requirement', Object.keys(hit.production.normal)
-                    .map((index: string) => `**${capitalizeFirstLetter(index)}**: ${(hit.production.normal as FrontlineGirlProductionRequirementsType)[index]}`)
+                    .map((index: string) => `**${capitalizeFirstLetter(index)}**: ${hit.production.normal![index]}`)
                     .join(', '));
             }
 
             if (hit.production.timer && hit.production.heavy) {
                 gfEmbed
                     .addField('Heavy Production Requirement', Object.keys(hit.production.heavy)
-                        .map((index: string) => `**${capitalizeFirstLetter(index)}**: ${(hit.production.heavy as FrontlineGirlProductionRequirementsType)[index]}`)
+                        .map((index: string) => `**${capitalizeFirstLetter(index)}**: ${hit.production.heavy![index]}`)
                         .join(', '));
             }
 

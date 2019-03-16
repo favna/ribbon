@@ -53,8 +53,8 @@ export default class ShipCommand extends Command {
 
     public async run (msg: CommandoMessage, { firstMember, secondMember }: { firstMember: GuildMember | string; secondMember: GuildMember | string }) {
         startTyping(msg);
-        const romeo: User = firstMember !== 'random' ? (firstMember as GuildMember).user : (msg.guild.members.random() as GuildMember).user;
-        const juliet: User = secondMember !== 'random' ? (secondMember as GuildMember).user : (msg.guild.members.random() as GuildMember).user;
+        const romeo: User = firstMember !== 'random' ? (firstMember as GuildMember).user : msg.guild.members.random()!.user;
+        const juliet: User = secondMember !== 'random' ? (secondMember as GuildMember).user : msg.guild.members.random()!.user;
 
         const avaOne = await jimp.read(romeo.displayAvatarURL({ format: 'png' }));
         const avaTwo = await jimp.read(juliet.displayAvatarURL({ format: 'png' }));

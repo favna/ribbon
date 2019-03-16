@@ -72,7 +72,7 @@ export default class MoneyCommand extends Command {
 
             const oxrEmbed = new MessageEmbed();
             const request = await fetch(`https://openexchangerates.org/api/latest.json?${stringify({
-                    app_id: (process.env.OXR_API_KEY as string),
+                    app_id: process.env.OXR_API_KEY!,
                     prettyprint: false,
                     show_alternative: true,
                 })}`
@@ -111,7 +111,7 @@ export default class MoneyCommand extends Command {
             return msg.embed(oxrEmbed);
         } catch (err) {
             stopTyping(msg);
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`oxr\` command!

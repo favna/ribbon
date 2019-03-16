@@ -151,7 +151,7 @@ export default class StopMusicCommand extends Command {
 
     private stop (guild: CommandoGuild, queue: MusicQueueType) {
         if (this.songVotes.has(guild.id)) {
-            clearTimeout((this.songVotes.get(guild.id) as MusicVoteType).timeout);
+            clearTimeout(this.songVotes.get(guild.id)!.timeout);
             this.songVotes.delete(guild.id);
         }
 

@@ -83,7 +83,7 @@ export default class AddRoleCommand extends Command {
                 return msg.reply(stripIndents`an error occurred adding the role \`${role.name}\` to \`${member.displayName}\`.
                     The server staff should check that I have \`Manage Roles\` permission and I have the proper hierarchy.`);
             }
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`addrole\` command!

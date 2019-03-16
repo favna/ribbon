@@ -118,7 +118,7 @@ export default class CydiaCommand extends Command {
             stopTyping(msg);
 
             if (/(no_packages)/i.test(err.toString())) return msg.say(`**Tweak/Theme \`${deb}\` not found!**`);
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
               <@${this.client.owners[0].id}> Error occurred in \`cydia\` command!

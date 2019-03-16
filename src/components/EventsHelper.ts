@@ -1,5 +1,5 @@
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
-import { ClientUser, GuildChannel, GuildMember, MessageAttachment, MessageEmbed, Permissions, RateLimitData, Role, Snowflake, TextChannel } from 'awesome-djs';
+import { GuildChannel, GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
@@ -28,7 +28,7 @@ const renderReminderMessage = async (client: CommandoClient) => {
                 user.send({
                     embed: {
                         author: {
-                            iconURL: (client.user as ClientUser).displayAvatarURL({
+                            iconURL: client.user!.displayAvatarURL({
                                 format: 'png',
                             }),
                             name: 'Ribbon Reminders',
@@ -48,7 +48,7 @@ const renderReminderMessage = async (client: CommandoClient) => {
             }
         }
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> Error occurred sending someone their reminder!
@@ -76,7 +76,7 @@ const renderCountdownMessage = (client: CommandoClient) => {
                 const dura = moment.duration(cdmoment.diff(moment()));
 
                 if (dura.asMinutes() <= 0) {
-                    const guild = client.guilds.get(tables[table].name) as CommandoGuild;
+                    const guild = client.guilds.get(tables[table].name)!;
                     const channel = guild.channels.get(rows[row].channel) as TextChannel;
                     const countdownEmbed = new MessageEmbed();
                     const me = guild.me;
@@ -127,7 +127,7 @@ const renderCountdownMessage = (client: CommandoClient) => {
             }
         }
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> Error occurred sending a countdown!
@@ -239,16 +239,16 @@ const renderLottoMessage = (client: CommandoClient) => {
                     .prepare(`UPDATE "${tables[table].name}" SET balance=$balance WHERE userID="${rows[winner].userID}"`)
                     .run({ balance: rows[winner].balance });
 
-                const defaultChannel = (client.guilds.get(tables[table].name) as CommandoGuild).systemChannel;
+                const defaultChannel = client.guilds.get(tables[table].name)!.systemChannel;
                 const winnerEmbed = new MessageEmbed();
-                const winnerMember: GuildMember = (client.guilds.get(tables[table].name) as CommandoGuild).members.get(rows[winner].userID) as GuildMember;
+                const winnerMember: GuildMember = client.guilds.get(tables[table].name)!.members.get(rows[winner].userID)!;
                 if (!winnerMember) continue;
                 const winnerLastMessageChannelId: Snowflake = winnerMember.lastMessageChannelID;
-                const winnerLastMessageChannel: (TextChannel | null) = winnerLastMessageChannelId
-                    ? ((client.guilds.get(tables[table].name) as CommandoGuild).channels.get(winnerLastMessageChannelId) as TextChannel)
+                const winnerLastMessageChannel = winnerLastMessageChannelId
+                    ? client.guilds.get(tables[table].name)!.channels.get(winnerLastMessageChannelId)!
                     : null;
                 const winnerLastMessageChannelPermitted: boolean = winnerLastMessageChannel
-                    ? (winnerLastMessageChannel.permissionsFor((client.user as ClientUser)) as Permissions).has('SEND_MESSAGES')
+                    ? winnerLastMessageChannel.permissionsFor(client.user!)!.has('SEND_MESSAGES')
                     : false;
 
                 winnerEmbed
@@ -259,7 +259,7 @@ const renderLottoMessage = (client: CommandoClient) => {
                     .addField('Balance', `${prevBal} ➡ ${rows[winner].balance}`);
 
                 if (winnerLastMessageChannelPermitted && winnerLastMessageChannel) {
-                    winnerLastMessageChannel.send(`<@${rows[winner].userID}>`, {
+                    (winnerLastMessageChannel as TextChannel).send(`<@${rows[winner].userID}>`, {
                         embed: winnerEmbed,
                     });
                 } else if (defaultChannel) {
@@ -270,7 +270,7 @@ const renderLottoMessage = (client: CommandoClient) => {
             }
         }
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> Error occurred giving someone their lotto payout!
@@ -304,7 +304,7 @@ const renderTimerMessage = (client: CommandoClient) => {
                             id: rows[row].id,
                             lastsend: moment().format('YYYY-MM-DD HH:mm'),
                         });
-                    const guild = (client.guilds.get(tables[table].name) as CommandoGuild);
+                    const guild = client.guilds.get(tables[table].name)!;
                     const channel = guild.channels.get(rows[row].channel) as TextChannel;
                     const timerEmbed = new MessageEmbed();
                     const me = guild.me;
@@ -316,7 +316,7 @@ const renderTimerMessage = (client: CommandoClient) => {
                         : null;
 
                     timerEmbed
-                        .setAuthor(`${(client.user as ClientUser).username} Timed Message`, me.user.displayAvatarURL({ format: 'png' }))
+                        .setAuthor(`${client.user!.username} Timed Message`, me.user.displayAvatarURL({ format: 'png' }))
                         .setColor(me.displayHexColor)
                         .setDescription(rows[row].content)
                         .setTimestamp();
@@ -328,7 +328,7 @@ const renderTimerMessage = (client: CommandoClient) => {
             }
         }
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> Error occurred sending a timed message!
@@ -358,7 +358,7 @@ const forceStopTyping = (client: CommandoClient) => {
 
     for (const channel of allChannels.values()) {
         if (channel.type === 'text' || channel.type === 'dm') {
-            if ((client.user as ClientUser).typingDurationIn(channel) > 10000) {
+            if (client.user!.typingDurationIn(channel) > 10000) {
                 const typingChannel = channel as TextChannel;
 
                 typingChannel.stopTyping(true);
@@ -368,7 +368,7 @@ const forceStopTyping = (client: CommandoClient) => {
 };
 
 export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, msg: CommandoMessage) => {
-    const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
     channel.send(stripIndents`
         Caught **Command Error**!
@@ -383,7 +383,7 @@ export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, m
 export const handleDebug = (info: string) => console.info(info);
 
 export const handleErr = (client: CommandoClient, err: Error) => {
-    const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
     channel.send(stripIndents`
         Caught **WebSocket Error**!
@@ -394,7 +394,7 @@ export const handleErr = (client: CommandoClient, err: Error) => {
 
 export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGuild) => {
     try {
-        const avatar = await jimp.read((client.user as ClientUser).displayAvatarURL({ format: 'png' }));
+        const avatar = await jimp.read(client.user!.displayAvatarURL({ format: 'png' }));
         const border = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/border.png`);
         const canvas = await jimp.read(500, 150);
         const mask = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/mask.png`);
@@ -423,7 +423,7 @@ export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGui
                 I've got many commands, you can see them all by using \`${client.commandPrefix}help\`
                 Don't like the prefix? The admins can change my prefix by using \`${client.commandPrefix}prefix [new prefix]\`
 
-                **All these commands can also be called by mentioning me instead of using a prefix, for example \`@${(client.user as ClientUser).tag} help\`**
+                **All these commands can also be called by mentioning me instead of using a prefix, for example \`@${client.user!.tag} help\`**
             `)
             .setImage('attachment://added.png');
 
@@ -443,7 +443,7 @@ export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild) =
     try {
         casinoConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the casino database!
@@ -455,7 +455,7 @@ export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild) =
     try {
         pastasConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the pastas database!
@@ -467,7 +467,7 @@ export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild) =
     try {
         timerConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the timers database!
@@ -479,7 +479,7 @@ export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild) =
     try {
         warningsConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the warnings database!
@@ -497,7 +497,7 @@ export const handleMemberJoin = (client: CommandoClient, joinMember: GuildMember
         if (guild.settings.get('defaultRole') && guild.roles.get(guild.settings.get('defaultRole')) && joinMember.manageable) {
             joinMember.roles.add(guild.settings.get('defaultRole'));
             memberJoinLogEmbed.setDescription(
-                `Automatically assigned the role ${(joinMember.guild.roles.get(guild.settings.get('defaultRole')) as Role).name} to this member`
+                `Automatically assigned the role ${joinMember.guild.roles.get(guild.settings.get('defaultRole'))!.name} to this member`
             );
         }
     } catch (err) {
@@ -521,14 +521,14 @@ export const handleMemberJoin = (client: CommandoClient, joinMember: GuildMember
 
             if (memberLogs
                 && joinMember.guild.channels.get(memberLogs)
-                && ((joinMember.guild.channels.get(memberLogs) as GuildChannel).permissionsFor((client.user as ClientUser)) as Permissions).has('SEND_MESSAGES')) {
+                && joinMember.guild.channels.get(memberLogs)!.permissionsFor(client.user!)!.has('SEND_MESSAGES')) {
                 const channel = guild.channels.get(memberLogs) as TextChannel;
 
                 channel.send('', { embed: memberJoinLogEmbed });
             }
         }
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> An error sending the member join memberlog message!
@@ -546,7 +546,7 @@ export const handleMemberJoin = (client: CommandoClient, joinMember: GuildMember
             renderJoinMessage(joinMember);
         }
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> An error occurred sending the member join image!
@@ -578,14 +578,14 @@ export const handleMemberLeave = (client: CommandoClient, leaveMember: GuildMemb
 
             if (memberLogs
                 && leaveMember.guild.channels.get(memberLogs)
-                && ((leaveMember.guild.channels.get(memberLogs) as GuildChannel).permissionsFor((client.user as ClientUser)) as Permissions).has('SEND_MESSAGES')) {
+                && leaveMember.guild.channels.get(memberLogs)!.permissionsFor(client.user!)!.has('SEND_MESSAGES')) {
                 const channel = guild.channels.get(memberLogs) as TextChannel;
 
                 channel.send('', { embed: memberLeaveLogEmbed });
             }
         }
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> An error occurred sending the member left memberlog message!
@@ -606,7 +606,7 @@ export const handleMemberLeave = (client: CommandoClient, leaveMember: GuildMemb
         }
     } catch (err) {
         if (!/(?:no such table)/i.test(err.toString())) {
-            const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
                 <@${client.owners[0].id}> An error occurred removing ${leaveMember.user.tag} (${leaveMember.id}) casino data when they left the server!
@@ -622,7 +622,7 @@ export const handleMemberLeave = (client: CommandoClient, leaveMember: GuildMemb
             renderLeaveMessage(leaveMember);
         }
     } catch (err) {
-        const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> An error occurred sending the member leave image!
@@ -634,7 +634,7 @@ export const handleMemberLeave = (client: CommandoClient, leaveMember: GuildMemb
 };
 
 export const handleMsg = (client: CommandoClient, msg: CommandoMessage): void => {
-    const guild = msg.guild as CommandoGuild;
+    const guild = msg.guild;
 
     if (msg.guild && msg.deletable && guild.settings.get('automod', false).enabled) {
         if (msg.member.roles.some(ro => guild.settings.get('automod', []).filterroles.includes(ro.id))) {
@@ -736,14 +736,14 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
                         `https://api.twitch.tv/helix/users?${stringify({
                             login: newActivity.url.split('/')[3],
                         })}`,
-                        { headers: { 'Client-ID': (process.env.TWITCH_CLIENT_ID as string) } }
+                        { headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID! } }
                     );
                     const userData = await userFetch.json();
                     const streamFetch = await fetch(
                         `https://api.twitch.tv/helix/streams?${stringify({
                             channel: userData.data[0].id,
                         })}`,
-                        { headers: { 'Client-ID': (process.env.TWITCH_CLIENT_ID as string) } }
+                        { headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID! } }
                     );
                     const streamData = await streamFetch.json();
                     const twitchChannelID = curGuild.settings.get('twitchchannelID', null);
@@ -784,7 +784,7 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
                     }
                 }
             } catch (err) {
-                const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+                const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
                 channel.send(stripIndents`
                     <@${client.owners[0].id}> Error occurred in sending a twitch live notifier!
@@ -801,7 +801,7 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
 };
 
 export const handleRateLimit = (client: CommandoClient, info: RateLimitData) => {
-    const channel = client.channels.get((process.env.RATELIMIT_LOG_CHANNEL_ID as string)) as TextChannel;
+    const channel = client.channels.get(process.env.RATELIMIT_LOG_CHANNEL_ID!) as TextChannel;
 
     channel.send(stripIndents`
         Ran into a **rate limit**!
@@ -816,7 +816,7 @@ export const handleRateLimit = (client: CommandoClient, info: RateLimitData) => 
 
 export const handleReady = (client: CommandoClient) => {
     console.info(oneLine`Client ready at ${moment().format('HH:mm:ss')};
-        logged in as ${(client.user as ClientUser).username}#${(client.user as ClientUser).discriminator} (${(client.user as ClientUser).id})
+        logged in as ${client.user!.username}#${client.user!.discriminator} (${client.user!.id})
     `);
     const bot = client;
 
@@ -847,7 +847,7 @@ export const handleReady = (client: CommandoClient) => {
 };
 
 export const handleRejection = (client: CommandoClient, reason: Error | any, p: Promise<any>) => {
-    const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
     if (reason instanceof Error) reason = reason.message;
 
     channel.send(stripIndents`
@@ -859,7 +859,7 @@ export const handleRejection = (client: CommandoClient, reason: Error | any, p: 
 };
 
 export const handleWarn = (client: CommandoClient, warn: string) => {
-    const channel = client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
     if (channel) {
         return channel.send(stripIndents`

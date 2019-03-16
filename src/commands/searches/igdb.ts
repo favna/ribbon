@@ -47,7 +47,7 @@ export default class IGDBCommand extends Command {
             const gameEmbed = new MessageEmbed();
             const headers = {
                 Accept: 'application/json',
-                'user-key': (process.env.IGDB_API_KEY as string),
+                'user-key': process.env.IGDB_API_KEY!,
             };
 
             const igdbSearch = await fetch('https://api-v3.igdb.com/games', {

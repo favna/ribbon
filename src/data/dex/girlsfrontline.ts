@@ -13477,5 +13477,5 @@ export const FrontlineGirls: FrontlineGirlType[] = [
             reward: 'Obtainable as an exchangeable character for 120 Nyan Kings during the collaboration event Hitoribocchi.',
         },
         img: 'pic_Theresa.png',
-    }
+    },
 ];

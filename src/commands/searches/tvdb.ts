@@ -45,13 +45,13 @@ export default class TVCommand extends Command {
         try {
             startTyping(msg);
             const movieSearch = await fetch(`https://api.themoviedb.org/3/search/tv?${stringify({
-                    api_key: (process.env.MOVIEDB_API_KEY as string),
+                    api_key: process.env.MOVIEDB_API_KEY!,
                     query: name,
                 })}`
             );
             const showList = await movieSearch.json();
             const showStats = await fetch(`https://api.themoviedb.org/3/tv/${showList.results[0].id}?${stringify(
-                { api_key: (process.env.MOVIEDB_API_KEY as string) })}`
+                { api_key: process.env.MOVIEDB_API_KEY! })}`
             );
             const show = await showStats.json();
             const showEmbed = new MessageEmbed();

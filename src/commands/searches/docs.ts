@@ -72,7 +72,7 @@ export default class DocsCommand extends Command {
             };
             const input = {
                 main: query[0],
-                sub: query[1] ? (query[1] as string).replace(/(\(.*\))/gm, '') : null,
+                sub: query[1] ? (query[1]).replace(/(\(.*\))/gm, '') : null,
             };
             const docsFuse = new Fuse(docs.classes.concat(docs.typedefs), docOptions);
             const docsEmbed = new MessageEmbed();

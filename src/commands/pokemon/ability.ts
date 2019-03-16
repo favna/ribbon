@@ -80,7 +80,7 @@ export default class AbilityCommand extends Command {
                     Be sure it is an ability that has an effect in battles
                 `);
             }
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID as string) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
 		        <@${this.client.owners[0].id}> Error occurred in \`ability\` command!

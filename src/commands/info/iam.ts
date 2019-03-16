@@ -60,7 +60,7 @@ export default class IamCommand extends Command {
             }
 
             const roleNames: (string | undefined)[] = selfRoles.map((r: string) => msg.guild.roles.get(r)
-                ? (msg.guild.roles.get(r) as Role).name
+                ? msg.guild.roles.get(r)!.name
                 : undefined).filter(Boolean);
 
             if (!selfRoles.includes(role.id)) {
@@ -100,7 +100,7 @@ export default class IamCommand extends Command {
                     role is valid please feel free to open an issue on the GitHub.`);
             }
 
-            const channel = this.client.channels.get((process.env.ISSUE_LOG_CHANNEL_ID as string)) as TextChannel;
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`iam\` command!
