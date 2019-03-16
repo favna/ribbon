@@ -5,8 +5,8 @@ import terser from 'gulp-terser';
 
 const compileSingleToJavaScript = (done) => {
     if (!argv.src) {
-        console.error('At least 1 file has to be specified with the --src argument, f.e. --src ./src/commands/automod/badwords.ts')
-        console.error('Specify multiple files by repeating the structure: --src ./src/commands/automod/badwords.ts --src ./src/commands/automod/duptext.ts')
+        global.console.error('At least 1 file has to be specified with the --src argument, f.e. --src ./src/commands/automod/badwords.ts')
+        global.console.error('Specify multiple files by repeating the structure: --src ./src/commands/automod/badwords.ts --src ./src/commands/automod/duptext.ts')
         return done();
     }
 

@@ -380,7 +380,7 @@ export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, m
     `);
 };
 
-export const handleDebug = (info: string) => console.info(info);
+export const handleDebug = (info: string) => global.console.info(info);
 
 export const handleErr = (client: CommandoClient, err: Error) => {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
@@ -815,7 +815,7 @@ export const handleRateLimit = (client: CommandoClient, info: RateLimitData) => 
 };
 
 export const handleReady = (client: CommandoClient) => {
-    console.info(oneLine`Client ready at ${moment().format('HH:mm:ss')};
+    global.console.info(oneLine`Client ready at ${moment().format('HH:mm:ss')};
         logged in as ${client.user!.username}#${client.user!.discriminator} (${client.user!.id})
     `);
     const bot = client;
@@ -868,6 +868,6 @@ export const handleWarn = (client: CommandoClient, warn: string) => {
             **Warning Message:** ${warn}
         `);
     } else {
-        return console.warn(warn);
+        return global.global.console.warn(warn);
     }
 };

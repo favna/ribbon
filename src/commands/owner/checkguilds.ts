@@ -22,6 +22,7 @@ export default class CheckGuildsCommand extends Command {
 
     public run (msg: CommandoMessage) {
         const guildList = this.client.guilds.map(m => `${m.name} (${m.id})`);
+        global.console.log('test');
 
         return msg.say(stripIndents`
             \`\`\`

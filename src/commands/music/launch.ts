@@ -239,8 +239,8 @@ export default class LaunchMusicCommand extends Command {
 
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
             /* tslint:disable:no-console*/
-            console.error('PLAYBACK ERROR OCCURRED: DEBUG BELOW');
-            console.error(video);
+            global.console.error('PLAYBACK ERROR OCCURRED: DEBUG BELOW');
+            global.console.error(video);
             /* tslint:enable:no-console*/
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Some playback error ocurred. I logged the video data to the error log!
@@ -323,8 +323,8 @@ export default class LaunchMusicCommand extends Command {
 
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
             /* tslint:disable:no-console*/
-            console.error('PLAYBACK ERROR OCCURRED: DEBUG BELOW');
-            console.error(video);
+            global.console.error('PLAYBACK ERROR OCCURRED: DEBUG BELOW');
+            global.console.error(video);
             /* tslint:enable:no-console*/
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Some playback error ocurred. I logged the video data to the error log!
