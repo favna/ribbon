@@ -4,7 +4,7 @@
 		"rootDir": "./src",
 		"forceConsistentCasingInFileNames": true,
 		"esModuleInterop": true,
-		"lib": ["esnext"],
+		"lib": ["esnext", "dom"],
 		"target": "esnext",
 		"module": "commonjs",
 		"moduleResolution": "node",
