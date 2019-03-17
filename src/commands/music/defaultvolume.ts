@@ -48,27 +48,29 @@ export default class DefaultVolumeCommand extends Command {
             stopTyping(msg);
 
             return msg.reply(`the default volume level is ${defaultVolume}.`);
-        } else if (volume === 'default') {
+        }
+
+        if (volume === 'default') {
             msg.guild.settings.remove('defaultVolume');
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.reply(`set the default volume level to Ribbon's default (currently ${DEFAULT_VOLUME}).`);
-        } else {
-            const defaultVolume = parseInt(volume, 10);
+        }
 
-            if (isNaN(defaultVolume) || defaultVolume <= 0 || defaultVolume > 10) {
-                deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
+        const newVolume = parseInt(volume, 10);
 
-                return msg.reply('invalid number provided. It must be in the range of 0-10.');
-            }
-
-            msg.guild.settings.set('defaultVolume', defaultVolume);
+        if (isNaN(newVolume) || newVolume <= 0 || newVolume > 10) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.reply(`set the default volume level to ${defaultVolume}.`);
+            return msg.reply('invalid number provided. It must be in the range of 0-10.');
         }
+
+        msg.guild.settings.set('defaultVolume', newVolume);
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.reply(`set the default volume level to ${newVolume}.`);
     }
 }

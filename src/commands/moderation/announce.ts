@@ -95,7 +95,8 @@ export default class NewsCommand extends Command {
                     Either create a channel named either \`announcements\` or \`news\`
                     or use the \`${msg.guild.commandPrefix}setannounce\` command to set a custom channel
                 `);
-            } else if (/(?:noperms)/i.test(err.toString())) {
+            }
+            if (/(?:noperms)/i.test(err.toString())) {
                 return msg.reply(oneLine`I do not have permission to send messages to the announcements channel.
                     Give me permissions in either your \`announcements\` or \`news\` channel,
                     or if you used the \`${msg.guild.commandPrefix}setannounce\` command allow me in your custom channel.

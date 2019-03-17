@@ -107,34 +107,34 @@ export default class SkipSongCommand extends Command {
             stopTyping(msg);
 
             return msg.say(oneLine`
-				${vote.count} vote${vote.count > 1 ? 's' : ''} received so far,
-				${remaining} more ${remaining > 1 ? 'are' : 'is'} needed to skip.
-				Five more seconds on the clock! The vote will end in ${time} seconds.
-			`);
-        } else {
-            const newVote: MusicVoteType = {
-                count: 1,
-                users: [msg.author.id],
-                queue,
-                guild: msg.guild.id,
-                start: Date.now(),
-                timeout: null,
-            };
-            const remaining = threshold - 1;
-            const time = this.setTimeout(newVote);
-
-            this.songVotes.set(msg.guild.id, newVote);
-
-            deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
-
-            return msg.say(oneLine`
-                Starting a voteskip.
-                ${remaining} more vote${remaining > 1 ? 's are' : ' is'}
-                required for the song to be skipped.
-                The vote will end in ${time} seconds.
+                ${vote.count} vote${vote.count > 1 ? 's' : ''} received so far,
+                ${remaining} more ${remaining > 1 ? 'are' : 'is'} needed to skip.
+                Five more seconds on the clock! The vote will end in ${time} seconds.
             `);
         }
+
+        const newVote: MusicVoteType = {
+            count: 1,
+            users: [msg.author.id],
+            queue,
+            guild: msg.guild.id,
+            start: Date.now(),
+            timeout: null,
+        };
+        const newVotesRemaining = threshold - 1;
+        const newTimeRemaining = this.setTimeout(newVote);
+
+        this.songVotes.set(msg.guild.id, newVote);
+
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.say(oneLine`
+            Starting a voteskip.
+            ${newVotesRemaining} more vote${newVotesRemaining > 1 ? 's are' : ' is'}
+            required for the song to be skipped.
+            The vote will end in ${newTimeRemaining} seconds.
+        `);
     }
 
     private skip (guild: CommandoGuild, queue: MusicQueueType) {

@@ -179,7 +179,8 @@ export default class OverwatchCommand extends Command {
 
             if (/(noplayer)/i.test(err.toString())) {
                 return msg.reply('no player found by that name. Check the platform (`pc`, `psn` or `xbl`) and region (`us`, `eu` or `asia`)');
-            } else if (/(nostats)/i.test(err.toString())) {
+            }
+            if (/(nostats)/i.test(err.toString())) {
                 return msg.reply('player has been found but the player has no statistics logged yet. Heroes never die!');
             }
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;

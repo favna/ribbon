@@ -97,7 +97,8 @@ export default class IamNotCommand extends Command {
             if (/(?:Missing Permissions)/i.test(err.toString())) {
                 return msg.reply(stripIndents`an error occurred removing the role \`${role.name}\` from you.
                     The server staff should check that I have \`Manage Roles\` permission and I have the proper hierarchy.`);
-            } else if (/(?:is not an array or collection of roles)/i.test(err.toString())) {
+            }
+            if (/(?:is not an array or collection of roles)/i.test(err.toString())) {
                 return msg.reply(oneLine`
                     it looks like you supplied an invalid role to add. If you are certain that the role is valid please feel free to open an issue on the GitHub.`
                 );

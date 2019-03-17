@@ -48,26 +48,27 @@ export default class MaxSongsCommand extends Command {
             stopTyping(msg);
 
             return msg.reply(`the maximum songs a user may have in the queue at one time is ${maxSongs}.`);
-        } else if (args.toLowerCase() === 'default') {
+        }
+        if (args.toLowerCase() === 'default') {
             msg.guild.settings.remove('maxSongs');
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.reply(`set the maximum songs to the default (currently ${MAX_SONGS}).`);
-        } else {
-            const maxSongs = parseInt(args, 10);
+        }
 
-            if (isNaN(maxSongs) || maxSongs <= 0) {
-                stopTyping(msg);
+        const newLimit = parseInt(args, 10);
 
-                return msg.reply('invalid number provided.');
-            }
-
-            msg.guild.settings.set('maxSongs', maxSongs);
-            deleteCommandMessages(msg, this.client);
+        if (isNaN(newLimit) || newLimit <= 0) {
             stopTyping(msg);
 
-            return msg.reply(`set the maximum songs to ${maxSongs}.`);
+            return msg.reply('invalid number provided.');
         }
+
+        msg.guild.settings.set('maxSongs', newLimit);
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.reply(`set the maximum songs to ${newLimit}.`);
     }
 }

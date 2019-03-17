@@ -2461,10 +2461,10 @@ detect-newline@^2.1.0:
   resolved "https://registry.yarnpkg.com/detect-newline/-/detect-newline-2.1.0.tgz#f41f1c10be4b00e87b5f13da680759f2c5bfd3e2"
   integrity sha1-9B8cEL5LAOh7XxPaaAdZ8sW/0+I=
 
-didyoumean2@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/didyoumean2/-/didyoumean2-2.0.2.tgz#c4940426cdce35d9a5a0026ae1e22a83fb07f68f"
-  integrity sha512-YEpkuyJ4lN8fSuuQy1UgfzGTAPi92rehUIcNmO+dcPhka0j2jWWniAy8tWEyJ2WJJQ3DLVI0C1Kjy31MJgFseA==
+didyoumean2@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/didyoumean2/-/didyoumean2-2.0.4.tgz#c8431308cdb2e2619ebec6231fdf4756e79aadbc"
+  integrity sha512-eLbnl2R3Xi1mDz3/a8qfMyVqNDrKvZVi2qpDKtK3mAwscweL7hkIb6Ub4FY6mYLyK/9489bQfJ0YMtHzIJskpQ==
   dependencies:
     leven "^2.0.0"
     lodash.deburr "^4.1.0"
@@ -2551,10 +2551,10 @@ domutils@^1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
-dotenv@^6.1.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
-  integrity sha512-HygQCKUBSFl8wKQZBSemMywRWcEDNidvNbjGVyZu3nbZ8qq9ubiPoGLMdRDpfSrpkkm9BXYFkpKxxFX38o/76w==
+dotenv@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-7.0.0.tgz#a2be3cd52736673206e8a85fb5210eea29628e7c"
+  integrity sha512-M3NhsLbV1i6HuGzBUH8vXrtxOk+tWmzWKDMbAVSUp3Zsjm7ywFeuwrUXhmhQyRK1q5B5GGy7hcXPbj3bnfZg2g==
 
 draftlog@^1.0.12:
   version "1.0.12"

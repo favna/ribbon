@@ -48,26 +48,28 @@ export default class MaxLengthCommand extends Command {
             stopTyping(msg);
 
             return msg.reply(`the maximum length of a song is ${maxLength} minutes.`);
-        } else if (args.toLowerCase() === 'default') {
+        }
+        if (args.toLowerCase() === 'default') {
             msg.guild.settings.remove('maxLength');
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.reply(`set the maximum song length to the default (currently ${MAX_LENGTH} minutes).`);
-        } else {
-            const maxLength = parseInt(args, 10);
+        }
 
-            if (isNaN(maxLength) || maxLength <= 0) {
-                stopTyping(msg);
+        const newLength = parseInt(args, 10);
 
-                return msg.reply('invalid number provided.');
-            }
-
-            msg.guild.settings.set('maxLength', maxLength);
-            deleteCommandMessages(msg, this.client);
+        if (isNaN(newLength) || newLength <= 0) {
             stopTyping(msg);
 
-            return msg.reply(`set the maximum song length to ${maxLength} minutes.`);
+            return msg.reply('invalid number provided.');
         }
+
+        msg.guild.settings.set('maxLength', newLength);
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.reply(`set the maximum song length to ${newLength} minutes.`);
+
     }
 }

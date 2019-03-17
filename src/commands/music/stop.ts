@@ -109,30 +109,30 @@ export default class StopMusicCommand extends Command {
 				${remaining} more ${remaining > 1 ? 'are' : 'is'} needed to stop.
 				Five more seconds on the clock! The vote will end in ${time} seconds.
 			`);
-        } else {
-            const newVote: MusicVoteType = {
-                count: 1,
-                users: [msg.author.id],
-                queue,
-                guild: msg.guild.id,
-                start: Date.now(),
-                timeout: null,
-            };
-            const remaining = threshold - 1;
-            const time = this.setTimeout(newVote);
-
-            this.songVotes.set(msg.guild.id, newVote);
-
-            deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
-
-            return msg.say(oneLine`
-                Starting a votestop.
-                ${remaining} more vote${remaining > 1 ? 's are' : ' is'}
-                required for the music to be stopped.
-                The vote will end in ${time} seconds.
-            `);
         }
+
+        const newVote: MusicVoteType = {
+            count: 1,
+            users: [msg.author.id],
+            queue,
+            guild: msg.guild.id,
+            start: Date.now(),
+            timeout: null,
+        };
+        const newVotesRemaining = threshold - 1;
+        const newTimeRemaining = this.setTimeout(newVote);
+
+        this.songVotes.set(msg.guild.id, newVote);
+
+        deleteCommandMessages(msg, this.client);
+        stopTyping(msg);
+
+        return msg.say(oneLine`
+            Starting a votestop.
+            ${newVotesRemaining} more vote${newVotesRemaining > 1 ? 's are' : ' is'}
+            required for the music to be stopped.
+            The vote will end in ${newTimeRemaining} seconds.
+        `);
     }
 
     private setTimeout (vote: MusicVoteType) {

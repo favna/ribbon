@@ -867,7 +867,7 @@ export const handleWarn = (client: CommandoClient, warn: string) => {
             **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
             **Warning Message:** ${warn}
         `);
-    } else {
-        return global.global.console.warn(warn);
     }
+
+    return global.global.console.warn(warn);
 };

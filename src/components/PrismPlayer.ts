@@ -28,26 +28,26 @@ const play = (url: string, options: downloadOptions = {}): Promise<Readable> => 
             if (canDemux) {
                 const demuxer = new prism.opus.WebmDemuxer();
                 return resolve(ytdlStream.pipe(demuxer).on('end', () => demuxer.destroy()));
-            } else {
-                const transcoder = new prism.FFmpeg({
-                    args: [
-                        '-analyzeduration', '0',
-                        '-loglevel', '0',
-                        '-f', 's16le',
-                        '-ar', '48000',
-                        '-ac', '2'
-                    ],
-                });
-                const opusOptions: OpusOptions = { frameSize: 960, channels: 2, rate: 48000 };
-
-                const opus = new prism.opus.Encoder(opusOptions);
-                const stream = ytdlStream.pipe(transcoder).pipe(opus);
-                stream.on('close', () => {
-                    transcoder.destroy();
-                    opus.destroy();
-                });
-                return resolve(stream);
             }
+
+            const transcoder = new prism.FFmpeg({
+                args: [
+                    '-analyzeduration', '0',
+                    '-loglevel', '0',
+                    '-f', 's16le',
+                    '-ar', '48000',
+                    '-ac', '2'
+                ],
+            });
+            const opusOptions: OpusOptions = { frameSize: 960, channels: 2, rate: 48000 };
+
+            const opus = new prism.opus.Encoder(opusOptions);
+            const stream = ytdlStream.pipe(transcoder).pipe(opus);
+            stream.on('close', () => {
+                transcoder.destroy();
+                opus.destroy();
+            });
+            return resolve(stream);
         });
     });
 };
