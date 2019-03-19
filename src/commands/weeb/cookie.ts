@@ -30,7 +30,7 @@ export default class CookieCommand extends Command {
                     key: 'member',
                     prompt: 'Whose cookie to steal?',
                     type: 'member',
-                    default: '',
+                    default: (msg: CommandoMessage) => msg.member,
                 }
             ],
             patterns: [/^\.(?:biscuit)$/i],
@@ -42,11 +42,12 @@ export default class CookieCommand extends Command {
 
         startTyping(msg);
         const cookieEmbed = new MessageEmbed();
+        const isNotSelf = member.id !== msg.member.id;
 
         cookieEmbed
             .setImage(this.fetchImage())
             .setColor(msg.guild ? msg.guild.me.displayColor : DEFAULT_EMBED_COLOR)
-            .setDescription(member ? `Gnanahahahaha eating your cookie <@${member.id}>` : 'You won\'t steal my cookie!!');
+            .setDescription(isNotSelf ? `Gnanahahahaha eating your cookie <@${member.id}>` : 'You won\'t steal my cookie!!');
 
         deleteCommandMessages(msg, this.client);
         stopTyping(msg);

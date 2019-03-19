@@ -33,7 +33,7 @@ export default class UserInfoCommand extends Command {
                     key: 'member',
                     prompt: 'What user would you like to snoop on?',
                     type: 'member',
-                    default: 'me',
+                    default: (msg: CommandoMessage) => msg.member,
                 }
             ],
         });
@@ -42,7 +42,6 @@ export default class UserInfoCommand extends Command {
     public run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         startTyping(msg);
 
-        if (member as unknown as string === 'me') member = msg.member;
         const uinfoEmbed = new MessageEmbed();
 
         uinfoEmbed

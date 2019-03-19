@@ -31,7 +31,7 @@ export default class HugCommand extends Command {
                     key: 'member',
                     prompt: 'Who do you want to give a hug?',
                     type: 'member',
-                    default: '',
+                    default: (msg: CommandoMessage) => msg.member,
                 }
             ],
         });
@@ -43,17 +43,17 @@ export default class HugCommand extends Command {
 
             const hugFetch = await fetch('https://nekos.life/api/v2/img/hug');
             const hugImg = await hugFetch.json();
-            const isMemberGiven = member.id === msg.member.id;
+            const isNotSelf = member.id !== msg.member.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.embed({
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
-                    description: isMemberGiven
+                    description: isNotSelf
                         ? `${member.displayName}! You were hugged by ${msg.member.displayName} 💖!`
                         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-                    image: { url: member ? hugImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
+                    image: { url: isNotSelf ? hugImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
                 },
                 `<@${member ? member.id : msg.author.id}>`
             );

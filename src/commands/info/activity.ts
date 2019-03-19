@@ -50,7 +50,7 @@ export default class ActivityCommand extends Command {
                     key: 'member',
                     prompt: 'What user would you like to get the activity from?',
                     type: 'member',
-                    default: 'me',
+                    default: (msg: CommandoMessage) => msg.member,
                 }
             ],
         });
@@ -105,7 +105,6 @@ export default class ActivityCommand extends Command {
         try {
             startTyping(msg);
 
-            if (member as unknown as string === 'me') member = msg.member;
             const activity = member.presence.activity;
             if (!activity) throw new Error('noActivity');
             const ava = member.user.displayAvatarURL();

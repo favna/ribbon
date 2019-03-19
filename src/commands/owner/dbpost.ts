@@ -18,6 +18,8 @@ export default class DBPostCommand extends Command {
             description: 'Post current server count to Discord Bots List',
             guildOnly: false,
             ownerOnly: true,
+            guarded: true,
+            hidden: true,
         });
     }
 

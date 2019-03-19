@@ -26,6 +26,7 @@ export default class InviteCommand extends Command {
                 usages: 2,
                 duration: 3,
             },
+            guarded: true,
         });
     }
 

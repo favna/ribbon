@@ -18,6 +18,8 @@ export default class UnknownCommand extends Command {
             description: 'Runs when an unknown command is used',
             guildOnly: false,
             ownerOnly: true,
+            guarded: true,
+            hidden: true,
             unknown: true,
         });
     }

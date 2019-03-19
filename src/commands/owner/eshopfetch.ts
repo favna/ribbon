@@ -24,6 +24,8 @@ export default class EShopFetchCommand extends Command {
             examples: ['eshopfetch'],
             guildOnly: false,
             ownerOnly: true,
+            guarded: true,
+            hidden: true,
         });
     }
 

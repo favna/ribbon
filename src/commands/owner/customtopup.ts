@@ -43,6 +43,8 @@ export default class CustomTopUpCommand extends Command {
                     parse: (chips: string) => roundNumber(Number(chips)),
                 }
             ],
+            guarded: true,
+            hidden: true,
         });
     }
 

@@ -31,7 +31,7 @@ export default class PokeCommand extends Command {
                     key: 'member',
                     prompt: 'Who do you want to poke?',
                     type: 'member',
-                    default: '',
+                    default: (msg: CommandoMessage) => msg.member,
                 }
             ],
         });
@@ -43,17 +43,17 @@ export default class PokeCommand extends Command {
 
             const pokeFetch = await fetch('https://nekos.life/api/v2/img/poke');
             const pokeImg = await pokeFetch.json();
-            const isMemberGiven = member.id === msg.member.id;
+            const isNotSelf = member.id !== msg.member.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.embed({
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
-                    description: isMemberGiven
+                    description: isNotSelf
                         ? `${member.displayName}! You got poked by ${msg.member.displayName} 👉!`
                         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-                    image: { url: member ? pokeImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
+                    image: { url: isNotSelf ? pokeImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
                 },
                 `<@${member ? member.id : msg.author.id}>`
             );

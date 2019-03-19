@@ -17,6 +17,8 @@ export default class CheckGuildsCommand extends Command {
             description: 'Check the current guild count and their names',
             guildOnly: false,
             ownerOnly: true,
+            guarded: true,
+            hidden: true,
         });
     }
 

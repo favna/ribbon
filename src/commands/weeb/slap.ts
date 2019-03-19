@@ -31,7 +31,7 @@ export default class SlapCommand extends Command {
                     key: 'member',
                     prompt: 'Who do you want to slap?',
                     type: 'member',
-                    default: '',
+                    default: (msg: CommandoMessage) => msg.member,
                 }
             ],
         });
@@ -43,17 +43,17 @@ export default class SlapCommand extends Command {
 
             const slapFetch = await fetch('https://nekos.life/api/v2/img/slap');
             const slapImg = await slapFetch.json();
-            const isMemberGiven = member.id === msg.member.id;
+            const isNotSelf = member.id !== msg.member.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.embed({
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
-                    description: isMemberGiven
+                    description: isNotSelf
                         ? `${member.displayName}! You got slapped by ${msg.member.displayName} 💢!`
                         : `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
-                    image: { url: member ? slapImg.url : `${ASSET_BASE_PATH}/ribbon/baka.gif` },
+                    image: { url: isNotSelf ? slapImg.url : `${ASSET_BASE_PATH}/ribbon/baka.gif` },
                 },
                 `<@${member ? member.id : msg.author.id}>`
             );

@@ -34,7 +34,7 @@ export default class AvatarCommand extends Command {
                     key: 'member',
                     prompt: 'What user would you like to get the avatar from?',
                     type: 'member',
-                    default: 'me',
+                    default: (msg: CommandoMessage) => msg.member,
                 },
                 {
                     key: 'size',
@@ -50,7 +50,6 @@ export default class AvatarCommand extends Command {
     public run (msg: CommandoMessage, { member, size }: { member: GuildMember; size: ImageSize }) {
         startTyping(msg);
 
-        if (member as unknown as string === 'me') member = msg.member;
         const ava = member.user.displayAvatarURL({ size: size as ImageSize });
         const embed = new MessageEmbed();
         const ext = this.fetchExt(ava);

@@ -31,7 +31,7 @@ export default class TickleCommand extends Command {
                     key: 'member',
                     prompt: 'Who do you want to tickle?',
                     type: 'member',
-                    default: '',
+                    default: (msg: CommandoMessage) => msg.member,
                 }
             ],
         });
@@ -43,17 +43,17 @@ export default class TickleCommand extends Command {
 
             const tickleFetch = await fetch('https://nekos.life/api/v2/img/tickle');
             const tickleImg = await tickleFetch.json();
-            const isMemberGiven = member.id === msg.member.id;
+            const isNotSelf = member.id !== msg.member.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.embed({
                     color: msg.guild ? msg.guild.me.displayColor : 10610610,
-                    description: isMemberGiven
+                    description: isNotSelf
                         ? `${member.displayName}! You were tickled by ${msg.member.displayName}, tickle them back!!!`
                         : `${msg.member.displayName} you must feel alone... Have a 🐈`,
-                    image: { url: member ? tickleImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
+                    image: { url: isNotSelf ? tickleImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
                 },
                 `<@${member ? member.id : msg.author.id}>`
             );

@@ -32,6 +32,8 @@ export default class TagMemberCommand extends Command {
                     type: 'member',
                 }
             ],
+            guarded: true,
+            hidden: true,
         });
     }
 
