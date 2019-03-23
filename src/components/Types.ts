@@ -139,47 +139,6 @@ type PokeGenderRatioType = {
     F: number;
 };
 
-type DjsDocsParamsType = {
-    name: string;
-    description: string;
-    optional?: boolean;
-    default?: string | number | boolean;
-    type: string[][][];
-};
-
-type DjsDocsClassConstructType = {
-    name: string;
-    params: DjsDocsParamsType[];
-};
-
-type DjsDocsMetaType = {
-    line: number;
-    file: string;
-    path: string;
-};
-
-type DjsDocsClassPropType = {
-    name: string;
-    description: string;
-    type: string[][][];
-    meta: DjsDocsMetaType;
-};
-
-type DjsDocsClassMethodType = {
-    name: string;
-    description: string;
-    params: DjsDocsParamsType[];
-    returns: string[][][];
-    meta: DjsDocsMetaType;
-};
-
-type DjsDocsClassEventType = {
-    name: string;
-    description: string;
-    params: DjsDocsParamsType[];
-    meta: DjsDocsMetaType;
-};
-
 export type CydiaAPIPackageType = {
     display: string;
     name: string;
@@ -492,25 +451,6 @@ export type FrontlineGirlType = {
         stage?: string;
     };
     img?: string;
-};
-
-export type DjsDocsClassType = {
-    name: string;
-    description: string;
-    extends?: string[];
-    construct: DjsDocsClassConstructType;
-    props?: DjsDocsClassPropType[];
-    methods?: DjsDocsClassMethodType[];
-    events?: DjsDocsClassEventType[];
-    meta: DjsDocsMetaType;
-};
-
-export type DjsDocsTypdefType = {
-    name: string;
-    description: string;
-    type: string[][][];
-    props: DjsDocsParamsType[];
-    meta: DjsDocsMetaType;
 };
 
 export type eShopType = {

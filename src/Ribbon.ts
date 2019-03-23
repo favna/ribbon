@@ -82,6 +82,7 @@ export default class Ribbon {
                 ['info', 'Info - Discord info at your fingertips'],
                 ['music', 'Music - Let the DJ out'],
                 ['searches', 'Searches - Browse the web and find results'],
+                ['docs', 'Docs - Find documentation for various sources'],
                 ['leaderboards', 'Leaderboards - View leaderboards from various games'],
                 ['pokemon', 'Pokemon - Let Dexter answer your questions'],
                 ['extra', 'Extra - Extra! Extra! Read All About It! Only Two Cents!'],
