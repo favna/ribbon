@@ -175,6 +175,18 @@ Server admins can disable this command entirely by using the <code>rmt off</code
 <p>A joke command to spite Kai. Server admins can disable this command entirely by using the <code>rmt off</code> command</p>
 <p><strong>Aliases</strong>: <code>.kai</code></p>
 </dd>
+<dt><a href="#module_docs">docs</a></dt>
+<dd><p>Docs DjsDocsCommand - Get an entry from the Discord.JS documentation</p>
+<p><strong>Aliases</strong>: <code>djsguide</code>, <code>guide</code>, <code>djs</code></p>
+</dd>
+<dt><a href="#module_yarn">yarn</a></dt>
+<dd><p>Docs MDNCommand - Responds with JS documentation pulled from Mozilla Developer Network</p>
+<p><strong>Aliases</strong>: <code>npm</code>, <code>npm-package</code></p>
+</dd>
+<dt><a href="#module_yarn">yarn</a></dt>
+<dd><p>Docs YarnCommand - Responds with information on a NodeJS package using the Yarn package registry</p>
+<p><strong>Aliases</strong>: <code>npm</code>, <code>npm-package</code></p>
+</dd>
 <dt><a href="#module_copypasta">copypasta</a></dt>
 <dd><p>Extra CopyPastaCommand - Sends a copypasta to the chat</p>
 <p>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!</p>
@@ -711,10 +723,6 @@ By default only <code>name</code> is used as argument and the supertype is set t
 <dt><a href="#module_define">define</a></dt>
 <dd><p>Searches DefineCommand - Define a word using glosbe</p>
 <p><strong>Aliases</strong>: <code>def</code>, <code>dict</code></p>
-</dd>
-<dt><a href="#module_docs">docs</a></dt>
-<dd><p>Searches DocsCommand - Get an entry from the Discord.JS documentation</p>
-<p><strong>Aliases</strong>: <code>djsguide</code>, <code>guide</code>, <code>djs</code></p>
 </dd>
 <dt><a href="#module_eshop">eshop</a></dt>
 <dd><p>Searches EShopCommand - Gets information about a game in the Nintendo Switch eShop</p>
@@ -1264,6 +1272,58 @@ A joke command to spite Kai. Server admins can disable this command entirely by 
 **Aliases**: `.kai`
 
 **Category**: custom  
+<a name="module_docs"></a>
+
+## docs
+Docs DjsDocsCommand - Get an entry from the Discord.JS documentation
+
+**Aliases**: `djsguide`, `guide`, `djs`
+
+**Category**: docs  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| DocEntry | <code>string</code> | The entry from the docs you want to get info about |
+| [version] | <code>string</code> | The Doc version to pick, one of `stable`, `master` or `commando` |
+
+**Example**  
+```nginx
+docs ClientUser
+```
+<a name="module_yarn"></a>
+
+## yarn
+Docs MDNCommand - Responds with JS documentation pulled from Mozilla Developer Network
+
+**Aliases**: `npm`, `npm-package`
+
+**Category**: docs  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pkg | <code>string</code> | The package to find |
+
+**Example**  
+```nginx
+yarn awesome-querystring
+```
+<a name="module_yarn"></a>
+
+## yarn
+Docs YarnCommand - Responds with information on a NodeJS package using the Yarn package registry
+
+**Aliases**: `npm`, `npm-package`
+
+**Category**: docs  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| pkg | <code>string</code> | The package to find |
+
+**Example**  
+```nginx
+yarn awesome-querystring
+```
 <a name="module_copypasta"></a>
 
 ## copypasta
@@ -3132,24 +3192,6 @@ Searches DefineCommand - Define a word using glosbe
 **Example**  
 ```nginx
 define Google
-```
-<a name="module_docs"></a>
-
-## docs
-Searches DocsCommand - Get an entry from the Discord.JS documentation
-
-**Aliases**: `djsguide`, `guide`, `djs`
-
-**Category**: searches  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| DocEntry | <code>string</code> | The entry from the docs you want to get info about |
-| [version] | <code>string</code> | The Doc version to pick, one of `stable`, `master` or `commando` |
-
-**Example**  
-```nginx
-docs ClientUser
 ```
 <a name="module_eshop"></a>
 
