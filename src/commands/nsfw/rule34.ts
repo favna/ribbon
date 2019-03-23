@@ -13,7 +13,7 @@
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
-import booru from 'booru';
+import { search as booru } from 'booru';
 import { stripIndents } from 'common-tags';
 import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
@@ -48,25 +48,25 @@ export default class Rule34Command extends Command {
         try {
             startTyping(msg);
 
-            const search = await booru.search('r34', tags, {
+            const booruSearch = await booru('r34', tags, {
                 limit: 1,
                 random: true,
             });
-            const hit = search[0];
+            const hit = booruSearch.first;
             const r34Embed = new MessageEmbed();
             const imageTags: string[] = [];
 
-            hit.tags.forEach((tag: string) => imageTags.push(`[#${tag}](${hit.file_url})`));
+            hit.tags.forEach((tag: string) => imageTags.push(`[#${tag}](${hit.fileUrl!})`));
 
             r34Embed
                 .setTitle(`Rule34 image for ${tags.join(', ')}`)
-                .setURL(hit.file_url)
+                .setURL(hit.fileUrl!)
                 .setColor('#FFB6C1')
                 .setDescription(stripIndents`
                     ${imageTags.slice(0, 5).join(' ')}
                     **Score**: ${hit.score}
                 `)
-                .setImage(hit.file_url);
+                .setImage(hit.fileUrl!);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
