@@ -179,9 +179,9 @@ Server admins can disable this command entirely by using the <code>rmt off</code
 <dd><p>Docs DjsDocsCommand - Get an entry from the Discord.JS documentation</p>
 <p><strong>Aliases</strong>: <code>djsguide</code>, <code>guide</code>, <code>djs</code></p>
 </dd>
-<dt><a href="#module_yarn">yarn</a></dt>
+<dt><a href="#module_mdn">mdn</a></dt>
 <dd><p>Docs MDNCommand - Responds with JS documentation pulled from Mozilla Developer Network</p>
-<p><strong>Aliases</strong>: <code>npm</code>, <code>npm-package</code></p>
+<p><strong>Aliases</strong>: <code>mozilla</code>, <code>moz</code></p>
 </dd>
 <dt><a href="#module_yarn">yarn</a></dt>
 <dd><p>Docs YarnCommand - Responds with information on a NodeJS package using the Yarn package registry</p>
@@ -1290,22 +1290,22 @@ Docs DjsDocsCommand - Get an entry from the Discord.JS documentation
 ```nginx
 docs ClientUser
 ```
-<a name="module_yarn"></a>
+<a name="module_mdn"></a>
 
-## yarn
+## mdn
 Docs MDNCommand - Responds with JS documentation pulled from Mozilla Developer Network
 
-**Aliases**: `npm`, `npm-package`
+**Aliases**: `mozilla`, `moz`
 
 **Category**: docs  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| pkg | <code>string</code> | The package to find |
+| prop | <code>string</code> | The property or prototype to find on MDN |
 
 **Example**  
 ```nginx
-yarn awesome-querystring
+mdn map
 ```
 <a name="module_yarn"></a>
 

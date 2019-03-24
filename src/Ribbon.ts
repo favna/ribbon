@@ -2,21 +2,8 @@ import { Client, Command, CommandoClient, CommandoGuild, CommandoMessage, SyncSQ
 import { GuildMember, RateLimitData } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import path from 'path';
-import {
-    handleCmdErr,
-    handleDebug,
-    handleErr,
-    handleGuildJoin,
-    handleGuildLeave,
-    handleMemberJoin,
-    handleMemberLeave,
-    handleMsg,
-    handlePresenceUpdate,
-    handleRateLimit,
-    handleReady,
-    handleRejection,
-    handleWarn,
-} from './components';
+import { handleCmdErr, handleDebug, handleErr, handleGuildJoin, handleGuildLeave, handleMemberJoin, handleMemberLeave, handleMsg,
+        handlePresenceUpdate, handleRateLimit, handleReady, handleRejection, handleWarn } from './components';
 
 export default class Ribbon {
     public token: string;

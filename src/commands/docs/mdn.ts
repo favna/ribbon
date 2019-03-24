@@ -1,12 +1,12 @@
 /**
  * @file Docs MDNCommand - Responds with JS documentation pulled from Mozilla Developer Network
  *
- * **Aliases**: `npm`, `npm-package`
+ * **Aliases**: `mozilla`, `moz`
  * @module
  * @category docs
- * @name yarn
- * @example yarn awesome-querystring
- * @param {string} pkg The package to find
+ * @name mdn
+ * @example mdn map
+ * @param {string} prop The property or prototype to find on MDN
  */
 
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
