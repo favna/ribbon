@@ -1,4 +1,5 @@
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
+import { scheduleJob } from 'node-schedule';
 import { GuildChannel, GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import Database from 'better-sqlite3';
@@ -10,9 +11,9 @@ import 'moment-duration-format';
 import { getGamesAmerica } from 'nintendo-switch-eshop';
 import fetch from 'node-fetch';
 import path from 'path';
-import { ASSET_BASE_PATH, badwords, caps, decache, DEFAULT_EMBED_COLOR, duptext, emojis, invites, links, mentions, ordinal, slowmode, timeparseHelper } from '.';
+import { ASSET_BASE_PATH, badwords, caps, decache, DEFAULT_EMBED_COLOR, duptext, emojis, invites, links, mentions, ordinal, slowmode } from '.';
 
-const renderReminderMessage = async (client: CommandoClient) => {
+const sendReminderMessages = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
 
     try {
@@ -58,7 +59,7 @@ const renderReminderMessage = async (client: CommandoClient) => {
     }
 };
 
-const renderCountdownMessage = (client: CommandoClient) => {
+const sendCountdownMessages = (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/countdowns.sqlite3'));
 
     try {
@@ -217,7 +218,7 @@ const renderLeaveMessage = async (member: GuildMember) => {
     }
 };
 
-const renderLottoMessage = (client: CommandoClient) => {
+const payoutLotto = (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3'));
 
     try {
@@ -280,7 +281,7 @@ const renderLottoMessage = (client: CommandoClient) => {
     }
 };
 
-const renderTimerMessage = (client: CommandoClient) => {
+const sendTimedMessages = (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/timers.sqlite3'));
 
     try {
@@ -338,7 +339,7 @@ const renderTimerMessage = (client: CommandoClient) => {
     }
 };
 
-const forceEshopUpdate = async (client: CommandoClient) => {
+const updateEshop = async (client: CommandoClient) => {
     try {
         fs.writeFileSync(
             path.join(__dirname, '../data/databases/eshop.json'),
@@ -353,7 +354,7 @@ const forceEshopUpdate = async (client: CommandoClient) => {
     }
 };
 
-const forceStopTyping = (client: CommandoClient) => {
+const stopTypingEverywhere = (client: CommandoClient) => {
     const allChannels = client.channels;
 
     for (const channel of allChannels.values()) {
@@ -818,22 +819,17 @@ export const handleReady = (client: CommandoClient) => {
     global.console.info(oneLine`Client ready at ${moment().format('HH:mm:ss')};
         logged in as ${client.user!.username}#${client.user!.discriminator} (${client.user!.id})
     `);
-    const bot = client;
 
-    setInterval(() => {
-        forceStopTyping(bot);
-        renderTimerMessage(bot);
-        renderCountdownMessage(bot);
-    }, timeparseHelper('3m'));
+    const everyThreeMinutes = '*/3 * * * *';
+    const everyFiveMinutes  = '*/1 * * * *';
+    const everyDayAtEight   = '0 20 * * *' ;
 
-    setInterval(() => {
-        renderReminderMessage(bot);
-    }, timeparseHelper('5m'));
-
-    setInterval(() => {
-        renderLottoMessage(bot);
-        forceEshopUpdate(bot);
-    }, timeparseHelper('24h'));
+    scheduleJob(everyThreeMinutes, () => stopTypingEverywhere(client));
+    scheduleJob(everyThreeMinutes, () => sendTimedMessages(client));
+    scheduleJob(everyThreeMinutes, () => sendCountdownMessages(client));
+    scheduleJob(everyFiveMinutes,  () => sendReminderMessages(client));
+    scheduleJob(everyDayAtEight,   () => payoutLotto(client));
+    scheduleJob(everyDayAtEight,   () => updateEshop(client));
 
     fs.watch(
         path.join(__dirname, '../data/dex/formats.json'),
