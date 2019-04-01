@@ -1,5 +1,4 @@
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
-import { scheduleJob } from 'node-schedule';
 import { GuildChannel, GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import Database from 'better-sqlite3';
@@ -10,6 +9,7 @@ import moment from 'moment';
 import 'moment-duration-format';
 import { getGamesAmerica } from 'nintendo-switch-eshop';
 import fetch from 'node-fetch';
+import { scheduleJob } from 'node-schedule';
 import path from 'path';
 import { ASSET_BASE_PATH, badwords, caps, decache, DEFAULT_EMBED_COLOR, duptext, emojis, invites, links, mentions, ordinal, slowmode } from '.';
 
