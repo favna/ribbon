@@ -1,7 +1,7 @@
-import gulp from 'gulp';
-import * as gulpTs from 'gulp-typescript';
-import { argv } from 'yargs';
-import terser from 'gulp-terser';
+const gulp = require('gulp');
+const typescript = require('gulp-typescript');
+const terser = require('gulp-terser');
+const { argv } = require('yargs');
 
 const compileSingleToJavaScript = (done) => {
     if (!argv.src) {
@@ -13,7 +13,7 @@ const compileSingleToJavaScript = (done) => {
     const targetFiles = argv.src.constructor === Array ? argv.src : [argv.src];
 
     for (const file of targetFiles) {
-        const tsProject = gulpTs.createProject('./tsconfig.json');
+        const tsProject = typescript.createProject('./tsconfig.json');
         const filePath = file.split('/');
         let targetFolder = '';
         if (filePath[0] === '.') targetFolder = `./dist/${filePath[2]}/${filePath[3]}`;
