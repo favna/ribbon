@@ -154,9 +154,7 @@ export default class RedditCommand extends Command {
     }
 
     private async fetchData (user: any) {
-        await this.fetchAbout(user);
-        await this.fetchComments(user);
-        await this.fetchSubmissions(user);
+        Promise.all([this.fetchAbout(user), this.fetchComments(user), this.fetchSubmissions(user)]);
     }
 
     private async fetchAbout (user: any): Promise<any> {

@@ -63,8 +63,7 @@ export default class EmotesCommand extends Command {
             const chunkedAnimatedEmotes = EmotesCommand.chunker(animEmotes, 50);
             emotesEmbed.setDescription('Woaw you got so many emotes I\'ll have to split them across a few messages!');
 
-            await msg.embed(emotesEmbed);
-            await msg.say('**__Static Emotes__**');
+            Promise.all([msg.embed(emotesEmbed), msg.say('**__Static Emotes__**')]);
             for (const chunk of chunkedStaticEmotes) {
                 await msg.say(chunk.join(' '));
             }

@@ -62,17 +62,20 @@ export default class PubgCommand extends Command {
         try {
             startTyping(msg);
 
+            const pubEmbed = new MessageEmbed();
             const headers = { Accept: 'application/vnd.api+json', Authorization: `Bearer ${process.env.PUBG_API_KEY!}` };
+
             const seasonReq = await fetch(`https://api.pubg.com/shards/${shard}/seasons`, { headers });
             const seasons = await seasonReq.json();
+            const currentSeason = seasons.data.filter((season: any) => season.attributes.isCurrentSeason)[0].id;
+
             const playerReq = await fetch(`https://api.pubg.com/shards/${shard}/players?filter[playerNames]=${user}`, { headers });
             const players = await playerReq.json();
-            const currentSeason = seasons.data.filter((season: any) => season.attributes.isCurrentSeason)[0].id;
             const playerId = players.data[0].id;
             const playerName = players.data[0].attributes.name;
+
             const playerStatsReq = await fetch(`https://api.pubg.com/shards/${shard}/players/${playerId}/seasons/${currentSeason}`, { headers });
             const playerStats = await playerStatsReq.json();
-            const pubEmbed = new MessageEmbed();
 
             pubEmbed
                 .setTitle(`PUBG Player Statistics for ${playerName}`)
