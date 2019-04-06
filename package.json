@@ -18,7 +18,7 @@
         "clean": "rimraf ./dist",
         "prebuild": "yarn clean && yarn lint",
         "build": "tsc",
-        "postbuild": "yarn copyfiles && yarn replace",
+        "postbuild": "yarn copyfiles && yarn replace && yarn terser",
         "start": "cross-env NODE_ENV=development ts-node ./src/app.ts",
         "start:prod": "cross-env NODE_ENV=production ts-node ./src/app.ts",
         "start:js": "yarn build && cross-env NODE_ENV=development node ./dist/app.js",
@@ -135,10 +135,5 @@
     "directories": {
         "doc": "docs/",
         "lib": "src/"
-    },
-    "_moduleAliases": {
-        "@components": "dist/components",
-        "@databases": "dist/data/databases",
-        "@pokedex": "dist/data/dex"
     }
 }

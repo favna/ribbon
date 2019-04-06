@@ -1,11 +1,11 @@
-import { handleChannelCreate, handleChannelDelete, handleCmdErr, handleCommandRun, handleDebug,
-         handleErr, handleGuildJoin, handleGuildLeave, handleMemberJoin, handleMemberLeave,
-         handleMsg, handlePresenceUpdate, handleRateLimit, handleReady, handleRejection, handleWarn
-} from '@components/EventsHelper';
 import { Client, Command, CommandoClient, CommandoGuild, CommandoMessage, SyncSQLiteProvider } from 'awesome-commando';
 import { DMChannel, GuildChannel, GuildMember, RateLimitData } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import path from 'path';
+import { handleChannelCreate, handleChannelDelete, handleCmdErr, handleCommandRun, handleDebug,
+         handleErr, handleGuildJoin, handleGuildLeave, handleMemberJoin, handleMemberLeave,
+         handleMsg, handlePresenceUpdate, handleRateLimit, handleReady, handleRejection, handleWarn
+} from './components/EventsHelper';
 
 export default class Ribbon {
     public token: string;

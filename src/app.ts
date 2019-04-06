@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
 import fireadmin from 'firebase-admin';
-import 'module-alias/register';
+import moduleAlias from 'module-alias';
 import path from 'path';
 import Ribbon from './Ribbon';
 
@@ -19,4 +19,8 @@ fireadmin.initializeApp({
     databaseURL: `https://${process.env.FIREBASE_PROJECT}.firebaseio.com`,
 });
 
-(() => new Ribbon(process.env.NODE_ENV === 'development' ? process.env.TEST_TOKEN! : process.env.BOT_TOKEN!).init())();
+moduleAlias.addAlias('@components', `${__dirname}/components`);
+moduleAlias.addAlias('@pokedex', `${__dirname}/data/dex`);
+moduleAlias.addAlias('@databases', `${__dirname}/data/databases`);
+
+new Ribbon(process.env.NODE_ENV === 'development' ? process.env.TEST_TOKEN! : process.env.BOT_TOKEN!).init();
