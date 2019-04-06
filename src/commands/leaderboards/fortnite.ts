@@ -10,12 +10,14 @@
  * @param {string} Platform The platform the player plays on (pc, xbox or psn)
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { FortniteStatsType } from '@components/Types';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, FortniteStatsType, startTyping, stopTyping } from '../../components';
 
 export default class FortniteCommand extends Command {
     constructor (client: CommandoClient) {

@@ -9,13 +9,16 @@
  * @param {string} GameName The name of any game that you want to find
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { currencyMap } from '@components/MoneyHelper';
+import { SteamGenreType } from '@components/Types';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import cheerio from 'cheerio';
 import fetch from 'node-fetch';
 import { unescape } from 'unescape-es6';
-import { currencyMap, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, SteamGenreType, stopTyping } from '../../components';
 
 export default class SteamCommand extends Command {
     constructor (client: CommandoClient) {

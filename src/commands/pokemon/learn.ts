@@ -17,12 +17,13 @@
  * @param {string} [Generation] The generation to find the match for
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { BattleLearnsets } from '@pokedex/learnsets';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
-import { BattleLearnsets } from '../../data/dex';
 
 export default class LearnCommand extends Command {
     constructor (client: CommandoClient) {

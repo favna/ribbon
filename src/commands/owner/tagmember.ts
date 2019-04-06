@@ -9,10 +9,10 @@
  * @param {GuildMemberResolvable} AnyMember Member to make a mention to
  */
 
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import { oneLine } from 'common-tags';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class TagMemberCommand extends Command {
     constructor (client: CommandoClient) {

@@ -8,9 +8,9 @@
  * @example neko
  */
 
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class NekoCommand extends Command {
     constructor (client: CommandoClient) {

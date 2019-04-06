@@ -9,12 +9,13 @@
  * @param {string} GameName Game that you want to find in the eShop
  */
 
+import { eShopType } from '@components/Types';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import shopData from '@databases/eshop.json';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { deleteCommandMessages, eShopType, startTyping, stopTyping } from '../../components';
-import shopData from '../../data/databases/eshop.json';
 
 export default class EShopCommand extends Command {
     constructor (client: CommandoClient) {

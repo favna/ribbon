@@ -7,10 +7,11 @@
  * @name invite
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class InviteCommand extends Command {
     constructor (client: CommandoClient) {

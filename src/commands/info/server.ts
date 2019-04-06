@@ -7,10 +7,11 @@
  * @name server
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class ServerInfoCommand extends Command {
     constructor (client: CommandoClient) {

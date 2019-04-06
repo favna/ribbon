@@ -3,6 +3,7 @@ node_modules/
 
 # Environment variables
 .env
+src/firebase.json
 
 # Any logs created
 *.log
@@ -21,4 +22,4 @@ dist/
 .vs/
 
 # My own stuff
-src/commands/owner/test.ts
+src/commands/owner/testing.ts

@@ -12,11 +12,12 @@
  * @param {string} [ShipMemberTwo] The second member to ship
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageAttachment, MessageEmbed, User } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import jimp from 'jimp';
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class ShipCommand extends Command {
     constructor (client: CommandoClient) {

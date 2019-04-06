@@ -9,8 +9,9 @@
  * @param {number/"show"} [VolumeToSet] The volume to set or use "show" to show current default volume
  */
 
+import { DEFAULT_VOLUME } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { DEFAULT_VOLUME, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class DefaultVolumeCommand extends Command {
     constructor (client: CommandoClient) {

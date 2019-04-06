@@ -17,6 +17,10 @@
  * @param {string} Video One of the options linking to a video to play
  */
 
+import { DEFAULT_VOLUME, MAX_LENGTH, MAX_SONGS, PASSES } from '@components/Constants';
+import PrismPlayer from '@components/PrismPlayer';
+import { MusicQueueType, MusicVoteType, YoutubeVideoSnippetType, YoutubeVideoType } from '@components/Types';
+import { deleteCommandMessages, Song, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Guild, Message, Permissions, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
 import { parse, stringify } from 'awesome-querystring';
@@ -24,21 +28,6 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { downloadOptions } from 'ytdl-core';
-import {
-    DEFAULT_VOLUME,
-    deleteCommandMessages,
-    MAX_LENGTH,
-    MAX_SONGS,
-    MusicQueueType,
-    MusicVoteType,
-    PASSES,
-    Song,
-    startTyping,
-    stopTyping,
-    YoutubeVideoSnippetType,
-    YoutubeVideoType,
-} from '../../components';
-import prismPlayer from '../../components/PrismPlayer';
 
 export default class LaunchMusicCommand extends Command {
     public queue: Map<Snowflake, MusicQueueType>;
@@ -133,7 +122,7 @@ export default class LaunchMusicCommand extends Command {
     }
 
     private static async startTheJam (connection: VoiceConnection, url: string, ytdlOptions?: downloadOptions, streamOptions?: StreamOptions) {
-        return connection.play(await prismPlayer(url, ytdlOptions), streamOptions);
+        return connection.play(await PrismPlayer(url, ytdlOptions), streamOptions);
     }
 
     public async run (msg: CommandoMessage, { videoQuery }: { videoQuery: string }) {

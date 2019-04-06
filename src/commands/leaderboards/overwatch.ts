@@ -11,13 +11,16 @@
  * @param {string} [region] Optional: The region the player plays in. Of of us, eu, asia
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { timeparseHelper } from '@components/TimeparseHelper';
+import { OverwatchHeroType } from '@components/Types';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, OverwatchHeroType, startTyping, stopTyping, timeparseHelper } from '../../components';
 
 export default class OverwatchCommand extends Command {
     constructor (client: CommandoClient) {

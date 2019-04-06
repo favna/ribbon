@@ -9,11 +9,11 @@
  * @param {RoleResolvable} AnyRole The role you want to assign to yourself
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class IamCommand extends Command {
     constructor (client: CommandoClient) {

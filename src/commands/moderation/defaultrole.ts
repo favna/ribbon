@@ -9,10 +9,10 @@
  * @param {RoleResolvable} AnyRole Role to assign to all new joining members
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class DefaultroleCommand extends Command {
     constructor (client: CommandoClient) {

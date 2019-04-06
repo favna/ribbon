@@ -16,11 +16,12 @@
  * @param {GuildMemberResolvable} AnyMember Member to mute
  */
 
+import { timeparseHelper } from '@components/TimeparseHelper';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, Message, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, timeparseHelper } from '../../components';
 
 export default class MuteCommand extends Command {
     constructor (client: CommandoClient) {

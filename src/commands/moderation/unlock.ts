@@ -10,10 +10,10 @@
  * @name unlock
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildChannel, MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class UnlockCommand extends Command {
     constructor (client: CommandoClient) {

@@ -10,11 +10,11 @@
  * @param {string} NewNickname Nickname to assign
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class NickCommand extends Command {
     constructor (client: CommandoClient) {

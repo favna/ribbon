@@ -11,11 +11,11 @@
  * @param {string} Query Something you want to find
  */
 
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { search as booru } from 'booru';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class Rule34Command extends Command {
     constructor (client: CommandoClient) {

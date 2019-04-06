@@ -1,7 +1,7 @@
 import { Command } from 'awesome-commando';
 import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
 import { videoFormat } from 'ytdl-core';
-import { Song } from '.';
+import { Song } from './Utils';
 
 type FlavorTextType = {
     version_id: string;

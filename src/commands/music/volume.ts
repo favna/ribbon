@@ -12,8 +12,9 @@
  * @param {number} [Volume] The new volume to set
  */
 
+import { IMusicCommand, MusicQueueType } from '@components/Types';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { deleteCommandMessages, IMusicCommand, MusicQueueType, startTyping, stopTyping } from '../../components';
 
 export default class ChangeVolumeCommand extends Command {
     private songQueue: Map<string, MusicQueueType>;

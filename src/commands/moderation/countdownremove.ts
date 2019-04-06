@@ -11,6 +11,8 @@
  * @param {string} CountdownID The ID of the Countdown to remove
  */
 
+import { CountdownType } from '@components/Types';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -18,7 +20,6 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
-import { CountdownType, deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class CountDownRemove extends Command {
     constructor (client: CommandoClient) {

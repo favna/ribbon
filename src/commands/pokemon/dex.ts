@@ -13,16 +13,19 @@
  * @param {string} PokemonName The name of the pokemon you want to find
  */
 
+import { ASSET_BASE_PATH } from '@components/Constants.js';
+import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types.js';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils.js';
+import { PokeAliases } from '@pokedex/aliases.js';
+import entries from '@pokedex/flavorText.json';
+import formats from '@pokedex/formats.json';
+import { BattlePokedex } from '@pokedex/pokedex.js';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import zalgo from 'awesome-zalgo';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType, startTyping, stopTyping } from '../../components';
-import { BattlePokedex, PokeAliases } from '../../data/dex';
-import entries from '../../data/dex/flavorText.json';
-import formats from '../../data/dex/formats.json';
 
 export default class DexCommand extends Command {
     constructor (client: CommandoClient) {

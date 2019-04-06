@@ -11,10 +11,11 @@
  * @name stop
  */
 
+import { IMusicCommand, MusicQueueType, MusicVoteType } from '@components/Types';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
 import { oneLine } from 'common-tags';
-import { deleteCommandMessages, IMusicCommand, MusicQueueType, MusicVoteType, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class StopMusicCommand extends Command {
     private songVotes: Map<Snowflake, MusicVoteType>;

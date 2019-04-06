@@ -13,10 +13,10 @@
  * @param {string} TheReason Reason for this softban.
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class SoftbanCommand extends Command {
     constructor (client: CommandoClient) {

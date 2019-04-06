@@ -7,11 +7,11 @@
  * @name saywut
  */
 
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class SayWutCommand extends Command {
     constructor (client: CommandoClient) {

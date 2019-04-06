@@ -11,6 +11,9 @@
  * @param {string} PastaName Name of the copypasta to send
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { CopypastaType } from '@components/Types';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -18,7 +21,6 @@ import { oneLine, stripIndents } from 'common-tags';
 import dym from 'didyoumean2';
 import moment from 'moment';
 import path from 'path';
-import { CopypastaType, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CopyPastaCommand extends Command {
     constructor (client: CommandoClient) {

@@ -11,13 +11,16 @@
  * @param {string} ItemName Name of the item to find
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { IPokeItemAliases, PokeItemDetailsType } from '@components/Types';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { ItemAliases } from '@pokedex/aliases';
+import { BattleItems } from '@pokedex/items';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeItemAliases, PokeItemDetailsType, startTyping, stopTyping } from '../../components';
-import { BattleItems, ItemAliases } from '../../data/dex';
 
 export default class ItemCommand extends Command {
     constructor (client: CommandoClient) {

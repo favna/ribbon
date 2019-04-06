@@ -11,9 +11,9 @@
  * @param {string} SomeText Your input to transform with Zalgo
  */
 
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import zalgo, { banish } from 'awesome-zalgo';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class ZalgoCommand extends Command {
     constructor (client: CommandoClient) {

@@ -9,6 +9,8 @@
  * @param {number} ChipsAmount The amount of chips you want to gamble
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -16,7 +18,6 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 import { SlotMachine, SlotSymbol } from 'slot-machine';
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class SlotsCommand extends Command {
     constructor (client: CommandoClient) {

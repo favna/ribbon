@@ -13,13 +13,14 @@
  * @param {string} Text The word or text to translate
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class TranslateCommand extends Command {
     constructor (client: CommandoClient) {

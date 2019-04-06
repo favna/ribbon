@@ -15,13 +15,14 @@
  * @param {string} CityName Name of the city to get the weather forecast for
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class WeatherCommand extends Command {
     constructor (client: CommandoClient) {
@@ -53,10 +54,34 @@ export default class WeatherCommand extends Command {
         });
     }
 
+    private static mileify (speed: number) {
+        return speed * 0.6214;
+    }
+
+    private static async getCords (location: string) {
+        const res = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?${stringify({
+                address: location,
+                key: process.env.GOOGLE_API_KEY!,
+            })}`
+        );
+        const cords = await res.json();
+
+        return {
+            address: cords.results[0].formatted_address,
+            lat: cords.results[0].geometry.location.lat,
+            long: cords.results[0].geometry.location.lng,
+        };
+    }
+
+    private static fahrenify (temp: number) {
+        return temp * 1.8 + 32;
+    }
+
     public async run (msg: CommandoMessage, { location }: { location: string }) {
         try {
             startTyping(msg);
-            const cords = await this.getCords(location);
+            const cords = await WeatherCommand.getCords(location);
             const res = await fetch(
                 `https://api.darksky.net/forecast/${
                     process.env.DARK_SKY_API_KEY!
@@ -78,7 +103,7 @@ export default class WeatherCommand extends Command {
                 .addField(
                     '<:windspeed:513156337237098521> Wind Speed',
                     `${weather.currently.windSpeed} km/h (${roundNumber(
-                        this.mileify(weather.currently.windSpeed),
+                        WeatherCommand.mileify(weather.currently.windSpeed),
                         2
                     )} mph)`,
                     true
@@ -105,7 +130,7 @@ export default class WeatherCommand extends Command {
                 .addField(
                     '<:todayhigh:513156337379704832> Today\'s High',
                     `${weather.daily.data[0].temperatureHigh} °C | ${roundNumber(
-                        this.fahrenify(weather.daily.data[0].temperatureHigh),
+                        WeatherCommand.fahrenify(weather.daily.data[0].temperatureHigh),
                         2
                     )} °F`,
                     true
@@ -113,7 +138,7 @@ export default class WeatherCommand extends Command {
                 .addField(
                     '<:todaylow:513156337732157440> Today\'s Low',
                     `${weather.daily.data[0].temperatureLow} °C | ${roundNumber(
-                        this.fahrenify(weather.daily.data[0].temperatureLow),
+                        WeatherCommand.fahrenify(weather.daily.data[0].temperatureLow),
                         2
                     )} °F`,
                     true
@@ -121,7 +146,7 @@ export default class WeatherCommand extends Command {
                 .addField(
                     '<:temperature:513156336964337697> Temperature',
                     `${weather.currently.temperature} °C | ${roundNumber(
-                        this.fahrenify(weather.currently.temperature),
+                        WeatherCommand.fahrenify(weather.currently.temperature),
                         2
                     )} °F`,
                     true
@@ -129,7 +154,7 @@ export default class WeatherCommand extends Command {
                 .addField(
                     '<:feelslike:513156337975164928> Feels Like',
                     `${weather.currently.apparentTemperature} °C | ${roundNumber(
-                        this.fahrenify(weather.currently.apparentTemperature),
+                        WeatherCommand.fahrenify(weather.currently.apparentTemperature),
                         2
                     )} °F`,
                     true
@@ -141,14 +166,14 @@ export default class WeatherCommand extends Command {
                 )
                 .addField(
                     `<:forecast:513156337321115667> Forecast ${moment.unix(weather.daily.data[1].time).format('dddd MMMM Do')}`,
-                    oneLine`High: ${weather.daily.data[1].temperatureHigh} °C (${roundNumber(this.fahrenify(weather.daily.data[1].temperatureHigh), 2)} °F)
-                          | Low: ${weather.daily.data[1].temperatureLow} °C (${roundNumber(this.fahrenify(weather.daily.data[1].temperatureLow), 2)} °F)`,
+                    oneLine`High: ${weather.daily.data[1].temperatureHigh} °C (${roundNumber(WeatherCommand.fahrenify(weather.daily.data[1].temperatureHigh), 2)} °F)
+                          | Low: ${weather.daily.data[1].temperatureLow} °C (${roundNumber(WeatherCommand.fahrenify(weather.daily.data[1].temperatureLow), 2)} °F)`,
                     false
                 )
                 .addField(
                     `<:forecast:513156337321115667> Forecast ${moment.unix(weather.daily.data[2].time).format('dddd MMMM Do')}`,
-                    oneLine`High: ${weather.daily.data[2].temperatureHigh} °C (${roundNumber(this.fahrenify(weather.daily.data[2].temperatureHigh), 2)} °F)
-                          | Low: ${weather.daily.data[2].temperatureLow} °C (${roundNumber(this.fahrenify(weather.daily.data[2].temperatureLow), 2)} °F)`,
+                    oneLine`High: ${weather.daily.data[2].temperatureHigh} °C (${roundNumber(WeatherCommand.fahrenify(weather.daily.data[2].temperatureHigh), 2)} °F)
+                          | Low: ${weather.daily.data[2].temperatureLow} °C (${roundNumber(WeatherCommand.fahrenify(weather.daily.data[2].temperatureLow), 2)} °F)`,
                     false
                 );
 
@@ -161,29 +186,5 @@ export default class WeatherCommand extends Command {
             stopTyping(msg);
             return msg.reply(`I wasn't able to find a location for \`${location}\``);
         }
-    }
-
-    private mileify (speed: number) {
-        return speed * 0.6214;
-    }
-
-    private async getCords (location: string) {
-        const res = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?${stringify({
-                address: location,
-                key: process.env.GOOGLE_API_KEY!,
-            })}`
-        );
-        const cords = await res.json();
-
-        return {
-            address: cords.results[0].formatted_address,
-            lat: cords.results[0].geometry.location.lat,
-            long: cords.results[0].geometry.location.lng,
-        };
-    }
-
-    private fahrenify (temp: number) {
-        return temp * 1.8 + 32;
     }
 }

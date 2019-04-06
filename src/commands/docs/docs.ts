@@ -10,13 +10,13 @@
  * @param {string} [version] The Doc version to pick, one of `stable`, `master` or `commando`
  */
 
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class DjsDocsCommand extends Command {
     constructor (client: CommandoClient) {

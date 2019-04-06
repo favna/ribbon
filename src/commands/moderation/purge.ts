@@ -9,9 +9,9 @@
  * @param {number} MessageAmount The amount of messages to delete, between 1 and 99
  */
 
+import { startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Message } from 'awesome-djs';
-import { startTyping, stopTyping } from '../../components';
 
 export default class PurgeCommand extends Command {
     constructor (client: CommandoClient) {

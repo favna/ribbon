@@ -12,9 +12,10 @@
  * @param {number | "default"} [MaxVideoLength] New maximum length in minutes
  */
 
+import { MAX_LENGTH } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
-import { deleteCommandMessages, MAX_LENGTH, startTyping, stopTyping } from '../../components';
 
 export default class MaxLengthCommand extends Command {
     constructor (client: CommandoClient) {

@@ -1,5 +1,5 @@
 /* tslint:disable:object-literal-sort-keys */
-import { PokeItemDetailsType } from '../../components';
+import { PokeItemDetailsType } from '@components/Types';
 
 export const BattleItems: PokeItemDetailsType[] = [
     {

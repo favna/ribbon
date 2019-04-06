@@ -9,6 +9,10 @@
  * @param {GuildMemberResolvable} member Member to get the activity for
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { currencyMap } from '@components/MoneyHelper';
+import { DiscordGameDevType, DiscordGameParsedType, DiscordGameSKUType, DiscordStoreGameType, SimpleEmbedFieldType } from '@components/Types';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -16,19 +20,6 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import {
-    capitalizeFirstLetter,
-    currencyMap,
-    DEFAULT_EMBED_COLOR,
-    deleteCommandMessages,
-    DiscordGameDevType,
-    DiscordGameParsedType,
-    DiscordGameSKUType,
-    DiscordStoreGameType,
-    SimpleEmbedFieldType,
-    startTyping,
-    stopTyping,
-} from '../../components';
 
 export default class ActivityCommand extends Command {
     constructor (client: CommandoClient) {

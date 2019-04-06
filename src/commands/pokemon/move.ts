@@ -11,13 +11,16 @@
  * @param {string} MoveName The move you want to find
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { IPokeMoveAliases, PokeMoveDetailsType } from '@components/Types';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { MoveAliases } from '@pokedex/aliases';
+import { BattleMovedex } from '@pokedex/moves';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeMoveAliases, PokeMoveDetailsType, startTyping, stopTyping } from '../../components';
-import { BattleMovedex, MoveAliases } from '../../data/dex';
 
 export default class MoveCommand extends Command {
     constructor (client: CommandoClient) {

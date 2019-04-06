@@ -13,13 +13,13 @@
  * @param {string} TheReason Reason for warning
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class WarnCommand extends Command {
     constructor (client: CommandoClient) {

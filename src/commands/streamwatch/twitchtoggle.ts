@@ -9,9 +9,9 @@
  * @param {boolean} Option True or False
  */
 
+import { deleteCommandMessages, startTyping, stopTyping, validateBool } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
-import { deleteCommandMessages, startTyping, stopTyping, validateBool } from '../../components';
 
 export default class TwitchToggleCommand extends Command {
     constructor (client: CommandoClient) {

@@ -1,10 +1,10 @@
+import { TierAliases } from '@pokedex/aliases';
 import { ArgumentType, CommandoClient } from 'awesome-commando';
 import cheerio from 'cheerio';
 import { stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import fetch from 'node-fetch';
 import { table } from 'table';
-import { TierAliases } from '../../data/dex';
 import { IPokeTierAliases } from '../Types';
 
 export default class ShowdownTierType extends ArgumentType {

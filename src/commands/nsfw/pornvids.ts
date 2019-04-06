@@ -11,11 +11,11 @@
  * @param {string} Query Something you want to find
  */
 
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import fetch from 'node-fetch';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class PornVidsCommand extends Command {
     constructor (client: CommandoClient) {

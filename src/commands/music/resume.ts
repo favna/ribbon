@@ -9,9 +9,10 @@
  * @name resume
  */
 
+import { IMusicCommand, MusicQueueType } from '@components/Types';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
-import { deleteCommandMessages, IMusicCommand, MusicQueueType, startTyping, stopTyping } from '../../components';
 
 export default class ResumeSongCommand extends Command {
     private songQueue: Map<Snowflake, MusicQueueType>;

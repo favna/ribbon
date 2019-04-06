@@ -9,12 +9,14 @@
  * @param {string} SeriesName Name of the TV serie you want to find
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { MovieGenreType } from '@components/Types';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, MovieGenreType, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class TVCommand extends Command {
     constructor (client: CommandoClient) {

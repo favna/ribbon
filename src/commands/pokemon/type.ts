@@ -9,12 +9,14 @@
  * @param {string} Types One or two types to find the matchup for
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { PokeTypeDataType } from '@components/Types';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { BattleTypeChart } from '@pokedex/typechart';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, PokeTypeDataType, startTyping, stopTyping } from '../../components';
-import { BattleTypeChart } from '../../data/dex';
 
 export default class TypeCommand extends Command {
     constructor (client: CommandoClient) {

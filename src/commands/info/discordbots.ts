@@ -9,11 +9,12 @@
  * @param {string} [BotID] the user ID of the bot you want to get info about
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class DiscordBotsCommand extends Command {
     constructor (client: CommandoClient) {

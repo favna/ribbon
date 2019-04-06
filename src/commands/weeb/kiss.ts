@@ -7,10 +7,11 @@
  * @param {GuildMemberResolvable} [MemberToKiss] Name of the member you want to give a kiss
  */
 
+import { ASSET_BASE_PATH } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
-import { ASSET_BASE_PATH, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class KissCommand extends Command {
     constructor (client: CommandoClient) {

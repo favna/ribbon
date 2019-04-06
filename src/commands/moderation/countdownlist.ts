@@ -7,6 +7,8 @@
  * @name countdownlist
  */
 
+import { CountdownType } from '@components/Types';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -14,7 +16,6 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
-import { CountdownType, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CountDownList extends Command {
     constructor (client: CommandoClient) {

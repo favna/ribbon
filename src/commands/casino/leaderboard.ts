@@ -7,13 +7,15 @@
  * @name leaderboard
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { CasinoRowType } from '@components/Types';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { ASSET_BASE_PATH, CasinoRowType, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class LeaderboardCommand extends Command {
     constructor (client: CommandoClient) {

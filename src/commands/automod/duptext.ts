@@ -18,10 +18,10 @@
  * @param {number} [distance] Levenshtein distance for similarity
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
 
 export default class DuplicateTextCommand extends Command {
     constructor (client: CommandoClient) {

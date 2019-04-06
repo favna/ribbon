@@ -9,12 +9,14 @@
  * @param {string} MovieName Name of the movie you want to find
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { MovieGenreType } from '@components/Types';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, MovieGenreType, startTyping, stopTyping } from '../../components';
 
 export default class MovieCommand extends Command {
     constructor (client: CommandoClient) {

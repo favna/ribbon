@@ -9,13 +9,16 @@
  * @param {string} AbilityName The name of the ability you  want to find
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { IPokeAbilityAliases, PokeAbilityDetailsType } from '@components/Types';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { BattleAbilities } from '@pokedex/abilities';
+import { AbilityAliases } from '@pokedex/aliases';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, IPokeAbilityAliases, PokeAbilityDetailsType, startTyping, stopTyping } from '../../components';
-import { AbilityAliases, BattleAbilities } from '../../data/dex';
 
 export default class AbilityCommand extends Command {
     constructor (client: CommandoClient) {

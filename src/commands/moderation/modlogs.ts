@@ -10,10 +10,10 @@
  * @param {TextChannel} [Channel] TextChannel the Mod Logs are sent to, required when enabling
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
 
 export default class ModLogsCommand extends Command {
     constructor (client: CommandoClient) {

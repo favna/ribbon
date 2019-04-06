@@ -1,5 +1,5 @@
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
-import { GuildChannel, GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel } from 'awesome-djs';
+import { DMChannel, GuildChannel, GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
@@ -11,7 +11,24 @@ import { getGamesAmerica } from 'nintendo-switch-eshop';
 import fetch from 'node-fetch';
 import { scheduleJob } from 'node-schedule';
 import path from 'path';
-import { ASSET_BASE_PATH, badwords, caps, decache, DEFAULT_EMBED_COLOR, duptext, emojis, invites, links, mentions, ordinal, slowmode } from '.';
+import { badwords, caps, duptext, emojis, invites, links, mentions, slowmode } from './AutomodHelper';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from './Constants';
+import { decache } from './Decache';
+import {
+    getChannelsData,
+    getCommandsData,
+    getMessagesData,
+    getServersData,
+    getUsersData,
+    setChannelsData,
+    setCommandsData,
+    setMessagesData,
+    setServersData,
+    setUptimeData,
+    setUsersData,
+} from './FirebaseActions';
+import FirebaseStorage from './FirebaseStorage';
+import { ordinal } from './Utils';
 
 const sendReminderMessages = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
@@ -132,6 +149,21 @@ const sendCountdownMessages = (client: CommandoClient) => {
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> Error occurred sending a countdown!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
+    }
+};
+
+const setUpdateToFirebase = (client: CommandoClient) => {
+    try {
+        const uptime = moment.duration(process.uptime() * 1000).format('D [days], H [hours] [and] m [minutes]');
+        setUptimeData(uptime);
+    } catch (err) {
+        const logChannel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+        logChannel.send(stripIndents`
+            <@${client.owners[0].id}> Failed to update Firebase uptime data!
             **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
             **Error Message:** ${err}
         `);
@@ -381,6 +413,73 @@ export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, m
     `);
 };
 
+export const handleCommandRun = (client: CommandoClient, cmd: Command, msg: CommandoMessage) => {
+    try {
+        if (cmd.group.name === 'owner') return;
+
+        let commandsCount = FirebaseStorage.commands;
+        commandsCount++;
+
+        FirebaseStorage.commands = commandsCount;
+        setCommandsData(commandsCount.toString());
+    } catch (err) {
+        const logChannel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+        logChannel.send(stripIndents`
+            <@${client.owners[0].id}> Failed to update Firebase commands count!
+            **Message ID:** (${msg.id})
+            **Channel Data:** ${(msg.channel as TextChannel).name} (${msg.channel.id})
+            **Guild Data:** ${msg.guild.name} (${msg.guild.id})
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
+    }
+};
+
+export const handleChannelCreate = (client: CommandoClient, channel: DMChannel | GuildChannel) => {
+    if (channel.type === 'category' || channel.type === 'dm') return;
+
+    try {
+        let channelsCount = FirebaseStorage.channels;
+        channelsCount++;
+
+        FirebaseStorage.channels = channelsCount;
+        setChannelsData(channelsCount.toString());
+    } catch (err) {
+        const logChannel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+        logChannel.send(stripIndents`
+            <@${client.owners[0].id}> Failed to update Firebase messages count!
+            **Channel Data:** ${(channel as TextChannel).name} (${channel.id})
+            **Guild Data:** ${(channel as GuildChannel).guild.name} (${(channel as GuildChannel).guild.id})
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
+    }
+};
+
+export const handleChannelDelete = (client: CommandoClient, channel: DMChannel | GuildChannel) => {
+    if (channel.type === 'category' || channel.type === 'dm') return;
+
+    try {
+        let channelsCount = FirebaseStorage.channels;
+        channelsCount--;
+
+        FirebaseStorage.channels = channelsCount;
+        setChannelsData(channelsCount.toString());
+    } catch (err) {
+        const logChannel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+        logChannel.send(stripIndents`
+            <@${client.owners[0].id}> Failed to update Firebase messages count!
+            **Channel Data:** ${(channel as TextChannel).name} (${channel.id})
+            **Guild Data:** ${(channel as GuildChannel).guild.name} (${(channel as GuildChannel).guild.id})
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
+    }
+};
+
 export const handleDebug = (info: string) => global.console.info(info);
 
 export const handleErr = (client: CommandoClient, err: Error) => {
@@ -393,7 +492,7 @@ export const handleErr = (client: CommandoClient, err: Error) => {
     `);
 };
 
-export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGuild) => {
+export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGuild): Promise<void> => {
     try {
         const avatar = await jimp.read(client.user!.displayAvatarURL({ format: 'png' }));
         const border = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/border.png`);
@@ -428,13 +527,35 @@ export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGui
             `)
             .setImage('attachment://added.png');
 
-        return channel ? channel.send('', { embed: newGuildEmbed }) : null;
+        if (channel) channel.send('', { embed: newGuildEmbed });
     } catch (err) {
-        return null;
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+        channel.send(stripIndents`
+            <@${client.owners[0].id}> Failed to say welcome upon joining ${guild.name} (${guild.id})!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
+    }
+
+    try {
+        let serverCount = FirebaseStorage.servers;
+        serverCount++;
+
+        FirebaseStorage.servers = serverCount;
+        setServersData(serverCount.toString());
+    } catch (err) {
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+        channel.send(stripIndents`
+            <@${client.owners[0].id}> Failed to update Firebase servers count when joining ${guild.name} (${guild.id})!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
     }
 };
 
-export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild) => {
+export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild): void => {
     guild.settings.clear();
     const casinoConn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3'));
     const pastasConn = new Database(path.join(__dirname, '../data/databases/pastas.sqlite3'));
@@ -488,17 +609,33 @@ export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild) =
             **Error Message:** ${err}
         `);
     }
-};
-
-export const handleMemberJoin = (client: CommandoClient, joinMember: GuildMember) => {
-    const memberJoinLogEmbed = new MessageEmbed();
-    const guild = joinMember.guild as CommandoGuild;
 
     try {
-        if (guild.settings.get('defaultRole') && guild.roles.get(guild.settings.get('defaultRole')) && joinMember.manageable) {
-            joinMember.roles.add(guild.settings.get('defaultRole'));
+        let serverCount = FirebaseStorage.servers;
+        serverCount--;
+
+        FirebaseStorage.servers = serverCount;
+        setServersData(serverCount.toString());
+    } catch (err) {
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+        channel.send(stripIndents`
+            <@${client.owners[0].id}> Failed to update Firebase servers count when leaving ${guild.name} (${guild.id})!
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
+    }
+};
+
+export const handleMemberJoin = (client: CommandoClient, member: GuildMember) => {
+    const memberJoinLogEmbed = new MessageEmbed();
+    const guild = member.guild as CommandoGuild;
+
+    try {
+        if (guild.settings.get('defaultRole') && guild.roles.get(guild.settings.get('defaultRole')) && member.manageable) {
+            member.roles.add(guild.settings.get('defaultRole'));
             memberJoinLogEmbed.setDescription(
-                `Automatically assigned the role ${joinMember.guild.roles.get(guild.settings.get('defaultRole'))!.name} to this member`
+                `Automatically assigned the role ${member.guild.roles.get(guild.settings.get('defaultRole'))!.name} to this member`
             );
         }
     } catch (err) {
@@ -509,20 +646,20 @@ export const handleMemberJoin = (client: CommandoClient, joinMember: GuildMember
         if (guild.settings.get('memberlogs', true)) {
             const memberLogs = guild.settings.get(
                 'memberlogchannel',
-                joinMember.guild.channels.find((c: GuildChannel) => c.name === 'member-logs')
-                    ? joinMember.guild.channels.find((c: GuildChannel) => c.name === 'member-logs').id
+                member.guild.channels.find((c: GuildChannel) => c.name === 'member-logs')
+                    ? member.guild.channels.find((c: GuildChannel) => c.name === 'member-logs').id
                     : null
             );
 
             memberJoinLogEmbed
-                .setAuthor(`${joinMember.user.tag} (${joinMember.id})`, joinMember.user.displayAvatarURL({ format: 'png' }))
+                .setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({ format: 'png' }))
                 .setFooter('User joined')
                 .setTimestamp()
                 .setColor('#80F31F');
 
             if (memberLogs
-                && joinMember.guild.channels.get(memberLogs)
-                && joinMember.guild.channels.get(memberLogs)!.permissionsFor(client.user!)!.has('SEND_MESSAGES')) {
+                && member.guild.channels.get(memberLogs)
+                && member.guild.channels.get(memberLogs)!.permissionsFor(client.user!)!.has('SEND_MESSAGES')) {
                 const channel = guild.channels.get(memberLogs) as TextChannel;
 
                 channel.send('', { embed: memberJoinLogEmbed });
@@ -533,7 +670,7 @@ export const handleMemberJoin = (client: CommandoClient, joinMember: GuildMember
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> An error sending the member join memberlog message!
-            **Server:** ${joinMember.guild.name} (${joinMember.guild.id})
+            **Server:** ${member.guild.name} (${member.guild.id})
             **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
             **Error Message:** ${err}
         `);
@@ -544,42 +681,60 @@ export const handleMemberJoin = (client: CommandoClient, joinMember: GuildMember
             guild.settings.get('joinmsgs', false) &&
             guild.settings.get('joinmsgchannel', null)
         ) {
-            renderJoinMessage(joinMember);
+            renderJoinMessage(member);
         }
     } catch (err) {
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> An error occurred sending the member join image!
-            **Server:** ${joinMember.guild.name} (${joinMember.guild.id})
+            **Server:** ${member.guild.name} (${member.guild.id})
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
+    }
+
+    try {
+        let usersCount = FirebaseStorage.users;
+        usersCount++;
+
+        FirebaseStorage.users = usersCount;
+        setUsersData(usersCount.toString());
+    } catch (err) {
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+        channel.send(stripIndents`
+            <@${client.owners[0].id}> Failed to update Firebase messages count!
+            **Member ID:** (${member.id})
+            **Guild Data:** ${guild.name} (${guild.id})
             **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
             **Error Message:** ${err}
         `);
     }
 };
 
-export const handleMemberLeave = (client: CommandoClient, leaveMember: GuildMember): any => {
-    const guild = leaveMember.guild as CommandoGuild;
+export const handleMemberLeave = (client: CommandoClient, member: GuildMember): any => {
+    const guild = member.guild as CommandoGuild;
 
     try {
         if (guild.settings.get('memberlogs', true)) {
             const memberLeaveLogEmbed = new MessageEmbed();
             const memberLogs = guild.settings.get(
                 'memberlogchannel',
-                leaveMember.guild.channels.find((c: GuildChannel) => c.name === 'member-logs')
-                    ? leaveMember.guild.channels.find((c: GuildChannel) => c.name === 'member-logs').id
+                member.guild.channels.find((c: GuildChannel) => c.name === 'member-logs')
+                    ? member.guild.channels.find((c: GuildChannel) => c.name === 'member-logs').id
                     : null
             );
 
             memberLeaveLogEmbed
-                .setAuthor(`${leaveMember.user.tag} (${leaveMember.id})`, leaveMember.user.displayAvatarURL({ format: 'png' }))
+                .setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({ format: 'png' }))
                 .setFooter('User left')
                 .setTimestamp()
                 .setColor('#F4BF42');
 
             if (memberLogs
-                && leaveMember.guild.channels.get(memberLogs)
-                && leaveMember.guild.channels.get(memberLogs)!.permissionsFor(client.user!)!.has('SEND_MESSAGES')) {
+                && member.guild.channels.get(memberLogs)
+                && member.guild.channels.get(memberLogs)!.permissionsFor(client.user!)!.has('SEND_MESSAGES')) {
                 const channel = guild.channels.get(memberLogs) as TextChannel;
 
                 channel.send('', { embed: memberLeaveLogEmbed });
@@ -590,7 +745,7 @@ export const handleMemberLeave = (client: CommandoClient, leaveMember: GuildMemb
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> An error occurred sending the member left memberlog message!
-            **Server:** ${leaveMember.guild.name} (${leaveMember.guild.id})
+            **Server:** ${member.guild.name} (${member.guild.id})
             **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
             **Error Message:** ${err}
         `);
@@ -599,19 +754,19 @@ export const handleMemberLeave = (client: CommandoClient, leaveMember: GuildMemb
     try {
         const conn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3'));
         const query = conn
-            .prepare(`SELECT * FROM "${leaveMember.guild.id}" WHERE userID = ?`)
-            .get(leaveMember.id);
+            .prepare(`SELECT * FROM "${member.guild.id}" WHERE userID = ?`)
+            .get(member.id);
 
         if (query) {
-            conn.prepare(`DELETE FROM "${leaveMember.guild.id}" WHERE userID = ?`).run(leaveMember.id);
+            conn.prepare(`DELETE FROM "${member.guild.id}" WHERE userID = ?`).run(member.id);
         }
     } catch (err) {
         if (!/(?:no such table)/i.test(err.toString())) {
             const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
-                <@${client.owners[0].id}> An error occurred removing ${leaveMember.user.tag} (${leaveMember.id}) casino data when they left the server!
-                **Server:** ${leaveMember.guild.name} (${leaveMember.guild.id})
+                <@${client.owners[0].id}> An error occurred removing ${member.user.tag} (${member.id}) casino data when they left the server!
+                **Server:** ${member.guild.name} (${member.guild.id})
                 **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Error Message:** ${err}
             `);
@@ -620,14 +775,32 @@ export const handleMemberLeave = (client: CommandoClient, leaveMember: GuildMemb
 
     try {
         if (guild.settings.get('leavemsgs', false) && guild.settings.get('leavemsgchannel', null)) {
-            renderLeaveMessage(leaveMember);
+            renderLeaveMessage(member);
         }
     } catch (err) {
         const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
         channel.send(stripIndents`
             <@${client.owners[0].id}> An error occurred sending the member leave image!
-            **Server:** ${leaveMember.guild.name} (${leaveMember.guild.id})
+            **Server:** ${member.guild.name} (${member.guild.id})
+            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+            **Error Message:** ${err}
+        `);
+    }
+
+    try {
+        let usersCount = FirebaseStorage.users;
+        usersCount--;
+
+        FirebaseStorage.users = usersCount;
+        setUsersData(usersCount.toString());
+    } catch (err) {
+        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+        channel.send(stripIndents`
+            <@${client.owners[0].id}> Failed to update Firebase messages count!
+            **Member ID:** (${member.id})
+            **Guild Data:** ${guild.name} (${guild.id})
             **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
             **Error Message:** ${err}
         `);
@@ -674,6 +847,27 @@ export const handleMsg = (client: CommandoClient, msg: CommandoMessage): void =>
         }
         if (guild.settings.get('slowmode', false).enabled && slowmode(msg, guild.settings.get('slowmode').within, client)) {
             msg.delete();
+        }
+    }
+
+    if (msg.author.id === client.user!.id) {
+        try {
+            let messagesCount = FirebaseStorage.messages;
+            messagesCount++;
+
+            FirebaseStorage.messages = messagesCount;
+            setMessagesData(messagesCount.toString());
+        } catch (err) {
+            const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+            channel.send(stripIndents`
+                <@${client.owners[0].id}> Failed to update Firebase messages count!
+                **Message ID:** (${msg.id})
+                **Channel Data:** ${(msg.channel as TextChannel).name} (${msg.channel.id})
+                **Guild Data:** ${msg.guild.name} (${msg.guild.id})
+                **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                **Error Message:** ${err}
+            `);
         }
     }
 };
@@ -815,21 +1009,24 @@ export const handleRateLimit = (client: CommandoClient, info: RateLimitData) => 
     `);
 };
 
-export const handleReady = (client: CommandoClient) => {
-    global.console.info(oneLine`Client ready at ${moment().format('HH:mm:ss')};
-        logged in as ${client.user!.username}#${client.user!.discriminator} (${client.user!.id})
-    `);
+export const handleReady = async (client: CommandoClient) => {
+    FirebaseStorage.channels = parseInt(await getChannelsData(), 10);
+    FirebaseStorage.commands = parseInt(await getCommandsData(), 10);
+    FirebaseStorage.messages = parseInt(await getMessagesData(), 10);
+    FirebaseStorage.servers = parseInt(await getServersData(), 10);
+    FirebaseStorage.users = parseInt(await getUsersData(), 10);
 
     const everyThreeMinutes = '*/3 * * * *';
-    const everyFiveMinutes  = '*/1 * * * *';
-    const everyDayAtEight   = '0 20 * * *' ;
+    const everyFiveMinutes = '*/5 * * * *';
+    const everyDayAtEight = '0 20 * * *';
 
+    scheduleJob(everyThreeMinutes, () => setUpdateToFirebase(client));
     scheduleJob(everyThreeMinutes, () => stopTypingEverywhere(client));
     scheduleJob(everyThreeMinutes, () => sendTimedMessages(client));
     scheduleJob(everyThreeMinutes, () => sendCountdownMessages(client));
-    scheduleJob(everyFiveMinutes,  () => sendReminderMessages(client));
-    scheduleJob(everyDayAtEight,   () => payoutLotto(client));
-    scheduleJob(everyDayAtEight,   () => updateEshop(client));
+    scheduleJob(everyFiveMinutes, () => sendReminderMessages(client));
+    scheduleJob(everyDayAtEight, () => payoutLotto(client));
+    scheduleJob(everyDayAtEight, () => updateEshop(client));
 
     fs.watch(
         path.join(__dirname, '../data/dex/formats.json'),
@@ -840,13 +1037,16 @@ export const handleReady = (client: CommandoClient) => {
             }
         }
     );
+
+    global.console.info(oneLine`Client ready at ${moment().format('HH:mm:ss')};
+        logged in as ${client.user!.username}#${client.user!.discriminator} (${client.user!.id})
+    `);
 };
 
-export const handleRejection = (client: CommandoClient, reason: Error | any, p: Promise<any>) => {
-    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+export const handleRejection = (reason: Error | any, p: Promise<any>) => {
     if (reason instanceof Error) reason = reason.message;
 
-    channel.send(stripIndents`
+    global.console.error(stripIndents`
         Caught **Unhandled Rejection **!
         **At:** ${p}
         **Reason:** ${reason}

@@ -9,11 +9,13 @@
  * @param {string} PhraseQuery Phrase that you want to define
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { UrbanDefinitionType } from '@components/Types';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import fetch from 'node-fetch';
-import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, UrbanDefinitionType } from '../../components';
 
 export default class UrbanCommand extends Command {
     constructor (client: CommandoClient) {

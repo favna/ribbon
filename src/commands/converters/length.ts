@@ -12,12 +12,13 @@
  */
 
 
+import { DEFAULT_EMBED_COLOR, LengthUnits } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { convert } from 'awesome-converter';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, LengthUnits, startTyping, stopTyping } from '../../components';
 
 export default class LengthCommand extends Command {
     constructor (client: CommandoClient) {

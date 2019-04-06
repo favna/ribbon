@@ -12,9 +12,10 @@
  * @param {number | "default"} [NumberOfSongs] New maximum number of songs
  */
 
+import { MAX_SONGS } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
-import { deleteCommandMessages, MAX_SONGS, startTyping, stopTyping } from '../../components';
 
 export default class MaxSongsCommand extends Command {
     constructor (client: CommandoClient) {

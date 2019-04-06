@@ -13,6 +13,9 @@
  * @param {string} TweakName Name of the tweak to find
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { CydiaAPIPackageType } from '@components/Types';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -21,7 +24,6 @@ import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { CydiaAPIPackageType, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CydiaCommand extends Command {
     constructor (client: CommandoClient) {

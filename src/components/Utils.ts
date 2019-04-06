@@ -2,7 +2,8 @@ import { CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando
 import { GuildMember, MessageEmbed, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
 import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
 import emojiRegex from 'emoji-regex';
-import { diacriticsMap, validBooleansMap, YoutubeVideoType } from '.';
+import { diacriticsMap, validBooleansMap } from './Constants';
+import { YoutubeVideoType } from './Types';
 
 export const arrayClean = (deleteValue: string | number | undefined | any, array: (string | number | undefined | any)[]) => array.filter(element => element !== deleteValue);
 

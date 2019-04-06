@@ -7,11 +7,12 @@
  * @name eshopfetch
  */
 
+import { decache } from '@components/Decache';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import fs from 'fs';
 import { getGamesAmerica } from 'nintendo-switch-eshop';
 import path from 'path';
-import { decache, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class EShopFetchCommand extends Command {
     constructor (client: CommandoClient) {

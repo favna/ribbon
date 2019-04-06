@@ -11,13 +11,14 @@
  * @param {string} CoinSide The side of the coin you want to bet on
  */
 
+import { ASSET_BASE_PATH, CoinSide, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping, validateCasinoLimit } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { ASSET_BASE_PATH, CoinSide, DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping, validateCasinoLimit } from '../../components';
 
 export default class CoinCommand extends Command {
     constructor (client: CommandoClient) {

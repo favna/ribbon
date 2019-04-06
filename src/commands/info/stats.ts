@@ -7,15 +7,15 @@
  * @name stats
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Message, MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, roundNumber, startTyping, stopTyping } from '../../components';
 
-/* tslint:disable-next-line:no-var-requires */
-const speedTest = require('speedtest-net');
+const speedTest = require('speedtest-net'); // tslint:disable-line:no-var-requires
 
 export default class RibbonStatsCommand extends Command {
     constructor (client: CommandoClient) {

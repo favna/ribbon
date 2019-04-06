@@ -9,10 +9,10 @@
  * @param {ChannelResolvable} AnnounceChannel The channel to set the announcements to
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class SetAnnounceCommand extends Command {
     constructor (client: CommandoClient) {

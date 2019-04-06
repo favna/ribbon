@@ -15,13 +15,15 @@
  * @param {string} TargetCurrency Currency to convert to
  */
 
+import { DEFAULT_EMBED_COLOR, validCurrenciesMap } from '@components/Constants';
+import { convertCurrency, currencyMap } from '@components/MoneyHelper';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import { stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { convertCurrency, currencyMap, DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping, validCurrenciesMap } from '../../components';
 
 export default class MoneyCommand extends Command {
     constructor (client: CommandoClient) {

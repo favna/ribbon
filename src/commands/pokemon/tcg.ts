@@ -19,13 +19,15 @@
  * @param {string} [Properties] Properties you want to use for your search
  */
 
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { TCGPropsType } from '@components/Types';
+import { startTyping, stopTyping } from '@components/Utils';
 import { ArgumentCollector, Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, startTyping, stopTyping, TCGPropsType } from '../../components';
 
 export default class PokemonTCGCommand extends Command {
     constructor (client: CommandoClient) {

@@ -9,10 +9,10 @@
  * @param {string} AnyMembers List of members to monitor space delimited
  */
 
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class TwitchMonitorsCommand extends Command {
     constructor (client: CommandoClient) {

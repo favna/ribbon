@@ -9,8 +9,9 @@
  * @name kai
  */
 
+import { ASSET_BASE_PATH } from '@components/Constants';
+import { startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { ASSET_BASE_PATH, startTyping, stopTyping } from '../../components';
 
 export default class KaiCommand extends Command {
     constructor (client: CommandoClient) {

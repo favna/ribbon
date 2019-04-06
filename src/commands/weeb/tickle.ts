@@ -7,10 +7,11 @@
  * @param {GuildMemberResolvable} [MemberToTickle] Name of the member you want to tickle
  */
 
+import { ASSET_BASE_PATH } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
-import { ASSET_BASE_PATH, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class TickleCommand extends Command {
     constructor (client: CommandoClient) {

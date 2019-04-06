@@ -9,9 +9,9 @@
  * @param {boolean} Option True or False
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '../../components';
 
 export default class UnknownMessagesCommand extends Command {
     constructor (client: CommandoClient) {

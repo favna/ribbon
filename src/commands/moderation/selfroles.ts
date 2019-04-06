@@ -15,10 +15,10 @@
  * @param {RoleResolvable} [AnyRole] Role to set, can be multiple split by spaces
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class SelfRolesCommand extends Command {
     constructor (client: CommandoClient) {

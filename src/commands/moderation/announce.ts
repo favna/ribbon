@@ -9,11 +9,11 @@
  * @param {string} Announcement The announcement you want to make
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildChannel, MessageAttachment, MessageEmbed, Permissions, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class NewsCommand extends Command {
     constructor (client: CommandoClient) {

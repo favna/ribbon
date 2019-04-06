@@ -11,13 +11,14 @@
  * @param {string} SearchQuery Thing to find on Google
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import cheerio from 'cheerio';
 import { oneLine } from 'common-tags';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class GoogleCommand extends Command {
     constructor (client: CommandoClient) {

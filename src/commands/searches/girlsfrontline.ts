@@ -9,6 +9,10 @@
  * @param {string} CharacterName Name (species), number or type of the girl you want to find
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { FrontlineGirlType } from '@components/Types';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { FrontlineGirls } from '@pokedex/girlsfrontline';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import cheerio from 'cheerio';
@@ -16,8 +20,6 @@ import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { capitalizeFirstLetter, DEFAULT_EMBED_COLOR, deleteCommandMessages, FrontlineGirlType, startTyping, stopTyping } from '../../components';
-import { FrontlineGirls } from '../../data/dex';
 
 export default class GirlsFrontlineCommand extends Command {
     constructor (client: CommandoClient) {

@@ -1,10 +1,6 @@
-/**
- * @file Ribbon Applet - initiates an instance of Ribbon
- * @author Jeroen Claassens (favna) <support@favna.xyz>
- * @copyright © 2017-2018 Favna
- */
-
 import { config } from 'dotenv';
+import fireadmin from 'firebase-admin';
+import 'module-alias/register';
 import path from 'path';
 import Ribbon from './Ribbon';
 
@@ -14,6 +10,13 @@ config({
     debug: false,
 });
 
-const start = () => new Ribbon(process.env.NODE_ENV! === 'development' ? process.env.TEST_TOKEN! : process.env.BOT_TOKEN!).init();
+fireadmin.initializeApp({
+    credential: fireadmin.credential.cert({
+        projectId: process.env.FIREBASE_PROJECT,
+        clientEmail: process.env.FIREBASE_EMAIL,
+        privateKey: process.env.FIREBASE_KEY,
+    }),
+    databaseURL: `https://${process.env.FIREBASE_PROJECT}.firebaseio.com`,
+});
 
-start();
+(() => new Ribbon(process.env.NODE_ENV === 'development' ? process.env.TEST_TOKEN! : process.env.BOT_TOKEN!).init())();

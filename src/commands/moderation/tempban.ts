@@ -14,10 +14,11 @@
  *     prevent Ribbon from deleting the banned member's messages
  */
 
+import { timeparseHelper } from '@components/TimeparseHelper';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, timeparseHelper } from '../../components';
 
 export default class TempBanCommand extends Command {
     constructor (client: CommandoClient) {

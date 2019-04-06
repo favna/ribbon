@@ -1,5 +1,5 @@
 /* tslint:disable:max-line-length */
-import { PokeAbilityDetailsType } from '../../components';
+import { PokeAbilityDetailsType } from '@components/Types';
 
 export const BattleAbilities: PokeAbilityDetailsType[] = [
     {

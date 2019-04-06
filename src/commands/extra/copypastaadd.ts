@@ -10,13 +10,14 @@
  * @param {string} PastaContent Content for the new pasta
  */
 
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class CopyPastaAddCommand extends Command {
     constructor (client: CommandoClient) {

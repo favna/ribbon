@@ -9,12 +9,14 @@
  * @param {string} GameName The name of any game that you want to find
  */
 
+import { DEFAULT_EMBED_COLOR, IGBDAgeRatings } from '@components/Constants';
+import { IGDBType, IIGDBAgeRating, IIGDBInvolvedCompany } from '@components/Types';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { DEFAULT_EMBED_COLOR, deleteCommandMessages, IGBDAgeRatings, IGDBType, IIGDBAgeRating, IIGDBInvolvedCompany, roundNumber, startTyping, stopTyping } from '../../components';
 
 export default class IGDBCommand extends Command {
     constructor (client: CommandoClient) {

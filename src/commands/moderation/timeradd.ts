@@ -22,13 +22,14 @@
  * @param {string} Message  The message(s) to repeat
  */
 
+import { timeparseHelper } from '@components/TimeparseHelper';
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, timeparseHelper } from '../../components';
 
 export default class TimerAddCommand extends Command {
     constructor (client: CommandoClient) {

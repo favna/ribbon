@@ -11,10 +11,12 @@
  * @param {string} [Page] Page to show
  */
 
+import { PAGINATED_ITEMS } from '@components/Constants';
+import { IMusicCommand, MusicQueueType } from '@components/Types';
+import { deleteCommandMessages, Song, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { deleteCommandMessages, IMusicCommand, MusicQueueType, PAGINATED_ITEMS, Song, startTyping, stopTyping } from '../../components';
 
 export default class ViewQueueCommand extends Command {
     private songQueue: Map<Snowflake, MusicQueueType>;

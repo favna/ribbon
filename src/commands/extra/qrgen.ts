@@ -9,12 +9,12 @@
  * @param {string} URL URL you want to encode into a QR image
  */
 
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageAttachment, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { toDataURL as qr } from 'qrcode';
-import { deleteCommandMessages, startTyping, stopTyping } from '../../components';
 
 export default class QRGenCommand extends Command {
     constructor (client: CommandoClient) {

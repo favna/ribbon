@@ -1,9 +1,11 @@
+import { handleChannelCreate, handleChannelDelete, handleCmdErr, handleCommandRun, handleDebug,
+         handleErr, handleGuildJoin, handleGuildLeave, handleMemberJoin, handleMemberLeave,
+         handleMsg, handlePresenceUpdate, handleRateLimit, handleReady, handleRejection, handleWarn
+} from '@components/EventsHelper';
 import { Client, Command, CommandoClient, CommandoGuild, CommandoMessage, SyncSQLiteProvider } from 'awesome-commando';
-import { GuildMember, RateLimitData } from 'awesome-djs';
+import { DMChannel, GuildChannel, GuildMember, RateLimitData } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import path from 'path';
-import { handleCmdErr, handleDebug, handleErr, handleGuildJoin, handleGuildLeave, handleMemberJoin, handleMemberLeave, handleMsg,
-        handlePresenceUpdate, handleRateLimit, handleReady, handleRejection, handleWarn } from './components';
 
 export default class Ribbon {
     public token: string;
@@ -13,11 +15,11 @@ export default class Ribbon {
         this.token = token;
         this.client = new Client({
             commandPrefix: '!',
-            disabledEvents: ['CHANNEL_CREATE', 'CHANNEL_DELETE', 'CHANNEL_PINS_UPDATE',
-                             'CHANNEL_UPDATE', 'GUILD_BAN_ADD', 'GUILD_BAN_REMOVE', 'GUILD_EMOJIS_UPDATE',
-                             'GUILD_INTEGRATIONS_UPDATE', 'GUILD_MEMBER_UPDATE', 'GUILD_ROLE_CREATE',
-                             'GUILD_ROLE_DELETE', 'GUILD_ROLE_UPDATE', 'MESSAGE_DELETE_BULK',
-                             'MESSAGE_DELETE', 'MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE_ALL',
+            disabledEvents: ['CHANNEL_PINS_UPDATE', 'CHANNEL_UPDATE', 'GUILD_BAN_ADD',
+                             'GUILD_BAN_REMOVE', 'GUILD_EMOJIS_UPDATE', 'GUILD_INTEGRATIONS_UPDATE',
+                             'GUILD_MEMBER_UPDATE', 'GUILD_ROLE_CREATE', 'GUILD_ROLE_DELETE',
+                             'GUILD_ROLE_UPDATE', 'MESSAGE_DELETE_BULK', 'MESSAGE_DELETE',
+                             'MESSAGE_REACTION_ADD', 'MESSAGE_REACTION_REMOVE_ALL',
                              'MESSAGE_REACTION_REMOVE', 'TYPING_START', 'USER_UPDATE', 'WEBHOOKS_UPDATE'
             ],
             messageCacheLifetime: 10 * 60,
@@ -38,6 +40,9 @@ export default class Ribbon {
     public init () {
         this.client
             .on('commandError', (cmd: Command, err: Error, msg: CommandoMessage) => handleCmdErr(this.client, cmd, err, msg))
+            .on('commandRun', (cmd: Command, promise: Promise<any>, message: CommandoMessage) => handleCommandRun(this.client, cmd, message))
+            .on('channelCreate', (channel: DMChannel | GuildChannel) => handleChannelCreate(this.client, channel))
+            .on('channelDelete', (channel: DMChannel | GuildChannel) => handleChannelDelete(this.client, channel))
             .on('debug', (info: string) => handleDebug(info))
             .on('error', (err: Error) => handleErr(this.client, err))
             .on('guildCreate', (guild: CommandoGuild) => handleGuildJoin(this.client, guild))
@@ -49,7 +54,7 @@ export default class Ribbon {
             .on('rateLimit', (info: RateLimitData) => handleRateLimit(this.client, info))
             .on('ready', () => handleReady(this.client))
             .on('warn', (warn: string) => handleWarn(this.client, warn));
-        process.on('unhandledRejection', (reason: Error | any, p: Promise<any>) => handleRejection(this.client, reason, p));
+        process.on('unhandledRejection', (reason: Error | any, p: Promise<any>) => handleRejection(reason, p));
 
         const db = new Database(path.join(__dirname, 'data/databases/settings.sqlite3'));
 

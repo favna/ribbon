@@ -11,10 +11,10 @@
  * @param {number} [LowerLimit] Optional: The new lower limit
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class CasinoLimitCommand extends Command {
     constructor (client: CommandoClient) {

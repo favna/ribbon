@@ -14,15 +14,18 @@
  * @param {string} PokemonName The name of the pokemon you want to get flavor text for
  */
 
+import { ASSET_BASE_PATH } from '@components/Constants';
+import { FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { PokeAliases } from '@pokedex/aliases';
+import entries from '@pokedex/flavorText.json';
+import { BattlePokedex } from '@pokedex/pokedex';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import zalgo from 'awesome-zalgo';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { ASSET_BASE_PATH, capitalizeFirstLetter, deleteCommandMessages, FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType, startTyping, stopTyping } from '../../components';
-import { BattlePokedex, PokeAliases } from '../../data/dex';
-import entries from '../../data/dex/flavorText.json';
 
 export default class FlavorCommand extends Command {
     constructor (client: CommandoClient) {

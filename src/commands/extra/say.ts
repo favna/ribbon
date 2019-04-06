@@ -9,8 +9,9 @@
  * @param {string} Text Message you want to have repeated
  */
 
+import { badwords, caps, duptext, emojis, invites, links, mentions } from '@components/AutomodHelper';
+import { startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { badwords, caps, duptext, emojis, invites, links, mentions, startTyping, stopTyping } from '../../components';
 
 export default class SayCommand extends Command {
     constructor (client: CommandoClient) {

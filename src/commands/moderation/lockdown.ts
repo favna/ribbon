@@ -16,10 +16,10 @@
  * @param {RoleResolvable} [LockRole] Optional: A role the lockdown is applied to, defaults to @everyone
  */
 
+import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '../../components';
 
 export default class LockdownCommand extends Command {
     constructor (client: CommandoClient) {
