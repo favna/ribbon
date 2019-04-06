@@ -222,21 +222,7 @@ export default class LaunchMusicCommand extends Command {
     private async handleVideo (video: YoutubeVideoType, queue: MusicQueueType, voiceChannel: VoiceChannel, msg: CommandoMessage, statusMsg: Message): Promise<null> {
         if (!video.durationSeconds || video.durationSeconds === 0) {
             stopTyping(msg);
-            statusMsg.edit(oneLine`${msg.author}, you can't play live streams.
-                Please note that this error might also be something else and there is currently additional
-                debugging information being send to <@${this.client.owners[0].id}>`);
-
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-            /* tslint:disable:no-console*/
-            global.console.error('PLAYBACK ERROR OCCURRED: DEBUG BELOW');
-            global.console.error(video);
-            /* tslint:enable:no-console*/
-            channel.send(stripIndents`
-                <@${this.client.owners[0].id}> Some playback error ocurred. I logged the video data to the error log!
-                **Handling:** Video
-                **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-            `);
-
+            statusMsg.edit(oneLine`${msg.author}, you can't play live streams`);
             return null;
         }
 
@@ -307,20 +293,7 @@ export default class LaunchMusicCommand extends Command {
     private async handlePlaylist (video: YoutubeVideoType, playlistId: string, msg: CommandoMessage, statusMsg: Message): Promise<null> {
         if (!video.durationSeconds || video.durationSeconds === 0) {
             stopTyping(msg);
-            statusMsg.edit(oneLine`${msg.author}, you can't play live streams.
-                Please note that this error might also be something else and there is currently additional debugging information being send to <@${this.client.owners[0].id}>`);
-
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-            /* tslint:disable:no-console*/
-            global.console.error('PLAYBACK ERROR OCCURRED: DEBUG BELOW');
-            global.console.error(video);
-            /* tslint:enable:no-console*/
-            channel.send(stripIndents`
-                <@${this.client.owners[0].id}> Some playback error ocurred. I logged the video data to the error log!
-                **Handling:** Playlist
-                **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-            `);
-
+            statusMsg.edit(oneLine`${msg.author}, you can't play live streams.`);
             return null;
         }
 

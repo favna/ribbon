@@ -1,4 +1,4 @@
-/* tslint:disable:no-dynamic-delete no-conditional-assignment*/
+// tslint:disable:no-dynamic-delete no-conditional-assignment
 
 import path from 'path';
 

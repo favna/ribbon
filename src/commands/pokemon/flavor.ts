@@ -80,7 +80,7 @@ export default class FlavorCommand extends Command {
         }
     }
 
-    /* tslint:disable:prefer-conditional-expression*/
+    // tslint:disable:prefer-conditional-expression
     public run (msg: CommandoMessage, { pokemon, shines }: { pokemon: string; shines: boolean }) {
         try {
             startTyping(msg);

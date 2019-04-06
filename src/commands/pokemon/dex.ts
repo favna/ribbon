@@ -13,13 +13,13 @@
  * @param {string} PokemonName The name of the pokemon you want to find
  */
 
-import { ASSET_BASE_PATH } from '@components/Constants.js';
-import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types.js';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils.js';
-import { PokeAliases } from '@pokedex/aliases.js';
+import { ASSET_BASE_PATH } from '@components/Constants';
+import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { PokeAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import formats from '@pokedex/formats.json';
-import { BattlePokedex } from '@pokedex/pokedex.js';
+import { BattlePokedex } from '@pokedex/pokedex';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import zalgo from 'awesome-zalgo';
@@ -80,7 +80,7 @@ export default class DexCommand extends Command {
         }
     }
 
-    /* tslint:disable:cyclomatic-complexity prefer-conditional-expression*/
+    // tslint:disable:cyclomatic-complexity prefer-conditional-expression
     public run (msg: CommandoMessage, { pokemon, shines }: { pokemon: string; shines: boolean }) {
         try {
             startTyping(msg);

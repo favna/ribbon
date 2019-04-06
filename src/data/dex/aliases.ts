@@ -1,4 +1,4 @@
-/* tslint:disable:object-literal-sort-keys */
+// tslint:disable:object-literal-sort-keys
 import { IPokeAbilityAliases, IPokeDexAliases, IPokeItemAliases, IPokeMoveAliases, IPokeTierAliases } from '@components/Types';
 
 export const TierAliases: IPokeTierAliases[] = [

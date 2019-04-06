@@ -82,7 +82,6 @@ export default class ViewQueueCommand extends Command {
                 iconURL: msg.author.displayAvatarURL({ format: 'png' }),
             },
             color: msg.guild ? msg.guild.me.displayColor : 10610610,
-            /* tslint:disable:max-line-length */
             description: stripIndents`
                 __**Song queue, page ${paginated.page}**__
                 ${paginated.items
@@ -111,7 +110,6 @@ export default class ViewQueueCommand extends Command {
                 `}
                 **Total queue time:** ${Song.timeString(totalLength)}
             `,
-            /* tslint:enable:max-line-length */
         });
     }
 }

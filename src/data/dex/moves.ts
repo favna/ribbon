@@ -1,4 +1,4 @@
-/* tslint:disable:max-line-length object-literal-sort-keys */
+// tslint:disable:max-line-length object-literal-sort-keys
 import { PokeMoveDetailsType } from '@components/Types';
 
 export const BattleMovedex: PokeMoveDetailsType[] = [

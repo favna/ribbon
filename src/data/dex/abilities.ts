@@ -1,4 +1,4 @@
-/* tslint:disable:max-line-length */
+// tslint:disable:max-line-length
 import { PokeAbilityDetailsType } from '@components/Types';
 
 export const BattleAbilities: PokeAbilityDetailsType[] = [

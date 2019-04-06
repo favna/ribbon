@@ -91,7 +91,7 @@ export default class ActivityCommand extends Command {
         };
     }
 
-    /* tslint:disable: cyclomatic-complexity*/
+    // tslint:disable: cyclomatic-complexity
     public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         try {
             startTyping(msg);

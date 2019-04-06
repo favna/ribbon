@@ -415,7 +415,7 @@ export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, m
 
 export const handleCommandRun = (client: CommandoClient, cmd: Command, msg: CommandoMessage) => {
     try {
-        if (cmd.group.name === 'owner') return;
+        if (cmd.group.id === 'owner') return;
 
         let commandsCount = FirebaseStorage.commands;
         commandsCount++;

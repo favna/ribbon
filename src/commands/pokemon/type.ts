@@ -57,7 +57,7 @@ export default class TypeCommand extends Command {
         });
     }
 
-    /* tslint:disable: cyclomatic-complexity*/
+    // tslint:disable: cyclomatic-complexity
     public run (msg: CommandoMessage, { types }: { types: string[] }) {
         try {
             startTyping(msg);

@@ -98,56 +98,19 @@ export default class SayCommand extends Command {
                     );
                 }
             }
-            /* tslint:disable:max-line-length */
-            if (
-                msg.guild.settings.get('badwords', false).enabled &&
-                badwords(
-                    msg,
-                    msg.guild.settings.get('badwords').words,
-                    this.client
-                )
-            ) {
-                return msg.reply(
-                    `you cannot use \`${
-                        msg.guild.commandPrefix
-                        }say\` to bypass the no bad words filter`
-                );
+
+            if (msg.guild.settings.get('badwords', false).enabled && badwords(msg, msg.guild.settings.get('badwords').words, this.client)) {
+                return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no bad words filter`);
             }
-            if (
-                msg.guild.settings.get('invites', false) &&
-                invites(msg, this.client)
-            ) {
-                return msg.reply(
-                    `you cannot use \`${
-                        msg.guild.commandPrefix
-                        }say\` to bypass the no server invites filter`
-                );
+            if (msg.guild.settings.get('invites', false) && invites(msg, this.client)) {
+                return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no server invites filter`);
             }
-            if (
-                msg.guild.settings.get('links', false) &&
-                links(msg, this.client)
-            ) {
-                return msg.reply(
-                    `you cannot use \`${
-                        msg.guild.commandPrefix
-                        }say\` to bypass the no external links filter`
-                );
+            if (msg.guild.settings.get('links', false) && links(msg, this.client)) {
+                return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no external links filter`);
             }
-            if (
-                msg.guild.settings.get('mentions', false).enabled &&
-                mentions(
-                    msg,
-                    msg.guild.settings.get('mentions').threshold,
-                    this.client
-                )
-            ) {
-                return msg.reply(
-                    `you cannot use \`${
-                        msg.guild.commandPrefix
-                        }say\` to bypass the no excessive mentions filter`
-                );
+            if (msg.guild.settings.get('mentions', false).enabled && mentions(msg, msg.guild.settings.get('mentions').threshold, this.client)) {
+                return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no excessive mentions filter`);
             }
-            /* tslint:enable:max-line-length */
         }
 
         startTyping(msg);

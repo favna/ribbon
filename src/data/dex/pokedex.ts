@@ -1,4 +1,4 @@
-/* tslint:disable:object-literal-sort-keys */
+// tslint:disable:object-literal-sort-keys
 import { PokedexType } from '@components/Types';
 
 export const BattlePokedex: PokedexType[] = [

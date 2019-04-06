@@ -1,4 +1,4 @@
-/* tslint:disable:max-line-length */
+// tslint:disable:max-line-length
 export const BattleLearnsets: any = {
     missingno: {
         learnset: {
