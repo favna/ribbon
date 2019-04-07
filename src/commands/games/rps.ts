@@ -49,7 +49,7 @@ export default class RockPaperScissorCommand extends Command {
             startTyping(msg);
 
             const randPost = await fetch(
-                'https://api.random.org/json-rpc/1/invoke',
+                'https://api.random.org/json-rpc/2/invoke',
                 {
                     body: JSON.stringify({
                         id: Math.floor(Math.random() * 42),
@@ -62,7 +62,7 @@ export default class RockPaperScissorCommand extends Command {
                             n: 1,
                         },
                     }),
-                    headers: { 'Content-Type': 'application/json-rpc' },
+                    headers: { 'Content-Type': 'application/json' },
                     method: 'POST',
                 }
             );
