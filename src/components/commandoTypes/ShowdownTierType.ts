@@ -20,6 +20,12 @@ export default class ShowdownTierType extends ArgumentType {
         } while (array.length > 0);
 
         chunkedArray.shift();
+        if (chunkedArray[chunkedArray.length - 1].length < size) {
+            const difference = size - chunkedArray[chunkedArray.length - 1].length;
+            for (let i = 0; i < difference; i++) {
+                chunkedArray[chunkedArray.length - 1].push('');
+            }
+        }
         return table(chunkedArray.map((inner: string[]) => inner.map((tier: string) => tier.toLowerCase())));
     }
 

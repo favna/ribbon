@@ -37,7 +37,7 @@ export default class MassCommand extends Command {
             },
             args: [
                 {
-                    key: 'lengthAmount',
+                    key: 'massAmount',
                     prompt: 'How much mass to convert?',
                     type: 'integer',
                 },
