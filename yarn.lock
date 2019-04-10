@@ -5906,6 +5906,11 @@ tslib@1.9.3, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
 
+tslint-config-favware@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tslint-config-favware/-/tslint-config-favware-1.0.0.tgz#62f2bdc0284733c6ce197b34c55303dbca7f5e99"
+  integrity sha512-1dT2FwVR0kqGK8Vy27A3Xz3WTX1Deed+XBsPnOZqoWTIhQuukR3AJ/pEdqpuSvZYTU/TTK3VXwlZfIXl29Okbg==
+
 tslint@^5.15.0:
   version "5.15.0"
   resolved "https://registry.yarnpkg.com/tslint/-/tslint-5.15.0.tgz#6ffb180986d63afa1e531feb2a134dbf961e27d3"

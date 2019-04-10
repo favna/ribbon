@@ -1,7 +1,7 @@
 // tslint:disable:object-literal-sort-keys
 import { PokeItemDetailsType } from '@components/Types';
 
-export const BattleItems: PokeItemDetailsType[] = [
+const ITEMS: PokeItemDetailsType[] = [
     {
         id: 'abomasite',
         name: 'Abomasite',
@@ -2740,5 +2740,7 @@ export const BattleItems: PokeItemDetailsType[] = [
         num: 796,
         gen: 7,
         desc: 'Used for Hyper Training. All of a Pokemon\'s stats are calculated with an IV of 31.',
-    },
+    }
 ];
+
+export default ITEMS;

@@ -1,7 +1,7 @@
 // tslint:disable:max-line-length
 import { PokeAbilityDetailsType } from '@components/Types';
 
-export const BattleAbilities: PokeAbilityDetailsType[] = [
+const ABILITIES: PokeAbilityDetailsType[] = [
     {
         shortDesc: 'Does nothing.',
         id: 'noability',
@@ -1562,5 +1562,7 @@ export const BattleAbilities: PokeAbilityDetailsType[] = [
         id: 'persistent',
         name: 'Persistent',
         num: -4,
-    },
+    }
 ];
+
+export default ABILITIES;

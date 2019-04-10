@@ -1,7 +1,7 @@
 // tslint:disable:object-literal-sort-keys
 import { PokedexType } from '@components/Types';
 
-export const BattlePokedex: PokedexType[] = [
+const POKEDEX: PokedexType[] = [
     {
         num: 1,
         species: 'Bulbasaur',
@@ -487,7 +487,7 @@ export const BattlePokedex: PokedexType[] = [
             'pikachukalos',
             'pikachualola',
             'pikachupartner',
-            'pikachustarter',
+            'pikachustarter'
         ],
     },
     {
@@ -2483,7 +2483,7 @@ export const BattlePokedex: PokedexType[] = [
             'umbreon',
             'leafeon',
             'glaceon',
-            'sylveon',
+            'sylveon'
         ],
         eggGroups: ['Field'],
         otherFormes: ['eeveestarter'],
@@ -3492,7 +3492,7 @@ export const BattlePokedex: PokedexType[] = [
             'unowny',
             'unownz',
             'unownexclamation',
-            'unownquestion',
+            'unownquestion'
         ],
     },
     {
@@ -7684,7 +7684,7 @@ export const BattlePokedex: PokedexType[] = [
             'rotomwash',
             'rotomfrost',
             'rotomfan',
-            'rotommow',
+            'rotommow'
         ],
     },
     {
@@ -7980,7 +7980,7 @@ export const BattlePokedex: PokedexType[] = [
             'arceuspsychic',
             'arceusrock',
             'arceussteel',
-            'arceuswater',
+            'arceuswater'
         ],
     },
     {
@@ -10404,7 +10404,7 @@ export const BattlePokedex: PokedexType[] = [
             'genesectdouse',
             'genesectshock',
             'genesectburn',
-            'genesectchill',
+            'genesectchill'
         ],
     },
     {
@@ -10730,7 +10730,7 @@ export const BattlePokedex: PokedexType[] = [
             'vivillonsun',
             'vivillontundra',
             'vivillonfancy',
-            'vivillonpokeball',
+            'vivillonpokeball'
         ],
     },
     {
@@ -10805,7 +10805,7 @@ export const BattlePokedex: PokedexType[] = [
             'flabebeblue',
             'flabebeorange',
             'flabebewhite',
-            'flabebeyellow',
+            'flabebeyellow'
         ],
     },
     {
@@ -10828,7 +10828,7 @@ export const BattlePokedex: PokedexType[] = [
             'floetteorange',
             'floettewhite',
             'floetteyellow',
-            'floetteeternal',
+            'floetteeternal'
         ],
     },
     {
@@ -10864,7 +10864,7 @@ export const BattlePokedex: PokedexType[] = [
             'florgesblue',
             'florgesorange',
             'florgeswhite',
-            'florgesyellow',
+            'florgesyellow'
         ],
     },
     {
@@ -10936,7 +10936,7 @@ export const BattlePokedex: PokedexType[] = [
             'furfroulareine',
             'furfroumatron',
             'furfroupharaoh',
-            'furfroustar',
+            'furfroustar'
         ],
     },
     {
@@ -12576,7 +12576,7 @@ export const BattlePokedex: PokedexType[] = [
             'silvallypsychic',
             'silvallyrock',
             'silvallysteel',
-            'silvallywater',
+            'silvallywater'
         ],
     },
     {
@@ -12887,7 +12887,7 @@ export const BattlePokedex: PokedexType[] = [
             'miniorgreen',
             'miniorblue',
             'miniorindigo',
-            'miniorviolet',
+            'miniorviolet'
         ],
     },
     {
@@ -14187,7 +14187,7 @@ export const BattlePokedex: PokedexType[] = [
         otherFormes: [
             'pokestargiant2',
             'pokestargiantpropo1',
-            'pokestargiantpropo2',
+            'pokestargiantpropo2'
         ],
     },
     {
@@ -14302,5 +14302,7 @@ export const BattlePokedex: PokedexType[] = [
         weightkg: 61,
         color: 'White',
         eggGroups: ['Undiscovered'],
-    },
+    }
 ];
+
+export default POKEDEX;

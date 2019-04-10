@@ -1,7 +1,7 @@
 // tslint:disable:object-literal-sort-keys
 import { IPokeAbilityAliases, IPokeDexAliases, IPokeItemAliases, IPokeMoveAliases, IPokeTierAliases } from '@components/Types';
 
-export const TierAliases: IPokeTierAliases[] = [
+export const tierAliases: IPokeTierAliases[] = [
     { alias: 'randbats', tier: 'randombattle' },
     { alias: 'randoms', tier: 'randombattle' },
     { alias: 'random battles', tier: 'randombattle' },
@@ -58,10 +58,10 @@ export const TierAliases: IPokeTierAliases[] = [
     { alias: 'mix and mega', tier: 'mixandmega' },
     { alias: 'almostanyability', tier: 'almostanyability' },
     { alias: 'aaa', tier: 'almostanyability' },
-    { alias: 'almost any ability', tier: 'almostanyability' },
+    { alias: 'almost any ability', tier: 'almostanyability' }
 ];
 
-export const PokeAliases: IPokeDexAliases[] = [
+export const pokeAliases: IPokeDexAliases[] = [
     { alias: 'maero', name: 'Aerodactyl-Mega' },
     { alias: 'megaaero', name: 'Aerodactyl-Mega' },
     { alias: 'megabee', name: 'Beedrill-Mega' },
@@ -707,15 +707,15 @@ export const PokeAliases: IPokeDexAliases[] = [
     { alias: 'shinboraa', name: 'Sigilyph' },
     { alias: 'barujiina', name: 'Mandibuzz' },
     { alias: 'rankurusu', name: 'Reuniclus' },
-    { alias: 'borutorosu', name: 'Thundurus' },
+    { alias: 'borutorosu', name: 'Thundurus' }
 ];
 
-export const AbilityAliases: IPokeAbilityAliases[] = [
+export const abilityAliases: IPokeAbilityAliases[] = [
     { alias: 'ph', ability: 'Poison Heal' },
-    { alias: 'stag', ability: 'Shadow Tag' },
+    { alias: 'stag', ability: 'Shadow Tag' }
 ];
 
-export const ItemAliases: IPokeItemAliases[] = [
+export const itemAliases: IPokeItemAliases[] = [
     { alias: 'assvest', item: 'Assault Vest' },
     { alias: 'av', item: 'Assault Vest' },
     { alias: 'band', item: 'Choice Band' },
@@ -740,10 +740,10 @@ export const ItemAliases: IPokeItemAliases[] = [
     { alias: 'sitrus', item: 'Sitrus Berry' },
     { alias: 'specs', item: 'Choice Specs' },
     { alias: 'wp', item: 'Weakness Policy' },
-    { alias: 'yache', item: 'Yache Berry' },
+    { alias: 'yache', item: 'Yache Berry' }
 ];
 
-export const MoveAliases: IPokeMoveAliases[] = [
+export const moveAliases: IPokeMoveAliases[] = [
     { alias: 'bb', move: 'Brave Bird' },
     { alias: 'bd', move: 'Belly Drum' },
     { alias: 'bpass', move: 'Baton Pass' },
@@ -885,5 +885,5 @@ export const MoveAliases: IPokeMoveAliases[] = [
     { alias: 'zthunderbolt', move: '10,000,000 Volt Thunderbolt' },
     { alias: 'zultranecrozma', move: 'Light That Burns the Sky' },
     { alias: 'zvolttackle', move: 'Catastropika' },
-    { alias: 'zwater', move: 'Hydro Vortex' },
+    { alias: 'zwater', move: 'Hydro Vortex' }
 ];

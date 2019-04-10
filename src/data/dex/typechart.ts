@@ -1,4 +1,4 @@
-export const BattleTypeChart: any = {
+const TYPECHART: any = {
     Bug: {
         damageTaken: {
             Bug: 0,
@@ -756,3 +756,5 @@ export const BattleTypeChart: any = {
         },
     },
 };
+
+export default TYPECHART;

@@ -16,10 +16,10 @@
 import { ASSET_BASE_PATH } from '@components/Constants';
 import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
 import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
-import { PokeAliases } from '@pokedex/aliases';
+import { pokeAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import formats from '@pokedex/formats.json';
-import { BattlePokedex } from '@pokedex/pokedex';
+import BattlePokedex from '@pokedex/pokedex';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import zalgo from 'awesome-zalgo';
@@ -96,7 +96,7 @@ export default class DexCommand extends Command {
                 keys: ['alias', 'species', 'name', 'num'],
                 threshold: 0.2,
             };
-            const aliasFuse = new Fuse(PokeAliases, pokeoptions);
+            const aliasFuse = new Fuse(pokeAliases, pokeoptions);
             const pokeFuse = new Fuse(BattlePokedex, pokeoptions);
             const firstSearch = pokeFuse.search(pokemon);
             const aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : [];

@@ -1,5 +1,5 @@
 // tslint:disable:max-line-length
-export const BattleLearnsets: any = {
+const LEARNSETS: any = {
     missingno: {
         learnset: {
             blizzard: ['5L1'],
@@ -66771,3 +66771,5 @@ export const BattleLearnsets: any = {
         },
     },
 };
+
+export default LEARNSETS;

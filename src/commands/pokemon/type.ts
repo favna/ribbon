@@ -12,7 +12,7 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { PokeTypeDataType } from '@components/Types';
 import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
-import { BattleTypeChart } from '@pokedex/typechart';
+import BattleTypeChart from '@pokedex/typechart';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';

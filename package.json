@@ -14,7 +14,7 @@
         "url": "https://github.com/favna/ribbon/issues"
     },
     "scripts": {
-        "lint": "tslint --fix -p . -c ./tslint.json ./src/**/*.ts",
+        "lint": "tslint -p . -c ./tslint.json --format verbose --fix",
         "clean": "rimraf ./dist",
         "prebuild": "yarn clean && yarn lint",
         "build": "tsc",
@@ -89,6 +89,7 @@
         "slot-machine": "^2.1.0",
         "speedtest-net": "^1.5.1",
         "table": "^5.2.3",
+        "tslint-config-favware": "^1.0.0",
         "turndown": "^5.0.3",
         "unescape-es6": "^2.1.2",
         "ytdl-core": "^0.29.1",

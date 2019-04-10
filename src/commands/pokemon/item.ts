@@ -14,8 +14,8 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeItemAliases, PokeItemDetailsType } from '@components/Types';
 import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
-import { ItemAliases } from '@pokedex/aliases';
-import { BattleItems } from '@pokedex/items';
+import { itemAliases } from '@pokedex/aliases';
+import BattleItems from '@pokedex/items';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -55,7 +55,7 @@ export default class ItemCommand extends Command {
                 keys: ['alias', 'item', 'id', 'name'],
                 threshold: 0.3,
             };
-            const aliasFuse = new Fuse(ItemAliases, itemOptions);
+            const aliasFuse = new Fuse(itemAliases, itemOptions);
             const itemFuse = new Fuse(BattleItems, itemOptions);
             const aliasSearch = aliasFuse.search(item);
             const itemSearch = aliasSearch.length ? itemFuse.search(aliasSearch[0].item) : itemFuse.search(item);

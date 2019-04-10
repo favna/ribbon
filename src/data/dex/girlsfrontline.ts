@@ -1,7 +1,7 @@
 // tslint:disable:max-line-length
 import { FrontlineGirlType } from '@components/Types';
 
-export const FrontlineGirls: FrontlineGirlType[] = [
+const FRONTLINE_GIRLS: FrontlineGirlType[] = [
     {
         url: '/wiki/6P62',
         num: 138,
@@ -13477,5 +13477,7 @@ export const FrontlineGirls: FrontlineGirlType[] = [
             reward: 'Obtainable as an exchangeable character for 120 Nyan Kings during the collaboration event Hitoribocchi.',
         },
         img: 'pic_Theresa.png',
-    },
+    }
 ];
+
+export default FRONTLINE_GIRLS;

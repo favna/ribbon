@@ -1,7 +1,7 @@
 // tslint:disable:max-line-length object-literal-sort-keys
 import { PokeMoveDetailsType } from '@components/Types';
 
-export const BattleMovedex: PokeMoveDetailsType[] = [
+const MOVEDEX: PokeMoveDetailsType[] = [
     {
         num: 719,
         accuracy: true,
@@ -10791,5 +10791,7 @@ export const BattleMovedex: PokeMoveDetailsType[] = [
         target: 'normal',
         type: 'Water',
         contestType: 'Cute',
-    },
+    }
 ];
+
+export default MOVEDEX;

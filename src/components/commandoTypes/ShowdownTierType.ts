@@ -1,4 +1,4 @@
-import { TierAliases } from '@pokedex/aliases';
+import { tierAliases } from '@pokedex/aliases';
 import { ArgumentType, CommandoClient } from 'awesome-commando';
 import cheerio from 'cheerio';
 import { stripIndents } from 'common-tags';
@@ -31,7 +31,7 @@ export default class ShowdownTierType extends ArgumentType {
 
     private static fuser (searchStr: string): { hasMatch: boolean, value: string } {
         const fuseOptions: FuseOptions<IPokeTierAliases> = { keys: ['alias'] };
-        const fuseTable = new Fuse(TierAliases, fuseOptions);
+        const fuseTable = new Fuse(tierAliases, fuseOptions);
         const fuseSearch = fuseTable.search(searchStr);
 
         return { hasMatch: !!fuseSearch.length, value: fuseSearch.length ? fuseSearch[0].tier : '' };

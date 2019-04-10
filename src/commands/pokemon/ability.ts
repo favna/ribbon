@@ -12,8 +12,8 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeAbilityAliases, PokeAbilityDetailsType } from '@components/Types';
 import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
-import { BattleAbilities } from '@pokedex/abilities';
-import { AbilityAliases } from '@pokedex/aliases';
+import BattleAbilities from '@pokedex/abilities';
+import { abilityAliases } from '@pokedex/aliases';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -50,7 +50,7 @@ export default class AbilityCommand extends Command {
         try {
             startTyping(msg);
             const fsoptions: FuseOptions<PokeAbilityDetailsType & IPokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
-            const aliasFuse = new Fuse(AbilityAliases, fsoptions);
+            const aliasFuse = new Fuse(abilityAliases, fsoptions);
             const abilityFuse = new Fuse(BattleAbilities, fsoptions);
             const aliasSearch = aliasFuse.search(ability);
             const abilitySearch = aliasSearch.length ? abilityFuse.search(aliasSearch[0].ability) : abilityFuse.search(ability);

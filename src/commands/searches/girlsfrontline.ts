@@ -12,7 +12,7 @@
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { FrontlineGirlType } from '@components/Types';
 import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
-import { FrontlineGirls } from '@pokedex/girlsfrontline';
+import frontlineGirls from '@pokedex/girlsfrontline';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import cheerio from 'cheerio';
@@ -48,7 +48,7 @@ export default class GirlsFrontlineCommand extends Command {
 
             const gfEmbed = new MessageEmbed();
             const gfOptions: FuseOptions<FrontlineGirlType> = { keys: ['name'] };
-            const fuse = new Fuse(FrontlineGirls, gfOptions);
+            const fuse = new Fuse(frontlineGirls, gfOptions);
             const results = fuse.search(character);
             const hit = results[0];
             const howObtain: string[] = [];

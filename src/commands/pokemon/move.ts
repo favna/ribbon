@@ -14,8 +14,8 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeMoveAliases, PokeMoveDetailsType } from '@components/Types';
 import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
-import { MoveAliases } from '@pokedex/aliases';
-import { BattleMovedex } from '@pokedex/moves';
+import { moveAliases } from '@pokedex/aliases';
+import BattleMovedex from '@pokedex/moves';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -56,7 +56,7 @@ export default class MoveCommand extends Command {
                 keys: ['alias', 'move', 'id', 'name'],
                 threshold: 0.2,
             };
-            const aliasFuse = new Fuse(MoveAliases, moveOptions);
+            const aliasFuse = new Fuse(moveAliases, moveOptions);
             const moveFuse = new Fuse(BattleMovedex, moveOptions);
             const aliasSearch = aliasFuse.search(move);
             let moveSearch = moveFuse.search(move);
