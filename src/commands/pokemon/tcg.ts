@@ -143,7 +143,7 @@ export default class PokemonTCGCommand extends Command {
                 ],
                 1
             );
-            const subTypeSelection = await subTypePicker.obtain<SubTypeArgumentCollection>(command,[],1);
+            const subTypeSelection = await subTypePicker.obtain<SubTypeArgumentCollection>(command, [], 1);
 
             properties.subtype = subTypeSelection.values.subtype;
             subTypeSelection.prompts[0].delete();
@@ -173,7 +173,7 @@ export default class PokemonTCGCommand extends Command {
                 ],
                 1
             );
-            const superTypeSelection = await superTypePicker.obtain<SuperTypeArgumentCollection>(command,[],1);
+            const superTypeSelection = await superTypePicker.obtain<SuperTypeArgumentCollection>(command, [], 1);
 
             properties.supertype = superTypeSelection.values.supertype;
             superTypeSelection.prompts[0].delete();

@@ -8,6 +8,7 @@ src/firebase.json
 # Any logs created
 *.log
 *.stackdump
+.DS_store
 
 # Data folders
 src/data/databases/*
