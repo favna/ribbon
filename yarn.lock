@@ -529,10 +529,10 @@
   dependencies:
     moment ">=2.14.0"
 
-"@types/node-fetch@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.3.0.tgz#d1da24d56e9f1774a0e50a93cc8ee2a7922f4f0e"
-  integrity sha512-8hiAWrp7m9c0+LWLSMrUdPAoTJogvarqUdpQsyV9BlWnxVHTpdopNW0ldB4H8s/G4dg/KJLpqJIMb0GaZDf8/Q==
+"@types/node-fetch@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.3.1.tgz#a453be56b53ff74e5e3603fe5f9a7e3d7b673efc"
+  integrity sha512-ZEiga4pDXtViK6SZKEXZ/86tiyI3tV8BJWvI9aj2WiRvs0TbX38aLFe9WecMhBmMF3BQpOJJGJM1Cvd7W2y2yg==
   dependencies:
     "@types/node" "*"
 
@@ -553,10 +553,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.14.4.tgz#1c586b991457cbb58fef51bc4e0cfcfa347714b5"
   integrity sha512-DT25xX/YgyPKiHFOpNuANIQIVvYEwCWXgK2jYYwqgaMrYE6+tq+DtmMwlD3drl6DJbUwtlIDnn0d7tIn/EbXBg==
 
-"@types/node@^11.13.0":
-  version "11.13.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.0.tgz#b0df8d6ef9b5001b2be3a94d909ce3c29a80f9e1"
-  integrity sha512-rx29MMkRdVmzunmiA4lzBYJNnXsW/PhG4kMBy2ATsYaDjGGR75dCFEVVROKpNwlVdcUX3xxlghKQOeDPBJobng==
+"@types/node@^11.13.4":
+  version "11.13.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.13.4.tgz#f83ec3c3e05b174b7241fadeb6688267fe5b22ca"
+  integrity sha512-+rabAZZ3Yn7tF/XPGHupKIL5EcAbrLxnTr/hgQICxbeuAfWtT0UZSfULE+ndusckBItcv4o6ZeOJplQikVcLvQ==
 
 "@types/node@^8.0.53":
   version "8.10.45"
@@ -1287,13 +1287,13 @@ chalk@^2.3.0, chalk@^2.4.1:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-cheerio@^1.0.0-rc.2:
-  version "1.0.0-rc.2"
-  resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-1.0.0-rc.2.tgz#4b9f53a81b27e4d5dac31c0ffd0cfa03cc6830db"
-  integrity sha1-S59TqBsn5NXawxwP/Qz6A8xoMNs=
+cheerio@^1.0.0-rc.3:
+  version "1.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/cheerio/-/cheerio-1.0.0-rc.3.tgz#094636d425b2e9c0f4eb91a46c05630c9a1a8bf6"
+  integrity sha512-0td5ijfUPuubwLUu0OBoe98gZj8C/AA+RW3v67GPlGOrvxWjZmBXiBCRU+I8VEiNyJzjth40POfHiz2RB3gImA==
   dependencies:
     css-select "~1.2.0"
-    dom-serializer "~0.1.0"
+    dom-serializer "~0.1.1"
     entities "~1.1.1"
     htmlparser2 "^3.9.1"
     lodash "^4.15.0"
@@ -1875,7 +1875,7 @@ dmd@^3.0.10:
     test-value "^3.0.0"
     walk-back "^3.0.0"
 
-dom-serializer@0, dom-serializer@~0.1.0:
+dom-serializer@0, dom-serializer@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-0.1.1.tgz#1ec4059e284babed36eec2941d4a970a189ce7c0"
   integrity sha512-l0IU0pPzLWSHBcieZbpOKgkIn3ts3vAh7ZuFyXNwJxJXk/c4Gwj9xaTJwIDVQCXawWD0qb3IzMGH5rglQaO0XA==
@@ -2010,9 +2010,10 @@ entities@^1.1.1, entities@~1.1.1:
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
 
-erlpack@discordapp/erlpack:
-  version "0.1.0"
-  resolved "https://codeload.github.com/discordapp/erlpack/tar.gz/674ebfd3439ba4b7ce616709821d27630f7cdc61"
+erlpack@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/erlpack/-/erlpack-0.1.2.tgz#cf1f4f755d0728ebc2d11b2e3c92bd2da834514e"
+  integrity sha1-zx9PdV0HKOvC0RsuPJK9Lag0UU4=
   dependencies:
     bindings "^1.2.1"
     nan "^2.1.0"
@@ -5906,10 +5907,10 @@ tslib@1.9.3, tslib@^1.8.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
 
-tslint-config-favware@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/tslint-config-favware/-/tslint-config-favware-1.0.0.tgz#62f2bdc0284733c6ce197b34c55303dbca7f5e99"
-  integrity sha512-1dT2FwVR0kqGK8Vy27A3Xz3WTX1Deed+XBsPnOZqoWTIhQuukR3AJ/pEdqpuSvZYTU/TTK3VXwlZfIXl29Okbg==
+tslint-config-favware@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/tslint-config-favware/-/tslint-config-favware-1.0.1.tgz#765826c619a079ec65ac5666c2426dfe01298c61"
+  integrity sha512-uxmCYPLFJ3LMjQhU71Zk6prE2f6oGE4ZGWLXdQiBYRIdEwYYB6Pd4N4Xo4grvGatabz5tAuDGz2iwbGrhQ5YJg==
 
 tslint@^5.15.0:
   version "5.15.0"
@@ -5973,10 +5974,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.4.2:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.2.tgz#9ed4e6475d906f589200193be056f5913caed481"
-  integrity sha512-Og2Vn6Mk7JAuWA1hQdDQN/Ekm/SchX80VzLhjKN9ETYrIepBFAd8PkOdOTK2nKt0FCkmMZKBJvQ1dV1gIxPu/A==
+typescript@^3.4.3:
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.3.tgz#0eb320e4ace9b10eadf5bc6103286b0f8b7c224f"
+  integrity sha512-FFgHdPt4T/duxx6Ndf7hwgMZZjZpB+U0nMNGVCYPq0rEzWKjEDobm4J6yb3CS7naZ0yURFqdw9Gwc7UOh/P9oQ==
 
 typical@^2.4.2, typical@^2.6.0, typical@^2.6.1:
   version "2.6.1"
