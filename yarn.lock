@@ -955,10 +955,10 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-awesome-commando@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/awesome-commando/-/awesome-commando-2.2.0.tgz#1e99eb555736532473264eaa536c51f247ea7ba1"
-  integrity sha512-+ygY+lj8YIU+WgPNkzU+SR1wM7B0cai2lpRXfXzDU8JW4zFzJ9r4JdlG7nVjt2DZfgzeOPmiaRlAZGYXWhEuDQ==
+awesome-commando@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/awesome-commando/-/awesome-commando-2.2.1.tgz#e4af207a1cc6a94e772e3e1ab425e599299be6d7"
+  integrity sha512-IztOaRzne2hQ2zAplXpIIeRAFK4j80GtUtAc0/mLNmv5KsQcChdvYNp0ZyEFpraX6yQQUa6VQhm2wWzS9/Ofrg==
   dependencies:
     common-tags "^1.8.0"
     escape-string-regexp "^1.0.5"
@@ -970,10 +970,10 @@ awesome-converter@^1.0.5:
   resolved "https://registry.yarnpkg.com/awesome-converter/-/awesome-converter-1.0.5.tgz#39845fce9b59adbbb48f224fc43c1cef2c239acd"
   integrity sha512-SB5n8TgfXWQwbZVFedO75xpnocL1FdTjA4NBouoIeZsL8bq3khNxTglDAsGcTqUxPutQY37THBtsBybiDB3N0A==
 
-awesome-djs@^13.0.5:
-  version "13.0.5"
-  resolved "https://registry.yarnpkg.com/awesome-djs/-/awesome-djs-13.0.5.tgz#78b62ff7e41de2f32b4e059df975401232caf7ca"
-  integrity sha512-L6LaM0LKAW6vHjESREhW6ExmG7wYcf8u+ELpbG9W5yYSTuy7xUW4zQvEGPwBIvL0Y28t+421JLK7dsO51okmpw==
+awesome-djs@^13.0.7:
+  version "13.0.7"
+  resolved "https://registry.yarnpkg.com/awesome-djs/-/awesome-djs-13.0.7.tgz#524dc835c31348550b90f2ae8e678b4a1b553c11"
+  integrity sha512-8DnLLS3BRZxEMzf2+pT2/PG7Ayb0AwCM11aH2etV35ucOgPLjMVFO7MpQakGZSP4uOCsU8zgkD2HugBopj9QnA==
   dependencies:
     form-data "^2.3.3"
     node-fetch "^2.3.0"

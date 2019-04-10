@@ -58,9 +58,9 @@
     },
     "dependencies": {
         "@discordjs/uws": "^11.149.1",
-        "awesome-commando": "^2.2.0",
+        "awesome-commando": "^2.2.1",
         "awesome-converter": "^1.0.5",
-        "awesome-djs": "^13.0.5",
+        "awesome-djs": "^13.0.7",
         "awesome-querystring": "^1.2.0",
         "awesome-zalgo": "^1.0.5",
         "better-sqlite3": "^5.4.0",
