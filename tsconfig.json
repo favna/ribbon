@@ -16,6 +16,7 @@
         "noUnusedLocals": true,
         "removeComments": true,
         "resolveJsonModule": true,
+        "importHelpers": true,
         "strict": true,
         "baseUrl": "src",
         "paths": {

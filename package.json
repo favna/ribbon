@@ -122,6 +122,7 @@
         "rimraf": "^2.6.3",
         "terser-folder": "^2.0.0",
         "ts-node": "^8.0.3",
+        "tslib": "^1.9.3",
         "tslint": "^5.15.0",
         "typescript": "^3.4.2",
         "yargs": "^13.2.2"
