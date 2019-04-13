@@ -1034,16 +1034,15 @@ export const handleReady = async (client: CommandoClient) => {
     FirebaseStorage.users = parseInt(await getUsersData(), 10);
 
     const everyThreeMinutes = '*/3 * * * *';
-    const everyFiveMinutes = '*/5 * * * *';
-    const everyDayAtEight = '0 */20 * * *';
+    const everyThirdHour = '0 */3 * * *';
     const everyThirdDay = '0 0 */3 * *';
 
     scheduleJob(everyThreeMinutes, () => setUpdateToFirebase(client));
     scheduleJob(everyThreeMinutes, () => stopTypingEverywhere(client));
     scheduleJob(everyThreeMinutes, () => sendTimedMessages(client));
     scheduleJob(everyThreeMinutes, () => sendCountdownMessages(client));
-    scheduleJob(everyFiveMinutes, () => sendReminderMessages(client));
-    scheduleJob(everyDayAtEight, () => payoutLotto(client));
+    scheduleJob(everyThreeMinutes, () => sendReminderMessages(client));
+    scheduleJob(everyThirdHour, () => payoutLotto(client));
     scheduleJob(everyThirdDay, () => updateEshop(client));
 
     fs.watch(
