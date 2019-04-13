@@ -29,6 +29,7 @@ import {
 } from './FirebaseActions';
 import FirebaseStorage from './FirebaseStorage';
 import { ordinal } from './Utils';
+import { CasinoRowType, CountdownType, TimerType } from './Types';
 
 const sendReminderMessages = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
@@ -80,12 +81,12 @@ const sendCountdownMessages = (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/countdowns.sqlite3'));
 
     try {
-        const tables = conn
+        const tables: {name: string}[] = conn
             .prepare('SELECT name FROM sqlite_master WHERE type=\'table\' AND name != \'sqlite_sequence\';')
             .all();
 
         for (const table in tables) {
-            const rows = conn
+            const rows: CountdownType[] = conn
                 .prepare(`SELECT * FROM "${tables[table].name}"`)
                 .all();
 
@@ -254,14 +255,27 @@ const payoutLotto = (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3'));
 
     try {
-        const tables = conn
+        const tables: {name: string}[] = conn
             .prepare('SELECT name FROM sqlite_master WHERE type=\'table\'')
             .all();
 
         for (const table in tables) {
             if (client.guilds.get(tables[table].name)) {
-                const rows = conn
-                    .prepare(`SELECT * FROM "${tables[table].name}"`)
+                const guildId: Snowflake = tables[table].name;
+                const lastCheck: {timeout: string} = conn.prepare(`SELECT timeout FROM timeouts WHERE guildid="${guildId}"`).get();
+                if (lastCheck && lastCheck.timeout) {
+                    const diff = moment.duration(moment(lastCheck.timeout).add(1, 'days').diff(moment()));
+                    const diffInDays = diff.asDays();
+                    if (diffInDays >= 0) continue;
+                } else {
+                    conn.prepare(`INSERT INTO timeouts VALUES($guildId, $timeout)`)
+                    .run({
+                        guildId,
+                        timeout: moment().format('YYYY-MM-DD HH:mm'),
+                    });
+                }
+                const rows: CasinoRowType[] = conn
+                    .prepare(`SELECT * FROM "${guildId}"`)
                     .all();
                 const winner = Math.floor(Math.random() * rows.length);
                 const prevBal = rows[winner].balance;
@@ -269,16 +283,19 @@ const payoutLotto = (client: CommandoClient) => {
                 rows[winner].balance += 2000;
 
                 conn
-                    .prepare(`UPDATE "${tables[table].name}" SET balance=$balance WHERE userID="${rows[winner].userID}"`)
+                    .prepare(`UPDATE "${guildId}" SET balance=$balance WHERE userID="${rows[winner].userID}"`)
                     .run({ balance: rows[winner].balance });
+                conn
+                    .prepare(`UPDATE "timeouts" SET timeout=$timeout WHERE guildid="${guildId}"`)
+                    .run({timeout: moment().format('YYYY-MM-DD HH:mm')});
 
-                const defaultChannel = client.guilds.get(tables[table].name)!.systemChannel;
+                const defaultChannel = client.guilds.get(guildId)!.systemChannel;
                 const winnerEmbed = new MessageEmbed();
-                const winnerMember: GuildMember = client.guilds.get(tables[table].name)!.members.get(rows[winner].userID)!;
+                const winnerMember: GuildMember = client.guilds.get(guildId)!.members.get(rows[winner].userID)!;
                 if (!winnerMember) continue;
                 const winnerLastMessageChannelId: Snowflake = winnerMember.lastMessageChannelID;
                 const winnerLastMessageChannel = winnerLastMessageChannelId
-                    ? client.guilds.get(tables[table].name)!.channels.get(winnerLastMessageChannelId)!
+                    ? client.guilds.get(guildId)!.channels.get(winnerLastMessageChannelId)!
                     : null;
                 const winnerLastMessageChannelPermitted: boolean = winnerLastMessageChannel
                     ? winnerLastMessageChannel.permissionsFor(client.user!)!.has('SEND_MESSAGES')
@@ -317,12 +334,12 @@ const sendTimedMessages = (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/timers.sqlite3'));
 
     try {
-        const tables = conn
+        const tables: {name: string}[] = conn
             .prepare('SELECT name FROM sqlite_master WHERE type=\'table\' AND name != \'sqlite_sequence\';')
             .all();
 
         for (const table in tables) {
-            const rows = conn
+            const rows: TimerType[] = conn
                 .prepare(`SELECT * FROM "${tables[table].name}"`)
                 .all();
 
