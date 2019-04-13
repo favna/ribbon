@@ -28,8 +28,8 @@ import {
     setUsersData,
 } from './FirebaseActions';
 import FirebaseStorage from './FirebaseStorage';
-import { ordinal } from './Utils';
 import { CasinoRowType, CountdownType, TimerType } from './Types';
+import { ordinal } from './Utils';
 
 const sendReminderMessages = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
