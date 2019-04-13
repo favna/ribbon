@@ -88,12 +88,11 @@ export default class SauceNaoCommand extends Command {
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
-              <@${this.client.owners[0].id}> Error occurred in \`cydia\` command!
+              <@${this.client.owners[0].id}> Error occurred in \`saucenao\` command!
               **Server:** ${msg.guild.name} (${msg.guild.id})
               **Author:** ${msg.author.tag} (${msg.author.id})
               **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
               **Image:** ${image}
-              **Regex Match:** \`${msg.patternMatches ? 'yes' : 'no'}\`
               **Error Message:** ${err}
           `);
 
