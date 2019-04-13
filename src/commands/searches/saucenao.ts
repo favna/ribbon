@@ -85,6 +85,9 @@ export default class SauceNaoCommand extends Command {
             if (/(no_sfw_matches)/i.test(err.toString())) {
                 return msg.reply(oneLine`Woops! I only found NSFW matches and it looks like you're not in an NSFW channel`);
             }
+            if (/(connect ECONNREFUSED)/i.test(err.toString())) {
+                return msg.reply(oneLine`something went wrong finding matches for \`${image}\`. How about trying manually on https://saucenao.com/?`);
+            }
 
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
