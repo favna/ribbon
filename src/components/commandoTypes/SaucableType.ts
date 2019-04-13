@@ -6,7 +6,6 @@ export default class SaucableType extends ArgumentType {
     }
 
     public validate (value: string, message: CommandoMessage): boolean | string {
-
         if (this.hasMessageAttachment(message)) return true;
         if (this.isValidImageURL(value)) return true;
 
