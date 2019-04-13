@@ -36,11 +36,7 @@ export default class SauceNaoCommand extends Command {
                 {
                     key: 'image',
                     prompt: 'For what image do you want to find the source?',
-                    type: 'string',
-                    validate: (val: string) => {
-                        const pattern = new RegExp('(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))', 'gi');
-                        return pattern.test(val);
-                    },
+                    type: 'saucable',
                 }
             ],
         });
@@ -81,7 +77,8 @@ export default class SauceNaoCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            if (/(no_matches)/i.test(err.toString())) return msg.reply(`no matches found for \`${image}\``);
+
+            if (/(no_matches|Could not find site matching URL given)/i.test(err.toString())) return msg.reply(`no matches found for \`${image}\``);
             if (/(no_sfw_matches)/i.test(err.toString())) {
                 return msg.reply(oneLine`Woops! I only found NSFW matches and it looks like you're not in an NSFW channel`);
             }
