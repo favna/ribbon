@@ -1035,7 +1035,8 @@ export const handleReady = async (client: CommandoClient) => {
 
     const everyThreeMinutes = '*/3 * * * *';
     const everyFiveMinutes = '*/5 * * * *';
-    const everyDayAtEight = '0 20 * * *';
+    const everyDayAtEight = '0 */20 * * *';
+    const everyThirdDay = '0 0 */3 * *';
 
     scheduleJob(everyThreeMinutes, () => setUpdateToFirebase(client));
     scheduleJob(everyThreeMinutes, () => stopTypingEverywhere(client));
@@ -1043,7 +1044,7 @@ export const handleReady = async (client: CommandoClient) => {
     scheduleJob(everyThreeMinutes, () => sendCountdownMessages(client));
     scheduleJob(everyFiveMinutes, () => sendReminderMessages(client));
     scheduleJob(everyDayAtEight, () => payoutLotto(client));
-    scheduleJob(everyDayAtEight, () => updateEshop(client));
+    scheduleJob(everyThirdDay, () => updateEshop(client));
 
     fs.watch(
         path.join(__dirname, '../data/dex/formats.json'),
