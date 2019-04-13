@@ -1,14 +1,12 @@
 /**
- * @file Searches SauceNaoCommand - Gets the source of any given image attachment or image URL using SauceNAO
- * 
- * Please note that message attachments take priority over image URLs!
+ * @file Searches SauceNaoCommand - Gets the source of any given image URL using SauceNAO
  *
  * **Aliases**: `sn`, `sauce`
  * @module
  * @category searches
  * @name saucenao
  * @example saucenao https://i.imgur.com/6FjildG.jpg
- * @param {string|MessageAttachment} Image URL or attachment to get the source for
+ * @param {string} ImageURL Image to get the source for
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
@@ -26,9 +24,8 @@ export default class SauceNaoCommand extends Command {
             aliases: ['sn', 'sauce'],
             group: 'searches',
             memberName: 'saucenao',
-            description: 'Gets the source of any given image attachment or image URL using SauceNAO',
+            description: 'Gets the source of any given image URL using SauceNAO',
             format: 'Image',
-            details: 'Please note that message attachments take priority over URLs!',
             examples: ['saucenao https://i.imgur.com/6FjildG.jpg'],
             guildOnly: false,
             throttling: {
@@ -39,7 +36,11 @@ export default class SauceNaoCommand extends Command {
                 {
                     key: 'image',
                     prompt: 'For what image do you want to find the source?',
-                    type: 'saucable',
+                    type: 'string',
+                    validate: (val: string) => {
+                        const pattern = new RegExp('(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))', 'gi');
+                        return pattern.test(val);
+                    },
                 }
             ],
         });
