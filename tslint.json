@@ -2,6 +2,6 @@
     "defaultSeverity": "error",
     "extends": ["tslint:recommended", "tslint-config-favware"],
     "linterOptions": {
-        "exclude": ["node_modules/", "node_modules/**/*[^.d$].ts"]
+        "exclude": ["node_modules/", "node_modules/**/*[^.d$].ts", "src/commands/owner/testing.ts"]
     }
 }

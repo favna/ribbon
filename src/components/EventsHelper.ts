@@ -7,9 +7,9 @@ import fs from 'fs';
 import jimp from 'jimp';
 import moment from 'moment';
 import 'moment-duration-format';
-import { getGamesAmerica } from 'nintendo-switch-eshop';
+/* import { getGamesAmerica } from 'nintendo-switch-eshop'; */
+import { schedule } from 'node-cron';
 import fetch from 'node-fetch';
-import { scheduleJob } from 'node-schedule';
 import path from 'path';
 import { badwords, caps, duptext, emojis, invites, links, mentions, slowmode } from './AutomodHelper';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from './Constants';
@@ -388,6 +388,7 @@ const sendTimedMessages = (client: CommandoClient) => {
     }
 };
 
+/*
 const updateEshop = async (client: CommandoClient) => {
     try {
         fs.writeFileSync(
@@ -402,6 +403,7 @@ const updateEshop = async (client: CommandoClient) => {
         return null;
     }
 };
+*/
 
 const stopTypingEverywhere = (client: CommandoClient) => {
     const allChannels = client.channels;
@@ -1035,15 +1037,13 @@ export const handleReady = async (client: CommandoClient) => {
 
     const everyThreeMinutes = '*/3 * * * *';
     const everyThirdHour = '0 */3 * * *';
-    const everyThirdDay = '0 0 */3 * *';
 
-    scheduleJob(everyThreeMinutes, () => setUpdateToFirebase(client));
-    scheduleJob(everyThreeMinutes, () => stopTypingEverywhere(client));
-    scheduleJob(everyThreeMinutes, () => sendTimedMessages(client));
-    scheduleJob(everyThreeMinutes, () => sendCountdownMessages(client));
-    scheduleJob(everyThreeMinutes, () => sendReminderMessages(client));
-    scheduleJob(everyThirdHour, () => payoutLotto(client));
-    scheduleJob(everyThirdDay, () => updateEshop(client));
+    schedule(everyThreeMinutes, () => setUpdateToFirebase(client));
+    schedule(everyThreeMinutes, () => stopTypingEverywhere(client));
+    schedule(everyThreeMinutes, () => sendTimedMessages(client));
+    schedule(everyThreeMinutes, () => sendCountdownMessages(client));
+    schedule(everyThreeMinutes, () => sendReminderMessages(client));
+    schedule(everyThirdHour, () => payoutLotto(client));
 
     fs.watch(
         path.join(__dirname, '../data/dex/formats.json'),
