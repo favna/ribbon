@@ -1,0 +1,13 @@
+{
+    "uid": "ribbon",
+    "append": false,
+    "watch": false,
+    "script": "./dist/app.js",
+    "spinSleepTime": 3000,
+    "minUptime": 1000,
+    "colors": true,
+    "sourceDir": "./",
+    "logFile": "./logs/forever.log",
+    "outFile": "./logs/forever-out.log",
+    "errFile": "./logs/forever-error.log"
+}

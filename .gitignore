@@ -8,6 +8,7 @@ node_modules/
 *.log
 *.stackdump
 .DS_store
+logs/
 
 # Data folders
 src/data/databases/*
