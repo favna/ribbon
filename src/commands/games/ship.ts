@@ -30,7 +30,7 @@ export default class ShipCommand extends Command {
             format: 'ShipMemberOne ShipMemberTwo',
             details: 'Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members',
             examples: ['ship Biscuit Rei'],
-            guildOnly: false,
+            guildOnly: true,
             throttling: {
                 usages: 2,
                 duration: 3,
