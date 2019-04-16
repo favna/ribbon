@@ -1,4 +1,4 @@
-import { Client, Command, CommandoClient, CommandoGuild, CommandoMessage, SyncSQLiteProvider } from 'awesome-commando';
+import { Command, CommandoClient, CommandoGuild, CommandoMessage, SyncSQLiteProvider } from 'awesome-commando';
 import { DMChannel, GuildChannel, GuildMember, RateLimitData } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import path from 'path';
@@ -13,7 +13,7 @@ export default class Ribbon {
 
     constructor (token: string) {
         this.token = token;
-        this.client = new Client({
+        this.client = new CommandoClient({
             commandPrefix: '!',
             disabledEvents: ['CHANNEL_PINS_UPDATE', 'CHANNEL_UPDATE', 'GUILD_BAN_ADD',
                              'GUILD_BAN_REMOVE', 'GUILD_EMOJIS_UPDATE', 'GUILD_INTEGRATIONS_UPDATE',
@@ -87,7 +87,7 @@ export default class Ribbon {
                 ['owner', 'Owner - Exclusive to the bot owner(s)']
             ])
             .registerDefaultCommands({
-                help: true,
+                help: false,
                 prefix: true,
                 eval: true,
                 ping: true,
