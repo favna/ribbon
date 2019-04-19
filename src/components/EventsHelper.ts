@@ -4,11 +4,11 @@ import { stringify } from 'awesome-querystring';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import fs from 'fs';
+/* import { getGamesAmerica } from 'nintendo-switch-eshop'; */
+import interval from 'interval-promise';
 import jimp from 'jimp';
 import moment from 'moment';
 import 'moment-duration-format';
-/* import { getGamesAmerica } from 'nintendo-switch-eshop'; */
-import { schedule } from 'node-cron';
 import fetch from 'node-fetch';
 import path from 'path';
 import { badwords, caps, duptext, emojis, invites, links, mentions, slowmode } from './AutomodHelper';
@@ -77,7 +77,7 @@ const sendReminderMessages = async (client: CommandoClient) => {
     }
 };
 
-const sendCountdownMessages = (client: CommandoClient) => {
+const sendCountdownMessages = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/countdowns.sqlite3'));
 
     try {
@@ -156,7 +156,7 @@ const sendCountdownMessages = (client: CommandoClient) => {
     }
 };
 
-const setUpdateToFirebase = (client: CommandoClient) => {
+const setUpdateToFirebase = async (client: CommandoClient) => {
     try {
         const uptime = moment.duration(process.uptime() * 1000).format('D [days], H [hours] [and] m [minutes]');
         setUptimeData(uptime);
@@ -251,7 +251,7 @@ const renderLeaveMessage = async (member: GuildMember) => {
     }
 };
 
-const payoutLotto = (client: CommandoClient) => {
+const payoutLotto = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3'));
 
     try {
@@ -330,7 +330,7 @@ const payoutLotto = (client: CommandoClient) => {
     }
 };
 
-const sendTimedMessages = (client: CommandoClient) => {
+const sendTimedMessages = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/timers.sqlite3'));
 
     try {
@@ -405,7 +405,7 @@ const updateEshop = async (client: CommandoClient) => {
 };
 */
 
-const stopTypingEverywhere = (client: CommandoClient) => {
+const stopTypingEverywhere = async (client: CommandoClient) => {
     const allChannels = client.channels;
 
     for (const channel of allChannels.values()) {
@@ -1035,15 +1035,15 @@ export const handleReady = async (client: CommandoClient) => {
     FirebaseStorage.servers = parseInt(await getServersData(), 10);
     FirebaseStorage.users = parseInt(await getUsersData(), 10);
 
-    const everyThreeMinutes = '*/3 * * * *';
-    const everyThirdHour = '0 */3 * * *';
+    const everyThreeMinutes = 3 * 60 * 1000;
+    const everyThirdHour = 3 * 60 * 60 * 1000;
 
-    schedule(everyThreeMinutes, () => setUpdateToFirebase(client));
-    schedule(everyThreeMinutes, () => stopTypingEverywhere(client));
-    schedule(everyThreeMinutes, () => sendTimedMessages(client));
-    schedule(everyThreeMinutes, () => sendCountdownMessages(client));
-    schedule(everyThreeMinutes, () => sendReminderMessages(client));
-    schedule(everyThirdHour, () => payoutLotto(client));
+    interval(async () => setUpdateToFirebase(client), everyThreeMinutes);
+    interval(async () => stopTypingEverywhere(client), everyThreeMinutes);
+    interval(async () => sendTimedMessages(client), everyThreeMinutes);
+    interval(async () => sendCountdownMessages(client), everyThreeMinutes);
+    interval(async () => sendReminderMessages(client), everyThreeMinutes);
+    interval(async () => payoutLotto(client), everyThirdHour);
 
     fs.watch(
         path.join(__dirname, '../data/dex/formats.json'),
@@ -1082,5 +1082,5 @@ export const handleWarn = (client: CommandoClient, warn: string) => {
         `);
     }
 
-    return global.global.console.warn(warn);
+    return global.console.warn(warn);
 };
