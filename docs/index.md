@@ -169,20 +169,20 @@ Server admins can disable this command entirely by using the <code>rmt off</code
 <dt><a href="#module_copypasta">copypasta</a></dt>
 <dd><p>Extra CopyPastaCommand - Sends a copypasta to the chat</p>
 <p>Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!</p>
-<p><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code></p>
+<p><strong>Aliases</strong>: <code>cp</code>, <code>pasta</code>, <code>tag</code></p>
 </dd>
 <dt><a href="#module_copypastaadd">copypastaadd</a></dt>
 <dd><p>Extra CopyPastaAddCommand - Adds a new copypasta for your server</p>
-<p><strong>Aliases</strong>: <code>cpadd</code>, <code>pastaadd</code></p>
+<p><strong>Aliases</strong>: <code>cpadd</code>, <code>pastaadd</code>, <code>tagadd</code>, <code>newtag</code></p>
 </dd>
 <dt><a href="#module_copypastalist">copypastalist</a></dt>
 <dd><p>Extra CopyPastaListCommand - Gets all copypastas available to the server</p>
-<p><strong>Aliases</strong>: <code>cplist</code>, <code>copylist</code>, <code>pastalist</code></p>
+<p><strong>Aliases</strong>: <code>cplist</code>, <code>copylist</code>, <code>pastalist</code>, <code>taglist</code></p>
 </dd>
 <dt><a href="#module_copypastaremove">copypastaremove</a></dt>
 <dd><p>Extra CopyPastaRemoveCommand - Remove a specified copypasta</p>
 <p>Use the copypastalist command to find the ID for deleting</p>
-<p><strong>Aliases</strong>: <code>cpremove</code>, <code>copypastadelete</code>, <code>cpdelete</code>, <code>cpd</code>, <code>cpr</code>, <code>pastadelete</code>, <code>pasteremove</code></p>
+<p><strong>Aliases</strong>: <code>cpremove</code>, <code>copypastadelete</code>, <code>cpdelete</code>, <code>cpd</code>, <code>cpr</code>, <code>pastadelete</code>, <code>pasteremove</code>, <code>tagdelete</code>, <code>tagremove</code></p>
 </dd>
 <dt><a href="#module_qrgen">qrgen</a></dt>
 <dd><p>Extra QRGenCommand - Generates a QR code from text (like a URL)</p>
@@ -1319,7 +1319,7 @@ Extra CopyPastaCommand - Sends a copypasta to the chat
 
 Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!
 
-**Aliases**: `cp`, `pasta`
+**Aliases**: `cp`, `pasta`, `tag`
 
 **Category**: extra  
 
@@ -1336,7 +1336,7 @@ copypasta navy
 ## copypastaadd
 Extra CopyPastaAddCommand - Adds a new copypasta for your server
 
-**Aliases**: `cpadd`, `pastaadd`
+**Aliases**: `cpadd`, `pastaadd`, `tagadd`, `newtag`
 
 **Category**: extra  
 
@@ -1354,7 +1354,7 @@ copypastaadd lipsum Lorem ipsum dolor sit amet.
 ## copypastalist
 Extra CopyPastaListCommand - Gets all copypastas available to the server
 
-**Aliases**: `cplist`, `copylist`, `pastalist`
+**Aliases**: `cplist`, `copylist`, `pastalist`, `taglist`
 
 **Category**: extra  
 <a name="module_copypastaremove"></a>
@@ -1364,7 +1364,7 @@ Extra CopyPastaRemoveCommand - Remove a specified copypasta
 
 Use the copypastalist command to find the ID for deleting
 
-**Aliases**: `cpremove`, `copypastadelete`, `cpdelete`, `cpd`, `cpr`, `pastadelete`, `pasteremove`
+**Aliases**: `cpremove`, `copypastadelete`, `cpdelete`, `cpd`, `cpr`, `pastadelete`, `pasteremove`, `tagdelete`, `tagremove`
 
 **Category**: extra  
 
