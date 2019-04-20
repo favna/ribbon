@@ -38,7 +38,7 @@ export default class TemperatureCommand extends Command {
                 {
                     key: 'lengthAmount',
                     prompt: 'How much temperature to convert?',
-                    type: 'integer',
+                    type: 'float',
                 },
                 {
                     key: 'fromUnit',

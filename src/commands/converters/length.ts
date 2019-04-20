@@ -39,7 +39,7 @@ export default class LengthCommand extends Command {
                 {
                     key: 'lengthAmount',
                     prompt: 'How much length to convert?',
-                    type: 'integer',
+                    type: 'float',
                 },
                 {
                     key: 'fromUnit',

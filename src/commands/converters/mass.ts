@@ -39,7 +39,7 @@ export default class MassCommand extends Command {
                 {
                     key: 'massAmount',
                     prompt: 'How much mass to convert?',
-                    type: 'integer',
+                    type: 'float',
                 },
                 {
                     key: 'fromUnit',
