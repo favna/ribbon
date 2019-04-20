@@ -13,7 +13,7 @@
 
 
 import { DEFAULT_EMBED_COLOR, MassUnits } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { convert } from 'awesome-converter';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -58,6 +58,7 @@ export default class MassCommand extends Command {
     public async run (msg: CommandoMessage, { massAmount, fromUnit, toUnit }: { massAmount: number, fromUnit: MassUnits, toUnit: MassUnits }) {
         try {
             startTyping(msg);
+            massAmount = roundNumber(massAmount, 2);
             const mathEmbed = new MessageEmbed();
             const output = convert(massAmount, MassUnits[fromUnit], MassUnits[toUnit], { precision: 2 });
 

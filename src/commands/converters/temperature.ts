@@ -12,7 +12,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR, TemperatureUnits } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { convert } from 'awesome-converter';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -36,7 +36,7 @@ export default class TemperatureCommand extends Command {
             },
             args: [
                 {
-                    key: 'lengthAmount',
+                    key: 'tempAmount',
                     prompt: 'How much temperature to convert?',
                     type: 'float',
                 },
@@ -54,16 +54,17 @@ export default class TemperatureCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { lengthAmount, fromUnit, toUnit }: { lengthAmount: number, fromUnit: TemperatureUnits, toUnit: TemperatureUnits }) {
+    public async run (msg: CommandoMessage, { tempAmount, fromUnit, toUnit }: { tempAmount: number, fromUnit: TemperatureUnits, toUnit: TemperatureUnits }) {
         try {
             startTyping(msg);
+            tempAmount = roundNumber(tempAmount, 2);
             const mathEmbed = new MessageEmbed();
-            const output = convert(lengthAmount, TemperatureUnits[fromUnit], TemperatureUnits[toUnit]);
+            const output = convert(tempAmount, TemperatureUnits[fromUnit], TemperatureUnits[toUnit], { precision: 2 });
 
             mathEmbed
                 .setTitle('Temperature Conversion')
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setDescription(oneLine`${lengthAmount} ${fromUnit} equals to ${output} ${toUnit}`);
+                .setDescription(oneLine`${tempAmount} ${fromUnit} equals to ${output} ${toUnit}`);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
@@ -79,7 +80,7 @@ export default class TemperatureCommand extends Command {
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author.tag} (${msg.author.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-                **Amount:** \`${lengthAmount}\`
+                **Amount:** \`${tempAmount}\`
                 **From Unit:** \`${fromUnit}\`
                 **To Unit:** \`${toUnit}\`
                 **Error Message:** ${err}

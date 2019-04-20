@@ -13,7 +13,7 @@
 
 
 import { DEFAULT_EMBED_COLOR, LengthUnits } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { convert } from 'awesome-converter';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -58,8 +58,9 @@ export default class LengthCommand extends Command {
     public async run (msg: CommandoMessage, { lengthAmount, fromUnit, toUnit }: { lengthAmount: number, fromUnit: LengthUnits, toUnit: LengthUnits }) {
         try {
             startTyping(msg);
+            lengthAmount = roundNumber(lengthAmount, 2);
             const mathEmbed = new MessageEmbed();
-            const output = convert(lengthAmount, LengthUnits[fromUnit], LengthUnits[toUnit]);
+            const output = convert(lengthAmount, LengthUnits[fromUnit], LengthUnits[toUnit], { precision: 2 });
 
             mathEmbed
                 .setTitle('Length Conversion')
