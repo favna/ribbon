@@ -1,7 +1,7 @@
 /**
  * @file Extra CopyPastaAddCommand - Adds a new copypasta for your server
  *
- * **Aliases**: `cpadd`, `pastaadd`
+ * **Aliases**: `cpadd`, `pastaadd`, `tagadd`, `newtag`
  * @module
  * @category extra
  * @name copypastaadd
@@ -23,7 +23,7 @@ export default class CopyPastaAddCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'copypastaadd',
-            aliases: ['cpadd', 'pastaadd'],
+            aliases: ['cpadd', 'pastaadd', 'tagadd', 'newtag'],
             group: 'extra',
             memberName: 'copypastaadd',
             description: 'Saves a copypasta to local file',

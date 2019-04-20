@@ -3,7 +3,7 @@
  *
  * Use the copypastalist command to find the ID for deleting
  *
- * **Aliases**: `cpremove`, `copypastadelete`, `cpdelete`, `cpd`, `cpr`, `pastadelete`, `pasteremove`
+ * **Aliases**: `cpremove`, `copypastadelete`, `cpdelete`, `cpd`, `cpr`, `pastadelete`, `pasteremove`, `tagdelete`, `tagremove`
  * @module
  * @category extra
  * @name copypastaremove
@@ -25,7 +25,7 @@ export default class CopyPastaRemoveCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'copypastaremove',
-            aliases: ['cpremove', 'copypastadelete', 'cpdelete', 'cpd', 'cpr', 'pastadelete', 'pasteremove'],
+            aliases: ['cpremove', 'copypastadelete', 'cpdelete', 'cpd', 'cpr', 'pastadelete', 'pasteremove', 'tagremove', 'tagdelete'],
             group: 'moderation',
             memberName: 'copypastaremove',
             description: 'Remove a specified copypasta',

@@ -3,7 +3,7 @@
  *
  * Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!
  *
- * **Aliases**: `cp`, `pasta`
+ * **Aliases**: `cp`, `pasta`, `tag`
  * @module
  * @category extra
  * @name copypasta
@@ -26,7 +26,7 @@ export default class CopyPastaCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'copypasta',
-            aliases: ['cp', 'pasta'],
+            aliases: ['cp', 'pasta', 'tag'],
             group: 'extra',
             memberName: 'copypasta',
             description: 'Sends a copypasta to the chat',

@@ -1,7 +1,7 @@
 /**
  * @file Extra CopyPastaListCommand - Gets all copypastas available to the server
  *
- * **Aliases**: `cplist`, `copylist`, `pastalist`
+ * **Aliases**: `cplist`, `copylist`, `pastalist`, `taglist`
  * @module
  * @category extra
  * @name copypastalist
@@ -20,7 +20,7 @@ export default class CopyPastaListCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'copypastalist',
-            aliases: ['cplist', 'copylist', 'pastalist'],
+            aliases: ['cplist', 'copylist', 'pastalist', 'taglist'],
             group: 'extra',
             memberName: 'copypastalist',
             description: 'Gets all copypastas available to the server',
