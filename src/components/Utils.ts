@@ -1,5 +1,5 @@
-import { CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
-import { GuildChannel, GuildMember, MessageEmbed, PermissionResolvable, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
+import { ArgumentCollectorResult, CommandoClient, CommandoGuild, CommandoMessage, util as CommandoUtil } from 'awesome-commando';
+import { GuildMember, MessageEmbed, PermissionString, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
 import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
 import emojiRegex from 'emoji-regex';
 import { diacriticsMap, validBooleansMap } from './Constants';
@@ -126,15 +126,35 @@ export const validateCasinoLimit = (input: string, msg: CommandoMessage) => {
     return `Reply with a chips amount between ${lowerLimit} and ${upperLimit}. Example: \`${roundNumber((lowerLimit + upperLimit) / 2)}\``;
 };
 
-export const validatePermissions = (
-    permission: PermissionResolvable, msg: CommandoMessage,
-    client: CommandoClient, shouldClientHavePermissions: boolean = false
-    ): boolean => {
-    const memberHasPermission = msg.member.hasPermission(permission);
-    const clientHasPermission = (msg.channel as GuildChannel).permissionsFor(client.user!.id)!.has(permission);
+export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission: boolean = false) => {
+    return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+        const originalFunction = descriptor.value;
 
-    if (shouldClientHavePermissions) return (memberHasPermission && clientHasPermission) || client.isOwner(msg.author);
-    return memberHasPermission || client.isOwner(msg.author);
+        descriptor.value = async function (msg: CommandoMessage, args: object, fromPattern: boolean, res?: ArgumentCollectorResult) {
+            const authorIsOwner = msg.client.isOwner(msg.author);
+            const memberHasPermission = msg.member.hasPermission(permission);
+
+            if (!memberHasPermission && !authorIsOwner) {
+                return msg.command.onBlock(msg, 'permission', {
+                    response: `You need the "${CommandoUtil.permissions[permission]}" permission to use the ${msg.command.name} command`,
+                });
+            }
+
+            if (shouldClientHavePermission) {
+                const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user!)!.has(permission);
+
+                if (!clientHasPermission && !authorIsOwner) {
+                    return msg.command.onBlock(msg, 'clientPermissions', { missing: [permission] });
+                }
+            }
+
+            const bindedOriginalFunction = originalFunction.bind(this); // tslint:disable-line:no-invalid-this
+            const result = bindedOriginalFunction(msg, args, fromPattern, res);
+            return result;
+        };
+
+        return descriptor;
+    };
 };
 
 export class Song {

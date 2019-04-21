@@ -12,7 +12,7 @@
  */
 
 import { timeparseHelper } from '@components/TimeparseHelper';
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -46,8 +46,7 @@ export default class TimerRemoveCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
-
+    @shouldHavePermission('MANAGE_MESSAGES')
     public run (msg: CommandoMessage, { id }: { id: number }) {
         const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
 

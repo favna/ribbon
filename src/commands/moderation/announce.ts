@@ -9,7 +9,7 @@
  * @param {string} Announcement The announcement you want to make
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildChannel, MessageAttachment, MessageEmbed, Permissions, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -40,8 +40,7 @@ export default class NewsCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client, false);
-
+    @shouldHavePermission('ADMINISTRATOR', true)
     public run (msg: CommandoMessage, { body }: { body: string }) {
         try {
             startTyping(msg);

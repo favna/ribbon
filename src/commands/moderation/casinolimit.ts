@@ -11,7 +11,7 @@
  * @param {number} [LowerLimit] Optional: The new lower limit
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -47,8 +47,7 @@ export default class CasinoLimitCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
-
+    @shouldHavePermission('MANAGE_MESSAGES')
     public run (msg: CommandoMessage, { upperlimit, lowerlimit }: { upperlimit: number, lowerlimit: number }) {
         startTyping(msg);
 

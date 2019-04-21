@@ -10,7 +10,7 @@
  */
 
 import { DEFAULT_VOLUME } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
 export default class DefaultVolumeCommand extends Command {
@@ -39,8 +39,7 @@ export default class DefaultVolumeCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client, false);
-
+    @shouldHavePermission('ADMINISTRATOR')
     public run (msg: CommandoMessage, { volume }: { volume: string }) {
         startTyping(msg);
         if (volume === 'show') {

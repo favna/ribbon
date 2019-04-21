@@ -12,7 +12,7 @@
  */
 
 import { CopypastaType } from '@components/Types';
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -57,8 +57,7 @@ export default class CopyPastaRemoveCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
-
+    @shouldHavePermission('MANAGE_MESSAGES')
     public run (msg: CommandoMessage, { id }: { id: string }) {
         try {
             startTyping(msg);

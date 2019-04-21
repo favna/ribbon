@@ -1002,10 +1002,10 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-awesome-commando@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/awesome-commando/-/awesome-commando-3.0.3.tgz#329403ef1217cea17f5fd2f69f6ba72c598e6366"
-  integrity sha512-R05cQ63Ra2nPwUTAA4JkDIPTn155tF7X4rAZkDW7zXpxGeUHS+9V1TV/oS9MNF+OZPzgm1qhiMMmk5kOPwCENg==
+awesome-commando@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/awesome-commando/-/awesome-commando-3.0.6.tgz#10314b02930304ee991df0aefc32ebb5272cfc83"
+  integrity sha512-w1S53ARDE0ZTOMiQg4yXmFuEVVNefgALbISgn+NuE1cxkYYKfWh3cF5kNxLWhuJtzZ3itrb7rpVDifWrCiWySw==
   dependencies:
     common-tags "^1.8.0"
     escape-string-regexp "^1.0.5"

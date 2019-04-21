@@ -17,7 +17,7 @@
  */
 
 import { timeparseHelper } from '@components/TimeparseHelper';
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, Message, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -85,8 +85,7 @@ export default class MuteCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_ROLES', msg, this.client);
-
+    @shouldHavePermission('MANAGE_ROLES', true)
     public async run (msg: CommandoMessage, { member, duration, logs }: { member: GuildMember; duration: number, logs: boolean }) {
         if (member.manageable) {
             startTyping(msg);

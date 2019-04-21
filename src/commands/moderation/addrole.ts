@@ -10,7 +10,7 @@
  * @param {RoleResolvable} AnyRole Role to give
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -46,8 +46,7 @@ export default class AddRoleCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_ROLES', msg, this.client);
-
+    @shouldHavePermission('MANAGE_MESSAGES', true)
     public async run (msg: CommandoMessage, { member, role }: { member: GuildMember; role: Role }) {
         try {
             if (!member.manageable) {

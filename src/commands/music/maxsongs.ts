@@ -13,7 +13,7 @@
  */
 
 import { MAX_SONGS } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
 
@@ -39,8 +39,7 @@ export default class MaxSongsCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client, false);
-
+    @shouldHavePermission('ADMINISTRATOR')
     public run (msg: CommandoMessage, args: any) {
         startTyping(msg);
         if (!args) {

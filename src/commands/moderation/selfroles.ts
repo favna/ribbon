@@ -15,7 +15,7 @@
  * @param {RoleResolvable} [AnyRole] Role to set, can be multiple split by spaces
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -49,8 +49,7 @@ export default class SelfRolesCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_ROLES', msg, this.client);
-
+    @shouldHavePermission('MANAGE_ROLES', true)
     public run (msg: CommandoMessage, { roles, roleIDs = [], roleNames = [] }: { roles: Role[]; roleIDs?: string[]; roleNames?: string[]; }) {
         startTyping(msg);
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);

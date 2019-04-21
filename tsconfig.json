@@ -3,6 +3,7 @@
         "outDir": "dist/",
         "rootDir": "./src",
         "forceConsistentCasingInFileNames": true,
+        "experimentalDecorators": true,
         "esModuleInterop": true,
         "lib": ["esnext", "dom"],
         "target": "esnext",
@@ -23,7 +24,7 @@
             "@components/*": ["components/*"],
             "@databases/*": ["data/databases/*"],
             "@pokedex/*": ["data/dex/*"]
-        },
+        }
     },
     "include": ["src/**/*.ts"],
     "exclude": ["node_modules", "dist", "src/**/*.js"]

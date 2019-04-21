@@ -9,7 +9,7 @@
 
 import { timeparseHelper } from '@components/TimeparseHelper';
 import { TimerType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Snowflake, TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -33,8 +33,7 @@ export default class TimerListCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
-
+    @shouldHavePermission('MANAGE_MESSAGES')
     public async run (msg: CommandoMessage) {
         startTyping(msg);
         const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));

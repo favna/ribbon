@@ -11,7 +11,7 @@
  * @param {number} [AmountOfWarnPoints] The amount of warning points to remove
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -50,8 +50,7 @@ export default class DeleteWarnCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
-
+    @shouldHavePermission('MANAGE_MESSAGES')
     public run (msg: CommandoMessage, { member, points }: { member: GuildMember; points: number }) {
         const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);

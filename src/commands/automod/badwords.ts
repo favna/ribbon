@@ -12,7 +12,7 @@
  * @param {string} [words] Optional: comma separated list of words to filter
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validateBool, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping, validateBool } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -50,8 +50,7 @@ export default class BadWordsCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client);
-
+    @shouldHavePermission('MANAGE_MESSAGES', true)
     public run (msg: CommandoMessage, { option, words }: { option: boolean; words: string[] }) {
         startTyping(msg);
         const bwfEmbed = new MessageEmbed();

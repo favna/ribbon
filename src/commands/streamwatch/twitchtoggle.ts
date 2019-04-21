@@ -9,7 +9,7 @@
  * @param {boolean} Option True or False
  */
 
-import { deleteCommandMessages, startTyping, stopTyping, validateBool, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping, validateBool } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
 
@@ -40,8 +40,7 @@ export default class TwitchToggleCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client, false);
-
+    @shouldHavePermission('ADMINISTRATOR')
     public run (msg: CommandoMessage, { option }: { option: boolean }) {
         startTyping(msg);
         msg.guild.settings.set('twitchnotifiers', option);

@@ -10,7 +10,7 @@
  * @param {TextChannel} [Channel] TextChannel the Join Message is sent to, required when enabling
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validateBool, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping, validateBool } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -47,8 +47,7 @@ export default class JoinMessagesCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
-
+    @shouldHavePermission('MANAGE_MESSAGES')
     public run (msg: CommandoMessage, { channel, option }: { channel: TextChannel | any; option: boolean }) {
         if (option && channel === 'off') {
             return msg.reply('when activating join messages you need to provide a channel for me to output the messages to!');

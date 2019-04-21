@@ -16,7 +16,7 @@
  * @param {RoleResolvable} [LockRole] Optional: A role the lockdown is applied to, defaults to @everyone
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -49,8 +49,7 @@ export default class LockdownCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client);
-
+    @shouldHavePermission('ADMINISTRATOR', true)
     public async run (msg: CommandoMessage, { lockrole }: { lockrole: Role | any }) {
         startTyping(msg);
         const lockEmbed = new MessageEmbed();

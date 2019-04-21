@@ -57,7 +57,7 @@
     },
     "dependencies": {
         "@discordjs/uws": "^11.149.1",
-        "awesome-commando": "^3.0.3",
+        "awesome-commando": "^3.0.6",
         "awesome-converter": "^1.0.5",
         "awesome-djs": "^13.0.12",
         "awesome-querystring": "^1.2.0",

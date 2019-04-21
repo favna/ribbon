@@ -9,7 +9,7 @@
  * @param {RoleResolvable} Role Role to set as mute role
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -39,8 +39,7 @@ export default class ConfigureMuteCommand extends Command {
         });
     }
 
-    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_ROLES', msg, this.client);
-
+    @shouldHavePermission('MANAGE_ROLES', true)
     public run (msg: CommandoMessage, { role }: { role: Role }) {
         startTyping(msg);
 
