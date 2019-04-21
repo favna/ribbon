@@ -9,7 +9,7 @@
  * @param {string} Announcement The announcement you want to make
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildChannel, MessageAttachment, MessageEmbed, Permissions, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -26,7 +26,6 @@ export default class NewsCommand extends Command {
             format: 'Announcement',
             examples: ['announce John Appleseed reads the news'],
             guildOnly: true,
-            userPermissions: ['ADMINISTRATOR'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -40,6 +39,8 @@ export default class NewsCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client, false);
 
     public run (msg: CommandoMessage, { body }: { body: string }) {
         try {

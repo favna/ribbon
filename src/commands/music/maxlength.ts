@@ -13,7 +13,7 @@
  */
 
 import { MAX_LENGTH } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
 
@@ -32,13 +32,14 @@ export default class MaxLengthCommand extends Command {
                 Only administrators may change this setting.`,
             examples: ['maxlength 10'],
             guildOnly: true,
-            userPermissions: ['ADMINISTRATOR'],
             throttling: {
                 usages: 2,
                 duration: 3,
             },
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client, false);
 
     public run (msg: CommandoMessage, args: any) {
         startTyping(msg);

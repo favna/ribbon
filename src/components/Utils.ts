@@ -1,5 +1,5 @@
 import { CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
+import { GuildChannel, GuildMember, MessageEmbed, PermissionResolvable, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
 import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
 import emojiRegex from 'emoji-regex';
 import { diacriticsMap, validBooleansMap } from './Constants';
@@ -124,6 +124,17 @@ export const validateCasinoLimit = (input: string, msg: CommandoMessage) => {
 
     if (chips >= lowerLimit && chips <= upperLimit) return true;
     return `Reply with a chips amount between ${lowerLimit} and ${upperLimit}. Example: \`${roundNumber((lowerLimit + upperLimit) / 2)}\``;
+};
+
+export const validatePermissions = (
+    permission: PermissionResolvable, msg: CommandoMessage,
+    client: CommandoClient, shouldClientHavePermissions: boolean = false
+    ): boolean => {
+    const memberHasPermission = msg.member.hasPermission(permission);
+    const clientHasPermission = (msg.channel as GuildChannel).permissionsFor(client.user!.id)!.has(permission);
+
+    if (shouldClientHavePermissions) return (memberHasPermission && clientHasPermission) || client.isOwner(msg.author);
+    return memberHasPermission || client.isOwner(msg.author);
 };
 
 export class Song {

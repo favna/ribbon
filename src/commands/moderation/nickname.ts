@@ -10,7 +10,7 @@
  * @param {string} NewNickname Nickname to assign
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -28,8 +28,6 @@ export default class NickCommand extends Command {
             details: 'Use `clear` to remove the nickname',
             examples: ['nick favna pyrrha nikos'],
             guildOnly: true,
-            clientPermissions: ['MANAGE_NICKNAMES'],
-            userPermissions: ['MANAGE_NICKNAMES'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -48,6 +46,8 @@ export default class NickCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_NICKNAMES', msg, this.client);
 
     public run (msg: CommandoMessage, { member, nickname }: { member: GuildMember; nickname: string }) {
         startTyping(msg);

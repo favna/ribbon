@@ -9,7 +9,7 @@
  * @param {ChannelResolvable} AnnounceChannel The channel to set the announcements to
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -25,7 +25,6 @@ export default class SetAnnounceCommand extends Command {
             format: 'ChannelID|ChannelName(partial or full)',
             examples: ['setannounce #updates'],
             guildOnly: true,
-            userPermissions: ['ADMINISTRATOR'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -40,6 +39,8 @@ export default class SetAnnounceCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client, false);
 
     public run (msg: CommandoMessage, { channel }: { channel: TextChannel }) {
         startTyping(msg);

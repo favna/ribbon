@@ -9,7 +9,7 @@
  * @param {number} MessageAmount The amount of messages to delete, between 1 and 99
  */
 
-import { startTyping, stopTyping } from '@components/Utils';
+import { startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Message } from 'awesome-djs';
 
@@ -24,8 +24,6 @@ export default class PurgeCommand extends Command {
             format: 'AmountOfMessages',
             examples: ['purge 5'],
             guildOnly: true,
-            clientPermissions: ['MANAGE_MESSAGES'],
-            userPermissions: ['MANAGE_MESSAGES'],
             args: [
                 {
                     key: 'amount',
@@ -37,6 +35,8 @@ export default class PurgeCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client);
 
     public async run (msg: CommandoMessage, { amount }: { amount: number }) {
         startTyping(msg);

@@ -12,7 +12,7 @@
  */
 
 import { CopypastaType } from '@components/Types';
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -33,7 +33,6 @@ export default class CopyPastaRemoveCommand extends Command {
             details: 'Use the copypastalist command to find the ID for deleting',
             examples: ['copypastaremove 1'],
             guildOnly: true,
-            userPermissions: ['MANAGE_MESSAGES'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -57,6 +56,8 @@ export default class CopyPastaRemoveCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
 
     public run (msg: CommandoMessage, { id }: { id: string }) {
         try {

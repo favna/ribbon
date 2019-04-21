@@ -14,7 +14,7 @@
  * @param {boolean} Option On or Off
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validateBool, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -33,7 +33,6 @@ export default class SetNonExplicitBlockCommand extends Command {
                 however at staff digression they can be allowed outside of NSFW channels by toggling this option off`,
             examples: ['setnonexplicitblock off'],
             guildOnly: true,
-            userPermissions: ['MANAGE_MESSAGES'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -48,6 +47,8 @@ export default class SetNonExplicitBlockCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
 
     public run (msg: CommandoMessage, { option }: { option: boolean }) {
         startTyping(msg);

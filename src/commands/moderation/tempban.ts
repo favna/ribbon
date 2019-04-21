@@ -15,7 +15,7 @@
  */
 
 import { timeparseHelper } from '@components/TimeparseHelper';
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -31,8 +31,6 @@ export default class TempBanCommand extends Command {
             format: 'MemberID|MemberName(partial or full) TimeForTheBan [ReasonForBanning]',
             examples: ['tempban JohnDoe 5m annoying'],
             guildOnly: true,
-            clientPermissions: ['BAN_MEMBERS'],
-            userPermissions: ['BAN_MEMBERS'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -82,6 +80,8 @@ export default class TempBanCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('BAN_MEMBERS', msg, this.client);
 
     public run (msg: CommandoMessage, { member, time, reason, keepmessages = false }: { member: GuildMember; time: number; reason: string; keepmessages: boolean; }) {
         if (member.id === msg.author.id) return msg.reply('I don\'t think you want to ban yourself.');

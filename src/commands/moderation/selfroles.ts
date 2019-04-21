@@ -15,7 +15,7 @@
  * @param {RoleResolvable} [AnyRole] Role to set, can be multiple split by spaces
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -33,8 +33,6 @@ export default class SelfRolesCommand extends Command {
                             You can clear the setting by giving no roles then replying \`finish\``,
             examples: ['selfroles uploader', 'selfroles uploader superuploader'],
             guildOnly: true,
-            clientPermissions: ['MANAGE_ROLES'],
-            userPermissions: ['MANAGE_ROLES'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -50,6 +48,8 @@ export default class SelfRolesCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_ROLES', msg, this.client);
 
     public run (msg: CommandoMessage, { roles, roleIDs = [], roleNames = [] }: { roles: Role[]; roleIDs?: string[]; roleNames?: string[]; }) {
         startTyping(msg);

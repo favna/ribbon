@@ -11,7 +11,7 @@
  *     prevent Ribbon from deleting the banned member's messages
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -27,8 +27,6 @@ export default class BanCommand extends Command {
             format: 'MemberID|MemberName(partial or full) [ReasonForBanning]',
             examples: ['ban JohnDoe annoying'],
             guildOnly: true,
-            clientPermissions: ['BAN_MEMBERS'],
-            userPermissions: ['BAN_MEMBERS'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -48,6 +46,8 @@ export default class BanCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('BAN_MEMBERS', msg, this.client);
 
     public run (msg: CommandoMessage, { member, reason, keepmessages }: { member: GuildMember; reason: string; keepmessages: boolean }) {
         if (member.id === msg.author.id) return msg.reply('I don\'t think you want to ban yourself.');

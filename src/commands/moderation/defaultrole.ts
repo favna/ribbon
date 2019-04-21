@@ -9,7 +9,7 @@
  * @param {RoleResolvable} AnyRole Role to assign to all new joining members
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -26,8 +26,6 @@ export default class DefaultroleCommand extends Command {
             details: 'Use "delete" to remove the default role',
             examples: ['defaultrole Member'],
             guildOnly: true,
-            clientPermissions: ['MANAGE_ROLES'],
-            userPermissions: ['MANAGE_ROLES'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -43,6 +41,8 @@ export default class DefaultroleCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_ROLES', msg, this.client);
 
     public run (msg: CommandoMessage, { role }: { role: Role | any }) {
         startTyping(msg);

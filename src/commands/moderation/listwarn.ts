@@ -9,7 +9,7 @@
  * @param {GuildMemberResolvable} AnyMember The member of whom to list the warning points
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -28,7 +28,6 @@ export default class ListWarnCommand extends Command {
             format: 'MemberID|MemberName(partial or full)',
             examples: ['listwarn Biscuit'],
             guildOnly: true,
-            userPermissions: ['MANAGE_MESSAGES'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -42,6 +41,8 @@ export default class ListWarnCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
 
     public run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));

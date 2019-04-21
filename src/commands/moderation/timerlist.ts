@@ -9,7 +9,7 @@
 
 import { timeparseHelper } from '@components/TimeparseHelper';
 import { TimerType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Snowflake, TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -26,13 +26,14 @@ export default class TimerListCommand extends Command {
             memberName: 'timerlist',
             description: 'List all stored timed messages in the current guild',
             guildOnly: true,
-            userPermissions: ['MANAGE_MESSAGES'],
             throttling: {
                 usages: 2,
                 duration: 3,
             },
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
 
     public async run (msg: CommandoMessage) {
         startTyping(msg);

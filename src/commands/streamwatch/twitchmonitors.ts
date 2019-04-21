@@ -9,7 +9,7 @@
  * @param {string} AnyMembers List of members to monitor space delimited
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -25,7 +25,6 @@ export default class TwitchMonitorsCommand extends Command {
             format: 'Member [Member Member Member]',
             examples: ['twitchmonitors Favna Techagent'],
             guildOnly: true,
-            userPermissions: ['ADMINISTRATOR'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -40,6 +39,8 @@ export default class TwitchMonitorsCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client, false);
 
     public run (msg: CommandoMessage, { members }: { members: GuildMember[] }) {
         startTyping(msg);

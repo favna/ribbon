@@ -10,7 +10,7 @@
  * @name unlock
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildChannel, MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -25,8 +25,6 @@ export default class UnlockCommand extends Command {
             description: 'Unlocks the current channel',
             examples: ['unlock'],
             guildOnly: true,
-            clientPermissions: ['ADMINISTRATOR'],
-            userPermissions: ['ADMINISTRATOR'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -41,6 +39,8 @@ export default class UnlockCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client);
 
     public async run (msg: CommandoMessage, { lockrole }: { lockrole: Role | any }) {
         startTyping(msg);

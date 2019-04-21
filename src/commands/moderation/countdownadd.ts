@@ -26,7 +26,7 @@
  * @param {string} Message  The message to repeat
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -53,7 +53,6 @@ export default class CountdownAddCommand extends Command {
                 The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the countdown`,
             examples: ['countdownadd 2018-12-31T18:00 #general New years day!'],
             guildOnly: true,
-            userPermissions: ['MANAGE_MESSAGES'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -88,6 +87,8 @@ export default class CountdownAddCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
 
     public run (msg: CommandoMessage, { datetime, cdChannel, content, tag = 'none' }: { datetime: string; cdChannel: TextChannel; content: string; tag?: string; }) {
         startTyping(msg);

@@ -8,7 +8,7 @@
  */
 
 import { CountdownType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -26,13 +26,14 @@ export default class CountDownList extends Command {
             memberName: 'countdownlist',
             description: 'List all stored countdown messages in the current guild',
             guildOnly: true,
-            userPermissions: ['MANAGE_MESSAGES'],
             throttling: {
                 usages: 2,
                 duration: 3,
             },
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
 
     public async run (msg: CommandoMessage) {
         startTyping(msg);

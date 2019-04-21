@@ -8,7 +8,7 @@
  * @param {GuildMemberResolvable} AnyMember The member to remove a role from
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -25,8 +25,6 @@ export default class UnmuteCommand extends Command {
             format: 'MemberID|MemberName(partial or full)',
             examples: ['unmute Muffin'],
             guildOnly: true,
-            clientPermissions: ['MANAGE_ROLES'],
-            userPermissions: ['MANAGE_ROLES'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -40,6 +38,8 @@ export default class UnmuteCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_ROLES', msg, this.client);
 
     public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         if (member.manageable) {

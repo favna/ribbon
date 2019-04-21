@@ -18,7 +18,7 @@
  * @param {number} [distance] Levenshtein distance for similarity
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validateBool, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -39,8 +39,6 @@ export default class DuplicateTextCommand extends Command {
                 the amount of allowed similar messages (defaults to 2) and the Levenshtein distance (defaults to 20)`,
             examples: ['duptext enable', 'duptext enable 3 2 20'],
             guildOnly: true,
-            clientPermissions: ['MANAGE_MESSAGES'],
-            userPermissions: ['MANAGE_MESSAGES'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -73,6 +71,8 @@ export default class DuplicateTextCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client);
 
     public run (msg: CommandoMessage, { option, within, equals, distance }: { option: boolean; within: number; equals: number; distance: number }) {
         startTyping(msg);

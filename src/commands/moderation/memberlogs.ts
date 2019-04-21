@@ -10,7 +10,7 @@
  * @param {TextChannel} [Channel] TextChannel the Member Logs are sent to, required when enabling
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validateBool, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -26,7 +26,6 @@ export default class MemberLogsCommand extends Command {
             format: 'boolean',
             examples: ['memberlogs enable'],
             guildOnly: true,
-            userPermissions: ['ADMINISTRATOR'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -47,6 +46,8 @@ export default class MemberLogsCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client, false);
 
     public run (msg: CommandoMessage, { channel, option }: { channel: TextChannel | any; option: boolean }) {
         if (option && channel === 'off') {

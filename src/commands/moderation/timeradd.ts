@@ -23,7 +23,7 @@
  */
 
 import { timeparseHelper } from '@components/TimeparseHelper';
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -47,7 +47,6 @@ export default class TimerAddCommand extends Command {
                 The format for the interval is in minutes, hours or days in the format of \`5m\`, \`2h\` or \`1d\``,
             examples: ['timeradd 1d #general Please read the rules everyone!'],
             guildOnly: true,
-            userPermissions: ['MANAGE_MESSAGES'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -110,6 +109,8 @@ export default class TimerAddCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('MANAGE_MESSAGES', msg, this.client, false);
 
     public run (msg: CommandoMessage, { interval, timerChannel, content, members }: { interval: number; timerChannel: TextChannel; content: string; members: GuildMember[]; }) {
         startTyping(msg);

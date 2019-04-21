@@ -10,7 +10,7 @@
  */
 
 import { DEFAULT_VOLUME } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
 export default class DefaultVolumeCommand extends Command {
@@ -24,7 +24,6 @@ export default class DefaultVolumeCommand extends Command {
             format: 'VolumeToSet',
             examples: ['defaultvolume 2'],
             guildOnly: true,
-            userPermissions: ['ADMINISTRATOR'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -39,6 +38,8 @@ export default class DefaultVolumeCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client, false);
 
     public run (msg: CommandoMessage, { volume }: { volume: string }) {
         startTyping(msg);

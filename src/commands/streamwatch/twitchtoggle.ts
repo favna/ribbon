@@ -9,7 +9,7 @@
  * @param {boolean} Option True or False
  */
 
-import { deleteCommandMessages, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, startTyping, stopTyping, validateBool, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
 
@@ -25,7 +25,6 @@ export default class TwitchToggleCommand extends Command {
             details: 'This is a killswitch for the entire module!',
             examples: ['twitchtoggle enable'],
             guildOnly: true,
-            userPermissions: ['ADMINISTRATOR'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -40,6 +39,8 @@ export default class TwitchToggleCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client, false);
 
     public run (msg: CommandoMessage, { option }: { option: boolean }) {
         startTyping(msg);

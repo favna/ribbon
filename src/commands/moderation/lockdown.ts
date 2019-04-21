@@ -16,7 +16,7 @@
  * @param {RoleResolvable} [LockRole] Optional: A role the lockdown is applied to, defaults to @everyone
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validatePermissions } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -34,8 +34,6 @@ export default class LockdownCommand extends Command {
                 This may also mean that Ribbon won't have access if it doesn't have administrator role so you cannot use the \`unlock\` command until you give it that permission!`,
             examples: ['lockdown'],
             guildOnly: true,
-            clientPermissions: ['ADMINISTRATOR'],
-            userPermissions: ['ADMINISTRATOR'],
             throttling: {
                 usages: 2,
                 duration: 3,
@@ -50,6 +48,8 @@ export default class LockdownCommand extends Command {
             ],
         });
     }
+
+    public hasPermission = (msg: CommandoMessage) => validatePermissions('ADMINISTRATOR', msg, this.client);
 
     public async run (msg: CommandoMessage, { lockrole }: { lockrole: Role | any }) {
         startTyping(msg);
