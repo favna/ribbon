@@ -10,7 +10,7 @@
  * @param {TextChannel} [Channel] TextChannel the Member Logs are sent to, required when enabling
  */
 
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -74,7 +74,7 @@ export default class MemberLogsCommand extends Command {
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, memberLogsEmbed);
+            logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, memberLogsEmbed);
         }
 
         deleteCommandMessages(msg, this.client);

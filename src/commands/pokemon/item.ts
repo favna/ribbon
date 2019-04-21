@@ -13,7 +13,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeItemAliases, PokeItemDetailsType } from '@components/Types';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
 import { itemAliases } from '@pokedex/aliases';
 import BattleItems from '@pokedex/items';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -67,14 +67,14 @@ export default class ItemCommand extends Command {
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setAuthor(
-                    `${capitalizeFirstLetter(itemSearch[0].name)}`,
+                    `${sentencecase(itemSearch[0].name)}`,
                     `https://play.pokemonshowdown.com/sprites/itemicons/${itemSearch[0].name.toLowerCase().replace(/ /g, '-')}.png`
                 )
                 .addField('Description', itemSearch[0].desc)
                 .addField('Generation Introduced', itemSearch[0].gen)
                 .addField(
                     'External Resources', oneLine`
-			        [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(itemSearch[0].name.replace(' ', '_').replace('\'', ''))})
+			        [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${sentencecase(itemSearch[0].name.replace(' ', '_').replace('\'', ''))})
 			        |  [Smogon](http://www.smogon.com/dex/sm/items/${itemSearch[0].name.toLowerCase().replace(' ', '_').replace('\'', '')})
 			        |  [PokémonDB](http://pokemondb.net/item/${itemSearch[0].name.toLowerCase().replace(' ', '-').replace('\'', '')})`
                 );
@@ -82,7 +82,7 @@ export default class ItemCommand extends Command {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
-            return msg.embed(itemEmbed, `**${capitalizeFirstLetter(itemSearch[0].name)}**`);
+            return msg.embed(itemEmbed, `**${sentencecase(itemSearch[0].name)}**`);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

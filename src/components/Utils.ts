@@ -5,13 +5,11 @@ import emojiRegex from 'emoji-regex';
 import { diacriticsMap, validBooleansMap } from './Constants';
 import { YoutubeVideoType } from './Types';
 
-export const arrayClean = (deleteValue: string | number | undefined | any, array: (string | number | undefined | any)[]) => array.filter(element => element !== deleteValue);
-
-export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+export const cleanArray = (deleteValue: string | number | undefined | any, array: (string | number | undefined | any)[]) => array.filter(element => element !== deleteValue);
+export const sentencecase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 export const titlecase = (str: string) => str.toLowerCase().replace(/(^[a-z]| [a-z]|-[a-z])/g, word => word.toUpperCase());
 
 export const countCaps = (stringToCheck: string, allowedLength: string): number => (stringToCheck.replace(/[^A-Z]/g, '').length / allowedLength.length) * 100;
-
 export const countEmojis = (str: string) => {
     const customEmojis = /<a?:[\S]+:[0-9]{18}>/gim;
     const customMatch = str.match(customEmojis);
@@ -24,7 +22,6 @@ export const countEmojis = (str: string) => {
 
     return counter;
 };
-
 export const countMentions = (str: string) => {
     const mentions = /^<@![0-9]{18}>$/gim;
     const mentionsMatch = str.match(mentions);
@@ -39,7 +36,7 @@ export const deleteCommandMessages = (msg: CommandoMessage, client: CommandoClie
     if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) msg.delete();
 };
 
-export const modLogMessage = (msg: CommandoMessage, guild: CommandoGuild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed) => {
+export const logModMessage = (msg: CommandoMessage, guild: CommandoGuild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed) => {
     if (!guild.settings.get('hasSentModLogMessage', false)) {
         msg.reply(oneLine`
             📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
@@ -55,14 +52,14 @@ export const modLogMessage = (msg: CommandoMessage, guild: CommandoGuild, outCha
         : null;
 };
 
-export const numberBetween = (num: number, lower: number, upper: number, inclusive: boolean) => {
+export const isNumberBetween = (num: number, lower: number, upper: number, inclusive: boolean) => {
     const max = Math.max(lower, upper);
     const min = Math.min(lower, upper);
 
     return inclusive ? num >= min && num <= max : num > min && num < max;
 };
 
-export const ordinal = (num: number) => {
+export const parseOrdinal = (num: number) => {
     const cent = num % 100;
     const dec = num % 10;
 

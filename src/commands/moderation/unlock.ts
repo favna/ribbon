@@ -10,7 +10,7 @@
  * @name unlock
  */
 
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildChannel, MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -72,7 +72,7 @@ export default class UnlockCommand extends Command {
 
         if (overwrite) {
             if (msg.guild.settings.get('modlogs', true)) {
-                modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, unlockEmbed);
+                logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, unlockEmbed);
             }
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

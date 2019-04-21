@@ -12,7 +12,7 @@
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { currencyMap } from '@components/MoneyHelper';
 import { DiscordGameDevType, DiscordGameParsedType, DiscordGameSKUType, DiscordStoreGameType, SimpleEmbedFieldType } from '@components/Types';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -85,7 +85,7 @@ export default class ActivityCommand extends Command {
             name: fieldName,
             value: Object.entries(parsedStatus)
                 .map((entry: [string, string | undefined]) => {
-                    return `${capitalizeFirstLetter(entry[0])}: ${entry[1] !== 'dnd' ? capitalizeFirstLetter(entry[1]!) : 'Do Not Disturb'}`;
+                    return `${sentencecase(entry[0])}: ${entry[1] !== 'dnd' ? sentencecase(entry[1]!) : 'Do Not Disturb'}`;
                 })
                 .join('\n'),
         };

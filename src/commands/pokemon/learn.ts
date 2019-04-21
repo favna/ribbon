@@ -18,7 +18,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
 import BattleLearnsets from '@pokedex/learnsets';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -93,31 +93,31 @@ export default class LearnCommand extends Command {
                         // tslint:disable-next-line:switch-default
                         switch (method.slice(1, 2)) {
                             case 'L':
-                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** by level up at level ${method.slice(2)}`);
+                                response.push(`In generation ${method.slice(0, 1)} ${sentencecase(pokemon)} **__can__** learn **${move}** by level up at level ${method.slice(2)}`);
                                 break;
                             case 'V':
-                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** through virtual console transfer`);
+                                response.push(`In generation ${method.slice(0, 1)} ${sentencecase(pokemon)} **__can__** learn **${move}** through virtual console transfer`);
                                 break;
                             case 'T':
-                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** through a move tutor`);
+                                response.push(`In generation ${method.slice(0, 1)} ${sentencecase(pokemon)} **__can__** learn **${move}** through a move tutor`);
                                 break;
                             case 'M':
-                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** through TM`);
+                                response.push(`In generation ${method.slice(0, 1)} ${sentencecase(pokemon)} **__can__** learn **${move}** through TM`);
                                 break;
                             case 'E':
-                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** as Egg Move`);
+                                response.push(`In generation ${method.slice(0, 1)} ${sentencecase(pokemon)} **__can__** learn **${move}** as Egg Move`);
                                 break;
                             case 'S':
-                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** through an event`);
+                                response.push(`In generation ${method.slice(0, 1)} ${sentencecase(pokemon)} **__can__** learn **${move}** through an event`);
                                 break;
                             case 'D':
-                                response.push(`In generation ${method.slice(0, 1)} ${capitalizeFirstLetter(pokemon)} **__can__** learn **${move}** through Dream World`);
+                                response.push(`In generation ${method.slice(0, 1)} ${sentencecase(pokemon)} **__can__** learn **${move}** through Dream World`);
                                 break;
                         }
                     });
                     methods.length = 0;
                 } else {
-                    response.push(`${capitalizeFirstLetter(pokemon)} **__cannot__** learn **${move}**`);
+                    response.push(`${sentencecase(pokemon)} **__cannot__** learn **${move}**`);
                 }
             });
 
@@ -125,13 +125,13 @@ export default class LearnCommand extends Command {
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
                 .setAuthor(
-                    `${capitalizeFirstLetter(pokemon)}`,
+                    `${sentencecase(pokemon)}`,
                     `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${pokemon}.png`
                 )
                 .setDescription(
                     response.length
                         ? response.join('\n\n')
-                        : stripIndents`${capitalizeFirstLetter(pokemon)} cannot learn ${movesArray.map((val: string) => `\`${val}\``).join(', ')}`
+                        : stripIndents`${sentencecase(pokemon)} cannot learn ${movesArray.map((val: string) => `\`${val}\``).join(', ')}`
                 );
 
             deleteCommandMessages(msg, this.client);

@@ -2,7 +2,7 @@ import { CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Message } from 'awesome-djs';
 import levenshtein from 'fast-levenshtein';
 import moment from 'moment';
-import { countCaps, countEmojis, countMentions, numberBetween } from './Utils';
+import { countCaps, countEmojis, countMentions, isNumberBetween } from './Utils';
 
 export const badwords = (msg: CommandoMessage, words: string[], client: CommandoClient) => {
     if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES') || !words || !words.length) {
@@ -19,7 +19,7 @@ export const duptext = (msg: CommandoMessage, within: number, equals: number, di
         const diff = moment.duration(moment(m.createdTimestamp).diff(moment()));
 
         return (
-            numberBetween(diff.asMinutes(), within * -1, 0, true) &&
+            isNumberBetween(diff.asMinutes(), within * -1, 0, true) &&
             m.author.id === msg.author.id
         );
     });
@@ -97,7 +97,7 @@ export const slowmode = (msg: CommandoMessage, within: number, client: CommandoC
         const diff = moment.duration(moment(m.createdTimestamp).diff(moment()));
 
         return (
-            numberBetween(diff.asSeconds(), within * -1, 0, true) &&
+            isNumberBetween(diff.asSeconds(), within * -1, 0, true) &&
             m.author.id === msg.author.id
         );
     });

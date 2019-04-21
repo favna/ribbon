@@ -9,7 +9,7 @@
  * @param {boolean} Option True or False
  */
 
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -60,7 +60,7 @@ export default class InvitesFilterCommand extends Command {
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, ifEmbed);
+            logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, ifEmbed);
         }
 
         deleteCommandMessages(msg, this.client);

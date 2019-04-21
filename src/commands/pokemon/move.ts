@@ -13,7 +13,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeMoveAliases, PokeMoveDetailsType } from '@components/Types';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
 import { moveAliases } from '@pokedex/aliases';
 import BattleMovedex from '@pokedex/moves';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -68,7 +68,7 @@ export default class MoveCommand extends Command {
             moveEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
-                .setTitle(capitalizeFirstLetter(hit.name))
+                .setTitle(sentencecase(hit.name))
                 .addField('Description', hit.desc ? hit.desc : hit.shortDesc)
                 .addField('Type', hit.type, true)
                 .addField('Base Power', hit.basePower, true)
@@ -86,7 +86,7 @@ export default class MoveCommand extends Command {
                     'Target',
                     hit.target === 'normal'
                         ? 'One Enemy'
-                        : capitalizeFirstLetter(hit.target.replace(/([A-Z])/g, ' $1')
+                        : sentencecase(hit.target.replace(/([A-Z])/g, ' $1')
                         ),
                     true
                 )
@@ -94,7 +94,7 @@ export default class MoveCommand extends Command {
                 .addField(
                     'Z-Crystal',
                     hit.isZ
-                        ? `${capitalizeFirstLetter(hit.isZ.substring(0, hit.isZ.length - 1))}Z`
+                        ? `${sentencecase(hit.isZ.substring(0, hit.isZ.length - 1))}Z`
                         : 'None',
                     true
                 )

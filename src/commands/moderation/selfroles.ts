@@ -15,7 +15,7 @@
  * @param {RoleResolvable} [AnyRole] Role to set, can be multiple split by spaces
  */
 
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -74,7 +74,7 @@ export default class SelfRolesCommand extends Command {
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, selfRolesEmbed);
+            logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, selfRolesEmbed);
         }
 
         deleteCommandMessages(msg, this.client);

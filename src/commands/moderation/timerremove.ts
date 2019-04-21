@@ -12,7 +12,7 @@
  */
 
 import { timeparseHelper } from '@components/TimeparseHelper';
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -103,7 +103,7 @@ export default class TimerRemoveCommand extends Command {
                 .setTimestamp();
 
             if (msg.guild.settings.get('modlogs', true)) {
-                modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, timerRemoveEmbed);
+                logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, timerRemoveEmbed);
             }
 
             deleteCommandMessages(msg, this.client);

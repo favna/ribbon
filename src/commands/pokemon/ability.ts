@@ -11,7 +11,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeAbilityAliases, PokeAbilityDetailsType } from '@components/Types';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
 import BattleAbilities from '@pokedex/abilities';
 import { abilityAliases } from '@pokedex/aliases';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -61,10 +61,10 @@ export default class AbilityCommand extends Command {
             abilityEmbed
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
-                .setTitle(capitalizeFirstLetter(abilitySearch[0].name))
+                .setTitle(sentencecase(abilitySearch[0].name))
                 .addField('Description', abilitySearch[0].desc ? abilitySearch[0].desc : abilitySearch[0].shortDesc)
                 .addField('External Resource', oneLine`
-                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(abilitySearch[0].name.replace(/ /g, '_'))}_(Ability\\))
+                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${sentencecase(abilitySearch[0].name.replace(/ /g, '_'))}_(Ability\\))
                     |  [Smogon](http://www.smogon.com/dex/sm/abilities/${abilitySearch[0].name.toLowerCase().replace(/ /g, '_')})
                     |  [PokémonDB](http://pokemondb.net/ability/${abilitySearch[0].name.toLowerCase().replace(/ /g, '-')})
 			    `);

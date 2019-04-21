@@ -29,7 +29,7 @@ import {
 } from './FirebaseActions';
 import FirebaseStorage from './FirebaseStorage';
 import { CasinoRowType, CountdownType, TimerType } from './Types';
-import { ordinal } from './Utils';
+import { parseOrdinal } from './Utils';
 
 const sendReminderMessages = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
@@ -188,7 +188,7 @@ const renderJoinMessage = async (member: GuildMember) => {
         avatar.composite(border, 0, 0);
         canvas.blit(avatar, 5, 5);
         canvas.print(fontLarge, 155, 10, 'welcome'.toUpperCase());
-        canvas.print(fontMedium, 160, 60, `you are the ${ordinal(member.guild.memberCount)} member`.toUpperCase());
+        canvas.print(fontMedium, 160, 60, `you are the ${parseOrdinal(member.guild.memberCount)} member`.toUpperCase());
         canvas.print(fontMedium, 160, 80, `of ${member.guild.name}`.toUpperCase());
 
         const buffer = await canvas.getBufferAsync(jimp.MIME_PNG);

@@ -8,7 +8,7 @@
  * @param {GuildMemberResolvable} AnyMember Member you want to get info about
  */
 
-import { arrayClean, capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { cleanArray, deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
@@ -53,18 +53,18 @@ export default class UserInfoCommand extends Command {
             .addField('Nickname', member.nickname ? member.nickname : 'No Nickname', true)
             .addField(
                 'Status',
-                member.user.presence.status !== 'dnd' ? capitalizeFirstLetter(member.user.presence.status) : 'Do Not Disturb',
+                member.user.presence.status !== 'dnd' ? sentencecase(member.user.presence.status) : 'Do Not Disturb',
                 true
             )
             .addField(
-                member.user.presence.activity ? capitalizeFirstLetter(member.user.presence.activity.type) : 'Activity',
+                member.user.presence.activity ? sentencecase(member.user.presence.activity.type) : 'Activity',
                 member.user.presence.activity ? member.user.presence.activity.name : 'Nothing',
                 true
             )
             .addField('Display Color', member.displayHexColor, true)
             .addField(
                 'Role(s)',
-                member.roles.size > 1 ? arrayClean(null, member.roles.map(r => r.name).filter(name => name !== '@everyone')).join(' | ') : 'None'
+                member.roles.size > 1 ? cleanArray(null, member.roles.map(r => r.name).filter(name => name !== '@everyone')).join(' | ') : 'None'
             )
             .addField('Account created at', moment(member.user.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
             .addField('Joined server at', moment(member.joinedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true);

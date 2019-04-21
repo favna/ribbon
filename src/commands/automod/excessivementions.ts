@@ -11,7 +11,7 @@
  * @param {string} [threshold] How many mentions allowed in 1 message
  */
 
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping, validateBool } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -70,7 +70,7 @@ export default class ExcessiveMentionsCommand extends Command {
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, emEmbed);
+            logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, emEmbed);
         }
 
         deleteCommandMessages(msg, this.client);

@@ -11,7 +11,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { PokeTypeDataType } from '@components/Types';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
 import BattleTypeChart from '@pokedex/typechart';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -42,7 +42,7 @@ export default class TypeCommand extends Command {
                         input = input
                             .split(' ')
                             .filter(Boolean)
-                            .map((type: string) => capitalizeFirstLetter(type))
+                            .map((type: string) => sentencecase(type))
                             .slice(0, 2) as string[];
 
                         if (input.every((type: any) => Object.keys(BattleTypeChart).includes(type))) {
@@ -51,7 +51,7 @@ export default class TypeCommand extends Command {
 
                         return `one of more of your types was invalid. Valid types are ${Object.keys(BattleTypeChart).map((val: string) => `\`${val}\``).join(', ')}`;
                     },
-                    parse: (p: string) => p.split(' ').filter(Boolean).map((type: string) => capitalizeFirstLetter(type)).slice(0, 2),
+                    parse: (p: string) => p.split(' ').filter(Boolean).map((type: string) => sentencecase(type)).slice(0, 2),
                 }
             ],
         });

@@ -15,7 +15,7 @@
 
 import { ASSET_BASE_PATH } from '@components/Constants';
 import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping, titlecase } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, startTyping, stopTyping, titlecase } from '@components/Utils';
 import { pokeAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import formats from '@pokedex/formats.json';
@@ -110,7 +110,7 @@ export default class DexCommand extends Command {
             const poke: PokedexType = pokeSearch[0];
             const pokeData: PokeDataType = {
                 abilities: '',
-                evos: `**${capitalizeFirstLetter(poke.species)}**`,
+                evos: `**${sentencecase(poke.species)}**`,
                 flavors: '*PokéDex data not found for this Pokémon*',
                 genders: '',
                 sprite: '',
@@ -119,20 +119,20 @@ export default class DexCommand extends Command {
             };
 
             if (poke.prevo) {
-                pokeData.evos = oneLine`\`${capitalizeFirstLetter(poke.prevo)}\`
+                pokeData.evos = oneLine`\`${sentencecase(poke.prevo)}\`
                 ${pokeFuse.search(poke.prevo)[0].evoLevel
                     ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})`
                     : ''} → ${pokeData.evos} **(${poke.evoLevel})**`;
 
                 if (pokeFuse.search(poke.prevo).length) {
                     const prevoSearch = pokeFuse.search(poke.prevo)[0].prevo;
-                    if (prevoSearch) pokeData.evos = `\`${capitalizeFirstLetter(prevoSearch)}\` → ${pokeData.evos}`;
+                    if (prevoSearch) pokeData.evos = `\`${sentencecase(prevoSearch)}\` → ${pokeData.evos}`;
                 }
             }
 
             if (poke.evos) {
                 pokeData.evos = oneLine`${pokeData.evos} → ${poke.evos
-                    .map((entry: string) => `\`${capitalizeFirstLetter(entry)}\` (${pokeFuse.search(entry)[0].evoLevel})`)
+                    .map((entry: string) => `\`${sentencecase(entry)}\` (${pokeFuse.search(entry)[0].evoLevel})`)
                     .join(', ')} `;
 
                 if (poke.evos.length === 1) {
@@ -141,7 +141,7 @@ export default class DexCommand extends Command {
                         if (evosMap && evosMap.length) {
                             pokeData.evos = oneLine`${pokeData.evos}
                             → ${evosMap.map((entry: string) =>
-                                `\`${capitalizeFirstLetter(entry)}\` (${pokeFuse.search(entry)[0].evoLevel})`
+                                `\`${sentencecase(entry)}\` (${pokeFuse.search(entry)[0].evoLevel})`
                             ).join(', ')}`;
                         }
                     }
@@ -199,7 +199,7 @@ export default class DexCommand extends Command {
             dexEmbed
                 .setColor(DexCommand.fetchColor(poke.color))
                 .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
-                .setAuthor(`#${poke.num} - ${capitalizeFirstLetter(poke.species)}`, pokeData.sprite)
+                .setAuthor(`#${poke.num} - ${sentencecase(poke.species)}`, pokeData.sprite)
                 .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
                 .addField('Type(s)', poke.types.join(', '), true)
                 .addField('Abilities', pokeData.abilities, true)

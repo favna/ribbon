@@ -26,7 +26,7 @@
  * @param {string} Message  The message to repeat
  */
 
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -171,7 +171,7 @@ export default class CountdownAddCommand extends Command {
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-            modLogMessage(msg, msg.guild, logCh, msg.guild.channels.get(logCh) as TextChannel, embed);
+            logModMessage(msg, msg.guild, logCh, msg.guild.channels.get(logCh) as TextChannel, embed);
         }
 
         deleteCommandMessages(msg, client);

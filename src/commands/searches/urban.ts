@@ -11,7 +11,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { UrbanDefinitionType } from '@components/Types';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -58,7 +58,7 @@ export default class UrbanCommand extends Command {
                 .setTitle(`Urban Search - ${hit.word}`)
                 .setURL(hit.permalink)
                 .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setDescription(capitalizeFirstLetter(hit.definition.replace(/[\[]]/gim, '')))
+                .setDescription(sentencecase(hit.definition.replace(/[\[]]/gim, '')))
                 .addField(
                     'Example',
                     hit.example

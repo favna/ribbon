@@ -16,7 +16,7 @@
 
 import { ASSET_BASE_PATH } from '@components/Constants';
 import { FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
 import { pokeAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import BattlePokedex from '@pokedex/pokedex';
@@ -164,7 +164,7 @@ export default class FlavorCommand extends Command {
             dataEmbed
                 .setColor(FlavorCommand.fetchColor(poke.color))
                 .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
-                .setAuthor(`#${poke.num} - ${capitalizeFirstLetter(poke.species)}`, pokeData.sprite)
+                .setAuthor(`#${poke.num} - ${sentencecase(poke.species)}`, pokeData.sprite)
                 .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
                 .setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.');
 

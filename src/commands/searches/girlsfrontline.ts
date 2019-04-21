@@ -11,7 +11,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { FrontlineGirlType } from '@components/Types';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
 import frontlineGirls from '@pokedex/girlsfrontline';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
@@ -92,14 +92,14 @@ export default class GirlsFrontlineCommand extends Command {
 
             if (hit.production.timer && hit.production.normal) {
                 gfEmbed.addField('Normal Production Requirement', Object.keys(hit.production.normal)
-                    .map((index: string) => `**${capitalizeFirstLetter(index)}**: ${hit.production.normal![index]}`)
+                    .map((index: string) => `**${sentencecase(index)}**: ${hit.production.normal![index]}`)
                     .join(', '));
             }
 
             if (hit.production.timer && hit.production.heavy) {
                 gfEmbed
                     .addField('Heavy Production Requirement', Object.keys(hit.production.heavy)
-                        .map((index: string) => `**${capitalizeFirstLetter(index)}**: ${hit.production.heavy![index]}`)
+                        .map((index: string) => `**${sentencecase(index)}**: ${hit.production.heavy![index]}`)
                         .join(', '));
             }
 

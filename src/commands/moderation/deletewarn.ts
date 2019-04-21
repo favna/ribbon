@@ -11,7 +11,7 @@
  * @param {number} [AmountOfWarnPoints] The amount of warning points to remove
  */
 
-import { deleteCommandMessages, modLogMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -84,7 +84,7 @@ export default class DeleteWarnCommand extends Command {
             `);
 
             if (msg.guild.settings.get('modlogs', true)) {
-                modLogMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, warnEmbed);
+                logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, warnEmbed);
             }
 
             deleteCommandMessages(msg, this.client);
