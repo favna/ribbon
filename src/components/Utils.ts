@@ -8,6 +8,7 @@ import { YoutubeVideoType } from './Types';
 export const arrayClean = (deleteValue: string | number | undefined | any, array: (string | number | undefined | any)[]) => array.filter(element => element !== deleteValue);
 
 export const capitalizeFirstLetter = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+export const titlecase = (str: string) => str.toLowerCase().replace(/(^[a-z]| [a-z]|-[a-z])/g, word => word.toUpperCase());
 
 export const countCaps = (stringToCheck: string, allowedLength: string): number => (stringToCheck.replace(/[^A-Z]/g, '').length / allowedLength.length) * 100;
 

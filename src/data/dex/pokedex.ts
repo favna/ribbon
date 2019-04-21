@@ -2303,7 +2303,7 @@ const POKEDEX: PokedexType[] = [
         heightm: 1.3,
         weightkg: 54.5,
         color: 'Pink',
-        prevo: 'mimejr',
+        prevo: 'mime jr',
         evoLevel: 'Level up while knowing Mimic',
 
         eggGroups: ['Human-Like'],
@@ -7094,7 +7094,7 @@ const POKEDEX: PokedexType[] = [
         heightm: 0.6,
         weightkg: 13,
         color: 'Pink',
-        evos: ['mrmime'],
+        evos: ['mr mime'],
         eggGroups: ['Undiscovered'],
     },
     {

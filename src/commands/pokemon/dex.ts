@@ -15,7 +15,7 @@
 
 import { ASSET_BASE_PATH } from '@components/Constants';
 import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
-import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { capitalizeFirstLetter, deleteCommandMessages, startTyping, stopTyping, titlecase } from '@components/Utils';
 import { pokeAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import formats from '@pokedex/formats.json';
@@ -191,9 +191,9 @@ export default class DexCommand extends Command {
             if (poke.num < 0) {
                 pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/unknown.png`;
             } else if (shines) {
-                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/shiny/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
+                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/shiny/${poke.species.replace(/([%. ])/g, '').toLowerCase()}.png`;
             } else {
-                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
+                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${poke.species.replace(/([%. ])/g, '').toLowerCase()}.png`;
             }
 
             dexEmbed
@@ -218,7 +218,7 @@ export default class DexCommand extends Command {
                 )
                 .addField('PokéDex Data', pokeData.flavors)
                 .addField('External Resource', oneLine`${poke.num >= 0 ? `
-                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${capitalizeFirstLetter(poke.species).replace(/ /g, '_')}_(Pokémon\\))` : '*Fan made Pokémon*'}
+                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${titlecase(poke.species).replace(/ /g, '_')}_(Pokémon\\))` : '*Fan made Pokémon*'}
                      ${poke.num >= 1 ? `
                         |  [Smogon](http://www.smogon.com/dex/sm/pokemon/${poke.species.replace(/ /g, '_')})
                         |  [PokémonDB](http://pokemondb.net/pokedex/${poke.species.replace(/ /g, '-')})` : ''}`

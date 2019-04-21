@@ -156,9 +156,9 @@ export default class FlavorCommand extends Command {
             if (poke.num < 0) {
                 pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/unknown.png`;
             } else if (shines) {
-                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/shiny/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
+                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/shiny/${poke.species.replace(/([%. ])/g, '').toLowerCase()}.png`;
             } else {
-                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${poke.species.replace(/([% ])/g, '').toLowerCase()}.png`;
+                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${poke.species.replace(/([%. ])/g, '').toLowerCase()}.png`;
             }
 
             dataEmbed
