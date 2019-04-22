@@ -1,4 +1,4 @@
-import { ArgumentCollectorResult, CommandoClient, CommandoGuild, CommandoMessage, util as CommandoUtil } from 'awesome-commando';
+import { CommandoClient, CommandoGuild, CommandoMessage, util as CommandoUtil } from 'awesome-commando';
 import { GuildMember, MessageEmbed, PermissionString, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
 import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
 import emojiRegex from 'emoji-regex';
@@ -126,11 +126,11 @@ export const validateCasinoLimit = (input: string, msg: CommandoMessage) => {
     return `Reply with a chips amount between ${lowerLimit} and ${upperLimit}. Example: \`${roundNumber((lowerLimit + upperLimit) / 2)}\``;
 };
 
-export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission: boolean = false) => {
-    return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-        const originalFunction = descriptor.value;
+export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission: boolean = false): MethodDecorator => {
+    return (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+        const fn = descriptor.value;
 
-        descriptor.value = async function (msg: CommandoMessage, args: object, fromPattern: boolean, res?: ArgumentCollectorResult) {
+        descriptor.value = (msg: CommandoMessage, args: object, fromPattern: boolean) => {
             const authorIsOwner = msg.client.isOwner(msg.author);
             const memberHasPermission = msg.member.hasPermission(permission);
 
@@ -143,14 +143,12 @@ export const shouldHavePermission = (permission: PermissionString, shouldClientH
             if (shouldClientHavePermission) {
                 const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user!)!.has(permission);
 
-                if (!clientHasPermission && !authorIsOwner) {
+                if (!clientHasPermission) {
                     return msg.command.onBlock(msg, 'clientPermissions', { missing: [permission] });
                 }
             }
 
-            const bindedOriginalFunction = originalFunction.bind(this); // tslint:disable-line:no-invalid-this
-            const result = bindedOriginalFunction(msg, args, fromPattern, res);
-            return result;
+            return fn.apply(target, [msg, args, fromPattern]);
         };
 
         return descriptor;
