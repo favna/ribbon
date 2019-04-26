@@ -14,7 +14,7 @@
  * @param {boolean} Option On or Off
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -41,8 +41,7 @@ export default class SetNonExplicitBlockCommand extends Command {
                 {
                     key: 'option',
                     prompt: 'Enable or disable the blocking of non explicit commands in non NSFW channels?',
-                    type: 'boolean',
-                    validate: (bool: boolean) => validateBool(bool),
+                    type: 'validboolean',
                 }
             ],
         });

@@ -1,8 +1,8 @@
 import { CommandoClient, CommandoGuild, CommandoMessage, util as CommandoUtil } from 'awesome-commando';
 import { GuildMember, MessageEmbed, PermissionString, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
-import { oneLine, oneLineTrim, stripIndents } from 'common-tags';
+import { oneLine, oneLineTrim } from 'common-tags';
 import emojiRegex from 'emoji-regex';
-import { diacriticsMap, validBooleansMap } from './Constants';
+import { diacriticsMap } from './Constants';
 import { YoutubeVideoType } from './Types';
 
 export const cleanArray = (deleteValue: string | number | undefined | any, array: (string | number | undefined | any)[]) => array.filter(element => element !== deleteValue);
@@ -40,9 +40,7 @@ export const logModMessage = (msg: CommandoMessage, guild: CommandoGuild, outCha
     if (!guild.settings.get('hasSentModLogMessage', false)) {
         msg.reply(oneLine`
             📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
-            (or some other name configured by the ${
-            guild.commandPrefix
-            }setmodlogs command) and give me access to it.
+            (or some other name configured by the ${guild.commandPrefix}setmodlogs command) and give me access to it.
             This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
         guild.settings.set('hasSentModLogMessage', true);
     }
@@ -107,23 +105,6 @@ export const stopTyping = (msg: CommandoMessage) => {
 
 export const startTyping = (msg: CommandoMessage) => {
     msg.channel.startTyping(1);
-};
-
-export const validateBool = (bool: boolean) => {
-    if (validBooleansMap.includes(bool.toString())) return true;
-
-    return stripIndents`
-        Has to be one of ${validBooleansMap.map(val => `\`${val}\``).join(', ')}
-        Respond with your new selection or`;
-};
-
-export const validateCasinoLimit = (input: string, msg: CommandoMessage) => {
-    const lowerLimit = msg.guild.settings.get('casinoLowerLimit', 1);
-    const upperLimit = msg.guild.settings.get('casinoUpperLimit', 10000);
-    const chips = Number(input);
-
-    if (chips >= lowerLimit && chips <= upperLimit) return true;
-    return `Reply with a chips amount between ${lowerLimit} and ${upperLimit}. Example: \`${roundNumber((lowerLimit + upperLimit) / 2)}\``;
 };
 
 export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission: boolean = false): MethodDecorator => {

@@ -9,7 +9,7 @@
  * @param {boolean} Option True or False
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -33,8 +33,7 @@ export default class ExternalLinksCommand extends Command {
                 {
                     key: 'option',
                     prompt: 'Enable or disable the external links filter?',
-                    type: 'boolean',
-                    validate: (bool: boolean) => validateBool(bool),
+                    type: 'validboolean',
                 }
             ],
         });

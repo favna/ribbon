@@ -10,7 +10,7 @@
  * @param {RoleResolvable} [Roles] Roles that are exempted from automod
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -34,8 +34,7 @@ export default class AutomodCommand extends Command {
                 {
                     key: 'option',
                     prompt: 'Enable or disable Unknown Command messages?',
-                    type: 'boolean',
-                    validate: (bool: boolean) => validateBool(bool),
+                    type: 'validboolean',
                 },
                 {
                     key: 'roles',

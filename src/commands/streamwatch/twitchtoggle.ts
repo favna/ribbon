@@ -9,7 +9,7 @@
  * @param {boolean} Option True or False
  */
 
-import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
 
@@ -33,8 +33,7 @@ export default class TwitchToggleCommand extends Command {
                 {
                     key: 'option',
                     prompt: 'Enable or disable twitch monitoring?',
-                    type: 'boolean',
-                    validate: (bool: boolean) => validateBool(bool),
+                    type: 'validboolean',
                 }
             ],
         });

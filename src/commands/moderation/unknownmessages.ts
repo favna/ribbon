@@ -9,7 +9,7 @@
  * @param {boolean} Option True or False
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping, validateBool } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 
@@ -32,8 +32,7 @@ export default class UnknownMessagesCommand extends Command {
                 {
                     key: 'option',
                     prompt: 'Enable or disable Unknown Command messages?',
-                    type: 'boolean',
-                    validate: (bool: boolean) => validateBool(bool),
+                    type: 'validboolean',
                 }
             ],
         });

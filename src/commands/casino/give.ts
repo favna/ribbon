@@ -12,7 +12,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { CasinoRowType } from '@components/Types';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -44,17 +44,7 @@ export default class GiveCommand extends Command {
                 {
                     key: 'chips',
                     prompt: 'How many chips do you want to give?',
-                    type: 'integer',
-                    validate: (input: string, msg: CommandoMessage) => {
-                        const lowerLimit = msg.guild.settings.get('casinoLowerLimit', 1);
-                        const upperLimit = msg.guild.settings.get('casinoUpperLimit', 10000);
-                        const chips = Number(input);
-
-                        return chips >= lowerLimit && chips <= upperLimit
-                            ? true
-                            : `Reply with a chips amount between ${lowerLimit} and ${upperLimit}. Example: \`${roundNumber((lowerLimit + upperLimit) / 2)}\``;
-                    },
-                    parse: (chips: string) => roundNumber(Number(chips)),
+                    type: 'casino',
                 }
             ],
         });

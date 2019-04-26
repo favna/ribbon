@@ -10,7 +10,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping, validateCasinoLimit } from '@components/Utils';
+import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -37,9 +37,7 @@ export default class WheelOfFortuneCommand extends Command {
                 {
                     key: 'chips',
                     prompt: 'How many chips do you want to gamble?',
-                    type: 'integer',
-                    validate: (input: string, msg: CommandoMessage) => validateCasinoLimit(input, msg),
-                    parse: (chips: string) => roundNumber(Number(chips)),
+                    type: 'casino',
                 }
             ],
         });
