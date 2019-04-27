@@ -73,7 +73,7 @@ export default class RibbonStatsCommand extends Command {
             .addField('Invite Me', '[Click Here](https://favna.xyz/redirect/ribbon)', true)
             .addField('Source', '[Available on GitHub](https://github.com/favna/ribbon)', true)
             .addField('Support', '[Server Invite](https://favna.xyz/redirect/server)', true)
-            .addField('Uptime', moment.duration(this.client.uptime).format('DD [days], HH [hours and] mm [minutes]'), true)
+            .addField('Uptime', moment.duration(process.uptime() * 1000).format('D [days], H [hours] [and] m [minutes]'), true)
             .addField(fields.time.name, fields.time.value)
             .addField(fields.info.name, fields.info.value)
             .setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, this.client.user!.displayAvatarURL({ format: 'png' }));
