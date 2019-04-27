@@ -81,7 +81,7 @@ const sendCountdownMessages = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/countdowns.sqlite3'));
 
     try {
-        const tables: {name: string}[] = conn
+        const tables: { name: string }[] = conn
             .prepare('SELECT name FROM sqlite_master WHERE type=\'table\' AND name != \'sqlite_sequence\';')
             .all();
 
@@ -255,24 +255,24 @@ const payoutLotto = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3'));
 
     try {
-        const tables: {name: string}[] = conn
+        const tables: { name: string }[] = conn
             .prepare('SELECT name FROM sqlite_master WHERE type=\'table\'')
             .all();
 
         for (const table in tables) {
             if (client.guilds.get(tables[table].name)) {
                 const guildId: Snowflake = tables[table].name;
-                const lastCheck: {timeout: string} = conn.prepare(`SELECT timeout FROM timeouts WHERE guildid="${guildId}"`).get();
+                const lastCheck: { timeout: string } = conn.prepare(`SELECT timeout FROM timeouts WHERE guildid="${guildId}"`).get();
                 if (lastCheck && lastCheck.timeout) {
                     const diff = moment.duration(moment(lastCheck.timeout).add(1, 'days').diff(moment()));
                     const diffInDays = diff.asDays();
                     if (diffInDays >= 0) continue;
                 } else {
                     conn.prepare(`INSERT INTO timeouts VALUES($guildId, $timeout)`)
-                    .run({
-                        guildId,
-                        timeout: moment().format('YYYY-MM-DD HH:mm'),
-                    });
+                        .run({
+                            guildId,
+                            timeout: moment().format('YYYY-MM-DD HH:mm'),
+                        });
                 }
                 const rows: CasinoRowType[] = conn
                     .prepare(`SELECT * FROM "${guildId}"`)
@@ -287,7 +287,7 @@ const payoutLotto = async (client: CommandoClient) => {
                     .run({ balance: rows[winner].balance });
                 conn
                     .prepare(`UPDATE "timeouts" SET timeout=$timeout WHERE guildid="${guildId}"`)
-                    .run({timeout: moment().format('YYYY-MM-DD HH:mm')});
+                    .run({ timeout: moment().format('YYYY-MM-DD HH:mm') });
 
                 const defaultChannel = client.guilds.get(guildId)!.systemChannel;
                 const winnerEmbed = new MessageEmbed();
@@ -334,7 +334,7 @@ const sendTimedMessages = async (client: CommandoClient) => {
     const conn = new Database(path.join(__dirname, '../data/databases/timers.sqlite3'));
 
     try {
-        const tables: {name: string}[] = conn
+        const tables: { name: string }[] = conn
             .prepare('SELECT name FROM sqlite_master WHERE type=\'table\' AND name != \'sqlite_sequence\';')
             .all();
 
@@ -1083,4 +1083,60 @@ export const handleWarn = (client: CommandoClient, warn: string) => {
     }
 
     return global.console.warn(warn);
+};
+
+export const handleShardDisconnect = (client: CommandoClient, event: CloseEvent, shard: number) => {
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+    channel.send(stripIndents`
+        <@${client.owners[0].id}>
+        __**Shard Disconnected, warning, it will not reconnect**__!
+        **Shard Number:** ${shard}
+        **Close Event Code:** ${event.code}
+        **Close Event Reason:** ${event.reason}
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    `);
+};
+
+export const handleShardError = (client: CommandoClient, event: Error, shard: number) => {
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+    channel.send(stripIndents`
+        <@${client.owners[0].id}>
+        __**Shard encounted a connection error**__!
+        **Shard Number:** ${shard}
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Error Message:** ${event.message}
+    `);
+};
+
+export const handleShardReady = (client: CommandoClient, shard: number) => {
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+    channel.send(stripIndents`
+        __**New Shard is ready**__!
+        **Shard Number:** ${shard}
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    `);
+};
+
+export const handleShardReconnecting = (client: CommandoClient, shard: number) => {
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+    channel.send(stripIndents`
+        __**Shard is reconnecting**__!
+        **Shard Number:** ${shard}
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    `);
+};
+
+export const handleShardResumed = (client: CommandoClient, shard: number, replayedEvents: number) => {
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+    channel.send(stripIndents`
+        __**Shard is resumed successfully**__!
+        **Shard Number:** ${shard}
+        **Amount of replayed events:** ${replayedEvents}
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    `);
 };

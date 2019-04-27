@@ -2,9 +2,12 @@ import { Command, CommandoClient, CommandoGuild, CommandoMessage, SyncSQLiteProv
 import { DMChannel, GuildChannel, GuildMember, RateLimitData } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import path from 'path';
-import { handleChannelCreate, handleChannelDelete, handleCmdErr, handleCommandRun, handleDebug,
-         handleErr, handleGuildJoin, handleGuildLeave, handleMemberJoin, handleMemberLeave,
-         handleMsg, handlePresenceUpdate, handleRateLimit, handleReady, handleRejection, handleWarn
+import {
+    handleChannelCreate, handleChannelDelete, handleCmdErr, handleCommandRun, handleDebug,
+    handleErr, handleGuildJoin, handleGuildLeave, handleMemberJoin, handleMemberLeave,
+    handleMsg, handlePresenceUpdate, handleRateLimit, handleReady, handleRejection,
+    handleShardDisconnect, handleShardError, handleShardReady, handleShardReconnecting,
+    handleShardResumed, handleWarn
 } from './components/EventsHelper';
 
 export default class Ribbon {
@@ -43,7 +46,12 @@ export default class Ribbon {
             .on('presenceUpdate', (oldMember: GuildMember, newMember: GuildMember) => handlePresenceUpdate(this.client, oldMember, newMember))
             .on('rateLimit', (info: RateLimitData) => handleRateLimit(this.client, info))
             .on('ready', () => handleReady(this.client))
-            .on('warn', (warn: string) => handleWarn(this.client, warn));
+            .on('warn', (warn: string) => handleWarn(this.client, warn))
+            .on('shardDisconnected', (event: CloseEvent, shard: number) => handleShardDisconnect(this.client, event, shard))
+            .on('shardError', (error: Error, shard: number) => handleShardError(this.client, error, shard))
+            .on('shardReady', (shard: number) => handleShardReady(this.client, shard))
+            .on('shardReconnecting', (shard: number) => handleShardReconnecting(this.client, shard))
+            .on('shardResumed', (shard: number, events: number) => handleShardResumed(this.client, shard, events));
         process.on('unhandledRejection', (reason: Error | any, p: Promise<any>) => handleRejection(reason, p));
 
         const db = new Database(path.join(__dirname, 'data/databases/settings.sqlite3'));
