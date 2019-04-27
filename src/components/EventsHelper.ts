@@ -1070,28 +1070,26 @@ export const handleWarn = (client: CommandoClient, warn: string) => {
     return global.console.warn(warn);
 };
 
-export const handleShardDisconnect = (client: CommandoClient, event: CloseEvent, shard: number) => {
-    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-    channel.send(stripIndents`
-        <@${client.owners[0].id}>
-        __**Shard Disconnected, warning, it will not reconnect**__!
+export const handleShardDisconnect = (event: CloseEvent, shard: number) => {
+    global.console.error(stripIndents`
+    >>>>>>
+        Shard Disconnected, warning, it will not reconnect!
         **Shard Number:** ${shard}
         **Close Event Code:** ${event.code}
         **Close Event Reason:** ${event.reason}
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    <<<<<<
     `);
 };
 
-export const handleShardError = (client: CommandoClient, event: Error, shard: number) => {
-    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-    channel.send(stripIndents`
-        <@${client.owners[0].id}>
-        __**Shard encounted a connection error**__!
+export const handleShardError = (event: Error, shard: number) => {
+    global.console.error(stripIndents`
+    >>>>>>
+        Shard encountered a connection error!
         **Shard Number:** ${shard}
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${event.message}
+    <<<<<<
     `);
 };
 
@@ -1105,23 +1103,23 @@ export const handleShardReady = (shard: number) => {
     `);
 };
 
-export const handleShardReconnecting = (client: CommandoClient, shard: number) => {
-    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-    channel.send(stripIndents`
-        __**Shard is reconnecting**__!
+export const handleShardReconnecting = (shard: number) => {
+    global.console.info(stripIndents`
+    >>>>>>
+        Shard is reconnecting!
         **Shard Number:** ${shard}
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    <<<<<<
     `);
 };
 
-export const handleShardResumed = (client: CommandoClient, shard: number, replayedEvents: number) => {
-    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-    channel.send(stripIndents`
-        __**Shard is resumed successfully**__!
+export const handleShardResumed = (shard: number, replayedEvents: number) => {
+    global.console.info(stripIndents`
+    >>>>>>
+        Shard is resumed successfully!
         **Shard Number:** ${shard}
         **Amount of replayed events:** ${replayedEvents}
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    <<<<<<
     `);
 };
