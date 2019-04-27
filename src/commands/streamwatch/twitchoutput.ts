@@ -9,7 +9,7 @@
  * @param {ChannelResolvable} AnyChannel Channel to output notifs to
  */
 
-import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { TextChannel } from 'awesome-djs';
 
@@ -40,10 +40,8 @@ export default class TwitchOutputCommand extends Command {
 
     @shouldHavePermission('ADMINISTRATOR')
     public run (msg: CommandoMessage, { channel }: { channel: TextChannel }) {
-        startTyping(msg);
         msg.guild.settings.set('twitchchannel', channel.id);
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply(`📹 the channel to use for the twitch notifications has been set to <#${channel.id}>`
         );

@@ -10,7 +10,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, removeDiacritics, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, removeDiacritics } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
@@ -45,7 +45,6 @@ export default class AnimeCommand extends Command {
 
     public async run (msg: CommandoMessage, { anime }: { anime: string }) {
         try {
-            startTyping(msg);
             const animeList = await fetch(
                 `https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,
                 {
@@ -89,12 +88,10 @@ export default class AnimeCommand extends Command {
                 );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(animeEmbed, `https://kitsu.io/anime/${hit.slug}`);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`no anime found for \`${anime}\` `);
         }

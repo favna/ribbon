@@ -9,7 +9,7 @@
  * @param {string} AnyMembers List of members to monitor space delimited
  */
 
-import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -42,13 +42,11 @@ export default class TwitchMonitorsCommand extends Command {
 
     @shouldHavePermission('ADMINISTRATOR')
     public run (msg: CommandoMessage, { members }: { members: GuildMember[] }) {
-        startTyping(msg);
         const memberIDs = members.map(m => m.id);
         const memberNames = members.map(m => m.displayName);
 
         msg.guild.settings.set('twitchmonitors', memberIDs);
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply(stripIndents`
             🕵 Started spying on the stream status of ${memberNames.map(val => `\`${val}\``).join(', ')}

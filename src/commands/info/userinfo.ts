@@ -8,7 +8,7 @@
  * @param {GuildMemberResolvable} AnyMember Member you want to get info about
  */
 
-import { cleanArray, deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
+import { cleanArray, deleteCommandMessages, sentencecase } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
@@ -40,8 +40,6 @@ export default class UserInfoCommand extends Command {
     }
 
     public run (msg: CommandoMessage, { member }: { member: GuildMember }) {
-        startTyping(msg);
-
         const uinfoEmbed = new MessageEmbed();
 
         uinfoEmbed
@@ -74,7 +72,6 @@ export default class UserInfoCommand extends Command {
             : uinfoEmbed.setFooter(`${member.displayName} has 0 roles`);
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(uinfoEmbed);
     }

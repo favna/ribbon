@@ -10,7 +10,6 @@
  */
 
 import { ASSET_BASE_PATH } from '@components/Constants';
-import { startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
 
@@ -41,9 +40,7 @@ export default class FavnaCommand extends Command {
     public run (msg: CommandoMessage) {
         if (msg.patternMatches && !this.verifyRmt(msg)) return null;
 
-        startTyping(msg);
         msg.delete();
-        stopTyping(msg);
 
         return msg.embed({
             color: msg.guild ? msg.guild.me!.displayColor : 10610610,

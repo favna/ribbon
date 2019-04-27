@@ -10,7 +10,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR, eightBallPredictionsMap } from '@components/Constants';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
@@ -40,7 +40,6 @@ export default class EightBallCommand extends Command {
     }
 
     public run (msg: CommandoMessage, { question }: { question: string }) {
-        startTyping(msg);
         const eightBallEmbed = new MessageEmbed();
 
         eightBallEmbed
@@ -53,7 +52,6 @@ export default class EightBallCommand extends Command {
             );
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(eightBallEmbed);
     }

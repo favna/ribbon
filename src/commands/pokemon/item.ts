@@ -13,7 +13,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeItemAliases, PokeItemDetailsType } from '@components/Types';
-import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import { itemAliases } from '@pokedex/aliases';
 import BattleItems from '@pokedex/items';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -50,7 +50,6 @@ export default class ItemCommand extends Command {
 
     public run (msg: CommandoMessage, { item }: { item: string }) {
         try {
-            startTyping(msg);
             const itemOptions: FuseOptions<PokeItemDetailsType & IPokeItemAliases> = {
                 keys: ['alias', 'item', 'id', 'name'],
                 threshold: 0.3,
@@ -80,12 +79,10 @@ export default class ItemCommand extends Command {
                 );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(itemEmbed, `**${sentencecase(itemSearch[0].name)}**`);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             if (/(?:no_item)/i.test(err.toString())) return msg.reply(stripIndents`no item found for \`${item}\``);
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;

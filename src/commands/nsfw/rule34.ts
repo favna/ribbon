@@ -11,7 +11,7 @@
  * @param {string} Query Something you want to find
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { search as booru } from 'booru';
@@ -46,8 +46,6 @@ export default class Rule34Command extends Command {
 
     public async run (msg: CommandoMessage, { tags }: { tags: string[] }) {
         try {
-            startTyping(msg);
-
             const booruSearch = await booru('r34', tags, {
                 limit: 1,
                 random: true,
@@ -69,12 +67,10 @@ export default class Rule34Command extends Command {
                 .setImage(hit.fileUrl!);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(r34Embed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`no juicy images found for \`${tags}\``);
         }

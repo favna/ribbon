@@ -10,7 +10,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -45,8 +45,6 @@ export default class ITunesCommand extends Command {
 
     public async run (msg: CommandoMessage, { music }: { music: string }) {
         try {
-            startTyping(msg);
-
             const apple = await fetch(
                 `https://itunes.apple.com/search?${stringify({
                     country: 'US',
@@ -79,11 +77,9 @@ export default class ITunesCommand extends Command {
                 .addField('Preview', `[Click Here](${song.previewUrl})`, true);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(tunesEmbed);
         } catch (err) {
-            stopTyping(msg);
 
             if (/(?:nosong)/i.test(err.toString())) {
                 return msg.reply(`no song found for \`${music.replace(/\+/g, ' ')}\``);

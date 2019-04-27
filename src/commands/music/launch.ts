@@ -20,7 +20,7 @@
 import { DEFAULT_VOLUME, MAX_LENGTH, MAX_SONGS, PASSES } from '@components/Constants';
 import PrismPlayer from '@components/PrismPlayer';
 import { MusicQueueType, MusicVoteType, YoutubeVideoSnippetType, YoutubeVideoType } from '@components/Types';
-import { deleteCommandMessages, Song, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, Song } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Guild, Message, Permissions, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
 import { parse, stringify } from 'awesome-querystring';
@@ -126,7 +126,6 @@ export default class LaunchMusicCommand extends Command {
     }
 
     public async run (msg: CommandoMessage, { videoQuery }: { videoQuery: string }) {
-        startTyping(msg);
         const queue = this.queue.get(msg.guild.id);
 
         if (!msg.member!.voice.channel) return msg.reply('please join a voice channel before issuing this command.');
@@ -157,7 +156,6 @@ export default class LaunchMusicCommand extends Command {
             } catch (error) {
                 this.queue.delete(msg.guild.id);
                 statusMsg.edit(`${msg.author}, unable to join your voice channel.`);
-                stopTyping(msg);
 
                 return null;
             }
@@ -173,7 +171,6 @@ export default class LaunchMusicCommand extends Command {
 
             if (!videos) {
                 statusMsg.edit(`${msg.author}, I did not find any videos in that playlist. Are you sure they are public and not unlisted / private?`);
-                stopTyping(msg);
 
                 return null;
             }
@@ -192,7 +189,6 @@ export default class LaunchMusicCommand extends Command {
             if (!video) throw new Error('no_video_id');
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             this.handleVideo(video, queue as MusicQueueType, voiceChannel, msg, statusMsg);
             return null;
@@ -209,7 +205,6 @@ export default class LaunchMusicCommand extends Command {
                     return null;
                 } catch (err) {
                     deleteCommandMessages(msg, this.client);
-                    stopTyping(msg);
 
                     return statusMsg.edit(`<@${msg.author!.id}>, couldn't obtain the search result video's details.`);
                 }
@@ -221,7 +216,6 @@ export default class LaunchMusicCommand extends Command {
 
     private async handleVideo (video: YoutubeVideoType, queue: MusicQueueType, voiceChannel: VoiceChannel, msg: CommandoMessage, statusMsg: Message): Promise<null> {
         if (!video.durationSeconds || video.durationSeconds === 0) {
-            stopTyping(msg);
             statusMsg.edit(oneLine`${msg.author}, you can't play live streams`);
             return null;
         }
@@ -250,7 +244,6 @@ export default class LaunchMusicCommand extends Command {
             if (!result.startsWith('👍')) {
                 this.queue.delete(msg.guild.id);
                 statusMsg.edit('', { embed: resultMessage });
-                stopTyping(msg);
 
                 return null;
             }
@@ -260,7 +253,6 @@ export default class LaunchMusicCommand extends Command {
                 queue.connection = await queue.voiceChannel.join();
                 this.play(msg.guild, queue.songs[0]);
                 statusMsg.delete();
-                stopTyping(msg);
 
                 return null;
             } catch (error) {
@@ -268,7 +260,6 @@ export default class LaunchMusicCommand extends Command {
                 statusMsg.edit(oneLine`${msg.author}, something went wrong playing music.
                     Please contact <@${this.client.owners[0].id}> as there is likely something wrong in the code!
                     Use \`${msg.guild.commandPrefix}invite\` to get an invite to the support server.`);
-                stopTyping(msg);
 
                 return null;
             }
@@ -284,7 +275,6 @@ export default class LaunchMusicCommand extends Command {
             };
 
             statusMsg.edit('', { embed: resultMessage });
-            stopTyping(msg);
 
             return null;
         }
@@ -292,7 +282,6 @@ export default class LaunchMusicCommand extends Command {
 
     private async handlePlaylist (video: YoutubeVideoType, playlistId: string, msg: CommandoMessage, statusMsg: Message): Promise<null> {
         if (!video.durationSeconds || video.durationSeconds === 0) {
-            stopTyping(msg);
             statusMsg.edit(oneLine`${msg.author}, you can't play live streams.`);
             return null;
         }
@@ -310,8 +299,6 @@ export default class LaunchMusicCommand extends Command {
         if (!result.startsWith('👍')) {
             this.queue.delete(msg.guild.id);
             statusMsg.edit('', { embed: resultMessage });
-            stopTyping(msg);
-
             return null;
         }
 
@@ -328,8 +315,6 @@ export default class LaunchMusicCommand extends Command {
                 },
             },
         });
-        stopTyping(msg);
-
         return null;
     }
 

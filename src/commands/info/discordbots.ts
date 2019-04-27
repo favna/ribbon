@@ -10,7 +10,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
@@ -44,7 +44,6 @@ export default class DiscordBotsCommand extends Command {
 
     public async run (msg: CommandoMessage, { bot }: { bot: string }) {
         try {
-            startTyping(msg);
             const res = await fetch(`https://discordbots.org/api/bots/${bot}`, {
                 headers: { Authorization: process.env.DISCORD_BOTS_API_KEY! },
             });
@@ -66,12 +65,10 @@ export default class DiscordBotsCommand extends Command {
                 .addField('Invite Link', `[Click Here](${info.invite})`);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(infoEmbed, `https://discordbots.org/bot/${info.clientid}`);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply('an error occurred getting info from that bot, are you sure it exists on the website?');
         }

@@ -18,7 +18,7 @@
  * @param {number} [distance] Levenshtein distance for similarity
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -73,8 +73,6 @@ export default class DuplicateTextCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
     public run (msg: CommandoMessage, { option, within, equals, distance }: { option: boolean; within: number; equals: number; distance: number }) {
-        startTyping(msg);
-
         const dtfEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const options = { distance, equals, within, enabled: option };
@@ -98,7 +96,6 @@ export default class DuplicateTextCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(dtfEmbed);
     }

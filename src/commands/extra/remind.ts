@@ -13,7 +13,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -101,7 +101,6 @@ export default class RemindCommand extends Command {
         const remindEmbed = new MessageEmbed();
 
         try {
-            startTyping(msg);
             conn.prepare('INSERT INTO "reminders" VALUES ($userid, $remindtime, $remindtext);')
                 .run({
                     remindtext: reminder,
@@ -125,7 +124,6 @@ export default class RemindCommand extends Command {
                     });
             } else {
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
                 const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
                 channel.send(stripIndents`
@@ -151,7 +149,6 @@ export default class RemindCommand extends Command {
             .setTimestamp(moment().add(time, 'minutes').toDate());
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(remindEmbed);
     }

@@ -13,7 +13,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeMoveAliases, PokeMoveDetailsType } from '@components/Types';
-import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import { moveAliases } from '@pokedex/aliases';
 import BattleMovedex from '@pokedex/moves';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -50,8 +50,6 @@ export default class MoveCommand extends Command {
 
     public run (msg: CommandoMessage, { move }: { move: string }) {
         try {
-            startTyping(msg);
-
             const moveOptions: FuseOptions<PokeMoveDetailsType & IPokeMoveAliases> = {
                 keys: ['alias', 'move', 'id', 'name'],
                 threshold: 0.2,
@@ -106,12 +104,10 @@ export default class MoveCommand extends Command {
                 );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(moveEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             if (/(?:no_move)/i.test(err.toString())) return msg.reply(stripIndents`no move found for \`${move}\``);
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;

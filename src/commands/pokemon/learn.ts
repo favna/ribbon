@@ -18,7 +18,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import BattleLearnsets from '@pokedex/learnsets';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -74,7 +74,6 @@ export default class LearnCommand extends Command {
 
     public run (msg: CommandoMessage, { pokemon, moves }: { pokemon: string; moves: string; }) {
         try {
-            startTyping(msg);
             moves = moves.toLowerCase().replace(/(-)/gm, '');
 
             const { learnset } = BattleLearnsets[pokemon];
@@ -135,11 +134,9 @@ export default class LearnCommand extends Command {
                 );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(learnEmbed);
         } catch (err) {
-            stopTyping(msg);
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`

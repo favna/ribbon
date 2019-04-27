@@ -12,7 +12,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { CasinoRowType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -60,7 +60,6 @@ export default class GiveCommand extends Command {
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
         try {
-            startTyping(msg);
             const query = conn
                 .prepare(`SELECT userID, balance FROM "${msg.guild.id}" WHERE userID = $authorid OR userID = $playerid;`)
                 .all({ authorid: msg.author!.id, playerid: player.id });
@@ -97,11 +96,9 @@ export default class GiveCommand extends Command {
                 .addField(player.displayName, `${oldReceiverEntry} ➡ ${query[receiverEntry].balance}`);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(giveEmbed);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
                 conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();

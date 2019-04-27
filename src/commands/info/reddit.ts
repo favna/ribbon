@@ -8,7 +8,7 @@
  * @param {string} RedditUser The Reddit user you want to look up
  */
 
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Message, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -55,7 +55,6 @@ export default class RedditCommand extends Command {
 
     public async run (msg: CommandoMessage, { user }: { user: string }) {
         try {
-            startTyping(msg);
             const reply: Message | Message[] = await msg.say('`fetching and calculating statistics...`');
 
             await this.fetchData(user);
@@ -124,14 +123,10 @@ export default class RedditCommand extends Command {
                 );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
-
             (reply as Message).delete();
 
             return msg.embed(redditEmbed);
         } catch (err) {
-            stopTyping(msg);
-
             if (/(?:no_user)/i.test(err.toString())) {
                 return msg.reply(oneLine`Either there is no Reddit user \`${user}\`
                     or they do not have enough content to show`);

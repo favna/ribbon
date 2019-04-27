@@ -13,7 +13,7 @@
 
 
 import { DEFAULT_EMBED_COLOR, LengthUnits } from '@components/Constants';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { convert } from 'awesome-converter';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -57,7 +57,6 @@ export default class LengthCommand extends Command {
 
     public async run (msg: CommandoMessage, { lengthAmount, fromUnit, toUnit }: { lengthAmount: number, fromUnit: LengthUnits, toUnit: LengthUnits }) {
         try {
-            startTyping(msg);
             lengthAmount = roundNumber(lengthAmount, 2);
             const mathEmbed = new MessageEmbed();
             const output = convert(lengthAmount, LengthUnits[fromUnit], LengthUnits[toUnit], { precision: 2 });
@@ -68,12 +67,9 @@ export default class LengthCommand extends Command {
                 .setDescription(oneLine`${lengthAmount} ${fromUnit} equals to ${output} ${toUnit}`);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(mathEmbed);
         } catch (err) {
-            stopTyping(msg);
-
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`

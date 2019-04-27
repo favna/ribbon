@@ -13,7 +13,7 @@
  * @param {string} TheReason Reason for this softban.
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -52,13 +52,8 @@ export default class SoftbanCommand extends Command {
     public run (msg: CommandoMessage, { member, reason }: { member: GuildMember; reason: string }) {
         if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to softban yourself.');
         if (!member.bannable) return msg.reply('I cannot softban that member, their role is probably higher than my own!');
-        startTyping(msg);
 
-        member.ban({
-            days: 1,
-            reason,
-        });
-
+        member.ban({ days: 1, reason });
         msg.guild.members.unban(member.user);
 
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
@@ -79,7 +74,6 @@ export default class SoftbanCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(softbanEmbed);
     }

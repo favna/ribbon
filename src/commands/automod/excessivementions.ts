@@ -11,7 +11,7 @@
  * @param {string} [threshold] How many mentions allowed in 1 message
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -49,8 +49,6 @@ export default class ExcessiveMentionsCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
     public run (msg: CommandoMessage, { option, threshold }: { option: boolean; threshold: number }) {
-        startTyping(msg);
-
         const emEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const options = { threshold, enabled: option };
@@ -72,7 +70,6 @@ export default class ExcessiveMentionsCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(emEmbed);
     }

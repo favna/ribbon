@@ -23,7 +23,7 @@
  */
 
 import { timeparseHelper } from '@components/TimeparseHelper';
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -112,13 +112,11 @@ export default class TimerAddCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES')
     public run (msg: CommandoMessage, { interval, timerChannel, content, members }: { interval: number; timerChannel: TextChannel; content: string; members: GuildMember[]; }) {
-        startTyping(msg);
         const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const timedMsgEmbed = new MessageEmbed();
 
         try {
-            startTyping(msg);
             conn.prepare(`INSERT INTO "${msg.guild.id}" (interval, channel, content, lastsend, members) VALUES ($interval, $channel, $content, $lastsend, $members);`)
                 .run({
                     content,
@@ -127,9 +125,7 @@ export default class TimerAddCommand extends Command {
                     lastsend: moment().subtract(interval, 'ms').format('YYYY-MM-DD HH:mm'),
                     members: members.length ? members.map(member => member.id).join(';') : '',
                 });
-            stopTyping(msg);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
                 conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id INTEGER PRIMARY KEY AUTOINCREMENT, interval INTEGER, channel TEXT, content TEXT, lastsend TEXT, members TEXT);`)
                     .run();
@@ -181,7 +177,6 @@ export default class TimerAddCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(timedMsgEmbed);
     }

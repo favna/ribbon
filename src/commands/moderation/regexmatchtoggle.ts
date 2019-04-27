@@ -9,7 +9,7 @@
  * @param {boolean} Option True or False
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 
@@ -40,8 +40,6 @@ export default class RegexMatchToggleCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES')
     public run (msg: CommandoMessage, { option }: { option: boolean }) {
-        startTyping(msg);
-
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const regexMatchEmbed = new MessageEmbed();
 
@@ -58,7 +56,6 @@ export default class RegexMatchToggleCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(regexMatchEmbed);
     }

@@ -11,7 +11,7 @@
  * @param {number} [AmountOfWarnPoints] The amount of warning points to remove
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -62,8 +62,6 @@ export default class DeleteWarnCommand extends Command {
             .setTimestamp();
 
         try {
-            startTyping(msg);
-
             const query = conn.prepare(`SELECT id,points FROM "${msg.guild.id}" WHERE id = ?;`).get(member.id);
 
             if (!query) return msg.reply('that user has no warnings points yet');
@@ -88,11 +86,9 @@ export default class DeleteWarnCommand extends Command {
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(warnEmbed);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
                 conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id TEXT PRIMARY KEY, tag TEXT, points INTEGER);`)
                     .run();

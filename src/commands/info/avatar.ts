@@ -11,7 +11,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, ImageSize, MessageEmbed } from 'awesome-djs';
 
@@ -49,8 +49,6 @@ export default class AvatarCommand extends Command {
     }
 
     public run (msg: CommandoMessage, { member, size }: { member: GuildMember; size: ImageSize }) {
-        startTyping(msg);
-
         const ava = member.user.displayAvatarURL({ size: size as ImageSize });
         const embed = new MessageEmbed();
         const ext = this.fetchExt(ava);
@@ -63,7 +61,6 @@ export default class AvatarCommand extends Command {
             .setDescription(`[Direct Link](${ava})`);
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(embed);
     }

@@ -17,7 +17,7 @@
  */
 
 import { IMusicCommand, MusicQueueType, MusicVoteType } from '@components/Types';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
 import { oneLine } from 'common-tags';
@@ -67,7 +67,6 @@ export default class SkipSongCommand extends Command {
         if (!queue.voiceChannel.members.has(msg.author!.id)) return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
         if (!queue.songs[0].dispatcher) return msg.reply('the song hasn\'t even begun playing yet. Why not give it a chance?');
 
-        startTyping(msg);
         const threshold = Math.ceil((queue.voiceChannel.members.size - 1) / 3);
         const force =
             threshold <= 1 ||
@@ -77,7 +76,6 @@ export default class SkipSongCommand extends Command {
 
         if (force) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(this.skip(msg.guild, queue));
         }
@@ -87,7 +85,6 @@ export default class SkipSongCommand extends Command {
         if (vote && vote.count >= 1) {
             if (vote.users.some((userId: string) => userId === msg.author!.id)) {
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.reply('you\'ve already voted to skip the song.');
             }
@@ -96,7 +93,6 @@ export default class SkipSongCommand extends Command {
             vote.users.push(msg.author!.id);
             if (vote.count >= threshold) {
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.reply(this.skip(msg.guild, queue));
             }
@@ -105,7 +101,6 @@ export default class SkipSongCommand extends Command {
             const time = this.setTimeout(vote);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.say(oneLine`
                 ${vote.count} vote${vote.count > 1 ? 's' : ''} received so far,
@@ -128,7 +123,6 @@ export default class SkipSongCommand extends Command {
         this.songVotes.set(msg.guild.id, newVote);
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.say(oneLine`
             Starting a voteskip.

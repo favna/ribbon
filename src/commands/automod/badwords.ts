@@ -12,7 +12,7 @@
  * @param {string} [words] Optional: comma separated list of words to filter
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -51,7 +51,6 @@ export default class BadWordsCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
     public run (msg: CommandoMessage, { option, words }: { option: boolean; words: string[] }) {
-        startTyping(msg);
         const bwfEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const options = { words, enabled: option };
@@ -72,7 +71,6 @@ export default class BadWordsCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(bwfEmbed);
     }

@@ -10,7 +10,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, pubgRegionsMap } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -60,8 +60,6 @@ export default class PubgCommand extends Command {
 
     public async run (msg: CommandoMessage, { user, shard }: { user: string; shard: string }) {
         try {
-            startTyping(msg);
-
             const pubEmbed = new MessageEmbed();
             const headers = { Accept: 'application/vnd.api+json', Authorization: `Bearer ${process.env.PUBG_API_KEY!}` };
 
@@ -185,12 +183,10 @@ export default class PubgCommand extends Command {
                 );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(pubEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
             if (/(?:Cannot read property)/i.test(err.toString())) {
                 return msg.reply(
                     `no player found with username \`${user}\` in \`${shard}\``

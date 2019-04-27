@@ -9,7 +9,7 @@
  * @param {string} URL URL you want to encode into a QR image
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageAttachment, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -43,7 +43,6 @@ export default class QRGenCommand extends Command {
 
     public async run (msg: CommandoMessage, { url }: { url: string }) {
         try {
-            startTyping(msg);
             const base64 = await qr(url, { type: 'image/jpeg', rendererOpts: { quality: 1 } });
             const buffer = Buffer.from(base64.replace(/^data:image\/png;base64,/, '').toString(), 'base64');
             const embedAttachment = new MessageAttachment(buffer, 'qrcode.png');
@@ -55,12 +54,10 @@ export default class QRGenCommand extends Command {
                 .setImage('attachment://qrcode.png');
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(qrEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 

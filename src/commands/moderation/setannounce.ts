@@ -9,7 +9,7 @@
  * @param {ChannelResolvable} AnnounceChannel The channel to set the announcements to
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -42,8 +42,6 @@ export default class SetAnnounceCommand extends Command {
 
     @shouldHavePermission('ADMINISTRATOR')
     public run (msg: CommandoMessage, { channel }: { channel: TextChannel }) {
-        startTyping(msg);
-
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const setAnnouncementEmbed = new MessageEmbed();
 
@@ -63,7 +61,6 @@ export default class SetAnnounceCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(setAnnouncementEmbed);
     }

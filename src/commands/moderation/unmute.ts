@@ -8,7 +8,7 @@
  * @param {GuildMemberResolvable} AnyMember The member to remove a role from
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -42,7 +42,6 @@ export default class UnmuteCommand extends Command {
     @shouldHavePermission('MANAGE_ROLES', true)
     public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         if (member.manageable) {
-            startTyping(msg);
             try {
                 const modlogChannel = msg.guild.settings.get('modlogchannel', null);
                 const muteRoleEmbed = new MessageEmbed();
@@ -66,12 +65,10 @@ export default class UnmuteCommand extends Command {
                 }
 
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.embed(muteRoleEmbed);
             } catch (err) {
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
                 if (/(?:Missing Permissions)/i.test(err.toString())) {
                     return msg.reply(stripIndents`an error occurred unmuting \`${member.displayName}\`.
                         Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?
@@ -92,7 +89,6 @@ export default class UnmuteCommand extends Command {
             }
         }
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply(stripIndents`an error occurred unmuting \`${member.displayName}\`.
             Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);

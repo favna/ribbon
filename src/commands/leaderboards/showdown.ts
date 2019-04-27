@@ -10,7 +10,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -44,7 +44,6 @@ export default class ShowdownCommand extends Command {
 
     public async run (msg: CommandoMessage, { tier }: { tier: string }) {
         try {
-            startTyping(msg);
             const ladders = await fetch(`https://pokemonshowdown.com/ladder/${tier}.json`);
             const json = await ladders.json();
             const data = {
@@ -73,12 +72,10 @@ export default class ShowdownCommand extends Command {
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(showdownEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 

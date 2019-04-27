@@ -8,7 +8,7 @@
  */
 
 import { CopypastaType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -36,8 +36,6 @@ export default class CopyPastaListCommand extends Command {
         const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
 
         try {
-            startTyping(msg);
-
             const list: CopypastaType[] = conn.prepare(`SELECT * FROM "${msg.guild.id}";`).all();
             if (!list.length) throw new Error('no_pastas');
 
@@ -61,11 +59,8 @@ export default class CopyPastaListCommand extends Command {
                     title: 'Copypastas available on this server',
                 }));
 
-                stopTyping(msg);
                 return null;
             }
-
-            stopTyping(msg);
 
             return msg.embed({
                 color: msg.guild.me!.displayColor,
@@ -74,7 +69,6 @@ export default class CopyPastaListCommand extends Command {
             });
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
             if (/(?:no such table|no_pastas)/i.test(err.toString())) {
                 return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);
             }

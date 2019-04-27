@@ -11,7 +11,7 @@
  * @param {string} Query Something you want to find
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -46,8 +46,6 @@ export default class PornVidsCommand extends Command {
 
     public async run (msg: CommandoMessage, { porn }: { porn: string }) {
         try {
-            startTyping(msg);
-
             const pornEmbed = new MessageEmbed();
             const res = await fetch(`https://www.pornhub.com/webmasters/search?${stringify({ search: porn })}`);
             const vid = await res.json();
@@ -70,12 +68,10 @@ export default class PornVidsCommand extends Command {
                 );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(pornEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`nothing found for \`${porn}\``);
         }

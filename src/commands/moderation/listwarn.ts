@@ -9,7 +9,7 @@
  * @param {GuildMemberResolvable} AnyMember The member of whom to list the warning points
  */
 
-import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -53,7 +53,6 @@ export default class ListWarnCommand extends Command {
             .setTimestamp();
 
         try {
-            startTyping(msg);
             const { id, points, tag } = conn.prepare(`SELECT id, points, tag FROM "${msg.guild.id}" WHERE id= ?;`).get(member.id);
 
             embed.setDescription(stripIndents`
@@ -61,11 +60,9 @@ export default class ListWarnCommand extends Command {
                 **Current warning Points:** ${points}
             `);
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(embed);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
                 return msg.reply(`no warnpoints found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
             }

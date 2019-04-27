@@ -8,10 +8,10 @@
  */
 
 import { decache } from '@components/Decache';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import fs from 'fs';
-import { getGamesAmerica } from 'nintendo-switch-eshop';
+import { getGamesEurope } from 'nintendo-switch-eshop';
 import path from 'path';
 
 export default class EShopFetchCommand extends Command {
@@ -31,10 +31,9 @@ export default class EShopFetchCommand extends Command {
     }
 
     public async run (msg: CommandoMessage) {
-        startTyping(msg);
         fs.writeFileSync(
             path.join(__dirname, '../../data/databases/eshop.json'),
-            JSON.stringify(await getGamesAmerica({ shop: 'all' })),
+            JSON.stringify(await getGamesEurope()),
             'utf8'
         );
         decache(path.join(__dirname, '../../data/databases/eshop.json'));
@@ -42,12 +41,10 @@ export default class EShopFetchCommand extends Command {
 
         if (fs.existsSync(path.join(__dirname, '../../data/databases/eshop.json'))) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply('latest eShop data stored in file');
         }
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply('an error occurred fetching latest data!');
     }

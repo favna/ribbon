@@ -11,7 +11,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { WordDefinitionType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -45,7 +45,6 @@ export default class DefineCommand extends Command {
 
     public async run (msg: CommandoMessage, { query }: { query: string }) {
         try {
-            startTyping(msg);
             const defineEmbed = new MessageEmbed();
             const res = await fetch(
                 `https://glosbe.com/gapi/translate?${stringify({
@@ -74,12 +73,10 @@ export default class DefineCommand extends Command {
                 .setDescription(final);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(defineEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(
                 `nothing found for \`${query}\`, maybe check your spelling?`

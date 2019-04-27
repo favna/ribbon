@@ -13,7 +13,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { CopypastaType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -53,7 +53,6 @@ export default class CopyPastaCommand extends Command {
         const pastaEmbed = new MessageEmbed();
 
         try {
-            startTyping(msg);
             const query: CopypastaType = conn
                 .prepare(`SELECT * FROM "${msg.guild.id}" WHERE name = ?;`)
                 .get(name);
@@ -77,7 +76,6 @@ export default class CopyPastaCommand extends Command {
                     for (const part of splitContent) {
                         await msg.say(part);
                     }
-                    stopTyping(msg);
 
                     return null;
                 }
@@ -88,7 +86,6 @@ export default class CopyPastaCommand extends Command {
                     .setDescription(query.content);
 
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.embed(pastaEmbed);
             }
@@ -96,7 +93,6 @@ export default class CopyPastaCommand extends Command {
             const maybe = dym(name, conn.prepare(`SELECT name FROM "${msg.guild.id}";`).all().map((a: CopypastaType) => a.name), { deburr: true });
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(
                 oneLine`that copypasta does not exist! ${maybe
@@ -106,7 +102,6 @@ export default class CopyPastaCommand extends Command {
             );
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
                 return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);
             }

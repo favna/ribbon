@@ -7,7 +7,7 @@
  * @name saywut
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
@@ -31,7 +31,6 @@ export default class SayWutCommand extends Command {
     }
 
     public run (msg: CommandoMessage) {
-        startTyping(msg);
         const saydata = msg.guild.settings.get('saydata', null);
         const wutEmbed = new MessageEmbed();
 
@@ -44,12 +43,10 @@ export default class SayWutCommand extends Command {
                 .setTimestamp(moment(saydata.messageDate).toDate());
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(wutEmbed);
         }
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply(`couldn't fetch message for your server. Has anyone used the ${msg.guild.commandPrefix}say command before?`
         );

@@ -8,7 +8,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -32,7 +32,6 @@ export default class InviteCommand extends Command {
     }
 
     public run (msg: CommandoMessage) {
-        startTyping(msg);
         const inviteEmbed = new MessageEmbed();
 
         inviteEmbed
@@ -49,7 +48,6 @@ export default class InviteCommand extends Command {
             `);
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(
             inviteEmbed,

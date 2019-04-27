@@ -10,7 +10,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -45,7 +45,6 @@ export default class MathCommand extends Command {
 
     public async run (msg: CommandoMessage, { equation }: { equation: string }) {
         try {
-            startTyping(msg);
             const calculator = await fetch('http://api.mathjs.org/v4/', {
                 body: JSON.stringify({ expr: equation }),
                 method: 'POST',
@@ -61,12 +60,9 @@ export default class MathCommand extends Command {
                 .setDescription(oneLine`The answer to \`${equation.toString()}\` is \`${maths.result}\``);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(mathEmbed);
         } catch (err) {
-            stopTyping(msg);
-
             if (/(?:matherr)/i.test(err.toString())) {
                 return msg.reply(
                     oneLine`\`${equation.toString()}\` is is not a supported equation. I use Math.js for my calculations (http://mathjs.org/)`

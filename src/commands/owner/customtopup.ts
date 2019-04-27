@@ -11,7 +11,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -50,7 +50,6 @@ export default class CustomTopUpCommand extends Command {
     }
 
     public run (msg: CommandoMessage, { player, chips }: { player: GuildMember; chips: number }) {
-        startTyping(msg);
         const coinEmbed = new MessageEmbed();
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
@@ -76,16 +75,13 @@ export default class CustomTopUpCommand extends Command {
                     .addField('New Balance', balance, true);
 
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.embed(coinEmbed);
             }
 
-            stopTyping(msg);
 
             return msg.reply('looks like that member has no chips yet');
         } catch (err) {
-            stopTyping(msg);
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`

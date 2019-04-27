@@ -10,7 +10,7 @@
  */
 
 import { DEFAULT_VOLUME } from '@components/Constants';
-import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
 export default class DefaultVolumeCommand extends Command {
@@ -41,12 +41,10 @@ export default class DefaultVolumeCommand extends Command {
 
     @shouldHavePermission('ADMINISTRATOR')
     public run (msg: CommandoMessage, { volume }: { volume: string }) {
-        startTyping(msg);
         if (volume === 'show') {
             const defaultVolume = msg.guild.settings.get('defaultVolume', DEFAULT_VOLUME);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`the default volume level is ${defaultVolume}.`);
         }
@@ -54,7 +52,6 @@ export default class DefaultVolumeCommand extends Command {
         if (volume === 'default') {
             msg.guild.settings.remove('defaultVolume');
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`set the default volume level to Ribbon's default (currently ${DEFAULT_VOLUME}).`);
         }
@@ -63,14 +60,12 @@ export default class DefaultVolumeCommand extends Command {
 
         if (isNaN(newVolume) || newVolume <= 0 || newVolume > 10) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply('invalid number provided. It must be in the range of 0-10.');
         }
 
         msg.guild.settings.set('defaultVolume', newVolume);
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply(`set the default volume level to ${newVolume}.`);
     }

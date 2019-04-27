@@ -8,7 +8,7 @@
  */
 
 import { CountdownType } from '@components/Types';
-import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -35,11 +35,9 @@ export default class CountDownList extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES')
     public async run (msg: CommandoMessage) {
-        startTyping(msg);
         const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
 
         try {
-            startTyping(msg);
             const list: CountdownType[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
             let body: string = '';
 
@@ -65,11 +63,9 @@ export default class CountDownList extends Command {
                     description: part,
                     title: 'Countdowns stored on this server',
                 }));
-                stopTyping(msg);
                 return null;
             }
 
-            stopTyping(msg);
 
             return msg.embed({
                 color: msg.guild.me!.displayColor,
@@ -77,7 +73,6 @@ export default class CountDownList extends Command {
                 title: 'Countdowns stored on this server',
             });
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
                 return msg.reply(`no countdowns found for this server. Start saving your first with ${msg.guild.commandPrefix}countdownadd`);
             }

@@ -12,7 +12,7 @@
  */
 
 import { ASSET_BASE_PATH, CoinSide, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -60,7 +60,6 @@ export default class CoinCommand extends Command {
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
         try {
-            startTyping(msg);
             let { balance } = conn.prepare(`SELECT balance FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
 
             if (balance >= 0) {
@@ -93,17 +92,14 @@ export default class CoinCommand extends Command {
                     );
 
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.embed(coinEmbed);
             }
-            stopTyping(msg);
 
             return msg.reply(oneLine`looks like you either don't have any chips yet or you used them all
                 Run \`${msg.guild.commandPrefix}chips\` to get your first 500
                 or run \`${msg.guild.commandPrefix}withdraw\` to withdraw some chips from your vault.`);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
                 conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();

@@ -10,7 +10,7 @@
  * @param {string} [TheReason] Reason for this kick.
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -50,7 +50,6 @@ export default class KickCommand extends Command {
     public run (msg: CommandoMessage, { member, reason }: { member: GuildMember; reason: string }) {
         if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to kick yourself.');
         if (!member.kickable) return msg.reply('I cannot kick that member, their role is probably higher than my own!');
-        startTyping(msg);
 
         member.kick(reason !== '' ? reason : 'No reason given by staff');
         const kickEmbed = new MessageEmbed();
@@ -71,7 +70,6 @@ export default class KickCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(kickEmbed);
     }

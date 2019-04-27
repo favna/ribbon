@@ -13,7 +13,7 @@
 
 import { PAGINATED_ITEMS } from '@components/Constants';
 import { IMusicCommand, MusicQueueType } from '@components/Types';
-import { deleteCommandMessages, Song, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, Song } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -56,12 +56,10 @@ export default class ViewQueueCommand extends Command {
     }
 
     public run (msg: CommandoMessage, { page }: { page: number }) {
-        startTyping(msg);
         const queue = this.queue.get(msg.guild.id);
 
         if (!queue) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(
                 'there are no songs in the queue. Why not put something in my jukebox?'
@@ -74,7 +72,6 @@ export default class ViewQueueCommand extends Command {
         const totalLength = queue.songs.reduce((prev: any, song: any) => prev + song.length, 0);
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed({
             author: {

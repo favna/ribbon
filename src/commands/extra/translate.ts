@@ -14,7 +14,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -60,8 +60,6 @@ export default class TranslateCommand extends Command {
 
     public async run (msg: CommandoMessage, { fromlang, tolang, text }: { fromlang: string; tolang: string; text: string }) {
         try {
-            startTyping(msg);
-
             const transEmbed = new MessageEmbed();
             const request = await fetch(
                 `https://translation.googleapis.com/language/translate/v2?${stringify({
@@ -86,11 +84,9 @@ export default class TranslateCommand extends Command {
                 `);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(transEmbed);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:invalid_request)/i.test(err.toString())) {
                 return msg.reply(
                     'either your from language or to language was not recognized. Please use ISO 639-1 codes for the languages (<https://cloud.google.com/translate/docs/languages>)'

@@ -15,7 +15,7 @@
  * @param {string} [hex] Optional: colour hex to display
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageAttachment, MessageEmbed } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -62,7 +62,6 @@ export default class RandomColCommand extends Command {
     }
 
     public async run (msg: CommandoMessage, { colour }: { colour: string }) {
-        startTyping(msg);
         const embed = new MessageEmbed();
         const hex = colour !== 'random'
             ? colour
@@ -82,7 +81,6 @@ export default class RandomColCommand extends Command {
             `);
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(embed);
     }

@@ -15,7 +15,7 @@
  */
 
 import { timeparseHelper } from '@components/TimeparseHelper';
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -85,7 +85,6 @@ export default class TempBanCommand extends Command {
     public run (msg: CommandoMessage, { member, time, reason, keepmessages = false }: { member: GuildMember; time: number; reason: string; keepmessages: boolean; }) {
         if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to ban yourself.');
         if (!member.bannable) return msg.reply('I cannot ban that member, their role is probably higher than my own!');
-        startTyping(msg);
 
         if (/--nodelete/im.test(msg.argString)) {
             keepmessages = true;
@@ -137,7 +136,6 @@ export default class TempBanCommand extends Command {
         }, time);
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(banEmbed);
     }

@@ -17,7 +17,7 @@
 
 import { DEFAULT_EMBED_COLOR, validCurrenciesMap } from '@components/Constants';
 import { convertCurrency, currencyMap } from '@components/MoneyHelper';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -70,8 +70,6 @@ export default class MoneyCommand extends Command {
 
     public async run (msg: CommandoMessage, { value, fromCurrency, toCurrency }: { value: number; fromCurrency: string; toCurrency: string }) {
         try {
-            startTyping(msg);
-
             const oxrEmbed = new MessageEmbed();
             const request = await fetch(`https://openexchangerates.org/api/latest.json?${stringify({
                     app_id: process.env.OXR_API_KEY!,
@@ -108,11 +106,9 @@ export default class MoneyCommand extends Command {
                 .setTimestamp();
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(oxrEmbed);
         } catch (err) {
-            stopTyping(msg);
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`

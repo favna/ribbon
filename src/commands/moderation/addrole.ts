@@ -10,7 +10,7 @@
  * @param {RoleResolvable} AnyRole Role to give
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -54,8 +54,6 @@ export default class AddRoleCommand extends Command {
                     Better go and fix your server's role permissions if you want to use this command!`);
             }
 
-            startTyping(msg);
-
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
             const roleAddEmbed = new MessageEmbed();
 
@@ -72,12 +70,10 @@ export default class AddRoleCommand extends Command {
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(roleAddEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
             if (/(?:Missing Permissions)/i.test(err.toString())) {
                 return msg.reply(stripIndents`an error occurred adding the role \`${role.name}\` to \`${member.displayName}\`.
                     The server staff should check that I have \`Manage Roles\` permission and I have the proper hierarchy.`);

@@ -11,7 +11,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { FrontlineGirlType } from '@components/Types';
-import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import frontlineGirls from '@pokedex/girlsfrontline';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
@@ -44,8 +44,6 @@ export default class GirlsFrontlineCommand extends Command {
 
     public async run (msg: CommandoMessage, { character }: { character: string }) {
         try {
-            startTyping(msg);
-
             const gfEmbed = new MessageEmbed();
             const gfOptions: FuseOptions<FrontlineGirlType> = { keys: ['name'] };
             const fuse = new Fuse(frontlineGirls, gfOptions);
@@ -110,12 +108,10 @@ export default class GirlsFrontlineCommand extends Command {
                 .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(gfEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`no girl found for \`${character}\``);
         }

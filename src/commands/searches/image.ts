@@ -10,7 +10,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -55,7 +55,6 @@ export default class ImageCommand extends Command {
         imageEmbed.setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
 
         try {
-            startTyping(msg);
             const imageSearch = await fetch(
                 `https://www.googleapis.com/customsearch/v1?${stringify({
                     cx: process.env.IMAGE_KEY!,
@@ -72,7 +71,6 @@ export default class ImageCommand extends Command {
                 .setFooter(`Search query: "${query.replace(/\+/g, ' ')}"`);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(imageEmbed);
         } catch (err) {
@@ -101,12 +99,10 @@ export default class ImageCommand extends Command {
                 .setFooter(`If you see this please contact ${this.client.owners[0].tag} (${this.client.owners[0].id}) as there is likely some issue with the Google search command`);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(imageEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`nothing found for \`${msg.argString}\``);
         }

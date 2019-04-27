@@ -13,7 +13,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IMusicCommand, MusicQueueType } from '@components/Types';
-import { deleteCommandMessages, Song, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, Song } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { MessageEmbed, Snowflake } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -52,7 +52,6 @@ export default class ShuffleCommand extends Command {
         if (!queue) return msg.reply('there are no songs in the queue. Why not put something in my jukebox?');
         if (queue.songs.length <= 2) return msg.reply('cannot shuffle a queue smaller than 2 tracks. Why not queue some more tunes?');
 
-        startTyping(msg);
         const currentPlaying = queue.songs[0];
 
         queue.songs.shift();
@@ -92,7 +91,6 @@ export default class ShuffleCommand extends Command {
             `);
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(embed);
     }

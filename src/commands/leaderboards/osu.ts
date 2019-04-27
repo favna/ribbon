@@ -10,7 +10,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -46,8 +46,6 @@ export default class OsuCommand extends Command {
 
     public async run (msg: CommandoMessage, { player }: { player: string }) {
         try {
-            startTyping(msg);
-
             const res = await fetch(
                 `https://osu.ppy.sh/api/get_user?${stringify({
                     k: process.env.OSU_API_KEY!,
@@ -86,12 +84,9 @@ export default class OsuCommand extends Command {
                 .addField('Accuracy', `${roundNumber(osu[0].accuracy, 2)}%`, true);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(osuEmbed);
         } catch (err) {
-            stopTyping(msg);
-
             if (/(?:no_player)/i.test(err.toString())) {
                 return msg.reply(`no OSU player found with username \`${player}\`.`);
             }

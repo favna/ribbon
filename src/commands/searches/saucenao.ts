@@ -10,7 +10,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { DMChannel, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -44,8 +44,6 @@ export default class SauceNaoCommand extends Command {
 
     public async run (msg: CommandoMessage, { image }: { image: string }) {
         try {
-            startTyping(msg);
-
             const sauceEmbed = new MessageEmbed();
             const handlerOptions: HandlerOptions = { numRes: 5, getRating: true };
             const sauceHandler = new Handler(process.env.SAUCENAO_KEY as string, handlerOptions);
@@ -70,13 +68,10 @@ export default class SauceNaoCommand extends Command {
                 .addField('Fifth potential match', `[on ${sauces[4].site}](${sauces[4].url})`);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(sauceEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
-
 
             if (/(no_matches|Could not find site matching URL given)/i.test(err.toString())) return msg.reply(`no matches found for \`${image}\``);
             if (/(no_sfw_matches)/i.test(err.toString())) {

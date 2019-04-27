@@ -9,7 +9,7 @@
  * @param {boolean} Option True or False
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -41,8 +41,6 @@ export default class InvitesFilterCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
     public run (msg: CommandoMessage, { option }: { option: boolean }) {
-        startTyping(msg);
-
         const ifEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
 
@@ -62,7 +60,6 @@ export default class InvitesFilterCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(ifEmbed);
     }

@@ -12,7 +12,7 @@
  */
 
 import { timeparseHelper } from '@components/TimeparseHelper';
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -51,14 +51,12 @@ export default class TimerRemoveCommand extends Command {
         const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
 
         try {
-            startTyping(msg);
             const rows = conn.prepare(`SELECT id FROM "${msg.guild.id}";`).all();
             const validIDs: any = [];
 
             rows.forEach((row: any) => validIDs.push(row.id));
 
             if (!validIDs.includes(id)) {
-                stopTyping(msg);
 
                 return msg.reply(oneLine`
                     that is not an ID of a message stored for this guild.
@@ -66,7 +64,6 @@ export default class TimerRemoveCommand extends Command {
                 `);
             }
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
                 return msg.reply(`no timed messages found for this server. Start saving your first with ${msg.guild.commandPrefix}timeradd`);
             }
@@ -107,7 +104,6 @@ export default class TimerRemoveCommand extends Command {
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(timerRemoveEmbed);
         } catch (err) {

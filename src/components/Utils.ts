@@ -99,14 +99,6 @@ export const roundNumber = (num: number, scale = 0) => {
     return Number(`${Math.round(Number(`${Number(arr[0])}e${sig}${Number(arr[1]) + scale}`))}e-${scale}`);
 };
 
-export const stopTyping = (msg: CommandoMessage) => {
-    msg.channel.stopTyping(true);
-};
-
-export const startTyping = (msg: CommandoMessage) => {
-    msg.channel.startTyping(1);
-};
-
 export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission: boolean = false): MethodDecorator => {
     return (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
         const fn = descriptor.value;

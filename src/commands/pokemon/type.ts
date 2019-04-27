@@ -11,7 +11,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { PokeTypeDataType } from '@components/Types';
-import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import BattleTypeChart from '@pokedex/typechart';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -60,7 +60,6 @@ export default class TypeCommand extends Command {
     // tslint:disable: cyclomatic-complexity
     public run (msg: CommandoMessage, { types }: { types: string[] }) {
         try {
-            startTyping(msg);
             const atk: PokeTypeDataType = {
                 doubleEffectiveTypes: [],
                 doubleResistedTypes: [],
@@ -212,12 +211,10 @@ export default class TypeCommand extends Command {
                 `);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(embed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`

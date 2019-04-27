@@ -10,7 +10,6 @@
  */
 
 import { ASSET_BASE_PATH } from '@components/Constants';
-import { startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
 export default class KaiCommand extends Command {
@@ -32,9 +31,7 @@ export default class KaiCommand extends Command {
 
     public run (msg: CommandoMessage) {
         if (msg.patternMatches && !this.verifyRmt(msg)) return null;
-        startTyping(msg);
         msg.delete();
-        stopTyping(msg);
 
         return msg.embed(
             {

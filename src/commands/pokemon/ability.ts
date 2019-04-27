@@ -11,7 +11,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeAbilityAliases, PokeAbilityDetailsType } from '@components/Types';
-import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import BattleAbilities from '@pokedex/abilities';
 import { abilityAliases } from '@pokedex/aliases';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -48,7 +48,6 @@ export default class AbilityCommand extends Command {
 
     public run (msg: CommandoMessage, { ability }: { ability: string }) {
         try {
-            startTyping(msg);
             const fsoptions: FuseOptions<PokeAbilityDetailsType & IPokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
             const aliasFuse = new Fuse(abilityAliases, fsoptions);
             const abilityFuse = new Fuse(BattleAbilities, fsoptions);
@@ -70,12 +69,10 @@ export default class AbilityCommand extends Command {
 			    `);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(abilityEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             if (/(?:no_ability)/i.test(err.toString())) {
                 return msg.reply(oneLine`

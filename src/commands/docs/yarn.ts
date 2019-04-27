@@ -10,7 +10,7 @@
  */
 
 import { ASSET_BASE_PATH } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -55,7 +55,6 @@ export default class YarnCommand extends Command {
 
     public async run (msg: CommandoMessage, { pkg }: { pkg: string }) {
         try {
-            startTyping(msg);
             const res = await fetch(`https://registry.yarnpkg.com/${pkg}`);
 
             if (res.status === 404) throw new Error('no_pkg_found');
@@ -82,12 +81,10 @@ export default class YarnCommand extends Command {
                 .addField('❯ Dependencies', dependencies && dependencies.length ? dependencies.join(', ') : 'None')
                 .addField('❯ Maintainers', maintainers.join(', '));
 
-            stopTyping(msg);
             deleteCommandMessages(msg, this.client);
             return msg.embed(yarnEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             if (/(?:no_pkg_found)/i.test(err.toString())) {
                 return msg.reply(oneLine`

@@ -10,7 +10,6 @@
  */
 
 import { badwords, caps, duptext, emojis, invites, links, mentions } from '@components/AutomodHelper';
-import { startTyping, stopTyping } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
 export default class SayCommand extends Command {
@@ -113,8 +112,6 @@ export default class SayCommand extends Command {
             }
         }
 
-        startTyping(msg);
-
         const saydata = {
             argString: msg.argString.slice(1),
             authorID: msg.author!.id,
@@ -130,7 +127,6 @@ export default class SayCommand extends Command {
         }
 
         msg.guild.settings.set('saydata', saydata);
-        stopTyping(msg);
 
         return msg.say(txt);
     }

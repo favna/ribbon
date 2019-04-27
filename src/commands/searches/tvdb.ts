@@ -11,7 +11,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { MovieGenreType } from '@components/Types';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -45,7 +45,6 @@ export default class TVCommand extends Command {
 
     public async run (msg: CommandoMessage, { name }: { name: string }) {
         try {
-            startTyping(msg);
             const movieSearch = await fetch(`https://api.themoviedb.org/3/search/tv?${stringify({
                     api_key: process.env.MOVIEDB_API_KEY!,
                     query: name,
@@ -75,12 +74,10 @@ export default class TVCommand extends Command {
                 );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(showEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`no shows found for \`${name}\``);
         }

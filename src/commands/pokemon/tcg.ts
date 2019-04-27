@@ -21,7 +21,6 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { TCGPropsType } from '@components/Types';
-import { startTyping, stopTyping } from '@components/Utils';
 import { ArgumentCollector, Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -73,7 +72,6 @@ export default class PokemonTCGCommand extends Command {
     }
 
     public async run (msg: CommandoMessage, { props }: { props: string[] }) {
-        startTyping(msg);
         const command = msg;
         const properties: TCGPropsType = {
             name: '',
@@ -309,16 +307,13 @@ export default class PokemonTCGCommand extends Command {
                 } else if (properties.supertype === 'trainer') {
                     tcgEmbed.setDescription(cards[selection].text[0]);
                 }
-                stopTyping(msg);
 
                 return command.embed(tcgEmbed);
             }
-            stopTyping(msg);
 
             return command.reply(stripIndents`no cards were found for that query.
                 Be sure to check the command help (\`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help tcg\`) if you want to know how to use this command `);
         } catch (err) {
-            stopTyping(msg);
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`

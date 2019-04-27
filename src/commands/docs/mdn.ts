@@ -10,7 +10,7 @@
  */
 
 import { ASSET_BASE_PATH } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -47,7 +47,6 @@ export default class MDNCommand extends Command {
 
     public async run (msg: CommandoMessage, { prop }: { prop: string }) {
         try {
-            startTyping(msg);
             const qs = stringify({ q: prop });
             const res = await fetch(`https://mdn.pleb.xyz/search?${qs}`);
             const body = await res.json();
@@ -69,7 +68,6 @@ export default class MDNCommand extends Command {
             return msg.embed(mdnEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             if (/(?:no_data_found)/i.test(err.toString())) {
                 return msg.reply(oneLine`

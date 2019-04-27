@@ -12,7 +12,7 @@
  */
 
 import { CountdownType } from '@components/Types';
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -58,8 +58,6 @@ export default class CountDownRemove extends Command {
     @shouldHavePermission('MANAGE_MESSAGES')
     public run (msg: CommandoMessage, { id }: { id: string }) {
         try {
-            startTyping(msg);
-
             const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
             const cdrEmbed = new MessageEmbed();
@@ -85,11 +83,9 @@ export default class CountDownRemove extends Command {
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(cdrEmbed);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
                 return msg.reply(`no countdowns found for this server. Start saving your first with ${msg.guild.commandPrefix}countdownadd`);
             }

@@ -26,7 +26,7 @@
  * @param {string} Message  The message to repeat
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -90,14 +90,11 @@ export default class CountdownAddCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES')
     public run (msg: CommandoMessage, { datetime, cdChannel, content, tag = 'none' }: { datetime: string; cdChannel: TextChannel; content: string; tag?: string; }) {
-        startTyping(msg);
         const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const countdownEmbed = new MessageEmbed();
 
         try {
-            startTyping(msg);
-
             if (/(?:--everyone)/i.test(content)) {
                 tag = 'everyone';
                 content =
@@ -121,7 +118,6 @@ export default class CountdownAddCommand extends Command {
 
             return this.sendRes(this.client, msg, datetime, cdChannel, content, tag, countdownEmbed, modlogChannel);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
                 conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id INTEGER PRIMARY KEY AUTOINCREMENT, datetime TEXT, channel TEXT, content TEXT, tag TEXT, lastsend TEXT);`)
                     .run();
@@ -175,7 +171,6 @@ export default class CountdownAddCommand extends Command {
         }
 
         deleteCommandMessages(msg, client);
-        stopTyping(msg);
 
         return msg.embed(embed);
     }

@@ -10,7 +10,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, removeDiacritics, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, removeDiacritics } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
@@ -45,7 +45,6 @@ export default class MangaCommand extends Command {
 
     public async run (msg: CommandoMessage, { manga }: { manga: string }) {
         try {
-            startTyping(msg);
             const mangaList = await fetch(`https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,
                 {
                     body: JSON.stringify({ params: `query=${manga}&facetFilters=[\"kind:manga\"]` }),
@@ -74,12 +73,10 @@ export default class MangaCommand extends Command {
                 .addField('First Publish Date', moment.unix(hit.startDate).format('MMMM Do YYYY'), true);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(mangaEmbed, `https://kitsu.io/manga/${hit.slug}`);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`no manga found for \`${manga}\` `);
         }

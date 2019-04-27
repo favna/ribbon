@@ -9,7 +9,7 @@
  * @param {string} SearchQuery The dumb sh*t people need to use google for
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
 export default class LmgtfyCommand extends Command {
@@ -39,10 +39,7 @@ export default class LmgtfyCommand extends Command {
     }
 
     public run (msg: CommandoMessage, { question }: { question: string }) {
-        startTyping(msg);
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
-
         return msg.say(`<https://lmgtfy.com/?q=${question}>`);
     }
 }

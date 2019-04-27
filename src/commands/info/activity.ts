@@ -12,7 +12,7 @@
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { currencyMap } from '@components/MoneyHelper';
 import { DiscordGameDevType, DiscordGameParsedType, DiscordGameSKUType, DiscordStoreGameType, SimpleEmbedFieldType } from '@components/Types';
-import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -94,8 +94,6 @@ export default class ActivityCommand extends Command {
     // tslint:disable: cyclomatic-complexity
     public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         try {
-            startTyping(msg);
-
             const activity = member.presence.activity;
             if (!activity) throw new Error('noActivity');
             const ava = member.user.displayAvatarURL();
@@ -276,11 +274,9 @@ export default class ActivityCommand extends Command {
             embed.fields.push(ActivityCommand.checkDeviceStatus(member));
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(embed);
         } catch (err) {
-            stopTyping(msg);
             if (/(noActivity|Cannot read property 'name' of null)/i.test(err.toString())) {
                 return msg.embed({
                     author: {

@@ -13,7 +13,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -47,7 +47,6 @@ export default class TimeCommand extends Command {
 
     public async run (msg: CommandoMessage, { location }: { location: string }) {
         try {
-            startTyping(msg);
             const cords = await this.getCords(location);
             const res = await fetch(
                 `http://api.timezonedb.com/v2/get-time-zone?${stringify({
@@ -72,12 +71,10 @@ export default class TimeCommand extends Command {
                 .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(timeEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(
                 `I wasn't able to find a location for \`${location}\``

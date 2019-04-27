@@ -14,7 +14,7 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { timeparseHelper } from '@components/TimeparseHelper';
 import { OverwatchHeroType } from '@components/Types';
-import { deleteCommandMessages, sentencecase, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -73,7 +73,6 @@ export default class OverwatchCommand extends Command {
 
     public async run (msg: CommandoMessage, { player, platform, region }: { player: string; platform: string; region: string }) {
         try {
-            startTyping(msg);
             const owData = await fetch(`https://ow-api.com/v1/stats/${platform}/${region}/${player}/complete`);
             const owEmbed = new MessageEmbed();
             const data = await owData.json();
@@ -174,12 +173,9 @@ export default class OverwatchCommand extends Command {
                 );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(owEmbed);
         } catch (err) {
-            stopTyping(msg);
-
             if (/(noplayer)/i.test(err.toString())) {
                 return msg.reply('no player found by that name. Check the platform (`pc`, `psn` or `xbl`) and region (`us`, `eu` or `asia`)');
             }

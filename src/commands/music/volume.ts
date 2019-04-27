@@ -13,7 +13,7 @@
  */
 
 import { IMusicCommand, MusicQueueType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
 export default class ChangeVolumeCommand extends Command {
@@ -57,7 +57,6 @@ export default class ChangeVolumeCommand extends Command {
     }
 
     public run (msg: CommandoMessage, { volume }: { volume: number }) {
-        startTyping(msg);
         const queue = this.queue.get(msg.guild.id);
 
         if (!queue) return msg.reply('there isn\'t any music playing to change the volume of. Better queue some up!');
@@ -69,7 +68,6 @@ export default class ChangeVolumeCommand extends Command {
         queue.volume = volume;
         if (queue.songs[0].dispatcher) queue.songs[0].dispatcher.setVolumeLogarithmic(queue.volume / 5);
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply(`${volume === 11 ? 'this one goes to 11!' : `set the dial to ${volume}.`}`);
     }

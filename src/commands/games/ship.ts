@@ -13,7 +13,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageAttachment, MessageEmbed, User } from 'awesome-djs';
 import { oneLine } from 'common-tags';
@@ -53,7 +53,6 @@ export default class ShipCommand extends Command {
     }
 
     public async run (msg: CommandoMessage, { firstMember, secondMember }: { firstMember: GuildMember | string; secondMember: GuildMember | string }) {
-        startTyping(msg);
         const romeo: User = firstMember !== 'random' ? (firstMember as GuildMember).user : msg.guild.members.random()!.user;
         const juliet: User = secondMember !== 'random' ? (secondMember as GuildMember).user : msg.guild.members.random()!.user;
 
@@ -86,7 +85,6 @@ export default class ShipCommand extends Command {
             .setImage('attachment://ship.png');
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(boat);
     }

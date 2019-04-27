@@ -12,7 +12,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { FortniteStatsType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -53,8 +53,6 @@ export default class FortniteCommand extends Command {
 
     public async run (msg: CommandoMessage, { user, platform }: { user: string; platform: string }) {
         try {
-            startTyping(msg);
-
             const res = await fetch(
                 `https://api.fortnitetracker.com/v1/profile/${platform}/${user}`,
                 { headers: { 'TRN-Api-Key': process.env.TRN_API_KEY! } }
@@ -133,12 +131,9 @@ export default class FortniteCommand extends Command {
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(fortEmbed);
         } catch (err) {
-            stopTyping(msg);
-
             if (/(noplayer)/i.test(err.toString())) return msg.reply('no player found by that name. Check the platform (`pc`, `xbox` or `psn`)');
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 

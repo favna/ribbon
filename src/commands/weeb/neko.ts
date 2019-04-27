@@ -8,7 +8,7 @@
  * @example neko
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import fetch from 'node-fetch';
 
@@ -31,13 +31,10 @@ export default class NekoCommand extends Command {
 
     public async run (msg: CommandoMessage) {
         try {
-            startTyping(msg);
-
             const nekoFetch = await fetch('https://nekos.life/api/v2/img/neko');
             const nekoImg = await nekoFetch.json();
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed({
                     color: msg.guild ? msg.guild.me!.displayColor : 10610610,
@@ -46,8 +43,6 @@ export default class NekoCommand extends Command {
                 }, `<:cat:498198858032218143> <@${msg.author!.id}> <:cat:498198858032218143>`
             );
         } catch (err) {
-            stopTyping(msg);
-
             return msg.reply('something went wrong getting a neko image 💔');
         }
     }

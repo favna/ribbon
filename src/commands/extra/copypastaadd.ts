@@ -11,7 +11,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -60,7 +60,6 @@ export default class CopyPastaAddCommand extends Command {
             .setDescription(content);
 
         try {
-            startTyping(msg);
             const query = conn
                 .prepare(`SELECT name FROM "${msg.guild.id}" WHERE name = ?;`)
                 .get(name);
@@ -72,7 +71,6 @@ export default class CopyPastaAddCommand extends Command {
                 pastaAddEmbed.setTitle(`Copypasta \`${name}\` Updated`);
 
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.embed(pastaAddEmbed);
             }
@@ -80,11 +78,8 @@ export default class CopyPastaAddCommand extends Command {
                 .run({ content, name });
             pastaAddEmbed.setTitle(`Copypasta \`${name}\` Added`);
 
-            stopTyping(msg);
-
             return msg.embed(pastaAddEmbed);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
                 conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT , content TEXT);`)
                     .run();
@@ -93,11 +88,8 @@ export default class CopyPastaAddCommand extends Command {
                     .run({ content, name });
                 pastaAddEmbed.setTitle(`Copypasta \`${name}\` Added`);
 
-                stopTyping(msg);
-
                 return msg.embed(pastaAddEmbed);
             }
-
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`

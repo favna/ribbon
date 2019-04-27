@@ -10,7 +10,7 @@
  * @param {TextChannel} [Channel] TextChannel the Mod Logs are sent to, required when enabling
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -52,8 +52,6 @@ export default class ModLogsCommand extends Command {
             return msg.reply('when activating join messages you need to provide a channel for me to output the messages to!');
         }
 
-        startTyping(msg);
-
         const description = option
             ? '📥 Ribbon modlogs have been enabled'
             : '📤 Ribbon modlogs have been disabled';
@@ -77,7 +75,6 @@ export default class ModLogsCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(modlogsEmbed);
     }

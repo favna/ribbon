@@ -15,7 +15,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { CydiaAPIPackageType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -56,7 +56,6 @@ export default class CydiaCommand extends Command {
 
     public async run (msg: CommandoMessage, { deb }: { deb: string }) {
         try {
-            startTyping(msg);
             if (msg.patternMatches) {
                 if (!msg.guild.settings.get('regexmatches', false)) return null;
                 deb = msg.patternMatches[0].substring(2, msg.patternMatches[0].length - 2);
@@ -113,12 +112,9 @@ export default class CydiaCommand extends Command {
             cydiaEmbed.addField('Package Name', hit.name, false);
 
             if (!msg.patternMatches) deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(cydiaEmbed);
         } catch (err) {
-            stopTyping(msg);
-
             if (/(no_packages)/i.test(err.toString())) return msg.say(`**Tweak/Theme \`${deb}\` not found!**`);
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 

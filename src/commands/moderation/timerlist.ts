@@ -9,7 +9,7 @@
 
 import { timeparseHelper } from '@components/TimeparseHelper';
 import { TimerType } from '@components/Types';
-import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Snowflake, TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -35,11 +35,9 @@ export default class TimerListCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES')
     public async run (msg: CommandoMessage) {
-        startTyping(msg);
         const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
 
         try {
-            startTyping(msg);
             const list: TimerType[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
             let body = '';
 
@@ -65,11 +63,8 @@ export default class TimerListCommand extends Command {
                     title: 'Timed messages stored on this server',
                 }));
 
-                stopTyping(msg);
                 return null;
             }
-
-            stopTyping(msg);
 
             return msg.embed({
                 color: msg.guild.me!.displayColor,
@@ -77,7 +72,6 @@ export default class TimerListCommand extends Command {
                 title: 'Timed messages stored on this server',
             });
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
                 return msg.reply(`no timed messages found for this server. Start saving your first with ${msg.guild.commandPrefix}timeradd`);
             }

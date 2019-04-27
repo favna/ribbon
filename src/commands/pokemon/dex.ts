@@ -15,7 +15,7 @@
 
 import { ASSET_BASE_PATH } from '@components/Constants';
 import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
-import { deleteCommandMessages, sentencecase, startTyping, stopTyping, titlecase } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, titlecase } from '@components/Utils';
 import { pokeAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import formats from '@pokedex/formats.json';
@@ -83,7 +83,6 @@ export default class DexCommand extends Command {
     // tslint:disable:cyclomatic-complexity prefer-conditional-expression
     public run (msg: CommandoMessage, { pokemon, shines }: { pokemon: string; shines: boolean }) {
         try {
-            startTyping(msg);
             if (/(?:--shiny)/i.test(pokemon)) {
                 pokemon = pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length).replace(/ /g, '');
                 shines = true;
@@ -241,12 +240,10 @@ export default class DexCommand extends Command {
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(dexEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             if (/(?:no_pokemon)/i.test(err.toString())) return msg.reply(stripIndents`no Pokémon found for \`${pokemon}\``);
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;

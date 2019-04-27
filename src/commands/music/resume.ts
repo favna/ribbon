@@ -10,7 +10,7 @@
  */
 
 import { IMusicCommand, MusicQueueType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
 
@@ -48,12 +48,10 @@ export default class ResumeSongCommand extends Command {
         if (!queue.songs[0].dispatcher) return msg.reply('pretty sure a song that hasn\'t actually begun playing yet could be considered "resumed".');
         if (queue.songs[0].playing) return msg.reply('resuming a song that isn\'t paused is a great move. Really fantastic.');
 
-        startTyping(msg);
         queue.songs[0].dispatcher.resume();
         queue.songs[0].playing = true;
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply('resumed the music. This party ain\'t over yet!');
     }

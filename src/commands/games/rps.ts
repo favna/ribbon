@@ -10,7 +10,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import fetch from 'node-fetch';
@@ -46,8 +46,6 @@ export default class RockPaperScissorCommand extends Command {
 
     public async run (msg: CommandoMessage, { hand }: { hand: string }) {
         try {
-            startTyping(msg);
-
             const randPost = await fetch(
                 'https://api.random.org/json-rpc/2/invoke',
                 {
@@ -96,11 +94,9 @@ export default class RockPaperScissorCommand extends Command {
                 .setDescription(resString);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(rpsEmbed);
         } catch (err) {
-            stopTyping(msg);
 
             return msg.reply('an error occurred getting a random result and I\'m not going to rig this game.');
         }

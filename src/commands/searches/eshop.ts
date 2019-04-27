@@ -10,7 +10,7 @@
  */
 
 import { eShopType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import shopData from '@databases/eshop.json';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
@@ -40,8 +40,6 @@ export default class EShopCommand extends Command {
 
     public run (msg: CommandoMessage, { game, price = 'TBA' }: { game: string; price?: string }) {
         try {
-            startTyping(msg);
-
             const eshopData: eShopType[] = shopData as eShopType[];
             const eshopEmbed = new MessageEmbed();
             const eShopOptions: FuseOptions<eShopType> = { keys: ['title'] };
@@ -64,12 +62,10 @@ export default class EShopCommand extends Command {
                 .addField('Categories', typeof hit.categories.category === 'object' ? hit.categories.category.join(', ') : hit.categories.category, true);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(eshopEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`no titles found for \`${game}\``);
         }

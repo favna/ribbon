@@ -11,7 +11,7 @@
 
 import { DEFAULT_EMBED_COLOR, IGBDAgeRatings } from '@components/Constants';
 import { IGDBType, IIGDBAgeRating, IIGDBInvolvedCompany } from '@components/Types';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
@@ -44,7 +44,6 @@ export default class IGDBCommand extends Command {
     }
 
     public async run (msg: CommandoMessage, { game }: { game: string }) {
-        startTyping(msg);
         try {
             const gameEmbed = new MessageEmbed();
             const headers = {
@@ -83,12 +82,10 @@ export default class IGDBCommand extends Command {
                 .setDescription(hit.summary);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(gameEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`nothing found for \`${game}\``);
         }

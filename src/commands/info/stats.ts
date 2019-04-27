@@ -8,7 +8,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Message, MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
@@ -35,7 +35,6 @@ export default class RibbonStatsCommand extends Command {
     }
 
     public async run (msg: CommandoMessage): Promise<any> {
-        startTyping(msg);
         const speed = speedTest({
             maxTime: 5000,
             serverId: 3242,
@@ -79,7 +78,6 @@ export default class RibbonStatsCommand extends Command {
             .setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, this.client.user!.displayAvatarURL({ format: 'png' }));
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         const statMessage: Message = await msg.embed(statsEmbed) as Message;
 

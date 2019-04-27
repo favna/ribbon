@@ -13,7 +13,7 @@
  */
 
 import { MAX_LENGTH } from '@components/Constants';
-import { deleteCommandMessages, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
 
@@ -41,19 +41,16 @@ export default class MaxLengthCommand extends Command {
 
     @shouldHavePermission('ADMINISTRATOR')
     public run (msg: CommandoMessage, args: any) {
-        startTyping(msg);
         if (!args) {
             const maxLength = msg.guild.settings.get('maxLength', MAX_LENGTH);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`the maximum length of a song is ${maxLength} minutes.`);
         }
         if (args.toLowerCase() === 'default') {
             msg.guild.settings.remove('maxLength');
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`set the maximum song length to the default (currently ${MAX_LENGTH} minutes).`);
         }
@@ -61,14 +58,11 @@ export default class MaxLengthCommand extends Command {
         const newLength = parseInt(args, 10);
 
         if (isNaN(newLength) || newLength <= 0) {
-            stopTyping(msg);
-
             return msg.reply('invalid number provided.');
         }
 
         msg.guild.settings.set('maxLength', newLength);
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply(`set the maximum song length to ${newLength} minutes.`);
 

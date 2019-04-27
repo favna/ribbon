@@ -9,7 +9,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IMusicCommand, MusicQueueType } from '@components/Types';
-import { deleteCommandMessages, Song, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, Song } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { MessageEmbed, Snowflake } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -46,7 +46,6 @@ export default class SaveQueueCommand extends Command {
         const queue = this.queue.get(msg.guild.id);
         if (!queue) return msg.reply('there isn\'t any music playing right now. You should get on that.');
 
-        startTyping(msg);
         const currentSong = queue.songs[0];
         const currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0;
         const embed = new MessageEmbed();
@@ -81,7 +80,6 @@ export default class SaveQueueCommand extends Command {
 
         msg.reply('✔ Check your inbox!');
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.direct('Your saved queue', { embed });
     }

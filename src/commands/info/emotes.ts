@@ -8,7 +8,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
@@ -41,7 +41,6 @@ export default class EmotesCommand extends Command {
     }
 
     public async run (msg: CommandoMessage) {
-        startTyping(msg);
         const emotesEmbed = new MessageEmbed();
         const animEmotes: string[] = [];
         const staticEmotes: string[] = [];
@@ -72,8 +71,6 @@ export default class EmotesCommand extends Command {
             for (const chunk of chunkedAnimatedEmotes) {
                 await msg.say(chunk.join(' '));
             }
-            stopTyping(msg);
-
             return null;
         }
 
@@ -83,7 +80,6 @@ export default class EmotesCommand extends Command {
         emotesEmbed.setDescription(description);
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(emotesEmbed);
     }

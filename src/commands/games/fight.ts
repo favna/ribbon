@@ -11,7 +11,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
@@ -48,7 +48,6 @@ export default class FightCommand extends Command {
 
     public run (msg: CommandoMessage, { fighterOne, fighterTwo }: { fighterOne: string; fighterTwo: string }) {
         try {
-            startTyping(msg);
             const fighterEmbed = new MessageEmbed();
 
             fighterOne = /<@[0-9]{18}>/.test(fighterOne)
@@ -81,7 +80,6 @@ export default class FightCommand extends Command {
                 }
 
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.embed(fighterEmbed);
             }
@@ -92,7 +90,6 @@ export default class FightCommand extends Command {
                     .setImage(`${ASSET_BASE_PATH}/ribbon/pyrrhawins.gif`);
 
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.embed(fighterEmbed);
             }
@@ -109,11 +106,9 @@ export default class FightCommand extends Command {
                 .setTimestamp();
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(fighterEmbed);
         } catch (err) {
-            stopTyping(msg);
 
             return msg.reply(`something went wrong trying to make \`${fighterOne}\` fight \`${fighterTwo}\``);
         }

@@ -9,7 +9,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { CasinoRowType } from '@components/Types';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -54,7 +54,6 @@ export default class LeaderboardCommand extends Command {
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
         try {
-            startTyping(msg);
             const query = conn
                 .prepare(`SELECT userID, balance FROM "${msg.guild.id}" ORDER BY balance DESC LIMIT ?;`)
                 .all(limit);
@@ -68,15 +67,12 @@ export default class LeaderboardCommand extends Command {
                 });
 
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.embed(lbEmbed);
             }
-            stopTyping(msg);
 
             return msg.reply(`looks like there aren't any casino players in this server yet, use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
                 conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();

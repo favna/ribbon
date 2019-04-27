@@ -12,7 +12,7 @@
  */
 
 import { CopypastaType } from '@components/Types';
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -60,8 +60,6 @@ export default class CopyPastaRemoveCommand extends Command {
     @shouldHavePermission('MANAGE_MESSAGES')
     public run (msg: CommandoMessage, { id }: { id: string }) {
         try {
-            startTyping(msg);
-
             const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
             const cprEmbed = new MessageEmbed();
@@ -84,11 +82,9 @@ export default class CopyPastaRemoveCommand extends Command {
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(cprEmbed);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table)/i.test(err.toString())) {
                 return msg.reply(`no pastas found for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);
             }

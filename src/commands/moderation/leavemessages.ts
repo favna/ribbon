@@ -10,7 +10,7 @@
  * @param {TextChannel} [Channel] TextChannel the Leave Message is sent to, required when enabling
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -52,7 +52,6 @@ export default class LeaveMessagesCommand extends Command {
             return msg.reply('when activating join messages you need to provide a channel for me to output the messages to!');
         }
 
-        startTyping(msg);
         const leaveMsgEmbed = new MessageEmbed();
         const description = option
             ? '📉 Ribbon leave messages have been enabled'
@@ -76,7 +75,6 @@ export default class LeaveMessagesCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(leaveMsgEmbed);
     }

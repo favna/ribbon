@@ -11,7 +11,7 @@
  * @param {string} SomeText Your input to transform with Zalgo
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import zalgo, { banish } from 'awesome-zalgo';
 
@@ -41,9 +41,7 @@ export default class ZalgoCommand extends Command {
     }
 
     public run (msg: CommandoMessage, { txt }: { txt: string }) {
-        startTyping(msg);
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.say(zalgo(banish(txt)));
     }

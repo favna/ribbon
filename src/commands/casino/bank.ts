@@ -9,7 +9,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
@@ -44,7 +44,6 @@ export default class BankCommand extends Command {
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/bank.png`);
 
         try {
-            startTyping(msg);
             const { balance, vault, lastdaily, lastweekly } = conn.prepare(`SELECT balance, vault, lastdaily, lastweekly FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
 
             if (balance >= 0) {
@@ -65,15 +64,12 @@ export default class BankCommand extends Command {
                     `);
 
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.embed(bankEmbed);
             }
-            stopTyping(msg);
 
             return msg.reply(`looks like you didn't get any chips yet. Run \`${msg.guild.commandPrefix}chips\` to get your first 500`);
         } catch (err) {
-            stopTyping(msg);
             if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
                 conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
                     .run();

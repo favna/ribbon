@@ -10,7 +10,7 @@
  * @param {RoleResolvable} AnyRole The role to remove
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -56,8 +56,6 @@ export default class DeleteRoleCommand extends Command {
                 );
             }
 
-            startTyping(msg);
-
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
             const roleRemoveEmbed = new MessageEmbed();
 
@@ -74,12 +72,10 @@ export default class DeleteRoleCommand extends Command {
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(roleRemoveEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
             if (/(?:Missing Permissions)/i.test(err.toString())) {
                 return msg.reply(stripIndents`an error occurred removing the role \`${role.name}\` from \`${member.displayName}\`.
                     The server staff should check that I have \`Manage Roles\` permission and I have the proper hierarchy.`);

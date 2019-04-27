@@ -12,7 +12,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -46,8 +46,6 @@ export default class YouTubeCommand extends Command {
 
     public async run (msg: CommandoMessage, { query }: { query: string }) {
         try {
-            startTyping(msg);
-
             const tubeSearch = await fetch(`https://www.googleapis.com/youtube/v3/search?${stringify({
                     key: process.env.GOOGLE_API_KEY!,
                     maxResults: '1',
@@ -62,8 +60,6 @@ export default class YouTubeCommand extends Command {
 
             deleteCommandMessages(msg, this.client);
             if (msg.content.split(' ')[0].slice(msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length) === 'yts') {
-                stopTyping(msg);
-
                 return msg.say(`https://www.youtube.com/watch?v=${video.id.videoId}`);
             }
 
@@ -78,12 +74,8 @@ export default class YouTubeCommand extends Command {
                 .addField('Published At', moment(video.snippet.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
                 .addField('Description', video.snippet.description ? video.snippet.description : 'No Description', false);
 
-            stopTyping(msg);
-
             return msg.embed(videoEmbed, `https://www.youtube.com/watch?v=${video.id.videoId}`);
         } catch (err) {
-            stopTyping(msg);
-
             return msg.reply(`no videos found for \`${query}\``);
         }
     }

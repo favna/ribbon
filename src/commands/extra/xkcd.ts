@@ -8,7 +8,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import fetch from 'node-fetch';
@@ -32,7 +32,6 @@ export default class XKCDCommand extends Command {
 
     public async run (msg: CommandoMessage) {
         try {
-            startTyping(msg);
             const count = await fetch('https://xkcd.com/info.0.json');
             const totalImages = await count.json();
             const randomNum = Math.floor(Math.random() * totalImages.num) + 1;
@@ -48,10 +47,8 @@ export default class XKCDCommand extends Command {
                 .setURL(`https://xkcd.com/${randomNum}/`);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
             return msg.embed(xkcdEmbed);
         } catch (err) {
-            stopTyping(msg);
             return msg.reply('woops, couldn\'t get a random xkcd image. Have a 🎀 instead!');
         }
     }

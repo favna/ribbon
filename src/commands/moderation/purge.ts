@@ -9,7 +9,7 @@
  * @param {number} MessageAmount The amount of messages to delete, between 1 and 99
  */
 
-import { shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Message } from 'awesome-djs';
 
@@ -38,13 +38,10 @@ export default class PurgeCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
     public async run (msg: CommandoMessage, { amount }: { amount: number }) {
-        startTyping(msg);
         amount = amount === 100 ? 99 : amount;
         msg.channel.bulkDelete(amount + 1, true);
 
         const reply = (await msg.say(`\`Deleted ${amount} messages\``)) as Message;
-
-        stopTyping(msg);
 
         return reply.delete({
             timeout: 1000,

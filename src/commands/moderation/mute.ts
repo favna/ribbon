@@ -17,7 +17,7 @@
  */
 
 import { timeparseHelper } from '@components/TimeparseHelper';
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, Message, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -88,7 +88,6 @@ export default class MuteCommand extends Command {
     @shouldHavePermission('MANAGE_ROLES', true)
     public async run (msg: CommandoMessage, { member, duration, logs }: { member: GuildMember; duration: number, logs: boolean }) {
         if (member.manageable) {
-            startTyping(msg);
             try {
                 const modlogChannel = msg.guild.settings.get('modlogchannel', null);
                 const muteRole = msg.guild.settings.get(
@@ -113,7 +112,6 @@ export default class MuteCommand extends Command {
                 }
 
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 const muteMessage: Message = await msg.embed(muteEmbed) as Message;
 
@@ -135,7 +133,6 @@ export default class MuteCommand extends Command {
                 return muteMessage;
             } catch (err) {
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
                 if (/(?:Missing Permissions)/i.test(err.toString())) {
                     return msg.reply(stripIndents`an error occurred muting \`${member.displayName}\`.
                         Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
@@ -156,7 +153,6 @@ export default class MuteCommand extends Command {
             }
         }
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply(stripIndents`an error occurred muting \`${member.displayName}\`.
 		    Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);

@@ -14,7 +14,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { Message, Util as DJSUtil } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -52,8 +52,6 @@ export default class HelpCommand extends Command {
     // tslint:disable-next-line:cyclomatic-complexity
     public async run (msg: CommandoMessage, { command = '' }: { command: string }) {
         try {
-            startTyping(msg);
-
             const groups = this.client.registry.groups;
             const commands = this.client.registry.findCommands(command, false, msg);
             const showAll = command && command.toLowerCase() === 'all';
@@ -163,7 +161,6 @@ export default class HelpCommand extends Command {
     }
 
     private endHelpCommand (msg: CommandoMessage, client: CommandoClient): void {
-        stopTyping(msg);
         deleteCommandMessages(msg, client);
     }
 

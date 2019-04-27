@@ -5,7 +5,7 @@
  * @name dbpost
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import fetch from 'node-fetch';
 
@@ -25,8 +25,6 @@ export default class DBPostCommand extends Command {
 
     public async run (msg: CommandoMessage) {
         try {
-            startTyping(msg);
-
             await fetch(`https://discordbots.org/api/bots/${this.client.user!.id}/stats`, {
                     body: JSON.stringify({ server_count: this.client.guilds.size }),
                     headers: { Authorization: process.env.DISCORD_BOTS_API_KEY!, 'Content-Type': 'application/json' },
@@ -35,12 +33,10 @@ export default class DBPostCommand extends Command {
             );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply('updated discordbots.org stats.');
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply('an error occurred updating discordbots.org stats.');
         }

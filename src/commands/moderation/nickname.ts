@@ -10,7 +10,7 @@
  * @param {string} NewNickname Nickname to assign
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -49,7 +49,6 @@ export default class NickCommand extends Command {
 
     @shouldHavePermission('MANAGE_NICKNAMES', true)
     public run (msg: CommandoMessage, { member, nickname }: { member: GuildMember; nickname: string }) {
-        startTyping(msg);
         if (member.manageable) {
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
             const nicknameEmbed = new MessageEmbed();
@@ -78,12 +77,10 @@ export default class NickCommand extends Command {
                 }
 
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.embed(nicknameEmbed);
             } catch (err) {
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
                 const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
                 channel.send(stripIndents`
@@ -100,7 +97,6 @@ export default class NickCommand extends Command {
             }
         }
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply(oneLine`failed to set nickname to that member.
             Check that I have permission to set their nickname as well as the role hierarchy`);

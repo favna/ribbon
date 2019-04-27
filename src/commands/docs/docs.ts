@@ -10,7 +10,7 @@
  * @param {string} [version] The Doc version to pick, one of `stable`, `master` or `commando`
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -54,8 +54,6 @@ export default class DjsDocsCommand extends Command {
 
     public async run (msg: CommandoMessage, { query, version }: { query: string; version: 'stable' | 'master' | 'commando' | 'rpc' }) {
         try {
-            startTyping(msg);
-
             let project = 'main';
             let branch = version;
 
@@ -70,13 +68,11 @@ export default class DjsDocsCommand extends Command {
 
             if (!data) throw new Error('no_data_found');
 
-            stopTyping(msg);
             deleteCommandMessages(msg, this.client);
 
             return msg.embed(data);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             if (/(?:no_data_found)/i.test(err.toString())) {
                 return msg.reply(oneLine`

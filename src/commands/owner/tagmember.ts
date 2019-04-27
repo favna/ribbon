@@ -9,7 +9,7 @@
  * @param {GuildMemberResolvable} AnyMember Member to make a mention to
  */
 
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import { oneLine } from 'common-tags';
@@ -38,16 +38,14 @@ export default class TagMemberCommand extends Command {
     }
 
     public run (msg: CommandoMessage, { member }: { member: GuildMember }) {
-        startTyping(msg);
-
         const emote = '<:literallyThis:519988005507956752>';
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.say(oneLine`
-        ${emote}${emote}${emote}${emote}
-        <@${member.id}>
-        ${emote}${emote}${emote}${emote}`);
+            ${emote}${emote}${emote}${emote}
+            <@${member.id}>
+            ${emote}${emote}${emote}${emote}
+        `);
     }
 }

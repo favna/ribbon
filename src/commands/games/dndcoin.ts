@@ -8,7 +8,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
@@ -30,7 +30,6 @@ export default class DndCCommand extends Command {
     }
 
     public run (msg: CommandoMessage) {
-        startTyping(msg);
         const coinEmbed = new MessageEmbed();
         const flip = roundNumber(Math.random());
 
@@ -44,7 +43,6 @@ export default class DndCCommand extends Command {
             .setTitle(`Flipped ${flip === 1 ? 'heads' : 'tails'}`);
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(coinEmbed);
     }

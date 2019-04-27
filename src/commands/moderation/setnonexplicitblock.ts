@@ -14,7 +14,7 @@
  * @param {boolean} Option On or Off
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -49,8 +49,6 @@ export default class SetNonExplicitBlockCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES')
     public run (msg: CommandoMessage, { option }: { option: boolean }) {
-        startTyping(msg);
-
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const snebEmbed = new MessageEmbed();
 
@@ -67,7 +65,6 @@ export default class SetNonExplicitBlockCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(snebEmbed);
     }

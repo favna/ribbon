@@ -12,7 +12,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -51,8 +51,6 @@ export default class GoogleCommand extends Command {
         const googleEmbed = new MessageEmbed();
 
         googleEmbed.setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
-        startTyping(msg);
-
         try {
             const knowledgeSearch = await fetch(
                 `https://kgsearch.googleapis.com/v1/entities:search?${stringify(
@@ -81,7 +79,6 @@ export default class GoogleCommand extends Command {
                 );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(googleEmbed);
         } catch (err) {
@@ -113,7 +110,6 @@ export default class GoogleCommand extends Command {
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(googleEmbed);
         } catch (err) {
@@ -145,12 +141,10 @@ export default class GoogleCommand extends Command {
                 .setFooter(`If you see this please contact ${this.client.owners[0].tag} (${this.client.owners[0].id}) as there is likely some issue with the Google search command`);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(googleEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`error occurred or nothing found for \`${query}\``);
         }

@@ -10,7 +10,7 @@
  * @param {number} [Within] Optional: Boundaries for slowmode
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -48,8 +48,6 @@ export default class SlowmodeCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
     public run (msg: CommandoMessage, { option, within }: { option: boolean; within: number }) {
-        startTyping(msg);
-
         const slEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const options = { within, enabled: option };
@@ -71,7 +69,6 @@ export default class SlowmodeCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(slEmbed);
     }

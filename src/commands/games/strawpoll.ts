@@ -16,7 +16,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import fetch from 'node-fetch';
@@ -63,7 +63,6 @@ export default class StrawpollCommand extends Command {
             );
         }
         try {
-            startTyping(msg);
             const pollEmbed = new MessageEmbed();
             const pollPost = await fetch(
                 'https://www.strawpoll.me/api/v2/polls',
@@ -89,12 +88,10 @@ export default class StrawpollCommand extends Command {
                 .setDescription(`Options on this poll: ${strawpoll.options.map((val: string) => `\`${val}\``).join(', ')}`);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(pollEmbed, `http://www.strawpoll.me/${strawpoll.id}`);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply('an error occurred creating the strawpoll');
         }

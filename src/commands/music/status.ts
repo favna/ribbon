@@ -8,7 +8,7 @@
  */
 
 import { IMusicCommand, MusicQueueType } from '@components/Types';
-import { deleteCommandMessages, Song, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, Song } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -44,7 +44,6 @@ export default class MusicStatusCommand extends Command {
         const queue = this.queue.get(msg.guild.id);
         if (!queue) return msg.say('There isn\'t any music playing right now. You should get on that.');
 
-        startTyping(msg);
         const song = queue.songs[0];
         const currentTime = song.dispatcher ? song.dispatcher.streamTime / 1000 : 0;
         const embed = {
@@ -63,7 +62,6 @@ export default class MusicStatusCommand extends Command {
         };
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(embed);
     }

@@ -11,7 +11,7 @@
  * @param {number} [minlength] Minimum length of message before it is checked
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -67,7 +67,6 @@ export default class ExcessiveCapsCommand extends Command {
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
     public run (msg: CommandoMessage, { option, threshold, minlength }: { option: boolean; threshold: number; minlength: number }) {
-        startTyping(msg);
         const ecfEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const options = { minlength, threshold, enabled: option };
@@ -90,7 +89,6 @@ export default class ExcessiveCapsCommand extends Command {
         }
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(ecfEmbed);
     }

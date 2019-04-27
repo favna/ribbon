@@ -12,7 +12,7 @@
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { currencyMap } from '@components/MoneyHelper';
 import { SteamGenreType } from '@components/Types';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -47,8 +47,6 @@ export default class SteamCommand extends Command {
 
     public async run (msg: CommandoMessage, { game }: { game: string }) {
         try {
-            startTyping(msg);
-
             const steamEmbed = new MessageEmbed();
             const steamSearch = await fetch(`http://store.steampowered.com/search/?${stringify({
                     category1: 998,
@@ -100,12 +98,10 @@ export default class SteamCommand extends Command {
                 .addField('Steam Store Link', `http://store.steampowered.com/app/${steamData.steam_appid}/`, false);
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(steamEmbed, `http://store.steampowered.com/app/${steamData.steam_appid}/`);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.reply(`nothing found for \`${game}\``);
         }

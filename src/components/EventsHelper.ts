@@ -4,11 +4,11 @@ import { stringify } from 'awesome-querystring';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import fs from 'fs';
-/* import { getGamesAmerica } from 'nintendo-switch-eshop'; */
 import interval from 'interval-promise';
 import jimp from 'jimp';
 import moment from 'moment';
 import 'moment-duration-format';
+import { getGamesEurope } from 'nintendo-switch-eshop';
 import fetch from 'node-fetch';
 import path from 'path';
 import { badwords, caps, duptext, emojis, invites, links, mentions, slowmode } from './AutomodHelper';
@@ -388,34 +388,18 @@ const sendTimedMessages = async (client: CommandoClient) => {
     }
 };
 
-/*
 const updateEshop = async (client: CommandoClient) => {
     try {
         fs.writeFileSync(
             path.join(__dirname, '../data/databases/eshop.json'),
-            JSON.stringify(await getGamesAmerica({ shop: 'all' })),
+            JSON.stringify(await getGamesEurope()),
             'utf8'
         );
         decache(path.join(__dirname, '../data/databases/eshop.json'));
 
         return client.registry.resolveCommand('searches:eshop').reload();
     } catch (err) {
-        return null;
-    }
-};
-*/
-
-const stopTypingEverywhere = async (client: CommandoClient) => {
-    const allChannels = client.channels;
-
-    for (const channel of allChannels.values()) {
-        if (channel.type === 'text' || channel.type === 'dm') {
-            if (client.user!.typingDurationIn(channel) > 10000) {
-                const typingChannel = channel as TextChannel;
-
-                typingChannel.stopTyping(true);
-            }
-        }
+        return;
     }
 };
 
@@ -1037,9 +1021,10 @@ export const handleReady = async (client: CommandoClient) => {
 
     const everyThreeMinutes = 3 * 60 * 1000;
     const everyThirdHour = 3 * 60 * 60 * 1000;
+    const everyThirdDay = 3 * 60 * 60 * 24 * 1000;
 
     interval(async () => setUpdateToFirebase(client), everyThreeMinutes);
-    interval(async () => stopTypingEverywhere(client), everyThreeMinutes);
+    interval(async () => updateEshop(client), everyThirdDay);
     interval(async () => sendTimedMessages(client), everyThreeMinutes);
     interval(async () => sendCountdownMessages(client), everyThreeMinutes);
     interval(async () => sendReminderMessages(client), everyThreeMinutes);

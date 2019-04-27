@@ -9,7 +9,7 @@
  * @param {RoleResolvable} AnyRole The role you want to remove from yourself
  */
 
-import { deleteCommandMessages, logModMessage, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -47,15 +47,12 @@ export default class IamNotCommand extends Command {
                 );
             }
 
-            startTyping(msg);
-
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
             const roleAddEmbed = new MessageEmbed();
             const selfRoles = msg.guild.settings.get('selfroles', null);
 
             if (selfRoles) {
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.reply('this server has no self assignable roles');
             }
@@ -66,7 +63,6 @@ export default class IamNotCommand extends Command {
 
             if (!selfRoles.includes(role.id)) {
                 deleteCommandMessages(msg, this.client);
-                stopTyping(msg);
 
                 return msg.reply(`that role is not self-assignable. The self-assignable roles are ${roleNames.map(val => `\`${val}\``).join(', ')}`
                 );
@@ -87,12 +83,10 @@ export default class IamNotCommand extends Command {
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(roleAddEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             if (/(?:Missing Permissions)/i.test(err.toString())) {
                 return msg.reply(stripIndents`an error occurred removing the role \`${role.name}\` from you.

@@ -11,7 +11,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
@@ -51,7 +51,6 @@ export default class DiceCommand extends Command {
     }
 
     public run (msg: CommandoMessage, { sides, rolls }: { sides: number; rolls: number }) {
-        startTyping(msg);
         const diceEmbed = new MessageEmbed();
         const res = [];
         const throwDice = this.xdicey(rolls, sides);
@@ -67,7 +66,6 @@ export default class DiceCommand extends Command {
             .addField('Total', throwDice.total, false);
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(diceEmbed);
     }

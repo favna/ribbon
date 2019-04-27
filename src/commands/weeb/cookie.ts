@@ -9,7 +9,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed } from 'awesome-djs';
 
@@ -41,7 +41,6 @@ export default class CookieCommand extends Command {
     public run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         if (msg.patternMatches && !this.verifyRmt(msg)) return null;
 
-        startTyping(msg);
         const cookieEmbed = new MessageEmbed();
         const isNotSelf = member.id !== msg.member!.id;
 
@@ -51,7 +50,6 @@ export default class CookieCommand extends Command {
             .setDescription(isNotSelf ? `Gnanahahahaha eating your cookie <@${member.id}>` : 'You won\'t steal my cookie!!');
 
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.embed(cookieEmbed);
     }

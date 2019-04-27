@@ -16,7 +16,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, roundNumber, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -80,7 +80,6 @@ export default class WeatherCommand extends Command {
 
     public async run (msg: CommandoMessage, { location }: { location: string }) {
         try {
-            startTyping(msg);
             const cords = await WeatherCommand.getCords(location);
             const res = await fetch(
                 `https://api.darksky.net/forecast/${
@@ -178,12 +177,10 @@ export default class WeatherCommand extends Command {
                 );
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(weatherEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
             return msg.reply(`I wasn't able to find a location for \`${location}\``);
         }
     }

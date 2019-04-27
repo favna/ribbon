@@ -10,7 +10,7 @@
  * @name unlock
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildChannel, MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
@@ -42,7 +42,6 @@ export default class UnlockCommand extends Command {
 
     @shouldHavePermission('ADMINISTRATOR', true)
     public async run (msg: CommandoMessage, { lockrole }: { lockrole: Role | any }) {
-        startTyping(msg);
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const channel = msg.channel as GuildChannel;
         const overwrite = await channel.overwritePermissions({
@@ -74,12 +73,10 @@ export default class UnlockCommand extends Command {
                 logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, unlockEmbed);
             }
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(unlockEmbed);
         }
         deleteCommandMessages(msg, this.client);
-        stopTyping(msg);
 
         return msg.reply('an error occurred unlocking this channel');
     }

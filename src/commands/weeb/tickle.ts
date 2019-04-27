@@ -8,7 +8,7 @@
  */
 
 import { ASSET_BASE_PATH } from '@components/Constants';
-import { deleteCommandMessages, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
@@ -40,14 +40,11 @@ export default class TickleCommand extends Command {
 
     public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
         try {
-            startTyping(msg);
-
             const tickleFetch = await fetch('https://nekos.life/api/v2/img/tickle');
             const tickleImg = await tickleFetch.json();
             const isNotSelf = member.id !== msg.member!.id;
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed({
                     color: msg.guild ? msg.guild.me!.displayColor : 10610610,
@@ -59,8 +56,6 @@ export default class TickleCommand extends Command {
                 `<@${member ? member.id : msg.author!.id}>`
             );
         } catch (err) {
-            stopTyping(msg);
-
             return msg.reply('something went wrong getting a tickle image 💔');
         }
     }

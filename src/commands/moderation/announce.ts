@@ -9,7 +9,7 @@
  * @param {string} Announcement The announcement you want to make
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission, startTyping, stopTyping } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildChannel, MessageAttachment, MessageEmbed, Permissions, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -43,8 +43,6 @@ export default class NewsCommand extends Command {
     @shouldHavePermission('ADMINISTRATOR', true)
     public run (msg: CommandoMessage, { body }: { body: string }) {
         try {
-            startTyping(msg);
-
             let announce = body;
             let newsChannel: TextChannel;
 
@@ -62,8 +60,6 @@ export default class NewsCommand extends Command {
             if (!newsChannel) throw new Error('nochannel');
             if (!(newsChannel.permissionsFor(msg.guild.me!) as Readonly<Permissions>).has(['SEND_MESSAGES', 'VIEW_CHANNEL'])) throw new Error('noperms');
 
-            newsChannel.startTyping(1);
-
             if (announce.slice(0, 4) !== 'http') announce = `${body.slice(0, 1).toUpperCase()}${body.slice(1)}`;
             if (msg.attachments.first() && (msg.attachments.first() as MessageAttachment).url) announce += `\n${(msg.attachments.first() as MessageAttachment).url}`;
 
@@ -77,19 +73,15 @@ export default class NewsCommand extends Command {
                 .setTimestamp();
 
             newsChannel.send(announce);
-            newsChannel.stopTyping(true);
 
             if (msg.guild.settings.get('modlogs', true)) {
                 logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, announceEmbed);
             }
 
             deleteCommandMessages(msg, this.client);
-            stopTyping(msg);
 
             return msg.embed(announceEmbed);
         } catch (err) {
-            stopTyping(msg);
-
             if (/(?:nochannel)/i.test(err.toString())) {
                 return msg.reply(oneLine`there is no channel for me to make the announcement in.
                     Either create a channel named either \`announcements\` or \`news\`
