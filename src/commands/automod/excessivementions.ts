@@ -59,7 +59,7 @@ export default class ExcessiveMentionsCommand extends Command {
 
         emEmbed
             .setColor('#439DFF')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** Mentions filter has been ${option ? 'enabled' : 'disabled'}
                 ${option ? `**Threshold:** Messages that have at least ${threshold} mentions will be deleted` : ''}

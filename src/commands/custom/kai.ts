@@ -38,7 +38,7 @@ export default class KaiCommand extends Command {
 
         return msg.embed(
             {
-                color: msg.guild ? msg.guild.me.displayColor : 10610610,
+                color: msg.guild ? msg.guild.me!.displayColor : 10610610,
                 image: { url: this.fetchImage() },
             },
             'Please <@418504046337589249> get lost'

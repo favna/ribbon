@@ -68,7 +68,7 @@ export default class ITunesCommand extends Command {
                 .setThumbnail(song.artworkUrl100)
                 .setTitle(song.trackName)
                 .setURL(song.trackViewUrl)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
                 .addField('Artist', `[${song.artistName}](${song.artistViewUrl})`, true)
                 .addField('Collection', `[${song.collectionName}](${song.collectionViewUrl})`, true)
                 .addField('Collection Price (USD)', `$${song.collectionPrice}`, true)
@@ -93,7 +93,7 @@ export default class ITunesCommand extends Command {
             channel.send(stripIndents`
 		        <@${this.client.owners[0].id}> Error occurred in \`itunes\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
 		        **Input:** ${music}
                 **Error Message:** ${err}

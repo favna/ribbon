@@ -83,7 +83,7 @@ export default class CopyPastaCommand extends Command {
                 }
 
                 pastaEmbed
-                    .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                    .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
                     .setTitle(query.name)
                     .setDescription(query.content);
 
@@ -115,7 +115,7 @@ export default class CopyPastaCommand extends Command {
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`copypasta\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Error Message:** ${err}
             `);

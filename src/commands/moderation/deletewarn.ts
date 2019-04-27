@@ -58,7 +58,7 @@ export default class DeleteWarnCommand extends Command {
 
         warnEmbed
             .setColor('#FFFF00')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setTimestamp();
 
         try {
@@ -111,7 +111,7 @@ export default class DeleteWarnCommand extends Command {
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`deletewarn\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Input:** \`${member.user.tag} (${member.id})\`|| \`${points}\`
                 **Error Message:** ${err}

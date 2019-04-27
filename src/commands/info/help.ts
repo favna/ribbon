@@ -82,7 +82,7 @@ export default class HelpCommand extends Command {
                     try {
                         messages.push(await msg.embed({
                             description: help,
-                            color: msg.guild ? msg.guild.me.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
+                            color: msg.guild ? msg.guild.me!.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
                         }) as Message);
                     } catch (err) {
                         messages.push(await msg.reply('Unable to send the help message.') as Message);
@@ -135,7 +135,7 @@ export default class HelpCommand extends Command {
                     for (const part in splitContent) {
                         messages.push(await msg.direct('', {
                             embed: {
-                                color: msg.guild ? msg.guild.me.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
+                                color: msg.guild ? msg.guild.me!.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
                                 description: splitContent[part],
                             },
                         }) as Message);
@@ -143,7 +143,7 @@ export default class HelpCommand extends Command {
                 } else {
                     messages.push(await msg.direct('', {
                         embed: {
-                            color: msg.guild ? msg.guild.me.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
+                            color: msg.guild ? msg.guild.me!.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
                             description: body,
                         },
                     }) as Message);

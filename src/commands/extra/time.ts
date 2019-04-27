@@ -69,7 +69,7 @@ export default class TimeCommand extends Command {
 					**Country:** ${time.countryName}
 					**DST:** ${time.dst}`
                 )
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR);
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

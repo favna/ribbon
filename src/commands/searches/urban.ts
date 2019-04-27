@@ -57,7 +57,7 @@ export default class UrbanCommand extends Command {
             urbanEmbed
                 .setTitle(`Urban Search - ${hit.word}`)
                 .setURL(hit.permalink)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setDescription(sentencecase(hit.definition.replace(/[\[]]/gim, '')))
                 .addField(
                     'Example',

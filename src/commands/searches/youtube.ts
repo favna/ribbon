@@ -70,7 +70,7 @@ export default class YouTubeCommand extends Command {
             videoEmbed
                 .setTitle(`Youtube Search Result for \`${query}\``)
                 .setURL(`https://www.youtube.com/watch?v=${video.id.videoId}`)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setImage(video.snippet.thumbnails.high.url)
                 .addField('Title', video.snippet.title, true)
                 .addField('URL', `[Click Here](https://www.youtube.com/watch?v=${video.id.videoId})`, true)

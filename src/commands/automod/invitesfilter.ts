@@ -50,7 +50,7 @@ export default class InvitesFilterCommand extends Command {
 
         ifEmbed
             .setColor('#439DFF')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** Discord Server invites filter has been ${option ? 'enabled' : 'disabled'}
                 ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`

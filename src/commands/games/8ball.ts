@@ -44,7 +44,7 @@ export default class EightBallCommand extends Command {
         const eightBallEmbed = new MessageEmbed();
 
         eightBallEmbed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
             .addField(':question: Question', question, false)
             .addField(
                 ':8ball: 8ball',

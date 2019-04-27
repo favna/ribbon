@@ -44,19 +44,19 @@ export default class SlapCommand extends Command {
 
             const slapFetch = await fetch('https://nekos.life/api/v2/img/slap');
             const slapImg = await slapFetch.json();
-            const isNotSelf = member.id !== msg.member.id;
+            const isNotSelf = member.id !== msg.member!.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.embed({
-                    color: msg.guild ? msg.guild.me.displayColor : 10610610,
+                    color: msg.guild ? msg.guild.me!.displayColor : 10610610,
                     description: isNotSelf
-                        ? `${member.displayName}! You got slapped by ${msg.member.displayName} 💢!`
-                        : `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
+                        ? `${member.displayName}! You got slapped by ${msg.member!.displayName} 💢!`
+                        : `${msg.member!.displayName} did you mean to slap someone B-Baka 🤔?`,
                     image: { url: isNotSelf ? slapImg.url : `${ASSET_BASE_PATH}/ribbon/baka.gif` },
                 },
-                `<@${member ? member.id : msg.author.id}>`
+                `<@${member ? member.id : msg.author!.id}>`
             );
         } catch (err) {
             stopTyping(msg);

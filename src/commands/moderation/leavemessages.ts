@@ -64,7 +64,7 @@ export default class LeaveMessagesCommand extends Command {
 
         leaveMsgEmbed
             .setColor('#AAEFE6')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** ${description}
                 ${option ? `**Channel:** <#${channel.id}>` : ''}`

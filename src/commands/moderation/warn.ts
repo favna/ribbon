@@ -66,7 +66,7 @@ export default class WarnCommand extends Command {
 
         warnEmbed
             .setColor('#FFFF00')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setTimestamp();
 
         try {
@@ -120,7 +120,7 @@ export default class WarnCommand extends Command {
                 channel.send(stripIndents`
                     <@${this.client.owners[0].id}> Error occurred in \`warn\` command!
                     **Server:** ${msg.guild.name} (${msg.guild.id})
-                    **Author:** ${msg.author.tag} (${msg.author.id})
+                    **Author:** ${msg.author!.tag} (${msg.author!.id})
                     **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                     **Input:** \`${member.user.tag} (${member.id})\`|| \`${points}\` || \`${reason}\`
                     **Error Message:** ${err}

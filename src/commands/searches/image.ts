@@ -52,7 +52,7 @@ export default class ImageCommand extends Command {
         const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
         const imageEmbed = new MessageEmbed();
 
-        imageEmbed.setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR);
+        imageEmbed.setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
 
         try {
             startTyping(msg);

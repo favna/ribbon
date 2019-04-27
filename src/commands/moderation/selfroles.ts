@@ -68,7 +68,7 @@ export default class SelfRolesCommand extends Command {
 
         selfRolesEmbed
             .setColor('#AAEFE6')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`**Action:** ${description}`)
             .setTimestamp();
 

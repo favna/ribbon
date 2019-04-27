@@ -83,7 +83,7 @@ export default class MoneyCommand extends Command {
             const result = convertCurrency(response.rates, fromCurrency, toCurrency, value);
 
             oxrEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setAuthor('🌐 Currency Converter')
                 .addField(
                     `:flag_${fromCurrency
@@ -118,7 +118,7 @@ export default class MoneyCommand extends Command {
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`oxr\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Input:** \`${value}\` || \`${fromCurrency}\` || \`${toCurrency}\`
             `);

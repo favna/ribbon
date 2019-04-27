@@ -59,7 +59,7 @@ export default class RibbonStatsCommand extends Command {
         };
 
         statsEmbed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
             .setAuthor(`${this.client.user!.username} Stats`, this.client.user!.displayAvatarURL({ format: 'png' }))
             .addField('Guilds', this.client.guilds.size, true)
             .addField('Channels', this.client.channels.size, true)
@@ -92,7 +92,7 @@ export default class RibbonStatsCommand extends Command {
                 .addField(fields.time.name, fields.time.value)
                 .addField(fields.info.name, fields.info.value);
 
-            statMessage.edit('', { embed: statsEmbed });
+            statMessage.edit('', statsEmbed);
         });
     }
 

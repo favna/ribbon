@@ -44,19 +44,19 @@ export default class PatCommand extends Command {
 
             const patFetch = await fetch('https://nekos.life/api/v2/img/pat');
             const petImg = await patFetch.json();
-            const isNotSelf = member.id !== msg.member.id;
+            const isNotSelf = member.id !== msg.member!.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.embed({
-                    color: msg.guild ? msg.guild.me.displayColor : 10610610,
+                    color: msg.guild ? msg.guild.me!.displayColor : 10610610,
                     description: isNotSelf
-                        ? `${member.displayName}! You got patted by ${msg.member.displayName} 🐇!`
-                        : `${msg.member.displayName} you must feel alone... Have a 🐈`,
+                        ? `${member.displayName}! You got patted by ${msg.member!.displayName} 🐇!`
+                        : `${msg.member!.displayName} you must feel alone... Have a 🐈`,
                     image: { url: isNotSelf ? petImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
                 },
-                `<@${member ? member.id : msg.author.id}>`
+                `<@${member ? member.id : msg.author!.id}>`
             );
         } catch (err) {
             stopTyping(msg);

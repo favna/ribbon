@@ -53,7 +53,7 @@ export default class UnlockCommand extends Command {
                         lockrole === 'everyone'
                             ? n.name === '@everyone'
                             : n.name === lockrole.name
-                    ).id,
+                    )!.id,
                 }
             ],
             reason: 'Channel Lockdown',
@@ -62,7 +62,7 @@ export default class UnlockCommand extends Command {
 
         unlockEmbed
             .setColor('#359876')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** 🔓 unlocked the \`${channel.name}\` channel.
                 **Details:** This channel can now be used by everyone again. Use \`${msg.guild.commandPrefix}lockdown\` in this channel to (re)-lock it.`

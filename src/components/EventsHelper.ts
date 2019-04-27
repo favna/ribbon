@@ -98,7 +98,7 @@ const sendCountdownMessages = async (client: CommandoClient) => {
                     const guild = client.guilds.get(tables[table].name)!;
                     const channel = guild.channels.get(rows[row].channel) as TextChannel;
                     const countdownEmbed = new MessageEmbed();
-                    const me = guild.me;
+                    const me = guild.me!;
 
                     countdownEmbed
                         .setAuthor(
@@ -293,7 +293,7 @@ const payoutLotto = async (client: CommandoClient) => {
                 const winnerEmbed = new MessageEmbed();
                 const winnerMember: GuildMember = client.guilds.get(guildId)!.members.get(rows[winner].userID)!;
                 if (!winnerMember) continue;
-                const winnerLastMessageChannelId: Snowflake = winnerMember.lastMessageChannelID;
+                const winnerLastMessageChannelId: Snowflake | null = winnerMember.lastMessageChannelID;
                 const winnerLastMessageChannel = winnerLastMessageChannelId
                     ? client.guilds.get(guildId)!.channels.get(winnerLastMessageChannelId)!
                     : null;
@@ -357,7 +357,7 @@ const sendTimedMessages = async (client: CommandoClient) => {
                     const guild = client.guilds.get(tables[table].name)!;
                     const channel = guild.channels.get(rows[row].channel) as TextChannel;
                     const timerEmbed = new MessageEmbed();
-                    const me = guild.me;
+                    const me = guild.me!;
                     const memberMentions = rows[row].members
                         ? rows[row].members
                             .split(';')
@@ -426,7 +426,7 @@ export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, m
         Caught **Command Error**!
         **Command:** ${cmd.name}
         ${msg.guild ? `**Server:** ${msg.guild.name} (${msg.guild.id})` : null}
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err.message}
     `);
@@ -666,7 +666,7 @@ export const handleMemberJoin = (client: CommandoClient, member: GuildMember) =>
             const memberLogs = guild.settings.get(
                 'memberlogchannel',
                 member.guild.channels.find((c: GuildChannel) => c.name === 'member-logs')
-                    ? member.guild.channels.find((c: GuildChannel) => c.name === 'member-logs').id
+                    ? member.guild.channels.find((c: GuildChannel) => c.name === 'member-logs')!.id
                     : null
             );
 
@@ -741,7 +741,7 @@ export const handleMemberLeave = (client: CommandoClient, member: GuildMember): 
             const memberLogs = guild.settings.get(
                 'memberlogchannel',
                 member.guild.channels.find((c: GuildChannel) => c.name === 'member-logs')
-                    ? member.guild.channels.find((c: GuildChannel) => c.name === 'member-logs').id
+                    ? member.guild.channels.find((c: GuildChannel) => c.name === 'member-logs')!.id
                     : null
             );
 
@@ -830,7 +830,7 @@ export const handleMsg = (client: CommandoClient, msg: CommandoMessage): void =>
     const guild = msg.guild;
 
     if (msg.guild && msg.deletable && guild.settings.get('automod', false).enabled) {
-        if (msg.member.roles.some(ro => guild.settings.get('automod', []).filterroles.includes(ro.id))) {
+        if (msg.member!.roles.some(ro => guild.settings.get('automod', []).filterroles.includes(ro.id))) {
             return;
         }
         if (guild.settings.get('caps', false).enabled) {
@@ -869,7 +869,7 @@ export const handleMsg = (client: CommandoClient, msg: CommandoMessage): void =>
         }
     }
 
-    if (msg.author.id === client.user!.id) {
+    if (msg.author!.id === client.user!.id) {
         try {
             let messagesCount = FirebaseStorage.messages;
             messagesCount++;
@@ -945,10 +945,10 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
                         url: 'placeholder',
                     };
                 }
-                if (!/(twitch)/i.test(oldActivity.url) && /(twitch)/i.test(newActivity.url)) {
+                if (!/(twitch)/i.test(oldActivity.url!) && /(twitch)/i.test(newActivity.url!)) {
                     const userFetch = await fetch(
                         `https://api.twitch.tv/helix/users?${stringify({
-                            login: newActivity.url.split('/')[3],
+                            login: newActivity.url!.split('/')[3],
                         })}`,
                         { headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID! } }
                     );
@@ -968,7 +968,7 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
 
                     twitchEmbed
                         .setThumbnail(curUser.displayAvatarURL())
-                        .setURL(newActivity.url)
+                        .setURL(newActivity.url!)
                         .setColor('#6441A4')
                         .setTitle(`${curDisplayName} just went live!`)
                         .setDescription(stripIndents`
@@ -1005,8 +1005,8 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
                     **Server:** ${curGuild.name} (${curGuild.id})
                     **Member:** ${curUser.tag} (${curUser.id})
                     **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-                    **Old Activity:** ${oldActivity.url}
-                    **New Activity:** ${newActivity.url}
+                    **Old Activity:** ${oldActivity!.url}
+                    **New Activity:** ${newActivity!.url}
                     **Error Message:** ${err}
                 `);
             }

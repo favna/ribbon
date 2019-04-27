@@ -129,9 +129,9 @@ export default class LaunchMusicCommand extends Command {
         startTyping(msg);
         const queue = this.queue.get(msg.guild.id);
 
-        if (!msg.member.voice.channel) return msg.reply('please join a voice channel before issuing this command.');
+        if (!msg.member!.voice.channel) return msg.reply('please join a voice channel before issuing this command.');
 
-        const voiceChannel: VoiceChannel = msg.member.voice.channel;
+        const voiceChannel: VoiceChannel = msg.member!.voice.channel;
         const statusMsg: Message = await msg.reply('obtaining video details...') as Message;
 
         if (!queue) {
@@ -161,7 +161,7 @@ export default class LaunchMusicCommand extends Command {
 
                 return null;
             }
-        } else if (!queue.voiceChannel.members.has(msg.author.id)) {
+        } else if (!queue.voiceChannel.members.has(msg.author!.id)) {
             return msg.reply('please join a voice channel before issuing this command.');
         }
 
@@ -211,11 +211,11 @@ export default class LaunchMusicCommand extends Command {
                     deleteCommandMessages(msg, this.client);
                     stopTyping(msg);
 
-                    return statusMsg.edit(`<@${msg.author.id}>, couldn't obtain the search result video's details.`);
+                    return statusMsg.edit(`<@${msg.author!.id}>, couldn't obtain the search result video's details.`);
                 }
             }
 
-            return statusMsg.edit(`<@${msg.author.id}>, couldn't match a youtube result. Was that really a youtube video?`);
+            return statusMsg.edit(`<@${msg.author!.id}>, couldn't match a youtube result. Was that really a youtube video?`);
         }
     }
 
@@ -240,8 +240,8 @@ export default class LaunchMusicCommand extends Command {
             const result = this.addSong(msg, video);
             const resultMessage = {
                 author: {
-                    iconURL: msg.author.displayAvatarURL({ format: 'png' }),
-                    name: `${msg.author.tag} (${msg.author.id})`,
+                    iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
+                    name: `${msg.author!.tag} (${msg.author!.id})`,
                 },
                 color: 3447003,
                 description: result,
@@ -276,8 +276,8 @@ export default class LaunchMusicCommand extends Command {
             const result = this.addSong(msg, video);
             const resultMessage = {
                 author: {
-                    iconURL: msg.author.displayAvatarURL({ format: 'png' }),
-                    name: `${msg.author.tag} (${msg.author.id})`,
+                    iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
+                    name: `${msg.author!.tag} (${msg.author!.id})`,
                 },
                 color: 3447003,
                 description: result,
@@ -300,8 +300,8 @@ export default class LaunchMusicCommand extends Command {
         const result = this.addSong(msg, video);
         const resultMessage = {
             author: {
-                iconURL: msg.author.displayAvatarURL({ format: 'png' }),
-                name: `${msg.author.tag} (${msg.author.id})`,
+                iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
+                name: `${msg.author!.tag} (${msg.author!.id})`,
             },
             color: 3447003,
             description: result,
@@ -323,8 +323,8 @@ export default class LaunchMusicCommand extends Command {
                 `,
                 color: 3447003,
                 author: {
-                    name: `${msg.author.tag} (${msg.author.id})`,
-                    icon_url: msg.author.displayAvatarURL({ format: 'png' }),
+                    name: `${msg.author!.tag} (${msg.author!.id})`,
+                    icon_url: msg.author!.displayAvatarURL({ format: 'png' }),
                 },
             },
         });
@@ -336,14 +336,14 @@ export default class LaunchMusicCommand extends Command {
     private addSong (msg: CommandoMessage, video: YoutubeVideoType) {
         const queue = this.queue.get(msg.guild.id);
         const songNumerator = (prev: any, curSong: any) => {
-            if (curSong.member.id === msg.author.id) {
+            if (curSong.member.id === msg.author!.id) {
                 prev += 1;
             }
 
             return prev;
         };
 
-        if (!this.client.isOwner(msg.author)) {
+        if (!this.client.isOwner(msg.author!)) {
             const songMaxLength = msg.guild.settings.get('maxLength', MAX_LENGTH);
             const songMaxSongs = msg.guild.settings.get('maxSongs', MAX_SONGS);
 
@@ -363,7 +363,7 @@ export default class LaunchMusicCommand extends Command {
             }
         }
 
-        const song = new Song(video, msg.member);
+        const song = new Song(video, msg.member!);
 
         (queue as MusicQueueType).songs.push(song);
 

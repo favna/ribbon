@@ -77,7 +77,7 @@ export default class CydiaCommand extends Command {
             if (!hit) throw new Error('no_packages');
 
             cydiaEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setTitle(hit.display)
                 .setDescription(hit.summary)
                 .addField('Version', hit.version, true)
@@ -125,7 +125,7 @@ export default class CydiaCommand extends Command {
             channel.send(stripIndents`
               <@${this.client.owners[0].id}> Error occurred in \`cydia\` command!
               **Server:** ${msg.guild.name} (${msg.guild.id})
-              **Author:** ${msg.author.tag} (${msg.author.id})
+              **Author:** ${msg.author!.tag} (${msg.author!.id})
               **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
               **Package:** ${deb}
               **Regex Match:** \`${msg.patternMatches ? 'yes' : 'no'}\`

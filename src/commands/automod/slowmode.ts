@@ -58,7 +58,7 @@ export default class SlowmodeCommand extends Command {
 
         slEmbed
             .setColor('#439DFF')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** Slowmode has been ${option ? 'enabled' : 'disabled'}
                 ${option ? `**Info:** Slow mode enabled. Members can 1 message per ${within} second(s)` : ''}

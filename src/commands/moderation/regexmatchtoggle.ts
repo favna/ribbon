@@ -49,7 +49,7 @@ export default class RegexMatchToggleCommand extends Command {
 
         regexMatchEmbed
             .setColor('#3DFFE5')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(`**Action:** Pattern matching commands are now ${option ? 'enabled' : 'disabled'}`)
             .setTimestamp();
 

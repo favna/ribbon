@@ -113,7 +113,7 @@ export default class OverwatchCommand extends Command {
                 .setAuthor('Overwatch Player Statistics', `${ASSET_BASE_PATH}/ribbon/overwatch.png`)
                 .setURL(`https://playoverwatch.com/en-us/career/${platform}/${player}`)
                 .setThumbnail(data.icon)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
                 .addField('Account Stats',
                     stripIndents`
                         Level: **${data.level}**
@@ -191,7 +191,7 @@ export default class OverwatchCommand extends Command {
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`overwatch\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Player:** ${player}
                 **Platform:** ${platform}

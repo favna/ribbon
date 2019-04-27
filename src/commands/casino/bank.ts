@@ -39,20 +39,20 @@ export default class BankCommand extends Command {
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
         bankEmbed
-            .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setAuthor(msg.member!.displayName, msg.author!.displayAvatarURL())
+            .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/bank.png`);
 
         try {
             startTyping(msg);
-            const { balance, vault, lastdaily, lastweekly } = conn.prepare(`SELECT balance, vault, lastdaily, lastweekly FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
+            const { balance, vault, lastdaily, lastweekly } = conn.prepare(`SELECT balance, vault, lastdaily, lastweekly FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
 
             if (balance >= 0) {
                 const dailyDura = moment.duration(moment(lastdaily).add(24, 'hours').diff(moment()));
                 const weeklyDura = moment.duration(moment(lastweekly).add(7, 'days').diff(moment()));
 
                 bankEmbed
-                    .setTitle(`${msg.author.tag}'s vault content`)
+                    .setTitle(`${msg.author!.tag}'s vault content`)
                     .setDescription(stripIndents`
                         **Vault Content**
                         ${vault}
@@ -85,7 +85,7 @@ export default class BankCommand extends Command {
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`bank\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Error Message:** ${err}
             `);

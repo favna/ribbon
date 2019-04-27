@@ -100,7 +100,7 @@ export default class MuteCommand extends Command {
 
                 muteEmbed
                     .setColor('#AAEFE6')
-                    .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+                    .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
                     .setDescription(stripIndents`
                         **Action:** Muted <@${member.id}>
                         **Duration:** ${duration ? timeparseHelper(duration, { long: true }) : 'Until manually removed'}`
@@ -145,7 +145,7 @@ export default class MuteCommand extends Command {
                 channel.send(stripIndents`
                     <@${this.client.owners[0].id}> Error occurred in \`mute\` command!
                     **Server:** ${msg.guild.name} (${msg.guild.id})
-                    **Author:** ${msg.author.tag} (${msg.author.id})
+                    **Author:** ${msg.author!.tag} (${msg.author!.id})
                     **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                     **Input:** \`${member.user.username} (${member.id})\` ${duration ? ` || \`${timeparseHelper(duration, { long: true })}` : null}
                     **Error Message:** ${err}

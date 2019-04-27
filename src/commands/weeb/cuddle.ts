@@ -44,20 +44,20 @@ export default class CuddleCommand extends Command {
 
             const cuddleFetch = await fetch('https://nekos.life/api/v2/img/cuddle');
             const cuddleImg = await cuddleFetch.json();
-            const isNotSelf = member.id !== msg.member.id;
+            const isNotSelf = member.id !== msg.member!.id;
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);
 
             return msg.embed(
                 {
-                    color: msg.guild ? msg.guild.me.displayColor : 10610610,
+                    color: msg.guild ? msg.guild.me!.displayColor : 10610610,
                     description: isNotSelf
-                        ? `Awww ${msg.member.displayName} is giving ${member.displayName} cuddles 💕!`
-                        : `${msg.member.displayName} you must feel alone... Have a 🐈`,
+                        ? `Awww ${msg.member!.displayName} is giving ${member.displayName} cuddles 💕!`
+                        : `${msg.member!.displayName} you must feel alone... Have a 🐈`,
                     image: { url: isNotSelf ? cuddleImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
                 },
-                `<@${member ? member.id : msg.author.id}>`
+                `<@${member ? member.id : msg.author!.id}>`
             );
         } catch (err) {
             stopTyping(msg);

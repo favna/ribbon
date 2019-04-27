@@ -71,7 +71,7 @@ export default class CopyPastaRemoveCommand extends Command {
 
             cprEmbed
                 .setColor('#F7F79D')
-                .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+                .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
                 .setDescription(stripIndents`
                     **Action:** Copypasta removed
                     **Name was:** ${name}
@@ -97,7 +97,7 @@ export default class CopyPastaRemoveCommand extends Command {
             channel.send(stripIndents`
 		        <@${this.client.owners[0].id}> Error occurred in the \`copypastaremove\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **ID:** ${id}
 		        **Error Message:** ${err}

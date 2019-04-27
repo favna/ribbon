@@ -49,7 +49,7 @@ export default class UnknownMessagesCommand extends Command {
 
         ukmEmbed
             .setColor('#3DFFE5')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(`**Action:** Unknown command response messages are now ${option ? 'enabled' : 'disabled'}`)
             .setTimestamp();
 

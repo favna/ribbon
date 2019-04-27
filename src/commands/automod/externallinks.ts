@@ -50,7 +50,7 @@ export default class ExternalLinksCommand extends Command {
 
         elEmbed
             .setColor('#439DFF')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** external links filter has been ${option ? 'enabled' : 'disabled'}
                 ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`

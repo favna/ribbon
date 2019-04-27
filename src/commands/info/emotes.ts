@@ -54,7 +54,7 @@ export default class EmotesCommand extends Command {
         });
 
         emotesEmbed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
             .setAuthor(`${staticEmotes.length + animEmotes.length} ${msg.guild.name} Emotes`, msg.guild.iconURL({ format: 'png' }))
             .setTimestamp();
 

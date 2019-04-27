@@ -52,7 +52,7 @@ export default class DiscordBotsCommand extends Command {
             const infoEmbed = new MessageEmbed();
 
             infoEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setTitle(`Discord Bots Info for ${info.username}#${info.discriminator} (${info.clientid})`)
                 .setURL(`https://discordbots.org/bot/${info.clientid}`)
                 .setThumbnail(`https://images.discordapp.net/avatars/${info.clientid}/${info.avatar}.png`)

@@ -62,7 +62,7 @@ export default class MangaCommand extends Command {
             const mangaEmbed = new MessageEmbed();
 
             mangaEmbed
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setTitle(hit.titles.en ? hit.titles.en : hit.canonicalTitle)
                 .setURL(`https://kitsu.io/anime/${hit.id}`)
                 .setDescription(hit.synopsis.replace(/(.+)[\r\n\t](.+)/gim, '$1 $2').split('\r\n')[0])

@@ -35,7 +35,7 @@ export default class FavnaCommand extends Command {
         if (msg.guild.id === '373826006651240450') return true;
         if (msg.guild.commandPrefix === '.') return true;
         if (msg.guild.settings.get('regexmatches', false)) return true;
-        return this.client.isOwner(msg.author);
+        return this.client.isOwner(msg.author!);
     }
 
     public run (msg: CommandoMessage) {
@@ -46,7 +46,7 @@ export default class FavnaCommand extends Command {
         stopTyping(msg);
 
         return msg.embed({
-            color: msg.guild ? msg.guild.me.displayColor : 10610610,
+            color: msg.guild ? msg.guild.me!.displayColor : 10610610,
             description: oneLine`Technically speaking my father, but to you he is your supreme leader and you will submit to him
                 or I will infect every single human being you have ever met with a virus so terrible their lungs and intestines
                 will instantly explode from their chests causing a gorey, bloody mess all over the floor and you

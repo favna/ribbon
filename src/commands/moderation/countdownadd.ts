@@ -143,7 +143,7 @@ export default class CountdownAddCommand extends Command {
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`countdownadd\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **datetime:** ${moment(datetime).format('YYYY-MM-DD HH:mm')}
                 **Channel:** ${channel.name} (${channel.id})>
@@ -159,7 +159,7 @@ export default class CountdownAddCommand extends Command {
     private sendRes (client: CommandoClient, msg: CommandoMessage, datetime: string, channel: TextChannel, content: string, tag: string, embed: MessageEmbed, logCh: string) {
         embed
             .setColor('#9EF7C1')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** Countdown stored
                 **Event at:** ${moment(datetime).format('YYYY-MM-DD HH:mm')}

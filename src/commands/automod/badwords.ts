@@ -59,7 +59,7 @@ export default class BadWordsCommand extends Command {
         msg.guild.settings.set('badwords', options);
         bwfEmbed
             .setColor('#439DFF')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** Bad words filter has been ${option ? 'enabled' : 'disabled'}
                 ${option ? `**Words:** Bad words have been set to ${words.map((word: string) => `\`${word}\``).join(', ')}` : ''}

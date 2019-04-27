@@ -112,8 +112,8 @@ export const shouldHavePermission = (permission: PermissionString, shouldClientH
         const fn = descriptor.value;
 
         descriptor.value = (msg: CommandoMessage, args: object, fromPattern: boolean) => {
-            const authorIsOwner = msg.client.isOwner(msg.author);
-            const memberHasPermission = msg.member.hasPermission(permission);
+            const authorIsOwner = msg.client.isOwner(msg.author!);
+            const memberHasPermission = msg.member!.hasPermission(permission);
 
             if (!memberHasPermission && !authorIsOwner) {
                 return msg.command.onBlock(msg, 'permission', {

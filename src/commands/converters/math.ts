@@ -57,7 +57,7 @@ export default class MathCommand extends Command {
 
             mathEmbed
                 .setTitle('Calculator')
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setDescription(oneLine`The answer to \`${equation.toString()}\` is \`${maths.result}\``);
 
             deleteCommandMessages(msg, this.client);
@@ -78,7 +78,7 @@ export default class MathCommand extends Command {
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`math\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Input:** \`${equation}\`
                 **Error Message:** ${err}

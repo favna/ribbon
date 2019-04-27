@@ -50,7 +50,7 @@ export default class LeaderboardCommand extends Command {
 
         lbEmbed
             .setTitle(`Top ${limit} players`)
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
         try {
@@ -88,7 +88,7 @@ export default class LeaderboardCommand extends Command {
             channel.send(stripIndents`
                 <@${this.client.owners[0].id}> Error occurred in \`leaderboard\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author.tag} (${msg.author.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                 **Error Message:** ${err}
             `);

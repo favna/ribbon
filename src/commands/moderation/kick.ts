@@ -48,7 +48,7 @@ export default class KickCommand extends Command {
 
     @shouldHavePermission('KICK_MEMBERS', true)
     public run (msg: CommandoMessage, { member, reason }: { member: GuildMember; reason: string }) {
-        if (member.id === msg.author.id) return msg.reply('I don\'t think you want to kick yourself.');
+        if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to kick yourself.');
         if (!member.kickable) return msg.reply('I cannot kick that member, their role is probably higher than my own!');
         startTyping(msg);
 
@@ -58,7 +58,7 @@ export default class KickCommand extends Command {
 
         kickEmbed
             .setColor('#FF8300')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Member:** ${member.user.tag} (${member.id})
                 **Action:** Kick

@@ -152,7 +152,7 @@ export default class TimerAddCommand extends Command {
                 channel.send(stripIndents`
                     <@${this.client.owners[0].id}> Error occurred in \`timeradd\` command!
                     **Server:** ${msg.guild.name} (${msg.guild.id})
-                    **Author:** ${msg.author.tag} (${msg.author.id})
+                    **Author:** ${msg.author!.tag} (${msg.author!.id})
                     **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
                     **Interval:** ${timeparseHelper(interval, { long: true })}
                     **Channel:** ${channel.name} (${channel.id})>
@@ -167,7 +167,7 @@ export default class TimerAddCommand extends Command {
 
         timedMsgEmbed
             .setColor('#9EF7C1')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** Timed message stored
                 **Interval:** ${timeparseHelper(interval, { long: true })}

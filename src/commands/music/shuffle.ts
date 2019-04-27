@@ -65,8 +65,8 @@ export default class ShuffleCommand extends Command {
         const paginated = util.paginate(queue.songs, 1, Math.floor(10));
 
         embed
-            .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
-            .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({ format: 'png' }))
+            .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setAuthor(`${msg.author!.tag} (${msg.author!.id})`, msg.author!.displayAvatarURL({ format: 'png' }))
             .setImage(currentSong.thumbnail)
             .setDescription(stripIndents`
                 __**First 10 songs in the queue**__${paginated.items

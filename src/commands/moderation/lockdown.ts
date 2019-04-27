@@ -59,14 +59,14 @@ export default class LockdownCommand extends Command {
             permissionOverwrites: [
                 {
                     allow: ['SEND_MESSAGES', 'VIEW_CHANNEL'],
-                    id: msg.member.roles.highest.id,
+                    id: msg.member!.roles.highest.id,
                 },
                 {
                     deny: ['SEND_MESSAGES'],
                     id: msg.guild.roles.find(n => lockrole === 'everyone'
                         ? n.name === '@everyone'
                         : n.name === lockrole.name
-                    ).id,
+                    )!.id,
                 }
             ],
             reason: 'Channel Lockdown',
@@ -74,7 +74,7 @@ export default class LockdownCommand extends Command {
 
         lockEmbed
             .setColor('#983553')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** 🔒 locked the \`${channel.name}\` channel.
                 **Details:** Only staff can now access this channel. Use \`${msg.guild.commandPrefix}unlock\` in this channel to unlock the channel`

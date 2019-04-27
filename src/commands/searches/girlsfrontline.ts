@@ -107,7 +107,7 @@ export default class GirlsFrontlineCommand extends Command {
                 .addField(`Ability: ${hit.ability.name}`, hit.ability.text, true)
                 .addField('Tile Bonus', hit.tile_bonus, true)
                 .addField('Tile Bonus Ability', hit.bonus_desc, true)
-                .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR);
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
 
             deleteCommandMessages(msg, this.client);
             stopTyping(msg);

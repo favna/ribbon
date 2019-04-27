@@ -43,11 +43,11 @@ export default class CookieCommand extends Command {
 
         startTyping(msg);
         const cookieEmbed = new MessageEmbed();
-        const isNotSelf = member.id !== msg.member.id;
+        const isNotSelf = member.id !== msg.member!.id;
 
         cookieEmbed
             .setImage(this.fetchImage())
-            .setColor(msg.guild ? msg.guild.me.displayColor : DEFAULT_EMBED_COLOR)
+            .setColor(msg.guild ? msg.guild.me!.displayColor : DEFAULT_EMBED_COLOR)
             .setDescription(isNotSelf ? `Gnanahahahaha eating your cookie <@${member.id}>` : 'You won\'t steal my cookie!!');
 
         deleteCommandMessages(msg, this.client);
@@ -77,6 +77,6 @@ export default class CookieCommand extends Command {
         if (msg.guild.id === '373826006651240450') return true;
         if (msg.guild.commandPrefix === '.') return true;
         if (msg.guild.settings.get('regexmatches', false)) return true;
-        return this.client.isOwner(msg.author);
+        return this.client.isOwner(msg.author!);
     }
 }

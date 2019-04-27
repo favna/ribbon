@@ -50,7 +50,7 @@ export default class GoogleCommand extends Command {
         const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
         const googleEmbed = new MessageEmbed();
 
-        googleEmbed.setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR);
+        googleEmbed.setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
         startTyping(msg);
 
         try {

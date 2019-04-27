@@ -58,7 +58,7 @@ export default class SetNonExplicitBlockCommand extends Command {
 
         snebEmbed
             .setColor('#3DFFE5')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(`**Action:** Non Explicit commands are now ${option ? 'blocked' : 'allowed'} outside of NSFW channels`)
             .setTimestamp();
 

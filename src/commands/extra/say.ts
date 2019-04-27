@@ -117,11 +117,11 @@ export default class SayCommand extends Command {
 
         const saydata = {
             argString: msg.argString.slice(1),
-            authorID: msg.author.id,
-            authorTag: msg.author.tag,
-            avatarURL: msg.author.displayAvatarURL({ format: 'png' }),
+            authorID: msg.author!.id,
+            authorTag: msg.author!.tag,
+            avatarURL: msg.author!.displayAvatarURL({ format: 'png' }),
             commandPrefix: msg.guild.commandPrefix,
-            memberHexColor: msg.member.displayHexColor,
+            memberHexColor: msg.member!.displayHexColor,
             messageDate: msg.createdAt,
         };
 

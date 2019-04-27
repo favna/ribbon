@@ -78,10 +78,10 @@ export default class ViewQueueCommand extends Command {
 
         return msg.embed({
             author: {
-                name: `${msg.author.tag} (${msg.author.id})`,
-                iconURL: msg.author.displayAvatarURL({ format: 'png' }),
+                name: `${msg.author!.tag} (${msg.author!.id})`,
+                iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
             },
-            color: msg.guild ? msg.guild.me.displayColor : 10610610,
+            color: msg.guild ? msg.guild.me!.displayColor : 10610610,
             description: stripIndents`
                 __**Song queue, page ${paginated.page}**__
                 ${paginated.items

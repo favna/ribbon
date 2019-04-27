@@ -62,7 +62,7 @@ export default class AutomodCommand extends Command {
 
         automodEmbed
             .setColor('#3DFFE5')
-            .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** Automod features are now ${option ? 'enabled' : 'disabled'}
                 **Notice:** Be sure to enable your desired individual features, they are all off by default!
