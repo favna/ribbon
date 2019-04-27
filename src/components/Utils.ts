@@ -103,7 +103,7 @@ export const shouldHavePermission = (permission: PermissionString, shouldClientH
     return (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
         const fn = descriptor.value;
 
-        descriptor.value = (msg: CommandoMessage, args: object, fromPattern: boolean) => {
+        descriptor.value = function (msg: CommandoMessage, args: object, fromPattern: boolean) {
             const authorIsOwner = msg.client.isOwner(msg.author!);
             const memberHasPermission = msg.member!.hasPermission(permission);
 
@@ -121,7 +121,8 @@ export const shouldHavePermission = (permission: PermissionString, shouldClientH
                 }
             }
 
-            return fn.apply(target, [msg, args, fromPattern]);
+            // tslint:disable-next-line:no-invalid-this
+            return fn.bind(this)(msg, args, fromPattern);
         };
 
         return descriptor;
