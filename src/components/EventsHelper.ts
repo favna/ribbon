@@ -1110,13 +1110,13 @@ export const handleShardError = (client: CommandoClient, event: Error, shard: nu
     `);
 };
 
-export const handleShardReady = (client: CommandoClient, shard: number) => {
-    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-    channel.send(stripIndents`
-        __**New Shard is ready**__!
-        **Shard Number:** ${shard}
-        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+export const handleShardReady = (shard: number) => {
+    global.console.info(stripIndents`
+    >>>>>>
+        New Shard is ready!
+        Shard Number: ${shard}
+        Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+    <<<<<<
     `);
 };
 

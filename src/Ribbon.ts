@@ -49,7 +49,7 @@ export default class Ribbon {
             .on('warn', (warn: string) => handleWarn(this.client, warn))
             .on('shardDisconnected', (event: CloseEvent, shard: number) => handleShardDisconnect(this.client, event, shard))
             .on('shardError', (error: Error, shard: number) => handleShardError(this.client, error, shard))
-            .on('shardReady', (shard: number) => handleShardReady(this.client, shard))
+            .on('shardReady', (shard: number) => handleShardReady(shard))
             .on('shardReconnecting', (shard: number) => handleShardReconnecting(this.client, shard))
             .on('shardResumed', (shard: number, events: number) => handleShardResumed(this.client, shard, events));
         process.on('unhandledRejection', (reason: Error | any, p: Promise<any>) => handleRejection(reason, p));

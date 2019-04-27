@@ -128,7 +128,7 @@ export default class MuteCommand extends Command {
                             logChannel.send('', { embed: muteEmbed });
                         }
 
-                        return muteMessage.edit('', { embed: muteEmbed });
+                        return muteMessage.edit('', muteEmbed);
                     }, duration);
                 }
 

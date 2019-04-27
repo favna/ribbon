@@ -66,6 +66,6 @@ export default class KaiCommand extends Command {
         if (msg.guild.id === '373826006651240450') return true;
         if (msg.guild.commandPrefix === '.') return true;
         if (msg.guild.settings.get('regexmatches', false)) return true;
-        return this.client.isOwner(msg.author);
+        return this.client.isOwner(msg.author!);
     }
 }
