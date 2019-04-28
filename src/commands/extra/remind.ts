@@ -140,7 +140,7 @@ export default class RemindCommand extends Command {
             }
         }
         remindEmbed
-            .setAuthor(msg.member!.displayName, msg.author!.displayAvatarURL({ format: 'png' }))
+            .setAuthor(msg.guild ? msg.member!.displayName : msg.author!.tag, msg.author!.displayAvatarURL({ format: 'png' }))
             .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/reminders.png`)
             .setTitle('Your reminder was stored!')
