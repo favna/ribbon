@@ -21,6 +21,8 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import fetch from 'node-fetch';
 
+// FIXME: Strawpoll command seems to be broken
+
 export default class StrawpollCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {

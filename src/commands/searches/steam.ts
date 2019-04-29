@@ -20,6 +20,10 @@ import cheerio from 'cheerio';
 import fetch from 'node-fetch';
 import { unescape } from 'unescape-es6';
 
+type SteamCommandArgs = {
+    game: string;
+};
+
 export default class SteamCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -45,7 +49,7 @@ export default class SteamCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { game }: { game: string }) {
+    public async run (msg: CommandoMessage, { game }: SteamCommandArgs) {
         try {
             const steamEmbed = new MessageEmbed();
             const steamSearch = await fetch(`http://store.steampowered.com/search/?${stringify({

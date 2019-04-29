@@ -12,6 +12,10 @@
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
+type LmgtfyCommandArgs = {
+    question: string;
+};
+
 export default class LmgtfyCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -38,7 +42,7 @@ export default class LmgtfyCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { question }: { question: string }) {
+    public run (msg: CommandoMessage, { question }: LmgtfyCommandArgs) {
         deleteCommandMessages(msg, this.client);
         return msg.say(`<https://lmgtfy.com/?q=${question}>`);
     }
