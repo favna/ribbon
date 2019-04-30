@@ -134,7 +134,7 @@ export default class ActivityCommand extends Command {
                             publishers: game.publishers.map((publisher: DiscordGameDevType) => publisher.name),
                             summary: storeData.summary,
                             price: `${currencyMap(storeData.sku.price.currency)}${String(storeData.sku.price.amount).slice(0, 2)}.${String(storeData.sku.price.amount).slice(2)}`,
-                            thumbnail: `https://cdn.discordapp.com/app-assets/${game.id}/store/${storeData.thumbnail.id}.png?${stringify({ size: 1024 })}`,
+                            thumbnail: `https://cdn.discordapp.com/app-assets/${game.id}/store/${storeData.thumbnail.id}.png?${stringify({ size: 2048 })}`,
                         };
                     }
                 }

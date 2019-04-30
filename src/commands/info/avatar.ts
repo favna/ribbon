@@ -47,7 +47,7 @@ export default class AvatarCommand extends Command {
                     prompt: 'What size do you want the avatar to be? (Valid sizes: 128, 256, 512, 1024, 2048)',
                     type: 'integer',
                     oneOf: [16, 32, 64, 128, 256, 512, 1024, 2048],
-                    default: 1024,
+                    default: 2048,
                 }
             ],
         });
