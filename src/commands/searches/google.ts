@@ -12,7 +12,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -22,6 +22,7 @@ import fetch from 'node-fetch';
 
 type GoogleArgs = {
     query: string;
+    hasManageMessages: boolean;
 };
 
 export default class GoogleCommand extends Command {
@@ -50,6 +51,7 @@ export default class GoogleCommand extends Command {
         });
     }
 
+    @clientHasManageMessages()
     public async run (msg: CommandoMessage, { query }: GoogleArgs) {
         const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
         const googleEmbed = new MessageEmbed();

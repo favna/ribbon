@@ -13,7 +13,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeItemAliases, PokeItemDetailsType } from '@components/Types';
-import { deleteCommandMessages, sentencecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, sentencecase } from '@components/Utils';
 import { itemAliases } from '@pokedex/aliases';
 import BattleItems from '@pokedex/items';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -24,6 +24,7 @@ import moment from 'moment';
 
 type ItemArgs = {
     item: string;
+    hasManageMessages: boolean;
 };
 
 export default class ItemCommand extends Command {
@@ -52,7 +53,8 @@ export default class ItemCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { item }: ItemArgs) {
+    @clientHasManageMessages()
+    public run (msg: CommandoMessage, { item, hasManageMessages }: ItemArgs) {
         try {
             const itemOptions: FuseOptions<PokeItemDetailsType & IPokeItemAliases> = {
                 keys: ['alias', 'item', 'id', 'name'],

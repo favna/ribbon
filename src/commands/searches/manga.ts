@@ -10,7 +10,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, removeDiacritics } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, removeDiacritics } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
@@ -19,6 +19,7 @@ import fetch from 'node-fetch';
 
 type MangaArgs = {
     manga: string;
+    hasManageMessages: boolean;
 };
 
 export default class MangaCommand extends Command {
@@ -47,7 +48,8 @@ export default class MangaCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { manga }: MangaArgs) {
+    @clientHasManageMessages()
+    public async run (msg: CommandoMessage, { manga, hasManageMessages }: MangaArgs) {
         try {
             const mangaList = await fetch(`https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,
                 {

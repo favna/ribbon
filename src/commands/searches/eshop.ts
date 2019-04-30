@@ -10,17 +10,18 @@
  */
 
 import { eShopType } from '@components/Types';
-import { deleteCommandMessages } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
 import shopData from '@databases/eshop.json';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 
-// FIXME: Fix Eshop fields matching EU based games list
+// FIXME: EShop Command data parsing should be updated to reflect EU games
 
 type EShopArgs = {
     game: string;
+    hasManageMessages: boolean;
     price: string;
 };
 
@@ -45,7 +46,8 @@ export default class EShopCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { game, price = 'TBA' }: EShopArgs) {
+    @clientHasManageMessages()
+    public run (msg: CommandoMessage, { game, price = 'TBA', hasManageMessages }: EShopArgs) {
         try {
             const eshopData: eShopType[] = shopData as eShopType[];
             const eshopEmbed = new MessageEmbed();

@@ -15,7 +15,7 @@
 
 import { ASSET_BASE_PATH } from '@components/Constants';
 import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
-import { deleteCommandMessages, sentencecase, titlecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, sentencecase, titlecase } from '@components/Utils';
 import { pokeAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import formats from '@pokedex/formats.json';
@@ -30,6 +30,7 @@ import moment from 'moment';
 type DexArgs = {
     pokemon: string;
     shines: boolean;
+    hasManageMessages: boolean;
 };
 
 export default class DexCommand extends Command {
@@ -86,7 +87,8 @@ export default class DexCommand extends Command {
     }
 
     // tslint:disable:cyclomatic-complexity prefer-conditional-expression
-    public run (msg: CommandoMessage, { pokemon, shines }: DexArgs) {
+    @clientHasManageMessages()
+    public run (msg: CommandoMessage, { pokemon, shines, hasManageMessages }: DexArgs) {
         try {
             if (/(?:--shiny)/i.test(pokemon)) {
                 pokemon = pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length).replace(/ /g, '');

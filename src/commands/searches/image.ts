@@ -10,7 +10,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -19,6 +19,7 @@ import fetch from 'node-fetch';
 
 type ImageArgs = {
     query: string;
+    hasManageMessages: boolean;
 };
 
 export default class ImageCommand extends Command {
@@ -52,7 +53,8 @@ export default class ImageCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { query }: ImageArgs) {
+    @clientHasManageMessages()
+    public async run (msg: CommandoMessage, { query, hasManageMessages }: ImageArgs) {
         const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
         const imageEmbed = new MessageEmbed();
 

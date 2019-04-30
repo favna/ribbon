@@ -15,7 +15,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { CydiaAPIPackageType } from '@components/Types';
-import { deleteCommandMessages } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -27,6 +27,7 @@ import fetch from 'node-fetch';
 
 type CydiaArgs = {
     deb: string;
+    hasManageMessages: boolean;
 };
 
 export default class CydiaCommand extends Command {
@@ -58,7 +59,8 @@ export default class CydiaCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { deb }: CydiaArgs) {
+    @clientHasManageMessages()
+    public async run (msg: CommandoMessage, { deb, hasManageMessages }: CydiaArgs) {
         try {
             if (msg.patternMatches) {
                 if (!msg.guild.settings.get('regexmatches', false)) return null;

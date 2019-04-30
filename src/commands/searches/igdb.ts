@@ -11,7 +11,7 @@
 
 import { DEFAULT_EMBED_COLOR, IGBDAgeRating } from '@components/Constants';
 import { IGDBType, IIGDBAgeRating, IIGDBInvolvedCompany } from '@components/Types';
-import { deleteCommandMessages, roundNumber } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
@@ -20,6 +20,7 @@ import fetch from 'node-fetch';
 
 type IGDBArgs = {
     game: string;
+    hasManageMessages: boolean;
 };
 
 export default class IGDBCommand extends Command {
@@ -47,7 +48,8 @@ export default class IGDBCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { game }: IGDBArgs) {
+    @clientHasManageMessages()
+    public async run (msg: CommandoMessage, { game, hasManageMessages }: IGDBArgs) {
         try {
             const gameEmbed = new MessageEmbed();
             const headers = {
@@ -62,7 +64,7 @@ export default class IGDBCommand extends Command {
                            involved_companies.company.name, genres.name, release_dates.date,
                            platforms.name, cover.url, age_ratings.rating, age_ratings.category;
                     where age_ratings != n;
-                    limit 1;
+                    limit ${hasManageMessages ? 10 : 1};
                     offset 0;
                 `,
                 headers,

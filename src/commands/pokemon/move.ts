@@ -13,7 +13,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeMoveAliases, PokeMoveDetailsType } from '@components/Types';
-import { deleteCommandMessages, sentencecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, sentencecase } from '@components/Utils';
 import { moveAliases } from '@pokedex/aliases';
 import BattleMovedex from '@pokedex/moves';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -24,6 +24,7 @@ import moment from 'moment';
 
 type MoveArgs = {
     move: string;
+    hasManageMessages: boolean;
 };
 
 export default class MoveCommand extends Command {
@@ -52,7 +53,8 @@ export default class MoveCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { move }: MoveArgs) {
+    @clientHasManageMessages()
+    public run (msg: CommandoMessage, { move, hasManageMessages }: MoveArgs) {
         try {
             const moveOptions: FuseOptions<PokeMoveDetailsType & IPokeMoveAliases> = {
                 keys: ['alias', 'move', 'id', 'name'],

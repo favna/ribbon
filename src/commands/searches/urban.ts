@@ -11,7 +11,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { UrbanDefinitionType } from '@components/Types';
-import { deleteCommandMessages, sentencecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, sentencecase } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -19,6 +19,7 @@ import fetch from 'node-fetch';
 
 type UrbanArgs = {
     term: string;
+    hasManageMessages: boolean;
 };
 
 export default class UrbanCommand extends Command {
@@ -48,7 +49,8 @@ export default class UrbanCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { term }: UrbanArgs) {
+    @clientHasManageMessages()
+    public async run (msg: CommandoMessage, { term, hasManageMessages }: UrbanArgs) {
         try {
             const urbanSearch = await fetch(`https://api.urbandictionary.com/v0/define?${stringify({ term })}`);
             const definition = await urbanSearch.json();

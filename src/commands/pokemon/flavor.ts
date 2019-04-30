@@ -16,7 +16,7 @@
 
 import { ASSET_BASE_PATH } from '@components/Constants';
 import { FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
-import { deleteCommandMessages, sentencecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, sentencecase } from '@components/Utils';
 import { pokeAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import BattlePokedex from '@pokedex/pokedex';
@@ -30,8 +30,8 @@ import moment from 'moment';
 type FlavorArgs = {
     pokemon: string;
     shines: boolean;
+    hasManageMessages: boolean;
 };
-
 
 export default class FlavorCommand extends Command {
     constructor (client: CommandoClient) {
@@ -87,7 +87,8 @@ export default class FlavorCommand extends Command {
     }
 
     // tslint:disable:prefer-conditional-expression
-    public run (msg: CommandoMessage, { pokemon, shines }: FlavorArgs) {
+    @clientHasManageMessages()
+    public run (msg: CommandoMessage, { pokemon, shines, hasManageMessages }: FlavorArgs) {
         try {
             if (/(?:--shiny)/i.test(pokemon)) {
                 pokemon = pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length).replace(/ /g, '');

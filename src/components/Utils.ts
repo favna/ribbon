@@ -99,6 +99,20 @@ export const roundNumber = (num: number, scale = 0) => {
     return Number(`${Math.round(Number(`${Number(arr[0])}e${sig}${Number(arr[1]) + scale}`))}e-${scale}`);
 };
 
+export const clientHasManageMessages = () => {
+    return (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+        const fn = descriptor.value;
+
+        descriptor.value = function (msg: CommandoMessage, args: any, fromPattern: boolean) {
+            const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user!)!.has('MANAGE_MESSAGES');
+            args.hasManageMessages = clientHasPermission;
+
+            // tslint:disable-next-line:no-invalid-this
+            return fn.bind(this)(msg, args, fromPattern);
+        };
+    };
+};
+
 export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission: boolean = false): MethodDecorator => {
     return (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
         const fn = descriptor.value;

@@ -12,7 +12,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
@@ -21,6 +21,7 @@ import fetch from 'node-fetch';
 
 type YoutubeArgs = {
     query: string;
+    hasManageMessages: boolean;
 };
 
 export default class YouTubeCommand extends Command {
@@ -48,7 +49,8 @@ export default class YouTubeCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { query }: YoutubeArgs) {
+    @clientHasManageMessages()
+    public async run (msg: CommandoMessage, { query, hasManageMessages }: YoutubeArgs) {
         try {
             const tubeSearch = await fetch(`https://www.googleapis.com/youtube/v3/search?${stringify({
                     key: process.env.GOOGLE_API_KEY!,

@@ -10,7 +10,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, removeDiacritics } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, removeDiacritics } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
@@ -19,6 +19,7 @@ import fetch from 'node-fetch';
 
 type AnimeArgs = {
     anime: string;
+    hasManageMessages: boolean;
 };
 
 export default class AnimeCommand extends Command {
@@ -47,7 +48,8 @@ export default class AnimeCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { anime }: AnimeArgs) {
+    @clientHasManageMessages()
+    public async run (msg: CommandoMessage, { anime, hasManageMessages }: AnimeArgs) {
         try {
             const animeList = await fetch(
                 `https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,

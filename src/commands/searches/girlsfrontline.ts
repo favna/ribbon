@@ -11,7 +11,7 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { FrontlineGirlType } from '@components/Types';
-import { deleteCommandMessages, sentencecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, sentencecase } from '@components/Utils';
 import frontlineGirls from '@pokedex/girlsfrontline';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
@@ -23,6 +23,7 @@ import fetch from 'node-fetch';
 
 type GirlsFrontlineArgs = {
     character: string;
+    hasManageMessages: boolean;
 };
 
 export default class GirlsFrontlineCommand extends Command {
@@ -46,6 +47,7 @@ export default class GirlsFrontlineCommand extends Command {
         });
     }
 
+    @clientHasManageMessages()
     public async run (msg: CommandoMessage, { character }: GirlsFrontlineArgs) {
         try {
             const gfEmbed = new MessageEmbed();

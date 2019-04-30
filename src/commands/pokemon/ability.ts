@@ -11,7 +11,7 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeAbilityAliases, PokeAbilityDetailsType } from '@components/Types';
-import { deleteCommandMessages, sentencecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, sentencecase } from '@components/Utils';
 import BattleAbilities from '@pokedex/abilities';
 import { abilityAliases } from '@pokedex/aliases';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -22,6 +22,7 @@ import moment from 'moment';
 
 type AbilityArgs = {
     ability: string;
+    hasManageMessages: boolean;
 };
 
 export default class AbilityCommand extends Command {
@@ -50,7 +51,8 @@ export default class AbilityCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { ability }: AbilityArgs) {
+    @clientHasManageMessages()
+    public run (msg: CommandoMessage, { ability, hasManageMessages }: AbilityArgs) {
         try {
             const fsoptions: FuseOptions<PokeAbilityDetailsType & IPokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
             const aliasFuse = new Fuse(abilityAliases, fsoptions);
