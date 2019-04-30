@@ -16,6 +16,12 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type BanArgs = {
+    member: GuildMember;
+    reason: string;
+    keepMessages: boolean;
+};
+
 export default class BanCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -48,19 +54,19 @@ export default class BanCommand extends Command {
     }
 
     @shouldHavePermission('BAN_MEMBERS', true)
-    public run (msg: CommandoMessage, { member, reason, keepmessages }: { member: GuildMember; reason: string; keepmessages: boolean }) {
+    public run (msg: CommandoMessage, { member, reason, keepMessages }: BanArgs) {
         if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to ban yourself.');
         if (!member.bannable) return msg.reply('I cannot ban that member, their role is probably higher than my own!');
 
         if (/--nodelete/im.test(msg.argString)) {
-            keepmessages = true;
+            keepMessages = true;
             reason =
                 reason.substring(0, reason.indexOf('--nodelete')) +
                 reason.substring(reason.indexOf('--nodelete') + '--nodelete'.length + 1);
         }
 
         member.ban({
-            days: keepmessages ? 0 : 1,
+            days: keepMessages ? 0 : 1,
             reason: reason !== '' ? reason : 'No reason given by staff',
         });
 

@@ -1,5 +1,5 @@
 /**
- * @file Moderation DefaultroleCommand - Sets a default role that should be assigned to all new joining members
+ * @file Moderation DefaultRoleCommand - Sets a default role that should be assigned to all new joining members
  *
  * **Aliases**: `defrole`
  * @module
@@ -13,8 +13,13 @@ import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@com
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
+import moment from 'moment';
 
-export default class DefaultroleCommand extends Command {
+type DefaultRoleArgs = {
+    role: Role | string;
+};
+
+export default class DefaultRoleCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'defaultrole',
@@ -33,8 +38,7 @@ export default class DefaultroleCommand extends Command {
             args: [
                 {
                     key: 'role',
-                    prompt:
-                        'Which role would you like to set as the default role?',
+                    prompt: 'Which role would you like to set as the default role?',
                     type: 'role',
                     default: 'delete',
                 }
@@ -43,31 +47,56 @@ export default class DefaultroleCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_ROLES', true)
-    public run (msg: CommandoMessage, { role }: { role: Role | any }) {
-        const defRoleEmbed = new MessageEmbed();
-        const modlogChannel = msg.guild.settings.get('modlogchannel', null);
+    public run (msg: CommandoMessage, { role }: DefaultRoleArgs) {
+        try {
+            const defRoleEmbed = new MessageEmbed();
+            const modlogChannel = msg.guild.settings.get('modlogchannel', null);
+            let description = '';
 
-        let description = oneLine`🔓 \`${role.name}\` has been set as the default role for this server and will now be granted to all people joining`;
+            if (this.isRole(role)) {
+                description = oneLine`🔓 \`${role.name}\` has been set as the default role for this server and will now be granted to all people joining`;
+                msg.guild.settings.set('defaultRole', role.id);
+            } else if (role === 'delete') {
+                msg.guild.settings.remove('defaultRole');
+                description = 'Default role has been removed';
+            } else throw new Error('not_a_role');
 
-        if (role === 'delete') {
-            msg.guild.settings.remove('defaultRole');
-            description = 'Default role has been removed';
-        } else {
-            msg.guild.settings.set('defaultRole', role.id);
+            defRoleEmbed
+                .setColor('#AAEFE6')
+                .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+                .setDescription(stripIndents`**Action:** ${description}`)
+                .setTimestamp();
+
+            if (msg.guild.settings.get('modlogs', true)) {
+                logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, defRoleEmbed);
+            }
+
+            deleteCommandMessages(msg, this.client);
+
+            return msg.embed(defRoleEmbed);
+
+        } catch (err) {
+            deleteCommandMessages(msg, this.client);
+            if (/(?:not_a_role)/i.test(err.toString())) {
+                return msg.reply(oneLine`an error occurred setting the default role.
+                    I was unable to find a role matching your input \`${role}\``);
+            }
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+            channel.send(stripIndents`
+                <@${this.client.owners[0].id}> Error occurred in \`defaultrole\` command!
+                **Server:** ${msg.guild.name} (${msg.guild.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                **Error Message:** ${err}
+            `);
+
+            return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
+                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
+    }
 
-        defRoleEmbed
-            .setColor('#AAEFE6')
-            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
-            .setDescription(stripIndents`**Action:** ${description}`)
-            .setTimestamp();
-
-        if (msg.guild.settings.get('modlogs', true)) {
-            logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, defRoleEmbed);
-        }
-
-        deleteCommandMessages(msg, this.client);
-
-        return msg.embed(defRoleEmbed);
+    private isRole (role: Role | string): role is Role {
+        return (role as Role).id !== undefined;
     }
 }

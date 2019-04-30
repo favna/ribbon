@@ -19,6 +19,11 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type DeleteWarnArgs = {
+    member: GuildMember;
+    points: number;
+};
+
 export default class DeleteWarnCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -51,7 +56,7 @@ export default class DeleteWarnCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { member, points }: { member: GuildMember; points: number }) {
+    public run (msg: CommandoMessage, { member, points }: DeleteWarnArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const warnEmbed = new MessageEmbed();

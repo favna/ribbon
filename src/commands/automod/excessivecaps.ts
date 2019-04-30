@@ -16,6 +16,12 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type ExcessiveCapsArgs = {
+    shouldEnable: boolean;
+    threshold: string;
+    minLength: number;
+};
+
 export default class ExcessiveCapsCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -33,7 +39,7 @@ export default class ExcessiveCapsCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable the Excessive Caps filter?',
                     type: 'validboolean',
                 },
@@ -56,7 +62,7 @@ export default class ExcessiveCapsCommand extends Command {
                     parse: (t: string) => /(?:[%])/.test(t) ? Number(t.slice(0, -1)) : Number(t),
                 },
                 {
-                    key: 'minlength',
+                    key: 'minLength',
                     prompt: 'What should the minimum length of a message be before it is checked?',
                     type: 'integer',
                     default: 10,
@@ -66,10 +72,10 @@ export default class ExcessiveCapsCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public run (msg: CommandoMessage, { option, threshold, minlength }: { option: boolean; threshold: number; minlength: number }) {
+    public run (msg: CommandoMessage, { shouldEnable, threshold, minLength }: ExcessiveCapsArgs) {
         const ecfEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-        const options = { minlength, threshold, enabled: option };
+        const options = { minlength: minLength, threshold, enabled: shouldEnable };
 
         msg.guild.settings.set('caps', options);
 
@@ -77,9 +83,9 @@ export default class ExcessiveCapsCommand extends Command {
             .setColor('#439DFF')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
-                **Action:** Excessive Caps filter has been ${option ? 'enabled' : 'disabled'}
-                ${option ? `**Threshold:** Messages that have at least ${threshold}% caps will be deleted` : ''}
-                ${option ? `**Minimum length:** Messages of at least ${minlength} are checked for caps` : ''}
+                **Action:** Excessive Caps filter has been ${shouldEnable ? 'enabled' : 'disabled'}
+                ${shouldEnable ? `**Threshold:** Messages that have at least ${threshold}% caps will be deleted` : ''}
+                ${shouldEnable ? `**Minimum length:** Messages of at least ${minLength} are checked for caps` : ''}
                 ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
             )
             .setTimestamp();

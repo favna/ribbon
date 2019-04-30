@@ -16,6 +16,11 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type CasinoLimitArgs = {
+    upperlimit: number;
+    lowerlimit: number;
+};
+
 export default class CasinoLimitCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -48,7 +53,7 @@ export default class CasinoLimitCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { upperlimit, lowerlimit }: { upperlimit: number, lowerlimit: number }) {
+    public run (msg: CommandoMessage, { upperlimit, lowerlimit }: CasinoLimitArgs) {
         const casinoLimitEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
 

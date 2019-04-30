@@ -17,6 +17,10 @@ import { MessageEmbed } from 'awesome-djs';
 import { search as booru } from 'booru';
 import { stripIndents } from 'common-tags';
 
+type PahealArgs = {
+    tags: string[];
+};
+
 export default class PahealCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,7 +48,7 @@ export default class PahealCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { tags }: { tags: string[] }) {
+    public async run (msg: CommandoMessage, { tags }: PahealArgs) {
         try {
             const booruSearch = await booru('paheal', tags, {
                 limit: 1,

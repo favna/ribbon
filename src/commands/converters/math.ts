@@ -17,6 +17,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type MathArgs = {
+    equation: string;
+};
+
 export default class MathCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -43,7 +47,7 @@ export default class MathCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { equation }: { equation: string }) {
+    public async run (msg: CommandoMessage, { equation }: MathArgs) {
         try {
             const calculator = await fetch('http://api.mathjs.org/v4/', {
                 body: JSON.stringify({ expr: equation }),

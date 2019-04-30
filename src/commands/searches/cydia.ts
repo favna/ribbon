@@ -25,6 +25,10 @@ import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type CydiaArgs = {
+    deb: string;
+};
+
 export default class CydiaCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -54,7 +58,7 @@ export default class CydiaCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { deb }: { deb: string }) {
+    public async run (msg: CommandoMessage, { deb }: CydiaArgs) {
         try {
             if (msg.patternMatches) {
                 if (!msg.guild.settings.get('regexmatches', false)) return null;

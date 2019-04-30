@@ -14,6 +14,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type ConfigureMuteArgs = {
+    role: Role;
+};
+
 export default class ConfigureMuteCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -40,7 +44,7 @@ export default class ConfigureMuteCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_ROLES', true)
-    public run (msg: CommandoMessage, { role }: { role: Role }) {
+    public run (msg: CommandoMessage, { role }: ConfigureMuteArgs) {
         const confMuteEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
 

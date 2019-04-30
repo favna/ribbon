@@ -14,6 +14,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type TwitchMonitorArgs = {
+    members: GuildMember[]
+};
+
 export default class TwitchMonitorsCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -41,7 +45,7 @@ export default class TwitchMonitorsCommand extends Command {
     }
 
     @shouldHavePermission('ADMINISTRATOR')
-    public run (msg: CommandoMessage, { members }: { members: GuildMember[] }) {
+    public run (msg: CommandoMessage, { members }: TwitchMonitorArgs) {
         const memberIDs = members.map(m => m.id);
         const memberNames = members.map(m => m.displayName);
 

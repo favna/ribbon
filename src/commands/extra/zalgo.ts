@@ -15,6 +15,10 @@ import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import zalgo, { banish } from 'awesome-zalgo';
 
+type ZalgoArgs = {
+    txt: string;
+};
+
 export default class ZalgoCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -40,7 +44,7 @@ export default class ZalgoCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { txt }: { txt: string }) {
+    public run (msg: CommandoMessage, { txt }: ZalgoArgs) {
         deleteCommandMessages(msg, this.client);
 
         return msg.say(zalgo(banish(txt)));

@@ -17,6 +17,10 @@ import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
 
+type MangaArgs = {
+    manga: string;
+};
+
 export default class MangaCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -43,7 +47,7 @@ export default class MangaCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { manga }: { manga: string }) {
+    public async run (msg: CommandoMessage, { manga }: MangaArgs) {
         try {
             const mangaList = await fetch(`https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,
                 {

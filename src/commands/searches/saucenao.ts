@@ -17,6 +17,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { Handler, HandlerOptions } from 'sagiri';
 
+type SauceNaoArgs = {
+    image: string;
+};
+
 export default class SauceNaoCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -42,7 +46,7 @@ export default class SauceNaoCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { image }: { image: string }) {
+    public async run (msg: CommandoMessage, { image }: SauceNaoArgs) {
         try {
             const sauceEmbed = new MessageEmbed();
             const handlerOptions: HandlerOptions = { numRes: 5, getRating: true };

@@ -16,6 +16,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { toDataURL as qr } from 'qrcode';
 
+type QRGenArgs = {
+    url: string;
+};
+
 export default class QRGenCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -41,7 +45,7 @@ export default class QRGenCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { url }: { url: string }) {
+    public async run (msg: CommandoMessage, { url }: QRGenArgs) {
         try {
             const base64 = await qr(url, { type: 'image/jpeg', rendererOpts: { quality: 1 } });
             const buffer = Buffer.from(base64.replace(/^data:image\/png;base64,/, '').toString(), 'base64');

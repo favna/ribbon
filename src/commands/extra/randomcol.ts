@@ -21,6 +21,10 @@ import { MessageAttachment, MessageEmbed } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 import jimp from 'jimp';
 
+type RandomColArgs = {
+    colour: string;
+};
+
 export default class RandomColCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -61,7 +65,7 @@ export default class RandomColCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { colour }: { colour: string }) {
+    public async run (msg: CommandoMessage, { colour }: RandomColArgs) {
         const embed = new MessageEmbed();
         const hex = colour !== 'random'
             ? colour

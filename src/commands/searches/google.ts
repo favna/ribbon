@@ -20,6 +20,10 @@ import cheerio from 'cheerio';
 import { oneLine } from 'common-tags';
 import fetch from 'node-fetch';
 
+type GoogleArgs = {
+    query: string;
+};
+
 export default class GoogleCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -46,7 +50,7 @@ export default class GoogleCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { query }: { query: string }) {
+    public async run (msg: CommandoMessage, { query }: GoogleArgs) {
         const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
         const googleEmbed = new MessageEmbed();
 

@@ -17,6 +17,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type ListWarnArgs = {
+    member: GuildMember;
+};
+
 export default class ListWarnCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -43,7 +47,7 @@ export default class ListWarnCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public run (msg: CommandoMessage, { member }: ListWarnArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));
         const embed = new MessageEmbed();
 

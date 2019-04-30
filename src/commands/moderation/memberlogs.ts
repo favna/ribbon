@@ -13,7 +13,13 @@
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
-import { stripIndents } from 'common-tags';
+import { oneLine, stripIndents } from 'common-tags';
+import moment from 'moment';
+
+type MemberLogsArgs = {
+    shouldEnable: boolean;
+    msgChannel: TextChannel | string;
+};
 
 export default class MemberLogsCommand extends Command {
     constructor (client: CommandoClient) {
@@ -32,7 +38,7 @@ export default class MemberLogsCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable memberlogs?',
                     type: 'validboolean',
                 },
@@ -47,35 +53,61 @@ export default class MemberLogsCommand extends Command {
     }
 
     @shouldHavePermission('ADMINISTRATOR')
-    public run (msg: CommandoMessage, { channel, option }: { channel: TextChannel | any; option: boolean }) {
-        if (option && channel === 'off') {
-            return msg.reply('when activating join messages you need to provide a channel for me to output the messages to!');
+    public run (msg: CommandoMessage, { shouldEnable, msgChannel }: MemberLogsArgs) {
+        try {
+            if (shouldEnable && msgChannel === 'off') {
+                return msg.reply('when activating join messages you need to provide a channel for me to output the messages to!');
+            }
+
+            if (!this.isChannel(msgChannel)) throw new Error('not_a_channel');
+
+            const memberLogsEmbed = new MessageEmbed();
+            const description = shouldEnable
+                ? '📥 Ribbon memberlogs have been enabled'
+                : '📤 Ribbon memberlogs have been disabled';
+            const modlogChannel = msg.guild.settings.get('modlogchannel', null);
+
+            msg.guild.settings.set('memberlogs', shouldEnable);
+            msg.guild.settings.set('memberlogchannel', msgChannel.id);
+
+            memberLogsEmbed
+                .setColor('#3DFFE5')
+                .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+                .setDescription(stripIndents`
+                    **Action:** ${description}
+                    ${shouldEnable ? `**Channel:** <#${msgChannel.id}>` : ''}`
+                )
+                .setTimestamp();
+
+            if (msg.guild.settings.get('modlogs', true)) {
+                logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, memberLogsEmbed);
+            }
+
+            deleteCommandMessages(msg, this.client);
+
+            return msg.embed(memberLogsEmbed);
+        } catch (err) {
+            deleteCommandMessages(msg, this.client);
+            if (/(?:not_a_channel)/i.test(err.toString())) {
+                return msg.reply(oneLine`an error occurred setting the join message channel;.
+                    I was unable to find a channel matching your input \`${msgChannel}\``);
+            }
+            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+            channel.send(stripIndents`
+                <@${this.client.owners[0].id}> Error occurred in \`memberlogs\` command!
+                **Server:** ${msg.guild.name} (${msg.guild.id})
+                **Author:** ${msg.author!.tag} (${msg.author!.id})
+                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                **Error Message:** ${err}
+            `);
+
+            return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
+                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
+    }
 
-        const memberLogsEmbed = new MessageEmbed();
-        const description = option
-            ? '📥 Ribbon memberlogs have been enabled'
-            : '📤 Ribbon memberlogs have been disabled';
-        const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-
-        msg.guild.settings.set('memberlogs', option);
-        msg.guild.settings.set('memberlogchannel', channel.id);
-
-        memberLogsEmbed
-            .setColor('#3DFFE5')
-            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
-            .setDescription(stripIndents`
-                **Action:** ${description}
-                ${option ? `**Channel:** <#${channel.id}>` : ''}`
-            )
-            .setTimestamp();
-
-        if (msg.guild.settings.get('modlogs', true)) {
-            logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, memberLogsEmbed);
-        }
-
-        deleteCommandMessages(msg, this.client);
-
-        return msg.embed(memberLogsEmbed);
+    private isChannel (channel: TextChannel | string): channel is TextChannel {
+        return (channel as TextChannel).id !== undefined;
     }
 }

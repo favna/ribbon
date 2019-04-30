@@ -23,6 +23,13 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type DuplicateTextArgs = {
+    shouldEnable: boolean;
+    within: number;
+    equals: number;
+    distance: number
+};
+
 export default class DuplicateTextCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -72,10 +79,10 @@ export default class DuplicateTextCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public run (msg: CommandoMessage, { option, within, equals, distance }: { option: boolean; within: number; equals: number; distance: number }) {
+    public run (msg: CommandoMessage, { shouldEnable, within, equals, distance }: DuplicateTextArgs) {
         const dtfEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-        const options = { distance, equals, within, enabled: option };
+        const options = { distance, equals, within, enabled: shouldEnable };
 
         msg.guild.settings.set('duptext', options);
 
@@ -83,10 +90,10 @@ export default class DuplicateTextCommand extends Command {
             .setColor('#439DFF')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
-                **Action:** Duplicate text filter has been ${option ? 'enabled' : 'disabled'}
-                ${option ? `**Timeout:** Duplicate text is checked between messages sent in the past ${within} minutes` : ''}
-                ${option ? `**Duplicates:** Members can send ${equals} duplicate messages before any others are deleted` : ''}
-                ${option ? `**Distance:** Messages are deleted if they have a levenshtein distance of at least ${distance}` : ''}
+                **Action:** Duplicate text filter has been ${shouldEnable ? 'enabled' : 'disabled'}
+                ${shouldEnable ? `**Timeout:** Duplicate text is checked between messages sent in the past ${within} minutes` : ''}
+                ${shouldEnable ? `**Duplicates:** Members can send ${equals} duplicate messages before any others are deleted` : ''}
+                ${shouldEnable ? `**Distance:** Messages are deleted if they have a levenshtein distance of at least ${distance}` : ''}
                 ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
             )
             .setTimestamp();

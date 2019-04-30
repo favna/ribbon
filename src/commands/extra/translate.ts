@@ -22,6 +22,12 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type TranslateArgs = {
+    fromlang: string;
+    tolang: string;
+    text: string;
+};
+
 export default class TranslateCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -58,7 +64,7 @@ export default class TranslateCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { fromlang, tolang, text }: { fromlang: string; tolang: string; text: string }) {
+    public async run (msg: CommandoMessage, { fromlang, tolang, text }: TranslateArgs) {
         try {
             const transEmbed = new MessageEmbed();
             const request = await fetch(

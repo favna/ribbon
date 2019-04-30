@@ -10,7 +10,7 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { MessageEmbed, Role } from 'awesome-djs';
 import moment from 'moment';
 
 export default class ServerInfoCommand extends Command {
@@ -87,7 +87,7 @@ export default class ServerInfoCommand extends Command {
             .addField('Members', msg.guild.memberCount, true)
             .addField('Currently Online', onlineMembers, true)
             .addField('Region', msg.guild.region, true)
-            .addField('Highest Role', msg.guild.roles.sort((a: any, b: any) => a.position - b.position || a.id - b.id).last()!.name, true)
+            .addField('Highest Role', msg.guild.roles.sort((a: Role, b: Role) => a.position - b.position).last()!.name, true)
             .addField('Number of emojis', msg.guild.emojis.size, true)
             .addField('Number of roles', msg.guild.roles.size, true)
             .addField('Number of channels', guildChannels, true)

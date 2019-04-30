@@ -18,6 +18,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type ITunesArgs = {
+    music: string;
+};
+
 export default class ITunesCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -43,7 +47,7 @@ export default class ITunesCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { music }: { music: string }) {
+    public async run (msg: CommandoMessage, { music }: ITunesArgs) {
         try {
             const apple = await fetch(
                 `https://itunes.apple.com/search?${stringify({

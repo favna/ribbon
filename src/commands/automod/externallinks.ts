@@ -14,6 +14,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type ExternalLinksArgs = {
+    shouldEnable: boolean;
+};
+
 export default class ExternalLinksCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -31,7 +35,7 @@ export default class ExternalLinksCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable the external links filter?',
                     type: 'validboolean',
                 }
@@ -40,17 +44,17 @@ export default class ExternalLinksCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public run (msg: CommandoMessage, { option }: { option: boolean }) {
+    public run (msg: CommandoMessage, { shouldEnable }: ExternalLinksArgs) {
         const elEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
 
-        msg.guild.settings.set('links', option);
+        msg.guild.settings.set('links', shouldEnable);
 
         elEmbed
             .setColor('#439DFF')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
-                **Action:** external links filter has been ${option ? 'enabled' : 'disabled'}
+                **Action:** external links filter has been ${shouldEnable ? 'enabled' : 'disabled'}
                 ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
             )
             .setTimestamp();

@@ -17,6 +17,13 @@ import { MessageEmbed } from 'awesome-djs';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 
+// FIXME: Fix Eshop fields matching EU based games list
+
+type EShopArgs = {
+    game: string;
+    price: string;
+};
+
 export default class EShopCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -38,7 +45,7 @@ export default class EShopCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { game, price = 'TBA' }: { game: string; price?: string }) {
+    public run (msg: CommandoMessage, { game, price = 'TBA' }: EShopArgs) {
         try {
             const eshopData: eShopType[] = shopData as eShopType[];
             const eshopEmbed = new MessageEmbed();

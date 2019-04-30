@@ -21,6 +21,10 @@ import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
 
+type GirlsFrontlineArgs = {
+    character: string;
+};
+
 export default class GirlsFrontlineCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -42,7 +46,7 @@ export default class GirlsFrontlineCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { character }: { character: string }) {
+    public async run (msg: CommandoMessage, { character }: GirlsFrontlineArgs) {
         try {
             const gfEmbed = new MessageEmbed();
             const gfOptions: FuseOptions<FrontlineGirlType> = { keys: ['name'] };

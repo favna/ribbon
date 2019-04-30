@@ -18,7 +18,7 @@ import { stringify } from 'awesome-querystring';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
-type TVCommandArgs = {
+type TVArgs = {
     name: string;
 };
 
@@ -47,7 +47,7 @@ export default class TVCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { name }: TVCommandArgs) {
+    public async run (msg: CommandoMessage, { name }: TVArgs) {
         try {
             const movieSearch = await fetch(`https://api.themoviedb.org/3/search/tv?${stringify({
                     api_key: process.env.MOVIEDB_API_KEY!,

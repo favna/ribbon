@@ -15,7 +15,8 @@ import { oneLine } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 
-const speedTest = require('speedtest-net'); // tslint:disable-line:no-var-requires
+// tslint:disable-next-line:no-var-requires
+const speedTest = require('speedtest-net');
 
 export default class RibbonStatsCommand extends Command {
     constructor (client: CommandoClient) {

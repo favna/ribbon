@@ -29,6 +29,10 @@ import moment from 'moment';
 import fetch from 'node-fetch';
 import { downloadOptions } from 'ytdl-core';
 
+type LaunchMusicArgs = {
+    videoQuery: string;
+};
+
 export default class LaunchMusicCommand extends Command {
     public queue: Map<Snowflake, MusicQueueType>;
     public votes: Map<Snowflake, MusicVoteType>;
@@ -125,7 +129,7 @@ export default class LaunchMusicCommand extends Command {
         return connection.play(await PrismPlayer(url, ytdlOptions), streamOptions);
     }
 
-    public async run (msg: CommandoMessage, { videoQuery }: { videoQuery: string }) {
+    public async run (msg: CommandoMessage, { videoQuery }: LaunchMusicArgs) {
         const queue = this.queue.get(msg.guild.id);
 
         if (!msg.member!.voice.channel) return msg.reply('please join a voice channel before issuing this command.');

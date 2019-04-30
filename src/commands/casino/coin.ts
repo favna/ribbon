@@ -20,6 +20,11 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type CoinArgs = {
+    chips: number;
+    side: CoinSide
+};
+
 export default class CoinCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -50,7 +55,7 @@ export default class CoinCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { chips, side }: { chips: number; side: CoinSide }) {
+    public run (msg: CommandoMessage, { chips, side }: CoinArgs) {
         const coinEmbed = new MessageEmbed();
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 

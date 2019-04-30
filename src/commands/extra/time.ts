@@ -20,6 +20,10 @@ import { stringify } from 'awesome-querystring';
 import { stripIndents } from 'common-tags';
 import fetch from 'node-fetch';
 
+type TimeArgs = {
+    location: string
+};
+
 export default class TimeCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -45,7 +49,7 @@ export default class TimeCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { location }: { location: string }) {
+    public async run (msg: CommandoMessage, { location }: TimeArgs) {
         try {
             const cords = await this.getCords(location);
             const res = await fetch(

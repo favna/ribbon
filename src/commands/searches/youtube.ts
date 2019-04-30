@@ -19,6 +19,10 @@ import { stringify } from 'awesome-querystring';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type YoutubeArgs = {
+    query: string;
+};
+
 export default class YouTubeCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,7 +48,7 @@ export default class YouTubeCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { query }: { query: string }) {
+    public async run (msg: CommandoMessage, { query }: YoutubeArgs) {
         try {
             const tubeSearch = await fetch(`https://www.googleapis.com/youtube/v3/search?${stringify({
                     key: process.env.GOOGLE_API_KEY!,

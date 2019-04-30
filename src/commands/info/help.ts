@@ -19,6 +19,10 @@ import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando
 import { Message, Util as DJSUtil } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 
+type HelpArgs = {
+    command: string;
+};
+
 export default class HelpCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -50,7 +54,7 @@ export default class HelpCommand extends Command {
     }
 
     // tslint:disable-next-line:cyclomatic-complexity
-    public async run (msg: CommandoMessage, { command = '' }: { command: string }) {
+    public async run (msg: CommandoMessage, { command = '' }: HelpArgs) {
         try {
             const groups = this.client.registry.groups;
             const commands = this.client.registry.findCommands(command, false, msg);

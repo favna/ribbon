@@ -13,6 +13,10 @@ import { DEFAULT_VOLUME } from '@components/Constants';
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
+type DefaultVolumeArgs = {
+    volume: string;
+};
+
 export default class DefaultVolumeCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -40,7 +44,7 @@ export default class DefaultVolumeCommand extends Command {
     }
 
     @shouldHavePermission('ADMINISTRATOR')
-    public run (msg: CommandoMessage, { volume }: { volume: string }) {
+    public run (msg: CommandoMessage, { volume }: DefaultVolumeArgs) {
         if (volume === 'show') {
             const defaultVolume = msg.guild.settings.get('defaultVolume', DEFAULT_VOLUME);
 

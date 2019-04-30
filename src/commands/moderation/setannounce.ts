@@ -14,6 +14,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type SetAnnounceArgs = {
+    channel: TextChannel
+};
+
 export default class SetAnnounceCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -32,8 +36,7 @@ export default class SetAnnounceCommand extends Command {
             args: [
                 {
                     key: 'channel',
-                    prompt:
-                        'To what channel should I change the announcements?',
+                    prompt: 'To what channel should I change the announcements?',
                     type: 'channel',
                 }
             ],
@@ -41,7 +44,7 @@ export default class SetAnnounceCommand extends Command {
     }
 
     @shouldHavePermission('ADMINISTRATOR')
-    public run (msg: CommandoMessage, { channel }: { channel: TextChannel }) {
+    public run (msg: CommandoMessage, { channel }: SetAnnounceArgs) {
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const setAnnouncementEmbed = new MessageEmbed();
 

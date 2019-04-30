@@ -21,6 +21,10 @@ import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
 
+type ActivityArgs = {
+    member: GuildMember;
+};
+
 export default class ActivityCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -92,7 +96,7 @@ export default class ActivityCommand extends Command {
     }
 
     // tslint:disable: cyclomatic-complexity
-    public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public async run (msg: CommandoMessage, { member }: ActivityArgs) {
         try {
             const activity = member.presence.activity;
             if (!activity) throw new Error('noActivity');

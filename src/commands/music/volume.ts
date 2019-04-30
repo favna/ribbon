@@ -16,6 +16,10 @@ import { IMusicCommand, MusicQueueType } from '@components/Types';
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
+type ChangeVolumeArgs = {
+    volume: number;
+};
+
 export default class ChangeVolumeCommand extends Command {
     private songQueue: Map<string, MusicQueueType>;
 
@@ -56,7 +60,7 @@ export default class ChangeVolumeCommand extends Command {
         return this.songQueue;
     }
 
-    public run (msg: CommandoMessage, { volume }: { volume: number }) {
+    public run (msg: CommandoMessage, { volume }: ChangeVolumeArgs) {
         const queue = this.queue.get(msg.guild.id);
 
         if (!queue) return msg.reply('there isn\'t any music playing to change the volume of. Better queue some up!');

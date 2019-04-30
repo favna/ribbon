@@ -13,6 +13,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
 
+type TickleArgs = {
+    member: GuildMember;
+};
+
 export default class TickleCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -38,7 +42,7 @@ export default class TickleCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public async run (msg: CommandoMessage, { member }: TickleArgs) {
         try {
             const tickleFetch = await fetch('https://nekos.life/api/v2/img/tickle');
             const tickleImg = await tickleFetch.json();

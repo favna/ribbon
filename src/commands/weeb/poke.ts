@@ -13,6 +13,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
 
+type PokeArgs = {
+    member: GuildMember;
+};
+
 export default class PokeCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -38,7 +42,7 @@ export default class PokeCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public async run (msg: CommandoMessage, { member }: PokeArgs) {
         try {
             const pokeFetch = await fetch('https://nekos.life/api/v2/img/poke');
             const pokeImg = await pokeFetch.json();

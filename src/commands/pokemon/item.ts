@@ -22,6 +22,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 
+type ItemArgs = {
+    item: string;
+};
+
 export default class ItemCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -48,7 +52,7 @@ export default class ItemCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { item }: { item: string }) {
+    public run (msg: CommandoMessage, { item }: ItemArgs) {
         try {
             const itemOptions: FuseOptions<PokeItemDetailsType & IPokeItemAliases> = {
                 keys: ['alias', 'item', 'id', 'name'],

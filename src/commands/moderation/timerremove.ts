@@ -20,6 +20,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type TimerRemoveArgs = {
+    id: number;
+};
+
 export default class TimerRemoveCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -47,7 +51,7 @@ export default class TimerRemoveCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { id }: { id: number }) {
+    public run (msg: CommandoMessage, { id }: TimerRemoveArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
 
         try {

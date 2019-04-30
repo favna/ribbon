@@ -13,6 +13,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
 
+type UserInfoArgs = {
+    member: GuildMember;
+};
+
 export default class UserInfoCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -39,7 +43,7 @@ export default class UserInfoCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public run (msg: CommandoMessage, { member }: UserInfoArgs) {
         const uinfoEmbed = new MessageEmbed();
 
         uinfoEmbed

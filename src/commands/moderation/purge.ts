@@ -13,6 +13,10 @@ import { shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Message } from 'awesome-djs';
 
+type PurgeArgs = {
+    amount: number;
+};
+
 export default class PurgeCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -37,7 +41,7 @@ export default class PurgeCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public async run (msg: CommandoMessage, { amount }: { amount: number }) {
+    public async run (msg: CommandoMessage, { amount }: PurgeArgs) {
         amount = amount === 100 ? 99 : amount;
         msg.channel.bulkDelete(amount + 1, true);
 

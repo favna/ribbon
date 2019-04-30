@@ -1,5 +1,5 @@
 /**
- * @file Moderation TempBanCommand - Temporary bans a member, then unbans them when the timer expires
+ * @file Moderation TempbanCommand - Temporary bans a member, then unbans them when the timer expires
  *
  * Given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`
  *
@@ -20,7 +20,14 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
-export default class TempBanCommand extends Command {
+type TempbanArgs = {
+    member: GuildMember;
+    time: number;
+    reason: string;
+    keepMessages: boolean;
+};
+
+export default class TempbanCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'tempban',
@@ -82,19 +89,19 @@ export default class TempBanCommand extends Command {
     }
 
     @shouldHavePermission('BAN_MEMBERS', true)
-    public run (msg: CommandoMessage, { member, time, reason, keepmessages = false }: { member: GuildMember; time: number; reason: string; keepmessages: boolean; }) {
+    public run (msg: CommandoMessage, { member, time, reason, keepMessages = false }: TempbanArgs) {
         if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to ban yourself.');
         if (!member.bannable) return msg.reply('I cannot ban that member, their role is probably higher than my own!');
 
         if (/--nodelete/im.test(msg.argString)) {
-            keepmessages = true;
+            keepMessages = true;
             reason =
                 reason.substring(0, reason.indexOf('--nodelete')) +
                 reason.substring(reason.indexOf('--nodelete') + '--nodelete'.length + 1);
         }
 
         member.ban({
-            days: keepmessages ? 0 : 1,
+            days: keepMessages ? 0 : 1,
             reason: reason !== '' ? reason : 'No reason given by staff',
         });
 

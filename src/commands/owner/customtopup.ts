@@ -19,6 +19,11 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type CustomTopUpArgs = {
+    player: GuildMember;
+    chips: number;
+};
+
 export default class CustomTopUpCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -49,7 +54,7 @@ export default class CustomTopUpCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { player, chips }: { player: GuildMember; chips: number }) {
+    public run (msg: CommandoMessage, { player, chips }: CustomTopUpArgs) {
         const coinEmbed = new MessageEmbed();
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 

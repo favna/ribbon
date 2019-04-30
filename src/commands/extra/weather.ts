@@ -24,6 +24,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type WeatherArgs = {
+    location: string;
+};
+
 export default class WeatherCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -78,7 +82,7 @@ export default class WeatherCommand extends Command {
         return temp * 1.8 + 32;
     }
 
-    public async run (msg: CommandoMessage, { location }: { location: string }) {
+    public async run (msg: CommandoMessage, { location }: WeatherArgs) {
         try {
             const cords = await WeatherCommand.getCords(location);
             const res = await fetch(

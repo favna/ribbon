@@ -17,6 +17,10 @@ import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import fetch from 'node-fetch';
 
+type PornVidsArgs = {
+    porn: string;
+};
+
 export default class PornVidsCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,7 +48,7 @@ export default class PornVidsCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { porn }: { porn: string }) {
+    public async run (msg: CommandoMessage, { porn }: PornVidsArgs) {
         try {
             const pornEmbed = new MessageEmbed();
             const res = await fetch(`https://www.pornhub.com/webmasters/search?${stringify({ search: porn })}`);

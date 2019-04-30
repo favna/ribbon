@@ -19,6 +19,11 @@ import { GuildMember, MessageAttachment, MessageEmbed, User } from 'awesome-djs'
 import { oneLine } from 'common-tags';
 import jimp from 'jimp';
 
+type ShipArgs = {
+    firstMember: GuildMember | string;
+    secondMember: GuildMember | string;
+};
+
 export default class ShipCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -52,7 +57,7 @@ export default class ShipCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { firstMember, secondMember }: { firstMember: GuildMember | string; secondMember: GuildMember | string }) {
+    public async run (msg: CommandoMessage, { firstMember, secondMember }: ShipArgs) {
         const romeo: User = firstMember !== 'random' ? (firstMember as GuildMember).user : msg.guild.members.random()!.user;
         const juliet: User = secondMember !== 'random' ? (secondMember as GuildMember).user : msg.guild.members.random()!.user;
 

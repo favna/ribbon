@@ -17,6 +17,10 @@ import { stringify } from 'awesome-querystring';
 import cheerio from 'cheerio';
 import fetch from 'node-fetch';
 
+type ImageArgs = {
+    query: string;
+};
+
 export default class ImageCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -48,7 +52,7 @@ export default class ImageCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { query }: { query: string }) {
+    public async run (msg: CommandoMessage, { query }: ImageArgs) {
         const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
         const imageEmbed = new MessageEmbed();
 

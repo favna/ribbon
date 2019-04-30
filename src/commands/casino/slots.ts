@@ -19,6 +19,10 @@ import moment from 'moment';
 import path from 'path';
 import { SlotMachine, SlotSymbol } from 'slot-machine';
 
+type SlotsArgs = {
+    chips: 1 | 2 | 3;
+};
+
 export default class SlotsCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -46,7 +50,7 @@ export default class SlotsCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { chips }: { chips: number }) {
+    public run (msg: CommandoMessage, { chips }: SlotsArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
         const slotEmbed = new MessageEmbed();
 

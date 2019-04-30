@@ -17,6 +17,11 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type PubgArgs = {
+    user: string;
+    shard: string;
+};
+
 export default class PubgCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -58,7 +63,7 @@ export default class PubgCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { user, shard }: { user: string; shard: string }) {
+    public async run (msg: CommandoMessage, { user, shard }: PubgArgs) {
         try {
             const pubEmbed = new MessageEmbed();
             const headers = { Accept: 'application/vnd.api+json', Authorization: `Bearer ${process.env.PUBG_API_KEY!}` };

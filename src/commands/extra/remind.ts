@@ -21,6 +21,11 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type RemindArgs = {
+    time: string;
+    reminder: string;
+};
+
 export default class RemindCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -96,7 +101,7 @@ export default class RemindCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { time, reminder }: { time: string; reminder: string }) {
+    public run (msg: CommandoMessage, { time, reminder }: RemindArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/reminders.sqlite3'));
         const remindEmbed = new MessageEmbed();
 

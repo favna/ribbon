@@ -18,6 +18,11 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type DjsDocsArgs = {
+    query: string;
+    version: 'stable' | 'master' | 'commando' | 'rpc';
+};
+
 export default class DjsDocsCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -52,7 +57,7 @@ export default class DjsDocsCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { query, version }: { query: string; version: 'stable' | 'master' | 'commando' | 'rpc' }) {
+    public async run (msg: CommandoMessage, { query, version }: DjsDocsArgs) {
         try {
             let project = 'main';
             let branch = version;

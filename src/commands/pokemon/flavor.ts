@@ -27,6 +27,12 @@ import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 
+type FlavorArgs = {
+    pokemon: string;
+    shines: boolean;
+};
+
+
 export default class FlavorCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -81,7 +87,7 @@ export default class FlavorCommand extends Command {
     }
 
     // tslint:disable:prefer-conditional-expression
-    public run (msg: CommandoMessage, { pokemon, shines }: { pokemon: string; shines: boolean }) {
+    public run (msg: CommandoMessage, { pokemon, shines }: FlavorArgs) {
         try {
             if (/(?:--shiny)/i.test(pokemon)) {
                 pokemon = pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length).replace(/ /g, '');

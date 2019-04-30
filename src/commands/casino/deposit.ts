@@ -18,6 +18,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type DepositArgs = {
+    chips: number;
+};
+
 export default class DepositCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,7 +48,7 @@ export default class DepositCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { chips }: { chips: number }) {
+    public run (msg: CommandoMessage, { chips }: DepositArgs) {
         const depositEmbed = new MessageEmbed();
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 

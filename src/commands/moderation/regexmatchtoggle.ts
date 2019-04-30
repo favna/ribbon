@@ -13,6 +13,10 @@ import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@com
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 
+type RegexMatchToggleArgs = {
+    shouldEnable: boolean;
+};
+
 export default class RegexMatchToggleCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -30,7 +34,7 @@ export default class RegexMatchToggleCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable regex matches?',
                     type: 'validboolean',
                 }
@@ -39,16 +43,16 @@ export default class RegexMatchToggleCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { option }: { option: boolean }) {
+    public run (msg: CommandoMessage, { shouldEnable }: RegexMatchToggleArgs) {
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const regexMatchEmbed = new MessageEmbed();
 
-        msg.guild.settings.set('regexmatches', option);
+        msg.guild.settings.set('regexmatches', shouldEnable);
 
         regexMatchEmbed
             .setColor('#3DFFE5')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
-            .setDescription(`**Action:** Pattern matching commands are now ${option ? 'enabled' : 'disabled'}`)
+            .setDescription(`**Action:** Pattern matching commands are now ${shouldEnable ? 'enabled' : 'disabled'}`)
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {

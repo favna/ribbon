@@ -17,6 +17,10 @@ import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import fetch from 'node-fetch';
 
+type UrbanArgs = {
+    term: string;
+};
+
 export default class UrbanCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,7 +48,7 @@ export default class UrbanCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { term }: { term: string }) {
+    public async run (msg: CommandoMessage, { term }: UrbanArgs) {
         try {
             const urbanSearch = await fetch(`https://api.urbandictionary.com/v0/define?${stringify({ term })}`);
             const definition = await urbanSearch.json();

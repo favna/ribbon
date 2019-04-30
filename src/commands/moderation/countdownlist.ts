@@ -1,5 +1,5 @@
 /**
- * @file Moderation CountDownList - List all stored countdown messages in the current guild
+ * @file Moderation CountdownList - List all stored countdown messages in the current guild
  *
  * **Aliases**: `cl`, `cdlist`
  * @module
@@ -17,7 +17,7 @@ import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
 
-export default class CountDownList extends Command {
+export default class CountdownList extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'countdownlist',

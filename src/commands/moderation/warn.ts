@@ -21,6 +21,12 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type WarnArgs = {
+    member: GuildMember;
+    points: number;
+    reason: string;
+};
+
 export default class WarnCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,8 +50,7 @@ export default class WarnCommand extends Command {
                 },
                 {
                     key: 'points',
-                    prompt:
-                        'How many warning points should I give this member?',
+                    prompt: 'How many warning points should I give this member?',
                     type: 'integer',
                 },
                 {
@@ -59,7 +64,7 @@ export default class WarnCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { member, points, reason }: { member: GuildMember; points: number; reason: string }) {
+    public run (msg: CommandoMessage, { member, points, reason }: WarnArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const warnEmbed = new MessageEmbed();

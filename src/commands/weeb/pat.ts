@@ -13,6 +13,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
 
+type PatArgs = {
+    member: GuildMember;
+};
+
 export default class PatCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -38,7 +42,7 @@ export default class PatCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public async run (msg: CommandoMessage, { member }: PatArgs) {
         try {
             const patFetch = await fetch('https://nekos.life/api/v2/img/pat');
             const petImg = await patFetch.json();

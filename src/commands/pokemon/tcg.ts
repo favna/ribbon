@@ -34,6 +34,7 @@ type SubTypeArgumentCollection = { subtype: string };
 type SuperTypeArgumentCollection = { supertype: string };
 type HpSelectionArgumentCollection = { hp: number };
 type CardChooserArgumentCollection = { card: number };
+type PokemonTCGArgs = { props: string[] };
 
 export default class PokemonTCGCommand extends Command {
     constructor (client: CommandoClient) {
@@ -71,7 +72,7 @@ export default class PokemonTCGCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { props }: { props: string[] }) {
+    public async run (msg: CommandoMessage, { props }: PokemonTCGArgs) {
         const command = msg;
         const properties: TCGPropsType = {
             name: '',

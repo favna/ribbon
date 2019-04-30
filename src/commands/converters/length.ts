@@ -12,13 +12,19 @@
  */
 
 
-import { DEFAULT_EMBED_COLOR, LengthUnits } from '@components/Constants';
+import { DEFAULT_EMBED_COLOR, LengthUnit } from '@components/Constants';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { convert } from 'awesome-converter';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
+
+type LengthArgs = {
+    lengthAmount: number;
+    fromUnit: LengthUnit;
+    toUnit: LengthUnit;
+};
 
 export default class LengthCommand extends Command {
     constructor (client: CommandoClient) {
@@ -55,11 +61,11 @@ export default class LengthCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { lengthAmount, fromUnit, toUnit }: { lengthAmount: number, fromUnit: LengthUnits, toUnit: LengthUnits }) {
+    public async run (msg: CommandoMessage, { lengthAmount, fromUnit, toUnit }: LengthArgs) {
         try {
             lengthAmount = roundNumber(lengthAmount, 2);
             const mathEmbed = new MessageEmbed();
-            const output = convert(lengthAmount, LengthUnits[fromUnit], LengthUnits[toUnit], { precision: 2 });
+            const output = convert(lengthAmount, LengthUnit[fromUnit], LengthUnit[toUnit], { precision: 2 });
 
             mathEmbed
                 .setTitle('Length Conversion')

@@ -12,13 +12,19 @@
  */
 
 
-import { DEFAULT_EMBED_COLOR, MassUnits } from '@components/Constants';
+import { DEFAULT_EMBED_COLOR, MassUnit } from '@components/Constants';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { convert } from 'awesome-converter';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
+
+type MassArgs = {
+    massAmount: number;
+    fromUnit: MassUnit;
+    toUnit: MassUnit;
+};
 
 export default class MassCommand extends Command {
     constructor (client: CommandoClient) {
@@ -55,11 +61,11 @@ export default class MassCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { massAmount, fromUnit, toUnit }: { massAmount: number, fromUnit: MassUnits, toUnit: MassUnits }) {
+    public async run (msg: CommandoMessage, { massAmount, fromUnit, toUnit }: MassArgs) {
         try {
             massAmount = roundNumber(massAmount, 2);
             const mathEmbed = new MessageEmbed();
-            const output = convert(massAmount, MassUnits[fromUnit], MassUnits[toUnit], { precision: 2 });
+            const output = convert(massAmount, MassUnit[fromUnit], MassUnit[toUnit], { precision: 2 });
 
             mathEmbed
                 .setTitle('Mass Conversion')

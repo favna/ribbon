@@ -22,6 +22,12 @@ import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
 
+type OverwatchArgs = {
+    player: string;
+    platform: string;
+    region: string;
+};
+
 export default class OverwatchCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -71,7 +77,7 @@ export default class OverwatchCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { player, platform, region }: { player: string; platform: string; region: string }) {
+    public async run (msg: CommandoMessage, { player, platform, region }: OverwatchArgs) {
         try {
             const owData = await fetch(`https://ow-api.com/v1/stats/${platform}/${region}/${player}/complete`);
             const owEmbed = new MessageEmbed();

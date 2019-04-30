@@ -16,6 +16,11 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type ExcessiveMentionsArgs = {
+    shouldEnable: boolean;
+    threshold: string;
+};
+
 export default class ExcessiveMentionsCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -33,7 +38,7 @@ export default class ExcessiveMentionsCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable the Excessive Emojis filter?',
                     type: 'validboolean',
                 },
@@ -48,10 +53,10 @@ export default class ExcessiveMentionsCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public run (msg: CommandoMessage, { option, threshold }: { option: boolean; threshold: number }) {
+    public run (msg: CommandoMessage, { shouldEnable, threshold }: ExcessiveMentionsArgs) {
         const emEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-        const options = { threshold, enabled: option };
+        const options = { threshold, enabled: shouldEnable };
 
         msg.guild.settings.set('mentions', options);
 
@@ -59,8 +64,8 @@ export default class ExcessiveMentionsCommand extends Command {
             .setColor('#439DFF')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
-                **Action:** Mentions filter has been ${option ? 'enabled' : 'disabled'}
-                ${option ? `**Threshold:** Messages that have at least ${threshold} mentions will be deleted` : ''}
+                **Action:** Mentions filter has been ${shouldEnable ? 'enabled' : 'disabled'}
+                ${shouldEnable ? `**Threshold:** Messages that have at least ${threshold} mentions will be deleted` : ''}
                 ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
             )
             .setTimestamp();

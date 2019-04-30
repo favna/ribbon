@@ -17,6 +17,11 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type BadWordsArgs = {
+    shouldEnable: boolean;
+    words: string[]
+};
+
 export default class BadWordsCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -35,7 +40,7 @@ export default class BadWordsCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable the bad words filter?',
                     type: 'validboolean',
                 },
@@ -50,18 +55,18 @@ export default class BadWordsCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public run (msg: CommandoMessage, { option, words }: { option: boolean; words: string[] }) {
+    public run (msg: CommandoMessage, { shouldEnable, words }: BadWordsArgs) {
         const bwfEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-        const options = { words, enabled: option };
+        const options = { words, enabled: shouldEnable };
 
         msg.guild.settings.set('badwords', options);
         bwfEmbed
             .setColor('#439DFF')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
-                **Action:** Bad words filter has been ${option ? 'enabled' : 'disabled'}
-                ${option ? `**Words:** Bad words have been set to ${words.map((word: string) => `\`${word}\``).join(', ')}` : ''}
+                **Action:** Bad words filter has been ${shouldEnable ? 'enabled' : 'disabled'}
+                ${shouldEnable ? `**Words:** Bad words have been set to ${words.map((word: string) => `\`${word}\``).join(', ')}` : ''}
                 ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
             )
             .setTimestamp();

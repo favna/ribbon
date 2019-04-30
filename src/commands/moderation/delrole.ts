@@ -16,6 +16,11 @@ import { GuildMember, MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
+type DeleteRoleArgs = {
+    member: GuildMember;
+    role: Role;
+};
+
 export default class DeleteRoleCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -47,7 +52,7 @@ export default class DeleteRoleCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_ROLES', true)
-    public async run (msg: CommandoMessage, { member, role }: { member: GuildMember; role: Role }) {
+    public async run (msg: CommandoMessage, { member, role }: DeleteRoleArgs) {
         try {
             if (!member.manageable) {
                 return msg.reply(

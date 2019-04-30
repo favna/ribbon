@@ -17,6 +17,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type ShowdownArgs = {
+    tier: string;
+};
+
 export default class ShowdownCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -42,7 +46,7 @@ export default class ShowdownCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { tier }: { tier: string }) {
+    public async run (msg: CommandoMessage, { tier }: ShowdownArgs) {
         try {
             const ladders = await fetch(`https://pokemonshowdown.com/ladder/${tier}.json`);
             const json = await ladders.json();

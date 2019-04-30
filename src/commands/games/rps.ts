@@ -15,6 +15,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import fetch from 'node-fetch';
 
+type RockPaperScissorArgs = {
+    hand: string;
+};
+
 export default class RockPaperScissorCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,7 +48,7 @@ export default class RockPaperScissorCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { hand }: { hand: string }) {
+    public async run (msg: CommandoMessage, { hand }: RockPaperScissorArgs) {
         try {
             const randPost = await fetch(
                 'https://api.random.org/json-rpc/2/invoke',

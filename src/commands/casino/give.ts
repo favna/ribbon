@@ -20,6 +20,11 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type GiveArgs = {
+    player: GuildMember;
+    chips: number;
+};
+
 export default class GiveCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -50,7 +55,7 @@ export default class GiveCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { player, chips }: { player: GuildMember; chips: number }) {
+    public run (msg: CommandoMessage, { player, chips }: GiveArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
         const giveEmbed = new MessageEmbed();
 

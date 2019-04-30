@@ -1,5 +1,5 @@
 /**
- * @file Extra CopyPastaRemoveCommand - Remove a specified copypasta
+ * @file Extra CopypastaRemoveCommand - Remove a specified copypasta
  *
  * Use the copypastalist command to find the ID for deleting
  *
@@ -21,7 +21,11 @@ import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
 
-export default class CopyPastaRemoveCommand extends Command {
+type CopypastaRemoveArgs = {
+    id: number;
+};
+
+export default class CopypastaRemoveCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'copypastaremove',
@@ -58,7 +62,7 @@ export default class CopyPastaRemoveCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { id }: { id: string }) {
+    public run (msg: CommandoMessage, { id }: CopypastaRemoveArgs) {
         try {
             const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);

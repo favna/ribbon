@@ -17,6 +17,10 @@ import { MessageEmbed } from 'awesome-djs';
 import { search as booru } from 'booru';
 import { stripIndents } from 'common-tags';
 
+type E621Args = {
+    tags: string[];
+};
+
 export default class E621Command extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,7 +48,7 @@ export default class E621Command extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { tags }: { tags: string[] }) {
+    public async run (msg: CommandoMessage, { tags }: E621Args) {
         try {
             const booruSearch = await booru('e621', tags, {
                 limit: 1,

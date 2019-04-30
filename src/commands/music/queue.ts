@@ -18,6 +18,10 @@ import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando
 import { Snowflake } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 
+type ViewQueueArgs = {
+    page: number;
+};
+
 export default class ViewQueueCommand extends Command {
     private songQueue: Map<Snowflake, MusicQueueType>;
 
@@ -55,7 +59,7 @@ export default class ViewQueueCommand extends Command {
         return this.songQueue;
     }
 
-    public run (msg: CommandoMessage, { page }: { page: number }) {
+    public run (msg: CommandoMessage, { page }: ViewQueueArgs) {
         const queue = this.queue.get(msg.guild.id);
 
         if (!queue) {

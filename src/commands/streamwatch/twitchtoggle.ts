@@ -13,6 +13,10 @@ import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
 
+type TwitchToggleArgs = {
+    shouldEnable: boolean;
+};
+
 export default class TwitchToggleCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -31,7 +35,7 @@ export default class TwitchToggleCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable twitch monitoring?',
                     type: 'validboolean',
                 }
@@ -40,13 +44,13 @@ export default class TwitchToggleCommand extends Command {
     }
 
     @shouldHavePermission('ADMINISTRATOR')
-    public run (msg: CommandoMessage, { option }: { option: boolean }) {
-        msg.guild.settings.set('twitchnotifiers', option);
+    public run (msg: CommandoMessage, { shouldEnable }: TwitchToggleArgs) {
+        msg.guild.settings.set('twitchnotifiers', shouldEnable);
 
         deleteCommandMessages(msg, this.client);
 
         return msg.reply(oneLine`Twitch Notifiers have been
-            ${option
+            ${shouldEnable
             ? `enabled.
                     Please make sure to set the output channel with \`${msg.guild.commandPrefix}twitchoutput\`and configure which users to monitor with \`${msg.guild.commandPrefix}twitchmonitors\` `
             : 'disabled.'}.

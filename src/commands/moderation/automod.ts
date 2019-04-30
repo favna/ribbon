@@ -15,6 +15,11 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type AutomodArgs = {
+    shouldEnable: boolean;
+    roles: Role[];
+};
+
 export default class AutomodCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -32,7 +37,7 @@ export default class AutomodCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable Unknown Command messages?',
                     type: 'validboolean',
                 },
@@ -48,11 +53,11 @@ export default class AutomodCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public run (msg: CommandoMessage, { option, roles }: { option: boolean; roles: Role[] }) {
+    public run (msg: CommandoMessage, { shouldEnable, roles }: AutomodArgs) {
         const automodEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const options = {
-            enabled: option,
+            enabled: shouldEnable,
             filterroles: roles ? roles.map(r => r.id) : [],
         };
 
@@ -62,7 +67,7 @@ export default class AutomodCommand extends Command {
             .setColor('#3DFFE5')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
-                **Action:** Automod features are now ${option ? 'enabled' : 'disabled'}
+                **Action:** Automod features are now ${shouldEnable ? 'enabled' : 'disabled'}
                 **Notice:** Be sure to enable your desired individual features, they are all off by default!
                 ${roles ? `**Roles exempted from automod**: ${roles.map(val => `\`${val.name}\``).join(', ')}` : ''}`
             )

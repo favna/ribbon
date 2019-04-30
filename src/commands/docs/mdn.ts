@@ -19,6 +19,10 @@ import moment from 'moment';
 import fetch from 'node-fetch';
 import Turndown from 'turndown';
 
+type MDNArgs = {
+    prop: string;
+};
+
 export default class MDNCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -45,7 +49,7 @@ export default class MDNCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { prop }: { prop: string }) {
+    public async run (msg: CommandoMessage, { prop }: MDNArgs) {
         try {
             const qs = stringify({ q: prop });
             const res = await fetch(`https://mdn.pleb.xyz/search?${qs}`);

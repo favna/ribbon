@@ -16,6 +16,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type RedditArgs = {
+    user: string;
+};
+
 export default class RedditCommand extends Command {
     private comments: any[];
     private submitted: any[];
@@ -53,7 +57,7 @@ export default class RedditCommand extends Command {
         this.submitted = [];
     }
 
-    public async run (msg: CommandoMessage, { user }: { user: string }) {
+    public async run (msg: CommandoMessage, { user }: RedditArgs) {
         try {
             const reply: Message | Message[] = await msg.say('`fetching and calculating statistics...`');
 

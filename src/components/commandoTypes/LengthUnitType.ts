@@ -1,20 +1,20 @@
 import { ArgumentType, CommandoClient } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
-import { LengthUnits } from '../Constants';
+import { LengthUnit } from '../Constants';
 
 export default class LengthUnitType extends ArgumentType {
     constructor (client: CommandoClient) {
         super(client, 'length');
     }
 
-    public validate (unit: LengthUnits) {
-        if (LengthUnits[unit]) return true;
+    public validate (unit: LengthUnit) {
+        if (LengthUnit[unit]) return true;
 
-        return stripIndents`Has to be one of ${Object.keys(LengthUnits).map(val => `\`${val}\``).join(', ')}
+        return stripIndents`Has to be one of ${Object.keys(LengthUnit).map(val => `\`${val}\``).join(', ')}
                             Respond with your new selection or`;
     }
 
-    public parse (unit: LengthUnits) {
-        return LengthUnits[unit];
+    public parse (unit: LengthUnit) {
+        return LengthUnit[unit];
     }
 }

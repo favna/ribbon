@@ -18,6 +18,10 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
+type TypeArgs = {
+    types: string[];
+};
+
 export default class TypeCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -58,7 +62,7 @@ export default class TypeCommand extends Command {
     }
 
     // tslint:disable: cyclomatic-complexity
-    public run (msg: CommandoMessage, { types }: { types: string[] }) {
+    public run (msg: CommandoMessage, { types }: TypeArgs) {
         try {
             const atk: PokeTypeDataType = {
                 doubleEffectiveTypes: [],

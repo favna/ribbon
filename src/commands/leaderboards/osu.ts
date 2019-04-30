@@ -18,6 +18,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type OsuArgs = {
+    player: string;
+};
+
 export default class OsuCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,7 +48,7 @@ export default class OsuCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { player }: { player: string }) {
+    public async run (msg: CommandoMessage, { player }: OsuArgs) {
         try {
             const res = await fetch(
                 `https://osu.ppy.sh/api/get_user?${stringify({

@@ -1,5 +1,5 @@
 /**
- * @file Extra CopyPastaAddCommand - Adds a new copypasta for your server
+ * @file Extra CopypastaAddCommand - Adds a new copypasta for your server
  *
  * **Aliases**: `cpadd`, `pastaadd`, `tagadd`, `newtag`
  * @module
@@ -19,7 +19,12 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
-export default class CopyPastaAddCommand extends Command {
+type CopypastaAddArgs = {
+    name: string;
+    content: string;
+};
+
+export default class CopypastaAddCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'copypastaadd',
@@ -50,7 +55,7 @@ export default class CopyPastaAddCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { name, content }: { name: string; content: string }) {
+    public run (msg: CommandoMessage, { name, content }: CopypastaAddArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
         const pastaAddEmbed = new MessageEmbed();
 

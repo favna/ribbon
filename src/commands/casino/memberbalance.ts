@@ -18,6 +18,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type MemberBalanceArgs = {
+    player: GuildMember;
+};
+
 export default class MemberBalanceCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -43,7 +47,7 @@ export default class MemberBalanceCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { player }: { player: GuildMember }) {
+    public run (msg: CommandoMessage, { player }: MemberBalanceArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
         const mbalEmbed = new MessageEmbed();
 

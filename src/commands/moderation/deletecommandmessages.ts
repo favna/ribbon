@@ -14,6 +14,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 
+type DeleteCommandMessagesArgs = {
+    shouldEnable: boolean;
+};
+
 export default class DeleteCommandMessagesCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -32,7 +36,7 @@ export default class DeleteCommandMessagesCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable deleting of command messages?',
                     type: 'validboolean',
                 }
@@ -41,16 +45,16 @@ export default class DeleteCommandMessagesCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public run (msg: CommandoMessage, { option }: { option: boolean }) {
+    public run (msg: CommandoMessage, { shouldEnable }: DeleteCommandMessagesArgs) {
         const dcmEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
 
-        msg.guild.settings.set('deletecommandmessages', option);
+        msg.guild.settings.set('deletecommandmessages', shouldEnable);
 
         dcmEmbed
             .setColor('#3DFFE5')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
-            .setDescription(oneLine`**Action:** Deleting of command messages is now ${option ? 'enabled' : 'disabled'}`)
+            .setDescription(oneLine`**Action:** Deleting of command messages is now ${shouldEnable ? 'enabled' : 'disabled'}`)
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {

@@ -31,6 +31,13 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type TimerAddArgs = {
+    interval: number
+    timerChannel: TextChannel;
+    content: string;
+    members: GuildMember[];
+};
+
 export default class TimerAddCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -111,7 +118,7 @@ export default class TimerAddCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { interval, timerChannel, content, members }: { interval: number; timerChannel: TextChannel; content: string; members: GuildMember[]; }) {
+    public run (msg: CommandoMessage, { interval, timerChannel, content, members }: TimerAddArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const timedMsgEmbed = new MessageEmbed();

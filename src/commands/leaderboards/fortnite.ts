@@ -19,6 +19,11 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type FortniteArgs = {
+    user: string;
+    platform: string;
+};
+
 export default class FortniteCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -51,7 +56,7 @@ export default class FortniteCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { user, platform }: { user: string; platform: string }) {
+    public async run (msg: CommandoMessage, { user, platform }: FortniteArgs) {
         try {
             const res = await fetch(
                 `https://api.fortnitetracker.com/v1/profile/${platform}/${user}`,

@@ -17,6 +17,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type LeaderboardArgs = {
+    limit: number;
+};
+
 export default class LeaderboardCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,7 +48,7 @@ export default class LeaderboardCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { limit }: { limit: number }) {
+    public run (msg: CommandoMessage, { limit }: LeaderboardArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
         const lbEmbed = new MessageEmbed();
 

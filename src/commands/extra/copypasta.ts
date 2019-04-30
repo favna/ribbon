@@ -1,5 +1,5 @@
 /**
- * @file Extra CopyPastaCommand - Sends a copypasta to the chat
+ * @file Extra CopypastaCommand - Sends a copypasta to the chat
  *
  * Note: It is possible to get copypastas with more than 2000 characters. Ask me to add it through my server!
  *
@@ -22,7 +22,11 @@ import dym from 'didyoumean2';
 import moment from 'moment';
 import path from 'path';
 
-export default class CopyPastaCommand extends Command {
+type CopypastaArgs = {
+    name: string;
+};
+
+export default class CopypastaCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'copypasta',
@@ -48,7 +52,7 @@ export default class CopyPastaCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { name }: { name: string }) {
+    public async run (msg: CommandoMessage, { name }: CopypastaArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
         const pastaEmbed = new MessageEmbed();
 

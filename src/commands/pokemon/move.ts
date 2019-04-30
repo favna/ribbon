@@ -22,6 +22,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 
+type MoveArgs = {
+    move: string;
+};
+
 export default class MoveCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -48,7 +52,7 @@ export default class MoveCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { move }: { move: string }) {
+    public run (msg: CommandoMessage, { move }: MoveArgs) {
         try {
             const moveOptions: FuseOptions<PokeMoveDetailsType & IPokeMoveAliases> = {
                 keys: ['alias', 'move', 'id', 'name'],

@@ -23,6 +23,12 @@ import { GuildMember, Message, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
+type MuteArgs = {
+    member: GuildMember;
+    duration: number;
+    logs: boolean
+};
+
 export default class MuteCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -86,7 +92,7 @@ export default class MuteCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_ROLES', true)
-    public async run (msg: CommandoMessage, { member, duration, logs }: { member: GuildMember; duration: number, logs: boolean }) {
+    public async run (msg: CommandoMessage, { member, duration, logs }: MuteArgs) {
         if (member.manageable) {
             try {
                 const modlogChannel = msg.guild.settings.get('modlogchannel', null);

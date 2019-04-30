@@ -14,6 +14,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 
+type TagMemberArgs = {
+    member: GuildMember;
+};
+
 export default class TagMemberCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -37,7 +41,7 @@ export default class TagMemberCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public run (msg: CommandoMessage, { member }: TagMemberArgs) {
         const emote = '<:literallyThis:519988005507956752>';
 
         deleteCommandMessages(msg, this.client);

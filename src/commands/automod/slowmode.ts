@@ -15,6 +15,11 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type SlowmodeArgs = {
+    shouldEnable: boolean;
+    within: number;
+};
+
 export default class SlowmodeCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -32,7 +37,7 @@ export default class SlowmodeCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable the server invites filter?',
                     type: 'validboolean',
                 },
@@ -47,10 +52,10 @@ export default class SlowmodeCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public run (msg: CommandoMessage, { option, within }: { option: boolean; within: number }) {
+    public run (msg: CommandoMessage, { shouldEnable, within }: SlowmodeArgs) {
         const slEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-        const options = { within, enabled: option };
+        const options = { within, enabled: shouldEnable };
 
         msg.guild.settings.set('slowmode', options);
 
@@ -58,8 +63,8 @@ export default class SlowmodeCommand extends Command {
             .setColor('#439DFF')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
-                **Action:** Slowmode has been ${option ? 'enabled' : 'disabled'}
-                ${option ? `**Info:** Slow mode enabled. Members can 1 message per ${within} second(s)` : ''}
+                **Action:** Slowmode has been ${shouldEnable ? 'enabled' : 'disabled'}
+                ${shouldEnable ? `**Info:** Slow mode enabled. Members can 1 message per ${within} second(s)` : ''}
                 ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
             )
             .setTimestamp();

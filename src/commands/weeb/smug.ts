@@ -13,6 +13,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
 
+type SmugArgs = {
+    member: GuildMember;
+};
+
 export default class SmugCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -38,7 +42,7 @@ export default class SmugCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public async run (msg: CommandoMessage, { member }: SmugArgs) {
         try {
             const hugFetch = await fetch('https://nekos.life/api/v2/img/smug');
             const hugImg = await hugFetch.json();

@@ -17,6 +17,10 @@ import { MessageEmbed } from 'awesome-djs';
 import { search as booru } from 'booru';
 import { stripIndents } from 'common-tags';
 
+type Rule34Args = {
+    tags: string[];
+};
+
 export default class Rule34Command extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,7 +48,7 @@ export default class Rule34Command extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { tags }: { tags: string[] }) {
+    public async run (msg: CommandoMessage, { tags }: Rule34Args) {
         try {
             const booruSearch = await booru('r34', tags, {
                 limit: 1,

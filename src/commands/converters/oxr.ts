@@ -15,7 +15,7 @@
  * @param {string} TargetCurrency Currency to convert to
  */
 
-import { DEFAULT_EMBED_COLOR, validCurrenciesMap } from '@components/Constants';
+import { Currency, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { convertCurrency, currencyMap } from '@components/MoneyHelper';
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -24,6 +24,12 @@ import { stringify } from 'awesome-querystring';
 import { stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
+
+type MoneyArgs = {
+    value: number;
+    fromCurrency: Currency;
+    toCurrency: Currency;
+};
 
 export default class MoneyCommand extends Command {
     constructor (client: CommandoClient) {
@@ -49,26 +55,18 @@ export default class MoneyCommand extends Command {
                 {
                     key: 'fromCurrency',
                     prompt: 'What is the valuta you want to convert **from**?',
-                    type: 'string',
-                    validate: (curs: string) => validCurrenciesMap.includes(curs.toUpperCase())
-                        ? true
-                        : 'Respond with a supported currency. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>',
-                    parse: (p: string) => p.toUpperCase(),
+                    type: 'currency',
                 },
                 {
                     key: 'toCurrency',
                     prompt: 'What is the valuta you want to convert **to**?',
-                    type: 'string',
-                    validate: (curs: string) => validCurrenciesMap.includes(curs.toUpperCase())
-                        ? true
-                        : 'Respond with a supported currency. See the list here: <https://docs.openexchangerates.org/docs/supported-currencies>',
-                    parse: (p: string) => p.toUpperCase(),
+                    type: 'currency',
                 }
             ],
         });
     }
 
-    public async run (msg: CommandoMessage, { value, fromCurrency, toCurrency }: { value: number; fromCurrency: string; toCurrency: string }) {
+    public async run (msg: CommandoMessage, { value, fromCurrency, toCurrency }: MoneyArgs) {
         try {
             const oxrEmbed = new MessageEmbed();
             const request = await fetch(`https://openexchangerates.org/api/latest.json?${stringify({

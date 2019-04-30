@@ -18,6 +18,11 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type SoftbanArgs = {
+    member: GuildMember;
+    reason: string;
+};
+
 export default class SoftbanCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -49,7 +54,7 @@ export default class SoftbanCommand extends Command {
     }
 
     @shouldHavePermission('BAN_MEMBERS', true)
-    public run (msg: CommandoMessage, { member, reason }: { member: GuildMember; reason: string }) {
+    public run (msg: CommandoMessage, { member, reason }: SoftbanArgs) {
         if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to softban yourself.');
         if (!member.bannable) return msg.reply('I cannot softban that member, their role is probably higher than my own!');
 

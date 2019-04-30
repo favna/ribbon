@@ -16,6 +16,12 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type ExcessiveEmojisArgs = {
+    shouldEnable: boolean;
+    threshold: string;
+    minLength: number;
+};
+
 export default class ExcessiveEmojisCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -33,7 +39,7 @@ export default class ExcessiveEmojisCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable the Excessive Emojis filter?',
                     type: 'validboolean',
                 },
@@ -44,7 +50,7 @@ export default class ExcessiveEmojisCommand extends Command {
                     default: 5,
                 },
                 {
-                    key: 'minlength',
+                    key: 'minLength',
                     prompt: 'What should the minimum length of a message be before it is checked?',
                     type: 'integer',
                     default: 10,
@@ -54,10 +60,10 @@ export default class ExcessiveEmojisCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public run (msg: CommandoMessage, { option, threshold, minlength }: { option: boolean; threshold: number; minlength: number }) {
+    public run (msg: CommandoMessage, { shouldEnable, threshold, minLength }: ExcessiveEmojisArgs) {
         const eeEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-        const options = { minlength, threshold, enabled: option };
+        const options = { minlength: minLength, threshold, enabled: shouldEnable };
 
         msg.guild.settings.set('emojis', options);
 
@@ -65,9 +71,9 @@ export default class ExcessiveEmojisCommand extends Command {
             .setColor('#439DFF')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
-                **Action:** Excessive Emojis filter has been ${option ? 'enabled' : 'disabled'}
-                ${option ? `**Threshold:** Messages that have at least ${threshold} emojis will be deleted` : ''}
-                ${option ? `**Minimum length:** Messages of at least ${minlength} are checked for excessive emojis` : ''}
+                **Action:** Excessive Emojis filter has been ${shouldEnable ? 'enabled' : 'disabled'}
+                ${shouldEnable ? `**Threshold:** Messages that have at least ${threshold} emojis will be deleted` : ''}
+                ${shouldEnable ? `**Minimum length:** Messages of at least ${minLength} are checked for excessive emojis` : ''}
                 ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
             )
             .setTimestamp();

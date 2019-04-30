@@ -1,5 +1,5 @@
 /**
- * @file Moderation CountDownRemove - Remove a specified countdown
+ * @file Moderation CountdownRemove - Remove a specified countdown
  *
  * Use the countdownlist command to find the ID for deleting
  *
@@ -21,7 +21,11 @@ import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
 
-export default class CountDownRemove extends Command {
+type CountdownRemoveArgs = {
+    id: number;
+};
+
+export default class CountdownRemove extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'countdownremove',
@@ -56,7 +60,7 @@ export default class CountDownRemove extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { id }: { id: string }) {
+    public run (msg: CommandoMessage, { id }: CountdownRemoveArgs) {
         try {
             const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);

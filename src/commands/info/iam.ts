@@ -15,6 +15,10 @@ import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
+type IamArgs = {
+    role: Role;
+};
+
 export default class IamCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -39,7 +43,7 @@ export default class IamCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { role }: { role: Role }) {
+    public async run (msg: CommandoMessage, { role }: IamArgs) {
         try {
             if (!msg.member!.manageable) {
                 return msg.reply(oneLine`looks like I do not have permission to edit your roles.

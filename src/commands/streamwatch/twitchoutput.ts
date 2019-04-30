@@ -13,6 +13,10 @@ import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { TextChannel } from 'awesome-djs';
 
+type TwitchOutputArgs = {
+    channel: TextChannel;
+};
+
 export default class TwitchOutputCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -39,7 +43,7 @@ export default class TwitchOutputCommand extends Command {
     }
 
     @shouldHavePermission('ADMINISTRATOR')
-    public run (msg: CommandoMessage, { channel }: { channel: TextChannel }) {
+    public run (msg: CommandoMessage, { channel }: TwitchOutputArgs) {
         msg.guild.settings.set('twitchchannel', channel.id);
         deleteCommandMessages(msg, this.client);
 

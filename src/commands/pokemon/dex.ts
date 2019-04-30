@@ -27,6 +27,11 @@ import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 
+type DexArgs = {
+    pokemon: string;
+    shines: boolean;
+};
+
 export default class DexCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -81,7 +86,7 @@ export default class DexCommand extends Command {
     }
 
     // tslint:disable:cyclomatic-complexity prefer-conditional-expression
-    public run (msg: CommandoMessage, { pokemon, shines }: { pokemon: string; shines: boolean }) {
+    public run (msg: CommandoMessage, { pokemon, shines }: DexArgs) {
         try {
             if (/(?:--shiny)/i.test(pokemon)) {
                 pokemon = pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length).replace(/ /g, '');

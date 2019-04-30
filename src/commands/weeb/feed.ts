@@ -13,6 +13,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
 
+type FeedArgs = {
+    member: GuildMember;
+};
+
 export default class FeedCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -38,7 +42,7 @@ export default class FeedCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public async run (msg: CommandoMessage, { member }: FeedArgs) {
         try {
             const feedFetch = await fetch('https://nekos.life/api/v2/img/feed');
             const feedImg = await feedFetch.json();

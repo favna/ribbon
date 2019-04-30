@@ -11,13 +11,19 @@
  * @param {string} ToUnit The unit to convert to
  */
 
-import { DEFAULT_EMBED_COLOR, TemperatureUnits } from '@components/Constants';
+import { DEFAULT_EMBED_COLOR, TemperatureUnit } from '@components/Constants';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { convert } from 'awesome-converter';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
+
+type TemperatureArgs = {
+    tempAmount: number;
+    fromUnit: TemperatureUnit;
+    toUnit: TemperatureUnit;
+};
 
 export default class TemperatureCommand extends Command {
     constructor (client: CommandoClient) {
@@ -54,11 +60,11 @@ export default class TemperatureCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { tempAmount, fromUnit, toUnit }: { tempAmount: number, fromUnit: TemperatureUnits, toUnit: TemperatureUnits }) {
+    public async run (msg: CommandoMessage, { tempAmount, fromUnit, toUnit }: TemperatureArgs) {
         try {
             tempAmount = roundNumber(tempAmount, 2);
             const mathEmbed = new MessageEmbed();
-            const output = convert(tempAmount, TemperatureUnits[fromUnit], TemperatureUnits[toUnit], { precision: 2 });
+            const output = convert(tempAmount, TemperatureUnit[fromUnit], TemperatureUnit[toUnit], { precision: 2 });
 
             mathEmbed
                 .setTitle('Temperature Conversion')

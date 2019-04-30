@@ -9,7 +9,7 @@
  * @param {string} GameName The name of any game that you want to find
  */
 
-import { DEFAULT_EMBED_COLOR, IGBDAgeRatings } from '@components/Constants';
+import { DEFAULT_EMBED_COLOR, IGBDAgeRating } from '@components/Constants';
 import { IGDBType, IIGDBAgeRating, IIGDBInvolvedCompany } from '@components/Types';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -17,6 +17,10 @@ import { MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
+
+type IGDBArgs = {
+    game: string;
+};
 
 export default class IGDBCommand extends Command {
     constructor (client: CommandoClient) {
@@ -43,7 +47,7 @@ export default class IGDBCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { game }: { game: string }) {
+    public async run (msg: CommandoMessage, { game }: IGDBArgs) {
         try {
             const gameEmbed = new MessageEmbed();
             const headers = {
@@ -74,7 +78,7 @@ export default class IGDBCommand extends Command {
                 .setURL(hit.url)
                 .setThumbnail(coverImg)
                 .addField('User Score', roundNumber(hit.rating, 1), true)
-                .addField('Age Rating(s)', hit.age_ratings.map((e: IIGDBAgeRating) => `${e.category === 1 ? 'ESRB' : 'PEGI'}: ${IGBDAgeRatings[e.rating]}`), true)
+                .addField('Age Rating(s)', hit.age_ratings.map((e: IIGDBAgeRating) => `${e.category === 1 ? 'ESRB' : 'PEGI'}: ${IGBDAgeRating[e.rating]}`), true)
                 .addField('Release Date', moment.unix(hit.release_dates[0].date).format('MMMM Do YYYY'), true)
                 .addField('Genre(s)', hit.genres.map((genre: IGDBType) => genre.name).join(', '), true)
                 .addField('Developer(s)', hit.involved_companies.map((e: IIGDBInvolvedCompany) => e.developer ? e.company.name : null).filter(Boolean).join(', '), true)

@@ -19,6 +19,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type SetNonExplicitBlockArgs = {
+    shouldEnable: boolean;
+};
+
 export default class SetNonExplicitBlockCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -39,7 +43,7 @@ export default class SetNonExplicitBlockCommand extends Command {
             },
             args: [
                 {
-                    key: 'option',
+                    key: 'shouldEnable',
                     prompt: 'Enable or disable the blocking of non explicit commands in non NSFW channels?',
                     type: 'validboolean',
                 }
@@ -48,16 +52,16 @@ export default class SetNonExplicitBlockCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { option }: { option: boolean }) {
+    public run (msg: CommandoMessage, { shouldEnable }: SetNonExplicitBlockArgs) {
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const snebEmbed = new MessageEmbed();
 
-        msg.guild.settings.set('blockUnexplicitNsfw', option);
+        msg.guild.settings.set('blockUnexplicitNsfw', shouldEnable);
 
         snebEmbed
             .setColor('#3DFFE5')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
-            .setDescription(`**Action:** Non Explicit commands are now ${option ? 'blocked' : 'allowed'} outside of NSFW channels`)
+            .setDescription(`**Action:** Non Explicit commands are now ${shouldEnable ? 'blocked' : 'allowed'} outside of NSFW channels`)
             .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {

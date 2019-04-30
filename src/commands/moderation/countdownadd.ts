@@ -35,6 +35,13 @@ import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
 
+type CountdownAddArgs = {
+    datetime: string;
+    cdChannel: TextChannel;
+    content: string;
+    tag: 'none' | 'everyone' | 'here';
+};
+
 export default class CountdownAddCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -89,7 +96,7 @@ export default class CountdownAddCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { datetime, cdChannel, content, tag = 'none' }: { datetime: string; cdChannel: TextChannel; content: string; tag?: string; }) {
+    public run (msg: CommandoMessage, { datetime, cdChannel, content, tag = 'none' }: CountdownAddArgs) {
         const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const countdownEmbed = new MessageEmbed();

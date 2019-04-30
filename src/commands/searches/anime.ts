@@ -17,6 +17,10 @@ import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
 
+type AnimeArgs = {
+    anime: string;
+};
+
 export default class AnimeCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -43,7 +47,7 @@ export default class AnimeCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { anime }: { anime: string }) {
+    public async run (msg: CommandoMessage, { anime }: AnimeArgs) {
         try {
             const animeList = await fetch(
                 `https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,

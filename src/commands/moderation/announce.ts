@@ -15,6 +15,10 @@ import { GuildChannel, MessageAttachment, MessageEmbed, Permissions, TextChannel
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
+type NewsArgs = {
+    body: string;
+};
+
 export default class NewsCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -41,7 +45,7 @@ export default class NewsCommand extends Command {
     }
 
     @shouldHavePermission('ADMINISTRATOR', true)
-    public run (msg: CommandoMessage, { body }: { body: string }) {
+    public run (msg: CommandoMessage, { body }: NewsArgs) {
         try {
             let announce = body;
             let newsChannel: TextChannel;

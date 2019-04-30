@@ -12,6 +12,10 @@
 import { badwords, caps, duptext, emojis, invites, links, mentions } from '@components/AutomodHelper';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
+type SayArgs = {
+    txt: string
+};
+
 export default class SayCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -53,7 +57,7 @@ export default class SayCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { txt }: { txt: string }) {
+    public run (msg: CommandoMessage, { txt }: SayArgs) {
         if (
             msg.guild &&
             msg.deletable &&

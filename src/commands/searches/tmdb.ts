@@ -18,7 +18,7 @@ import { stringify } from 'awesome-querystring';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
-type MovieCommandArgs = {
+type MovieArgs = {
     name: string;
 };
 
@@ -47,7 +47,7 @@ export default class MovieCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { name }: MovieCommandArgs) {
+    public async run (msg: CommandoMessage, { name }: MovieArgs) {
         try {
             const movieSearch = await fetch(`https://api.themoviedb.org/3/search/movie?${stringify({
                     api_key: process.env.MOVIEDB_API_KEY!,

@@ -16,6 +16,11 @@ import { GuildMember, MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
+type AddRoleArgs = {
+    member: GuildMember;
+    role: Role;
+};
+
 export default class AddRoleCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -47,7 +52,7 @@ export default class AddRoleCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public async run (msg: CommandoMessage, { member, role }: { member: GuildMember; role: Role }) {
+    public async run (msg: CommandoMessage, { member, role }: AddRoleArgs) {
         try {
             if (!member.manageable) {
                 return msg.reply(oneLine`looks like I do not have permission to edit the roles of ${member.displayName}.

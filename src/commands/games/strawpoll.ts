@@ -23,6 +23,11 @@ import fetch from 'node-fetch';
 
 // FIXME: Strawpoll command seems to be broken
 
+type StrawpollArgs = {
+    title: string;
+    options: string;
+};
+
 export default class StrawpollCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -58,7 +63,7 @@ export default class StrawpollCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { title, options }: { title: string; options: string }) {
+    public async run (msg: CommandoMessage, { title, options }: StrawpollArgs) {
         if (options.length < 2) {
             return msg.reply(
                 'a poll needs to have at least 2 options to pick from'

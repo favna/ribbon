@@ -17,6 +17,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type YarnArgs = {
+    pkg: string;
+};
+
 export default class YarnCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -53,7 +57,7 @@ export default class YarnCommand extends Command {
         return arr;
     }
 
-    public async run (msg: CommandoMessage, { pkg }: { pkg: string }) {
+    public async run (msg: CommandoMessage, { pkg }: YarnArgs) {
         try {
             const res = await fetch(`https://registry.yarnpkg.com/${pkg}`);
 

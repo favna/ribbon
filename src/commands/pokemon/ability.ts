@@ -20,6 +20,10 @@ import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 
+type AbilityArgs = {
+    ability: string;
+};
+
 export default class AbilityCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -46,7 +50,7 @@ export default class AbilityCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { ability }: { ability: string }) {
+    public run (msg: CommandoMessage, { ability }: AbilityArgs) {
         try {
             const fsoptions: FuseOptions<PokeAbilityDetailsType & IPokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
             const aliasFuse = new Fuse(abilityAliases, fsoptions);

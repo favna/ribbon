@@ -13,6 +13,10 @@ import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed } from 'awesome-djs';
 
+type CookieArgs = {
+    member: GuildMember;
+};
+
 export default class CookieCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -38,7 +42,7 @@ export default class CookieCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public run (msg: CommandoMessage, { member }: CookieArgs) {
         if (msg.patternMatches && !this.verifyRmt(msg)) return null;
 
         const cookieEmbed = new MessageEmbed();

@@ -15,6 +15,11 @@ import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
+type DiceArgs = {
+    sides: number;
+    rolls: number;
+};
+
 export default class DiceCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -50,7 +55,7 @@ export default class DiceCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { sides, rolls }: { sides: number; rolls: number }) {
+    public run (msg: CommandoMessage, { sides, rolls }: DiceArgs) {
         const diceEmbed = new MessageEmbed();
         const res = [];
         const throwDice = this.xdicey(rolls, sides);

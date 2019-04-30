@@ -17,7 +17,7 @@ import { MessageEmbed } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import fetch from 'node-fetch';
 
-type DefineCommandArgs = {
+type DefineArgs = {
     query: string;
 };
 
@@ -47,7 +47,7 @@ export default class DefineCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { query }: DefineCommandArgs) {
+    public async run (msg: CommandoMessage, { query }: DefineArgs) {
         try {
             const defineEmbed = new MessageEmbed();
             const res = await fetch(

@@ -14,6 +14,10 @@ import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
+type UnmuteArgs = {
+    member: GuildMember;
+};
+
 export default class UnmuteCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -40,7 +44,7 @@ export default class UnmuteCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_ROLES', true)
-    public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public async run (msg: CommandoMessage, { member }: UnmuteArgs) {
         if (member.manageable) {
             try {
                 const modlogChannel = msg.guild.settings.get('modlogchannel', null);

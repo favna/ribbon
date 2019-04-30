@@ -25,6 +25,11 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
+type LearnArgs = {
+    pokemon: string;
+    moves: string;
+};
+
 export default class LearnCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -72,7 +77,7 @@ export default class LearnCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { pokemon, moves }: { pokemon: string; moves: string; }) {
+    public run (msg: CommandoMessage, { pokemon, moves }: LearnArgs) {
         try {
             moves = moves.toLowerCase().replace(/(-)/gm, '');
 

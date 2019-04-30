@@ -15,6 +15,10 @@ import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
+type IamNotArgs = {
+    role: Role;
+};
+
 export default class IamNotCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -39,7 +43,7 @@ export default class IamNotCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { role }: { role: Role }) {
+    public async run (msg: CommandoMessage, { role }: IamNotArgs) {
         try {
             if (!msg.member!.manageable) {
                 return msg.reply(

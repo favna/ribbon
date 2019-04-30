@@ -16,6 +16,11 @@ import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
+type NickArgs = {
+    member: GuildMember;
+    nickname: string;
+};
+
 export default class NickCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -48,7 +53,7 @@ export default class NickCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_NICKNAMES', true)
-    public run (msg: CommandoMessage, { member, nickname }: { member: GuildMember; nickname: string }) {
+    public run (msg: CommandoMessage, { member, nickname }: NickArgs) {
         if (member.manageable) {
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
             const nicknameEmbed = new MessageEmbed();

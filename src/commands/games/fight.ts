@@ -15,6 +15,11 @@ import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
+type FightArgs = {
+    fighterOne: string;
+    fighterTwo: string;
+};
+
 export default class FightCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -46,7 +51,7 @@ export default class FightCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { fighterOne, fighterTwo }: { fighterOne: string; fighterTwo: string }) {
+    public run (msg: CommandoMessage, { fighterOne, fighterTwo }: FightArgs) {
         try {
             const fighterEmbed = new MessageEmbed();
 

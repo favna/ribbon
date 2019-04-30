@@ -16,6 +16,10 @@ import { MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
+type DiscordBotsArgs = {
+    bot: string;
+};
+
 export default class DiscordBotsCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -42,7 +46,7 @@ export default class DiscordBotsCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { bot }: { bot: string }) {
+    public async run (msg: CommandoMessage, { bot }: DiscordBotsArgs) {
         try {
             const res = await fetch(`https://discordbots.org/api/bots/${bot}`, {
                 headers: { Authorization: process.env.DISCORD_BOTS_API_KEY! },

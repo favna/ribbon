@@ -18,6 +18,10 @@ import { oneLine, stripIndent, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
 
+type WheelOfFortuneArgs = {
+    chips: number;
+};
+
 export default class WheelOfFortuneCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -43,11 +47,11 @@ export default class WheelOfFortuneCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { chips }: { chips: number }) {
+    public run (msg: CommandoMessage, { chips }: WheelOfFortuneArgs) {
         const arrowmojis = ['⬆', '↖', '⬅', '↙', '⬇', '↘', '➡', '↗'];
         const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
-        const multipliers = [0.1, 0.2, 0.3, 0.5, 1.2, 1.5, 1.7, 2.4] as number[];
-        const spin = Math.floor(Math.random() * multipliers.length) as number;
+        const multipliers = [0.1, 0.2, 0.3, 0.5, 1.2, 1.5, 1.7, 2.4];
+        const spin = Math.floor(Math.random() * multipliers.length);
         const wofEmbed = new MessageEmbed();
 
         wofEmbed

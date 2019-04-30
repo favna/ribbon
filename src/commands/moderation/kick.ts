@@ -15,6 +15,11 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
+type KickArgs = {
+    member: GuildMember;
+    reason: string;
+};
+
 export default class KickCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -47,7 +52,7 @@ export default class KickCommand extends Command {
     }
 
     @shouldHavePermission('KICK_MEMBERS', true)
-    public run (msg: CommandoMessage, { member, reason }: { member: GuildMember; reason: string }) {
+    public run (msg: CommandoMessage, { member, reason }: KickArgs) {
         if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to kick yourself.');
         if (!member.kickable) return msg.reply('I cannot kick that member, their role is probably higher than my own!');
 

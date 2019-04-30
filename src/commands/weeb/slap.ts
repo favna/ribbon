@@ -13,6 +13,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
 
+type SlapArgs = {
+    member: GuildMember;
+};
+
 export default class SlapCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -38,7 +42,7 @@ export default class SlapCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { member }: { member: GuildMember }) {
+    public async run (msg: CommandoMessage, { member }: SlapArgs) {
         try {
             const slapFetch = await fetch('https://nekos.life/api/v2/img/slap');
             const slapImg = await slapFetch.json();

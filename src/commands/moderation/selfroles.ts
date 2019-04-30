@@ -17,8 +17,14 @@
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
+import { MessageEmbed, Role, Snowflake, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
+
+type SelfRolesArgs = {
+    roles: Role[];
+    roleIDs: Snowflake[];
+    roleNames: string[];
+};
 
 export default class SelfRolesCommand extends Command {
     constructor (client: CommandoClient) {
@@ -50,7 +56,7 @@ export default class SelfRolesCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_ROLES', true)
-    public run (msg: CommandoMessage, { roles, roleIDs = [], roleNames = [] }: { roles: Role[]; roleIDs?: string[]; roleNames?: string[]; }) {
+    public run (msg: CommandoMessage, { roles, roleIDs = [], roleNames = [] }: SelfRolesArgs) {
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const selfRolesEmbed = new MessageEmbed();
         let description = '';

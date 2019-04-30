@@ -14,6 +14,10 @@ import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
+type EightBallArgs = {
+    question: string;
+};
+
 export default class EightBallCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -39,7 +43,7 @@ export default class EightBallCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { question }: { question: string }) {
+    public run (msg: CommandoMessage, { question }: EightBallArgs) {
         const eightBallEmbed = new MessageEmbed();
 
         eightBallEmbed

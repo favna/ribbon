@@ -17,6 +17,10 @@ import { MessageEmbed } from 'awesome-djs';
 import { search as booru } from 'booru';
 import { stripIndents } from 'common-tags';
 
+type GelbooruArgs = {
+    tags: string[];
+};
+
 export default class GelbooruCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
@@ -44,7 +48,7 @@ export default class GelbooruCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { tags }: { tags: string[] }) {
+    public async run (msg: CommandoMessage, { tags }: GelbooruArgs) {
         try {
             const booruSearch = await booru('gelbooru', tags, {
                 limit: 1,
