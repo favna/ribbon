@@ -27,6 +27,7 @@ export default class Ribbon {
                 },
             },
             typescript: true,
+            userid: ['512150391471996930', '512152952908152833'],
         });
     }
 
@@ -93,7 +94,7 @@ export default class Ribbon {
                 unknownCommand: false,
             })
             .registerCommandsIn({
-                dirname: path.join(__dirname, 'commands'),
+                dirname: path.join(__dirname, 'commands/pokemon'),
                 filter: (fileName: string) => /^.+\.ts$/.test(fileName) ? fileName : undefined,
             });
 

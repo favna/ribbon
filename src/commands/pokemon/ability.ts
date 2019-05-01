@@ -9,13 +9,13 @@
  * @param {string} AbilityName The name of the ability you  want to find
  */
 
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeAbilityAliases, PokeAbilityDetailsType } from '@components/Types';
-import { clientHasManageMessages, deleteCommandMessages, sentencecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import BattleAbilities from '@pokedex/abilities';
 import { abilityAliases } from '@pokedex/aliases';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
@@ -23,6 +23,7 @@ import moment from 'moment';
 type AbilityArgs = {
     ability: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class AbilityCommand extends Command {
@@ -52,31 +53,44 @@ export default class AbilityCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public run (msg: CommandoMessage, { ability, hasManageMessages }: AbilityArgs) {
+    public async run (msg: CommandoMessage, { ability, hasManageMessages, position = 0 }: AbilityArgs) {
         try {
-            const fsoptions: FuseOptions<PokeAbilityDetailsType & IPokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
-            const aliasFuse = new Fuse(abilityAliases, fsoptions);
-            const abilityFuse = new Fuse(BattleAbilities, fsoptions);
+            const abilityOptions: FuseOptions<PokeAbilityDetailsType & IPokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
+            const aliasFuse = new Fuse(abilityAliases, abilityOptions);
+            const abilityFuse = new Fuse(BattleAbilities, abilityOptions);
             const aliasSearch = aliasFuse.search(ability);
             const abilitySearch = aliasSearch.length ? abilityFuse.search(aliasSearch[0].ability) : abilityFuse.search(ability);
-            const abilityEmbed = new MessageEmbed();
+            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
             if (!abilitySearch.length) throw new Error('no_ability');
 
-            abilityEmbed
-                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
-                .setTitle(sentencecase(abilitySearch[0].name))
-                .addField('Description', abilitySearch[0].desc ? abilitySearch[0].desc : abilitySearch[0].shortDesc)
-                .addField('External Resource', oneLine`
-                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${sentencecase(abilitySearch[0].name.replace(/ /g, '_'))}_(Ability\\))
-                    |  [Smogon](http://www.smogon.com/dex/sm/abilities/${abilitySearch[0].name.toLowerCase().replace(/ /g, '_')})
-                    |  [PokémonDB](http://pokemondb.net/ability/${abilitySearch[0].name.toLowerCase().replace(/ /g, '-')})
-			    `);
+            let abi = abilitySearch[0];
+            let abilityEmbed = this.prepMessage(color, abi, abilitySearch.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(abilityEmbed);
+            const returnMsg = await msg.embed(abilityEmbed) as CommandoMessage;
+
+            if (abilitySearch.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(returnMsg);
+                const reactionCollector = new ReactionCollector(
+                    returnMsg, navigationReactionFilter, { time: CollectorTimeout.five }
+                );
+
+                reactionCollector.on('collect', (reaction: MessageReaction, user: User) => {
+                    if (user.id !== this.client.user!.id) {
+                        reaction.emoji.name === '➡' ? position++ : position--;
+                        if (position >= abilitySearch.length) position = 0;
+                        if (position < 0) position = abilitySearch.length - 1;
+                        abi = abilitySearch[position];
+                        abilityEmbed = this.prepMessage(color, abi, abilitySearch.length, position);
+                        returnMsg.edit('', abilityEmbed);
+                        returnMsg.reactions.get(reaction.emoji.name)!.users.remove(user);
+                    }
+                });
+            }
+
+            return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
 
@@ -100,5 +114,23 @@ export default class AbilityCommand extends Command {
             return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
                     Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
+    }
+
+    private prepMessage (color: string, ability: PokeAbilityDetailsType, abilitySearchLength: number, position: number): MessageEmbed {
+        const abilityEmbed = new MessageEmbed();
+
+        abilityEmbed
+            .setColor(color)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
+            .setTitle(sentencecase(ability.name))
+            .setFooter(`Result ${position + 1} of ${abilitySearchLength}`)
+            .addField('Description', ability.desc ? ability.desc : ability.shortDesc)
+            .addField('External Resource', oneLine`
+                   [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${sentencecase(ability.name.replace(/ /g, '_'))}_(Ability\\))
+                |  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(/ /g, '_')})
+                |  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(/ /g, '-')})
+        `);
+
+        return abilityEmbed;
     }
 }

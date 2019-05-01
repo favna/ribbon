@@ -116,12 +116,12 @@ export default class DexCommand extends Command {
 
             deleteCommandMessages(msg, this.client);
 
-            const initialMessage = await msg.embed(dexEmbed) as CommandoMessage;
+            const returnMsg = await msg.embed(dexEmbed) as CommandoMessage;
 
             if (pokeSearch.length > 1 && hasManageMessages) {
-                injectNavigationEmotes(initialMessage);
+                injectNavigationEmotes(returnMsg);
                 const reactionCollector = new ReactionCollector(
-                    initialMessage, navigationReactionFilter, {time: CollectorTimeout.five }
+                    returnMsg, navigationReactionFilter, { time: CollectorTimeout.five }
                 );
 
                 reactionCollector.on('collect', (reaction: MessageReaction, user: User) => {
@@ -132,8 +132,8 @@ export default class DexCommand extends Command {
                         poke = pokeSearch[position];
                         pokeData = this.fetchAllData(poke, shines, pokeFuse);
                         dexEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
-                        initialMessage.edit('', dexEmbed);
-                        initialMessage.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        returnMsg.edit('', dexEmbed);
+                        returnMsg.reactions.get(reaction.emoji.name)!.users.remove(user);
                     }
                 });
             }

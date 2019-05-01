@@ -14,14 +14,14 @@
  * @param {string} PokemonName The name of the pokemon you want to get flavor text for
  */
 
-import { ASSET_BASE_PATH } from '@components/Constants';
+import { ASSET_BASE_PATH, CollectorTimeout } from '@components/Constants';
 import { FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
-import { clientHasManageMessages, deleteCommandMessages, sentencecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import { pokeAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import BattlePokedex from '@pokedex/pokedex';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
 import zalgo from 'awesome-zalgo';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
@@ -31,6 +31,7 @@ type FlavorArgs = {
     pokemon: string;
     shines: boolean;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class FlavorCommand extends Command {
@@ -88,7 +89,7 @@ export default class FlavorCommand extends Command {
 
     // tslint:disable:prefer-conditional-expression
     @clientHasManageMessages()
-    public run (msg: CommandoMessage, { pokemon, shines, hasManageMessages }: FlavorArgs) {
+    public async run (msg: CommandoMessage, { pokemon, shines, hasManageMessages, position = 0 }: FlavorArgs) {
         try {
             if (/(?:--shiny)/i.test(pokemon)) {
                 pokemon = pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length).replace(/ /g, '');
@@ -107,92 +108,38 @@ export default class FlavorCommand extends Command {
             const firstSearch = pokeFuse.search(pokemon);
             const aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null;
             const pokeSearch = !firstSearch.length && aliasSearch && aliasSearch.length ? pokeFuse.search(aliasSearch[0].name) : firstSearch;
-            const flavors: FlavorJSONType = entries as FlavorJSONType;
-            const dataEmbed = new MessageEmbed();
 
             if (!pokeSearch.length) throw new Error('no_pokemon');
 
-            const poke = pokeSearch[0];
-            const pokeData: PokeDataType = {
-                sprite: '',
-                entries: [],
-            };
+            let poke = pokeSearch[0];
+            let pokeData = this.fetchAllData(poke, shines);
+            let dataEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
 
-            let totalEntriesLength = 0;
-
-            if (poke.forme) {
-                for (const entry of flavors[`${poke.num}${poke.forme.toLowerCase()}`]) {
-                    pokeData.entries.push({
-                        game: entry.version_id,
-                        text: entry.flavor_text,
-                    });
-                }
-            } else {
-                for (const entry of flavors[poke.num]) {
-                    pokeData.entries.push({
-                        game: entry.version_id,
-                        text: entry.flavor_text,
-                    });
-                }
-            }
-
-            if (!pokeData.entries.length) {
-                pokeData.entries.push({
-                    game: 'N.A.',
-                    text: '*PokéDex data not found for this Pokémon*',
-                });
-            }
-            let i = pokeData.entries.length - 1;
-
-            outer: do {
-                dataEmbed.addField(
-                    pokeData.entries[i].game,
-                    pokeData.entries[i].text,
-                    false
-                );
-                for (const field of dataEmbed.fields) {
-                    totalEntriesLength += field.value.length;
-                    if (totalEntriesLength >= 2000) {
-                        break outer;
-                    }
-                }
-                i -= 1;
-            } while (i !== -1);
-
-            if (poke.num < 0) {
-                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/unknown.png`;
-            } else if (shines) {
-                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/shiny/${poke.species.replace(/([%. ])/g, '').toLowerCase()}.png`;
-            } else {
-                pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${poke.species.replace(/([%. ])/g, '').toLowerCase()}.png`;
-            }
-
-            dataEmbed
-                .setColor(FlavorCommand.fetchColor(poke.color))
-                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
-                .setAuthor(`#${poke.num} - ${sentencecase(poke.species)}`, pokeData.sprite)
-                .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
-                .setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.');
-
-            if (poke.num === 0) {
-                const fields = [];
-
-                for (const field in dataEmbed.fields) {
-                    fields.push({
-                        inline: dataEmbed.fields[field].inline,
-                        name: zalgo(dataEmbed.fields[field].name),
-                        value: zalgo(dataEmbed.fields[field].value),
-                    });
-                }
-
-                dataEmbed.description = zalgo(dataEmbed.description);
-                dataEmbed.author!.name = zalgo(dataEmbed.author!.name!);
-                dataEmbed.fields = fields;
-                dataEmbed.setImage(`${ASSET_BASE_PATH}/ribbon/missingno.png`);
-            }
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(dataEmbed);
+            const returnMsg = await msg.embed(dataEmbed) as CommandoMessage;
+
+            if (pokeSearch.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(returnMsg);
+                const reactionCollector = new ReactionCollector(
+                    returnMsg, navigationReactionFilter, { time: CollectorTimeout.five }
+                );
+
+                reactionCollector.on('collect', (reaction: MessageReaction, user: User) => {
+                    if (!this.client.userid.includes(user.id)) {
+                        reaction.emoji.name === '➡' ? position++ : position--;
+                        if (position >= pokeSearch.length) position = 0;
+                        if (position < 0) position = pokeSearch.length - 1;
+                        poke = pokeSearch[position];
+                        pokeData = this.fetchAllData(poke, shines);
+                        dataEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
+                        returnMsg.edit('', dataEmbed);
+                        returnMsg.reactions.get(reaction.emoji.name)!.users.remove(user);
+                    }
+                });
+            }
+
+            return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
 
@@ -214,5 +161,95 @@ export default class FlavorCommand extends Command {
             return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
                     Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
+    }
+
+    private fetchAllData (poke: PokedexType, shines: boolean): PokeDataType {
+        const flavors: FlavorJSONType = entries as FlavorJSONType;
+        const pokeData: PokeDataType = {
+            sprite: '',
+            entries: [],
+        };
+
+        if (poke.forme && flavors[`${poke.num}${poke.forme.toLowerCase()}`]) {
+            for (const entry of flavors[`${poke.num}${poke.forme.toLowerCase()}`]) {
+                pokeData.entries.push({
+                    game: entry.version_id,
+                    text: entry.flavor_text,
+                });
+            }
+        } else {
+            for (const entry of flavors[poke.num]) {
+                pokeData.entries.push({
+                    game: entry.version_id,
+                    text: entry.flavor_text,
+                });
+            }
+        }
+
+        if (!pokeData.entries.length) {
+            pokeData.entries.push({
+                game: 'N.A.',
+                text: '*PokéDex data not found for this Pokémon*',
+            });
+        }
+
+        if (poke.num < 0) {
+            pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/unknown.png`;
+        } else if (shines) {
+            pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/shiny/${poke.species.replace(/([%. ])/g, '').toLowerCase()}.png`;
+        } else {
+            pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${poke.species.replace(/([%. ])/g, '').toLowerCase()}.png`;
+        }
+
+        return pokeData;
+    }
+
+    private prepMessage (pokeData: PokeDataType, poke: PokedexType, shines: boolean, pokeSearchLength: number, position: number): MessageEmbed {
+        const dataEmbed = new MessageEmbed();
+
+        let i = pokeData.entries.length - 1;
+        let totalEntriesLength = 0;
+
+        dataEmbed
+            .setColor(FlavorCommand.fetchColor(poke.color))
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
+            .setAuthor(`#${poke.num} - ${sentencecase(poke.species)}`, pokeData.sprite)
+            .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
+            .setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.')
+            .setFooter(`Result ${position + 1} of ${pokeSearchLength}`);
+
+        outer: do {
+                dataEmbed.addField(
+                    pokeData.entries[i].game,
+                    pokeData.entries[i].text,
+                    false
+                );
+                for (const field of dataEmbed.fields) {
+                    totalEntriesLength += field.value.length;
+                    if (totalEntriesLength >= 2000) {
+                        break outer;
+                    }
+                }
+                i -= 1;
+            } while (i !== -1);
+
+        if (poke.num === 0) {
+            const fields = [];
+
+            for (const field in dataEmbed.fields) {
+                fields.push({
+                    inline: dataEmbed.fields[field].inline,
+                    name: zalgo(dataEmbed.fields[field].name),
+                    value: zalgo(dataEmbed.fields[field].value),
+                });
+            }
+
+            dataEmbed.description = zalgo(dataEmbed.description);
+            dataEmbed.author!.name = zalgo(dataEmbed.author!.name!);
+            dataEmbed.fields = fields;
+            dataEmbed.setImage(`${ASSET_BASE_PATH}/ribbon/missingno.png`);
+        }
+
+        return dataEmbed;
     }
 }
