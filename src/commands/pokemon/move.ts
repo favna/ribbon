@@ -11,13 +11,13 @@
  * @param {string} MoveName The move you want to find
  */
 
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeMoveAliases, PokeMoveDetailsType } from '@components/Types';
-import { clientHasManageMessages, deleteCommandMessages, sentencecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import { moveAliases } from '@pokedex/aliases';
 import BattleMovedex from '@pokedex/moves';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
@@ -25,6 +25,7 @@ import moment from 'moment';
 type MoveArgs = {
     move: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class MoveCommand extends Command {
@@ -54,7 +55,7 @@ export default class MoveCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public run (msg: CommandoMessage, { move, hasManageMessages }: MoveArgs) {
+    public async run (msg: CommandoMessage, { move, hasManageMessages, position = 0 }: MoveArgs) {
         try {
             const moveOptions: FuseOptions<PokeMoveDetailsType & IPokeMoveAliases> = {
                 keys: ['alias', 'move', 'id', 'name'],
@@ -63,55 +64,35 @@ export default class MoveCommand extends Command {
             const aliasFuse = new Fuse(moveAliases, moveOptions);
             const moveFuse = new Fuse(BattleMovedex, moveOptions);
             const aliasSearch = aliasFuse.search(move);
+            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
             let moveSearch = moveFuse.search(move);
             if (!moveSearch.length) moveSearch = aliasSearch.length ? moveFuse.search(aliasSearch[0].move) : [];
             if (!moveSearch.length) throw new Error('no_move');
-            const hit = moveSearch[0];
-            const moveEmbed = new MessageEmbed();
 
-            moveEmbed
-                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
-                .setTitle(sentencecase(hit.name))
-                .addField('Description', hit.desc ? hit.desc : hit.shortDesc)
-                .addField('Type', hit.type, true)
-                .addField('Base Power', hit.basePower, true)
-                .addField('PP', hit.pp, true)
-                .addField('Category', hit.category, true)
-                .addField(
-                    'Accuracy',
-                    typeof hit.accuracy === 'boolean'
-                        ? 'Certain Success'
-                        : hit.accuracy,
-                    true
-                )
-                .addField('Priority', hit.priority, true)
-                .addField(
-                    'Target',
-                    hit.target === 'normal'
-                        ? 'One Enemy'
-                        : sentencecase(hit.target.replace(/([A-Z])/g, ' $1')
-                        ),
-                    true
-                )
-                .addField('Contest Condition', hit.contestType, true)
-                .addField(
-                    'Z-Crystal',
-                    hit.isZ
-                        ? `${sentencecase(hit.isZ.substring(0, hit.isZ.length - 1))}Z`
-                        : 'None',
-                    true
-                )
-                .addField('External Resources', oneLine`
-                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${hit.name.replace(/ /g, '_')}_(move\\))
-                    |  [Smogon](http://www.smogon.com/dex/sm/moves/${hit.name.replace(/ /g, '_')})
-                    |  [PokémonDB](http://pokemondb.net/move/${hit.name.replace(/ /g, '-')})
-                    `
-                );
+            let currentMove = moveSearch[position];
+            let moveEmbed = this.prepMessage(color, currentMove, moveSearch.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(moveEmbed);
+            const message = await msg.embed(moveEmbed) as CommandoMessage;
+
+            if (moveSearch.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= moveSearch.length) position = 0;
+                            if (position < 0) position = moveSearch.length - 1;
+                            currentMove = moveSearch[position];
+                            moveEmbed = this.prepMessage(color, currentMove, moveSearch.length, position);
+                            message.edit('', moveEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
 
@@ -130,5 +111,48 @@ export default class MoveCommand extends Command {
             return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
                 Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
+    }
+
+    private prepMessage (color: string, currentMove: PokeMoveDetailsType, moveSearchLength: number, position: number): MessageEmbed {
+        return new MessageEmbed()
+            .setColor(color)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
+            .setTitle(sentencecase(currentMove.name))
+            .setFooter(`Result ${position + 1} of ${moveSearchLength}`)
+            .addField('Description', currentMove.desc ? currentMove.desc : currentMove.shortDesc)
+            .addField('Type', currentMove.type, true)
+            .addField('Base Power', currentMove.basePower, true)
+            .addField('PP', currentMove.pp, true)
+            .addField('Category', currentMove.category, true)
+            .addField(
+                'Accuracy',
+                typeof currentMove.accuracy === 'boolean'
+                    ? 'Certain Success'
+                    : currentMove.accuracy,
+                true
+            )
+            .addField('Priority', currentMove.priority, true)
+            .addField(
+                'Target',
+                currentMove.target === 'normal'
+                    ? 'One Enemy'
+                    : sentencecase(currentMove.target.replace(/([A-Z])/g, ' $1')
+                    ),
+                true
+            )
+            .addField('Contest Condition', currentMove.contestType, true)
+            .addField(
+                'Z-Crystal',
+                currentMove.isZ
+                    ? `${sentencecase(currentMove.isZ.substring(0, currentMove.isZ.length - 1))}Z`
+                    : 'None',
+                true
+            )
+            .addField('External Resources', oneLine`
+                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${currentMove.name.replace(/ /g, '_')}_(move\\))
+                    |  [Smogon](http://www.smogon.com/dex/sm/moves/${currentMove.name.replace(/ /g, '_')})
+                    |  [PokémonDB](http://pokemondb.net/move/${currentMove.name.replace(/ /g, '-')})
+                    `
+            );
     }
 }

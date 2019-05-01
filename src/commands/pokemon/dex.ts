@@ -110,32 +110,29 @@ export default class DexCommand extends Command {
 
             if (!pokeSearch.length) throw new Error('no_pokemon');
 
-            let poke = pokeSearch[0];
+            let poke = pokeSearch[position];
             let pokeData = this.fetchAllData(poke, shines, pokeFuse);
             let dexEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            const returnMsg = await msg.embed(dexEmbed) as CommandoMessage;
+            const message = await msg.embed(dexEmbed) as CommandoMessage;
 
             if (pokeSearch.length > 1 && hasManageMessages) {
-                injectNavigationEmotes(returnMsg);
-                const reactionCollector = new ReactionCollector(
-                    returnMsg, navigationReactionFilter, { time: CollectorTimeout.five }
-                );
-
-                reactionCollector.on('collect', (reaction: MessageReaction, user: User) => {
-                    if (user.id !== this.client.user!.id) {
-                        reaction.emoji.name === '➡' ? position++ : position--;
-                        if (position >= pokeSearch.length) position = 0;
-                        if (position < 0) position = pokeSearch.length - 1;
-                        poke = pokeSearch[position];
-                        pokeData = this.fetchAllData(poke, shines, pokeFuse);
-                        dexEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
-                        returnMsg.edit('', dexEmbed);
-                        returnMsg.reactions.get(reaction.emoji.name)!.users.remove(user);
-                    }
-                });
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= pokeSearch.length) position = 0;
+                            if (position < 0) position = pokeSearch.length - 1;
+                            poke = pokeSearch[position];
+                            pokeData = this.fetchAllData(poke, shines, pokeFuse);
+                            dexEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
+                            message.edit('', dexEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
             }
 
             return null;

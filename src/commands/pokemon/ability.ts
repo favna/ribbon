@@ -64,30 +64,27 @@ export default class AbilityCommand extends Command {
 
             if (!abilitySearch.length) throw new Error('no_ability');
 
-            let abi = abilitySearch[0];
-            let abilityEmbed = this.prepMessage(color, abi, abilitySearch.length, position);
+            let currentAbility = abilitySearch[position];
+            let abilityEmbed = this.prepMessage(color, currentAbility, abilitySearch.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            const returnMsg = await msg.embed(abilityEmbed) as CommandoMessage;
+            const message = await msg.embed(abilityEmbed) as CommandoMessage;
 
             if (abilitySearch.length > 1 && hasManageMessages) {
-                injectNavigationEmotes(returnMsg);
-                const reactionCollector = new ReactionCollector(
-                    returnMsg, navigationReactionFilter, { time: CollectorTimeout.five }
-                );
-
-                reactionCollector.on('collect', (reaction: MessageReaction, user: User) => {
-                    if (user.id !== this.client.user!.id) {
-                        reaction.emoji.name === '➡' ? position++ : position--;
-                        if (position >= abilitySearch.length) position = 0;
-                        if (position < 0) position = abilitySearch.length - 1;
-                        abi = abilitySearch[position];
-                        abilityEmbed = this.prepMessage(color, abi, abilitySearch.length, position);
-                        returnMsg.edit('', abilityEmbed);
-                        returnMsg.reactions.get(reaction.emoji.name)!.users.remove(user);
-                    }
-                });
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= abilitySearch.length) position = 0;
+                            if (position < 0) position = abilitySearch.length - 1;
+                            currentAbility = abilitySearch[position];
+                            abilityEmbed = this.prepMessage(color, currentAbility, abilitySearch.length, position);
+                            message.edit('', abilityEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
             }
 
             return null;
@@ -117,9 +114,7 @@ export default class AbilityCommand extends Command {
     }
 
     private prepMessage (color: string, ability: PokeAbilityDetailsType, abilitySearchLength: number, position: number): MessageEmbed {
-        const abilityEmbed = new MessageEmbed();
-
-        abilityEmbed
+        return new MessageEmbed()
             .setColor(color)
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
             .setTitle(sentencecase(ability.name))
@@ -130,7 +125,5 @@ export default class AbilityCommand extends Command {
                 |  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(/ /g, '_')})
                 |  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(/ /g, '-')})
         `);
-
-        return abilityEmbed;
     }
 }

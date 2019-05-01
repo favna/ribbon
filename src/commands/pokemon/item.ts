@@ -11,13 +11,13 @@
  * @param {string} ItemName Name of the item to find
  */
 
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { IPokeItemAliases, PokeItemDetailsType } from '@components/Types';
-import { clientHasManageMessages, deleteCommandMessages, sentencecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import { itemAliases } from '@pokedex/aliases';
 import BattleItems from '@pokedex/items';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
@@ -25,6 +25,7 @@ import moment from 'moment';
 type ItemArgs = {
     item: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class ItemCommand extends Command {
@@ -54,7 +55,7 @@ export default class ItemCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public run (msg: CommandoMessage, { item, hasManageMessages }: ItemArgs) {
+    public async run (msg: CommandoMessage, { item, hasManageMessages, position = 0 }: ItemArgs) {
         try {
             const itemOptions: FuseOptions<PokeItemDetailsType & IPokeItemAliases> = {
                 keys: ['alias', 'item', 'id', 'name'],
@@ -64,29 +65,32 @@ export default class ItemCommand extends Command {
             const itemFuse = new Fuse(BattleItems, itemOptions);
             const aliasSearch = aliasFuse.search(item);
             const itemSearch = aliasSearch.length ? itemFuse.search(aliasSearch[0].item) : itemFuse.search(item);
-            const itemEmbed = new MessageEmbed();
+            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
             if (!itemSearch.length) throw new Error('no_item');
 
-            itemEmbed
-                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
-                .setAuthor(
-                    `${sentencecase(itemSearch[0].name)}`,
-                    `https://play.pokemonshowdown.com/sprites/itemicons/${itemSearch[0].name.toLowerCase().replace(/ /g, '-')}.png`
-                )
-                .addField('Description', itemSearch[0].desc)
-                .addField('Generation Introduced', itemSearch[0].gen)
-                .addField(
-                    'External Resources', oneLine`
-			        [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${sentencecase(itemSearch[0].name.replace(' ', '_').replace('\'', ''))})
-			        |  [Smogon](http://www.smogon.com/dex/sm/items/${itemSearch[0].name.toLowerCase().replace(' ', '_').replace('\'', '')})
-			        |  [PokémonDB](http://pokemondb.net/item/${itemSearch[0].name.toLowerCase().replace(' ', '-').replace('\'', '')})`
-                );
+            let currentItem = itemSearch[position];
+            let itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(itemEmbed, `**${sentencecase(itemSearch[0].name)}**`);
+            const returnMsg = await msg.embed(itemEmbed) as CommandoMessage;
+
+            if (itemSearch.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(returnMsg);
+                new ReactionCollector(returnMsg, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        reaction.emoji.name === '➡' ? position++ : position--;
+                        if (position >= itemSearch.length) position = 0;
+                        if (position < 0) position = itemSearch.length - 1;
+                        currentItem = itemSearch[position];
+                        itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position);
+                        returnMsg.edit('', itemEmbed);
+                        returnMsg.reactions.get(reaction.emoji.name)!.users.remove(user);
+                    });
+            }
+
+            return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
 
@@ -105,5 +109,24 @@ export default class ItemCommand extends Command {
             return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
                     Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
+    }
+
+    private prepMessage (color: string, item: PokeItemDetailsType, itemSearchLength: number, position: number): MessageEmbed {
+        return new MessageEmbed()
+            .setColor(color)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
+            .setAuthor(
+                `${sentencecase(item.name)}`,
+                `https://play.pokemonshowdown.com/sprites/itemicons/${item.name.toLowerCase().replace(/ /g, '-')}.png`
+            )
+            .setFooter(`Result ${position + 1} of ${itemSearchLength}`)
+            .addField('Description', item.desc)
+            .addField('Generation Introduced', item.gen)
+            .addField(
+                'External Resources', oneLine`
+            [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${sentencecase(item.name.replace(' ', '_').replace('\'', ''))})
+            |  [Smogon](http://www.smogon.com/dex/sm/items/${item.name.toLowerCase().replace(' ', '_').replace('\'', '')})
+            |  [PokémonDB](http://pokemondb.net/item/${item.name.toLowerCase().replace(' ', '-').replace('\'', '')})`
+            );
     }
 }

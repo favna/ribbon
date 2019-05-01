@@ -111,18 +111,18 @@ export default class FlavorCommand extends Command {
 
             if (!pokeSearch.length) throw new Error('no_pokemon');
 
-            let poke = pokeSearch[0];
+            let poke = pokeSearch[position];
             let pokeData = this.fetchAllData(poke, shines);
             let dataEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            const returnMsg = await msg.embed(dataEmbed) as CommandoMessage;
+            const message = await msg.embed(dataEmbed) as CommandoMessage;
 
             if (pokeSearch.length > 1 && hasManageMessages) {
-                injectNavigationEmotes(returnMsg);
+                injectNavigationEmotes(message);
                 const reactionCollector = new ReactionCollector(
-                    returnMsg, navigationReactionFilter, { time: CollectorTimeout.five }
+                    message, navigationReactionFilter, { time: CollectorTimeout.five }
                 );
 
                 reactionCollector.on('collect', (reaction: MessageReaction, user: User) => {
@@ -133,8 +133,8 @@ export default class FlavorCommand extends Command {
                         poke = pokeSearch[position];
                         pokeData = this.fetchAllData(poke, shines);
                         dataEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
-                        returnMsg.edit('', dataEmbed);
-                        returnMsg.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        message.edit('', dataEmbed);
+                        message.reactions.get(reaction.emoji.name)!.users.remove(user);
                     }
                 });
             }
