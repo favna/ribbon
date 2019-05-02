@@ -9,10 +9,11 @@
  * @param {string} AnimeName anime to look up
  */
 
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { clientHasManageMessages, deleteCommandMessages, removeDiacritics } from '@components/Utils';
+import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { AnimeHit, KitsuAnime } from '@components/Types';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, removeDiacritics } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
@@ -20,6 +21,7 @@ import fetch from 'node-fetch';
 type AnimeArgs = {
     anime: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class AnimeCommand extends Command {
@@ -49,7 +51,7 @@ export default class AnimeCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { anime, hasManageMessages }: AnimeArgs) {
+    public async run (msg: CommandoMessage, { anime, hasManageMessages, position = 0 }: AnimeArgs) {
         try {
             const animeList = await fetch(
                 `https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,
@@ -63,43 +65,65 @@ export default class AnimeCommand extends Command {
                     method: 'POST',
                 }
             );
-            const animes = await animeList.json();
-            const hit = animes.hits[0];
-            const animeEmbed = new MessageEmbed();
-
-            animeEmbed
-                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setTitle(hit.titles.en ? hit.titles.en : hit.canonicalTitle)
-                .setURL(`https://kitsu.io/anime/${hit.id}`)
-                .setDescription(hit.synopsis.replace(/(.+)[\r\n\t](.+)/gim, '$1 $2').split('\r\n')[0])
-                .setImage(hit.posterImage.original)
-                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/kitsulogo.png`)
-                .addField('Canonical Title', hit.canonicalTitle, true)
-                .addField('Score', `${hit.averageRating}%`, true)
-                .addField(
-                    'Episode(s)',
-                    hit.episodeCount ? hit.episodeCount : 'Still airing',
-                    true
-                )
-                .addField(
-                    'Episode Length',
-                    hit.episodeLength ? moment.duration(hit.episodeLength, 'minutes').format('h [hours] [and] m [minutes]') : 'unknown',
-                    true
-                )
-                .addField('Age Rating', hit.ageRating, true)
-                .addField(
-                    'First Air Date',
-                    moment.unix(hit.startDate).format('MMMM Do YYYY'),
-                    true
-                );
+            const animes: KitsuAnime = await animeList.json();
+            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+            let currentAnime = animes.hits[position];
+            let animeEmbed = this.prepMessage(color, currentAnime, animes.hits.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(animeEmbed, `https://kitsu.io/anime/${hit.slug}`);
+            const message = await msg.embed(animeEmbed, `https://kitsu.io/anime/${currentAnime.slug}`) as CommandoMessage;
+
+            if (animes.hits.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= animes.hits.length) position = 0;
+                            if (position < 0) position = animes.hits.length - 1;
+                            currentAnime = animes.hits[position];
+                            animeEmbed = this.prepMessage(color, currentAnime, animes.hits.length, position);
+                            message.edit('', animeEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
 
             return msg.reply(`no anime found for \`${anime}\` `);
         }
+    }
+
+    private prepMessage (color: string, anime: AnimeHit, animesLength: number, position: number): MessageEmbed {
+        return new MessageEmbed()
+            .setColor(color)
+            .setTitle(anime.titles.en ? anime.titles.en : anime.canonicalTitle)
+            .setURL(`https://kitsu.io/anime/${anime.id}`)
+            .setDescription(anime.synopsis.replace(/(.+)[\r\n\t](.+)/gim, '$1 $2').split('\r\n')[0])
+            .setImage(anime.posterImage.original)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/kitsulogo.png`)
+            .setFooter(`Result ${position + 1} of ${animesLength}`)
+            .addField('Canonical Title', anime.canonicalTitle, true)
+            .addField('Score', `${anime.averageRating}%`, true)
+            .addField(
+                'Episode(s)',
+                anime.episodeCount ? anime.episodeCount : 'Still airing',
+                true
+            )
+            .addField(
+                'Episode Length',
+                anime.episodeLength ? moment.duration(anime.episodeLength, 'minutes').format('h [hours] [and] m [minutes]') : 'unknown',
+                true
+            )
+            .addField('Age Rating', anime.ageRating, true)
+            .addField(
+                'First Air Date',
+                moment.unix(anime.startDate).format('MMMM Do YYYY'),
+                true
+            );
     }
 }

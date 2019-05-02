@@ -68,13 +68,31 @@ type FrontlineGirlStatsType = {
     [propName: string]: number;
 };
 
-export type FrontlineGirlProductionRequirementsType = {
-    manpower: number;
-    ammo: number;
-    rations: number;
-    parts: number;
+type AnimePosterImageDimensions = {
+    width: number | null;
+    height: number | null;
+};
 
-    [propName: string]: number;
+type AnimePosterImage = {
+    tiny?: string,
+    small?: string,
+    medium?: string,
+    large?: string,
+    original: string,
+    meta: {
+        dimensions: {
+            large: AnimePosterImageDimensions;
+            medium: AnimePosterImageDimensions;
+            small: AnimePosterImageDimensions;
+            tiny: AnimePosterImageDimensions;
+        }
+    }
+};
+
+type AnimeTitles = {
+    en: string;
+    en_jp: string;
+    ja_jp: string;
 };
 
 type FrontlineGirlAbilityType = {
@@ -430,6 +448,15 @@ export type DiscordStoreGameType = {
     };
 };
 
+export type FrontlineGirlProductionRequirementsType = {
+    manpower: number;
+    ammo: number;
+    rations: number;
+    parts: number;
+
+    [propName: string]: number;
+};
+
 export type FrontlineGirlType = {
     url: string;
     num: number;
@@ -475,3 +502,42 @@ export type eShopType = {
 export interface IPrismVideoFormat extends videoFormat {
     audio_sample_rate?: number;
 }
+
+export type AnimeHit = {
+    abbreviatedTitles: string[];
+    ageRating: 'PG' | string;
+    averageRating: number;
+    canonicalTitle: string;
+    endDate: number;
+    episodeCount: number;
+    episodeLength: number;
+    favoritesCount: number;
+    id: number;
+    kind: 'anime' | string;
+    objectID: string;
+    season: 'spring' | 'summer' | 'autumn' | 'winter' | string;
+    seasonYear: number;
+    slug: string;
+    startDate: number;
+    subtype: 'TV' | 'movie' | 'special' | string;
+    synopsis: string;
+    totalLength: number;
+    userCount: number;
+    year: number;
+    posterImage: AnimePosterImage;
+    titles: AnimeTitles;
+    _tags: string[];
+};
+
+export type KitsuAnime = {
+    exhaustiveNbHits: boolean;
+    hitsPerPage: number;
+    nbHits: number;
+    nbPages: number;
+    page: number;
+    params: string;
+    processingTimeMS: number;
+    query: string;
+    queryAfterRemoval: string;
+    hits: AnimeHit[];
+};
