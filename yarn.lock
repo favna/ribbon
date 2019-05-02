@@ -495,11 +495,6 @@
   resolved "https://registry.yarnpkg.com/@types/common-tags/-/common-tags-1.8.0.tgz#79d55e748d730b997be5b7fce4b74488d8b26a6b"
   integrity sha512-htRqZr5qn8EzMelhX/Xmx142z218lLyGaeZ3YR8jlze4TATRU9huKKvuBmAJEW4LCC4pnY1N6JAm6p85fMHjhg==
 
-"@types/country-data@^0.0.0":
-  version "0.0.0"
-  resolved "https://registry.yarnpkg.com/@types/country-data/-/country-data-0.0.0.tgz#6f5563cae3d148780c5b6539803a29bd93f8f1a1"
-  integrity sha512-lIxCk6G7AwmUagQ4gIQGxUBnvAq664prFD9nSAz6dgd1XmBXBtZABV/op+QsJsIyaP1GZsf/iXhYKHX3azSRCw==
-
 "@types/dotenv@^6.1.1":
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/@types/dotenv/-/dotenv-6.1.1.tgz#f7ce1cc4fe34f0a4373ba99fefa437b0bec54b46"
@@ -1020,7 +1015,7 @@ awesome-djs@^13.0.13:
     tweetnacl "^1.0.1"
     ws "^6.1.3"
 
-awesome-querystring@^1.1.5, awesome-querystring@^1.2.0:
+awesome-querystring@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/awesome-querystring/-/awesome-querystring-1.2.0.tgz#2ff2ab60f7ad723157637b9d5942ded29b18bede"
   integrity sha512-zHrDHVik0B2K6V0U2RuiEJ4PeaaKYeLAfobvp114FMLQ7MVt/zlg1iyW1KkMF8XKDuo3dKXoxIJaF5rdGc25+w==
@@ -1620,14 +1615,6 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
-country-data@^0.0.31:
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/country-data/-/country-data-0.0.31.tgz#80966b8e1d147fa6d6a589d32933f8793774956d"
-  integrity sha1-gJZrjh0Uf6bWpYnTKTP4eTd0lW0=
-  dependencies:
-    currency-symbol-map "~2"
-    underscore ">1.4.4"
-
 cron-parser@^2.7.3:
   version "2.11.0"
   resolved "https://registry.yarnpkg.com/cron-parser/-/cron-parser-2.11.0.tgz#c3bf477e01de6a56938d6625b92efd6cec30a8a5"
@@ -1695,11 +1682,6 @@ cssstyle@^1.0.0:
   integrity sha512-43wY3kl1CVQSvL7wUY1qXkxVGkStjpkDmVjiIKX8R97uhajy8Bybay78uOtqvh7Q5GK75dNPfW0geWjE6qQQow==
   dependencies:
     cssom "0.3.x"
-
-currency-symbol-map@~2:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/currency-symbol-map/-/currency-symbol-map-2.2.0.tgz#2b3c1872ff1ac2ce595d8273e58e1fff0272aea2"
-  integrity sha1-KzwYcv8aws5ZXYJz5Y4f/wJyrqI=
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -2290,7 +2272,7 @@ fast-text-encoding@^1.0.0:
   resolved "https://registry.yarnpkg.com/fast-text-encoding/-/fast-text-encoding-1.0.0.tgz#3e5ce8293409cfaa7177a71b9ca84e1b1e6f25ef"
   integrity sha512-R9bHCvweUxxwkDwhjav5vxpFvdPGlVngtqmx4pIZfSUhM/Q4NiIUHB456BAf+Q1Nwu3HEZYONtu+Rya+af4jiQ==
 
-fast-xml-parser@^3.12.12, fast-xml-parser@^3.12.13:
+fast-xml-parser@^3.12.13:
   version "3.12.16"
   resolved "https://registry.yarnpkg.com/fast-xml-parser/-/fast-xml-parser-3.12.16.tgz#6730a81dfbd454ecbee6eb6d9ec60e871acfa8f3"
   integrity sha512-7ePrHTK4K9BLzY3+6ZOv2YEPOpdYJg3ohyMHxacG6kp1A0Y8KNyjrFfEHJuo8G4T7vT7cIlIXGWoHdIWu9U41A==
@@ -4161,17 +4143,6 @@ nimnjs@^1.3.2:
     nimn-date-parser "^1.0.0"
     nimn_schema_builder "^1.0.0"
 
-nintendo-switch-eshop@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/nintendo-switch-eshop/-/nintendo-switch-eshop-2.1.1.tgz#4db7fa5d120d372f522fb858243e4187d7dc8997"
-  integrity sha512-n/4l7UKubdESUyT3xUF6DTjqu1fsQrcjsykPfPQl5k28uMDdBC0Fys3iPf1kqFpaugApE2aKPKS0PKE7FKvIuA==
-  dependencies:
-    "@types/country-data" "^0.0.0"
-    awesome-querystring "^1.1.5"
-    country-data "^0.0.31"
-    fast-xml-parser "^3.12.12"
-    node-fetch "^2.3.0"
-
 node-fetch@^2.2.0, node-fetch@^2.3.0, node-fetch@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.4.1.tgz#b2e38f1117b8acbedbe0524f041fb3177188255d"
@@ -6032,11 +6003,6 @@ underscore@1.6.0, underscore@~1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.6.0.tgz#8b38b10cacdef63337b8b24e4ff86d45aea529a8"
   integrity sha1-izixDKze9jM3uLJOT/htRa6lKag=
-
-underscore@>1.4.4:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.1.tgz#06dce34a0e68a7babc29b365b8e74b8925203961"
-  integrity sha512-5/4etnCkd9c8gwgowi5/om/mYO5ajCaOgdzj/oW+0eQV9WxKBDZw5+ycmKmeaTXjInS/W0BzpGLo2xR2aBwZdg==
 
 underscore@~1.8.3:
   version "1.8.3"

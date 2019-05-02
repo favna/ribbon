@@ -488,25 +488,6 @@ export type FrontlineGirlType = {
     img?: string;
 };
 
-export type eShopType = {
-    categories: { category: string[] },
-    slug: string;
-    buyitnow: boolean;
-    release_date: string;
-    digitaldownload: string;
-    free_to_start: string;
-    title: string;
-    system: string;
-    id: string;
-    ca_price: string;
-    number_of_players: string;
-    nsuid: string;
-    eshop_price: string;
-    front_box_art: string;
-    game_code: string;
-    buyonline: string;
-};
-
 export interface IPrismVideoFormat extends videoFormat {
     audio_sample_rate?: number;
 }
@@ -548,4 +529,49 @@ export type KitsuAnime = {
     query: string;
     queryAfterRemoval: string;
     hits: AnimeHit[];
+};
+
+export type eShopHit = {
+    type: string;
+    locale: string;
+    url: string;
+    title: string;
+    description: string;
+    lastModified: number;
+    id: string;
+    nsuid: string;
+    slug: string;
+    boxArt: string;
+    gallery: string;
+    platform: string;
+    releaseDateMask: string;
+    characters: string[];
+    categories: string[];
+    msrp: number;
+    esrb: string;
+    esrbDescriptors: string;
+    virtualConsole: string;
+    generalFilters: string[];
+    filterShops: string[];
+    filterPlayers: string[];
+    players: string;
+    features: boolean;
+    freeToStart: boolean;
+    priceRange: string;
+    salePrice: number | null;
+    availability: string[];
+    objectID: string;
+};
+
+type eShoData = {
+    hits: eShopHit[];
+    nbHits: number;
+    page: number;
+    nbPages: number;
+    hitsPerPage: number;
+    processingTimeMS: number;
+};
+
+export type eShopResult = {
+    results: eShoData[];
 };

@@ -9,20 +9,19 @@
  * @param {string} GameName Game that you want to find in the eShop
  */
 
-import { eShopType } from '@components/Types';
-import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
-import shopData from '@databases/eshop.json';
+import { CollectorTimeout } from '@components/Constants';
+import { eShopHit, eShopResult } from '@components/Types';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
-import Fuse, { FuseOptions } from 'fuse.js';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
+import { stringify } from 'awesome-querystring';
 import moment from 'moment';
-
-// FIXME: EShop Command data parsing should be updated to reflect EU games
+import fetch from 'node-fetch';
 
 type EShopArgs = {
-    game: string;
+    query: string;
     hasManageMessages: boolean;
-    price: string;
+    position: number;
 };
 
 export default class EShopCommand extends Command {
@@ -38,7 +37,7 @@ export default class EShopCommand extends Command {
             guildOnly: false,
             args: [
                 {
-                    key: 'game',
+                    key: 'query',
                     prompt: 'What game to find?',
                     type: 'string',
                 }
@@ -47,36 +46,92 @@ export default class EShopCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public run (msg: CommandoMessage, { game, price = 'TBA', hasManageMessages }: EShopArgs) {
+    public async run (msg: CommandoMessage, { query, hasManageMessages, position = 0 }: EShopArgs) {
         try {
-            const eshopData: eShopType[] = shopData as eShopType[];
-            const eshopEmbed = new MessageEmbed();
-            const eShopOptions: FuseOptions<eShopType> = { keys: ['title'] };
-            const fuse = new Fuse(eshopData, eShopOptions);
-            const results = fuse.search(game);
-            const hit = results[0];
+            const gamesList = await fetch(
+                `https://${process.env.NINTENDO_ALGOLIA_ID}-dsn.algolia.net/1/indexes/*/queries`,
+                {
+                    body: JSON.stringify(
+                        {
+                            requests: [
+                                {
+                                    indexName: 'noa_aem_game_en_us',
+                                    params: stringify({
+                                        facetFilters: [
+                                            ['filterShops:On Nintendo.com'],
+                                            ['platform:Nintendo Switch']
+                                        ],
+                                        facets: [
+                                            'generalFilters', 'platform', 'availability', 'categories',
+                                            'filterShops', 'virtualConsole', 'characters', 'priceRange',
+                                            'esrb', 'filterPlayers'
+                                        ],
+                                        hitsPerPage: 42,
+                                        maxValuesPerFacet: 30,
+                                        page: 0,
+                                        query,
+                                    }),
+                                }
+                            ],
+                        }
+                    ),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Algolia-API-Key': process.env.NINTENDO_ALOGLIA_KEY!,
+                        'X-Algolia-Application-Id': process.env.NINTENDO_ALGOLIA_ID!,
+                    },
+                    method: 'POST',
+                }
+            );
 
-            if (hit.eshop_price) price = hit.eshop_price === '0.00' ? 'free' : `$${hit.eshop_price} USD`;
+            const games: eShopResult = await gamesList.json();
+            const results = games.results[0];
 
-            eshopEmbed
-                .setTitle(hit.title)
-                .setURL(`https://www.nintendo.com/games/detail/${hit.slug}`)
-                .setThumbnail(hit.front_box_art)
-                .setColor('#FFA600')
-                .addField('eShop Price', price, true)
-                .addField('Release Date', moment(hit.release_date, 'MMM DD YYYY').format('MMMM Do YYYY'), true)
-                .addField('Number of Players', hit.number_of_players, true)
-                .addField('Game Code', hit.game_code, true)
-                .addField('NSUID', hit.nsuid ? hit.nsuid : 'TBD', true)
-                .addField('Categories', typeof hit.categories.category === 'object' ? hit.categories.category.join(', ') : hit.categories.category, true);
+            let currentGame = results.hits[position];
+            let eshopEmbed = this.prepMessage(currentGame, results.hits.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(eshopEmbed);
+            const message = await msg.embed(eshopEmbed) as CommandoMessage;
+
+            if (results.hits.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= results.hits.length) position = 0;
+                            if (position < 0) position = results.hits.length - 1;
+                            currentGame = results.hits[position];
+                            eshopEmbed = this.prepMessage(currentGame, results.hits.length, position);
+                            message.edit('', eshopEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-
-            return msg.reply(`no titles found for \`${game}\``);
+            return msg.reply(`no titles found for \`${query}\``);
         }
+    }
+
+    private prepMessage (game: eShopHit, gamesLength: number, position: number): MessageEmbed {
+        return new MessageEmbed()
+            .setColor('#FFA600')
+            .setTitle(game.title)
+            .setURL(`https://nintendo.com${game.url}`)
+            .setThumbnail(`https://nintendo.com${game.boxArt}`)
+            .setDescription(`${game.description.length <= 800 ? game.description : `${game.description.slice(0, 800)}…`}`)
+            .setFooter(`Result ${position + 1} of ${gamesLength}`)
+            .addField('ESRB', game.esrb, true)
+            .addField('Price', game.msrp ? game.msrp === 0 ? 'Free' : `$${game.msrp} USD` : 'TBA', true)
+            .addField('Availability', game.availability[0], true)
+            .addField('Release Date', game.releaseDateMask === 'TBD' ? game.releaseDateMask : moment(game.releaseDateMask).format('MMMM Do YYYY'), true)
+            .addField('Number of Players', sentencecase(game.players), true)
+            .addField('Platform', game.platform, true)
+            .addField('NSUID', game.nsuid ? game.nsuid : 'TBD', true)
+            .addField('Categories', game.categories.join(', '), false);
     }
 }

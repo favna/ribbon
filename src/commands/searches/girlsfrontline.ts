@@ -9,12 +9,12 @@
  * @param {string} CharacterName Name (species), number or type of the girl you want to find
  */
 
-import { DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { FrontlineGirlType } from '@components/Types';
-import { clientHasManageMessages, deleteCommandMessages, sentencecase } from '@components/Utils';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import frontlineGirls from '@pokedex/girlsfrontline';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
 import cheerio from 'cheerio';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
@@ -24,6 +24,7 @@ import fetch from 'node-fetch';
 type GirlsFrontlineArgs = {
     character: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class GirlsFrontlineCommand extends Command {
@@ -48,78 +49,105 @@ export default class GirlsFrontlineCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { character }: GirlsFrontlineArgs) {
+    public async run (msg: CommandoMessage, { character, hasManageMessages, position = 0 }: GirlsFrontlineArgs) {
         try {
-            const gfEmbed = new MessageEmbed();
             const gfOptions: FuseOptions<FrontlineGirlType> = { keys: ['name'] };
             const fuse = new Fuse(frontlineGirls, gfOptions);
-            const results = fuse.search(character);
-            const hit = results[0];
-            const howObtain: string[] = [];
-            const statIndices = ['hp', 'dmg', 'eva', 'acc', 'rof'];
+            const girlSearch = fuse.search(character);
+            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
-            if (hit.production.stage) howObtain.push(`**Stage:** ${hit.production.stage}`);
-            if (hit.production.reward) howObtain.push(`**Reward:** ${hit.production.reward}`);
-            if (hit.production.timer) howObtain.push(`**Production Timer:** ${moment.duration(hit.production.timer, 'hours').format('H [hours and] mm [minutes]')}`);
-
-            hit.ability.text.match(/\(\$([a-z0-9_])+\)/gm)!.forEach((element: string) => {
-                hit.ability.text = hit.ability.text.replace(element, (hit.ability[element.replace(/\(\$(.+)\)/gim, '$1')] as string[]).reverse()[0]);
-            });
-
-            const wikiBasePath = 'https://en.gfwiki.com';
-            const wikiFetch = await fetch(wikiBasePath.concat(hit.url));
-            const $ = cheerio.load(await wikiFetch.text());
-            const thumbSrc = $('.gallery').find('.gallerytext > p:contains("Profile image")')
-                .parent().parent().find('img').attr('src')
-                .slice(1).split('/').slice(2, 5).join('/');
-
-            gfEmbed
-                .setURL(wikiBasePath.concat(hit.url))
-                .setTitle(`No. ${hit.num} - ${hit.name} ${[...Array(hit.rating)].map(() => '★').join('').concat('☆☆☆☆☆'.slice(hit.rating))}`)
-                .setThumbnail(wikiBasePath.concat('/images/', thumbSrc))
-                .addField('Type', hit.type, true)
-                .addField('Constant Stats',
-                    Object.keys(hit.constStats)
-                        .map(index => `${index.toUpperCase()}: **${hit.constStats[index]}**`)
-                        .join(', '))
-                .addField('Maximum Stats',
-                    Object.keys(hit.baseStats)
-                        .map(index => statIndices.includes(index) ? `${index.toUpperCase()}: **${hit.baseStats[index]}**` : undefined)
-                        .filter(Boolean)
-                        .join(', '))
-                .addField('Base Stats',
-                    Object.keys(hit.maxStats)
-                        .map(index => statIndices.includes(index) ? `${index.toUpperCase()}: **${hit.maxStats[index]}**` : undefined)
-                        .filter(Boolean)
-                        .join(', '))
-                .addField('How To Obtain', howObtain.join('\n'));
-
-            if (hit.production.timer && hit.production.normal) {
-                gfEmbed.addField('Normal Production Requirement', Object.keys(hit.production.normal)
-                    .map((index: string) => `**${sentencecase(index)}**: ${hit.production.normal![index]}`)
-                    .join(', '));
-            }
-
-            if (hit.production.timer && hit.production.heavy) {
-                gfEmbed
-                    .addField('Heavy Production Requirement', Object.keys(hit.production.heavy)
-                        .map((index: string) => `**${sentencecase(index)}**: ${hit.production.heavy![index]}`)
-                        .join(', '));
-            }
-
-            gfEmbed
-                .addField(`Ability: ${hit.ability.name}`, hit.ability.text, true)
-                .addField('Tile Bonus', hit.tile_bonus, true)
-                .addField('Tile Bonus Ability', hit.bonus_desc, true)
-                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
+            let currentGirl = girlSearch[0];
+            let girlEmbed = await this.prepMessage(color, currentGirl, girlSearch.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(gfEmbed);
+            const message = await msg.embed(girlEmbed) as CommandoMessage;
+
+            if (girlSearch.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', async (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= girlSearch.length) position = 0;
+                            if (position < 0) position = girlSearch.length - 1;
+                            currentGirl = girlSearch[position];
+                            girlEmbed = await this.prepMessage(color, currentGirl, girlSearch.length, position);
+                            message.edit('', girlEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
 
             return msg.reply(`no girl found for \`${character}\``);
         }
+    }
+
+    private async prepMessage (color: string, girl: FrontlineGirlType, girlsLength: number, position: number): Promise<MessageEmbed> {
+        const embed = new MessageEmbed();
+        const howObtain: string[] = [];
+        const statIndices = ['hp', 'dmg', 'eva', 'acc', 'rof'];
+
+        if (girl.production.stage) howObtain.push(`**Stage:** ${girl.production.stage}`);
+        if (girl.production.reward) howObtain.push(`**Reward:** ${girl.production.reward}`);
+        if (girl.production.timer) howObtain.push(`**Production Timer:** ${moment.duration(girl.production.timer, 'hours').format('H [hours and] mm [minutes]')}`);
+
+        girl.ability.text.match(/\(\$([a-z0-9_])+\)/gm)!.forEach((element: string) => {
+            girl.ability.text = girl.ability.text.replace(element, (girl.ability[element.replace(/\(\$(.+)\)/gim, '$1')] as string[]).reverse()[0]);
+        });
+
+        const wikiBasePath = 'https://en.gfwiki.com';
+        const wikiFetch = await fetch(wikiBasePath.concat(girl.url));
+        const $ = cheerio.load(await wikiFetch.text());
+        const thumbSrc = $('.gallery').find('.gallerytext > p:contains("Profile image")')
+            .parent().parent().find('img').attr('src')
+            .slice(1).split('/').slice(2, 5).join('/');
+
+        embed
+            .setColor(color)
+            .setURL(wikiBasePath.concat(girl.url))
+            .setTitle(`No. ${girl.num} - ${girl.name} ${[...Array(girl.rating)].map(() => '★').join('').concat('☆☆☆☆☆'.slice(girl.rating))}`)
+            .setThumbnail(wikiBasePath.concat('/images/', thumbSrc))
+            .setFooter(`Result ${position + 1} of ${girlsLength}`)
+            .addField('Type', girl.type, true)
+            .addField('Constant Stats',
+                Object.keys(girl.constStats)
+                    .map(index => `${index.toUpperCase()}: **${girl.constStats[index]}**`)
+                    .join(', '))
+            .addField('Maximum Stats',
+                Object.keys(girl.baseStats)
+                    .map(index => statIndices.includes(index) ? `${index.toUpperCase()}: **${girl.baseStats[index]}**` : undefined)
+                    .filter(Boolean)
+                    .join(', '))
+            .addField('Base Stats',
+                Object.keys(girl.maxStats)
+                    .map(index => statIndices.includes(index) ? `${index.toUpperCase()}: **${girl.maxStats[index]}**` : undefined)
+                    .filter(Boolean)
+                    .join(', '))
+            .addField('How To Obtain', howObtain.join('\n'));
+
+        if (girl.production.timer && girl.production.normal) {
+            embed.addField('Normal Production Requirement', Object.keys(girl.production.normal)
+                .map((index: string) => `**${sentencecase(index)}**: ${girl.production.normal![index]}`)
+                .join(', '));
+        }
+
+        if (girl.production.timer && girl.production.heavy) {
+            embed
+                .addField('Heavy Production Requirement', Object.keys(girl.production.heavy)
+                    .map((index: string) => `**${sentencecase(index)}**: ${girl.production.heavy![index]}`)
+                    .join(', '));
+        }
+
+        embed
+            .addField(`Ability: ${girl.ability.name}`, girl.ability.text, true)
+            .addField('Tile Bonus', girl.tile_bonus, true)
+            .addField('Tile Bonus Ability', girl.bonus_desc, true);
+
+        return embed;
     }
 }
