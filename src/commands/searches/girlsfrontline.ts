@@ -56,7 +56,7 @@ export default class GirlsFrontlineCommand extends Command {
             const girlSearch = fuse.search(character);
             const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
-            let currentGirl = girlSearch[0];
+            let currentGirl = girlSearch[position];
             let girlEmbed = await this.prepMessage(color, currentGirl, girlSearch.length, position);
 
             deleteCommandMessages(msg, this.client);
@@ -82,7 +82,6 @@ export default class GirlsFrontlineCommand extends Command {
             return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-
             return msg.reply(`no girl found for \`${character}\``);
         }
     }
@@ -91,14 +90,17 @@ export default class GirlsFrontlineCommand extends Command {
         const embed = new MessageEmbed();
         const howObtain: string[] = [];
         const statIndices = ['hp', 'dmg', 'eva', 'acc', 'rof'];
+        const abilityReplacer = girl.ability.text.match(/\(\$([a-z0-9_])+\)/gm);
 
         if (girl.production.stage) howObtain.push(`**Stage:** ${girl.production.stage}`);
         if (girl.production.reward) howObtain.push(`**Reward:** ${girl.production.reward}`);
         if (girl.production.timer) howObtain.push(`**Production Timer:** ${moment.duration(girl.production.timer, 'hours').format('H [hours and] mm [minutes]')}`);
 
-        girl.ability.text.match(/\(\$([a-z0-9_])+\)/gm)!.forEach((element: string) => {
-            girl.ability.text = girl.ability.text.replace(element, (girl.ability[element.replace(/\(\$(.+)\)/gim, '$1')] as string[]).reverse()[0]);
-        });
+        if (abilityReplacer) {
+            abilityReplacer.forEach((element: string) => {
+                girl.ability.text = girl.ability.text.replace(element, (girl.ability[element.replace(/\(\$(.+)\)/gim, '$1')] as string[]).reverse()[0]);
+            });
+        }
 
         const wikiBasePath = 'https://en.gfwiki.com';
         const wikiFetch = await fetch(wikiBasePath.concat(girl.url));
