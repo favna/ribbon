@@ -1,6 +1,7 @@
 import { Command } from 'awesome-commando';
 import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
 import { videoFormat } from 'ytdl-core';
+import { GoogleSource } from './Constants';
 import { Song } from './Utils';
 
 type FlavorTextType = {
@@ -575,3 +576,52 @@ type eShoData = {
 export type eShopResult = {
     results: eShoData[];
 };
+
+type GoogleCSEImage = {
+    src: string;
+    height?: string;
+    width?: string;
+};
+
+export type GoogleItemCommon = {
+    source: GoogleSource;
+};
+
+export type GoogleKnowledgeItem = {
+    '@type': string;
+    resultScore: number;
+    result: {
+        '@id': string;
+        '@type': string[];
+        description: string;
+        name: string;
+        url: string;
+        detailedDescription: {
+            articleBody: string;
+            license: string;
+            url: string;
+        }
+        image: {
+            contentUrl: string;
+        }
+    } & GoogleItemCommon
+};
+
+export type GoogleCSEItem = {
+    cacheId: string;
+    displayLink: string;
+    formattedUrl: string;
+    htmlFormattedUrl: string;
+    htmlSnippet: string;
+    htmlTitle: string;
+    kind: string;
+    link: string;
+    snippet: string;
+    title: string;
+    pagemap: {
+        cse_image: GoogleCSEImage[];
+        cse_thumbnail: GoogleCSEImage[];
+    }
+} & GoogleItemCommon;
+
+export type GoogleItem = GoogleKnowledgeItem['result'] | GoogleCSEItem | GoogleItemCommon;

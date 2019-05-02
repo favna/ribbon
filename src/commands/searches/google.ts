@@ -11,10 +11,11 @@
  * @param {string} SearchQuery Thing to find on Google
  */
 
-import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
+import { CollectorTimeout, DEFAULT_EMBED_COLOR, GoogleSource } from '@components/Constants';
+import { GoogleCSEItem, GoogleItem, GoogleKnowledgeItem } from '@components/Types';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import cheerio from 'cheerio';
 import { oneLine } from 'common-tags';
@@ -23,6 +24,7 @@ import fetch from 'node-fetch';
 type GoogleArgs = {
     query: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class GoogleCommand extends Command {
@@ -52,11 +54,7 @@ export default class GoogleCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { query }: GoogleArgs) {
-        const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
-        const googleEmbed = new MessageEmbed();
-
-        googleEmbed.setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
+    public async run (msg: CommandoMessage, { query, hasManageMessages, position = 0 }: GoogleArgs) {
         try {
             const knowledgeSearch = await fetch(
                 `https://kgsearch.googleapis.com/v1/entities:search?${stringify(
@@ -68,56 +66,58 @@ export default class GoogleCommand extends Command {
                     }
                 ).replace(/%2B/gm, '+')}`
             );
-            const knowledgeData = await knowledgeSearch.json();
-            const result = knowledgeData.itemListElement[0].result;
 
-            let types = result['@type'].map((t: string) => t.replace(/([a-z])([A-Z])/g, '$1 $2'));
-            if (types.length > 1) types = types.filter((t: string) => t !== 'Thing');
-
-            if (!result.detailedDescription) throw new Error('not_enough_knowledge_data_should_continue');
-            if (nsfwAllowed || !msg.guild.settings.get('blockUnexplicitNsfw', true)) googleEmbed.setImage(result.image.contentUrl);
-
-            googleEmbed
-                .setTitle(`${result.name} ${types.length === 0 ? '' : `(${types.join(', ')})`}`)
-                .setURL(result.detailedDescription.url)
-                .setDescription(oneLine`${result.detailedDescription.articleBody}
-                    [Learn More...](${String(result.detailedDescription.url).replace(/\(/, '%28').replace(/\)/, '%29')})`
-                );
-
-            deleteCommandMessages(msg, this.client);
-
-            return msg.embed(googleEmbed);
-        } catch (err) {
-            // Intentionally empty
-        }
-
-        try {
             const googleSearch = await fetch(
                 `https://www.googleapis.com/customsearch/v1?${stringify({
                     cx: process.env.SEARCH_KEY!,
                     key: process.env.GOOGLE_API_KEY!,
                     q: query,
-                    safe: nsfwAllowed ? 'off' : 'active',
+                    safe: this.isNsfwAllowed(msg) ? 'off' : 'active',
                 })}`
             );
-            const googleData = await googleSearch.json();
-            const item = googleData.items[0];
 
-            googleEmbed
-                .setTitle(item.title)
-                .setURL(item.link)
-                .setDescription(item.snippet);
+            const cseData: { items: GoogleCSEItem[] } = await googleSearch.json();
+            const cseItems = cseData.items.map(googleItem => ({ ...googleItem, source: GoogleSource.CSE }));
 
-            if (item.pagemap.cse_image) {
-                if ((nsfwAllowed && item.pagemap.cse_image[0].src) ||
-                    (!msg.guild.settings.get('blockUnexplicitNsfw', true) && item.pagemap.cse_image[0].src)) {
-                    googleEmbed.setImage(item.pagemap.cse_image[0].src);
+            const knowledgeData: { itemListElement: GoogleKnowledgeItem[] } = await knowledgeSearch.json();
+            const knowledgeItems = knowledgeData.itemListElement.map(item => (
+                {
+                    ...item.result,
+                    source: GoogleSource.KNOWLEDGE,
                 }
-            }
+            ));
+
+            knowledgeItems.map(item => {
+                const types = item['@type'].map((t: string) => t.replace(/([a-z])([A-Z])/g, '$1 $2'));
+                return types.length > 1 ? item['@type'] = types.filter((t: string) => t !== 'Thing') : item['@type'];
+            });
+
+            const googleItems: GoogleItem[] = [...cseItems, ...knowledgeItems];
+
+            let currentItem = googleItems[position];
+            let googleEmbed = this.prepMessage(msg, currentItem, googleItems.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(googleEmbed);
+            const message = await msg.embed(googleEmbed) as CommandoMessage;
+
+            if (googleItems.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= googleItems.length) position = 0;
+                            if (position < 0) position = googleItems.length - 1;
+                            currentItem = googleItems[position];
+                            googleEmbed = this.prepMessage(msg, currentItem, googleItems.length, position);
+                            message.edit('', googleEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
         } catch (err) {
             // Intentionally empty
         }
@@ -128,7 +128,7 @@ export default class GoogleCommand extends Command {
                     cr: 'countryGB',
                     lr: 'lang_en',
                     q: query,
-                    safe: nsfwAllowed ? 'off' : 'active',
+                    safe: this.isNsfwAllowed(msg) ? 'off' : 'active',
                 })}`
             );
             const $ = cheerio.load(await backupSearch.text());
@@ -140,7 +140,8 @@ export default class GoogleCommand extends Command {
                 .replace('/url?q=', '')
                 .split('&')[0];
 
-            googleEmbed
+            const googleEmbed = new MessageEmbed()
+                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
                 .setTitle(`Google Search Result for ${query}`)
                 .setDescription(href)
                 .setURL(href)
@@ -154,5 +155,40 @@ export default class GoogleCommand extends Command {
 
             return msg.reply(`error occurred or nothing found for \`${query}\``);
         }
+    }
+
+    private prepMessage (msg: CommandoMessage, item: any, itemLength: number, position: number): MessageEmbed {
+        const googleEmbed = new MessageEmbed()
+            .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+            .setFooter(`Result ${position + 1} of ${itemLength}`);
+
+        if (item.source === GoogleSource.CSE) {
+            const cseItem = item as GoogleCSEItem;
+            googleEmbed
+                .setTitle(cseItem.title)
+                .setURL(cseItem.link)
+                .setDescription(cseItem.snippet);
+
+            if (cseItem.pagemap.cse_image) {
+                if ((this.isNsfwAllowed(msg) && cseItem.pagemap.cse_image[0].src) ||
+                    (!msg.guild.settings.get('blockUnexplicitNsfw', true) && cseItem.pagemap.cse_image[0].src)) {
+                    googleEmbed.setImage(cseItem.pagemap.cse_image[0].src);
+                }
+            }
+        } else {
+            const knowledgeItem = item as GoogleKnowledgeItem['result'];
+            googleEmbed
+                .setTitle(`${knowledgeItem.name} ${knowledgeItem['@type'].length === 0 ? '' : `(${knowledgeItem['@type'].join(', ')})`}`)
+                .setURL(knowledgeItem.detailedDescription.url)
+                .setDescription(oneLine`${knowledgeItem.detailedDescription.articleBody}
+                    [Learn More...](${String(knowledgeItem.detailedDescription.url).replace(/\(/, '%28').replace(/\)/, '%29')})`
+                );
+        }
+
+        return googleEmbed;
+    }
+
+    private isNsfwAllowed (msg: CommandoMessage): boolean {
+        return msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
     }
 }

@@ -28,3 +28,7 @@ export enum CollectorTimeout {
     five = 5 * 60 * 1000,
     ten = 10 * 60 * 1000,
 }
+export enum GoogleSource {
+    KNOWLEDGE = 'knowledge',
+    CSE = 'cse',
+}
