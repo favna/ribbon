@@ -160,10 +160,18 @@ type PokeGenderRatioType = {
 export type CydiaAPIPackageType = {
     display: string;
     name: string;
-    section: string;
     summary: string;
     version: string;
+    thumbnail: string;
 };
+
+export type CydiaData = {
+    source: string;
+    size: string;
+    baseURL: string;
+    section: string;
+    price: 'Free' | string;
+} & CydiaAPIPackageType;
 
 export type SimpleEmbedFieldType = { name: string, value: string };
 export type DiscordGameDevType = { id: string, name: string };

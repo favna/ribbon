@@ -13,11 +13,11 @@
  * @param {string} TweakName Name of the tweak to find
  */
 
-import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { CydiaAPIPackageType } from '@components/Types';
-import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
+import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { CydiaAPIPackageType, CydiaData } from '@components/Types';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import cheerio from 'cheerio';
 import { oneLine, stripIndents } from 'common-tags';
@@ -28,6 +28,7 @@ import fetch from 'node-fetch';
 type CydiaArgs = {
     deb: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class CydiaCommand extends Command {
@@ -60,7 +61,7 @@ export default class CydiaCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { deb, hasManageMessages }: CydiaArgs) {
+    public async run (msg: CommandoMessage, { deb, hasManageMessages, position = 0 }: CydiaArgs) {
         try {
             if (msg.patternMatches) {
                 if (!msg.guild.settings.get('regexmatches', false)) return null;
@@ -68,7 +69,6 @@ export default class CydiaCommand extends Command {
             }
 
             const baseURL = 'https://cydia.saurik.com/';
-            const cydiaEmbed = new MessageEmbed();
             const fsoptions: FuseOptions<CydiaAPIPackageType> = {
                 keys: ['display', 'name'],
                 threshold: 0.3,
@@ -77,49 +77,36 @@ export default class CydiaCommand extends Command {
             const packages = await res.json();
             const fuzzyList = new Fuse(packages.results as CydiaAPIPackageType[], fsoptions);
             const search = fuzzyList.search(deb);
-            const hit = search[0];
+            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
-            if (!hit) throw new Error('no_packages');
+            if (!search.length) throw new Error('no_packages');
 
-            cydiaEmbed
-                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setTitle(hit.display)
-                .setDescription(hit.summary)
-                .addField('Version', hit.version, true)
-                .addField(
-                    'Link',
-                    `[Click Here](${baseURL}package/${hit.name})`,
-                    true
-                );
-
-            try {
-                const siteReq = await fetch(`${baseURL}package/${hit.name}`);
-                const site = await siteReq.text();
-                const $ = cheerio.load(site);
-
-                cydiaEmbed
-                    .addField('Source', $('.source-name').html(), true)
-                    .addField('Section', $('#section').html(), true)
-                    .addField('Size', $('#extra').text(), true)
-                    .setThumbnail(`${baseURL}${$('#header > #icon > div > span > img').attr('src').slice(1)}`);
-            } catch {
-                // Intentionally empty
-            }
-
-            try {
-                const priceReq = await fetch(`${baseURL}api/ibbignerd?${stringify({ query: hit.name })}`);
-                const price = await priceReq.json();
-
-                cydiaEmbed.addField('Price', price ? price.msrp : 'Free', true);
-            } catch (priceErr) {
-                // Intentionally empty
-            }
-
-            cydiaEmbed.addField('Package Name', hit.name, false);
+            let currentPackage = search[position];
+            let packageData = await this.fetchAllData(currentPackage, baseURL);
+            let cydiaEmbed = this.prepMessage(color, packageData, search.length, position);
 
             if (!msg.patternMatches) deleteCommandMessages(msg, this.client);
 
-            return msg.embed(cydiaEmbed);
+            const message = await msg.embed(cydiaEmbed) as CommandoMessage;
+
+            if (search.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.two })
+                    .on('collect', async (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= search.length) position = 0;
+                            if (position < 0) position = search.length - 1;
+                            currentPackage = search[position];
+                            packageData = await this.fetchAllData(currentPackage, baseURL);
+                            cydiaEmbed = this.prepMessage(color, packageData, search.length, position);
+                            message.edit('', cydiaEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
         } catch (err) {
             if (/(no_packages)/i.test(err.toString())) return msg.say(`**Tweak/Theme \`${deb}\` not found!**`);
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
@@ -137,5 +124,68 @@ export default class CydiaCommand extends Command {
             return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
                 Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
+    }
+
+    private async fetchAllData (pkg: CydiaAPIPackageType, baseURL: string): Promise<CydiaData> {
+        let source = '';
+        let size = '';
+        let price = '';
+        let section = '';
+        let thumbnail = '';
+
+        try {
+            const siteReq = await fetch(`${baseURL}package/${pkg.name}`);
+            const site = await siteReq.text();
+            const $ = cheerio.load(site);
+
+            source = $('.source-name').html()!;
+            section = $('#section').html()!;
+            size = $('#extra').text();
+            thumbnail = `${baseURL}${$('#header > #icon > div > span > img').attr('src').slice(1)}`;
+        } catch {
+            // Intentionally empty
+        }
+
+        try {
+            const priceReq = await fetch(`${baseURL}api/ibbignerd?${stringify({ query: pkg.name })}`);
+            const priceData = await priceReq.json();
+
+            price = priceData ? priceData.msrp : 'Free';
+        } catch (priceErr) {
+            // Intentionally empty
+        }
+
+        return {
+            size,
+            price,
+            source,
+            baseURL,
+            section,
+            thumbnail,
+            name: pkg.name,
+            display: pkg.display,
+            summary: pkg.summary,
+            version: pkg.version,
+        };
+    }
+
+    private prepMessage (color: string, pkg: CydiaData, packagesLength: number, position: number): MessageEmbed {
+        return new MessageEmbed()
+            .setColor(color)
+            .setTitle(pkg.display)
+            .setDescription(pkg.summary)
+            .setThumbnail(pkg.thumbnail ? pkg.thumbnail : `${ASSET_BASE_PATH}/ribbon/cydia.png`)
+            .setFooter(`Result ${position + 1} of ${packagesLength}`)
+            .addField('Version', pkg.version, true)
+            .addField(
+                'Link',
+                `[Click Here](${pkg.baseURL}package/${pkg.name})`,
+                true
+            )
+            .addField('Section', pkg.section ? pkg.section : 'Unknown', true)
+            .addField('Size', pkg.size ? pkg.size : 'Unknown', true)
+            .addField('Price', pkg.price ? pkg.price : 'Unknown', true)
+            .addField('Source', pkg.source ? pkg.source : 'Unknown', true)
+            .addField('Package Name', pkg.name, false);
     }
 }
