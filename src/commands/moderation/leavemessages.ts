@@ -59,25 +59,22 @@ export default class LeaveMessagesCommand extends Command {
                 return msg.reply('when activating join messages you need to provide a channel for me to output the messages to!');
             }
 
-            if (!this.isChannel(msgChannel)) throw new Error('not_a_channel');
-
-            const leaveMsgEmbed = new MessageEmbed();
             const description = shouldEnable
                 ? '📉 Ribbon leave messages have been enabled'
                 : '📉 Ribbon leave messages have been disabled';
             const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-
-            msg.guild.settings.set('leavemsgs', shouldEnable);
-            msg.guild.settings.set('leavemsgchannel', msgChannel.id);
-
-            leaveMsgEmbed
+            const leaveMsgEmbed = new MessageEmbed()
                 .setColor('#AAEFE6')
                 .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
-                .setDescription(stripIndents`
-                    **Action:** ${description}
-                    ${shouldEnable ? `**Channel:** <#${msgChannel.id}>` : ''}`
-                )
+                .setDescription(`**Action:** ${description}`)
                 .setTimestamp();
+
+            msg.guild.settings.set('leavemsgs', shouldEnable);
+
+            if (this.isChannel(msgChannel)) {
+                msg.guild.settings.set('leavemsgchannel', msgChannel.id);
+                leaveMsgEmbed.description += `\n${shouldEnable ? `**Channel:** <#${msgChannel.id}>` : ''}`;
+            }
 
             if (msg.guild.settings.get('modlogs', true)) {
                 logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, leaveMsgEmbed);
@@ -88,10 +85,6 @@ export default class LeaveMessagesCommand extends Command {
             return msg.embed(leaveMsgEmbed);
         } catch (err) {
             deleteCommandMessages(msg, this.client);
-            if (/(?:not_a_channel)/i.test(err.toString())) {
-                return msg.reply(oneLine`an error occurred setting the join message channel;.
-                    I was unable to find a channel matching your input \`${msgChannel}\``);
-            }
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
