@@ -169,11 +169,8 @@ export default class GoogleCommand extends Command {
                 .setURL(cseItem.link)
                 .setDescription(cseItem.snippet);
 
-            if (cseItem.pagemap.cse_image) {
-                if ((this.isNsfwAllowed(msg) && cseItem.pagemap.cse_image[0].src) ||
-                    (!msg.guild.settings.get('blockUnexplicitNsfw', true) && cseItem.pagemap.cse_image[0].src)) {
-                    googleEmbed.setImage(cseItem.pagemap.cse_image[0].src);
-                }
+            if (cseItem.pagemap.cse_image && cseItem.pagemap.cse_image[0].src) {
+                googleEmbed.setImage(cseItem.pagemap.cse_image[0].src);
             }
         } else {
             const knowledgeItem = item as GoogleKnowledgeItem['result'];
