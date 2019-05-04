@@ -40,7 +40,10 @@
         "docs:build": "tsc -p ./tsconfig.docs.json",
         "docs:md": "jsdoc2md --template ./docs/template.hbs --files ./docsbuild/commands/**/*.js --example-lang nginx | tee ./docs/index.md > ../wikiribbon/All-Commands.md",
         "docs:json": "jsdoc2md --json --files ./docsbuild/commands/**/*.js > ../favware-site/src/assets/docs/ribbon.json",
-        "terser": "terser-folder ./dist -eo ./dist -x .js"
+        "terser": "terser-folder ./dist -eo ./dist -x .js",
+        "db:up" : "docker-compose up -d",
+        "db:stop": "docker-compose stop",
+        "db:down": "docker-compose down"
     },
     "keywords": [
         "bot",
