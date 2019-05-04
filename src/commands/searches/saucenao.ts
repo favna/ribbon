@@ -9,17 +9,18 @@
  * @param {string} ImageURL Image to get the source for
  */
 
-import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
+import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { DMChannel, MessageEmbed, TextChannel } from 'awesome-djs';
+import { DMChannel, MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { Handler, HandlerOptions } from 'sagiri';
+import { Handler, HandlerOptions, Source } from 'sagiri';
 
 type SauceNaoArgs = {
     image: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class SauceNaoCommand extends Command {
@@ -48,43 +49,52 @@ export default class SauceNaoCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { image, hasManageMessages }: SauceNaoArgs) {
+    public async run (msg: CommandoMessage, { image, hasManageMessages, position = 0 }: SauceNaoArgs) {
         try {
-            const sauceEmbed = new MessageEmbed();
             const handlerOptions: HandlerOptions = { numRes: 5, getRating: true };
-            const sauceHandler = new Handler(process.env.SAUCENAO_KEY as string, handlerOptions);
+            const sauceHandler = new Handler(process.env.SAUCENAO_KEY!, handlerOptions);
             const sauces = await sauceHandler.getSauce(image);
+            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
             if (!sauces || !sauces.length) throw new Error('no_matches');
             if (this.channelIsNSFW(msg.channel)) sauces.filter(result => result.rating <= 2);
             if (!sauces || !sauces.length) throw new Error('no_sfw_matches');
 
-            const sauce = sauces[0];
-
-            sauceEmbed
-                .setURL(sauce.url)
-                .setTitle(`Best match found on: ${sauce.site}`)
-                .setImage(sauce.thumbnail)
-                .setColor(DEFAULT_EMBED_COLOR)
-                .setDescription(oneLine`I found a match with a ${sauce.similarity}% similarity on ${sauce.site} as seen below.
-                                        Click [here](${sauce.url}) to view the image, or check out some other matches:`)
-                .addField('Second potential match', `[on ${sauces[1].site}](${sauces[1].url})`)
-                .addField('Third potential match', `[on ${sauces[2].site}](${sauces[2].url})`)
-                .addField('Fourth potential match', `[on ${sauces[3].site}](${sauces[3].url})`)
-                .addField('Fifth potential match', `[on ${sauces[4].site}](${sauces[4].url})`);
+            let currentSauce = sauces[position];
+            let sauceEmbed = this.prepMessage(color, currentSauce, sauces.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(sauceEmbed);
+            const message = await msg.embed(sauceEmbed) as CommandoMessage;
+
+            if (sauces.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= sauces.length) position = 0;
+                            if (position < 0) position = sauces.length - 1;
+                            currentSauce = sauces[position];
+                            sauceEmbed = this.prepMessage(color, currentSauce, sauces.length, position);
+                            message.edit(sauceEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
 
-            if (/(no_matches|Could not find site matching URL given)/i.test(err.toString())) return msg.reply(`no matches found for \`${image}\``);
+            if (/(no_matches|Could not find site matching URL given)/i.test(err.toString())) {
+                return msg.reply(`no matches found for \`${image}\``);
+            }
             if (/(no_sfw_matches)/i.test(err.toString())) {
-                return msg.reply(oneLine`Woops! I only found NSFW matches and it looks like you're not in an NSFW channel`);
+                return msg.reply(`Woops! I only found NSFW matches and it looks like you're not in an NSFW channel`);
             }
             if (/(connect ECONNREFUSED|Server-side error occurred)/i.test(err.toString())) {
-                return msg.reply(oneLine`something went wrong finding matches for \`${image}\`. How about trying manually on https://saucenao.com/?`);
+                return msg.reply(`something went wrong finding matches for \`${image}\`. How about trying manually on https://saucenao.com/?`);
             }
 
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
@@ -101,6 +111,19 @@ export default class SauceNaoCommand extends Command {
             return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
                 Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
+    }
+
+    private prepMessage (color: string, sauce: Source, saucesLength: number, position: number): MessageEmbed {
+        return new MessageEmbed()
+            .setURL(sauce.url)
+            .setTitle(`Match found on: ${sauce.site}`)
+            .setImage(sauce.thumbnail.replace(/ /g, '%20'))
+            .setColor(color)
+            .setFooter(`Result ${position + 1} of ${saucesLength}`)
+            .setDescription(oneLine`
+                I found a match with a ${sauce.similarity}% similarity on ${sauce.site} as seen below.
+                Click [here](${sauce.url}) to view the image
+        `);
     }
 
     private channelIsNSFW (channel: TextChannel | DMChannel) {

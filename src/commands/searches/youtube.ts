@@ -11,17 +11,20 @@
  * @param {string} VideoQuery Video to find on YouTube
  */
 
-import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
+import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { YoutubeResultList, YoutubeVideoResourceType, YoutubeVideoSnippetType } from '@components/Types';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
+import { stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
 type YoutubeArgs = {
     query: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class YouTubeCommand extends Command {
@@ -50,39 +53,71 @@ export default class YouTubeCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { query, hasManageMessages }: YoutubeArgs) {
+    public async run (msg: CommandoMessage, { query, hasManageMessages, position = 0 }: YoutubeArgs) {
         try {
             const tubeSearch = await fetch(`https://www.googleapis.com/youtube/v3/search?${stringify({
-                    key: process.env.GOOGLE_API_KEY!,
-                    maxResults: '1',
-                    part: 'snippet',
-                    q: query,
-                    type: 'video',
-                })}`
+                key: process.env.GOOGLE_API_KEY!,
+                maxResults: '10',
+                part: 'snippet',
+                q: query,
+                type: 'video',
+            })}`
             );
-            const videoList = await tubeSearch.json();
-            const video = videoList.items[0];
-            const videoEmbed = new MessageEmbed();
+            const videoList: YoutubeResultList = await tubeSearch.json();
+            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+            const commandPrefix = msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length;
+            const replyShouldBeSimple = msg.content.split(' ')[0].slice(commandPrefix) === 'yts';
+
+            let currentVideo = videoList.items[position];
+            let videoEmbed = this.prepMessage(color, query, currentVideo.snippet, currentVideo.id, videoList.items.length, position);
 
             deleteCommandMessages(msg, this.client);
-            if (msg.content.split(' ')[0].slice(msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length) === 'yts') {
-                return msg.say(`https://www.youtube.com/watch?v=${video.id.videoId}`);
+
+            const message = replyShouldBeSimple
+                ? await msg.say(stripIndents`
+                    https://www.youtube.com/watch?v=${currentVideo.id.videoId}
+                    __*Result ${position + 1} of ${videoList.items.length}*__
+                `) as CommandoMessage
+                : await msg.embed(videoEmbed, `https://www.youtube.com/watch?v=${currentVideo.id.videoId}`) as CommandoMessage;
+
+            if (videoList.items.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= videoList.items.length) position = 0;
+                            if (position < 0) position = videoList.items.length - 1;
+                            currentVideo = videoList.items[position];
+                            videoEmbed = this.prepMessage(color, query, currentVideo.snippet, currentVideo.id, videoList.items.length, position);
+                            replyShouldBeSimple
+                                ? message.edit(stripIndents`
+                                    https://www.youtube.com/watch?v=${currentVideo.id.videoId}
+                                    __*Result ${position + 1} of ${videoList.items.length}*__
+                                `)
+                                : message.edit(`https://www.youtube.com/watch?v=${currentVideo.id.videoId}`, videoEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
             }
 
-            videoEmbed
-                .setTitle(`Youtube Search Result for \`${query}\``)
-                .setURL(`https://www.youtube.com/watch?v=${video.id.videoId}`)
-                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setImage(video.snippet.thumbnails.high.url)
-                .addField('Title', video.snippet.title, true)
-                .addField('URL', `[Click Here](https://www.youtube.com/watch?v=${video.id.videoId})`, true)
-                .addField('Channel', `[${video.snippet.channelTitle}](https://www.youtube.com/channel/${video.snippet.channelId})`, true)
-                .addField('Published At', moment(video.snippet.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
-                .addField('Description', video.snippet.description ? video.snippet.description : 'No Description', false);
-
-            return msg.embed(videoEmbed, `https://www.youtube.com/watch?v=${video.id.videoId}`);
+            return null;
         } catch (err) {
             return msg.reply(`no videos found for \`${query}\``);
         }
+    }
+
+    private prepMessage (color: string, query: string, video: YoutubeVideoSnippetType, videoResource: YoutubeVideoResourceType, videosLength: number, position: number) {
+        return new MessageEmbed()
+            .setTitle(`Youtube Search Result for \`${query}\``)
+            .setURL(`https://www.youtube.com/watch?v=${videoResource.videoId}`)
+            .setColor(color)
+            .setImage(video.thumbnails.default.url)
+            .setFooter(`Result ${position + 1} of ${videosLength}`)
+            .addField('Title', video.title, true)
+            .addField('URL', `[Click Here](https://www.youtube.com/watch?v=${videoResource.videoId})`, true)
+            .addField('Channel', `[${video.channelTitle}](https://www.youtube.com/channel/${video.channelId})`, true)
+            .addField('Published At', moment(video.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
+            .addField('Description', video.description ? video.description : 'No Description', false);
     }
 }

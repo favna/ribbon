@@ -9,17 +9,19 @@
  * @param {string} SeriesName Name of the TV serie you want to find
  */
 
-import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { MovieGenreType } from '@components/Types';
-import { deleteCommandMessages, roundNumber } from '@components/Utils';
+import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { MovieGenreType, TMDBSerie, TVDBSeriesList } from '@components/Types';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
 type TVArgs = {
     name: string;
+    hasManageMessages: boolean;
+    position: number;
 };
 
 export default class TVCommand extends Command {
@@ -47,43 +49,72 @@ export default class TVCommand extends Command {
         });
     }
 
-    public async run (msg: CommandoMessage, { name }: TVArgs) {
+    @clientHasManageMessages()
+    public async run (msg: CommandoMessage, { name, hasManageMessages, position = 0 }: TVArgs) {
         try {
             const movieSearch = await fetch(`https://api.themoviedb.org/3/search/tv?${stringify({
-                    api_key: process.env.MOVIEDB_API_KEY!,
-                    query: name,
-                })}`
-            );
-            const showList = await movieSearch.json();
-            const showStats = await fetch(`https://api.themoviedb.org/3/tv/${showList.results[0].id}?${stringify(
-                { api_key: process.env.MOVIEDB_API_KEY! })}`
-            );
-            const show = await showStats.json();
-            const showEmbed = new MessageEmbed();
+                api_key: process.env.MOVIEDB_API_KEY!,
+                query: name,
+            })}`);
+            const color = msg.guild ? msg.member!.displayHexColor : DEFAULT_EMBED_COLOR;
+            const showList: TVDBSeriesList = await movieSearch.json();
 
-            showEmbed
-                .setTitle(show.name)
-                .setURL(`https://www.themoviedb.org/tv/${show.id}`)
-                .setColor(msg.guild ? msg.member!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setImage(`https://image.tmdb.org/t/p/original${show.backdrop_path}`)
-                .setThumbnail(`https://image.tmdb.org/t/p/original${show.poster_path}`)
-                .setDescription(show.overview)
-                .addField('Episode Runtime', `${show.episode_run_time} minutes`, true)
-                .addField('Popularity', `${roundNumber(show.popularity, 2)}%`, true)
-                .addField('Status', show.status, true)
-                .addField('First air Date', moment(show.first_air_date).format('MMMM Do YYYY'), true)
-                .addField(
-                    'Genres',
-                    show.genres.length ? show.genres.map((genre: MovieGenreType) => genre.name).join(', ') : 'None on TheMovieDB'
-                );
+            let currentSeries = showList.results[position].id;
+            let show = await this.fetchAllData(currentSeries);
+            let showEmbed = this.prepMessage(color, show, showList.total_results, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(showEmbed);
+            const message = await msg.embed(showEmbed) as CommandoMessage;
+
+            if (showList.total_results > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', async (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= showList.total_results) position = 0;
+                            if (position < 0) position = showList.total_results - 1;
+                            currentSeries = showList.results[position].id;
+                            show = await this.fetchAllData(currentSeries);
+                            showEmbed = this.prepMessage(color, show, showList.total_results, position);
+                            message.edit(showEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
 
             return msg.reply(`no shows found for \`${name}\``);
         }
+    }
+
+    private async fetchAllData (serieId: number): Promise<TMDBSerie> {
+        const seriesStats = await fetch(`https://api.themoviedb.org/3/tv/${serieId}?${stringify(
+            { api_key: process.env.MOVIEDB_API_KEY! })}`
+        );
+        return seriesStats.json();
+    }
+
+    private prepMessage (color: string, show: any, seriesSearchLength: number, position: number) {
+        return new MessageEmbed()
+            .setTitle(show.name)
+            .setURL(`https://www.themoviedb.org/tv/${show.id}`)
+            .setColor(color)
+            .setImage(`https://image.tmdb.org/t/p/original${show.backdrop_path}`)
+            .setThumbnail(`https://image.tmdb.org/t/p/original${show.poster_path}`)
+            .setDescription(show.overview)
+            .setFooter(`Result ${position + 1} of ${seriesSearchLength}`)
+            .addField('Episode Runtime', `${show.episode_run_time} minutes`, true)
+            .addField('Popularity', `${roundNumber(show.popularity, 2)}%`, true)
+            .addField('Status', show.status, true)
+            .addField('First air Date', moment(show.first_air_date).format('MMMM Do YYYY'), true)
+            .addField(
+                'Genres',
+                show.genres.length ? show.genres.map((genre: MovieGenreType) => genre.name).join(', ') : 'None on TheMovieDB'
+            );
     }
 }

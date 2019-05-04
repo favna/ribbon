@@ -9,10 +9,11 @@
  * @param {string} TrackQuery The music track to look up
  */
 
-import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
+import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { iTunesData, iTunesResult } from '@components/Types';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
@@ -21,6 +22,7 @@ import fetch from 'node-fetch';
 type ITunesArgs = {
     music: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class ITunesCommand extends Command {
@@ -49,44 +51,50 @@ export default class ITunesCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { music }: ITunesArgs) {
+    public async run (msg: CommandoMessage, { music, hasManageMessages, position = 0 }: ITunesArgs) {
         try {
-            const apple = await fetch(
+            const request = await fetch(
                 `https://itunes.apple.com/search?${stringify({
                     country: 'US',
                     entity: 'song',
                     explicit: 'yes',
                     lang: 'en_us',
-                    limit: 5,
+                    limit: hasManageMessages ? 10 : 1,
                     media: 'music',
                     term: music,
                 }).replace(/%2B/gm, '+')}`
             );
-            const tune = await apple.json();
-            const song = tune.resultCount >= 1 ? tune.results[0] : null;
-            const tunesEmbed = new MessageEmbed();
+            const tracks: iTunesResult = await request.json();
+            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
-            if (!song) throw new Error('nosong');
+            if (!tracks.resultCount) throw new Error('nosong');
 
-            tunesEmbed
-                .setThumbnail(song.artworkUrl100)
-                .setTitle(song.trackName)
-                .setURL(song.trackViewUrl)
-                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .addField('Artist', `[${song.artistName}](${song.artistViewUrl})`, true)
-                .addField('Collection', `[${song.collectionName}](${song.collectionViewUrl})`, true)
-                .addField('Collection Price (USD)', `$${song.collectionPrice}`, true)
-                .addField('Track price (USD)', `$${song.trackPrice}`, true)
-                .addField('Track Release Date', moment(song.releaseDate).format('MMMM Do YYYY'), true)
-                .addField('# Tracks in Collection', song.trackCount, true)
-                .addField('Primary Genre', song.primaryGenreName, true)
-                .addField('Preview', `[Click Here](${song.previewUrl})`, true);
+            let currentSong = tracks.results[position];
+            let tunesEmbed = this.prepMessage(color, currentSong, tracks.resultCount, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(tunesEmbed);
-        } catch (err) {
+            const message = await msg.embed(tunesEmbed) as CommandoMessage;
 
+            if (tracks.resultCount > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= tracks.resultCount) position = 0;
+                            if (position < 0) position = tracks.resultCount - 1;
+                            currentSong = tracks.results[position];
+                            tunesEmbed = this.prepMessage(color, currentSong, tracks.resultCount, position);
+                            message.edit('', tunesEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
+        } catch (err) {
+            deleteCommandMessages(msg, this.client);
             if (/(?:nosong)/i.test(err.toString())) {
                 return msg.reply(`no song found for \`${music.replace(/\+/g, ' ')}\``);
             }
@@ -104,5 +112,22 @@ export default class ITunesCommand extends Command {
             return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
                 Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
         }
+    }
+
+    private prepMessage (color: string, song: iTunesData, songResultsLength: number, position: number): MessageEmbed {
+        return new MessageEmbed()
+            .setThumbnail(song.artworkUrl100)
+            .setTitle(song.trackName)
+            .setURL(song.trackViewUrl)
+            .setColor(color)
+            .setFooter(`Result ${position + 1} of ${songResultsLength}`)
+            .addField('Artist', `[${song.artistName}](${song.artistViewUrl})`, true)
+            .addField('Collection', `[${song.collectionName}](${song.collectionViewUrl})`, true)
+            .addField('Collection Price (USD)', `$${song.collectionPrice}`, true)
+            .addField('Track price (USD)', `$${song.trackPrice}`, true)
+            .addField('Track Release Date', moment(song.releaseDate).format('MMMM Do YYYY'), true)
+            .addField('# Tracks in Collection', song.trackCount, true)
+            .addField('Primary Genre', song.primaryGenreName, true)
+            .addField('Preview', `[Click Here](${song.previewUrl})`, true);
     }
 }

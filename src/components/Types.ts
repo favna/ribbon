@@ -28,18 +28,33 @@ export type YoutubeVideoSnippetType = {
     resourceId: YoutubeVideoResourceType;
     thumbnails: YoutubeVideoThumbnailType;
     title: string;
+    liveBroadcastContent: string;
 };
 
 type YoutubeVideoThumbnailType = {
-    default: string;
-    high?: string;
-    medium?: string;
-    standard?: string;
+    default: { height: number; width: null; url: string };
+    high?: { height: number; width: null; url: string };
+    medium?: { height: number; width: null; url: string };
+    standard?: { height: number; width: null; url: string };
 };
 
-type YoutubeVideoResourceType = {
+export type YoutubeVideoResourceType = {
     kind: string;
     videoId: string;
+};
+
+export type YoutubeResultList = {
+    etag: string;
+    items: {
+        etag: string
+        id: YoutubeVideoResourceType;
+        kind: string;
+        snippet: YoutubeVideoSnippetType;
+    }[];
+    kind: string;
+    nextPageToken: string;
+    pageInfo: {resultsPerPage: number, totalResults: number };
+    regionCode: string;
 };
 
 type DiscordGameExecutableType = {
@@ -69,12 +84,12 @@ type FrontlineGirlStatsType = {
     [propName: string]: number;
 };
 
-type AnimePosterImageDimensions = {
+type KitsuPosterImageDimensions = {
     width: number | null;
     height: number | null;
 };
 
-type AnimePosterImage = {
+type KitsuPosterImage = {
     tiny?: string,
     small?: string,
     medium?: string,
@@ -82,15 +97,15 @@ type AnimePosterImage = {
     original: string,
     meta: {
         dimensions: {
-            large: AnimePosterImageDimensions;
-            medium: AnimePosterImageDimensions;
-            small: AnimePosterImageDimensions;
-            tiny: AnimePosterImageDimensions;
+            large: KitsuPosterImageDimensions;
+            medium: KitsuPosterImageDimensions;
+            small: KitsuPosterImageDimensions;
+            tiny: KitsuPosterImageDimensions;
         }
     }
 };
 
-type AnimeTitles = {
+type KitsuTitles = {
     en: string;
     en_jp: string;
     ja_jp: string;
@@ -221,10 +236,6 @@ export type PokeDataType = {
     entries: any[];
 };
 
-export type MovieGenreType = {
-    name: string;
-};
-
 export type CasinoRowType = {
     userID: string;
     balance: number;
@@ -338,20 +349,6 @@ export type SteamGenreType = {
     id: string;
 };
 
-export type UrbanDefinitionType = {
-    author: string;
-    current_vote: string;
-    defid: number;
-    definition: string;
-    example: string;
-    permalink: string;
-    sound_urls: string[];
-    thumbs_down: number;
-    thumbs_up: number;
-    word: string;
-    written_on: string;
-};
-
 export type OverwatchHeroType = {
     hero: string;
     time: number;
@@ -393,22 +390,6 @@ export type FlavorJSONType = {
 export type FormatsJSONType = {
     [propName: string]: string;
 };
-
-export type IGDBType = {
-    id: number;
-    name?: string;
-};
-
-export interface IIGDBInvolvedCompany extends IGDBType {
-    id: number;
-    company: IGDBType;
-    developer: boolean;
-}
-
-export interface IIGDBAgeRating extends IGDBType {
-    category: number;
-    rating: number;
-}
 
 export type DiscordGameSKUType = {
     distributor: string;
@@ -493,9 +474,9 @@ export interface IPrismVideoFormat extends videoFormat {
     audio_sample_rate?: number;
 }
 
-export type AnimeHit = {
+export type KitsuHit = {
     abbreviatedTitles: string[];
-    ageRating: 'PG' | string;
+    ageRating: 'PG' | 'G' | string;
     averageRating: number;
     canonicalTitle: string;
     endDate: number;
@@ -514,12 +495,12 @@ export type AnimeHit = {
     totalLength: number;
     userCount: number;
     year: number;
-    posterImage: AnimePosterImage;
-    titles: AnimeTitles;
+    posterImage: KitsuPosterImage;
+    titles: KitsuTitles;
     _tags: string[];
 };
 
-export type KitsuAnime = {
+export type KitsuResult = {
     exhaustiveNbHits: boolean;
     hitsPerPage: number;
     nbHits: number;
@@ -529,7 +510,7 @@ export type KitsuAnime = {
     processingTimeMS: number;
     query: string;
     queryAfterRemoval: string;
-    hits: AnimeHit[];
+    hits: KitsuHit[];
 };
 
 export type eShopHit = {
@@ -625,3 +606,197 @@ export type GoogleCSEItem = {
 } & GoogleItemCommon;
 
 export type GoogleItem = GoogleKnowledgeItem['result'] | GoogleCSEItem | GoogleItemCommon;
+
+type GoogleImage = {
+    byteSize: number;
+    contextLink: string;
+    height: number;
+    thumbnailHeight: number;
+    thumbnailLink: string;
+    thumbnailWidth: number;
+    width: number;
+};
+
+export type GoogleImageData = {
+    displayLink: string;
+    htmlSnippet: string;
+    htmlTitle: string;
+    kind: string;
+    link: string;
+    mime: string;
+    snippet: string;
+    title: string;
+    image: GoogleImage;
+};
+
+export type GoogleImageResult = {
+    kind: string;
+    context: { title: string };
+    items: GoogleImageData[];
+};
+
+export type IgdbGame = {
+    id: number;
+    name: string;
+    rating: number;
+    summary: string;
+    url: string;
+    age_ratings: { id: number; category: number; rating: number; }[];
+    cover: { id: number; url: string };
+    genres: { id: number; name: string }[];
+    involved_companies: {
+        id: number; developer: boolean; company: {
+            id: number;
+            name: string;
+        }
+    }[];
+    platforms: { id: number; name: string; }[];
+    release_dates: { id: string; date: number }[];
+};
+
+export type iTunesData = {
+    artistId: number;
+    artistName: string;
+    artistViewUrl: string;
+    artworkUrl100: string;
+    artworkUrl30: string;
+    artworkUrl60: string;
+    collectionCensoredName: string;
+    collectionExplicitness: 'explicit' | string;
+    collectionId: number;
+    collectionName: string;
+    collectionPrice: number;
+    collectionViewUrl: string;
+    country: string;
+    currency: string;
+    discCount: number;
+    discNumber: number;
+    isStreamable: boolean;
+    kind: 'song' | string;
+    previewUrl: string;
+    primaryGenreName: string;
+    releaseDate: string;
+    trackCensoredName: string;
+    trackCount: number;
+    trackExplicitness: 'notExplicit' | string;
+    trackId: number;
+    trackName: string;
+    trackNumber: number;
+    trackPrice: number;
+    trackTimeMillis: number;
+    trackViewUrl: string;
+    wrapperType: 'track' | string;
+};
+
+export type iTunesResult = {
+    results: iTunesData[];
+    resultCount: number;
+};
+
+export type MovieGenreType = {
+    name: string;
+};
+
+type TMDBCommon = {
+    id: number;
+    adult: boolean;
+    backdrop_path: string;
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    release_date: string;
+    title: string;
+    video: boolean;
+    vote_average?: number;
+    vote_count?: number;
+};
+
+export type TMDBMovieList = {
+    page: number;
+    total_pages: number;
+    total_results: number;
+    results: (TMDBCommon & { genre_ids: number[] })[]
+};
+
+export interface TMDBMovie extends TMDBCommon {
+    budget: number;
+    revenue: number;
+    tagline: string;
+    status: string;
+    homepage?: string;
+    runtime?: number;
+    imdb_id?: number;
+    genres: { id: number; name: string }[];
+    spoken_language: { iso_639_1: number; name: string; }[];
+    production_countries?: { iso_3166_1: string; name: string; }[];
+    belongs_to_collection?: { id: number; name: string; poster_path: string; };
+    production_companies?: { id: number, logo_path: string | null; name: string; origin_country: string; }[];
+}
+
+export interface TVDBSeriesList extends TMDBMovieList {
+    results: (TMDBCommon &
+    {
+        genre_ids: number[];
+        first_air_date: string;
+        origin_country: string[];
+    })[];
+}
+
+type TMDBSerieEpisode = {
+    id: number;
+    air_date: string;
+    episode_number: number;
+    name: string;
+    overview: string;
+    production_code: string;
+    season_number: number;
+    show_id: number;
+    still_path: string;
+    vote_average: number;
+    vote_count: number;
+};
+
+export interface TMDBSerie extends TMDBCommon {
+    created_by: string[];
+    episode_run_time: number[];
+    first_air_date: string;
+    in_production: boolean;
+    languages: string[];
+    status: string;
+    type: string;
+    name: string;
+    number_of_episodes: number;
+    number_of_seasons: number;
+    origin_country: string[];
+    last_air_date: string;
+    last_episode_to_air: TMDBSerieEpisode;
+    next_episode_to_air: TMDBSerieEpisode | null;
+    homepage?: string;
+    seasons: {
+        id: number; air_date: string; episode_count: number;
+        name: string; overview: string; poster_path: string; season_number: number
+    }[];
+    genres: { id: number; name: string }[];
+    networks: { id: number; logo_path: string; name: string; origin_country: string; }[];
+    production_companies?: { id: number, logo_path: string | null; name: string; origin_country: string; }[];
+}
+
+export type UrbanDefinition = {
+    author: string;
+    current_vote: string;
+    defid: number;
+    definition: string;
+    example: string;
+    permalink: string;
+    sound_urls: string[];
+    thumbs_down: number;
+    thumbs_up: number;
+    word: string;
+    written_on: string;
+};
+
+export interface UrbanDefinitionResults {
+    list: UrbanDefinition[];
+}

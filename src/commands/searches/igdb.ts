@@ -9,11 +9,11 @@
  * @param {string} GameName The name of any game that you want to find
  */
 
-import { DEFAULT_EMBED_COLOR, IGBDAgeRating } from '@components/Constants';
-import { IGDBType, IIGDBAgeRating, IIGDBInvolvedCompany } from '@components/Types';
-import { clientHasManageMessages, deleteCommandMessages, roundNumber } from '@components/Utils';
+import { CollectorTimeout, DEFAULT_EMBED_COLOR, IGBDAgeRating } from '@components/Constants';
+import { IgdbGame } from '@components/Types';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
@@ -21,6 +21,7 @@ import fetch from 'node-fetch';
 type IGDBArgs = {
     game: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class IGDBCommand extends Command {
@@ -49,9 +50,8 @@ export default class IGDBCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { game, hasManageMessages }: IGDBArgs) {
+    public async run (msg: CommandoMessage, { game, hasManageMessages, position = 0 }: IGDBArgs) {
         try {
-            const gameEmbed = new MessageEmbed();
             const headers = {
                 Accept: 'application/json',
                 'user-key': process.env.IGDB_API_KEY!,
@@ -70,30 +70,55 @@ export default class IGDBCommand extends Command {
                 headers,
                 method: 'POST',
             });
-            const gameInfo = await igdbSearch.json();
-            const hit = gameInfo[0];
-            const coverImg = /https?:/i.test(hit.cover.url) ? hit.cover.url : `https:${hit.cover.url}`;
+            const gameInfo: IgdbGame[] = await igdbSearch.json();
+            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
-            gameEmbed
-                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setTitle(hit.name)
-                .setURL(hit.url)
-                .setThumbnail(coverImg)
-                .addField('User Score', roundNumber(hit.rating, 1), true)
-                .addField('Age Rating(s)', hit.age_ratings.map((e: IIGDBAgeRating) => `${e.category === 1 ? 'ESRB' : 'PEGI'}: ${IGBDAgeRating[e.rating]}`), true)
-                .addField('Release Date', moment.unix(hit.release_dates[0].date).format('MMMM Do YYYY'), true)
-                .addField('Genre(s)', hit.genres.map((genre: IGDBType) => genre.name).join(', '), true)
-                .addField('Developer(s)', hit.involved_companies.map((e: IIGDBInvolvedCompany) => e.developer ? e.company.name : null).filter(Boolean).join(', '), true)
-                .addField('Platform(s)', hit.platforms.map((e: IGDBType) => e.name).join(', '), true)
-                .setDescription(hit.summary);
+            let currentGame = gameInfo[position];
+            let gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(gameEmbed);
+            const message = await msg.embed(gameEmbed) as CommandoMessage;
+
+            if (gameInfo.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= gameInfo.length) position = 0;
+                            if (position < 0) position = gameInfo.length - 1;
+                            currentGame = gameInfo[position];
+                            gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position);
+                            message.edit('', gameEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
 
             return msg.reply(`nothing found for \`${game}\``);
         }
+    }
+
+    private prepMessage (color: string, game: IgdbGame, gameSearchLength: number, position: number): MessageEmbed {
+        const coverImg = /https?:/i.test(game.cover.url) ? game.cover.url : `https:${game.cover.url}`;
+
+        return new MessageEmbed()
+            .setColor(color)
+            .setTitle(game.name)
+            .setURL(game.url)
+            .setThumbnail(coverImg)
+            .setFooter(`Result ${position + 1} of ${gameSearchLength}`)
+            .addField('User Score', roundNumber(game.rating, 1), true)
+            .addField('Age Rating(s)', game.age_ratings.map(ageRating => `${ageRating.category === 1 ? 'ESRB' : 'PEGI'}: ${IGBDAgeRating[ageRating.rating]}`), true)
+            .addField('Release Date', moment.unix(game.release_dates[0].date).format('MMMM Do YYYY'), true)
+            .addField('Genre(s)', game.genres.map(genre => genre.name).join(', '), true)
+            .addField('Developer(s)', game.involved_companies.map(company => company.developer ? company.company.name : null).filter(Boolean).join(', '), true)
+            .addField('Platform(s)', game.platforms.map(platform => platform.name).join(', '), true)
+            .setDescription(game.summary);
     }
 }

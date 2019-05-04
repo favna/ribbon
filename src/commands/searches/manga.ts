@@ -9,10 +9,11 @@
  * @param {string} AnyManga manga to look up
  */
 
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { clientHasManageMessages, deleteCommandMessages, removeDiacritics } from '@components/Utils';
+import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { KitsuHit, KitsuResult } from '@components/Types';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, removeDiacritics } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
@@ -20,6 +21,7 @@ import fetch from 'node-fetch';
 type MangaArgs = {
     manga: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class MangaCommand extends Command {
@@ -49,7 +51,7 @@ export default class MangaCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { manga, hasManageMessages }: MangaArgs) {
+    public async run (msg: CommandoMessage, { manga, hasManageMessages, position = 0 }: MangaArgs) {
         try {
             const mangaList = await fetch(`https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,
                 {
@@ -62,29 +64,52 @@ export default class MangaCommand extends Command {
                     method: 'POST',
                 }
             );
-            const mangas = await mangaList.json();
-            const hit = mangas.hits[0];
-            const mangaEmbed = new MessageEmbed();
+            const mangas: KitsuResult = await mangaList.json();
+            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
-            mangaEmbed
-                .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setTitle(hit.titles.en ? hit.titles.en : hit.canonicalTitle)
-                .setURL(`https://kitsu.io/anime/${hit.id}`)
-                .setDescription(hit.synopsis.replace(/(.+)[\r\n\t](.+)/gim, '$1 $2').split('\r\n')[0])
-                .setImage(hit.posterImage.original)
-                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/kitsulogo.png`)
-                .addField('Canonical Title', hit.canonicalTitle, true)
-                .addField('Score', `${hit.averageRating}%`, true)
-                .addField('Age Rating', hit.ageRating ? hit.ageRating : 'None', true)
-                .addField('First Publish Date', moment.unix(hit.startDate).format('MMMM Do YYYY'), true);
+            let currentManga = mangas.hits[position];
+            let mangaEmbed = this.prepMessage(color, currentManga, mangas.hits.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(mangaEmbed, `https://kitsu.io/manga/${hit.slug}`);
+            const message = await msg.embed(mangaEmbed, `https://kitsu.io/anime/${currentManga.slug}`) as CommandoMessage;
+
+            if (mangas.hits.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= mangas.hits.length) position = 0;
+                            if (position < 0) position = mangas.hits.length - 1;
+                            currentManga = mangas.hits[position];
+                            mangaEmbed = this.prepMessage(color, currentManga, mangas.hits.length, position);
+                            message.edit(`https://kitsu.io/anime/${currentManga.slug}`, mangaEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
         } catch (err) {
             deleteCommandMessages(msg, this.client);
 
             return msg.reply(`no manga found for \`${manga}\` `);
         }
+    }
+
+    private prepMessage (color: string, manga: KitsuHit, mangaLength: number, position: number): MessageEmbed {
+        return new MessageEmbed()
+            .setColor(color)
+            .setTitle(manga.titles.en ? manga.titles.en : manga.canonicalTitle)
+            .setURL(`https://kitsu.io/anime/${manga.id}`)
+            .setDescription(manga.synopsis.replace(/(.+)[\r\n\t](.+)/gim, '$1 $2').split('\r\n')[0])
+            .setFooter(`Result ${position + 1} of ${mangaLength}`)
+            .setImage(manga.posterImage.original)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/kitsulogo.png`)
+            .addField('Canonical Title', manga.canonicalTitle, true)
+            .addField('Score', `${manga.averageRating}%`, true)
+            .addField('Age Rating', manga.ageRating ? manga.ageRating : 'None', true)
+            .addField('First Publish Date', moment.unix(manga.startDate).format('MMMM Do YYYY'), true);
     }
 }

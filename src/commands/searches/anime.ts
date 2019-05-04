@@ -10,7 +10,7 @@
  */
 
 import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { AnimeHit, KitsuAnime } from '@components/Types';
+import { KitsuHit, KitsuResult } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, removeDiacritics } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
@@ -65,7 +65,7 @@ export default class AnimeCommand extends Command {
                     method: 'POST',
                 }
             );
-            const animes: KitsuAnime = await animeList.json();
+            const animes: KitsuResult = await animeList.json();
             const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
             let currentAnime = animes.hits[position];
             let animeEmbed = this.prepMessage(color, currentAnime, animes.hits.length, position);
@@ -84,7 +84,7 @@ export default class AnimeCommand extends Command {
                             if (position < 0) position = animes.hits.length - 1;
                             currentAnime = animes.hits[position];
                             animeEmbed = this.prepMessage(color, currentAnime, animes.hits.length, position);
-                            message.edit('', animeEmbed);
+                            message.edit(`https://kitsu.io/anime/${currentAnime.slug}`, animeEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
                     });
@@ -98,7 +98,7 @@ export default class AnimeCommand extends Command {
         }
     }
 
-    private prepMessage (color: string, anime: AnimeHit, animesLength: number, position: number): MessageEmbed {
+    private prepMessage (color: string, anime: KitsuHit, animesLength: number, position: number): MessageEmbed {
         return new MessageEmbed()
             .setColor(color)
             .setTitle(anime.titles.en ? anime.titles.en : anime.canonicalTitle)

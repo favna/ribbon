@@ -9,10 +9,11 @@
  * @param {string} ImageQuery Image to find on Google Images
  */
 
-import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { clientHasManageMessages, deleteCommandMessages } from '@components/Utils';
+import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { GoogleImageData, GoogleImageResult } from '@components/Types';
+import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
 import { stringify } from 'awesome-querystring';
 import cheerio from 'cheerio';
 import fetch from 'node-fetch';
@@ -20,6 +21,7 @@ import fetch from 'node-fetch';
 type ImageArgs = {
     query: string;
     hasManageMessages: boolean;
+    position: number;
 };
 
 export default class ImageCommand extends Command {
@@ -32,8 +34,6 @@ export default class ImageCommand extends Command {
             description: 'Finds an image through Google',
             format: 'ImageQuery',
             examples: ['image Pyrrha Nikos'],
-            nsfw: true,
-            explicit: false,
             guildOnly: false,
             throttling: {
                 usages: 2,
@@ -54,11 +54,12 @@ export default class ImageCommand extends Command {
     }
 
     @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { query, hasManageMessages }: ImageArgs) {
+    public async run (msg: CommandoMessage, { query, hasManageMessages, position = 0 }: ImageArgs) {
         const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
-        const imageEmbed = new MessageEmbed();
+        const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
-        imageEmbed.setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
+        let imageEmbed = new MessageEmbed()
+            .setColor(color);
 
         try {
             const imageSearch = await fetch(
@@ -70,15 +71,32 @@ export default class ImageCommand extends Command {
                     searchType: 'image',
                 })}`
             );
-            const imageData = await imageSearch.json();
+            const imageData: GoogleImageResult = await imageSearch.json();
 
-            imageEmbed
-                .setImage(imageData.items[0].link)
-                .setFooter(`Search query: "${query.replace(/\+/g, ' ')}"`);
+            let currentImage = imageData.items[position];
+            imageEmbed = this.prepMessage(currentImage, query, imageData.items.length, position);
 
             deleteCommandMessages(msg, this.client);
 
-            return msg.embed(imageEmbed);
+            const message = await msg.embed(imageEmbed) as CommandoMessage;
+
+            if (imageData.items.length > 1 && hasManageMessages) {
+                injectNavigationEmotes(message);
+                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+                    .on('collect', (reaction: MessageReaction, user: User) => {
+                        if (!this.client.userid.includes(user.id)) {
+                            reaction.emoji.name === '➡' ? position++ : position--;
+                            if (position >= imageData.items.length) position = 0;
+                            if (position < 0) position = imageData.items.length - 1;
+                            currentImage = imageData.items[position];
+                            imageEmbed = this.prepMessage(currentImage, query, imageData.items.length, position);
+                            message.edit('', imageEmbed);
+                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
+                        }
+                    });
+            }
+
+            return null;
         } catch (err) {
             // Intentionally empty
         }
@@ -112,5 +130,13 @@ export default class ImageCommand extends Command {
 
             return msg.reply(`nothing found for \`${msg.argString}\``);
         }
+    }
+
+    private prepMessage (image: GoogleImageData, query: string, imageSearchLength: number, position: number): MessageEmbed {
+        return new MessageEmbed()
+            .setImage(image.link)
+            .setURL(image.link)
+            .setTitle(`Image results for: \`${query.replace(/\+/g, ' ')}\``)
+            .setFooter(`Result ${position + 1} of ${imageSearchLength}`);
     }
 }

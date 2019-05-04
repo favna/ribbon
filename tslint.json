@@ -3,5 +3,8 @@
     "extends": ["tslint:recommended", "tslint-config-favware"],
     "linterOptions": {
         "exclude": ["node_modules/", "node_modules/**/*[^.d$].ts", "src/commands/owner/testing.ts"]
+    },
+    "rules": {
+        "interface-name": false
     }
 }
