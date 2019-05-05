@@ -116,7 +116,7 @@ export default class RemindCommand extends Command {
                 });
         } catch (err) {
             if (/(?:no such table)/i.test(err.toString())) {
-                conn.prepare('CREATE TABLE IF NOT EXISTS "reminders" (userID TEXT PRIMARY KEY, remindTime TEXT, remindText TEXT);')
+                conn.prepare('CREATE TABLE IF NOT EXISTS "reminders" (userID TEXT, remindTime TEXT, remindText TEXT);')
                     .run();
 
                 conn.prepare('INSERT INTO "reminders" VALUES ($userid, $remindtime, $remindtext);')
