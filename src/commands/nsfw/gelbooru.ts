@@ -32,7 +32,6 @@ export default class GelbooruCommand extends Command {
             format: 'NSFWToLookUp',
             examples: ['gelbooru Pyrrha Nikos'],
             nsfw: true,
-            explicit: true,
             guildOnly: false,
             throttling: {
                 usages: 2,

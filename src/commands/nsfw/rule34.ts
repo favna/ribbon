@@ -32,7 +32,6 @@ export default class Rule34Command extends Command {
             format: 'NSFWToLookUp',
             examples: ['rule34 Pyrrha Nikos'],
             nsfw: true,
-            explicit: true,
             guildOnly: false,
             throttling: {
                 usages: 2,

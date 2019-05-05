@@ -32,7 +32,6 @@ export default class PahealCommand extends Command {
             format: 'NSFWToLookUp',
             examples: ['paheal Pyrrha Nikos'],
             nsfw: true,
-            explicit: true,
             guildOnly: false,
             throttling: {
                 usages: 2,

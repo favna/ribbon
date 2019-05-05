@@ -32,7 +32,6 @@ export default class PornVidsCommand extends Command {
             format: 'NSFWToLookUp',
             examples: ['pornvids babe'],
             nsfw: true,
-            explicit: true,
             guildOnly: false,
             throttling: {
                 usages: 2,

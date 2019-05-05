@@ -32,7 +32,6 @@ export default class E621Command extends Command {
             format: 'NSFWToLookUp',
             examples: ['e621 Pyrrha Nikos'],
             nsfw: true,
-            explicit: true,
             guildOnly: false,
             throttling: {
                 usages: 2,
