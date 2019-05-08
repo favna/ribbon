@@ -68,11 +68,11 @@ export default class MangaCommand extends Command {
             const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
             let currentManga = mangas.hits[position];
-            let mangaEmbed = this.prepMessage(color, currentManga, mangas.hits.length, position);
+            let mangaEmbed = this.prepMessage(color, currentManga, mangas.hits.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
-            const message = await msg.embed(mangaEmbed, `https://kitsu.io/anime/${currentManga.slug}`) as CommandoMessage;
+            const message = await msg.embed(mangaEmbed, `https://kitsu.io/manga/${currentManga.slug}`) as CommandoMessage;
 
             if (mangas.hits.length > 1 && hasManageMessages) {
                 injectNavigationEmotes(message);
@@ -83,8 +83,8 @@ export default class MangaCommand extends Command {
                             if (position >= mangas.hits.length) position = 0;
                             if (position < 0) position = mangas.hits.length - 1;
                             currentManga = mangas.hits[position];
-                            mangaEmbed = this.prepMessage(color, currentManga, mangas.hits.length, position);
-                            message.edit(`https://kitsu.io/anime/${currentManga.slug}`, mangaEmbed);
+                            mangaEmbed = this.prepMessage(color, currentManga, mangas.hits.length, position, hasManageMessages);
+                            message.edit(`https://kitsu.io/manga/${currentManga.slug}`, mangaEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
                     });
@@ -98,13 +98,16 @@ export default class MangaCommand extends Command {
         }
     }
 
-    private prepMessage (color: string, manga: KitsuHit, mangaLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        color: string, manga: KitsuHit, mangaLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         return new MessageEmbed()
             .setColor(color)
             .setTitle(manga.titles.en ? manga.titles.en : manga.canonicalTitle)
-            .setURL(`https://kitsu.io/anime/${manga.id}`)
+            .setURL(`https://kitsu.io/manga/${manga.id}`)
             .setDescription(manga.synopsis.replace(/(.+)[\r\n\t](.+)/gim, '$1 $2').split('\r\n')[0])
-            .setFooter(`Result ${position + 1} of ${mangaLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${mangaLength}` : '')
             .setImage(manga.posterImage.original)
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/kitsulogo.png`)
             .addField('Canonical Title', manga.canonicalTitle, true)
