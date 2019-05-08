@@ -61,7 +61,7 @@ export default class MovieCommand extends Command {
 
             let currentMovie = movieList.results[position].id;
             let movie = await this.fetchAllData(currentMovie);
-            let movieEmbed = this.prepMessage(color, movie, movieList.total_results, position);
+            let movieEmbed = this.prepMessage(color, movie, movieList.total_results, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -77,7 +77,7 @@ export default class MovieCommand extends Command {
                             if (position < 0) position = movieList.total_results - 1;
                             currentMovie = movieList.results[position].id;
                             movie = await this.fetchAllData(currentMovie);
-                            movieEmbed = this.prepMessage(color, movie, movieList.total_results, position);
+                            movieEmbed = this.prepMessage(color, movie, movieList.total_results, position, hasManageMessages);
                             message.edit(movieEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -99,7 +99,10 @@ export default class MovieCommand extends Command {
         return movieStats.json();
     }
 
-    private prepMessage (color: string, movie: TMDBMovie, movieSearchLength: number, position: number) {
+    private prepMessage (
+        color: string, movie: TMDBMovie, movieSearchLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         return new MessageEmbed()
             .setTitle(movie.title)
             .setURL(`https://www.themoviedb.org/movie/${movie.id}`)
@@ -107,7 +110,7 @@ export default class MovieCommand extends Command {
             .setImage(`https://image.tmdb.org/t/p/original${movie.backdrop_path}`)
             .setThumbnail(`https://image.tmdb.org/t/p/original${movie.poster_path}`)
             .setDescription(movie.overview)
-            .setFooter(`Result ${position + 1} of ${movieSearchLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${movieSearchLength}` : '')
             .addField('Runtime', movie.runtime ? `${movie.runtime} minutes` : 'Movie in production', true)
             .addField('User Score', movie.vote_average ? movie.vote_average : 'Movie in production', true)
             .addField('Status', movie.status, true)

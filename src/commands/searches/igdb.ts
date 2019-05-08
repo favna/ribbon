@@ -74,7 +74,7 @@ export default class IGDBCommand extends Command {
             const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
             let currentGame = gameInfo[position];
-            let gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position);
+            let gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -89,7 +89,7 @@ export default class IGDBCommand extends Command {
                             if (position >= gameInfo.length) position = 0;
                             if (position < 0) position = gameInfo.length - 1;
                             currentGame = gameInfo[position];
-                            gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position);
+                            gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position, hasManageMessages);
                             message.edit('', gameEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -104,7 +104,10 @@ export default class IGDBCommand extends Command {
         }
     }
 
-    private prepMessage (color: string, game: IgdbGame, gameSearchLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        color: string, game: IgdbGame, gameSearchLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         const coverImg = /https?:/i.test(game.cover.url) ? game.cover.url : `https:${game.cover.url}`;
 
         return new MessageEmbed()

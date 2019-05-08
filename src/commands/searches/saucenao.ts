@@ -61,7 +61,7 @@ export default class SauceNaoCommand extends Command {
             if (!sauces || !sauces.length) throw new Error('no_sfw_matches');
 
             let currentSauce = sauces[position];
-            let sauceEmbed = this.prepMessage(color, currentSauce, sauces.length, position);
+            let sauceEmbed = this.prepMessage(color, currentSauce, sauces.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -76,7 +76,7 @@ export default class SauceNaoCommand extends Command {
                             if (position >= sauces.length) position = 0;
                             if (position < 0) position = sauces.length - 1;
                             currentSauce = sauces[position];
-                            sauceEmbed = this.prepMessage(color, currentSauce, sauces.length, position);
+                            sauceEmbed = this.prepMessage(color, currentSauce, sauces.length, position, hasManageMessages);
                             message.edit(sauceEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -113,13 +113,16 @@ export default class SauceNaoCommand extends Command {
         }
     }
 
-    private prepMessage (color: string, sauce: Source, saucesLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        color: string, sauce: Source, saucesLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         return new MessageEmbed()
             .setURL(sauce.url)
             .setTitle(`Match found on: ${sauce.site}`)
             .setImage(sauce.thumbnail.replace(/ /g, '%20'))
             .setColor(color)
-            .setFooter(`Result ${position + 1} of ${saucesLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${saucesLength}` : '')
             .setDescription(oneLine`
                 I found a match with a ${sauce.similarity}% similarity on ${sauce.site} as seen below.
                 Click [here](${sauce.url}) to view the image

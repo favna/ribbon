@@ -83,7 +83,7 @@ export default class CydiaCommand extends Command {
 
             let currentPackage = search[position];
             let packageData = await this.fetchAllData(currentPackage, baseURL);
-            let cydiaEmbed = this.prepMessage(color, packageData, search.length, position);
+            let cydiaEmbed = this.prepMessage(color, packageData, search.length, position, hasManageMessages);
 
             if (!msg.patternMatches) deleteCommandMessages(msg, this.client);
 
@@ -99,7 +99,7 @@ export default class CydiaCommand extends Command {
                             if (position < 0) position = search.length - 1;
                             currentPackage = search[position];
                             packageData = await this.fetchAllData(currentPackage, baseURL);
-                            cydiaEmbed = this.prepMessage(color, packageData, search.length, position);
+                            cydiaEmbed = this.prepMessage(color, packageData, search.length, position, hasManageMessages);
                             message.edit('', cydiaEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -169,13 +169,16 @@ export default class CydiaCommand extends Command {
         };
     }
 
-    private prepMessage (color: string, pkg: CydiaData, packagesLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        color: string, pkg: CydiaData, packagesLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         return new MessageEmbed()
             .setColor(color)
             .setTitle(pkg.display)
             .setDescription(pkg.summary)
             .setThumbnail(pkg.thumbnail ? pkg.thumbnail : `${ASSET_BASE_PATH}/ribbon/cydia.png`)
-            .setFooter(`Result ${position + 1} of ${packagesLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${packagesLength}` : '')
             .addField('Version', pkg.version, true)
             .addField(
                 'Link',

@@ -112,7 +112,7 @@ export default class DexCommand extends Command {
 
             let poke = pokeSearch[position];
             let pokeData = this.fetchAllData(poke, shines, pokeFuse);
-            let dexEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
+            let dexEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -128,7 +128,7 @@ export default class DexCommand extends Command {
                             if (position < 0) position = pokeSearch.length - 1;
                             poke = pokeSearch[position];
                             pokeData = this.fetchAllData(poke, shines, pokeFuse);
-                            dexEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
+                            dexEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position, hasManageMessages);
                             message.edit('', dexEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -157,7 +157,10 @@ export default class DexCommand extends Command {
         }
     }
 
-    private fetchAllData (poke: PokedexType, shines: boolean, pokeFuse: Fuse<PokedexType, Fuse.FuseOptions<PokedexType & IPokeDexAliases>>): PokeDataType {
+    private fetchAllData (
+        poke: PokedexType, shines: boolean,
+        pokeFuse: Fuse<PokedexType, Fuse.FuseOptions<PokedexType & IPokeDexAliases>>
+    ): PokeDataType {
         const tiers: FormatsJSONType = formats as FormatsJSONType;
         const flavors: FlavorJSONType = entries as FlavorJSONType;
 
@@ -254,7 +257,10 @@ export default class DexCommand extends Command {
         return pokeData;
     }
 
-    private prepMessage (pokeData: PokeDataType, poke: PokedexType, shines: boolean, pokeSearchLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        pokeData: PokeDataType, poke: PokedexType, shines: boolean, pokeSearchLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         const dexEmbed: MessageEmbed = new MessageEmbed();
 
         dexEmbed
@@ -262,7 +268,7 @@ export default class DexCommand extends Command {
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
             .setAuthor(`#${poke.num} - ${sentencecase(poke.species)}`, pokeData.sprite)
             .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
-            .setFooter(`Result ${position + 1} of ${pokeSearchLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${pokeSearchLength}` : '')
             .addField('Type(s)', poke.types.join(', '), true)
             .addField('Abilities', pokeData.abilities, true)
             .addField('Gender Ratio', pokeData.genders, true)

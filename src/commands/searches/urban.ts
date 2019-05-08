@@ -53,27 +53,28 @@ export default class UrbanCommand extends Command {
         try {
             const urbanSearch = await fetch(`https://api.urbandictionary.com/v0/define?${stringify({ term })}`);
             const urbanDefinitions: UrbanDefinitionResults = await urbanSearch.json();
+            const amountOfDefinitions = urbanDefinitions.list.length;
             const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
             urbanDefinitions.list.sort((a, b) => b.thumbs_up - b.thumbs_down - (a.thumbs_up - a.thumbs_down));
 
             let currentDefinition = urbanDefinitions.list[position];
-            let urbanEmbed = this.prepMessage(color, currentDefinition, urbanDefinitions.list.length, position);
+            let urbanEmbed = this.prepMessage(color, currentDefinition, amountOfDefinitions, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
             const message = await msg.embed(urbanEmbed) as CommandoMessage;
 
-            if (urbanDefinitions.list.length > 1 && hasManageMessages) {
+            if (amountOfDefinitions > 1 && hasManageMessages) {
                 injectNavigationEmotes(message);
                 new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
                     .on('collect', (reaction: MessageReaction, user: User) => {
                         if (!this.client.userid.includes(user.id)) {
                             reaction.emoji.name === '➡' ? position++ : position--;
-                            if (position >= urbanDefinitions.list.length) position = 0;
-                            if (position < 0) position = urbanDefinitions.list.length - 1;
+                            if (position >= amountOfDefinitions) position = 0;
+                            if (position < 0) position = amountOfDefinitions - 1;
                             currentDefinition = urbanDefinitions.list[position];
-                            urbanEmbed = this.prepMessage(color, currentDefinition, urbanDefinitions.list.length, position);
+                            urbanEmbed = this.prepMessage(color, currentDefinition, amountOfDefinitions, position, hasManageMessages);
                             message.edit(urbanEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -88,13 +89,16 @@ export default class UrbanCommand extends Command {
         }
     }
 
-    private prepMessage (color: string, definition: UrbanDefinition, definitionsLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        color: string, definition: UrbanDefinition, definitionsLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         return new MessageEmbed()
             .setTitle(`Urban Search - ${definition.word}`)
             .setURL(definition.permalink)
             .setColor(color)
             .setDescription(sentencecase(definition.definition.replace(/[\[]]/gim, '')))
-            .setFooter(`Result ${position + 1} of ${definitionsLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${definitionsLength}` : '')
             .addField(
                 'Example',
                 definition.example

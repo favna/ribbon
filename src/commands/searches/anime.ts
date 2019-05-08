@@ -68,7 +68,7 @@ export default class AnimeCommand extends Command {
             const animes: KitsuResult = await animeList.json();
             const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
             let currentAnime = animes.hits[position];
-            let animeEmbed = this.prepMessage(color, currentAnime, animes.hits.length, position);
+            let animeEmbed = this.prepMessage(color, currentAnime, animes.hits.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -83,7 +83,7 @@ export default class AnimeCommand extends Command {
                             if (position >= animes.hits.length) position = 0;
                             if (position < 0) position = animes.hits.length - 1;
                             currentAnime = animes.hits[position];
-                            animeEmbed = this.prepMessage(color, currentAnime, animes.hits.length, position);
+                            animeEmbed = this.prepMessage(color, currentAnime, animes.hits.length, position, hasManageMessages);
                             message.edit(`https://kitsu.io/anime/${currentAnime.slug}`, animeEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -98,7 +98,9 @@ export default class AnimeCommand extends Command {
         }
     }
 
-    private prepMessage (color: string, anime: KitsuHit, animesLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        color: string, anime: KitsuHit, animesLength: number,
+        position: number, hasManageMessages: boolean): MessageEmbed {
         return new MessageEmbed()
             .setColor(color)
             .setTitle(anime.titles.en ? anime.titles.en : anime.canonicalTitle)
@@ -106,7 +108,7 @@ export default class AnimeCommand extends Command {
             .setDescription(anime.synopsis.replace(/(.+)[\r\n\t](.+)/gim, '$1 $2').split('\r\n')[0])
             .setImage(anime.posterImage.original)
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/kitsulogo.png`)
-            .setFooter(`Result ${position + 1} of ${animesLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${animesLength}` : '')
             .addField('Canonical Title', anime.canonicalTitle, true)
             .addField('Score', `${anime.averageRating}%`, true)
             .addField(

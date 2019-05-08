@@ -57,7 +57,7 @@ export default class GirlsFrontlineCommand extends Command {
             const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
             let currentGirl = girlSearch[position];
-            let girlEmbed = await this.prepMessage(color, currentGirl, girlSearch.length, position);
+            let girlEmbed = await this.prepMessage(color, currentGirl, girlSearch.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -72,7 +72,7 @@ export default class GirlsFrontlineCommand extends Command {
                             if (position >= girlSearch.length) position = 0;
                             if (position < 0) position = girlSearch.length - 1;
                             currentGirl = girlSearch[position];
-                            girlEmbed = await this.prepMessage(color, currentGirl, girlSearch.length, position);
+                            girlEmbed = await this.prepMessage(color, currentGirl, girlSearch.length, position, hasManageMessages);
                             message.edit('', girlEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -86,7 +86,10 @@ export default class GirlsFrontlineCommand extends Command {
         }
     }
 
-    private async prepMessage (color: string, girl: FrontlineGirlType, girlsLength: number, position: number): Promise<MessageEmbed> {
+    private async prepMessage (
+        color: string, girl: FrontlineGirlType, girlsLength: number,
+        position: number, hasManageMessages: boolean
+    ): Promise<MessageEmbed> {
         const embed = new MessageEmbed();
         const howObtain: string[] = [];
         const statIndices = ['hp', 'dmg', 'eva', 'acc', 'rof'];
@@ -114,7 +117,7 @@ export default class GirlsFrontlineCommand extends Command {
             .setURL(wikiBasePath.concat(girl.url))
             .setTitle(`No. ${girl.num} - ${girl.name} ${[...Array(girl.rating)].map(() => '★').join('').concat('☆☆☆☆☆'.slice(girl.rating))}`)
             .setThumbnail(wikiBasePath.concat('/images/', thumbSrc))
-            .setFooter(`Result ${position + 1} of ${girlsLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${girlsLength}` : '')
             .addField('Type', girl.type, true)
             .addField('Constant Stats',
                 Object.keys(girl.constStats)

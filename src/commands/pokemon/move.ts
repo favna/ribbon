@@ -70,7 +70,7 @@ export default class MoveCommand extends Command {
             if (!moveSearch.length) throw new Error('no_move');
 
             let currentMove = moveSearch[position];
-            let moveEmbed = this.prepMessage(color, currentMove, moveSearch.length, position);
+            let moveEmbed = this.prepMessage(color, currentMove, moveSearch.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -85,7 +85,7 @@ export default class MoveCommand extends Command {
                             if (position >= moveSearch.length) position = 0;
                             if (position < 0) position = moveSearch.length - 1;
                             currentMove = moveSearch[position];
-                            moveEmbed = this.prepMessage(color, currentMove, moveSearch.length, position);
+                            moveEmbed = this.prepMessage(color, currentMove, moveSearch.length, position, hasManageMessages);
                             message.edit('', moveEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -113,12 +113,15 @@ export default class MoveCommand extends Command {
         }
     }
 
-    private prepMessage (color: string, currentMove: PokeMoveDetailsType, moveSearchLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        color: string, currentMove: PokeMoveDetailsType, moveSearchLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         return new MessageEmbed()
             .setColor(color)
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
             .setTitle(sentencecase(currentMove.name))
-            .setFooter(`Result ${position + 1} of ${moveSearchLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${moveSearchLength}` : '')
             .addField('Description', currentMove.desc ? currentMove.desc : currentMove.shortDesc)
             .addField('Type', currentMove.type, true)
             .addField('Base Power', currentMove.basePower, true)

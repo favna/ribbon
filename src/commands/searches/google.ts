@@ -95,7 +95,7 @@ export default class GoogleCommand extends Command {
             const googleItems: GoogleItem[] = [...cseItems, ...knowledgeItems];
 
             let currentItem = googleItems[position];
-            let googleEmbed = this.prepMessage(msg, currentItem, googleItems.length, position);
+            let googleEmbed = this.prepMessage(msg, currentItem, googleItems.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -110,7 +110,7 @@ export default class GoogleCommand extends Command {
                             if (position >= googleItems.length) position = 0;
                             if (position < 0) position = googleItems.length - 1;
                             currentItem = googleItems[position];
-                            googleEmbed = this.prepMessage(msg, currentItem, googleItems.length, position);
+                            googleEmbed = this.prepMessage(msg, currentItem, googleItems.length, position, hasManageMessages);
                             message.edit('', googleEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -157,10 +157,13 @@ export default class GoogleCommand extends Command {
         }
     }
 
-    private prepMessage (msg: CommandoMessage, item: any, itemLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        msg: CommandoMessage, item: any, itemLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         const googleEmbed = new MessageEmbed()
             .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-            .setFooter(`Result ${position + 1} of ${itemLength}`);
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${itemLength}` : '');
 
         if (item.source === GoogleSource.CSE) {
             const cseItem = item as GoogleCSEItem;

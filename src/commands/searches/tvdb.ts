@@ -61,7 +61,7 @@ export default class TVCommand extends Command {
 
             let currentSeries = showList.results[position].id;
             let show = await this.fetchAllData(currentSeries);
-            let showEmbed = this.prepMessage(color, show, showList.total_results, position);
+            let showEmbed = this.prepMessage(color, show, showList.total_results, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -77,7 +77,7 @@ export default class TVCommand extends Command {
                             if (position < 0) position = showList.total_results - 1;
                             currentSeries = showList.results[position].id;
                             show = await this.fetchAllData(currentSeries);
-                            showEmbed = this.prepMessage(color, show, showList.total_results, position);
+                            showEmbed = this.prepMessage(color, show, showList.total_results, position, hasManageMessages);
                             message.edit(showEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -99,7 +99,10 @@ export default class TVCommand extends Command {
         return seriesStats.json();
     }
 
-    private prepMessage (color: string, show: any, seriesSearchLength: number, position: number) {
+    private prepMessage (
+        color: string, show: any, seriesSearchLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         return new MessageEmbed()
             .setTitle(show.name)
             .setURL(`https://www.themoviedb.org/tv/${show.id}`)
@@ -107,7 +110,7 @@ export default class TVCommand extends Command {
             .setImage(`https://image.tmdb.org/t/p/original${show.backdrop_path}`)
             .setThumbnail(`https://image.tmdb.org/t/p/original${show.poster_path}`)
             .setDescription(show.overview)
-            .setFooter(`Result ${position + 1} of ${seriesSearchLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${seriesSearchLength}` : '')
             .addField('Episode Runtime', `${show.episode_run_time} minutes`, true)
             .addField('Popularity', `${roundNumber(show.popularity, 2)}%`, true)
             .addField('Status', show.status, true)

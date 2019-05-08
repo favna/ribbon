@@ -12,7 +12,7 @@
  */
 
 import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { YoutubeResultList, YoutubeVideoResourceType, YoutubeVideoSnippetType } from '@components/Types';
+import { YoutubeResultList, YoutubeVideoSnippetType } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
@@ -55,47 +55,57 @@ export default class YouTubeCommand extends Command {
     @clientHasManageMessages()
     public async run (msg: CommandoMessage, { query, hasManageMessages, position = 0 }: YoutubeArgs) {
         try {
-            const tubeSearch = await fetch(`https://www.googleapis.com/youtube/v3/search?${stringify({
-                key: process.env.GOOGLE_API_KEY!,
-                maxResults: '10',
-                part: 'snippet',
-                q: query,
-                type: 'video',
-            })}`
-            );
+            const tubeSearch = await fetch(`https://www.googleapis.com/youtube/v3/search?${
+                stringify({
+                    key: process.env.GOOGLE_API_KEY!,
+                    maxResults: '10',
+                    part: 'snippet',
+                    q: query,
+                    type: 'video',
+                })}
+            `);
             const videoList: YoutubeResultList = await tubeSearch.json();
             const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
             const commandPrefix = msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length;
             const replyShouldBeSimple = msg.content.split(' ')[0].slice(commandPrefix) === 'yts';
+            const amountOfVideos = videoList.items.length;
 
             let currentVideo = videoList.items[position];
-            let videoEmbed = this.prepMessage(color, query, currentVideo.snippet, currentVideo.id, videoList.items.length, position);
+            let currentVideoId = videoList.items[position].id.videoId;
+            let videoEmbed = this.prepMessage(
+                color, query, currentVideo.snippet, currentVideoId,
+                amountOfVideos, position, hasManageMessages
+            );
 
             deleteCommandMessages(msg, this.client);
 
             const message = replyShouldBeSimple
                 ? await msg.say(stripIndents`
-                    https://www.youtube.com/watch?v=${currentVideo.id.videoId}
-                    __*Result ${position + 1} of ${videoList.items.length}*__
+                    https://www.youtube.com/watch?v=${currentVideoId}
+                    ${hasManageMessages ? `__*Result ${position + 1} of ${amountOfVideos}*__` : ''}
                 `) as CommandoMessage
-                : await msg.embed(videoEmbed, `https://www.youtube.com/watch?v=${currentVideo.id.videoId}`) as CommandoMessage;
+                : await msg.embed(videoEmbed, `https://www.youtube.com/watch?v=${currentVideoId}`) as CommandoMessage;
 
-            if (videoList.items.length > 1 && hasManageMessages) {
+            if (amountOfVideos > 1 && hasManageMessages) {
                 injectNavigationEmotes(message);
                 new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
                     .on('collect', (reaction: MessageReaction, user: User) => {
                         if (!this.client.userid.includes(user.id)) {
                             reaction.emoji.name === '➡' ? position++ : position--;
-                            if (position >= videoList.items.length) position = 0;
-                            if (position < 0) position = videoList.items.length - 1;
+                            if (position >= amountOfVideos) position = 0;
+                            if (position < 0) position = amountOfVideos - 1;
                             currentVideo = videoList.items[position];
-                            videoEmbed = this.prepMessage(color, query, currentVideo.snippet, currentVideo.id, videoList.items.length, position);
+                            currentVideoId = videoList.items[position].id.videoId;
+                            videoEmbed = this.prepMessage(
+                                color, query, currentVideo.snippet, currentVideoId,
+                                amountOfVideos, position, hasManageMessages
+                            );
                             replyShouldBeSimple
                                 ? message.edit(stripIndents`
-                                    https://www.youtube.com/watch?v=${currentVideo.id.videoId}
-                                    __*Result ${position + 1} of ${videoList.items.length}*__
+                                    https://www.youtube.com/watch?v=${currentVideoId}
+                                    ${hasManageMessages ? `__*Result ${position + 1} of ${amountOfVideos}*__` : ''}
                                 `)
-                                : message.edit(`https://www.youtube.com/watch?v=${currentVideo.id.videoId}`, videoEmbed);
+                                : message.edit(`https://www.youtube.com/watch?v=${currentVideoId}`, videoEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
                     });
@@ -107,15 +117,18 @@ export default class YouTubeCommand extends Command {
         }
     }
 
-    private prepMessage (color: string, query: string, video: YoutubeVideoSnippetType, videoResource: YoutubeVideoResourceType, videosLength: number, position: number) {
+    private prepMessage (
+        color: string, query: string, video: YoutubeVideoSnippetType, videoId: string,
+        videosLength: number, position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         return new MessageEmbed()
             .setTitle(`Youtube Search Result for \`${query}\``)
-            .setURL(`https://www.youtube.com/watch?v=${videoResource.videoId}`)
+            .setURL(`https://www.youtube.com/watch?v=${videoId}`)
             .setColor(color)
             .setImage(video.thumbnails.default.url)
-            .setFooter(`Result ${position + 1} of ${videosLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${videosLength}` : '')
             .addField('Title', video.title, true)
-            .addField('URL', `[Click Here](https://www.youtube.com/watch?v=${videoResource.videoId})`, true)
+            .addField('URL', `[Click Here](https://www.youtube.com/watch?v=${videoId})`, true)
             .addField('Channel', `[${video.channelTitle}](https://www.youtube.com/channel/${video.channelId})`, true)
             .addField('Published At', moment(video.publishedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), false)
             .addField('Description', video.description ? video.description : 'No Description', false);

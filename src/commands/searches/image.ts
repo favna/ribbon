@@ -74,7 +74,7 @@ export default class ImageCommand extends Command {
             const imageData: GoogleImageResult = await imageSearch.json();
 
             let currentImage = imageData.items[position];
-            imageEmbed = this.prepMessage(currentImage, query, imageData.items.length, position);
+            imageEmbed = this.prepMessage(currentImage, query, imageData.items.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -89,7 +89,7 @@ export default class ImageCommand extends Command {
                             if (position >= imageData.items.length) position = 0;
                             if (position < 0) position = imageData.items.length - 1;
                             currentImage = imageData.items[position];
-                            imageEmbed = this.prepMessage(currentImage, query, imageData.items.length, position);
+                            imageEmbed = this.prepMessage(currentImage, query, imageData.items.length, position, hasManageMessages);
                             message.edit('', imageEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -132,11 +132,13 @@ export default class ImageCommand extends Command {
         }
     }
 
-    private prepMessage (image: GoogleImageData, query: string, imageSearchLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        image: GoogleImageData, query: string, imageSearchLength: number,
+        position: number, hasManageMessages: boolean): MessageEmbed {
         return new MessageEmbed()
             .setImage(image.link)
             .setURL(image.link)
             .setTitle(`Image results for: \`${query.replace(/\+/g, ' ')}\``)
-            .setFooter(`Result ${position + 1} of ${imageSearchLength}`);
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${imageSearchLength}` : '');
     }
 }

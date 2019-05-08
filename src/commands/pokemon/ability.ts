@@ -65,7 +65,7 @@ export default class AbilityCommand extends Command {
             if (!abilitySearch.length) throw new Error('no_ability');
 
             let currentAbility = abilitySearch[position];
-            let abilityEmbed = this.prepMessage(color, currentAbility, abilitySearch.length, position);
+            let abilityEmbed = this.prepMessage(color, currentAbility, abilitySearch.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -80,7 +80,7 @@ export default class AbilityCommand extends Command {
                             if (position >= abilitySearch.length) position = 0;
                             if (position < 0) position = abilitySearch.length - 1;
                             currentAbility = abilitySearch[position];
-                            abilityEmbed = this.prepMessage(color, currentAbility, abilitySearch.length, position);
+                            abilityEmbed = this.prepMessage(color, currentAbility, abilitySearch.length, position, hasManageMessages);
                             message.edit('', abilityEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -113,12 +113,15 @@ export default class AbilityCommand extends Command {
         }
     }
 
-    private prepMessage (color: string, ability: PokeAbilityDetailsType, abilitySearchLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        color: string, ability: PokeAbilityDetailsType, abilitySearchLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         return new MessageEmbed()
             .setColor(color)
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
             .setTitle(sentencecase(ability.name))
-            .setFooter(`Result ${position + 1} of ${abilitySearchLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${abilitySearchLength}` : '')
             .addField('Description', ability.desc ? ability.desc : ability.shortDesc)
             .addField('External Resource', oneLine`
                    [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${sentencecase(ability.name.replace(/ /g, '_'))}_(Ability\\))

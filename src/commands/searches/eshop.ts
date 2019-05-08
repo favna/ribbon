@@ -88,7 +88,7 @@ export default class EShopCommand extends Command {
             const results = games.results[0];
 
             let currentGame = results.hits[position];
-            let eshopEmbed = this.prepMessage(currentGame, results.hits.length, position);
+            let eshopEmbed = this.prepMessage(currentGame, results.hits.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -103,7 +103,7 @@ export default class EShopCommand extends Command {
                             if (position >= results.hits.length) position = 0;
                             if (position < 0) position = results.hits.length - 1;
                             currentGame = results.hits[position];
-                            eshopEmbed = this.prepMessage(currentGame, results.hits.length, position);
+                            eshopEmbed = this.prepMessage(currentGame, results.hits.length, position, hasManageMessages);
                             message.edit('', eshopEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -117,14 +117,17 @@ export default class EShopCommand extends Command {
         }
     }
 
-    private prepMessage (game: eShopHit, gamesLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        game: eShopHit, gamesLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         return new MessageEmbed()
             .setColor('#FFA600')
             .setTitle(game.title)
             .setURL(`https://nintendo.com${game.url}`)
             .setThumbnail(`https://nintendo.com${game.boxArt}`)
             .setDescription(`${game.description.length <= 800 ? game.description : `${game.description.slice(0, 800)}…`}`)
-            .setFooter(`Result ${position + 1} of ${gamesLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${gamesLength}` : '')
             .addField('ESRB', game.esrb, true)
             .addField('Price', game.msrp ? game.msrp === 0 ? 'Free' : `$${game.msrp} USD` : 'TBA', true)
             .addField('Availability', game.availability[0], true)

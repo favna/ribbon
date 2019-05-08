@@ -113,7 +113,7 @@ export default class FlavorCommand extends Command {
 
             let poke = pokeSearch[position];
             let pokeData = this.fetchAllData(poke, shines);
-            let dataEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
+            let dataEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -132,7 +132,7 @@ export default class FlavorCommand extends Command {
                         if (position < 0) position = pokeSearch.length - 1;
                         poke = pokeSearch[position];
                         pokeData = this.fetchAllData(poke, shines);
-                        dataEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position);
+                        dataEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position, hasManageMessages);
                         message.edit('', dataEmbed);
                         message.reactions.get(reaction.emoji.name)!.users.remove(user);
                     }
@@ -204,7 +204,10 @@ export default class FlavorCommand extends Command {
         return pokeData;
     }
 
-    private prepMessage (pokeData: PokeDataType, poke: PokedexType, shines: boolean, pokeSearchLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        pokeData: PokeDataType, poke: PokedexType, shines: boolean, pokeSearchLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         const dataEmbed = new MessageEmbed();
 
         let i = pokeData.entries.length - 1;
@@ -216,22 +219,22 @@ export default class FlavorCommand extends Command {
             .setAuthor(`#${poke.num} - ${sentencecase(poke.species)}`, pokeData.sprite)
             .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
             .setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.')
-            .setFooter(`Result ${position + 1} of ${pokeSearchLength}`);
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${pokeSearchLength}` : '');
 
         outer: do {
-                dataEmbed.addField(
-                    pokeData.entries[i].game,
-                    pokeData.entries[i].text,
-                    false
-                );
-                for (const field of dataEmbed.fields) {
-                    totalEntriesLength += field.value.length;
-                    if (totalEntriesLength >= 2000) {
-                        break outer;
-                    }
+            dataEmbed.addField(
+                pokeData.entries[i].game,
+                pokeData.entries[i].text,
+                false
+            );
+            for (const field of dataEmbed.fields) {
+                totalEntriesLength += field.value.length;
+                if (totalEntriesLength >= 2000) {
+                    break outer;
                 }
-                i -= 1;
-            } while (i !== -1);
+            }
+            i -= 1;
+        } while (i !== -1);
 
         if (poke.num === 0) {
             const fields = [];

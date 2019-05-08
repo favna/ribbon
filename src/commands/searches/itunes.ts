@@ -70,7 +70,7 @@ export default class ITunesCommand extends Command {
             if (!tracks.resultCount) throw new Error('nosong');
 
             let currentSong = tracks.results[position];
-            let tunesEmbed = this.prepMessage(color, currentSong, tracks.resultCount, position);
+            let tunesEmbed = this.prepMessage(color, currentSong, tracks.resultCount, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -85,7 +85,7 @@ export default class ITunesCommand extends Command {
                             if (position >= tracks.resultCount) position = 0;
                             if (position < 0) position = tracks.resultCount - 1;
                             currentSong = tracks.results[position];
-                            tunesEmbed = this.prepMessage(color, currentSong, tracks.resultCount, position);
+                            tunesEmbed = this.prepMessage(color, currentSong, tracks.resultCount, position, hasManageMessages);
                             message.edit('', tunesEmbed);
                             message.reactions.get(reaction.emoji.name)!.users.remove(user);
                         }
@@ -114,13 +114,15 @@ export default class ITunesCommand extends Command {
         }
     }
 
-    private prepMessage (color: string, song: iTunesData, songResultsLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        color: string, song: iTunesData, songResultsLength: number,
+        position: number, hasManageMessages: boolean): MessageEmbed {
         return new MessageEmbed()
             .setThumbnail(song.artworkUrl100)
             .setTitle(song.trackName)
             .setURL(song.trackViewUrl)
             .setColor(color)
-            .setFooter(`Result ${position + 1} of ${songResultsLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${songResultsLength}` : '')
             .addField('Artist', `[${song.artistName}](${song.artistViewUrl})`, true)
             .addField('Collection', `[${song.collectionName}](${song.collectionViewUrl})`, true)
             .addField('Collection Price (USD)', `$${song.collectionPrice}`, true)

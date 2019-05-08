@@ -70,7 +70,7 @@ export default class ItemCommand extends Command {
             if (!itemSearch.length) throw new Error('no_item');
 
             let currentItem = itemSearch[position];
-            let itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position);
+            let itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position, hasManageMessages);
 
             deleteCommandMessages(msg, this.client);
 
@@ -84,7 +84,7 @@ export default class ItemCommand extends Command {
                         if (position >= itemSearch.length) position = 0;
                         if (position < 0) position = itemSearch.length - 1;
                         currentItem = itemSearch[position];
-                        itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position);
+                        itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position, hasManageMessages);
                         returnMsg.edit('', itemEmbed);
                         returnMsg.reactions.get(reaction.emoji.name)!.users.remove(user);
                     });
@@ -111,7 +111,10 @@ export default class ItemCommand extends Command {
         }
     }
 
-    private prepMessage (color: string, item: PokeItemDetailsType, itemSearchLength: number, position: number): MessageEmbed {
+    private prepMessage (
+        color: string, item: PokeItemDetailsType, itemSearchLength: number,
+        position: number, hasManageMessages: boolean
+    ): MessageEmbed {
         return new MessageEmbed()
             .setColor(color)
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
@@ -119,7 +122,7 @@ export default class ItemCommand extends Command {
                 `${sentencecase(item.name)}`,
                 `https://play.pokemonshowdown.com/sprites/itemicons/${item.name.toLowerCase().replace(/ /g, '-')}.png`
             )
-            .setFooter(`Result ${position + 1} of ${itemSearchLength}`)
+            .setFooter(hasManageMessages ? `Result ${position + 1} of ${itemSearchLength}` : '')
             .addField('Description', item.desc)
             .addField('Generation Introduced', item.gen)
             .addField(
