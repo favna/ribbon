@@ -32,3 +32,4 @@ export enum GoogleSource {
     KNOWLEDGE = 'knowledge',
     CSE = 'cse',
 }
+export enum Language {NL = 'nl',EN = 'en'}

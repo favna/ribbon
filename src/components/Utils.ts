@@ -118,7 +118,9 @@ export const clientHasManageMessages = () => {
     };
 };
 
-export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission: boolean = false): MethodDecorator => {
+export const shouldHavePermission = (
+    permission: PermissionString, shouldClientHavePermission: boolean = false
+): MethodDecorator => {
     return (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
         const fn: (...args: any[]) => any = descriptor.value;
 
@@ -145,6 +147,20 @@ export const shouldHavePermission = (permission: PermissionString, shouldClientH
         };
 
         return descriptor;
+    };
+};
+
+export const resolveGuildI18n = (): MethodDecorator => {
+    return (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+        const fn: (...args: any[]) => any = descriptor.value;
+
+        descriptor.value = function (msg: CommandoMessage, args: any, fromPattern: boolean) {
+            const language = msg.guild ? msg.guild.settings.get('i18n', 'en') : 'en';
+            args.language = language;
+
+            // tslint:disable-next-line:no-invalid-this
+            return fn.apply(this, [msg, args, fromPattern]);
+        };
     };
 };
 

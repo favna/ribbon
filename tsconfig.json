@@ -23,7 +23,8 @@
         "paths": {
             "@components/*": ["components/*"],
             "@databases/*": ["data/databases/*"],
-            "@pokedex/*": ["data/dex/*"]
+            "@pokedex/*": ["data/dex/*"],
+            "@i18n/*": ["data/i18n/*"]
         }
     },
     "include": ["src/**/*.ts"],

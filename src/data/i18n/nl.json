@@ -1,0 +1,14 @@
+{
+  "commands": {
+    "automod": {
+      "badwords": {
+        "description": "Zet bad words filter aan of uit"
+      }
+    },
+    "info": {
+      "activity": {
+        "description": "Toont de huidige activiteit van een guild lid"
+      }
+    }
+  }
+}

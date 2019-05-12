@@ -14,13 +14,15 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages } from '@components/Utils';
+import { deleteCommandMessages, resolveGuildI18n } from '@components/Utils';
+import i18n from '@i18n/i18n';
 import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { Message, Util as DJSUtil } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 
 type HelpArgs = {
     command: string;
+    language: string;
 };
 
 export default class HelpCommand extends Command {
@@ -54,7 +56,8 @@ export default class HelpCommand extends Command {
     }
 
     // tslint:disable-next-line:cyclomatic-complexity
-    public async run (msg: CommandoMessage, { command = '' }: HelpArgs) {
+    @resolveGuildI18n()
+    public async run (msg: CommandoMessage, { command = '', language }: HelpArgs) {
         try {
             const groups = this.client.registry.groups;
             const commands = this.client.registry.findCommands(command, false, msg);
@@ -66,7 +69,7 @@ export default class HelpCommand extends Command {
                 if (commands.length === 1) {
                     let help = stripIndents`
                             ${oneLine`
-                                __Command **${commands[0].name}**:__ ${commands[0].description}
+                                __Command **${commands[0].name}**:__ ${this.getDescription(commands[0], language)}
                                 ${commands[0].guildOnly ? ' (Usable only in servers)' : ''}
                                 ${commands[0].nsfw ? ' (NSFW)' : ''}
                             `}
@@ -128,7 +131,7 @@ export default class HelpCommand extends Command {
                         ${groups.filter(grp => grp.commands.some(cmd => !cmd.hidden && (showAll || cmd.isUsable(msg)))).map(grp => stripIndents`
                             __${grp.name}__
                         ${grp.commands.filter(cmd => !cmd.hidden && (showAll || cmd.isUsable(msg))).map(cmd => stripIndents`
-                            **${cmd.name}:** ${cmd.description}${cmd.nsfw ? ' (NSFW)' : ''}`)
+                            **${cmd.name}:** ${this.getDescription(cmd, language)}${cmd.nsfw ? ' (NSFW)' : ''}`)
                     .join('\n')}`).join('\n\n')}`;
 
                 if (body.length >= 2000) {
@@ -170,5 +173,9 @@ export default class HelpCommand extends Command {
 
     private hextodec (colour: string) {
         return parseInt(colour.replace('#', ''), 16);
+    }
+
+    private getDescription (command: Command, language: string): string {
+        return i18n.t(`commands.${command.groupID}.${command.memberName}.description`, { lng: language });
     }
 }

@@ -1,0 +1,14 @@
+{
+  "commands": {
+    "automod": {
+      "badwords": {
+        "description": "Toggle the bad words filter"
+      }
+    },
+    "info": {
+      "activity": {
+        "description": "Gets the activity (presence) data from a member"
+      }
+    }
+  }
+}
