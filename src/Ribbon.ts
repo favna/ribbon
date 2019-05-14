@@ -94,7 +94,7 @@ export default class Ribbon {
                 unknownCommand: false,
             })
             .registerCommandsIn({
-                dirname: path.join(__dirname, 'commands'),
+                dirname: path.join(__dirname, 'commands/info'),
                 filter: (fileName: string) => /^.+\.ts$/.test(fileName) ? fileName : undefined,
             });
 

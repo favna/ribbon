@@ -1,8 +1,16 @@
 {
+  "general": {
+    "enabled": "enabled",
+    "disabled": "disabled"
+  },
   "commands": {
     "automod": {
       "badwords": {
-        "description": "Toggle the bad words filter"
+        "description": "Toggle the bad words filter",
+        "details": "Please note that when adding new words to your server's filter you overwrite all your currently set words!",
+        "action": "**Action:** Bad words filter has been OPTION",
+        "words": "**Words:** Bad words have been set to WORDS",
+        "notice": "**Notice:** Be sure to enable the general automod toggle with the PREFIXautomod command"
       }
     },
     "info": {

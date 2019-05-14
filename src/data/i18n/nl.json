@@ -1,8 +1,16 @@
 {
+  "general": {
+    "enabled": "aangezet",
+    "disabled": "uitgezet"
+  },
   "commands": {
     "automod": {
       "badwords": {
-        "description": "Zet bad words filter aan of uit"
+        "description": "Zet bad words filter aan of uit",
+        "details": "Let op, als je nieuwe woorden toevoegt aan je server's filter dan worden al je oude worden overschreven",
+        "action": "**Actie:** Bad words filter is OPTION",
+        "words": "**Woorden:** Bad words zijn nu WORDS",
+        "notice": "**Let Op:** Zorg dat je het PREFIXautomod command uitvoert om automod aan te zetten"
       }
     },
     "info": {

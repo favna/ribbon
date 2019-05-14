@@ -1,8 +1,8 @@
-import 'data/i18n/i18n';
 import { config } from 'dotenv';
 import fireadmin from 'firebase-admin';
 import moduleAlias from 'module-alias';
 import path from 'path';
+import './data/i18n/i18n';
 import Ribbon from './Ribbon';
 
 // Configure dotenv

@@ -12,14 +12,16 @@
  * @param {string} [words] Optional: comma separated list of words to filter
  */
 
-import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
+import { deleteCommandMessages, logModMessage, resolveGuildI18n, shouldHavePermission } from '@components/Utils';
+import i18n from '@i18n/i18n';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
 type BadWordsArgs = {
     shouldEnable: boolean;
-    words: string[]
+    words: string[];
+    language: string;
 };
 
 export default class BadWordsCommand extends Command {
@@ -55,7 +57,8 @@ export default class BadWordsCommand extends Command {
     }
 
     @shouldHavePermission('MANAGE_MESSAGES', true)
-    public run (msg: CommandoMessage, { shouldEnable, words }: BadWordsArgs) {
+    @resolveGuildI18n()
+    public run (msg: CommandoMessage, { shouldEnable, words, language }: BadWordsArgs) {
         const bwfEmbed = new MessageEmbed();
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
         const options = { words, enabled: shouldEnable };
@@ -65,9 +68,9 @@ export default class BadWordsCommand extends Command {
             .setColor('#439DFF')
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
-                **Action:** Bad words filter has been ${shouldEnable ? 'enabled' : 'disabled'}
-                ${shouldEnable ? `**Words:** Bad words have been set to ${words.map((word: string) => `\`${word}\``).join(', ')}` : ''}
-                ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
+                ${this.getAction(this, language).replace('OPTION', this.getActiveState(this, language, shouldEnable ? 'enabled' : 'disabled'))}
+                ${shouldEnable ? this.getWords(this, language).replace('WORDS', words.map((word: string) => `\`${word}\``).join(', ')) : ''}
+                ${!msg.guild.settings.get('automod', false) ? this.getNotice(this, language).replace('PREFIX', msg.guild.commandPrefix) : ''}`
             )
             .setTimestamp();
 
@@ -78,5 +81,21 @@ export default class BadWordsCommand extends Command {
         deleteCommandMessages(msg, this.client);
 
         return msg.embed(bwfEmbed);
+    }
+
+    private getAction (command: Command, language: string): string {
+        return i18n.t(`commands.${command.groupID}.${command.memberName}.action`, { lng: language });
+    }
+
+    private getWords (command: Command, language: string): string {
+        return i18n.t(`commands.${command.groupID}.${command.memberName}.words`, { lng: language });
+    }
+
+    private getNotice (command: Command, language: string): string {
+        return i18n.t(`commands.${command.groupID}.${command.memberName}.notice`, { lng: language });
+    }
+
+    private getActiveState (command: Command, language: string, state: 'enabled' | 'disabled'): string {
+        return i18n.t(`general.${state}`, { lng: language });
     }
 }

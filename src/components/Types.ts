@@ -1,6 +1,5 @@
 import { Command } from 'awesome-commando';
 import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
-import { videoFormat } from 'ytdl-core';
 import { GoogleSource } from './Constants';
 import { Song } from './Utils';
 
@@ -469,10 +468,6 @@ export type FrontlineGirlType = {
     };
     img?: string;
 };
-
-export interface IPrismVideoFormat extends videoFormat {
-    audio_sample_rate?: number;
-}
 
 export type KitsuHit = {
     abbreviatedTitles: string[];

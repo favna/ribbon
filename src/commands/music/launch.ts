@@ -18,9 +18,9 @@
  */
 
 import { DEFAULT_VOLUME, MAX_LENGTH, MAX_SONGS, PASSES } from '@components/Constants';
-import PrismPlayer from '@components/PrismPlayer';
 import { MusicQueueType, MusicVoteType, YoutubeVideoSnippetType, YoutubeVideoType } from '@components/Types';
 import { deleteCommandMessages, Song } from '@components/Utils';
+import ytdl from '@favware/ytdl-prismplayer';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Guild, Message, Permissions, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
 import { parse, stringify } from 'awesome-querystring';
@@ -126,7 +126,7 @@ export default class LaunchMusicCommand extends Command {
     }
 
     private static async startTheJam (connection: VoiceConnection, url: string, ytdlOptions?: downloadOptions, streamOptions?: StreamOptions) {
-        return connection.play(await PrismPlayer(url, ytdlOptions), streamOptions);
+        return connection.play(await ytdl(url, ytdlOptions), streamOptions);
     }
 
     public async run (msg: CommandoMessage, { videoQuery }: LaunchMusicArgs) {

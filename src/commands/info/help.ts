@@ -81,7 +81,7 @@ export default class HelpCommand extends Command {
                             **Group:** ${commands[0].group.name}
                             (\`${commands[0].groupID}:${commands[0].memberName}\`)
                         `}`;
-                    if (commands[0].details) help += `\n**Details:** ${commands[0].details}`;
+                    if (commands[0].details) help += `\n**Details:** ${this.getDetails(commands[0], language)}`;
                     if (commands[0].examples) help += `\n**Examples:**\n${commands[0].examples.join('\n')}`;
 
                     try {
@@ -176,6 +176,14 @@ export default class HelpCommand extends Command {
     }
 
     private getDescription (command: Command, language: string): string {
-        return i18n.t(`commands.${command.groupID}.${command.memberName}.description`, { lng: language });
+        const translateKey = `commands.${command.groupID}.${command.memberName}.description`;
+        const translation = i18n.t(translateKey, { lng: language });
+        return translateKey !== translation ? translation : command.description;
+    }
+
+    private getDetails (command: Command, language: string): string {
+        const translateKey = `commands.${command.groupID}.${command.memberName}.details`;
+        const translation = i18n.t(translateKey, { lng: language });
+        return translateKey !== translation ? translation : command.details;
     }
 }
