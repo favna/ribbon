@@ -5,7 +5,7 @@
   </p>
 
   <p>
-   <a href="https://depfu.com/repos/Favna/Ribbon"><img src="https://img.shields.io/depfu/Favna/Ribbon.svg?style=flat-square" alt="Depfu" /></a><!--
+   <a href="https://depfu.com/repos/Favna/ribbon"><img src="https://img.shields.io/depfu/Favna/ribbon.svg?style=flat-square" alt="Depfu" /></a><!--
 --><a href="https://github.com/Favna/Ribbon/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/favna/ribbon.svg?style=flat-square" alt="License"></a><!--
 --><a href="https://www.npmjs.com/package/discord-ribbon"><img src="https://img.shields.io/node/v/discord-ribbon.svg?style=flat-square" alt="Node Version"></a>
   </p>
