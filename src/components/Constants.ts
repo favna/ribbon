@@ -13,7 +13,7 @@ export const DEFAULT_VOLUME = 3;
 export const MAX_LENGTH = 10;
 export const MAX_SONGS = 3;
 export const PAGINATED_ITEMS = 5;
-export const PASSES = 5;
+export const PASSES = 10;
 
 // Enums
 export enum IGBDAgeRating{Three=1,Seven=2,Twelve=3,Sixteen=4,Eighteen=5,RP=6,EC=7,E=8,E10=9,T=10,M=11,AO=12}
