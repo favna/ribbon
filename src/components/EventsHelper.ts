@@ -408,7 +408,7 @@ export const handleCommandRun = (client: CommandoClient, cmd: Command, msg: Comm
         commandsCount++;
 
         FirebaseStorage.commands = commandsCount;
-        setCommandsData(commandsCount.toString());
+        setCommandsData(String(commandsCount));
     } catch (err) {
         const logChannel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
@@ -843,7 +843,7 @@ export const handleMsg = (client: CommandoClient, msg: CommandoMessage): void =>
             messagesCount++;
 
             FirebaseStorage.messages = messagesCount;
-            setMessagesData(messagesCount.toString());
+            setMessagesData(String(messagesCount));
         } catch (err) {
             const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
