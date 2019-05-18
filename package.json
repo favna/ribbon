@@ -2,8 +2,9 @@
     "name": "discord-ribbon",
     "version": "9.0.0",
     "description": "feature rich, modular Discord.JS-Commando server bot written in TypeScript",
-    "author": "Jeroen \"Favna\" Claassens <support@favna.xyz> (https://favna.xyz/home)",
+    "author": "Jeroen \"Favna\" Claassens <support@favware.tech> (https://favna.xyz/home)",
     "license": "GPL-3.0",
+    "private": true,
     "main": "./dist/app.js",
     "homepage": "https://favna.xyz/ribbon",
     "repository": {
@@ -58,7 +59,7 @@
         "Ribbon"
     ],
     "engines": {
-        "node": ">=10.0.0"
+        "node": ">=8.0.0"
     },
     "dependencies": {
         "@discordjs/uws": "^11.149.1",
