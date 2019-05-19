@@ -13,12 +13,12 @@ import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { currencyMap } from '@components/MoneyHelper';
 import { SteamGenreType } from '@components/Types';
 import { deleteCommandMessages } from '@components/Utils';
+import { stringify } from '@favware/querystring';
+import { unescape } from '@favware/unescape';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
-import { stringify } from 'awesome-querystring';
 import cheerio from 'cheerio';
 import fetch from 'node-fetch';
-import { unescape } from 'unescape-es6';
 
 type SteamArgs = {
     game: string;

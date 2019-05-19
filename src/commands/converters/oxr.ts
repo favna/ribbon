@@ -18,9 +18,9 @@
 import { Currency, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { convertCurrency, currencyMap } from '@components/MoneyHelper';
 import { deleteCommandMessages } from '@components/Utils';
+import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
-import { stringify } from 'awesome-querystring';
 import { stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';

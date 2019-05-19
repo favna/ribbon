@@ -16,13 +16,13 @@
 import { ASSET_BASE_PATH, CollectorTimeout } from '@components/Constants';
 import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase, titlecase } from '@components/Utils';
+import zalgo from '@favware/zalgo';
 import { pokeAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import formats from '@pokedex/formats.json';
 import BattlePokedex from '@pokedex/pokedex';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
-import zalgo from 'awesome-zalgo';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';

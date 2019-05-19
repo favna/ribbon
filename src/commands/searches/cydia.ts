@@ -16,9 +16,9 @@
 import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { CydiaAPIPackageType, CydiaData } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, roundNumber } from '@components/Utils';
+import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
-import { stringify } from 'awesome-querystring';
 import cheerio from 'cheerio';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
@@ -149,7 +149,7 @@ export default class CydiaCommand extends Command {
         try {
             const priceReq = await fetch(`${baseURL}api/ibbignerd?${stringify({ query: pkg.name })}`);
             const priceData = await priceReq.json();
-            
+
             price = priceData ? `$${roundNumber(parseFloat(priceData.msrp.toString()), 2).toFixed(2)}` : 'Free';
         } catch (priceErr) {
             // Intentionally empty

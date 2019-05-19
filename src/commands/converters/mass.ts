@@ -14,8 +14,8 @@
 
 import { DEFAULT_EMBED_COLOR, MassUnit } from '@components/Constants';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
+import { convert } from '@favware/converter';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { convert } from 'awesome-converter';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';

@@ -20,10 +20,10 @@
 import { DEFAULT_VOLUME, MAX_LENGTH, MAX_SONGS, PASSES } from '@components/Constants';
 import { MusicQueueType, MusicVoteType, YoutubeVideoSnippetType, YoutubeVideoType } from '@components/Types';
 import { deleteCommandMessages, Song } from '@components/Utils';
+import { parse, stringify } from '@favware/querystring';
 import ytdl from '@favware/ytdl-prismplayer';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Guild, Message, Permissions, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
-import { parse, stringify } from 'awesome-querystring';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';

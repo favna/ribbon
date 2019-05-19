@@ -5,7 +5,7 @@
  * @module
  * @category docs
  * @name yarn
- * @example yarn awesome-querystring
+ * @example yarn @favware/querystring
  * @param {string} pkg The package to find
  */
 
@@ -30,7 +30,7 @@ export default class YarnCommand extends Command {
             memberName: 'yarn',
             description: 'Responds with information on a NodeJS package using the Yarn package registry',
             format: 'package_name',
-            examples: ['yarn awesome-querystring'],
+            examples: ['yarn @favware/querystring'],
             guildOnly: false,
             throttling: {
                 usages: 2,

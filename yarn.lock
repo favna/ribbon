@@ -43,10 +43,31 @@
   resolved "https://registry.yarnpkg.com/@discordjs/uws/-/uws-11.149.1.tgz#2e86f2825f43bed43d2e69eaf30a07d2dd8e8946"
   integrity sha512-TmbwZaeXDSCq0ckmf2q10Fkt1220gu9AZJ/UvtQjsi2jyJDjy0i0OwL4/eb3vc9Cwr0mpC9EbfzltQ2si0qUiQ==
 
+"@favware/converter@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@favware/converter/-/converter-1.0.0.tgz#4e81037b0c4abf4bea459e0fb170fb8c3f1992d8"
+  integrity sha512-IY51zHaPIuk8nYHqupK5diB3yfHObtibp3HWcaHP9qS8h+4szn7sHDPr/Z3e2c94dHcxi5CNPGSVVhQ2mzq1OQ==
+  dependencies:
+    tslib "^1.9.3"
+
+"@favware/querystring@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@favware/querystring/-/querystring-1.0.0.tgz#cd28ca9a7d8d1d7ff8f09bdb1703cf39268cb2b0"
+  integrity sha512-QChVZ+RKoCb0sGFebsHJUj9gvj36YPocpvTYKj8+d24W63E6W06jj2pdwuF+v+QQfaL6ZgrjsuWxqYO5cL24Tw==
+  dependencies:
+    tslib "^1.9.3"
+
 "@favware/tslint-config@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@favware/tslint-config/-/tslint-config-1.0.0.tgz#310ff8d0fb4a35f8629d173fcf331b891211b6b8"
   integrity sha512-w5MVangs/DYeoZGjSFdJ236yHtxGgiq55p6phvXFqpHquWi7YFTZ/mlQQji6bYde363LZ6lOzUSAQm7Y9F3LMQ==
+
+"@favware/unescape@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@favware/unescape/-/unescape-1.0.0.tgz#16ed1a227fa9f06cdbc49ee30ad928a3a7d019df"
+  integrity sha512-5CYPEbYVBB914CEx+EK2cwfml8xKD/bY7wl8g1akP6WrsObOZ6Q4UII2hrODGJA5YpdPDURaGBlzeG5CKMNphw==
+  dependencies:
+    tslib "^1.9.3"
 
 "@favware/ytdl-prismplayer@^1.0.0":
   version "1.0.0"
@@ -56,6 +77,13 @@
     "@types/node" "^12.0.1"
     prism-media "^1.0.2"
     ytdl-core "^0.29.2"
+
+"@favware/zalgo@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@favware/zalgo/-/zalgo-1.0.0.tgz#bb142beb1834a047c8a61ad794bbebf165869ea8"
+  integrity sha512-PmxdejogNDJlNsEZpeXt70QUbGs4j6ZzF58GEcEnO+ZUh0VUnFnciYf+fGn/SDFi8q/TlDqtmC2r3lJiYNFOKg==
+  dependencies:
+    tslib "^1.9.3"
 
 "@firebase/app-types@0.3.10":
   version "0.3.10"
@@ -1014,11 +1042,6 @@ awesome-commando@^3.0.7:
     moment "^2.24.0"
     require-all "^3.0.0"
 
-awesome-converter@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/awesome-converter/-/awesome-converter-1.0.5.tgz#39845fce9b59adbbb48f224fc43c1cef2c239acd"
-  integrity sha512-SB5n8TgfXWQwbZVFedO75xpnocL1FdTjA4NBouoIeZsL8bq3khNxTglDAsGcTqUxPutQY37THBtsBybiDB3N0A==
-
 awesome-djs@^13.0.13:
   version "13.0.13"
   resolved "https://registry.yarnpkg.com/awesome-djs/-/awesome-djs-13.0.13.tgz#be88ca721ed3d3c439c3e384e5e34477cbfbcef0"
@@ -1031,16 +1054,6 @@ awesome-djs@^13.0.13:
     setimmediate "^1.0.5"
     tweetnacl "^1.0.1"
     ws "^6.1.3"
-
-awesome-querystring@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/awesome-querystring/-/awesome-querystring-1.2.0.tgz#2ff2ab60f7ad723157637b9d5942ded29b18bede"
-  integrity sha512-zHrDHVik0B2K6V0U2RuiEJ4PeaaKYeLAfobvp114FMLQ7MVt/zlg1iyW1KkMF8XKDuo3dKXoxIJaF5rdGc25+w==
-
-awesome-zalgo@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/awesome-zalgo/-/awesome-zalgo-1.0.5.tgz#570891d50ebac4ff075450f57f49a9b62b8f3b61"
-  integrity sha512-HG3QmbV1c9iKYYL9AQxXoEzsiP+PH8K191a8e2o1i7Qh926vO5avJG2oNPCm7tv8pSkTJRy35uruwlA1OlwatQ==
 
 aws-sign2@~0.7.0:
   version "0.7.0"
@@ -1627,9 +1640,9 @@ copyfiles@^2.1.0:
     yargs "^11.0.0"
 
 core-js@^2.5.7, core-js@^2.6.5:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.5.tgz#44bc8d249e7fb2ff5d00e0341a7ffb94fbf67895"
-  integrity sha512-klh/kDpwX8hryYL14M9w/xei6vrv6sE8gTHDG7/T/+SEovB/G4ejwcfE/CBzO6Edsu+OETZMZ3wcX/EjUkrl5A==
+  version "2.6.6"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.6.tgz#00eb6d6bf815471cc16d8563edd7d38786dec50b"
+  integrity sha512-Mt/LaAym54NXnrjEMdo918cT2h70tqb/Yl7T3uPHQHRm5SxVoqlKmerUy4mL11k8saSBDWQ7ULIHxmeFyT3pfg==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -6082,11 +6095,6 @@ undertaker@^1.2.1:
     object.defaults "^1.0.0"
     object.reduce "^1.0.0"
     undertaker-registry "^1.0.0"
-
-unescape-es6@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/unescape-es6/-/unescape-es6-2.1.2.tgz#38cb595c94e9c875025f2cee58b7e00f68ea51a1"
-  integrity sha512-uI9c1kssuqzVxHlowRNjO4roSLwMVpdtRX4wSX9fSobZi9Iv2rp2VXL5ZrcQVIM4E2b+IYbo69GwU2IIzdGgAw==
 
 union-value@^1.0.0:
   version "1.0.0"

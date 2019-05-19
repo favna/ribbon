@@ -12,9 +12,9 @@
 import { CollectorTimeout } from '@components/Constants';
 import { eShopHit, eShopResult } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
+import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
-import { stringify } from 'awesome-querystring';
 import moment from 'moment';
 import fetch from 'node-fetch';
 

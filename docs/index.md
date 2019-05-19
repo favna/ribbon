@@ -143,17 +143,6 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dd><p>Converters TemperatureCommand - Convert various units of temperature</p>
 <p><strong>Aliases</strong>: <code>heat</code>, <code>warmth</code>, <code>temp</code></p>
 </dd>
-<dt><a href="#module_favna">favna</a></dt>
-<dd><p>Custom FavnaCommand - Custom Command exclusive to ChaosGamez server</p>
-<p>A joke command to praise Favna
-Server admins can disable this command entirely by using the <code>rmt off</code> command
-<strong>Aliases</strong>: <code>.favna</code></p>
-</dd>
-<dt><a href="#module_kai">kai</a></dt>
-<dd><p>Custom KaiCommand - Custom Command exclusive to ChaosGamez server</p>
-<p>A joke command to spite Kai. Server admins can disable this command entirely by using the <code>rmt off</code> command</p>
-<p><strong>Aliases</strong>: <code>.kai</code></p>
-</dd>
 <dt><a href="#module_docs">docs</a></dt>
 <dd><p>Docs DjsDocsCommand - Get an entry from the Discord.JS documentation</p>
 <p><strong>Aliases</strong>: <code>djsguide</code>, <code>guide</code>, <code>djs</code></p>
@@ -1235,26 +1224,6 @@ Converters TemperatureCommand - Convert various units of temperature
 ```nginx
 temperature 20 c f
 ```
-<a name="module_favna"></a>
-
-## favna
-Custom FavnaCommand - Custom Command exclusive to ChaosGamez server
-
-A joke command to praise Favna
-Server admins can disable this command entirely by using the `rmt off` command
-**Aliases**: `.favna`
-
-**Category**: custom  
-<a name="module_kai"></a>
-
-## kai
-Custom KaiCommand - Custom Command exclusive to ChaosGamez server
-
-A joke command to spite Kai. Server admins can disable this command entirely by using the `rmt off` command
-
-**Aliases**: `.kai`
-
-**Category**: custom  
 <a name="module_docs"></a>
 
 ## docs
@@ -1305,7 +1274,7 @@ Docs YarnCommand - Responds with information on a NodeJS package using the Yarn 
 
 **Example**  
 ```nginx
-yarn awesome-querystring
+yarn @favware/querystring
 ```
 <a name="module_copypasta"></a>
 

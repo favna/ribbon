@@ -12,8 +12,8 @@
  */
 
 import { deleteCommandMessages } from '@components/Utils';
+import zalgo, { banish } from '@favware/zalgo';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import zalgo, { banish } from 'awesome-zalgo';
 
 type ZalgoArgs = {
     txt: string;

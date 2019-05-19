@@ -14,9 +14,9 @@
 import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { YoutubeResultList, YoutubeVideoSnippetType } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
+import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
-import { stringify } from 'awesome-querystring';
 import { stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
