@@ -23,7 +23,7 @@ export default class WeeklyCommand extends Command {
             aliases: ['weeklytopup', 'weeklybonus'],
             group: 'casino',
             memberName: 'weekly',
-            description: 'Receive your weekly cash top up of 3500 chips',
+            description: 'Receive your weekly cash top up of 2000 chips',
             guildOnly: true,
             throttling: {
                 usages: 2,

@@ -81,7 +81,6 @@ export default class Ribbon {
                 ['moderation', 'Moderation - Moderate with no effort'],
                 ['automod', 'Automod - Let Ribbon moderate the chat for you'],
                 ['streamwatch', 'Streamwatch - Spy on members and get notified when they go live'],
-                ['custom', 'Custom - Server specific commands'],
                 ['nsfw', 'NSFW - For all you dirty minds ( ͡° ͜ʖ ͡°)'],
                 ['owner', 'Owner - Exclusive to the bot owner(s)']
             ])

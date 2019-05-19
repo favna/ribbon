@@ -38,8 +38,9 @@ export default class MoneyCommand extends Command {
             aliases: ['money', 'rate'],
             group: 'converters',
             memberName: 'oxr',
-            description: 'Currency converter - makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
+            description: 'Convert any currency into another',
             format: 'CurrencyAmount FirstValuta SecondValuta',
+            details: 'Makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
             examples: ['convert 50 USD EUR'],
             guildOnly: false,
             throttling: {

@@ -11,6 +11,139 @@
         "action": "**Action:** Bad words filter has been OPTION",
         "words": "**Words:** Bad words have been set to WORDS",
         "notice": "**Notice:** Be sure to enable the general automod toggle with the PREFIXautomod command"
+      },
+      "duptext": {
+        "description": "Toggle the duplicate text filter",
+        "details": "Uses the Levenshtein Distance Algorithm to determine similarity.\nIf the distance is less than 10 the messages are considered duplicate.\nYou can specify the minutes within messages should be checked (defaults to 3),\nthe amount of allowed similar messages (defaults to 2) and the Levenshtein distance (defaults to 20)"
+      },
+      "excessivecaps": {
+        "description": "Toggle the excessive caps filter"
+      },
+      "excessivementions": {
+        "description": "Toggle the excessive mentions filter"
+      },
+      "excessiveemojis": {
+        "description": "Toggle the excessive emojis filter"
+      },
+      "externallinks": {
+        "description": "Toggle the external links filter"
+      },
+      "invitesfilter": {
+        "description": "Toggle the Discord server invites filter"
+      },
+      "slowmode": {
+        "description": "Toggle the server invites filter"
+      }
+    },
+    "casino": {
+      "bank": {
+        "description": "View your vault content"
+      },
+      "chips": {
+        "description": "Retrieves your current balance for the casino"
+      },
+      "coin": {
+        "description": "Gamble your chips in a coin flip"
+      },
+      "daily": {
+        "description": "Receive your daily cash top up of 300 chips"
+      },
+      "deposit": {
+        "description": "Deposit chips into your vault"
+      },
+      "give": {
+        "description": "Give another player some chips"
+      },
+      "leaderboard": {
+        "description": "Shows the top 5 ranking players for your server"
+      },
+      "memberbalance": {
+        "description": "Retrieves the amount of chips another member has for the casino"
+      },
+      "slots": {
+        "description": "Gamble your chips at the slot machine"
+      },
+      "weekly": {
+        "description": "Receive your weekly cash top up of 2000 chips"
+      },
+      "wheeloffortune": {
+        "description": "Gamble your chips iat the wheel of fortune"
+      },
+      "withdraw": {
+        "description": "Withdraw chips from your vault"
+      }
+    },
+    "converters": {
+      "length": {
+        "description": "Convert various units of length"
+      },
+      "mass": {
+        "description": "Convert various units of mass"
+      },
+      "math": {
+        "description": "Calculate anything"
+      },
+      "oxr": {
+        "description": "Convert any currency into another",
+        "details": "Makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)"
+      },
+      "temperature": {
+        "description": "Convert various units of temperature"
+      }
+    },
+    "docs": {
+      "docs": {
+        "description": "Gets info from something in the DJS docs"
+      },
+      "mdn": {
+        "description": "Responds with JS documentation pulled from Mozilla Developer Network"
+      },
+      "yarn": {
+        "description": "Responds with information on a NodeJS package using the Yarn package registry"
+      }
+    },
+    "extra": {
+      "copypasta": {
+        "description": ""
+      },
+      "copypastaadd": {
+        "description": ""
+      },
+      "copypastalist": {
+        "description": ""
+      },
+      "copypastaremove": {
+        "description": ""
+      },
+      "qrgen": {
+        "description": ""
+      },
+      "randomcol": {
+        "description": ""
+      },
+      "remind": {
+        "description": ""
+      },
+      "say": {
+        "description": ""
+      },
+      "saywut": {
+        "description": ""
+      },
+      "time": {
+        "description": ""
+      },
+      "translate": {
+        "description": ""
+      },
+      "weather": {
+        "description": ""
+      },
+      "xkcd": {
+        "description": ""
+      },
+      "zalgo": {
+        "description": ""
       }
     },
     "info": {

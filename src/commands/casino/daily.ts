@@ -23,7 +23,7 @@ export default class DailyCommand extends Command {
             aliases: ['topup', 'bonus'],
             group: 'casino',
             memberName: 'daily',
-            description: 'Receive your daily cash top up of 500 chips',
+            description: 'Receive your daily cash top up of 300 chips',
             guildOnly: true,
             throttling: {
                 usages: 2,
