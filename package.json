@@ -41,7 +41,7 @@
         "docs:build": "tsc -p ./tsconfig.docs.json",
         "docs:base": "jsdoc2md --template ./docs/template.hbs --files ./docsbuild/commands/**/*.js --example-lang nginx > ./docs/index.md",
         "docs:wiki": "jsdoc2md --template ./docs/template.hbs --files ./docsbuild/commands/**/*.js --example-lang nginx > ../wikiribbon/All-Commands.md",
-        "docs:json": "jsdoc2md --json --files ./docsbuild/commands/**/*.js > ../favware-site/src/assets/docs/ribbon.json",
+        "docs:json": "jsdoc2md --json --files ./docsbuild/commands/**/*.js > ../@favware-website/src/assets/docs/ribbon.json",
         "terser": "terser-folder ./dist -eo ./dist -x .js",
         "db:up": "docker-compose up -d",
         "db:stop": "docker-compose stop",
