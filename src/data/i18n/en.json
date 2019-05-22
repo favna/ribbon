@@ -146,9 +146,395 @@
         "description": ""
       }
     },
+    "games": {
+      "8ball": {
+        "description": ""
+      },
+      "dice": {
+        "description": ""
+      },
+      "dndcoin": {
+        "description": ""
+      },
+      "fight": {
+        "description": ""
+      },
+      "rps": {
+        "description": ""
+      },
+      "ship": {
+        "description": ""
+      },
+      "strawpoll": {
+        "description": ""
+      }
+    },
     "info": {
       "activity": {
         "description": "Gets the activity (presence) data from a member"
+      },
+      "avatar": {
+        "description": ""
+      },
+      "discordbots": {
+        "description": ""
+      },
+      "emotes": {
+        "description": ""
+      },
+      "help": {
+        "description": ""
+      },
+      "iam": {
+        "description": ""
+      },
+      "iamnot": {
+        "description": ""
+      },
+      "invite": {
+        "description": ""
+      },
+      "reddit": {
+        "description": ""
+      },
+      "server": {
+        "description": ""
+      },
+      "stats": {
+        "description": ""
+      },
+      "userinfo": {
+        "description": ""
+      }
+    },
+    "leaderboards": {
+      "fortnite": {
+        "description": ""
+      },
+      "osu": {
+        "description": ""
+      },
+      "overwatch": {
+        "description": ""
+      },
+      "pubg": {
+        "description": ""
+      },
+      "showdown": {
+        "description": ""
+      }
+    },
+    "moderation": {
+      "addrole": {
+        "description": ""
+      },
+      "announce": {
+        "description": ""
+      },
+      "automod": {
+        "description": ""
+      },
+      "ban": {
+        "description": ""
+      },
+      "casinolimit": {
+        "description": ""
+      },
+      "confmute": {
+        "description": ""
+      },
+      "countdownadd": {
+        "description": ""
+      },
+      "countdownlist": {
+        "description": ""
+      },
+      "countdownremove": {
+        "description": ""
+      },
+      "defaultrole": {
+        "description": ""
+      },
+      "deletecommandmessages": {
+        "description": ""
+      },
+      "deletewarn": {
+        "description": ""
+      },
+      "delrole": {
+        "description": ""
+      },
+      "i18n": {
+        "description": ""
+      },
+      "joinmessages": {
+        "description": ""
+      },
+      "kick": {
+        "description": ""
+      },
+      "leavemessages": {
+        "description": ""
+      },
+      "listwarn": {
+        "description": ""
+      },
+      "lockdown": {
+        "description": ""
+      },
+      "memberlogs": {
+        "description": ""
+      },
+      "modlogs": {
+        "description": ""
+      },
+      "mute": {
+        "description": ""
+      },
+      "nickname": {
+        "description": ""
+      },
+      "purge": {
+        "description": ""
+      },
+      "regexmatchtoggle": {
+        "description": ""
+      },
+      "selfroles": {
+        "description": ""
+      },
+      "setannounce": {
+        "description": ""
+      },
+      "softban": {
+        "description": ""
+      },
+      "tempban": {
+        "description": ""
+      },
+      "timeradd": {
+        "description": ""
+      },
+      "timerlist": {
+        "description": ""
+      },
+      "timerremove": {
+        "description": ""
+      },
+      "unknownmessages": {
+        "description": ""
+      },
+      "unlock": {
+        "description": ""
+      },
+      "unmute": {
+        "description": ""
+      },
+      "warn": {
+        "description": ""
+      }
+    },
+    "music": {
+      "defaultvolume": {
+        "description": ""
+      },
+      "launch": {
+        "description": ""
+      },
+      "maxlength": {
+        "description": ""
+      },
+      "maxsongs": {
+        "description": ""
+      },
+      "pause": {
+        "description": ""
+      },
+      "queue": {
+        "description": ""
+      },
+      "resume": {
+        "description": ""
+      },
+      "save": {
+        "description": ""
+      },
+      "shuffle": {
+        "description": ""
+      },
+      "skip": {
+        "description": ""
+      },
+      "status": {
+        "description": ""
+      },
+      "stop": {
+        "description": ""
+      },
+      "volume": {
+        "description": ""
+      }
+    },
+    "nsfw": {
+      "e621": {
+        "description": ""
+      },
+      "gelbooru": {
+        "description": ""
+      },
+      "paheal": {
+        "description": ""
+      },
+      "pornvids": {
+        "description": ""
+      },
+      "rule34": {
+        "description": ""
+      }
+    },
+    "owner": {
+      "checkguilds": {
+        "description": ""
+      },
+      "customtopup": {
+        "description": ""
+      },
+      "dbpost": {
+        "description": ""
+      },
+      "tagmember": {
+        "description": ""
+      },
+      "testing": {
+        "description": ""
+      },
+      "unknowncommand": {
+        "description": ""
+      }
+    },
+    "pokemon": {
+      "ability": {
+        "description": ""
+      },
+      "dex": {
+        "description": ""
+      },
+      "flavor": {
+        "description": ""
+      },
+      "item": {
+        "description": ""
+      },
+      "learn": {
+        "description": ""
+      },
+      "move": {
+        "description": ""
+      },
+      "tcg": {
+        "description": ""
+      },
+      "type": {
+        "description": ""
+      }
+    },
+    "searches": {
+      "anime": {
+        "description": ""
+      },
+      "cydia": {
+        "description": ""
+      },
+      "define": {
+        "description": ""
+      },
+      "eshop": {
+        "description": ""
+      },
+      "girlsfrontline": {
+        "description": ""
+      },
+      "google": {
+        "description": ""
+      },
+      "igdb": {
+        "description": ""
+      },
+      "image": {
+        "description": ""
+      },
+      "itunes": {
+        "description": ""
+      },
+      "lmgtfy": {
+        "description": ""
+      },
+      "manga": {
+        "description": ""
+      },
+      "saucenao": {
+        "description": ""
+      },
+      "steam": {
+        "description": ""
+      },
+      "tmdb": {
+        "description": ""
+      },
+      "tvdb": {
+        "description": ""
+      },
+      "urban": {
+        "description": ""
+      },
+      "youtube": {
+        "description": ""
+      }
+    },
+    "streamwatch": {
+      "twitchmonitors": {
+        "description": ""
+      },
+      "twitchoutput": {
+        "description": ""
+      },
+      "twitchtoggle": {
+        "description": ""
+      }
+    },
+    "weeb": {
+      "cookie": {
+        "description": ""
+      },
+      "cuddle": {
+        "description": ""
+      },
+      "feed": {
+        "description": ""
+      },
+      "hug": {
+        "description": ""
+      },
+      "kiss": {
+        "description": ""
+      },
+      "neko": {
+        "description": ""
+      },
+      "pat": {
+        "description": ""
+      },
+      "poke": {
+        "description": ""
+      },
+      "slap": {
+        "description": ""
+      },
+      "smug": {
+        "description": ""
+      },
+      "tickle": {
+        "description": ""
       }
     }
   }
