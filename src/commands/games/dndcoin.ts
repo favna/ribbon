@@ -1,7 +1,7 @@
 /**
  * @file Games DndCCommand - Flips a coin
  *
- * **Aliases**: `coinflip`, `dndc`, `dcoin`
+ * **Aliases**: `coinflip`, `dndc`, `dcoin`, `dnd`
  * @module
  * @category games
  * @name dndc
@@ -16,7 +16,7 @@ export default class DndCCommand extends Command {
     constructor (client: CommandoClient) {
         super(client, {
             name: 'dndcoin',
-            aliases: ['coinflip', 'dndc', 'dcoin'],
+            aliases: ['coinflip', 'dndc', 'dcoin', 'dnd'],
             group: 'games',
             memberName: 'dndcoin',
             description: 'Flips a coin',
