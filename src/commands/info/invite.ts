@@ -37,12 +37,12 @@ export default class InviteCommand extends Command {
         inviteEmbed
             .setTitle('Ribbon by Favna')
             .setThumbnail(this.client.user!.displayAvatarURL({ format: 'png' }))
-            .setURL('https://favna.xyz/ribbon')
+            .setURL('https://favware.tech/ribbon')
             .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
             .setDescription(stripIndents`Enrich your Discord server with a fully modular Discord bot with many many commands\n
-                [Add me to your server](https://favna.xyz/redirect/ribbon)
-                [Join the Support Server](https://favna.xyz/redirect/server)
-                [Website](https://favna.xyz/ribbon)
+                [Add me to your server](https://favware.tech/redirect/ribbon)
+                [Join the Support Server](https://favware.tech/redirect/server)
+                [Website](https://favware.tech/ribbon)
                 [GitHub](https://github.com/Favna/Ribbon)
                 [Wiki](https://github.com/Favna/Ribbon/wiki)
             `);
@@ -51,7 +51,7 @@ export default class InviteCommand extends Command {
 
         return msg.embed(
             inviteEmbed,
-            'Find information on Ribbon here: https://favna.xyz/ribbon'
+            'Find information on Ribbon here: https://favware.tech/ribbon'
         );
     }
 }

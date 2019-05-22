@@ -5,7 +5,7 @@
  * @module
  * @category extra
  * @name qrgen
- * @example qrgen https://favna.xyz/ribbon
+ * @example qrgen https://favware.tech/ribbon
  * @param {string} URL URL you want to encode into a QR image
  */
 

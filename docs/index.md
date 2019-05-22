@@ -1355,7 +1355,7 @@ Extra QRGenCommand - Generates a QR code from text (like a URL)
 
 **Example**  
 ```nginx
-qrgen https://favna.xyz/ribbon
+qrgen https://favware.tech/ribbon
 ```
 <a name="module_randomcol"></a>
 

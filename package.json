@@ -1,12 +1,12 @@
 {
-    "name": "discord-ribbon",
+    "name": "@favware/ribbon",
     "version": "9.0.0",
-    "description": "feature rich, modular Discord.JS-Commando server bot written in TypeScript",
-    "author": "Jeroen \"Favna\" Claassens <support@favware.tech> (https://favna.xyz/home)",
+    "description": "feature rich, modular Discord.JS-Commando server bot",
+    "author": "@favware",
     "license": "GPL-3.0",
     "private": true,
     "main": "./dist/app.js",
-    "homepage": "https://favna.xyz/ribbon",
+    "homepage": "https://favware.tech/ribbon",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/favna/ribbon.git"
@@ -45,7 +45,8 @@
         "terser": "terser-folder ./dist -eo ./dist -x .js",
         "db:up": "docker-compose up -d",
         "db:stop": "docker-compose stop",
-        "db:down": "docker-compose down"
+        "db:down": "docker-compose down",
+        "prepublishOnly": "yarn build"
     },
     "keywords": [
         "bot",
