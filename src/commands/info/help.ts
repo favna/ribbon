@@ -178,12 +178,12 @@ export default class HelpCommand extends Command {
     private getDescription (command: Command, language: string): string {
         const translateKey = `commands.${command.groupID}.${command.memberName}.description`;
         const translation = i18n.t(translateKey, { lng: language });
-        return translateKey !== translation ? translation : command.description;
+        return translation && translateKey !== translation ? translation : command.description;
     }
 
     private getDetails (command: Command, language: string): string {
         const translateKey = `commands.${command.groupID}.${command.memberName}.details`;
         const translation = i18n.t(translateKey, { lng: language });
-        return translateKey !== translation ? translation : command.details;
+        return translation && translateKey !== translation ? translation : command.details;
     }
 }

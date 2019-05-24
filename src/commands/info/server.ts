@@ -80,7 +80,7 @@ export default class ServerInfoCommand extends Command {
         serverEmbed
             .setColor(msg.guild.owner ? msg.guild.owner.displayHexColor : DEFAULT_EMBED_COLOR)
             .setAuthor('Server Info', `${ASSET_BASE_PATH}/ribbon/discordlogo.png`)
-            .setThumbnail(msg.guild.iconURL({ format: 'png' }))
+            .setThumbnail(msg.guild.iconURL({ format: 'png' })!)
             .setFooter(`Server ID: ${msg.guild.id}`)
             .addField('Server Name', msg.guild.name, true)
             .addField('Owner', msg.guild.owner ? msg.guild.owner.user.tag : 'Owner is MIA', true)
@@ -107,7 +107,7 @@ export default class ServerInfoCommand extends Command {
             );
         }
 
-        if (msg.guild.splashURL()) serverEmbed.setImage(msg.guild.splashURL());
+        if (msg.guild.splashURL()) serverEmbed.setImage(msg.guild.splashURL()!);
 
         deleteCommandMessages(msg, this.client);
 
