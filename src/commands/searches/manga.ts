@@ -108,7 +108,7 @@ export default class MangaCommand extends Command {
             .setURL(`https://kitsu.io/manga/${manga.id}`)
             .setDescription(manga.synopsis.replace(/(.+)[\r\n\t](.+)/gim, '$1 $2').split('\r\n')[0])
             .setFooter(hasManageMessages ? `Result ${position + 1} of ${mangaLength}` : '')
-            .setImage(manga.posterImage.original)
+            .setImage(manga.posterImage && manga.posterImage.original ? manga.posterImage.original : `${ASSET_BASE_PATH}/ribbon/kitsulogo.png`)
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/kitsulogo.png`)
             .addField('Canonical Title', manga.canonicalTitle, true)
             .addField('Score', `${manga.averageRating}%`, true)
