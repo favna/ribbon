@@ -142,18 +142,16 @@ export default class CydiaCommand extends Command {
             section = $('#section').html()!;
             size = $('#extra').text();
             thumbnail = `${baseURL}${$('#header > #icon > div > span > img').attr('src').slice(1)}`;
-        } catch {
-            // Intentionally empty
-        }
+            // tslint:disable-next-line: no-empty
+        } catch { }
 
         try {
             const priceReq = await fetch(`${baseURL}api/ibbignerd?${stringify({ query: pkg.name })}`);
             const priceData = await priceReq.json();
 
             price = priceData ? `$${roundNumber(parseFloat(priceData.msrp.toString()), 2).toFixed(2)}` : 'Free';
-        } catch (priceErr) {
-            // Intentionally empty
-        }
+            // tslint:disable-next-line: no-empty
+        } catch { }
 
         return {
             size,

@@ -625,9 +625,8 @@ export const handleMemberJoin = (client: CommandoClient, member: GuildMember) =>
                 `Automatically assigned the role ${member.guild.roles.get(guild.settings.get('defaultRole'))!.name} to this member`
             );
         }
-    } catch (err) {
-        // Intentionally empty
-    }
+        // tslint:disable-next-line: no-empty
+    } catch { }
 
     try {
         if (guild.settings.get('memberlogs', true)) {

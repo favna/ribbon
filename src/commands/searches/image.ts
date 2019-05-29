@@ -97,9 +97,8 @@ export default class ImageCommand extends Command {
             }
 
             return null;
-        } catch (err) {
-            // Intentionally empty
-        }
+            // tslint:disable-next-line: no-empty
+        } catch { }
 
         try {
             const backupSearch = await fetch(
