@@ -81,7 +81,7 @@
         "erlpack": "^0.1.2",
         "fast-levenshtein": "^2.0.6",
         "firebase-admin": "^8.0.0",
-        "fuse.js": "^3.4.4",
+        "fuse.js": "^3.4.5",
         "gulp-replace": "^1.0.0",
         "i18next": "^15.1.3",
         "interval-promise": "^1.3.0",
