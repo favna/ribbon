@@ -105,7 +105,7 @@
     "devDependencies": {
         "@favware/tslint-config": "^1.0.0",
         "@firebase/app-types": "^0.4.0",
-        "@google-cloud/firestore": "^2.0.0",
+        "@google-cloud/firestore": "^2.1.1",
         "@types/better-sqlite3": "^5.2.3",
         "@types/cheerio": "^0.22.11",
         "@types/common-tags": "^1.8.0",
