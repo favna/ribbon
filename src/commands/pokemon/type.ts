@@ -184,7 +184,7 @@ export default class TypeCommand extends Command {
 
             embed
                 .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
                 .setAuthor(`Type effectiveness for ${types.join(' ')}`)
                 .addField('__Offensive__', stripIndents`
                     Supereffective against: ${atk.doubleEffectiveTypes.map((el: string) => `${el} (x4)`).concat(atk.effectiveTypes.map((el: string) => `${el} (x2)`)).join(', ')}

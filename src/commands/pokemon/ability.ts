@@ -119,7 +119,7 @@ export default class AbilityCommand extends Command {
     ): MessageEmbed {
         return new MessageEmbed()
             .setColor(color)
-            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
             .setTitle(sentencecase(ability.name))
             .setFooter(hasManageMessages ? `Result ${position + 1} of ${abilitySearchLength}` : '')
             .addField('Description', ability.desc ? ability.desc : ability.shortDesc)

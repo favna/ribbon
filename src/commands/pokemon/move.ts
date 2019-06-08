@@ -119,7 +119,7 @@ export default class MoveCommand extends Command {
     ): MessageEmbed {
         return new MessageEmbed()
             .setColor(color)
-            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
             .setTitle(sentencecase(currentMove.name))
             .setFooter(hasManageMessages ? `Result ${position + 1} of ${moveSearchLength}` : '')
             .addField('Description', currentMove.desc ? currentMove.desc : currentMove.shortDesc)

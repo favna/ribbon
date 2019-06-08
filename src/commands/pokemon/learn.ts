@@ -127,7 +127,7 @@ export default class LearnCommand extends Command {
 
             learnEmbed
                 .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
+                .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
                 .setAuthor(
                     `${sentencecase(pokemon)}`,
                     `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${pokemon}.png`

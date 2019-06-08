@@ -117,7 +117,7 @@ export default class ItemCommand extends Command {
     ): MessageEmbed {
         return new MessageEmbed()
             .setColor(color)
-            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
             .setAuthor(
                 `${sentencecase(item.name)}`,
                 `https://play.pokemonshowdown.com/sprites/itemicons/${item.name.toLowerCase().replace(/ /g, '-')}.png`
