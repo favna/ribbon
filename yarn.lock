@@ -614,6 +614,14 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+"@types/gulp-terser@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@types/gulp-terser/-/gulp-terser-1.2.0.tgz#6737ab3bda6d7485eb86efd4eb6a2ffcf360cc9f"
+  integrity sha512-VvzRHZvdutztJjr7rcEyigQLNvoVbjkc2AtvH7ibc7VQglHEfyetkHMkUe3P1FZkEBp8U30HkkVa6tQB2dg9uw==
+  dependencies:
+    "@types/node" "*"
+    terser "^4.0.0"
+
 "@types/gulp@^4.0.6":
   version "4.0.6"
   resolved "https://registry.yarnpkg.com/@types/gulp/-/gulp-4.0.6.tgz#68fe0e1f0ff3657cfca46fb564806b744a1bf899"

@@ -110,6 +110,7 @@
         "@types/dotenv": "^6.1.1",
         "@types/fast-levenshtein": "^0.0.1",
         "@types/gulp": "^4.0.6",
+        "@types/gulp-terser": "^1.2.0",
         "@types/libsodium-wrappers": "^0.7.5",
         "@types/module-alias": "^2.0.0",
         "@types/moment-duration-format": "^2.2.2",
