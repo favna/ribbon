@@ -11,6 +11,7 @@
 
 import { badwords, caps, duptext, emojis, invites, links, mentions } from '@components/AutomodHelper';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { MessageAttachment } from 'awesome-djs';
 
 type SayArgs = {
     txt: string
@@ -58,18 +59,14 @@ export default class SayCommand extends Command {
     }
 
     public run (msg: CommandoMessage, { txt }: SayArgs) {
-        if (
-            msg.guild &&
-            msg.deletable &&
-            msg.guild.settings.get('automod', false)
-        ) {
+        if (msg.guild && msg.deletable && msg.guild.settings.get('automod', false)) {
             if (msg.guild.settings.get('caps', false).enabled) {
                 const opts = msg.guild.settings.get('caps');
                 if (caps(msg, opts.threshold, opts.minlength, this.client)) {
                     return msg.reply(
                         `you cannot use \`${
-                            msg.guild.commandPrefix
-                            }say\` to bypass the no excessive capitals filter`
+                        msg.guild.commandPrefix
+                        }say\` to bypass the no excessive capitals filter`
                     );
                 }
             }
@@ -86,8 +83,8 @@ export default class SayCommand extends Command {
                 ) {
                     return msg.reply(
                         `you cannot use \`${
-                            msg.guild.commandPrefix
-                            }say\` to bypass the no duplicate text filter`
+                        msg.guild.commandPrefix
+                        }say\` to bypass the no duplicate text filter`
                     );
                 }
             }
@@ -96,8 +93,8 @@ export default class SayCommand extends Command {
                 if (emojis(msg, opts.threshold, opts.minlength, this.client)) {
                     return msg.reply(
                         `you cannot use \`${
-                            msg.guild.commandPrefix
-                            }say\` to bypass the no excessive emojis filter`
+                        msg.guild.commandPrefix
+                        }say\` to bypass the no excessive emojis filter`
                     );
                 }
             }
@@ -114,6 +111,10 @@ export default class SayCommand extends Command {
             if (msg.guild.settings.get('mentions', false).enabled && mentions(msg, msg.guild.settings.get('mentions').threshold, this.client)) {
                 return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no excessive mentions filter`);
             }
+        }
+
+        if (msg.attachments.first() && (msg.attachments.first() as MessageAttachment).url) {
+            txt += `\n${(msg.attachments.first() as MessageAttachment).url}`;
         }
 
         const saydata = {
