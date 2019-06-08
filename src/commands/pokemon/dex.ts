@@ -269,7 +269,7 @@ export default class DexCommand extends Command {
 
         dexEmbed
             .setColor(DexCommand.fetchColor(poke.color))
-            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/unovadexclosedv2.png`)
+            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
             .setAuthor(`#${poke.num} - ${sentencecase(poke.species)}`, pokeData.sprite)
             .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
             .setFooter(hasManageMessages ? `Result ${position + 1} of ${pokeSearchLength}` : '')
