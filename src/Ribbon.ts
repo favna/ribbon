@@ -19,6 +19,7 @@ export default class Ribbon {
         this.client = new CommandoClient({
             commandPrefix: '!',
             owner: ['268792781713965056', '437280139353653249'],
+            invite: 'discord.gg/sguypX8',
             presence: {
                 status: 'online',
                 activity: {
