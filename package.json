@@ -16,8 +16,8 @@
     },
     "scripts": {
         "lint": "tslint -p . -c ./tslint.json --format verbose --fix",
-        "clean": "rimraf ./dist",
-        "prebuild": "yarn clean && yarn lint",
+        "clean": "rimraf ./dist ./tsconfig.tsbuildinfo",
+        "prebuild": "yarn lint",
         "build": "tsc",
         "postbuild": "yarn copyfiles && yarn replace && yarn terser",
         "start": "cross-env NODE_ENV=development ts-node ./src/app.ts",

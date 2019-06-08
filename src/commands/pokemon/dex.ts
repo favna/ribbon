@@ -157,12 +157,16 @@ export default class DexCommand extends Command {
         }
     }
 
+    // tslint:disable-next-line:cyclomatic-complexity
     private fetchAllData (
         poke: PokedexType, shines: boolean,
         pokeFuse: Fuse<PokedexType, Fuse.FuseOptions<PokedexType & IPokeDexAliases>>
     ): PokeDataType {
         const tiers: FormatsJSONType = formats as FormatsJSONType;
         const flavors: FlavorJSONType = entries as FlavorJSONType;
+        const smogonTier = tiers[poke.species.toLowerCase().replace(/([-% ])/gm, '')]
+            ? tiers[poke.species.toLowerCase().replace(/([-% ])/gm, '')]
+            : 'Undiscovered';
 
         const pokeData: PokeDataType = {
             abilities: '',
@@ -170,7 +174,7 @@ export default class DexCommand extends Command {
             flavors: '*PokéDex data not found for this Pokémon*',
             genders: '',
             sprite: '',
-            tier: tiers[poke.species.toLowerCase().replace(/([-% ])/gm, '')],
+            tier: smogonTier,
             entries: [],
         };
 
