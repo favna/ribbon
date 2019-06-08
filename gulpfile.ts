@@ -1,5 +1,4 @@
 import gulp from 'gulp';
-import terser from 'gulp-terser';
 import typescript from 'gulp-typescript';
 import { argv } from 'yargs';
 
@@ -22,7 +21,7 @@ const compileSingleToJavaScript = (done: () => void) => {
 
         gulp.src(file)
             .pipe(tsProject())
-            .js.pipe(terser({compress: {ecma: 6, drop_console: true}}))
+            .js
             .pipe(gulp.dest(targetFolder));
     }
 
