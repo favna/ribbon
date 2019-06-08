@@ -11,13 +11,14 @@
  * @param {string} TimerID The ID of the timed message to remove
  */
 
-import { timeparseHelper } from '@components/TimeparseHelper';
+import { DURA_FORMAT } from '@components/Constants';
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
+import 'moment-duration-format';
 import path from 'path';
 
 type TimerRemoveArgs = {
@@ -74,7 +75,7 @@ export default class TimerRemoveCommand extends Command {
             const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
             channel.send(stripIndents`
-		        <@${this.client.owners[0].id}> Error occurred in validating the ID for the \`timerremove\` command!
+                <@${this.client.owners[0].id}> Error occurred in validating the ID for the \`timerremove\` command!
                 **Server:** ${msg.guild.name} (${msg.guild.id})
                 **Author:** ${msg.author!.tag} (${msg.author!.id})
                 **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
@@ -97,7 +98,7 @@ export default class TimerRemoveCommand extends Command {
                 .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
                 .setDescription(stripIndents`
                     **Action:** Timed message removed
-                    **Interval:** ${timeparseHelper(interval, { long: true })}
+                    **Interval:** ${moment.duration(interval).format(DURA_FORMAT)}
                     **Channel:** <#${channel}>
                     **Message:** ${content}`
                 )

@@ -12,7 +12,6 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { timeparseHelper } from '@components/TimeparseHelper';
 import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -96,7 +95,7 @@ export default class OverwatchCommand extends Command {
                         ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
                         : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
 
-                    return { hero: r, time: timeparseHelper(`${seconds}s`) };
+                    return { hero: r, time: seconds * 1000 };
                 })
                 .sort((a: OverwatchHeroType, b: OverwatchHeroType) => a.time - b.time).reverse().slice(0, 3);
             const topQuickPlayHeroes = Object.keys(data.quickPlayStats.topHeroes)
@@ -108,7 +107,7 @@ export default class OverwatchCommand extends Command {
                         ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
                         : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
 
-                    return { hero: r, time: timeparseHelper(`${seconds}s`) };
+                    return { hero: r, time: seconds * 1000 };
                 })
                 .sort((a: OverwatchHeroType, b: OverwatchHeroType) => a.time - b.time).reverse().slice(0, 3);
             const quickPlayStats = data.quickPlayStats.careerStats;

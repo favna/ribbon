@@ -12,7 +12,7 @@
  * @param {string} Reminder Thing you want Ribbon to remind you of
  */
 
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, DURA_FORMAT } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -22,7 +22,7 @@ import moment from 'moment';
 import path from 'path';
 
 type RemindArgs = {
-    time: string;
+    time: number;
     reminder: string;
 };
 
@@ -46,51 +46,7 @@ export default class RemindCommand extends Command {
                 {
                     key: 'time',
                     prompt: 'Reply with the time in which you want to be reminded?',
-                    type: 'string',
-                    validate: (t: string) => {
-                        if (/^(?:[0-9]{1,3}(?:m|min|mins|minute|minutes|h|hr|hour|hours|d|day|days))$/i.test(t)) {
-                            return true;
-                        }
-
-                        return stripIndents`Time until reminder has to be a formatting of \`Number\` \`Specification\`.
-                        Specification can have various option:
-                          - \`m\` , \`min\`, \`mins\`, \`minute\` or \`minutes\` for minutes
-                          - \`h\`, \`hr\`, \`hour\` or \`hours\` for hours
-                          - \`d\`, \`day\` or \`days\` for days
-
-                        example: \`5m\` for 5 minutes from now; \`1d\` for 1 day from now
-                        Please reply with your properly formatted time until reminder or`;
-                    },
-                    parse: (t: string) => {
-                        const match = t.match(/[a-z]+|[^a-z]+/gi) as RegExpMatchArray;
-                        let multiplier = 1;
-
-                        switch (match[1]) {
-                            case 'm':
-                            case 'min':
-                            case 'mins':
-                            case 'minute':
-                            case 'minutes':
-                                multiplier = 1;
-                                break;
-                            case 'h':
-                            case 'hr':
-                            case 'hour':
-                            case 'hours':
-                                multiplier = 60;
-                                break;
-                            case 'd':
-                            case 'day':
-                            case 'days':
-                                multiplier = 1440;
-                                break;
-                            default:
-                                multiplier = 1;
-                                break;
-                        }
-
-                        return Number(match[0]) * multiplier;
-                    },
+                    type: 'duration',
                 },
                 {
                     key: 'reminder',
@@ -110,7 +66,7 @@ export default class RemindCommand extends Command {
                 .run({
                     remindtext: reminder,
                     remindtime: moment()
-                        .add(time, 'minutes')
+                        .add(time, 'ms')
                         .format('YYYY-MM-DD HH:mm:ss'),
                     userid: msg.author!.id,
                 });
@@ -123,7 +79,7 @@ export default class RemindCommand extends Command {
                     .run({
                         remindtext: reminder,
                         remindtime: moment()
-                            .add(time, 'minutes')
+                            .add(time, 'ms')
                             .format('YYYY-MM-DD HH:mm:ss'),
                         userid: msg.author!.id,
                     });
@@ -136,7 +92,8 @@ export default class RemindCommand extends Command {
                     **Server:** ${msg.guild.name} (${msg.guild.id})
                     **Author:** ${msg.author!.tag} (${msg.author!.id})
                     **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-                    **Input:** \`${time}\` || \`${reminder}\`
+                    **Should have reminded in:** ${moment.duration(time).format(DURA_FORMAT)}
+                    **Reminder that should've been sent:** \`${reminder}\`
                     **Error Message:** ${err}
                 `);
 
@@ -150,8 +107,7 @@ export default class RemindCommand extends Command {
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/reminders.png`)
             .setTitle('Your reminder was stored!')
             .setDescription(reminder)
-            .setFooter('Reminder will be sent')
-            .setTimestamp(moment().add(time, 'minutes').toDate());
+            .addField('I will remind you in', moment.duration(time).format(DURA_FORMAT));
 
         deleteCommandMessages(msg, this.client);
 

@@ -14,11 +14,14 @@
  *     prevent Ribbon from deleting the banned member's messages
  */
 
-import { timeparseHelper } from '@components/TimeparseHelper';
+
+import { DURA_FORMAT } from '@components/Constants';
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
+import moment from 'moment';
+import 'moment-duration-format';
 
 type TempbanArgs = {
     member: GuildMember;
@@ -51,32 +54,7 @@ export default class TempbanCommand extends Command {
                 {
                     key: 'time',
                     prompt: 'How long should that member be banned?',
-                    type: 'string',
-                    validate: (t: string) => {
-                        if (/^(?:[0-9]{1,2}(?:m|h|d){1})$/i.test(t)) return true;
-                        return 'Has to be in the pattern of `50m`, `2h` or `01d` wherein `m` would be minutes, `h` would be hours and `d` would be days';
-                    },
-                    parse: (t: string) => {
-                        const match = t.match(/[a-z]+|[^a-z]+/gi);
-                        let multiplier = 1;
-
-                        switch (match![1]) {
-                            case 'm':
-                                multiplier = 1;
-                                break;
-                            case 'h':
-                                multiplier = 60;
-                                break;
-                            case 'd':
-                                multiplier = 1440;
-                                break;
-                            default:
-                                multiplier = 1;
-                                break;
-                        }
-
-                        return Number(match![0]) * multiplier * 60000;
-                    },
+                    type: 'duration',
                 },
                 {
                     key: 'reason',
@@ -115,7 +93,7 @@ export default class TempbanCommand extends Command {
             .setDescription(stripIndents`
                 **Member:** ${member.user.tag} (${member.id})
                 **Action:** Temporary Ban
-                **Duration:** ${timeparseHelper(time, { long: true })}
+                **Duration:** ${moment.duration(time).format(DURA_FORMAT.slice(5))}
                 **Reason:** ${reason !== '' ? reason : 'No reason given by staff'}`
             )
             .setTimestamp();

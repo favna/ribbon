@@ -1002,13 +1002,14 @@ export const handleReady = async (client: CommandoClient) => {
     FirebaseStorage.servers = parseInt(await getServersData(), 10);
     FirebaseStorage.users = parseInt(await getUsersData(), 10);
 
+    const everyMinute = 1 * 60 * 1000;
     const everyThreeMinutes = 3 * 60 * 1000;
     const everyThirdHour = 3 * 60 * 60 * 1000;
 
     interval(async () => setUpdateToFirebase(client), everyThreeMinutes);
-    interval(async () => sendTimedMessages(client), everyThreeMinutes);
+    interval(async () => sendTimedMessages(client), everyMinute);
     interval(async () => sendCountdownMessages(client), everyThreeMinutes);
-    interval(async () => sendReminderMessages(client), everyThreeMinutes);
+    interval(async () => sendReminderMessages(client), everyMinute);
     interval(async () => payoutLotto(client), everyThirdHour);
 
     fs.watch(

@@ -22,13 +22,14 @@
  * @param {string} Message  The message(s) to repeat
  */
 
-import { timeparseHelper } from '@components/TimeparseHelper';
+import { DURA_FORMAT } from '@components/Constants';
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
+import 'moment-duration-format';
 import path from 'path';
 
 type TimerAddArgs = {
@@ -62,39 +63,7 @@ export default class TimerAddCommand extends Command {
                 {
                     key: 'interval',
                     prompt: 'At which interval should the message(s) be repeated?',
-                    type: 'string',
-                    validate: (t: string) => {
-                        if (/^(?:[0-9]{1,3}(?:m|min|mins|minute|minutes|h|hr|hour|hours|d|day|days){1})$/i.test(t)) return true;
-                        return stripIndents`
-                            Time until reminder has to be a formatting of \`Number\` \`Specification\`. Specification can have various option:
-                            - \`m\` , \`min\`, \`mins\`, \`minute\` or \`minutes\` for minutes
-                            - \`h\`, \`hr\`, \`hour\` or \`hours\` for hours
-                            - \`d\`, \`day\` or \`days\` for days
-
-                            Example: \`5m\` for 5 minutes from now; \`1d\` for 1 day from now
-                            Please reply with your properly formatted time until reminder or`;
-                    },
-                    parse: (t: string) => {
-                        const match = t.match(/[a-z]+|[^a-z]+/gi);
-                        let multiplier = 1;
-
-                        switch (match![1]) {
-                            case 'm':
-                                multiplier = 1;
-                                break;
-                            case 'h':
-                                multiplier = 60;
-                                break;
-                            case 'd':
-                                multiplier = 1440;
-                                break;
-                            default:
-                                multiplier = 1;
-                                break;
-                        }
-
-                        return Number(match![0]) * multiplier * 60000;
-                    },
+                    type: 'duration',
                 },
                 {
                     key: 'timerChannel',
@@ -157,7 +126,7 @@ export default class TimerAddCommand extends Command {
                     **Server:** ${msg.guild.name} (${msg.guild.id})
                     **Author:** ${msg.author!.tag} (${msg.author!.id})
                     **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-                    **Interval:** ${timeparseHelper(interval, { long: true })}
+                    **Interval:** ${moment.duration(interval).format(DURA_FORMAT.slice(5))}
                     **Channel:** ${channel.name} (${channel.id})>
                     **Message:** ${content}
                     **Error Message:** ${err}
@@ -173,7 +142,7 @@ export default class TimerAddCommand extends Command {
             .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
             .setDescription(stripIndents`
                 **Action:** Timed message stored
-                **Interval:** ${timeparseHelper(interval, { long: true })}
+                **Interval:** ${moment.duration(interval).format(DURA_FORMAT)}
                 **Channel:** <#${timerChannel.id}>
                 **Message:** ${content}`
             )

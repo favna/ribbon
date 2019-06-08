@@ -7,13 +7,14 @@
  * @name timerlist
  */
 
-import { timeparseHelper } from '@components/TimeparseHelper';
+import { DURA_FORMAT } from '@components/Constants';
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Snowflake, TextChannel, Util } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
+import 'moment-duration-format';
 import path from 'path';
 import { TimerType } from 'RibbonTypes';
 
@@ -44,7 +45,7 @@ export default class TimerListCommand extends Command {
             list.forEach((row: TimerType) =>
                 body += `${stripIndents`
                     **id:** ${row.id}
-                    **interval:** ${timeparseHelper(row.interval, { long: true })}
+                    **interval:** ${moment.duration(row.interval).format(DURA_FORMAT.slice(5))}
                     **channel:** <#${row.channel}>
                     **content:** ${row.content}
                     **last sent at:** ${moment(row.lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}
