@@ -10,7 +10,6 @@
  */
 
 import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { IPokeAbilityAliases, PokeAbilityDetailsType } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import BattleAbilities from '@pokedex/abilities';
 import { abilityAliases } from '@pokedex/aliases';
@@ -19,6 +18,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
+import { IPokeAbilityAliases, PokeAbilityDetailsType } from 'RibbonTypes';
 
 type AbilityArgs = {
     ability: string;

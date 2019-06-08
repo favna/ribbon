@@ -11,7 +11,6 @@
  * @param {string} CountdownID The ID of the Countdown to remove
  */
 
-import { CountdownType } from '@components/Types';
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -20,6 +19,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
+import { CountdownType } from 'RibbonTypes';
 
 type CountdownRemoveArgs = {
     id: number;

@@ -13,7 +13,6 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { timeparseHelper } from '@components/TimeparseHelper';
-import { OverwatchHeroType } from '@components/Types';
 import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -21,6 +20,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
+import { OverwatchHeroType } from 'RibbonTypes';
 
 type OverwatchArgs = {
     player: string;

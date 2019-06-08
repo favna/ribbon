@@ -10,9 +10,9 @@
  */
 
 import { badwords, caps, duptext, emojis, invites, links, mentions } from '@components/AutomodHelper';
-import { SayData } from '@components/Types';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageAttachment } from 'awesome-djs';
+import { SayData } from 'RibbonTypes';
 
 type SayArgs = {
     txt: string;
@@ -67,8 +67,8 @@ export default class SayCommand extends Command {
                 if (caps(msg, opts.threshold, opts.minlength, this.client)) {
                     return msg.reply(
                         `you cannot use \`${
-                        msg.guild.commandPrefix
-                        }say\` to bypass the no excessive capitals filter`
+                            msg.guild.commandPrefix
+                            }say\` to bypass the no excessive capitals filter`
                     );
                 }
             }
@@ -85,8 +85,8 @@ export default class SayCommand extends Command {
                 ) {
                     return msg.reply(
                         `you cannot use \`${
-                        msg.guild.commandPrefix
-                        }say\` to bypass the no duplicate text filter`
+                            msg.guild.commandPrefix
+                            }say\` to bypass the no duplicate text filter`
                     );
                 }
             }
@@ -95,8 +95,8 @@ export default class SayCommand extends Command {
                 if (emojis(msg, opts.threshold, opts.minlength, this.client)) {
                     return msg.reply(
                         `you cannot use \`${
-                        msg.guild.commandPrefix
-                        }say\` to bypass the no excessive emojis filter`
+                            msg.guild.commandPrefix
+                            }say\` to bypass the no excessive emojis filter`
                     );
                 }
             }

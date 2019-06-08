@@ -59,7 +59,9 @@ export default class DefaultRoleCommand extends Command {
             } else if (role === 'delete') {
                 msg.guild.settings.remove('defaultRole');
                 description = 'Default role has been removed';
-            } else throw new Error('not_a_role');
+            } else {
+                throw new Error('not_a_role');
+            }
 
             defRoleEmbed
                 .setColor('#AAEFE6')

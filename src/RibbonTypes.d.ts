@@ -1,7 +1,7 @@
+import { GoogleSource } from '@components/Constants';
+import { Song } from '@components/Utils';
 import { Command } from 'awesome-commando';
 import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
-import { GoogleSource } from './Constants';
-import { Song } from './Utils';
 
 type FlavorTextType = {
     version_id: string;
@@ -52,7 +52,7 @@ export type YoutubeResultList = {
     }[];
     kind: string;
     nextPageToken: string;
-    pageInfo: {resultsPerPage: number, totalResults: number };
+    pageInfo: { resultsPerPage: number, totalResults: number };
     regionCode: string;
 };
 
@@ -732,11 +732,11 @@ export interface TMDBMovie extends TMDBCommon {
 
 export interface TVDBSeriesList extends TMDBMovieList {
     results: (TMDBCommon &
-    {
-        genre_ids: number[];
-        first_air_date: string;
-        origin_country: string[];
-    })[];
+        {
+            genre_ids: number[];
+            first_air_date: string;
+            origin_country: string[];
+        })[];
 }
 
 type TMDBSerieEpisode = {

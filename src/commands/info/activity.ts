@@ -11,7 +11,6 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { currencyMap } from '@components/MoneyHelper';
-import { DiscordGameDevType, DiscordGameParsedType, DiscordGameSKUType, DiscordStoreGameType, SimpleEmbedFieldType } from '@components/Types';
 import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -20,6 +19,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
+import { DiscordGameDevType, DiscordGameParsedType, DiscordGameSKUType, DiscordStoreGameType, SimpleEmbedFieldType } from 'RibbonTypes';
 
 type ActivityArgs = {
     member: GuildMember;

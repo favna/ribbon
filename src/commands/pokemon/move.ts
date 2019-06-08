@@ -12,7 +12,6 @@
  */
 
 import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { IPokeMoveAliases, PokeMoveDetailsType } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import { moveAliases } from '@pokedex/aliases';
 import BattleMovedex from '@pokedex/moves';
@@ -21,6 +20,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
+import { IPokeMoveAliases, PokeMoveDetailsType } from 'RibbonTypes';
 
 type MoveArgs = {
     move: string;

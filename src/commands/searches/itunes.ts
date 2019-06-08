@@ -10,7 +10,6 @@
  */
 
 import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { iTunesData, iTunesResult } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -18,6 +17,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
+import { iTunesData, iTunesResult } from 'RibbonTypes';
 
 type ITunesArgs = {
     music: string;

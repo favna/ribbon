@@ -1,5 +1,5 @@
 // tslint:disable:max-line-length
-import { FrontlineGirlType } from '@components/Types';
+import { FrontlineGirlType } from 'RibbonTypes';
 
 const FRONTLINE_GIRLS: FrontlineGirlType[] = [
     {

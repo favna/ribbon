@@ -12,11 +12,11 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { IMusicCommand, MusicQueueType } from '@components/Types';
 import { deleteCommandMessages, Song } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { MessageEmbed, Snowflake } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
+import { IMusicCommand, MusicQueueType } from 'RibbonTypes';
 
 export default class ShuffleCommand extends Command {
     private songQueue: Map<Snowflake, MusicQueueType>;

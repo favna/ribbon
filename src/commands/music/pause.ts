@@ -9,10 +9,10 @@
  * @name pause
  */
 
-import { IMusicCommand, MusicQueueType } from '@components/Types';
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
+import { IMusicCommand, MusicQueueType } from 'RibbonTypes';
 
 export default class PauseSongCommand extends Command {
     private songQueue: Map<Snowflake, MusicQueueType>;

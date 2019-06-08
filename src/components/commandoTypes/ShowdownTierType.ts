@@ -5,7 +5,7 @@ import { stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import fetch from 'node-fetch';
 import { table } from 'table';
-import { IPokeTierAliases } from '../Types';
+import { IPokeTierAliases } from '../../RibbonTypes';
 
 export default class ShowdownTierType extends ArgumentType {
     constructor (client: CommandoClient) {

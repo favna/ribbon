@@ -1,5 +1,5 @@
 // tslint:disable:max-line-length
-import { PokeAbilityDetailsType } from '@components/Types';
+import { PokeAbilityDetailsType } from 'RibbonTypes';
 
 const ABILITIES: PokeAbilityDetailsType[] = [
     {

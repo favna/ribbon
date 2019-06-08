@@ -11,7 +11,6 @@
  * @param {string} CopyPastaID The ID of the Copypasta to remove
  */
 
-import { CopypastaType } from '@components/Types';
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
@@ -20,6 +19,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
+import { CopypastaType } from 'RibbonTypes';
 
 type CopypastaRemoveArgs = {
     id: number;

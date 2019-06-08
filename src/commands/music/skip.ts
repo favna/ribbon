@@ -16,11 +16,11 @@
  * @param {string} [force] Force the skip if you are the requester or a server moderator
  */
 
-import { IMusicCommand, MusicQueueType, MusicVoteType } from '@components/Types';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
 import { oneLine } from 'common-tags';
+import { IMusicCommand, MusicQueueType, MusicVoteType } from 'RibbonTypes';
 
 export default class SkipSongCommand extends Command {
     public songVotes: Map<Snowflake, MusicVoteType>;

@@ -20,13 +20,13 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { TCGPropsType } from '@components/Types';
 import { stringify } from '@favware/querystring';
 import { ArgumentCollector, Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
+import { TCGPropsType } from 'RibbonTypes';
 
 type NameArgumentCollection = { name: string };
 type TypeArgumentCollection = { types: string };

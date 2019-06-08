@@ -10,13 +10,13 @@
  */
 
 import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { GoogleImageData, GoogleImageResult } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
 import cheerio from 'cheerio';
 import fetch from 'node-fetch';
+import { GoogleImageData, GoogleImageResult } from 'RibbonTypes';
 
 type ImageArgs = {
     query: string;
@@ -98,7 +98,8 @@ export default class ImageCommand extends Command {
 
             return null;
             // tslint:disable-next-line: no-empty
-        } catch { }
+        } catch {
+        }
 
         try {
             const backupSearch = await fetch(

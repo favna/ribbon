@@ -10,13 +10,13 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { PokeTypeDataType } from '@components/Types';
 import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import BattleTypeChart from '@pokedex/typechart';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
+import { PokeTypeDataType } from 'RibbonTypes';
 
 type TypeArgs = {
     types: string[];

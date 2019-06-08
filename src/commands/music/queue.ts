@@ -12,11 +12,11 @@
  */
 
 import { PAGINATED_ITEMS } from '@components/Constants';
-import { IMusicCommand, MusicQueueType } from '@components/Types';
 import { deleteCommandMessages, Song } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
+import { IMusicCommand, MusicQueueType } from 'RibbonTypes';
 
 type ViewQueueArgs = {
     page: number;

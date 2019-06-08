@@ -1,5 +1,5 @@
 // tslint:disable:object-literal-sort-keys
-import { PokeItemDetailsType } from '@components/Types';
+import { PokeItemDetailsType } from 'RibbonTypes';
 
 const ITEMS: PokeItemDetailsType[] = [
     {

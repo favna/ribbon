@@ -10,6 +10,7 @@ import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
 import path from 'path';
+import { CasinoRowType, CountdownType, TimerType } from '../RibbonTypes';
 import { badwords, caps, duptext, emojis, invites, links, mentions, slowmode } from './AutomodHelper';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from './Constants';
 import { decache } from './Decache';
@@ -27,7 +28,6 @@ import {
     setUsersData,
 } from './FirebaseActions';
 import FirebaseStorage from './FirebaseStorage';
-import { CasinoRowType, CountdownType, TimerType } from './Types';
 import { parseOrdinal } from './Utils';
 
 const sendReminderMessages = async (client: CommandoClient) => {

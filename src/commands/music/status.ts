@@ -7,11 +7,11 @@
  * @name status
  */
 
-import { IMusicCommand, MusicQueueType } from '@components/Types';
 import { deleteCommandMessages, Song } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
+import { IMusicCommand, MusicQueueType } from 'RibbonTypes';
 
 export default class MusicStatusCommand extends Command {
     private songQueue: Map<Snowflake, MusicQueueType>;

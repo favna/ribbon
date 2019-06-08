@@ -1,5 +1,5 @@
 // tslint:disable:object-literal-sort-keys
-import { IPokeAbilityAliases, IPokeDexAliases, IPokeItemAliases, IPokeMoveAliases, IPokeTierAliases } from '@components/Types';
+import { IPokeAbilityAliases, IPokeDexAliases, IPokeItemAliases, IPokeMoveAliases, IPokeTierAliases } from 'RibbonTypes';
 
 export const tierAliases: IPokeTierAliases[] = [
     { alias: 'randbats', tier: 'randombattle' },

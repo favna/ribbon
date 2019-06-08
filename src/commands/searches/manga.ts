@@ -10,13 +10,13 @@
  */
 
 import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { KitsuHit, KitsuResult } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, removeDiacritics } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
+import { KitsuHit, KitsuResult } from 'RibbonTypes';
 
 type MangaArgs = {
     manga: string;

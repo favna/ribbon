@@ -15,7 +15,6 @@
  */
 
 import { ASSET_BASE_PATH, CollectorTimeout } from '@components/Constants';
-import { FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import zalgo from '@favware/zalgo';
 import { pokeAliases } from '@pokedex/aliases';
@@ -26,6 +25,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
+import { FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType } from 'RibbonTypes';
 
 type FlavorArgs = {
     pokemon: string;

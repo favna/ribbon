@@ -1,10 +1,10 @@
 /**
  * @file Moderation I18nCommand - Sets the guild language
- * 
+ *
  * This affects various parts of the responses of the bot, primarily the help prompts.
  * Any data returned from external sources is not translated.
- * 
- * 
+ *
+ *
  * Current supported languages are 'en' for English and 'nl' for Dutch
  *
  * **Aliases**: `language`, `lang`, `lng`

@@ -11,13 +11,13 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { FortniteStatsType } from '@components/Types';
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
+import { FortniteStatsType } from 'RibbonTypes';
 
 type FortniteArgs = {
     user: string;

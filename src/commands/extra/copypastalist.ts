@@ -7,7 +7,6 @@
  * @name copypastalist
  */
 
-import { CopypastaType } from '@components/Types';
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { TextChannel, Util } from 'awesome-djs';
@@ -15,6 +14,7 @@ import Database from 'better-sqlite3';
 import { stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
+import { CopypastaType } from 'RibbonTypes';
 
 export default class CopyPastaListCommand extends Command {
     constructor (client: CommandoClient) {

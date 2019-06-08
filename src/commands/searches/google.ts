@@ -12,7 +12,6 @@
  */
 
 import { CollectorTimeout, DEFAULT_EMBED_COLOR, GoogleSource } from '@components/Constants';
-import { GoogleCSEItem, GoogleItem, GoogleKnowledgeItem } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -20,6 +19,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import cheerio from 'cheerio';
 import { oneLine } from 'common-tags';
 import fetch from 'node-fetch';
+import { GoogleCSEItem, GoogleItem, GoogleKnowledgeItem } from 'RibbonTypes';
 
 type GoogleArgs = {
     query: string;
@@ -119,7 +119,8 @@ export default class GoogleCommand extends Command {
 
             return null;
             // tslint:disable-next-line: no-empty
-        } catch { }
+        } catch {
+        }
 
         try {
             const backupSearch = await fetch(

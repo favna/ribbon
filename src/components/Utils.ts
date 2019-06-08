@@ -2,8 +2,8 @@ import { CommandoClient, CommandoGuild, CommandoMessage, util as CommandoUtil } 
 import { GuildMember, MessageEmbed, MessageReaction, PermissionString, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
 import { oneLine, oneLineTrim } from 'common-tags';
 import emojiRegex from 'emoji-regex';
+import { YoutubeVideoType } from '../RibbonTypes';
 import { diacriticsMap } from './Constants';
-import { YoutubeVideoType } from './Types';
 
 export const cleanArray = (deleteValue: string | number | undefined | any, array: (string | number | undefined | any)[]) => array.filter(element => element !== deleteValue);
 export const sentencecase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();

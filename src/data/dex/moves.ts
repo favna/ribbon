@@ -1,5 +1,5 @@
 // tslint:disable:max-line-length object-literal-sort-keys
-import { PokeMoveDetailsType } from '@components/Types';
+import { PokeMoveDetailsType } from 'RibbonTypes';
 
 const MOVEDEX: PokeMoveDetailsType[] = [
     {

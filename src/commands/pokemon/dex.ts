@@ -14,7 +14,6 @@
  */
 
 import { ASSET_BASE_PATH, CollectorTimeout } from '@components/Constants';
-import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase, titlecase } from '@components/Utils';
 import zalgo from '@favware/zalgo';
 import { pokeAliases } from '@pokedex/aliases';
@@ -26,6 +25,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
+import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from 'RibbonTypes';
 
 type DexArgs = {
     pokemon: string;
@@ -181,8 +181,8 @@ export default class DexCommand extends Command {
         if (poke.prevo) {
             pokeData.evos = oneLine`\`${sentencecase(poke.prevo)}\`
             ${pokeFuse.search(poke.prevo)[0].evoLevel
-                    ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})`
-                    : ''} → ${pokeData.evos} **(${poke.evoLevel})**`;
+                ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})`
+                : ''} → ${pokeData.evos} **(${poke.evoLevel})**`;
 
             if (pokeFuse.search(poke.prevo).length) {
                 const prevoSearch = pokeFuse.search(poke.prevo)[0].prevo;

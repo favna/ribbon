@@ -8,7 +8,6 @@
  */
 
 import { timeparseHelper } from '@components/TimeparseHelper';
-import { TimerType } from '@components/Types';
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Snowflake, TextChannel, Util } from 'awesome-djs';
@@ -16,6 +15,7 @@ import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
+import { TimerType } from 'RibbonTypes';
 
 export default class TimerListCommand extends Command {
     constructor (client: CommandoClient) {

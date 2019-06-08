@@ -7,7 +7,6 @@
  * @name countdownlist
  */
 
-import { CountdownType } from '@components/Types';
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { TextChannel, Util } from 'awesome-djs';
@@ -16,6 +15,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
+import { CountdownType } from 'RibbonTypes';
 
 export default class CountdownList extends Command {
     constructor (client: CommandoClient) {

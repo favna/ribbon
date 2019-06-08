@@ -10,13 +10,13 @@
  */
 
 import { CollectorTimeout, DEFAULT_EMBED_COLOR, IGBDAgeRating } from '@components/Constants';
-import { IgdbGame } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
+import { IgdbGame } from 'RibbonTypes';
 
 type IGDBArgs = {
     game: string;

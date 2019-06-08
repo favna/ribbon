@@ -12,9 +12,9 @@
  * @param {number} [Volume] The new volume to set
  */
 
-import { IMusicCommand, MusicQueueType } from '@components/Types';
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { IMusicCommand, MusicQueueType } from 'RibbonTypes';
 
 type ChangeVolumeArgs = {
     volume: number;

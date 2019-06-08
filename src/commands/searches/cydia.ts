@@ -14,7 +14,6 @@
  */
 
 import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { CydiaAPIPackageType, CydiaData } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, roundNumber } from '@components/Utils';
 import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -24,6 +23,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import fetch from 'node-fetch';
+import { CydiaAPIPackageType, CydiaData } from 'RibbonTypes';
 
 type CydiaArgs = {
     deb: string;
@@ -143,7 +143,8 @@ export default class CydiaCommand extends Command {
             size = $('#extra').text();
             thumbnail = `${baseURL}${$('#header > #icon > div > span > img').attr('src').slice(1)}`;
             // tslint:disable-next-line: no-empty
-        } catch { }
+        } catch {
+        }
 
         try {
             const priceReq = await fetch(`${baseURL}api/ibbignerd?${stringify({ query: pkg.name })}`);
@@ -151,7 +152,8 @@ export default class CydiaCommand extends Command {
 
             price = priceData ? `$${roundNumber(parseFloat(priceData.msrp.toString()), 2).toFixed(2)}` : 'Free';
             // tslint:disable-next-line: no-empty
-        } catch { }
+        } catch {
+        }
 
         return {
             size,

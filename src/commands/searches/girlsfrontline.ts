@@ -10,7 +10,6 @@
  */
 
 import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { FrontlineGirlType } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import frontlineGirls from '@pokedex/girlsfrontline';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -20,6 +19,7 @@ import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
+import { FrontlineGirlType } from 'RibbonTypes';
 
 type GirlsFrontlineArgs = {
     character: string;

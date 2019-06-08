@@ -10,12 +10,12 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { WordDefinitionType } from '@components/Types';
 import { deleteCommandMessages } from '@components/Utils';
 import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 import fetch from 'node-fetch';
+import { WordDefinitionType } from 'RibbonTypes';
 
 type DefineArgs = {
     query: string;

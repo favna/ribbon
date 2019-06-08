@@ -10,12 +10,12 @@
  */
 
 import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { UrbanDefinition, UrbanDefinitionResults } from '@components/Types';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
 import fetch from 'node-fetch';
+import { UrbanDefinition, UrbanDefinitionResults } from 'RibbonTypes';
 
 type UrbanArgs = {
     term: string;
@@ -103,10 +103,10 @@ export default class UrbanCommand extends Command {
                 'Example',
                 definition.example
                     ? `${definition.example.slice(0, 1020)}${
-                    definition.example.length >= 1024
-                        ? '...'
-                        : ''
-                    }`
+                        definition.example.length >= 1024
+                            ? '...'
+                            : ''
+                        }`
                     : 'None'
             );
     }

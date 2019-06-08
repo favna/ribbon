@@ -7,12 +7,12 @@
  * @name saywut
  */
 
-import { SayData } from '@components/Types';
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageAttachment, MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
+import { SayData } from 'RibbonTypes';
 
 export default class SayWutCommand extends Command {
     constructor (client: CommandoClient) {

@@ -1,5 +1,5 @@
 // tslint:disable:object-literal-sort-keys
-import { PokedexType } from '@components/Types';
+import { PokedexType } from 'RibbonTypes';
 
 const POKEDEX: PokedexType[] = [
     {
