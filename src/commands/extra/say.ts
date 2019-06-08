@@ -10,11 +10,13 @@
  */
 
 import { badwords, caps, duptext, emojis, invites, links, mentions } from '@components/AutomodHelper';
+import { SayData } from '@components/Types';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageAttachment } from 'awesome-djs';
 
 type SayArgs = {
-    txt: string
+    txt: string;
+    attachment: MessageAttachment
 };
 
 export default class SayCommand extends Command {
@@ -58,7 +60,7 @@ export default class SayCommand extends Command {
         });
     }
 
-    public run (msg: CommandoMessage, { txt }: SayArgs) {
+    public run (msg: CommandoMessage, { txt, attachment }: SayArgs) {
         if (msg.guild && msg.deletable && msg.guild.settings.get('automod', false)) {
             if (msg.guild.settings.get('caps', false).enabled) {
                 const opts = msg.guild.settings.get('caps');
@@ -114,10 +116,10 @@ export default class SayCommand extends Command {
         }
 
         if (msg.attachments.first() && (msg.attachments.first() as MessageAttachment).url) {
-            txt += `\n${(msg.attachments.first() as MessageAttachment).url}`;
+            attachment = msg.attachments.first() as MessageAttachment;
         }
 
-        const saydata = {
+        const saydata: SayData = {
             argString: msg.argString.slice(1),
             authorID: msg.author!.id,
             authorTag: msg.author!.tag,
@@ -125,6 +127,7 @@ export default class SayCommand extends Command {
             commandPrefix: msg.guild.commandPrefix,
             memberHexColor: msg.member!.displayHexColor,
             messageDate: msg.createdAt,
+            attachment: attachment ? attachment.url : '',
         };
 
         if (msg.deletable) {
@@ -133,6 +136,6 @@ export default class SayCommand extends Command {
 
         msg.guild.settings.set('saydata', saydata);
 
-        return msg.say(txt);
+        return msg.say(txt, attachment ? { files: [attachment.url] } : {});
     }
 }

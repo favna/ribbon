@@ -7,9 +7,10 @@
  * @name saywut
  */
 
+import { SayData } from '@components/Types';
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { MessageAttachment, MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
 
@@ -31,16 +32,23 @@ export default class SayWutCommand extends Command {
     }
 
     public run (msg: CommandoMessage) {
-        const saydata = msg.guild.settings.get('saydata', null);
-        const wutEmbed = new MessageEmbed();
+        const saydata: SayData = msg.guild.settings.get('saydata', null);
 
         if (saydata) {
-            wutEmbed
+            const wutEmbed = new MessageEmbed()
                 .setColor(saydata.memberHexColor)
                 .setTitle(`Last ${saydata.commandPrefix}say message author`)
                 .setAuthor(oneLine`${saydata.authorTag} (${saydata.authorID})`, saydata.avatarURL)
                 .setDescription(saydata.argString)
                 .setTimestamp(moment(saydata.messageDate).toDate());
+
+            if (saydata.attachment) {
+                const attachmentExtension = saydata.attachment.split('.').pop();
+                const embedAttachment = new MessageAttachment(saydata.attachment, `say_image.${attachmentExtension}`);
+                wutEmbed
+                    .attachFiles([embedAttachment])
+                    .setImage(`attachment://say_image.${attachmentExtension}`);
+            }
 
             deleteCommandMessages(msg, this.client);
 

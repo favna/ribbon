@@ -795,3 +795,14 @@ export type UrbanDefinition = {
 export interface UrbanDefinitionResults {
     list: UrbanDefinition[];
 }
+
+export type SayData = {
+    argString: string;
+    authorID: string;
+    authorTag: string;
+    avatarURL: string;
+    commandPrefix: string;
+    memberHexColor: string;
+    messageDate: Date;
+    attachment: string;
+};
