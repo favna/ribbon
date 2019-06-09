@@ -38,11 +38,6 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@discordjs/uws@^11.149.1":
-  version "11.149.1"
-  resolved "https://registry.yarnpkg.com/@discordjs/uws/-/uws-11.149.1.tgz#2e86f2825f43bed43d2e69eaf30a07d2dd8e8946"
-  integrity sha512-TmbwZaeXDSCq0ckmf2q10Fkt1220gu9AZJ/UvtQjsi2jyJDjy0i0OwL4/eb3vc9Cwr0mpC9EbfzltQ2si0qUiQ==
-
 "@favware/converter@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@favware/converter/-/converter-1.0.2.tgz#8639cc7645bfd7592751a1569c921fb69db379ad"

@@ -62,7 +62,6 @@
         "node": ">=8.0.0"
     },
     "dependencies": {
-        "@discordjs/uws": "^11.149.1",
         "@favware/converter": "^1.0.2",
         "@favware/querystring": "^1.0.2",
         "@favware/unescape": "^1.0.1",
