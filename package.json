@@ -68,7 +68,7 @@
         "@favware/ytdl-prismplayer": "^1.0.0",
         "@favware/zalgo": "^1.0.1",
         "awesome-commando": "^3.0.9",
-        "awesome-djs": "^13.0.15",
+        "awesome-djs": "^13.0.16-beta.0",
         "better-sqlite3": "^5.4.0",
         "booru": "^2.0.2",
         "cheerio": "^1.0.0-rc.3",

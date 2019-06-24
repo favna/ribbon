@@ -277,6 +277,7 @@ const payoutLotto = async (client: CommandoClient) => {
                     .prepare(`SELECT * FROM "${guildId}"`)
                     .all();
                 const winner = Math.floor(Math.random() * rows.length);
+                if (!rows[winner]) throw new Error('no_rows');
                 const prevBal = rows[winner].balance;
 
                 rows[winner].balance += 2000;
@@ -319,13 +320,15 @@ const payoutLotto = async (client: CommandoClient) => {
             }
         }
     } catch (err) {
-        const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+        if (!/(?:no_rows)/i.test(err.toString())) {
+            const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
-        channel.send(stripIndents`
-            <@${client.owners[0].id}> Error occurred giving someone their lotto payout!
-            **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-            **Error Message:** ${err}
-        `);
+            channel.send(stripIndents`
+                <@${client.owners[0].id}> Error occurred giving someone their lotto payout!
+                **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+                **Error Message:** ${err}
+            `);
+        }
     }
 };
 
