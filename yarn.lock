@@ -1079,10 +1079,10 @@ awesome-commando@^3.0.9:
     moment "^2.24.0"
     require-all "^3.0.0"
 
-awesome-djs@^13.0.16-beta.0:
-  version "13.0.16-beta.0"
-  resolved "https://registry.yarnpkg.com/awesome-djs/-/awesome-djs-13.0.16-beta.0.tgz#6374d74e487ee5b5da7794204ae2c4b585552206"
-  integrity sha512-ENAodpdZhSskgGNa1DGfdhct6grNkBDSl/5BSUhgJD2BcPCNnooSi76skNY5fMfaJfc3VfZWMEEsuiZLYp2zYw==
+awesome-djs@^13.0.16-beta.1:
+  version "13.0.16-beta.1"
+  resolved "https://registry.yarnpkg.com/awesome-djs/-/awesome-djs-13.0.16-beta.1.tgz#b3d540b398d356dd9d6bcde2879b690c2f7cd854"
+  integrity sha512-pGBhZrCwIknbFQbcG9qzJFVqF7AcMy87amIVTtoIwqBHzdLNTGX0Pg+2TK4H6CDa/dnaNwcdAELhqUGEF3KX1Q==
   dependencies:
     form-data "^2.3.3"
     node-fetch "^2.3.0"
