@@ -233,7 +233,7 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 </dd>
 <dt><a href="#module_dndc">dndc</a></dt>
 <dd><p>Games DndCCommand - Flips a coin</p>
-<p><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code>, <code>dcoin</code></p>
+<p><strong>Aliases</strong>: <code>coinflip</code>, <code>dndc</code>, <code>dcoin</code>, <code>dnd</code></p>
 </dd>
 <dt><a href="#module_fight">fight</a></dt>
 <dd><p>Games FightCommand - Pit two things against each other in a fight to the death.</p>
@@ -260,10 +260,6 @@ Build-In PingCommand - Checks the bot's ping to the Discord server
 <dt><a href="#module_avatar">avatar</a></dt>
 <dd><p>Info AvatarCommand - Get the avatar from any member on this server</p>
 <p><strong>Aliases</strong>: <code>ava</code></p>
-</dd>
-<dt><a href="#module_discordbots">discordbots</a></dt>
-<dd><p>Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList</p>
-<p><strong>Aliases</strong>: <code>dbapi</code>, <code>db</code></p>
 </dd>
 <dt><a href="#module_emotes">emotes</a></dt>
 <dd><p>Info EmotesCommand - Lists all emotes from the server</p>
@@ -613,9 +609,6 @@ You need to be in a voice channel before you can use this command</p>
 <dt><a href="#module_customtopup">customtopup</a></dt>
 <dd><p>Owner CustomTopUpCommand - Daniël Ocean doesn&#39;t give a crap about legality</p>
 <p><strong>Aliases</strong>: <code>ctu</code></p>
-</dd>
-<dt><a href="#module_dbpost">dbpost</a></dt>
-<dd><p>Owner DBPostCommand - Posts current guild count to discordbotlist</p>
 </dd>
 <dt><a href="#module_tagmember">tagmember</a></dt>
 <dd><p>Owner TagMemberCommand - Tags a member by ID</p>
@@ -1556,7 +1549,7 @@ dice 5 6
 ## dndc
 Games DndCCommand - Flips a coin
 
-**Aliases**: `coinflip`, `dndc`, `dcoin`
+**Aliases**: `coinflip`, `dndc`, `dcoin`, `dnd`
 
 **Category**: games  
 <a name="module_fight"></a>
@@ -1672,23 +1665,6 @@ Info AvatarCommand - Get the avatar from any member on this server
 **Example**  
 ```nginx
 avatar Favna
-```
-<a name="module_discordbots"></a>
-
-## discordbots
-Info DiscordBotsCommand - Gets the stats from a bot listed on DiscordBotList
-
-**Aliases**: `dbapi`, `db`
-
-**Category**: info  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| [BotID] | <code>string</code> | the user ID of the bot you want to get info about |
-
-**Example**  
-```nginx
-discordbots 512150391471996930
 ```
 <a name="module_emotes"></a>
 
@@ -2912,12 +2888,6 @@ Owner CustomTopUpCommand - Daniël Ocean doesn't give a crap about legality
 ```nginx
 ctu Biscuit 1000
 ```
-<a name="module_dbpost"></a>
-
-## dbpost
-Owner DBPostCommand - Posts current guild count to discordbotlist
-
-**Category**: owner  
 <a name="module_tagmember"></a>
 
 ## tagmember
