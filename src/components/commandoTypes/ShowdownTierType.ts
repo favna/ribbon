@@ -5,7 +5,7 @@ import { stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import fetch from 'node-fetch';
 import { table } from 'table';
-import { IPokeTierAliases } from '../../RibbonTypes';
+import { PokeTierAliases } from '../../RibbonTypes';
 
 export default class ShowdownTierType extends ArgumentType {
   constructor (client: CommandoClient) {
@@ -30,7 +30,7 @@ export default class ShowdownTierType extends ArgumentType {
   }
 
   private static fuser (searchStr: string): { hasMatch: boolean, value: string } {
-    const fuseOptions: FuseOptions<IPokeTierAliases> = { keys: ['alias'] };
+    const fuseOptions: FuseOptions<PokeTierAliases> = { keys: ['alias'] };
     const fuseTable = new Fuse(tierAliases, fuseOptions);
     const fuseSearch = fuseTable.search(searchStr);
 

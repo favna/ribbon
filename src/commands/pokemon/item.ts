@@ -20,7 +20,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { IPokeItemAliases, PokeItemDetailsType } from 'RibbonTypes';
+import { PokeItemAliases, PokeItemDetailsType } from 'RibbonTypes';
 
 type ItemArgs = {
   item: string;
@@ -57,7 +57,7 @@ export default class ItemCommand extends Command {
   @clientHasManageMessages()
   public async run (msg: CommandoMessage, { item, hasManageMessages, position = 0 }: ItemArgs) {
     try {
-      const itemOptions: FuseOptions<PokeItemDetailsType & IPokeItemAliases> = {
+      const itemOptions: FuseOptions<PokeItemDetailsType & PokeItemAliases> = {
         keys: ['alias', 'item', 'id', 'name'],
         threshold: 0.3,
       };

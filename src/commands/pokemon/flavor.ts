@@ -25,7 +25,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { FlavorJSONType, IPokeDexAliases, PokeDataType, PokedexType } from 'RibbonTypes';
+import { FlavorJSONType, PokeDataType, PokeDexAliases, PokedexType } from 'RibbonTypes';
 
 type FlavorArgs = {
   pokemon: string;
@@ -99,7 +99,7 @@ export default class FlavorCommand extends Command {
         pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
       }
 
-      const pokeoptions: FuseOptions<PokedexType & IPokeDexAliases> = {
+      const pokeoptions: FuseOptions<PokedexType & PokeDexAliases> = {
         keys: ['alias', 'species', 'name', 'num'],
         threshold: 0.2,
       };

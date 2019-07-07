@@ -3,21 +3,21 @@ import { Song } from '@components/Utils';
 import { Command } from 'awesome-commando';
 import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
 
-type FlavorTextType = {
+declare type FlavorTextType = {
   version_id: string;
   flavor_text: string;
 };
 
-type PokeAliasType = {
+declare type PokeAliasType = {
   alias: string;
 };
 
-type YoutubeVideoContentDetailsType = {
+declare type YoutubeVideoContentDetailsType = {
   videoId: string;
   videoPublishedAt: string;
 };
 
-export type YoutubeVideoSnippetType = {
+export declare type YoutubeVideoSnippetType = {
   channelId: string;
   channelTitle: string;
   description: string;
@@ -30,19 +30,19 @@ export type YoutubeVideoSnippetType = {
   liveBroadcastContent: string;
 };
 
-type YoutubeVideoThumbnailType = {
+declare type YoutubeVideoThumbnailType = {
   default: { height: number; width: null; url: string };
   high?: { height: number; width: null; url: string };
   medium?: { height: number; width: null; url: string };
   standard?: { height: number; width: null; url: string };
 };
 
-export type YoutubeVideoResourceType = {
+export declare type YoutubeVideoResourceType = {
   kind: string;
   videoId: string;
 };
 
-export type YoutubeResultList = {
+export declare type YoutubeResultList = {
   etag: string;
   items: {
     etag: string
@@ -56,12 +56,12 @@ export type YoutubeResultList = {
   regionCode: string;
 };
 
-type DiscordGameExecutableType = {
+declare type DiscordGameExecutableType = {
   name: string;
   os: string;
 };
 
-type FrontlineGirlConstantsType = {
+declare type FrontlineGirlConstantsType = {
   mov: number;
   crit_rate: number;
   crit_dmg: number;
@@ -70,7 +70,7 @@ type FrontlineGirlConstantsType = {
   [propName: string]: number;
 };
 
-type FrontlineGirlStatsType = {
+declare type FrontlineGirlStatsType = {
   hp: number;
   ammo: number;
   ration: number;
@@ -83,12 +83,12 @@ type FrontlineGirlStatsType = {
   [propName: string]: number;
 };
 
-type KitsuPosterImageDimensions = {
+declare type KitsuPosterImageDimensions = {
   width: number | null;
   height: number | null;
 };
 
-type KitsuPosterImage = {
+declare type KitsuPosterImage = {
   tiny?: string,
   small?: string,
   medium?: string,
@@ -104,13 +104,13 @@ type KitsuPosterImage = {
   }
 };
 
-type KitsuTitles = {
+declare type KitsuTitles = {
   en: string;
   en_jp: string;
   ja_jp: string;
 };
 
-type FrontlineGirlAbilityType = {
+declare type FrontlineGirlAbilityType = {
   name: string;
   icon: string;
   text: string;
@@ -124,7 +124,7 @@ type FrontlineGirlAbilityType = {
   [propName: string]: string | string[] | undefined;
 };
 
-type PokeStatType = {
+declare type PokeStatType = {
   hp: number;
   atk: number;
   def: number;
@@ -135,7 +135,7 @@ type PokeStatType = {
   [propName: string]: string | number | undefined;
 };
 
-type PokeAbilityType = {
+declare type PokeAbilityType = {
   0: string;
   1?: string;
   H?: string;
@@ -144,7 +144,7 @@ type PokeAbilityType = {
   [propName: string]: string | undefined;
 };
 
-type PokeTypesType = {
+declare type PokeTypesType = {
   bug: number;
   dark: number;
   dragon: number;
@@ -167,12 +167,12 @@ type PokeTypesType = {
   [propName: string]: number;
 };
 
-type PokeGenderRatioType = {
+declare type PokeGenderRatioType = {
   M: number;
   F: number;
 };
 
-export type CydiaAPIPackageType = {
+export declare type CydiaAPIPackageType = {
   display: string;
   name: string;
   summary: string;
@@ -180,7 +180,7 @@ export type CydiaAPIPackageType = {
   thumbnail: string;
 };
 
-export type CydiaData = {
+export declare type CydiaData = {
   source: string;
   size: string;
   baseURL: string;
@@ -188,15 +188,15 @@ export type CydiaData = {
   price: 'Free' | string;
 } & CydiaAPIPackageType;
 
-export type SimpleEmbedFieldType = { name: string, value: string };
-export type DiscordGameDevType = { id: string, name: string };
+export declare type SimpleEmbedFieldType = { name: string, value: string };
+export declare type DiscordGameDevType = { id: string, name: string };
 
-export interface IMusicCommand extends Command {
+export declare type MusicCommand = {
   queue: any;
   votes: any;
-}
+} & Command;
 
-export type MusicQueueType = {
+export declare type MusicQueueType = {
   textChannel: TextChannel;
   voiceChannel: VoiceChannel;
   connection: VoiceConnection | null;
@@ -206,7 +206,7 @@ export type MusicQueueType = {
   isTriggeredByStop?: boolean;
 };
 
-export type MusicVoteType = {
+export declare type MusicVoteType = {
   count: number;
   users: Snowflake[];
   queue: MusicQueueType;
@@ -215,7 +215,7 @@ export type MusicVoteType = {
   timeout: any;
 };
 
-export type YoutubeVideoType = {
+export declare type YoutubeVideoType = {
   id: string;
   title: string;
   kind: string;
@@ -225,7 +225,7 @@ export type YoutubeVideoType = {
   snippet?: YoutubeVideoSnippetType;
 };
 
-export type PokeDataType = {
+export declare type PokeDataType = {
   abilities?: string;
   evos?: string;
   flavors?: string;
@@ -235,7 +235,7 @@ export type PokeDataType = {
   entries: any[];
 };
 
-export type CasinoRowType = {
+export declare type CasinoRowType = {
   userID: string;
   balance: number;
   lastdaily: string;
@@ -243,7 +243,7 @@ export type CasinoRowType = {
   vault: number;
 };
 
-export type PokedexType = {
+export declare type PokedexType = {
   num: number;
   species: string;
   types: string[];
@@ -266,7 +266,7 @@ export type PokedexType = {
   otherFormes?: string[];
 };
 
-export type PokeAbilityDetailsType = {
+export declare type PokeAbilityDetailsType = {
   desc?: string;
   shortDesc: string;
   id: string;
@@ -274,7 +274,7 @@ export type PokeAbilityDetailsType = {
   num: number;
 };
 
-export type PokeItemDetailsType = {
+export declare type PokeItemDetailsType = {
   id: string;
   name: string;
   desc: string;
@@ -283,7 +283,7 @@ export type PokeItemDetailsType = {
   shortDesc?: string;
 };
 
-export type PokeMoveDetailsType = {
+export declare type PokeMoveDetailsType = {
   id: string;
   num: number;
   name: string;
@@ -300,27 +300,27 @@ export type PokeMoveDetailsType = {
   desc?: string;
 };
 
-export interface IPokeAbilityAliases extends PokeAliasType {
+export declare type PokeAbilityAliases = PokeAliasType & {
   ability: string;
-}
+};
 
-export interface IPokeTierAliases extends PokeAliasType {
+export declare type PokeTierAliases = PokeAliasType & {
   tier: string;
-}
+};
 
-export interface IPokeDexAliases extends PokeAliasType {
+export declare type PokeDexAliases = PokeAliasType & {
   name: string;
-}
+};
 
-export interface IPokeItemAliases extends PokeAliasType {
+export declare type PokeItemAliases = PokeAliasType & {
   item: string;
-}
+};
 
-export interface IPokeMoveAliases extends PokeAliasType {
+export declare type PokeMoveAliases = PokeAliasType & {
   move: string;
-}
+};
 
-export type TCGPropsType = {
+export declare type TCGPropsType = {
   name: string;
   types: string;
   subtype: string;
@@ -328,7 +328,7 @@ export type TCGPropsType = {
   hp: string;
 };
 
-export type PokeTypeDataType = {
+export declare type PokeTypeDataType = {
   doubleEffectiveTypes: string[];
   doubleResistedTypes: string[];
   effectiveTypes: string[];
@@ -338,28 +338,28 @@ export type PokeTypeDataType = {
   resistedTypes: string[];
 };
 
-export type WordDefinitionType = {
+export declare type WordDefinitionType = {
   language: string;
   text: string;
 };
 
-export type SteamGenreType = {
+export declare type SteamGenreType = {
   description: string;
   id: string;
 };
 
-export type OverwatchHeroType = {
+export declare type OverwatchHeroType = {
   hero: string;
   time: number;
 };
 
-export type CopypastaType = {
+export declare type CopypastaType = {
   id: number;
   name: string;
   content: string;
 };
 
-export type TimerType = {
+export declare type TimerType = {
   id: number;
   interval: number;
   channel: Snowflake;
@@ -368,12 +368,12 @@ export type TimerType = {
   members: string;
 };
 
-export type FortniteStatsType = {
+export declare type FortniteStatsType = {
   key: string;
   value: string;
 };
 
-export type CountdownType = {
+export declare type CountdownType = {
   id: number;
   channel: string;
   content: string;
@@ -382,20 +382,20 @@ export type CountdownType = {
   tag: string;
 };
 
-export type FlavorJSONType = {
+export declare type FlavorJSONType = {
   [propName: string]: FlavorTextType[];
 };
 
-export type FormatsJSONType = {
+export declare type FormatsJSONType = {
   [propName: string]: string;
 };
 
-export type DiscordGameSKUType = {
+export declare type DiscordGameSKUType = {
   distributor: string;
   sku: string;
 };
 
-export type DiscordGameType = {
+export declare type DiscordGameType = {
   description: string;
   developers: string[];
   distributor_applications: DiscordGameSKUType[];
@@ -409,7 +409,7 @@ export type DiscordGameType = {
   third_party_skus: DiscordGameSKUType[];
 };
 
-export type DiscordGameParsedType = {
+export declare type DiscordGameParsedType = {
   id: string;
   icon: string;
   name?: string;
@@ -421,7 +421,7 @@ export type DiscordGameParsedType = {
   thumbnail?: string;
 };
 
-export type DiscordStoreGameType = {
+export declare type DiscordStoreGameType = {
   code?: string;
   id?: string;
   summary?: string;
@@ -437,7 +437,7 @@ export type DiscordStoreGameType = {
   };
 };
 
-export type FrontlineGirlProductionRequirementsType = {
+export declare type FrontlineGirlProductionRequirementsType = {
   manpower: number;
   ammo: number;
   rations: number;
@@ -446,7 +446,7 @@ export type FrontlineGirlProductionRequirementsType = {
   [propName: string]: number;
 };
 
-export type FrontlineGirlType = {
+export declare type FrontlineGirlType = {
   url: string;
   num: number;
   name: string;
@@ -469,7 +469,7 @@ export type FrontlineGirlType = {
   img?: string;
 };
 
-export type KitsuHit = {
+export declare type KitsuHit = {
   abbreviatedTitles: string[];
   ageRating: 'PG' | 'G' | string;
   averageRating: number;
@@ -495,7 +495,7 @@ export type KitsuHit = {
   _tags: string[];
 };
 
-export type KitsuResult = {
+export declare type KitsuResult = {
   exhaustiveNbHits: boolean;
   hitsPerPage: number;
   nbHits: number;
@@ -508,7 +508,7 @@ export type KitsuResult = {
   hits: KitsuHit[];
 };
 
-export type eShopHit = {
+export declare type eShopHit = {
   type: string;
   locale: string;
   url: string;
@@ -540,7 +540,7 @@ export type eShopHit = {
   objectID: string;
 };
 
-type eShoData = {
+declare type eShoData = {
   hits: eShopHit[];
   nbHits: number;
   page: number;
@@ -549,21 +549,21 @@ type eShoData = {
   processingTimeMS: number;
 };
 
-export type eShopResult = {
+export declare type eShopResult = {
   results: eShoData[];
 };
 
-type GoogleCSEImage = {
+declare type GoogleCSEImage = {
   src: string;
   height?: string;
   width?: string;
 };
 
-export type GoogleItemCommon = {
+export declare type GoogleItemCommon = {
   source: GoogleSource;
 };
 
-export type GoogleKnowledgeItem = {
+export declare type GoogleKnowledgeItem = {
   '@type': string;
   resultScore: number;
   result: {
@@ -583,7 +583,7 @@ export type GoogleKnowledgeItem = {
   } & GoogleItemCommon
 };
 
-export type GoogleCSEItem = {
+export declare type GoogleCSEItem = {
   cacheId: string;
   displayLink: string;
   formattedUrl: string;
@@ -600,9 +600,9 @@ export type GoogleCSEItem = {
   }
 } & GoogleItemCommon;
 
-export type GoogleItem = GoogleKnowledgeItem['result'] | GoogleCSEItem | GoogleItemCommon;
+export declare type GoogleItem = GoogleKnowledgeItem['result'] | GoogleCSEItem | GoogleItemCommon;
 
-type GoogleImage = {
+declare type GoogleImage = {
   byteSize: number;
   contextLink: string;
   height: number;
@@ -612,7 +612,7 @@ type GoogleImage = {
   width: number;
 };
 
-export type GoogleImageData = {
+export declare type GoogleImageData = {
   displayLink: string;
   htmlSnippet: string;
   htmlTitle: string;
@@ -624,13 +624,13 @@ export type GoogleImageData = {
   image: GoogleImage;
 };
 
-export type GoogleImageResult = {
+export declare type GoogleImageResult = {
   kind: string;
   context: { title: string };
   items: GoogleImageData[];
 };
 
-export type IgdbGame = {
+export declare type IgdbGame = {
   id: number;
   name: string;
   rating: number;
@@ -649,7 +649,7 @@ export type IgdbGame = {
   release_dates: { id: string; date: number }[];
 };
 
-export type iTunesData = {
+export declare type iTunesData = {
   artistId: number;
   artistName: string;
   artistViewUrl: string;
@@ -683,16 +683,16 @@ export type iTunesData = {
   wrapperType: 'track' | string;
 };
 
-export type iTunesResult = {
+export declare type iTunesResult = {
   results: iTunesData[];
   resultCount: number;
 };
 
-export type MovieGenreType = {
+export declare type MovieGenreType = {
   name: string;
 };
 
-type TMDBCommon = {
+declare type TMDBCommon = {
   id: number;
   adult: boolean;
   backdrop_path: string;
@@ -708,14 +708,14 @@ type TMDBCommon = {
   vote_count?: number;
 };
 
-export type TMDBMovieList = {
+export declare type TMDBMovieList = {
   page: number;
   total_pages: number;
   total_results: number;
   results: (TMDBCommon & { genre_ids: number[] })[]
 };
 
-export interface TMDBMovie extends TMDBCommon {
+export declare type TMDBMovie = {
   budget: number;
   revenue: number;
   tagline: string;
@@ -728,18 +728,18 @@ export interface TMDBMovie extends TMDBCommon {
   production_countries?: { iso_3166_1: string; name: string; }[];
   belongs_to_collection?: { id: number; name: string; poster_path: string; };
   production_companies?: { id: number, logo_path: string | null; name: string; origin_country: string; }[];
-}
+} & TMDBCommon;
 
-export interface TVDBSeriesList extends TMDBMovieList {
+export declare type TVDBSeriesList = {
   results: (TMDBCommon &
     {
       genre_ids: number[];
       first_air_date: string;
       origin_country: string[];
     })[];
-}
+} & TMDBMovieList;
 
-type TMDBSerieEpisode = {
+declare type TMDBSerieEpisode = {
   id: number;
   air_date: string;
   episode_number: number;
@@ -753,7 +753,7 @@ type TMDBSerieEpisode = {
   vote_count: number;
 };
 
-export interface TMDBSerie extends TMDBCommon {
+export declare type TMDBSerie = {
   created_by: string[];
   episode_run_time: number[];
   first_air_date: string;
@@ -776,9 +776,9 @@ export interface TMDBSerie extends TMDBCommon {
   genres: { id: number; name: string }[];
   networks: { id: number; logo_path: string; name: string; origin_country: string; }[];
   production_companies?: { id: number, logo_path: string | null; name: string; origin_country: string; }[];
-}
+} & TMDBCommon;
 
-export type UrbanDefinition = {
+export declare type UrbanDefinition = {
   author: string;
   current_vote: string;
   defid: number;
@@ -792,11 +792,11 @@ export type UrbanDefinition = {
   written_on: string;
 };
 
-export interface UrbanDefinitionResults {
+export declare type UrbanDefinitionResults = {
   list: UrbanDefinition[];
-}
+};
 
-export type SayData = {
+export declare type SayData = {
   argString: string;
   authorID: string;
   authorTag: string;
@@ -805,4 +805,29 @@ export type SayData = {
   memberHexColor: string;
   messageDate: Date;
   attachment: string;
+};
+
+declare type DamageDealtTakenType = { damageTaken: Required<PokeTypesType>, damageDealt: Required<PokeTypesType> };
+
+export declare type TypeChartType = {
+  Bug: DamageDealtTakenType,
+  Dark: DamageDealtTakenType,
+  Dragon: DamageDealtTakenType,
+  Electric: DamageDealtTakenType,
+  Fairy: DamageDealtTakenType,
+  Fighting: DamageDealtTakenType,
+  Fire: DamageDealtTakenType,
+  Flying: DamageDealtTakenType,
+  Ghost: DamageDealtTakenType,
+  Grass: DamageDealtTakenType,
+  Ground: DamageDealtTakenType,
+  Ice: DamageDealtTakenType,
+  Normal: DamageDealtTakenType,
+  Poison: DamageDealtTakenType,
+  Psychic: DamageDealtTakenType,
+  Rock: DamageDealtTakenType,
+  Steel: DamageDealtTakenType,
+  Water: DamageDealtTakenType
+
+  [propName: string]: DamageDealtTakenType;
 };

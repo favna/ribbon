@@ -16,7 +16,7 @@ import { deleteCommandMessages, Song } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
 import { MessageEmbed, Snowflake } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import { IMusicCommand, MusicQueueType } from 'RibbonTypes';
+import { MusicCommand, MusicQueueType } from 'RibbonTypes';
 
 type ViewQueueArgs = {
   page: number;
@@ -53,7 +53,7 @@ export default class ViewQueueCommand extends Command {
 
   get queue () {
     if (!this.songQueue) {
-      this.songQueue = (this.client.registry.resolveCommand('music:launch') as IMusicCommand).queue;
+      this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
 
     return this.songQueue;

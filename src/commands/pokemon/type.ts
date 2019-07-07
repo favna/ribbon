@@ -53,7 +53,10 @@ export default class TypeCommand extends Command {
               return true;
             }
 
-            return `one of more of your types was invalid. Valid types are ${Object.keys(BattleTypeChart).map((val: string) => `\`${val}\``).join(', ')}`;
+            return oneLine`
+              one of more of your types was invalid.
+              Valid types are ${Object.keys(BattleTypeChart).map((val: string) => `\`${val}\``).join(', ')}
+            `;
           },
           parse: (p: string) => p.split(' ').filter(Boolean).map((type: string) => sentencecase(type)).slice(0, 2),
         }

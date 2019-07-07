@@ -1,7 +1,7 @@
 // tslint:disable:object-literal-sort-keys
-import { IPokeAbilityAliases, IPokeDexAliases, IPokeItemAliases, IPokeMoveAliases, IPokeTierAliases } from 'RibbonTypes';
+import { PokeAbilityAliases, PokeDexAliases, PokeItemAliases, PokeMoveAliases, PokeTierAliases } from 'RibbonTypes';
 
-export const tierAliases: IPokeTierAliases[] = [
+export const tierAliases: PokeTierAliases[] = [
   { alias: 'randbats', tier: 'randombattle' },
   { alias: 'randoms', tier: 'randombattle' },
   { alias: 'random battles', tier: 'randombattle' },
@@ -61,7 +61,7 @@ export const tierAliases: IPokeTierAliases[] = [
   { alias: 'almost any ability', tier: 'almostanyability' }
 ];
 
-export const pokeAliases: IPokeDexAliases[] = [
+export const pokeAliases: PokeDexAliases[] = [
   { alias: 'maero', name: 'Aerodactyl-Mega' },
   { alias: 'megaaero', name: 'Aerodactyl-Mega' },
   { alias: 'megabee', name: 'Beedrill-Mega' },
@@ -710,12 +710,12 @@ export const pokeAliases: IPokeDexAliases[] = [
   { alias: 'borutorosu', name: 'Thundurus' }
 ];
 
-export const abilityAliases: IPokeAbilityAliases[] = [
+export const abilityAliases: PokeAbilityAliases[] = [
   { alias: 'ph', ability: 'Poison Heal' },
   { alias: 'stag', ability: 'Shadow Tag' }
 ];
 
-export const itemAliases: IPokeItemAliases[] = [
+export const itemAliases: PokeItemAliases[] = [
   { alias: 'assvest', item: 'Assault Vest' },
   { alias: 'av', item: 'Assault Vest' },
   { alias: 'band', item: 'Choice Band' },
@@ -743,7 +743,7 @@ export const itemAliases: IPokeItemAliases[] = [
   { alias: 'yache', item: 'Yache Berry' }
 ];
 
-export const moveAliases: IPokeMoveAliases[] = [
+export const moveAliases: PokeMoveAliases[] = [
   { alias: 'bb', move: 'Brave Bird' },
   { alias: 'bd', move: 'Belly Drum' },
   { alias: 'bpass', move: 'Baton Pass' },

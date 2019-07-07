@@ -12,7 +12,7 @@
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
-import { IMusicCommand, MusicQueueType } from 'RibbonTypes';
+import { MusicCommand, MusicQueueType } from 'RibbonTypes';
 
 export default class ResumeSongCommand extends Command {
   private songQueue: Map<Snowflake, MusicQueueType>;
@@ -36,7 +36,7 @@ export default class ResumeSongCommand extends Command {
 
   get queue () {
     if (!this.songQueue) {
-      this.songQueue = (this.client.registry.resolveCommand('music:launch') as IMusicCommand).queue;
+      this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
 
     return this.songQueue;

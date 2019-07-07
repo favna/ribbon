@@ -20,7 +20,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { IPokeMoveAliases, PokeMoveDetailsType } from 'RibbonTypes';
+import { PokeMoveAliases, PokeMoveDetailsType } from 'RibbonTypes';
 
 type MoveArgs = {
   move: string;
@@ -57,7 +57,7 @@ export default class MoveCommand extends Command {
   @clientHasManageMessages()
   public async run (msg: CommandoMessage, { move, hasManageMessages, position = 0 }: MoveArgs) {
     try {
-      const moveOptions: FuseOptions<PokeMoveDetailsType & IPokeMoveAliases> = {
+      const moveOptions: FuseOptions<PokeMoveDetailsType & PokeMoveAliases> = {
         keys: ['alias', 'move', 'id', 'name'],
         threshold: 0.2,
       };

@@ -25,7 +25,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { FlavorJSONType, FormatsJSONType, IPokeDexAliases, PokeDataType, PokedexType } from 'RibbonTypes';
+import { FlavorJSONType, FormatsJSONType, PokeDataType, PokeDexAliases, PokedexType } from 'RibbonTypes';
 
 type DexArgs = {
   pokemon: string;
@@ -98,7 +98,7 @@ export default class DexCommand extends Command {
         pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
       }
 
-      const pokeoptions: FuseOptions<PokedexType & IPokeDexAliases> = {
+      const pokeoptions: FuseOptions<PokedexType & PokeDexAliases> = {
         keys: ['alias', 'species', 'name', 'num'],
         threshold: 0.2,
       };
@@ -163,7 +163,7 @@ export default class DexCommand extends Command {
   // tslint:disable-next-line:cyclomatic-complexity
   private fetchAllData (
     poke: PokedexType, shines: boolean,
-    pokeFuse: Fuse<PokedexType, Fuse.FuseOptions<PokedexType & IPokeDexAliases>>
+    pokeFuse: Fuse<PokedexType, Fuse.FuseOptions<PokedexType & PokeDexAliases>>
   ): PokeDataType {
     const tiers: FormatsJSONType = formats as FormatsJSONType;
     const flavors: FlavorJSONType = entries as FlavorJSONType;

@@ -18,7 +18,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { IPokeAbilityAliases, PokeAbilityDetailsType } from 'RibbonTypes';
+import { PokeAbilityAliases, PokeAbilityDetailsType } from 'RibbonTypes';
 
 type AbilityArgs = {
   ability: string;
@@ -55,7 +55,7 @@ export default class AbilityCommand extends Command {
   @clientHasManageMessages()
   public async run (msg: CommandoMessage, { ability, hasManageMessages, position = 0 }: AbilityArgs) {
     try {
-      const abilityOptions: FuseOptions<PokeAbilityDetailsType & IPokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
+      const abilityOptions: FuseOptions<PokeAbilityDetailsType & PokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
       const aliasFuse = new Fuse(abilityAliases, abilityOptions);
       const abilityFuse = new Fuse(BattleAbilities, abilityOptions);
       const aliasSearch = aliasFuse.search(ability);

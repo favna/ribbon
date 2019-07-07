@@ -20,7 +20,7 @@ import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
 import { Snowflake } from 'awesome-djs';
 import { oneLine } from 'common-tags';
-import { IMusicCommand, MusicQueueType, MusicVoteType } from 'RibbonTypes';
+import { MusicCommand, MusicQueueType, MusicVoteType } from 'RibbonTypes';
 
 export default class SkipSongCommand extends Command {
   public songVotes: Map<Snowflake, MusicVoteType>;
@@ -47,7 +47,7 @@ export default class SkipSongCommand extends Command {
 
   get queue () {
     if (!this.songQueue) {
-      this.songQueue = (this.client.registry.resolveCommand('music:launch') as IMusicCommand).queue;
+      this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
 
     return this.songQueue;
@@ -55,7 +55,7 @@ export default class SkipSongCommand extends Command {
 
   get votes () {
     if (!this.songVotes) {
-      this.songVotes = (this.client.registry.resolveCommand('music:launch') as IMusicCommand).votes;
+      this.songVotes = (this.client.registry.resolveCommand('music:launch') as MusicCommand).votes;
     }
 
     return this.songVotes;

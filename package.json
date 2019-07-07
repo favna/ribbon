@@ -96,6 +96,7 @@
     "speedtest-net": "^1.5.1",
     "table": "^5.4.1",
     "turndown": "^5.0.3",
+    "ytdl-core": "^0.29.2",
     "zlib-sync": "^0.1.4"
   },
   "devDependencies": {

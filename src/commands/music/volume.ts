@@ -14,7 +14,7 @@
 
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { IMusicCommand, MusicQueueType } from 'RibbonTypes';
+import { MusicCommand, MusicQueueType } from 'RibbonTypes';
 
 type ChangeVolumeArgs = {
   volume: number;
@@ -54,7 +54,7 @@ export default class ChangeVolumeCommand extends Command {
 
   get queue () {
     if (!this.songQueue) {
-      this.songQueue = (this.client.registry.resolveCommand('music:launch') as IMusicCommand).queue;
+      this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
 
     return this.songQueue;

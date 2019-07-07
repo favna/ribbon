@@ -18,7 +18,7 @@ type TwitchToggleArgs = {
 };
 
 export default class TwitchToggleCommand extends Command {
-  constructor(client: CommandoClient) {
+  constructor (client: CommandoClient) {
     super(client, {
       name: 'twitchtoggle',
       aliases: ['twitchon', 'twitchoff'],
@@ -44,7 +44,7 @@ export default class TwitchToggleCommand extends Command {
   }
 
   @shouldHavePermission('ADMINISTRATOR')
-  public run(msg: CommandoMessage, { shouldEnable }: TwitchToggleArgs) {
+  public run (msg: CommandoMessage, { shouldEnable }: TwitchToggleArgs) {
     msg.guild.settings.set('twitchnotifiers', shouldEnable);
 
     deleteCommandMessages(msg, this.client);
