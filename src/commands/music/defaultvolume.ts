@@ -14,63 +14,63 @@ import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 
 type DefaultVolumeArgs = {
-    volume: string;
+  volume: string;
 };
 
 export default class DefaultVolumeCommand extends Command {
-    constructor (client: CommandoClient) {
-        super(client, {
-            name: 'defaultvolume',
-            aliases: ['defvol'],
-            group: 'music',
-            memberName: 'defaultvolume',
-            description: 'Shows or sets the default volume level',
-            format: 'VolumeToSet',
-            examples: ['defaultvolume 2'],
-            guildOnly: true,
-            throttling: {
-                usages: 2,
-                duration: 3,
-            },
-            args: [
-                {
-                    key: 'volume',
-                    prompt: 'What is the default volume I should set? (\'default\' to reset)',
-                    type: 'string',
-                    default: 'show',
-                }
-            ],
-        });
+  constructor (client: CommandoClient) {
+    super(client, {
+      name: 'defaultvolume',
+      aliases: ['defvol'],
+      group: 'music',
+      memberName: 'defaultvolume',
+      description: 'Shows or sets the default volume level',
+      format: 'VolumeToSet',
+      examples: ['defaultvolume 2'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3,
+      },
+      args: [
+        {
+          key: 'volume',
+          prompt: 'What is the default volume I should set? (\'default\' to reset)',
+          type: 'string',
+          default: 'show',
+        }
+      ],
+    });
+  }
+
+  @shouldHavePermission('ADMINISTRATOR')
+  public run (msg: CommandoMessage, { volume }: DefaultVolumeArgs) {
+    if (volume === 'show') {
+      const defaultVolume = msg.guild.settings.get('defaultVolume', DEFAULT_VOLUME);
+
+      deleteCommandMessages(msg, this.client);
+
+      return msg.reply(`the default volume level is ${defaultVolume}.`);
     }
 
-    @shouldHavePermission('ADMINISTRATOR')
-    public run (msg: CommandoMessage, { volume }: DefaultVolumeArgs) {
-        if (volume === 'show') {
-            const defaultVolume = msg.guild.settings.get('defaultVolume', DEFAULT_VOLUME);
+    if (volume === 'default') {
+      msg.guild.settings.remove('defaultVolume');
+      deleteCommandMessages(msg, this.client);
 
-            deleteCommandMessages(msg, this.client);
-
-            return msg.reply(`the default volume level is ${defaultVolume}.`);
-        }
-
-        if (volume === 'default') {
-            msg.guild.settings.remove('defaultVolume');
-            deleteCommandMessages(msg, this.client);
-
-            return msg.reply(`set the default volume level to Ribbon's default (currently ${DEFAULT_VOLUME}).`);
-        }
-
-        const newVolume = parseInt(volume, 10);
-
-        if (isNaN(newVolume) || newVolume <= 0 || newVolume > 10) {
-            deleteCommandMessages(msg, this.client);
-
-            return msg.reply('invalid number provided. It must be in the range of 0-10.');
-        }
-
-        msg.guild.settings.set('defaultVolume', newVolume);
-        deleteCommandMessages(msg, this.client);
-
-        return msg.reply(`set the default volume level to ${newVolume}.`);
+      return msg.reply(`set the default volume level to Ribbon's default (currently ${DEFAULT_VOLUME}).`);
     }
+
+    const newVolume = parseInt(volume, 10);
+
+    if (isNaN(newVolume) || newVolume <= 0 || newVolume > 10) {
+      deleteCommandMessages(msg, this.client);
+
+      return msg.reply('invalid number provided. It must be in the range of 0-10.');
+    }
+
+    msg.guild.settings.set('defaultVolume', newVolume);
+    deleteCommandMessages(msg, this.client);
+
+    return msg.reply(`set the default volume level to ${newVolume}.`);
+  }
 }

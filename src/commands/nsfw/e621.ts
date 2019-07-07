@@ -18,64 +18,63 @@ import { search as booru } from 'booru';
 import { stripIndents } from 'common-tags';
 
 type E621Args = {
-    tags: string[];
+  tags: string[];
 };
 
 export default class E621Command extends Command {
-    constructor (client: CommandoClient) {
-        super(client, {
-            name: 'e621',
-            aliases: ['eee'],
-            group: 'nsfw',
-            memberName: 'e621',
-            description: 'Find NSFW Content on e621',
-            format: 'NSFWToLookUp',
-            examples: ['e621 Pyrrha Nikos'],
-            nsfw: true,
-            guildOnly: false,
-            throttling: {
-                usages: 2,
-                duration: 3,
-            },
-            args: [
-                {
-                    key: 'tags',
-                    prompt: 'What do you want to find NSFW for?',
-                    type: 'stringarray',
-                }
-            ],
-        });
-    }
-
-    public async run (msg: CommandoMessage, { tags }: E621Args) {
-        try {
-            const booruSearch = await booru('e621', tags, {
-                limit: 1,
-                random: true,
-            });
-            const hit = booruSearch.first;
-            const e621Embed = new MessageEmbed();
-            const imageTags: string[] = [];
-
-            hit.tags.forEach((tag: string) => imageTags.push(`[#${tag}](${hit.fileUrl!})`));
-
-            e621Embed
-                .setTitle(`e621 image for ${tags.join(', ')}`)
-                .setURL(hit.fileUrl!)
-                .setColor('#FFB6C1')
-                .setDescription(stripIndents`
-                    ${imageTags.slice(0, 5).join(' ')}
-                    **Score**: ${hit.score}
-                `)
-                .setImage(hit.fileUrl!);
-
-            deleteCommandMessages(msg, this.client);
-
-            return msg.embed(e621Embed);
-        } catch (err) {
-            deleteCommandMessages(msg, this.client);
-
-            return msg.reply(`no juicy images found for \`${tags}\``);
+  constructor (client: CommandoClient) {
+    super(client, {
+      name: 'e621',
+      aliases: ['eee'],
+      group: 'nsfw',
+      memberName: 'e621',
+      description: 'Find NSFW Content on e621',
+      format: 'NSFWToLookUp',
+      examples: ['e621 Pyrrha Nikos'],
+      nsfw: true,
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3,
+      },
+      args: [
+        {
+          key: 'tags',
+          prompt: 'What do you want to find NSFW for?',
+          type: 'stringarray',
         }
+      ],
+    });
+  }
+
+  public async run (msg: CommandoMessage, { tags }: E621Args) {
+    try {
+      const booruSearch = await booru('e621', tags, {
+        limit: 1,
+        random: true,
+      });
+      const hit = booruSearch.first;
+      const imageTags: string[] = [];
+
+      hit.tags.forEach((tag: string) => imageTags.push(`[#${tag}](${hit.fileUrl!})`));
+
+      const e621Embed = new MessageEmbed()
+        .setTitle(`e621 image for ${tags.join(', ')}`)
+        .setURL(hit.fileUrl!)
+        .setColor('#FFB6C1')
+        .setDescription(stripIndents`
+          ${imageTags.slice(0, 5).join(' ')}
+          **Score**: ${hit.score}`
+        )
+        .setImage(hit.fileUrl!);
+
+      deleteCommandMessages(msg, this.client);
+
+      return msg.embed(e621Embed);
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+
+      return msg.reply(`no juicy images found for \`${tags}\``);
     }
+  }
 }

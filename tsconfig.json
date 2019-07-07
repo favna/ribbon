@@ -1,35 +1,35 @@
 {
-    "compilerOptions": {
-        "outDir": "dist/",
-        "rootDir": "./src",
-        "forceConsistentCasingInFileNames": true,
-        "experimentalDecorators": true,
-        "esModuleInterop": true,
-        "lib": ["esnext", "dom"],
-        "target": "esnext",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "newLine": "lf",
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "noUnusedLocals": true,
-        "removeComments": true,
-        "resolveJsonModule": true,
-        "importHelpers": true,
-        "strict": true,
-        "baseUrl": "src",
-        "skipLibCheck": true,
-        "paths": {
-            "@components/*": ["components/*"],
-            "@databases/*": ["data/databases/*"],
-            "@pokedex/*": ["data/dex/*"],
-            "@i18n/*": ["data/i18n/*"]
-        },
-        "typeRoots": [ "typings", "./node_modules/@types"],
-        "incremental": true
+  "compilerOptions": {
+    "outDir": "dist/",
+    "rootDir": "./src",
+    "forceConsistentCasingInFileNames": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "lib": ["esnext","dom"],
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "newLine": "lf",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "strict": true,
+    "baseUrl": "src",
+    "skipLibCheck": true,
+    "paths": {
+      "@components/*": ["components/*"],
+      "@databases/*": ["data/databases/*"],
+      "@pokedex/*": ["data/dex/*"],
+      "@i18n/*": ["data/i18n/*"]
     },
-    "include": ["src/**/*.ts"],
-    "exclude": ["node_modules", "dist", "src/**/*.js", "typings"]
+    "typeRoots": ["typings","./node_modules/@types"],
+    "incremental": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules","dist","src/**/*.js","typings"]
 }

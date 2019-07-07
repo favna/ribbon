@@ -17,62 +17,62 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { IMusicCommand, MusicQueueType } from 'RibbonTypes';
 
 type ChangeVolumeArgs = {
-    volume: number;
+  volume: number;
 };
 
 export default class ChangeVolumeCommand extends Command {
-    private songQueue: Map<string, MusicQueueType>;
+  private songQueue: Map<string, MusicQueueType>;
 
-    constructor (client: CommandoClient) {
-        super(client, {
-            name: 'volume',
-            aliases: ['set-volume', 'set-vol', 'vol'],
-            group: 'music',
-            memberName: 'volume',
-            description: 'Changes the volume.',
-            format: '[level]',
-            details: 'The volume level ranges from 0-10. You may specify "up" or "down" to modify the volume level by 2.',
-            examples: ['volume', 'volume 7', 'volume up', 'volume down'],
-            guildOnly: true,
-            throttling: {
-                usages: 2,
-                duration: 3,
-            },
-            args: [
-                {
-                    key: 'volume',
-                    prompt: 'What volume should I set?',
-                    type: 'integer',
-                    max: 11,
-                    min: 0,
-                    default: -1,
-                }
-            ],
-        });
-        this.songQueue = this.queue;
-    }
-
-    get queue () {
-        if (!this.songQueue) {
-            this.songQueue = (this.client.registry.resolveCommand('music:launch') as IMusicCommand).queue;
+  constructor (client: CommandoClient) {
+    super(client, {
+      name: 'volume',
+      aliases: ['set-volume', 'set-vol', 'vol'],
+      group: 'music',
+      memberName: 'volume',
+      description: 'Changes the volume.',
+      format: '[level]',
+      details: 'The volume level ranges from 0-10. You may specify "up" or "down" to modify the volume level by 2.',
+      examples: ['volume', 'volume 7', 'volume up', 'volume down'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3,
+      },
+      args: [
+        {
+          key: 'volume',
+          prompt: 'What volume should I set?',
+          type: 'integer',
+          max: 11,
+          min: 0,
+          default: -1,
         }
+      ],
+    });
+    this.songQueue = this.queue;
+  }
 
-        return this.songQueue;
+  get queue () {
+    if (!this.songQueue) {
+      this.songQueue = (this.client.registry.resolveCommand('music:launch') as IMusicCommand).queue;
     }
 
-    public run (msg: CommandoMessage, { volume }: ChangeVolumeArgs) {
-        const queue = this.queue.get(msg.guild.id);
+    return this.songQueue;
+  }
 
-        if (!queue) return msg.reply('there isn\'t any music playing to change the volume of. Better queue some up!');
-        if (volume < 0) return msg.reply(`the dial is currently set to ${queue.volume}.`);
-        if (!queue.voiceChannel.members.has(msg.author!.id)) {
-            return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
-        }
+  public run (msg: CommandoMessage, { volume }: ChangeVolumeArgs) {
+    const queue = this.queue.get(msg.guild.id);
 
-        queue.volume = volume;
-        if (queue.songs[0].dispatcher) queue.songs[0].dispatcher.setVolumeLogarithmic(queue.volume / 5);
-        deleteCommandMessages(msg, this.client);
-
-        return msg.reply(`${volume === 11 ? 'this one goes to 11!' : `set the dial to ${volume}.`}`);
+    if (!queue) return msg.reply('there isn\'t any music playing to change the volume of. Better queue some up!');
+    if (volume < 0) return msg.reply(`the dial is currently set to ${queue.volume}.`);
+    if (!queue.voiceChannel.members.has(msg.author!.id)) {
+      return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
     }
+
+    queue.volume = volume;
+    if (queue.songs[0].dispatcher) queue.songs[0].dispatcher.setVolumeLogarithmic(queue.volume / 5);
+    deleteCommandMessages(msg, this.client);
+
+    return msg.reply(`${volume === 11 ? 'this one goes to 11!' : `set the dial to ${volume}.`}`);
+  }
 }

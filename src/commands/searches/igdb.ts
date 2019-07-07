@@ -19,46 +19,46 @@ import fetch from 'node-fetch';
 import { IgdbGame } from 'RibbonTypes';
 
 type IGDBArgs = {
-    game: string;
-    hasManageMessages: boolean;
-    position: number;
+  game: string;
+  hasManageMessages: boolean;
+  position: number;
 };
 
 export default class IGDBCommand extends Command {
-    constructor (client: CommandoClient) {
-        super(client, {
-            name: 'igdb',
-            aliases: ['game', 'moby', 'games'],
-            group: 'searches',
-            memberName: 'igdb',
-            description: 'Gets information about a game using Internet Game Database (IGDB)',
-            format: 'GameName',
-            examples: ['igdb Tales of Berseria'],
-            guildOnly: false,
-            throttling: {
-                usages: 2,
-                duration: 3,
-            },
-            args: [
-                {
-                    key: 'game',
-                    prompt: 'Which game do you want to look up on IGDB?',
-                    type: 'string',
-                }
-            ],
-        });
-    }
+  constructor (client: CommandoClient) {
+    super(client, {
+      name: 'igdb',
+      aliases: ['game', 'moby', 'games'],
+      group: 'searches',
+      memberName: 'igdb',
+      description: 'Gets information about a game using Internet Game Database (IGDB)',
+      format: 'GameName',
+      examples: ['igdb Tales of Berseria'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3,
+      },
+      args: [
+        {
+          key: 'game',
+          prompt: 'Which game do you want to look up on IGDB?',
+          type: 'string',
+        }
+      ],
+    });
+  }
 
-    @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { game, hasManageMessages, position = 0 }: IGDBArgs) {
-        try {
-            const headers = {
-                Accept: 'application/json',
-                'user-key': process.env.IGDB_API_KEY!,
-            };
+  @clientHasManageMessages()
+  public async run (msg: CommandoMessage, { game, hasManageMessages, position = 0 }: IGDBArgs) {
+    try {
+      const headers = {
+        Accept: 'application/json',
+        'user-key': process.env.IGDB_API_KEY!,
+      };
 
-            const igdbSearch = await fetch('https://api-v3.igdb.com/games', {
-                body: oneLine`
+      const igdbSearch = await fetch('https://api-v3.igdb.com/games', {
+        body: oneLine`
                     search "${game}";
                     fields name, url, summary, rating, involved_companies.developer,
                            involved_companies.company.name, genres.name, release_dates.date,
@@ -67,61 +67,61 @@ export default class IGDBCommand extends Command {
                     limit ${hasManageMessages ? 10 : 1};
                     offset 0;
                 `,
-                headers,
-                method: 'POST',
-            });
-            const gameInfo: IgdbGame[] = await igdbSearch.json();
-            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+        headers,
+        method: 'POST',
+      });
+      const gameInfo: IgdbGame[] = await igdbSearch.json();
+      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
-            let currentGame = gameInfo[position];
-            let gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position, hasManageMessages);
+      let currentGame = gameInfo[position];
+      let gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position, hasManageMessages);
 
-            deleteCommandMessages(msg, this.client);
+      deleteCommandMessages(msg, this.client);
 
-            const message = await msg.embed(gameEmbed) as CommandoMessage;
+      const message = await msg.embed(gameEmbed) as CommandoMessage;
 
-            if (gameInfo.length > 1 && hasManageMessages) {
-                injectNavigationEmotes(message);
-                new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
-                    .on('collect', (reaction: MessageReaction, user: User) => {
-                        if (!this.client.userid.includes(user.id)) {
-                            reaction.emoji.name === '➡' ? position++ : position--;
-                            if (position >= gameInfo.length) position = 0;
-                            if (position < 0) position = gameInfo.length - 1;
-                            currentGame = gameInfo[position];
-                            gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position, hasManageMessages);
-                            message.edit('', gameEmbed);
-                            message.reactions.get(reaction.emoji.name)!.users.remove(user);
-                        }
-                    });
+      if (gameInfo.length > 1 && hasManageMessages) {
+        injectNavigationEmotes(message);
+        new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
+          .on('collect', (reaction: MessageReaction, user: User) => {
+            if (!this.client.userid.includes(user.id)) {
+              reaction.emoji.name === '➡' ? position++ : position--;
+              if (position >= gameInfo.length) position = 0;
+              if (position < 0) position = gameInfo.length - 1;
+              currentGame = gameInfo[position];
+              gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position, hasManageMessages);
+              message.edit('', gameEmbed);
+              message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
+          });
+      }
 
-            return null;
-        } catch (err) {
-            deleteCommandMessages(msg, this.client);
+      return null;
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
 
-            return msg.reply(`nothing found for \`${game}\``);
-        }
+      return msg.reply(`nothing found for \`${game}\``);
     }
+  }
 
-    private prepMessage (
-        color: string, game: IgdbGame, gameSearchLength: number,
-        position: number, hasManageMessages: boolean
-    ): MessageEmbed {
-        const coverImg = /https?:/i.test(game.cover.url) ? game.cover.url : `https:${game.cover.url}`;
+  private prepMessage (
+    color: string, game: IgdbGame, gameSearchLength: number,
+    position: number, hasManageMessages: boolean
+  ): MessageEmbed {
+    const coverImg = /https?:/i.test(game.cover.url) ? game.cover.url : `https:${game.cover.url}`;
 
-        return new MessageEmbed()
-            .setColor(color)
-            .setTitle(game.name)
-            .setURL(game.url)
-            .setThumbnail(coverImg)
-            .setFooter(`Result ${position + 1} of ${gameSearchLength}`)
-            .addField('User Score', roundNumber(game.rating, 1), true)
-            .addField('Age Rating(s)', game.age_ratings.map(ageRating => `${ageRating.category === 1 ? 'ESRB' : 'PEGI'}: ${IGBDAgeRating[ageRating.rating]}`), true)
-            .addField('Release Date', moment.unix(game.release_dates[0].date).format('MMMM Do YYYY'), true)
-            .addField('Genre(s)', game.genres.map(genre => genre.name).join(', '), true)
-            .addField('Developer(s)', game.involved_companies.map(company => company.developer ? company.company.name : null).filter(Boolean).join(', '), true)
-            .addField('Platform(s)', game.platforms.map(platform => platform.name).join(', '), true)
-            .setDescription(game.summary);
-    }
+    return new MessageEmbed()
+      .setColor(color)
+      .setTitle(game.name)
+      .setURL(game.url)
+      .setThumbnail(coverImg)
+      .setFooter(`Result ${position + 1} of ${gameSearchLength}`)
+      .addField('User Score', roundNumber(game.rating, 1), true)
+      .addField('Age Rating(s)', game.age_ratings.map(ageRating => `${ageRating.category === 1 ? 'ESRB' : 'PEGI'}: ${IGBDAgeRating[ageRating.rating]}`), true)
+      .addField('Release Date', moment.unix(game.release_dates[0].date).format('MMMM Do YYYY'), true)
+      .addField('Genre(s)', game.genres.map(genre => genre.name).join(', '), true)
+      .addField('Developer(s)', game.involved_companies.map(company => company.developer ? company.company.name : null).filter(Boolean).join(', '), true)
+      .addField('Platform(s)', game.platforms.map(platform => platform.name).join(', '), true)
+      .setDescription(game.summary);
+  }
 }

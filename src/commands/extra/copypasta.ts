@@ -23,104 +23,106 @@ import path from 'path';
 import { CopypastaType } from 'RibbonTypes';
 
 type CopypastaArgs = {
-    name: string;
+  name: string;
 };
 
 export default class CopypastaCommand extends Command {
-    constructor (client: CommandoClient) {
-        super(client, {
-            name: 'copypasta',
-            aliases: ['cp', 'pasta', 'tag'],
-            group: 'extra',
-            memberName: 'copypasta',
-            description: 'Sends a copypasta to the chat',
-            format: 'CopypastaName',
-            examples: ['copypasta navy'],
-            guildOnly: true,
-            throttling: {
-                usages: 2,
-                duration: 3,
-            },
-            args: [
-                {
-                    key: 'name',
-                    prompt: 'Which copypasta should I send?',
-                    type: 'string',
-                    parse: (p: string) => p.toLowerCase(),
-                }
-            ],
-        });
-    }
-
-    public async run (msg: CommandoMessage, { name }: CopypastaArgs) {
-        const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
-        const pastaEmbed = new MessageEmbed();
-
-        try {
-            const query: CopypastaType = conn
-                .prepare(`SELECT * FROM "${msg.guild.id}" WHERE name = ?;`)
-                .get(name);
-
-            if (query) {
-                const image = query.content.match(/(https?:\/\/.*\.(?:png|jpg|gif|webp|jpeg|svg))/im);
-
-                if (image) {
-                    pastaEmbed.setImage(image[0]);
-                    query.content = query.content.replace(/([<>])/gm, '');
-                    query.content =
-                        query.content.substring(0, image.index! - 1) +
-                        query.content.substring(image.index! + image[0].length);
-                }
-
-                if (query.content.length >= 1800) {
-                    const splitContent = Util.splitMessage(query.content, {
-                        maxLength: 1800,
-                    });
-
-                    for (const part of splitContent) {
-                        await msg.say(part);
-                    }
-
-                    return null;
-                }
-
-                pastaEmbed
-                    .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-                    .setTitle(query.name)
-                    .setDescription(query.content);
-
-                deleteCommandMessages(msg, this.client);
-
-                return msg.embed(pastaEmbed);
-            }
-
-            const maybe = dym(name, conn.prepare(`SELECT name FROM "${msg.guild.id}";`).all().map((a: CopypastaType) => a.name), { deburr: true });
-
-            deleteCommandMessages(msg, this.client);
-
-            return msg.reply(
-                oneLine`that copypasta does not exist! ${maybe
-                    ? oneLine`Did you mean \`${maybe}\`?`
-                    : `You can save it with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``
-                    }`
-            );
-        } catch (err) {
-            deleteCommandMessages(msg, this.client);
-            if (/(?:no such table)/i.test(err.toString())) {
-                return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);
-            }
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-            channel.send(stripIndents`
-                <@${this.client.owners[0].id}> Error occurred in \`copypasta\` command!
-                **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author!.tag} (${msg.author!.id})
-                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-                **Error Message:** ${err}
-            `);
-
-            return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
-                Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+  constructor (client: CommandoClient) {
+    super(client, {
+      name: 'copypasta',
+      aliases: ['cp', 'pasta', 'tag'],
+      group: 'extra',
+      memberName: 'copypasta',
+      description: 'Sends a copypasta to the chat',
+      format: 'CopypastaName',
+      examples: ['copypasta navy'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3,
+      },
+      args: [
+        {
+          key: 'name',
+          prompt: 'Which copypasta should I send?',
+          type: 'string',
+          parse: (p: string) => p.toLowerCase(),
         }
+      ],
+    });
+  }
+
+  public async run (msg: CommandoMessage, { name }: CopypastaArgs) {
+    const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
+    const pastaEmbed = new MessageEmbed();
+
+    try {
+      const query: CopypastaType = conn
+        .prepare(`SELECT * FROM "${msg.guild.id}" WHERE name = ?;`)
+        .get(name);
+
+      if (query) {
+        const image = query.content.match(/(https?:\/\/.*\.(?:png|jpg|gif|webp|jpeg|svg))/im);
+
+        if (image) {
+          pastaEmbed.setImage(image[0]);
+          query.content = query.content.replace(/([<>])/gm, '');
+          query.content =
+            query.content.substring(0, image.index! - 1) +
+            query.content.substring(image.index! + image[0].length);
+        }
+
+        if (query.content.length >= 1800) {
+          const splitContent = Util.splitMessage(query.content, {
+            maxLength: 1800,
+          });
+
+          for (const part of splitContent) {
+            await msg.say(part);
+          }
+
+          return null;
+        }
+
+        pastaEmbed
+          .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+          .setTitle(query.name)
+          .setDescription(query.content);
+
+        deleteCommandMessages(msg, this.client);
+
+        return msg.embed(pastaEmbed);
+      }
+
+      const maybe = dym(name, conn.prepare(`SELECT name FROM "${msg.guild.id}";`).all().map((a: CopypastaType) => a.name), { deburr: true });
+
+      deleteCommandMessages(msg, this.client);
+
+      return msg.reply(
+        oneLine`that copypasta does not exist! ${maybe
+          ? oneLine`Did you mean \`${maybe}\`?`
+          : `You can save it with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``}`
+      );
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+      if (/(?:no such table)/i.test(err.toString())) {
+        return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);
+      }
+      const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+      channel.send(stripIndents`
+        <@${this.client.owners[0].id}> Error occurred in \`copypasta\` command!
+        **Server:** ${msg.guild.name} (${msg.guild.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Error Message:** ${err}`
+      );
+
+      return msg.reply(oneLine`
+        an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
+        Want to know more about the error?
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
+      );
     }
+  }
 }

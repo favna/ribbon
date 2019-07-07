@@ -17,73 +17,73 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
 type ExcessiveEmojisArgs = {
-    shouldEnable: boolean;
-    threshold: string;
-    minLength: number;
+  shouldEnable: boolean;
+  threshold: string;
+  minLength: number;
 };
 
 export default class ExcessiveEmojisCommand extends Command {
-    constructor (client: CommandoClient) {
-        super(client, {
-            name: 'excessiveemojis',
-            aliases: ['ef', 'emojifilter', 'spammedemojis', 'manyemojis'],
-            group: 'automod',
-            memberName: 'excessiveemojis',
-            description: 'Toggle the excessive emojis filter',
-            format: 'boolean',
-            examples: ['excessiveemojis enable'],
-            guildOnly: true,
-            throttling: {
-                usages: 2,
-                duration: 3,
-            },
-            args: [
-                {
-                    key: 'shouldEnable',
-                    prompt: 'Enable or disable the Excessive Emojis filter?',
-                    type: 'validboolean',
-                },
-                {
-                    key: 'threshold',
-                    prompt: 'How many emojis are allowed in 1 message?',
-                    type: 'integer',
-                    default: 5,
-                },
-                {
-                    key: 'minLength',
-                    prompt: 'What should the minimum length of a message be before it is checked?',
-                    type: 'integer',
-                    default: 10,
-                }
-            ],
-        });
-    }
-
-    @shouldHavePermission('MANAGE_MESSAGES', true)
-    public run (msg: CommandoMessage, { shouldEnable, threshold, minLength }: ExcessiveEmojisArgs) {
-        const eeEmbed = new MessageEmbed();
-        const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-        const options = { minlength: minLength, threshold, enabled: shouldEnable };
-
-        msg.guild.settings.set('emojis', options);
-
-        eeEmbed
-            .setColor('#439DFF')
-            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
-            .setDescription(stripIndents`
-                **Action:** Excessive Emojis filter has been ${shouldEnable ? 'enabled' : 'disabled'}
-                ${shouldEnable ? `**Threshold:** Messages that have at least ${threshold} emojis will be deleted` : ''}
-                ${shouldEnable ? `**Minimum length:** Messages of at least ${minLength} are checked for excessive emojis` : ''}
-                ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
-            )
-            .setTimestamp();
-
-        if (msg.guild.settings.get('modlogs', true)) {
-            logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, eeEmbed);
+  constructor (client: CommandoClient) {
+    super(client, {
+      name: 'excessiveemojis',
+      aliases: ['ef', 'emojifilter', 'spammedemojis', 'manyemojis'],
+      group: 'automod',
+      memberName: 'excessiveemojis',
+      description: 'Toggle the excessive emojis filter',
+      format: 'boolean',
+      examples: ['excessiveemojis enable'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3,
+      },
+      args: [
+        {
+          key: 'shouldEnable',
+          prompt: 'Enable or disable the Excessive Emojis filter?',
+          type: 'validboolean',
+        },
+        {
+          key: 'threshold',
+          prompt: 'How many emojis are allowed in 1 message?',
+          type: 'integer',
+          default: 5,
+        },
+        {
+          key: 'minLength',
+          prompt: 'What should the minimum length of a message be before it is checked?',
+          type: 'integer',
+          default: 10,
         }
+      ],
+    });
+  }
 
-        deleteCommandMessages(msg, this.client);
+  @shouldHavePermission('MANAGE_MESSAGES', true)
+  public run (msg: CommandoMessage, { shouldEnable, threshold, minLength }: ExcessiveEmojisArgs) {
+    const eeEmbed = new MessageEmbed();
+    const modlogChannel = msg.guild.settings.get('modlogchannel', null);
+    const options = { minlength: minLength, threshold, enabled: shouldEnable };
 
-        return msg.embed(eeEmbed);
+    msg.guild.settings.set('emojis', options);
+
+    eeEmbed
+      .setColor('#439DFF')
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      .setDescription(stripIndents`
+        **Action:** Excessive Emojis filter has been ${shouldEnable ? 'enabled' : 'disabled'}
+        ${shouldEnable ? `**Threshold:** Messages that have at least ${threshold} emojis will be deleted` : ''}
+        ${shouldEnable ? `**Minimum length:** Messages of at least ${minLength} are checked for excessive emojis` : ''}
+        ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
+      )
+      .setTimestamp();
+
+    if (msg.guild.settings.get('modlogs', true)) {
+      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, eeEmbed);
     }
+
+    deleteCommandMessages(msg, this.client);
+
+    return msg.embed(eeEmbed);
+  }
 }

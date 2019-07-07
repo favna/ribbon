@@ -14,53 +14,53 @@ import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
 
 type PatArgs = {
-    member: GuildMember;
+  member: GuildMember;
 };
 
 export default class PatCommand extends Command {
-    constructor (client: CommandoClient) {
-        super(client, {
-            name: 'pat',
-            group: 'weeb',
-            memberName: 'pat',
-            description: 'Pat a good person 🐇!',
-            format: 'MemberToPat',
-            examples: ['pat Favna'],
-            guildOnly: true,
-            throttling: {
-                usages: 2,
-                duration: 3,
-            },
-            args: [
-                {
-                    key: 'member',
-                    prompt: 'Who do you want to pat?',
-                    type: 'member',
-                    default: (msg: CommandoMessage) => msg.member,
-                }
-            ],
-        });
-    }
-
-    public async run (msg: CommandoMessage, { member }: PatArgs) {
-        try {
-            const patFetch = await fetch('https://nekos.life/api/v2/img/pat');
-            const petImg = await patFetch.json();
-            const isNotSelf = member.id !== msg.member!.id;
-
-            deleteCommandMessages(msg, this.client);
-
-            return msg.embed({
-                    color: msg.guild ? msg.guild.me!.displayColor : 10610610,
-                    description: isNotSelf
-                        ? `${member.displayName}! You got patted by ${msg.member!.displayName} 🐇!`
-                        : `${msg.member!.displayName} you must feel alone... Have a 🐈`,
-                    image: { url: isNotSelf ? petImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
-                },
-                `<@${member ? member.id : msg.author!.id}>`
-            );
-        } catch (err) {
-            return msg.reply('something went wrong getting a pat image 💔');
+  constructor (client: CommandoClient) {
+    super(client, {
+      name: 'pat',
+      group: 'weeb',
+      memberName: 'pat',
+      description: 'Pat a good person 🐇!',
+      format: 'MemberToPat',
+      examples: ['pat Favna'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3,
+      },
+      args: [
+        {
+          key: 'member',
+          prompt: 'Who do you want to pat?',
+          type: 'member',
+          default: (msg: CommandoMessage) => msg.member,
         }
+      ],
+    });
+  }
+
+  public async run (msg: CommandoMessage, { member }: PatArgs) {
+    try {
+      const patFetch = await fetch('https://nekos.life/api/v2/img/pat');
+      const petImg = await patFetch.json();
+      const isNotSelf = member.id !== msg.member!.id;
+
+      deleteCommandMessages(msg, this.client);
+
+      return msg.embed({
+          color: msg.guild ? msg.guild.me!.displayColor : 10610610,
+          description: isNotSelf
+            ? `${member.displayName}! You got patted by ${msg.member!.displayName} 🐇!`
+            : `${msg.member!.displayName} you must feel alone... Have a 🐈`,
+          image: { url: isNotSelf ? petImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
+        },
+        `<@${member ? member.id : msg.author!.id}>`
+      );
+    } catch (err) {
+      return msg.reply('something went wrong getting a pat image 💔');
     }
+  }
 }

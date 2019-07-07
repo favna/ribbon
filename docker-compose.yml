@@ -3,7 +3,7 @@ services:
   ribbongres:
     container_name: ribbongres
     image: postgres:latest
-    volumes: 
+    volumes:
       - $HOME/docker/volumes/postgres:/var/lib/postgresql/data
     ports:
       - 5432:5432

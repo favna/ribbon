@@ -3,18 +3,19 @@ import { stripIndents } from 'common-tags';
 import { CoinSide } from '../Constants';
 
 export default class CoinSideType extends ArgumentType {
-    constructor (client: CommandoClient) {
-        super(client, 'coinside');
-    }
+  constructor (client: CommandoClient) {
+    super(client, 'coinside');
+  }
 
-    public validate (side: CoinSide) {
-        if (CoinSide[side]) return true;
+  public validate (side: CoinSide) {
+    if (CoinSide[side]) return true;
 
-        return stripIndents`Has to be one of ${Object.keys(CoinSide).map(val => `\`${val}\``).join(', ')}
-                            Respond with your new selection oro`;
-    }
+    return stripIndents`
+      Has to be one of ${Object.keys(CoinSide).map(val => `\`${val}\``).join(', ')}
+      Respond with your new selection oro`;
+  }
 
-    public parse (side: CoinSide) {
-        return CoinSide[side];
-    }
+  public parse (side: CoinSide) {
+    return CoinSide[side];
+  }
 }

@@ -16,77 +16,76 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
 type DiceArgs = {
-    sides: number;
-    rolls: number;
+  sides: number;
+  rolls: number;
 };
 
 export default class DiceCommand extends Command {
-    constructor (client: CommandoClient) {
-        super(client, {
-            name: 'dice',
-            aliases: ['xdicey', 'roll', 'dicey', 'die'],
-            group: 'games',
-            memberName: 'dice',
-            description:
-                'Rolls some dice with some sides. Great for the DnD players!',
-            format: 'SidesOfTheDice AmountOfRolls',
-            examples: ['dice 6 5'],
-            guildOnly: false,
-            throttling: {
-                usages: 2,
-                duration: 3,
-            },
-            args: [
-                {
-                    key: 'sides',
-                    prompt: 'How many sides does your die have?',
-                    type: 'integer',
-                    max: 20,
-                    min: 4,
-                },
-                {
-                    key: 'rolls',
-                    prompt: 'How many times should the die be rolled?',
-                    type: 'integer',
-                    max: 40,
-                    min: 1,
-                }
-            ],
-        });
-    }
-
-    public run (msg: CommandoMessage, { sides, rolls }: DiceArgs) {
-        const diceEmbed = new MessageEmbed();
-        const res = [];
-        const throwDice = this.xdicey(rolls, sides);
-
-        for (const i in throwDice.individual) {
-            res.push(`${throwDice.individual[i]}`);
+  constructor (client: CommandoClient) {
+    super(client, {
+      name: 'dice',
+      aliases: ['xdicey', 'roll', 'dicey', 'die'],
+      group: 'games',
+      memberName: 'dice',
+      description: 'Rolls some dice with some sides. Great for the DnD players!',
+      format: 'SidesOfTheDice AmountOfRolls',
+      examples: ['dice 6 5'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3,
+      },
+      args: [
+        {
+          key: 'sides',
+          prompt: 'How many sides does your die have?',
+          type: 'integer',
+          max: 20,
+          min: 4,
+        },
+        {
+          key: 'rolls',
+          prompt: 'How many times should the die be rolled?',
+          type: 'integer',
+          max: 40,
+          min: 1,
         }
+      ],
+    });
+  }
 
-        diceEmbed
-            .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-            .setTitle('🎲 Dice Rolls 🎲')
-            .setDescription(`| ${res.join(' | ')} |`)
-            .addField('Total', throwDice.total, false);
+  public run (msg: CommandoMessage, { sides, rolls }: DiceArgs) {
+    const diceEmbed = new MessageEmbed();
+    const res = [];
+    const dice = this.rollDice(rolls, sides);
 
-        deleteCommandMessages(msg, this.client);
-
-        return msg.embed(diceEmbed);
+    for (const i in dice.individual) {
+      res.push(`${dice.individual[i]}`);
     }
 
-    private xdicey (rolls: number, sides: number) {
-        const result = [];
+    diceEmbed
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setTitle('🎲 Dice Rolls 🎲')
+      .setDescription(`| ${res.join(' | ')} |`)
+      .addField('Total', dice.total, false);
 
-        for (let i = 1; i < Math.abs(rolls); i++) {
-            result[i - 1] = Math.floor(Math.random() * Math.floor(Math.abs(sides))) + 1;
-        }
+    deleteCommandMessages(msg, this.client);
 
-        const totalAmount = result.reduce((total, current) => total + current, 0);
+    return msg.embed(diceEmbed);
+  }
 
-        return {
-            individual: result,
-            total: totalAmount,
-        };
+  private rollDice (rolls: number, sides: number) {
+    const result = [];
+
+    for (let i = 1; i < Math.abs(rolls); i++) {
+      result[i - 1] = Math.floor(Math.random() * Math.floor(Math.abs(sides))) + 1;
     }
+
+    const totalAmount = result.reduce((total, current) => total + current, 0);
+
+    return {
+      individual: result,
+      total: totalAmount,
+    };
+  }
 }

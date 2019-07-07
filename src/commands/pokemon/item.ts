@@ -23,113 +23,118 @@ import moment from 'moment';
 import { IPokeItemAliases, PokeItemDetailsType } from 'RibbonTypes';
 
 type ItemArgs = {
-    item: string;
-    hasManageMessages: boolean;
-    position: number;
+  item: string;
+  hasManageMessages: boolean;
+  position: number;
 };
 
 export default class ItemCommand extends Command {
-    constructor (client: CommandoClient) {
-        super(client, {
-            name: 'item',
-            aliases: ['it', 'bag'],
-            group: 'pokemon',
-            memberName: 'item',
-            description: 'Get the info on an item in Pokémon',
-            format: 'ItemName',
-            examples: ['item Life Orb'],
-            guildOnly: false,
-            throttling: {
-                usages: 2,
-                duration: 3,
-            },
-            args: [
-                {
-                    key: 'item',
-                    prompt: 'Get info on which item?',
-                    type: 'string',
-                    parse: (p: string) => p.toLowerCase().replace(/ /g, ''),
-                }
-            ],
-        });
-    }
-
-    @clientHasManageMessages()
-    public async run (msg: CommandoMessage, { item, hasManageMessages, position = 0 }: ItemArgs) {
-        try {
-            const itemOptions: FuseOptions<PokeItemDetailsType & IPokeItemAliases> = {
-                keys: ['alias', 'item', 'id', 'name'],
-                threshold: 0.3,
-            };
-            const aliasFuse = new Fuse(itemAliases, itemOptions);
-            const itemFuse = new Fuse(BattleItems, itemOptions);
-            const aliasSearch = aliasFuse.search(item);
-            const itemSearch = aliasSearch.length ? itemFuse.search(aliasSearch[0].item) : itemFuse.search(item);
-            const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
-
-            if (!itemSearch.length) throw new Error('no_item');
-
-            let currentItem = itemSearch[position];
-            let itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position, hasManageMessages);
-
-            deleteCommandMessages(msg, this.client);
-
-            const returnMsg = await msg.embed(itemEmbed) as CommandoMessage;
-
-            if (itemSearch.length > 1 && hasManageMessages) {
-                injectNavigationEmotes(returnMsg);
-                new ReactionCollector(returnMsg, navigationReactionFilter, { time: CollectorTimeout.five })
-                    .on('collect', (reaction: MessageReaction, user: User) => {
-                        reaction.emoji.name === '➡' ? position++ : position--;
-                        if (position >= itemSearch.length) position = 0;
-                        if (position < 0) position = itemSearch.length - 1;
-                        currentItem = itemSearch[position];
-                        itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position, hasManageMessages);
-                        returnMsg.edit('', itemEmbed);
-                        returnMsg.reactions.get(reaction.emoji.name)!.users.remove(user);
-                    });
-            }
-
-            return null;
-        } catch (err) {
-            deleteCommandMessages(msg, this.client);
-
-            if (/(?:no_item)/i.test(err.toString())) return msg.reply(stripIndents`no item found for \`${item}\``);
-            const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-            channel.send(stripIndents`
-                <@${this.client.owners[0].id}> Error occurred in \`item\` command!
-                **Server:** ${msg.guild.name} (${msg.guild.id})
-                **Author:** ${msg.author!.tag} (${msg.author!.id})
-                **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-                **Input:** ${item}
-                **Error Message:** ${err}
-            `);
-
-            return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
-                    Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
+  constructor (client: CommandoClient) {
+    super(client, {
+      name: 'item',
+      aliases: ['it', 'bag'],
+      group: 'pokemon',
+      memberName: 'item',
+      description: 'Get the info on an item in Pokémon',
+      format: 'ItemName',
+      examples: ['item Life Orb'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3,
+      },
+      args: [
+        {
+          key: 'item',
+          prompt: 'Get info on which item?',
+          type: 'string',
+          parse: (p: string) => p.toLowerCase().replace(/ /g, ''),
         }
-    }
+      ],
+    });
+  }
 
-    private prepMessage (
-        color: string, item: PokeItemDetailsType, itemSearchLength: number,
-        position: number, hasManageMessages: boolean
-    ): MessageEmbed {
-        return new MessageEmbed()
-            .setColor(color)
-            .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
-            .setAuthor(
-                `${sentencecase(item.name)}`,
-                `https://play.pokemonshowdown.com/sprites/itemicons/${item.name.toLowerCase().replace(/ /g, '-')}.png`
-            )
-            .setFooter(hasManageMessages ? `Result ${position + 1} of ${itemSearchLength}` : '')
-            .addField('Description', item.desc)
-            .addField('Generation Introduced', item.gen)
-            .addField(
-                'External Resources', oneLine`
-            [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${sentencecase(item.name.replace(' ', '_').replace('\'', ''))})
-            |  [Smogon](http://www.smogon.com/dex/sm/items/${item.name.toLowerCase().replace(' ', '_').replace('\'', '')})
-            |  [PokémonDB](http://pokemondb.net/item/${item.name.toLowerCase().replace(' ', '-').replace('\'', '')})`
-            );
+  @clientHasManageMessages()
+  public async run (msg: CommandoMessage, { item, hasManageMessages, position = 0 }: ItemArgs) {
+    try {
+      const itemOptions: FuseOptions<PokeItemDetailsType & IPokeItemAliases> = {
+        keys: ['alias', 'item', 'id', 'name'],
+        threshold: 0.3,
+      };
+      const aliasFuse = new Fuse(itemAliases, itemOptions);
+      const itemFuse = new Fuse(BattleItems, itemOptions);
+      const aliasSearch = aliasFuse.search(item);
+      const itemSearch = aliasSearch.length ? itemFuse.search(aliasSearch[0].item) : itemFuse.search(item);
+      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+
+      if (!itemSearch.length) throw new Error('no_item');
+
+      let currentItem = itemSearch[position];
+      let itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position, hasManageMessages);
+
+      deleteCommandMessages(msg, this.client);
+
+      const returnMsg = await msg.embed(itemEmbed) as CommandoMessage;
+
+      if (itemSearch.length > 1 && hasManageMessages) {
+        injectNavigationEmotes(returnMsg);
+        new ReactionCollector(returnMsg, navigationReactionFilter, { time: CollectorTimeout.five })
+          .on('collect', (reaction: MessageReaction, user: User) => {
+            if (!this.client.userid.includes(user.id)) {
+              reaction.emoji.name === '➡' ? position++ : position--;
+              if (position >= itemSearch.length) position = 0;
+              if (position < 0) position = itemSearch.length - 1;
+              currentItem = itemSearch[position];
+              itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position, hasManageMessages);
+              returnMsg.edit('', itemEmbed);
+              returnMsg.reactions.get(reaction.emoji.name)!.users.remove(user);
+            }
+          });
+      }
+
+      return null;
+    } catch (err) {
+      deleteCommandMessages(msg, this.client);
+
+      if (/(?:no_item)/i.test(err.toString())) return msg.reply(stripIndents`no item found for \`${item}\``);
+      const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+      channel.send(stripIndents`
+        <@${this.client.owners[0].id}> Error occurred in \`item\` command!
+        **Server:** ${msg.guild.name} (${msg.guild.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Input:** ${item}
+        **Error Message:** ${err}`
+      );
+
+      return msg.reply(oneLine`
+        an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
+        Want to know more about the error?
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
+      );
     }
+  }
+
+  private prepMessage (
+    color: string, item: PokeItemDetailsType, itemSearchLength: number,
+    position: number, hasManageMessages: boolean
+  ): MessageEmbed {
+    return new MessageEmbed()
+      .setColor(color)
+      .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
+      .setAuthor(
+        `${sentencecase(item.name)}`,
+        `https://play.pokemonshowdown.com/sprites/itemicons/${item.name.toLowerCase().replace(/ /g, '-')}.png`
+      )
+      .setFooter(hasManageMessages ? `Result ${position + 1} of ${itemSearchLength}` : '')
+      .addField('Description', item.desc)
+      .addField('Generation Introduced', item.gen)
+      .addField(
+        'External Resources', oneLine`
+            [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${sentencecase(item.name.replace(' ', '_').replace('\'', ''))})
+            | [Smogon](http://www.smogon.com/dex/sm/items/${item.name.toLowerCase().replace(' ', '_').replace('\'', '')})
+            | [PokémonDB](http://pokemondb.net/item/${item.name.toLowerCase().replace(' ', '-').replace('\'', '')})`
+      );
+  }
 }

@@ -13,37 +13,37 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
 export default class DndCCommand extends Command {
-    constructor (client: CommandoClient) {
-        super(client, {
-            name: 'dndcoin',
-            aliases: ['coinflip', 'dndc', 'dcoin', 'dnd'],
-            group: 'games',
-            memberName: 'dndcoin',
-            description: 'Flips a coin',
-            examples: ['coin'],
-            guildOnly: false,
-            throttling: {
-                usages: 2,
-                duration: 3,
-            },
-        });
-    }
+  constructor (client: CommandoClient) {
+    super(client, {
+      name: 'dndcoin',
+      aliases: ['coinflip', 'dndc', 'dcoin', 'dnd'],
+      group: 'games',
+      memberName: 'dndcoin',
+      description: 'Flips a coin',
+      examples: ['coin'],
+      guildOnly: false,
+      throttling: {
+        usages: 2,
+        duration: 3,
+      },
+    });
+  }
 
-    public run (msg: CommandoMessage) {
-        const coinEmbed = new MessageEmbed();
-        const flip = roundNumber(Math.random());
+  public run (msg: CommandoMessage) {
+    const coinEmbed = new MessageEmbed();
+    const flip = roundNumber(Math.random());
 
-        coinEmbed
-            .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-            .setImage(
-                flip === 1
-                    ? `${ASSET_BASE_PATH}/ribbon/dndheads.png`
-                    : `${ASSET_BASE_PATH}/ribbon/dndtails.png`
-            )
-            .setTitle(`Flipped ${flip === 1 ? 'heads' : 'tails'}`);
+    coinEmbed
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setImage(
+        flip === 1
+          ? `${ASSET_BASE_PATH}/ribbon/dndheads.png`
+          : `${ASSET_BASE_PATH}/ribbon/dndtails.png`
+      )
+      .setTitle(`Flipped ${flip === 1 ? 'heads' : 'tails'}`);
 
-        deleteCommandMessages(msg, this.client);
+    deleteCommandMessages(msg, this.client);
 
-        return msg.embed(coinEmbed);
-    }
+    return msg.embed(coinEmbed);
+  }
 }

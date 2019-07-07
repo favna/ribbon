@@ -7,19 +7,19 @@ import Ribbon from './Ribbon';
 
 // Configure dotenv
 config({
-    path: path.join(__dirname, '.env'),
-    encoding: 'utf8',
-    debug: false,
+  path: path.join(__dirname, '.env'),
+  encoding: 'utf8',
+  debug: false,
 });
 
 // Authenticate Firebase-admin
 fireadmin.initializeApp({
-    credential: fireadmin.credential.cert({
-        projectId: process.env.FIREBASE_PROJECT,
-        clientEmail: process.env.FIREBASE_EMAIL,
-        privateKey: process.env.FIREBASE_KEY,
-    }),
-    databaseURL: `https://${process.env.FIREBASE_PROJECT}.firebaseio.com`,
+  credential: fireadmin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT,
+    clientEmail: process.env.FIREBASE_EMAIL,
+    privateKey: process.env.FIREBASE_KEY,
+  }),
+  databaseURL: `https://${process.env.FIREBASE_PROJECT}.firebaseio.com`,
 });
 
 // Add module aliases

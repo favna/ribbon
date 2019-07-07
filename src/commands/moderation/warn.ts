@@ -22,126 +22,129 @@ import moment from 'moment';
 import path from 'path';
 
 type WarnArgs = {
-    member: GuildMember;
-    points: number;
-    reason: string;
+  member: GuildMember;
+  points: number;
+  reason: string;
 };
 
 export default class WarnCommand extends Command {
-    constructor (client: CommandoClient) {
-        super(client, {
-            name: 'warn',
-            aliases: ['warning'],
-            group: 'moderation',
-            memberName: 'warn',
-            description: 'Warn a member with a specified amount of points',
-            format: 'MemberID|MemberName(partial or full) AmountOfWarnPoints ReasonForWarning',
-            examples: ['warn JohnDoe 1 annoying'],
-            guildOnly: true,
-            throttling: {
-                usages: 2,
-                duration: 3,
-            },
-            args: [
-                {
-                    key: 'member',
-                    prompt: 'Which member should I give a warning?',
-                    type: 'member',
-                },
-                {
-                    key: 'points',
-                    prompt: 'How many warning points should I give this member?',
-                    type: 'integer',
-                },
-                {
-                    key: 'reason',
-                    prompt: 'What is the reason for this warning?',
-                    type: 'string',
-                    default: '',
-                }
-            ],
-        });
-    }
-
-    @shouldHavePermission('MANAGE_MESSAGES')
-    public run (msg: CommandoMessage, { member, points, reason }: WarnArgs) {
-        const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));
-        const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-        const warnEmbed = new MessageEmbed();
-
-        warnEmbed
-            .setColor('#FFFF00')
-            .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
-            .setTimestamp();
-
-        try {
-            const query = conn.prepare(`SELECT points FROM "${msg.guild.id}" WHERE id = ?;`).get(member.id);
-            let newPoints = points;
-            let previousPoints = null;
-
-            if (query) {
-                previousPoints = query.points;
-                newPoints += query.points;
-                conn.prepare(`UPDATE "${msg.guild.id}" SET points=$points WHERE id="${member.id}";`)
-                    .run({ points: newPoints });
-            } else {
-                previousPoints = 0;
-                conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($id, $tag, $points);`)
-                    .run({ points, id: member.id, tag: member.user.tag });
-            }
-
-            warnEmbed.setDescription(stripIndents`
-                **Member:** ${member.user.tag} (${member.id})
-                **Action:** Warn
-                **Previous Warning Points:** ${previousPoints}
-                **Current Warning Points:** ${newPoints}
-                **Reason:** ${reason !== '' ? reason : 'No reason has been added by the moderator'}
-            `);
-
-            if (msg.guild.settings.get('modlogs', true)) {
-                logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, warnEmbed);
-            }
-
-            deleteCommandMessages(msg, this.client);
-
-            return msg.embed(warnEmbed);
-        } catch (err) {
-            if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
-                conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id TEXT PRIMARY KEY, tag TEXT, points INTEGER);`)
-                    .run();
-
-                conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($id, $tag, $points);`)
-                    .run({
-                        points,
-                        id: member.id,
-                        tag: member.user.tag,
-                    });
-            } else {
-                const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-                channel.send(stripIndents`
-                    <@${this.client.owners[0].id}> Error occurred in \`warn\` command!
-                    **Server:** ${msg.guild.name} (${msg.guild.id})
-                    **Author:** ${msg.author!.tag} (${msg.author!.id})
-                    **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-                    **Input:** \`${member.user.tag} (${member.id})\`|| \`${points}\` || \`${reason}\`
-                    **Error Message:** ${err}
-              `);
-
-                return msg.reply(oneLine`An unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
-                    Want to know more about the error? Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `);
-            }
+  constructor (client: CommandoClient) {
+    super(client, {
+      name: 'warn',
+      aliases: ['warning'],
+      group: 'moderation',
+      memberName: 'warn',
+      description: 'Warn a member with a specified amount of points',
+      format: 'MemberID|MemberName(partial or full) AmountOfWarnPoints ReasonForWarning',
+      examples: ['warn JohnDoe 1 annoying'],
+      guildOnly: true,
+      throttling: {
+        usages: 2,
+        duration: 3,
+      },
+      args: [
+        {
+          key: 'member',
+          prompt: 'Which member should I give a warning?',
+          type: 'member',
+        },
+        {
+          key: 'points',
+          prompt: 'How many warning points should I give this member?',
+          type: 'integer',
+        },
+        {
+          key: 'reason',
+          prompt: 'What is the reason for this warning?',
+          type: 'string',
+          default: '',
         }
-        warnEmbed.setDescription(stripIndents`
-            **Member:** ${member.user.tag} (${member.id})
-            **Action:** Warn
-            **Previous Warning Points:** 0
-            **Current Warning Points:** ${points}
-            **Reason:** ${reason !== '' ? reason : 'No reason has been added by the moderator'}
-        `);
+      ],
+    });
+  }
 
-        deleteCommandMessages(msg, this.client);
+  @shouldHavePermission('MANAGE_MESSAGES')
+  public run (msg: CommandoMessage, { member, points, reason }: WarnArgs) {
+    const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));
+    const modlogChannel = msg.guild.settings.get('modlogchannel', null);
+    const warnEmbed = new MessageEmbed();
 
-        return msg.embed(warnEmbed);
+    warnEmbed
+      .setColor('#FFFF00')
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      .setTimestamp();
+
+    try {
+      const query = conn.prepare(`SELECT points FROM "${msg.guild.id}" WHERE id = ?;`).get(member.id);
+      let newPoints = points;
+      let previousPoints = null;
+
+      if (query) {
+        previousPoints = query.points;
+        newPoints += query.points;
+        conn.prepare(`UPDATE "${msg.guild.id}" SET points=$points WHERE id="${member.id}";`)
+          .run({ points: newPoints });
+      } else {
+        previousPoints = 0;
+        conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($id, $tag, $points);`)
+          .run({ points, id: member.id, tag: member.user.tag });
+      }
+
+      warnEmbed.setDescription(stripIndents`
+        **Member:** ${member.user.tag} (${member.id})
+        **Action:** Warn
+        **Previous Warning Points:** ${previousPoints}
+        **Current Warning Points:** ${newPoints}
+        **Reason:** ${reason !== '' ? reason : 'No reason has been added by the moderator'}`
+      );
+
+      if (msg.guild.settings.get('modlogs', true)) {
+        logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, warnEmbed);
+      }
+
+      deleteCommandMessages(msg, this.client);
+
+      return msg.embed(warnEmbed);
+    } catch (err) {
+      if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
+        conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id TEXT PRIMARY KEY, tag TEXT, points INTEGER);`)
+          .run();
+
+        conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($id, $tag, $points);`)
+          .run({
+            points,
+            id: member.id,
+            tag: member.user.tag,
+          });
+      } else {
+        const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+        channel.send(stripIndents`
+          <@${this.client.owners[0].id}> Error occurred in \`warn\` command!
+          **Server:** ${msg.guild.name} (${msg.guild.id})
+          **Author:** ${msg.author!.tag} (${msg.author!.id})
+          **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+          **Input:** \`${member.user.tag} (${member.id})\`|| \`${points}\` || \`${reason}\`
+          **Error Message:** ${err}`
+        );
+
+        return msg.reply(oneLine`
+          an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
+          Want to know more about the error?
+          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
+        );
+      }
     }
+    warnEmbed.setDescription(stripIndents`
+      **Member:** ${member.user.tag} (${member.id})
+      **Action:** Warn
+      **Previous Warning Points:** 0
+      **Current Warning Points:** ${points}
+      **Reason:** ${reason !== '' ? reason : 'No reason has been added by the moderator'}`
+    );
+
+    deleteCommandMessages(msg, this.client);
+
+    return msg.embed(warnEmbed);
+  }
 }

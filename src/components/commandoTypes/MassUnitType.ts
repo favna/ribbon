@@ -3,18 +3,19 @@ import { stripIndents } from 'common-tags';
 import { MassUnit } from '../Constants';
 
 export default class MassUnitType extends ArgumentType {
-    constructor (client: CommandoClient) {
-        super(client, 'mass');
-    }
+  constructor (client: CommandoClient) {
+    super(client, 'mass');
+  }
 
-    public validate (unit: MassUnit) {
-        if (MassUnit[unit]) return true;
+  public validate (unit: MassUnit) {
+    if (MassUnit[unit]) return true;
 
-        return stripIndents`Has to be one of ${Object.keys(MassUnit).map(val => `\`${val}\``).join(', ')}
-                            Respond with your new selection or`;
-    }
+    return stripIndents`
+      Has to be one of ${Object.keys(MassUnit).map(val => `\`${val}\``).join(', ')}
+      Respond with your new selection or`;
+  }
 
-    public parse (unit: MassUnit) {
-        return MassUnit[unit];
-    }
+  public parse (unit: MassUnit) {
+    return MassUnit[unit];
+  }
 }
