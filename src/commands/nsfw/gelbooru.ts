@@ -22,15 +22,15 @@ type GelbooruArgs = {
 };
 
 export default class GelbooruCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'gelbooru',
-      aliases: ['gel', 'booru'],
+      aliases: [ 'gel', 'booru' ],
       group: 'nsfw',
       memberName: 'gelbooru',
       description: 'Find NSFW Content on gelbooru',
       format: 'NSFWToLookUp',
-      examples: ['gelbooru Pyrrha Nikos'],
+      examples: [ 'gelbooru Pyrrha Nikos' ],
       nsfw: true,
       guildOnly: false,
       throttling: {
@@ -47,7 +47,7 @@ export default class GelbooruCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { tags }: GelbooruArgs) {
+  public async run(msg: CommandoMessage, { tags }: GelbooruArgs) {
     try {
       const booruSearch = await booru('gelbooru', tags, {
         limit: 1,
@@ -64,8 +64,7 @@ export default class GelbooruCommand extends Command {
         .setColor('#FFB6C1')
         .setDescription(stripIndents`
           ${imageTags.slice(0, 5).join(' ')}
-          **Score**: ${hit.score}`
-        )
+          **Score**: ${hit.score}`)
         .setImage(hit.fileUrl!);
 
       deleteCommandMessages(msg, this.client);

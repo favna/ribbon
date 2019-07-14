@@ -8,7 +8,7 @@ declare type FlavorTextType = {
   flavor_text: string;
 };
 
-declare type PokeAliasType = {
+declare type PokeAlias = {
   alias: string;
 };
 
@@ -45,14 +45,14 @@ export declare type YoutubeVideoResourceType = {
 export declare type YoutubeResultList = {
   etag: string;
   items: {
-    etag: string
+    etag: string;
     id: YoutubeVideoResourceType;
     kind: string;
     snippet: YoutubeVideoSnippetType;
   }[];
   kind: string;
   nextPageToken: string;
-  pageInfo: { resultsPerPage: number, totalResults: number };
+  pageInfo: { resultsPerPage: number; totalResults: number };
   regionCode: string;
 };
 
@@ -89,19 +89,19 @@ declare type KitsuPosterImageDimensions = {
 };
 
 declare type KitsuPosterImage = {
-  tiny?: string,
-  small?: string,
-  medium?: string,
-  large?: string,
-  original: string,
+  tiny?: string;
+  small?: string;
+  medium?: string;
+  large?: string;
+  original: string;
   meta: {
     dimensions: {
       large: KitsuPosterImageDimensions;
       medium: KitsuPosterImageDimensions;
       small: KitsuPosterImageDimensions;
       tiny: KitsuPosterImageDimensions;
-    }
-  }
+    };
+  };
 };
 
 declare type KitsuTitles = {
@@ -188,12 +188,12 @@ export declare type CydiaData = {
   price: 'Free' | string;
 } & CydiaAPIPackageType;
 
-export declare type SimpleEmbedFieldType = { name: string, value: string };
-export declare type DiscordGameDevType = { id: string, name: string };
+export declare type SimpleEmbedFieldType = { name: string; value: string };
+export declare type DiscordGameDevType = { id: string; name: string };
 
 export declare type MusicCommand = {
-  queue: any;
-  votes: any;
+  queue: Map<string, MusicQueueType>;
+  votes: Map<Snowflake, MusicVoteType>;
 } & Command;
 
 export declare type MusicQueueType = {
@@ -212,6 +212,7 @@ export declare type MusicVoteType = {
   queue: MusicQueueType;
   guild: Snowflake;
   start: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   timeout: any;
 };
 
@@ -232,7 +233,13 @@ export declare type PokeDataType = {
   genders?: string;
   sprite: string;
   tier?: string;
-  entries: any[];
+};
+
+export declare type FlavorDataType = PokeDataType & {
+  entries: {
+    game: string;
+    text: string;
+  }[];
 };
 
 export declare type CasinoRowType = {
@@ -243,7 +250,16 @@ export declare type CasinoRowType = {
   vault: number;
 };
 
-export declare type PokedexType = {
+export declare type TimerRow = {
+  id: number;
+  interval: number;
+  channel: Snowflake;
+  content: string;
+  lastsend: string;
+  members: string;
+};
+
+export declare type Pokedex = {
   num: number;
   species: string;
   types: string[];
@@ -266,7 +282,7 @@ export declare type PokedexType = {
   otherFormes?: string[];
 };
 
-export declare type PokeAbilityDetailsType = {
+export declare type PokemonAbility = {
   desc?: string;
   shortDesc: string;
   id: string;
@@ -274,7 +290,7 @@ export declare type PokeAbilityDetailsType = {
   num: number;
 };
 
-export declare type PokeItemDetailsType = {
+export declare type PokemonItem = {
   id: string;
   name: string;
   desc: string;
@@ -283,7 +299,7 @@ export declare type PokeItemDetailsType = {
   shortDesc?: string;
 };
 
-export declare type PokeMoveDetailsType = {
+export declare type PokemonMove = {
   id: string;
   num: number;
   name: string;
@@ -300,23 +316,23 @@ export declare type PokeMoveDetailsType = {
   desc?: string;
 };
 
-export declare type PokeAbilityAliases = PokeAliasType & {
+export declare type abilityAlias = PokeAlias & {
   ability: string;
 };
 
-export declare type PokeTierAliases = PokeAliasType & {
+export declare type tierAlias = PokeAlias & {
   tier: string;
 };
 
-export declare type PokeDexAliases = PokeAliasType & {
+export declare type PokedexAlias = PokeAlias & {
   name: string;
 };
 
-export declare type PokeItemAliases = PokeAliasType & {
+export declare type itemAlias = PokeAlias & {
   item: string;
 };
 
-export declare type PokeMoveAliases = PokeAliasType & {
+export declare type moveAlias = PokeAlias & {
   move: string;
 };
 
@@ -346,11 +362,6 @@ export declare type WordDefinitionType = {
 export declare type SteamGenreType = {
   description: string;
   id: string;
-};
-
-export declare type OverwatchHeroType = {
-  hero: string;
-  time: number;
 };
 
 export declare type CopypastaType = {
@@ -430,7 +441,7 @@ export declare type DiscordStoreGameType = {
     price: {
       currency: string;
       amount: number;
-    }
+    };
   };
   thumbnail?: {
     id: string;
@@ -446,7 +457,7 @@ export declare type FrontlineGirlProductionRequirementsType = {
   [propName: string]: number;
 };
 
-export declare type FrontlineGirlType = {
+export declare type FrontlineGirl = {
   url: string;
   num: number;
   name: string;
@@ -576,11 +587,11 @@ export declare type GoogleKnowledgeItem = {
       articleBody: string;
       license: string;
       url: string;
-    }
+    };
     image: {
       contentUrl: string;
-    }
-  } & GoogleItemCommon
+    };
+  } & GoogleItemCommon;
 };
 
 export declare type GoogleCSEItem = {
@@ -597,7 +608,7 @@ export declare type GoogleCSEItem = {
   pagemap: {
     cse_image: GoogleCSEImage[];
     cse_thumbnail: GoogleCSEImage[];
-  }
+  };
 } & GoogleItemCommon;
 
 export declare type GoogleItem = GoogleKnowledgeItem['result'] | GoogleCSEItem | GoogleItemCommon;
@@ -636,16 +647,16 @@ export declare type IgdbGame = {
   rating: number;
   summary: string;
   url: string;
-  age_ratings: { id: number; category: number; rating: number; }[];
+  age_ratings: { id: number; category: number; rating: number }[];
   cover: { id: number; url: string };
   genres: { id: number; name: string }[];
   involved_companies: {
     id: number; developer: boolean; company: {
       id: number;
       name: string;
-    }
+    };
   }[];
-  platforms: { id: number; name: string; }[];
+  platforms: { id: number; name: string }[];
   release_dates: { id: string; date: number }[];
 };
 
@@ -712,7 +723,7 @@ export declare type TMDBMovieList = {
   page: number;
   total_pages: number;
   total_results: number;
-  results: (TMDBCommon & { genre_ids: number[] })[]
+  results: (TMDBCommon & { genre_ids: number[] })[];
 };
 
 export declare type TMDBMovie = {
@@ -724,19 +735,19 @@ export declare type TMDBMovie = {
   runtime?: number;
   imdb_id?: number;
   genres: { id: number; name: string }[];
-  spoken_language: { iso_639_1: number; name: string; }[];
-  production_countries?: { iso_3166_1: string; name: string; }[];
-  belongs_to_collection?: { id: number; name: string; poster_path: string; };
-  production_companies?: { id: number, logo_path: string | null; name: string; origin_country: string; }[];
+  spoken_language: { iso_639_1: number; name: string }[];
+  production_countries?: { iso_3166_1: string; name: string }[];
+  belongs_to_collection?: { id: number; name: string; poster_path: string };
+  production_companies?: { id: number; logo_path: string | null; name: string; origin_country: string }[];
 } & TMDBCommon;
 
 export declare type TVDBSeriesList = {
   results: (TMDBCommon &
-    {
-      genre_ids: number[];
-      first_air_date: string;
-      origin_country: string[];
-    })[];
+  {
+    genre_ids: number[];
+    first_air_date: string;
+    origin_country: string[];
+  })[];
 } & TMDBMovieList;
 
 declare type TMDBSerieEpisode = {
@@ -771,11 +782,11 @@ export declare type TMDBSerie = {
   homepage?: string;
   seasons: {
     id: number; air_date: string; episode_count: number;
-    name: string; overview: string; poster_path: string; season_number: number
+    name: string; overview: string; poster_path: string; season_number: number;
   }[];
   genres: { id: number; name: string }[];
-  networks: { id: number; logo_path: string; name: string; origin_country: string; }[];
-  production_companies?: { id: number, logo_path: string | null; name: string; origin_country: string; }[];
+  networks: { id: number; logo_path: string; name: string; origin_country: string }[];
+  production_companies?: { id: number; logo_path: string | null; name: string; origin_country: string }[];
 } & TMDBCommon;
 
 export declare type UrbanDefinition = {
@@ -807,27 +818,725 @@ export declare type SayData = {
   attachment: string;
 };
 
-declare type DamageDealtTakenType = { damageTaken: Required<PokeTypesType>, damageDealt: Required<PokeTypesType> };
+declare type DamageDealtTakenType = { damageTaken: Required<PokeTypesType>; damageDealt: Required<PokeTypesType> };
 
-export declare type TypeChartType = {
-  Bug: DamageDealtTakenType,
-  Dark: DamageDealtTakenType,
-  Dragon: DamageDealtTakenType,
-  Electric: DamageDealtTakenType,
-  Fairy: DamageDealtTakenType,
-  Fighting: DamageDealtTakenType,
-  Fire: DamageDealtTakenType,
-  Flying: DamageDealtTakenType,
-  Ghost: DamageDealtTakenType,
-  Grass: DamageDealtTakenType,
-  Ground: DamageDealtTakenType,
-  Ice: DamageDealtTakenType,
-  Normal: DamageDealtTakenType,
-  Poison: DamageDealtTakenType,
-  Psychic: DamageDealtTakenType,
-  Rock: DamageDealtTakenType,
-  Steel: DamageDealtTakenType,
-  Water: DamageDealtTakenType
+export declare type TypeChart = {
+  Bug: DamageDealtTakenType;
+  Dark: DamageDealtTakenType;
+  Dragon: DamageDealtTakenType;
+  Electric: DamageDealtTakenType;
+  Fairy: DamageDealtTakenType;
+  Fighting: DamageDealtTakenType;
+  Fire: DamageDealtTakenType;
+  Flying: DamageDealtTakenType;
+  Ghost: DamageDealtTakenType;
+  Grass: DamageDealtTakenType;
+  Ground: DamageDealtTakenType;
+  Ice: DamageDealtTakenType;
+  Normal: DamageDealtTakenType;
+  Poison: DamageDealtTakenType;
+  Psychic: DamageDealtTakenType;
+  Rock: DamageDealtTakenType;
+  Steel: DamageDealtTakenType;
+  Water: DamageDealtTakenType;
 
   [propName: string]: DamageDealtTakenType;
+};
+
+export declare type CurrencyUnits = {
+  AED: number; AFN: number; ALL: number; AMD: number; ANG: number; AOA: number; ARS: number;
+  AUD: number; AWG: number; AZN: number; BAM: number; BBD: number; BDT: number; BGN: number;
+  BHD: number; BIF: number; BMD: number; BND: number; BOB: number; BRL: number; BSD: number;
+  BTC: number; BTN: number; BWP: number; BYN: number; BZD: number; CAD: number; CDF: number;
+  CHF: number; CLF: number; CLP: number; CNH: number; CNY: number; COP: number; CRC: number;
+  CUC: number; CUP: number; CVE: number; CZK: number; DJF: number; DKK: number; DOP: number;
+  DZD: number; EGP: number; ERN: number; ETB: number; EUR: number; FJD: number; FKP: number;
+  GBP: number; GEL: number; GGP: number; GHS: number; GIP: number; GMD: number; GNF: number;
+  GTQ: number; GYD: number; HKD: number; HNL: number; HRK: number; HTG: number; HUF: number;
+  IDR: number; ILS: number; IMP: number; INR: number; IQD: number; IRR: number; ISK: number;
+  JEP: number; JMD: number; JOD: number; JPY: number; KES: number; KGS: number; KHR: number;
+  KMF: number; KPW: number; KRW: number; KWD: number; KYD: number; KZT: number; LAK: number;
+  LBP: number; LKR: number; LRD: number; LSL: number; LYD: number; MAD: number; MDL: number;
+  MGA: number; MKD: number; MMK: number; MNT: number; MOP: number; MRO: number; MRU: number;
+  MUR: number; MVR: number; MWK: number; MXN: number; MYR: number; MZN: number; NAD: number;
+  NGN: number; NIO: number; NOK: number; NPR: number; NZD: number; OMR: number; PAB: number;
+  PEN: number; PGK: number; PHP: number; PKR: number; PLN: number; PYG: number; QAR: number;
+  RON: number; RSD: number; RUB: number; RWF: number; SAR: number; SBD: number; SCR: number;
+  SDG: number; SEK: number; SGD: number; SHP: number; SLL: number; SOS: number; SRD: number;
+  SSP: number; STD: number; STN: number; SVC: number; SYP: number; SZL: number; THB: number;
+  TJS: number; TMT: number; TND: number; TOP: number; TRY: number; TTD: number; TWD: number;
+  TZS: number; UAH: number; UGX: number; USD: number; UYU: number; UZS: number; VEF: number;
+  VES: number; VND: number; VUV: number; WST: number; XAF: number; XAG: number; XAU: number;
+  XCD: number; XDR: number; XOF: number; XPD: number; XPF: number; XPT: number; YER: number;
+  ZAR: number; ZMW: number; ZWL: number;
+
+  [propName: string]: number;
+};
+
+export declare type RedditAbout = {
+  comment_karma: number;
+  created: number;
+  created_utc: number;
+  has_subscribed: boolean;
+  has_verified_email: boolean;
+  hide_from_robots: boolean;
+  icon_img: string;
+  id: string;
+  is_employee: boolean;
+  is_friend: boolean;
+  is_gold: boolean;
+  is_mod: boolean;
+  link_karma: number;
+  name: string;
+  pref_show_snoovatar: boolean;
+  subreddit: unknown;
+  verified: boolean;
+};
+
+export declare type RedditComment = {
+  all_awardings: unknown[];
+  total_awards_received: number;
+  approved_at_utc: unknown;
+  edited: boolean;
+  mod_reason_by: unknown;
+  banned_by: unknown;
+  author_flair_type: string;
+  removal_reason: unknown;
+  link_id: string;
+  author_flair_template_id: unknown;
+  likes: unknown;
+  replies: string;
+  user_reports: unknown[];
+  saved: boolean;
+  id: string;
+  banned_at_utc: unknown;
+  mod_reason_title: unknown;
+  gilded: number;
+  archived: boolean;
+  no_follow: boolean;
+  author: string;
+  num_comments: number;
+  can_mod_post: boolean;
+  created_utc: number;
+  send_replies: boolean;
+  parent_id: string;
+  score: 1;
+  author_fullname: string;
+  over_18: boolean;
+  approved_by: unknown;
+  mod_note: unknown;
+  all_awardings: unknown[];
+  subreddit_id: string;
+  body: string;
+  link_title: string;
+  author_flair_css_class: string;
+  name: string;
+  author_patreon_flair: boolean;
+  downs: number;
+  author_flair_richtext: {
+    e: string;
+    t: string;
+  }[];
+  is_submitter: boolean;
+  body_html: string;
+  gildings: unknown;
+  collapsed_reason: unknown;
+  distinguished: unknown;
+  stickied: boolean;
+  can_gild: boolean;
+  subreddit: string;
+  author_flair_text_color: string;
+  score_hidden: boolean;
+  permalink: string;
+  num_reports: unknown;
+  link_permalink: string;
+  report_reasons: unknown;
+  link_author: string;
+  author_flair_text: string;
+  link_url: string;
+  created: number;
+  collapsed: boolean;
+  subreddit_name_prefixed: string;
+  controversiality: number;
+  locked: boolean;
+  author_flair_background_color: string;
+  mod_reports: unknown[];
+  quarantine: boolean;
+  subreddit_type: string;
+  ups: number;
+};
+
+
+export declare type RedditPost = {
+  all_awardings: unknown[];
+  allow_live_comments: boolean;
+  approved_at_utc: number | null;
+  approved_by: string | null;
+  archived: boolean;
+  author: string;
+  author_flair_background_color: unknown | null;
+  author_flair_css_class: string | null;
+  author_flair_richtext: unknown[];
+  author_flair_template_id?: unknown;
+  author_flair_text_color?: unknown;
+  author_flair_text?: unknown;
+  author_flair_type: string;
+  author_fullname: string;
+  author_patreon_flair: boolean;
+  author: string;
+  banned_at_utc?: unknown;
+  banned_by?: unknown;
+  can_gild: boolean;
+  can_mod_post: boolean;
+  category?: unknown;
+  clicked: boolean;
+  content_categories?: unknown;
+  contest_mode: boolean;
+  created_utc: number;
+  created: number;
+  discussion_type?: unknown;
+  distinguished?: unknown;
+  domain: string;
+  downs: number;
+  edited: boolean;
+  gilded: number;
+  gildings: unknown;
+  hidden: boolean;
+  hide_score: boolean;
+  id: string;
+  is_crosspostable: boolean;
+  is_meta: boolean;
+  is_original_content: boolean;
+  is_reddit_media_domain: boolean;
+  is_robot_indexable: boolean;
+  is_self: boolean;
+  is_video: boolean;
+  likes?: unknown;
+  link_flair_background_color: string;
+  link_flair_css_class?: unknown;
+  link_flair_richtext: unknown[];
+  link_flair_text_color: string;
+  link_flair_text?: unknown;
+  link_flair_type: string;
+  locked: boolean;
+  media_embed: unknown;
+  media_only: boolean;
+  media?: unknown;
+  mod_note?: unknown;
+  mod_reason_by?: unknown;
+  mod_reason_title?: unknown;
+  mod_reports: unknown[];
+  name: string;
+  no_follow: boolean;
+  num_comments: number;
+  num_crossposts: number;
+  num_reports?: unknown;
+  over_18: boolean;
+  parent_whitelist_status?: unknown;
+  permalink: string;
+  pinned: boolean;
+  post_hint: string;
+  preview: {
+    images: {
+      source: {
+        url: string;
+        width: number;
+        height: number;
+      };
+      resolutions: {
+        url: string;
+        width: number;
+        height: number;
+      }[];
+      variants: unknown;
+      id: string;
+    }[];
+    enabled: boolean;
+  };
+  pwls?: unknown;
+  quarantine: boolean;
+  removal_reason?: unknown;
+  report_reasons?: unknown;
+  saved: boolean;
+  score: number;
+  secure_media_embed: unknown;
+  secure_media?: unknown;
+  selftext_html?: unknown;
+  selftext: string;
+  send_replies: boolean;
+  spoiler: boolean;
+  stickied: boolean;
+  subreddit_id: string;
+  subreddit_name_prefixed: string;
+  subreddit_subscribers: number;
+  subreddit_type: string;
+  subreddit: string;
+  suggested_sort?: unknown;
+  thumbnail_height: number;
+  thumbnail_width: number;
+  thumbnail: string;
+  title: string;
+  total_awards_received: number;
+  ups: number;
+  url: string;
+  user_reports: unknown[];
+  view_count?: unknown;
+  visited: boolean;
+  whitelist_status?: unknown;
+  wls?: unknown;
+};
+
+export declare type RedditResponse<K extends 'comments' | 'posts'> = {
+  kind: string;
+  data: {
+    after: string;
+    before: unknown;
+    dist: number;
+    modhash: string;
+    kind: string;
+    children: {
+      kind: string;
+      data: K extends 'comments' ? RedditComment : RedditPost;
+    }[];
+  };
+};
+
+export declare type SpeedTestResponse = {
+  speeds: {
+    download: number;
+    upload: number;
+    originalDownload: number;
+    originalUpload: number;
+  };
+  client: {
+    ip: string;
+    lat: number;
+    lon: number;
+    isp: string;
+    isprating: number;
+    rating: number;
+    ispdlavg: number;
+    ispulavg: number;
+    country: string;
+  };
+  server: {
+    host: string;
+    lat: number;
+    lon: number;
+    location: string;
+    country: string;
+    cc: string;
+    sponsor: string;
+    distance: number;
+    distanceMi: string;
+    ping: number;
+    id: string;
+  };
+};
+
+declare type OverwatchHeroesUnion =
+  'ana' | 'brigitte' | 'junkrat' |
+  'mei' | 'mercy' | 'moira' |
+  'orisa' | 'reinhardt' | 'soldier76' |
+  'symmetra' | 'torbjorn' | 'winston' |
+  'wreckingBall' | string;
+
+declare type OverwatchTopHeroStats = {
+  timePlayed: string;
+  timePlayedInSeconds: number;
+  gamesWon: number;
+  winPercentage: number;
+  weaponAccuracy: number;
+  eliminationsPerLife: number;
+  multiKillBest: number;
+  objectiveKills: number;
+
+  [topHeroStat: string]: number;
+};
+
+declare type OverwatchAwardStats = {
+  cards: number;
+  medals: number;
+  medalsBronze: number;
+  medalsSiver: number;
+  medalsGold: number;
+
+  [awardStat: string]: number;
+};
+
+declare type OverwatchCareerAllHeroesAssists = {
+  defensiveAssists: number;
+  defensiveAssistsAvgPer10Min: number;
+  defensiveAssistsMostInGame: number;
+  healingDone: number;
+  healingDoneAvgPer10Min: number;
+  healingDoneMostInGame: number;
+  offensiveAssists: number;
+  offensiveAssistsAvgPer10Min: number;
+  offensiveAssistsMostInGame: number;
+
+  [stat: string]: number;
+};
+
+declare type OverwatchCareerAllHeroesAverage = {
+  allDamageDoneAvgPer10Min: number;
+  barrierDamageDoneAvgPer10Min: number;
+  deathsAvgPer10Min: number;
+  eliminationsAvgPer10Min: number;
+  finalBlowsAvgPer10Min: number;
+  healingDoneAvgPer10Min: number;
+  heroDamageDoneAvgPer10Min: number;
+  objectiveKillsAvgPer10Min: number;
+  objectiveTimeAvgPer10Min: string;
+  soloKillsAvgPer10Min: number;
+  timeSpentOnFireAvgPer10Min: string;
+
+  [stat: string]: number;
+};
+
+declare type OverwatchCareerAllHeroesBest = {
+  allDamageDoneMostInGame: number;
+  barrierDamageDoneMostInGame: number;
+  defensiveAssistsMostInGame: number;
+  eliminationsMostInGame: number;
+  environmentalKillsMostInGame: number;
+  finalBlowsMostInGame: number;
+  healingDoneMostInGame: number;
+  heroDamageDoneMostInGame: number;
+  killsStreakBest: number;
+  meleeFinalBlowsMostInGame: number;
+  multikillsBest: number;
+  objectiveKillsMostInGame: number;
+  objectiveTimeMostInGame: string;
+  offensiveAssistsMostInGame: number;
+  soloKillsMostInGame: number;
+  teleporterPadsDestroyedMostInGame: number;
+  timeSpentOnFireMostInGame: string;
+  turretsDestroyedMostInGame: number;
+
+  [stat: string]: number;
+};
+
+declare type OverwatchCareerAllHeroesCombat = {
+  barrierDamageDone: number;
+  damageDone: number;
+  deaths: number;
+  eliminations: number;
+  environmentalKills: number;
+  finalBlows: number;
+  heroDamageDone: number;
+  meleeFinalBlows: number;
+  multikills: number;
+  objectiveKills: number;
+  objectiveTime: string;
+  soloKills: number;
+  timeSpentOnFire: string;
+
+  [stat: string]: number;
+};
+
+declare type OverwatchCareerAllHeroesGame = {
+  gamesLost: number;
+  gamesPlayed: number;
+  gamesTied: number;
+  gamesWon: number;
+  timePlayed: string;
+
+  [stat: string]: number;
+};
+
+declare type OverwatchCareerAllHeroesMatchAwards = {
+  cards: number;
+  medals: number;
+  medalsBronze: number;
+  medalsGold: number;
+  medalsSilver: number;
+
+  [stat: string]: number;
+};
+
+declare type OverwatchCareerAllHeroesMisc = {
+  teleporterPadsDestroyed: number;
+  turretsDestroyed: number;
+
+  [stat: string]: number;
+};
+
+
+declare type OverwatchHeroStats = {
+  assists: OverwatchCareerAllHeroesAssists;
+  average: OverwatchCareerAllHeroesAverage;
+  best: OverwatchCareerAllHeroesBest;
+  combat: OverwatchCareerAllHeroesCombat;
+  deaths: unknown | null;
+  heroSpecific: null;
+  game: OverwatchCareerAllHeroesGame;
+  matchAwards: OverwatchCareerAllHeroesMatchAwards;
+  miscellaneous?: OverwatchCareerAllHeroesMisc;
+};
+
+declare type OverwatchCareerStats = {
+  allHeroes: OverwatchHeroStats;
+
+  [heroName: OverwatchHeroesUnion]: OverwatchHeroStats;
+};
+
+declare type OverwatchTopHeroes = {
+  [heroName: OverwatchHeroesUnion]: OverwatchTopHeroStats;
+
+  [index: string]: OverwatchTopHeroStats;
+};
+
+declare type OverwatchGamesStats = {
+  played: number;
+  won: number;
+
+  [gameStats: string]: number;
+};
+
+declare type OverwatchStatsGroup = {
+  awards: OverwatchAwardStats;
+  careerStats: OverwatchCareerStats;
+  games: OverwatchGamesStats;
+  topHeroes: OverwatchTopHeroes;
+};
+
+export declare type OverwatchData = {
+  error: unknown;
+  endorsement: number;
+  endorsementIcon: string;
+  gamesWon: number;
+  icon: string;
+  level: number;
+  levelIcon: string;
+  name: string;
+  prestige: number;
+  prestigeIcon: string;
+  private: boolean;
+  rating: number;
+  ratingIcon: string;
+  ratingName?: string;
+  competitiveStats: OverwatchStatsGroup;
+  quickPlayStats: OverwatchStatsGroup;
+};
+
+declare type PubgSetTypeUnion = 'season' | 'player' | 'playerSeason';
+
+declare type PubgSeasonSet = {
+  type: Exclude<PubgSetTypeUnion, 'playerSeason' | 'player'>;
+  id: string;
+  attributes: {
+    isCurrentSeason: boolean;
+    isOffSeason: boolean;
+  };
+};
+
+declare type PubgPlayerSet = {
+  type: Exclude<PubgSetTypeUnion, 'playerSeason' | 'season'>;
+  id: string;
+  attributes: {
+    name: string;
+    stats: unknown;
+    titleId: string;
+    shardId: string;
+    createdAt: string;
+    updatedAt: string;
+    patchVersion: string;
+  };
+  relationships: {
+    assets: {
+      data: unknown[];
+    };
+    matches: {
+      data: unknown[];
+    };
+  };
+};
+
+declare type PubgStatistics = {
+  assists: number;
+  bestRankPoint: number;
+  boosts: number;
+  dBNOs: number;
+  dailyKills: number;
+  dailyWins: number;
+  damageDealt: number;
+  days: number;
+  headshotKills: number;
+  heals: number;
+  killPoints: number;
+  kills: number;
+  longestKill: number;
+  longestTimeSurvived: number;
+  losses: number;
+  maxKillStreaks: number;
+  mostSurvivalTime: number;
+  rankPoints: number;
+  rankPointsTitle: string;
+  revives: number;
+  rideDistance: number;
+  roadKills: number;
+  roundMostKills: number;
+  roundsPlayed: number;
+  suicides: number;
+  swimDistance: number;
+  teamKills: number;
+  timeSurvived: number;
+  top10s: number;
+  vehicleDestroys: number;
+  walkDistance: number;
+  weaponsAcquired: number;
+  weeklyKills: number;
+  weeklyWins: number;
+  winPoints: number;
+  wins: number;
+};
+
+declare type PubgPlayerStatsSet = {
+  type: Exclude<PubgSetTypeUnion, 'season' | 'player'>;
+  attributes: {
+    gameModeStats: {
+      duo: PubgStatistics;
+      'duo-fpp': PubgStatistics;
+      solo: PubgStatistics;
+      'solo-fpp': PubgStatistics;
+      squad: PubgStatistics;
+      'squad-fpp': PubgStatistics;
+    };
+  };
+  relationships: {
+    matchesSquad: { data: unknown };
+    matchesSquadFPP: { data: unknown };
+    season: {
+      data: {
+        type: Exclude<PubgSetTypeUnion, 'playerSeason' | 'player'>;
+        id: string;
+      };
+    };
+    player: {
+      data: {
+        type: Exclude<PubgSetTypeUnion, 'playerSeason' | 'season'>;
+        id: string;
+      };
+    };
+    matchesSolo: { data: unknown };
+    matchesSoloFPP: { data: unknown };
+    matchesDuo: { data: unknown };
+    matchesDuoFPP: { data: unknown };
+  };
+};
+
+export declare type PubgData<K extends PubgSetTypeUnion> = {
+  data: K extends Exclude<PubgSetTypeUnion, 'playerSeason' | 'player'>
+    ? PubgSeasonSet[]
+    : K extends Exclude<PubgSetTypeUnion, 'playerSeason' | 'season'>
+      ? PubgPlayerSet[]
+      : PubgPlayerStatsSet;
+  links: {
+    self: string;
+    schema: string;
+  };
+  meta: {};
+};
+
+declare type ShowdownTierUnion = 'ou' | 'uu' | 'uber' | 'nu' | 'ru' | 'pu' | 'lc' | 'monotype' | string;
+
+declare type ShowdownRanker = {
+  userid: string;
+  username: string;
+  w: number;
+  l: number;
+  t: number;
+  gxe: number;
+  r: number;
+  rd: number;
+  sigma: number;
+  rptime: string;
+  rpr: number;
+  rprd: number;
+  rpsigma: number;
+  elo: number;
+};
+
+export declare type ShowdownData = {
+  formatid: ShowdownTierUnion;
+  format: ShowdownTierUnion;
+  toplist: ShowdownRanker[];
+};
+
+
+export declare type PokemonLearnsets = {
+  [propName: string]: {
+    learnset: {
+      [propName: string]: string[];
+    };
+  };
+};
+
+export declare type TCGType =
+  'Grass' | 'Fire' | 'Water' | 'Lightning' |
+  'Fighting' | 'Psychic' | 'Colorless' |
+  'Darkness' | 'Metal' | 'Dragon' | 'Fairy';
+
+export declare type TCGSuperType = 'Pokémon' | 'Trainer' | 'Energy';
+export declare type TCGSubType =
+  'EX' | 'Special' | 'Restored' | 'Level Up' |
+  'MEGA' | 'Technical Machine' | 'Item' |
+  'Stadium' | 'Supporter' | 'Stage 1' | 'GX' |
+  'Pokémon Tool' | 'Basic' | 'LEGEND' | 'Stage 2' |
+  'BREAK' | 'Rocket\'s Secret Machine';
+
+declare type TCGAttack = {
+  cost: TCGType[];
+  name: string;
+  text: string;
+  damage: string;
+  convertedEnergyCost: number;
+};
+
+declare type TCGResistWeakness = {
+  type: TCGType;
+  value: string;
+};
+
+declare type TCGAbility = {
+  name: string;
+  text: string;
+  type: string;
+};
+
+declare type TCGCard = {
+  name: string;
+  id: string;
+  nationalPokedexNumber?: number;
+  types?: TCGType[];
+  subtype: TCGSubType;
+  supertype: TCGSuperType;
+  hp?: string;
+  number: string;
+  artist: string;
+  rarity: string;
+  series: string;
+  set: string;
+  setCode: string;
+  retreatCost?: TCGType[];
+  convertedRetreatCost?: number;
+  text: string;
+  attacks?: TCGAttack[];
+  weaknesses?: TCGResistWeakness[];
+  resistances?: TCGResistWeakness[];
+  ancientTrait?: string;
+  ability?: TCGAbility;
+  evolvesFrom?: string;
+  contains?: string;
+  imageUrl: string;
+  imageUrlHiRes: string;
+};
+
+export declare type TCGCardData = {
+  cards: TCGCard[];
+};
+
+export declare type NekoData = {
+  url: string;
 };

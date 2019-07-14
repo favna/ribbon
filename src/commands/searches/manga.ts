@@ -17,6 +17,7 @@ import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
 import { KitsuHit, KitsuResult } from 'RibbonTypes';
+import stringify from '@favware/querystring';
 
 type MangaArgs = {
   manga: string;
@@ -25,15 +26,15 @@ type MangaArgs = {
 };
 
 export default class MangaCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'manga',
-      aliases: ['cartoon', 'man'],
+      aliases: [ 'cartoon', 'man' ],
       group: 'searches',
       memberName: 'manga',
       description: 'Finds manga on kitsu.io',
       format: 'MangaName',
-      examples: ['manga Pokemon'],
+      examples: [ 'manga Pokemon' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -51,24 +52,32 @@ export default class MangaCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { manga, hasManageMessages, position = 0 }: MangaArgs) {
+  public async run(msg: CommandoMessage, { manga, hasManageMessages, position = 0 }: MangaArgs) {
     try {
       const mangaList = await fetch(`https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,
         {
-          body: JSON.stringify({ params: `query=${manga}&facetFilters=[\"kind:manga\"]` }),
+          body: JSON.stringify(
+            {
+              params: stringify({
+                query: manga,
+                facetFilters: [ 'kind:manga' ],
+              }),
+            }
+          ),
           headers: {
             'Content-Type': 'application/json',
             'X-Algolia-API-Key': process.env.KITSU_KEY!,
             'X-Algolia-Application-Id': process.env.KITSU_ID!,
           },
           method: 'POST',
-        }
-      );
+        });
       const mangas: KitsuResult = await mangaList.json();
       const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
       let currentManga = mangas.hits[position];
-      let mangaEmbed = this.prepMessage(color, currentManga, mangas.hits.length, position, hasManageMessages);
+      let mangaEmbed = this.prepMessage(
+        color, currentManga, mangas.hits.length, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -79,11 +88,14 @@ export default class MangaCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= mangas.hits.length) position = 0;
               if (position < 0) position = mangas.hits.length - 1;
               currentManga = mangas.hits[position];
-              mangaEmbed = this.prepMessage(color, currentManga, mangas.hits.length, position, hasManageMessages);
+              mangaEmbed = this.prepMessage(
+                color, currentManga, mangas.hits.length, position, hasManageMessages
+              );
               message.edit(`https://kitsu.io/manga/${currentManga.slug}`, mangaEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -98,7 +110,7 @@ export default class MangaCommand extends Command {
     }
   }
 
-  private prepMessage (
+  private prepMessage(
     color: string, manga: KitsuHit, mangaLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {

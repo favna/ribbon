@@ -22,15 +22,15 @@ type ExcessiveMentionsArgs = {
 };
 
 export default class ExcessiveMentionsCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'excessivementions',
-      aliases: ['emf', 'mfilter', 'spammedmentions', 'manymentions'],
+      aliases: [ 'emf', 'mfilter', 'spammedmentions', 'manymentions' ],
       group: 'automod',
       memberName: 'excessivementions',
       description: 'Toggle the excessive mentions filter',
       format: 'boolean',
-      examples: ['excessivementions enable', 'emf enable 3'],
+      examples: [ 'excessivementions enable', 'emf enable 3' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -53,7 +53,7 @@ export default class ExcessiveMentionsCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES', true)
-  public run (msg: CommandoMessage, { shouldEnable, threshold }: ExcessiveMentionsArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable, threshold }: ExcessiveMentionsArgs) {
     const emEmbed = new MessageEmbed();
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const options = { threshold, enabled: shouldEnable };
@@ -66,12 +66,13 @@ export default class ExcessiveMentionsCommand extends Command {
       .setDescription(stripIndents`
         **Action:** Mentions filter has been ${shouldEnable ? 'enabled' : 'disabled'}
         ${shouldEnable ? `**Threshold:** Messages that have at least ${threshold} mentions will be deleted` : ''}
-        ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
-      )
+        ${msg.guild.settings.get('automod', false) ? '' : `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!`}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, emEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, emEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

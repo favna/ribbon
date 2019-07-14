@@ -18,15 +18,15 @@ type RegexMatchToggleArgs = {
 };
 
 export default class RegexMatchToggleCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'regexmatchtoggle',
-      aliases: ['rmt', 'regexmatch'],
+      aliases: [ 'rmt', 'regexmatch' ],
       group: 'moderation',
       memberName: 'regexmatchtoggle',
       description: 'Toggle commands matching on regex for this server',
       format: 'boolean',
-      examples: ['regexmatchtoggle enable'],
+      examples: [ 'regexmatchtoggle enable' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -43,7 +43,7 @@ export default class RegexMatchToggleCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public run (msg: CommandoMessage, { shouldEnable }: RegexMatchToggleArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable }: RegexMatchToggleArgs) {
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const regexMatchEmbed = new MessageEmbed();
 
@@ -56,7 +56,9 @@ export default class RegexMatchToggleCommand extends Command {
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, regexMatchEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, regexMatchEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

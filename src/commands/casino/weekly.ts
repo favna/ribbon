@@ -17,10 +17,10 @@ import moment from 'moment';
 import path from 'path';
 
 export default class WeeklyCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'weekly',
-      aliases: ['weeklytopup', 'weeklybonus'],
+      aliases: [ 'weeklytopup', 'weeklybonus' ],
       group: 'casino',
       memberName: 'weekly',
       description: 'Receive your weekly cash top up of 2000 chips',
@@ -32,7 +32,7 @@ export default class WeeklyCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const balEmbed = new MessageEmbed();
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
@@ -44,7 +44,9 @@ export default class WeeklyCommand extends Command {
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
     try {
-      let { balance, lastweekly } = conn.prepare(`SELECT balance, lastweekly FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
+      const query = conn.prepare(`SELECT balance, lastweekly FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
+      const { lastweekly } = query;
+      let { balance } = query;
 
       if (balance >= 0) {
         const weeklyDura = moment.duration(moment(lastweekly).add(7, 'days').diff(moment()));
@@ -72,8 +74,7 @@ export default class WeeklyCommand extends Command {
           **Balance**
           ${chipStr}
           **Weekly Reset**
-          ${resetStr}`
-        );
+          ${resetStr}`);
 
         deleteCommandMessages(msg, this.client);
 
@@ -108,14 +109,12 @@ export default class WeeklyCommand extends Command {
           **Server:** ${msg.guild.name} (${msg.guild.id})
           **Author:** ${msg.author!.tag} (${msg.author!.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-          **Error Message:** ${err}`
-        );
+          **Error Message:** ${err}`);
 
         return msg.reply(oneLine`
           an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
           Want to know more about the error?
-          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-        );
+          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
       }
     }
 
@@ -123,8 +122,7 @@ export default class WeeklyCommand extends Command {
       **Balance**
       500
       **Weekly Reset**
-      in 7 days`
-    );
+      in 7 days`);
 
     deleteCommandMessages(msg, this.client);
 

@@ -20,19 +20,19 @@ import fetch from 'node-fetch';
 
 type DjsDocsArgs = {
   query: string;
-  version: 'stable' | 'master' | 'commando' | 'rpc';
+  version: 'stable' | 'master' | 'commando' | 'rpc' | 'main';
 };
 
 export default class DjsDocsCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'docs',
-      aliases: ['djsguide', 'guide', 'djs'],
+      aliases: [ 'djsguide', 'guide', 'djs' ],
       group: 'docs',
       memberName: 'docs',
       description: 'Gets info from something in the DJS docs',
       format: 'TopicToFind [master|stable|commando]',
-      examples: ['docs ClientUser'],
+      examples: [ 'docs ClientUser' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -43,13 +43,13 @@ export default class DjsDocsCommand extends Command {
           key: 'query',
           prompt: 'what would you like to find in the Discord.JS documentation?',
           type: 'string',
-          parse: (p: string) => p.toLowerCase().replace(/\.([A-z]+)\(\)/g, '#$1').replace(/\(\)/g, '').replace(/\./g, '#'),
+          parse: (query: string) => query.toLowerCase().replace(/\.([A-z]+)\(\)/g, '#$1').replace(/\(\)/g, '').replace(/\./g, '#'),
         },
         {
           key: 'version',
           prompt: 'which version of docs would you like (stable, master, commando)?',
           type: 'string',
-          oneOf: ['stable', 'master', 'commando', 'rpc'],
+          oneOf: [ 'stable', 'master', 'commando', 'rpc' ],
           default: 'stable',
           parse: (value: string) => value.toLowerCase(),
         }
@@ -57,18 +57,17 @@ export default class DjsDocsCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { query, version }: DjsDocsArgs) {
+  public async run(msg: CommandoMessage, { query, version }: DjsDocsArgs) {
     try {
-      let project = 'main';
+      let project: DjsDocsArgs['version'] = 'main';
       let branch = version;
 
-      if (['rpc', 'commando'].includes(branch)) {
+      if ([ 'rpc', 'commando' ].includes(branch)) {
         project = branch;
         branch = 'master';
       }
 
-      const qs = stringify({ q: query });
-      const res = await fetch(`https://djsdocs.sorta.moe/${project}/${branch}/embed?${qs}`);
+      const res = await fetch(`https://djsdocs.sorta.moe/${project}/${branch}/embed?${stringify({ q: query})}`);
       const data = await res.json();
 
       if (!data) throw new Error('no_data_found');
@@ -82,8 +81,7 @@ export default class DjsDocsCommand extends Command {
       if (/(?:no_data_found)/i.test(err.toString())) {
         return msg.reply(oneLine`
           I couldn't find any data for \`${query}\` in the Discord.JS/${version} docs.
-          Maybe try searching something that actually exists next time?`
-        );
+          Maybe try searching something that actually exists next time?`);
       }
 
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
@@ -93,14 +91,12 @@ export default class DjsDocsCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

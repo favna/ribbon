@@ -31,15 +31,15 @@ type TempbanArgs = {
 };
 
 export default class TempbanCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'tempban',
-      aliases: ['tb', 'rottenbanana'],
+      aliases: [ 'tb', 'rottenbanana' ],
       group: 'moderation',
       memberName: 'tempban',
       description: 'Temporary bans a member, then unbans them when the timer expires',
       format: 'MemberID|MemberName(partial or full) TimeForTheBan [ReasonForBanning]',
-      examples: ['tempban JohnDoe 5m annoying'],
+      examples: [ 'tempban JohnDoe 5m annoying' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -67,7 +67,9 @@ export default class TempbanCommand extends Command {
   }
 
   @shouldHavePermission('BAN_MEMBERS', true)
-  public run (msg: CommandoMessage, { member, time, reason, keepMessages = false }: TempbanArgs) {
+  public async run(msg: CommandoMessage, {
+    member, time, reason, keepMessages = false,
+  }: TempbanArgs) {
     if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to ban yourself.');
     if (!member.bannable) return msg.reply('I cannot ban that member, their role is probably higher than my own!');
 
@@ -94,8 +96,7 @@ export default class TempbanCommand extends Command {
         **Member:** ${member.user.tag} (${member.id})
         **Action:** Temporary Ban
         **Duration:** ${moment.duration(time).format(DURA_FORMAT.slice(5))}
-        **Reason:** ${reason !== '' ? reason : 'No reason given by staff'}`
-      )
+        **Reason:** ${reason !== '' ? reason : 'No reason given by staff'}`)
       .setTimestamp();
 
     unbanEmbed
@@ -103,18 +104,21 @@ export default class TempbanCommand extends Command {
       .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Member:** ${member.user.tag} (${member.id})
-        **Action:** Temporary ban removed`
-      )
+        **Action:** Temporary ban removed`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, banEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, banEmbed
+      );
     }
 
-    setTimeout(() => {
+    setTimeout(async () => {
       msg.guild.members.unban(member.user);
       if (msg.guild.settings.get('modlogs', true)) {
-        logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, unbanEmbed);
+        logModMessage(
+          msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, unbanEmbed
+        );
       }
 
       return msg.embed(unbanEmbed);

@@ -19,10 +19,10 @@ import path from 'path';
 import { TimerType } from 'RibbonTypes';
 
 export default class TimerListCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'timerlist',
-      aliases: ['tl', 'timelist'],
+      aliases: [ 'tl', 'timelist' ],
       group: 'moderation',
       memberName: 'timerlist',
       description: 'List all stored timed messages in the current guild',
@@ -35,14 +35,14 @@ export default class TimerListCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public async run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
 
     try {
       const list: TimerType[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
       let body = '';
 
-      list.forEach((row: TimerType) =>
+      list.forEach((row: TimerType) => {
         body += `${stripIndents`
           **id:** ${row.id}
           **interval:** ${moment.duration(row.interval).format(DURA_FORMAT.slice(5))}
@@ -50,19 +50,21 @@ export default class TimerListCommand extends Command {
           **content:** ${row.content}
           **last sent at:** ${moment(row.lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}
           ${row.members ? `**members tagged on send:** ${row.members.split(';').map((member: Snowflake) => `<@${member}>`).join(' ')}` : ''}`}
-          \n`
-      );
+          \n`;
+      });
 
       deleteCommandMessages(msg, this.client);
 
       if (body.length >= 1800) {
         const splitContent: string[] = Util.splitMessage(body, { maxLength: 1800 }) as string[];
 
-        splitContent.forEach(part => msg.embed({
-          color: msg.guild.me!.displayColor,
-          description: part,
-          title: 'Timed messages stored on this server',
-        }));
+        splitContent.forEach(part => {
+          msg.embed({
+            color: msg.guild.me!.displayColor,
+            description: part,
+            title: 'Timed messages stored on this server',
+          });
+        });
 
         return null;
       }
@@ -83,14 +85,12 @@ export default class TimerListCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

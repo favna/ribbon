@@ -3,11 +3,11 @@ import { stripIndents } from 'common-tags';
 import { Currency } from '../Constants';
 
 export default class CurrencyType extends ArgumentType {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, 'currency');
   }
 
-  public validate (unit: Currency) {
+  public validate(unit: Currency) {
     if (Currency[unit]) return true;
 
     return stripIndents`
@@ -16,7 +16,7 @@ export default class CurrencyType extends ArgumentType {
       Respond with your new selection or`;
   }
 
-  public parse (unit: Currency) {
+  public parse(unit: Currency) {
     return Currency[unit].toLowerCase();
   }
 }

@@ -18,10 +18,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
 
 export default class MaxLengthCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'maxlength',
-      aliases: ['max-duration', 'max-song-length', 'max-song-duration'],
+      aliases: [ 'max-duration', 'max-song-length', 'max-song-duration' ],
       group: 'music',
       memberName: 'maxlength',
       description: 'Shows or sets the max song length.',
@@ -31,7 +31,7 @@ export default class MaxLengthCommand extends Command {
                 The default is ${MAX_LENGTH}.
                 Only administrators may change this setting.
               `,
-      examples: ['maxlength 10'],
+      examples: [ 'maxlength 10' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -41,7 +41,7 @@ export default class MaxLengthCommand extends Command {
   }
 
   @shouldHavePermission('ADMINISTRATOR')
-  public run (msg: CommandoMessage, args: any) {
+  public async run(msg: CommandoMessage, args: string) {
     if (!args) {
       const maxLength = msg.guild.settings.get('maxLength', MAX_LENGTH);
 
@@ -56,7 +56,7 @@ export default class MaxLengthCommand extends Command {
       return msg.reply(`set the maximum song length to the default (currently ${MAX_LENGTH} minutes).`);
     }
 
-    const newLength = parseInt(args, 10);
+    const newLength = parseInt(args);
 
     if (isNaN(newLength) || newLength <= 0) {
       return msg.reply('invalid number provided.');
@@ -66,6 +66,5 @@ export default class MaxLengthCommand extends Command {
     deleteCommandMessages(msg, this.client);
 
     return msg.reply(`set the maximum song length to ${newLength} minutes.`);
-
   }
 }

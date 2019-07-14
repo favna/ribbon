@@ -17,6 +17,7 @@ import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
 import { KitsuHit, KitsuResult } from 'RibbonTypes';
+import stringify from '@favware/querystring';
 
 type AnimeArgs = {
   anime: string;
@@ -25,15 +26,15 @@ type AnimeArgs = {
 };
 
 export default class AnimeCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'anime',
-      aliases: ['ani', 'mal', 'kitsu'],
+      aliases: [ 'ani', 'mal', 'kitsu' ],
       group: 'searches',
       memberName: 'anime',
       description: 'Finds anime on kitsu.io',
       format: 'AnimeName',
-      examples: ['anime Yu-Gi-Oh Dual Monsters'],
+      examples: [ 'anime Yu-Gi-Oh Dual Monsters' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -51,24 +52,31 @@ export default class AnimeCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { anime, hasManageMessages, position = 0 }: AnimeArgs) {
+  public async run(msg: CommandoMessage, { anime, hasManageMessages, position = 0 }: AnimeArgs) {
     try {
-      const animeList = await fetch(
-        `https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,
+      const animeList = await fetch(`https://${process.env.KITSU_ID!}-dsn.algolia.net/1/indexes/production_media/query`,
         {
-          body: JSON.stringify({ params: `query=${anime}&facetFilters=[\"kind:anime\"]` }),
+          body: JSON.stringify(
+            {
+              params: stringify({
+                query: anime,
+                facetFilters: [ 'kind:anime' ],
+              }),
+            }
+          ),
           headers: {
             'Content-Type': 'application/json',
             'X-Algolia-API-Key': process.env.KITSU_KEY!,
             'X-Algolia-Application-Id': process.env.KITSU_ID!,
           },
           method: 'POST',
-        }
-      );
+        });
       const animes: KitsuResult = await animeList.json();
       const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
       let currentAnime = animes.hits[position];
-      let animeEmbed = this.prepMessage(color, currentAnime, animes.hits.length, position, hasManageMessages);
+      let animeEmbed = this.prepMessage(
+        color, currentAnime, animes.hits.length, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -79,11 +87,14 @@ export default class AnimeCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= animes.hits.length) position = 0;
               if (position < 0) position = animes.hits.length - 1;
               currentAnime = animes.hits[position];
-              animeEmbed = this.prepMessage(color, currentAnime, animes.hits.length, position, hasManageMessages);
+              animeEmbed = this.prepMessage(
+                color, currentAnime, animes.hits.length, position, hasManageMessages
+              );
               message.edit(`https://kitsu.io/anime/${currentAnime.slug}`, animeEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -98,9 +109,10 @@ export default class AnimeCommand extends Command {
     }
   }
 
-  private prepMessage (
+  private prepMessage(
     color: string, anime: KitsuHit, animesLength: number,
-    position: number, hasManageMessages: boolean): MessageEmbed {
+    position: number, hasManageMessages: boolean
+  ): MessageEmbed {
     return new MessageEmbed()
       .setColor(color)
       .setTitle(anime.titles.en ? anime.titles.en : anime.canonicalTitle)
@@ -111,21 +123,15 @@ export default class AnimeCommand extends Command {
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${animesLength}` : '')
       .addField('Canonical Title', anime.canonicalTitle, true)
       .addField('Score', `${anime.averageRating}%`, true)
-      .addField(
-        'Episode(s)',
+      .addField('Episode(s)',
         anime.episodeCount ? anime.episodeCount : 'Still airing',
-        true
-      )
-      .addField(
-        'Episode Length',
+        true)
+      .addField('Episode Length',
         anime.episodeLength ? moment.duration(anime.episodeLength, 'minutes').format('h [hours] [and] m [minutes]') : 'unknown',
-        true
-      )
+        true)
       .addField('Age Rating', anime.ageRating, true)
-      .addField(
-        'First Air Date',
+      .addField('First Air Date',
         moment.unix(anime.startDate).format('MMMM Do YYYY'),
-        true
-      );
+        true);
   }
 }

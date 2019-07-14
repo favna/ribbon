@@ -22,16 +22,16 @@ type NickArgs = {
 };
 
 export default class NickCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'nickname',
-      aliases: ['nick'],
+      aliases: [ 'nick' ],
       group: 'moderation',
       memberName: 'nickname',
       description: 'Assigns a nickname to a member',
       format: 'MemberID|MemberName(partial or full) NewNickname|clear',
       details: 'Use `clear` to remove the nickname',
-      examples: ['nick favna pyrrha nikos'],
+      examples: [ 'nick favna pyrrha nikos' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -53,7 +53,7 @@ export default class NickCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_NICKNAMES', true)
-  public run (msg: CommandoMessage, { member, nickname }: NickArgs) {
+  public async run(msg: CommandoMessage, { member, nickname }: NickArgs) {
     if (member.manageable) {
       const modlogChannel = msg.guild.settings.get('modlogchannel', null);
       const nicknameEmbed = new MessageEmbed();
@@ -73,12 +73,13 @@ export default class NickCommand extends Command {
             **Action:** Nickname change
             **Member:** <@${member.id}> (${member.user.tag})
             **Old name:** ${oldName}
-            **New name:** ${nickname}`
-          )
+            **New name:** ${nickname}`)
           .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-          logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, nicknameEmbed);
+          logModMessage(
+            msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, nicknameEmbed
+          );
         }
 
         deleteCommandMessages(msg, this.client);
@@ -94,21 +95,18 @@ export default class NickCommand extends Command {
           **Author:** ${msg.author!.tag} (${msg.author!.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Input:** \`${member.user.tag} (${member.id})\` || \`${nickname}\`
-          **Error Message:** ${err}`
-        );
+          **Error Message:** ${err}`);
 
         return msg.reply(oneLine`
           an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
           Want to know more about the error?
-          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-        );
+          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
       }
     }
     deleteCommandMessages(msg, this.client);
 
     return msg.reply(oneLine`
       failed to set nickname to that member.
-      Check that I have permission to set their nickname as well as the role hierarchy`
-    );
+      Check that I have permission to set their nickname as well as the role hierarchy`);
   }
 }

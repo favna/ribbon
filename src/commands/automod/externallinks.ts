@@ -19,15 +19,15 @@ type ExternalLinksArgs = {
 };
 
 export default class ExternalLinksCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'externallinks',
-      aliases: ['extlinks', 'extlinksfilter', 'elf'],
+      aliases: [ 'extlinks', 'extlinksfilter', 'elf' ],
       group: 'automod',
       memberName: 'externallinks',
       description: 'Toggle the external links filter',
       format: 'boolean',
-      examples: ['externallinks enable'],
+      examples: [ 'externallinks enable' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -44,7 +44,7 @@ export default class ExternalLinksCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES', true)
-  public run (msg: CommandoMessage, { shouldEnable }: ExternalLinksArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable }: ExternalLinksArgs) {
     const elEmbed = new MessageEmbed();
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
 
@@ -55,12 +55,13 @@ export default class ExternalLinksCommand extends Command {
       .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** external links filter has been ${shouldEnable ? 'enabled' : 'disabled'}
-        ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
-      )
+        ${msg.guild.settings.get('automod', false) ? '' : `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!`}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, elEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, elEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

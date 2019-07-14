@@ -24,15 +24,15 @@ type UrbanArgs = {
 };
 
 export default class UrbanCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'urban',
-      aliases: ['ub', 'ud'],
+      aliases: [ 'ub', 'ud' ],
       group: 'searches',
       memberName: 'urban',
       description: 'Find definitions on urban dictionary',
       format: 'Term',
-      examples: ['urban ugt'],
+      examples: [ 'urban ugt' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -49,7 +49,7 @@ export default class UrbanCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { term, hasManageMessages, position = 0 }: UrbanArgs) {
+  public async run(msg: CommandoMessage, { term, hasManageMessages, position = 0 }: UrbanArgs) {
     try {
       const urbanSearch = await fetch(`https://api.urbandictionary.com/v0/define?${stringify({ term })}`);
       const urbanDefinitions: UrbanDefinitionResults = await urbanSearch.json();
@@ -59,7 +59,9 @@ export default class UrbanCommand extends Command {
       urbanDefinitions.list.sort((a, b) => b.thumbs_up - b.thumbs_down - (a.thumbs_up - a.thumbs_down));
 
       let currentDefinition = urbanDefinitions.list[position];
-      let urbanEmbed = this.prepMessage(color, currentDefinition, amountOfDefinitions, position, hasManageMessages);
+      let urbanEmbed = this.prepMessage(
+        color, currentDefinition, amountOfDefinitions, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -70,11 +72,14 @@ export default class UrbanCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= amountOfDefinitions) position = 0;
               if (position < 0) position = amountOfDefinitions - 1;
               currentDefinition = urbanDefinitions.list[position];
-              urbanEmbed = this.prepMessage(color, currentDefinition, amountOfDefinitions, position, hasManageMessages);
+              urbanEmbed = this.prepMessage(
+                color, currentDefinition, amountOfDefinitions, position, hasManageMessages
+              );
               message.edit(urbanEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -89,7 +94,7 @@ export default class UrbanCommand extends Command {
     }
   }
 
-  private prepMessage (
+  private prepMessage(
     color: string, definition: UrbanDefinition, definitionsLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
@@ -97,17 +102,15 @@ export default class UrbanCommand extends Command {
       .setTitle(`Urban Search - ${definition.word}`)
       .setURL(definition.permalink)
       .setColor(color)
-      .setDescription(sentencecase(definition.definition.replace(/[\[]]/gim, '')))
+      .setDescription(sentencecase(definition.definition.replace(/[[\]]/gim, '')))
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${definitionsLength}` : '')
-      .addField(
-        'Example',
+      .addField('Example',
         definition.example
           ? `${definition.example.slice(0, 1020)}${
             definition.example.length >= 1024
               ? '...'
               : ''
-            }`
-          : 'None'
-      );
+          }`
+          : 'None');
   }
 }

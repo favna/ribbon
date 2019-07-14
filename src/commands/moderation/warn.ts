@@ -28,15 +28,15 @@ type WarnArgs = {
 };
 
 export default class WarnCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'warn',
-      aliases: ['warning'],
+      aliases: [ 'warning' ],
       group: 'moderation',
       memberName: 'warn',
       description: 'Warn a member with a specified amount of points',
       format: 'MemberID|MemberName(partial or full) AmountOfWarnPoints ReasonForWarning',
-      examples: ['warn JohnDoe 1 annoying'],
+      examples: [ 'warn JohnDoe 1 annoying' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -64,7 +64,7 @@ export default class WarnCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public run (msg: CommandoMessage, { member, points, reason }: WarnArgs) {
+  public async run(msg: CommandoMessage, { member, points, reason }: WarnArgs) {
     const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const warnEmbed = new MessageEmbed();
@@ -95,11 +95,12 @@ export default class WarnCommand extends Command {
         **Action:** Warn
         **Previous Warning Points:** ${previousPoints}
         **Current Warning Points:** ${newPoints}
-        **Reason:** ${reason !== '' ? reason : 'No reason has been added by the moderator'}`
-      );
+        **Reason:** ${reason !== '' ? reason : 'No reason has been added by the moderator'}`);
 
       if (msg.guild.settings.get('modlogs', true)) {
-        logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, warnEmbed);
+        logModMessage(
+          msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, warnEmbed
+        );
       }
 
       deleteCommandMessages(msg, this.client);
@@ -125,14 +126,12 @@ export default class WarnCommand extends Command {
           **Author:** ${msg.author!.tag} (${msg.author!.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Input:** \`${member.user.tag} (${member.id})\`|| \`${points}\` || \`${reason}\`
-          **Error Message:** ${err}`
-        );
+          **Error Message:** ${err}`);
 
         return msg.reply(oneLine`
           an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
           Want to know more about the error?
-          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-        );
+          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
       }
     }
     warnEmbed.setDescription(stripIndents`
@@ -140,8 +139,7 @@ export default class WarnCommand extends Command {
       **Action:** Warn
       **Previous Warning Points:** 0
       **Current Warning Points:** ${points}
-      **Reason:** ${reason !== '' ? reason : 'No reason has been added by the moderator'}`
-    );
+      **Reason:** ${reason !== '' ? reason : 'No reason has been added by the moderator'}`);
 
     deleteCommandMessages(msg, this.client);
 

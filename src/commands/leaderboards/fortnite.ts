@@ -25,15 +25,15 @@ type FortniteArgs = {
 };
 
 export default class FortniteCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'fortnite',
-      aliases: ['fort', 'fortshite'],
+      aliases: [ 'fort', 'fortshite' ],
       group: 'leaderboards',
       memberName: 'fortnite',
       description: 'Get Player Statistics from Fortnite',
       format: 'User Platform',
-      examples: ['fortnite darkentz014 pc'],
+      examples: [ 'fortnite darkentz014 pc' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -49,19 +49,17 @@ export default class FortniteCommand extends Command {
           key: 'platform',
           prompt: 'What platform do they play on (`pc`, `xbox` or `psn`)?',
           type: 'string',
-          oneOf: ['pc', 'xbox', 'psn'],
+          oneOf: [ 'pc', 'xbox', 'psn' ],
           parse: (p: string) => p.toLowerCase(),
         }
       ],
     });
   }
 
-  public async run (msg: CommandoMessage, { user, platform }: FortniteArgs) {
+  public async run(msg: CommandoMessage, { user, platform }: FortniteArgs) {
     try {
-      const res = await fetch(
-        `https://api.fortnitetracker.com/v1/profile/${platform}/${user}`,
-        { headers: { 'TRN-Api-Key': process.env.TRN_API_KEY! } }
-      );
+      const res = await fetch(`https://api.fortnitetracker.com/v1/profile/${platform}/${user}`,
+        { headers: { 'TRN-Api-Key': process.env.TRN_API_KEY! } });
       const stats = await res.json();
       const fortEmbed = new MessageEmbed();
 
@@ -72,8 +70,7 @@ export default class FortniteCommand extends Command {
         .setURL(`https://fortnitetracker.com/profile/${stats.platformName}/${stats.epicUserHandle}`)
         .setThumbnail('https://nintendowire.com/wp-content/uploads/2018/06/FortniteSwitch.jpg')
         .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-        .addField(
-          'Lifetime Stats',
+        .addField('Lifetime Stats',
           stripIndents`
             Wins: **${stats.lifeTimeStats.filter((el: FortniteStatsType) => el.key.toLowerCase() === 'wins')[0].value}**
             Kills: **${stats.lifeTimeStats.filter((el: FortniteStatsType) => el.key.toLowerCase() === 'kills')[0].value}**
@@ -84,10 +81,8 @@ export default class FortniteCommand extends Command {
             Top 10s: **${stats.lifeTimeStats.filter((el: FortniteStatsType) => el.key.toLowerCase() === 'top 10')[0].value}**
             Top 25s: **${stats.lifeTimeStats.filter((el: FortniteStatsType) => el.key.toLowerCase() === 'top 25s')[0].value}**
           `,
-          true
-        )
-        .addField(
-          'Solos',
+          true)
+        .addField('Solos',
           stripIndents`
             Wins: **${stats.stats.p2.top1.value}**
             Kills: **${stats.stats.p2.kills.value}**
@@ -98,12 +93,10 @@ export default class FortniteCommand extends Command {
             Top 10s: **${stats.stats.p2.top10.value}**
             Top 25s: **${stats.stats.p2.top25.value}**
           `,
-          true
-        );
+          true);
 
       if (stats.stats.p10) {
-        fortEmbed.addField(
-          'Duos',
+        fortEmbed.addField('Duos',
           stripIndents`
             Wins: **${stats.stats.p10.top1.value}**
             Kills: **${stats.stats.p10.kills.value}**
@@ -114,13 +107,11 @@ export default class FortniteCommand extends Command {
             Top 10s: **${stats.stats.p10.top10.value}**
             Top 25s: **${stats.stats.p10.top25.value}**
           `,
-          true
-        );
+          true);
       }
 
       if (stats.stats.p9) {
-        fortEmbed.addField(
-          'Squads',
+        fortEmbed.addField('Squads',
           stripIndents`
             Wins: **${stats.stats.p9.top1.value}**
             Kills: **${stats.stats.p9.kills.value}**
@@ -131,15 +122,14 @@ export default class FortniteCommand extends Command {
             Top 10s: **${stats.stats.p9.top10.value}**
             Top 25s: **${stats.stats.p9.top25.value}**
           `,
-          true
-        );
+          true);
       }
 
       deleteCommandMessages(msg, this.client);
 
       return msg.embed(fortEmbed);
     } catch (err) {
-      if (/(noplayer)/i.test(err.toString())) return msg.reply('no player found by that name. Check the platform (`pc`, `xbox` or `psn`)');
+      if (/noplayer/i.test(err.toString())) return msg.reply('no player found by that name. Check the platform (`pc`, `xbox` or `psn`)');
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
       channel.send(stripIndents`
@@ -149,14 +139,12 @@ export default class FortniteCommand extends Command {
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Player:** ${user}
         **Platform:** ${platform}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

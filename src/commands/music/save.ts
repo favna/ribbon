@@ -17,14 +17,14 @@ import { MusicCommand, MusicQueueType } from 'RibbonTypes';
 export default class SaveQueueCommand extends Command {
   private songQueue: Map<Snowflake, MusicQueueType>;
 
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'save',
-      aliases: ['save-songs', 'save-song-list', 'ss', 'savequeue'],
+      aliases: [ 'save-songs', 'save-song-list', 'ss', 'savequeue' ],
       group: 'music',
       memberName: 'save',
       description: 'Saves the queued songs for later',
-      examples: ['save'],
+      examples: [ 'save' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -34,7 +34,7 @@ export default class SaveQueueCommand extends Command {
     this.songQueue = this.queue;
   }
 
-  get queue () {
+  private get queue() {
     if (!this.songQueue) {
       this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
@@ -42,7 +42,7 @@ export default class SaveQueueCommand extends Command {
     return this.songQueue;
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const queue = this.queue.get(msg.guild.id);
     if (!queue) return msg.reply('there isn\'t any music playing right now. You should get on that.');
 
@@ -56,26 +56,24 @@ export default class SaveQueueCommand extends Command {
       .setAuthor(`${msg.author!.tag} (${msg.author!.id})`, msg.author!.displayAvatarURL({ format: 'png' }))
       .setImage(currentSong.thumbnail)
       .setDescription(stripIndents`
-          __**First 10 songs in the queue**__
-          ${paginated.items.map((song: Song) =>
-            `**-** ${!isNaN(song.id)
-              ? `${song.name} (${song.lengthString})`
-              : `[${song.name}](${`https://www.youtube.com/watch?v=${song.id}`})`} (${song.lengthString})`)
-            .join('\n')
-          }
-          ${paginated.maxPage > 1 ? `\nUse ${msg.usage()} to view a specific page.\n` : ''}
+    __**First 10 songs in the queue**__
+    ${paginated.items.map(song => `
+    **-** ${song.id
+    ? `[${song.name}](https://www.youtube.com/watch?v=${song.id}) (${song.lengthString})`
+    : `${song.name} (${song.lengthString})`}`).join('\n')}
 
-          **Now playing:** ${!isNaN(currentSong.id)
-            ? `${currentSong.name}`
-            : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`
-          }
+    ${paginated.maxPage > 1
+    ? `\nUse ${msg.usage()} to view a specific page.\n`
+    : ''}
 
-          ${oneLine`
-            **Progress:**
-            ${!currentSong.playing ? 'Paused: ' : ''}${Song.timeString(currentTime)} / ${currentSong.lengthString}
-            (${currentSong.timeLeft(currentTime)} left)`}
-        `
-      );
+
+    **Now playing:** ${currentSong.id
+    ? `[${currentSong.name}](https://www.youtube.com/watch?v=${currentSong.id})`
+    : `${currentSong.name}`}
+
+    ${oneLine`
+     **Progress:**${!currentSong.playing ? 'Paused: ' : ''}
+     ${Song.timeString(currentTime)} / ${currentSong.lengthString}(${currentSong.timeLeft(currentTime)} left)`}`);
 
     msg.reply('✔ Check your inbox!');
     deleteCommandMessages(msg, this.client);

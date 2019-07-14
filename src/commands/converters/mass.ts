@@ -27,15 +27,15 @@ type MassArgs = {
 };
 
 export default class MassCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'mass',
-      aliases: ['weight'],
+      aliases: [ 'weight' ],
       group: 'converters',
       memberName: 'mass',
       description: 'Convert various units of mass',
       format: 'AmountToConvert FromUnit ToUnit',
-      examples: ['mass 1 g lb', 'mass 1 kg oz'],
+      examples: [ 'mass 1 g lb', 'mass 1 kg oz' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -61,7 +61,7 @@ export default class MassCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { massAmount, fromUnit, toUnit }: MassArgs) {
+  public async run(msg: CommandoMessage, { massAmount, fromUnit, toUnit }: MassArgs) {
     try {
       massAmount = roundNumber(massAmount, 2);
       const mathEmbed = new MessageEmbed();
@@ -86,14 +86,12 @@ export default class MassCommand extends Command {
         **Amount:** \`${massAmount}\`
         **From Unit:** \`${fromUnit}\`
         **To Unit:** \`${toUnit}\`
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

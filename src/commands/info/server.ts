@@ -14,14 +14,14 @@ import { MessageEmbed, Role } from 'awesome-djs';
 import moment from 'moment';
 
 export default class ServerInfoCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'server',
-      aliases: ['serverinfo', 'sinfo'],
+      aliases: [ 'serverinfo', 'sinfo' ],
       group: 'info',
       memberName: 'server',
       description: 'Gets information about the server.',
-      examples: ['server'],
+      examples: [ 'server' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -30,7 +30,7 @@ export default class ServerInfoCommand extends Command {
     });
   }
 
-  private static contentFilter (filter: number) {
+  private static contentFilter(filter: number) {
     switch (filter) {
       case 0:
         return 'Content filter disabled';
@@ -43,7 +43,7 @@ export default class ServerInfoCommand extends Command {
     }
   }
 
-  private static verificationFilter (filter: number) {
+  private static verificationFilter(filter: number) {
     switch (filter) {
       case 0:
         return 'None - unrestricted';
@@ -52,7 +52,7 @@ export default class ServerInfoCommand extends Command {
       case 2:
         return 'Medium - must be registered on Discord for longer than 5 minutes';
       case 3:
-        return 'High - 	(╯°□°）╯︵ ┻━┻ - must be a member of the server for longer than 10 minutes';
+        return 'High - (╯°□°）╯︵ ┻━┻ - must be a member of the server for longer than 10 minutes';
       case 4:
         return 'Very High - ┻━┻ミヽ(ಠ益ಠ)ﾉ彡┻━┻ - must have a verified phone number';
       default:
@@ -60,7 +60,7 @@ export default class ServerInfoCommand extends Command {
     }
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const channels = msg.guild.channels.map(ty => ty.type);
     const presences = msg.guild.presences.map(st => st.status);
     const selfRoles = msg.guild.settings.get('selfroles', null);
@@ -69,12 +69,12 @@ export default class ServerInfoCommand extends Command {
     let guildChannels = 0;
     let onlineMembers = 0;
 
-    for (const i in presences) {
-      if (presences[i] !== 'offline') onlineMembers += 1;
+    for (const presence of presences) {
+      if (presence !== 'offline') onlineMembers += 1;
     }
 
-    for (const i in channels) {
-      if (channels[i] === 'text') guildChannels += 1;
+    for (const channel of channels) {
+      if (channel === 'text') guildChannels += 1;
     }
 
     serverEmbed
@@ -100,11 +100,9 @@ export default class ServerInfoCommand extends Command {
         ? msg.guild.roles.get(r)!.name
         : undefined).filter(Boolean);
 
-      serverEmbed.addField(
-        'Self-Assignable Roles',
+      serverEmbed.addField('Self-Assignable Roles',
         `${roleNames.map(val => `\`${val}\``).join(', ')}`,
-        false
-      );
+        false);
     }
 
     if (msg.guild.splashURL()) serverEmbed.setImage(msg.guild.splashURL()!);

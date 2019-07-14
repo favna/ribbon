@@ -25,15 +25,15 @@ type IGDBArgs = {
 };
 
 export default class IGDBCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'igdb',
-      aliases: ['game', 'moby', 'games'],
+      aliases: [ 'game', 'moby', 'games' ],
       group: 'searches',
       memberName: 'igdb',
       description: 'Gets information about a game using Internet Game Database (IGDB)',
       format: 'GameName',
-      examples: ['igdb Tales of Berseria'],
+      examples: [ 'igdb Tales of Berseria' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -50,7 +50,7 @@ export default class IGDBCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { game, hasManageMessages, position = 0 }: IGDBArgs) {
+  public async run(msg: CommandoMessage, { game, hasManageMessages, position = 0 }: IGDBArgs) {
     try {
       const headers = {
         Accept: 'application/json',
@@ -74,7 +74,9 @@ export default class IGDBCommand extends Command {
       const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
       let currentGame = gameInfo[position];
-      let gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position, hasManageMessages);
+      let gameEmbed = this.prepMessage(
+        color, currentGame, gameInfo.length, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -85,11 +87,14 @@ export default class IGDBCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= gameInfo.length) position = 0;
               if (position < 0) position = gameInfo.length - 1;
               currentGame = gameInfo[position];
-              gameEmbed = this.prepMessage(color, currentGame, gameInfo.length, position, hasManageMessages);
+              gameEmbed = this.prepMessage(
+                color, currentGame, gameInfo.length, position, hasManageMessages
+              );
               message.edit('', gameEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -104,7 +109,7 @@ export default class IGDBCommand extends Command {
     }
   }
 
-  private prepMessage (
+  private prepMessage(
     color: string, game: IgdbGame, gameSearchLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
@@ -115,7 +120,7 @@ export default class IGDBCommand extends Command {
       .setTitle(game.name)
       .setURL(game.url)
       .setThumbnail(coverImg)
-      .setFooter(`Result ${position + 1} of ${gameSearchLength}`)
+      .setFooter(hasManageMessages ? `Result ${position + 1} of ${gameSearchLength}` : '')
       .addField('User Score', roundNumber(game.rating, 1), true)
       .addField('Age Rating(s)', game.age_ratings.map(ageRating => `${ageRating.category === 1 ? 'ESRB' : 'PEGI'}: ${IGBDAgeRating[ageRating.rating]}`), true)
       .addField('Release Date', moment.unix(game.release_dates[0].date).format('MMMM Do YYYY'), true)

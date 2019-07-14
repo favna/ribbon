@@ -18,7 +18,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { PokeAbilityAliases, PokeAbilityDetailsType } from 'RibbonTypes';
+import { abilityAlias, PokemonAbility } from 'RibbonTypes';
 
 type AbilityArgs = {
   ability: string;
@@ -27,15 +27,15 @@ type AbilityArgs = {
 };
 
 export default class AbilityCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'ability',
-      aliases: ['abilities', 'abi'],
+      aliases: [ 'abilities', 'abi' ],
       group: 'pokemon',
       memberName: 'ability',
       description: 'Get the info on a Pokémon ability',
       format: 'AbilityName',
-      examples: ['ability Multiscale'],
+      examples: [ 'ability Multiscale' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -53,9 +53,9 @@ export default class AbilityCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { ability, hasManageMessages, position = 0 }: AbilityArgs) {
+  public async run(msg: CommandoMessage, { ability, hasManageMessages, position = 0 }: AbilityArgs) {
     try {
-      const abilityOptions: FuseOptions<PokeAbilityDetailsType & PokeAbilityAliases> = { keys: ['alias', 'ability', 'id', 'name'] };
+      const abilityOptions: FuseOptions<PokemonAbility & abilityAlias> = { keys: [ 'alias', 'ability', 'id', 'name' ] };
       const aliasFuse = new Fuse(abilityAliases, abilityOptions);
       const abilityFuse = new Fuse(BattleAbilities, abilityOptions);
       const aliasSearch = aliasFuse.search(ability);
@@ -65,7 +65,9 @@ export default class AbilityCommand extends Command {
       if (!abilitySearch.length) throw new Error('no_ability');
 
       let currentAbility = abilitySearch[position];
-      let abilityEmbed = this.prepMessage(color, currentAbility, abilitySearch.length, position, hasManageMessages);
+      let abilityEmbed = this.prepMessage(
+        color, currentAbility, abilitySearch.length, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -76,11 +78,14 @@ export default class AbilityCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= abilitySearch.length) position = 0;
               if (position < 0) position = abilitySearch.length - 1;
               currentAbility = abilitySearch[position];
-              abilityEmbed = this.prepMessage(color, currentAbility, abilitySearch.length, position, hasManageMessages);
+              abilityEmbed = this.prepMessage(
+                color, currentAbility, abilitySearch.length, position, hasManageMessages
+              );
               message.edit('', abilityEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -105,19 +110,17 @@ export default class AbilityCommand extends Command {
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${ability}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 
-  private prepMessage (
-    color: string, ability: PokeAbilityDetailsType, abilitySearchLength: number,
+  private prepMessage(
+    color: string, ability: PokemonAbility, abilitySearchLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
     return new MessageEmbed()
@@ -129,7 +132,6 @@ export default class AbilityCommand extends Command {
       .addField('External Resource', oneLine`
         [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${sentencecase(ability.name.replace(/ /g, '_'))}_(Ability\\))
         |  [Smogon](http://www.smogon.com/dex/sm/abilities/${ability.name.toLowerCase().replace(/ /g, '_')})
-        |  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(/ /g, '-')})`
-      );
+        |  [PokémonDB](http://pokemondb.net/ability/${ability.name.toLowerCase().replace(/ /g, '-')})`);
   }
 }

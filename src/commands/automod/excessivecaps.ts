@@ -23,15 +23,15 @@ type ExcessiveCapsArgs = {
 };
 
 export default class ExcessiveCapsCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'excessivecaps',
-      aliases: ['spammedcaps', 'manycaps', 'caps'],
+      aliases: [ 'spammedcaps', 'manycaps', 'caps' ],
       group: 'automod',
       memberName: 'excessivecaps',
       description: 'Toggle the excessive caps filter',
       format: 'boolean',
-      examples: ['excessivecaps enable'],
+      examples: [ 'excessivecaps enable' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -48,18 +48,18 @@ export default class ExcessiveCapsCommand extends Command {
           prompt: 'After how much percent of caps should a message be deleted?',
           type: 'string',
           default: '60',
-          validate: (t: string) => {
-            if (/(?:[%])/.test(t)) {
-              if (Number(t.slice(0, -1))) {
+          validate: (threshold: string) => {
+            if (/(?:[%])/.test(threshold)) {
+              if (Number(threshold.slice(0, -1))) {
                 return true;
               }
-            } else if (Number(t)) {
+            } else if (Number(threshold)) {
               return true;
             }
 
             return 'has to be a valid percentile number in the format of `60% or `60`';
           },
-          parse: (t: string) => /(?:[%])/.test(t) ? Number(t.slice(0, -1)) : Number(t),
+          parse: (threshold: string) => /(?:[%])/.test(threshold) ? Number(threshold.slice(0, -1)) : Number(threshold),
         },
         {
           key: 'minLength',
@@ -72,7 +72,7 @@ export default class ExcessiveCapsCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES', true)
-  public run (msg: CommandoMessage, { shouldEnable, threshold, minLength }: ExcessiveCapsArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable, threshold, minLength }: ExcessiveCapsArgs) {
     const ecfEmbed = new MessageEmbed();
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const options = { minlength: minLength, threshold, enabled: shouldEnable };
@@ -86,12 +86,13 @@ export default class ExcessiveCapsCommand extends Command {
         **Action:** Excessive Caps filter has been ${shouldEnable ? 'enabled' : 'disabled'}
         ${shouldEnable ? `**Threshold:** Messages that have at least ${threshold}% caps will be deleted` : ''}
         ${shouldEnable ? `**Minimum length:** Messages of at least ${minLength} are checked for caps` : ''}
-        ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
-      )
+        ${msg.guild.settings.get('automod', false) ? '' : `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!`}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, ecfEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, ecfEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

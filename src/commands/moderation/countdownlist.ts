@@ -18,10 +18,10 @@ import path from 'path';
 import { CountdownType } from 'RibbonTypes';
 
 export default class CountdownList extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'countdownlist',
-      aliases: ['cd', 'cdlist'],
+      aliases: [ 'cd', 'cdlist' ],
       group: 'moderation',
       memberName: 'countdownlist',
       description: 'List all stored countdown messages in the current guild',
@@ -34,14 +34,14 @@ export default class CountdownList extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public async run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
 
     try {
       const list: CountdownType[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
-      let body: string = '';
+      let body = '';
 
-      list.forEach((row: CountdownType) =>
+      list.forEach((row: CountdownType) => {
         body += `${stripIndents`
           **id:** ${row.id}
           **Event at:** ${moment(row.datetime).format('YYYY-MM-DD HH:mm')}
@@ -50,19 +50,22 @@ export default class CountdownList extends Command {
           **Channel:** <#${row.channel}> (\`${row.channel}\`)
           **Content:** ${row.content}
           **Last sent at:** ${moment(row.lastsend).format('YYYY-MM-DD HH:mm [UTC]Z')}`}
-          \n`
-      );
+          \n`;
+      });
 
       deleteCommandMessages(msg, this.client);
 
       if (body.length >= 1800) {
         const splitContent: string[] = Util.splitMessage(body, { maxLength: 1800 }) as string[];
 
-        splitContent.forEach(part => msg.embed({
-          color: msg.guild.me!.displayColor,
-          description: part,
-          title: 'Countdowns stored on this server',
-        }));
+        splitContent.forEach(part => {
+          msg.embed({
+            color: msg.guild.me!.displayColor,
+            description: part,
+            title: 'Countdowns stored on this server',
+          });
+        });
+
         return null;
       }
 
@@ -83,14 +86,12 @@ export default class CountdownList extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

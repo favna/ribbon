@@ -20,6 +20,7 @@ import cheerio from 'cheerio';
 import { oneLine } from 'common-tags';
 import fetch from 'node-fetch';
 import { GoogleCSEItem, GoogleItem, GoogleKnowledgeItem } from 'RibbonTypes';
+import unescape from '@favware/unescape';
 
 type GoogleArgs = {
   query: string;
@@ -28,15 +29,15 @@ type GoogleArgs = {
 };
 
 export default class GoogleCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'google',
-      aliases: ['search', 'g'],
+      aliases: [ 'search', 'g' ],
       group: 'searches',
       memberName: 'google',
       description: 'Finds anything on google',
       format: 'GoogleQuery',
-      examples: ['google Pyrrha Nikos'],
+      examples: [ 'google Pyrrha Nikos' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -54,27 +55,21 @@ export default class GoogleCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { query, hasManageMessages, position = 0 }: GoogleArgs) {
+  public async run(msg: CommandoMessage, { query, hasManageMessages, position = 0 }: GoogleArgs) {
     try {
-      const knowledgeSearch = await fetch(
-        `https://kgsearch.googleapis.com/v1/entities:search?${stringify(
-          {
-            query,
-            indent: 'True',
-            key: process.env.GOOGLE_API_KEY!,
-            limit: 1,
-          }
-        ).replace(/%2B/gm, '+')}`
-      );
+      const knowledgeSearch = await fetch(`https://kgsearch.googleapis.com/v1/entities:search?${stringify({
+        query,
+        indent: 'True',
+        key: process.env.GOOGLE_API_KEY!,
+        limit: 1,
+      }).replace(/%2B/gm, '+')}`);
 
-      const googleSearch = await fetch(
-        `https://www.googleapis.com/customsearch/v1?${stringify({
-          cx: process.env.SEARCH_KEY!,
-          key: process.env.GOOGLE_API_KEY!,
-          q: query,
-          safe: this.isNsfwAllowed(msg) ? 'off' : 'active',
-        })}`
-      );
+      const googleSearch = await fetch(`https://www.googleapis.com/customsearch/v1?${stringify({
+        cx: process.env.SEARCH_KEY!,
+        key: process.env.GOOGLE_API_KEY!,
+        q: query,
+        safe: this.isNsfwAllowed(msg) ? 'off' : 'active',
+      })}`);
 
       const cseData: { items: GoogleCSEItem[] } = await googleSearch.json();
       const cseItems = cseData.items.map(googleItem => ({ ...googleItem, source: GoogleSource.CSE }));
@@ -89,13 +84,16 @@ export default class GoogleCommand extends Command {
 
       knowledgeItems.map(item => {
         const types = item['@type'].map((t: string) => t.replace(/([a-z])([A-Z])/g, '$1 $2'));
-        return types.length > 1 ? item['@type'] = types.filter((t: string) => t !== 'Thing') : item['@type'];
+
+        return types.length > 1 ? types.filter((t: string) => t !== 'Thing') : item['@type'];
       });
 
-      const googleItems: GoogleItem[] = [...cseItems, ...knowledgeItems];
+      const googleItems: GoogleItem[] = [ ...cseItems, ...knowledgeItems ];
 
       let currentItem = googleItems[position];
-      let googleEmbed = this.prepMessage(msg, currentItem, googleItems.length, position, hasManageMessages);
+      let googleEmbed = this.prepMessage(
+        msg, currentItem, googleItems.length, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -106,11 +104,14 @@ export default class GoogleCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= googleItems.length) position = 0;
               if (position < 0) position = googleItems.length - 1;
               currentItem = googleItems[position];
-              googleEmbed = this.prepMessage(msg, currentItem, googleItems.length, position, hasManageMessages);
+              googleEmbed = this.prepMessage(
+                msg, currentItem, googleItems.length, position, hasManageMessages
+              );
               message.edit('', googleEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -118,19 +119,16 @@ export default class GoogleCommand extends Command {
       }
 
       return null;
-      // tslint:disable-next-line: no-empty
-    } catch {
-    }
+      // eslint-disable-next-line no-empty
+    } catch { }
 
     try {
-      const backupSearch = await fetch(
-        `https://www.google.com/search?${stringify({
-          cr: 'countryGB',
-          lr: 'lang_en',
-          q: query,
-          safe: this.isNsfwAllowed(msg) ? 'off' : 'active',
-        })}`
-      );
+      const backupSearch = await fetch(`https://www.google.com/search?${stringify({
+        cr: 'countryGB',
+        lr: 'lang_en',
+        q: query,
+        safe: this.isNsfwAllowed(msg) ? 'off' : 'active',
+      })}`);
       const $ = cheerio.load(await backupSearch.text());
       const href = $('.r')
         .first()
@@ -147,8 +145,7 @@ export default class GoogleCommand extends Command {
         .setURL(href)
         .setFooter(oneLine`
           If you see this please contact ${this.client.owners[0].tag} (${this.client.owners[0].id})
-          as there is likely some issue with the Google search command`
-        );
+          as there is likely some issue with the Google search command`);
 
       deleteCommandMessages(msg, this.client);
 
@@ -160,8 +157,8 @@ export default class GoogleCommand extends Command {
     }
   }
 
-  private prepMessage (
-    msg: CommandoMessage, item: any, itemLength: number,
+  private prepMessage(
+    msg: CommandoMessage, item: GoogleItem, itemLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
     const googleEmbed = new MessageEmbed()
@@ -184,15 +181,18 @@ export default class GoogleCommand extends Command {
         .setTitle(`${knowledgeItem.name} ${knowledgeItem['@type'].length === 0 ? '' : `(${knowledgeItem['@type'].join(', ')})`}`)
         .setURL(knowledgeItem.detailedDescription.url)
         .setDescription(oneLine`
-          ${knowledgeItem.detailedDescription.articleBody}
-          [Learn More...](${String(knowledgeItem.detailedDescription.url).replace(/\(/, '%28').replace(/\)/, '%29')})`
-        );
+          ${unescape(knowledgeItem.detailedDescription.articleBody)}
+          [Learn More...](${String(knowledgeItem.detailedDescription.url).replace(/\(/, '%28').replace(/\)/, '%29')})`);
+
+      if (knowledgeItem.image && knowledgeItem.image.contentUrl) {
+        googleEmbed.setImage(knowledgeItem.image.contentUrl);
+      }
     }
 
     return googleEmbed;
   }
 
-  private isNsfwAllowed (msg: CommandoMessage): boolean {
+  private isNsfwAllowed(msg: CommandoMessage): boolean {
     return msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
   }
 }

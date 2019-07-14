@@ -10,7 +10,7 @@ import { oneLine } from 'common-tags';
 import dym, { ReturnTypeEnums } from 'didyoumean2';
 
 export default class UnknownCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'unknowncommand',
       group: 'owner',
@@ -23,8 +23,8 @@ export default class UnknownCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage) {
-    if (msg.guild.settings.get('unknownmessages', true)) {
+  public async run(msg: CommandoMessage) {
+    if (msg.guild && msg.guild.settings.get('unknownmessages', true)) {
       const commandsAndAliases = this.client.registry.commands
         .map((command: Command) => command.name)
         .concat(this.client.registry.commands
@@ -39,11 +39,11 @@ export default class UnknownCommand extends Command {
       ];
 
       if (maybe.length) returnStr[1] = `Maybe you meant one of the following: ${maybe.map(val => `\`${val}\``).join(', ')}?`;
+
       return msg.reply(returnStr.filter(Boolean).join('\n'));
     }
 
     return msg.reply(oneLine`Unknown command. Use \`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help\`
-                              or <@${this.client.user!.id}> help to view the command list.`
-    );
+                              or <@${this.client.user!.id}> help to view the command list.`);
   }
 }

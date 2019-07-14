@@ -12,20 +12,21 @@ import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
+import { NekoData } from 'RibbonTypes';
 
 type CuddleArgs = {
   member: GuildMember;
 };
 
 export default class CuddleCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'cuddle',
       group: 'weeb',
       memberName: 'cuddle',
       description: 'Cuuuuddlleeesss!! 💕!',
       format: '[MemberToCuddle]',
-      examples: ['cuddle Velvet'],
+      examples: [ 'cuddle Velvet' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -42,24 +43,22 @@ export default class CuddleCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { member }: CuddleArgs) {
+  public async run(msg: CommandoMessage, { member }: CuddleArgs) {
     try {
       const cuddleFetch = await fetch('https://nekos.life/api/v2/img/cuddle');
-      const cuddleImg = await cuddleFetch.json();
+      const cuddleImg: NekoData = await cuddleFetch.json();
       const isNotSelf = member.id !== msg.member!.id;
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(
-        {
-          color: msg.guild ? msg.guild.me!.displayColor : 10610610,
-          description: isNotSelf
-            ? `Awww ${msg.member!.displayName} is giving ${member.displayName} cuddles 💕!`
-            : `${msg.member!.displayName} you must feel alone... Have a 🐈`,
-          image: { url: isNotSelf ? cuddleImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
-        },
-        `<@${member ? member.id : msg.author!.id}>`
-      );
+      return msg.embed({
+        color: msg.guild ? msg.guild.me!.displayColor : 10610610,
+        description: isNotSelf
+          ? `Awww ${msg.member!.displayName} is giving ${member.displayName} cuddles 💕!`
+          : `${msg.member!.displayName} you must feel alone... Have a 🐈`,
+        image: { url: isNotSelf ? cuddleImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
+      },
+      `<@${member ? member.id : msg.author!.id}>`);
     } catch (err) {
       return msg.reply('something went wrong getting a cuddle image 💔');
     }

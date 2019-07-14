@@ -22,15 +22,15 @@ type Rule34Args = {
 };
 
 export default class Rule34Command extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'rule34',
-      aliases: ['r34'],
+      aliases: [ 'r34' ],
       group: 'nsfw',
       memberName: 'rule34',
       description: 'Find NSFW Content on Rule34',
       format: 'NSFWToLookUp',
-      examples: ['rule34 Pyrrha Nikos'],
+      examples: [ 'rule34 Pyrrha Nikos' ],
       nsfw: true,
       guildOnly: false,
       throttling: {
@@ -47,7 +47,7 @@ export default class Rule34Command extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { tags }: Rule34Args) {
+  public async run(msg: CommandoMessage, { tags }: Rule34Args) {
     try {
       const booruSearch = await booru('r34', tags, {
         limit: 1,
@@ -64,8 +64,7 @@ export default class Rule34Command extends Command {
         .setColor('#FFB6C1')
         .setDescription(stripIndents`
           ${imageTags.slice(0, 5).join(' ')}
-          **Score**: ${hit.score}`
-        )
+          **Score**: ${hit.score}`)
         .setImage(hit.fileUrl!);
 
       deleteCommandMessages(msg, this.client);

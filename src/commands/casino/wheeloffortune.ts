@@ -23,15 +23,15 @@ type WheelOfFortuneArgs = {
 };
 
 export default class WheelOfFortuneCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'wheeloffortune',
-      aliases: ['wheel', 'wof'],
+      aliases: [ 'wheel', 'wof' ],
       group: 'casino',
       memberName: 'wheeloffortune',
       description: 'Gamble your chips iat the wheel of fortune',
       format: 'AmountOfChips',
-      examples: ['wof 50'],
+      examples: [ 'wof 50' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -47,10 +47,10 @@ export default class WheelOfFortuneCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { chips }: WheelOfFortuneArgs) {
-    const arrowmojis = ['⬆', '↖', '⬅', '↙', '⬇', '↘', '➡', '↗'];
+  public async run(msg: CommandoMessage, { chips }: WheelOfFortuneArgs) {
+    const arrowmojis = [ '⬆', '↖', '⬅', '↙', '⬇', '↘', '➡', '↗' ];
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
-    const multipliers = [0.1, 0.2, 0.3, 0.5, 1.2, 1.5, 1.7, 2.4];
+    const multipliers = [ 0.1, 0.2, 0.3, 0.5, 1.2, 1.5, 1.7, 2.4 ];
     const spin = Math.floor(Math.random() * multipliers.length);
     const wofEmbed = new MessageEmbed();
 
@@ -68,21 +68,22 @@ export default class WheelOfFortuneCommand extends Command {
         }
 
         const prevBal = balance;
+        const nextBal = chips * multipliers[spin];
 
         balance -= chips;
-        balance += chips * multipliers[spin];
+        balance += nextBal;
         balance = roundNumber(balance);
 
         conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author!.id}";`)
           .run({ balance });
 
         wofEmbed
-          .setTitle(`
-                        ${msg.author!.tag} ${multipliers[spin] < 1
-            ? `lost ${roundNumber(chips - chips * multipliers[spin])}`
-            : `won ${roundNumber(chips * multipliers[spin] - chips)}`
-            } chips
-                    `)
+          .setTitle(oneLine`
+    ${msg.author!.tag}
+    ${multipliers[spin] < 1
+    ? `lost ${roundNumber(chips - nextBal)}`
+    : `won ${roundNumber(nextBal - chips)}`} chips`
+          )
           .addField('Previous Balance', prevBal, true)
           .addField('New Balance', balance, true)
           .setDescription(stripIndent`
@@ -90,8 +91,7 @@ export default class WheelOfFortuneCommand extends Command {
 
             『${multipliers[2]}』      ${arrowmojis[spin]}        『${multipliers[6]}』
 
-            『${multipliers[3]}』   『${multipliers[4]}』   『${multipliers[5]}』`
-          );
+            『${multipliers[3]}』   『${multipliers[4]}』   『${multipliers[5]}』`);
 
         deleteCommandMessages(msg, this.client);
 
@@ -101,8 +101,7 @@ export default class WheelOfFortuneCommand extends Command {
       return msg.reply(oneLine`
         looks like you either don't have any chips yet or you used them all
         Run \`${msg.guild.commandPrefix}chips\` to get your first 500
-        or run \`${msg.guild.commandPrefix}withdraw\` to withdraw some chips from your vault.`
-      );
+        or run \`${msg.guild.commandPrefix}withdraw\` to withdraw some chips from your vault.`);
     } catch (err) {
       if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
@@ -117,14 +116,12 @@ export default class WheelOfFortuneCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

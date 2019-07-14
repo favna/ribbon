@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ArgumentType, CommandoClient } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
 import { Language } from '../Constants';
 
 export default class I18nType extends ArgumentType {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, 'i18n');
   }
 
-  public validate (lang: any) {
+  public validate(lang: any) {
     if (Language[lang.toUpperCase()]) return true;
 
     return stripIndents`
@@ -15,7 +16,7 @@ export default class I18nType extends ArgumentType {
       Respond with your new selection or`;
   }
 
-  public parse (lang: any) {
+  public parse(lang: any) {
     return Language[lang.toUpperCase()];
   }
 }

@@ -15,14 +15,14 @@ import moment from 'moment';
 import { SayData } from 'RibbonTypes';
 
 export default class SayWutCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'saywut',
-      aliases: ['saywat', 'saywot'],
+      aliases: [ 'saywat', 'saywot' ],
       group: 'extra',
       memberName: 'saywut',
       description: 'Bust the last "say" user',
-      examples: ['saywut'],
+      examples: [ 'saywut' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -31,7 +31,7 @@ export default class SayWutCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const saydata: SayData = msg.guild.settings.get('saydata', null);
 
     if (saydata) {
@@ -46,7 +46,7 @@ export default class SayWutCommand extends Command {
         const attachmentExtension = saydata.attachment.split('.').pop();
         const embedAttachment = new MessageAttachment(saydata.attachment, `say_image.${attachmentExtension}`);
         wutEmbed
-          .attachFiles([embedAttachment])
+          .attachFiles([ embedAttachment ])
           .setImage(`attachment://say_image.${attachmentExtension}`);
       }
 
@@ -58,7 +58,6 @@ export default class SayWutCommand extends Command {
 
     return msg.reply(oneLine`
       couldn't fetch message for your server.
-      Has anyone used the ${msg.guild.commandPrefix}say command before?`
-    );
+      Has anyone used the ${msg.guild.commandPrefix}say command before?`);
   }
 }

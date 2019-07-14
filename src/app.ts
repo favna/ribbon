@@ -29,4 +29,6 @@ moduleAlias.addAlias('@i18n', `${__dirname}/data/i18n`);
 moduleAlias.addAlias('@databases', `${__dirname}/data/databases`);
 
 // Start the bot
-new Ribbon(process.env.NODE_ENV === 'development' ? process.env.TEST_TOKEN! : process.env.BOT_TOKEN!).init();
+(async () => {
+  await new Ribbon(process.env.NODE_ENV === 'development' ? process.env.TEST_TOKEN! : process.env.BOT_TOKEN!).init();
+})();

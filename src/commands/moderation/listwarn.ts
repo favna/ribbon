@@ -22,15 +22,15 @@ type ListWarnArgs = {
 };
 
 export default class ListWarnCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'listwarn',
-      aliases: ['reqwarn', 'lw', 'rw'],
+      aliases: [ 'reqwarn', 'lw', 'rw' ],
       group: 'moderation',
       memberName: 'listwarn',
       description: 'Lists the warning points given to a member',
       format: 'MemberID|MemberName(partial or full)',
-      examples: ['listwarn Biscuit'],
+      examples: [ 'listwarn Biscuit' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -47,7 +47,7 @@ export default class ListWarnCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public run (msg: CommandoMessage, { member }: ListWarnArgs) {
+  public async run(msg: CommandoMessage, { member }: ListWarnArgs) {
     const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));
     const embed = new MessageEmbed();
 
@@ -61,8 +61,7 @@ export default class ListWarnCommand extends Command {
 
       embed.setDescription(stripIndents`
         **Member:** ${tag} (${id})
-        **Current warning Points:** ${points}`
-      );
+        **Current warning Points:** ${points}`);
       deleteCommandMessages(msg, this.client);
 
       return msg.embed(embed);
@@ -73,8 +72,7 @@ export default class ListWarnCommand extends Command {
       if (/(?:TypeError: Cannot read property 'tag')/i.test(err.toString())) {
         embed.setDescription(stripIndents`
           **Member:** ${member.user.tag} (${member.id})
-          **Current warning Points:** 0`
-        );
+          **Current warning Points:** 0`);
 
         return msg.embed(embed);
       }
@@ -86,14 +84,12 @@ export default class ListWarnCommand extends Command {
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** \`${member.user.tag} (${member.id})\`
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

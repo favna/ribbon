@@ -27,10 +27,10 @@ type StrawpollArgs = {
 };
 
 export default class StrawpollCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'strawpoll',
-      aliases: ['straw', 'poll'],
+      aliases: [ 'straw', 'poll' ],
       group: 'games',
       memberName: 'strawpoll',
       description: 'Strawpoll something. Recommended to use the replying with each argument method to allow spaces in the title',
@@ -61,14 +61,13 @@ export default class StrawpollCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { title, options }: StrawpollArgs) {
+  public async run(msg: CommandoMessage, { title, options }: StrawpollArgs) {
     if (options.length < 2) {
       return msg.reply('a poll needs to have at least 2 options to pick from');
     }
     try {
       const pollEmbed = new MessageEmbed();
-      const pollPost = await fetch(
-        'https://www.strawpoll.me/api/v2/polls',
+      const pollPost = await fetch('https://www.strawpoll.me/api/v2/polls',
         {
           body: JSON.stringify({
             options,
@@ -79,8 +78,7 @@ export default class StrawpollCommand extends Command {
           }),
           headers: { 'Content-Type': 'application/json' },
           method: 'POST',
-        }
-      );
+        });
       const strawpoll = await pollPost.json();
 
       pollEmbed

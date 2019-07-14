@@ -14,14 +14,14 @@ import { MessageEmbed } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
 export default class InviteCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'invite',
-      aliases: ['inv', 'links', 'shill'],
+      aliases: [ 'inv', 'links', 'shill' ],
       group: 'info',
       memberName: 'invite',
       description: 'Gives you invitation links',
-      examples: ['invite'],
+      examples: [ 'invite' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -31,7 +31,7 @@ export default class InviteCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const inviteEmbed = new MessageEmbed();
 
     inviteEmbed
@@ -45,8 +45,7 @@ export default class InviteCommand extends Command {
         [Join the Support Server](https://favware.tech/redirect/server)
         [Website](https://favware.tech/ribbon)
         [GitHub](https://github.com/Favna/Ribbon)
-        [Wiki](https://github.com/Favna/Ribbon/wiki)`
-      );
+        [Wiki](https://github.com/Favna/Ribbon/wiki)`);
 
     deleteCommandMessages(msg, this.client);
 

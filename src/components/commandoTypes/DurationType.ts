@@ -4,7 +4,7 @@ export default class CurrencyType extends ArgumentType {
   private timeIds: Set<string>;
   private duration: number;
 
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, 'duration');
     this.timeIds = new Set([
       'ms', 'millisecond', 'milliseconds',
@@ -19,32 +19,33 @@ export default class CurrencyType extends ArgumentType {
     this.duration = 0;
   }
 
-  public validate (value: string) {
-    const MATCHES_ALL = value.match(/(\d+)\s*([A-Za-z]+)/g);
+  public validate(value: string) {
+    const MATCHES_ALL = value.match(/\d+\s*[A-Za-z]+/g);
 
     if (MATCHES_ALL) {
       for (const match of MATCHES_ALL) {
-        const tempNum = match.match(/(\d+)/g);
-        const tempStr = match.match(/([A-Za-z]+)/g);
+        const tempNum = match.match(/\d+/g);
+        const tempStr = match.match(/[A-Za-z]+/g);
         if (!tempNum || (tempNum.length !== 1)) return false;
         if (!tempStr || (tempStr.length !== 1)) return false;
-        if (!Number.isInteger(parseInt(tempNum[0], 10))) return false;
+        if (!Number.isInteger(parseInt(tempNum[0]))) return false;
         if (!this.timeIds.has(tempStr[0])) return false;
       }
+
       return true;
     }
 
     return false;
   }
 
-  public parse (value: string) {
-    const MATCHES_ALL = value.match(/(\d+)\s*([A-Za-z]+)/g);
+  public parse(value: string) {
+    const MATCHES_ALL = value.match(/\d+\s*[A-Za-z]+/g);
 
     if (MATCHES_ALL) {
-      let totalTime: number = 0;
+      let totalTime = 0;
       MATCHES_ALL.forEach((dur: string) => {
-        const tempNum = parseInt(dur.match(/(\d+)/g)![0], 10);
-        const tempStr = dur.match(/([A-Za-z]+)/g)![0];
+        const tempNum = parseInt(dur.match(/\d+/g)![0]);
+        const tempStr = dur.match(/[A-Za-z]+/g)![0];
         if (isNaN(tempNum)) {
           totalTime = 0;
         } else {
@@ -53,6 +54,7 @@ export default class CurrencyType extends ArgumentType {
       });
       if (totalTime) {
         this.duration = totalTime;
+
         return this.duration;
       }
     }
@@ -60,7 +62,7 @@ export default class CurrencyType extends ArgumentType {
     return null;
   }
 
-  private determineTimeType (str: string): number {
+  private determineTimeType(str: string): number {
     switch (str) {
       case 'ms':
       case 'millisecond':

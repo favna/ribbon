@@ -14,14 +14,14 @@ import { MessageEmbed } from 'awesome-djs';
 import fetch from 'node-fetch';
 
 export default class XKCDCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'xkcd',
-      aliases: ['devjoke', 'comicjoke'],
+      aliases: [ 'devjoke', 'comicjoke' ],
       group: 'extra',
       memberName: 'xkcd',
       description: 'Gets a random image from xkcd',
-      examples: ['xkcd'],
+      examples: [ 'xkcd' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -30,7 +30,7 @@ export default class XKCDCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     try {
       const count = await fetch('https://xkcd.com/info.0.json');
       const totalImages = await count.json();
@@ -47,6 +47,7 @@ export default class XKCDCommand extends Command {
         .setURL(`https://xkcd.com/${randomNum}/`);
 
       deleteCommandMessages(msg, this.client);
+
       return msg.embed(xkcdEmbed);
     } catch (err) {
       return msg.reply('woops, couldn\'t get a random xkcd image. Have a 🎀 instead!');

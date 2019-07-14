@@ -18,10 +18,10 @@ type CookieArgs = {
 };
 
 export default class CookieCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'cookie',
-      aliases: ['biscuit'],
+      aliases: [ 'biscuit' ],
       group: 'weeb',
       memberName: 'cookie',
       description: 'Steal someone\'s 🍪 gnanahahahaha',
@@ -38,11 +38,11 @@ export default class CookieCommand extends Command {
           default: (msg: CommandoMessage) => msg.member,
         }
       ],
-      patterns: [/^\.(?:biscuit)$/i],
+      patterns: [ /^\.(?:biscuit)$/i ],
     });
   }
 
-  public run (msg: CommandoMessage, { member }: CookieArgs) {
+  public async run(msg: CommandoMessage, { member }: CookieArgs) {
     if (msg.patternMatches && !this.verifyRmt(msg)) return null;
 
     const cookieEmbed = new MessageEmbed();
@@ -58,7 +58,7 @@ export default class CookieCommand extends Command {
     return msg.embed(cookieEmbed);
   }
 
-  private fetchImage () {
+  private fetchImage() {
     const images = [
       `${ASSET_BASE_PATH}/ribbon/cookie/cookie01.gif`,
       `${ASSET_BASE_PATH}/ribbon/cookie/cookie02.gif`,
@@ -75,10 +75,11 @@ export default class CookieCommand extends Command {
     return images[curImage];
   }
 
-  private verifyRmt (msg: CommandoMessage) {
+  private verifyRmt(msg: CommandoMessage) {
     if (msg.guild.id === '373826006651240450') return true;
     if (msg.guild.commandPrefix === '.') return true;
     if (msg.guild.settings.get('regexmatches', false)) return true;
+
     return this.client.isOwner(msg.author!);
   }
 }

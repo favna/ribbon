@@ -23,15 +23,15 @@ type ExcessiveEmojisArgs = {
 };
 
 export default class ExcessiveEmojisCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'excessiveemojis',
-      aliases: ['ef', 'emojifilter', 'spammedemojis', 'manyemojis'],
+      aliases: [ 'ef', 'emojifilter', 'spammedemojis', 'manyemojis' ],
       group: 'automod',
       memberName: 'excessiveemojis',
       description: 'Toggle the excessive emojis filter',
       format: 'boolean',
-      examples: ['excessiveemojis enable'],
+      examples: [ 'excessiveemojis enable' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -60,7 +60,7 @@ export default class ExcessiveEmojisCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES', true)
-  public run (msg: CommandoMessage, { shouldEnable, threshold, minLength }: ExcessiveEmojisArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable, threshold, minLength }: ExcessiveEmojisArgs) {
     const eeEmbed = new MessageEmbed();
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const options = { minlength: minLength, threshold, enabled: shouldEnable };
@@ -74,12 +74,13 @@ export default class ExcessiveEmojisCommand extends Command {
         **Action:** Excessive Emojis filter has been ${shouldEnable ? 'enabled' : 'disabled'}
         ${shouldEnable ? `**Threshold:** Messages that have at least ${threshold} emojis will be deleted` : ''}
         ${shouldEnable ? `**Minimum length:** Messages of at least ${minLength} are checked for excessive emojis` : ''}
-        ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
-      )
+        ${msg.guild.settings.get('automod', false) ? '' : `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!`}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, eeEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, eeEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

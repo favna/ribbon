@@ -19,7 +19,7 @@ import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { FrontlineGirlType } from 'RibbonTypes';
+import { FrontlineGirl } from 'RibbonTypes';
 
 type GirlsFrontlineArgs = {
   character: string;
@@ -28,15 +28,15 @@ type GirlsFrontlineArgs = {
 };
 
 export default class GirlsFrontlineCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'girlsfrontline',
-      aliases: ['gfsearch'],
+      aliases: [ 'gfsearch' ],
       group: 'searches',
       memberName: 'girlsfrontline',
       description: 'Gets information about [Girls Froontline](http://gf.sunborngame.com/) characters',
       format: 'CharacterName',
-      examples: ['girlsfrontline Negev'],
+      examples: [ 'girlsfrontline Negev' ],
       guildOnly: false,
       args: [
         {
@@ -49,15 +49,17 @@ export default class GirlsFrontlineCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { character, hasManageMessages, position = 0 }: GirlsFrontlineArgs) {
+  public async run(msg: CommandoMessage, { character, hasManageMessages, position = 0 }: GirlsFrontlineArgs) {
     try {
-      const gfOptions: FuseOptions<FrontlineGirlType> = { keys: ['name'] };
+      const gfOptions: FuseOptions<FrontlineGirl> = { keys: [ 'name' ] };
       const fuse = new Fuse(frontlineGirls, gfOptions);
       const girlSearch = fuse.search(character);
       const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
       let currentGirl = girlSearch[position];
-      let girlEmbed = await this.prepMessage(color, currentGirl, girlSearch.length, position, hasManageMessages);
+      let girlEmbed = await this.prepMessage(
+        color, currentGirl, girlSearch.length, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -68,11 +70,14 @@ export default class GirlsFrontlineCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', async (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= girlSearch.length) position = 0;
               if (position < 0) position = girlSearch.length - 1;
               currentGirl = girlSearch[position];
-              girlEmbed = await this.prepMessage(color, currentGirl, girlSearch.length, position, hasManageMessages);
+              girlEmbed = await this.prepMessage(
+                color, currentGirl, girlSearch.length, position, hasManageMessages
+              );
               message.edit('', girlEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -82,17 +87,18 @@ export default class GirlsFrontlineCommand extends Command {
       return null;
     } catch (err) {
       deleteCommandMessages(msg, this.client);
+
       return msg.reply(`no girl found for \`${character}\``);
     }
   }
 
-  private async prepMessage (
-    color: string, girl: FrontlineGirlType, girlsLength: number,
+  private async prepMessage(
+    color: string, girl: FrontlineGirl, girlsLength: number,
     position: number, hasManageMessages: boolean
   ): Promise<MessageEmbed> {
     const embed = new MessageEmbed();
     const howObtain: string[] = [];
-    const statIndices = ['hp', 'dmg', 'eva', 'acc', 'rof'];
+    const statIndices = [ 'hp', 'dmg', 'eva', 'acc', 'rof' ];
     const abilityReplacer = girl.ability.text.match(/\(\$([a-z0-9_])+\)/gm);
 
     if (girl.production.stage) howObtain.push(`**Stage:** ${girl.production.stage}`);
@@ -115,7 +121,7 @@ export default class GirlsFrontlineCommand extends Command {
     embed
       .setColor(color)
       .setURL(wikiBasePath.concat(girl.url))
-      .setTitle(`No. ${girl.num} - ${girl.name} ${[...Array(girl.rating)].map(() => '★').join('').concat('☆☆☆☆☆'.slice(girl.rating))}`)
+      .setTitle(`No. ${girl.num} - ${girl.name} ${[ ...Array(girl.rating) ].map(() => '★').join('').concat('☆☆☆☆☆'.slice(girl.rating))}`)
       .setThumbnail(wikiBasePath.concat('/images/', thumbSrc))
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${girlsLength}` : '')
       .addField('Type', girl.type, true)

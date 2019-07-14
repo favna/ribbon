@@ -17,15 +17,15 @@ type LmgtfyArgs = {
 };
 
 export default class LmgtfyCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'lmgtfy',
-      aliases: ['dumb'],
+      aliases: [ 'dumb' ],
       group: 'searches',
       memberName: 'lmgtfy',
       description: 'Produce a lmgtfy (let me google that for you) URL',
       format: 'Query',
-      examples: ['lmgtfy is it legal to kill an ant???', 'lmgtfy are there birds in canada?'],
+      examples: [ 'lmgtfy is it legal to kill an ant???', 'lmgtfy are there birds in canada?' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -42,8 +42,9 @@ export default class LmgtfyCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { question }: LmgtfyArgs) {
+  public async run(msg: CommandoMessage, { question }: LmgtfyArgs) {
     deleteCommandMessages(msg, this.client);
+
     return msg.say(`<https://lmgtfy.com/?q=${question}>`);
   }
 }

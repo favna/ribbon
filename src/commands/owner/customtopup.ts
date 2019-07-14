@@ -25,15 +25,15 @@ type CustomTopUpArgs = {
 };
 
 export default class CustomTopUpCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'customtopup',
-      aliases: ['ctu'],
+      aliases: [ 'ctu' ],
       group: 'owner',
       memberName: 'customtopup',
       description: 'Daniël Ocean doesn\'t give a crap about legality',
       format: 'AnyMember ChipsAmount',
-      examples: ['ctu Biscuit 1000'],
+      examples: [ 'ctu Biscuit 1000' ],
       guildOnly: false,
       ownerOnly: true,
       args: [
@@ -54,7 +54,7 @@ export default class CustomTopUpCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { player, chips }: CustomTopUpArgs) {
+  public async run(msg: CommandoMessage, { player, chips }: CustomTopUpArgs) {
     const coinEmbed = new MessageEmbed();
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
@@ -94,14 +94,12 @@ export default class CustomTopUpCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

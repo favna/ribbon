@@ -20,22 +20,23 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import path from 'path';
+import { TimerRow } from 'RibbonTypes';
 
 type TimerRemoveArgs = {
   id: number;
 };
 
 export default class TimerRemoveCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'timerremove',
-      aliases: ['timeremove', 'timerdelete', 'timedelete'],
+      aliases: [ 'timeremove', 'timerdelete', 'timedelete' ],
       group: 'moderation',
       memberName: 'timerremove',
       description: 'Remove a specified timed message',
       format: 'TimerID',
       details: 'Use the timerlist command to find the ID for deleting',
-      examples: ['timerremove 1'],
+      examples: [ 'timerremove 1' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -52,21 +53,19 @@ export default class TimerRemoveCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public run (msg: CommandoMessage, { id }: TimerRemoveArgs) {
+  public async run(msg: CommandoMessage, { id }: TimerRemoveArgs) {
     const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
 
     try {
-      const rows = conn.prepare(`SELECT id FROM "${msg.guild.id}";`).all();
-      const validIDs: any = [];
+      const rows: TimerRow[] = conn.prepare(`SELECT id FROM "${msg.guild.id}";`).all();
+      const validIDs: number[] = [];
 
-      rows.forEach((row: any) => validIDs.push(row.id));
+      rows.forEach(async row => validIDs.push(row.id));
 
       if (!validIDs.includes(id)) {
-
         return msg.reply(oneLine`
           that is not an ID of a message stored for this guild.
-          You can view all the stored messages with the \`${msg.guild.commandPrefix}timerlist\` command`
-        );
+          You can view all the stored messages with the \`${msg.guild.commandPrefix}timerlist\` command`);
       }
     } catch (err) {
       if (/(?:no such table)/i.test(err.toString())) {
@@ -79,14 +78,12 @@ export default class TimerRemoveCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
 
     try {
@@ -103,12 +100,13 @@ export default class TimerRemoveCommand extends Command {
           **Action:** Timed message removed
           **Interval:** ${moment.duration(interval).format(DURA_FORMAT)}
           **Channel:** <#${channel}>
-          **Message:** ${content}`
-        )
+          **Message:** ${content}`)
         .setTimestamp();
 
       if (msg.guild.settings.get('modlogs', true)) {
-        logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, timerRemoveEmbed);
+        logModMessage(
+          msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, timerRemoveEmbed
+        );
       }
 
       deleteCommandMessages(msg, this.client);
@@ -125,14 +123,12 @@ export default class TimerRemoveCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

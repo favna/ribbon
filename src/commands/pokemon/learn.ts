@@ -31,10 +31,10 @@ type LearnArgs = {
 };
 
 export default class LearnCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'learn',
-      aliases: ['learnset', 'learnall'],
+      aliases: [ 'learnset', 'learnall' ],
       group: 'pokemon',
       memberName: 'learn',
       description: 'Displays how a Pokemon can learn given moves, if at all',
@@ -44,7 +44,7 @@ export default class LearnCommand extends Command {
                   ${oneLine`
                     You can specify a generation for the match by adding \`--gen [1-7]\` anywhere in the list of moves,
                     with \`[1-7]\` being a number in that range.`
-        }
+}
                   Generation defaults to 7
                 `,
       examples: [
@@ -82,66 +82,59 @@ export default class LearnCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { pokemon, moves }: LearnArgs) {
+  public async run(msg: CommandoMessage, { pokemon, moves }: LearnArgs) {
     try {
       moves = moves.toLowerCase().replace(/(-)/gm, '');
 
       const { learnset } = BattleLearnsets[pokemon];
       const learnEmbed = new MessageEmbed();
-      const movesArray: string[] = moves.includes(',') ? moves.split(',') : [moves];
+      const movesArray: string[] = moves.includes(',') ? moves.split(',') : [ moves ];
       const methods: string[] = [];
       const response: string[] = [];
 
-      movesArray.forEach((move: string): any => {
+      movesArray.forEach(async (move: string) => {
         if (move in learnset) {
-          learnset[move].forEach((learn: string): any => {
+          learnset[move].forEach(async (learn: string) => {
             methods.push(learn);
           });
 
-          methods.forEach((method: string): any => {
-            // tslint:disable-next-line:switch-default
+          methods.forEach(async (method: string) => {
+            // eslint-disable-next-line default-case
             switch (method.slice(1, 2)) {
               case 'L':
                 response.push(oneLine`
                   In generation ${method.slice(0, 1)} ${sentencecase(pokemon)}
-                  **__can__** learn **${move}** by level up at level ${method.slice(2)}`
-                );
+                  **__can__** learn **${move}** by level up at level ${method.slice(2)}`);
                 break;
               case 'V':
                 response.push(oneLine`
                   In generation ${method.slice(0, 1)} ${sentencecase(pokemon)}
-                  **__can__** learn **${move}** through virtual console transfer`
-                );
+                  **__can__** learn **${move}** through virtual console transfer`);
                 break;
               case 'T':
                 response.push(oneLine`
                   In generation ${method.slice(0, 1)} ${sentencecase(pokemon)}
-                  **__can__** learn **${move}** through a move tutor`
-                );
+                  **__can__** learn **${move}** through a move tutor`);
                 break;
               case 'M':
                 response.push(oneLine`
                   In generation ${method.slice(0, 1)} ${sentencecase(pokemon)}
-                  **__can__** learn **${move}** through TM`
-                );
+                  **__can__** learn **${move}** through TM`);
                 break;
               case 'E':
                 response.push(oneLine`
                   In generation ${method.slice(0, 1)} ${sentencecase(pokemon)}
-                  **__can__** learn **${move}** as Egg Move`
-                );
+                  **__can__** learn **${move}** as Egg Move`);
                 break;
               case 'S':
                 response.push(oneLine`
                   In generation ${method.slice(0, 1)} ${sentencecase(pokemon)}
-                  **__can__** learn **${move}** through an event`
-                );
+                  **__can__** learn **${move}** through an event`);
                 break;
               case 'D':
                 response.push(oneLine`
                   In generation ${method.slice(0, 1)} ${sentencecase(pokemon)}
-                  **__can__** learn **${move}** through Dream World`
-                );
+                  **__can__** learn **${move}** through Dream World`);
                 break;
             }
           });
@@ -154,15 +147,11 @@ export default class LearnCommand extends Command {
       learnEmbed
         .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
-        .setAuthor(
-          `${sentencecase(pokemon)}`,
-          `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${pokemon}.png`
-        )
-        .setDescription(
-          response.length
-            ? response.join('\n\n')
-            : stripIndents`${sentencecase(pokemon)} cannot learn ${movesArray.map((val: string) => `\`${val}\``).join(', ')}`
-        );
+        .setAuthor(`${sentencecase(pokemon)}`,
+          `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${pokemon}.png`)
+        .setDescription(response.length
+          ? response.join('\n\n')
+          : stripIndents`${sentencecase(pokemon)} cannot learn ${movesArray.map((val: string) => `\`${val}\``).join(', ')}`);
 
       deleteCommandMessages(msg, this.client);
 
@@ -177,14 +166,12 @@ export default class LearnCommand extends Command {
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Pokemon:** ${pokemon}
         **Moves:** ${moves}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

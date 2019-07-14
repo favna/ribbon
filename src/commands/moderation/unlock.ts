@@ -21,14 +21,14 @@ type UnlockArgs = {
 };
 
 export default class UnlockCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'unlock',
-      aliases: ['delock', 'ul'],
+      aliases: [ 'delock', 'ul' ],
       group: 'moderation',
       memberName: 'unlock',
       description: 'Unlocks the current channel',
-      examples: ['unlock'],
+      examples: [ 'unlock' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -46,18 +46,17 @@ export default class UnlockCommand extends Command {
   }
 
   @shouldHavePermission('ADMINISTRATOR', true)
-  public async run (msg: CommandoMessage, { lockrole }: UnlockArgs) {
+  public async run(msg: CommandoMessage, { lockrole }: UnlockArgs) {
     try {
       const modlogChannel = msg.guild.settings.get('modlogchannel', null);
       const channel = msg.channel as GuildChannel;
       const overwrite = await channel.overwritePermissions({
         permissionOverwrites: [
           {
-            allow: ['SEND_MESSAGES'],
+            allow: [ 'SEND_MESSAGES' ],
             id: msg.guild.roles.find(n => this.isRole(lockrole)
               ? n.name === lockrole.name
-              : n.name === '@everyone'
-            )!.id,
+              : n.name === '@everyone')!.id,
           }
         ],
         reason: 'Channel Lockdown',
@@ -69,13 +68,14 @@ export default class UnlockCommand extends Command {
         .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
         .setDescription(stripIndents`
           **Action:** 🔓 unlocked the \`${channel.name}\` channel.
-          **Details:** This channel can now be used by everyone again. Use \`${msg.guild.commandPrefix}lockdown\` in this channel to (re)-lock it.`
-        )
+          **Details:** This channel can now be used by everyone again. Use \`${msg.guild.commandPrefix}lockdown\` in this channel to (re)-lock it.`)
         .setTimestamp();
 
       if (overwrite) {
         if (msg.guild.settings.get('modlogs', true)) {
-          logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, unlockEmbed);
+          logModMessage(
+            msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, unlockEmbed
+          );
         }
         deleteCommandMessages(msg, this.client);
 
@@ -94,18 +94,16 @@ export default class UnlockCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 
-  private isRole (role: Role | string): role is Role {
+  private isRole(role: Role | string): role is Role {
     return (role as Role).id !== undefined;
   }
 }

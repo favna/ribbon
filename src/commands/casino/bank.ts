@@ -18,14 +18,14 @@ import moment from 'moment';
 import path from 'path';
 
 export default class BankCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'bank',
-      aliases: ['vault'],
+      aliases: [ 'vault' ],
       group: 'casino',
       memberName: 'bank',
       description: 'View your vault content',
-      examples: ['bank', 'vault'],
+      examples: [ 'bank', 'vault' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -34,7 +34,7 @@ export default class BankCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const bankEmbed = new MessageEmbed();
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
@@ -44,7 +44,9 @@ export default class BankCommand extends Command {
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/bank.png`);
 
     try {
-      const { balance, vault, lastdaily, lastweekly } = conn.prepare(`SELECT balance, vault, lastdaily, lastweekly FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
+      const {
+        balance, vault, lastdaily, lastweekly,
+      } = conn.prepare(`SELECT balance, vault, lastdaily, lastweekly FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
 
       if (balance >= 0) {
         const dailyDura = moment.duration(moment(lastdaily).add(24, 'hours').diff(moment()));
@@ -58,9 +60,9 @@ export default class BankCommand extends Command {
             **Balance**
             ${balance}
             **Daily Reset**
-            ${!(dailyDura.asMilliseconds() <= 0) ? dailyDura.format('[in] HH[ hour(s) and ]mm[ minute(s)]') : 'Right now!'}
+            ${(dailyDura.asMilliseconds() <= 0) ? 'Right now!' : dailyDura.format('[in] HH[ hour(s) and ]mm[ minute(s)]')}
             **Weekly Reset**
-            ${!(weeklyDura.asDays() <= 0) ? weeklyDura.format('[in] d[ day and] HH[ hour]') : 'Right now!'}
+            ${(weeklyDura.asDays() <= 0) ? 'Right now!' : weeklyDura.format('[in] d[ day and] HH[ hour]')}
           `);
 
         deleteCommandMessages(msg, this.client);
@@ -89,8 +91,7 @@ export default class BankCommand extends Command {
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

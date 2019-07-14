@@ -20,16 +20,16 @@ type DefaultRoleArgs = {
 };
 
 export default class DefaultRoleCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'defaultrole',
-      aliases: ['defrole'],
+      aliases: [ 'defrole' ],
       group: 'moderation',
       memberName: 'defaultrole',
       description: 'Set a default role Ribbon will assign to any members joining after this command',
       format: 'RoleID|RoleName(partial or full)',
       details: 'Use "delete" to remove the default role',
-      examples: ['defaultrole Member'],
+      examples: [ 'defaultrole Member' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -47,7 +47,7 @@ export default class DefaultRoleCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_ROLES', true)
-  public run (msg: CommandoMessage, { role }: DefaultRoleArgs) {
+  public async run(msg: CommandoMessage, { role }: DefaultRoleArgs) {
     try {
       const defRoleEmbed = new MessageEmbed();
       const modlogChannel = msg.guild.settings.get('modlogchannel', null);
@@ -70,13 +70,14 @@ export default class DefaultRoleCommand extends Command {
         .setTimestamp();
 
       if (msg.guild.settings.get('modlogs', true)) {
-        logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, defRoleEmbed);
+        logModMessage(
+          msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, defRoleEmbed
+        );
       }
 
       deleteCommandMessages(msg, this.client);
 
       return msg.embed(defRoleEmbed);
-
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       if (/(?:not_a_role)/i.test(err.toString())) {
@@ -90,18 +91,16 @@ export default class DefaultRoleCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 
-  private isRole (role: Role | string): role is Role {
+  private isRole(role: Role | string): role is Role {
     return (role as Role).id !== undefined;
   }
 }

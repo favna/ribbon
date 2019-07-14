@@ -26,15 +26,15 @@ export default class SkipSongCommand extends Command {
   public songVotes: Map<Snowflake, MusicVoteType>;
   private songQueue: Map<Snowflake, MusicQueueType>;
 
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'skip',
-      aliases: ['next'],
+      aliases: [ 'next' ],
       group: 'music',
       memberName: 'skip',
       description: 'Skips the song that is currently playing.',
       details: 'If there are more than 3 people (not counting Ribbon) a voteskip is started. Staff can force the skip by adding `force` to the command',
-      examples: ['skip'],
+      examples: [ 'skip' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -45,7 +45,7 @@ export default class SkipSongCommand extends Command {
     this.songQueue = this.queue;
   }
 
-  get queue () {
+  private get queue() {
     if (!this.songQueue) {
       this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
@@ -53,7 +53,7 @@ export default class SkipSongCommand extends Command {
     return this.songQueue;
   }
 
-  get votes () {
+  private get votes() {
     if (!this.songVotes) {
       this.songVotes = (this.client.registry.resolveCommand('music:launch') as MusicCommand).votes;
     }
@@ -61,7 +61,7 @@ export default class SkipSongCommand extends Command {
     return this.songVotes;
   }
 
-  public run (msg: CommandoMessage, args: any) {
+  public async run(msg: CommandoMessage, args: string) {
     const queue = this.queue.get(msg.guild.id);
     if (!queue) return msg.reply('there isn\'t a song playing right now, silly.');
     if (!queue.voiceChannel.members.has(msg.author!.id)) return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
@@ -105,13 +105,12 @@ export default class SkipSongCommand extends Command {
       return msg.say(oneLine`
         ${vote.count} vote${vote.count > 1 ? 's' : ''} received so far,
         ${remaining} more ${remaining > 1 ? 'are' : 'is'} needed to skip.
-        Five more seconds on the clock! The vote will end in ${time} seconds.`
-      );
+        Five more seconds on the clock! The vote will end in ${time} seconds.`);
     }
 
     const newVote: MusicVoteType = {
       count: 1,
-      users: [msg.author!.id],
+      users: [ msg.author!.id ],
       queue,
       guild: msg.guild.id,
       start: Date.now(),
@@ -128,11 +127,10 @@ export default class SkipSongCommand extends Command {
       Starting a voteskip.
       ${newVotesRemaining} more vote${newVotesRemaining > 1 ? 's are' : ' is'}
       required for the song to be skipped.
-      The vote will end in ${newTimeRemaining} seconds.`
-    );
+      The vote will end in ${newTimeRemaining} seconds.`);
   }
 
-  private skip (guild: CommandoGuild, queue: MusicQueueType) {
+  private skip(guild: CommandoGuild, queue: MusicQueueType) {
     if (this.songVotes.get(guild.id)) {
       clearTimeout(this.songVotes.get(guild.id)!.timeout);
       this.songVotes.delete(guild.id);
@@ -144,8 +142,8 @@ export default class SkipSongCommand extends Command {
     return `Skipped: **${queue.songs[0]}**`;
   }
 
-  private setTimeout (vote: MusicVoteType) {
-    const time = vote.start + 15000 - Date.now() + (vote.count - 1) * 5000;
+  private setTimeout(vote: MusicVoteType) {
+    const time = vote.start + 15000 - Date.now() + ((vote.count - 1) * 5000);
 
     clearTimeout(vote.timeout);
     vote.timeout = setTimeout(() => {

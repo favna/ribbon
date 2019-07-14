@@ -8,19 +8,19 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages } from '@components/Utils';
+import { deleteCommandMessages, cleanArray } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
 export default class EmotesCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'emotes',
-      aliases: ['listemo', 'emolist', 'listemoji', 'emote', 'emojis', 'emoji'],
+      aliases: [ 'listemo', 'emolist', 'listemoji', 'emote', 'emojis', 'emoji' ],
       group: 'info',
       memberName: 'emotes',
       description: 'Gets all available custom emotes from the server',
-      examples: ['emotes'],
+      examples: [ 'emotes' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -29,8 +29,8 @@ export default class EmotesCommand extends Command {
     });
   }
 
-  private static chunker (array: string[], size: number): string[][] {
-    const chunkedArray: string[][] = [[]];
+  private static chunker(array: string[], size: number): string[][] {
+    const chunkedArray: string[][] = [ [] ];
 
     do {
       chunkedArray.push(array.splice(0, size));
@@ -40,17 +40,11 @@ export default class EmotesCommand extends Command {
     return chunkedArray;
   }
 
-  public async run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const emotesEmbed = new MessageEmbed();
-    const animEmotes: string[] = [];
-    const staticEmotes: string[] = [];
+    const animEmotes = cleanArray(undefined, msg.guild.emojis.map(emote => emote.animated ? `<a:${emote.name}:${emote.id}>` : undefined)) as string[];
+    const staticEmotes = cleanArray(undefined, msg.guild.emojis.map(emote => emote.animated ? undefined : `<a:${emote.name}:${emote.id}>`)) as string[];
     let description = '';
-
-    msg.guild.emojis.forEach(emote => {
-      emote.animated
-        ? animEmotes.push(`<a:${emote.name}:${emote.id}>`)
-        : staticEmotes.push(`<:${emote.name}:${emote.id}>`);
-    });
 
     emotesEmbed
       .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
@@ -62,7 +56,7 @@ export default class EmotesCommand extends Command {
       const chunkedAnimatedEmotes = EmotesCommand.chunker(animEmotes, 50);
       emotesEmbed.setDescription('Woaw you got so many emotes I\'ll have to split them across a few messages!');
 
-      Promise.all([msg.embed(emotesEmbed), msg.say('**__Static Emotes__**')]);
+      Promise.all([ msg.embed(emotesEmbed), msg.say('**__Static Emotes__**') ]);
       for (const chunk of chunkedStaticEmotes) {
         await msg.say(chunk.join(' '));
       }
@@ -71,6 +65,7 @@ export default class EmotesCommand extends Command {
       for (const chunk of chunkedAnimatedEmotes) {
         await msg.say(chunk.join(' '));
       }
+
       return null;
     }
 

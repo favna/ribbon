@@ -21,10 +21,10 @@ import { MusicCommand, MusicQueueType } from 'RibbonTypes';
 export default class ShuffleCommand extends Command {
   private songQueue: Map<Snowflake, MusicQueueType>;
 
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'shuffle',
-      aliases: ['remix', 'mixtape'],
+      aliases: [ 'remix', 'mixtape' ],
       group: 'music',
       memberName: 'shuffle',
       description: 'Shuffles the current queue of songs',
@@ -32,7 +32,7 @@ export default class ShuffleCommand extends Command {
         Shuffles using a
         [modern version of the Fisher-Yates shuffle algorithm](https://en.wikipedia.org/wiki/Fisher–Yates_shuffle#The_modern_algorithm)
       `,
-      examples: ['shuffle'],
+      examples: [ 'shuffle' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -42,7 +42,7 @@ export default class ShuffleCommand extends Command {
     this.songQueue = this.queue;
   }
 
-  get queue () {
+  private get queue() {
     if (!this.songQueue) {
       this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
@@ -50,7 +50,7 @@ export default class ShuffleCommand extends Command {
     return this.songQueue;
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const queue = this.queue.get(msg.guild.id);
     if (!queue) return msg.reply('there are no songs in the queue. Why not put something in my jukebox?');
     if (queue.songs.length <= 2) return msg.reply('cannot shuffle a queue smaller than 2 tracks. Why not queue some more tunes?');
@@ -71,37 +71,35 @@ export default class ShuffleCommand extends Command {
       .setAuthor(`${msg.author!.tag} (${msg.author!.id})`, msg.author!.displayAvatarURL({ format: 'png' }))
       .setImage(currentSong.thumbnail)
       .setDescription(stripIndents`
-          __**First 10 songs in the queue**__
-          ${paginated.items.map((song: Song) =>
-            `**-** ${!isNaN(song.id)
-              ? `${song.name} (${song.lengthString})`
-              : `[${song.name}](${`https://www.youtube.com/watch?v=${song.id}`})`} (${song.lengthString})`)
-            .join('\n')
-          }
-          ${paginated.maxPage > 1 ? `\nUse ${msg.usage()} to view a specific page.\n` : ''}
+    __**First 10 songs in the queue**__
+    ${paginated.items.map(song => `
+    **-** ${song.id
+    ? `[${song.name}](https://www.youtube.com/watch?v=${song.id}) (${song.lengthString})`
+    : `${song.name} (${song.lengthString})`}`).join('\n')}
 
-          **Now playing:** ${!isNaN(currentSong.id)
-            ? `${currentSong.name}`
-            : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`
-          }
+    ${paginated.maxPage > 1
+    ? `\nUse ${msg.usage()} to view a specific page.\n`
+    : ''}
 
-          ${oneLine`
-            **Progress:**
-            ${!currentSong.playing ? 'Paused: ' : ''}${Song.timeString(currentTime)} / ${currentSong.lengthString}
-            (${currentSong.timeLeft(currentTime)} left)`}
-        `
-      );
+
+    **Now playing:** ${currentSong.id
+    ? `[${currentSong.name}](https://www.youtube.com/watch?v=${currentSong.id})`
+    : `${currentSong.name}`}
+
+    ${oneLine`
+     **Progress:**${!currentSong.playing ? 'Paused: ' : ''}
+     ${Song.timeString(currentTime)} / ${currentSong.lengthString}(${currentSong.timeLeft(currentTime)} left)`}`);
 
     deleteCommandMessages(msg, this.client);
 
     return msg.embed(embed);
   }
 
-  private shuffle (a: Song[]) {
+  private shuffle(a: Song[]) {
     for (let i = a.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
 
-      [a[i], a[j]] = [a[j], a[i]];
+      [ a[i], a[j] ] = [ a[j], a[i] ];
     }
 
     return a;

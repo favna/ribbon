@@ -21,16 +21,16 @@ type FightArgs = {
 };
 
 export default class FightCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'fight',
-      aliases: ['combat'],
+      aliases: [ 'combat' ],
       group: 'games',
       memberName: 'fight',
       description: 'Pit two things against each other in a fight to the death.',
       format: 'FirstFighter, SecondFighter',
       details: 'Winner is determined with random.org randomization',
-      examples: ['fight Favna Chuck Norris'],
+      examples: [ 'fight Favna Chuck Norris' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -51,7 +51,7 @@ export default class FightCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { fighterOne, fighterTwo }: FightArgs) {
+  public async run(msg: CommandoMessage, { fighterOne, fighterTwo }: FightArgs) {
     try {
       const fighterEmbed = new MessageEmbed();
 
@@ -70,17 +70,13 @@ export default class FightCommand extends Command {
       if (fighterOne.toLowerCase() === 'chuck norris' || fighterTwo.toLowerCase() === 'chuck norris') {
         if (fighterOne.toLowerCase() === 'favna' || fighterTwo.toLowerCase() === 'favna') {
           fighterEmbed
-            .addField(
-              'All right, you asked for it...',
-              '***The universe was destroyed due to this battle between two unstoppable forces. Good Job.***'
-            )
+            .addField('All right, you asked for it...',
+              '***The universe was destroyed due to this battle between two unstoppable forces. Good Job.***')
             .setImage(`${ASSET_BASE_PATH}/ribbon/universeblast.png`);
         } else {
           fighterEmbed
-            .addField(
-              'You fokn wot m8',
-              '***Chuck Norris cannot be beaten***'
-            )
+            .addField('You fokn wot m8',
+              '***Chuck Norris cannot be beaten***')
             .setImage(`${ASSET_BASE_PATH}/ribbon/chucknorris.png`);
         }
 
@@ -99,8 +95,8 @@ export default class FightCommand extends Command {
         return msg.embed(fighterEmbed);
       }
 
-      const fighterOneChance = Math.floor(Math.random() * 100 + 1);
-      const fighterTwoChance = Math.floor(Math.random() * 100 + 1);
+      const fighterOneChance = Math.floor((Math.random() * 100) + 1);
+      const fighterTwoChance = Math.floor((Math.random() * 100) + 1);
       const loser = Math.min(fighterOneChance, fighterTwoChance) === fighterOneChance ? fighterOne : fighterTwo;
       const winner = Math.max(fighterOneChance, fighterTwoChance) === fighterOneChance ? fighterOne : fighterTwo;
 
@@ -114,7 +110,6 @@ export default class FightCommand extends Command {
 
       return msg.embed(fighterEmbed);
     } catch (err) {
-
       return msg.reply(`something went wrong trying to make \`${fighterOne}\` fight \`${fighterTwo}\``);
     }
   }

@@ -23,15 +23,15 @@ type TypeArgs = {
 };
 
 export default class TypeCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'type',
-      aliases: ['matchup', 'weakness', 'advantage'],
+      aliases: [ 'matchup', 'weakness', 'advantage' ],
       group: 'pokemon',
       memberName: 'type',
       description: 'Get type matchup for a given type or type combination',
       format: 'FirstType [SecondType]',
-      examples: ['type Dragon Flying'],
+      examples: [ 'type Dragon Flying' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -42,14 +42,14 @@ export default class TypeCommand extends Command {
           key: 'types',
           prompt: 'Get info on which type(s)?',
           type: 'string',
-          validate: (input: any) => {
-            input = input
+          validate: (input: string) => {
+            const types = input
               .split(' ')
               .filter(Boolean)
               .map((type: string) => sentencecase(type))
-              .slice(0, 2) as string[];
+              .slice(0, 2);
 
-            if (input.every((type: any) => Object.keys(BattleTypeChart).includes(type))) {
+            if (types.every(type => Object.keys(BattleTypeChart).includes(type))) {
               return true;
             }
 
@@ -64,8 +64,7 @@ export default class TypeCommand extends Command {
     });
   }
 
-  // tslint:disable: cyclomatic-complexity
-  public run (msg: CommandoMessage, { types }: TypeArgs) {
+  public async run(msg: CommandoMessage, { types }: TypeArgs) {
     try {
       const atk: PokeTypeDataType = {
         doubleEffectiveTypes: [],
@@ -191,34 +190,32 @@ export default class TypeCommand extends Command {
         .setAuthor(`Type effectiveness for ${types.join(' ')}`)
         .addField('__Offensive__', stripIndents`
                     Supereffective against: ${atk.doubleEffectiveTypes
-            .map((el: string) => `${el} (x4)`)
-            .concat(atk.effectiveTypes.map((el: string) => `${el} (x2)`))
-            .join(', ')}
+    .map((el: string) => `${el} (x4)`)
+    .concat(atk.effectiveTypes.map((el: string) => `${el} (x2)`))
+    .join(', ')}
 
                     Deals normal damage to: ${atk.normalTypes.join(', ')}
 
                     Not very effective against: ${atk.doubleResistedTypes
-            .map((el: string) => `${el} (x0.25)`)
-            .concat(atk.resistedTypes.map((el: string) => `${el} (x0.5)`))
-            .join(', ')}
+    .map((el: string) => `${el} (x0.25)`)
+    .concat(atk.resistedTypes.map((el: string) => `${el} (x0.5)`))
+    .join(', ')}
 
                     ${atk.effectlessTypes.length ? `Doesn't affect: ${atk.effectlessTypes.join(', ')}` : ''}
-                `
-        )
-        .addField(
-          '__Defensive__',
+                `)
+        .addField('__Defensive__',
           stripIndents`
                     Vulnerable to: ${def.doubleEffectiveTypes
-              .map((el: string) => `${el} (x4)`)
-              .concat(def.effectiveTypes.map((el: string) => `${el} (x2)`))
-              .join(', ')}
+    .map((el: string) => `${el} (x4)`)
+    .concat(def.effectiveTypes.map((el: string) => `${el} (x2)`))
+    .join(', ')}
 
                     Takes normal damage from: ${def.normalTypes.join(', ')}
 
                     Resists: ${def.doubleResistedTypes
-              .map((el: string) => `${el} (x0.25)`)
-              .concat(def.resistedTypes.map((el: string) => `${el} (x0.5)`))
-              .join(', ')}
+    .map((el: string) => `${el} (x0.25)`)
+    .concat(def.resistedTypes.map((el: string) => `${el} (x0.5)`))
+    .join(', ')}
 
                     ${def.effectlessTypes.length ? `Not affected by: ${def.effectlessTypes.join(', ')}` : ''}
                 `)
@@ -242,14 +239,12 @@ export default class TypeCommand extends Command {
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${types}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

@@ -23,15 +23,15 @@ type BanArgs = {
 };
 
 export default class BanCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'ban',
-      aliases: ['b', 'banana'],
+      aliases: [ 'b', 'banana' ],
       group: 'moderation',
       memberName: 'ban',
       description: 'Bans a member from the server',
       format: 'MemberID|MemberName(partial or full) [ReasonForBanning]',
-      examples: ['ban JohnDoe annoying'],
+      examples: [ 'ban JohnDoe annoying' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -54,7 +54,7 @@ export default class BanCommand extends Command {
   }
 
   @shouldHavePermission('BAN_MEMBERS', true)
-  public run (msg: CommandoMessage, { member, reason, keepMessages }: BanArgs) {
+  public async run(msg: CommandoMessage, { member, reason, keepMessages }: BanArgs) {
     if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to ban yourself.');
     if (!member.bannable) return msg.reply('I cannot ban that member, their role is probably higher than my own!');
 
@@ -79,12 +79,13 @@ export default class BanCommand extends Command {
       .setDescription(stripIndents`
         **Member:** ${member.user.tag} (${member.id})
         **Action:** Ban
-        **Reason:** ${reason !== '' ? reason : 'No reason given by staff'}`
-      )
+        **Reason:** ${reason !== '' ? reason : 'No reason given by staff'}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, banEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, banEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

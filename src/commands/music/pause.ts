@@ -17,14 +17,14 @@ import { MusicCommand, MusicQueueType } from 'RibbonTypes';
 export default class PauseSongCommand extends Command {
   private songQueue: Map<Snowflake, MusicQueueType>;
 
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'pause',
-      aliases: ['shh', 'shhh', 'shhhh', 'shhhhh', 'hush', 'halt'],
+      aliases: [ 'shh', 'shhh', 'shhhh', 'shhhhh', 'hush', 'halt' ],
       group: 'music',
       memberName: 'pause',
       description: 'Pauses the currently playing song',
-      examples: ['pause'],
+      examples: [ 'pause' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -34,7 +34,7 @@ export default class PauseSongCommand extends Command {
     this.songQueue = this.queue;
   }
 
-  get queue () {
+  private get queue() {
     if (!this.songQueue) {
       this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
@@ -42,7 +42,7 @@ export default class PauseSongCommand extends Command {
     return this.songQueue;
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const queue = this.queue.get(msg.guild.id);
 
     if (!queue) {

@@ -24,15 +24,15 @@ type SauceNaoArgs = {
 };
 
 export default class SauceNaoCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'saucenao',
-      aliases: ['sn', 'sauce'],
+      aliases: [ 'sn', 'sauce' ],
       group: 'searches',
       memberName: 'saucenao',
       description: 'Gets the source of any given image URL using SauceNAO',
       format: 'Image',
-      examples: ['saucenao https://i.imgur.com/6FjildG.jpg'],
+      examples: [ 'saucenao https://i.imgur.com/6FjildG.jpg' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -49,7 +49,7 @@ export default class SauceNaoCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { image, hasManageMessages, position = 0 }: SauceNaoArgs) {
+  public async run(msg: CommandoMessage, { image, hasManageMessages, position = 0 }: SauceNaoArgs) {
     try {
       const handlerOptions: HandlerOptions = { numRes: 5, getRating: true };
       const sauceHandler = new Handler(process.env.SAUCENAO_KEY!, handlerOptions);
@@ -61,7 +61,9 @@ export default class SauceNaoCommand extends Command {
       if (!sauces || !sauces.length) throw new Error('no_sfw_matches');
 
       let currentSauce = sauces[position];
-      let sauceEmbed = this.prepMessage(color, currentSauce, sauces.length, position, hasManageMessages);
+      let sauceEmbed = this.prepMessage(
+        color, currentSauce, sauces.length, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -72,11 +74,14 @@ export default class SauceNaoCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= sauces.length) position = 0;
               if (position < 0) position = sauces.length - 1;
               currentSauce = sauces[position];
-              sauceEmbed = this.prepMessage(color, currentSauce, sauces.length, position, hasManageMessages);
+              sauceEmbed = this.prepMessage(
+                color, currentSauce, sauces.length, position, hasManageMessages
+              );
               message.edit(sauceEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -91,7 +96,7 @@ export default class SauceNaoCommand extends Command {
         return msg.reply(`no matches found for \`${image}\``);
       }
       if (/(no_sfw_matches)/i.test(err.toString())) {
-        return msg.reply(`Woops! I only found NSFW matches and it looks like you're not in an NSFW channel`);
+        return msg.reply('Woops! I only found NSFW matches and it looks like you\'re not in an NSFW channel');
       }
       if (/(connect ECONNREFUSED|Server-side error occurred)/i.test(err.toString())) {
         return msg.reply(`something went wrong finding matches for \`${image}\`. How about trying manually on https://saucenao.com/?`);
@@ -105,18 +110,16 @@ export default class SauceNaoCommand extends Command {
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Image:** ${image}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 
-  private prepMessage (
+  private prepMessage(
     color: string, sauce: Source, saucesLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
@@ -128,11 +131,10 @@ export default class SauceNaoCommand extends Command {
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${saucesLength}` : '')
       .setDescription(oneLine`
         I found a match with a ${sauce.similarity}% similarity on ${sauce.site} as seen below.
-        Click [here](${sauce.url}) to view the image`
-      );
+        Click [here](${sauce.url}) to view the image`);
   }
 
-  private channelIsNSFW (channel: TextChannel | DMChannel) {
+  private channelIsNSFW(channel: TextChannel | DMChannel) {
     return channel.type === 'text' && (channel as TextChannel).nsfw;
   }
 }

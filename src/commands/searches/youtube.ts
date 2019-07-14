@@ -28,15 +28,15 @@ type YoutubeArgs = {
 };
 
 export default class YouTubeCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'youtube',
-      aliases: ['yt', 'tube', 'yts'],
+      aliases: [ 'yt', 'tube', 'yts' ],
       group: 'searches',
       memberName: 'youtube',
       description: 'Find videos on youtube',
       format: 'VideoName',
-      examples: ['youtube RWBY Volume 4'],
+      examples: [ 'youtube RWBY Volume 4' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -53,7 +53,7 @@ export default class YouTubeCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { query, hasManageMessages, position = 0 }: YoutubeArgs) {
+  public async run(msg: CommandoMessage, { query, hasManageMessages, position = 0 }: YoutubeArgs) {
     try {
       const tubeSearch = await fetch(`https://www.googleapis.com/youtube/v3/search?${
         stringify({
@@ -62,8 +62,7 @@ export default class YouTubeCommand extends Command {
           part: 'snippet',
           q: query,
           type: 'video',
-        })}`
-      );
+        })}`);
       const videoList: YoutubeResultList = await tubeSearch.json();
       const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
       const commandPrefix = msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length;
@@ -82,8 +81,7 @@ export default class YouTubeCommand extends Command {
       const message = replyShouldBeSimple
         ? await msg.say(stripIndents`
                     https://www.youtube.com/watch?v=${currentVideoId}
-                    ${hasManageMessages ? `__*Result ${position + 1} of ${amountOfVideos}*__` : ''}`
-        ) as CommandoMessage
+                    ${hasManageMessages ? `__*Result ${position + 1} of ${amountOfVideos}*__` : ''}`) as CommandoMessage
         : await msg.embed(videoEmbed, `https://www.youtube.com/watch?v=${currentVideoId}`) as CommandoMessage;
 
       if (amountOfVideos > 1 && hasManageMessages) {
@@ -91,7 +89,8 @@ export default class YouTubeCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= amountOfVideos) position = 0;
               if (position < 0) position = amountOfVideos - 1;
               currentVideo = videoList.items[position];
@@ -100,12 +99,13 @@ export default class YouTubeCommand extends Command {
                 color, query, currentVideo.snippet, currentVideoId,
                 amountOfVideos, position, hasManageMessages
               );
-              replyShouldBeSimple
-                ? message.edit(stripIndents`
-                                    https://www.youtube.com/watch?v=${currentVideoId}
-                                    ${hasManageMessages ? `__*Result ${position + 1} of ${amountOfVideos}*__` : ''}`
-                )
-                : message.edit(`https://www.youtube.com/watch?v=${currentVideoId}`, videoEmbed);
+              if (replyShouldBeSimple) {
+                message.edit(stripIndents`
+                  https://www.youtube.com/watch?v=${currentVideoId}${hasManageMessages ? `__*Result ${position + 1} of ${amountOfVideos}*__` : ''}`
+                );
+              } else {
+                message.edit(`https://www.youtube.com/watch?v=${currentVideoId}`, videoEmbed);
+              }
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
           });
@@ -117,7 +117,7 @@ export default class YouTubeCommand extends Command {
     }
   }
 
-  private prepMessage (
+  private prepMessage(
     color: string, query: string, video: YoutubeVideoSnippetType, videoId: string,
     videosLength: number, position: number, hasManageMessages: boolean
   ): MessageEmbed {

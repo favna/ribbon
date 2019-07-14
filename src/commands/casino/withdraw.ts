@@ -23,15 +23,15 @@ type WithdrawArgs = {
 };
 
 export default class WithdrawCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'withdraw',
-      aliases: ['wdraw'],
+      aliases: [ 'wdraw' ],
       group: 'casino',
       memberName: 'withdraw',
       description: 'Withdraw chips from your vault',
       format: 'ChipsAmount',
-      examples: ['withdraw 100'],
+      examples: [ 'withdraw 100' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -48,7 +48,7 @@ export default class WithdrawCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { chips }: WithdrawArgs) {
+  public async run(msg: CommandoMessage, { chips }: WithdrawArgs) {
     const withdrawEmbed = new MessageEmbed();
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
@@ -64,8 +64,7 @@ export default class WithdrawCommand extends Command {
         if (chips > vault) {
           return msg.reply(oneLine`
             you don\'t have that many chips stored in your vault.
-            Use \`${msg.guild.commandPrefix}bank\` to check your vault content.`
-          );
+            Use \`${msg.guild.commandPrefix}bank\` to check your vault content.`);
         }
 
         const prevBal = balance;
@@ -92,8 +91,7 @@ export default class WithdrawCommand extends Command {
       return msg.reply(oneLine`
         looks like you either didn't get any chips or didn't save any to your vault
         Run \`${msg.guild.commandPrefix}chips\` to get your first 500
-        or run \`${msg.guild.commandPrefix}deposit\` to deposit some chips to your vault`
-      );
+        or run \`${msg.guild.commandPrefix}deposit\` to deposit some chips to your vault`);
     } catch (err) {
       if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
@@ -109,14 +107,12 @@ export default class WithdrawCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

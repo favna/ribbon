@@ -22,15 +22,15 @@ type PornVidsArgs = {
 };
 
 export default class PornVidsCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'pornvids',
-      aliases: ['porn', 'nsfwvids'],
+      aliases: [ 'porn', 'nsfwvids' ],
       group: 'nsfw',
       memberName: 'pornvids',
       description: 'Search porn videos',
       format: 'NSFWToLookUp',
-      examples: ['pornvids babe'],
+      examples: [ 'pornvids babe' ],
       nsfw: true,
       guildOnly: false,
       throttling: {
@@ -47,7 +47,7 @@ export default class PornVidsCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { porn }: PornVidsArgs) {
+  public async run(msg: CommandoMessage, { porn }: PornVidsArgs) {
     try {
       const res = await fetch(`https://www.pornhub.com/webmasters/search?${stringify({ search: porn })}`);
       const vid = await res.json();
@@ -58,16 +58,12 @@ export default class PornVidsCommand extends Command {
         .setTitle(vid.videos[vidRandom].title)
         .setImage(vid.videos[vidRandom].default_thumb)
         .setColor('#FFB6C1')
-        .addField(
-          'Porn video URL',
+        .addField('Porn video URL',
           `[Click Here](${vid.videos[vidRandom].url})`,
-          true
-        )
-        .addField(
-          'Porn video duration',
+          true)
+        .addField('Porn video duration',
           `${vid.videos[vidRandom].duration} minutes`,
-          true
-        );
+          true);
 
       deleteCommandMessages(msg, this.client);
 

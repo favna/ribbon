@@ -19,15 +19,15 @@ type ConfigureMuteArgs = {
 };
 
 export default class ConfigureMuteCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'confmute',
-      aliases: ['cm', 'configmute'],
+      aliases: [ 'cm', 'configmute' ],
       group: 'moderation',
       memberName: 'confmute',
       description: 'Configure which role to use as "mute" role',
       format: 'RoleResolvable',
-      examples: ['confmute mute'],
+      examples: [ 'confmute mute' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -44,7 +44,7 @@ export default class ConfigureMuteCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_ROLES', true)
-  public run (msg: CommandoMessage, { role }: ConfigureMuteArgs) {
+  public async run(msg: CommandoMessage, { role }: ConfigureMuteArgs) {
     const confMuteEmbed = new MessageEmbed();
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
 
@@ -54,12 +54,13 @@ export default class ConfigureMuteCommand extends Command {
       .setColor('#3DFFE5')
       .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
-        **Action:** Configured mute role to \`${role.name}\``
-      )
+        **Action:** Configured mute role to \`${role.name}\``)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, confMuteEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, confMuteEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

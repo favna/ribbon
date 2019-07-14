@@ -27,10 +27,10 @@ type I18nArgs = {
 };
 
 export default class I18nCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'i18n',
-      aliases: ['language', 'lang', 'lng'],
+      aliases: [ 'language', 'lang', 'lng' ],
       group: 'moderation',
       memberName: 'i18n',
       description: 'Sets the guild language',
@@ -41,7 +41,7 @@ export default class I18nCommand extends Command {
 
                 Current supported languages are 'en' for English and 'nl' for Dutch
               `,
-      examples: ['i18n en', 'i18n nl'],
+      examples: [ 'i18n en', 'i18n nl' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -59,7 +59,7 @@ export default class I18nCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public run (msg: CommandoMessage, { language }: I18nArgs) {
+  public async run(msg: CommandoMessage, { language }: I18nArgs) {
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const i18nEmbed = new MessageEmbed();
 
@@ -72,7 +72,9 @@ export default class I18nCommand extends Command {
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, i18nEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, i18nEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);
@@ -80,7 +82,7 @@ export default class I18nCommand extends Command {
     return msg.embed(i18nEmbed);
   }
 
-  private languageMapper (lang: Language) {
+  private languageMapper(lang: Language) {
     switch (lang) {
       case Language.NL:
         return 'Nederlands';

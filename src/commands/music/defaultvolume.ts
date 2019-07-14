@@ -18,15 +18,15 @@ type DefaultVolumeArgs = {
 };
 
 export default class DefaultVolumeCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'defaultvolume',
-      aliases: ['defvol'],
+      aliases: [ 'defvol' ],
       group: 'music',
       memberName: 'defaultvolume',
       description: 'Shows or sets the default volume level',
       format: 'VolumeToSet',
-      examples: ['defaultvolume 2'],
+      examples: [ 'defaultvolume 2' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -44,7 +44,7 @@ export default class DefaultVolumeCommand extends Command {
   }
 
   @shouldHavePermission('ADMINISTRATOR')
-  public run (msg: CommandoMessage, { volume }: DefaultVolumeArgs) {
+  public async run(msg: CommandoMessage, { volume }: DefaultVolumeArgs) {
     if (volume === 'show') {
       const defaultVolume = msg.guild.settings.get('defaultVolume', DEFAULT_VOLUME);
 
@@ -60,7 +60,7 @@ export default class DefaultVolumeCommand extends Command {
       return msg.reply(`set the default volume level to Ribbon's default (currently ${DEFAULT_VOLUME}).`);
     }
 
-    const newVolume = parseInt(volume, 10);
+    const newVolume = parseInt(volume);
 
     if (isNaN(newVolume) || newVolume <= 0 || newVolume > 10) {
       deleteCommandMessages(msg, this.client);

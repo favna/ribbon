@@ -9,7 +9,7 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { stripIndents } from 'common-tags';
 
 export default class CheckGuildsCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'checkguilds',
       group: 'owner',
@@ -22,7 +22,7 @@ export default class CheckGuildsCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const guildList = this.client.guilds.map(m => `${m.name} (${m.id})`);
 
     return msg.say(stripIndents`
@@ -32,7 +32,6 @@ export default class CheckGuildsCommand extends Command {
       Guild list:
       ${guildList.join('\n')}
     \`\`\`
-    `, { split: true }
-    );
+    `, { split: true });
   }
 }

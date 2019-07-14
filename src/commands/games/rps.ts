@@ -20,15 +20,15 @@ type RockPaperScissorArgs = {
 };
 
 export default class RockPaperScissorCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'rps',
-      aliases: ['rockpaperscissors'],
+      aliases: [ 'rockpaperscissors' ],
       group: 'games',
       memberName: 'rps',
       description: 'Play Rock Paper Scissors against random.org randomization',
       format: 'HandToPlay',
-      examples: ['rps Rock'],
+      examples: [ 'rps Rock' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -39,19 +39,18 @@ export default class RockPaperScissorCommand extends Command {
           key: 'hand',
           prompt: 'Do you play rock, paper or scissors?',
           type: 'string',
-          validate: (v: string) => /(rock|paper|scissors)/i.test(v)
+          validate: (hand: string) => /(rock|paper|scissors)/i.test(hand)
             ? true
             : 'has to be one of `rock`, `paper` or `scissors`',
-          parse: (p: string) => p.toLowerCase(),
+          parse: (hand: string) => hand.toLowerCase(),
         }
       ],
     });
   }
 
-  public async run (msg: CommandoMessage, { hand }: RockPaperScissorArgs) {
+  public async run(msg: CommandoMessage, { hand }: RockPaperScissorArgs) {
     try {
-      const randPost = await fetch(
-        'https://api.random.org/json-rpc/2/invoke',
+      const randPost = await fetch('https://api.random.org/json-rpc/2/invoke',
         {
           body: JSON.stringify({
             id: Math.floor(Math.random() * 42),
@@ -66,8 +65,7 @@ export default class RockPaperScissorCommand extends Command {
           }),
           headers: { 'Content-Type': 'application/json' },
           method: 'POST',
-        }
-      );
+        });
       const random = await randPost.json();
       const randoms = random.result.random.data[0];
       const rpsEmbed = new MessageEmbed();
@@ -90,7 +88,9 @@ export default class RockPaperScissorCommand extends Command {
         resString = 'I won 😃! My 🗿 smashed your ✂ to pieces';
       } else if (hand === 'scissor' && randoms === 2) {
         resString = 'I lost 😞! Your ✂️ cut my 📜 to shreds';
-      } else if (hand === 'scissor' && randoms === 3) resString = 'It\'s a draw 😶! Both picked ✂';
+      } else if (hand === 'scissor' && randoms === 3) {
+        resString = 'It\'s a draw 😶! Both picked ✂';
+      }
 
       rpsEmbed
         .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
@@ -101,7 +101,6 @@ export default class RockPaperScissorCommand extends Command {
 
       return msg.embed(rpsEmbed);
     } catch (err) {
-
       return msg.reply('an error occurred getting a random result and I\'m not going to rig this game.');
     }
   }

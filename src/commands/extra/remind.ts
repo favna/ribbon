@@ -27,16 +27,16 @@ type RemindArgs = {
 };
 
 export default class RemindCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'remind',
-      aliases: ['remindme', 'reminder'],
+      aliases: [ 'remindme', 'reminder' ],
       group: 'extra',
       memberName: 'remind',
       description: 'Set a reminder and Ribbon will remind you',
       format: 'Time Reminder',
       details: 'Works by reminding you after a given amount of minutes, hours or days in the format of `5m`, `2h` or `1d`',
-      examples: ['remind 1h To continue developing Ribbon'],
+      examples: [ 'remind 1h To continue developing Ribbon' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -57,7 +57,7 @@ export default class RemindCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { time, reminder }: RemindArgs) {
+  public async run(msg: CommandoMessage, { time, reminder }: RemindArgs) {
     const conn = new Database(path.join(__dirname, '../../data/databases/reminders.sqlite3'));
     const remindEmbed = new MessageEmbed();
 
@@ -94,14 +94,12 @@ export default class RemindCommand extends Command {
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Should have reminded in:** ${moment.duration(time).format(DURA_FORMAT)}
           **Reminder that should've been sent:** \`${reminder}\`
-          **Error Message:** ${err}`
-        );
+          **Error Message:** ${err}`);
 
         return msg.reply(oneLine`
           an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
           Want to know more about the error?
-          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-        );
+          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
       }
     }
     remindEmbed

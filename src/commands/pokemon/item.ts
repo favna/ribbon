@@ -20,7 +20,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { PokeItemAliases, PokeItemDetailsType } from 'RibbonTypes';
+import { itemAlias, PokemonItem } from 'RibbonTypes';
 
 type ItemArgs = {
   item: string;
@@ -29,15 +29,15 @@ type ItemArgs = {
 };
 
 export default class ItemCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'item',
-      aliases: ['it', 'bag'],
+      aliases: [ 'it', 'bag' ],
       group: 'pokemon',
       memberName: 'item',
       description: 'Get the info on an item in Pokémon',
       format: 'ItemName',
-      examples: ['item Life Orb'],
+      examples: [ 'item Life Orb' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -55,10 +55,10 @@ export default class ItemCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { item, hasManageMessages, position = 0 }: ItemArgs) {
+  public async run(msg: CommandoMessage, { item, hasManageMessages, position = 0 }: ItemArgs) {
     try {
-      const itemOptions: FuseOptions<PokeItemDetailsType & PokeItemAliases> = {
-        keys: ['alias', 'item', 'id', 'name'],
+      const itemOptions: FuseOptions<PokemonItem & itemAlias> = {
+        keys: [ 'alias', 'item', 'id', 'name' ],
         threshold: 0.3,
       };
       const aliasFuse = new Fuse(itemAliases, itemOptions);
@@ -70,7 +70,9 @@ export default class ItemCommand extends Command {
       if (!itemSearch.length) throw new Error('no_item');
 
       let currentItem = itemSearch[position];
-      let itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position, hasManageMessages);
+      let itemEmbed = this.prepMessage(
+        color, currentItem, itemSearch.length, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -81,11 +83,14 @@ export default class ItemCommand extends Command {
         new ReactionCollector(returnMsg, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= itemSearch.length) position = 0;
               if (position < 0) position = itemSearch.length - 1;
               currentItem = itemSearch[position];
-              itemEmbed = this.prepMessage(color, currentItem, itemSearch.length, position, hasManageMessages);
+              itemEmbed = this.prepMessage(
+                color, currentItem, itemSearch.length, position, hasManageMessages
+              );
               returnMsg.edit('', itemEmbed);
               returnMsg.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -105,36 +110,30 @@ export default class ItemCommand extends Command {
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${item}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 
-  private prepMessage (
-    color: string, item: PokeItemDetailsType, itemSearchLength: number,
+  private prepMessage(
+    color: string, item: PokemonItem, itemSearchLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
     return new MessageEmbed()
       .setColor(color)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
-      .setAuthor(
-        `${sentencecase(item.name)}`,
-        `https://play.pokemonshowdown.com/sprites/itemicons/${item.name.toLowerCase().replace(/ /g, '-')}.png`
-      )
+      .setAuthor(`${sentencecase(item.name)}`,
+        `https://play.pokemonshowdown.com/sprites/itemicons/${item.name.toLowerCase().replace(/ /g, '-')}.png`)
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${itemSearchLength}` : '')
       .addField('Description', item.desc)
       .addField('Generation Introduced', item.gen)
-      .addField(
-        'External Resources', oneLine`
+      .addField('External Resources', oneLine`
             [Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${sentencecase(item.name.replace(' ', '_').replace('\'', ''))})
             | [Smogon](http://www.smogon.com/dex/sm/items/${item.name.toLowerCase().replace(' ', '_').replace('\'', '')})
-            | [PokémonDB](http://pokemondb.net/item/${item.name.toLowerCase().replace(' ', '-').replace('\'', '')})`
-      );
+            | [PokémonDB](http://pokemondb.net/item/${item.name.toLowerCase().replace(' ', '-').replace('\'', '')})`);
   }
 }

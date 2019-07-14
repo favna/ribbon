@@ -21,10 +21,10 @@ export default class StopMusicCommand extends Command {
   private songVotes: Map<Snowflake, MusicVoteType>;
   private songQueue: Map<Snowflake, MusicQueueType>;
 
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'stop',
-      aliases: ['kill', 'stfu', 'quit', 'leave', 'disconnect'],
+      aliases: [ 'kill', 'stfu', 'quit', 'leave', 'disconnect' ],
       group: 'music',
       memberName: 'stop',
       description: 'Stops the music and wipes the queue.',
@@ -42,7 +42,7 @@ export default class StopMusicCommand extends Command {
     this.songQueue = this.queue;
   }
 
-  get queue () {
+  private get queue() {
     if (!this.songQueue) {
       this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
@@ -50,7 +50,7 @@ export default class StopMusicCommand extends Command {
     return this.songQueue;
   }
 
-  get votes () {
+  private get votes() {
     if (!this.songVotes) {
       this.songVotes = (this.client.registry.resolveCommand('music:launch') as MusicCommand).votes;
     }
@@ -58,7 +58,7 @@ export default class StopMusicCommand extends Command {
     return this.songVotes;
   }
 
-  public run (msg: CommandoMessage, args: any) {
+  public async run(msg: CommandoMessage, args: string) {
     const queue = this.queue.get(msg.guild.id);
 
     if (!queue) return msg.reply('there isn\'t any music playing right now.');
@@ -79,6 +79,7 @@ export default class StopMusicCommand extends Command {
 
       queue.isTriggeredByStop = true;
       this.queue.set(msg.guild.id, queue);
+
       return msg.reply(this.stop(msg.guild, queue));
     }
 
@@ -105,15 +106,14 @@ export default class StopMusicCommand extends Command {
       deleteCommandMessages(msg, this.client);
 
       return msg.say(oneLine`
-				${vote.count} vote${vote.count > 1 ? 's' : ''} received so far,
-				${remaining} more ${remaining > 1 ? 'are' : 'is'} needed to stop.
-        Five more seconds on the clock! The vote will end in ${time} seconds.`
-      );
+        ${vote.count} vote${vote.count > 1 ? 's' : ''} received so far,
+        ${remaining} more ${remaining > 1 ? 'are' : 'is'} needed to stop.
+        Five more seconds on the clock! The vote will end in ${time} seconds.`);
     }
 
     const newVote: MusicVoteType = {
       count: 1,
-      users: [msg.author!.id],
+      users: [ msg.author!.id ],
       queue,
       guild: msg.guild.id,
       start: Date.now(),
@@ -130,12 +130,11 @@ export default class StopMusicCommand extends Command {
       Starting a votestop.
       ${newVotesRemaining} more vote${newVotesRemaining > 1 ? 's are' : ' is'}
       required for the music to be stopped.
-      The vote will end in ${newTimeRemaining} seconds.`
-    );
+      The vote will end in ${newTimeRemaining} seconds.`);
   }
 
-  private setTimeout (vote: MusicVoteType) {
-    const time = vote.start + 15000 - Date.now() + (vote.count - 1) * 5000;
+  private setTimeout(vote: MusicVoteType) {
+    const time = vote.start + 15000 - Date.now() + ((vote.count - 1) * 5000);
 
     clearTimeout(vote.timeout);
     vote.timeout = setTimeout(() => {
@@ -146,7 +145,7 @@ export default class StopMusicCommand extends Command {
     return roundNumber(time / 1000);
   }
 
-  private stop (guild: CommandoGuild, queue: MusicQueueType) {
+  private stop(guild: CommandoGuild, queue: MusicQueueType) {
     if (this.songVotes.has(guild.id)) {
       clearTimeout(this.songVotes.get(guild.id)!.timeout);
       this.songVotes.delete(guild.id);

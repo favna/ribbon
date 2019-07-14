@@ -1,7 +1,7 @@
-// tslint:disable:max-line-length object-literal-sort-keys
-import { PokeMoveDetailsType } from 'RibbonTypes';
+/* eslint-disable max-len, object-curly-newline */
+import { PokemonMove } from 'RibbonTypes';
 
-const MOVEDEX: PokeMoveDetailsType[] = [
+const pokemonMoves: PokemonMove[] = [
   {
     num: 0,
     accuracy: 100,
@@ -10775,4 +10775,4 @@ const MOVEDEX: PokeMoveDetailsType[] = [
   }
 ];
 
-export default MOVEDEX;
+export default pokemonMoves;

@@ -26,14 +26,14 @@ import moment from 'moment';
 type MuteArgs = {
   member: GuildMember;
   duration: number;
-  logs: boolean
+  logs: boolean;
 };
 
 export default class MuteCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'mute',
-      aliases: ['silent'],
+      aliases: [ 'silent' ],
       group: 'moderation',
       memberName: 'mute',
       description: 'Mute a member',
@@ -41,7 +41,7 @@ export default class MuteCommand extends Command {
       details: stripIndents`Requires either a role named \`muted\` on the server, or first having set the mute role with confmute
                 You can optionally specify a duration for how long this mute will last. Not specifying any will mean it will last until manually unmuted.
                 The format for duration is in minutes, hours or days in the format of \`5m\`, \`2h\` or \`1d\``,
-      examples: ['mute Muffin 2h'],
+      examples: [ 'mute Muffin 2h' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -64,12 +64,11 @@ export default class MuteCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_ROLES', true)
-  public async run (msg: CommandoMessage, { member, duration, logs }: MuteArgs) {
+  public async run(msg: CommandoMessage, { member, duration, logs }: MuteArgs) {
     if (member.manageable) {
       try {
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-        const muteRole = msg.guild.settings.get(
-          'muterole',
+        const muteRole = msg.guild.settings.get('muterole',
           msg.guild.roles.find(r => r.name === 'muted') ? msg.guild.roles.find(r => r.name === 'muted') : null);
         const muteEmbed = new MessageEmbed();
 
@@ -80,12 +79,13 @@ export default class MuteCommand extends Command {
           .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
           .setDescription(stripIndents`
                         **Action:** Muted <@${member.id}>
-                        **Duration:** ${duration ? moment.duration(duration).format(DURA_FORMAT.slice(5)) : 'Until manually removed'}`
-          )
+                        **Duration:** ${duration ? moment.duration(duration).format(DURA_FORMAT.slice(5)) : 'Until manually removed'}`)
           .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-          logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, muteEmbed);
+          logModMessage(
+            msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, muteEmbed
+          );
           logs = true;
         }
 
@@ -97,8 +97,7 @@ export default class MuteCommand extends Command {
           setTimeout(async () => {
             await member.roles.remove(muteRole);
             muteEmbed.setDescription(stripIndents`
-                            **Action:** Mute duration ended, unmuted ${member.displayName} (<@${member.id}>)`
-            );
+                            **Action:** Mute duration ended, unmuted ${member.displayName} (<@${member.id}>)`);
             if (logs) {
               const logChannel: TextChannel = msg.guild.channels.get(modlogChannel) as TextChannel;
               logChannel.send('', { embed: muteEmbed });
@@ -124,21 +123,18 @@ export default class MuteCommand extends Command {
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Member:** \`${member.user.username} (${member.id})\`
           **Duration:** ${duration ? moment.duration(duration).format(DURA_FORMAT.slice(5)) : null}
-          **Error Message:** ${err}`
-        );
+          **Error Message:** ${err}`);
 
         return msg.reply(oneLine`
           an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
           Want to know more about the error?
-          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-        );
+          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
       }
     }
     deleteCommandMessages(msg, this.client);
 
     return msg.reply(stripIndents`
       an error occurred muting \`${member.displayName}\`.
-      Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`
-    );
+      Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
   }
 }

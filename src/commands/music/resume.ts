@@ -17,14 +17,14 @@ import { MusicCommand, MusicQueueType } from 'RibbonTypes';
 export default class ResumeSongCommand extends Command {
   private songQueue: Map<Snowflake, MusicQueueType>;
 
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'resume',
-      aliases: ['go', 'continue', 'ale', 'loss', 'res'],
+      aliases: [ 'go', 'continue', 'ale', 'loss', 'res' ],
       group: 'music',
       memberName: 'resume',
       description: 'Resumes the currently playing song.',
-      examples: ['resume'],
+      examples: [ 'resume' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -34,7 +34,7 @@ export default class ResumeSongCommand extends Command {
     this.songQueue = this.queue;
   }
 
-  get queue () {
+  private get queue() {
     if (!this.songQueue) {
       this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
@@ -42,7 +42,7 @@ export default class ResumeSongCommand extends Command {
     return this.songQueue;
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const queue = this.queue.get(msg.guild.id);
     if (!queue) {
       return msg.reply('there isn\'t any music playing to resume, oh brilliant one.');

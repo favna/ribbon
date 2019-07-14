@@ -19,15 +19,15 @@ type EightBallArgs = {
 };
 
 export default class EightBallCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: '8ball',
-      aliases: ['eightball'],
+      aliases: [ 'eightball' ],
       group: 'games',
       memberName: '8ball',
       description: 'Roll a magic 8ball',
       format: 'YourQuestion',
-      examples: ['8ball is Favna a genius coder?'],
+      examples: [ '8ball is Favna a genius coder?' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -43,17 +43,15 @@ export default class EightBallCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { question }: EightBallArgs) {
+  public async run(msg: CommandoMessage, { question }: EightBallArgs) {
     const eightBallEmbed = new MessageEmbed();
 
     eightBallEmbed
       .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .addField(':question: Question', question, false)
-      .addField(
-        ':8ball: 8ball',
+      .addField(':8ball: 8ball',
         eightBallPredictionsMap[roundNumber(Math.random() * eightBallPredictionsMap.length)],
-        false
-      );
+        false);
 
     deleteCommandMessages(msg, this.client);
 

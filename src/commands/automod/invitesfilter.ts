@@ -19,15 +19,15 @@ type InvitesFilterArgs = {
 };
 
 export default class InvitesFilterCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'invitesfilter',
-      aliases: ['if', 'noinvites'],
+      aliases: [ 'if', 'noinvites' ],
       group: 'automod',
       memberName: 'invitesfilter',
       description: 'Toggle the Discord server invites filter',
       format: 'boolean',
-      examples: ['invitesfilter enable'],
+      examples: [ 'invitesfilter enable' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -44,7 +44,7 @@ export default class InvitesFilterCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES', true)
-  public run (msg: CommandoMessage, { shouldEnable }: InvitesFilterArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable }: InvitesFilterArgs) {
     const ifEmbed = new MessageEmbed();
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
 
@@ -55,12 +55,13 @@ export default class InvitesFilterCommand extends Command {
       .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Discord Server invites filter has been ${shouldEnable ? 'enabled' : 'disabled'}
-        ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
-      )
+        ${msg.guild.settings.get('automod', false) ? '' : `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!`}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, ifEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, ifEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

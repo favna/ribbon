@@ -13,14 +13,14 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
 export default class DndCCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'dndcoin',
-      aliases: ['coinflip', 'dndc', 'dcoin', 'dnd'],
+      aliases: [ 'coinflip', 'dndc', 'dcoin', 'dnd' ],
       group: 'games',
       memberName: 'dndcoin',
       description: 'Flips a coin',
-      examples: ['coin'],
+      examples: [ 'coin' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -29,17 +29,15 @@ export default class DndCCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const coinEmbed = new MessageEmbed();
     const flip = roundNumber(Math.random());
 
     coinEmbed
       .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
-      .setImage(
-        flip === 1
-          ? `${ASSET_BASE_PATH}/ribbon/dndheads.png`
-          : `${ASSET_BASE_PATH}/ribbon/dndtails.png`
-      )
+      .setImage(flip === 1
+        ? `${ASSET_BASE_PATH}/ribbon/dndheads.png`
+        : `${ASSET_BASE_PATH}/ribbon/dndtails.png`)
       .setTitle(`Flipped ${flip === 1 ? 'heads' : 'tails'}`);
 
     deleteCommandMessages(msg, this.client);

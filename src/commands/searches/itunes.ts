@@ -26,14 +26,14 @@ type ITunesArgs = {
 };
 
 export default class ITunesCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'itunes',
-      aliases: ['apple', 'tunes'],
+      aliases: [ 'apple', 'tunes' ],
       group: 'searches',
       memberName: 'itunes',
       description: 'Search iTunes for music tracks',
-      examples: ['itunes dash berlin symphony'],
+      examples: [ 'itunes dash berlin symphony' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -51,26 +51,26 @@ export default class ITunesCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { music, hasManageMessages, position = 0 }: ITunesArgs) {
+  public async run(msg: CommandoMessage, { music, hasManageMessages, position = 0 }: ITunesArgs) {
     try {
-      const request = await fetch(
-        `https://itunes.apple.com/search?${stringify({
-          country: 'US',
-          entity: 'song',
-          explicit: 'yes',
-          lang: 'en_us',
-          limit: hasManageMessages ? 10 : 1,
-          media: 'music',
-          term: music,
-        }).replace(/%2B/gm, '+')}`
-      );
+      const request = await fetch(`https://itunes.apple.com/search?${stringify({
+        country: 'US',
+        entity: 'song',
+        explicit: 'yes',
+        lang: 'en_us',
+        limit: hasManageMessages ? 10 : 1,
+        media: 'music',
+        term: music,
+      }).replace(/%2B/gm, '+')}`);
       const tracks: iTunesResult = await request.json();
       const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
       if (!tracks.resultCount) throw new Error('nosong');
 
       let currentSong = tracks.results[position];
-      let tunesEmbed = this.prepMessage(color, currentSong, tracks.resultCount, position, hasManageMessages);
+      let tunesEmbed = this.prepMessage(
+        color, currentSong, tracks.resultCount, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -81,11 +81,14 @@ export default class ITunesCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= tracks.resultCount) position = 0;
               if (position < 0) position = tracks.resultCount - 1;
               currentSong = tracks.results[position];
-              tunesEmbed = this.prepMessage(color, currentSong, tracks.resultCount, position, hasManageMessages);
+              tunesEmbed = this.prepMessage(
+                color, currentSong, tracks.resultCount, position, hasManageMessages
+              );
               message.edit('', tunesEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -106,20 +109,19 @@ export default class ITunesCommand extends Command {
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${music}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 
-  private prepMessage (
+  private prepMessage(
     color: string, song: iTunesData, songResultsLength: number,
-    position: number, hasManageMessages: boolean): MessageEmbed {
+    position: number, hasManageMessages: boolean
+  ): MessageEmbed {
     return new MessageEmbed()
       .setThumbnail(song.artworkUrl100)
       .setTitle(song.trackName)

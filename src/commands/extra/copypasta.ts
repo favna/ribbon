@@ -27,15 +27,15 @@ type CopypastaArgs = {
 };
 
 export default class CopypastaCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'copypasta',
-      aliases: ['cp', 'pasta', 'tag'],
+      aliases: [ 'cp', 'pasta', 'tag' ],
       group: 'extra',
       memberName: 'copypasta',
       description: 'Sends a copypasta to the chat',
       format: 'CopypastaName',
-      examples: ['copypasta navy'],
+      examples: [ 'copypasta navy' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -46,13 +46,13 @@ export default class CopypastaCommand extends Command {
           key: 'name',
           prompt: 'Which copypasta should I send?',
           type: 'string',
-          parse: (p: string) => p.toLowerCase(),
+          parse: (name: string) => name.toLowerCase(),
         }
       ],
     });
   }
 
-  public async run (msg: CommandoMessage, { name }: CopypastaArgs) {
+  public async run(msg: CommandoMessage, { name }: CopypastaArgs) {
     const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
     const pastaEmbed = new MessageEmbed();
 
@@ -62,7 +62,7 @@ export default class CopypastaCommand extends Command {
         .get(name);
 
       if (query) {
-        const image = query.content.match(/(https?:\/\/.*\.(?:png|jpg|gif|webp|jpeg|svg))/im);
+        const image = query.content.match(/https?:\/\/.*\.(?:png|jpg|gif|webp|jpeg|svg)/im);
 
         if (image) {
           pastaEmbed.setImage(image[0]);
@@ -73,9 +73,7 @@ export default class CopypastaCommand extends Command {
         }
 
         if (query.content.length >= 1800) {
-          const splitContent = Util.splitMessage(query.content, {
-            maxLength: 1800,
-          });
+          const splitContent = Util.splitMessage(query.content, {maxLength: 1800});
 
           for (const part of splitContent) {
             await msg.say(part);
@@ -94,15 +92,13 @@ export default class CopypastaCommand extends Command {
         return msg.embed(pastaEmbed);
       }
 
-      const maybe = dym(name, conn.prepare(`SELECT name FROM "${msg.guild.id}";`).all().map((a: CopypastaType) => a.name), { deburr: true });
+      const maybe = dym(name, conn.prepare(`SELECT name FROM "${msg.guild.id}";`).all().map((pasta: CopypastaType) => pasta.name), { deburr: true });
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.reply(
-        oneLine`that copypasta does not exist! ${maybe
-          ? oneLine`Did you mean \`${maybe}\`?`
-          : `You can save it with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``}`
-      );
+      return msg.reply(oneLine`that copypasta does not exist! ${maybe
+        ? oneLine`Did you mean \`${maybe}\`?`
+        : `You can save it with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``}`);
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       if (/(?:no such table)/i.test(err.toString())) {
@@ -115,14 +111,12 @@ export default class CopypastaCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

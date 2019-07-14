@@ -25,15 +25,15 @@ type MovieArgs = {
 };
 
 export default class MovieCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'tmdb',
-      aliases: ['movie'],
+      aliases: [ 'movie' ],
       group: 'searches',
       memberName: 'tmdb',
       description: 'Finds movies on TheMovieDB',
       format: 'MovieName [release_year_movie]',
-      examples: ['tmdb Ocean\'s Eleven 2001'],
+      examples: [ 'tmdb Ocean\'s Eleven 2001' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -50,7 +50,7 @@ export default class MovieCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { name, hasManageMessages, position = 0 }: MovieArgs) {
+  public async run(msg: CommandoMessage, { name, hasManageMessages, position = 0 }: MovieArgs) {
     try {
       const movieSearch = await fetch(`https://api.themoviedb.org/3/search/movie?${stringify({
         api_key: process.env.MOVIEDB_API_KEY!,
@@ -61,7 +61,9 @@ export default class MovieCommand extends Command {
 
       let currentMovie = movieList.results[position].id;
       let movie = await this.fetchAllData(currentMovie);
-      let movieEmbed = this.prepMessage(color, movie, movieList.total_results, position, hasManageMessages);
+      let movieEmbed = this.prepMessage(
+        color, movie, movieList.total_results, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -72,12 +74,15 @@ export default class MovieCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', async (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= movieList.total_results) position = 0;
               if (position < 0) position = movieList.total_results - 1;
               currentMovie = movieList.results[position].id;
               movie = await this.fetchAllData(currentMovie);
-              movieEmbed = this.prepMessage(color, movie, movieList.total_results, position, hasManageMessages);
+              movieEmbed = this.prepMessage(
+                color, movie, movieList.total_results, position, hasManageMessages
+              );
               message.edit(movieEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -92,14 +97,13 @@ export default class MovieCommand extends Command {
     }
   }
 
-  private async fetchAllData (movieId: number): Promise<TMDBMovie> {
-    const movieStats = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?${stringify(
-      { api_key: process.env.MOVIEDB_API_KEY! })}`
-    );
+  private async fetchAllData(movieId: number): Promise<TMDBMovie> {
+    const movieStats = await fetch(`https://api.themoviedb.org/3/movie/${movieId}?${stringify({ api_key: process.env.MOVIEDB_API_KEY! })}`);
+
     return movieStats.json();
   }
 
-  private prepMessage (
+  private prepMessage(
     color: string, movie: TMDBMovie, movieSearchLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
@@ -115,25 +119,17 @@ export default class MovieCommand extends Command {
       .addField('User Score', movie.vote_average ? movie.vote_average : 'Movie in production', true)
       .addField('Status', movie.status, true)
       .addField('Release Date', moment(movie.release_date).format('MMMM Do YYYY'), true)
-      .addField(
-        'IMDB Page',
+      .addField('IMDB Page',
         movie.imdb_id ? `[Click Here](http://www.imdb.com/title/${movie.imdb_id})` : 'none',
-        true
-      )
-      .addField(
-        'Home Page',
+        true)
+      .addField('Home Page',
         movie.homepage ? `[Click Here](${movie.homepage})` : 'None',
-        true
-      )
-      .addField(
-        'Collection',
+        true)
+      .addField('Collection',
         movie.belongs_to_collection ? movie.belongs_to_collection.name : 'Not part of a collection',
-        false
-      )
-      .addField(
-        'Genres',
+        false)
+      .addField('Genres',
         movie.genres.length ? movie.genres.map((genre: MovieGenreType) => genre.name).join(', ') : 'None on TheMovieDB',
-        false
-      );
+        false);
   }
 }

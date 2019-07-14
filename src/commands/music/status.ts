@@ -16,10 +16,10 @@ import { MusicCommand, MusicQueueType } from 'RibbonTypes';
 export default class MusicStatusCommand extends Command {
   private songQueue: Map<Snowflake, MusicQueueType>;
 
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'status',
-      aliases: ['song', 'playing', 'current-song', 'now-playing'],
+      aliases: [ 'song', 'playing', 'current-song', 'now-playing' ],
       group: 'music',
       memberName: 'status',
       description: 'Shows the current status of the music.',
@@ -32,7 +32,7 @@ export default class MusicStatusCommand extends Command {
     this.songQueue = this.queue;
   }
 
-  get queue () {
+  private get queue() {
     if (!this.songQueue) {
       this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
@@ -40,7 +40,7 @@ export default class MusicStatusCommand extends Command {
     return this.songQueue;
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const queue = this.queue.get(msg.guild.id);
     if (!queue) return msg.say('There isn\'t any music playing right now. You should get on that.');
 
@@ -54,8 +54,7 @@ export default class MusicStatusCommand extends Command {
 
           We are ${Song.timeString(currentTime)} into the song, and have ${song.timeLeft(currentTime)} left.
           ${!song.playing ? 'The music is paused.' : ''}
-        `
-      )
+        `)
       .setImage(song.thumbnail);
 
     deleteCommandMessages(msg, this.client);

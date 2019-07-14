@@ -19,7 +19,7 @@ import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
 import fetch from 'node-fetch';
-import { OverwatchHeroType } from 'RibbonTypes';
+import { OverwatchData } from 'RibbonTypes';
 
 type OverwatchArgs = {
   player: string;
@@ -28,15 +28,15 @@ type OverwatchArgs = {
 };
 
 export default class OverwatchCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'overwatch',
-      aliases: ['owstats'],
+      aliases: [ 'owstats' ],
       group: 'leaderboards',
       memberName: 'overwatch',
       description: 'Shows Player Stats for a given Overwatch player',
       format: 'BattleTag, [platform], [region]',
-      examples: ['overwatch Camoflouge#1267'],
+      examples: [ 'overwatch Camoflouge#1267' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -48,7 +48,7 @@ export default class OverwatchCommand extends Command {
           prompt: 'Respond with the player\'s BattleTag',
           type: 'string',
           validate: (tag: string) => {
-            if (/[a-zA-Z0-9]+([#\-][0-9]{4,5})?/i.test(tag)) {
+            if (/[a-zA-Z0-9]+([#-][0-9]{4,5})?/i.test(tag)) {
               return true;
             }
 
@@ -60,7 +60,7 @@ export default class OverwatchCommand extends Command {
           key: 'platform',
           prompt: 'Respond with the platform that player plays on',
           type: 'string',
-          oneOf: ['pc', 'psn', 'xbl'],
+          oneOf: [ 'pc', 'psn', 'xbl' ],
           default: 'pc',
           parse: (plat: string) => plat.toLowerCase(),
         },
@@ -68,7 +68,7 @@ export default class OverwatchCommand extends Command {
           key: 'region',
           prompt: 'Respond with the region that player is playing in',
           type: 'string',
-          oneOf: ['us', 'eu', 'asia'],
+          oneOf: [ 'us', 'eu', 'asia' ],
           default: 'us',
           parse: (reg: string) => reg.toLowerCase(),
         }
@@ -76,42 +76,44 @@ export default class OverwatchCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { player, platform, region }: OverwatchArgs) {
+  public async run(msg: CommandoMessage, { player, platform, region }: OverwatchArgs) {
     try {
       const owData = await fetch(`https://ow-api.com/v1/stats/${platform}/${region}/${player}/complete`);
       const owEmbed = new MessageEmbed();
-      const data = await owData.json();
+      const data: OverwatchData = await owData.json();
 
       if (data.error) throw new Error('noplayer');
       if (!data.competitiveStats.topHeroes) throw new Error('nostats');
       if (!data.quickPlayStats.topHeroes) throw new Error('nostats');
 
       const topCompetitiveHeroes = Object.keys(data.competitiveStats.topHeroes)
-        .map((r: string) => {
-          const timePlayed = data.competitiveStats.topHeroes[r].timePlayed.split(':');
-          let seconds: number;
+        .map(hero => {
+          const timePlayed = data.competitiveStats.topHeroes[hero].timePlayed
+            .split(':')
+            .map(time => parseFloat(time));
 
-          seconds = timePlayed.length === 3
+          const seconds = timePlayed.length === 3
             ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
             : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
 
-          return { hero: r, time: seconds * 1000 };
+          return { hero, time: seconds * 1000 };
         })
-        .sort((a: OverwatchHeroType, b: OverwatchHeroType) => a.time - b.time)
+        .sort((a, b) => a.time - b.time)
         .reverse()
         .slice(0, 3);
       const topQuickPlayHeroes = Object.keys(data.quickPlayStats.topHeroes)
-        .map((r: string) => {
-          const timePlayed = data.quickPlayStats.topHeroes[r].timePlayed.split(':');
-          let seconds: number;
+        .map(hero => {
+          const timePlayed = data.competitiveStats.topHeroes[hero].timePlayed
+            .split(':')
+            .map(time => parseFloat(time));
 
-          seconds = timePlayed.length === 3
+          const seconds = timePlayed.length === 3
             ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
             : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
 
-          return { hero: r, time: seconds * 1000 };
+          return { hero, time: seconds * 1000 };
         })
-        .sort((a: OverwatchHeroType, b: OverwatchHeroType) => a.time - b.time)
+        .sort((a, b) => a.time - b.time)
         .reverse()
         .slice(0, 3);
       const quickPlayStats = data.quickPlayStats.careerStats;
@@ -124,12 +126,11 @@ export default class OverwatchCommand extends Command {
         .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .addField('Account Stats', stripIndents`
           Level: **${data.level}**
-          Prestige level: **${data.level + data.prestige * 100}**
+          Prestige level: **${data.level + (data.prestige * 100)}**
           Rank: **${data.rating ? data.rating : 'Unknown Rating'}${data.ratingName ? ` (${data.ratingName})` : null}**
           Total Games Won: **${data.gamesWon ? data.gamesWon : 'No games won'}**
         `,
-          true
-        )
+        true)
         .addBlankField(true)
         .addField('Quickplay Stats', stripIndents`
           Final Blows: **${quickPlayStats.allHeroes.combat.finalBlows}**
@@ -144,8 +145,7 @@ export default class OverwatchCommand extends Command {
           Silver Medals: **${data.quickPlayStats.awards.medalsSilver}**
           Bronze Medals: **${data.quickPlayStats.awards.medalsBronze}**
         `,
-          true
-        )
+        true)
         .addField('Competitive Stats', stripIndents`
           Final Blows: **${competitiveStats.allHeroes.combat.finalBlows}**
           Deaths: **${competitiveStats.allHeroes.combat.deaths}**
@@ -159,31 +159,28 @@ export default class OverwatchCommand extends Command {
           Silver Medals: **${data.competitiveStats.awards.medalsSilver}**
           Bronze Medals: **${data.competitiveStats.awards.medalsBronze}**
         `,
-          true
-        )
+        true)
         .addField('top Heroes Quick Play', stripIndents`
           **${sentencecase(topQuickPlayHeroes[0].hero)}** (${moment.duration(topQuickPlayHeroes[0].time, 'milliseconds').format('H [hours]', 2)})
           **${sentencecase(topQuickPlayHeroes[1].hero)}** (${moment.duration(topQuickPlayHeroes[1].time, 'milliseconds').format('H [hours]', 2)})
           **${sentencecase(topQuickPlayHeroes[2].hero)}** (${moment.duration(topQuickPlayHeroes[2].time, 'milliseconds').format('H [hours]', 2)})
         `,
-          true
-        )
+        true)
         .addField('Top Heroes Competitive', stripIndents`
           **${sentencecase(topCompetitiveHeroes[0].hero)}** (${moment.duration(topCompetitiveHeroes[0].time, 'milliseconds').format('H [hours]', 2)})
           **${sentencecase(topCompetitiveHeroes[1].hero)}** (${moment.duration(topCompetitiveHeroes[1].time, 'milliseconds').format('H [hours]', 2)})
           **${sentencecase(topCompetitiveHeroes[2].hero)}** (${moment.duration(topCompetitiveHeroes[2].time, 'milliseconds').format('H [hours]', 2)})
         `,
-          true
-        );
+        true);
 
       deleteCommandMessages(msg, this.client);
 
       return msg.embed(owEmbed);
     } catch (err) {
-      if (/(noplayer)/i.test(err.toString())) {
+      if (/noplayer/i.test(err.toString())) {
         return msg.reply('no player found by that name. Check the platform (`pc`, `psn` or `xbl`) and region (`us`, `eu` or `asia`)');
       }
-      if (/(nostats)/i.test(err.toString())) {
+      if (/nostats/i.test(err.toString())) {
         return msg.reply('player has been found but the player has no statistics logged yet. Heroes never die!');
       }
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
@@ -196,14 +193,12 @@ export default class OverwatchCommand extends Command {
         **Player:** ${player}
         **Platform:** ${platform}
         **Region:** ${region}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

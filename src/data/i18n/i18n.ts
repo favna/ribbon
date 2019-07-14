@@ -4,20 +4,12 @@ import nl from './nl.json';
 
 i18n.init({
   resources: {
-    nl: {
-      i18n: {
-        ...nl,
-      },
-    },
-    en: {
-      i18n: {
-        ...en,
-      },
-    },
+    nl: {i18n: {...nl}},
+    en: {i18n: {...en}},
   },
   fallbackLng: 'en',
 
-  ns: ['i18n'],
+  ns: [ 'i18n' ],
   defaultNS: 'i18n',
 
   interpolation: {

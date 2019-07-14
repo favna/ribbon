@@ -24,15 +24,15 @@ type SlotsArgs = {
 };
 
 export default class SlotsCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'slots',
-      aliases: ['slot', 'fruits'],
+      aliases: [ 'slot', 'fruits' ],
       group: 'casino',
       memberName: 'slots',
       description: 'Gamble your chips at the slot machine',
       format: 'AmountOfChips',
-      examples: ['slots 50'],
+      examples: [ 'slots 50' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -43,14 +43,14 @@ export default class SlotsCommand extends Command {
           key: 'chips',
           prompt: 'How many chips do you want to gamble?',
           type: 'integer',
-          oneOf: [1, 2, 3],
-          parse: (p: string) => roundNumber(Number(p)),
+          oneOf: [ 1, 2, 3 ],
+          parse: (chips: string) => roundNumber(Number(chips)),
         }
       ],
     });
   }
 
-  public run (msg: CommandoMessage, { chips }: SlotsArgs) {
+  public async run(msg: CommandoMessage, { chips }: SlotsArgs) {
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
     const slotEmbed = new MessageEmbed();
 
@@ -98,11 +98,10 @@ export default class SlotsCommand extends Command {
           weight: 60,
         });
 
-        const machine = new SlotMachine(3, [bar, cherry, diamond, lemon, seven, watermelon]);
+        const machine = new SlotMachine(3, [ bar, cherry, diamond, lemon, seven, watermelon ]);
         const prevBal = balance;
         const result = machine.play();
 
-        let titleString: string;
         let winningPoints = 0;
 
         switch (chips) {
@@ -110,9 +109,9 @@ export default class SlotsCommand extends Command {
             winningPoints += result.lines[1].points;
             break;
           case 2:
-            for (let i = 0; i <= 2; ++i) {
-              if (result.lines[i].isWon) {
-                winningPoints += result.lines[i].points;
+            for (let line = 0; line <= 2; ++line) {
+              if (result.lines[line].isWon) {
+                winningPoints += result.lines[line].points;
               }
             }
             break;
@@ -127,23 +126,24 @@ export default class SlotsCommand extends Command {
             break;
         }
 
-        winningPoints !== 0
-          ? (balance += winningPoints - chips)
-          : (balance -= chips);
+        if (winningPoints) balance += winningPoints - chips;
+        else balance -= chips;
 
         conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author!.id}";`)
           .run({ balance });
 
-        titleString =
+        /* eslint-disable no-nested-ternary, no-negated-condition */
+        const titleString =
           chips === winningPoints
             ? 'won back their exact input'
             : chips > winningPoints
-            ? `lost ${chips - winningPoints} chips ${
-              winningPoints !== 0
-                ? `(slots gave back ${winningPoints})`
-                : ''
+              ? `lost ${chips - winningPoints} chips ${
+                winningPoints !== 0
+                  ? `(slots gave back ${winningPoints})`
+                  : ''
               }`
-            : `won ${balance - prevBal} chips`;
+              : `won ${balance - prevBal} chips`;
+        /* eslint-enable no-nested-ternary, no-negated-condition */
 
         slotEmbed
           .setTitle(`${msg.author!.tag} ${titleString}`)
@@ -159,8 +159,7 @@ export default class SlotsCommand extends Command {
       return msg.reply(oneLine`
         looks like you either don't have any chips yet or you used them all
         Run \`${msg.guild.commandPrefix}chips\` to get your first 500
-        or run \`${msg.guild.commandPrefix}withdraw\` to withdraw some chips from your vault.`
-      );
+        or run \`${msg.guild.commandPrefix}withdraw\` to withdraw some chips from your vault.`);
     } catch (err) {
       if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
@@ -175,14 +174,12 @@ export default class SlotsCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

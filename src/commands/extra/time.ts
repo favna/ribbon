@@ -21,19 +21,19 @@ import { stripIndents } from 'common-tags';
 import fetch from 'node-fetch';
 
 type TimeArgs = {
-  location: string
+  location: string;
 };
 
 export default class TimeCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'time',
-      aliases: ['citytime'],
+      aliases: [ 'citytime' ],
       group: 'extra',
       memberName: 'time',
       description: 'Gets the time in any given city',
       format: 'CityName',
-      examples: ['time London'],
+      examples: [ 'time London' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -49,18 +49,16 @@ export default class TimeCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { location }: TimeArgs) {
+  public async run(msg: CommandoMessage, { location }: TimeArgs) {
     try {
       const cords = await this.getCords(location);
-      const res = await fetch(
-        `http://api.timezonedb.com/v2/get-time-zone?${stringify({
-          by: 'position',
-          format: 'json',
-          key: process.env.TIMEZONE_DB_API_KEY!,
-          lat: cords.lat,
-          lng: cords.long,
-        })}`
-      );
+      const res = await fetch(`http://api.timezonedb.com/v2/get-time-zone?${stringify({
+        by: 'position',
+        format: 'json',
+        key: process.env.TIMEZONE_DB_API_KEY!,
+        lat: cords.lat,
+        lng: cords.long,
+      })}`);
       const time = await res.json();
       const timeEmbed = new MessageEmbed();
 
@@ -70,8 +68,7 @@ export default class TimeCommand extends Command {
           **Current Time:** ${time.formatted.split(' ')[1]}
           **Current Date:** ${time.formatted.split(' ')[0]}
           **Country:** ${time.countryName}
-          **DST:** ${time.dst}`
-        )
+          **DST:** ${time.dst}`)
         .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
 
       deleteCommandMessages(msg, this.client);
@@ -84,13 +81,11 @@ export default class TimeCommand extends Command {
     }
   }
 
-  private async getCords (location: string) {
-    const res = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?${stringify({
-        address: location,
-        key: process.env.GOOGLE_API_KEY!,
-      })}`
-    );
+  private async getCords(location: string) {
+    const res = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?${stringify({
+      address: location,
+      key: process.env.GOOGLE_API_KEY!,
+    })}`);
     const cords = await res.json();
 
     return {

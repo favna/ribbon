@@ -3,11 +3,11 @@ import { stripIndents } from 'common-tags';
 import { MassUnit } from '../Constants';
 
 export default class MassUnitType extends ArgumentType {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, 'mass');
   }
 
-  public validate (unit: MassUnit) {
+  public validate(unit: MassUnit) {
     if (MassUnit[unit]) return true;
 
     return stripIndents`
@@ -15,7 +15,7 @@ export default class MassUnitType extends ArgumentType {
       Respond with your new selection or`;
   }
 
-  public parse (unit: MassUnit) {
+  public parse(unit: MassUnit) {
     return MassUnit[unit];
   }
 }

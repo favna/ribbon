@@ -27,10 +27,10 @@ type SelfRolesArgs = {
 };
 
 export default class SelfRolesCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'selfroles',
-      aliases: ['sroles'],
+      aliases: [ 'sroles' ],
       group: 'moderation',
       memberName: 'selfroles',
       description: 'Sets the self assignable roles for the server members, to be used by the `iam` command',
@@ -39,7 +39,7 @@ export default class SelfRolesCommand extends Command {
                 You can set multiple roles by delimiting with spaces (\`role1 role2\`)
                 You can clear the setting by giving no roles then replying \`finish\`
               `,
-      examples: ['selfroles uploader', 'selfroles uploader superuploader'],
+      examples: [ 'selfroles uploader', 'selfroles uploader superuploader' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -58,7 +58,7 @@ export default class SelfRolesCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_ROLES', true)
-  public run (msg: CommandoMessage, { roles, roleIDs = [], roleNames = [] }: SelfRolesArgs) {
+  public async run(msg: CommandoMessage, { roles, roleIDs = [], roleNames = [] }: SelfRolesArgs) {
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const selfRolesEmbed = new MessageEmbed();
     let description = '';
@@ -80,7 +80,9 @@ export default class SelfRolesCommand extends Command {
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, selfRolesEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, selfRolesEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

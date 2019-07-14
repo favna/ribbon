@@ -15,19 +15,19 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
 type SetAnnounceArgs = {
-  channel: TextChannel
+  channel: TextChannel;
 };
 
 export default class SetAnnounceCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'setannounce',
-      aliases: ['sa', 'setannouncement', 'setannouncements'],
+      aliases: [ 'sa', 'setannouncement', 'setannouncements' ],
       group: 'moderation',
       memberName: 'setannounce',
       description: 'Set the channel for the announce command',
       format: 'ChannelID|ChannelName(partial or full)',
-      examples: ['setannounce #updates'],
+      examples: [ 'setannounce #updates' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -44,7 +44,7 @@ export default class SetAnnounceCommand extends Command {
   }
 
   @shouldHavePermission('ADMINISTRATOR')
-  public run (msg: CommandoMessage, { channel }: SetAnnounceArgs) {
+  public async run(msg: CommandoMessage, { channel }: SetAnnounceArgs) {
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const setAnnouncementEmbed = new MessageEmbed();
 
@@ -55,12 +55,13 @@ export default class SetAnnounceCommand extends Command {
       .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Announcements Channel channel changed
-        **Channel:** <#${channel.id}>`
-      )
+        **Channel:** <#${channel.id}>`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, setAnnouncementEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, setAnnouncementEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

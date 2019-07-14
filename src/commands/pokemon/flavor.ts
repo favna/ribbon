@@ -17,7 +17,7 @@
 import { ASSET_BASE_PATH, CollectorTimeout } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import zalgo from '@favware/zalgo';
-import { pokeAliases } from '@pokedex/aliases';
+import { pokedexAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import BattlePokedex from '@pokedex/pokedex';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
@@ -25,7 +25,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { FlavorJSONType, PokeDataType, PokeDexAliases, PokedexType } from 'RibbonTypes';
+import { FlavorJSONType, PokedexAlias, Pokedex, FlavorDataType } from 'RibbonTypes';
 
 type FlavorArgs = {
   pokemon: string;
@@ -35,15 +35,15 @@ type FlavorArgs = {
 };
 
 export default class FlavorCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'flavor',
-      aliases: ['flavors', 'dexentries', 'dextext', 'dextex', 'flavour', 'flavours'],
+      aliases: [ 'flavors', 'dexentries', 'dextext', 'dextex', 'flavour', 'flavours' ],
       group: 'pokemon',
       memberName: 'flavor',
       description: 'Get all the available dex entries for a Pokémon',
       format: 'PokemonName',
-      examples: ['flavor Dragonite'],
+      examples: [ 'flavor Dragonite' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -60,7 +60,7 @@ export default class FlavorCommand extends Command {
     });
   }
 
-  private static fetchColor (col: string) {
+  private static fetchColor(col: string) {
     switch (col) {
       case 'Black':
         return '#323232';
@@ -87,23 +87,25 @@ export default class FlavorCommand extends Command {
     }
   }
 
-  // tslint:disable:prefer-conditional-expression
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { pokemon, shines, hasManageMessages, position = 0 }: FlavorArgs) {
+  public async run(msg: CommandoMessage, {
+    pokemon, shines, hasManageMessages, position = 0,
+  }: FlavorArgs) {
     try {
       if (/(?:--shiny)/i.test(pokemon)) {
-        pokemon = pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length).replace(/ /g, '');
+        pokemon = pokemon.substring(0, pokemon.indexOf('--shiny')) +
+                  pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length).replace(/ /g, '');
         shines = true;
       }
       if (pokemon.split(' ')[0] === 'mega') {
         pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
       }
 
-      const pokeoptions: FuseOptions<PokedexType & PokeDexAliases> = {
-        keys: ['alias', 'species', 'name', 'num'],
+      const pokeoptions: FuseOptions<Pokedex & PokedexAlias> = {
+        keys: [ 'alias', 'species', 'name', 'num' ],
         threshold: 0.2,
       };
-      const aliasFuse = new Fuse(pokeAliases, pokeoptions);
+      const aliasFuse = new Fuse(pokedexAliases, pokeoptions);
       const pokeFuse = new Fuse(BattlePokedex, pokeoptions);
       const firstSearch = pokeFuse.search(pokemon);
       const aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : null;
@@ -113,7 +115,9 @@ export default class FlavorCommand extends Command {
 
       let poke = pokeSearch[position];
       let pokeData = this.fetchAllData(poke, shines);
-      let dataEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position, hasManageMessages);
+      let dataEmbed = this.prepMessage(
+        pokeData, poke, shines, pokeSearch.length, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -121,18 +125,19 @@ export default class FlavorCommand extends Command {
 
       if (pokeSearch.length > 1 && hasManageMessages) {
         injectNavigationEmotes(message);
-        const reactionCollector = new ReactionCollector(
-          message, navigationReactionFilter, { time: CollectorTimeout.five }
-        );
+        const reactionCollector = new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five });
 
         reactionCollector.on('collect', (reaction: MessageReaction, user: User) => {
           if (!this.client.userid.includes(user.id)) {
-            reaction.emoji.name === '➡' ? position++ : position--;
+            if (reaction.emoji.name === '➡') position++;
+            else position--;
             if (position >= pokeSearch.length) position = 0;
             if (position < 0) position = pokeSearch.length - 1;
             poke = pokeSearch[position];
             pokeData = this.fetchAllData(poke, shines);
-            dataEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position, hasManageMessages);
+            dataEmbed = this.prepMessage(
+              pokeData, poke, shines, pokeSearch.length, position, hasManageMessages
+            );
             message.edit('', dataEmbed);
             message.reactions.get(reaction.emoji.name)!.users.remove(user);
           }
@@ -155,20 +160,18 @@ export default class FlavorCommand extends Command {
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${pokemon}
         **Shiny?:** ${shines ? 'yes' : 'no'}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 
-  private fetchAllData (poke: PokedexType, shines: boolean): PokeDataType {
+  private fetchAllData(poke: Pokedex, shines: boolean): FlavorDataType {
     const flavors: FlavorJSONType = entries as FlavorJSONType;
-    const pokeData: PokeDataType = {
+    const pokeData: FlavorDataType = {
       sprite: '',
       entries: [],
     };
@@ -207,8 +210,8 @@ export default class FlavorCommand extends Command {
     return pokeData;
   }
 
-  private prepMessage (
-    pokeData: PokeDataType, poke: PokedexType, shines: boolean, pokeSearchLength: number,
+  private prepMessage(
+    pokeData: FlavorDataType, poke: Pokedex, shines: boolean, pokeSearchLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
     const dataEmbed = new MessageEmbed();
@@ -220,16 +223,18 @@ export default class FlavorCommand extends Command {
       .setColor(FlavorCommand.fetchColor(poke.color))
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
       .setAuthor(`#${poke.num} - ${sentencecase(poke.species)}`, pokeData.sprite)
-      .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
+      .setImage(oneLine`
+          https://play.pokemonshowdown.com/sprites/
+          ${shines ? 'xyani-shiny' : 'xyani'}/
+          ${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`
+      )
       .setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.')
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${pokeSearchLength}` : '');
 
     outer: do {
-      dataEmbed.addField(
-        pokeData.entries[i].game,
+      dataEmbed.addField(pokeData.entries[i].game,
         pokeData.entries[i].text,
-        false
-      );
+        false);
       for (const field of dataEmbed.fields) {
         totalEntriesLength += field.value.length;
         if (totalEntriesLength >= 2000) {
@@ -242,11 +247,11 @@ export default class FlavorCommand extends Command {
     if (poke.num === 0) {
       const fields = [];
 
-      for (const field in dataEmbed.fields) {
+      for (const field of dataEmbed.fields) {
         fields.push({
-          inline: dataEmbed.fields[field].inline,
-          name: zalgo(dataEmbed.fields[field].name),
-          value: zalgo(dataEmbed.fields[field].value),
+          inline: field.inline,
+          name: zalgo(field.name),
+          value: zalgo(field.value),
         });
       }
 

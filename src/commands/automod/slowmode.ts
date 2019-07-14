@@ -21,15 +21,15 @@ type SlowmodeArgs = {
 };
 
 export default class SlowmodeCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'slowmode',
-      aliases: ['slowdown'],
+      aliases: [ 'slowdown' ],
       group: 'automod',
       memberName: 'slowmode',
       description: 'Toggle the server invites filter',
       format: 'Option [Within]',
-      examples: ['slowmode enable'],
+      examples: [ 'slowmode enable' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -52,7 +52,7 @@ export default class SlowmodeCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES', true)
-  public run (msg: CommandoMessage, { shouldEnable, within }: SlowmodeArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable, within }: SlowmodeArgs) {
     const slEmbed = new MessageEmbed();
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const options = { within, enabled: shouldEnable };
@@ -65,12 +65,13 @@ export default class SlowmodeCommand extends Command {
       .setDescription(stripIndents`
         **Action:** Slowmode has been ${shouldEnable ? 'enabled' : 'disabled'}
         ${shouldEnable ? `**Info:** Slow mode enabled. Members can 1 message per ${within} second(s)` : ''}
-        ${!msg.guild.settings.get('automod', false) ? `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!` : ''}`
-      )
+        ${msg.guild.settings.get('automod', false) ? '' : `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!`}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, slEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, slEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

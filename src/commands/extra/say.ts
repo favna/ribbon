@@ -16,19 +16,19 @@ import { SayData } from 'RibbonTypes';
 
 type SayArgs = {
   txt: string;
-  attachment: MessageAttachment
+  attachment: MessageAttachment;
 };
 
 export default class SayCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'say',
-      aliases: ['sayd', 'repeat'],
+      aliases: [ 'sayd', 'repeat' ],
       group: 'extra',
       memberName: 'say',
       description: 'I will repeat your message',
       format: 'MessageToSay',
-      examples: ['say Favna is a great coder!'],
+      examples: [ 'say Favna is a great coder!' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -60,7 +60,7 @@ export default class SayCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { txt, attachment }: SayArgs) {
+  public async run(msg: CommandoMessage, { txt, attachment }: SayArgs) {
     if (msg.guild && msg.deletable && msg.guild.settings.get('automod', false)) {
       if (msg.guild.settings.get('caps', false).enabled) {
         const opts = msg.guild.settings.get('caps');
@@ -71,7 +71,9 @@ export default class SayCommand extends Command {
       if (msg.guild.settings.get('duptext', false).enabled) {
         const opts = msg.guild.settings.get('duptext');
         if (
-          duptext(msg, opts.within, opts.equals, opts.distance, this.client)
+          duptext(
+            msg, opts.within, opts.equals, opts.distance, this.client
+          )
         ) {
           return msg.reply(`you cannot use \`${msg.guild.commandPrefix}say\` to bypass the no duplicate text filter`);
         }
@@ -118,6 +120,6 @@ export default class SayCommand extends Command {
 
     msg.guild.settings.set('saydata', saydata);
 
-    return msg.say(txt, attachment ? { files: [attachment.url] } : {});
+    return msg.say(txt, attachment ? { files: [ attachment.url ] } : {});
   }
 }

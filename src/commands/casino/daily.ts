@@ -17,10 +17,10 @@ import moment from 'moment';
 import path from 'path';
 
 export default class DailyCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'daily',
-      aliases: ['topup', 'bonus'],
+      aliases: [ 'topup', 'bonus' ],
       group: 'casino',
       memberName: 'daily',
       description: 'Receive your daily cash top up of 300 chips',
@@ -32,7 +32,7 @@ export default class DailyCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const balEmbed = new MessageEmbed();
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
@@ -44,7 +44,9 @@ export default class DailyCommand extends Command {
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
     try {
-      let { balance, lastdaily } = conn.prepare(`SELECT balance, lastdaily FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
+      const query = conn.prepare(`SELECT balance, lastdaily FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
+      const { lastdaily } = query;
+      let { balance } = query;
 
       if (balance >= 0) {
         const dailyDura = moment.duration(moment(lastdaily).add(24, 'hours').diff(moment()));
@@ -71,10 +73,10 @@ export default class DailyCommand extends Command {
           **Balance**
           ${chipStr}
           **Daily Reset**
-          ${resetStr}`
-        );
+          ${resetStr}`);
 
         deleteCommandMessages(msg, this.client);
+
         return msg.embed(balEmbed, returnMsg);
       }
       conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($userid, $balance, $dailydate, $weeklydate, $vault);`)
@@ -106,14 +108,12 @@ export default class DailyCommand extends Command {
           **Server:** ${msg.guild.name} (${msg.guild.id})
           **Author:** ${msg.author!.tag} (${msg.author!.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-          **Error Message:** ${err}`
-        );
+          **Error Message:** ${err}`);
 
         return msg.reply(oneLine`
           an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
           Want to know more about the error?
-          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-        );
+          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
       }
     }
 
@@ -121,12 +121,10 @@ export default class DailyCommand extends Command {
       **Balance**
       500
       **Daily Reset**
-      in 24 hours`
-    );
+      in 24 hours`);
 
     deleteCommandMessages(msg, this.client);
 
-    return msg.embed(balEmbed, 'You didn\'t have any chips yet so here\'s your first 500. Spend them wisely!'
-    );
+    return msg.embed(balEmbed, 'You didn\'t have any chips yet so here\'s your first 500. Spend them wisely!');
   }
 }

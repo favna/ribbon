@@ -18,16 +18,16 @@ type TwitchToggleArgs = {
 };
 
 export default class TwitchToggleCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'twitchtoggle',
-      aliases: ['twitchon', 'twitchoff'],
+      aliases: [ 'twitchon', 'twitchoff' ],
       group: 'streamwatch',
       memberName: 'twitchtoggle',
       description: 'Configures whether Twitch Notifications are enabled',
       format: 'boolean',
       details: 'This is a killswitch for the entire module!',
-      examples: ['twitchtoggle enable'],
+      examples: [ 'twitchtoggle enable' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -44,7 +44,7 @@ export default class TwitchToggleCommand extends Command {
   }
 
   @shouldHavePermission('ADMINISTRATOR')
-  public run (msg: CommandoMessage, { shouldEnable }: TwitchToggleArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable }: TwitchToggleArgs) {
     msg.guild.settings.set('twitchnotifiers', shouldEnable);
 
     deleteCommandMessages(msg, this.client);
@@ -52,9 +52,8 @@ export default class TwitchToggleCommand extends Command {
     return msg.reply(oneLine`
       Twitch Notifiers have been
       ${shouldEnable
-        ? `enabled. Please make sure to set the output channel with \`${msg.guild.commandPrefix}twitchoutput\`and configure which users to monitor with \`${msg.guild.commandPrefix}twitchmonitors\``
-        : 'disabled.'
-      }.`
-    );
+    ? `enabled. Please make sure to set the output channel with \`${msg.guild.commandPrefix}twitchoutput\`and configure which users to monitor with \`${msg.guild.commandPrefix}twitchmonitors\``
+    : 'disabled.'
+}.`);
   }
 }

@@ -25,15 +25,15 @@ type TVArgs = {
 };
 
 export default class TVCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'tvdb',
-      aliases: ['tv'],
+      aliases: [ 'tv' ],
       group: 'searches',
       memberName: 'tvdb',
       description: 'Finds TV shows on TheMovieDB',
       format: 'MovieName [release_year_movie]',
-      examples: ['tvdb Pokemon'],
+      examples: [ 'tvdb Pokemon' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -50,7 +50,7 @@ export default class TVCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { name, hasManageMessages, position = 0 }: TVArgs) {
+  public async run(msg: CommandoMessage, { name, hasManageMessages, position = 0 }: TVArgs) {
     try {
       const movieSearch = await fetch(`https://api.themoviedb.org/3/search/tv?${stringify({
         api_key: process.env.MOVIEDB_API_KEY!,
@@ -61,7 +61,9 @@ export default class TVCommand extends Command {
 
       let currentSeries = showList.results[position].id;
       let show = await this.fetchAllData(currentSeries);
-      let showEmbed = this.prepMessage(color, show, showList.total_results, position, hasManageMessages);
+      let showEmbed = this.prepMessage(
+        color, show, showList.total_results, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -72,12 +74,15 @@ export default class TVCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', async (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= showList.total_results) position = 0;
               if (position < 0) position = showList.total_results - 1;
               currentSeries = showList.results[position].id;
               show = await this.fetchAllData(currentSeries);
-              showEmbed = this.prepMessage(color, show, showList.total_results, position, hasManageMessages);
+              showEmbed = this.prepMessage(
+                color, show, showList.total_results, position, hasManageMessages
+              );
               message.edit(showEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -92,15 +97,14 @@ export default class TVCommand extends Command {
     }
   }
 
-  private async fetchAllData (serieId: number): Promise<TMDBSerie> {
-    const seriesStats = await fetch(`https://api.themoviedb.org/3/tv/${serieId}?${stringify(
-      { api_key: process.env.MOVIEDB_API_KEY! })}`
-    );
+  private async fetchAllData(serieId: number): Promise<TMDBSerie> {
+    const seriesStats = await fetch(`https://api.themoviedb.org/3/tv/${serieId}?${stringify({ api_key: process.env.MOVIEDB_API_KEY! })}`);
+
     return seriesStats.json();
   }
 
-  private prepMessage (
-    color: string, show: any, seriesSearchLength: number,
+  private prepMessage(
+    color: string, show: TMDBSerie, seriesSearchLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
     return new MessageEmbed()
@@ -118,7 +122,6 @@ export default class TVCommand extends Command {
       .addField('Genres',
         show.genres.length
           ? show.genres.map((genre: MovieGenreType) => genre.name).join(', ')
-          : 'None on TheMovieDB'
-      );
+          : 'None on TheMovieDB');
   }
 }

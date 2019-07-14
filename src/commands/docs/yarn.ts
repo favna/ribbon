@@ -22,15 +22,15 @@ type YarnArgs = {
 };
 
 export default class YarnCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'yarn',
-      aliases: ['npm', 'npm-package'],
+      aliases: [ 'npm', 'npm-package' ],
       group: 'docs',
       memberName: 'yarn',
       description: 'Responds with information on a NodeJS package using the Yarn package registry',
       format: 'package_name',
-      examples: ['yarn @favware/querystring'],
+      examples: [ 'yarn @favware/querystring' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -41,13 +41,13 @@ export default class YarnCommand extends Command {
           key: 'pkg',
           prompt: 'What package would you like to search on the Yarn package Registry?',
           type: 'string',
-          parse: (p: string) => encodeURIComponent(p.toLowerCase().replace(/ /g, '-')),
+          parse: (pkg: string) => encodeURIComponent(pkg.toLowerCase().replace(/ /g, '-')),
         }
       ],
     });
   }
 
-  private static trimArray (arr: string[]) {
+  private static trimArray(arr: string[]) {
     if (arr.length > 10) {
       const len = arr.length - 10;
       arr = arr.slice(0, 10);
@@ -57,7 +57,7 @@ export default class YarnCommand extends Command {
     return arr;
   }
 
-  public async run (msg: CommandoMessage, { pkg }: YarnArgs) {
+  public async run(msg: CommandoMessage, { pkg }: YarnArgs) {
     try {
       const res = await fetch(`https://registry.yarnpkg.com/${pkg}`);
 
@@ -68,7 +68,7 @@ export default class YarnCommand extends Command {
       if (body.time.unpublished) throw new Error('unpublished_pkg');
 
       const version = body.versions[body['dist-tags'].latest];
-      const maintainers = YarnCommand.trimArray(body.maintainers.map((user: { name: string, email: string }) => user.name));
+      const maintainers = YarnCommand.trimArray(body.maintainers.map((user: { name: string; email: string }) => user.name));
       const dependencies = version.dependencies ? YarnCommand.trimArray(Object.keys(version.dependencies)) : null;
       const yarnEmbed = new MessageEmbed()
         .setColor('#2C8EBA')
@@ -86,6 +86,7 @@ export default class YarnCommand extends Command {
         .addField('❯ Maintainers', maintainers.join(', '));
 
       deleteCommandMessages(msg, this.client);
+
       return msg.embed(yarnEmbed);
     } catch (err) {
       deleteCommandMessages(msg, this.client);
@@ -93,8 +94,7 @@ export default class YarnCommand extends Command {
       if (/(?:no_pkg_found)/i.test(err.toString())) {
         return msg.reply(oneLine`
           I couldn't find any package by the name of \`${pkg}\` In the Yarnpkg registry.
-          Maybe try searching something that actually exists next time?`
-        );
+          Maybe try searching something that actually exists next time?`);
       }
 
       if (/(?:unpublished_pkg)/i.test(err.toString())) {
@@ -108,14 +108,12 @@ export default class YarnCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

@@ -3,11 +3,11 @@ import { stripIndents } from 'common-tags';
 import { CoinSide } from '../Constants';
 
 export default class CoinSideType extends ArgumentType {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, 'coinside');
   }
 
-  public validate (side: CoinSide) {
+  public validate(side: CoinSide) {
     if (CoinSide[side]) return true;
 
     return stripIndents`
@@ -15,7 +15,7 @@ export default class CoinSideType extends ArgumentType {
       Respond with your new selection oro`;
   }
 
-  public parse (side: CoinSide) {
+  public parse(side: CoinSide) {
     return CoinSide[side];
   }
 }

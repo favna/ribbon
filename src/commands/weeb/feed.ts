@@ -12,20 +12,21 @@ import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember } from 'awesome-djs';
 import fetch from 'node-fetch';
+import { NekoData } from 'RibbonTypes';
 
 type FeedArgs = {
   member: GuildMember;
 };
 
 export default class FeedCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'feed',
       group: 'weeb',
       memberName: 'feed',
       description: 'Feed someone licious food 🍜 😋!',
       format: 'MemberToFeed',
-      examples: ['feed Ren'],
+      examples: [ 'feed Ren' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -42,24 +43,22 @@ export default class FeedCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { member }: FeedArgs) {
+  public async run(msg: CommandoMessage, { member }: FeedArgs) {
     try {
       const feedFetch = await fetch('https://nekos.life/api/v2/img/feed');
-      const feedImg = await feedFetch.json();
+      const feedImg: NekoData = await feedFetch.json();
       const isNotSelf = member.id !== msg.member!.id;
 
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(
-        {
-          color: msg.guild ? msg.guild.me!.displayColor : 10610610,
-          description: isNotSelf
-            ? `${member.displayName}! You were fed by ${msg.member!.displayName} 🍜 😋!`
-            : `${msg.member!.displayName} you must feel alone... Have a 🐈`,
-          image: { url: isNotSelf ? feedImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
-        },
-        `<@${member ? member.id : msg.author!.id}>`
-      );
+      return msg.embed({
+        color: msg.guild ? msg.guild.me!.displayColor : 10610610,
+        description: isNotSelf
+          ? `${member.displayName}! You were fed by ${msg.member!.displayName} 🍜 😋!`
+          : `${msg.member!.displayName} you must feel alone... Have a 🐈`,
+        image: { url: isNotSelf ? feedImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
+      },
+      `<@${member ? member.id : msg.author!.id}>`);
     } catch (err) {
       return msg.reply('something went wrong getting a feed image 💔');
     }

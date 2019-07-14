@@ -21,15 +21,15 @@ type AutomodArgs = {
 };
 
 export default class AutomodCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'automod',
-      aliases: ['botmod', 'skynetmod'],
+      aliases: [ 'botmod', 'skynetmod' ],
       group: 'moderation',
       memberName: 'automod',
       description: 'General toggle for all automod features',
       format: 'boolean [RoleResolvable(s)]',
-      examples: ['automod enable'],
+      examples: [ 'automod enable' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -53,7 +53,7 @@ export default class AutomodCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES', true)
-  public run (msg: CommandoMessage, { shouldEnable, roles }: AutomodArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable, roles }: AutomodArgs) {
     const automodEmbed = new MessageEmbed();
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const options = {
@@ -69,12 +69,13 @@ export default class AutomodCommand extends Command {
       .setDescription(stripIndents`
         **Action:** Automod features are now ${shouldEnable ? 'enabled' : 'disabled'}
         **Notice:** Be sure to enable your desired individual features, they are all off by default!
-        ${roles ? `**Roles exempted from automod**: ${roles.map(val => `\`${val.name}\``).join(', ')}` : ''}`
-      )
+        ${roles ? `**Roles exempted from automod**: ${roles.map(val => `\`${val.name}\``).join(', ')}` : ''}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, automodEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, automodEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

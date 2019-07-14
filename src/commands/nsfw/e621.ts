@@ -22,15 +22,15 @@ type E621Args = {
 };
 
 export default class E621Command extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'e621',
-      aliases: ['eee'],
+      aliases: [ 'eee' ],
       group: 'nsfw',
       memberName: 'e621',
       description: 'Find NSFW Content on e621',
       format: 'NSFWToLookUp',
-      examples: ['e621 Pyrrha Nikos'],
+      examples: [ 'e621 Pyrrha Nikos' ],
       nsfw: true,
       guildOnly: false,
       throttling: {
@@ -47,7 +47,7 @@ export default class E621Command extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { tags }: E621Args) {
+  public async run(msg: CommandoMessage, { tags }: E621Args) {
     try {
       const booruSearch = await booru('e621', tags, {
         limit: 1,
@@ -64,8 +64,7 @@ export default class E621Command extends Command {
         .setColor('#FFB6C1')
         .setDescription(stripIndents`
           ${imageTags.slice(0, 5).join(' ')}
-          **Score**: ${hit.score}`
-        )
+          **Score**: ${hit.score}`)
         .setImage(hit.fileUrl!);
 
       deleteCommandMessages(msg, this.client);

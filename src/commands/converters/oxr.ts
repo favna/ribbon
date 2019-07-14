@@ -24,6 +24,7 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
+import { CurrencyUnits } from 'RibbonTypes';
 
 type MoneyArgs = {
   value: number;
@@ -32,16 +33,16 @@ type MoneyArgs = {
 };
 
 export default class MoneyCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'oxr',
-      aliases: ['money', 'rate'],
+      aliases: [ 'money', 'rate' ],
       group: 'converters',
       memberName: 'oxr',
       description: 'Convert any currency into another',
       format: 'CurrencyAmount FirstValuta SecondValuta',
       details: 'Makes use of ISO 4217 standard currency codes (see list here: <https://docs.openexchangerates.org/docs/supported-currencies>)',
-      examples: ['convert 50 USD EUR'],
+      examples: [ 'convert 50 USD EUR' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -67,41 +68,36 @@ export default class MoneyCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { value, fromCurrency, toCurrency }: MoneyArgs) {
+  public async run(msg: CommandoMessage, { value, fromCurrency, toCurrency }: MoneyArgs) {
     try {
       const oxrEmbed = new MessageEmbed();
       const request = await fetch(`https://openexchangerates.org/api/latest.json?${stringify({
         app_id: process.env.OXR_API_KEY!,
         prettyprint: false,
         show_alternative: true,
-      })}`
-      );
-      const response = await request.json();
+      })}`);
+      const response: {rates: CurrencyUnits; [propName: string]: unknown} = await request.json();
       const result = convertCurrency(response.rates, fromCurrency, toCurrency, value);
 
       oxrEmbed
         .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .setAuthor('🌐 Currency Converter')
-        .addField(
-          `:flag_${fromCurrency
-            .slice(0, 2)
-            .toLowerCase()}: Money in ${fromCurrency}`,
-          `${
+        .addField(`:flag_${fromCurrency
+          .slice(0, 2)
+          .toLowerCase()}: Money in ${fromCurrency}`,
+        `${
           currencyMap(fromCurrency)
             ? currencyMap(fromCurrency)
             : ''
-          }${value}`,
-          true
-        )
-        .addField(
-          `:flag_${toCurrency
-            .slice(0, 2)
-            .toLowerCase()}: Money in ${toCurrency}`,
-          `${
+        }${value}`,
+        true)
+        .addField(`:flag_${toCurrency
+          .slice(0, 2)
+          .toLowerCase()}: Money in ${toCurrency}`,
+        `${
           currencyMap(toCurrency) ? currencyMap(toCurrency) : ''
-          }${result}`,
-          true
-        )
+        }${result}`,
+        true)
         .setTimestamp();
 
       deleteCommandMessages(msg, this.client);
@@ -115,8 +111,7 @@ export default class MoneyCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Input:** \`${value}\` || \`${fromCurrency}\` || \`${toCurrency}\``
-      );
+        **Input:** \`${value}\` || \`${fromCurrency}\` || \`${toCurrency}\``);
 
       return msg.reply(oneLine`
         an error occurred.

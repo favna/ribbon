@@ -1,7 +1,7 @@
-// tslint:disable:max-line-length
-import { PokeAbilityDetailsType } from 'RibbonTypes';
+/* eslint-disable max-len */
+import { PokemonAbility } from 'RibbonTypes';
 
-const ABILITIES: PokeAbilityDetailsType[] = [
+const ABILITIES: PokemonAbility[] = [
   {
     desc: 'The duration of Gravity, Heal Block, Magic Room, Safeguard, Tailwind, Trick Room, and Wonder Room is increased by 2 turns if the effect is started by this Pokemon.',
     shortDesc: 'When used, Gravity/Heal Block/Safeguard/Tailwind/Room effects last 2 more turns.',

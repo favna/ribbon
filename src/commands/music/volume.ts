@@ -23,16 +23,16 @@ type ChangeVolumeArgs = {
 export default class ChangeVolumeCommand extends Command {
   private songQueue: Map<string, MusicQueueType>;
 
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'volume',
-      aliases: ['set-volume', 'set-vol', 'vol'],
+      aliases: [ 'set-volume', 'set-vol', 'vol' ],
       group: 'music',
       memberName: 'volume',
       description: 'Changes the volume.',
       format: '[level]',
       details: 'The volume level ranges from 0-10. You may specify "up" or "down" to modify the volume level by 2.',
-      examples: ['volume', 'volume 7', 'volume up', 'volume down'],
+      examples: [ 'volume', 'volume 7', 'volume up', 'volume down' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -52,7 +52,7 @@ export default class ChangeVolumeCommand extends Command {
     this.songQueue = this.queue;
   }
 
-  get queue () {
+  private get queue() {
     if (!this.songQueue) {
       this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
@@ -60,7 +60,7 @@ export default class ChangeVolumeCommand extends Command {
     return this.songQueue;
   }
 
-  public run (msg: CommandoMessage, { volume }: ChangeVolumeArgs) {
+  public async run(msg: CommandoMessage, { volume }: ChangeVolumeArgs) {
     const queue = this.queue.get(msg.guild.id);
 
     if (!queue) return msg.reply('there isn\'t any music playing to change the volume of. Better queue some up!');

@@ -15,19 +15,19 @@ import { GuildMember } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 
 type TwitchMonitorArgs = {
-  members: GuildMember[]
+  members: GuildMember[];
 };
 
 export default class TwitchMonitorsCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'twitchmonitors',
-      aliases: ['monitors', 'monitor', 'twitchmonitor'],
+      aliases: [ 'monitors', 'monitor', 'twitchmonitor' ],
       group: 'streamwatch',
       memberName: 'twitchmonitors',
       description: 'Configures which streamers to spy on',
       format: 'Member [Member Member Member]',
-      examples: ['twitchmonitors Favna Techagent'],
+      examples: [ 'twitchmonitors Favna Techagent' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -45,7 +45,7 @@ export default class TwitchMonitorsCommand extends Command {
   }
 
   @shouldHavePermission('ADMINISTRATOR')
-  public run (msg: CommandoMessage, { members }: TwitchMonitorArgs) {
+  public async run(msg: CommandoMessage, { members }: TwitchMonitorArgs) {
     const memberIDs = members.map(m => m.id);
     const memberNames = members.map(m => m.displayName);
 
@@ -55,7 +55,6 @@ export default class TwitchMonitorsCommand extends Command {
     return msg.reply(stripIndents`
       🕵 Started spying on the stream status of ${memberNames.map(val => `\`${val}\``).join(', ')}
       Use \`${msg.guild.commandPrefix}twitchtoggle\` to toggle twitch notifiers on or off
-      Use \`${msg.guild.commandPrefix}twitchoutput\` to set the channel the notifiers should be sent to`
-    );
+      Use \`${msg.guild.commandPrefix}twitchoutput\` to set the channel the notifiers should be sent to`);
   }
 }

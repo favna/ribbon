@@ -26,15 +26,15 @@ type ActivityArgs = {
 };
 
 export default class ActivityCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'activity',
-      aliases: ['act', 'presence', 'richpresence'],
+      aliases: [ 'act', 'presence', 'richpresence' ],
       group: 'info',
       memberName: 'activity',
       description: 'Gets the activity (presence) data from a member',
       format: 'MemberID|MemberName(partial or full)',
-      examples: ['activity Favna'],
+      examples: [ 'activity Favna' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -51,33 +51,33 @@ export default class ActivityCommand extends Command {
     });
   }
 
-  private static convertType (type: string) {
-    return type.toLowerCase() !== 'listening'
-      ? type.charAt(0).toUpperCase() + type.slice(1)
-      : 'Listening to';
+  private static convertType(type: string) {
+    return type.toLowerCase() === 'listening'
+      ? 'Listening to'
+      : type.charAt(0).toUpperCase() + type.slice(1);
   }
 
-  private static fetchExt (str: string) {
+  private static fetchExt(str: string) {
     return str.slice(-4);
   }
 
-  private static checkDeviceStatus (member: GuildMember): SimpleEmbedFieldType {
-    type ParsedClientStatus = { desktop?: string; mobile?: string; web?: string; };
+  private static checkDeviceStatus(member: GuildMember): SimpleEmbedFieldType {
+    type ParsedClientStatus = { desktop?: string; mobile?: string; web?: string };
 
     const status = member.presence.clientStatus;
     const fieldName = 'Device Presence';
 
     if (!status) return { name: fieldName, value: 'Offline' };
 
-    const onlineStatuses: (string | undefined)[] = ['online', 'idle', 'dnd'];
+    const onlineStatuses: (string | undefined)[] = [ 'online', 'idle', 'dnd' ];
     const isOnDesktop = onlineStatuses.includes(status.desktop);
     const isOnMobile = onlineStatuses.includes(status.mobile);
     const isOnWeb = onlineStatuses.includes(status.web);
 
-    const filterObj = (obj: any, predicate: any) =>
-      Object.keys(obj)
-        .filter(key => predicate(obj[key]))
-        .reduce((res, key) => ({ ...res, [key]: obj[key] }), {});
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const filterObj = (obj: any, predicate: any) => Object.keys(obj)
+      .filter(async key => predicate(obj[key]))
+      .reduce((res, key) => ({ ...res, [key]: obj[key] }), {});
 
     const parsedStatus: ParsedClientStatus = filterObj({
       desktop: isOnDesktop ? status.desktop : '',
@@ -89,14 +89,13 @@ export default class ActivityCommand extends Command {
       name: fieldName,
       value: Object.entries(parsedStatus)
         .map((entry: [string, string | undefined]) => {
-          return `${sentencecase(entry[0])}: ${entry[1] !== 'dnd' ? sentencecase(entry[1]!) : 'Do Not Disturb'}`;
+          return `${sentencecase(entry[0])}: ${entry[1] === 'dnd' ? 'Do Not Disturb' : sentencecase(entry[1]!)}`;
         })
         .join('\n'),
     };
   }
 
-  // tslint:disable: cyclomatic-complexity
-  public async run (msg: CommandoMessage, { member }: ActivityArgs) {
+  public async run(msg: CommandoMessage, { member }: ActivityArgs) {
     try {
       const activity = member.presence.activity;
       if (!activity) throw new Error('noActivity');
@@ -107,17 +106,17 @@ export default class ActivityCommand extends Command {
       const games = await fetch('https://canary.discordapp.com/api/v6/applications/detectable');
       const gameList = await games.json();
 
-      let isDiscordStoreGame: boolean = false;
+      let isDiscordStoreGame = false;
       let discordGameData: DiscordGameParsedType = { id: '', icon: '' };
 
-      discordStoreData: for (const game of gameList) {
+      for (const game of gameList) {
         if (game.name === activity.name) {
           discordGameData = { id: game.id, icon: game.icon };
 
-          const discordSkus = game.third_party_skus.filter((y: DiscordGameSKUType) => y.distributor === 'discord');
+          const discordSkus = game.third_party_skus.filter((gameSku: DiscordGameSKUType) => gameSku.distributor === 'discord');
           const skuId = discordSkus.length ? discordSkus[0].sku : null;
 
-          if (!skuId) break discordStoreData;
+          if (!skuId) break;
 
           const storeCheck = await fetch(`https://canary.discordapp.com/api/v6/store/published-listings/skus/${skuId}`);
           const storeData: DiscordStoreGameType = await storeCheck.json();
@@ -140,6 +139,7 @@ export default class ActivityCommand extends Command {
         }
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       let spotifyData: any = {};
 
       embed
@@ -148,8 +148,7 @@ export default class ActivityCommand extends Command {
         .setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
 
       if (isSpotifyMusic) {
-        const tokenReq = await fetch(
-          'https://accounts.spotify.com/api/token',
+        const tokenReq = await fetch('https://accounts.spotify.com/api/token',
           {
             body: stringify({ grant_type: 'client_credentials' }),
             headers: {
@@ -157,20 +156,17 @@ export default class ActivityCommand extends Command {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
             },
             method: 'POST',
-          }
-        );
+          });
         const tokenRes = await tokenReq.json();
-        const trackSearch = await fetch(
-          `https://api.spotify.com/v1/search?${stringify({
-            limit: '1',
-            q: activity.details,
-            type: 'track',
-          })}`,
-          {
-            headers: { Authorization: `Bearer ${tokenRes.access_token}` },
-            method: 'GET',
-          }
-        );
+        const trackSearch = await fetch(`https://api.spotify.com/v1/search?${stringify({
+          limit: '1',
+          q: activity.details,
+          type: 'track',
+        })}`,
+        {
+          headers: { Authorization: `Bearer ${tokenRes.access_token}` },
+          method: 'GET',
+        });
         const songInfo = await trackSearch.json();
         spotifyData = songInfo.tracks.items[0];
       }
@@ -193,29 +189,22 @@ export default class ActivityCommand extends Command {
 
       if (activity.state) {
         if (isSpotifyMusic) {
-          embed.addField('Artist(s)', `${spotifyData.artists.map((artist: any) => `${artist.name}`).join(', ')}`, true);
+          embed.addField('Artist(s)', `${spotifyData.artists.map((artist: { name: string }) => `${artist.name}`).join(', ')}`, true);
         } else {
           embed.addField('State', activity.state, true);
         }
       }
 
       if (activity.party && activity.party.size) {
-        embed.addField(
-          'Party Size',
+        embed.addField('Party Size',
           `${activity.party.size[0]} of ${activity.party.size[1]}`,
-          true
-        );
+          true);
       }
 
       if (activity.assets) {
-        embed.setThumbnail(
-          !activity.assets.largeImage!.includes('spotify')
-            ? `https://cdn.discordapp.com/app-assets/${
-            activity.applicationID
-            }/${activity.assets.largeImage}.png`
-            : `https://i.scdn.co/image/${
-            activity.assets.largeImage!.split(':')[1]
-            }`
+        embed.setThumbnail(activity.assets.largeImage!.includes('spotify')
+          ? `https://i.scdn.co/image/${activity.assets.largeImage!.split(':')[1]}`
+          : `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.largeImage}.png`
         );
       }
 
@@ -224,26 +213,24 @@ export default class ActivityCommand extends Command {
           .setFooter('Start Time')
           .setTimestamp(activity.timestamps.start);
         if (activity.timestamps.end) {
-          embed.addField(
-            'End Time',
+          embed.addField('End Time',
             `${moment.duration(moment(activity.timestamps.end).diff(Date.now())).format('H [hours], m [minutes] [and] s [seconds]')}`,
-            true
-          );
+            true);
         }
       }
 
       if (activity.assets && activity.assets.smallImage) {
-        embed.setFooter(
-          activity.assets.smallText
-            ? activity.timestamps && activity.timestamps.start
-              ? `${activity.assets.smallText} | Start Time`
-              : activity.assets.smallText
-            : activity.timestamps && activity.timestamps.start
-              ? 'Start Time'
-              : '​',
-          !activity.assets.smallImage.includes('spotify')
-            ? `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`
-            : `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`
+        // eslint-disable-next-line no-nested-ternary
+        embed.setFooter(activity.assets.smallText
+          ? activity.timestamps && activity.timestamps.start
+            ? `${activity.assets.smallText} | Start Time`
+            : activity.assets.smallText
+          : activity.timestamps && activity.timestamps.start
+            ? 'Start Time'
+            : '​',
+        activity.assets.smallImage.includes('spotify')
+          ? `https://i.scdn.co/image/${activity.assets.smallImage.split(':')[1]}`
+          : `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.smallImage}.png`
         );
       }
 
@@ -259,11 +246,11 @@ export default class ActivityCommand extends Command {
         embed.setThumbnail(`https://cdn.discordapp.com/game-assets/${discordGameData.id}/${discordGameData.icon}.png`);
       }
 
-      if (isDiscordStoreGame
-        && typeof discordGameData.store_link === 'string'
-        && typeof discordGameData.thumbnail === 'string'
-        && discordGameData.developers
-        && discordGameData.publishers) {
+      if (isDiscordStoreGame &&
+        typeof discordGameData.store_link === 'string' &&
+        typeof discordGameData.thumbnail === 'string' &&
+        discordGameData.developers &&
+        discordGameData.publishers) {
         embed
           .setURL(discordGameData.store_link)
           .setTitle(`${discordGameData.name} on Discord Game Store`)
@@ -308,14 +295,12 @@ export default class ActivityCommand extends Command {
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Member:** ${member.user.tag} (${member.id})
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

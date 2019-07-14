@@ -18,10 +18,10 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { oneLine } from 'common-tags';
 
 export default class MaxSongsCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'maxsongs',
-      aliases: ['songcap', 'songmax', 'maxsong'],
+      aliases: [ 'songcap', 'songmax', 'maxsong' ],
       group: 'music',
       memberName: 'maxsongs',
       description: 'Shows or sets the max songs per user.',
@@ -31,7 +31,7 @@ export default class MaxSongsCommand extends Command {
                 The default is ${MAX_SONGS}.
                 Only administrators may change this setting.
               `,
-      examples: ['maxsongs 3'],
+      examples: [ 'maxsongs 3' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -41,7 +41,7 @@ export default class MaxSongsCommand extends Command {
   }
 
   @shouldHavePermission('ADMINISTRATOR')
-  public run (msg: CommandoMessage, args: any) {
+  public async run(msg: CommandoMessage, args: string) {
     if (!args) {
       const maxSongs = msg.guild.settings.get('maxSongs', MAX_SONGS);
 
@@ -56,10 +56,9 @@ export default class MaxSongsCommand extends Command {
       return msg.reply(`set the maximum songs to the default (currently ${MAX_SONGS}).`);
     }
 
-    const newLimit = parseInt(args, 10);
+    const newLimit = parseInt(args);
 
     if (isNaN(newLimit) || newLimit <= 0) {
-
       return msg.reply('invalid number provided.');
     }
 

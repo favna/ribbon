@@ -26,15 +26,15 @@ type TemperatureArgs = {
 };
 
 export default class TemperatureCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'temperature',
-      aliases: ['heat', 'warmth', 'temp'],
+      aliases: [ 'heat', 'warmth', 'temp' ],
       group: 'converters',
       memberName: 'temperature',
       description: 'Convert various units of temperature',
       format: 'AmountToConvert FromUnit ToUnit',
-      examples: ['temperature 20 c f', 'temperature 300 kelvin celsius'],
+      examples: [ 'temperature 20 c f', 'temperature 300 kelvin celsius' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -60,7 +60,7 @@ export default class TemperatureCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { tempAmount, fromUnit, toUnit }: TemperatureArgs) {
+  public async run(msg: CommandoMessage, { tempAmount, fromUnit, toUnit }: TemperatureArgs) {
     try {
       tempAmount = roundNumber(tempAmount, 2);
       const mathEmbed = new MessageEmbed();
@@ -85,14 +85,12 @@ export default class TemperatureCommand extends Command {
         **Amount:** \`${tempAmount}\`
         **From Unit:** \`${fromUnit}\`
         **To Unit:** \`${toUnit}\`
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

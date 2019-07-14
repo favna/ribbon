@@ -14,19 +14,20 @@ import { Message, MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
 import 'moment-duration-format';
+import { SpeedTestResponse } from 'RibbonTypes';
 
-// tslint:disable-next-line:no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
 const speedTest = require('speedtest-net');
 
 export default class RibbonStatsCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'stats',
-      aliases: ['botinfo', 'info'],
+      aliases: [ 'botinfo', 'info' ],
       group: 'info',
       memberName: 'stats',
       description: 'Gets statistics about Ribbon',
-      examples: ['stats'],
+      examples: [ 'stats' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -35,7 +36,7 @@ export default class RibbonStatsCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage): Promise<any> {
+  public async run(msg: CommandoMessage): Promise<null> {
     const speed = speedTest({
       maxTime: 5000,
       serverId: 3242,
@@ -82,7 +83,7 @@ export default class RibbonStatsCommand extends Command {
 
     const statMessage: Message = await msg.embed(statsEmbed) as Message;
 
-    speed.on('data', (data: any) => {
+    speed.on('data', (data: SpeedTestResponse) => {
       statsEmbed.fields.pop();
       statsEmbed.fields.pop();
       statsEmbed
@@ -93,9 +94,11 @@ export default class RibbonStatsCommand extends Command {
 
       statMessage.edit('', statsEmbed);
     });
+
+    return null;
   }
 
-  private fetchPlatform (plat: string) {
+  private fetchPlatform(plat: string) {
     switch (plat) {
       case 'win32':
         return 'Windows';

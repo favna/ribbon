@@ -25,15 +25,15 @@ type ViewQueueArgs = {
 export default class ViewQueueCommand extends Command {
   private songQueue: Map<Snowflake, MusicQueueType>;
 
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'queue',
-      aliases: ['songs', 'song-list', 'list', 'listqueue'],
+      aliases: [ 'songs', 'song-list', 'list', 'listqueue' ],
       group: 'music',
       memberName: 'queue',
       description: 'Lists the queued songs.',
       format: '[PageNumber]',
-      examples: ['queue 2'],
+      examples: [ 'queue 2' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -51,7 +51,7 @@ export default class ViewQueueCommand extends Command {
     this.songQueue = this.queue;
   }
 
-  get queue () {
+  private get queue() {
     if (!this.songQueue) {
       this.songQueue = (this.client.registry.resolveCommand('music:launch') as MusicCommand).queue;
     }
@@ -59,7 +59,7 @@ export default class ViewQueueCommand extends Command {
     return this.songQueue;
   }
 
-  public run (msg: CommandoMessage, { page }: ViewQueueArgs) {
+  public async run(msg: CommandoMessage, { page }: ViewQueueArgs) {
     const queue = this.queue.get(msg.guild.id);
 
     if (!queue) {
@@ -71,33 +71,30 @@ export default class ViewQueueCommand extends Command {
     const currentSong = queue.songs[0];
     const currentTime = currentSong.dispatcher ? currentSong.dispatcher.streamTime / 1000 : 0;
     const paginated = util.paginate(queue.songs, page, Math.floor(Number(PAGINATED_ITEMS)));
-    const totalLength = queue.songs.reduce((prev: any, song: any) => prev + song.length, 0);
+    const totalLength = queue.songs.reduce((acc, song) => acc + song.length, 0);
     const songQueueEmbed = new MessageEmbed()
       .setAuthor(`${msg.author!.tag} (${msg.author!.id})`, msg.author!.displayAvatarURL({ format: 'png' }))
       .setColor(msg.guild.me!.displayHexColor)
       .setDescription(stripIndents`
-        __**Song queue, page ${paginated.page}**__
-        ${paginated.items.map((song: Song) => `
-          **-** ${!isNaN(song.id)
-            ? `${song.name} (${song.lengthString})`
-            : `[${song.name}](${`https://www.youtube.com/watch?v=${song.id}`})`} (${song.lengthString})`).join('\n')
-          }
-        ${paginated.maxPage > 1
-            ? `\nUse ${msg.usage()} to view a specific page.\n`
-            : ''
-          }
+    __**Song queue, page ${paginated.page}**__
+    ${paginated.items.map(song => `
+    **-** ${song.id
+    ? `[${song.name}](https://www.youtube.com/watch?v=${song.id}) (${song.lengthString})`
+    : `${song.name} (${song.lengthString})`}`).join('\n')}
 
-          **Now playing:** ${!isNaN(currentSong.id)
-            ? `${currentSong.name}`
-            : `[${currentSong.name}](${`https://www.youtube.com/watch?v=${currentSong.id}`})`
-          }
+    ${paginated.maxPage > 1
+    ? `\nUse ${msg.usage()} to view a specific page.\n`
+    : ''}
 
-          ${oneLine`
-            **Progress:**${!currentSong.playing ? 'Paused: ' : ''}
-            ${Song.timeString(currentTime)} / ${currentSong.lengthString}(${currentSong.timeLeft(currentTime)} left)`}
-          **Total queue time:** ${Song.timeString(totalLength)}
-        `
-      );
+
+    **Now playing:** ${currentSong.id
+    ? `[${currentSong.name}](https://www.youtube.com/watch?v=${currentSong.id})`
+    : `${currentSong.name}`}
+
+    ${oneLine`
+     **Progress:**${!currentSong.playing ? 'Paused: ' : ''}
+     ${Song.timeString(currentTime)} / ${currentSong.lengthString}(${currentSong.timeLeft(currentTime)} left)`}
+     **Total queue time:** ${Song.timeString(totalLength)}`);
 
     deleteCommandMessages(msg, this.client);
 

@@ -27,15 +27,15 @@ type LengthArgs = {
 };
 
 export default class LengthCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'length',
-      aliases: ['height'],
+      aliases: [ 'height' ],
       group: 'converters',
       memberName: 'length',
       description: 'Convert various units of length',
       format: 'AmountToConvert FromUnit ToUnit',
-      examples: ['length 1 m foot', 'length 170 cm inch'],
+      examples: [ 'length 1 m foot', 'length 170 cm inch' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -61,7 +61,7 @@ export default class LengthCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { lengthAmount, fromUnit, toUnit }: LengthArgs) {
+  public async run(msg: CommandoMessage, { lengthAmount, fromUnit, toUnit }: LengthArgs) {
     try {
       lengthAmount = roundNumber(lengthAmount, 2);
       const mathEmbed = new MessageEmbed();
@@ -86,14 +86,12 @@ export default class LengthCommand extends Command {
         **Amount:** \`${lengthAmount}\`
         **From Unit:** \`${fromUnit}\`
         **To Unit:** \`${toUnit}\`
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

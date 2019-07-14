@@ -22,15 +22,15 @@ type MemberLogsArgs = {
 };
 
 export default class MemberLogsCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'memberlogs',
-      aliases: ['tml', 'togglemember', 'togglememberlogs'],
+      aliases: [ 'tml', 'togglemember', 'togglememberlogs' ],
       group: 'moderation',
       memberName: 'memberlogs',
       description: 'Toggle member logs in the configured channel',
       format: 'boolean',
-      examples: ['memberlogs enable'],
+      examples: [ 'memberlogs enable' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -53,7 +53,7 @@ export default class MemberLogsCommand extends Command {
   }
 
   @shouldHavePermission('ADMINISTRATOR')
-  public run (msg: CommandoMessage, { shouldEnable, msgChannel }: MemberLogsArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable, msgChannel }: MemberLogsArgs) {
     try {
       if (shouldEnable && msgChannel === 'off') {
         return msg.reply('when activating join messages you need to provide a channel for me to output the messages to!');
@@ -77,7 +77,9 @@ export default class MemberLogsCommand extends Command {
       }
 
       if (msg.guild.settings.get('modlogs', true)) {
-        logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, memberLogsEmbed);
+        logModMessage(
+          msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, memberLogsEmbed
+        );
       }
 
       deleteCommandMessages(msg, this.client);
@@ -92,18 +94,16 @@ export default class MemberLogsCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 
-  private isChannel (channel: TextChannel | string): channel is TextChannel {
+  private isChannel(channel: TextChannel | string): channel is TextChannel {
     return (channel as TextChannel).id !== undefined;
   }
 }

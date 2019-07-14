@@ -18,15 +18,15 @@ type PurgeArgs = {
 };
 
 export default class PurgeCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'purge',
-      aliases: ['prune', 'delete'],
+      aliases: [ 'prune', 'delete' ],
       group: 'moderation',
       memberName: 'purge',
       description: 'Purge a certain amount of messages',
       format: 'AmountOfMessages',
-      examples: ['purge 5'],
+      examples: [ 'purge 5' ],
       guildOnly: true,
       args: [
         {
@@ -41,7 +41,7 @@ export default class PurgeCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES', true)
-  public async run (msg: CommandoMessage, { amount }: PurgeArgs) {
+  public async run(msg: CommandoMessage, { amount }: PurgeArgs) {
     amount = amount === 100 ? 99 : amount;
     msg.channel.bulkDelete(amount + 1, true);
 

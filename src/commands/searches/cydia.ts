@@ -32,10 +32,10 @@ type CydiaArgs = {
 };
 
 export default class CydiaCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'cydia',
-      aliases: ['cy'],
+      aliases: [ 'cy' ],
       group: 'searches',
       memberName: 'cydia',
       description: 'Finds info on a Cydia package',
@@ -44,9 +44,9 @@ export default class CydiaCommand extends Command {
                 ${oneLine`
                   Can also listens to the pattern of \`[[SomePackageName]]\`
                   as is custom on the [/r/jailbreak subreddit](https://www.reddit.com/r/jailbreak) and [its discord server](https://discord.gg/jb)`
-        }
+}
                 Server admins can enable the \`[[]]\` matching by using the \`rmt on\` command`,
-      examples: ['cydia anemone'],
+      examples: [ 'cydia anemone' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -59,12 +59,12 @@ export default class CydiaCommand extends Command {
           type: 'string',
         }
       ],
-      patterns: [/\[\[[a-zA-Z0-9 ]+]]/im],
+      patterns: [ /\[\[[a-zA-Z0-9 ]+]]/im ],
     });
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { deb, hasManageMessages, position = 0 }: CydiaArgs) {
+  public async run(msg: CommandoMessage, { deb, hasManageMessages, position = 0 }: CydiaArgs) {
     try {
       if (msg.patternMatches) {
         if (!msg.guild.settings.get('regexmatches', false)) return null;
@@ -73,7 +73,7 @@ export default class CydiaCommand extends Command {
 
       const baseURL = 'https://cydia.saurik.com/';
       const fsoptions: FuseOptions<CydiaAPIPackageType> = {
-        keys: ['display', 'name'],
+        keys: [ 'display', 'name' ],
         threshold: 0.3,
       };
       const res = await fetch(`${baseURL}api/macciti?${stringify({ query: deb })}`);
@@ -86,7 +86,9 @@ export default class CydiaCommand extends Command {
 
       let currentPackage = search[position];
       let packageData = await this.fetchAllData(currentPackage, baseURL);
-      let cydiaEmbed = this.prepMessage(color, packageData, search.length, position, hasManageMessages);
+      let cydiaEmbed = this.prepMessage(
+        color, packageData, search.length, position, hasManageMessages
+      );
 
       if (!msg.patternMatches) deleteCommandMessages(msg, this.client);
 
@@ -97,12 +99,15 @@ export default class CydiaCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.two })
           .on('collect', async (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= search.length) position = 0;
               if (position < 0) position = search.length - 1;
               currentPackage = search[position];
               packageData = await this.fetchAllData(currentPackage, baseURL);
-              cydiaEmbed = this.prepMessage(color, packageData, search.length, position, hasManageMessages);
+              cydiaEmbed = this.prepMessage(
+                color, packageData, search.length, position, hasManageMessages
+              );
               message.edit('', cydiaEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -111,7 +116,7 @@ export default class CydiaCommand extends Command {
 
       return null;
     } catch (err) {
-      if (/(no_packages)/i.test(err.toString())) return msg.say(`**Tweak/Theme \`${deb}\` not found!**`);
+      if (/no_packages/i.test(err.toString())) return msg.say(`**Tweak/Theme \`${deb}\` not found!**`);
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
       channel.send(stripIndents`
@@ -121,18 +126,16 @@ export default class CydiaCommand extends Command {
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Package:** ${deb}
         **Regex Match:** \`${msg.patternMatches ? 'yes' : 'no'}\`
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 
-  private async fetchAllData (pkg: CydiaAPIPackageType, baseURL: string): Promise<CydiaData> {
+  private async fetchAllData(pkg: CydiaAPIPackageType, baseURL: string): Promise<CydiaData> {
     let source = '';
     let size = '';
     let price = '';
@@ -148,7 +151,7 @@ export default class CydiaCommand extends Command {
       section = $('#section').html()!;
       size = $('#extra').text();
       thumbnail = `${baseURL}${$('#header > #icon > div > span > img').attr('src').slice(1)}`;
-      // tslint:disable-next-line: no-empty
+      // eslint-disable-next-line no-empty
     } catch { }
 
     try {
@@ -156,7 +159,7 @@ export default class CydiaCommand extends Command {
       const priceData = await priceReq.json();
 
       price = priceData ? `$${roundNumber(parseFloat(priceData.msrp.toString()), 2).toFixed(2)}` : 'Free';
-      // tslint:disable-next-line: no-empty
+      // eslint-disable-next-line no-empty
     } catch { }
 
     return {
@@ -173,7 +176,7 @@ export default class CydiaCommand extends Command {
     };
   }
 
-  private prepMessage (
+  private prepMessage(
     color: string, pkg: CydiaData, packagesLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
@@ -184,11 +187,9 @@ export default class CydiaCommand extends Command {
       .setThumbnail(pkg.thumbnail ? pkg.thumbnail : `${ASSET_BASE_PATH}/ribbon/cydia.png`)
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${packagesLength}` : '')
       .addField('Version', pkg.version, true)
-      .addField(
-        'Link',
+      .addField('Link',
         `[Click Here](${pkg.baseURL}package/${pkg.name})`,
-        true
-      )
+        true)
       .addField('Section', pkg.section ? pkg.section : 'Unknown', true)
       .addField('Size', pkg.size ? pkg.size : 'Unknown', true)
       .addField('Price', pkg.price ? pkg.price : 'Unknown', true)

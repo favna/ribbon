@@ -22,15 +22,15 @@ type PahealArgs = {
 };
 
 export default class PahealCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'paheal',
-      aliases: ['pa', 'heal'],
+      aliases: [ 'pa', 'heal' ],
       group: 'nsfw',
       memberName: 'paheal',
       description: 'Find NSFW Content on Rule34 - Paheal',
       format: 'NSFWToLookUp',
-      examples: ['paheal Pyrrha Nikos'],
+      examples: [ 'paheal Pyrrha Nikos' ],
       nsfw: true,
       guildOnly: false,
       throttling: {
@@ -47,7 +47,7 @@ export default class PahealCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { tags }: PahealArgs) {
+  public async run(msg: CommandoMessage, { tags }: PahealArgs) {
     try {
       const booruSearch = await booru('paheal', tags, {
         limit: 1,
@@ -64,8 +64,7 @@ export default class PahealCommand extends Command {
         .setColor('#FFB6C1')
         .setDescription(stripIndents`
           ${imageTags.slice(0, 5).join(' ')}
-          **Score**: ${hit.score}`
-        )
+          **Score**: ${hit.score}`)
         .setImage(hit.fileUrl!);
 
       deleteCommandMessages(msg, this.client);

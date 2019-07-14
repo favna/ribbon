@@ -22,19 +22,19 @@ import path from 'path';
 
 type CoinArgs = {
   chips: number;
-  side: CoinSide
+  side: CoinSide;
 };
 
 export default class CoinCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'coin',
-      aliases: ['flip', 'cflip'],
+      aliases: [ 'flip', 'cflip' ],
       group: 'casino',
       memberName: 'coin',
       description: 'Gamble your chips in a coin flip',
       format: 'AmountOfChips CoinSide',
-      examples: ['coin 50 heads'],
+      examples: [ 'coin 50 heads' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -55,7 +55,7 @@ export default class CoinCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { chips, side }: CoinArgs) {
+  public async run(msg: CommandoMessage, { chips, side }: CoinArgs) {
     const coinEmbed = new MessageEmbed();
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
@@ -72,8 +72,7 @@ export default class CoinCommand extends Command {
           return msg.reply(oneLine`
             you don't have enough chips to make that bet.
             Use \`${msg.guild.commandPrefix}chips\` to check your current balance.
-            or withdraw some chips from your vault with \`${msg.guild.commandPrefix}withdraw\``
-          );
+            or withdraw some chips from your vault with \`${msg.guild.commandPrefix}withdraw\``);
         }
 
         const flip = Math.random() >= 0.5;
@@ -95,8 +94,7 @@ export default class CoinCommand extends Command {
           .addField('New Balance', balance, true)
           .setImage(flip === res
             ? `${ASSET_BASE_PATH}/ribbon/coin${side}.png`
-            : `${ASSET_BASE_PATH}/ribbon/coin${side === 'heads' ? 'tails' : 'heads'}.png`
-          );
+            : `${ASSET_BASE_PATH}/ribbon/coin${side === 'heads' ? 'tails' : 'heads'}.png`);
 
         deleteCommandMessages(msg, this.client);
 
@@ -106,8 +104,7 @@ export default class CoinCommand extends Command {
       return msg.reply(oneLine`
         looks like you either don't have any chips yet or you used them all
         Run \`${msg.guild.commandPrefix}chips\` to get your first 500
-        or run \`${msg.guild.commandPrefix}withdraw\` to withdraw some chips from your vault.`
-      );
+        or run \`${msg.guild.commandPrefix}withdraw\` to withdraw some chips from your vault.`);
     } catch (err) {
       if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
         conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
@@ -122,14 +119,12 @@ export default class CoinCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

@@ -22,7 +22,9 @@ import { deleteCommandMessages, Song } from '@components/Utils';
 import { parse, stringify } from '@favware/querystring';
 import ytdl from '@favware/ytdl-prismplayer';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { Guild, Message, Permissions, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
+import {
+  Guild, Message, Permissions, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection
+} from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
@@ -33,19 +35,20 @@ type LaunchMusicArgs = {
   videoQuery: string;
 };
 
+/* eslint-disable require-atomic-updates */
 export default class LaunchMusicCommand extends Command {
   public queue: Map<Snowflake, MusicQueueType>;
   public votes: Map<Snowflake, MusicVoteType>;
 
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'launch',
-      aliases: ['add', 'enqueue', 'start', 'join', 'play'],
+      aliases: [ 'add', 'enqueue', 'start', 'join', 'play' ],
       group: 'music',
       memberName: 'launch',
       description: 'Adds a song to the queue',
       format: 'YoutubeURL|YoutubeVideoSearch',
-      examples: ['play final fantasy one winged angel'],
+      examples: [ 'play final fantasy one winged angel' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -65,21 +68,19 @@ export default class LaunchMusicCommand extends Command {
     this.votes = new Map();
   }
 
-  private static getPlaylistID (url: string): string {
+  private static getPlaylistID(url: string): string {
     return parse(url.split('?')[1]).list;
   }
 
-  private static async getVideoByName (name: string): Promise<string | null> {
+  private static async getVideoByName(name: string): Promise<string | null> {
     try {
-      const request = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?${stringify({
-          key: process.env.GOOGLE_API_KEY!,
-          maxResults: '1',
-          part: 'snippet',
-          q: name,
-          type: 'video',
-        })}`
-      );
+      const request = await fetch(`https://www.googleapis.com/youtube/v3/search?${stringify({
+        key: process.env.GOOGLE_API_KEY!,
+        maxResults: '1',
+        part: 'snippet',
+        q: name,
+        type: 'video',
+      })}`);
       const data = await request.json();
       const video = data.items[0];
 
@@ -89,16 +90,14 @@ export default class LaunchMusicCommand extends Command {
     }
   }
 
-  private static async getVideo (id: string): Promise<YoutubeVideoType | null> {
+  private static async getVideo(id: string): Promise<YoutubeVideoType | null> {
     try {
-      const request = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?${stringify({
-          id,
-          key: process.env.GOOGLE_API_KEY!,
-          maxResults: 1,
-          part: 'snippet,contentDetails',
-        })}`
-      );
+      const request = await fetch(`https://www.googleapis.com/youtube/v3/videos?${stringify({
+        id,
+        key: process.env.GOOGLE_API_KEY!,
+        maxResults: 1,
+        part: 'snippet,contentDetails',
+      })}`);
 
       const data = await request.json();
 
@@ -113,7 +112,7 @@ export default class LaunchMusicCommand extends Command {
     }
   }
 
-  private static async getVideoID (url: string): Promise<YoutubeVideoType | null> {
+  private static async getVideoID(url: string): Promise<YoutubeVideoType | null> {
     try {
       if (/youtu\.be/i.test(url)) {
         return LaunchMusicCommand.getVideo((url.match(/\/[a-zA-Z0-9-_]+$/i) as RegExpMatchArray)[0].slice(1));
@@ -125,11 +124,11 @@ export default class LaunchMusicCommand extends Command {
     }
   }
 
-  private static async startTheJam (connection: VoiceConnection, url: string, ytdlOptions?: downloadOptions, streamOptions?: StreamOptions) {
+  private static async startTheJam(connection: VoiceConnection, url: string, ytdlOptions?: downloadOptions, streamOptions?: StreamOptions) {
     return connection.play(await ytdl(url, ytdlOptions), streamOptions);
   }
 
-  public async run (msg: CommandoMessage, { videoQuery }: LaunchMusicArgs) {
+  public async run(msg: CommandoMessage, { videoQuery }: LaunchMusicArgs) {
     const queue = this.queue.get(msg.guild.id);
 
     if (!msg.member!.voice.channel) return msg.reply('please join a voice channel before issuing this command.');
@@ -194,7 +193,10 @@ export default class LaunchMusicCommand extends Command {
 
       deleteCommandMessages(msg, this.client);
 
-      this.handleVideo(video, queue as MusicQueueType, voiceChannel, msg, statusMsg);
+      this.handleVideo(
+        video, queue as MusicQueueType, voiceChannel, msg, statusMsg
+      );
+
       return null;
     } catch (error) {
       if (/(?:no_video_id)/i.test(error.toString())) {
@@ -205,7 +207,10 @@ export default class LaunchMusicCommand extends Command {
           const video = await LaunchMusicCommand.getVideo(videoId);
           deleteCommandMessages(msg, this.client);
 
-          this.handleVideo(video as YoutubeVideoType, queue as MusicQueueType, voiceChannel, msg, statusMsg);
+          this.handleVideo(
+            video as YoutubeVideoType, queue as MusicQueueType, voiceChannel, msg, statusMsg
+          );
+
           return null;
         } catch (err) {
           deleteCommandMessages(msg, this.client);
@@ -218,12 +223,13 @@ export default class LaunchMusicCommand extends Command {
     }
   }
 
-  private async handleVideo (
+  private async handleVideo(
     video: YoutubeVideoType, queue: MusicQueueType, voiceChannel: VoiceChannel,
     msg: CommandoMessage, statusMsg: Message
   ): Promise<null> {
     if (!video.durationSeconds || video.durationSeconds === 0) {
       statusMsg.edit(oneLine`${msg.author}, you can't play live streams`);
+
       return null;
     }
 
@@ -287,12 +293,11 @@ export default class LaunchMusicCommand extends Command {
     }
   }
 
-  private async handlePlaylist (
-    video: YoutubeVideoType, playlistId: string,
-    msg: CommandoMessage, statusMsg: Message
-  ): Promise<null> {
+  private async handlePlaylist(video: YoutubeVideoType, playlistId: string,
+    msg: CommandoMessage, statusMsg: Message): Promise<null> {
     if (!video.durationSeconds || video.durationSeconds === 0) {
       statusMsg.edit(oneLine`${msg.author}, you can't play live streams.`);
+
       return null;
     }
 
@@ -309,6 +314,7 @@ export default class LaunchMusicCommand extends Command {
     if (!result.startsWith('👍')) {
       this.queue.delete(msg.guild.id);
       statusMsg.edit('', { embed: resultMessage });
+
       return null;
     }
 
@@ -321,16 +327,17 @@ export default class LaunchMusicCommand extends Command {
         color: 3447003,
         author: {
           name: `${msg.author!.tag} (${msg.author!.id})`,
-          icon_url: msg.author!.displayAvatarURL({ format: 'png' }),
+          iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
         },
       },
     });
+
     return null;
   }
 
-  private addSong (msg: CommandoMessage, video: YoutubeVideoType) {
+  private addSong(msg: CommandoMessage, video: YoutubeVideoType) {
     const queue = this.queue.get(msg.guild.id);
-    const songNumerator = (prev: any, curSong: any) => {
+    const songNumerator = (prev: number, curSong: Song) => {
       if (curSong.member.id === msg.author!.id) {
         prev += 1;
       }
@@ -344,10 +351,10 @@ export default class LaunchMusicCommand extends Command {
 
       if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
         return oneLine`
-					👎 ${Util.escapeMarkdown(video.title)}
-					(${Song.timeString(video.durationSeconds)})
-					is too long. No songs longer than ${songMaxLength} minutes!
-				`;
+          👎 ${Util.escapeMarkdown(video.title)}
+          (${Song.timeString(video.durationSeconds)})
+          is too long. No songs longer than ${songMaxLength} minutes!
+        `;
       }
       if ((queue as MusicQueueType).songs.some((songIterator: Song) => songIterator.id === video.id)) {
         return `👎 ${Util.escapeMarkdown(video.title)} is already queued.`;
@@ -365,7 +372,7 @@ export default class LaunchMusicCommand extends Command {
     return oneLine`👍 ${`[${song}](${`${song.url}`})`}`;
   }
 
-  private async play (guild: Guild, song: any): Promise<boolean> {
+  private async play(guild: Guild, song: Song): Promise<void | boolean> {
     const queue = this.queue.get(guild.id);
     const vote = this.votes.get(guild.id);
 
@@ -379,6 +386,7 @@ export default class LaunchMusicCommand extends Command {
         queue.textChannel.send('We\'ve run out of songs! Better queue up some more tunes.');
       }
       (queue as MusicQueueType).voiceChannel.leave();
+
       return this.queue.delete(guild.id);
     }
 
@@ -397,12 +405,10 @@ export default class LaunchMusicCommand extends Command {
     }) as Promise<Message>;
 
     try {
-      dispatcher = await LaunchMusicCommand.startTheJam(
-        ((queue as MusicQueueType).connection as VoiceConnection),
+      dispatcher = await LaunchMusicCommand.startTheJam(((queue as MusicQueueType).connection as VoiceConnection),
         song.url,
         { quality: 'highestaudio', highWaterMark: 1 << 25 },
-        { type: 'opus', passes: Number(PASSES), fec: true }
-      );
+        { type: 'opus', passes: Number(PASSES), fec: true });
 
       dispatcher.on('end', () => {
         if (streamErrored) return;
@@ -417,35 +423,34 @@ export default class LaunchMusicCommand extends Command {
       dispatcher.setVolumeLogarithmic((queue as MusicQueueType).volume / 5);
       song.dispatcher = dispatcher;
       song.playing = true;
-      return (queue as MusicQueueType).playing = true;
+
+      (queue as MusicQueueType).playing = true;
+
+      return undefined;
     } catch (err) {
       streamErrored = true;
-      playing.then((msg: Message) => msg.edit(`❌ Couldn't play ${song}. What a drag!`));
+      playing.then(async msg => msg.edit(`❌ Couldn't play ${song}. What a drag!`));
       (queue as MusicQueueType).songs.shift();
+
       return this.play(guild, (queue as MusicQueueType).songs[0]);
     }
   }
 
-  private async getPlaylistVideos (id: string) {
+  private async getPlaylistVideos(id: string) {
     try {
-      const request = await fetch(
-        `https://www.googleapis.com/youtube/v3/playlistItems?${stringify({
-          key: process.env.GOOGLE_API_KEY!,
-          maxResults: 25,
-          part: 'snippet,contentDetails',
-          playlistId: id,
-        }
-        )}`
-      );
+      const request = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?${stringify({
+        key: process.env.GOOGLE_API_KEY!,
+        maxResults: 25,
+        part: 'snippet,contentDetails',
+        playlistId: id,
+      })}`);
 
       const data = await request.json();
       const arr: (YoutubeVideoType | null)[] = [];
       const videos = data.items;
 
-      videos.forEach(
-        async (video: YoutubeVideoType) =>
-          arr.push(await LaunchMusicCommand.getVideo((video.snippet as YoutubeVideoSnippetType).resourceId.videoId))
-      );
+      videos.forEach(async (video: YoutubeVideoType) => arr.push(await LaunchMusicCommand.getVideo((video.snippet as YoutubeVideoSnippetType).resourceId.videoId)));
+
       return arr;
     } catch (err) {
       return null;

@@ -19,10 +19,10 @@ import 'moment-duration-format';
 import path from 'path';
 
 export default class ChipsCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'chips',
-      aliases: ['bal', 'cash', 'balance'],
+      aliases: [ 'bal', 'cash', 'balance' ],
       group: 'casino',
       memberName: 'chips',
       description: 'Retrieves your current balance for the casino',
@@ -34,7 +34,7 @@ export default class ChipsCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const balEmbed = new MessageEmbed();
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
@@ -54,10 +54,9 @@ export default class ChipsCommand extends Command {
           **Balance**
           ${balance}
           **Daily Reset**
-          ${!(dailyDura.asHours() <= 0) ? dailyDura.format('[in] HH[ hour(s) and ]mm[ minute(s)]') : 'Right now!'}
+          ${(dailyDura.asHours() <= 0) ? 'Right now!' : dailyDura.format('[in] HH[ hour(s) and ]mm[ minute(s)]')}
           **Weekly Reset**
-          ${!(weeklyDura.asDays() <= 0) ? weeklyDura.format('[in] d[ day and] HH[ hour]') : 'Right now!'}`
-        );
+          ${(weeklyDura.asDays() <= 0) ? 'Right now!' : weeklyDura.format('[in] d[ day and] HH[ hour]')}`);
 
         deleteCommandMessages(msg, this.client);
 
@@ -92,14 +91,12 @@ export default class ChipsCommand extends Command {
           **Server:** ${msg.guild.name} (${msg.guild.id})
           **Author:** ${msg.author!.tag} (${msg.author!.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-          **Error Message:** ${err}`
-        );
+          **Error Message:** ${err}`);
 
         return msg.reply(oneLine`
           an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
           Want to know more about the error?
-          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-        );
+          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
       }
     }
 
@@ -109,8 +106,7 @@ export default class ChipsCommand extends Command {
       **Daily Reset**
       in 24 hours
       **Weekly Reset**
-      in 7 days`
-    );
+      in 7 days`);
 
     deleteCommandMessages(msg, this.client);
 

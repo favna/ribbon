@@ -19,15 +19,15 @@ type UnmuteArgs = {
 };
 
 export default class UnmuteCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'unmute',
-      aliases: ['um'],
+      aliases: [ 'um' ],
       group: 'moderation',
       memberName: 'unmute',
       description: 'Unmutes a previously muted member',
       format: 'MemberID|MemberName(partial or full)',
-      examples: ['unmute Muffin'],
+      examples: [ 'unmute Muffin' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -44,7 +44,7 @@ export default class UnmuteCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_ROLES', true)
-  public async run (msg: CommandoMessage, { member }: UnmuteArgs) {
+  public async run(msg: CommandoMessage, { member }: UnmuteArgs) {
     if (member.manageable) {
       try {
         const modlogChannel = msg.guild.settings.get('modlogchannel', null);
@@ -52,8 +52,7 @@ export default class UnmuteCommand extends Command {
         const muteRole = msg.guild.settings.get('muterole',
           msg.guild.roles.find(r => r.name === 'muted')
             ? msg.guild.roles.find(r => r.name === 'muted')
-            : null
-        );
+            : null);
 
         await member.roles.remove(muteRole);
 
@@ -64,7 +63,9 @@ export default class UnmuteCommand extends Command {
           .setTimestamp();
 
         if (msg.guild.settings.get('modlogs', true)) {
-          logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, muteRoleEmbed);
+          logModMessage(
+            msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, muteRoleEmbed
+          );
         }
 
         deleteCommandMessages(msg, this.client);
@@ -75,8 +76,7 @@ export default class UnmuteCommand extends Command {
         if (/(?:Missing Permissions)/i.test(err.toString())) {
           return msg.reply(stripIndents`
             an error occurred unmuting \`${member.displayName}\`.
-            Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`
-          );
+            Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
         }
         const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
@@ -85,21 +85,18 @@ export default class UnmuteCommand extends Command {
           **Server:** ${msg.guild.name} (${msg.guild.id})
           **Author:** ${msg.author!.tag} (${msg.author!.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-          **Error Message:** ${err}`
-        );
+          **Error Message:** ${err}`);
 
         return msg.reply(oneLine`
           an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
           Want to know more about the error?
-          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-        );
+          Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
       }
     }
     deleteCommandMessages(msg, this.client);
 
     return msg.reply(stripIndents`
       an error occurred unmuting \`${member.displayName}\`.
-      Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`
-    );
+      Do I have \`Manage Roles\` permission and am I higher in hierarchy than the target's roles?`);
   }
 }

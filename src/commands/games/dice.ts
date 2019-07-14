@@ -21,15 +21,15 @@ type DiceArgs = {
 };
 
 export default class DiceCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'dice',
-      aliases: ['xdicey', 'roll', 'dicey', 'die'],
+      aliases: [ 'xdicey', 'roll', 'dicey', 'die' ],
       group: 'games',
       memberName: 'dice',
       description: 'Rolls some dice with some sides. Great for the DnD players!',
       format: 'SidesOfTheDice AmountOfRolls',
-      examples: ['dice 6 5'],
+      examples: [ 'dice 6 5' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -54,14 +54,14 @@ export default class DiceCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { sides, rolls }: DiceArgs) {
+  public async run(msg: CommandoMessage, { sides, rolls }: DiceArgs) {
     const diceEmbed = new MessageEmbed();
-    const res = [];
+    const res: string[] = [];
     const dice = this.rollDice(rolls, sides);
 
-    for (const i in dice.individual) {
-      res.push(`${dice.individual[i]}`);
-    }
+    dice.individual.forEach(die => {
+      res.push(`${dice.individual[die]}`);
+    });
 
     diceEmbed
       .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
@@ -74,11 +74,11 @@ export default class DiceCommand extends Command {
     return msg.embed(diceEmbed);
   }
 
-  private rollDice (rolls: number, sides: number) {
+  private rollDice(rolls: number, sides: number) {
     const result = [];
 
-    for (let i = 1; i < Math.abs(rolls); i++) {
-      result[i - 1] = Math.floor(Math.random() * Math.floor(Math.abs(sides))) + 1;
+    for (let roll = 1; roll < Math.abs(rolls); roll++) {
+      result[roll - 1] = Math.floor(Math.random() * Math.floor(Math.abs(sides))) + 1;
     }
 
     const totalAmount = result.reduce((total, current) => total + current, 0);

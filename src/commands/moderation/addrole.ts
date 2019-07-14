@@ -22,15 +22,15 @@ type AddRoleArgs = {
 };
 
 export default class AddRoleCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'addrole',
-      aliases: ['newrole', 'ar'],
+      aliases: [ 'newrole', 'ar' ],
       group: 'moderation',
       memberName: 'addrole',
       description: 'Adds a role to a member',
       format: 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
-      examples: ['addrole favna tagrole1'],
+      examples: [ 'addrole favna tagrole1' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -52,13 +52,12 @@ export default class AddRoleCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES', true)
-  public async run (msg: CommandoMessage, { member, role }: AddRoleArgs) {
+  public async run(msg: CommandoMessage, { member, role }: AddRoleArgs) {
     try {
       if (!member.manageable) {
         return msg.reply(oneLine`
           looks like I do not have permission to edit the roles of ${member.displayName}.
-          Better go and fix your server's role permissions if you want to use this command!`
-        );
+          Better go and fix your server's role permissions if you want to use this command!`);
       }
 
       const modlogChannel = msg.guild.settings.get('modlogchannel', null);
@@ -73,7 +72,9 @@ export default class AddRoleCommand extends Command {
         .setTimestamp();
 
       if (msg.guild.settings.get('modlogs', true)) {
-        logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, roleAddEmbed);
+        logModMessage(
+          msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, roleAddEmbed
+        );
       }
 
       deleteCommandMessages(msg, this.client);
@@ -84,8 +85,7 @@ export default class AddRoleCommand extends Command {
       if (/(?:Missing Permissions)/i.test(err.toString())) {
         return msg.reply(stripIndents`
           an error occurred adding the role \`${role.name}\` to \`${member.displayName}\`.
-          The server staff should check that I have \`Manage Roles\` permission and I have the proper hierarchy.`
-        );
+          The server staff should check that I have \`Manage Roles\` permission and I have the proper hierarchy.`);
       }
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
@@ -95,14 +95,12 @@ export default class AddRoleCommand extends Command {
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** \`${role.name} (${role.id})\` || \`${member.user.tag} (${member.id})\`
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

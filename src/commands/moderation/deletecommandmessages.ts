@@ -19,16 +19,16 @@ type DeleteCommandMessagesArgs = {
 };
 
 export default class DeleteCommandMessagesCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'deletecommandmessages',
-      aliases: ['dcm'],
+      aliases: [ 'dcm' ],
       group: 'moderation',
       memberName: 'deletecommandmessages',
       description:
         'Configure whether Ribbon should delete command messages',
       format: 'boolean',
-      examples: ['deletecommandmessages enable'],
+      examples: [ 'deletecommandmessages enable' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -45,7 +45,7 @@ export default class DeleteCommandMessagesCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES', true)
-  public run (msg: CommandoMessage, { shouldEnable }: DeleteCommandMessagesArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable }: DeleteCommandMessagesArgs) {
     const dcmEmbed = new MessageEmbed();
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
 
@@ -58,7 +58,9 @@ export default class DeleteCommandMessagesCommand extends Command {
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, dcmEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, dcmEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

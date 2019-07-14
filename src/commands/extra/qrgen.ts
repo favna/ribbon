@@ -21,15 +21,15 @@ type QRGenArgs = {
 };
 
 export default class QRGenCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'qrgen',
-      aliases: ['qr', 'qrcode'],
+      aliases: [ 'qr', 'qrcode' ],
       group: 'extra',
       memberName: 'qrgen',
       description: 'Generates a QR code from text (like a URL)',
       format: 'TextToEncode',
-      examples: ['qrgen https://github.com/Favna/Ribbon'],
+      examples: [ 'qrgen https://github.com/Favna/Ribbon' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -45,7 +45,7 @@ export default class QRGenCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { url }: QRGenArgs) {
+  public async run(msg: CommandoMessage, { url }: QRGenArgs) {
     try {
       const base64 = await qr(url, { type: 'image/jpeg', rendererOpts: { quality: 1 } });
       const buffer = Buffer.from(base64.replace(/^data:image\/png;base64,/, '').toString(), 'base64');
@@ -53,7 +53,7 @@ export default class QRGenCommand extends Command {
       const qrEmbed = new MessageEmbed();
 
       qrEmbed
-        .attachFiles([embedAttachment])
+        .attachFiles([ embedAttachment ])
         .setTitle(`QR code for ${url}`)
         .setImage('attachment://qrcode.png');
 
@@ -70,14 +70,12 @@ export default class QRGenCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

@@ -16,6 +16,7 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
+import { PubgData } from 'RibbonTypes';
 
 type PubgArgs = {
   user: string;
@@ -23,14 +24,14 @@ type PubgArgs = {
 };
 
 export default class PubgCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'pubg',
       group: 'leaderboards',
       memberName: 'pubg',
       description: 'Get statistics from a PUBG account',
       format: 'PubgUsername Shard',
-      examples: ['pubg shroud pc-na'],
+      examples: [ 'pubg shroud pc-na' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -63,22 +64,22 @@ export default class PubgCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { user, shard }: PubgArgs) {
+  public async run(msg: CommandoMessage, { user, shard }: PubgArgs) {
     try {
       const pubEmbed = new MessageEmbed();
       const headers = { Accept: 'application/vnd.api+json', Authorization: `Bearer ${process.env.PUBG_API_KEY!}` };
 
       const seasonReq = await fetch(`https://api.pubg.com/shards/${shard}/seasons`, { headers });
-      const seasons = await seasonReq.json();
-      const currentSeason = seasons.data.filter((season: any) => season.attributes.isCurrentSeason)[0].id;
+      const seasons: PubgData<'season'> = await seasonReq.json();
+      const currentSeason = seasons.data.filter(season => season.attributes.isCurrentSeason)[0].id;
 
       const playerReq = await fetch(`https://api.pubg.com/shards/${shard}/players?filter[playerNames]=${user}`, { headers });
-      const players = await playerReq.json();
+      const players: PubgData<'player'> = await playerReq.json();
       const playerId = players.data[0].id;
       const playerName = players.data[0].attributes.name;
 
       const playerStatsReq = await fetch(`https://api.pubg.com/shards/${shard}/players/${playerId}/seasons/${currentSeason}`, { headers });
-      const playerStats = await playerStatsReq.json();
+      const playerStats: PubgData<'playerSeason'> = await playerStatsReq.json();
 
       pubEmbed
         .setTitle(`PUBG Player Statistics for ${playerName}`)
@@ -97,8 +98,7 @@ export default class PubgCommand extends Command {
           Drive Distance: **${playerStats.data.attributes.gameModeStats.duo.rideDistance}**
           Walk Distance: **${playerStats.data.attributes.gameModeStats.duo.walkDistance}**
         `,
-          true
-        )
+        true)
         .addField('Duos FPP Stats', stripIndents`
           Wins: **${playerStats.data.attributes.gameModeStats['duo-fpp'].wins}**
           Losses: **${playerStats.data.attributes.gameModeStats['duo-fpp'].losses}**
@@ -112,8 +112,7 @@ export default class PubgCommand extends Command {
           Drive Distance: **${playerStats.data.attributes.gameModeStats['duo-fpp'].rideDistance}**
           Walk Distance: **${playerStats.data.attributes.gameModeStats['duo-fpp'].walkDistance}**
         `,
-          true
-        )
+        true)
         .addField('Solos Stats', stripIndents`
           Wins: **${playerStats.data.attributes.gameModeStats.solo.wins}**
           Losses: **${playerStats.data.attributes.gameModeStats.solo.losses}**
@@ -127,8 +126,7 @@ export default class PubgCommand extends Command {
           Drive Distance: **${playerStats.data.attributes.gameModeStats.solo.rideDistance}**
           Walk Distance: **${playerStats.data.attributes.gameModeStats.solo.walkDistance}**
         `,
-          true
-        )
+        true)
         .addField('Solos FPP Stats', stripIndents`
           Wins: **${playerStats.data.attributes.gameModeStats['solo-fpp'].wins}**
           Losses: **${playerStats.data.attributes.gameModeStats['solo-fpp'].losses}**
@@ -142,8 +140,7 @@ export default class PubgCommand extends Command {
           Drive Distance: **${playerStats.data.attributes.gameModeStats['solo-fpp'].rideDistance}**
           Walk Distance: **${playerStats.data.attributes.gameModeStats['solo-fpp'].walkDistance}**
         `,
-          true
-        )
+        true)
         .addField('Squad Stats', stripIndents`
           Wins: **${playerStats.data.attributes.gameModeStats.squad.wins}**
           Losses: **${playerStats.data.attributes.gameModeStats.squad.losses}**
@@ -157,8 +154,7 @@ export default class PubgCommand extends Command {
           Drive Distance: **${playerStats.data.attributes.gameModeStats.squad.rideDistance}**
           Walk Distance: **${playerStats.data.attributes.gameModeStats.squad.walkDistance}**
         `,
-          true
-        )
+        true)
         .addField('Squad FPP Stats', stripIndents`
           Wins: **${playerStats.data.attributes.gameModeStats['squad-fpp'].wins}**
           Losses: **${playerStats.data.attributes.gameModeStats['squad-fpp'].losses}**
@@ -172,8 +168,7 @@ export default class PubgCommand extends Command {
           Drive Distance: **${playerStats.data.attributes.gameModeStats['squad-fpp'].rideDistance}**
           Walk Distance: **${playerStats.data.attributes.gameModeStats['squad-fpp'].walkDistance}**
         `,
-          true
-        );
+        true);
 
       deleteCommandMessages(msg, this.client);
 
@@ -181,9 +176,7 @@ export default class PubgCommand extends Command {
     } catch (err) {
       deleteCommandMessages(msg, this.client);
       if (/(?:Cannot read property)/i.test(err.toString())) {
-        return msg.reply(
-          `no player found with username \`${user}\` in \`${shard}\``
-        );
+        return msg.reply(`no player found with username \`${user}\` in \`${shard}\``);
       }
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
@@ -194,14 +187,12 @@ export default class PubgCommand extends Command {
         **User:** ${user}
         **Shard:** ${shard}
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

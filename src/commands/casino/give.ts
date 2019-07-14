@@ -26,15 +26,15 @@ type GiveArgs = {
 };
 
 export default class GiveCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'give',
-      aliases: ['donate'],
+      aliases: [ 'donate' ],
       group: 'casino',
       memberName: 'give',
       description: 'Give another player some chips',
       format: 'AnyMember ChipsAmount',
-      examples: ['give GuyInShroomSuit 50'],
+      examples: [ 'give GuyInShroomSuit 50' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -55,7 +55,7 @@ export default class GiveCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { player, chips }: GiveArgs) {
+  public async run(msg: CommandoMessage, { player, chips }: GiveArgs) {
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
     const giveEmbed = new MessageEmbed();
 
@@ -126,14 +126,12 @@ export default class GiveCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

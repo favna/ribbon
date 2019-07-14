@@ -25,15 +25,15 @@ type CopypastaAddArgs = {
 };
 
 export default class CopypastaAddCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'copypastaadd',
-      aliases: ['cpadd', 'pastaadd', 'tagadd', 'newtag'],
+      aliases: [ 'cpadd', 'pastaadd', 'tagadd', 'newtag' ],
       group: 'extra',
       memberName: 'copypastaadd',
       description: 'Saves a copypasta to local file',
       format: 'CopypastaName CopypastaContent',
-      examples: ['copypasta navy what the fuck did you just say to me ... (etc.)'],
+      examples: [ 'copypasta navy what the fuck did you just say to me ... (etc.)' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -44,7 +44,7 @@ export default class CopypastaAddCommand extends Command {
           key: 'name',
           prompt: 'What is the name of the copypasta you want to save?',
           type: 'string',
-          parse: (p: string) => p.toLowerCase(),
+          parse: (name: string) => name.toLowerCase(),
         },
         {
           key: 'content',
@@ -55,7 +55,7 @@ export default class CopypastaAddCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { name, content }: CopypastaAddArgs) {
+  public async run(msg: CommandoMessage, { name, content }: CopypastaAddArgs) {
     const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
     const pastaAddEmbed = new MessageEmbed();
 
@@ -105,14 +105,12 @@ export default class CopypastaAddCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

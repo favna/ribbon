@@ -3,11 +3,11 @@ import { stripIndents } from 'common-tags';
 import { TemperatureUnit } from '../Constants';
 
 export default class TemperatureUnitType extends ArgumentType {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, 'temperature');
   }
 
-  public validate (unit: TemperatureUnit) {
+  public validate(unit: TemperatureUnit) {
     if (TemperatureUnit[unit]) return true;
 
     return stripIndents`
@@ -15,7 +15,7 @@ export default class TemperatureUnitType extends ArgumentType {
       Respond with your new selection or`;
   }
 
-  public parse (unit: TemperatureUnit) {
+  public parse(unit: TemperatureUnit) {
     return TemperatureUnit[unit];
   }
 }

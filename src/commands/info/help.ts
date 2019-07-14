@@ -26,18 +26,18 @@ type HelpArgs = {
 };
 
 export default class HelpCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'help',
-      aliases: ['?', 'commands'],
+      aliases: [ '?', 'commands' ],
       group: 'info',
       memberName: 'help',
       description: 'Displays a list of available commands, or detailed information for a specified command.',
       details: oneLine`
-				The command may be part of a command name or a whole command name.
-				If it isn't specified, all available commands will be listed.
+        The command may be part of a command name or a whole command name.
+        If it isn't specified, all available commands will be listed.
             `,
-      examples: ['help', 'help all', 'help avatar'],
+      examples: [ 'help', 'help all', 'help avatar' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -55,9 +55,8 @@ export default class HelpCommand extends Command {
     });
   }
 
-  // tslint:disable-next-line:cyclomatic-complexity
   @resolveGuildI18n()
-  public async run (msg: CommandoMessage, { command = '', language }: HelpArgs) {
+  public async run(msg: CommandoMessage, { command = '', language }: HelpArgs) {
     try {
       const groups = this.client.registry.groups;
       const commands = this.client.registry.findCommands(command, false, msg);
@@ -72,14 +71,14 @@ export default class HelpCommand extends Command {
                           __Command **${commands[0].name}**:__ ${this.getDescription(commands[0], language)}
                           ${commands[0].guildOnly ? ' (Usable only in servers)' : ''}
                           ${commands[0].nsfw ? ' (NSFW)' : ''}`
-                        }
+}
 
                         **Format:** ${msg.anyUsage(`${commands[0].name}${commands[0].format ? ` ${commands[0].format}` : ''}`)}`;
           if (commands[0].aliases.length > 0) help += `\n**Aliases:** ${commands[0].aliases.join(', ')}`;
           help += `\n${oneLine`
                         **Group:** ${commands[0].group.name}
                         (\`${commands[0].groupID}:${commands[0].memberName}\`)`
-                      }`;
+          }`;
           if (commands[0].details) help += `\n**Details:** ${this.getDetails(commands[0], language)}`;
           if (commands[0].examples) help += `\n**Examples:**\n${commands[0].examples.join('\n')}`;
 
@@ -93,23 +92,27 @@ export default class HelpCommand extends Command {
           }
 
           this.endHelpCommand(msg, this.client);
+
           return messages;
         }
         if (commands.length > 15) {
           this.endHelpCommand(msg, this.client);
+
           return msg.reply('Multiple commands found. Please be more specific.');
         }
         if (commands.length > 1) {
           this.endHelpCommand(msg, this.client);
+
           return msg.reply(util.disambiguation(commands, 'commands'));
         }
 
         this.endHelpCommand(msg, this.client);
 
-        return msg.reply(
-          `Unable to identify command. Use ${msg.usage(
-            undefined, msg.channel.type === 'dm' ? this.client.commandPrefix : msg.guild.commandPrefix, msg.channel.type === 'dm' ? this.client.user! : undefined
-          )} to view the list of all commands.`
+        return msg.reply(oneLine`
+        Unable to identify command.
+        Use ${msg.usage(undefined,
+    msg.channel.type === 'dm' ? this.client.commandPrefix : msg.guild.commandPrefix,
+    msg.channel.type === 'dm' ? this.client.user! : undefined)} to view the list of all commands.`
         );
       }
 
@@ -131,19 +134,19 @@ export default class HelpCommand extends Command {
               __${grp.name}__
           ${grp.commands.filter(cmd => !cmd.hidden && (showAll || cmd.isUsable(msg))).map(cmd => stripIndents`
               **${cmd.name}:** ${this.getDescription(cmd, language)}${cmd.nsfw ? ' (NSFW)' : ''}`)
-          .join('\n')}`).join('\n\n')}`;
+    .join('\n')}`).join('\n\n')}`;
 
         if (body.length >= 2000) {
           const splitContent = DJSUtil.splitMessage(body) as string[];
 
-          for (const part in splitContent) {
+          splitContent.forEach(async part => (
             messages.push(await msg.direct('', {
               embed: {
                 color: msg.guild ? msg.guild.me!.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
-                description: splitContent[part],
+                description: part,
               },
-            }) as Message);
-          }
+            }) as Message)
+          ));
         } else {
           messages.push(await msg.direct('', {
             embed: {
@@ -166,23 +169,25 @@ export default class HelpCommand extends Command {
     }
   }
 
-  private endHelpCommand (msg: CommandoMessage, client: CommandoClient): void {
+  private endHelpCommand(msg: CommandoMessage, client: CommandoClient): void {
     deleteCommandMessages(msg, client);
   }
 
-  private hextodec (colour: string) {
+  private hextodec(colour: string) {
     return parseInt(colour.replace('#', ''), 16);
   }
 
-  private getDescription (command: Command, language: string): string {
+  private getDescription(command: Command, language: string): string {
     const translateKey = `commands.${command.groupID}.${command.memberName}.description`;
     const translation = i18n.t(translateKey, { lng: language });
+
     return translation && translateKey !== translation ? translation : command.description;
   }
 
-  private getDetails (command: Command, language: string): string {
+  private getDetails(command: Command, language: string): string {
     const translateKey = `commands.${command.groupID}.${command.memberName}.details`;
     const translation = i18n.t(translateKey, { lng: language });
+
     return translation && translateKey !== translation ? translation : command.details;
   }
 }

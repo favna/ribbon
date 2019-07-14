@@ -5,9 +5,9 @@ import emojiRegex from 'emoji-regex';
 import { YoutubeVideoType } from '../RibbonTypes';
 import { diacriticsMap } from './Constants';
 
-export const cleanArray = (deleteValue: string | number | undefined | any, array: (string | number | undefined | any)[]) => array.filter(element => element !== deleteValue);
+export const cleanArray = <T extends unknown>(deleteValue: string | number | undefined | null, array: T[]) => array.filter(element => element !== deleteValue);
 export const sentencecase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-export const titlecase = (str: string) => str.toLowerCase().replace(/(^[a-z]| [a-z]|-[a-z])/g, word => word.toUpperCase());
+export const titlecase = (str: string) => str.toLowerCase().replace(/^([a-z]| [a-z]|-[a-z])/g, word => word.toUpperCase());
 export const navigationReactionFilter = (reaction: MessageReaction) => (reaction.emoji.name === '➡' || reaction.emoji.name === '⬅');
 export const injectNavigationEmotes = async (message: CommandoMessage): Promise<void> => {
   await message.react('⬅');
@@ -41,7 +41,9 @@ export const deleteCommandMessages = (msg: CommandoMessage, client: CommandoClie
   if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) msg.delete();
 };
 
-export const logModMessage = (msg: CommandoMessage, guild: CommandoGuild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed) => {
+export const logModMessage = async (
+  msg: CommandoMessage, guild: CommandoGuild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed
+) => {
   if (!guild.settings.get('hasSentModLogMessage', false)) {
     msg.reply(oneLine`
             📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
@@ -82,12 +84,13 @@ export const parseOrdinal = (num: number) => {
   }
 };
 
-export const removeDiacritics = (str: string) => {
+export const removeDiacritics = (input: string) => {
+  let sentence = input;
   for (const diacritic of diacriticsMap) {
-    str = str.replace(diacritic.letters, diacritic.base);
+    sentence = input.replace(diacritic.letters, diacritic.base);
   }
 
-  return str;
+  return sentence;
 };
 
 export const roundNumber = (num: number, scale = 0) => {
@@ -105,45 +108,40 @@ export const roundNumber = (num: number, scale = 0) => {
 };
 
 export const clientHasManageMessages = () => {
-  return (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
-    const fn: (...args: any[]) => any = descriptor.value;
+  return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+    const fn: (...args: unknown[]) => unknown = descriptor.value;
 
-    descriptor.value = function (msg: CommandoMessage, args: any, fromPattern: boolean) {
+    descriptor.value = async function value(msg: CommandoMessage, args: { hasManageMessages: boolean }, fromPattern: boolean) {
       const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user!)!.has('MANAGE_MESSAGES');
       args.hasManageMessages = clientHasPermission;
 
-      // tslint:disable-next-line:no-invalid-this
-      return fn.apply(this, [msg, args, fromPattern]);
+      return fn.apply(this, [ msg, args, fromPattern ]);
     };
   };
 };
 
-export const shouldHavePermission = (
-  permission: PermissionString, shouldClientHavePermission: boolean = false
-): MethodDecorator => {
-  return (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
-    const fn: (...args: any[]) => any = descriptor.value;
+export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission: boolean = false): MethodDecorator => {
+  return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+    const fn: (...args: unknown[]) => unknown = descriptor.value;
 
-    descriptor.value = function (msg: CommandoMessage, args: object, fromPattern: boolean) {
+    descriptor.value = async function value(msg: CommandoMessage, args: object, fromPattern: boolean) {
       const authorIsOwner = msg.client.isOwner(msg.author!);
       const memberHasPermission = msg.member!.hasPermission(permission);
 
       if (!memberHasPermission && !authorIsOwner) {
-        return msg.command.onBlock(msg, 'permission', {
-          response: `You need the "${CommandoUtil.permissions[permission]}" permission to use the ${msg.command.name} command`,
-        });
+        return msg.command.onBlock(msg, 'permission',
+          { response: `You need the "${CommandoUtil.permissions[permission]}" permission to use the ${msg.command.name} command`});
       }
 
       if (shouldClientHavePermission) {
         const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user!)!.has(permission);
 
         if (!clientHasPermission) {
-          return msg.command.onBlock(msg, 'clientPermissions', { missing: [permission] });
+          return msg.command.onBlock(msg, 'clientPermissions', { missing: [ permission ] });
         }
       }
 
-      // tslint:disable-next-line:no-invalid-this
-      return fn.apply(this, [msg, args, fromPattern]);
+      return fn.apply(this, [ msg, args, fromPattern ]);
     };
 
     return descriptor;
@@ -151,28 +149,27 @@ export const shouldHavePermission = (
 };
 
 export const resolveGuildI18n = (): MethodDecorator => {
-  return (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
-    const fn: (...args: any[]) => any = descriptor.value;
+  return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+    const fn: (...args: unknown[]) => unknown = descriptor.value;
 
-    descriptor.value = function (msg: CommandoMessage, args: any, fromPattern: boolean) {
+    descriptor.value = async function value(msg: CommandoMessage, args: { language: 'en' | 'nl' }, fromPattern: boolean) {
       const language = msg.guild ? msg.guild.settings.get('i18n', 'en') : 'en';
       args.language = language;
 
-      // tslint:disable-next-line:no-invalid-this
-      return fn.apply(this, [msg, args, fromPattern]);
+      return fn.apply(this, [ msg, args, fromPattern ]);
     };
   };
 };
 
 export class Song {
   public name: string;
-  public id: any;
-  public length: any;
+  public id: string;
+  public length: number;
   public member: GuildMember;
   public dispatcher: StreamDispatcher | null;
   public playing: boolean;
 
-  constructor (video: YoutubeVideoType, member: GuildMember) {
+  public constructor(video: YoutubeVideoType, member: GuildMember) {
     this.name = Util.escapeMarkdown(video.title);
     this.id = video.id;
     this.length = video.durationSeconds;
@@ -181,42 +178,42 @@ export class Song {
     this.playing = false;
   }
 
-  get url () {
+  public get url() {
     return `https://www.youtube.com/watch?v=${this.id}`;
   }
 
-  get thumbnail () {
+  public get thumbnail() {
     return `https://img.youtube.com/vi/${this.id}/mqdefault.jpg`;
   }
 
-  get username () {
+  public get username() {
     return Util.escapeMarkdown(`${this.member.user.tag} (${this.member.user.id})`);
   }
 
-  get avatar () {
+  public get avatar() {
     return `${this.member.user.displayAvatarURL({ format: 'png' })}`;
   }
 
-  get lengthString () {
+  public get lengthString() {
     return Song.timeString(this.length);
   }
 
-  public static timeString (seconds: number, forceHours = false) {
+  public static timeString(seconds: number, forceHours = false) {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
 
     return oneLineTrim`
-			${forceHours || hours >= 1 ? `${hours}:` : ''}
-			${hours >= 1 ? `0${minutes}`.slice(-2) : minutes}:
-			${`0${Math.floor(seconds % 60)}`.slice(-2)}
-		`;
+     ${forceHours || hours >= 1 ? `${hours}:` : ''}
+     ${hours >= 1 ? `0${minutes}`.slice(-2) : minutes}:
+     ${`0${Math.floor(seconds % 60)}`.slice(-2)}
+    `;
   }
 
-  public timeLeft (currentTime: number) {
+  public timeLeft(currentTime: number) {
     return Song.timeString(this.length - currentTime);
   }
 
-  public toString () {
+  public toString() {
     return `${this.name} (${this.lengthString})`;
   }
 }

@@ -22,15 +22,15 @@ type DeleteRoleArgs = {
 };
 
 export default class DeleteRoleCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'delrole',
-      aliases: ['deleterole', 'dr', 'remrole', 'removerole'],
+      aliases: [ 'deleterole', 'dr', 'remrole', 'removerole' ],
       group: 'moderation',
       memberName: 'delrole',
       description: 'Deletes a role from a member',
       format: 'MemberID|MemberName(partial or full) RoleID|RoleName(partial or full)',
-      examples: ['delrole favna tagrole1'],
+      examples: [ 'delrole favna tagrole1' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -52,13 +52,11 @@ export default class DeleteRoleCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_ROLES', true)
-  public async run (msg: CommandoMessage, { member, role }: DeleteRoleArgs) {
+  public async run(msg: CommandoMessage, { member, role }: DeleteRoleArgs) {
     try {
       if (!member.manageable) {
-        return msg.reply(
-          oneLine`looks like I do not have permission to edit the roles of ${member.displayName}.
-                    Better go and fix your server's role permissions if you want to use this command!`
-        );
+        return msg.reply(oneLine`looks like I do not have permission to edit the roles of ${member.displayName}.
+                    Better go and fix your server's role permissions if you want to use this command!`);
       }
 
       const modlogChannel = msg.guild.settings.get('modlogchannel', null);
@@ -73,7 +71,9 @@ export default class DeleteRoleCommand extends Command {
         .setTimestamp();
 
       if (msg.guild.settings.get('modlogs', true)) {
-        logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, roleRemoveEmbed);
+        logModMessage(
+          msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, roleRemoveEmbed
+        );
       }
 
       deleteCommandMessages(msg, this.client);
@@ -84,14 +84,12 @@ export default class DeleteRoleCommand extends Command {
       if (/(?:Missing Permissions)/i.test(err.toString())) {
         return msg.reply(stripIndents`
           an error occurred removing the role \`${role.name}\` from \`${member.displayName}\`.
-          The server staff should check that I have \`Manage Roles\` permission and I have the proper hierarchy.`
-        );
+          The server staff should check that I have \`Manage Roles\` permission and I have the proper hierarchy.`);
       }
       if (/(?:is not an array or collection of roles)/i.test(err.toString())) {
         return msg.reply(stripIndents`
           it looks like you supplied an invalid role to delete.
-          If you are certain that the role is valid please feel free to open an issue on the GitHub.`
-        );
+          If you are certain that the role is valid please feel free to open an issue on the GitHub.`);
       }
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
@@ -101,14 +99,12 @@ export default class DeleteRoleCommand extends Command {
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** \`${role.name} (${role.id})\` || \`${member.user.tag} (${member.id})\`
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

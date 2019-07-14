@@ -26,16 +26,16 @@ type CountdownRemoveArgs = {
 };
 
 export default class CountdownRemove extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'countdownremove',
-      aliases: ['cdremove', 'countdowndelete', 'cddelete', 'cdd', 'cdr'],
+      aliases: [ 'cdremove', 'countdowndelete', 'cddelete', 'cdd', 'cdr' ],
       group: 'moderation',
       memberName: 'countdownremove',
       description: 'Remove a specified countdown',
       format: 'CountdownID',
       details: 'Use the countdownlist command to find the ID for deleting',
-      examples: ['countdownremove 1'],
+      examples: [ 'countdownremove 1' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -60,12 +60,14 @@ export default class CountdownRemove extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public run (msg: CommandoMessage, { id }: CountdownRemoveArgs) {
+  public async run(msg: CommandoMessage, { id }: CountdownRemoveArgs) {
     try {
       const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
       const modlogChannel = msg.guild.settings.get('modlogchannel', null);
       const cdrEmbed = new MessageEmbed();
-      const { datetime, tag, channel, content } = conn.prepare(`SELECT datetime, tag, channel, content from "${msg.guild.id}" WHERE id = ?`).get(id);
+      const {
+        datetime, tag, channel, content,
+      } = conn.prepare(`SELECT datetime, tag, channel, content from "${msg.guild.id}" WHERE id = ?`).get(id);
 
       conn.prepare(`DELETE FROM "${msg.guild.id}" WHERE id = ?`).run(id);
 
@@ -78,12 +80,13 @@ export default class CountdownRemove extends Command {
           **Countdown Duration:** ${moment.duration(moment(datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
           **Tag on event:** ${tag === 'none' ? 'No one' : `@${tag}`}
           **Channel:** <#${channel}>
-          **Message:** ${content}`
-        )
+          **Message:** ${content}`)
         .setTimestamp();
 
       if (msg.guild.settings.get('modlogs', true)) {
-        logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, cdrEmbed);
+        logModMessage(
+          msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, cdrEmbed
+        );
       }
 
       deleteCommandMessages(msg, this.client);
@@ -100,14 +103,12 @@ export default class CountdownRemove extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command `
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

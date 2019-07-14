@@ -8,19 +8,22 @@ export const badwords = (msg: CommandoMessage, words: string[], client: Commando
   if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES') || !words || !words.length) {
     return false;
   }
-  return words.some((v: string) => msg.content.indexOf(v) >= 0);
+
+  return words.some((word: string) => msg.content.includes(word));
 };
 
-export const duptext = (msg: CommandoMessage, within: number, equals: number, distance: number, client: CommandoClient) => {
+export const duptext = (
+  msg: CommandoMessage, within: number, equals: number, distance: number, client: CommandoClient
+) => {
   if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
-  const authorMessages = msg.channel.messages.filter((m: Message) => {
-    const diff = moment.duration(moment(m.createdTimestamp).diff(moment()));
+  const authorMessages = msg.channel.messages.filter((message: Message) => {
+    const diff = moment.duration(moment(message.createdTimestamp).diff(moment()));
 
     return (
       isNumberBetween(diff.asMinutes(), within * -1, 0, true) &&
-      m.author!.id === msg.author!.id
+      message.author!.id === msg.author!.id
     );
   });
 
@@ -30,12 +33,10 @@ export const duptext = (msg: CommandoMessage, within: number, equals: number, di
 
   const msgArray = authorMessages.array();
 
-  msgArray.sort((x: Message, y: Message) => y.createdTimestamp - x.createdTimestamp);
+  msgArray.sort((prevMsg: Message, nextMsg: Message) => nextMsg.createdTimestamp - prevMsg.createdTimestamp);
 
-  const levdist = levenshtein.get(
-    msgArray[0].cleanContent,
-    msgArray[1].cleanContent
-  );
+  const levdist = levenshtein.get(msgArray[0].cleanContent,
+    msgArray[1].cleanContent);
 
   return levdist <= distance;
 };
@@ -70,6 +71,7 @@ export const mentions = (msg: CommandoMessage, threshold: number, client: Comman
   if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
+
   return countMentions(msg.content) >= threshold;
 };
 
@@ -77,15 +79,15 @@ export const links = (msg: CommandoMessage, client: CommandoClient) => {
   if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
-  return /https?:\/\/(?!discordapp\.com|discord.gg)[^\s]+/gim.test(
-    msg.content
-  );
+
+  return /https?:\/\/(?!discordapp\.com|discord.gg)[^\s]+/gim.test(msg.content);
 };
 
 export const invites = (msg: CommandoMessage, client: CommandoClient) => {
   if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
+
   return /(?:discord\.gg|discordapp.com\/invite)/gim.test(msg.content);
 };
 
@@ -93,21 +95,19 @@ export const slowmode = (msg: CommandoMessage, within: number, client: CommandoC
   if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
-  const authorMessages = msg.channel.messages.filter((m: Message) => {
-    const diff = moment.duration(moment(m.createdTimestamp).diff(moment()));
+  const authorMessages = msg.channel.messages.filter((message: Message) => {
+    const diff = moment.duration(moment(message.createdTimestamp).diff(moment()));
 
     return (
       isNumberBetween(diff.asSeconds(), within * -1, 0, true) &&
-      m.author!.id === msg.author!.id
+      message.author!.id === msg.author!.id
     );
   });
 
   const msgArray = authorMessages.array();
 
   if (msgArray.length) {
-    const diff = moment.duration(
-      moment(msgArray[0].createdAt).diff(moment())
-    );
+    const diff = moment.duration(moment(msgArray[0].createdAt).diff(moment()));
 
     if (diff.asSeconds() <= within) {
       return true;

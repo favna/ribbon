@@ -16,7 +16,7 @@
 import { ASSET_BASE_PATH, CollectorTimeout } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase, titlecase } from '@components/Utils';
 import zalgo from '@favware/zalgo';
-import { pokeAliases } from '@pokedex/aliases';
+import { pokedexAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import formats from '@pokedex/formats.json';
 import BattlePokedex from '@pokedex/pokedex';
@@ -25,7 +25,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import { FlavorJSONType, FormatsJSONType, PokeDataType, PokeDexAliases, PokedexType } from 'RibbonTypes';
+import { FlavorJSONType, FormatsJSONType, PokeDataType, PokedexAlias, Pokedex } from 'RibbonTypes';
 
 type DexArgs = {
   pokemon: string;
@@ -35,15 +35,15 @@ type DexArgs = {
 };
 
 export default class DexCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'dex',
-      aliases: ['p', 'mon', 'pokemon', 'pokedex', 'df', 'dexfind', 'dexdata', 'dexter', 'rotom'],
+      aliases: [ 'p', 'mon', 'pokemon', 'pokedex', 'df', 'dexfind', 'dexdata', 'dexter', 'rotom' ],
       group: 'pokemon',
       memberName: 'dex',
       description: 'Get the info on a Pokémon',
       format: 'PokemonName',
-      examples: ['dex Dragonite'],
+      examples: [ 'dex Dragonite' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -60,7 +60,7 @@ export default class DexCommand extends Command {
     });
   }
 
-  private static fetchColor (col: string) {
+  private static fetchColor(col: string) {
     switch (col) {
       case 'Black':
         return '#323232';
@@ -88,7 +88,9 @@ export default class DexCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { pokemon, shines, hasManageMessages, position = 0 }: DexArgs) {
+  public async run(msg: CommandoMessage, {
+    pokemon, shines, hasManageMessages, position = 0,
+  }: DexArgs) {
     try {
       if (/(?:--shiny)/i.test(pokemon)) {
         pokemon = pokemon.substring(0, pokemon.indexOf('--shiny')) + pokemon.substring(pokemon.indexOf('--shiny') + '--shiny'.length).replace(/ /g, '');
@@ -98,11 +100,11 @@ export default class DexCommand extends Command {
         pokemon = `${pokemon.substring(pokemon.split(' ')[0].length + 1)}mega`;
       }
 
-      const pokeoptions: FuseOptions<PokedexType & PokeDexAliases> = {
-        keys: ['alias', 'species', 'name', 'num'],
+      const pokeoptions: FuseOptions<Pokedex & PokedexAlias> = {
+        keys: [ 'alias', 'species', 'name', 'num' ],
         threshold: 0.2,
       };
-      const aliasFuse = new Fuse(pokeAliases, pokeoptions);
+      const aliasFuse = new Fuse(pokedexAliases, pokeoptions);
       const pokeFuse = new Fuse(BattlePokedex, pokeoptions);
       const firstSearch = pokeFuse.search(pokemon);
       const aliasSearch = !firstSearch.length ? aliasFuse.search(pokemon) : [];
@@ -112,7 +114,9 @@ export default class DexCommand extends Command {
 
       let poke = pokeSearch[position];
       let pokeData = this.fetchAllData(poke, shines, pokeFuse);
-      let dexEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position, hasManageMessages);
+      let dexEmbed = this.prepMessage(
+        pokeData, poke, shines, pokeSearch.length, position, hasManageMessages
+      );
 
       deleteCommandMessages(msg, this.client);
 
@@ -123,12 +127,15 @@ export default class DexCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= pokeSearch.length) position = 0;
               if (position < 0) position = pokeSearch.length - 1;
               poke = pokeSearch[position];
               pokeData = this.fetchAllData(poke, shines, pokeFuse);
-              dexEmbed = this.prepMessage(pokeData, poke, shines, pokeSearch.length, position, hasManageMessages);
+              dexEmbed = this.prepMessage(
+                pokeData, poke, shines, pokeSearch.length, position, hasManageMessages
+              );
               message.edit('', dexEmbed);
               message.reactions.get(reaction.emoji.name)!.users.remove(user);
             }
@@ -149,22 +156,17 @@ export default class DexCommand extends Command {
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${pokemon}
         **Shiny?:** ${shines ? 'yes' : 'no'}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 
-  // tslint:disable-next-line:cyclomatic-complexity
-  private fetchAllData (
-    poke: PokedexType, shines: boolean,
-    pokeFuse: Fuse<PokedexType, Fuse.FuseOptions<PokedexType & PokeDexAliases>>
-  ): PokeDataType {
+  private fetchAllData(poke: Pokedex, shines: boolean,
+    pokeFuse: Fuse<Pokedex, Fuse.FuseOptions<Pokedex & PokedexAlias>>): PokeDataType {
     const tiers: FormatsJSONType = formats as FormatsJSONType;
     const flavors: FlavorJSONType = entries as FlavorJSONType;
     const smogonTier = tiers[poke.species.toLowerCase().replace(/([-% ])/gm, '')]
@@ -178,14 +180,13 @@ export default class DexCommand extends Command {
       genders: '',
       sprite: '',
       tier: smogonTier,
-      entries: [],
     };
 
     if (poke.prevo) {
       pokeData.evos = oneLine`\`${sentencecase(poke.prevo)}\`
             ${pokeFuse.search(poke.prevo)[0].evoLevel
-          ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})`
-          : ''} → ${pokeData.evos} **(${poke.evoLevel})**`;
+    ? `(${pokeFuse.search(poke.prevo)[0].evoLevel})`
+    : ''} → ${pokeData.evos} **(${poke.evoLevel})**`;
 
       if (pokeFuse.search(poke.prevo).length) {
         const prevoSearch = pokeFuse.search(poke.prevo)[0].prevo;
@@ -202,9 +203,7 @@ export default class DexCommand extends Command {
         if (pokeFuse.search(poke.evos[0]).length && pokeFuse.search(poke.evos[0])[0].evos) {
           const evosMap = pokeFuse.search(poke.evos[0])[0].evos;
           if (evosMap && evosMap.length) {
-            pokeData.evos = oneLine`${pokeData.evos} → ${evosMap.map((entry: string) =>
-              `\`${sentencecase(entry)}\` (${pokeFuse.search(entry)[0].evoLevel})`
-            ).join(', ')}`;
+            pokeData.evos = oneLine`${pokeData.evos} → ${evosMap.map((entry: string) => `\`${sentencecase(entry)}\` (${pokeFuse.search(entry)[0].evoLevel})`).join(', ')}`;
           }
         }
       }
@@ -242,7 +241,6 @@ export default class DexCommand extends Command {
         .genderRatio.F * 100}% ♀`;
     }
 
-    // tslint:disable:prefer-conditional-expression
     if (poke.num >= 0) {
       if (poke.forme && flavors[`${poke.num}${poke.forme.toLowerCase()}`]) {
         pokeData.flavors = flavors[`${poke.num}${poke.forme.toLowerCase()}`][flavors[`${poke.num}${poke.forme.toLowerCase()}`].length - 1].flavor_text;
@@ -258,13 +256,12 @@ export default class DexCommand extends Command {
     } else {
       pokeData.sprite = `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${poke.species.replace(/([%. ])/g, '').toLowerCase()}.png`;
     }
-    // tslint:enable:prefer-conditional-expression
 
     return pokeData;
   }
 
-  private prepMessage (
-    pokeData: PokeDataType, poke: PokedexType, shines: boolean, pokeSearchLength: number,
+  private prepMessage(
+    pokeData: PokeDataType, poke: Pokedex, shines: boolean, pokeSearchLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
     const dexEmbed: MessageEmbed = new MessageEmbed();
@@ -273,7 +270,11 @@ export default class DexCommand extends Command {
       .setColor(DexCommand.fetchColor(poke.color))
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
       .setAuthor(`#${poke.num} - ${sentencecase(poke.species)}`, pokeData.sprite)
-      .setImage(`https://play.pokemonshowdown.com/sprites/${shines ? 'xyani-shiny' : 'xyani'}/${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`)
+      .setImage(oneLine`
+          https://play.pokemonshowdown.com/sprites/
+          ${shines ? 'xyani-shiny' : 'xyani'}/
+          ${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`
+      )
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${pokeSearchLength}` : '')
       .addField('Type(s)', poke.types.join(', '), true)
       .addField('Abilities', pokeData.abilities, true)
@@ -290,30 +291,28 @@ export default class DexCommand extends Command {
       .addField('Base Stats',
         Object.keys(poke.baseStats)
           .map(index => `${index.toUpperCase()}: **${poke.baseStats[index]}**`)
-          .join(', ')
-      )
+          .join(', '))
       .addField('PokéDex Data', pokeData.flavors)
       .addField('External Resource', oneLine`
         ${poke.num >= 0
-          ? `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${titlecase(poke.species).replace(/ /g, '_')}_(Pokémon\\))`
-          : '*Fan made Pokémon*'
-        }
+    ? `[Bulbapedia](http://bulbapedia.bulbagarden.net/wiki/${titlecase(poke.species).replace(/ /g, '_')}_(Pokémon\\))`
+    : '*Fan made Pokémon*'
+}
         ${poke.num >= 1
-          ? oneLine`
+    ? oneLine`
             | [Smogon](http://www.smogon.com/dex/sm/pokemon/${poke.species.replace(/ /g, '_')})
             | [PokémonDB](http://pokemondb.net/pokedex/${poke.species.replace(/ /g, '-')})`
-          : ''
-        }`
-      );
+    : ''
+}`);
 
     if (poke.num === 0) {
       const fields = [];
 
-      for (const field in dexEmbed.fields) {
+      for (const field of dexEmbed.fields) {
         fields.push({
-          inline: dexEmbed.fields[field].inline,
-          name: zalgo(dexEmbed.fields[field].name),
-          value: zalgo(dexEmbed.fields[field].value),
+          inline: field.inline,
+          name: zalgo(field.name),
+          value: zalgo(field.value),
         });
       }
 

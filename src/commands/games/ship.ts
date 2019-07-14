@@ -25,16 +25,16 @@ type ShipArgs = {
 };
 
 export default class ShipCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'ship',
-      aliases: ['love', 'marry', 'engage'],
+      aliases: [ 'love', 'marry', 'engage' ],
       group: 'games',
       memberName: 'ship',
       description: 'Ship 2 members',
       format: 'ShipMemberOne ShipMemberTwo',
       details: 'Leaving 1 or both parameters out will have Ribbon randomly pick 1 or 2 members',
-      examples: ['ship Biscuit Rei'],
+      examples: [ 'ship Biscuit Rei' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -57,20 +57,20 @@ export default class ShipCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { firstMember, secondMember }: ShipArgs) {
-    const romeo: User = firstMember !== 'random' ? (firstMember as GuildMember).user : msg.guild.members.random()!.user;
-    const juliet: User = secondMember !== 'random' ? (secondMember as GuildMember).user : msg.guild.members.random()!.user;
+  public async run(msg: CommandoMessage, { firstMember, secondMember }: ShipArgs) {
+    const romeo: User = firstMember === 'random' ? msg.guild.members.random()!.user : (firstMember as GuildMember).user;
+    const juliet: User = secondMember === 'random' ? msg.guild.members.random()!.user : (secondMember as GuildMember).user;
 
     const avaOne = await jimp.read(romeo.displayAvatarURL({ format: 'png' }));
     const avaTwo = await jimp.read(juliet.displayAvatarURL({ format: 'png' }));
     const boat = new MessageEmbed();
     const canvas = await jimp.read(384, 128);
     const heart = await jimp.read(`${ASSET_BASE_PATH}/ribbon/heart.png`);
-    const randLengthRomeo = roundNumber(Math.random() * 4 + 2);
-    const randLengthJuliet = roundNumber(Math.random() * 4 + 2);
+    const randLengthRomeo = roundNumber((Math.random() * 4) + 2);
+    const randLengthJuliet = roundNumber((Math.random() * 4) + 2);
     const shipName = (
-      romeo.username.substring(0, roundNumber(romeo.username.length / randLengthRomeo))
-      + juliet.username.substring(roundNumber(juliet.username.length / randLengthJuliet))
+      romeo.username.substring(0, roundNumber(romeo.username.length / randLengthRomeo)) +
+      juliet.username.substring(roundNumber(juliet.username.length / randLengthJuliet))
     ).replace(/[.,\\/#!$%^&*;:{}=\-_`~() ]/g, '');
 
     avaOne.resize(128, jimp.AUTO);
@@ -83,7 +83,7 @@ export default class ShipCommand extends Command {
     const buffer = await canvas.getBufferAsync(jimp.MIME_PNG);
     const embedAttachment = new MessageAttachment(buffer, 'ship.png');
 
-    boat.attachFiles([embedAttachment])
+    boat.attachFiles([ embedAttachment ])
       .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
       .setDescription(oneLine`I call it... ${shipName}! 😘`)

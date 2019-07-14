@@ -24,15 +24,15 @@ type SoftbanArgs = {
 };
 
 export default class SoftbanCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'softban',
-      aliases: ['sb', 'sban'],
+      aliases: [ 'sb', 'sban' ],
       group: 'moderation',
       memberName: 'softban',
       description: 'Kicks a member while also purging messages from the last 24 hours',
       format: 'MemberID|MemberName(partial or full) [ReasonForSoftbanning]',
-      examples: ['softban JohnDoe annoying'],
+      examples: [ 'softban JohnDoe annoying' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -54,7 +54,7 @@ export default class SoftbanCommand extends Command {
   }
 
   @shouldHavePermission('BAN_MEMBERS', true)
-  public run (msg: CommandoMessage, { member, reason }: SoftbanArgs) {
+  public async run(msg: CommandoMessage, { member, reason }: SoftbanArgs) {
     if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to softban yourself.');
     if (!member.bannable) return msg.reply('I cannot softban that member, their role is probably higher than my own!');
 
@@ -70,12 +70,13 @@ export default class SoftbanCommand extends Command {
       .setDescription(stripIndents`
         **Member:** ${member.user.tag} (${member.id})
         **Action:** Softban
-        **Reason:** ${reason}`
-      )
+        **Reason:** ${reason}`)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, softbanEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, softbanEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

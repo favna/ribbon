@@ -1,7 +1,7 @@
-// tslint:disable:object-literal-sort-keys
-import { PokeItemDetailsType } from 'RibbonTypes';
+/* eslint-disable max-len, object-curly-newline */
+import { PokemonItem } from 'RibbonTypes';
 
-const ITEMS: PokeItemDetailsType[] = [
+const pokemonItem: PokemonItem[] = [
   {
     id: 'crucibellite',
     name: 'Crucibellite',
@@ -2743,4 +2743,4 @@ const ITEMS: PokeItemDetailsType[] = [
   }
 ];
 
-export default ITEMS;
+export default pokemonItem;

@@ -1,11 +1,10 @@
-// tslint:disable:no-dynamic-delete no-conditional-assignment
-
+/* eslint-disable no-underscore-dangle, @typescript-eslint/no-explicit-any */
 import path from 'path';
 
 const find = (moduleName: string) => {
   try {
     return require.resolve(moduleName);
-  } catch (e) {
+  } catch (err) {
     return null;
   }
 };
@@ -32,7 +31,6 @@ const searchCache = (moduleName: string, callback: (arg: any) => void) => {
 };
 
 export const decache = (moduleName: string | null): void => {
-
   if (moduleName) {
     moduleName = find(moduleName);
 
@@ -47,9 +45,9 @@ export const decache = (moduleName: string | null): void => {
     });
   }
 
-  return;
+  return undefined;
 };
 
-interface IModuleFunction extends Function {
+type IModuleFunction = {
   _pathCache: any;
-}
+} & Function;

@@ -22,11 +22,11 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { stringify } from '@favware/querystring';
 import { ArgumentCollector, Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { MessageEmbed, TextChannel, Message } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { TCGPropsType } from 'RibbonTypes';
+import { TCGPropsType, TCGCardData } from 'RibbonTypes';
 
 type NameArgumentCollection = { name: string };
 type TypeArgumentCollection = { types: string };
@@ -37,10 +37,10 @@ type CardChooserArgumentCollection = { card: number };
 type PokemonTCGArgs = { props: string[] };
 
 export default class PokemonTCGCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'tcg',
-      aliases: ['ptcg', 'tcgo'],
+      aliases: [ 'ptcg', 'tcgo' ],
       group: 'pokemon',
       memberName: 'tcg',
       description: 'Gets information on a Pokemon card',
@@ -49,7 +49,7 @@ export default class PokemonTCGCommand extends Command {
                 ${oneLine`
                   At start of the command you can specify which properties you want to use for the search,
                   the options are \`name\`, \`types\`, \`subtype\`, \`supertype\` and \`hp\``
-        }
+}
                 After specifying which options you want to use, Ribbon will go through the options asking you the values to use for the search
                 By default only \`name\` is used as argument and the supertype is set to pokemon
                 name is the name of the pokemon card
@@ -57,7 +57,7 @@ export default class PokemonTCGCommand extends Command {
                 subtype specifies the subtype of a card (ex: MEGA, Stage 1, BREAK, Supporter)
                 supertype specifies the supertype of a card (pokemon, trainer or energy)
                 hp specifies the hp of a pokemon`,
-      examples: ['tcg name types subtype'],
+      examples: [ 'tcg name types subtype' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -71,13 +71,13 @@ export default class PokemonTCGCommand extends Command {
                     Split each property with a \`space\`
                     Use the help command (\`help tcg\`) to view examples`,
           type: 'tcgprops',
-          default: ['name'],
+          default: [ 'name' ],
         }
       ],
     });
   }
 
-  public async run (msg: CommandoMessage, { props }: PokemonTCGArgs) {
+  public async run(msg: CommandoMessage, { props }: PokemonTCGArgs) {
     const command = msg;
     const properties: TCGPropsType = {
       name: '',
@@ -102,8 +102,7 @@ export default class PokemonTCGCommand extends Command {
             parse: (p: string) => p.toLowerCase(),
           }
         ],
-        1
-      );
+        1);
 
       const nameSelection = await namePicker.obtain<NameArgumentCollection>(command, [], 1);
 
@@ -126,8 +125,7 @@ export default class PokemonTCGCommand extends Command {
             parse: (p: string) => p.replace(/ /gm, ',').toLowerCase(),
           }
         ],
-        1
-      );
+        1);
       const typeSelection = await typePicker.obtain<TypeArgumentCollection>(command, [], 1);
 
       properties.types = typeSelection.values.types;
@@ -145,8 +143,7 @@ export default class PokemonTCGCommand extends Command {
             parse: (p: string) => p.toLowerCase(),
           }
         ],
-        1
-      );
+        1);
       const subTypeSelection = await subTypePicker.obtain<SubTypeArgumentCollection>(command, [], 1);
 
       properties.subtype = subTypeSelection.values.subtype;
@@ -155,15 +152,14 @@ export default class PokemonTCGCommand extends Command {
     }
 
     if (props.includes('supertype')) {
-      const superTypePicker = new ArgumentCollector(
-        command.client,
+      const superTypePicker = new ArgumentCollector(command.client,
         [
           {
             key: 'supertype',
             prompt: 'What can the card\'s super be (one of pokemon, trainer or energy)?',
             type: 'string',
             validate: (type: string) => {
-              const validTypes = ['pokemon', 'trainer', 'energy'];
+              const validTypes = [ 'pokemon', 'trainer', 'energy' ];
 
               if (validTypes.includes(type.toLowerCase())) {
                 return true;
@@ -177,8 +173,7 @@ export default class PokemonTCGCommand extends Command {
             parse: (p: string) => p.toLowerCase(),
           }
         ],
-        1
-      );
+        1);
       const superTypeSelection = await superTypePicker.obtain<SuperTypeArgumentCollection>(command, [], 1);
 
       properties.supertype = superTypeSelection.values.supertype;
@@ -187,8 +182,7 @@ export default class PokemonTCGCommand extends Command {
     }
 
     if (props.includes('hp')) {
-      const hpPicker = new ArgumentCollector(
-        command.client,
+      const hpPicker = new ArgumentCollector(command.client,
         [
           {
             key: 'hp',
@@ -196,8 +190,7 @@ export default class PokemonTCGCommand extends Command {
             type: 'integer',
           }
         ],
-        1
-      );
+        1);
       const hpSelection = await hpPicker.obtain<HpSelectionArgumentCollection>(command, [], 1);
 
       properties.hp = hpSelection.values.hp.toString();
@@ -206,21 +199,19 @@ export default class PokemonTCGCommand extends Command {
     }
 
     try {
-      const res = await fetch(
-        `https://api.pokemontcg.io/v1/cards?${stringify({
-          hp: properties.hp ? properties.hp : '',
-          name: properties.name,
-          page: 1,
-          pageSize: 10,
-          subtype: properties.subtype ? properties.subtype : '',
-          supertype: properties.supertype,
-          types: properties.types ? properties.types : '',
-        })}`
-      );
-      const poke = await res.json();
+      const res = await fetch(`https://api.pokemontcg.io/v1/cards?${stringify({
+        hp: properties.hp ? properties.hp : '',
+        name: properties.name,
+        page: 1,
+        pageSize: 10,
+        subtype: properties.subtype ? properties.subtype : '',
+        supertype: properties.supertype,
+        types: properties.types ? properties.types : '',
+      })}`);
+      const poke = await res.json() as TCGCardData;
 
       if (poke.cards.length) {
-        const { cards } = poke;
+        const cards = poke.cards;
         let body = '';
         let index = 0;
 
@@ -229,28 +220,25 @@ export default class PokemonTCGCommand extends Command {
           index++;
         }
 
-        const selectionEmbed: any = await command.embed({
+        const selectionEmbed = await command.embed({
           color: command.guild ? command.member!.displayColor : 14827841,
           description: body,
           thumbnail: { url: `${ASSET_BASE_PATH}/ribbon/tcglogo.png` },
-        });
+        }) as Message;
 
-        const cardChooser = new ArgumentCollector(
-          command.client,
+        const cardChooser = new ArgumentCollector(command.client,
           [
             {
               key: 'card',
               prompt: 'Send number to see details or cancel to cancel',
               type: 'integer',
-              validate: (v: string) =>
-                Number(v) >= 1 && Number(v) <= 10
-                  ? true
-                  : 'Please choose a number between 1 and 10',
+              validate: (v: string) => Number(v) >= 1 && Number(v) <= 10
+                ? true
+                : 'Please choose a number between 1 and 10',
               parse: (p: string) => Number(p) - 1,
             }
           ],
-          1
-        );
+          1);
 
         const cardSelection = await cardChooser.obtain<CardChooserArgumentCollection>(command, [], 1);
         const selection = cardSelection.values.card;
@@ -272,39 +260,36 @@ export default class PokemonTCGCommand extends Command {
           const { resistances } = cards[selection];
           const { weaknesses } = cards[selection];
 
-          attacks.forEach((item: any, attackIndex: any) => {
+          attacks!.forEach((attack, attackIndex) => {
             tcgEmbed.addField(`
               Attack ${Number(attackIndex) + 1}`, stripIndents`
-              **Name:** ${item.name}
-              **Description:** ${item.text}
-              **Damage:** ${item.damage}
-              **Cost:** ${item.cost.join(', ')}
+              **Name:** ${attack.name}
+              **Description:** ${attack.text}
+              **Damage:** ${attack.damage}
+              **Cost:** ${attack.cost.join(', ')}
             `,
-              true
-            );
+            true);
           });
 
           if (resistances) {
-            resistances.forEach((item: any, resistIndex: any) => {
+            resistances.forEach((resistance, resistIndex) => {
               tcgEmbed.addField(`
                 Resistance ${Number(resistIndex) + 1}`, stripIndents`
-                **Type:** ${item.type}
-                **Multiplier:** ${item.value}
+                **Type:** ${resistance.type}
+                **Multiplier:** ${resistance.value}
               `,
-                true
-              );
+              true);
             });
           }
 
           if (weaknesses) {
-            weaknesses.forEach((item: any, weaknessIndex: any) => {
+            weaknesses.forEach((weakness, weaknessIndex) => {
               tcgEmbed.addField(`
                 Weakness ${Number(weaknessIndex) + 1}`, stripIndents`
-                **Type:** ${item.type}
-                **Multiplier:** ${item.value}
+                **Type:** ${weakness.type}
+                **Multiplier:** ${weakness.value}
               `,
-                true
-              );
+              true);
             });
           }
 
@@ -312,7 +297,7 @@ export default class PokemonTCGCommand extends Command {
           tcgEmbed.fields.shift();
 
           tcgEmbed
-            .addField('Type(s)', cards[selection].types.join(', '), true)
+            .addField('Type(s)', cards[selection].types!.join(', '), true)
             .addField('Subtype', cards[selection].subtype, true)
             .addField('HP', cards[selection].hp, true)
             .addField('Retreat Cost', cards[selection].convertedRetreatCost, true)
@@ -329,8 +314,7 @@ export default class PokemonTCGCommand extends Command {
         no cards were found for that query.
         ${oneLine`
           Be sure to check the command help (\`${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}help tcg\`)
-          if you want to know how to use this command`
-        }`
+          if you want to know how to use this command`}`
       );
     } catch (err) {
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
@@ -346,14 +330,12 @@ export default class PokemonTCGCommand extends Command {
         **Subtype:** \`${properties.subtype}\`
         **Supertype:** \`${properties.supertype}\`
         **HP:** \`${properties.hp}\`
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

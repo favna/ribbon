@@ -22,15 +22,15 @@ type MathArgs = {
 };
 
 export default class MathCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'math',
-      aliases: ['maths', 'calc'],
+      aliases: [ 'maths', 'calc' ],
       group: 'converters',
       memberName: 'math',
       description: 'Calculate anything',
       format: 'EquationToSolve',
-      examples: ['math (PI - 1) * 3'],
+      examples: [ 'math (PI - 1) * 3' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -41,13 +41,13 @@ export default class MathCommand extends Command {
           key: 'equation',
           prompt: 'What is the equation to solve?',
           type: 'string',
-          parse: (p: string) => p.toLowerCase().replace(/x/gim, '*'),
+          parse: (equation: string) => equation.toLowerCase().replace(/x/gim, '*'),
         }
       ],
     });
   }
 
-  public async run (msg: CommandoMessage, { equation }: MathArgs) {
+  public async run(msg: CommandoMessage, { equation }: MathArgs) {
     try {
       const calculator = await fetch('http://api.mathjs.org/v4/', {
         body: JSON.stringify({ expr: equation }),
@@ -68,9 +68,7 @@ export default class MathCommand extends Command {
       return msg.embed(mathEmbed);
     } catch (err) {
       if (/(?:matherr)/i.test(err.toString())) {
-        return msg.reply(
-          oneLine`\`${equation.toString()}\` is is not a supported equation. I use Math.js for my calculations (http://mathjs.org/)`
-        );
+        return msg.reply(oneLine`\`${equation.toString()}\` is is not a supported equation. I use Math.js for my calculations (http://mathjs.org/)`);
       }
 
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
@@ -81,14 +79,12 @@ export default class MathCommand extends Command {
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** \`${equation}\`
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

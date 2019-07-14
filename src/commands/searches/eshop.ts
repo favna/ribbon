@@ -25,15 +25,15 @@ type EShopArgs = {
 };
 
 export default class EShopCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'eshop',
-      aliases: ['shop'],
+      aliases: [ 'shop' ],
       group: 'searches',
       memberName: 'eshop',
       description: 'Gets any game from the Nintendo eShop',
       format: 'GameName',
-      examples: ['eshop Breath of the Wild'],
+      examples: [ 'eshop Breath of the Wild' ],
       guildOnly: false,
       args: [
         {
@@ -46,43 +46,39 @@ export default class EShopCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run (msg: CommandoMessage, { query, hasManageMessages, position = 0 }: EShopArgs) {
+  public async run(msg: CommandoMessage, { query, hasManageMessages, position = 0 }: EShopArgs) {
     try {
-      const gamesList = await fetch(
-        `https://${process.env.NINTENDO_ALGOLIA_ID}-dsn.algolia.net/1/indexes/*/queries`,
+      const gamesList = await fetch(`https://${process.env.NINTENDO_ALGOLIA_ID}-dsn.algolia.net/1/indexes/*/queries`,
         {
-          body: JSON.stringify(
-            {
-              requests: [
-                {
-                  indexName: 'noa_aem_game_en_us',
-                  params: stringify({
-                    facetFilters: [
-                      ['filterShops:On Nintendo.com'],
-                      ['platform:Nintendo Switch']
-                    ],
-                    facets: [
-                      'generalFilters', 'platform', 'availability', 'categories',
-                      'filterShops', 'virtualConsole', 'characters', 'priceRange',
-                      'esrb', 'filterPlayers'
-                    ],
-                    hitsPerPage: 42,
-                    maxValuesPerFacet: 30,
-                    page: 0,
-                    query,
-                  }),
-                }
-              ],
-            }
-          ),
+          body: JSON.stringify({
+            requests: [
+              {
+                indexName: 'noa_aem_game_en_us',
+                params: stringify({
+                  facetFilters: [
+                    [ 'filterShops:On Nintendo.com' ],
+                    [ 'platform:Nintendo Switch' ]
+                  ],
+                  facets: [
+                    'generalFilters', 'platform', 'availability', 'categories',
+                    'filterShops', 'virtualConsole', 'characters', 'priceRange',
+                    'esrb', 'filterPlayers'
+                  ],
+                  hitsPerPage: 42,
+                  maxValuesPerFacet: 30,
+                  page: 0,
+                  query,
+                }),
+              }
+            ],
+          }),
           headers: {
             'Content-Type': 'application/json',
             'X-Algolia-API-Key': process.env.NINTENDO_ALOGLIA_KEY!,
             'X-Algolia-Application-Id': process.env.NINTENDO_ALGOLIA_ID!,
           },
           method: 'POST',
-        }
-      );
+        });
 
       const games: eShopResult = await gamesList.json();
       const results = games.results[0];
@@ -99,7 +95,8 @@ export default class EShopCommand extends Command {
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
             if (!this.client.userid.includes(user.id)) {
-              reaction.emoji.name === '➡' ? position++ : position--;
+              if (reaction.emoji.name === '➡') position++;
+              else position--;
               if (position >= results.hits.length) position = 0;
               if (position < 0) position = results.hits.length - 1;
               currentGame = results.hits[position];
@@ -113,14 +110,17 @@ export default class EShopCommand extends Command {
       return null;
     } catch (err) {
       deleteCommandMessages(msg, this.client);
+
       return msg.reply(`no titles found for \`${query}\``);
     }
   }
 
-  private prepMessage (
-    game: eShopHit, gamesLength: number,
-    position: number, hasManageMessages: boolean
-  ): MessageEmbed {
+  private prepMessage(game: eShopHit, gamesLength: number,
+    position: number, hasManageMessages: boolean): MessageEmbed {
+    let price = 'Free';
+    if (game.msrp && game.msrp > 0) price = `$${game.msrp} USD`;
+    if (!game.msrp) price = 'TBA';
+
     return new MessageEmbed()
       .setColor('#FFA600')
       .setTitle(game.title)
@@ -129,7 +129,7 @@ export default class EShopCommand extends Command {
       .setDescription(`${game.description.length <= 800 ? game.description : `${game.description.slice(0, 800)}…`}`)
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${gamesLength}` : '')
       .addField('ESRB', game.esrb, true)
-      .addField('Price', game.msrp ? game.msrp === 0 ? 'Free' : `$${game.msrp} USD` : 'TBA', true)
+      .addField('Price', price, true)
       .addField('Availability', game.availability[0], true)
       .addField('Release Date', game.releaseDateMask === 'TBD' ? game.releaseDateMask : moment(game.releaseDateMask).format('MMMM Do YYYY'), true)
       .addField('Number of Players', sentencecase(game.players), true)

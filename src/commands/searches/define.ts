@@ -22,15 +22,15 @@ type DefineArgs = {
 };
 
 export default class DefineCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'define',
-      aliases: ['def', 'dict'],
+      aliases: [ 'def', 'dict' ],
       group: 'searches',
       memberName: 'define',
       description: 'Gets the definition on a word on glosbe',
       format: 'Word',
-      examples: ['define pixel'],
+      examples: [ 'define pixel' ],
       guildOnly: false,
       throttling: {
         usages: 2,
@@ -47,19 +47,17 @@ export default class DefineCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage, { query }: DefineArgs) {
+  public async run(msg: CommandoMessage, { query }: DefineArgs) {
     try {
       const defineEmbed = new MessageEmbed();
-      const res = await fetch(
-        `https://glosbe.com/gapi/translate?${stringify({
-          dest: 'en',
-          format: 'json',
-          from: 'en',
-          phrase: query,
-        })}`
-      );
+      const res = await fetch(`https://glosbe.com/gapi/translate?${stringify({
+        dest: 'en',
+        format: 'json',
+        from: 'en',
+        phrase: query,
+      })}`);
       const words = await res.json();
-      const final = [`**Definitions for __${query}__:**`];
+      const final = [ `**Definitions for __${query}__:**` ];
 
       words.tuc[0].meanings.slice(0, 5).forEach((word: WordDefinitionType, index: number) => {
         const definition = word.text

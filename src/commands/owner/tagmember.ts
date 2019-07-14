@@ -19,14 +19,14 @@ type TagMemberArgs = {
 };
 
 export default class TagMemberCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'tagmember',
       group: 'owner',
       memberName: 'tagmember',
       description: 'Tag a member',
       format: 'MemberID|MemberName(partial or full)',
-      examples: ['tagmember Favna'],
+      examples: [ 'tagmember Favna' ],
       guildOnly: false,
       ownerOnly: true,
       args: [
@@ -41,7 +41,7 @@ export default class TagMemberCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { member }: TagMemberArgs) {
+  public async run(msg: CommandoMessage, { member }: TagMemberArgs) {
     const emote = '<:literallyThis:519988005507956752>';
 
     deleteCommandMessages(msg, this.client);

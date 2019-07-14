@@ -23,15 +23,15 @@ type MemberBalanceArgs = {
 };
 
 export default class MemberBalanceCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'memberbalance',
-      aliases: ['mbal', 'mcash', 'mbalance', 'mchips'],
+      aliases: [ 'mbal', 'mcash', 'mbalance', 'mchips' ],
       group: 'casino',
       memberName: 'memberbalance',
       description: 'Retrieves the amount of chips another member has for the casino',
       format: 'MemberID|MemberName(partial or full)',
-      examples: ['memberbalance Sagiri'],
+      examples: [ 'memberbalance Sagiri' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -47,7 +47,7 @@ export default class MemberBalanceCommand extends Command {
     });
   }
 
-  public run (msg: CommandoMessage, { player }: MemberBalanceArgs) {
+  public async run(msg: CommandoMessage, { player }: MemberBalanceArgs) {
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
     const mbalEmbed = new MessageEmbed();
 
@@ -62,8 +62,7 @@ export default class MemberBalanceCommand extends Command {
       if (balance >= 0) {
         mbalEmbed.setDescription(stripIndents`
           **Balance**
-          ${balance}`
-        );
+          ${balance}`);
 
         deleteCommandMessages(msg, this.client);
 
@@ -85,14 +84,12 @@ export default class MemberBalanceCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
-      );
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
     }
   }
 }

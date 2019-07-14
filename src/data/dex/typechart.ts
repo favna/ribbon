@@ -1,6 +1,7 @@
-import { TypeChartType } from '../../RibbonTypes';
+/* eslint-disable max-len, object-curly-newline */
+import { TypeChart } from '../../RibbonTypes';
 
-const typeChart: TypeChartType = {
+const typeChart: TypeChart = {
   Bug: {
     damageTaken: {
       bug: 0,

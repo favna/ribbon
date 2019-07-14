@@ -17,10 +17,10 @@ import path from 'path';
 import { CopypastaType } from 'RibbonTypes';
 
 export default class CopyPastaListCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'copypastalist',
-      aliases: ['cplist', 'copylist', 'pastalist', 'taglist'],
+      aliases: [ 'cplist', 'copylist', 'pastalist', 'taglist' ],
       group: 'extra',
       memberName: 'copypastalist',
       description: 'Gets all copypastas available to the server',
@@ -32,7 +32,7 @@ export default class CopyPastaListCommand extends Command {
     });
   }
 
-  public async run (msg: CommandoMessage) {
+  public async run(msg: CommandoMessage) {
     const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
 
     try {
@@ -41,21 +41,19 @@ export default class CopyPastaListCommand extends Command {
 
       let body = '';
 
-      list.forEach((row: CopypastaType) =>
-        (
-          body += `${stripIndents`
+      list.forEach((row: CopypastaType) => (
+        body += `${stripIndents`
             **id:** ${row.id}
             **name:** ${row.name}`}
             \n`
-        )
-      );
+      ));
 
       deleteCommandMessages(msg, this.client);
 
       if (body.length >= 1800) {
         const splitContent: string[] = Util.splitMessage(body, { maxLength: 1800 }) as string[];
 
-        splitContent.forEach(part => msg.embed({
+        splitContent.forEach(async part => msg.embed({
           color: msg.guild.me!.displayColor,
           description: part,
           title: 'Copypastas available on this server',
@@ -81,8 +79,7 @@ export default class CopyPastaListCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+        **Error Message:** ${err}`);
 
       return msg.reply(`no copypastas found for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd\`!`);
     }

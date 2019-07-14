@@ -18,15 +18,15 @@ type UnknownMessagesArgs = {
 };
 
 export default class UnknownMessagesCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'unknownmessages',
-      aliases: ['unkmsg', 'unknowns'],
+      aliases: [ 'unkmsg', 'unknowns' ],
       group: 'moderation',
       memberName: 'unknownmessages',
       description: 'Toggle Unknown Command messages on or off',
       format: 'boolean',
-      examples: ['unknownmessages enable'],
+      examples: [ 'unknownmessages enable' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -43,7 +43,7 @@ export default class UnknownMessagesCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public run (msg: CommandoMessage, { shouldEnable }: UnknownMessagesArgs) {
+  public async run(msg: CommandoMessage, { shouldEnable }: UnknownMessagesArgs) {
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const ukmEmbed = new MessageEmbed();
 
@@ -56,7 +56,9 @@ export default class UnknownMessagesCommand extends Command {
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, ukmEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, ukmEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);

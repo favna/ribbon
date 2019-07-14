@@ -22,15 +22,15 @@ type CasinoLimitArgs = {
 };
 
 export default class CasinoLimitCommand extends Command {
-  constructor (client: CommandoClient) {
+  public constructor(client: CommandoClient) {
     super(client, {
       name: 'casinolimit',
-      aliases: ['cl'],
+      aliases: [ 'cl' ],
       group: 'moderation',
       memberName: 'casinolimit',
       description: 'Configure what the limits for any casino command should be',
       format: 'casinoUpperLimit casinoLowerLimit',
-      examples: ['casinolimit 20000', 'casinolimit 20000 1000'],
+      examples: [ 'casinolimit 20000', 'casinolimit 20000 1000' ],
       guildOnly: true,
       throttling: {
         usages: 2,
@@ -53,7 +53,7 @@ export default class CasinoLimitCommand extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public run (msg: CommandoMessage, { upperlimit, lowerlimit }: CasinoLimitArgs) {
+  public async run(msg: CommandoMessage, { upperlimit, lowerlimit }: CasinoLimitArgs) {
     const casinoLimitEmbed = new MessageEmbed();
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
 
@@ -66,12 +66,13 @@ export default class CasinoLimitCommand extends Command {
       .setDescription(stripIndents`
         **Action:** Changed casino limits
         **Lower Limit:** \`${lowerlimit}\`
-        **Upper Limit:** \`${upperlimit}\``
-      )
+        **Upper Limit:** \`${upperlimit}\``)
       .setTimestamp();
 
     if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, casinoLimitEmbed);
+      logModMessage(
+        msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, casinoLimitEmbed
+      );
     }
 
     deleteCommandMessages(msg, this.client);
