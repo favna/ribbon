@@ -46,6 +46,14 @@
     array-flat-polyfill "^1.0.1"
     tslib "^1.9.3"
 
+"@favware/eslint-config@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@favware/eslint-config/-/eslint-config-1.0.0.tgz#9f9217a57ac62a1722f4c99b392dbcae07545df8"
+  integrity sha512-nXl75IS+JDKl7UghhfvoKEKxf+pYi1088Ykowe0OU20bxIdcN65Qk7GxpuqXQJzFGoGiOh4Vmvx/+e2pJvrUyw==
+  dependencies:
+    "@typescript-eslint/eslint-plugin" "^1"
+    "@typescript-eslint/parser" "^1"
+
 "@favware/querystring@^2.0.2":
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/@favware/querystring/-/querystring-2.0.2.tgz#3e95445288781bf17fd26afc3c3fb590fc6d15e9"
@@ -718,7 +726,7 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@^1.12.0":
+"@typescript-eslint/eslint-plugin@^1":
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-1.12.0.tgz#96b4e08b5f998a198b8414508b1a289f9e8c549a"
   integrity sha512-J/ZTZF+pLNqjXBGNfq5fahsoJ4vJOkYbitWPavA05IrZ7BXUaf4XWlhUB/ic1lpOGTRpLWF+PLAePjiHp6dz8g==
@@ -737,7 +745,7 @@
     "@typescript-eslint/typescript-estree" "1.12.0"
     eslint-scope "^4.0.0"
 
-"@typescript-eslint/parser@^1.12.0":
+"@typescript-eslint/parser@^1":
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-1.12.0.tgz#9965895ec4745578185965d63f21510f93a3f35a"
   integrity sha512-0uzbaa9ZLCA5yMWJywnJJ7YVENKGWVUhJDV5UrMoldC5HoI54W5kkdPhTfmtFKpPFp93MIwmJj0/61ztvmz5Dw==
