@@ -73,8 +73,8 @@ export default class ViewQueueCommand extends Command {
     const paginated = util.paginate(queue.songs, page, Math.floor(Number(PAGINATED_ITEMS)));
     const totalLength = queue.songs.reduce((acc, song) => acc + song.length, 0);
     const songQueueEmbed = new MessageEmbed()
-      .setAuthor(`${msg.author!.tag} (${msg.author!.id})`, msg.author!.displayAvatarURL({ format: 'png' }))
-      .setColor(msg.guild.me!.displayHexColor)
+      .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({ format: 'png' }))
+      .setColor(msg.guild.me.displayHexColor)
       .setDescription(stripIndents`
     __**Song queue, page ${paginated.page}**__
     ${paginated.items.map(song => `

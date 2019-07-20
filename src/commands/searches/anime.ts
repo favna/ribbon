@@ -72,7 +72,7 @@ export default class AnimeCommand extends Command {
           method: 'POST',
         });
       const animes: KitsuResult = await animeList.json();
-      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
       let currentAnime = animes.hits[position];
       let animeEmbed = this.prepMessage(
         color, currentAnime, animes.hits.length, position, hasManageMessages

@@ -139,7 +139,7 @@ export default class GoogleCommand extends Command {
         .split('&')[0];
 
       const googleEmbed = new MessageEmbed()
-        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
         .setTitle(`Google Search Result for ${query}`)
         .setDescription(href)
         .setURL(href)
@@ -162,7 +162,7 @@ export default class GoogleCommand extends Command {
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
     const googleEmbed = new MessageEmbed()
-      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${itemLength}` : '');
 
     if (item.source === GoogleSource.CSE) {

@@ -92,7 +92,7 @@ export default class DuplicateTextCommand extends Command {
 
     dtfEmbed
       .setColor('#439DFF')
-      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Duplicate text filter has been ${shouldEnable ? 'enabled' : 'disabled'}
         ${shouldEnable ? `**Timeout:** Duplicate text is checked between messages sent in the past ${within} minutes` : ''}

@@ -52,7 +52,7 @@ export default class ConfigureMuteCommand extends Command {
 
     confMuteEmbed
       .setColor('#3DFFE5')
-      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Configured mute role to \`${role.name}\``)
       .setTimestamp();

@@ -69,7 +69,7 @@ export default class MassCommand extends Command {
 
       mathEmbed
         .setTitle('Mass Conversion')
-        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
         .setDescription(oneLine`${massAmount} ${fromUnit} equals to ${output} ${toUnit}`);
 
       deleteCommandMessages(msg, this.client);
@@ -81,7 +81,7 @@ export default class MassCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`mass\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Amount:** \`${massAmount}\`
         **From Unit:** \`${fromUnit}\`

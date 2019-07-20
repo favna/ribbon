@@ -54,7 +54,7 @@ export default class SauceNaoCommand extends Command {
       const handlerOptions: HandlerOptions = { numRes: 5, getRating: true };
       const sauceHandler = new Handler(process.env.SAUCENAO_KEY!, handlerOptions);
       const sauces = await sauceHandler.getSauce(image);
-      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
 
       if (!sauces || !sauces.length) throw new Error('no_matches');
       if (this.channelIsNSFW(msg.channel)) sauces.filter(result => result.rating <= 2);
@@ -107,7 +107,7 @@ export default class SauceNaoCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`saucenao\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Image:** ${image}
         **Error Message:** ${err}`);

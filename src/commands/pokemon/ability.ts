@@ -60,7 +60,7 @@ export default class AbilityCommand extends Command {
       const abilityFuse = new Fuse(BattleAbilities, abilityOptions);
       const aliasSearch = aliasFuse.search(ability);
       const abilitySearch = aliasSearch.length ? abilityFuse.search(aliasSearch[0].ability) : abilityFuse.search(ability);
-      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
 
       if (!abilitySearch.length) throw new Error('no_ability');
 
@@ -107,7 +107,7 @@ export default class AbilityCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`ability\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${ability}
         **Error Message:** ${err}`);

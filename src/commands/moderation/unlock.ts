@@ -65,7 +65,7 @@ export default class UnlockCommand extends Command {
 
       unlockEmbed
         .setColor('#359876')
-        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
         .setDescription(stripIndents`
           **Action:** 🔓 unlocked the \`${channel.name}\` channel.
           **Details:** This channel can now be used by everyone again. Use \`${msg.guild.commandPrefix}lockdown\` in this channel to (re)-lock it.`)
@@ -92,7 +92,7 @@ export default class UnlockCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`defaultrole\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

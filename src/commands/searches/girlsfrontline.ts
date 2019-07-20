@@ -54,7 +54,7 @@ export default class GirlsFrontlineCommand extends Command {
       const gfOptions: FuseOptions<FrontlineGirl> = { keys: [ 'name' ] };
       const fuse = new Fuse(frontlineGirls, gfOptions);
       const girlSearch = fuse.search(character);
-      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
 
       let currentGirl = girlSearch[position];
       let girlEmbed = await this.prepMessage(

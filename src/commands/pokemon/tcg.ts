@@ -221,7 +221,7 @@ export default class PokemonTCGCommand extends Command {
         }
 
         const selectionEmbed = await command.embed({
-          color: command.guild ? command.member!.displayColor : 14827841,
+          color: command.guild ? command.member.displayColor : 14827841,
           description: body,
           thumbnail: { url: `${ASSET_BASE_PATH}/ribbon/tcglogo.png` },
         }) as Message;
@@ -248,7 +248,7 @@ export default class PokemonTCGCommand extends Command {
         if (messagesDeletable) cardSelection.answers[0].delete();
 
         tcgEmbed
-          .setColor(msg.guild ? msg.member!.displayHexColor : DEFAULT_EMBED_COLOR)
+          .setColor(msg.guild ? msg.member.displayHexColor : DEFAULT_EMBED_COLOR)
           .setThumbnail(`${ASSET_BASE_PATH}/ribbon/tcglogo.png`)
           .setTitle(`${cards[selection].name} (${cards[selection].id})`)
           .setImage(cards[selection].imageUrl)
@@ -322,7 +322,7 @@ export default class PokemonTCGCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`tcg\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Props:** ${props.map(val => `\`${val}\``).join(', ')}
         **Name:** \`${properties.name}\`

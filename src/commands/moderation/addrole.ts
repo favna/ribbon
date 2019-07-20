@@ -67,7 +67,7 @@ export default class AddRoleCommand extends Command {
 
       roleAddEmbed
         .setColor('#AAEFE6')
-        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
         .setDescription(stripIndents`**Action:** Added ${role.name} to ${member.displayName}`)
         .setTimestamp();
 
@@ -92,7 +92,7 @@ export default class AddRoleCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`addrole\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** \`${role.name} (${role.id})\` || \`${member.user.tag} (${member.id})\`
         **Error Message:** ${err}`);

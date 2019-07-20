@@ -39,12 +39,12 @@ export default class DailyCommand extends Command {
     let returnMsg = '';
 
     balEmbed
-      .setAuthor(msg.member!.displayName, msg.author!.displayAvatarURL({ format: 'png' }))
-      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
     try {
-      const query = conn.prepare(`SELECT balance, lastdaily FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
+      const query = conn.prepare(`SELECT balance, lastdaily FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
       const { lastdaily } = query;
       let { balance } = query;
 
@@ -57,7 +57,7 @@ export default class DailyCommand extends Command {
         balance += 300;
 
         if (dailyDura.asHours() <= 0) {
-          conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance, lastdaily=$date WHERE userID="${msg.author!.id}";`)
+          conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance, lastdaily=$date WHERE userID="${msg.author.id}";`)
             .run({ balance, date: moment().format('YYYY-MM-DD HH:mm') });
 
           chipStr = `${prevBal} ➡ ${balance}`;
@@ -83,7 +83,7 @@ export default class DailyCommand extends Command {
         .run({
           balance: 500,
           dailydate: moment().format('YYYY-MM-DD HH:mm'),
-          userid: msg.author!.id,
+          userid: msg.author.id,
           vault: 0,
           weeklydate: moment().format('YYYY-MM-DD HH:mm'),
         });
@@ -96,7 +96,7 @@ export default class DailyCommand extends Command {
           .run({
             balance: 500,
             dailydate: moment().format('YYYY-MM-DD HH:mm'),
-            userid: msg.author!.id,
+            userid: msg.author.id,
             vault: 0,
             weeklydate: moment().format('YYYY-MM-DD HH:mm'),
           });
@@ -106,7 +106,7 @@ export default class DailyCommand extends Command {
         channel.send(stripIndents`
           <@${this.client.owners[0].id}> Error occurred in \`daily\` command!
           **Server:** ${msg.guild.name} (${msg.guild.id})
-          **Author:** ${msg.author!.tag} (${msg.author!.id})
+          **Author:** ${msg.author.tag} (${msg.author.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Error Message:** ${err}`);
 

@@ -63,7 +63,7 @@ export default class UserInfoCommand extends Command {
       .addField('Role(s)',
         member.roles.size > 1 ? cleanArray(null, member.roles.map(r => r.name).filter(name => name !== '@everyone')).join(' | ') : 'None')
       .addField('Account created at', moment(member.user.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
-      .addField('Joined server at', moment(member.joinedAt!).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true);
+      .addField('Joined server at', moment(member.joinedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true);
 
     if (member.roles.size >= 1) {
       uinfoEmbed.setFooter(`${member.displayName} has ${member.roles.size - 1} role(s)`);

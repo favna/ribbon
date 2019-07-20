@@ -65,7 +65,7 @@ export default class DefaultRoleCommand extends Command {
 
       defRoleEmbed
         .setColor('#AAEFE6')
-        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
         .setDescription(stripIndents`**Action:** ${description}`)
         .setTimestamp();
 
@@ -89,7 +89,7 @@ export default class DefaultRoleCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`defaultrole\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

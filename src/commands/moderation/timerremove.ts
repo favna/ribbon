@@ -76,7 +76,7 @@ export default class TimerRemoveCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in validating the ID for the \`timerremove\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 
@@ -95,7 +95,7 @@ export default class TimerRemoveCommand extends Command {
 
       timerRemoveEmbed
         .setColor('#F7F79D')
-        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
         .setDescription(stripIndents`
           **Action:** Timed message removed
           **Interval:** ${moment.duration(interval).format(DURA_FORMAT)}
@@ -121,7 +121,7 @@ export default class TimerRemoveCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in removing message in the \`timerremove\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

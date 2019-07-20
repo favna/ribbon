@@ -112,7 +112,7 @@ export const clientHasManageMessages = () => {
     const fn: (...args: unknown[]) => unknown = descriptor.value;
 
     descriptor.value = async function value(msg: CommandoMessage, args: { hasManageMessages: boolean }, fromPattern: boolean) {
-      const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user!)!.has('MANAGE_MESSAGES');
+      const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has('MANAGE_MESSAGES');
       args.hasManageMessages = clientHasPermission;
 
       return fn.apply(this, [ msg, args, fromPattern ]);
@@ -125,8 +125,8 @@ export const shouldHavePermission = (permission: PermissionString, shouldClientH
     const fn: (...args: unknown[]) => unknown = descriptor.value;
 
     descriptor.value = async function value(msg: CommandoMessage, args: object, fromPattern: boolean) {
-      const authorIsOwner = msg.client.isOwner(msg.author!);
-      const memberHasPermission = msg.member!.hasPermission(permission);
+      const authorIsOwner = msg.client.isOwner(msg.author);
+      const memberHasPermission = msg.member.hasPermission(permission);
 
       if (!memberHasPermission && !authorIsOwner) {
         return msg.command.onBlock(msg, 'permission',
@@ -134,7 +134,7 @@ export const shouldHavePermission = (permission: PermissionString, shouldClientH
       }
 
       if (shouldClientHavePermission) {
-        const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user!)!.has(permission);
+        const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has(permission);
 
         if (!clientHasPermission) {
           return msg.command.onBlock(msg, 'clientPermissions', { missing: [ permission ] });

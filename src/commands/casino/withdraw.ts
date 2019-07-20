@@ -53,12 +53,12 @@ export default class WithdrawCommand extends Command {
     const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
 
     withdrawEmbed
-      .setAuthor(msg.member!.displayName, msg.author!.displayAvatarURL())
-      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/bank.png`);
 
     try {
-      let { balance, vault } = conn.prepare(`SELECT balance, vault FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
+      let { balance, vault } = conn.prepare(`SELECT balance, vault FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (balance >= 0) {
         if (chips > vault) {
@@ -73,7 +73,7 @@ export default class WithdrawCommand extends Command {
         balance += chips;
         vault -= chips;
 
-        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance, vault=$vault WHERE userID="${msg.author!.id}"`)
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance, vault=$vault WHERE userID="${msg.author.id}"`)
           .run({ balance, vault });
 
         withdrawEmbed
@@ -105,7 +105,7 @@ export default class WithdrawCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`withdraw\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

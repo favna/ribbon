@@ -61,18 +61,18 @@ export default class GiveCommand extends Command {
 
     giveEmbed
       .setTitle('Transaction Log')
-      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
     try {
       const query = conn
         .prepare(`SELECT userID, balance FROM "${msg.guild.id}" WHERE userID = $authorid OR userID = $playerid;`)
-        .all({ authorid: msg.author!.id, playerid: player.id });
+        .all({ authorid: msg.author.id, playerid: player.id });
 
       if (query.length !== 2) throw new Error('no_balance');
 
       query.forEach((row: CasinoRowType) => {
-        if (row.userID === msg.author!.id && chips > row.balance) {
+        if (row.userID === msg.author.id && chips > row.balance) {
           throw new Error('insufficient_balance');
         }
       });
@@ -81,7 +81,7 @@ export default class GiveCommand extends Command {
       let receiverEntry = 0;
 
       query.forEach((row: CasinoRowType, index: number) => {
-        if (row.userID === msg.author!.id) giverEntry = Number(index);
+        if (row.userID === msg.author.id) giverEntry = Number(index);
         if (row.userID === player.id) receiverEntry = Number(index);
       });
 
@@ -97,7 +97,7 @@ export default class GiveCommand extends Command {
         .run(query[receiverEntry].balance, query[receiverEntry].userID);
 
       giveEmbed
-        .addField(msg.member!.displayName, `${oldGiverBalance} ➡ ${query[giverEntry].balance}`)
+        .addField(msg.member.displayName, `${oldGiverBalance} ➡ ${query[giverEntry].balance}`)
         .addField(player.displayName, `${oldReceiverEntry} ➡ ${query[receiverEntry].balance}`);
 
       deleteCommandMessages(msg, this.client);
@@ -124,7 +124,7 @@ export default class GiveCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`give\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

@@ -143,7 +143,7 @@ export default class ActivityCommand extends Command {
       let spotifyData: any = {};
 
       embed
-        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
         .setAuthor(member.user.tag, ava, `${ava}?size2048`)
         .setThumbnail(ext.includes('gif') ? `${ava}&f=.gif` : ava);
 
@@ -202,8 +202,8 @@ export default class ActivityCommand extends Command {
       }
 
       if (activity.assets) {
-        embed.setThumbnail(activity.assets.largeImage!.includes('spotify')
-          ? `https://i.scdn.co/image/${activity.assets.largeImage!.split(':')[1]}`
+        embed.setThumbnail(activity.assets.largeImage.includes('spotify')
+          ? `https://i.scdn.co/image/${activity.assets.largeImage.split(':')[1]}`
           : `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.largeImage}.png`
         );
       }
@@ -275,7 +275,7 @@ export default class ActivityCommand extends Command {
             url: `${member.user.displayAvatarURL()}?size=2048`,
             iconURL: member.user.displayAvatarURL(),
           },
-          color: msg.guild ? msg.guild.me!.displayColor : 8190976,
+          color: msg.guild ? msg.guild.me.displayColor : 8190976,
           fields: [
             {
               name: 'Activity',
@@ -292,7 +292,7 @@ export default class ActivityCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`activity\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Member:** ${member.user.tag} (${member.id})
         **Error Message:** ${err}`);

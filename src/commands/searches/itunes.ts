@@ -63,7 +63,7 @@ export default class ITunesCommand extends Command {
         term: music,
       }).replace(/%2B/gm, '+')}`);
       const tracks: iTunesResult = await request.json();
-      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
 
       if (!tracks.resultCount) throw new Error('nosong');
 
@@ -106,7 +106,7 @@ export default class ITunesCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`itunes\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${music}
         **Error Message:** ${err}`);

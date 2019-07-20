@@ -80,7 +80,7 @@ export default class CydiaCommand extends Command {
       const packages = await res.json();
       const fuzzyList = new Fuse(packages.results as CydiaAPIPackageType[], fsoptions);
       const search = fuzzyList.search(deb);
-      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
 
       if (!search.length) throw new Error('no_packages');
 
@@ -122,7 +122,7 @@ export default class CydiaCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`cydia\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Package:** ${deb}
         **Regex Match:** \`${msg.patternMatches ? 'yes' : 'no'}\`

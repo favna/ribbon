@@ -38,10 +38,10 @@ export default class NekoCommand extends Command {
       deleteCommandMessages(msg, this.client);
 
       return msg.embed({
-        color: msg.guild ? msg.guild.me!.displayColor : 10610610,
-        description: `Here is your cute cat girl ${msg.member!.displayName} 😻!`,
+        color: msg.guild ? msg.guild.me.displayColor : 10610610,
+        description: `Here is your cute cat girl ${msg.member.displayName} 😻!`,
         image: { url: nekoImg.url },
-      }, `<:cat:498198858032218143> <@${msg.author!.id}> <:cat:498198858032218143>`);
+      }, `<:cat:498198858032218143> <@${msg.author.id}> <:cat:498198858032218143>`);
     } catch (err) {
       return msg.reply('something went wrong getting a neko image 💔');
     }

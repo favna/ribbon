@@ -56,7 +56,7 @@ export default class MovieCommand extends Command {
         api_key: process.env.MOVIEDB_API_KEY!,
         query: name,
       })}`);
-      const color = msg.guild ? msg.member!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.member.displayHexColor : DEFAULT_EMBED_COLOR;
       const movieList: TMDBMovieList = await movieSearch.json();
 
       let currentMovie = movieList.results[position].id;

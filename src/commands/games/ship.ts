@@ -84,7 +84,7 @@ export default class ShipCommand extends Command {
     const embedAttachment = new MessageAttachment(buffer, 'ship.png');
 
     boat.attachFiles([ embedAttachment ])
-      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
       .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
       .setDescription(oneLine`I call it... ${shipName}! 😘`)
       .setImage('attachment://ship.png');

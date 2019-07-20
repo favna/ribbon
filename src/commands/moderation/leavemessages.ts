@@ -65,7 +65,7 @@ export default class LeaveMessagesCommand extends Command {
       const modlogChannel = msg.guild.settings.get('modlogchannel', null);
       const leaveMsgEmbed = new MessageEmbed()
         .setColor('#AAEFE6')
-        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
         .setDescription(`**Action:** ${description}`)
         .setTimestamp();
 
@@ -92,7 +92,7 @@ export default class LeaveMessagesCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`joinmessafes\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

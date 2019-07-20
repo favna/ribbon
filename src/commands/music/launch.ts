@@ -22,9 +22,7 @@ import { deleteCommandMessages, Song } from '@components/Utils';
 import { parse, stringify } from '@favware/querystring';
 import ytdl from '@favware/ytdl-prismplayer';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import {
-  Guild, Message, Permissions, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection
-} from 'awesome-djs';
+import { Guild, Message, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
@@ -131,13 +129,13 @@ export default class LaunchMusicCommand extends Command {
   public async run(msg: CommandoMessage, { videoQuery }: LaunchMusicArgs) {
     const queue = this.queue.get(msg.guild.id);
 
-    if (!msg.member!.voice.channel) return msg.reply('please join a voice channel before issuing this command.');
+    if (!msg.member.voice.channel) return msg.reply('please join a voice channel before issuing this command.');
 
-    const voiceChannel: VoiceChannel = msg.member!.voice.channel;
+    const voiceChannel: VoiceChannel = msg.member.voice.channel;
     const statusMsg: Message = await msg.reply('obtaining video details...') as Message;
 
     if (!queue) {
-      const permissions = voiceChannel.permissionsFor(msg.client.user!) as Readonly<Permissions>;
+      const permissions = voiceChannel.permissionsFor(msg.client.user);
 
       if (!permissions.has('CONNECT')) return msg.reply('I don\'t have permission to join your voice channel. Fix your server\'s permissions');
       if (!permissions.has('SPEAK')) return msg.reply('I don\'t have permission to speak in your voice channel. Fix your server\'s permissions');
@@ -162,7 +160,7 @@ export default class LaunchMusicCommand extends Command {
 
         return null;
       }
-    } else if (!queue.voiceChannel.members.has(msg.author!.id)) {
+    } else if (!queue.voiceChannel.members.has(msg.author.id)) {
       return msg.reply('please join a voice channel before issuing this command.');
     }
 
@@ -215,11 +213,11 @@ export default class LaunchMusicCommand extends Command {
         } catch (err) {
           deleteCommandMessages(msg, this.client);
 
-          return statusMsg.edit(`<@${msg.author!.id}>, couldn't obtain the search result video's details.`);
+          return statusMsg.edit(`<@${msg.author.id}>, couldn't obtain the search result video's details.`);
         }
       }
 
-      return statusMsg.edit(`<@${msg.author!.id}>, couldn't match a youtube result. Was that really a youtube video?`);
+      return statusMsg.edit(`<@${msg.author.id}>, couldn't match a youtube result. Was that really a youtube video?`);
     }
   }
 
@@ -247,8 +245,8 @@ export default class LaunchMusicCommand extends Command {
       const result = this.addSong(msg, video);
       const resultMessage = {
         author: {
-          iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
-          name: `${msg.author!.tag} (${msg.author!.id})`,
+          iconURL: msg.author.displayAvatarURL({ format: 'png' }),
+          name: `${msg.author.tag} (${msg.author.id})`,
         },
         color: 3447003,
         description: result,
@@ -280,8 +278,8 @@ export default class LaunchMusicCommand extends Command {
       const result = this.addSong(msg, video);
       const resultMessage = {
         author: {
-          iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
-          name: `${msg.author!.tag} (${msg.author!.id})`,
+          iconURL: msg.author.displayAvatarURL({ format: 'png' }),
+          name: `${msg.author.tag} (${msg.author.id})`,
         },
         color: 3447003,
         description: result,
@@ -304,8 +302,8 @@ export default class LaunchMusicCommand extends Command {
     const result = this.addSong(msg, video);
     const resultMessage = {
       author: {
-        iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
-        name: `${msg.author!.tag} (${msg.author!.id})`,
+        iconURL: msg.author.displayAvatarURL({ format: 'png' }),
+        name: `${msg.author.tag} (${msg.author.id})`,
       },
       color: 3447003,
       description: result,
@@ -326,8 +324,8 @@ export default class LaunchMusicCommand extends Command {
                     `,
         color: 3447003,
         author: {
-          name: `${msg.author!.tag} (${msg.author!.id})`,
-          iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
+          name: `${msg.author.tag} (${msg.author.id})`,
+          iconURL: msg.author.displayAvatarURL({ format: 'png' }),
         },
       },
     });
@@ -338,14 +336,14 @@ export default class LaunchMusicCommand extends Command {
   private addSong(msg: CommandoMessage, video: YoutubeVideoType) {
     const queue = this.queue.get(msg.guild.id);
     const songNumerator = (prev: number, curSong: Song) => {
-      if (curSong.member.id === msg.author!.id) {
+      if (curSong.member.id === msg.author.id) {
         prev += 1;
       }
 
       return prev;
     };
 
-    if (!this.client.isOwner(msg.author!)) {
+    if (!this.client.isOwner(msg.author)) {
       const songMaxLength = msg.guild.settings.get('maxLength', MAX_LENGTH);
       const songMaxSongs = msg.guild.settings.get('maxSongs', MAX_SONGS);
 
@@ -365,7 +363,7 @@ export default class LaunchMusicCommand extends Command {
       }
     }
 
-    const song = new Song(video, msg.member!);
+    const song = new Song(video, msg.member);
 
     (queue as MusicQueueType).songs.push(song);
 

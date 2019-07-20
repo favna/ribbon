@@ -5,7 +5,7 @@ import moment from 'moment';
 import { countCaps, countEmojis, countMentions, isNumberBetween } from './Utils';
 
 export const badwords = (msg: CommandoMessage, words: string[], client: CommandoClient) => {
-  if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES') || !words || !words.length) {
+  if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES') || !words || !words.length) {
     return false;
   }
 
@@ -15,7 +15,7 @@ export const badwords = (msg: CommandoMessage, words: string[], client: Commando
 export const duptext = (
   msg: CommandoMessage, within: number, equals: number, distance: number, client: CommandoClient
 ) => {
-  if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
   const authorMessages = msg.channel.messages.filter((message: Message) => {
@@ -23,7 +23,7 @@ export const duptext = (
 
     return (
       isNumberBetween(diff.asMinutes(), within * -1, 0, true) &&
-      message.author!.id === msg.author!.id
+      message.author.id === msg.author.id
     );
   });
 
@@ -42,7 +42,7 @@ export const duptext = (
 };
 
 export const caps = (msg: CommandoMessage, threshold: number, minlength: number, client: CommandoClient) => {
-  if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
   if (msg.cleanContent.length >= minlength) {
@@ -55,7 +55,7 @@ export const caps = (msg: CommandoMessage, threshold: number, minlength: number,
 };
 
 export const emojis = (msg: CommandoMessage, threshold: number, minlength: number, client: CommandoClient) => {
-  if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
   if (msg.cleanContent.length >= minlength) {
@@ -68,7 +68,7 @@ export const emojis = (msg: CommandoMessage, threshold: number, minlength: numbe
 };
 
 export const mentions = (msg: CommandoMessage, threshold: number, client: CommandoClient) => {
-  if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
 
@@ -76,7 +76,7 @@ export const mentions = (msg: CommandoMessage, threshold: number, client: Comman
 };
 
 export const links = (msg: CommandoMessage, client: CommandoClient) => {
-  if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
 
@@ -84,7 +84,7 @@ export const links = (msg: CommandoMessage, client: CommandoClient) => {
 };
 
 export const invites = (msg: CommandoMessage, client: CommandoClient) => {
-  if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
 
@@ -92,7 +92,7 @@ export const invites = (msg: CommandoMessage, client: CommandoClient) => {
 };
 
 export const slowmode = (msg: CommandoMessage, within: number, client: CommandoClient) => {
-  if (msg.author!.bot || client.isOwner(msg.author!) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.isOwner(msg.author) || msg.member.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
   const authorMessages = msg.channel.messages.filter((message: Message) => {
@@ -100,7 +100,7 @@ export const slowmode = (msg: CommandoMessage, within: number, client: CommandoC
 
     return (
       isNumberBetween(diff.asSeconds(), within * -1, 0, true) &&
-      message.author!.id === msg.author!.id
+      message.author.id === msg.author.id
     );
   });
 

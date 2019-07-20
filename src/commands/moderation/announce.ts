@@ -11,7 +11,7 @@
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageAttachment, MessageEmbed, Permissions, TextChannel } from 'awesome-djs';
+import { MessageAttachment, MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
@@ -60,14 +60,14 @@ export default class NewsCommand extends Command {
       }
 
       if (!newsChannel) throw new Error('nochannel');
-      if (!(newsChannel.permissionsFor(msg.guild.me!) as Readonly<Permissions>).has([ 'SEND_MESSAGES', 'VIEW_CHANNEL' ])) throw new Error('noperms');
+      if (!(newsChannel.permissionsFor(msg.guild.me)).has([ 'SEND_MESSAGES', 'VIEW_CHANNEL' ])) throw new Error('noperms');
 
       if (announce.slice(0, 4) !== 'http') announce = `${body.slice(0, 1).toUpperCase()}${body.slice(1)}`;
       if (msg.attachments.first() && (msg.attachments.first() as MessageAttachment).url) announce += `\n${(msg.attachments.first() as MessageAttachment).url}`;
 
       announceEmbed
         .setColor('#AAEFE6')
-        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
         .setDescription(stripIndents`
           **Action:** Made an announcement
           **Content:** ${announce}`)
@@ -103,7 +103,7 @@ export default class NewsCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`warn\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${body}
         **Error Message:** ${err}`);

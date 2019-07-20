@@ -48,7 +48,7 @@ export default class MusicStatusCommand extends Command {
     const currentTime = song.dispatcher ? song.dispatcher.streamTime / 1000 : 0;
     const songStatusEmbed = new MessageEmbed()
       .setAuthor(song.username, song.avatar)
-      .setColor(msg.guild.me!.displayHexColor)
+      .setColor(msg.guild.me.displayHexColor)
       .setDescription(stripIndents`
           [${song}](${`${song.url}`})
 

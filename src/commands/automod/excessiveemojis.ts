@@ -69,7 +69,7 @@ export default class ExcessiveEmojisCommand extends Command {
 
     eeEmbed
       .setColor('#439DFF')
-      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Excessive Emojis filter has been ${shouldEnable ? 'enabled' : 'disabled'}
         ${shouldEnable ? `**Threshold:** Messages that have at least ${threshold} emojis will be deleted` : ''}

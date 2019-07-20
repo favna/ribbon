@@ -67,7 +67,7 @@ export default class I18nCommand extends Command {
 
     i18nEmbed
       .setColor('#3DFFE5')
-      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(`**Action:** Guild language set to \`${this.languageMapper(language)}\``)
       .setTimestamp();
 

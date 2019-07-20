@@ -72,7 +72,7 @@ export default class MangaCommand extends Command {
           method: 'POST',
         });
       const mangas: KitsuResult = await mangaList.json();
-      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
 
       let currentManga = mangas.hits[position];
       let mangaEmbed = this.prepMessage(

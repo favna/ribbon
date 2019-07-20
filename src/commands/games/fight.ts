@@ -63,7 +63,7 @@ export default class FightCommand extends Command {
         : fighterTwo;
 
       fighterEmbed
-        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
         .setTitle('🥊 Fight Results 🥊')
         .setThumbnail(`${ASSET_BASE_PATH}/ribbon/dbxlogo.png`);
 

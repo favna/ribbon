@@ -60,8 +60,8 @@ export default class CopypastaAddCommand extends Command {
     const pastaAddEmbed = new MessageEmbed();
 
     pastaAddEmbed
-      .setAuthor(msg.member!.displayName, msg.author!.displayAvatarURL({ format: 'png' }))
-      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
       .setDescription(content);
 
     try {
@@ -103,7 +103,7 @@ export default class CopypastaAddCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`copypastaadd\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

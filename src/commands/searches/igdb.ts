@@ -71,7 +71,7 @@ export default class IGDBCommand extends Command {
         method: 'POST',
       });
       const gameInfo: IgdbGame[] = await igdbSearch.json();
-      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
 
       let currentGame = gameInfo[position];
       let gameEmbed = this.prepMessage(

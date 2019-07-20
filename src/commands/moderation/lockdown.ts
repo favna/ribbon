@@ -66,7 +66,7 @@ export default class LockdownCommand extends Command {
         permissionOverwrites: [
           {
             allow: [ 'SEND_MESSAGES', 'VIEW_CHANNEL' ],
-            id: msg.member!.roles.highest.id,
+            id: msg.member.roles.highest.id,
           },
           {
             deny: [ 'SEND_MESSAGES' ],
@@ -80,7 +80,7 @@ export default class LockdownCommand extends Command {
 
       lockEmbed
         .setColor('#983553')
-        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
         .setDescription(stripIndents`
           **Action:** 🔒 locked the \`${channel.name}\` channel.
           **Details:** Only staff can now access this channel. Use \`${msg.guild.commandPrefix}unlock\` in this channel to unlock the channel`)
@@ -107,7 +107,7 @@ export default class LockdownCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`defaultrole\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

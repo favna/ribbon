@@ -94,7 +94,7 @@ export default class WeatherCommand extends Command {
 
       weatherEmbed
         .setTitle(`Weather forecast for ${cords.address}`)
-        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
         .setFooter('Powered by DarkSky')
         .setTimestamp()
         .setThumbnail(`${ASSET_BASE_PATH}/ribbon/weather/${weather.currently.icon}.png`)

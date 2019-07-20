@@ -52,7 +52,7 @@ export default class SetAnnounceCommand extends Command {
 
     setAnnouncementEmbed
       .setColor('#3DFFE5')
-      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Announcements Channel channel changed
         **Channel:** <#${channel.id}>`)

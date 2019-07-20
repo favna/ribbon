@@ -57,7 +57,7 @@ export default class ImageCommand extends Command {
   @clientHasManageMessages()
   public async run(msg: CommandoMessage, { query, hasManageMessages, position = 0 }: ImageArgs) {
     const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
-    const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+    const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
 
     let imageEmbed = new MessageEmbed()
       .setColor(color);

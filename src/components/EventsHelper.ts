@@ -47,7 +47,7 @@ const sendReminderMessages = async (client: CommandoClient) => {
         user.send({
           embed: {
             author: {
-              iconURL: client.user!.displayAvatarURL({ format: 'png' }),
+              iconURL: client.user.displayAvatarURL({ format: 'png' }),
               name: 'Ribbon Reminders',
             },
             color: 10610610,
@@ -95,7 +95,7 @@ const sendCountdownMessages = async (client: CommandoClient) => {
           const guild = client.guilds.get(tables[table].name)!;
           const channel = guild.channels.get(rows[row].channel) as TextChannel;
           const countdownEmbed = new MessageEmbed();
-          const me = guild.me!;
+          const me = guild.me;
 
           countdownEmbed
             .setAuthor('Countdown Reminder', me.user.displayAvatarURL({ format: 'png' }))
@@ -283,7 +283,7 @@ const payoutLotto = async (client: CommandoClient) => {
           client.guilds.get(guildId)!.channels.get(winnerLastMessageChannelId)! :
           null;
         const winnerLastMessageChannelPermitted: boolean = winnerLastMessageChannel ?
-          winnerLastMessageChannel.permissionsFor(client.user!)!.has('SEND_MESSAGES') :
+          winnerLastMessageChannel.permissionsFor(client.user)!.has('SEND_MESSAGES') :
           false;
 
         winnerEmbed
@@ -339,7 +339,7 @@ const sendTimedMessages = async (client: CommandoClient) => {
           const guild = client.guilds.get(tables[table].name)!;
           const channel = guild.channels.get(rows[row].channel) as TextChannel;
           const timerEmbed = new MessageEmbed();
-          const me = guild.me!;
+          const me = guild.me;
           const memberMentions = rows[row].members ?
             rows[row].members
               .split(';')
@@ -348,7 +348,7 @@ const sendTimedMessages = async (client: CommandoClient) => {
             null;
 
           timerEmbed
-            .setAuthor(`${client.user!.username} Timed Message`, me.user.displayAvatarURL({ format: 'png' }))
+            .setAuthor(`${client.user.username} Timed Message`, me.user.displayAvatarURL({ format: 'png' }))
             .setColor(me.displayHexColor)
             .setDescription(rows[row].content)
             .setTimestamp();
@@ -374,7 +374,7 @@ export const handleCmdErr = (client: CommandoClient, cmd: Command, err: Error, m
     Caught **Command Error**!
     **Command:** ${cmd.name}
     ${msg.guild ? `**Server:** ${msg.guild.name} (${msg.guild.id})` : null}
-    **Author:** ${msg.author!.tag} (${msg.author!.id})
+    **Author:** ${msg.author.tag} (${msg.author.id})
     **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
     **Error Message:** ${err.message}`);
 };
@@ -456,7 +456,7 @@ export const handleErr = (client: CommandoClient, err: Error) => {
 
 export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGuild): Promise<void> => {
   try {
-    const avatar = await jimp.read(client.user!.displayAvatarURL({ format: 'png' }));
+    const avatar = await jimp.read(client.user.displayAvatarURL({ format: 'png' }));
     const border = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/border.png`);
     const canvas = await jimp.read(500, 150);
     const mask = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/mask.png`);
@@ -485,7 +485,7 @@ export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGui
         I've got many commands, you can see them all by using \`${client.commandPrefix}help\`
         Don't like the prefix? The admins can change my prefix by using \`${client.commandPrefix}prefix [new prefix]\`
 
-        **All these commands can also be called by mentioning me instead of using a prefix, for example \`@${client.user!.tag} help\`**`)
+        **All these commands can also be called by mentioning me instead of using a prefix, for example \`@${client.user.tag} help\`**`)
       .setImage('attachment://added.png');
 
     if (channel) channel.send('', { embed: newGuildEmbed });
@@ -608,7 +608,7 @@ export const handleMemberJoin = (client: CommandoClient, member: GuildMember) =>
 
       if (memberLogs &&
         member.guild.channels.get(memberLogs) &&
-        member.guild.channels.get(memberLogs)!.permissionsFor(client.user!)!.has('SEND_MESSAGES')) {
+        member.guild.channels.get(memberLogs)!.permissionsFor(client.user)!.has('SEND_MESSAGES')) {
         const channel = guild.channels.get(memberLogs) as TextChannel;
 
         channel.send('', { embed: memberJoinLogEmbed });
@@ -678,7 +678,7 @@ export const handleMemberLeave = (client: CommandoClient, member: GuildMember): 
 
       if (memberLogs &&
         member.guild.channels.get(memberLogs) &&
-        member.guild.channels.get(memberLogs)!.permissionsFor(client.user!)!.has('SEND_MESSAGES')) {
+        member.guild.channels.get(memberLogs)!.permissionsFor(client.user)!.has('SEND_MESSAGES')) {
         const channel = guild.channels.get(memberLogs) as TextChannel;
 
         channel.send('', { embed: memberLeaveLogEmbed });
@@ -752,7 +752,7 @@ export const handleMsg = (client: CommandoClient, msg: CommandoMessage): void =>
 
   if (msg.guild && msg.deletable && guild.settings.get('automod', false).enabled) {
     // eslint-disable-next-line @typescript-eslint/promise-function-async
-    if (msg.member!.roles.some(role => guild.settings.get('automod', []).filterroles.includes(role.id))) {
+    if (msg.member.roles.some(role => guild.settings.get('automod', []).filterroles.includes(role.id))) {
       return;
     }
     if (guild.settings.get('caps', false).enabled) {
@@ -793,7 +793,7 @@ export const handleMsg = (client: CommandoClient, msg: CommandoMessage): void =>
     }
   }
 
-  if (msg.author!.id === client.user!.id) {
+  if (msg.author.id === client.user.id) {
     try {
       let messagesCount = FirebaseStorage.messages;
       messagesCount++;
@@ -868,8 +868,8 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
             url: 'placeholder',
           };
         }
-        if (!/(twitch)/i.test(oldActivity.url!) && /(twitch)/i.test(newActivity.url!)) {
-          const userFetch = await fetch(`https://api.twitch.tv/helix/users?${stringify({ login: newActivity.url!.split('/')[3] })}`,
+        if (!/(twitch)/i.test(oldActivity.url) && /(twitch)/i.test(newActivity.url)) {
+          const userFetch = await fetch(`https://api.twitch.tv/helix/users?${stringify({ login: newActivity.url.split('/')[3] })}`,
             { headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID! } });
           const userData = await userFetch.json();
           const streamFetch = await fetch(`https://api.twitch.tv/helix/streams?${stringify({ channel: userData.data[0].id })}`,
@@ -883,7 +883,7 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
 
           twitchEmbed
             .setThumbnail(curUser.displayAvatarURL())
-            .setURL(newActivity.url!)
+            .setURL(newActivity.url)
             .setColor('#6441A4')
             .setTitle(`${curDisplayName} just went live!`)
             .setDescription(stripIndents`
@@ -918,8 +918,8 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
           **Server:** ${curGuild.name} (${curGuild.id})
           **Member:** ${curUser.tag} (${curUser.id})
           **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-          **Old Activity:** ${oldActivity!.url}
-          **New Activity:** ${newActivity!.url}
+          **Old Activity:** ${oldActivity.url}
+          **New Activity:** ${newActivity.url}
           **Error Message:** ${err}`);
       }
     }
@@ -967,7 +967,7 @@ export const handleReady = async (client: CommandoClient) => {
   // eslint-disable-next-line no-console
   console.info(oneLine`
     Client ready at ${moment().format('HH:mm:ss')};
-    logged in as ${client.user!.username}#${client.user!.discriminator} (${client.user!.id})`);
+    logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})`);
 };
 
 export const handleRejection = (reason: Error | unknown, promise: Promise<unknown>) => {

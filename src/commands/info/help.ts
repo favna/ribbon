@@ -85,7 +85,7 @@ export default class HelpCommand extends Command {
           try {
             messages.push(await msg.embed({
               description: help,
-              color: msg.guild ? msg.guild.me!.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
+              color: msg.guild ? msg.guild.me.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
             }) as Message);
           } catch (err) {
             messages.push(await msg.reply('Unable to send the help message.') as Message);
@@ -112,7 +112,7 @@ export default class HelpCommand extends Command {
         Unable to identify command.
         Use ${msg.usage(undefined,
     msg.channel.type === 'dm' ? this.client.commandPrefix : msg.guild.commandPrefix,
-    msg.channel.type === 'dm' ? this.client.user! : undefined)} to view the list of all commands.`
+    msg.channel.type === 'dm' ? this.client.user : undefined)} to view the list of all commands.`
         );
       }
 
@@ -121,8 +121,8 @@ export default class HelpCommand extends Command {
         const body = stripIndents`
           ${oneLine`
           To run a command in ${msg.guild ? msg.guild.name : 'any server'},
-          use ${Command.usage('command', msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix, this.client.user!)}.
-          For example, ${Command.usage('prefix', msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix, this.client.user!)}.`}
+          use ${Command.usage('command', msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix, this.client.user)}.
+          For example, ${Command.usage('prefix', msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix, this.client.user)}.`}
           To run a command in this DM, simply use ${Command.usage('command', undefined, undefined)} with no prefix.
 
           Use ${this.usage('<command>', undefined, undefined)} to view detailed information about a specific command.
@@ -142,7 +142,7 @@ export default class HelpCommand extends Command {
           splitContent.forEach(async part => (
             messages.push(await msg.direct('', {
               embed: {
-                color: msg.guild ? msg.guild.me!.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
+                color: msg.guild ? msg.guild.me.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
                 description: part,
               },
             }) as Message)
@@ -150,7 +150,7 @@ export default class HelpCommand extends Command {
         } else {
           messages.push(await msg.direct('', {
             embed: {
-              color: msg.guild ? msg.guild.me!.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
+              color: msg.guild ? msg.guild.me.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
               description: body,
             },
           }) as Message);

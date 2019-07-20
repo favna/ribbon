@@ -62,7 +62,7 @@ export default class CasinoLimitCommand extends Command {
 
     casinoLimitEmbed
       .setColor('#3DFFE5')
-      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Changed casino limits
         **Lower Limit:** \`${lowerlimit}\`

@@ -75,7 +75,7 @@ export default class OsuCommand extends Command {
           xpbar: true,
           xpbarhex: true,
         })}`)
-        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
         .addField('Perfects', osu[0].count300, true)
         .addField('Greats', osu[0].count100, true)
         .addField('Poors', osu[0].count50, true)
@@ -96,7 +96,7 @@ export default class OsuCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`osu\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Player:** ${player}
         **Error Message:** ${err}`);

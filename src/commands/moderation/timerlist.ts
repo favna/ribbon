@@ -60,7 +60,7 @@ export default class TimerListCommand extends Command {
 
         splitContent.forEach(part => {
           msg.embed({
-            color: msg.guild.me!.displayColor,
+            color: msg.guild.me.displayColor,
             description: part,
             title: 'Timed messages stored on this server',
           });
@@ -70,7 +70,7 @@ export default class TimerListCommand extends Command {
       }
 
       return msg.embed({
-        color: msg.guild.me!.displayColor,
+        color: msg.guild.me.displayColor,
         description: body,
         title: 'Timed messages stored on this server',
       });
@@ -83,7 +83,7 @@ export default class TimerListCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`timerlist\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

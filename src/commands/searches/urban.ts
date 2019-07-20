@@ -54,7 +54,7 @@ export default class UrbanCommand extends Command {
       const urbanSearch = await fetch(`https://api.urbandictionary.com/v0/define?${stringify({ term })}`);
       const urbanDefinitions: UrbanDefinitionResults = await urbanSearch.json();
       const amountOfDefinitions = urbanDefinitions.list.length;
-      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
 
       urbanDefinitions.list.sort((a, b) => b.thumbs_up - b.thumbs_down - (a.thumbs_up - a.thumbs_down));
 

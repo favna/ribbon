@@ -93,7 +93,7 @@ export default class RockPaperScissorCommand extends Command {
       }
 
       rpsEmbed
-        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
         .setTitle('Rock Paper Scissors')
         .setDescription(resString);
 

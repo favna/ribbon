@@ -64,7 +64,7 @@ export default class MoveCommand extends Command {
       const aliasFuse = new Fuse(moveAliases, moveOptions);
       const moveFuse = new Fuse(BattleMovedex, moveOptions);
       const aliasSearch = aliasFuse.search(move);
-      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
       let moveSearch = moveFuse.search(move);
       if (!moveSearch.length) moveSearch = aliasSearch.length ? moveFuse.search(aliasSearch[0].move) : [];
       if (!moveSearch.length) throw new Error('no_move');
@@ -107,7 +107,7 @@ export default class MoveCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`move\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${move}
         **Error Message:** ${err}`);

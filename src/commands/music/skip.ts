@@ -64,15 +64,15 @@ export default class SkipSongCommand extends Command {
   public async run(msg: CommandoMessage, args: string) {
     const queue = this.queue.get(msg.guild.id);
     if (!queue) return msg.reply('there isn\'t a song playing right now, silly.');
-    if (!queue.voiceChannel.members.has(msg.author!.id)) return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
+    if (!queue.voiceChannel.members.has(msg.author.id)) return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
     if (!queue.songs[0].dispatcher) return msg.reply('the song hasn\'t even begun playing yet. Why not give it a chance?');
 
     const threshold = Math.ceil((queue.voiceChannel.members.size - 1) / 3);
     const force =
       threshold <= 1 ||
       queue.voiceChannel.members.size < threshold ||
-      queue.songs[0].member.id === msg.author!.id ||
-      (msg.member!.hasPermission('MANAGE_MESSAGES') && args.toLowerCase() === 'force');
+      queue.songs[0].member.id === msg.author.id ||
+      (msg.member.hasPermission('MANAGE_MESSAGES') && args.toLowerCase() === 'force');
 
     if (force) {
       deleteCommandMessages(msg, this.client);
@@ -83,14 +83,14 @@ export default class SkipSongCommand extends Command {
     const vote = this.songVotes.get(msg.guild.id);
 
     if (vote && vote.count >= 1) {
-      if (vote.users.some((userId: string) => userId === msg.author!.id)) {
+      if (vote.users.some((userId: string) => userId === msg.author.id)) {
         deleteCommandMessages(msg, this.client);
 
         return msg.reply('you\'ve already voted to skip the song.');
       }
 
       vote.count += 1;
-      vote.users.push(msg.author!.id);
+      vote.users.push(msg.author.id);
       if (vote.count >= threshold) {
         deleteCommandMessages(msg, this.client);
 
@@ -110,7 +110,7 @@ export default class SkipSongCommand extends Command {
 
     const newVote: MusicVoteType = {
       count: 1,
-      users: [ msg.author!.id ],
+      users: [ msg.author.id ],
       queue,
       guild: msg.guild.id,
       start: Date.now(),

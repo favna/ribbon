@@ -84,7 +84,7 @@ export default class PubgCommand extends Command {
       pubEmbed
         .setTitle(`PUBG Player Statistics for ${playerName}`)
         .setThumbnail(`${ASSET_BASE_PATH}/ribbon/pubgicon.png`)
-        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
         .addField('Duos Stats', stripIndents`
           Wins: **${playerStats.data.attributes.gameModeStats.duo.wins}**
           Losses: **${playerStats.data.attributes.gameModeStats.duo.losses}**
@@ -183,7 +183,7 @@ export default class PubgCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`pubg\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **User:** ${user}
         **Shard:** ${shard}
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}

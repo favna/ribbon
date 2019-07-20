@@ -55,12 +55,12 @@ export default class WheelOfFortuneCommand extends Command {
     const wofEmbed = new MessageEmbed();
 
     wofEmbed
-      .setAuthor(msg.member!.displayName, msg.author!.displayAvatarURL({ format: 'png' }))
-      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
     try {
-      let { balance } = conn.prepare(`SELECT balance FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author!.id);
+      let { balance } = conn.prepare(`SELECT balance FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
 
       if (balance >= 0) {
         if (chips > balance) {
@@ -74,12 +74,12 @@ export default class WheelOfFortuneCommand extends Command {
         balance += nextBal;
         balance = roundNumber(balance);
 
-        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author!.id}";`)
+        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`)
           .run({ balance });
 
         wofEmbed
           .setTitle(oneLine`
-    ${msg.author!.tag}
+    ${msg.author.tag}
     ${multipliers[spin] < 1
     ? `lost ${roundNumber(chips - nextBal)}`
     : `won ${roundNumber(nextBal - chips)}`} chips`
@@ -114,7 +114,7 @@ export default class WheelOfFortuneCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`wheeloffortune\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

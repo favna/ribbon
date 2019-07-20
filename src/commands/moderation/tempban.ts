@@ -70,7 +70,7 @@ export default class TempbanCommand extends Command {
   public async run(msg: CommandoMessage, {
     member, time, reason, keepMessages = false,
   }: TempbanArgs) {
-    if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to ban yourself.');
+    if (member.id === msg.author.id) return msg.reply('I don\'t think you want to ban yourself.');
     if (!member.bannable) return msg.reply('I cannot ban that member, their role is probably higher than my own!');
 
     if (/--nodelete/im.test(msg.argString)) {
@@ -91,7 +91,7 @@ export default class TempbanCommand extends Command {
 
     banEmbed
       .setColor('#FF1900')
-      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
         **Member:** ${member.user.tag} (${member.id})
         **Action:** Temporary Ban
@@ -101,7 +101,7 @@ export default class TempbanCommand extends Command {
 
     unbanEmbed
       .setColor('#FF1900')
-      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(stripIndents`
         **Member:** ${member.user.tag} (${member.id})
         **Action:** Temporary ban removed`)

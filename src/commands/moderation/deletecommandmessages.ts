@@ -53,7 +53,7 @@ export default class DeleteCommandMessagesCommand extends Command {
 
     dcmEmbed
       .setColor('#3DFFE5')
-      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setDescription(oneLine`**Action:** Deleting of command messages is now ${shouldEnable ? 'enabled' : 'disabled'}`)
       .setTimestamp();
 

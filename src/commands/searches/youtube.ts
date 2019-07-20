@@ -64,7 +64,7 @@ export default class YouTubeCommand extends Command {
           type: 'video',
         })}`);
       const videoList: YoutubeResultList = await tubeSearch.json();
-      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
       const commandPrefix = msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length;
       const replyShouldBeSimple = msg.content.split(' ')[0].slice(commandPrefix) === 'yts';
       const amountOfVideos = videoList.items.length;

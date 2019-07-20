@@ -45,7 +45,7 @@ export default class IamCommand extends Command {
 
   public async run(msg: CommandoMessage, { role }: IamArgs) {
     try {
-      if (!msg.member!.manageable) {
+      if (!msg.member.manageable) {
         return msg.reply(oneLine`
           looks like I do not have permission to edit your roles.
           The staff will have to fix the server\'s role permissions if you want to use this command!`);
@@ -71,13 +71,13 @@ export default class IamCommand extends Command {
         return msg.reply(`that role is not self-assignable. The self-assignable roles are ${roleNames.map(val => `\`${val}\``).join(', ')}`);
       }
 
-      await msg.member!.roles.add(role);
+      await msg.member.roles.add(role);
 
       roleAddEmbed
         .setColor('#AAEFE6')
-        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
         .setDescription(stripIndents`
-          **Action:** \`${msg.member!.displayName}\` (\`${msg.author!.id}\`) assigned \`${role.name}\` to themselves with the \`iam\` command`)
+          **Action:** \`${msg.member.displayName}\` (\`${msg.author.id}\`) assigned \`${role.name}\` to themselves with the \`iam\` command`)
         .setTimestamp();
 
       if (msg.guild.settings.get('modlogs', true)) {
@@ -108,9 +108,9 @@ export default class IamCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`iam\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Input:** \`${role.name} (${role.id})\` || \`${msg.author!.tag} (${msg.author!.id})\`
+        **Input:** \`${role.name} (${role.id})\` || \`${msg.author.tag} (${msg.author.id})\`
         **Error Message:** ${err}`);
 
       return msg.reply(oneLine`

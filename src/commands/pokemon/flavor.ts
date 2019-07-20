@@ -156,7 +156,7 @@ export default class FlavorCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`flavor\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author!.tag} (${msg.author!.id})
+        **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${pokemon}
         **Shiny?:** ${shines ? 'yes' : 'no'}
@@ -256,7 +256,7 @@ export default class FlavorCommand extends Command {
       }
 
       dataEmbed.description = zalgo(dataEmbed.description);
-      dataEmbed.author!.name = zalgo(dataEmbed.author!.name!);
+      dataEmbed.author.name = zalgo(dataEmbed.author.name!);
       dataEmbed.fields = fields;
       dataEmbed.setImage(`${ASSET_BASE_PATH}/ribbon/missingno.png`);
     }

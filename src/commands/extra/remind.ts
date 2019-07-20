@@ -68,7 +68,7 @@ export default class RemindCommand extends Command {
           remindtime: moment()
             .add(time, 'ms')
             .format('YYYY-MM-DD HH:mm:ss'),
-          userid: msg.author!.id,
+          userid: msg.author.id,
         });
     } catch (err) {
       if (/(?:no such table)/i.test(err.toString())) {
@@ -81,7 +81,7 @@ export default class RemindCommand extends Command {
             remindtime: moment()
               .add(time, 'ms')
               .format('YYYY-MM-DD HH:mm:ss'),
-            userid: msg.author!.id,
+            userid: msg.author.id,
           });
       } else {
         deleteCommandMessages(msg, this.client);
@@ -90,7 +90,7 @@ export default class RemindCommand extends Command {
         channel.send(stripIndents`
           <@${this.client.owners[0].id}> Error occurred in \`remind\` command!
           **Server:** ${msg.guild.name} (${msg.guild.id})
-          **Author:** ${msg.author!.tag} (${msg.author!.id})
+          **Author:** ${msg.author.tag} (${msg.author.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Should have reminded in:** ${moment.duration(time).format(DURA_FORMAT)}
           **Reminder that should've been sent:** \`${reminder}\`
@@ -103,8 +103,8 @@ export default class RemindCommand extends Command {
       }
     }
     remindEmbed
-      .setAuthor(msg.guild ? msg.member!.displayName : msg.author!.tag, msg.author!.displayAvatarURL({ format: 'png' }))
-      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(msg.guild ? msg.member.displayName : msg.author.tag, msg.author.displayAvatarURL({ format: 'png' }))
+      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/reminders.png`)
       .setTitle('Your reminder was stored!')
       .setDescription(reminder)
