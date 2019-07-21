@@ -71,7 +71,7 @@ export default class UrbanCommand extends Command {
         injectNavigationEmotes(message);
         new ReactionCollector(message, navigationReactionFilter, { time: CollectorTimeout.five })
           .on('collect', (reaction: MessageReaction, user: User) => {
-            if (!this.client.userid.includes(user.id)) {
+            if (!this.client.botIds.includes(user.id)) {
               if (reaction.emoji.name === '➡') position++;
               else position--;
               if (position >= amountOfDefinitions) position = 0;
