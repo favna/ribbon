@@ -1111,20 +1111,20 @@ atob@^2.1.1:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-awesome-commando@^3.0.9:
-  version "3.0.9"
-  resolved "https://registry.yarnpkg.com/awesome-commando/-/awesome-commando-3.0.9.tgz#07e226730dde894b6e575ced2fcc32589bfbf19b"
-  integrity sha512-+XKnNniYU0ZlpsAduCcRTJ86ShHpGqbqor18mysCIu/fIz4cFCn/kN5D4u+GO2QvdFdBhGbp77wIvwPFK5CYLA==
+awesome-commando@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/awesome-commando/-/awesome-commando-3.0.10.tgz#b848d6df9b9959287c6262d952ac460f33acb8bf"
+  integrity sha512-be+hvh4I+sWWfw2bzpDIukyywEQJ8j6IPjTzNcNQTYVBw5UC9BC81zsH0XuNigtlWMuNIbaZENbILmAFZudcuA==
   dependencies:
     common-tags "^1.8.0"
     escape-string-regexp "^1.0.5"
     moment "^2.24.0"
     require-all "^3.0.0"
 
-awesome-djs@^13.0.18:
-  version "13.0.18"
-  resolved "https://registry.yarnpkg.com/awesome-djs/-/awesome-djs-13.0.18.tgz#d8b52f54b474dc129e669ba3f3fa49ee8a9f6fa2"
-  integrity sha512-/LsS5YuSeSEGKzQBlMAcuniYJGL9kltG7I7aXs25DOrAsMREJDRVowWMhjTtEccuEm7wv+8p/o7CPC702xK6/g==
+awesome-djs@^13.0.19:
+  version "13.0.19"
+  resolved "https://registry.yarnpkg.com/awesome-djs/-/awesome-djs-13.0.19.tgz#d625d2bcdabb12f23e35ac7f614ea39c14feee88"
+  integrity sha512-sKCiskW8/Ebvoq37YnZ+dR4s7gktxvNb6NQPZWlYDLH2qoDD7c+8lnPv4XAUBv+aBh1xMI0uZjkUpVqwej44Pw==
   dependencies:
     form-data "^2.3.3"
     node-fetch "^2.3.0"
