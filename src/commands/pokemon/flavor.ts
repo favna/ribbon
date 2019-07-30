@@ -227,6 +227,7 @@ export default class FlavorCommand extends Command {
           https://play.pokemonshowdown.com/sprites/
           ${shines ? 'xyani-shiny' : 'xyani'}/
           ${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`
+        .replace(/ /g, '')
       )
       .setDescription('Dex entries throughout the games starting at the latest one. Possibly not listing all available due to 2000 characters limit.')
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${pokeSearchLength}` : '');

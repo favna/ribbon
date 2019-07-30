@@ -274,6 +274,7 @@ export default class DexCommand extends Command {
           https://play.pokemonshowdown.com/sprites/
           ${shines ? 'xyani-shiny' : 'xyani'}/
           ${poke.species.toLowerCase().replace(/([% ])/g, '')}.gif`
+        .replace(/ /g, '')
       )
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${pokeSearchLength}` : '')
       .addField('Type(s)', poke.types.join(', '), true)
