@@ -15,12 +15,11 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noUnusedLocals": true,
-    "removeComments": true,
     "resolveJsonModule": true,
     "importHelpers": true,
     "strict": true,
+    "incremental": true,
     "baseUrl": "src",
-    "skipLibCheck": true,
     "paths": {
       "@components/*": ["components/*"],
       "@databases/*": ["data/databases/*"],
@@ -28,7 +27,6 @@
       "@i18n/*": ["data/i18n/*"]
     },
     "typeRoots": ["typings","./node_modules/@types"],
-    "incremental": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules","dist","src/**/*.js","typings"]
