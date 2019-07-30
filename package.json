@@ -107,6 +107,7 @@
     "@types/common-tags": "^1.8.0",
     "@types/dotenv": "^6.1.1",
     "@types/fast-levenshtein": "^0.0.1",
+    "@types/form-data": "^2.5.0",
     "@types/gulp": "^4.0.6",
     "@types/libsodium-wrappers": "^0.7.5",
     "@types/module-alias": "^2.0.0",

@@ -3,6 +3,8 @@ import { Song } from '@components/Utils';
 import { Command } from 'awesome-commando';
 import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
 
+export declare type StringOrNumber = string | number;
+
 declare type FlavorTextType = {
   version_id: string;
   flavor_text: string;
@@ -132,7 +134,7 @@ declare type PokeStatType = {
   spd: number;
   spe: number;
 
-  [propName: string]: string | number | undefined;
+  [propName: string]: StringOrNumber | undefined;
 };
 
 declare type PokeAbilityType = {
@@ -277,7 +279,7 @@ export declare type Pokedex = {
   formeLetter?: string;
   prevo?: string;
   evos?: string[];
-  evoLevel?: number | string;
+  evoLevel?: StringOrNumber;
   eggGroups?: string[];
   otherFormes?: string[];
 };
@@ -305,10 +307,10 @@ export declare type PokemonMove = {
   name: string;
   shortDesc: string;
   type: string;
-  basePower: string | number;
+  basePower: StringOrNumber;
   pp: number;
   category: string;
-  accuracy: boolean | string | number;
+  accuracy: boolean | StringOrNumber;
   priority: number;
   target: string;
   contestType: string;
@@ -925,7 +927,6 @@ export declare type RedditComment = {
   over_18: boolean;
   approved_by: unknown;
   mod_note: unknown;
-  all_awardings: unknown[];
   subreddit_id: string;
   body: string;
   link_title: string;
@@ -983,7 +984,6 @@ export declare type RedditPost = {
   author_flair_type: string;
   author_fullname: string;
   author_patreon_flair: boolean;
-  author: string;
   banned_at_utc?: unknown;
   banned_by?: unknown;
   can_gild: boolean;
@@ -1151,7 +1151,7 @@ declare type OverwatchTopHeroStats = {
   multiKillBest: number;
   objectiveKills: number;
 
-  [topHeroStat: string]: number;
+  [topHeroStat: string]: StringOrNumber;
 };
 
 declare type OverwatchAwardStats = {
@@ -1191,7 +1191,7 @@ declare type OverwatchCareerAllHeroesAverage = {
   soloKillsAvgPer10Min: number;
   timeSpentOnFireAvgPer10Min: string;
 
-  [stat: string]: number;
+  [stat: string]: StringOrNumber;
 };
 
 declare type OverwatchCareerAllHeroesBest = {
@@ -1214,7 +1214,7 @@ declare type OverwatchCareerAllHeroesBest = {
   timeSpentOnFireMostInGame: string;
   turretsDestroyedMostInGame: number;
 
-  [stat: string]: number;
+  [stat: string]: StringOrNumber;
 };
 
 declare type OverwatchCareerAllHeroesCombat = {
@@ -1232,7 +1232,7 @@ declare type OverwatchCareerAllHeroesCombat = {
   soloKills: number;
   timeSpentOnFire: string;
 
-  [stat: string]: number;
+  [stat: string]: StringOrNumber;
 };
 
 declare type OverwatchCareerAllHeroesGame = {
@@ -1242,7 +1242,7 @@ declare type OverwatchCareerAllHeroesGame = {
   gamesWon: number;
   timePlayed: string;
 
-  [stat: string]: number;
+  [stat: string]: StringOrNumber;
 };
 
 declare type OverwatchCareerAllHeroesMatchAwards = {
@@ -1278,13 +1278,11 @@ declare type OverwatchHeroStats = {
 declare type OverwatchCareerStats = {
   allHeroes: OverwatchHeroStats;
 
-  [heroName: OverwatchHeroesUnion]: OverwatchHeroStats;
+  [heroName: string]: OverwatchHeroStats;
 };
 
 declare type OverwatchTopHeroes = {
-  [heroName: OverwatchHeroesUnion]: OverwatchTopHeroStats;
-
-  [index: string]: OverwatchTopHeroStats;
+  [heroName: string]: OverwatchTopHeroStats;
 };
 
 declare type OverwatchGamesStats = {

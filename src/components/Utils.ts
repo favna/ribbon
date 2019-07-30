@@ -2,10 +2,10 @@ import { CommandoClient, CommandoGuild, CommandoMessage, util as CommandoUtil } 
 import { GuildMember, MessageEmbed, MessageReaction, PermissionString, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
 import { oneLine, oneLineTrim } from 'common-tags';
 import emojiRegex from 'emoji-regex';
-import { YoutubeVideoType } from '../RibbonTypes';
+import { YoutubeVideoType, StringOrNumber } from '../RibbonTypes';
 import { diacriticsMap } from './Constants';
 
-export const cleanArray = <T extends unknown>(deleteValue: string | number | undefined | null, array: T[]) => array.filter(element => element !== deleteValue);
+export const cleanArray = <T extends unknown>(deleteValue: StringOrNumber | undefined | null, array: T[]) => array.filter(element => element !== deleteValue);
 export const sentencecase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 export const titlecase = (str: string) => str.toLowerCase().replace(/^([a-z]| [a-z]|-[a-z])/g, word => word.toUpperCase());
 export const navigationReactionFilter = (reaction: MessageReaction) => (reaction.emoji.name === '➡' || reaction.emoji.name === '⬅');
