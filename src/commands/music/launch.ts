@@ -400,7 +400,7 @@ export default class LaunchMusicCommand extends Command {
         description: `${`[${song}](${`${song.url}`})`}`,
         image: { url: song.thumbnail },
       },
-    }) as Promise<Message>;
+    });
 
     try {
       dispatcher = await LaunchMusicCommand.startTheJam(((queue as MusicQueueType).connection as VoiceConnection),
