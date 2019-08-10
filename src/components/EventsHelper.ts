@@ -10,7 +10,7 @@ import jimp from 'jimp';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import path from 'path';
-import { CasinoRowType, CountdownType, TimerType } from '../RibbonTypes';
+import { CountdownType, TimerType } from '../RibbonTypes';
 import { badwords, caps, duptext, emojis, invites, links, mentions, slowmode } from './AutomodHelper';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from './Constants';
 import { decache } from './Decache';
@@ -257,7 +257,7 @@ const payoutLotto = async (client: CommandoClient) => {
               timeout: moment().format('YYYY-MM-DD HH:mm'),
             });
         }
-        const rows: CasinoRowType[] = conn
+        const rows: any[] = conn // eslint-disable-line
           .prepare(`SELECT * FROM "${guildId}"`)
           .all();
         const winner = Math.floor(Math.random() * rows.length);
