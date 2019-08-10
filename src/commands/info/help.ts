@@ -137,7 +137,7 @@ export default class HelpCommand extends Command {
     .join('\n')}`).join('\n\n')}`;
 
         if (body.length >= 2000) {
-          const splitContent = DJSUtil.splitMessage(body) as string[];
+          const splitContent = DJSUtil.splitMessage(body);
 
           splitContent.forEach(async part => (
             messages.push(await msg.direct('', {

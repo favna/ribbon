@@ -56,7 +56,7 @@ export default class CountdownList extends Command {
       deleteCommandMessages(msg, this.client);
 
       if (body.length >= 1800) {
-        const splitContent: string[] = Util.splitMessage(body, { maxLength: 1800 }) as string[];
+        const splitContent = Util.splitMessage(body, { maxLength: 1800 });
 
         splitContent.forEach(part => {
           msg.embed({

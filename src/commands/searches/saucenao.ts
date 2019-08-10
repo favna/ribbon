@@ -15,7 +15,7 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { DMChannel, MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { Handler, HandlerOptions, Source } from 'sagiri';
+import Sagiri, { SagiriOptions, Source } from 'sagiri';
 
 type SauceNaoArgs = {
   image: string;
@@ -51,13 +51,13 @@ export default class SauceNaoCommand extends Command {
   @clientHasManageMessages()
   public async run(msg: CommandoMessage, { image, hasManageMessages, position = 0 }: SauceNaoArgs) {
     try {
-      const handlerOptions: HandlerOptions = { numRes: 5, getRating: true };
-      const sauceHandler = new Handler(process.env.SAUCENAO_KEY!, handlerOptions);
+      const handlerOptions: SagiriOptions = { numRes: 5, getRating: true };
+      const sauceHandler = new Sagiri(process.env.SAUCENAO_KEY!, handlerOptions);
       const sauces = await sauceHandler.getSauce(image);
       const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
 
       if (!sauces || !sauces.length) throw new Error('no_matches');
-      if (this.channelIsNSFW(msg.channel)) sauces.filter(result => result.rating <= 2);
+      if (this.channelIsNSFW(msg.channel)) sauces.filter(result => parseInt(result.rating) <= 2);
       if (!sauces || !sauces.length) throw new Error('no_sfw_matches');
 
       let currentSauce = sauces[position];
@@ -130,7 +130,7 @@ export default class SauceNaoCommand extends Command {
       .setColor(color)
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${saucesLength}` : '')
       .setDescription(oneLine`
-        I found a match with a ${sauce.similarity}% similarity on ${sauce.site} as seen below.
+        I found a match with a ${sauce.similary}% similarity on ${sauce.site} as seen below.
         Click [here](${sauce.url}) to view the image`);
   }
 
