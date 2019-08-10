@@ -10,7 +10,7 @@ export default class CurrencyType extends ArgumentType {
       'ms', 'millisecond', 'milliseconds',
       's', 'second', 'seconds',
       'm', 'min', 'mins', 'minute', 'minutes',
-      'h', 'hr', 'hour', 'hours',
+      'h', 'hr', 'hrs', 'hour', 'hours',
       'd', 'day', 'days',
       'w', 'week', 'weeks',
       'mo', 'month', 'months',
