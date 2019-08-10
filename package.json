@@ -95,6 +95,7 @@
     "sagiri": "^2.0.0",
     "slot-machine": "^2.1.0",
     "speedtest-net": "^1.5.1",
+    "sqlite": "^3.0.3",
     "sqlite3": "^4.0.9",
     "table": "^5.4.5",
     "turndown": "^5.0.3",

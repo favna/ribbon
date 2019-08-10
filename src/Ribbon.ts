@@ -1,6 +1,6 @@
-import { Command, CommandoClient, CommandoGuild, CommandoMessage, SyncSQLiteProvider } from 'awesome-commando';
+import { Command, CommandoClient, CommandoGuild, CommandoMessage, SQLiteProvider } from 'awesome-commando';
 import { DMChannel, GuildChannel, GuildMember, RateLimitData } from 'awesome-djs';
-import Database from 'better-sqlite3';
+import { open as openDb } from 'sqlite';
 import path from 'path';
 import {
   handleChannelCreate,
@@ -45,7 +45,8 @@ export default class Ribbon {
         },
       },
       typescript: true,
-      disabledEvents: [ 'CHANNEL_PINS_UPDATE', 'CHANNEL_UPDATE', 'GUILD_BAN_ADD',
+      disabledEvents: [
+        'CHANNEL_PINS_UPDATE', 'CHANNEL_UPDATE', 'GUILD_BAN_ADD',
         'GUILD_BAN_REMOVE', 'GUILD_EMOJIS_UPDATE', 'GUILD_INTEGRATIONS_UPDATE',
         'GUILD_MEMBER_UPDATE', 'GUILD_ROLE_CREATE', 'GUILD_ROLE_DELETE',
         'GUILD_ROLE_UPDATE', 'MESSAGE_DELETE_BULK', 'MESSAGE_DELETE',
@@ -82,9 +83,9 @@ export default class Ribbon {
       .on('shardResumed', (shard: number, events: number) => handleShardResumed(shard, events));
     process.on('unhandledRejection', (reason: Error | unknown, promise: Promise<unknown>) => handleRejection(reason, promise));
 
-    const database = new Database(path.join(__dirname, 'data/databases/settings.sqlite3'));
+    const database = await openDb(path.join(__dirname, 'data/databases/settings.sqlite3'));
 
-    this.client.setProvider(new SyncSQLiteProvider(database));
+    this.client.setProvider(new SQLiteProvider(database));
 
     this.client.registry
       .registerDefaultTypes()
