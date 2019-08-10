@@ -15,9 +15,9 @@
     "url": "https://github.com/favna/ribbon/issues"
   },
   "scripts": {
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
-    "clean": "rimraf ./dist ./tsconfig.tsbuildinfo",
-    "prebuild": "yarn lint",
+    "lint": "eslint src --fix --ext .ts",
+    "clean": "rimraf ./dist",
+    "prebuild": "yarn clean && yarn lint",
     "build": "tsc",
     "postbuild": "yarn copyfiles && yarn replace",
     "start": "cross-env NODE_ENV=development ts-node ./src/app.ts",
@@ -69,7 +69,7 @@
     "@favware/zalgo": "^1.0.1",
     "awesome-commando": "^3.0.10",
     "awesome-djs": "^13.0.19",
-    "better-sqlite3": "^5.4.1",
+    "better-sqlite3": "^5.4.2",
     "booru": "^2.0.3",
     "cheerio": "^1.0.0-rc.3",
     "common-tags": "^1.8.0",
@@ -91,13 +91,16 @@
     "node-opus": "^0.3.2",
     "prism-media": "^1.0.2",
     "qrcode": "^1.4.1",
-    "sagiri": "^1.5.4",
+    "reflect-metadata": "^0.1.13",
+    "sagiri": "^1.5.3",
     "slot-machine": "^2.1.0",
     "speedtest-net": "^1.5.1",
-    "table": "^5.4.5",
+    "sqlite3": "^4.0.9",
+    "table": "^5.4.4",
     "turndown": "^5.0.3",
-    "ytdl-core": "^0.29.5",
-    "zlib-sync": "^0.1.5"
+    "typeorm": "^0.2.18",
+    "ytdl-core": "^0.29.4",
+    "zucc": "^0.1.2"
   },
   "devDependencies": {
     "@favware/eslint-config": "^1.0.0",
@@ -115,6 +118,7 @@
     "@types/node": "^12.6.9",
     "@types/node-fetch": "^2.5.0",
     "@types/qrcode": "^1.3.3",
+    "@types/sqlite3": "^3.1.5",
     "@types/table": "^4.0.6",
     "@types/turndown": "^5.0.0",
     "@types/ws": "^6.0.1",
@@ -131,6 +135,7 @@
     "ts-node": "^8.3.0",
     "tslib": "^1.10.0",
     "typescript": "^3.5.3",
+    "utility-types": "^3.7.0",
     "yargs": "^13.3.0"
   }
 }

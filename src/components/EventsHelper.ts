@@ -29,7 +29,7 @@ import {
   setUsersData
 } from './FirebaseActions';
 import FirebaseStorage from './FirebaseStorage';
-import { parseOrdinal } from './Utils';
+import { parseOrdinal, prod } from './Utils';
 
 const sendReminderMessages = async (client: CommandoClient) => {
   const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
@@ -443,15 +443,30 @@ export const handleChannelDelete = (client: CommandoClient, channel: DMChannel |
   }
 };
 
-export const handleDebug = (info: string) => console.info(info); // eslint-disable-line no-console
+export const handleDebug = (info: string): void => {
+  if (!prod) {
+    return console.info(info);
+  }
 
-export const handleErr = (client: CommandoClient, err: Error) => {
-  const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+  return undefined;
+};
 
-  channel.send(stripIndents`
+export const handleErr = async (client: CommandoClient, err: Error) => {
+  if (prod) {
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+    return channel.send(stripIndents`
+      Caught **WebSocket Error**!
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Error Message:** ${err.message}
+    `);
+  }
+
+  return console.error(stripIndents`
     Caught **WebSocket Error**!
     **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    **Error Message:** ${err.message}`);
+    **Error Message:** ${err.message}
+  `);
 };
 
 export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGuild): Promise<void> => {
@@ -926,17 +941,21 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
   }
 };
 
-export const handleRateLimit = (client: CommandoClient, info: RateLimitData) => {
-  const channel = client.channels.get(process.env.RATELIMIT_LOG_CHANNEL_ID!) as TextChannel;
+export const handleRateLimit = async (client: CommandoClient, info: RateLimitData) => {
+  if (prod) {
+    const channel = client.channels.get(process.env.RATELIMIT_LOG_CHANNEL_ID!) as TextChannel;
 
-  channel.send(stripIndents`
-    Ran into a **rate limit**!
-    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    **Timeout**: ${info.timeout}
-    **Limit**: ${info.limit}
-    **HTTP Method**: ${info.method}
-    **Path**: ${info.path}
-    **Route**: ${info.route}`);
+    return channel.send(stripIndents`
+      Ran into a **rate limit**!
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Timeout**: ${info.timeout}
+      **Limit**: ${info.limit}
+      **HTTP Method**: ${info.method}
+      **Path**: ${info.path}
+      **Route**: ${info.route}`);
+  }
+
+  return undefined;
 };
 
 export const handleReady = async (client: CommandoClient) => {
@@ -946,15 +965,18 @@ export const handleReady = async (client: CommandoClient) => {
   FirebaseStorage.servers = parseInt(await getServersData());
   FirebaseStorage.users = parseInt(await getUsersData());
 
-  const everyMinute = 1 * 60 * 1000;
-  const everyThreeMinutes = 3 * 60 * 1000;
-  const everyThirdHour = 3 * 60 * 60 * 1000;
 
-  interval(async () => setUpdateToFirebase(client), everyThreeMinutes);
-  interval(async () => sendTimedMessages(client), everyMinute);
-  interval(async () => sendCountdownMessages(client), everyThreeMinutes);
-  interval(async () => sendReminderMessages(client), everyMinute);
-  interval(async () => payoutLotto(client), everyThirdHour);
+  if (prod) {
+    const everyMinute = 1 * 60 * 1000;
+    const everyThreeMinutes = 3 * 60 * 1000;
+    const everyThirdHour = 3 * 60 * 60 * 1000;
+
+    interval(async () => setUpdateToFirebase(client), everyThreeMinutes);
+    interval(async () => sendTimedMessages(client), everyMinute);
+    interval(async () => sendCountdownMessages(client), everyThreeMinutes);
+    interval(async () => sendReminderMessages(client), everyMinute);
+    interval(async () => payoutLotto(client), everyThirdHour);
+  }
 
   fs.watch(path.join(__dirname, '../data/dex/formats.json'),
     (eventType, filename) => {
@@ -967,7 +989,7 @@ export const handleReady = async (client: CommandoClient) => {
   // eslint-disable-next-line no-console
   console.info(oneLine`
     Client ready at ${moment().format('HH:mm:ss')};
-    logged in as ${client.user.username}#${client.user.discriminator} (${client.user.id})`);
+    logged in as ${client.user.tag} (${client.user.id})`);
 };
 
 export const handleRejection = (reason: Error | unknown, promise: Promise<unknown>) => {
@@ -995,50 +1017,70 @@ export const handleWarn = async (client: CommandoClient, warn: string) => {
 };
 
 export const handleShardDisconnect = (event: CloseEvent, shard: number) => {
-  console.error(stripIndents`
-    >>>>>>
-        Shard Disconnected, warning, it will not reconnect!
-        **Shard Number:** ${shard}
-        **Close Event Code:** ${event.code}
-        **Close Event Reason:** ${event.reason}
-        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    <<<<<<`);
+  if (prod) {
+    return console.error(stripIndents`
+      >>>>>>
+          Shard Disconnected, warning, it will not reconnect!
+          **Shard Number:** ${shard}
+          **Close Event Code:** ${event.code}
+          **Close Event Reason:** ${event.reason}
+          **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      <<<<<<`);
+  }
+
+  return undefined;
 };
 
 export const handleShardError = (event: Error, shard: number) => {
-  console.error(stripIndents`
+  if (prod) {
+    return console.error(stripIndents`
     >>>>>>
         Shard encountered a connection error!
         **Shard Number:** ${shard}
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${event.message}
     <<<<<<`);
+  }
+
+  return undefined;
 };
 
 export const handleShardReady = (shard: number) => {
-  console.info(stripIndents`
+  if (prod) {
+    console.info(stripIndents`
     >>>>>>
         New Shard is ready!
         Shard Number: ${shard}
         Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
     <<<<<<`);
+  }
+
+  return undefined;
 };
 
 export const handleShardReconnecting = (shard: number) => {
-  console.info(stripIndents`
+  if (prod) {
+    console.info(stripIndents`
     >>>>>>
         Shard is reconnecting!
         **Shard Number:** ${shard}
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
     <<<<<<`);
+  }
+
+  return undefined;
 };
 
 export const handleShardResumed = (shard: number, replayedEvents: number) => {
-  console.info(stripIndents`
+  if (prod) {
+    console.info(stripIndents`
     >>>>>>
         Shard is resumed successfully!
         **Shard Number:** ${shard}
         **Amount of replayed events:** ${replayedEvents}
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
     <<<<<<`);
+  }
+
+  return undefined;
 };

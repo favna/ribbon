@@ -5,16 +5,31 @@ import emojiRegex from 'emoji-regex';
 import { YoutubeVideoType, StringOrNumber } from '../RibbonTypes';
 import { diacriticsMap } from './Constants';
 
+/** Validation on whether this connection will be production or not */
+export const prod = process.env.NODE_ENV === 'production';
+
+/** Cleans an array of a given value */
 export const cleanArray = <T extends unknown>(deleteValue: StringOrNumber | undefined | null, array: T[]) => array.filter(element => element !== deleteValue);
+
+/** Transforms a message to Sentence case */
 export const sentencecase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
+/** Transforms a message to Title Case */
 export const titlecase = (str: string) => str.toLowerCase().replace(/^([a-z]| [a-z]|-[a-z])/g, word => word.toUpperCase());
+
+/** Filter applied to navigation reactions */
 export const navigationReactionFilter = (reaction: MessageReaction) => (reaction.emoji.name === '➡' || reaction.emoji.name === '⬅');
+
+/** Helper function to inject navigation emotes */
 export const injectNavigationEmotes = async (message: CommandoMessage): Promise<void> => {
   await message.react('⬅');
   await message.react('➡');
 };
 
+/** Helper function to count the amount of capital letters in a message */
 export const countCaps = (stringToCheck: string, allowedLength: string): number => (stringToCheck.replace(/[^A-Z]/g, '').length / allowedLength.length) * 100;
+
+/** Helper function to count the amount of emojis in a message */
 export const countEmojis = (str: string) => {
   const customEmojis = /<a?:[\S]+:[0-9]{18}>/gim;
   const customMatch = str.match(customEmojis);
@@ -27,6 +42,8 @@ export const countEmojis = (str: string) => {
 
   return counter;
 };
+
+/** Helper function to count the amount of mentions in a message */
 export const countMentions = (str: string) => {
   const mentions = /^<@![0-9]{18}>$/gim;
   const mentionsMatch = str.match(mentions);
@@ -37,10 +54,12 @@ export const countMentions = (str: string) => {
   return counter;
 };
 
+/** Helper function to delete command messages */
 export const deleteCommandMessages = (msg: CommandoMessage, client: CommandoClient) => {
   if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) msg.delete();
 };
 
+/** Helper function to log moderation commands */
 export const logModMessage = async (
   msg: CommandoMessage, guild: CommandoGuild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed
 ) => {
@@ -57,6 +76,7 @@ export const logModMessage = async (
     : null;
 };
 
+/** Helper function to validate if number (num) is between lower and upper boundaries */
 export const isNumberBetween = (num: number, lower: number, upper: number, inclusive: boolean) => {
   const max = Math.max(lower, upper);
   const min = Math.min(lower, upper);
@@ -64,6 +84,7 @@ export const isNumberBetween = (num: number, lower: number, upper: number, inclu
   return inclusive ? num >= min && num <= max : num > min && num < max;
 };
 
+/** Helper function to create the ordinal version of any number */
 export const parseOrdinal = (num: number) => {
   const cent = num % 100;
   const dec = num % 10;
@@ -84,6 +105,7 @@ export const parseOrdinal = (num: number) => {
   }
 };
 
+/** Helper function to remove any diacritics (such as é and ê) from a message */
 export const removeDiacritics = (input: string) => {
   let sentence = input;
   for (const diacritic of diacriticsMap) {
@@ -93,6 +115,7 @@ export const removeDiacritics = (input: string) => {
   return sentence;
 };
 
+/** Helper function to properly round up or down a number */
 export const roundNumber = (num: number, scale = 0) => {
   if (!num.toString().includes('e')) {
     return Number(`${Math.round(Number(`${num}e+${scale}`))}e-${scale}`);
@@ -107,6 +130,7 @@ export const roundNumber = (num: number, scale = 0) => {
   return Number(`${Math.round(Number(`${Number(arr[0])}e${sig}${Number(arr[1]) + scale}`))}e-${scale}`);
 };
 
+/** Decorator function that checks if the bot client has the permissions to manage messages */
 export const clientHasManageMessages = () => {
   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
     const fn: (...args: unknown[]) => unknown = descriptor.value;
@@ -120,6 +144,7 @@ export const clientHasManageMessages = () => {
   };
 };
 
+/** Decorator function that checks if the user and the client have the required permissions */
 export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission: boolean = false): MethodDecorator => {
   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
     const fn: (...args: unknown[]) => unknown = descriptor.value;
@@ -148,6 +173,7 @@ export const shouldHavePermission = (permission: PermissionString, shouldClientH
   };
 };
 
+/** Decorator function to fetch the guild's configured language */
 export const resolveGuildI18n = (): MethodDecorator => {
   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
     const fn: (...args: unknown[]) => unknown = descriptor.value;
@@ -161,6 +187,7 @@ export const resolveGuildI18n = (): MethodDecorator => {
   };
 };
 
+/** Song class used in music commands to track the song data */
 export class Song {
   public name: string;
   public id: string;

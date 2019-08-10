@@ -4,6 +4,8 @@ import moduleAlias from 'module-alias';
 import path from 'path';
 import './data/i18n/i18n';
 import Ribbon from './Ribbon';
+import 'reflect-metadata';
+import createDatabaseConnection from './components/Typeorm/DbConfig';
 
 // Configure dotenv
 config({
@@ -24,11 +26,14 @@ fireadmin.initializeApp({
 
 // Add module aliases
 moduleAlias.addAlias('@components', `${__dirname}/components`);
+moduleAlias.addAlias('@typeorm', `${__dirname}/components/Typeorm`);
+moduleAlias.addAlias('@entities', `${__dirname}/components/Typeorm/Entities`);
 moduleAlias.addAlias('@pokedex', `${__dirname}/data/dex`);
 moduleAlias.addAlias('@i18n', `${__dirname}/data/i18n`);
 moduleAlias.addAlias('@databases', `${__dirname}/data/databases`);
 
 // Start the bot
 (async () => {
+  await createDatabaseConnection();
   await new Ribbon(process.env.NODE_ENV === 'development' ? process.env.TEST_TOKEN! : process.env.BOT_TOKEN!).init();
 })();

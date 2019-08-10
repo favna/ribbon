@@ -2,4 +2,12 @@
   "extends": [
     "@favware/eslint-config"
   ],
+  "rules": {
+    "new-cap": [
+      "error",
+      {
+        "capIsNewExceptionPattern": "^[A-Z][a-z]+(?:[A-Z][a-z]+)*$"
+      }
+    ]
+  }
 }

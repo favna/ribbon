@@ -71,8 +71,7 @@ export default class CountdownAddCommand extends Command {
       args: [
         {
           key: 'datetime',
-          prompt:
-            'At which datetime should the message(s) be repeated?',
+          prompt: 'To which date and time should I countdown? (use a format such as `2018-12-31 18:00`)',
           type: 'string',
           validate: (v: string) => moment(v).isValid()
             ? true
