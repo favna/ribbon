@@ -1,8 +1,8 @@
 import { Entity, Column, BaseEntity, PrimaryColumn } from 'typeorm';
 import { Snowflake } from 'awesome-djs';
-import { OptionalKeys } from 'utility-types';
+import { NonFunctionKeys } from 'utility-types';
 
-export type WarningData = Pick<Warning, OptionalKeys<Warning>>;
+export type WarningData = Pick<Warning, Exclude<NonFunctionKeys<Warning>, undefined>>;
 
 @Entity()
 export default class Warning extends BaseEntity {

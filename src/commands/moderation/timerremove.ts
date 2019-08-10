@@ -18,9 +18,7 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import 'moment-duration-format';
 import path from 'path';
-import { TimerRow } from 'RibbonTypes';
 
 type TimerRemoveArgs = {
   id: number;
@@ -57,7 +55,7 @@ export default class TimerRemoveCommand extends Command {
     const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
 
     try {
-      const rows: TimerRow[] = conn.prepare(`SELECT id FROM "${msg.guild.id}";`).all();
+      const rows: any[] = conn.prepare(`SELECT id FROM "${msg.guild.id}";`).all();
       const validIDs: number[] = [];
 
       rows.forEach(async row => validIDs.push(row.id));

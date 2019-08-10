@@ -13,7 +13,6 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Message, MessageEmbed } from 'awesome-djs';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
-import 'moment-duration-format';
 import { SpeedTestResponse } from 'RibbonTypes';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports

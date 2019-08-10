@@ -21,7 +21,6 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
 import { stripIndents } from 'common-tags';
 import moment from 'moment';
-import 'moment-duration-format';
 
 type TempbanArgs = {
   member: GuildMember;

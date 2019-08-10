@@ -1,8 +1,8 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { Snowflake } from 'awesome-djs';
-import { OptionalKeys } from 'utility-types';
+import { NonFunctionKeys } from 'utility-types';
 
-export type TimerData = Pick<Timer, OptionalKeys<Timer>>;
+export type TimerData = Pick<Timer, Exclude<NonFunctionKeys<Timer>, undefined>>;
 
 @Entity()
 export default class Timer extends BaseEntity {
@@ -21,7 +21,7 @@ export default class Timer extends BaseEntity {
   @Column({ nullable: false, default: '' })
   public content?: string;
 
-  @CreateDateColumn()
+  @UpdateDateColumn()
   public lastsend?: Date;
 
   @Column('simple-array', { nullable: false, default: '' })

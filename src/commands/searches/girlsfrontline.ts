@@ -17,7 +17,6 @@ import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-
 import cheerio from 'cheerio';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
-import 'moment-duration-format';
 import fetch from 'node-fetch';
 import { FrontlineGirl } from 'RibbonTypes';
 

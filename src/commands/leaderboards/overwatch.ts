@@ -17,7 +17,6 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import 'moment-duration-format';
 import fetch from 'node-fetch';
 import { OverwatchData } from 'RibbonTypes';
 

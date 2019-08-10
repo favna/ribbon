@@ -1,8 +1,8 @@
 import { Entity, Column, BaseEntity, PrimaryGeneratedColumn } from 'typeorm';
 import { Snowflake } from 'awesome-djs';
-import { OptionalKeys } from 'utility-types';
+import { NonFunctionKeys } from 'utility-types';
 
-export type PastaData = Pick<Pasta, OptionalKeys<Pasta>>;
+export type PastaData = Pick<Pasta, Exclude<NonFunctionKeys<Pasta>, undefined>>;
 
 @Entity()
 export default class Pasta extends BaseEntity {

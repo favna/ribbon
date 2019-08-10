@@ -11,11 +11,9 @@ import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
-import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import path from 'path';
-import { CasinoRowType } from 'RibbonTypes';
+import { readCasinoLimited } from '@components/Typeorm/DbInteractions';
 
 type LeaderboardArgs = {
   limit: number;
@@ -49,23 +47,20 @@ export default class LeaderboardCommand extends Command {
   }
 
   public async run(msg: CommandoMessage, { limit }: LeaderboardArgs) {
-    const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
-    const lbEmbed = new MessageEmbed();
-
-    lbEmbed
+    const lbEmbed = new MessageEmbed()
       .setTitle(`Top ${limit} players`)
       .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
     try {
-      const query = conn
-        .prepare(`SELECT userID, balance FROM "${msg.guild.id}" ORDER BY balance DESC LIMIT ?;`)
-        .all(limit);
+      const casino = await readCasinoLimited(msg.guild.id, limit);
 
-      if (query) {
-        query.forEach((player: CasinoRowType, index: number) => {
-          lbEmbed.addField(`#${index + 1} ${(msg.guild.members.get(player.userID) as GuildMember).displayName}`,
-            `Chips: ${player.balance}`);
+      if (casino) {
+        casino.forEach((row, index) => {
+          if (row.userId) {
+            lbEmbed.addField(`#${index + 1} ${(msg.guild.members.get(row.userId) as GuildMember).displayName}`,
+              `Chips: ${row.balance}`);
+          }
         });
 
         deleteCommandMessages(msg, this.client);
@@ -73,14 +68,11 @@ export default class LeaderboardCommand extends Command {
         return msg.embed(lbEmbed);
       }
 
-      return msg.reply(`looks like there aren't any casino players in this server yet, use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
+      return msg.reply(oneLine`
+        looks like there aren't any casino players in this server yet,
+        use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`
+      );
     } catch (err) {
-      if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
-        conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
-          .run();
-
-        return msg.reply(`looks like there aren't any casino players in this server yet, use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
-      }
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
       channel.send(stripIndents`
@@ -88,12 +80,14 @@ export default class LeaderboardCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`);
+        **Error Message:** ${err}`
+      );
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
+      );
     }
   }
 }

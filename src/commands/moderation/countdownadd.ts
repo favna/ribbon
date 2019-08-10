@@ -32,7 +32,6 @@ import { MessageEmbed, TextChannel } from 'awesome-djs';
 import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import 'moment-duration-format';
 import path from 'path';
 
 type CountdownAddArgs = {

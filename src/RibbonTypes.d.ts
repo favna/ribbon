@@ -244,23 +244,6 @@ export declare type FlavorDataType = PokeDataType & {
   }[];
 };
 
-export declare type CasinoRowType = {
-  userID: string;
-  balance: number;
-  lastdaily: string;
-  lastweekly: string;
-  vault: number;
-};
-
-export declare type TimerRow = {
-  id: number;
-  interval: number;
-  channel: Snowflake;
-  content: string;
-  lastsend: string;
-  members: string;
-};
-
 export declare type Pokedex = {
   num: number;
   species: string;

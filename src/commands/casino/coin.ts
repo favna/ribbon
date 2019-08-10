@@ -15,10 +15,9 @@ import { ASSET_BASE_PATH, CoinSide, DEFAULT_EMBED_COLOR } from '@components/Cons
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
-import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import path from 'path';
+import { readCasino, writeCasino } from '@components/Typeorm/DbInteractions';
 
 type CoinArgs = {
   chips: number;
@@ -56,19 +55,16 @@ export default class CoinCommand extends Command {
   }
 
   public async run(msg: CommandoMessage, { chips, side }: CoinArgs) {
-    const coinEmbed = new MessageEmbed();
-    const conn = new Database(path.join(__dirname, '../../data/databases/casino.sqlite3'));
-
-    coinEmbed
+    const coinEmbed = new MessageEmbed()
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
     try {
-      let { balance } = conn.prepare(`SELECT balance FROM "${msg.guild.id}" WHERE userID = ?;`).get(msg.author.id);
+      const casino = await readCasino(msg.author.id, msg.guild.id);
 
-      if (balance >= 0) {
-        if (chips > balance) {
+      if (casino && casino.balance !== undefined && casino.balance >= 0) {
+        if (chips > casino.balance) {
           return msg.reply(oneLine`
             you don't have enough chips to make that bet.
             Use \`${msg.guild.commandPrefix}chips\` to check your current balance.
@@ -76,22 +72,25 @@ export default class CoinCommand extends Command {
         }
 
         const flip = Math.random() >= 0.5;
-        const prevBal = balance;
+        const prevBal = casino.balance;
         const res = side === 'heads';
 
-        balance -= chips;
+        let newBalance = casino.balance - chips;
 
-        if (flip === res) balance += chips * 2;
+        if (flip === res) newBalance += chips * 2;
 
-        balance = roundNumber(balance);
+        newBalance = roundNumber(newBalance);
 
-        conn.prepare(`UPDATE "${msg.guild.id}" SET balance=$balance WHERE userID="${msg.author.id}";`)
-          .run({ balance });
+        await writeCasino({
+          userId: msg.author.id,
+          guildId: msg.guild.id,
+          balance: newBalance,
+        });
 
         coinEmbed
           .setTitle(`${msg.author.tag} ${flip === res ? 'won' : 'lost'} ${chips} chips`)
           .addField('Previous Balance', prevBal, true)
-          .addField('New Balance', balance, true)
+          .addField('New Balance', newBalance, true)
           .setImage(flip === res
             ? `${ASSET_BASE_PATH}/ribbon/coin${side}.png`
             : `${ASSET_BASE_PATH}/ribbon/coin${side === 'heads' ? 'tails' : 'heads'}.png`);
@@ -104,14 +103,9 @@ export default class CoinCommand extends Command {
       return msg.reply(oneLine`
         looks like you either don't have any chips yet or you used them all
         Run \`${msg.guild.commandPrefix}chips\` to get your first 500
-        or run \`${msg.guild.commandPrefix}withdraw\` to withdraw some chips from your vault.`);
+        or run \`${msg.guild.commandPrefix}withdraw\` to withdraw some chips from your vault.`
+      );
     } catch (err) {
-      if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
-        conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (userID TEXT PRIMARY KEY, balance INTEGER , lastdaily TEXT , lastweekly TEXT , vault INTEGER);`)
-          .run();
-
-        return msg.reply(`looks like you don't have any chips yet, please use the \`${msg.guild.commandPrefix}chips\` command to get your first 500`);
-      }
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
       channel.send(stripIndents`
@@ -119,12 +113,14 @@ export default class CoinCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`);
+        **Error Message:** ${err}`
+      );
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
+      );
     }
   }
 }

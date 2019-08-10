@@ -1,15 +1,15 @@
-import { Entity, Column, BaseEntity, PrimaryColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, BaseEntity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { Snowflake } from 'awesome-djs';
-import { OptionalKeys } from 'utility-types';
+import { NonFunctionKeys } from 'utility-types';
 
-export type ReminderData = Pick<Reminder, OptionalKeys<Reminder>>;
+export type ReminderData = Pick<Reminder, Exclude<NonFunctionKeys<Reminder>, undefined>>;
 
 @Entity()
 export default class Reminder extends BaseEntity {
   @PrimaryColumn()
   public userId?: Snowflake;
 
-  @CreateDateColumn()
+  @UpdateDateColumn()
   public remindTime?: Date;
 
   @Column({ nullable: false, default: '' })

@@ -1,8 +1,8 @@
-import { Entity, Column, BaseEntity, PrimaryColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, BaseEntity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { Snowflake } from 'awesome-djs';
-import { OptionalKeys } from 'utility-types';
+import { NonFunctionKeys } from 'utility-types';
 
-export type CasinoData = Pick<Casino, OptionalKeys<Casino>>;
+export type CasinoData = Pick<Casino, Exclude<NonFunctionKeys<Casino>, undefined>>;
 
 @Entity()
 export default class Casino extends BaseEntity {
@@ -15,10 +15,10 @@ export default class Casino extends BaseEntity {
   @Column({ nullable: false, default: 0})
   public balance?: number;
 
-  @CreateDateColumn()
+  @UpdateDateColumn()
   public lastdaily?: Date;
 
-  @CreateDateColumn()
+  @UpdateDateColumn()
   public lastweekly?: Date;
 
   @Column({nullable: false, default: 0})

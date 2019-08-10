@@ -24,9 +24,7 @@
       "@components/*": ["components/*"],
       "@databases/*": ["data/databases/*"],
       "@pokedex/*": ["data/dex/*"],
-      "@i18n/*": ["data/i18n/*"],
-      "@typeorm/*": ["components/Typeorm/*"],
-      "@entities/*": ["components/Typeorm/Entities/*"],
+      "@i18n/*": ["data/i18n/*"]
     },
     "typeRoots": ["typings","./node_modules/@types"],
   },

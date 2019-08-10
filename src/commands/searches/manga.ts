@@ -14,7 +14,6 @@ import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes,
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
 import moment from 'moment';
-import 'moment-duration-format';
 import fetch from 'node-fetch';
 import { KitsuHit, KitsuResult } from 'RibbonTypes';
 import stringify from '@favware/querystring';

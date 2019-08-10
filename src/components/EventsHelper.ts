@@ -8,7 +8,6 @@ import fs from 'fs';
 import interval from 'interval-promise';
 import jimp from 'jimp';
 import moment from 'moment';
-import 'moment-duration-format';
 import fetch from 'node-fetch';
 import path from 'path';
 import { CasinoRowType, CountdownType, TimerType } from '../RibbonTypes';
