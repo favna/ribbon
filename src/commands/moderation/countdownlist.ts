@@ -14,7 +14,6 @@ import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { CountdownType } from 'RibbonTypes';
 
 export default class CountdownList extends Command {
   public constructor(client: CommandoClient) {
@@ -37,10 +36,11 @@ export default class CountdownList extends Command {
     const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
 
     try {
-      const list: CountdownType[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
+      // TODO: Rewrite to TypeORM
+      const list: any[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
       let body = '';
 
-      list.forEach((row: CountdownType) => {
+      list.forEach((row: any) => {
         body += `${stripIndents`
           **id:** ${row.id}
           **Event at:** ${moment(row.datetime).format('YYYY-MM-DD HH:mm')}

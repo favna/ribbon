@@ -8,7 +8,7 @@
  * @param {GuildMemberResolvable} AnyMember Member you want to get info about
  */
 
-import { cleanArray, deleteCommandMessages, sentencecase } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, removeNullAndUndefined } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed } from 'awesome-djs';
 import moment from 'moment';
@@ -61,7 +61,14 @@ export default class UserInfoCommand extends Command {
         true)
       .addField('Display Color', member.displayHexColor, true)
       .addField('Role(s)',
-        member.roles.size > 1 ? cleanArray(null, member.roles.map(r => r.name).filter(name => name !== '@everyone')).join(' | ') : 'None')
+        member.roles.size > 1
+          ? member.roles
+            .map(r => r.name)
+            .filter(name => name !== '@everyone')
+            .filter(removeNullAndUndefined)
+            .join(' | ')
+          : 'None'
+      )
       .addField('Account created at', moment(member.user.createdAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true)
       .addField('Joined server at', moment(member.joinedAt).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z'), true);
 

@@ -349,33 +349,9 @@ export declare type SteamGenreType = {
   id: string;
 };
 
-export declare type CopypastaType = {
-  id: number;
-  name: string;
-  content: string;
-};
-
-export declare type TimerType = {
-  id: number;
-  interval: number;
-  channel: Snowflake;
-  content: string;
-  lastsend: string;
-  members: string;
-};
-
 export declare type FortniteStatsType = {
   key: string;
   value: string;
-};
-
-export declare type CountdownType = {
-  id: number;
-  channel: string;
-  content: string;
-  datetime: string;
-  lastsend: string;
-  tag: string;
 };
 
 export declare type FlavorJSONType = {

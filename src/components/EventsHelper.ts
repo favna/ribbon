@@ -10,7 +10,6 @@ import jimp from 'jimp';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import path from 'path';
-import { CountdownType, TimerType } from '../RibbonTypes';
 import { badwords, caps, duptext, emojis, invites, links, mentions, slowmode } from './AutomodHelper';
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from './Constants';
 import { decache } from './Decache';
@@ -82,7 +81,8 @@ const sendCountdownMessages = async (client: CommandoClient) => {
       .all();
 
     for (const table in tables) {
-      const rows: CountdownType[] = conn
+      // TODO: Rewrite to TypeORM
+      const rows: any[] = conn
         .prepare(`SELECT * FROM "${tables[table].name}"`)
         .all();
 
@@ -257,7 +257,8 @@ const payoutLotto = async (client: CommandoClient) => {
               timeout: moment().format('YYYY-MM-DD HH:mm'),
             });
         }
-        const rows: any[] = conn // eslint-disable-line
+        // TODO: Rewrite to TypeORM
+        const rows: any[] = conn
           .prepare(`SELECT * FROM "${guildId}"`)
           .all();
         const winner = Math.floor(Math.random() * rows.length);
@@ -320,7 +321,8 @@ const sendTimedMessages = async (client: CommandoClient) => {
       .all();
 
     for (const table in tables) {
-      const rows: TimerType[] = conn
+      // TODO: Rewrite to TypeORM
+      const rows: any[] = conn
         .prepare(`SELECT * FROM "${tables[table].name}"`)
         .all();
 

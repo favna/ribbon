@@ -8,7 +8,7 @@
  */
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, cleanArray } from '@components/Utils';
+import { deleteCommandMessages, removeNullAndUndefined } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed } from 'awesome-djs';
 
@@ -42,8 +42,8 @@ export default class EmotesCommand extends Command {
 
   public async run(msg: CommandoMessage) {
     const emotesEmbed = new MessageEmbed();
-    const animEmotes = cleanArray(undefined, msg.guild.emojis.map(emote => emote.animated ? `<a:${emote.name}:${emote.id}>` : undefined)) as string[];
-    const staticEmotes = cleanArray(undefined, msg.guild.emojis.map(emote => emote.animated ? undefined : `<a:${emote.name}:${emote.id}>`)) as string[];
+    const animEmotes = msg.guild.emojis.map(emote => emote.animated ? `<a:${emote.name}:${emote.id}>` : undefined).filter(removeNullAndUndefined);
+    const staticEmotes = msg.guild.emojis.map(emote => emote.animated ? undefined : `<a:${emote.name}:${emote.id}>`).filter(removeNullAndUndefined);
     let description = '';
 
     emotesEmbed

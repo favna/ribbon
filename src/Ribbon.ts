@@ -121,7 +121,7 @@ export default class Ribbon {
         unknownCommand: false,
       })
       .registerCommandsIn({
-        dirname: path.join(__dirname, 'commands/casino'),
+        dirname: path.join(__dirname, 'commands/owner'),
         filter: (fileName: string) => /^.+\.ts$/.test(fileName) ? fileName : undefined,
       });
 

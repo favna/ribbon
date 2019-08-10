@@ -2,14 +2,16 @@ import { CommandoClient, CommandoGuild, CommandoMessage, util as CommandoUtil } 
 import { GuildMember, MessageEmbed, MessageReaction, PermissionString, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
 import { oneLine, oneLineTrim } from 'common-tags';
 import emojiRegex from 'emoji-regex';
-import { YoutubeVideoType, StringOrNumber } from '../RibbonTypes';
+import { YoutubeVideoType } from '../RibbonTypes';
 import { diacriticsMap } from './Constants';
 
 /** Validation on whether this connection will be production or not */
 export const prod = process.env.NODE_ENV === 'production';
 
 /** Cleans an array of a given value */
-export const cleanArray = <T extends unknown>(deleteValue: StringOrNumber | undefined | null, array: T[]) => array.filter(element => element !== deleteValue);
+export function removeNullAndUndefined<TValue>(value: TValue | null | undefined): value is TValue {
+  return value !== null && value !== undefined;
+}
 
 /** Transforms a message to Sentence case */
 export const sentencecase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();

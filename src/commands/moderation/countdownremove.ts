@@ -18,7 +18,6 @@ import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { CountdownType } from 'RibbonTypes';
 
 type CountdownRemoveArgs = {
   id: number;
@@ -47,9 +46,11 @@ export default class CountdownRemove extends Command {
           type: 'integer',
           validate: (v: string, msg: CommandoMessage) => {
             const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
+
             const rows = conn.prepare(`SELECT id FROM "${msg.guild.id}";`).all();
 
-            if (rows.some((el: CountdownType) => el.id === Number(v))) return true;
+            // TODO: Rewrite to TypeORM
+            if (rows.some((el: any) => el.id === Number(v))) return true;
 
             return `that is not an ID of a countdown stored for this guild. You can view all the stored countdowns with the \`${msg.guild.commandPrefix}countdownlist\` command`;
           },

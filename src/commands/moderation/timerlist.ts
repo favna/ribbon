@@ -15,7 +15,6 @@ import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import path from 'path';
-import { TimerType } from 'RibbonTypes';
 
 export default class TimerListCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -38,10 +37,10 @@ export default class TimerListCommand extends Command {
     const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
 
     try {
-      const list: TimerType[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
+      const list: any[] = conn.prepare(`SELECT * FROM "${msg.guild.id}"`).all();
       let body = '';
 
-      list.forEach((row: TimerType) => {
+      list.forEach((row: any) => {
         body += `${stripIndents`
           **id:** ${row.id}
           **interval:** ${moment.duration(row.interval).format(DURA_FORMAT.slice(5))}

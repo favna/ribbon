@@ -14,10 +14,9 @@ import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
-import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import path from 'path';
+import { writePasta } from '@components/Typeorm/DbInteractions';
 
 type CopypastaAddArgs = {
   name: string;
@@ -56,48 +55,23 @@ export default class CopypastaAddCommand extends Command {
   }
 
   public async run(msg: CommandoMessage, { name, content }: CopypastaAddArgs) {
-    const conn = new Database(path.join(__dirname, '../../data/databases/pastas.sqlite3'));
-    const pastaAddEmbed = new MessageEmbed();
-
-    pastaAddEmbed
+    const pastaAddEmbed = new MessageEmbed()
       .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
       .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
-      .setDescription(content);
+      .setDescription(content)
+      .setTitle(`Stored the \`${name}\` copypasta`);
 
     try {
-      const query = conn
-        .prepare(`SELECT name FROM "${msg.guild.id}" WHERE name = ?;`)
-        .get(name);
+      await writePasta({
+        name,
+        guildId: msg.guild.id,
+        content,
+      });
 
-      if (query) {
-        conn.prepare(`UPDATE "${msg.guild.id}" SET content=$content WHERE name=$name`)
-          .run({ content, name });
-
-        pastaAddEmbed.setTitle(`Copypasta \`${name}\` Updated`);
-
-        deleteCommandMessages(msg, this.client);
-
-        return msg.embed(pastaAddEmbed);
-      }
-
-      conn
-        .prepare(`INSERT INTO "${msg.guild.id}" (name, content) VALUES ($name, $content);`)
-        .run({ content, name });
-
-      pastaAddEmbed.setTitle(`Copypasta \`${name}\` Added`);
+      deleteCommandMessages(msg, this.client);
 
       return msg.embed(pastaAddEmbed);
     } catch (err) {
-      if (/(?:no such table)/i.test(err.toString())) {
-        conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT , content TEXT);`)
-          .run();
-
-        conn.prepare(`INSERT INTO "${msg.guild.id}" (name, content) VALUES ($name, $content);`)
-          .run({ content, name });
-        pastaAddEmbed.setTitle(`Copypasta \`${name}\` Added`);
-
-        return msg.embed(pastaAddEmbed);
-      }
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
       channel.send(stripIndents`
@@ -105,12 +79,14 @@ export default class CopypastaAddCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`);
+        **Error Message:** ${err}`
+      );
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
+      );
     }
   }
 }
