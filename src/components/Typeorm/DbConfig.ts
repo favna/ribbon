@@ -1,6 +1,7 @@
 import { ConnectionOptions, Connection, createConnection, getConnection } from 'typeorm';
 import Warning from './Entities/Warning';
 import Casino from './Entities/Casino';
+import CasinoTimeout from './Entities/CasinoTimeout';
 import Countdown from './Entities/Countdown';
 import Pasta from './Entities/Pasta';
 import Reminder from './Entities/Reminder';
@@ -24,7 +25,7 @@ export const config: ConnectionOptions =
   name: 'db_con',
   logging: true,
   synchronize: true,
-  entities: [ Casino, Countdown, Pasta, Reminder, Timer, Warning ],
+  entities: [ Casino, CasinoTimeout, Countdown, Pasta, Reminder, Timer, Warning ],
 
   ...(prod && {
     database: path.join(projectRoot, 'dist', 'data', 'databases', 'prod_store.sqlite'),

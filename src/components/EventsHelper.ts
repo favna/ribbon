@@ -2,7 +2,6 @@
 import { stringify } from '@favware/querystring';
 import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
 import { DMChannel, GuildChannel, GuildMember, MessageAttachment, MessageEmbed, RateLimitData, Snowflake, TextChannel } from 'awesome-djs';
-import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import fs from 'fs';
 import interval from 'interval-promise';
@@ -14,33 +13,30 @@ import { badwords, caps, duptext, emojis, invites, links, mentions, slowmode } f
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from './Constants';
 import { decache } from './Decache';
 import {
-  getChannelsData,
-  getCommandsData,
-  getMessagesData,
-  getServersData,
-  getUsersData,
-  setChannelsData,
-  setCommandsData,
-  setMessagesData,
-  setServersData,
-  setUptimeData,
-  setUsersData
+  getChannelsData, getCommandsData, getMessagesData,
+  getServersData, getUsersData, setChannelsData,
+  setCommandsData, setMessagesData, setServersData,
+  setUptimeData, setUsersData
 } from './FirebaseActions';
 import FirebaseStorage from './FirebaseStorage';
 import { parseOrdinal, prod } from './Utils';
+import {
+  readAllReminders, deleteReminder, readAllCountdowns,
+  writeCountdown, deleteCountdown, deleteCasino, readAllCasino,
+  readCasinoTimeout, writeCasinoTimeout, readAllCasinoForGuild,
+  writeCasino, readAllTimers, writeTimer
+} from './Typeorm/DbInteractions';
 
 const sendReminderMessages = async (client: CommandoClient) => {
-  const conn = new Database(path.join(__dirname, '../data/databases/reminders.sqlite3'));
-
   try {
-    const query = conn.prepare('SELECT * FROM "reminders"').all();
+    const reminders = await readAllReminders();
 
-    for (const row in query) {
-      const remindTime = moment(query[row].remindTime);
+    for (const reminder of reminders) {
+      const remindTime = moment(reminder.date);
       const dura = moment.duration(remindTime.diff(moment()));
 
       if (dura.asMinutes() <= 0) {
-        const user = await client.users.fetch(query[row].userID);
+        const user = await client.users.fetch(reminder.userId!);
 
         user.send({
           embed: {
@@ -49,17 +45,15 @@ const sendReminderMessages = async (client: CommandoClient) => {
               name: 'Ribbon Reminders',
             },
             color: 10610610,
-            description: query[row].remindText,
+            description: reminder.content,
             thumbnail: {
               url:
                 `${ASSET_BASE_PATH}/ribbon/reminders.png`,
             },
           },
         });
-        conn.prepare('DELETE FROM "reminders" WHERE userID = $userid AND remindTime = $remindTime').run({
-          remindTime: query[row].remindTime,
-          userid: query[row].userID,
-        });
+
+        await deleteReminder(reminder.id);
       }
     }
   } catch (err) {
@@ -68,67 +62,55 @@ const sendReminderMessages = async (client: CommandoClient) => {
     channel.send(stripIndents`
       <@${client.owners[0].id}> Error occurred sending someone their reminder!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 };
 
 const sendCountdownMessages = async (client: CommandoClient) => {
-  const conn = new Database(path.join(__dirname, '../data/databases/countdowns.sqlite3'));
-
   try {
-    const tables: { name: string }[] = conn
-      .prepare('SELECT name FROM sqlite_master WHERE type=\'table\' AND name != \'sqlite_sequence\';')
-      .all();
+    const countdowns = await readAllCountdowns();
 
-    for (const table in tables) {
-      // TODO: Rewrite to TypeORM
-      const rows: any[] = conn
-        .prepare(`SELECT * FROM "${tables[table].name}"`)
-        .all();
+    for (const countdown of countdowns) {
+      const cdMoment = moment(countdown.lastsend).add(24, 'hours');
+      const dura = moment.duration(cdMoment.diff(moment()));
 
-      for (const row in rows) {
-        const cdmoment = moment(rows[row].lastsend).add(24, 'hours');
-        const dura = moment.duration(cdmoment.diff(moment()));
+      if (dura.asMinutes() <= 0) {
+        const guild = client.guilds.get(countdown.guildId!);
+        if (!guild) continue;
+        const channel = guild.channels.get(countdown.channelId!) as TextChannel;
+        const me = guild.me;
+        const countdownEmbed = new MessageEmbed()
+          .setAuthor('Countdown Reminder', me.user.displayAvatarURL({ format: 'png' }))
+          .setColor(me.displayHexColor)
+          .setTimestamp()
+          .setDescription(stripIndents`
+            Event on: ${moment(countdown.datetime).format('MMMM Do YYYY [at] HH:mm')}
+            That is:
+            ${moment.duration(moment(countdown.datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
 
-        if (dura.asMinutes() <= 0) {
-          const guild = client.guilds.get(tables[table].name)!;
-          const channel = guild.channels.get(rows[row].channel) as TextChannel;
-          const countdownEmbed = new MessageEmbed();
-          const me = guild.me;
+            **__${countdown.content}__**`
+          );
 
-          countdownEmbed
-            .setAuthor('Countdown Reminder', me.user.displayAvatarURL({ format: 'png' }))
-            .setColor(me.displayHexColor)
-            .setTimestamp()
-            .setDescription(stripIndents`
-              Event on: ${moment(rows[row].datetime).format('MMMM Do YYYY [at] HH:mm')}
-              That is:
-              ${moment.duration(moment(rows[row].datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+        if (moment(countdown.datetime).diff(new Date(), 'hours') >= 24) {
+          await writeCountdown({
+            name: countdown.name,
+            guildId: countdown.guildId,
+            lastsend: new Date(),
+          });
+        }
+        await deleteCountdown(countdown.name, countdown.guildId);
 
-              **__${rows[row].content}__**`);
-
-          if (moment(rows[row].datetime).diff(new Date(), 'hours') >= 24) {
-            conn.prepare(`UPDATE "${tables[table].name}" SET lastsend=$lastsend WHERE id=$id;`).run({
-              id: rows[row].id,
-              lastsend: moment().format('YYYY-MM-DD HH:mm'),
-            });
-
-            channel.send('', { embed: countdownEmbed });
-          } else {
-            conn.prepare(`DELETE FROM "${tables[table].name}" WHERE id = ?;`).run(rows[row].id);
-
-            switch (rows[row].tag) {
-              case 'everyone':
-                channel.send('@everyone GET HYPE IT IS TIME!', { embed: countdownEmbed });
-                break;
-              case 'here':
-                channel.send('@here GET HYPE IT IS TIME!', { embed: countdownEmbed });
-                break;
-              default:
-                channel.send('GET HYPE IT IS TIME!', { embed: countdownEmbed });
-                break;
-            }
-          }
+        switch (countdown.tag) {
+          case 'everyone':
+            channel.send('@everyone GET HYPE IT IS TIME!', countdownEmbed);
+            break;
+          case 'here':
+            channel.send('@here GET HYPE IT IS TIME!', countdownEmbed);
+            break;
+          default:
+            channel.send('GET HYPE IT IS TIME!', countdownEmbed);
+            break;
         }
       }
     }
@@ -156,7 +138,7 @@ const setUpdateToFirebase = async (client: CommandoClient) => {
   }
 };
 
-const renderJoinMessage = async (member: GuildMember) => {
+const sendJoinMessage = async (member: GuildMember) => {
   try {
     const avatar = await jimp.read(member.user.displayAvatarURL({ format: 'png' }));
     const border = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/border.png`);
@@ -195,7 +177,7 @@ const renderJoinMessage = async (member: GuildMember) => {
   }
 };
 
-const renderLeaveMessage = async (member: GuildMember) => {
+const sendLeaveMessage = async (member: GuildMember) => {
   try {
     const avatar = await jimp.read(member.user.displayAvatarURL({ format: 'png' }));
     const border = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/border.png`);
@@ -235,48 +217,42 @@ const renderLeaveMessage = async (member: GuildMember) => {
 };
 
 const payoutLotto = async (client: CommandoClient) => {
-  const conn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3'));
-
   try {
-    const tables: { name: string }[] = conn
-      .prepare('SELECT name FROM sqlite_master WHERE type=\'table\'')
-      .all();
+    const casinoData = await readAllCasino();
 
-    for (const table in tables) {
-      if (client.guilds.get(tables[table].name)) {
-        const guildId: Snowflake = tables[table].name;
-        const lastCheck: { timeout: string } = conn.prepare(`SELECT timeout FROM timeouts WHERE guildid="${guildId}"`).get();
+    for (const casino of casinoData) {
+      const guildId = casino.guildId!;
+      if (client.guilds.get(guildId)) {
+        const lastCheck = await readCasinoTimeout(guildId);
         if (lastCheck && lastCheck.timeout) {
           const diff = moment.duration(moment(lastCheck.timeout).add(1, 'days').diff(moment()));
           const diffInDays = diff.asDays();
           if (diffInDays >= 0) continue;
         } else {
-          conn.prepare('INSERT INTO timeouts VALUES($guildId, $timeout)')
-            .run({
-              guildId,
-              timeout: moment().format('YYYY-MM-DD HH:mm'),
-            });
+          await writeCasinoTimeout({ guildId });
         }
-        // TODO: Rewrite to TypeORM
-        const rows: any[] = conn
-          .prepare(`SELECT * FROM "${guildId}"`)
-          .all();
-        const winner = Math.floor(Math.random() * rows.length);
-        if (!rows[winner]) throw new Error('no_rows');
-        const prevBal = rows[winner].balance;
 
-        rows[winner].balance += 2000;
+        const casinoGuildEntries = await readAllCasinoForGuild(guildId);
+        const winner = Math.floor(Math.random() * casinoGuildEntries.length);
 
-        conn
-          .prepare(`UPDATE "${guildId}" SET balance=$balance WHERE userID="${rows[winner].userID}"`)
-          .run({ balance: rows[winner].balance });
-        conn
-          .prepare(`UPDATE "timeouts" SET timeout=$timeout WHERE guildid="${guildId}"`)
-          .run({ timeout: moment().format('YYYY-MM-DD HH:mm') });
+        if (!casinoGuildEntries[winner]) throw new Error('no_rows');
+        const previousBalance = casinoGuildEntries[winner].balance!;
+        const newBalance = previousBalance + 2000;
+
+        await writeCasino({
+          userId: casinoGuildEntries[winner].userId,
+          guildId,
+          balance: newBalance,
+        });
+
+        await writeCasinoTimeout({
+          guildId,
+          timeout: new Date(),
+        });
 
         const defaultChannel = client.guilds.get(guildId)!.systemChannel;
         const winnerEmbed = new MessageEmbed();
-        const winnerMember: GuildMember = client.guilds.get(guildId)!.members.get(rows[winner].userID)!;
+        const winnerMember: GuildMember = client.guilds.get(guildId)!.members.get(casinoGuildEntries[winner].userId!)!;
         if (!winnerMember) continue;
         const winnerLastMessageChannelId: Snowflake | null = winnerMember.lastMessageChannelID;
         const winnerLastMessageChannel = winnerLastMessageChannelId ?
@@ -288,15 +264,15 @@ const payoutLotto = async (client: CommandoClient) => {
 
         winnerEmbed
           .setColor(DEFAULT_EMBED_COLOR)
-          .setDescription(`Congratulations <@${rows[winner].userID}>! You won today's random lotto and were granted 2000 chips 🎉!`)
+          .setDescription(`Congratulations <@${casinoGuildEntries[winner].userId}>! You won today's random lotto and were granted 2000 chips 🎉!`)
           .setAuthor(winnerMember.displayName, winnerMember.user.displayAvatarURL({ format: 'png' }))
           .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`)
-          .addField('Balance', `${prevBal} ➡ ${rows[winner].balance}`);
+          .addField('Balance', `${previousBalance} ➡ ${casinoGuildEntries[winner].balance}`);
 
         if (winnerLastMessageChannelPermitted && winnerLastMessageChannel) {
-          (winnerLastMessageChannel as TextChannel).send(`<@${rows[winner].userID}>`, { embed: winnerEmbed });
+          (winnerLastMessageChannel as TextChannel).send(`<@${casinoGuildEntries[winner].userId}>`, { embed: winnerEmbed });
         } else if (defaultChannel) {
-          defaultChannel.send(`<@${rows[winner].userID}>`, { embed: winnerEmbed });
+          defaultChannel.send(`<@${casinoGuildEntries[winner].userId}>`, { embed: winnerEmbed });
         }
       }
     }
@@ -307,55 +283,38 @@ const payoutLotto = async (client: CommandoClient) => {
       channel.send(stripIndents`
         <@${client.owners[0].id}> Error occurred giving someone their lotto payout!
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`);
+        **Error Message:** ${err}`
+      );
     }
   }
 };
 
 const sendTimedMessages = async (client: CommandoClient) => {
-  const conn = new Database(path.join(__dirname, '../data/databases/timers.sqlite3'));
-
   try {
-    const tables: { name: string }[] = conn
-      .prepare('SELECT name FROM sqlite_master WHERE type=\'table\' AND name != \'sqlite_sequence\';')
-      .all();
+    const timers = await readAllTimers();
 
-    for (const table in tables) {
-      // TODO: Rewrite to TypeORM
-      const rows: any[] = conn
-        .prepare(`SELECT * FROM "${tables[table].name}"`)
-        .all();
+    for (const timer of timers) {
+      const timerMoment = moment(timer.lastsend).add(timer.interval, 'ms');
+      const dura = moment.duration(timerMoment.diff(moment()));
 
-      for (const row in rows) {
-        const timermoment = moment(rows[row].lastsend).add(rows[row].interval, 'ms');
-        const dura = moment.duration(timermoment.diff(moment()));
+      if (dura.asMinutes() <= 0) {
+        await writeTimer({
+          name: timer.name,
+          guildId: timer.guildId,
+          lastsend: new Date(),
+        });
+        const guild = client.guilds.get(timer.guildId!);
+        if (!guild) continue;
+        const channel = guild.channels.get(timer.channelId!) as TextChannel;
+        const me = guild.me;
+        const memberMentions = timer.members ? timer.members.map(member => `<@${member}>`).join(' ') : null;
+        const timerEmbed = new MessageEmbed()
+          .setAuthor(`${client.user.username} Timed Message`, me.user.displayAvatarURL({ format: 'png' }))
+          .setColor(me.displayHexColor)
+          .setDescription(timer.content)
+          .setTimestamp();
 
-        if (dura.asMinutes() <= 0) {
-          conn
-            .prepare(`UPDATE "${tables[table].name}" SET lastsend=$lastsend WHERE id=$id;`)
-            .run({
-              id: rows[row].id,
-              lastsend: moment().format('YYYY-MM-DD HH:mm'),
-            });
-          const guild = client.guilds.get(tables[table].name)!;
-          const channel = guild.channels.get(rows[row].channel) as TextChannel;
-          const timerEmbed = new MessageEmbed();
-          const me = guild.me;
-          const memberMentions = rows[row].members ?
-            rows[row].members
-              .split(';')
-              .map((member: Snowflake) => `<@${member}>`)
-              .join(' ') :
-            null;
-
-          timerEmbed
-            .setAuthor(`${client.user.username} Timed Message`, me.user.displayAvatarURL({ format: 'png' }))
-            .setColor(me.displayHexColor)
-            .setDescription(rows[row].content)
-            .setTimestamp();
-
-          channel.send(memberMentions ? memberMentions : '', { embed: timerEmbed });
-        }
+        channel.send(memberMentions ? memberMentions : '', timerEmbed);
       }
     }
   } catch (err) {
@@ -364,7 +323,8 @@ const sendTimedMessages = async (client: CommandoClient) => {
     channel.send(stripIndents`
       <@${client.owners[0].id}> Error occurred sending a timed message!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 };
 
@@ -532,54 +492,6 @@ export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGui
 
 export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild): void => {
   guild.settings.clear();
-  const casinoConn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3'));
-  const pastasConn = new Database(path.join(__dirname, '../data/databases/pastas.sqlite3'));
-  const timerConn = new Database(path.join(__dirname, '../data/databases/timers.sqlite3'));
-  const warningsConn = new Database(path.join(__dirname, '../data/databases/warnings.sqlite3'));
-
-  try {
-    casinoConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
-  } catch (err) {
-    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-    channel.send(stripIndents`
-      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the casino database!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
-  }
-
-  try {
-    pastasConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
-  } catch (err) {
-    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-    channel.send(stripIndents`
-      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the pastas database!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
-  }
-
-  try {
-    timerConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
-  } catch (err) {
-    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-    channel.send(stripIndents`
-      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the timers database!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
-  }
-
-  try {
-    warningsConn.exec(`DROP TABLE IF EXISTS "${guild.id}"`);
-  } catch (err) {
-    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-    channel.send(stripIndents`
-      <@${client.owners[0].id}> Failed to purge ${guild.name} (${guild.id}) from the warnings database!
-      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
-  }
 
   try {
     let serverCount = FirebaseStorage.servers;
@@ -645,7 +557,7 @@ export const handleMemberJoin = (client: CommandoClient, member: GuildMember) =>
       guild.settings.get('joinmsgs', false) &&
       guild.settings.get('joinmsgchannel', null)
     ) {
-      renderJoinMessage(member);
+      sendJoinMessage(member);
     }
   } catch (err) {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
@@ -711,29 +623,21 @@ export const handleMemberLeave = (client: CommandoClient, member: GuildMember): 
   }
 
   try {
-    const conn = new Database(path.join(__dirname, '../data/databases/casino.sqlite3'));
-    const query = conn
-      .prepare(`SELECT * FROM "${member.guild.id}" WHERE userID = ?`)
-      .get(member.id);
-
-    if (query) {
-      conn.prepare(`DELETE FROM "${member.guild.id}" WHERE userID = ?`).run(member.id);
-    }
+    deleteCasino(member.id, guild.id);
   } catch (err) {
-    if (!/(?:no such table)/i.test(err.toString())) {
-      const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
-      channel.send(stripIndents`
-        <@${client.owners[0].id}> An error occurred removing ${member.user.tag} (${member.id}) casino data when they left the server!
-        **Server:** ${member.guild.name} (${member.guild.id})
-        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`);
-    }
+    channel.send(stripIndents`
+      <@${client.owners[0].id}> An error occurred removing ${member.user.tag} (${member.id}) casino data when they left the server!
+      **Server:** ${member.guild.name} (${member.guild.id})
+      **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      **Error Message:** ${err}`
+    );
   }
 
   try {
     if (guild.settings.get('leavemsgs', false) && guild.settings.get('leavemsgchannel', null)) {
-      renderLeaveMessage(member);
+      sendLeaveMessage(member);
     }
   } catch (err) {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;

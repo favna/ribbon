@@ -83,7 +83,7 @@ export default class Ribbon {
       .on('shardResumed', (shard: number, events: number) => handleShardResumed(shard, events));
     process.on('unhandledRejection', (reason: Error | unknown, promise: Promise<unknown>) => handleRejection(reason, promise));
 
-    const database = await openDb(path.join(__dirname, 'data/databases/settings.sqlite3'));
+    const database = await openDb(path.join(__dirname, 'data/databases/settings.sqlite'));
 
     this.client.setProvider(new SQLiteProvider(database));
 
@@ -121,7 +121,7 @@ export default class Ribbon {
         unknownCommand: false,
       })
       .registerCommandsIn({
-        dirname: path.join(__dirname, 'commands/owner'),
+        dirname: path.join(__dirname, 'commands'),
         filter: (fileName: string) => /^.+\.ts$/.test(fileName) ? fileName : undefined,
       });
 

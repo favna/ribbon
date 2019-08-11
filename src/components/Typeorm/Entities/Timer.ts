@@ -1,4 +1,4 @@
-import { Entity, Column, BaseEntity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, Column, BaseEntity, UpdateDateColumn, PrimaryColumn } from 'typeorm';
 import { Snowflake } from 'awesome-djs';
 import { NonFunctionKeys } from 'utility-types';
 
@@ -6,10 +6,10 @@ export type TimerData = Pick<Timer, Exclude<NonFunctionKeys<Timer>, undefined>>;
 
 @Entity()
 export default class Timer extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public timerId?: number;
+  @PrimaryColumn()
+  public name?: string;
 
-  @Column()
+  @PrimaryColumn()
   public guildId?: Snowflake;
 
   @Column()
@@ -31,6 +31,7 @@ export default class Timer extends BaseEntity {
     super();
 
     if (data) {
+      this.name = data.name;
       this.guildId = data.guildId;
       this.interval = data.interval;
       this.channelId = data.channelId;

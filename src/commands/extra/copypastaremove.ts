@@ -42,15 +42,15 @@ export default class CopypastaRemoveCommand extends Command {
         {
           key: 'name',
           prompt: 'Which Copypasta should I delete?',
-          type: 'text',
+          type: 'string',
           validate: async (value: string, msg: CommandoMessage) => {
             try {
               const pastas = await readAllPastas(msg.guild.id);
-              if (pastas.some(row => row.name === value)) return true;
+              if (pastas.some(pasta => pasta.name === value)) return true;
 
               return `that is not a name of a Copypasta stored for this guild. You can view all the stored pastas with the \`${msg.guild.commandPrefix}copypastalist\` command`;
-            } catch (err) {
-              return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd <name> <content>\``);
+            } catch {
+              return msg.reply(`no pastas saved for this server. Start saving your first with \`${msg.guild.commandPrefix}copypastaadd\``);
             }
           },
         }

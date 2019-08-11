@@ -15,13 +15,12 @@ import { DURA_FORMAT } from '@components/Constants';
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
-import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import path from 'path';
+import { readAllTimersForGuild, readTimer, deleteTimer } from '@components/Typeorm/DbInteractions';
 
 type TimerRemoveArgs = {
-  id: number;
+  name: string;
 };
 
 export default class TimerRemoveCommand extends Command {
@@ -42,63 +41,44 @@ export default class TimerRemoveCommand extends Command {
       },
       args: [
         {
-          key: 'id',
+          key: 'name',
           prompt: 'Which timed message should I delete?',
-          type: 'integer',
+          type: 'string',
+          validate: async (value: string, msg: CommandoMessage) => {
+            try {
+              const timers = await readAllTimersForGuild(msg.guild.id);
+              if (timers.some(pasta => pasta.name === value)) return true;
+
+              return `that is not a name of a timer stored for this guild. You can view all the stored pastas with the \`${msg.guild.commandPrefix}timerlist\` command`;
+            } catch {
+              return msg.reply(`no timers saved for this server. Start saving your first with \`${msg.guild.commandPrefix}timeradd\``);
+            }
+          },
         }
       ],
     });
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public async run(msg: CommandoMessage, { id }: TimerRemoveArgs) {
-    const conn = new Database(path.join(__dirname, '../../data/databases/timers.sqlite3'));
-
+  public async run(msg: CommandoMessage, { name }: TimerRemoveArgs) {
     try {
-      const rows: any[] = conn.prepare(`SELECT id FROM "${msg.guild.id}";`).all();
-      const validIDs: number[] = [];
-
-      rows.forEach(async row => validIDs.push(row.id));
-
-      if (!validIDs.includes(id)) {
-        return msg.reply(oneLine`
-          that is not an ID of a message stored for this guild.
-          You can view all the stored messages with the \`${msg.guild.commandPrefix}timerlist\` command`);
-      }
-    } catch (err) {
-      if (/(?:no such table)/i.test(err.toString())) {
-        return msg.reply(`no timed messages found for this server. Start saving your first with ${msg.guild.commandPrefix}timeradd`);
-      }
-      const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
-
-      channel.send(stripIndents`
-        <@${this.client.owners[0].id}> Error occurred in validating the ID for the \`timerremove\` command!
-        **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
-        **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`);
-
-      return msg.reply(oneLine`
-        an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
-        Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
-    }
-
-    try {
-      const timerRemoveEmbed = new MessageEmbed();
       const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-      const { interval, channel, content } = conn.prepare(`SELECT interval, channel, content from "${msg.guild.id}" WHERE id = ?`).get(id);
+      const timerRemoveEmbed = new MessageEmbed();
+      const timer = await readTimer(name, msg.guild.id);
+      const timerContent = timer && timer.content ? timer.content : '';
+      const timerInterval = timer && timer.interval ? timer.interval : null;
+      const timerChannel = timer && timer.channelId ? timer.channelId : null;
 
-      conn.prepare(`DELETE FROM "${msg.guild.id}" WHERE id = ?`).run(id);
+      await deleteTimer(name, msg.guild.id);
 
       timerRemoveEmbed
         .setColor('#F7F79D')
         .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
         .setDescription(stripIndents`
           **Action:** Timed message removed
-          **Interval:** ${moment.duration(interval).format(DURA_FORMAT)}
-          **Channel:** <#${channel}>
-          **Message:** ${content}`)
+          ${timerInterval ? `**Interval:** ${moment.duration(timerInterval).format(DURA_FORMAT)}` : ''}
+          ${timerChannel ? `**Channel:** <#${timerChannel}>` : ''}
+          **Content was:** ${timerContent.length <= 1800 ? timerContent : `${timerContent.slice(0, 1800)}...`}`)
         .setTimestamp();
 
       if (msg.guild.settings.get('modlogs', true)) {
@@ -111,9 +91,6 @@ export default class TimerRemoveCommand extends Command {
 
       return msg.embed(timerRemoveEmbed);
     } catch (err) {
-      if (/(?:no such table)/i.test(err.toString())) {
-        return msg.reply(`no timed messages found for this server. Start saving your first with ${msg.guild.commandPrefix}timeradd`);
-      }
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
       channel.send(stripIndents`
@@ -121,12 +98,14 @@ export default class TimerRemoveCommand extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`);
+        **Error Message:** ${err}`
+      );
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
+      );
     }
   }
 }

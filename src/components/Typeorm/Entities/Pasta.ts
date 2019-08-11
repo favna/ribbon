@@ -9,7 +9,7 @@ export default class Pasta extends BaseEntity {
   @PrimaryColumn()
   public name?: string;
 
-  @Column()
+  @PrimaryColumn()
   public guildId?: Snowflake;
 
   @Column({ nullable: false, default: '' })
@@ -19,8 +19,8 @@ export default class Pasta extends BaseEntity {
     super();
 
     if (data) {
-      this.guildId = data.guildId;
       this.name = data.name;
+      this.guildId = data.guildId;
       this.content = data.content;
     }
   }

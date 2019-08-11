@@ -14,13 +14,12 @@
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
-import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import path from 'path';
+import { readAllPastas, readCountdown, deleteCountdown } from '@components/Typeorm/DbInteractions';
 
 type CountdownRemoveArgs = {
-  id: number;
+  name: string;
 };
 
 export default class CountdownRemove extends Command {
@@ -41,18 +40,19 @@ export default class CountdownRemove extends Command {
       },
       args: [
         {
-          key: 'id',
+          key: 'name',
           prompt: 'Which countdowns should I delete?',
-          type: 'integer',
-          validate: (v: string, msg: CommandoMessage) => {
-            const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
+          type: 'string',
+          validate: async (value: string, msg: CommandoMessage) => {
+            try {
+              const countdowns = await readAllPastas(msg.guild.id);
 
-            const rows = conn.prepare(`SELECT id FROM "${msg.guild.id}";`).all();
+              if (countdowns.some(countdown => countdown.name === value)) return true;
 
-            // TODO: Rewrite to TypeORM
-            if (rows.some((el: any) => el.id === Number(v))) return true;
-
-            return `that is not an ID of a countdown stored for this guild. You can view all the stored countdowns with the \`${msg.guild.commandPrefix}countdownlist\` command`;
+              return `that is not a name of a countdown stored for this guild. You can view all the stored pastas with the \`${msg.guild.commandPrefix}countdownlist\` command`;
+            } catch {
+              return msg.reply(`no countdowns saved for this server. Start saving your first with \`${msg.guild.commandPrefix}countdownadd <name> <datetime> <channel> <content>\``);
+            }
           },
         }
       ],
@@ -60,28 +60,29 @@ export default class CountdownRemove extends Command {
   }
 
   @shouldHavePermission('MANAGE_MESSAGES')
-  public async run(msg: CommandoMessage, { id }: CountdownRemoveArgs) {
+  public async run(msg: CommandoMessage, { name }: CountdownRemoveArgs) {
     try {
-      const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
       const modlogChannel = msg.guild.settings.get('modlogchannel', null);
       const cdrEmbed = new MessageEmbed();
-      const {
-        datetime, tag, channel, content,
-      } = conn.prepare(`SELECT datetime, tag, channel, content from "${msg.guild.id}" WHERE id = ?`).get(id);
+      const countdown = await readCountdown(name, msg.guild.id);
 
-      conn.prepare(`DELETE FROM "${msg.guild.id}" WHERE id = ?`).run(id);
+      await deleteCountdown(name, msg.guild.id);
 
       cdrEmbed
         .setColor('#F7F79D')
         .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-        .setDescription(stripIndents`
-          **Action:** Countdown removed
-          **Event was at:** ${moment(datetime).format('YYYY-MM-DD HH:mm')}
-          **Countdown Duration:** ${moment.duration(moment(datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
-          **Tag on event:** ${tag === 'none' ? 'No one' : `@${tag}`}
-          **Channel:** <#${channel}>
-          **Message:** ${content}`)
         .setTimestamp();
+
+      if (countdown) {
+        cdrEmbed.setDescription(stripIndents`
+          **Action:** Countdown removed
+          **Event was at:** ${moment(countdown.datetime).format('YYYY-MM-DD HH:mm')}
+          **Countdown Duration:** ${moment.duration(moment(countdown.datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+          **Tag on event:** ${countdown.tag === 'none' ? 'No one' : `@${countdown.tag}`}
+          **Channel:** <#${countdown.channelId}>
+          **Message:** ${countdown.content}`
+        );
+      }
 
       if (msg.guild.settings.get('modlogs', true)) {
         logModMessage(
@@ -93,9 +94,6 @@ export default class CountdownRemove extends Command {
 
       return msg.embed(cdrEmbed);
     } catch (err) {
-      if (/(?:no such table|Cannot destructure property)/i.test(err.toString())) {
-        return msg.reply(`no countdowns found for this server. Start saving your first with ${msg.guild.commandPrefix}countdownadd`);
-      }
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
       channel.send(stripIndents`
@@ -103,12 +101,14 @@ export default class CountdownRemove extends Command {
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`);
+        **Error Message:** ${err}`
+      );
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
+      );
     }
   }
 }

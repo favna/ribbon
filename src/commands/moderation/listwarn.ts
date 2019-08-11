@@ -12,10 +12,9 @@
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
-import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import path from 'path';
+import { readWarning } from '@components/Typeorm/DbInteractions';
 
 type ListWarnArgs = {
   member: GuildMember;
@@ -48,34 +47,25 @@ export default class ListWarnCommand extends Command {
 
   @shouldHavePermission('MANAGE_MESSAGES')
   public async run(msg: CommandoMessage, { member }: ListWarnArgs) {
-    const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));
-    const embed = new MessageEmbed();
-
-    embed
+    const listwarnEmbed = new MessageEmbed()
       .setColor('#ECECC9')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setTimestamp();
 
     try {
-      const { id, points, tag } = conn.prepare(`SELECT id, points, tag FROM "${msg.guild.id}" WHERE id= ?;`).get(member.id);
+      const warning = await readWarning(member.id, msg.guild.id);
+      const userTag = warning && warning.tag ? warning.tag : null;
+      const userId = warning && warning.userId ? warning.userId : null;
+      const warnPoints = warning && warning.points ? warning.points : 0;
 
-      embed.setDescription(stripIndents`
-        **Member:** ${tag} (${id})
-        **Current warning Points:** ${points}`);
+      listwarnEmbed.setDescription(stripIndents`
+        **Member:** ${userTag} (${userId})
+        **Current warning Points:** ${warnPoints}`
+      );
       deleteCommandMessages(msg, this.client);
 
-      return msg.embed(embed);
+      return msg.embed(listwarnEmbed);
     } catch (err) {
-      if (/(?:no such table)/i.test(err.toString())) {
-        return msg.reply(`no warnpoints found for this server, it will be created the first time you use the \`${msg.guild.commandPrefix}warn\` command`);
-      }
-      if (/(?:TypeError: Cannot read property 'tag')/i.test(err.toString())) {
-        embed.setDescription(stripIndents`
-          **Member:** ${member.user.tag} (${member.id})
-          **Current warning Points:** 0`);
-
-        return msg.embed(embed);
-      }
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
       channel.send(stripIndents`
@@ -84,12 +74,14 @@ export default class ListWarnCommand extends Command {
         **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** \`${member.user.tag} (${member.id})\`
-        **Error Message:** ${err}`);
+        **Error Message:** ${err}`
+      );
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
+      );
     }
   }
 }

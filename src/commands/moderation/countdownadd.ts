@@ -20,7 +20,7 @@
  * @module
  * @category moderation
  * @name countdownadd
- * @example countdownadd 2018-12-31T18:00 #general New years day!
+ * @example countdownadd newyears 2020-12-31T18:00 #general New years day!
  * @param {string} DateTime The date (and time) of the event
  * @param {ChannelResolvable} Channel The channel to send countdown reminders in
  * @param {string} Message  The message to repeat
@@ -29,14 +29,15 @@
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
-import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import path from 'path';
+import { writeCountdown } from '@components/Typeorm/DbInteractions';
+import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 
 type CountdownAddArgs = {
-  datetime: string;
-  cdChannel: TextChannel;
+  name: string;
+  datetime: moment.Moment;
+  channel: TextChannel;
   content: string;
   tag: 'none' | 'everyone' | 'here';
 };
@@ -61,13 +62,19 @@ export default class CountdownAddCommand extends Command {
                 ${oneLine`The first time the message will be send is the next periodic check Ribbon will do
                           (which is every 3 minutes) after adding the countdown`}
                 `,
-      examples: [ 'countdownadd 2020-12-31T18:00 #general New years day!' ],
+      examples: [ 'countdownadd newyears 2020-12-31T18:00 #general New years day!' ],
       guildOnly: true,
       throttling: {
         usages: 2,
         duration: 3,
       },
       args: [
+        {
+          key: 'name',
+          prompt: 'What is the name for this countdown?',
+          type: 'string',
+          parse: (name: string) => name.toLowerCase(),
+        },
         {
           key: 'datetime',
           prompt: 'To which date and time should I countdown? (use a format such as `2018-12-31 18:00`)',
@@ -80,10 +87,10 @@ export default class CountdownAddCommand extends Command {
                   \`2018-12-31 18:00\` (\`YYYY-MM-DD HH:mm\`)
                   \`2018-12-31 6:00 PM\` (\`YYYY-MM-DD hh:mm\`)
                 `,
-          parse: (p: string) => moment(p).format('YYYY-MM-DD HH:mm'),
+          parse: (p: string) => moment(p),
         },
         {
-          key: 'cdChannel',
+          key: 'channel',
           prompt: 'In what channel should the countdown be repeated?',
           type: 'channel',
         },
@@ -98,9 +105,8 @@ export default class CountdownAddCommand extends Command {
 
   @shouldHavePermission('MANAGE_MESSAGES')
   public async run(msg: CommandoMessage, {
-    datetime, cdChannel, content, tag = 'none',
+    name, datetime, channel, content, tag = 'none',
   }: CountdownAddArgs) {
-    const conn = new Database(path.join(__dirname, '../../data/databases/countdowns.sqlite3'));
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const countdownEmbed = new MessageEmbed();
 
@@ -117,91 +123,57 @@ export default class CountdownAddCommand extends Command {
           content.substring(content.indexOf('--here') + '--here'.length + 1);
       }
 
-      conn.prepare(oneLine`
-                INSERT INTO "${msg.guild.id}" (datetime, channel, content, tag, lastsend)
-                VALUES ($datetime, $channel, $content, $tag, $lastsend);`
-      )
-        .run({
-          datetime,
-          tag,
-          channel: cdChannel.id,
-          content: stripIndents`${content}`,
-          lastsend: moment().subtract(1, 'hour').format('YYYY-MM-DD HH:mm'),
-        });
+      await writeCountdown({
+        name,
+        tag,
+        guildId: msg.guild.id,
+        datetime: datetime.toDate(),
+        channelId: channel.id,
+        content: stripIndents(content),
+        lastsend: moment().subtract(1, 'hour').toDate(),
+      });
 
-      return this.sendRes(
-        this.client, msg, datetime, cdChannel, content, tag, countdownEmbed, modlogChannel
-      );
-    } catch (err) {
-      if (/(?:no such table)/i.test(err.toString())) {
-        conn.prepare(oneLine`
-                CREATE TABLE IF NOT EXISTS "${msg.guild.id}"
-                (id INTEGER PRIMARY KEY AUTOINCREMENT, datetime TEXT, channel TEXT, content TEXT, tag TEXT, lastsend TEXT);`
+      countdownEmbed
+        .setColor(DEFAULT_EMBED_COLOR)
+        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+        .setDescription(stripIndents`
+          **Action:** Countdown stored
+          **Event at:** ${datetime.format('YYYY-MM-DD HH:mm')}
+          **Countdown Duration:** ${moment.duration(datetime.diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+          **Tag on event:** ${tag === 'none' ? 'No one' : `@${tag}`}
+          **Channel:** <#${channel.id}>
+          **Message:** ${content}`
         )
-          .run();
+        .setTimestamp();
 
-        conn.prepare(oneLine`
-                INSERT INTO "${msg.guild.id}" (datetime, channel, content, tag, lastsend)
-                VALUES ($datetime, $channel, $content, $tag, $lastsend);`
-        )
-          .run({
-            content,
-            datetime,
-            tag,
-            channel: cdChannel.id,
-            lastsend: moment().subtract(1, 'hour').format('YYYY-MM-DD HH:mm'),
-          });
-
-        return this.sendRes(
-          this.client, msg, datetime, cdChannel, content, tag, countdownEmbed, modlogChannel
+      if (msg.guild.settings.get('modlogs', true)) {
+        logModMessage(
+          msg, msg.guild, modlogChannel, msg.guild.channels.get(modlogChannel) as TextChannel, countdownEmbed
         );
       }
 
-      const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+      deleteCommandMessages(msg, this.client);
 
-      channel.send(stripIndents`
+      return msg.embed(countdownEmbed);
+    } catch (err) {
+      const logChannel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
+
+      logChannel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`countdownadd\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
         **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **datetime:** ${moment(datetime).format('YYYY-MM-DD HH:mm')}
-        **Channel:** ${channel.name} (${channel.id})>
+        **datetime:** ${datetime.format('YYYY-MM-DD HH:mm')}
+        **Channel:** ${logChannel.name} (${logChannel.id})>
         **Message:** ${content}
-        **Error Message:** ${err}`);
+        **Error Message:** ${err}`
+      );
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
-    }
-  }
-
-  private async sendRes(
-    client: CommandoClient, msg: CommandoMessage,
-    datetime: string, channel: TextChannel,
-    content: string, tag: string,
-    embed: MessageEmbed, logCh: string
-  ) {
-    embed
-      .setColor('#9EF7C1')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
-      .setDescription(stripIndents`
-        **Action:** Countdown stored
-        **Event at:** ${moment(datetime).format('YYYY-MM-DD HH:mm')}
-        **Countdown Duration:** ${moment.duration(moment(datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
-        **Tag on event:** ${tag === 'none' ? 'No one' : `@${tag}`}
-        **Channel:** <#${channel.id}>
-        **Message:** ${content}`)
-      .setTimestamp();
-
-    if (msg.guild.settings.get('modlogs', true)) {
-      logModMessage(
-        msg, msg.guild, logCh, msg.guild.channels.get(logCh) as TextChannel, embed
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
       );
     }
-
-    deleteCommandMessages(msg, client);
-
-    return msg.embed(embed);
   }
 }

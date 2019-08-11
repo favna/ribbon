@@ -14,10 +14,9 @@
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
-import Database from 'better-sqlite3';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import path from 'path';
+import { readWarning, updateWarning } from '@components/Typeorm/DbInteractions';
 
 type DeleteWarnArgs = {
   member: GuildMember;
@@ -57,33 +56,35 @@ export default class DeleteWarnCommand extends Command {
 
   @shouldHavePermission('MANAGE_MESSAGES')
   public async run(msg: CommandoMessage, { member, points }: DeleteWarnArgs) {
-    const conn = new Database(path.join(__dirname, '../../data/databases/warnings.sqlite3'));
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
-    const warnEmbed = new MessageEmbed();
-
-    warnEmbed
+    const warnEmbed = new MessageEmbed()
       .setColor('#FFFF00')
       .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
       .setTimestamp();
 
     try {
-      const query = conn.prepare(`SELECT id,points FROM "${msg.guild.id}" WHERE id = ?;`).get(member.id);
+      const warning = await readWarning(member.id, msg.guild.id);
 
-      if (!query) return msg.reply('that user has no warnings points yet');
+      if (!warning || !warning.points) return msg.reply('that user has no warnings points yet');
 
-      const previousPoints = query.points;
-      let newPoints = points === 999999 ? 0 : query.points - points;
+      const previousPoints = warning.points;
+      let newPoints = points === 999999 ? 0 : warning.points - points;
 
       if (newPoints < 0) newPoints = 0;
 
-      conn.prepare(`UPDATE "${msg.guild.id}" SET points=$points WHERE id="${member.id}";`)
-        .run({ points: newPoints });
+      await updateWarning({
+        userId: member.id,
+        guildId: msg.guild.id,
+        tag: member.user.tag,
+        points: newPoints,
+      });
 
       warnEmbed.setDescription(stripIndents`
         **Member:** ${member.user.tag} (${member.id})
         **Action:** Removed Warnings
         **Previous Warning Points:** ${previousPoints}
-        **Current Warning Points:** ${newPoints}`);
+        **Current Warning Points:** ${newPoints}`
+      );
 
       if (msg.guild.settings.get('modlogs', true)) {
         logModMessage(
@@ -95,19 +96,6 @@ export default class DeleteWarnCommand extends Command {
 
       return msg.embed(warnEmbed);
     } catch (err) {
-      if (/(?:no such table)/i.test(err.toString())) {
-        conn.prepare(`CREATE TABLE IF NOT EXISTS "${msg.guild.id}" (id TEXT PRIMARY KEY, tag TEXT, points INTEGER);`)
-          .run();
-
-        conn.prepare(`INSERT INTO "${msg.guild.id}" VALUES ($id, $tag, $points);`)
-          .run({
-            id: member.id,
-            points: 0,
-            tag: member.user.tag,
-          });
-
-        return msg.reply('there were no warnings for that user yet, I created an entry and assigned 0 points');
-      }
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
       channel.send(stripIndents`
@@ -116,12 +104,14 @@ export default class DeleteWarnCommand extends Command {
         **Author:** ${msg.author.tag} (${msg.author.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** \`${member.user.tag} (${member.id})\`|| \`${points}\`
-        **Error Message:** ${err}`);
+        **Error Message:** ${err}`
+      );
 
       return msg.reply(oneLine`
         an unknown and unhandled error occurred but I notified ${this.client.owners[0].username}.
         Want to know more about the error?
-        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`);
+        Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
+      );
     }
   }
 }

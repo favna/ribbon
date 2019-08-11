@@ -1,6 +1,6 @@
 {
   "name": "@favware/ribbon",
-  "version": "9.0.0",
+  "version": "10.0.0",
   "description": "feature rich, modular Discord.JS-Commando server bot",
   "author": "@favware",
   "license": "GPL-3.0",
@@ -59,7 +59,8 @@
     "Ribbon"
   ],
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=8",
+    "npm": ">=5"
   },
   "dependencies": {
     "@favware/converter": "^1.0.2",
@@ -67,9 +68,8 @@
     "@favware/unescape": "^1.0.1",
     "@favware/ytdl-prismplayer": "^2.1.0",
     "@favware/zalgo": "^1.0.1",
-    "awesome-commando": "^3.0.10",
+    "awesome-commando": "^3.0.11",
     "awesome-djs": "^13.0.20",
-    "better-sqlite3": "^5.4.2",
     "booru": "^2.0.3",
     "cheerio": "^1.0.0-rc.3",
     "common-tags": "^1.8.0",
@@ -106,7 +106,6 @@
   "devDependencies": {
     "@favware/eslint-config": "^1.0.0",
     "@google-cloud/firestore": "^2.2.6",
-    "@types/better-sqlite3": "^5.4.0",
     "@types/cheerio": "^0.22.13",
     "@types/common-tags": "^1.8.0",
     "@types/dotenv": "^6.1.1",
