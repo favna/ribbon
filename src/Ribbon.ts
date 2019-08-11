@@ -74,13 +74,13 @@ export default class Ribbon {
       .on('message', (message: CommandoMessage) => handleMsg(this.client, message))
       .on('presenceUpdate', async (oldMember: GuildMember, newMember: GuildMember) => handlePresenceUpdate(this.client, oldMember, newMember))
       .on('rateLimit', async (info: RateLimitData) => handleRateLimit(this.client, info))
-      .on('ready', async () => handleReady(this.client))
       .on('warn', async (warn: string) => handleWarn(this.client, warn))
       .on('shardDisconnected', (event: CloseEvent, shard: number) => handleShardDisconnect(event, shard))
       .on('shardError', (error: Error, shard: number) => handleShardError(error, shard))
       .on('shardReady', (shard: number) => handleShardReady(shard))
       .on('shardReconnecting', (shard: number) => handleShardReconnecting(shard))
-      .on('shardResumed', (shard: number, events: number) => handleShardResumed(shard, events));
+      .on('shardResumed', (shard: number, events: number) => handleShardResumed(shard, events))
+      .once('ready', async () => handleReady(this.client));
     process.on('unhandledRejection', (reason: Error | unknown, promise: Promise<unknown>) => handleRejection(reason, promise));
 
     const database = await openDb(path.join(__dirname, 'data/databases/settings.sqlite'));
