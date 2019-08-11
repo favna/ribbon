@@ -120,7 +120,8 @@ const sendCountdownMessages = async (client: CommandoClient) => {
     channel.send(stripIndents`
       <@${client.owners[0].id}> Error occurred sending a countdown!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 };
 
@@ -134,7 +135,8 @@ const setUpdateToFirebase = async (client: CommandoClient) => {
     logChannel.send(stripIndents`
       <@${client.owners[0].id}> Failed to update Firebase uptime data!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 };
 
@@ -229,7 +231,10 @@ const payoutLotto = async (client: CommandoClient) => {
           const diffInDays = diff.asDays();
           if (diffInDays >= 0) continue;
         } else {
-          await writeCasinoTimeout({ guildId });
+          await writeCasinoTimeout({
+            guildId,
+            timeout: new Date(),
+          });
         }
 
         const casinoGuildEntries = await readAllCasinoForGuild(guildId);
@@ -267,7 +272,7 @@ const payoutLotto = async (client: CommandoClient) => {
           .setDescription(`Congratulations <@${casinoGuildEntries[winner].userId}>! You won today's random lotto and were granted 2000 chips 🎉!`)
           .setAuthor(winnerMember.displayName, winnerMember.user.displayAvatarURL({ format: 'png' }))
           .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`)
-          .addField('Balance', `${previousBalance} ➡ ${casinoGuildEntries[winner].balance}`);
+          .addField('Balance', `${previousBalance} ➡ ${newBalance}`);
 
         if (winnerLastMessageChannelPermitted && winnerLastMessageChannel) {
           (winnerLastMessageChannel as TextChannel).send(`<@${casinoGuildEntries[winner].userId}>`, { embed: winnerEmbed });
@@ -358,7 +363,8 @@ export const handleCommandRun = (client: CommandoClient, cmd: Command, msg: Comm
       **Channel Data:** ${(msg.channel as TextChannel).name} (${msg.channel.id})
       **Guild Data:** ${msg.guild.name} (${msg.guild.id})
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 };
 
@@ -379,7 +385,8 @@ export const handleChannelCreate = (client: CommandoClient, channel: DMChannel |
       **Channel Data:** ${(channel as TextChannel).name} (${channel.id})
       **Guild Data:** ${(channel as GuildChannel).guild.name} (${(channel as GuildChannel).guild.id})
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 };
 
@@ -400,7 +407,8 @@ export const handleChannelDelete = (client: CommandoClient, channel: DMChannel |
       **Channel Data:** ${(channel as TextChannel).name} (${channel.id})
       **Guild Data:** ${(channel as GuildChannel).guild.name} (${(channel as GuildChannel).guild.id})
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 };
 
@@ -419,15 +427,15 @@ export const handleErr = async (client: CommandoClient, err: Error) => {
     return channel.send(stripIndents`
       Caught **WebSocket Error**!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err.message}
-    `);
+      **Error Message:** ${err.message}`
+    );
   }
 
   return console.error(stripIndents`
     Caught **WebSocket Error**!
     **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    **Error Message:** ${err.message}
-  `);
+    **Error Message:** ${err.message}`
+  );
 };
 
 export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGuild): Promise<void> => {
@@ -461,7 +469,8 @@ export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGui
         I've got many commands, you can see them all by using \`${client.commandPrefix}help\`
         Don't like the prefix? The admins can change my prefix by using \`${client.commandPrefix}prefix [new prefix]\`
 
-        **All these commands can also be called by mentioning me instead of using a prefix, for example \`@${client.user.tag} help\`**`)
+        **All these commands can also be called by mentioning me instead of using a prefix, for example \`@${client.user.tag} help\`**`
+      )
       .setImage('attachment://added.png');
 
     if (channel) channel.send('', { embed: newGuildEmbed });
@@ -471,7 +480,8 @@ export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGui
     channel.send(stripIndents`
       <@${client.owners[0].id}> Failed to say welcome upon joining ${guild.name} (${guild.id})!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 
   try {
@@ -486,7 +496,8 @@ export const handleGuildJoin = async (client: CommandoClient, guild: CommandoGui
     channel.send(stripIndents`
       <@${client.owners[0].id}> Failed to update Firebase servers count when joining ${guild.name} (${guild.id})!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 };
 
@@ -505,7 +516,8 @@ export const handleGuildLeave = (client: CommandoClient, guild: CommandoGuild): 
     channel.send(stripIndents`
       <@${client.owners[0].id}> Failed to update Firebase servers count when leaving ${guild.name} (${guild.id})!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 };
 
@@ -549,7 +561,8 @@ export const handleMemberJoin = (client: CommandoClient, member: GuildMember) =>
       <@${client.owners[0].id}> An error sending the member join memberlog message!
       **Server:** ${member.guild.name} (${member.guild.id})
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 
   try {
@@ -566,7 +579,8 @@ export const handleMemberJoin = (client: CommandoClient, member: GuildMember) =>
       <@${client.owners[0].id}> An error occurred sending the member join image!
       **Server:** ${member.guild.name} (${member.guild.id})
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 
   try {
@@ -583,7 +597,8 @@ export const handleMemberJoin = (client: CommandoClient, member: GuildMember) =>
       **Member ID:** (${member.id})
       **Guild Data:** ${guild.name} (${guild.id})
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 };
 
@@ -619,7 +634,8 @@ export const handleMemberLeave = (client: CommandoClient, member: GuildMember): 
       <@${client.owners[0].id}> An error occurred sending the member left memberlog message!
       **Server:** ${member.guild.name} (${member.guild.id})
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 
   try {
@@ -646,7 +662,8 @@ export const handleMemberLeave = (client: CommandoClient, member: GuildMember): 
       <@${client.owners[0].id}> An error occurred sending the member leave image!
       **Server:** ${member.guild.name} (${member.guild.id})
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 
   try {
@@ -663,7 +680,8 @@ export const handleMemberLeave = (client: CommandoClient, member: GuildMember): 
       **Member ID:** (${member.id})
       **Guild Data:** ${guild.name} (${guild.id})
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Error Message:** ${err}`);
+      **Error Message:** ${err}`
+    );
   }
 };
 
@@ -729,7 +747,8 @@ export const handleMsg = (client: CommandoClient, msg: CommandoMessage): void =>
         **Channel Data:** ${(msg.channel as TextChannel).name} (${msg.channel.id})
         **Guild Data:** ${msg.guild.name} (${msg.guild.id})
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`);
+        **Error Message:** ${err}`
+      );
     }
   }
 };
@@ -840,7 +859,8 @@ export const handlePresenceUpdate = async (client: CommandoClient, oldMember: Gu
           **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Old Activity:** ${oldActivity.url}
           **New Activity:** ${newActivity.url}
-          **Error Message:** ${err}`);
+          **Error Message:** ${err}`
+        );
       }
     }
   }
@@ -857,7 +877,8 @@ export const handleRateLimit = async (client: CommandoClient, info: RateLimitDat
       **Limit**: ${info.limit}
       **HTTP Method**: ${info.method}
       **Path**: ${info.path}
-      **Route**: ${info.route}`);
+      **Route**: ${info.route}`
+    );
   }
 
   return undefined;
@@ -894,7 +915,8 @@ export const handleReady = async (client: CommandoClient) => {
   // eslint-disable-next-line no-console
   console.info(oneLine`
     Client ready at ${moment().format('HH:mm:ss')};
-    logged in as ${client.user.tag} (${client.user.id})`);
+    logged in as ${client.user.tag} (${client.user.id})`
+  );
 };
 
 export const handleRejection = (reason: Error | unknown, promise: Promise<unknown>) => {
@@ -905,7 +927,8 @@ export const handleRejection = (reason: Error | unknown, promise: Promise<unknow
     Caught **Unhandled Rejection **!
     **At:** ${promise}
     **Reason:** ${reason}
-    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`);
+    **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`
+  );
 };
 
 export const handleWarn = async (client: CommandoClient, warn: string) => {
@@ -915,7 +938,8 @@ export const handleWarn = async (client: CommandoClient, warn: string) => {
     return channel.send(stripIndents`
       Caught **General Warning**!
       **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      **Warning Message:** ${warn}`);
+      **Warning Message:** ${warn}`
+    );
   }
 
   return console.warn(warn);
@@ -930,7 +954,8 @@ export const handleShardDisconnect = (event: CloseEvent, shard: number) => {
           **Close Event Code:** ${event.code}
           **Close Event Reason:** ${event.reason}
           **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-      <<<<<<`);
+      <<<<<<`
+    );
   }
 
   return undefined;
@@ -939,12 +964,13 @@ export const handleShardDisconnect = (event: CloseEvent, shard: number) => {
 export const handleShardError = (event: Error, shard: number) => {
   if (prod) {
     return console.error(stripIndents`
-    >>>>>>
-        Shard encountered a connection error!
-        **Shard Number:** ${shard}
-        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${event.message}
-    <<<<<<`);
+      >>>>>>
+          Shard encountered a connection error!
+          **Shard Number:** ${shard}
+          **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+          **Error Message:** ${event.message}
+      <<<<<<`
+    );
   }
 
   return undefined;
@@ -953,11 +979,12 @@ export const handleShardError = (event: Error, shard: number) => {
 export const handleShardReady = (shard: number) => {
   if (prod) {
     console.info(stripIndents`
-    >>>>>>
-        New Shard is ready!
-        Shard Number: ${shard}
-        Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    <<<<<<`);
+      >>>>>>
+          New Shard is ready!
+          Shard Number: ${shard}
+          Time: ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      <<<<<<`
+    );
   }
 
   return undefined;
@@ -966,11 +993,12 @@ export const handleShardReady = (shard: number) => {
 export const handleShardReconnecting = (shard: number) => {
   if (prod) {
     console.info(stripIndents`
-    >>>>>>
-        Shard is reconnecting!
-        **Shard Number:** ${shard}
-        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    <<<<<<`);
+      >>>>>>
+          Shard is reconnecting!
+          **Shard Number:** ${shard}
+          **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      <<<<<<`
+    );
   }
 
   return undefined;
@@ -979,12 +1007,13 @@ export const handleShardReconnecting = (shard: number) => {
 export const handleShardResumed = (shard: number, replayedEvents: number) => {
   if (prod) {
     console.info(stripIndents`
-    >>>>>>
-        Shard is resumed successfully!
-        **Shard Number:** ${shard}
-        **Amount of replayed events:** ${replayedEvents}
-        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-    <<<<<<`);
+      >>>>>>
+          Shard is resumed successfully!
+          **Shard Number:** ${shard}
+          **Amount of replayed events:** ${replayedEvents}
+          **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+      <<<<<<`
+    );
   }
 
   return undefined;
