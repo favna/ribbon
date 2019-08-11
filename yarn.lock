@@ -5339,10 +5339,10 @@ safe-regex@^1.1.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sagiri@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/sagiri/-/sagiri-2.0.0.tgz#37586977f0c540ea60da674ef30aaeff55bcf6b6"
-  integrity sha512-h41enTzA6IYQiuGyw+K48ArZ4DyjLtJBhS+mq06NaNlNEd62qKlDE1Jt43nMGRtCLS3b8Zi4bNPPEGjpa2BIiA==
+sagiri@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/sagiri/-/sagiri-2.0.1.tgz#fa0bb67ecdd351214e60c304518d37eee3022501"
+  integrity sha512-WETnMmERRS8hpjOBhdB+erOu+zdxvK/+2A3NMZI/zrXpgPRJp0IBtmMnNsxbeBopOvR0a3eMWLu4wciAN+01jQ==
   dependencies:
     form-data "^2.5.0"
     node-fetch "^2.6.0"

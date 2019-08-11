@@ -130,7 +130,7 @@ export default class SauceNaoCommand extends Command {
       .setColor(color)
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${saucesLength}` : '')
       .setDescription(oneLine`
-        I found a match with a ${sauce.similary}% similarity on ${sauce.site} as seen below.
+        I found a match with a ${sauce.similarity}% similarity on ${sauce.site} as seen below.
         Click [here](${sauce.url}) to view the image`);
   }
 
