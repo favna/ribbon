@@ -101,7 +101,7 @@
     "turndown": "^5.0.3",
     "typeorm": "^0.2.18",
     "ytdl-core": "^0.29.5",
-    "zucc": "^0.1.2"
+    "zlib-sync": "^0.1.5"
   },
   "devDependencies": {
     "@favware/eslint-config": "^1.0.0",
