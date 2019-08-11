@@ -16,7 +16,7 @@
  * @module
  * @category moderation
  * @name timeradd
- * @example timeradd 1d #general Please read the rules everyone!
+ * @example timeradd reminder 1d #general "Please read the rules everyone!"
  * @param {string} Interval The interval at which the message(s) should be repeated
  * @param {ChannelResolvable} Channel The channel to send the timed message in
  * @param {string} Message  The message(s) to repeat
@@ -54,7 +54,7 @@ export default class TimerAddCommand extends Command {
                 The first time the message will be send is the next periodic check Ribbon will do (which is every 3 minutes) after adding the timed message
                 The format for the interval is in minutes, hours or days in the format of \`5m\`, \`2h\` or \`1d\`
               `,
-      examples: [ 'reminder timeradd 1d #general "Please read the rules everyone!"' ],
+      examples: [ 'timeradd reminder 1d #general "Please read the rules everyone!"' ],
       guildOnly: true,
       throttling: {
         usages: 2,

@@ -7,7 +7,7 @@
  * @module
  * @category extra
  * @name copypastaremove
- * @example copypastaremove 1
+ * @example copypastaremove lipsum
  * @param {string} CopyPastaID The ID of the Copypasta to remove
  */
 
@@ -32,7 +32,7 @@ export default class CopypastaRemoveCommand extends Command {
       description: 'Remove a specified copypasta',
       format: 'CopyPastaID',
       details: 'Use the copypastalist command to find the ID for deleting',
-      examples: [ 'copypastaremove 1' ],
+      examples: [ 'copypastaremove lipsum' ],
       guildOnly: true,
       throttling: {
         usages: 2,

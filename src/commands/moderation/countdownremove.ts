@@ -7,7 +7,7 @@
  * @module
  * @category moderation
  * @name countdownremove
- * @example countdownremove 1
+ * @example countdownremove newyears
  * @param {string} CountdownID The ID of the Countdown to remove
  */
 
@@ -32,7 +32,7 @@ export default class CountdownRemove extends Command {
       description: 'Remove a specified countdown',
       format: 'CountdownID',
       details: 'Use the countdownlist command to find the ID for deleting',
-      examples: [ 'countdownremove 1' ],
+      examples: [ 'countdownremove newyears' ],
       guildOnly: true,
       throttling: {
         usages: 2,

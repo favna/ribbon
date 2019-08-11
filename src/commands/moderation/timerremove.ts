@@ -7,7 +7,7 @@
  * @module
  * @category moderation
  * @name timerremove
- * @example timerremove 1
+ * @example timerremove reminder
  * @param {string} TimerID The ID of the timed message to remove
  */
 
@@ -33,7 +33,7 @@ export default class TimerRemoveCommand extends Command {
       description: 'Remove a specified timed message',
       format: 'TimerID',
       details: 'Use the timerlist command to find the ID for deleting',
-      examples: [ 'timerremove 1' ],
+      examples: [ 'timerremove reminder' ],
       guildOnly: true,
       throttling: {
         usages: 2,

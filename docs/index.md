@@ -1331,7 +1331,7 @@ Use the copypastalist command to find the ID for deleting
 
 **Example**  
 ```nginx
-copypastaremove 1
+copypastaremove lipsum
 ```
 <a name="module_qrgen"></a>
 
@@ -2020,7 +2020,7 @@ The first time the message will be send is the next periodic check Ribbon will d
 
 **Example**  
 ```nginx
-countdownadd 2018-12-31T18:00 #general New years day!
+countdownadd newyears 2020-12-31T18:00 #general New years day!
 ```
 <a name="module_countdownlist"></a>
 
@@ -2047,7 +2047,7 @@ Use the countdownlist command to find the ID for deleting
 
 **Example**  
 ```nginx
-countdownremove 1
+countdownremove newyears
 ```
 <a name="module_defaultrole"></a>
 
@@ -2467,7 +2467,7 @@ The format for the interval is in minutes, hours or days in the format of `5m`, 
 
 **Example**  
 ```nginx
-timeradd 1d #general Please read the rules everyone!
+timeradd reminder 1d #general "Please read the rules everyone!"
 ```
 <a name="module_timerlist"></a>
 
@@ -2494,7 +2494,7 @@ Use the timerlist command to find the ID for deleting
 
 **Example**  
 ```nginx
-timerremove 1
+timerremove reminder
 ```
 <a name="module_unknownmessages"></a>
 
