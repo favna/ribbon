@@ -46,11 +46,15 @@ export const readAllCasinoForGuild = async (guildId: Casino['guildId']) => {
 };
 
 /** Fetches all Casino data */
-export const readAllCasino = async () => {
+export const readAllCasinoGuildIds = async () => {
   const connection = await connect();
   const casinoRepo = connection.getRepository(Casino);
 
-  return casinoRepo.find();
+  return casinoRepo
+    .createQueryBuilder('casino')
+    .select('casino.guildId')
+    .groupBy('casino.guildId')
+    .getMany();
 };
 
 /** Writes a single casino entry */
@@ -81,6 +85,18 @@ export const deleteCasino = async (userId: Casino['userId'], guildId: Casino['gu
   return casinoRepo.delete({ userId, guildId });
 };
 
+/** Creates a Casino Timeout entry */
+export const createCasinoTimeout = async (data: CasinoTimeoutData) => {
+  const connection = await connect();
+
+  return connection
+    .createQueryBuilder()
+    .insert()
+    .into(CasinoTimeout)
+    .values({ guildId: data.guildId, timeout: data.timeout })
+    .execute();
+};
+
 /** Fetches a single Casino Timeout entry by guildId */
 export const readCasinoTimeout = async (guildId: CasinoTimeout['guildId']) => {
   const connection = await connect();
@@ -89,14 +105,16 @@ export const readCasinoTimeout = async (guildId: CasinoTimeout['guildId']) => {
   return casinoTimeoutRepo.findOne({ where: { guildId }, select: [ 'timeout' ] });
 };
 
-/** Writes a single Casino Timeout entry */
-export const writeCasinoTimeout = async (data: CasinoTimeoutData) => {
+/** Updates a Casino Timeout entry */
+export const updateCasinoTimeout = async (data: CasinoTimeoutData) => {
   const connection = await connect();
-  const casinoTimeoutRepo = connection.getRepository(CasinoTimeout);
 
-  const newCasinoTimeout = new CasinoTimeout(data);
-
-  return casinoTimeoutRepo.save(newCasinoTimeout);
+  return connection
+    .createQueryBuilder()
+    .update(CasinoTimeout)
+    .set({ timeout: data.timeout })
+    .where('guildId = :guildId', { guildId: data.guildId })
+    .execute();
 };
 
 /** Fetches a single pasta by name */

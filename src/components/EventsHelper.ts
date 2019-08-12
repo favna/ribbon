@@ -22,9 +22,9 @@ import FirebaseStorage from './FirebaseStorage';
 import { parseOrdinal, prod } from './Utils';
 import {
   readAllReminders, deleteReminder, readAllCountdowns,
-  writeCountdown, deleteCountdown, deleteCasino, readAllCasino,
-  readCasinoTimeout, writeCasinoTimeout, readAllCasinoForGuild,
-  writeCasino, readAllTimers, writeTimer
+  writeCountdown, deleteCountdown, deleteCasino,
+  readCasinoTimeout, updateCasinoTimeout, readAllCasinoForGuild,
+  writeCasino, readAllTimers, writeTimer, readAllCasinoGuildIds, createCasinoTimeout
 } from './Typeorm/DbInteractions';
 
 const sendReminderMessages = async (client: CommandoClient) => {
@@ -220,18 +220,20 @@ const sendLeaveMessage = async (member: GuildMember) => {
 
 const payoutLotto = async (client: CommandoClient) => {
   try {
-    const casinoData = await readAllCasino();
+    const casinoData = await readAllCasinoGuildIds();
 
     for (const casino of casinoData) {
       const guildId = casino.guildId!;
+
       if (client.guilds.get(guildId)) {
         const lastCheck = await readCasinoTimeout(guildId);
+
         if (lastCheck && lastCheck.timeout) {
           const diff = moment.duration(moment(lastCheck.timeout).add(1, 'days').diff(moment()));
           const diffInDays = diff.asDays();
           if (diffInDays >= 0) continue;
         } else {
-          await writeCasinoTimeout({
+          await createCasinoTimeout({
             guildId,
             timeout: new Date(),
           });
@@ -250,7 +252,7 @@ const payoutLotto = async (client: CommandoClient) => {
           balance: newBalance,
         });
 
-        await writeCasinoTimeout({
+        await updateCasinoTimeout({
           guildId,
           timeout: new Date(),
         });
@@ -689,7 +691,6 @@ export const handleMsg = (client: CommandoClient, msg: CommandoMessage): void =>
   const guild = msg.guild;
 
   if (msg.guild && msg.deletable && guild.settings.get('automod', false).enabled) {
-    // eslint-disable-next-line @typescript-eslint/promise-function-async
     if (msg.member.roles.some(role => guild.settings.get('automod', []).filterroles.includes(role.id))) {
       return;
     }
@@ -891,7 +892,6 @@ export const handleReady = async (client: CommandoClient) => {
   FirebaseStorage.servers = parseInt(await getServersData());
   FirebaseStorage.users = parseInt(await getUsersData());
 
-
   if (prod) {
     const everyMinute = 1 * 60 * 1000;
     const everyThreeMinutes = 3 * 60 * 1000;
@@ -912,7 +912,6 @@ export const handleReady = async (client: CommandoClient) => {
       }
     });
 
-  // eslint-disable-next-line no-console
   console.info(oneLine`
     Client ready at ${moment().format('HH:mm:ss')};
     logged in as ${client.user.tag} (${client.user.id})`
@@ -922,7 +921,6 @@ export const handleReady = async (client: CommandoClient) => {
 export const handleRejection = (reason: Error | unknown, promise: Promise<unknown>) => {
   if (reason instanceof Error) reason = reason.message;
 
-  // eslint-disable-next-line no-console
   console.error(stripIndents`
     Caught **Unhandled Rejection **!
     **At:** ${promise}
