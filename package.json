@@ -76,7 +76,7 @@
     "didyoumean2": "^3.1.2",
     "dotenv": "^8.0.0",
     "emoji-regex": "^8.0.0",
-    "erlpack": "^0.1.2",
+    "erlpack": "discordapp/erlpack",
     "fast-levenshtein": "^2.0.6",
     "firebase-admin": "8.3.0",
     "fuse.js": "^3.4.5",
