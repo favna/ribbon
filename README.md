@@ -13,7 +13,7 @@
 --><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XMAYCF9SDHZ34"><img src="https://img.shields.io/badge/Donate-PayPal-547ab8.svg?style=flat-square" alt="donate" title="Donate with PayPal" /></a><!--
 --><a href="https://www.patreon.com/bePatron?u=9336537"><img src="https://img.shields.io/badge/Patreon-Donate-Orange.svg?logo=patreon&logoColor=white&colorB=000000&colorA=F96854&longCache=true&style=flat-square&link=https://www.patreon.com/bePatron?u=9336537" alt="patreon badge" title="Become a Patron"></a>
   </p>
-  
+
   <p>
     <a href="https://favware.tech/redirect/server"><img src="https://discordapp.com/api/guilds/512303595966824458/widget.png?style=banner2" alt="Join Discord Server"/></a>
   </p>
@@ -27,6 +27,8 @@
 
 
 ## Features
+
+- Always maintained, always open to squash bugs, and always looking for new features
 
 - Many web searches, such as Google, Google Images, Kitsu, YouTube, Steam and many more
 
