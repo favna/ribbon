@@ -90,12 +90,8 @@ export default class OverwatchCommand extends Command {
           const timePlayed = data.competitiveStats.topHeroes[hero].timePlayed
             .split(':')
             .map(time => parseFloat(time));
-
-          const seconds = timePlayed.length === 3
-            ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
-            : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
-
-          return { hero, time: seconds * 1000 };
+          
+          return { hero, time: Number(timePlayed[0] };
         })
         .sort((a, b) => a.time - b.time)
         .reverse()
@@ -106,11 +102,7 @@ export default class OverwatchCommand extends Command {
             .split(':')
             .map(time => parseFloat(time));
 
-          const seconds = timePlayed.length === 3
-            ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
-            : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
-
-          return { hero, time: seconds * 1000 };
+          return { hero, time: Number(timePlayed[0] };
         })
         .sort((a, b) => a.time - b.time)
         .reverse()
@@ -160,15 +152,15 @@ export default class OverwatchCommand extends Command {
         `,
         true)
         .addField('top Heroes Quick Play', stripIndents`
-          **${sentencecase(topQuickPlayHeroes[0].hero)}** (${moment.duration(topQuickPlayHeroes[0].time, 'milliseconds').format('H [hours]', 2)})
-          **${sentencecase(topQuickPlayHeroes[1].hero)}** (${moment.duration(topQuickPlayHeroes[1].time, 'milliseconds').format('H [hours]', 2)})
-          **${sentencecase(topQuickPlayHeroes[2].hero)}** (${moment.duration(topQuickPlayHeroes[2].time, 'milliseconds').format('H [hours]', 2)})
+          **${sentencecase(topQuickPlayHeroes[0].hero)}** (${topQuickPlayHeroes[0].time} hours)
+          **${sentencecase(topQuickPlayHeroes[1].hero)}** (${topQuickPlayHeroes[1].time} hours)
+          **${sentencecase(topQuickPlayHeroes[2].hero)}** (${topQuickPlayHeroes[2].time} hours)
         `,
         true)
         .addField('Top Heroes Competitive', stripIndents`
-          **${sentencecase(topCompetitiveHeroes[0].hero)}** (${moment.duration(topCompetitiveHeroes[0].time, 'milliseconds').format('H [hours]', 2)})
-          **${sentencecase(topCompetitiveHeroes[1].hero)}** (${moment.duration(topCompetitiveHeroes[1].time, 'milliseconds').format('H [hours]', 2)})
-          **${sentencecase(topCompetitiveHeroes[2].hero)}** (${moment.duration(topCompetitiveHeroes[2].time, 'milliseconds').format('H [hours]', 2)})
+          **${sentencecase(topCompetitiveHeroes[0].hero)}** (${topCompetitiveHeroes[0].time} hours)
+          **${sentencecase(topCompetitiveHeroes[1].hero)}** (${topCompetitiveHeroes[1].time} hours)
+          **${sentencecase(topCompetitiveHeroes[2].hero)}** (${topCompetitiveHeroes[2].time} hours)
         `,
         true);
 
