@@ -12,7 +12,7 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
-import { deleteCommandMessages, sentencecase } from '@components/Utils';
+import { deleteCommandMessages, sentencecase, removeNullAndUndefined } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
@@ -87,31 +87,41 @@ export default class OverwatchCommand extends Command {
 
       const topCompetitiveHeroes = Object.keys(data.competitiveStats.topHeroes)
         .map(hero => {
-          const timePlayed = data.competitiveStats.topHeroes[hero].timePlayed
-            .split(':')
-            .map(time => parseFloat(time));
+          if (hero in data.competitiveStats.topHeroes) {
+            const timePlayed = data.competitiveStats.topHeroes[hero].timePlayed
+              .split(':')
+              .map(time => parseFloat(time));
 
-          const seconds = timePlayed.length === 3
-            ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
-            : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
+            const seconds = timePlayed.length === 3
+              ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
+              : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
 
-          return { hero, time: seconds * 1000 };
+            return { hero, time: seconds * 1000 };
+          }
+
+          return undefined;
         })
+        .filter(removeNullAndUndefined)
         .sort((a, b) => a.time - b.time)
         .reverse()
         .slice(0, 3);
       const topQuickPlayHeroes = Object.keys(data.quickPlayStats.topHeroes)
         .map(hero => {
-          const timePlayed = data.competitiveStats.topHeroes[hero].timePlayed
-            .split(':')
-            .map(time => parseFloat(time));
+          if (hero in data.quickPlayStats.topHeroes) {
+            const timePlayed = data.quickPlayStats.topHeroes[hero].timePlayed
+              .split(':')
+              .map(time => parseFloat(time));
 
-          const seconds = timePlayed.length === 3
-            ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
-            : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
+            const seconds = timePlayed.length === 3
+              ? Number(timePlayed[0] * 3600) + Number(timePlayed[1] * 60) + Number(timePlayed[0])
+              : Number(timePlayed[0] * 60) + Number(timePlayed[1]);
 
-          return { hero, time: seconds * 1000 };
+            return { hero, time: seconds * 1000 };
+          }
+
+          return undefined;
         })
+        .filter(removeNullAndUndefined)
         .sort((a, b) => a.time - b.time)
         .reverse()
         .slice(0, 3);
@@ -119,19 +129,20 @@ export default class OverwatchCommand extends Command {
       const competitiveStats = data.competitiveStats.careerStats;
 
       owEmbed
-        .setAuthor('Overwatch Player Statistics', `${ASSET_BASE_PATH}/ribbon/overwatch.png`)
-        .setURL(`https://playoverwatch.com/en-us/career/${platform}/${player}`)
+        .setAuthor(`Overwatch Player Statistics for ${data.name}`, `${ASSET_BASE_PATH}/ribbon/overwatch.png`)
+        .setTitle('Click here for more details on overwatchtracker.com')
+        .setURL(`https://overwatchtracker.com/profile/${platform}/global/${player}`)
         .setThumbnail(data.icon)
         .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
-        .addField('Account Stats', stripIndents`
-          Level: **${data.level}**
+        .addField(sentencecase('account stats'), stripIndents`
+          Player Level: **${data.level}**
           Prestige level: **${data.level + (data.prestige * 100)}**
-          Rank: **${data.rating ? data.rating : 'Unknown Rating'}${data.ratingName ? ` (${data.ratingName})` : null}**
+          Rank: **${data.rating ? data.rating : 'Unknown Rating'}${data.ratingName ? ` (${data.ratingName})` : ''}**
           Total Games Won: **${data.gamesWon ? data.gamesWon : 'No games won'}**
         `,
         true)
         .addBlankField(true)
-        .addField('Quickplay Stats', stripIndents`
+        .addField(sentencecase('quickplay stats'), stripIndents`
           Final Blows: **${quickPlayStats.allHeroes.combat.finalBlows}**
           Deaths: **${quickPlayStats.allHeroes.combat.deaths}**
           Damage Dealt: **${quickPlayStats.allHeroes.combat.damageDone}**
@@ -145,7 +156,7 @@ export default class OverwatchCommand extends Command {
           Bronze Medals: **${data.quickPlayStats.awards.medalsBronze}**
         `,
         true)
-        .addField('Competitive Stats', stripIndents`
+        .addField(sentencecase('competitive stats'), stripIndents`
           Final Blows: **${competitiveStats.allHeroes.combat.finalBlows}**
           Deaths: **${competitiveStats.allHeroes.combat.deaths}**
           Damage Dealt: **${competitiveStats.allHeroes.combat.damageDone}**
@@ -159,16 +170,16 @@ export default class OverwatchCommand extends Command {
           Bronze Medals: **${data.competitiveStats.awards.medalsBronze}**
         `,
         true)
-        .addField('top Heroes Quick Play', stripIndents`
-          **${sentencecase(topQuickPlayHeroes[0].hero)}** (${moment.duration(topQuickPlayHeroes[0].time, 'milliseconds').format('H [hours]', 2)})
-          **${sentencecase(topQuickPlayHeroes[1].hero)}** (${moment.duration(topQuickPlayHeroes[1].time, 'milliseconds').format('H [hours]', 2)})
-          **${sentencecase(topQuickPlayHeroes[2].hero)}** (${moment.duration(topQuickPlayHeroes[2].time, 'milliseconds').format('H [hours]', 2)})
+        .addField(sentencecase('top heroes quick play'), stripIndents`
+          **${sentencecase(topQuickPlayHeroes[0].hero)}** (${moment.duration(topQuickPlayHeroes[0].time, 'milliseconds').format('H [hrs] - m [min]')})
+          **${sentencecase(topQuickPlayHeroes[1].hero)}** (${moment.duration(topQuickPlayHeroes[1].time, 'milliseconds').format('H [hrs] - m [min]')})
+          **${sentencecase(topQuickPlayHeroes[2].hero)}** (${moment.duration(topQuickPlayHeroes[2].time, 'milliseconds').format('H [hrs] - m [min]')})
         `,
         true)
-        .addField('Top Heroes Competitive', stripIndents`
-          **${sentencecase(topCompetitiveHeroes[0].hero)}** (${moment.duration(topCompetitiveHeroes[0].time, 'milliseconds').format('H [hours]', 2)})
-          **${sentencecase(topCompetitiveHeroes[1].hero)}** (${moment.duration(topCompetitiveHeroes[1].time, 'milliseconds').format('H [hours]', 2)})
-          **${sentencecase(topCompetitiveHeroes[2].hero)}** (${moment.duration(topCompetitiveHeroes[2].time, 'milliseconds').format('H [hours]', 2)})
+        .addField(sentencecase('top heroes competitive'), stripIndents`
+          **${sentencecase(topCompetitiveHeroes[0].hero)}** (${moment.duration(topCompetitiveHeroes[0].time, 'milliseconds').format('H [hr] - m [min]')})
+          **${sentencecase(topCompetitiveHeroes[1].hero)}** (${moment.duration(topCompetitiveHeroes[1].time, 'milliseconds').format('H [hr] - m [min]')})
+          **${sentencecase(topCompetitiveHeroes[2].hero)}** (${moment.duration(topCompetitiveHeroes[2].time, 'milliseconds').format('H [hr] - m [min]')})
         `,
         true);
 
