@@ -31,8 +31,6 @@ jobs:
       - image: circleci/node:11
     steps:
       - nodejs
-    steps:
-      - nodejs
 
 workflows:
   version: 2
