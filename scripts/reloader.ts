@@ -24,7 +24,14 @@ import { minify as terser } from 'terser';
 
   const srcDir = join(__dirname, '../src');
   const commandDir = join(srcDir, 'commands');
-  const ribbonCommands = globby(`${commandDir}/**/*.ts`).map(file => file.split('/')[6].slice(0, -3));
+  const ribbonCommands = globby(`${commandDir}/**/*.ts`).map(file => {
+    const parts = file.split('/');
+    const platform = process.platform.toLowerCase();
+
+    if (platform === 'linux' || platform === 'darwin') return parts[8].slice(0, -3);
+
+    return parts[6].slice(0, -3);
+  });
   const baseTSConfig = readJson(resolve(srcDir, '..', 'tsconfig.json')) as BaseTSConfig;
 
   const compile = (fileContent: string, options?: CompilerOptions): TranspileOutput => {
