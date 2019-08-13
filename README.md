@@ -6,7 +6,7 @@
 
   <p>
    <a href="https://github.com/Favna/Ribbon/blob/master/LICENSE.md"><img src="https://img.shields.io/github/license/favna/ribbon.svg?style=flat-square" alt="License"></a><!--
---><a href="https://www.npmjs.com/package/@favware/ribbon"><img src="https://img.shields.io/node/v/@favware/ribbon.svg?style=flat-square" alt="Node Version"></a>
+  --><a href="https://circleci.com/gh/favware/speedtest/tree/master"><img src="https://img.shields.io/circleci/project/github/favware/speedtest/master.svg?style=flat-square" alt="Build Status" title="Build Status" /></a>
   </p>
   <p>
 <a href="https://twitter.com/favna_"><img src="https://img.shields.io/twitter/follow/espadrine.svg?style=flat-square&label=Follow" alt="Twitter Follow"></a><!--
