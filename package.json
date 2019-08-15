@@ -46,7 +46,9 @@
     "docs:json": "jsdoc2md --json --files ./docsbuild/commands/**/*.js > ../website/src/assets/docs/ribbon.json",
     "db:up": "docker-compose up -d",
     "db:stop": "docker-compose stop",
-    "db:down": "docker-compose down"
+    "db:down": "docker-compose down",
+    "commit": "git-cz",
+    "cz": "git-cz"
   },
   "keywords": [
     "bot",
@@ -60,7 +62,7 @@
     "Ribbon"
   ],
   "engines": {
-    "node": ">=8",
+    "node": "^11",
     "npm": ">=5"
   },
   "dependencies": {
@@ -98,14 +100,14 @@
     "speedtest-net": "^1.5.1",
     "sqlite": "^3.0.3",
     "sqlite3": "^4.0.9",
-    "table": "^5.4.5",
+    "table": "^5.4.6",
     "turndown": "^5.0.3",
     "typeorm": "^0.2.18",
     "ytdl-core": "^0.29.5",
     "zlib-sync": "^0.1.5"
   },
   "devDependencies": {
-    "@favware/eslint-config": "^1.0.1",
+    "@favware/eslint-config": "^2.0.0",
     "@google-cloud/firestore": "^2.2.6",
     "@types/cheerio": "^0.22.13",
     "@types/common-tags": "^1.8.0",
@@ -116,9 +118,9 @@
     "@types/libsodium-wrappers": "^0.7.5",
     "@types/module-alias": "^2.0.0",
     "@types/moment-duration-format": "^2.2.2",
-    "@types/node": "^12.7.1",
+    "@types/node": "^12.7.2",
     "@types/node-fetch": "^2.5.0",
-    "@types/qrcode": "^1.3.3",
+    "@types/qrcode": "^1.3.4",
     "@types/sqlite3": "^3.1.5",
     "@types/table": "^4.0.6",
     "@types/terser": "^3.12.0",
@@ -129,17 +131,34 @@
     "concurrently": "^4.1.1",
     "copyfiles": "^2.1.1",
     "cross-env": "^5.2.0",
+    "cz-conventional-changelog": "3.0.2",
     "eslint": "^6.1.0",
     "glob": "^7.1.4",
     "jsdoc-to-markdown": "^5.0.0",
     "jsonfile": "^5.0.0",
     "replace": "^1.1.0",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.0",
     "terser": "^4.1.4",
     "ts-node": "^8.3.0",
     "tslib": "^1.10.0",
     "typescript": "^3.5.3",
     "utility-types": "^3.7.0",
     "yargs-interactive": "^2.1.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "yarn lint:js",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
