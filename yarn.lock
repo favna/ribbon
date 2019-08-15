@@ -75,10 +75,10 @@
     array-flat-polyfill "^1.0.1"
     tslib "^1.9.3"
 
-"@favware/eslint-config@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@favware/eslint-config/-/eslint-config-2.0.2.tgz#9f4cf25d69befabcdeba1b91493d20031b313217"
-  integrity sha512-9C4irIsZZVUkfYI3KJ3+1cg+QxU8k6AIqo0HGFbOssvCk1+xmVzRN2NX9eBjgd4k4j/aKlbUNj0y0hyDMciXMA==
+"@favware/eslint-config@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@favware/eslint-config/-/eslint-config-3.0.0.tgz#1f19238d0ebd615495ed2698d01a9e758ed9f3fa"
+  integrity sha512-1WEW+uTg8RBM7AbemcNkoEQgOeLw/JiOk9BTKUeb6TJZCIp0LYHjll7A0RYb43MLuIu4eTBjKCVTdljc12nAkQ==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^2.0.0"
     "@typescript-eslint/parser" "^2.0.0"
