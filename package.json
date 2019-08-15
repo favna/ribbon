@@ -48,7 +48,10 @@
     "db:stop": "docker-compose stop",
     "db:down": "docker-compose down",
     "commit": "git-cz",
-    "cz": "git-cz"
+    "cz": "git-cz",
+    "release": "standard-version",
+    "push": "git push --follow-tags origin master",
+    "publish": "git push --follow-tags origin master && npm publish"
   },
   "keywords": [
     "bot",
@@ -138,6 +141,7 @@
     "jsonfile": "^5.0.0",
     "replace": "^1.1.0",
     "rimraf": "^3.0.0",
+    "standard-version": "^7.0.0",
     "terser": "^4.1.4",
     "ts-node": "^8.3.0",
     "tslib": "^1.10.0",
