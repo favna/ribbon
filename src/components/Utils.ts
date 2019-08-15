@@ -147,7 +147,7 @@ export const clientHasManageMessages = () => {
 };
 
 /** Decorator function that checks if the user and the client have the required permissions */
-export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission: boolean = false): MethodDecorator => {
+export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission = false): MethodDecorator => {
   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
     const fn: (...args: unknown[]) => unknown = descriptor.value;
 

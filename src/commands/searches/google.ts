@@ -166,7 +166,7 @@ export default class GoogleCommand extends Command {
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${itemLength}` : '');
 
     if (item.source === GoogleSource.CSE) {
-      const cseItem = item as GoogleCSEItem;
+      const cseItem = item;
       googleEmbed
         .setTitle(cseItem.title)
         .setURL(cseItem.link)
@@ -176,7 +176,7 @@ export default class GoogleCommand extends Command {
         googleEmbed.setImage(cseItem.pagemap.cse_image[0].src);
       }
     } else {
-      const knowledgeItem = item as GoogleKnowledgeItem['result'];
+      const knowledgeItem = item;
       googleEmbed
         .setTitle(`${knowledgeItem.name} ${knowledgeItem['@type'].length === 0 ? '' : `(${knowledgeItem['@type'].join(', ')})`}`)
         .setURL(knowledgeItem.detailedDescription.url)

@@ -110,7 +110,7 @@
     "zlib-sync": "^0.1.5"
   },
   "devDependencies": {
-    "@favware/eslint-config": "^2.0.0",
+    "@favware/eslint-config": "^2.0.2",
     "@google-cloud/firestore": "^2.2.6",
     "@types/cheerio": "^0.22.13",
     "@types/common-tags": "^1.8.0",
@@ -156,7 +156,7 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "yarn lint:js",
+      "yarn lint",
       "git add"
     ]
   },

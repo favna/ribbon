@@ -170,7 +170,7 @@ export default class FlavorCommand extends Command {
   }
 
   private fetchAllData(poke: Pokedex, shines: boolean): FlavorDataType {
-    const flavors: FlavorJSONType = entries as FlavorJSONType;
+    const flavors: FlavorJSONType = entries;
     const pokeData: FlavorDataType = {
       sprite: '',
       entries: [],

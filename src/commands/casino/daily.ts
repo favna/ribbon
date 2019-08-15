@@ -47,7 +47,7 @@ export default class DailyCommand extends Command {
 
         let chipStr = '';
         let resetStr = '';
-        const newBalance = casino.balance + 300;
+        const newBalance = prevBal + 300;
 
         if (dailyDura.asHours() <= 0) {
           await writeCasino({

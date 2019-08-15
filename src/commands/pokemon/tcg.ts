@@ -260,7 +260,7 @@ export default class PokemonTCGCommand extends Command {
           const { resistances } = cards[selection];
           const { weaknesses } = cards[selection];
 
-          attacks!.forEach((attack, attackIndex) => {
+          attacks.forEach((attack, attackIndex) => {
             tcgEmbed.addField(`
               Attack ${Number(attackIndex) + 1}`, stripIndents`
               **Name:** ${attack.name}

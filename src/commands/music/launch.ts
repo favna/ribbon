@@ -26,7 +26,7 @@ import { Guild, Message, Snowflake, StreamDispatcher, StreamOptions, TextChannel
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { MusicQueueType, MusicVoteType, YoutubeVideoSnippetType, YoutubeVideoType } from 'RibbonTypes';
+import { MusicQueueType, MusicVoteType, YoutubeVideoType } from 'RibbonTypes';
 import { downloadOptions } from 'ytdl-core';
 
 type LaunchMusicArgs = {
@@ -447,7 +447,7 @@ export default class LaunchMusicCommand extends Command {
       const arr: (YoutubeVideoType | null)[] = [];
       const videos = data.items;
 
-      videos.forEach(async (video: YoutubeVideoType) => arr.push(await LaunchMusicCommand.getVideo((video.snippet as YoutubeVideoSnippetType).resourceId.videoId)));
+      videos.forEach(async (video: YoutubeVideoType) => arr.push(await LaunchMusicCommand.getVideo(video.snippet!.resourceId.videoId)));
 
       return arr;
     } catch (err) {

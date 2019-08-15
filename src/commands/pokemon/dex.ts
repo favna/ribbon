@@ -167,8 +167,8 @@ export default class DexCommand extends Command {
 
   private fetchAllData(poke: Pokedex, shines: boolean,
     pokeFuse: Fuse<Pokedex, Fuse.FuseOptions<Pokedex & PokedexAlias>>): PokeDataType {
-    const tiers: FormatsJSONType = formats as FormatsJSONType;
-    const flavors: FlavorJSONType = entries as FlavorJSONType;
+    const tiers: FormatsJSONType = formats;
+    const flavors: FlavorJSONType = entries;
     const smogonTier = tiers[poke.species.toLowerCase().replace(/([-% ])/gm, '')]
       ? tiers[poke.species.toLowerCase().replace(/([-% ])/gm, '')]
       : 'Undiscovered';
