@@ -260,16 +260,18 @@ export default class PokemonTCGCommand extends Command {
           const { resistances } = cards[selection];
           const { weaknesses } = cards[selection];
 
-          attacks.forEach((attack, attackIndex) => {
-            tcgEmbed.addField(`
-              Attack ${Number(attackIndex) + 1}`, stripIndents`
-              **Name:** ${attack.name}
-              **Description:** ${attack.text}
-              **Damage:** ${attack.damage}
-              **Cost:** ${attack.cost.join(', ')}
-            `,
-            true);
-          });
+          if (attacks) {
+            attacks.forEach((attack, attackIndex) => {
+              tcgEmbed.addField(`
+                Attack ${Number(attackIndex) + 1}`, stripIndents`
+                **Name:** ${attack.name}
+                **Description:** ${attack.text}
+                **Damage:** ${attack.damage}
+                **Cost:** ${attack.cost.join(', ')}
+              `,
+              true);
+            });
+          }
 
           if (resistances) {
             resistances.forEach((resistance, resistIndex) => {

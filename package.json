@@ -15,7 +15,7 @@
     "url": "https://github.com/favna/ribbon/issues"
   },
   "scripts": {
-    "lint": "eslint src scripts --fix --ext .ts",
+    "lint": "eslint src scripts --fix --ext ts",
     "clean": "rimraf ./dist",
     "prebuild": "yarn clean && yarn lint",
     "build": "tsc",
@@ -51,7 +51,8 @@
     "cz": "git-cz",
     "release": "standard-version",
     "push": "git push --follow-tags origin master",
-    "publish": "git push --follow-tags origin master && npm publish"
+    "publish": "git push --follow-tags origin master && npm publish",
+    "scripts:reload": "babel-node scripts/reloader --extensions \".ts\""
   },
   "keywords": [
     "bot",
@@ -102,7 +103,7 @@
     "slot-machine": "^2.1.0",
     "speedtest-net": "^1.5.1",
     "sqlite": "^3.0.3",
-    "sqlite3": "^4.0.9",
+    "sqlite3": "^4.1.0",
     "table": "^5.4.6",
     "turndown": "^5.0.3",
     "typeorm": "^0.2.18",
@@ -110,8 +111,15 @@
     "zlib-sync": "^0.1.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-typescript": "^7.3.3",
+    "@babel/register": "^7.5.5",
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
     "@favware/eslint-config": "^3.0.0",
-    "@google-cloud/firestore": "^2.2.6",
+    "@google-cloud/firestore": "^2.2.7",
     "@types/cheerio": "^0.22.13",
     "@types/common-tags": "^1.8.0",
     "@types/dotenv": "^6.1.1",
@@ -131,7 +139,7 @@
     "@types/ws": "^6.0.2",
     "@types/yargs-interactive": "^2.1.0",
     "chalk": "^2.4.2",
-    "concurrently": "^4.1.1",
+    "concurrently": "^4.1.2",
     "copyfiles": "^2.1.1",
     "cross-env": "^5.2.0",
     "cz-conventional-changelog": "3.0.2",
@@ -151,8 +159,14 @@
   },
   "husky": {
     "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-commit": "yarn lint-staged"
     }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [

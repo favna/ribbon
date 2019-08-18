@@ -66,6 +66,8 @@ import { minify as terser } from 'terser';
 
     const commandsResult: string[] = Array.isArray(results.command) ? results.command : [ results.command ];
 
+    if (!commandsResult.length) throw new Error('You didn\'t give any commands to reload');
+
     for (const result of commandsResult) {
       const filePath = globby(`${commandDir}/**/${result}.ts`)[0];
       const fileContent = readFile(filePath, { encoding: 'utf8' });
@@ -75,7 +77,13 @@ import { minify as terser } from 'terser';
 
       writeFile(distPath, minfiedModule, { encoding: 'utf8' });
     }
+
+    console.info(chalk.green('Done!')); // eslint-disable-line no-console
+
+    return process.exit(0);
   } catch (err) {
-    throw new Error(err);
+    console.error(chalk.red(err)); // eslint-disable-line no-console
+
+    return process.exit(1);
   }
 })();
