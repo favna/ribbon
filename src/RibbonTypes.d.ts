@@ -572,7 +572,7 @@ export declare type GoogleCSEItem = {
   };
 } & GoogleItemCommon;
 
-export declare type GoogleItem = GoogleKnowledgeItem['result'] | GoogleCSEItem | GoogleItemCommon;
+export declare type GoogleItem = GoogleKnowledgeItem['result'] | GoogleCSEItem;
 
 declare type GoogleImage = {
   byteSize: number;
