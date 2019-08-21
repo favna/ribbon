@@ -7,6 +7,9 @@ run:
 logs:
 	docker logs -f lavalink
 
+stop:
+	docker container stop lavalink
+
 remove:
 	docker container stop lavalink && docker container rm lavalink
 
