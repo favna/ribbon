@@ -843,41 +843,41 @@
   dependencies:
     find-up "^4.0.0"
 
-"@favware/converter@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@favware/converter/-/converter-1.0.3.tgz#11fa2ab51db5a229805d31f0833c37d587209d78"
-  integrity sha512-8i+GT82X5RI5HVAOW6KII0onA+weUvCECaggbTvujDUD4Uw4+hab3Blc8i9adpmJNrkyBH7puiX3kDeL05AqcA==
+"@favware/converter@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@favware/converter/-/converter-1.0.4.tgz#fed57dc6cb611871f2ba88f27f9a177124ae0db0"
+  integrity sha512-rHN1DZW8OaxcEib50Vy5FZPZo/CmP2q3FbNs5Kw+90hz43zNie3odyemP5qi8Wyzr9upUoLbX/NjwmsEgWNShA==
   dependencies:
     array-flat-polyfill "^1.0.1"
 
-"@favware/eslint-config@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@favware/eslint-config/-/eslint-config-3.0.1.tgz#bdd85d57076476e2fc36c3ecfbf7879c788670bc"
-  integrity sha512-lxB0YBEMyjytgB9ezw0EjYSMq/MzuwMBcQqBn+9I0y31rHhjh8pNMj/L8uHEDuJG2oV1qojDyvI16z9q2Gt68A==
+"@favware/eslint-config@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@favware/eslint-config/-/eslint-config-3.0.2.tgz#b5aac8628448be1c1c607e8f84451698a546272d"
+  integrity sha512-IQb6Urv41AkiVLE00K5OFePUK2R/5/paCB/05UzW7fDmhF8LekvtEg9F/hDb+eVmNYwa54rGbdYuUM+xYkOvng==
   dependencies:
     "@typescript-eslint/eslint-plugin" "^2.0.0"
     "@typescript-eslint/parser" "^2.0.0"
     eslint-plugin-jest "^22.15.1"
 
-"@favware/querystring@^3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@favware/querystring/-/querystring-3.0.1.tgz#66ce27547ea84a4e803c4ce6e5d8cec652f50dae"
-  integrity sha512-DrZVSV4Q0bMGTT7DaEcWHwkGxu+px4z9Avcf0xGtBCnGZ9HkCjnqUMNko8wE+TvyTeSmBDOg4PVtB45uP8/m8A==
+"@favware/querystring@^3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@favware/querystring/-/querystring-3.0.2.tgz#b23fe246afe4899a73097caa98cf93a434ed66d8"
+  integrity sha512-GfqZ5sDCh0mJN+Ng4x2/Kh3HpignExHFVt7Jw3YGcEITw5nEwsghP5ykl/uYymwMcvR7tEXVu4aXdGnqEnBYqg==
 
-"@favware/unescape@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@favware/unescape/-/unescape-1.0.2.tgz#dd8e8c9bbeae7dea932118eb4b41212833651065"
-  integrity sha512-CV0e+STEIEtJRMc6zEOnBfGzSYy8cI6TSb13Hya9hatF2Qm9aybUhnI9njapRuJT5fX5+4S6fqJTZeNIsujKiw==
+"@favware/unescape@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@favware/unescape/-/unescape-1.0.3.tgz#dfc8589b3b51a0af6158fb196420965b9bea22e5"
+  integrity sha512-b2MqXo8Ior/B1NMsh9+7oa8aVMee5C4G8gWdL0mvFXGuIX5DJJTSP4wr4q82hjiE3oxuIFYiJoxYzfLh7EY8bw==
 
-"@favware/ytdl-prismplayer@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@favware/ytdl-prismplayer/-/ytdl-prismplayer-2.1.1.tgz#809a37d4c8a52f153daf398b4ddbfc2325f9fae9"
-  integrity sha512-OPd2ILw/7s6LxVIVb1ArI9oFO3youvPkgfY8r11sYdqcpIOjaYiRI+0xzZUUJsG7z8zWb2n8hKohlp+4Ul5ywQ==
+"@favware/ytdl-prismplayer@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@favware/ytdl-prismplayer/-/ytdl-prismplayer-2.2.0.tgz#afa19c3e84740f56a9de8c2522c39a3ab9fe48ba"
+  integrity sha512-vOmPD26zmQ1krQ/716wniUyMmmZrpHD0ROhV/PV5aHx2HMu0YgXoLhcBJvNURrxcvMHIOKKM3LcSgmu5pXRkmQ==
 
-"@favware/zalgo@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@favware/zalgo/-/zalgo-1.0.2.tgz#536898bb2c0c7f1b5633bacbb0ae534d94a22cb9"
-  integrity sha512-mPbwkEgEf0q5P0ACad3C2vDab+ELAg95WBVFi4hcrF1N5KA6HdmgHkcQZ8uE7ejlbiEq0XCK8bEjzFwSdUrtyw==
+"@favware/zalgo@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@favware/zalgo/-/zalgo-1.0.3.tgz#9731e1f772cbf5c52fc77313b7167afc4279e765"
+  integrity sha512-A1v887ZvruVyGLr3ZEJqXP8vZ9JVwcO6IDo5GBT8AzX7z+9w/SdImAgIfJMgp/m48wbM1/7bemPtd1RS6r7rWA==
 
 "@firebase/database-types@0.4.2":
   version "0.4.2"

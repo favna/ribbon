@@ -20,14 +20,13 @@
 import { DEFAULT_VOLUME, MAX_LENGTH, MAX_SONGS, PASSES } from '@components/Constants';
 import { deleteCommandMessages, Song } from '@components/Utils';
 import { parse, stringify } from '@favware/querystring';
-import ytdl from '@favware/ytdl-prismplayer';
+import ytdl, { downloadOptions } from '@favware/ytdl-prismplayer';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { Guild, Message, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { MusicQueueType, MusicVoteType, YoutubeVideoType } from 'RibbonTypes';
-import { downloadOptions } from 'ytdl-core';
 
 type LaunchMusicArgs = {
   videoQuery: string;
