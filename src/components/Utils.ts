@@ -1,8 +1,10 @@
-import { GuildMember, MessageEmbed, MessageReaction, PermissionString, StreamDispatcher, TextChannel, Util, Message, Guild } from 'discord.js';
+/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
+import { GuildMember, MessageEmbed, PermissionString, TextChannel, Util, Message, Guild, Channel } from 'discord.js';
 import { oneLine, oneLineTrim } from 'common-tags';
 import emojiRegex from 'emoji-regex';
 import { YoutubeVideoType } from '../RibbonTypes';
 import { diacriticsMap } from './Constants';
+import { KlasaClient, KlasaMessage, KlasaGuild } from 'klasa';
 
 /** Validation on whether this connection will be production or not */
 export const prod = process.env.NODE_ENV === 'production';
@@ -17,6 +19,16 @@ export const sentencecase = (str: string) => str.charAt(0).toUpperCase() + str.s
 
 /** Transforms a message to Title Case */
 export const titlecase = (str: string) => str.toLowerCase().replace(/^([a-z]| [a-z]|-[a-z])/g, word => word.toUpperCase());
+
+/** TypeGuard to distinguish TextChannel from Channel  */
+export const isTextChannel = (channel: Channel | TextChannel): channel is TextChannel => {
+  return (channel as TextChannel).topic !== undefined;
+};
+
+/** TypeGuard to distinguish string from object */
+export const isString = (str: string | unknown): str is string => {
+  return (str as string).length !== undefined && typeof str === 'string';
+};
 
 /** Helper function to count the amount of capital letters in a message */
 export const countCaps = (stringToCheck: string, allowedLength: string): number => (stringToCheck.replace(/[^A-Z]/g, '').length / allowedLength.length) * 100;
@@ -47,25 +59,25 @@ export const countMentions = (str: string) => {
 };
 
 /** Helper function to delete command messages */
-export const deleteCommandMessages = (msg: Message, client: CommandoClient) => {
-  if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) msg.delete();
+export const deleteCommandMessages = (msg: KlasaMessage, client: KlasaClient) => {
+  // if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) msg.delete();
 };
 
 /** Helper function to log moderation commands */
 export const logModMessage = async (
-  msg: Message, guild: Guild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed
+  msg: KlasaMessage, guild: KlasaGuild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed
 ) => {
-  if (!guild.settings.get('hasSentModLogMessage', false)) {
-    msg.reply(oneLine`
-            📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
-            (or some other name configured by the ${guild.commandPrefix}setmodlogs command) and give me access to it.
-            This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-    guild.settings.set('hasSentModLogMessage', true);
-  }
+  // if (!guild.settings.get('hasSentModLogMessage', false)) {
+  //   msg.reply(oneLine`
+  //           📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
+  //           (or some other name configured by the ${guild.commandPrefix}setmodlogs command) and give me access to it.
+  //           This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
+  //   guild.settings.set('hasSentModLogMessage', true);
+  // }
 
-  return outChannelID && guild.settings.get('modlogs', false)
-    ? outChannel.send('', { embed })
-    : null;
+  // return outChannelID && guild.settings.get('modlogs', false)
+  //   ? outChannel.send('', { embed })
+  //   : null;
 };
 
 /** Helper function to validate if number (num) is between lower and upper boundaries */
@@ -127,8 +139,8 @@ export const clientHasManageMessages = () => {
   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
     const fn: (...args: unknown[]) => unknown = descriptor.value;
 
-    descriptor.value = async function value(msg: Message, args: { hasManageMessages: boolean }, fromPattern: boolean) {
-      const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user!)!.has('MANAGE_MESSAGES');
+    descriptor.value = async function value(msg: KlasaMessage, args: { hasManageMessages: boolean }, fromPattern: boolean) {
+      const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has('MANAGE_MESSAGES');
       args.hasManageMessages = clientHasPermission;
 
       return fn.apply(this, [ msg, args, fromPattern ]);
@@ -139,43 +151,29 @@ export const clientHasManageMessages = () => {
 /** Decorator function that checks if the user and the client have the required permissions */
 export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission = false): MethodDecorator => {
   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
-    const fn: (...args: unknown[]) => unknown = descriptor.value;
+    // const fn: (...args: unknown[]) => unknown = descriptor.value;
 
-    descriptor.value = async function value(msg: Message, args: object, fromPattern: boolean) {
-      const authorIsOwner = msg.client.isOwner(msg.author);
-      const memberHasPermission = msg.member!.hasPermission(permission);
+    // descriptor.value = async function value(msg: KlasaMessage, args: object, fromPattern: boolean) {
+    //   const authorIsOwner = msg.client.isOwner(msg.author);
+    //   const memberHasPermission = msg.member!.hasPermission(permission);
 
-      if (!memberHasPermission && !authorIsOwner) {
-        return msg.command.onBlock(msg, 'permission',
-          { response: `You need the "${CommandoUtil.permissions[permission]}" permission to use the ${msg.command.name} command`});
-      }
+    //   if (!memberHasPermission && !authorIsOwner) {
+    //     return msg.command.onBlock(msg, 'permission',
+    //       { response: `You need the "${CommandoUtil.permissions[permission]}" permission to use the ${msg.command.name} command`});
+    //   }
 
-      if (shouldClientHavePermission) {
-        const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has(permission);
+    //   if (shouldClientHavePermission) {
+    //     const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has(permission);
 
-        if (!clientHasPermission) {
-          return msg.command.onBlock(msg, 'clientPermissions', { missing: [ permission ] });
-        }
-      }
+    //     if (!clientHasPermission) {
+    //       return msg.command.onBlock(msg, 'clientPermissions', { missing: [ permission ] });
+    //     }
+    //   }
 
-      return fn.apply(this, [ msg, args, fromPattern ]);
-    };
+    //   return fn.apply(this, [ msg, args, fromPattern ]);
+    // };
 
     return descriptor;
-  };
-};
-
-/** Decorator function to fetch the guild's configured language */
-export const resolveGuildI18n = (): MethodDecorator => {
-  return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
-    const fn: (...args: unknown[]) => unknown = descriptor.value;
-
-    descriptor.value = async function value(msg: Message, args: { language: 'en' | 'nl' }, fromPattern: boolean) {
-      const language = msg.guild ? msg.guild.settings.get('i18n', 'en') : 'en';
-      args.language = language;
-
-      return fn.apply(this, [ msg, args, fromPattern ]);
-    };
   };
 };
 

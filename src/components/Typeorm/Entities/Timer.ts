@@ -1,5 +1,5 @@
 import { Entity, Column, BaseEntity, UpdateDateColumn, PrimaryColumn } from 'typeorm';
-import { Snowflake } from 'awesome-djs';
+import { Snowflake } from 'discord.js';
 import { NonFunctionKeys } from 'utility-types';
 
 export type TimerData = Pick<Timer, Exclude<NonFunctionKeys<Timer>, undefined>>;

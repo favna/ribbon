@@ -1,7 +1,7 @@
 import { GoogleSource } from '@components/Constants';
 import { Song } from '@components/Utils';
-import { Command } from 'awesome-commando';
-import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
+import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'discord.js';
+import { Command } from 'klasa';
 
 export type StringOrNumber = string | number;
 

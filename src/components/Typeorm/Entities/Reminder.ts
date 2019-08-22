@@ -1,5 +1,5 @@
 import { Entity, Column, BaseEntity, UpdateDateColumn, PrimaryGeneratedColumn } from 'typeorm';
-import { Snowflake } from 'awesome-djs';
+import { Snowflake } from 'discord.js';
 import { NonFunctionKeys } from 'utility-types';
 
 export type ReminderData = Pick<Reminder, Exclude<NonFunctionKeys<Reminder>, undefined>>;

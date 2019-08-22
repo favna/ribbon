@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "dist/",
-    "rootDir": "./src",
+    "rootDir": "src/",
     "forceConsistentCasingInFileNames": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -11,23 +11,27 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "newLine": "lf",
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
+    // "strict": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noImplicitAny": true,
+    // "noImplicitReturns": true,
+    // "noImplicitThis": true,
+    // "noUnusedLocals": true,
+    "strict": false,
+    "noFallthroughCasesInSwitch": false,
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "noImplicitThis": false,
+    "noUnusedLocals": false,
     "resolveJsonModule": true,
     "importHelpers": true,
-    "strict": true,
     "baseUrl": "src",
     "paths": {
       "@components/*": ["components/*"],
       "@databases/*": ["data/databases/*"],
-      "@pokedex/*": ["data/dex/*"],
-      "@i18n/*": ["data/i18n/*"]
+      "@pokedex/*": ["data/dex/*"]
     },
     "typeRoots": ["typings","./node_modules/@types"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules","dist","src/**/*.js","typings"]
+  "include": ["src/*.ts"]
 }

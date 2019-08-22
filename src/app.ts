@@ -2,7 +2,6 @@ import { config } from 'dotenv';
 import fireadmin from 'firebase-admin';
 import moduleAlias from 'module-alias';
 import path from 'path';
-import './data/i18n/i18n';
 import Ribbon from './Ribbon';
 import 'reflect-metadata';
 import 'moment-duration-format';
@@ -28,7 +27,6 @@ fireadmin.initializeApp({
 // Add module aliases
 moduleAlias.addAlias('@components', `${__dirname}/components`);
 moduleAlias.addAlias('@pokedex', `${__dirname}/data/dex`);
-moduleAlias.addAlias('@i18n', `${__dirname}/data/i18n`);
 moduleAlias.addAlias('@databases', `${__dirname}/data/databases`);
 
 // Start the bot

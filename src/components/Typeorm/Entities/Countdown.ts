@@ -1,5 +1,5 @@
 import { Entity, Column, BaseEntity, UpdateDateColumn, PrimaryColumn } from 'typeorm';
-import { Snowflake } from 'awesome-djs';
+import { Snowflake } from 'discord.js';
 import { NonFunctionKeys } from 'utility-types';
 
 export type CountdownData = Pick<Countdown, Exclude<NonFunctionKeys<Countdown>, undefined>>;
