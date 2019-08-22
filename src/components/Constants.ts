@@ -13,7 +13,6 @@ export const DEFAULT_VOLUME = 3;
 export const MAX_LENGTH = 10;
 export const MAX_SONGS = 3;
 export const PAGINATED_ITEMS = 5;
-export const PASSES = 10;
 export const DURA_FORMAT = '[in] Y[ year, ]M[ month, ]D[ day, ]H[ hour and ]m[ minute]';
 
 // Enums
@@ -42,5 +41,3 @@ export enum GoogleSource {
   KNOWLEDGE = 'knowledge',
   CSE = 'cse',
 }
-
-export enum Language {NL = 'nl', EN = 'en'}

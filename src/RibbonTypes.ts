@@ -3,23 +3,23 @@ import { Song } from '@components/Utils';
 import { Command } from 'awesome-commando';
 import { Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'awesome-djs';
 
-export declare type StringOrNumber = string | number;
+export type StringOrNumber = string | number;
 
-declare type FlavorTextType = {
+type FlavorTextType = {
   version_id: string;
   flavor_text: string;
 };
 
-declare type PokeAlias = {
+type PokeAlias = {
   alias: string;
 };
 
-declare type YoutubeVideoContentDetailsType = {
+type YoutubeVideoContentDetailsType = {
   videoId: string;
   videoPublishedAt: string;
 };
 
-export declare type YoutubeVideoSnippetType = {
+export type YoutubeVideoSnippetType = {
   channelId: string;
   channelTitle: string;
   description: string;
@@ -32,19 +32,19 @@ export declare type YoutubeVideoSnippetType = {
   liveBroadcastContent: string;
 };
 
-declare type YoutubeVideoThumbnailType = {
+type YoutubeVideoThumbnailType = {
   default: { height: number; width: null; url: string };
   high?: { height: number; width: null; url: string };
   medium?: { height: number; width: null; url: string };
   standard?: { height: number; width: null; url: string };
 };
 
-export declare type YoutubeVideoResourceType = {
+export type YoutubeVideoResourceType = {
   kind: string;
   videoId: string;
 };
 
-export declare type YoutubeResultList = {
+export type YoutubeResultList = {
   etag: string;
   items: {
     etag: string;
@@ -58,12 +58,12 @@ export declare type YoutubeResultList = {
   regionCode: string;
 };
 
-declare type DiscordGameExecutableType = {
+type DiscordGameExecutableType = {
   name: string;
   os: string;
 };
 
-declare type FrontlineGirlConstantsType = {
+type FrontlineGirlConstantsType = {
   mov: number;
   crit_rate: number;
   crit_dmg: number;
@@ -72,7 +72,7 @@ declare type FrontlineGirlConstantsType = {
   [propName: string]: number;
 };
 
-declare type FrontlineGirlStatsType = {
+type FrontlineGirlStatsType = {
   hp: number;
   ammo: number;
   ration: number;
@@ -85,12 +85,12 @@ declare type FrontlineGirlStatsType = {
   [propName: string]: number;
 };
 
-declare type KitsuPosterImageDimensions = {
+type KitsuPosterImageDimensions = {
   width: number | null;
   height: number | null;
 };
 
-declare type KitsuPosterImage = {
+type KitsuPosterImage = {
   tiny?: string;
   small?: string;
   medium?: string;
@@ -106,13 +106,13 @@ declare type KitsuPosterImage = {
   };
 };
 
-declare type KitsuTitles = {
+type KitsuTitles = {
   en: string;
   en_jp: string;
   ja_jp: string;
 };
 
-declare type FrontlineGirlAbilityType = {
+type FrontlineGirlAbilityType = {
   name: string;
   icon: string;
   text: string;
@@ -126,7 +126,7 @@ declare type FrontlineGirlAbilityType = {
   [propName: string]: string | string[] | undefined;
 };
 
-declare type PokeStatType = {
+type PokeStatType = {
   hp: number;
   atk: number;
   def: number;
@@ -137,7 +137,7 @@ declare type PokeStatType = {
   [propName: string]: StringOrNumber | undefined;
 };
 
-declare type PokeAbilityType = {
+type PokeAbilityType = {
   0: string;
   1?: string;
   H?: string;
@@ -146,7 +146,7 @@ declare type PokeAbilityType = {
   [propName: string]: string | undefined;
 };
 
-declare type PokeTypesType = {
+type PokeTypesType = {
   bug: number;
   dark: number;
   dragon: number;
@@ -169,12 +169,12 @@ declare type PokeTypesType = {
   [propName: string]: number;
 };
 
-declare type PokeGenderRatioType = {
+type PokeGenderRatioType = {
   M: number;
   F: number;
 };
 
-export declare type CydiaAPIPackageType = {
+export type CydiaAPIPackageType = {
   display: string;
   name: string;
   summary: string;
@@ -182,7 +182,7 @@ export declare type CydiaAPIPackageType = {
   thumbnail: string;
 };
 
-export declare type CydiaData = {
+export type CydiaData = {
   source: string;
   size: string;
   baseURL: string;
@@ -190,15 +190,15 @@ export declare type CydiaData = {
   price: 'Free' | string;
 } & CydiaAPIPackageType;
 
-export declare type SimpleEmbedFieldType = { name: string; value: string };
-export declare type DiscordGameDevType = { id: string; name: string };
+export type SimpleEmbedFieldType = { name: string; value: string };
+export type DiscordGameDevType = { id: string; name: string };
 
-export declare type MusicCommand = {
+export type MusicCommand = {
   queue: Map<string, MusicQueueType>;
   votes: Map<Snowflake, MusicVoteType>;
 } & Command;
 
-export declare type MusicQueueType = {
+export type MusicQueueType = {
   textChannel: TextChannel;
   voiceChannel: VoiceChannel;
   connection: VoiceConnection | null;
@@ -208,7 +208,7 @@ export declare type MusicQueueType = {
   isTriggeredByStop?: boolean;
 };
 
-export declare type MusicVoteType = {
+export type MusicVoteType = {
   count: number;
   users: Snowflake[];
   queue: MusicQueueType;
@@ -218,7 +218,7 @@ export declare type MusicVoteType = {
   timeout: any;
 };
 
-export declare type YoutubeVideoType = {
+export type YoutubeVideoType = {
   id: string;
   title: string;
   kind: string;
@@ -228,7 +228,7 @@ export declare type YoutubeVideoType = {
   snippet?: YoutubeVideoSnippetType;
 };
 
-export declare type PokeDataType = {
+export type PokeDataType = {
   abilities?: string;
   evos?: string;
   flavors?: string;
@@ -237,14 +237,14 @@ export declare type PokeDataType = {
   tier?: string;
 };
 
-export declare type FlavorDataType = PokeDataType & {
+export type FlavorDataType = PokeDataType & {
   entries: {
     game: string;
     text: string;
   }[];
 };
 
-export declare type Pokedex = {
+export type Pokedex = {
   num: number;
   species: string;
   types: string[];
@@ -267,7 +267,7 @@ export declare type Pokedex = {
   otherFormes?: string[];
 };
 
-export declare type PokemonAbility = {
+export type PokemonAbility = {
   desc?: string;
   shortDesc: string;
   id: string;
@@ -275,7 +275,7 @@ export declare type PokemonAbility = {
   num: number;
 };
 
-export declare type PokemonItem = {
+export type PokemonItem = {
   id: string;
   name: string;
   desc: string;
@@ -284,7 +284,7 @@ export declare type PokemonItem = {
   shortDesc?: string;
 };
 
-export declare type PokemonMove = {
+export type PokemonMove = {
   id: string;
   num: number;
   name: string;
@@ -301,27 +301,27 @@ export declare type PokemonMove = {
   desc?: string;
 };
 
-export declare type abilityAlias = PokeAlias & {
+export type abilityAlias = PokeAlias & {
   ability: string;
 };
 
-export declare type tierAlias = PokeAlias & {
+export type tierAlias = PokeAlias & {
   tier: string;
 };
 
-export declare type PokedexAlias = PokeAlias & {
+export type PokedexAlias = PokeAlias & {
   name: string;
 };
 
-export declare type itemAlias = PokeAlias & {
+export type itemAlias = PokeAlias & {
   item: string;
 };
 
-export declare type moveAlias = PokeAlias & {
+export type moveAlias = PokeAlias & {
   move: string;
 };
 
-export declare type TCGPropsType = {
+export type TCGPropsType = {
   name: string;
   types: string;
   subtype: string;
@@ -329,7 +329,7 @@ export declare type TCGPropsType = {
   hp: string;
 };
 
-export declare type PokeTypeDataType = {
+export type PokeTypeDataType = {
   doubleEffectiveTypes: string[];
   doubleResistedTypes: string[];
   effectiveTypes: string[];
@@ -339,35 +339,35 @@ export declare type PokeTypeDataType = {
   resistedTypes: string[];
 };
 
-export declare type WordDefinitionType = {
+export type WordDefinitionType = {
   language: string;
   text: string;
 };
 
-export declare type SteamGenreType = {
+export type SteamGenreType = {
   description: string;
   id: string;
 };
 
-export declare type FortniteStatsType = {
+export type FortniteStatsType = {
   key: string;
   value: string;
 };
 
-export declare type FlavorJSONType = {
+export type FlavorJSONType = {
   [propName: string]: FlavorTextType[];
 };
 
-export declare type FormatsJSONType = {
+export type FormatsJSONType = {
   [propName: string]: string;
 };
 
-export declare type DiscordGameSKUType = {
+export type DiscordGameSKUType = {
   distributor: string;
   sku: string;
 };
 
-export declare type DiscordGameType = {
+export type DiscordGameType = {
   description: string;
   developers: string[];
   distributor_applications: DiscordGameSKUType[];
@@ -381,7 +381,7 @@ export declare type DiscordGameType = {
   third_party_skus: DiscordGameSKUType[];
 };
 
-export declare type DiscordGameParsedType = {
+export type DiscordGameParsedType = {
   id: string;
   icon: string;
   name?: string;
@@ -393,7 +393,7 @@ export declare type DiscordGameParsedType = {
   thumbnail?: string;
 };
 
-export declare type DiscordStoreGameType = {
+export type DiscordStoreGameType = {
   code?: string;
   id?: string;
   summary?: string;
@@ -409,7 +409,7 @@ export declare type DiscordStoreGameType = {
   };
 };
 
-export declare type FrontlineGirlProductionRequirementsType = {
+export type FrontlineGirlProductionRequirementsType = {
   manpower: number;
   ammo: number;
   rations: number;
@@ -418,7 +418,7 @@ export declare type FrontlineGirlProductionRequirementsType = {
   [propName: string]: number;
 };
 
-export declare type FrontlineGirl = {
+export type FrontlineGirl = {
   url: string;
   num: number;
   name: string;
@@ -441,7 +441,7 @@ export declare type FrontlineGirl = {
   img?: string;
 };
 
-export declare type KitsuHit = {
+export type KitsuHit = {
   abbreviatedTitles: string[];
   ageRating: 'PG' | 'G' | string;
   averageRating: number;
@@ -467,7 +467,7 @@ export declare type KitsuHit = {
   _tags: string[];
 };
 
-export declare type KitsuResult = {
+export type KitsuResult = {
   exhaustiveNbHits: boolean;
   hitsPerPage: number;
   nbHits: number;
@@ -480,7 +480,7 @@ export declare type KitsuResult = {
   hits: KitsuHit[];
 };
 
-export declare type eShopHit = {
+export type eShopHit = {
   type: string;
   locale: string;
   url: string;
@@ -512,7 +512,7 @@ export declare type eShopHit = {
   objectID: string;
 };
 
-declare type eShoData = {
+type eShoData = {
   hits: eShopHit[];
   nbHits: number;
   page: number;
@@ -521,21 +521,21 @@ declare type eShoData = {
   processingTimeMS: number;
 };
 
-export declare type eShopResult = {
+export type eShopResult = {
   results: eShoData[];
 };
 
-declare type GoogleCSEImage = {
+type GoogleCSEImage = {
   src: string;
   height?: string;
   width?: string;
 };
 
-export declare type GoogleItemCommon = {
+export type GoogleItemCommon = {
   source: GoogleSource;
 };
 
-export declare type GoogleKnowledgeItem = {
+export type GoogleKnowledgeItem = {
   '@type': string;
   resultScore: number;
   result: {
@@ -555,7 +555,7 @@ export declare type GoogleKnowledgeItem = {
   } & GoogleItemCommon;
 };
 
-export declare type GoogleCSEItem = {
+export type GoogleCSEItem = {
   cacheId: string;
   displayLink: string;
   formattedUrl: string;
@@ -572,9 +572,9 @@ export declare type GoogleCSEItem = {
   };
 } & GoogleItemCommon;
 
-export declare type GoogleItem = GoogleKnowledgeItem['result'] | GoogleCSEItem;
+export type GoogleItem = GoogleKnowledgeItem['result'] | GoogleCSEItem;
 
-declare type GoogleImage = {
+type GoogleImage = {
   byteSize: number;
   contextLink: string;
   height: number;
@@ -584,7 +584,7 @@ declare type GoogleImage = {
   width: number;
 };
 
-export declare type GoogleImageData = {
+export type GoogleImageData = {
   displayLink: string;
   htmlSnippet: string;
   htmlTitle: string;
@@ -596,13 +596,13 @@ export declare type GoogleImageData = {
   image: GoogleImage;
 };
 
-export declare type GoogleImageResult = {
+export type GoogleImageResult = {
   kind: string;
   context: { title: string };
   items: GoogleImageData[];
 };
 
-export declare type IgdbGame = {
+export type IgdbGame = {
   id: number;
   name: string;
   rating: number;
@@ -621,7 +621,7 @@ export declare type IgdbGame = {
   release_dates: { id: string; date: number }[];
 };
 
-export declare type iTunesData = {
+export type iTunesData = {
   artistId: number;
   artistName: string;
   artistViewUrl: string;
@@ -655,16 +655,16 @@ export declare type iTunesData = {
   wrapperType: 'track' | string;
 };
 
-export declare type iTunesResult = {
+export type iTunesResult = {
   results: iTunesData[];
   resultCount: number;
 };
 
-export declare type MovieGenreType = {
+export type MovieGenreType = {
   name: string;
 };
 
-declare type TMDBCommon = {
+type TMDBCommon = {
   id: number;
   adult: boolean;
   backdrop_path: string;
@@ -680,14 +680,14 @@ declare type TMDBCommon = {
   vote_count?: number;
 };
 
-export declare type TMDBMovieList = {
+export type TMDBMovieList = {
   page: number;
   total_pages: number;
   total_results: number;
   results: (TMDBCommon & { genre_ids: number[] })[];
 };
 
-export declare type TMDBMovie = {
+export type TMDBMovie = {
   budget: number;
   revenue: number;
   tagline: string;
@@ -702,7 +702,7 @@ export declare type TMDBMovie = {
   production_companies?: { id: number; logo_path: string | null; name: string; origin_country: string }[];
 } & TMDBCommon;
 
-export declare type TVDBSeriesList = {
+export type TVDBSeriesList = {
   results: (TMDBCommon &
   {
     genre_ids: number[];
@@ -711,7 +711,7 @@ export declare type TVDBSeriesList = {
   })[];
 } & TMDBMovieList;
 
-declare type TMDBSerieEpisode = {
+type TMDBSerieEpisode = {
   id: number;
   air_date: string;
   episode_number: number;
@@ -725,7 +725,7 @@ declare type TMDBSerieEpisode = {
   vote_count: number;
 };
 
-export declare type TMDBSerie = {
+export type TMDBSerie = {
   created_by: string[];
   episode_run_time: number[];
   first_air_date: string;
@@ -750,7 +750,7 @@ export declare type TMDBSerie = {
   production_companies?: { id: number; logo_path: string | null; name: string; origin_country: string }[];
 } & TMDBCommon;
 
-export declare type UrbanDefinition = {
+export type UrbanDefinition = {
   author: string;
   current_vote: string;
   defid: number;
@@ -764,11 +764,11 @@ export declare type UrbanDefinition = {
   written_on: string;
 };
 
-export declare type UrbanDefinitionResults = {
+export type UrbanDefinitionResults = {
   list: UrbanDefinition[];
 };
 
-export declare type SayData = {
+export type SayData = {
   argString: string;
   authorID: string;
   authorTag: string;
@@ -779,9 +779,9 @@ export declare type SayData = {
   attachment: string;
 };
 
-declare type DamageDealtTakenType = { damageTaken: Required<PokeTypesType>; damageDealt: Required<PokeTypesType> };
+type DamageDealtTakenType = { damageTaken: Required<PokeTypesType>; damageDealt: Required<PokeTypesType> };
 
-export declare type TypeChart = {
+export type TypeChart = {
   Bug: DamageDealtTakenType;
   Dark: DamageDealtTakenType;
   Dragon: DamageDealtTakenType;
@@ -804,7 +804,7 @@ export declare type TypeChart = {
   [propName: string]: DamageDealtTakenType;
 };
 
-export declare type CurrencyUnits = {
+export type CurrencyUnits = {
   AED: number; AFN: number; ALL: number; AMD: number; ANG: number; AOA: number; ARS: number;
   AUD: number; AWG: number; AZN: number; BAM: number; BBD: number; BDT: number; BGN: number;
   BHD: number; BIF: number; BMD: number; BND: number; BOB: number; BRL: number; BSD: number;
@@ -834,7 +834,7 @@ export declare type CurrencyUnits = {
   [propName: string]: number;
 };
 
-export declare type RedditAbout = {
+export type RedditAbout = {
   comment_karma: number;
   created: number;
   created_utc: number;
@@ -854,7 +854,7 @@ export declare type RedditAbout = {
   verified: boolean;
 };
 
-export declare type RedditComment = {
+export type RedditComment = {
   all_awardings: unknown[];
   total_awards_received: number;
   approved_at_utc: unknown;
@@ -927,7 +927,7 @@ export declare type RedditComment = {
 };
 
 
-export declare type RedditPost = {
+export type RedditPost = {
   all_awardings: unknown[];
   allow_live_comments: boolean;
   approved_at_utc: number | null;
@@ -1045,7 +1045,7 @@ export declare type RedditPost = {
   wls?: unknown;
 };
 
-export declare type RedditResponse<K extends 'comments' | 'posts'> = {
+export type RedditResponse<K extends 'comments' | 'posts'> = {
   kind: string;
   data: {
     after: string;
@@ -1060,7 +1060,7 @@ export declare type RedditResponse<K extends 'comments' | 'posts'> = {
   };
 };
 
-export declare type SpeedTestResponse = {
+export type SpeedTestResponse = {
   speeds: {
     download: number;
     upload: number;
@@ -1093,14 +1093,7 @@ export declare type SpeedTestResponse = {
   };
 };
 
-declare type OverwatchHeroesUnion =
-  'ana' | 'brigitte' | 'junkrat' |
-  'mei' | 'mercy' | 'moira' |
-  'orisa' | 'reinhardt' | 'soldier76' |
-  'symmetra' | 'torbjorn' | 'winston' |
-  'wreckingBall' | string;
-
-declare type OverwatchTopHeroStats = {
+type OverwatchTopHeroStats = {
   timePlayed: string;
   timePlayedInSeconds: number;
   gamesWon: number;
@@ -1113,7 +1106,7 @@ declare type OverwatchTopHeroStats = {
   [topHeroStat: string]: StringOrNumber;
 };
 
-declare type OverwatchAwardStats = {
+type OverwatchAwardStats = {
   cards: number;
   medals: number;
   medalsBronze: number;
@@ -1123,7 +1116,7 @@ declare type OverwatchAwardStats = {
   [awardStat: string]: number;
 };
 
-declare type OverwatchCareerAllHeroesAssists = {
+type OverwatchCareerAllHeroesAssists = {
   defensiveAssists: number;
   defensiveAssistsAvgPer10Min: number;
   defensiveAssistsMostInGame: number;
@@ -1137,7 +1130,7 @@ declare type OverwatchCareerAllHeroesAssists = {
   [stat: string]: number;
 };
 
-declare type OverwatchCareerAllHeroesAverage = {
+type OverwatchCareerAllHeroesAverage = {
   allDamageDoneAvgPer10Min: number;
   barrierDamageDoneAvgPer10Min: number;
   deathsAvgPer10Min: number;
@@ -1153,7 +1146,7 @@ declare type OverwatchCareerAllHeroesAverage = {
   [stat: string]: StringOrNumber;
 };
 
-declare type OverwatchCareerAllHeroesBest = {
+type OverwatchCareerAllHeroesBest = {
   allDamageDoneMostInGame: number;
   barrierDamageDoneMostInGame: number;
   defensiveAssistsMostInGame: number;
@@ -1176,7 +1169,7 @@ declare type OverwatchCareerAllHeroesBest = {
   [stat: string]: StringOrNumber;
 };
 
-declare type OverwatchCareerAllHeroesCombat = {
+type OverwatchCareerAllHeroesCombat = {
   barrierDamageDone: number;
   damageDone: number;
   deaths: number;
@@ -1194,7 +1187,7 @@ declare type OverwatchCareerAllHeroesCombat = {
   [stat: string]: StringOrNumber;
 };
 
-declare type OverwatchCareerAllHeroesGame = {
+type OverwatchCareerAllHeroesGame = {
   gamesLost: number;
   gamesPlayed: number;
   gamesTied: number;
@@ -1204,7 +1197,7 @@ declare type OverwatchCareerAllHeroesGame = {
   [stat: string]: StringOrNumber;
 };
 
-declare type OverwatchCareerAllHeroesMatchAwards = {
+type OverwatchCareerAllHeroesMatchAwards = {
   cards: number;
   medals: number;
   medalsBronze: number;
@@ -1214,7 +1207,7 @@ declare type OverwatchCareerAllHeroesMatchAwards = {
   [stat: string]: number;
 };
 
-declare type OverwatchCareerAllHeroesMisc = {
+type OverwatchCareerAllHeroesMisc = {
   teleporterPadsDestroyed: number;
   turretsDestroyed: number;
 
@@ -1222,7 +1215,7 @@ declare type OverwatchCareerAllHeroesMisc = {
 };
 
 
-declare type OverwatchHeroStats = {
+type OverwatchHeroStats = {
   assists: OverwatchCareerAllHeroesAssists;
   average: OverwatchCareerAllHeroesAverage;
   best: OverwatchCareerAllHeroesBest;
@@ -1234,31 +1227,31 @@ declare type OverwatchHeroStats = {
   miscellaneous?: OverwatchCareerAllHeroesMisc;
 };
 
-declare type OverwatchCareerStats = {
+type OverwatchCareerStats = {
   allHeroes: OverwatchHeroStats;
 
   [heroName: string]: OverwatchHeroStats;
 };
 
-declare type OverwatchTopHeroes = {
+type OverwatchTopHeroes = {
   [heroName: string]: OverwatchTopHeroStats;
 };
 
-declare type OverwatchGamesStats = {
+type OverwatchGamesStats = {
   played: number;
   won: number;
 
   [gameStats: string]: number;
 };
 
-declare type OverwatchStatsGroup = {
+type OverwatchStatsGroup = {
   awards: OverwatchAwardStats;
   careerStats: OverwatchCareerStats;
   games: OverwatchGamesStats;
   topHeroes: OverwatchTopHeroes;
 };
 
-export declare type OverwatchData = {
+export type OverwatchData = {
   error: unknown;
   endorsement: number;
   endorsementIcon: string;
@@ -1277,9 +1270,9 @@ export declare type OverwatchData = {
   quickPlayStats: OverwatchStatsGroup;
 };
 
-declare type PubgSetTypeUnion = 'season' | 'player' | 'playerSeason';
+type PubgSetTypeUnion = 'season' | 'player' | 'playerSeason';
 
-declare type PubgSeasonSet = {
+type PubgSeasonSet = {
   type: Exclude<PubgSetTypeUnion, 'playerSeason' | 'player'>;
   id: string;
   attributes: {
@@ -1288,7 +1281,7 @@ declare type PubgSeasonSet = {
   };
 };
 
-declare type PubgPlayerSet = {
+type PubgPlayerSet = {
   type: Exclude<PubgSetTypeUnion, 'playerSeason' | 'season'>;
   id: string;
   attributes: {
@@ -1310,7 +1303,7 @@ declare type PubgPlayerSet = {
   };
 };
 
-declare type PubgStatistics = {
+type PubgStatistics = {
   assists: number;
   bestRankPoint: number;
   boosts: number;
@@ -1349,7 +1342,7 @@ declare type PubgStatistics = {
   wins: number;
 };
 
-declare type PubgPlayerStatsSet = {
+type PubgPlayerStatsSet = {
   type: Exclude<PubgSetTypeUnion, 'season' | 'player'>;
   attributes: {
     gameModeStats: {
@@ -1383,7 +1376,7 @@ declare type PubgPlayerStatsSet = {
   };
 };
 
-export declare type PubgData<K extends PubgSetTypeUnion> = {
+export type PubgData<K extends PubgSetTypeUnion> = {
   data: K extends Exclude<PubgSetTypeUnion, 'playerSeason' | 'player'>
     ? PubgSeasonSet[]
     : K extends Exclude<PubgSetTypeUnion, 'playerSeason' | 'season'>
@@ -1396,9 +1389,9 @@ export declare type PubgData<K extends PubgSetTypeUnion> = {
   meta: {};
 };
 
-declare type ShowdownTierUnion = 'ou' | 'uu' | 'uber' | 'nu' | 'ru' | 'pu' | 'lc' | 'monotype' | string;
+type ShowdownTierUnion = 'ou' | 'uu' | 'uber' | 'nu' | 'ru' | 'pu' | 'lc' | 'monotype' | string;
 
-declare type ShowdownRanker = {
+type ShowdownRanker = {
   userid: string;
   username: string;
   w: number;
@@ -1415,14 +1408,14 @@ declare type ShowdownRanker = {
   elo: number;
 };
 
-export declare type ShowdownData = {
+export type ShowdownData = {
   formatid: ShowdownTierUnion;
   format: ShowdownTierUnion;
   toplist: ShowdownRanker[];
 };
 
 
-export declare type PokemonLearnsets = {
+export type PokemonLearnsets = {
   [propName: string]: {
     learnset: {
       [propName: string]: string[];
@@ -1430,20 +1423,20 @@ export declare type PokemonLearnsets = {
   };
 };
 
-export declare type TCGType =
+export type TCGType =
   'Grass' | 'Fire' | 'Water' | 'Lightning' |
   'Fighting' | 'Psychic' | 'Colorless' |
   'Darkness' | 'Metal' | 'Dragon' | 'Fairy';
 
-export declare type TCGSuperType = 'Pokémon' | 'Trainer' | 'Energy';
-export declare type TCGSubType =
+export type TCGSuperType = 'Pokémon' | 'Trainer' | 'Energy';
+export type TCGSubType =
   'EX' | 'Special' | 'Restored' | 'Level Up' |
   'MEGA' | 'Technical Machine' | 'Item' |
   'Stadium' | 'Supporter' | 'Stage 1' | 'GX' |
   'Pokémon Tool' | 'Basic' | 'LEGEND' | 'Stage 2' |
   'BREAK' | 'Rocket\'s Secret Machine';
 
-declare type TCGAttack = {
+type TCGAttack = {
   cost: TCGType[];
   name: string;
   text: string;
@@ -1451,18 +1444,18 @@ declare type TCGAttack = {
   convertedEnergyCost: number;
 };
 
-declare type TCGResistWeakness = {
+type TCGResistWeakness = {
   type: TCGType;
   value: string;
 };
 
-declare type TCGAbility = {
+type TCGAbility = {
   name: string;
   text: string;
   type: string;
 };
 
-declare type TCGCard = {
+type TCGCard = {
   name: string;
   id: string;
   nationalPokedexNumber?: number;
@@ -1490,10 +1483,10 @@ declare type TCGCard = {
   imageUrlHiRes: string;
 };
 
-export declare type TCGCardData = {
+export type TCGCardData = {
   cards: TCGCard[];
 };
 
-export declare type NekoData = {
+export type NekoData = {
   url: string;
 };

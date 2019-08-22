@@ -1,5 +1,4 @@
-import { CommandoClient, CommandoGuild, CommandoMessage, util as CommandoUtil } from 'awesome-commando';
-import { GuildMember, MessageEmbed, MessageReaction, PermissionString, StreamDispatcher, TextChannel, Util } from 'awesome-djs';
+import { GuildMember, MessageEmbed, MessageReaction, PermissionString, StreamDispatcher, TextChannel, Util, Message, Guild } from 'discord.js';
 import { oneLine, oneLineTrim } from 'common-tags';
 import emojiRegex from 'emoji-regex';
 import { YoutubeVideoType } from '../RibbonTypes';
@@ -18,15 +17,6 @@ export const sentencecase = (str: string) => str.charAt(0).toUpperCase() + str.s
 
 /** Transforms a message to Title Case */
 export const titlecase = (str: string) => str.toLowerCase().replace(/^([a-z]| [a-z]|-[a-z])/g, word => word.toUpperCase());
-
-/** Filter applied to navigation reactions */
-export const navigationReactionFilter = (reaction: MessageReaction) => (reaction.emoji.name === '➡' || reaction.emoji.name === '⬅');
-
-/** Helper function to inject navigation emotes */
-export const injectNavigationEmotes = async (message: CommandoMessage): Promise<void> => {
-  await message.react('⬅');
-  await message.react('➡');
-};
 
 /** Helper function to count the amount of capital letters in a message */
 export const countCaps = (stringToCheck: string, allowedLength: string): number => (stringToCheck.replace(/[^A-Z]/g, '').length / allowedLength.length) * 100;
@@ -57,13 +47,13 @@ export const countMentions = (str: string) => {
 };
 
 /** Helper function to delete command messages */
-export const deleteCommandMessages = (msg: CommandoMessage, client: CommandoClient) => {
+export const deleteCommandMessages = (msg: Message, client: CommandoClient) => {
   if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) msg.delete();
 };
 
 /** Helper function to log moderation commands */
 export const logModMessage = async (
-  msg: CommandoMessage, guild: CommandoGuild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed
+  msg: Message, guild: Guild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed
 ) => {
   if (!guild.settings.get('hasSentModLogMessage', false)) {
     msg.reply(oneLine`
@@ -137,8 +127,8 @@ export const clientHasManageMessages = () => {
   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
     const fn: (...args: unknown[]) => unknown = descriptor.value;
 
-    descriptor.value = async function value(msg: CommandoMessage, args: { hasManageMessages: boolean }, fromPattern: boolean) {
-      const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has('MANAGE_MESSAGES');
+    descriptor.value = async function value(msg: Message, args: { hasManageMessages: boolean }, fromPattern: boolean) {
+      const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user!)!.has('MANAGE_MESSAGES');
       args.hasManageMessages = clientHasPermission;
 
       return fn.apply(this, [ msg, args, fromPattern ]);
@@ -151,9 +141,9 @@ export const shouldHavePermission = (permission: PermissionString, shouldClientH
   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
     const fn: (...args: unknown[]) => unknown = descriptor.value;
 
-    descriptor.value = async function value(msg: CommandoMessage, args: object, fromPattern: boolean) {
+    descriptor.value = async function value(msg: Message, args: object, fromPattern: boolean) {
       const authorIsOwner = msg.client.isOwner(msg.author);
-      const memberHasPermission = msg.member.hasPermission(permission);
+      const memberHasPermission = msg.member!.hasPermission(permission);
 
       if (!memberHasPermission && !authorIsOwner) {
         return msg.command.onBlock(msg, 'permission',
@@ -180,7 +170,7 @@ export const resolveGuildI18n = (): MethodDecorator => {
   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
     const fn: (...args: unknown[]) => unknown = descriptor.value;
 
-    descriptor.value = async function value(msg: CommandoMessage, args: { language: 'en' | 'nl' }, fromPattern: boolean) {
+    descriptor.value = async function value(msg: Message, args: { language: 'en' | 'nl' }, fromPattern: boolean) {
       const language = msg.guild ? msg.guild.settings.get('i18n', 'en') : 'en';
       args.language = language;
 
@@ -195,7 +185,6 @@ export class Song {
   public id: string;
   public length: number;
   public member: GuildMember;
-  public dispatcher: StreamDispatcher | null;
   public playing: boolean;
 
   public constructor(video: YoutubeVideoType, member: GuildMember) {
@@ -203,7 +192,6 @@ export class Song {
     this.id = video.id;
     this.length = video.durationSeconds;
     this.member = member;
-    this.dispatcher = null;
     this.playing = false;
   }
 

@@ -28,6 +28,8 @@
 
 ## Features
 
+- Based on the
+
 - Always maintained, always open to squash bugs, and always looking for new features
 
 - Many web searches, such as Google, Google Images, Kitsu, YouTube, Steam and many more
@@ -56,7 +58,7 @@
 
 - Hydrabolt for the DiscordJS library
 
-- Gawdl3y for the DiscordJS-Commando framework
+- Dirigeants for the Klasa framework
 
 - York, the creator of [AnIdiotsGuide](https://anidiots.guide/) for getting me started
 
