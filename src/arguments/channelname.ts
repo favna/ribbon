@@ -1,4 +1,4 @@
-import { Argument, util, KlasaGuild, Possible, KlasaMessage, KlasaUser } from 'klasa';
+import { Argument, util, KlasaGuild, Possible, KlasaMessage } from 'klasa';
 import { isString } from 'util';
 import { GuildChannel } from 'discord.js';
 
