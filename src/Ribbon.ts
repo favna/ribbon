@@ -25,11 +25,10 @@ export default class Ribbon {
         quotedStringSupport: true,
       },
       noPrefixDM: true,
-      ownerID: '268792781713965056',
-      production: prod,
       prefix: '.',
       readyMessage: client => `Client ready at ${moment().format('HH:mm:ss')}. Logged in as ${client.user!.tag} (${client.user!.id})`,
       typing: true,
+      providers: { default: 'firestore' },
     });
     // this.client = new CommandoClient({
     //   commandPrefix: '!',

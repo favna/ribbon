@@ -22,12 +22,17 @@ export const titlecase = (str: string) => str.toLowerCase().replace(/^([a-z]| [a
 
 /** TypeGuard to distinguish TextChannel from Channel  */
 export const isTextChannel = (channel: Channel | TextChannel): channel is TextChannel => {
-  return (channel as TextChannel).topic !== undefined;
+  return channel.type === 'text' && channel instanceof TextChannel;
 };
 
-/** TypeGuard to distinguish string from object */
+/** TypeGuard to ensure param is string */
 export const isString = (str: string | unknown): str is string => {
-  return (str as string).length !== undefined && typeof str === 'string';
+  return (str as string).toLowerCase() !== undefined && typeof str === 'string';
+};
+
+/** TypeGuard to ensure param is number */
+export const isNumber = (num: string | unknown): num is number => {
+  return (num as number).valueOf() !== undefined && typeof num === 'number';
 };
 
 /** Helper function to count the amount of capital letters in a message */

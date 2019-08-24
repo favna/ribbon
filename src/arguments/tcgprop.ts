@@ -1,8 +1,8 @@
-import { Argument, KlasaClient, ArgumentStore, ArgumentOptions } from 'klasa';
+import { Argument, ArgumentOptions, ArgumentStore } from 'klasa';
 
 export default class TcgPropArgument extends Argument {
-  constructor(client: KlasaClient, store: ArgumentStore, file: string[], directory: string, options?: ArgumentOptions) {
-    super(client, store, file, directory, { ...options, aliases: [ 'tcgp' ] });
+  constructor(store: ArgumentStore, file: string[], directory: string, options?: ArgumentOptions) {
+    super(store, file, directory, { ...options, aliases: [ 'tcgp' ] });
   }
 
   run(arg: string) {

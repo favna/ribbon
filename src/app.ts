@@ -6,6 +6,7 @@ import Ribbon from './Ribbon';
 import 'reflect-metadata';
 import 'moment-duration-format';
 import createDatabaseConnection from './components/Typeorm/DbConfig';
+import { prod } from './components/Utils';
 
 // Configure dotenv
 config({
@@ -14,14 +15,13 @@ config({
   debug: false,
 });
 
-// Authenticate Firebase-admin
 fireadmin.initializeApp({
   credential: fireadmin.credential.cert({
-    projectId: process.env.FIREBASE_PROJECT,
-    clientEmail: process.env.FIREBASE_EMAIL,
-    privateKey: process.env.FIREBASE_KEY,
+    projectId: prod ? process.env.FIREBASE_PROJECT : process.env.DEV_FIREBASE_PROJECT,
+    clientEmail: prod ? process.env.FIREBASE_EMAIL : process.env.DEV_FIREBASE_EMAIL,
+    privateKey: prod ? process.env.FIREBASE_KEY : process.env.DEV_FIREBASE_KEY,
   }),
-  databaseURL: `https://${process.env.FIREBASE_PROJECT}.firebaseio.com`,
+  databaseURL: `https://${prod ? process.env.FIREBASE_PROJECT : process.env.DEV_FIREBASE_PROJECT}.firebaseio.com`,
 });
 
 // Add module aliases

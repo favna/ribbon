@@ -1,16 +1,16 @@
 /* eslint-disable no-console */
 /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
-import { KlasaClient, Command, KlasaMessage } from 'klasa';
-import FirebaseStorage from './FirebaseStorage';
-import { setCommandsData, getChannelsData, getCommandsData, getMessagesData, getServersData, getUsersData, setUptimeData } from './FirebaseActions';
-import { isTextChannel, prod } from './Utils';
-import moment from 'moment';
-import { stripIndents, oneLine } from 'common-tags';
-import { isString } from 'util';
+import { stripIndents } from 'common-tags';
 import fs from 'fs';
-import path from 'path';
 import interval from 'interval-promise';
+import { Command, KlasaClient, KlasaMessage } from 'klasa';
+import moment from 'moment';
+import path from 'path';
+import { isString } from 'util';
 import { decache } from './Decache';
+import { getChannelsData, getCommandsData, getMessagesData, getServersData, getUsersData, setCommandsData, setUptimeData } from './FirebaseActions';
+import FirebaseStorage from './FirebaseStorage';
+import { isTextChannel, prod } from './Utils';
 
 export const postUptimeToFirebase = async (client: KlasaClient) => {
   try {
@@ -19,10 +19,10 @@ export const postUptimeToFirebase = async (client: KlasaClient) => {
   } catch (err) {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!);
 
-    if (channel && isTextChannel(channel) && client.owner) {
+    if (channel && isTextChannel(channel)) {
       channel.send(stripIndents(
         `
-        <@${client.owner.id}> Failed to update Firebase uptime data!
+        ${client.options.owners.map(owner => `<@${owner}>`).join(' and ')}, I failed to update Firebase uptime data!
         **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}
         `
@@ -43,10 +43,10 @@ export const handleCommandRun = (client: KlasaClient, msg: KlasaMessage, command
   } catch (err) {
     const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!);
 
-    if (channel && isTextChannel(channel) && isTextChannel(msg.channel) && client.owner && msg.guild) {
+    if (channel && isTextChannel(channel) && isTextChannel(msg.channel) && msg.guild) {
       channel.send(stripIndents(
         `
-          <@${client.owner.id}> Failed to update Firebase commands count!
+        ${client.options.owners.map(owner => `<@${owner}>`).join(' and ')}, failed to update Firebase commands count!
           **Message ID:** (${msg.id})
           **Channel Data:** ${msg.channel.name} (${msg.channel.id})
           **Guild Data:** ${msg.guild.name} (${msg.guild.id})
@@ -148,13 +148,4 @@ export const handleReady = async (client: KlasaClient) => {
         // client.registry.resolveCommand('pokemon:dex').reload();
       }
     });
-
-  if (client.user) {
-    console.info(oneLine(
-      `
-        Client ready at ${moment().format('HH:mm:ss')};
-        logged in as ${client.user.tag} (${client.user.id})
-      `
-    ));
-  }
 };

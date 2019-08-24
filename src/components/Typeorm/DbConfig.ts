@@ -20,7 +20,7 @@ export const projectRoot = path.resolve(__dirname, '..', '..', '..');
  */
 export const config: ConnectionOptions =
 {
-  database: path.join(projectRoot, 'src', 'data', 'databases', 'dev_store.sqlite'),
+  database: path.join(projectRoot, 'src', 'data', 'dev_store.sqlite'),
   type: 'sqlite',
   name: 'db_con',
   logging: true,
@@ -28,7 +28,7 @@ export const config: ConnectionOptions =
   entities: [ Casino, CasinoTimeout, Countdown, Pasta, Reminder, Timer, Warning ],
 
   ...(prod && {
-    database: path.join(projectRoot, 'dist', 'data', 'databases', 'prod_store.sqlite'),
+    database: path.join(projectRoot, 'dist', 'data', 'prod_store.sqlite'),
     logging: false,
     synchronize: false,
   }),
