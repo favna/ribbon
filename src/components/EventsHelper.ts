@@ -2,7 +2,7 @@
 /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 import { KlasaClient, Command, KlasaMessage } from 'klasa';
 import FirebaseStorage from './FirebaseStorage';
-import { setCommandsData, getChannelsData, getCommandsData, getMessagesData, getServersData, getUsersData } from './FirebaseActions';
+import { setCommandsData, getChannelsData, getCommandsData, getMessagesData, getServersData, getUsersData, setUptimeData } from './FirebaseActions';
 import { isTextChannel, prod } from './Utils';
 import moment from 'moment';
 import { stripIndents, oneLine } from 'common-tags';
@@ -11,6 +11,25 @@ import fs from 'fs';
 import path from 'path';
 import interval from 'interval-promise';
 import { decache } from './Decache';
+
+export const postUptimeToFirebase = async (client: KlasaClient) => {
+  try {
+    const uptime = moment.duration(process.uptime() * 1000).format('D [days], H [hours] [and] m [minutes]');
+    setUptimeData(uptime);
+  } catch (err) {
+    const channel = client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!);
+
+    if (channel && isTextChannel(channel) && client.owner) {
+      channel.send(stripIndents(
+        `
+        <@${client.owner.id}> Failed to update Firebase uptime data!
+        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+        **Error Message:** ${err}
+        `
+      ));
+    }
+  }
+};
 
 export const handleCommandRun = (client: KlasaClient, msg: KlasaMessage, command: Command) => {
   try {
@@ -111,11 +130,11 @@ export const handleReady = async (client: KlasaClient) => {
   FirebaseStorage.users = parseInt(await getUsersData());
 
   if (prod) {
-    const everyMinute = 1 * 60 * 1000;
+    // const everyMinute = 1 * 60 * 1000;
     const everyThreeMinutes = 3 * 60 * 1000;
-    const everyThirdHour = 3 * 60 * 60 * 1000;
+    // const everyThirdHour = 3 * 60 * 60 * 1000;
 
-    // interval(async () => setUpdateToFirebase(client), everyThreeMinutes);
+    interval(async () => postUptimeToFirebase(client), everyThreeMinutes);
     // interval(async () => sendTimedMessages(client), everyMinute);
     // interval(async () => sendCountdownMessages(client), everyThreeMinutes);
     // interval(async () => sendReminderMessages(client), everyMinute);
@@ -126,7 +145,7 @@ export const handleReady = async (client: KlasaClient) => {
     (eventType, filename) => {
       if (filename) {
         decache(path.join(__dirname, '../data/dex/formats.json'));
-      // client.registry.resolveCommand('pokemon:dex').reload();
+        // client.registry.resolveCommand('pokemon:dex').reload();
       }
     });
 

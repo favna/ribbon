@@ -11,18 +11,12 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "newLine": "lf",
-    // "strict": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noImplicitAny": true,
-    // "noImplicitReturns": true,
-    // "noImplicitThis": true,
-    // "noUnusedLocals": true,
-    "strict": false,
-    "noFallthroughCasesInSwitch": false,
-    "noImplicitAny": false,
-    "noImplicitReturns": false,
-    "noImplicitThis": false,
-    "noUnusedLocals": false,
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
     "resolveJsonModule": true,
     "importHelpers": true,
     "baseUrl": "src",
@@ -33,5 +27,5 @@
     },
     "typeRoots": ["typings","./node_modules/@types"]
   },
-  "include": ["src/*.ts"]
+  "include": ["src"]
 }

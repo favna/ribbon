@@ -4,12 +4,12 @@ import { GuildMember } from 'discord.js';
 
 const USER_REGEXP = Argument.regex.userOrMember;
 
-const resolveUser = async (query: GuildMember | KlasaUser | string, guild: KlasaGuild): Promise<KlasaUser> => {
+const resolveUser = async (query: GuildMember | KlasaUser | string, guild: KlasaGuild): Promise<KlasaUser | null> => {
   if (query instanceof GuildMember) return query.user;
   if (query instanceof KlasaUser) return query;
   if (typeof query === 'string') {
     if (USER_REGEXP.test(query)) {
-      const member = await guild.members.fetch(USER_REGEXP.exec(query)[1]);
+      const member = await guild.members.fetch((USER_REGEXP.exec(query) as RegExpExecArray)[1]);
 
       return member.user;
     }
@@ -24,7 +24,7 @@ const resolveUser = async (query: GuildMember | KlasaUser | string, guild: Klasa
 };
 
 export default class UsernameArgument extends Argument {
-  async run(arg: Parameters<typeof resolveUser>[0], possible: Possible, msg: KlasaMessage) {
+  async run(arg: string, possible: Possible, msg: KlasaMessage): Promise<KlasaUser> {
     if (!msg.guild) return this.store.get('user').run(arg, possible, msg);
     try {
       const resUser = await resolveUser(arg, msg.guild);

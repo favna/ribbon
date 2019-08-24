@@ -1,6 +1,6 @@
 /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 // import path from 'path';
-import { Client, KlasaMessage, Command, KlasaGuild } from 'klasa';
+import { Client, KlasaMessage, Command } from 'klasa';
 import { prod } from './components/Utils';
 import moment from 'moment';
 import { handleCommandRun, handleDebug, handleErr, handleWarn, handleReady, handleRejection } from './components/EventsHelper';

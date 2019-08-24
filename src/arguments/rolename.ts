@@ -1,18 +1,18 @@
-import { Argument, util, KlasaGuild, Possible, KlasaMessage } from 'klasa';
 import { Role } from 'discord.js';
+import { Argument, KlasaGuild, KlasaMessage, Possible, util } from 'klasa';
 import { isString } from 'util';
 
 const ROLE_REGEXP = Argument.regex.role;
 
 const resolveRole = (query: Role | string, guild: KlasaGuild) => {
   if (query instanceof Role) return guild.roles.has(query.id) ? query : null;
-  if (typeof query === 'string' && ROLE_REGEXP.test(query)) return guild.roles.get(ROLE_REGEXP.exec(query)[1]);
+  if (typeof query === 'string' && ROLE_REGEXP.test(query)) return guild.roles.get((ROLE_REGEXP.exec(query) as RegExpExecArray)[1]);
 
   return null;
 };
 
 export default class RolenameArgument extends Argument {
-  run(arg: Parameters<typeof resolveRole>[0], possible: Possible, msg: KlasaMessage) {
+  run(arg: string, possible: Possible, msg: KlasaMessage): Role {
     if (!msg.guild) throw new Error('This command can only be used inside a server.');
     const resRole = resolveRole(arg, msg.guild);
     if (resRole) return resRole;

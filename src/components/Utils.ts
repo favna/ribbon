@@ -1,6 +1,6 @@
 /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
-import { GuildMember, MessageEmbed, PermissionString, TextChannel, Util, Message, Guild, Channel } from 'discord.js';
-import { oneLine, oneLineTrim } from 'common-tags';
+import { GuildMember, MessageEmbed, TextChannel, Util, Channel } from 'discord.js';
+import { oneLineTrim } from 'common-tags';
 import emojiRegex from 'emoji-regex';
 import { YoutubeVideoType } from '../RibbonTypes';
 import { diacriticsMap } from './Constants';
@@ -135,47 +135,47 @@ export const roundNumber = (num: number, scale = 0) => {
 };
 
 /** Decorator function that checks if the bot client has the permissions to manage messages */
-export const clientHasManageMessages = () => {
-  return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
-    const fn: (...args: unknown[]) => unknown = descriptor.value;
+// export const clientHasManageMessages = () => {
+//   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+//     const fn: (...args: unknown[]) => unknown = descriptor.value;
 
-    descriptor.value = async function value(msg: KlasaMessage, args: { hasManageMessages: boolean }, fromPattern: boolean) {
-      const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has('MANAGE_MESSAGES');
-      args.hasManageMessages = clientHasPermission;
+//     descriptor.value = async function value(msg: KlasaMessage, args: { hasManageMessages: boolean }, fromPattern: boolean) {
+//       const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has('MANAGE_MESSAGES');
+//       args.hasManageMessages = clientHasPermission;
 
-      return fn.apply(this, [ msg, args, fromPattern ]);
-    };
-  };
-};
+//       return fn.apply(this, [ msg, args, fromPattern ]);
+//     };
+//   };
+// };
 
 /** Decorator function that checks if the user and the client have the required permissions */
-export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission = false): MethodDecorator => {
-  return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
-    // const fn: (...args: unknown[]) => unknown = descriptor.value;
+// export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission = false): MethodDecorator => {
+//   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+// const fn: (...args: unknown[]) => unknown = descriptor.value;
 
-    // descriptor.value = async function value(msg: KlasaMessage, args: object, fromPattern: boolean) {
-    //   const authorIsOwner = msg.client.isOwner(msg.author);
-    //   const memberHasPermission = msg.member!.hasPermission(permission);
+// descriptor.value = async function value(msg: KlasaMessage, args: object, fromPattern: boolean) {
+//   const authorIsOwner = msg.client.isOwner(msg.author);
+//   const memberHasPermission = msg.member!.hasPermission(permission);
 
-    //   if (!memberHasPermission && !authorIsOwner) {
-    //     return msg.command.onBlock(msg, 'permission',
-    //       { response: `You need the "${CommandoUtil.permissions[permission]}" permission to use the ${msg.command.name} command`});
-    //   }
+//   if (!memberHasPermission && !authorIsOwner) {
+//     return msg.command.onBlock(msg, 'permission',
+//       { response: `You need the "${CommandoUtil.permissions[permission]}" permission to use the ${msg.command.name} command`});
+//   }
 
-    //   if (shouldClientHavePermission) {
-    //     const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has(permission);
+//   if (shouldClientHavePermission) {
+//     const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has(permission);
 
-    //     if (!clientHasPermission) {
-    //       return msg.command.onBlock(msg, 'clientPermissions', { missing: [ permission ] });
-    //     }
-    //   }
+//     if (!clientHasPermission) {
+//       return msg.command.onBlock(msg, 'clientPermissions', { missing: [ permission ] });
+//     }
+//   }
 
-    //   return fn.apply(this, [ msg, args, fromPattern ]);
-    // };
+//   return fn.apply(this, [ msg, args, fromPattern ]);
+// };
 
-    return descriptor;
-  };
-};
+//     return descriptor;
+//   };
+// };
 
 /** Song class used in music commands to track the song data */
 export class Song {

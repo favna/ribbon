@@ -11,6 +11,10 @@
       {
         "capIsNewExceptionPattern": "^[A-Z][a-z]+(?:[A-Z][a-z]+)*$"
       }
-    ]
+    ],
+    "multiline-comment-style": "off",
+    "capitalized-comments": "off",
+    "line-comment-position":"off",
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }
