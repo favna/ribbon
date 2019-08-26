@@ -31,9 +31,15 @@ jobs:
       - image: circleci/node:11
     steps:
       - nodejs
+  node-v12:
+    docker:
+      - image: circleci/node:12
+    steps:
+      - nodejs
 
 workflows:
   version: 2
   node-multi-build:
     jobs:
       - node-v11
+      - node-v12
