@@ -32,12 +32,11 @@
     "copyfiles:databases": "copyfiles -u 1 ./src/data/*.sqlite ./dist",
     "copyfiles:env": "copyfiles -u 1 ./src/.env ./dist",
     "copyfiles:dex": "copyfiles -u 1 ./src/data/dex/*.json ./dist",
-    "up": "yarn upgrade-interactive --latest",
     "commit": "git-cz",
     "cz": "git-cz",
-    "release": "standard-version",
-    "push": "git push --follow-tags origin master",
-    "publish": "git push --follow-tags origin master && npm publish",
+    "up": "yarn upgrade-interactive --latest",
+    "release:version": "standard-version",
+    "release:push": "git push --follow-tags origin master",
     "scripts:reload": "babel-node scripts/reloader --extensions \".ts\""
   },
   "keywords": [
@@ -51,14 +50,13 @@
     "Ribbon"
   ],
   "engines": {
-    "node": "^11",
+    "node": ">=11",
     "npm": ">=6"
   },
   "dependencies": {
     "@favware/converter": "^1.0.4",
     "@favware/querystring": "^3.0.2",
     "@favware/unescape": "^1.0.3",
-    "@favware/ytdl-prismplayer": "^2.2.0",
     "@favware/zalgo": "^1.0.3",
     "booru": "^2.0.3",
     "cheerio": "^1.0.0-rc.3",
@@ -67,7 +65,6 @@
     "discord.js": "favna/discord.js#ribbon-djs",
     "dotenv": "^8.1.0",
     "emoji-regex": "^8.0.0",
-    "erlpack": "discordapp/erlpack",
     "fast-levenshtein": "^2.0.6",
     "firebase-admin": "8.4.0",
     "fs-nextra": "^0.4.5",
@@ -80,8 +77,6 @@
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
     "node-fetch": "^2.6.0",
-    "node-opus": "^0.3.2",
-    "prism-media": "^1.0.2",
     "qrcode": "^1.4.1",
     "reflect-metadata": "^0.1.13",
     "sagiri": "^2.0.2",
@@ -92,7 +87,6 @@
     "table": "^5.4.6",
     "turndown": "^5.0.3",
     "typeorm": "^0.2.18",
-    "ytdl-core": "^0.29.5",
     "zlib-sync": "^0.1.5"
   },
   "devDependencies": {
