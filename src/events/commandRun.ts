@@ -21,7 +21,7 @@ export default class CommandRunEvent extends Event {
       if (channel && isTextChannel(channel) && isTextChannel(msg.channel) && msg.guild) {
         channel.send(stripIndents(
           `
-          ${this.client.options.owners.map(owner => `<@${owner}>`).join(' and ')}, failed to update Firebase commands count!
+            ${this.client.options.owners.map(owner => `<@${owner}>`).join(' and ')}, I failed to update Firebase commands count!
             **Message ID:** (${msg.id})
             **Channel Data:** ${msg.channel.name} (${msg.channel.id})
             **Guild Data:** ${msg.guild.name} (${msg.guild.id})
