@@ -67,7 +67,7 @@
     "Ribbon"
   ],
   "engines": {
-    "node": "^11",
+    "node": ">=11",
     "npm": ">=6"
   },
   "dependencies": {
@@ -84,7 +84,6 @@
     "didyoumean2": "^3.1.2",
     "dotenv": "^8.1.0",
     "emoji-regex": "^8.0.0",
-    "erlpack": "discordapp/erlpack",
     "fast-levenshtein": "^2.0.6",
     "firebase-admin": "8.4.0",
     "fuse.js": "^3.4.5",
@@ -96,7 +95,6 @@
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
     "node-fetch": "^2.6.0",
-    "node-opus": "^0.3.2",
     "prism-media": "^1.0.2",
     "qrcode": "^1.4.1",
     "reflect-metadata": "^0.1.13",
