@@ -1,12 +1,8 @@
-import { Provider, ProviderStore, ProviderOptions } from 'klasa';
 import fireadmin from 'firebase-admin';
+import { Provider } from 'klasa';
 
 export default class Firestore extends Provider {
-  public db: FirebaseFirestore.Firestore | null;
-  constructor(store: ProviderStore, file: string[], directory: string, options?: ProviderOptions) {
-    super(store, file, directory, options);
-    this.db = null;
-  }
+  public db: FirebaseFirestore.Firestore | null = null;
 
   async init() {
     this.db = fireadmin.firestore();
@@ -41,12 +37,10 @@ export default class Firestore extends Provider {
   }
 
   create(table: string, id: string, doc: FirebaseFirestore.DocumentData = {}) {
-    console.log('in create');
     return this.db!.collection(table).doc(id).set(this.parseUpdateInput(doc));
   }
 
   update(table: string, id: string, doc: FirebaseFirestore.UpdateData) {
-    console.log('in update');
     return this.db!.collection(table).doc(id).update(this.parseUpdateInput(doc));
   }
 
@@ -55,7 +49,6 @@ export default class Firestore extends Provider {
   }
 
   replace(...args: [string, string, FirebaseFirestore.DocumentData]) {
-    console.log('in replace');
     return this.create(...args);
   }
 

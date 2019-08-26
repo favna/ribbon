@@ -1,10 +1,8 @@
-import { Argument, ArgumentOptions, ArgumentStore } from 'klasa';
+import { ApplyOptions } from '@components/Utils';
+import { Argument, ArgumentOptions } from 'klasa';
 
+@ApplyOptions<ArgumentOptions>({aliases: [ 'tcgp' ]})
 export default class TcgPropArgument extends Argument {
-  constructor(store: ArgumentStore, file: string[], directory: string, options?: ArgumentOptions) {
-    super(store, file, directory, { ...options, aliases: [ 'tcgp' ] });
-  }
-
   run(arg: string) {
     const props: string[] = arg.split(' ').filter(Boolean);
 

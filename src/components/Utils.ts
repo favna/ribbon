@@ -1,10 +1,10 @@
 /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
-import { GuildMember, MessageEmbed, TextChannel, Util, Channel } from 'discord.js';
+import { GuildMember, MessageEmbed, TextChannel, Util, Channel, Constructor } from 'discord.js';
 import { oneLineTrim } from 'common-tags';
 import emojiRegex from 'emoji-regex';
 import { YoutubeVideoType } from '../RibbonTypes';
 import { diacriticsMap } from './Constants';
-import { KlasaClient, KlasaMessage, KlasaGuild } from 'klasa';
+import { KlasaClient, KlasaMessage, KlasaGuild, PieceOptions, Piece, Store } from 'klasa';
 
 /** Validation on whether this connection will be production or not */
 export const prod = process.env.NODE_ENV === 'production';
@@ -27,12 +27,24 @@ export const isTextChannel = (channel: Channel | TextChannel): channel is TextCh
 
 /** TypeGuard to ensure param is string */
 export const isString = (str: string | unknown): str is string => {
-  return (str as string).toLowerCase() !== undefined && typeof str === 'string';
+  return typeof str === 'string';
 };
 
 /** TypeGuard to ensure param is number */
 export const isNumber = (num: string | unknown): num is number => {
   return (num as number).valueOf() !== undefined && typeof num === 'number';
+};
+
+export const isArray = (arr: unknown[] | unknown): arr is unknown[] => {
+  return Array.isArray(arr);
+};
+
+export const isNumbers = (array: number[] | string[] | (string | number)[]): array is number[] => {
+  return array.every(val => typeof val === 'number');
+};
+
+export const isStrings = (array: number[] | string[] | (string | number)[]): array is number[] => {
+  return array.every(val => typeof val === 'string');
 };
 
 /** Helper function to count the amount of capital letters in a message */
@@ -138,6 +150,19 @@ export const roundNumber = (num: number, scale = 0) => {
 
   return Number(`${Math.round(Number(`${Number(arr[0])}e${sig}${Number(arr[1]) + scale}`))}e-${scale}`);
 };
+
+function createClassDecorator(fn: Function): Function {
+  return fn;
+}
+
+/** Decorator function that applies given options to any Klasa piece */
+export function ApplyOptions<T extends PieceOptions>(options: T): Function {
+  return createClassDecorator((target: Constructor<Piece>) => class extends target {
+    public constructor(store: Store<string, Piece, typeof Piece>, file: string[], directory: string) {
+      super(store, file, directory, options);
+    }
+  });
+}
 
 /** Decorator function that checks if the bot client has the permissions to manage messages */
 // export const clientHasManageMessages = () => {

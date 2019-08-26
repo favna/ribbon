@@ -6,6 +6,7 @@
     "createDefaultProgram": true,
   },
   "rules": {
+    "@typescript-eslint/no-namespace": "off",
     "new-cap": [
       "error",
       {

@@ -1,8 +1,9 @@
+import { ApplyOptions } from '@components/Utils';
 import { tierAliases } from '@pokedex/aliases';
 import cheerio from 'cheerio';
 import { stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
-import { Argument, ArgumentOptions, ArgumentStore } from 'klasa';
+import { Argument, ArgumentOptions } from 'klasa';
 import fetch from 'node-fetch';
 import { table } from 'table';
 import { tierAlias } from '../RibbonTypes';
@@ -13,11 +14,8 @@ type Fuser = {
   alias: string;
 };
 
+@ApplyOptions<ArgumentOptions>({aliases: [ 'sdtier' ]})
 export default class ShowdownArgument extends Argument {
-  constructor(store: ArgumentStore, file: string[], directory: string, options?: ArgumentOptions) {
-    super(store, file, directory, { ...options, aliases: [ 'sdtier' ] });
-  }
-
   async run(arg: string) {
     const fuseRes = this.fuser(arg);
     if (fuseRes.hasMatch) arg = fuseRes.alias;
