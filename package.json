@@ -132,7 +132,7 @@
     "tslib": "^1.10.0",
     "typescript": "^3.5.3",
     "utility-types": "^3.7.0",
-    "yargs-interactive": "^2.1.0"
+    "yargs-interactive": "^2.2.0"
   },
   "husky": {
     "hooks": {
