@@ -1,39 +1,68 @@
 version: 2.1
 
+aliases:
+  - &checkout
+    checkout
+
+# job_node_10: &job_node_10
+#   docker:
+#     - image: circleci/node:10
+
+job_node_11: &job_node_11
+  docker:
+    - image: circleci/node:11
+
+job_node_12: &job_node_12
+  docker:
+    - image: circleci/node:12
+
+run_yarn: &run_yarn
+  name: Install yarn packages
+  command: yarn install
+
+save_yarn: &save_yarn
+  save_cache:
+    name: Save Yarn Package Cache
+    key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+    paths:
+      - ~/.cache/yarn
+      - node_modules
+
+restore_yarn: &restore_yarn
+  restore_cache:
+    name: Restore Yarn Package Cache
+    key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+
 commands:
   nodejs:
+    description: Primary flow
     steps:
-      - checkout
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-            - node_modules
-      - run:
-          name: Lint code
-          command: yarn lint
-      - run:
-          name: Build code
-          command: yarn build
+    - *checkout
+    - <<: *restore_yarn
+    - run:
+        <<: *run_yarn
+    - <<: *save_yarn
+    - run:
+        name: Confirm the linting
+        command: yarn lint
+    - run:
+        name: Make a build
+        command: yarn build
+    - *store_artifacts
+    - *codecov
 
 # List of jobs
 jobs:
+  # node-v10:
+  #   <<: *job_node_10
+  #   steps:
+  #     - nodejs
   node-v11:
-    docker:
-      - image: circleci/node:11
+    <<: *job_node_11
     steps:
       - nodejs
   node-v12:
-    docker:
-      - image: circleci/node:12
+    <<: *job_node_12
     steps:
       - nodejs
 
@@ -41,5 +70,19 @@ workflows:
   version: 2
   node-multi-build:
     jobs:
+      # - node-v10
       - node-v11
       - node-v12
+
+  nightly:
+    jobs:
+      # - node-v10
+      - node-v11
+      - node-v12
+    triggers:
+      - schedule:
+          cron: 0 2 * * *
+          filters:
+            branches:
+              only:
+                - master
