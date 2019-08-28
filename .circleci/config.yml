@@ -48,8 +48,8 @@ commands:
     - run:
         name: Make a build
         command: yarn build
-    - *store_artifacts
-    - *codecov
+    # - *store_artifacts
+    # - *codecov
 
 # List of jobs
 jobs:
