@@ -15,7 +15,7 @@
     "url": "https://github.com/favware/ribbon/issues"
   },
   "scripts": {
-    "lint": "eslint src scripts --fix --ext ts",
+    "lint": "eslint src --fix --ext ts",
     "clean": "rimraf ./dist",
     "prebuild": "yarn lint",
     "build": "tsc",
