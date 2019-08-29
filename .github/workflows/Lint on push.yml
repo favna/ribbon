@@ -1,0 +1,26 @@
+name: Lint on push
+
+on: [push]
+
+jobs:
+  lint:
+    strategy:
+      matrix:
+        node: [ '10', '11', '12' ]
+        os: [ubuntu-latest, macOS-latest]
+
+    name: lint on ${{ matrix.node }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Setup Node ${{ matrix.node }}
+      uses: actions/setup-node@v1.1.2
+      with:
+        node-version: ${{ matrix.node }}
+    - name: linting
+      uses: stefanoeb/eslint-action@master
+      with:
+        args: src --ext ts
+      env:
+        CI: true

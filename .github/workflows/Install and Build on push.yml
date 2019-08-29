@@ -1,0 +1,26 @@
+name: Build on push
+
+on: [push]
+
+jobs:
+  installAndBuild:
+    strategy:
+      matrix:
+        node: [ '10', '11', '12' ]
+        os: [ubuntu-latest, macOS-latest]
+
+    name: install and build on ${{ matrix.node }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Setup Node ${{ matrix.node }}
+      uses: actions/setup-node@v1.1.2
+      with:
+        node-version: ${{ matrix.node }}
+    - name: install and build
+      uses: comchangs/action-yarn@master
+      with:
+        args: yarn install; yarn build
+      env:
+        CI: true
