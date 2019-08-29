@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         node: [ '10', '11', '12' ]
-        os: [ubuntu-latest]
+        os: [ ubuntu-latest, windows-latest, macOS-latest ]
 
     name: install and build on Node v${{ matrix.node }} - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -18,9 +18,9 @@ jobs:
       uses: actions/setup-node@v1.1.2
       with:
         node-version: ${{ matrix.node }}
-    - name: install and build
-      uses: comchangs/action-yarn@master
-      with:
-        args: yarn install; yarn ci:build
+    - name: Install and Build
+      run: |
+        yarn
+        yarn ci:build
       env:
         CI: true

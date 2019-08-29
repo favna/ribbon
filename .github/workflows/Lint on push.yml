@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         node: [ '10', '11', '12' ]
-        os: [ubuntu-latest]
+        os: [ ubuntu-latest, windows-latest, macOS-latest ]
 
     name: lint on Node v${{ matrix.node }} - ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
@@ -18,9 +18,9 @@ jobs:
       uses: actions/setup-node@v1.1.2
       with:
         node-version: ${{ matrix.node }}
-    - name: linting
-      uses: stefanoeb/eslint-action@master
-      with:
-        args: src --ext ts
+    - name: Linting
+      run: |
+        yarn
+        yarn lint
       env:
         CI: true
