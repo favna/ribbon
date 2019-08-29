@@ -1,20 +1,19 @@
 name: Build
 
-on:
-  push:
-    paths:
-      - 'src/**/*'
-      - 'package.json'
-      - 'yarn.lock'
-      - 'tsconfig.json'
-  pull_request:
-    paths:
-      - 'src/**/*'
-      - 'package.json'
-      - 'yarn.lock'
-      - 'tsconfig.json'
-  schedule:
-    - cron:  '0 2 * * *'
+on: [push, pull_request]
+
+push:
+  paths:
+    - 'src/**/*'
+    - 'package.json'
+    - 'yarn.lock'
+    - 'tsconfig.json'
+pull_request:
+  paths:
+    - 'src/**/*'
+    - 'package.json'
+    - 'yarn.lock'
+    - 'tsconfig.json'
 
 jobs:
   installAndBuild:
@@ -33,7 +32,7 @@ jobs:
       with:
         node-version: ${{ matrix.node }}
     - name: Setup windows-build-tools
-      if: ${{ maxtrix.os }} == windows-latest
+      if: contains( ${{ maxtrix.os }}, 'windows')
       run: |
         npm i -g windows-build-tools
     - name: Install and Build
