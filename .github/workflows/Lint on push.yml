@@ -1,6 +1,18 @@
-name: Lint on push
+name: ESLint
 
-on: [push]
+on:
+push:
+  paths:
+    - 'src/*'
+    - 'package.json'
+    - 'yarn.lock'
+    - 'tsconfig.json'
+pull_request:
+  paths:
+    - 'src/*'
+    - 'package.json'
+    - 'yarn.lock'
+    - 'tsconfig.json'
 
 jobs:
   lint:
