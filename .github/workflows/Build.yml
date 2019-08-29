@@ -19,7 +19,7 @@ jobs:
       with:
         node-version: ${{ matrix.node }}
     - name: Setup windows-build-tools
-      if: contains( ${{ maxtrix.os }}, 'windows')
+      if: contains( ${{ matrix.os }}, 'windows')
       run: |
         npm i -g windows-build-tools
     - name: Install and Build
