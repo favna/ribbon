@@ -8,6 +8,7 @@ import 'reflect-metadata';
 import createDatabaseConnection from './components/Typeorm/DbConfig';
 import { prod } from './components/Utils';
 import Ribbon from './Ribbon';
+import 'array-flat-polyfill';
 
 // Configure dotenv
 config({
