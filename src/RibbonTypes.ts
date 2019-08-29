@@ -1,6 +1,6 @@
 import { GoogleSource } from '@components/Constants';
 import { Song } from '@components/Utils';
-import { Snowflake, TextChannel, VoiceChannel, VoiceConnection, Role } from 'discord.js';
+import { Role, Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'discord.js';
 import { Command, KlasaUser } from 'klasa';
 
 export type StringOrNumber = string | number;

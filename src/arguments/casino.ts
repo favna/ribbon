@@ -1,7 +1,7 @@
 import { roundNumber } from '@components/Utils';
 import { Argument, KlasaMessage, Possible } from 'klasa';
-import { isNumber } from 'util';
 import { GuildSettings } from 'RibbonTypes';
+import { isNumber } from 'util';
 
 export default class CasinoArgument extends Argument {
   run(arg: string, possible: Possible, msg: KlasaMessage) {

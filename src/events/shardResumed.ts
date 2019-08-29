@@ -1,6 +1,6 @@
+import { stripIndents } from 'common-tags';
 import { Event } from 'klasa';
 import moment from 'moment';
-import { stripIndents } from 'common-tags';
 
 export default class ShardResumedEvent extends Event {
   run(shard: number, replayedEvents: number) {

@@ -1,6 +1,6 @@
-import { Argument, util, KlasaGuild, Possible, KlasaMessage, KlasaUser } from 'klasa';
-import { isString } from 'util';
 import { GuildMember } from 'discord.js';
+import { Argument, KlasaGuild, KlasaMessage, KlasaUser, Possible, util } from 'klasa';
+import { isString } from 'util';
 
 const USER_REGEXP = Argument.regex.userOrMember;
 

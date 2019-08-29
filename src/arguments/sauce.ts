@@ -1,4 +1,4 @@
-import { Argument, Possible, KlasaMessage } from 'klasa';
+import { Argument, KlasaMessage, Possible } from 'klasa';
 
 export default class SauceArgument extends Argument {
   run(arg: string, possible: Possible, msg: KlasaMessage) {

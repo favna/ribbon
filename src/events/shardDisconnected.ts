@@ -1,6 +1,6 @@
+import { stripIndents } from 'common-tags';
 import { Event } from 'klasa';
 import moment from 'moment';
-import { stripIndents } from 'common-tags';
 
 export default class ShardDisconnectedEvent extends Event {
   run(event: CloseEvent, shard: number) {

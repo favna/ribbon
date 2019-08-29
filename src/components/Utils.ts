@@ -1,10 +1,10 @@
 /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
-import { GuildMember, MessageEmbed, TextChannel, Util, Channel, Constructor } from 'discord.js';
 import { oneLineTrim } from 'common-tags';
+import { Channel, Constructor, GuildMember, MessageEmbed, TextChannel, Util } from 'discord.js';
 import emojiRegex from 'emoji-regex';
+import { KlasaClient, KlasaGuild, KlasaMessage, Piece, PieceOptions, Store } from 'klasa';
 import { YoutubeVideoType } from '../RibbonTypes';
 import { diacriticsMap } from './Constants';
-import { KlasaClient, KlasaMessage, KlasaGuild, PieceOptions, Piece, Store } from 'klasa';
 
 /** Validation on whether this connection will be production or not */
 export const prod = process.env.NODE_ENV === 'production';

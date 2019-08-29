@@ -1,5 +1,5 @@
-import { Entity, Column, BaseEntity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { Snowflake } from 'discord.js';
+import { BaseEntity, Column, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { NonFunctionKeys } from 'utility-types';
 
 export type CasinoData = Pick<Casino, Exclude<NonFunctionKeys<Casino>, undefined>>;

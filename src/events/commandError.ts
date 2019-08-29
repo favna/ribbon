@@ -1,6 +1,6 @@
-import { Event, KlasaMessage, Command } from 'klasa';
 import { isTextChannel } from '@components/Utils';
 import { stripIndents } from 'common-tags';
+import { Command, Event, KlasaMessage } from 'klasa';
 import moment from 'moment';
 
 export default class CommandErrorEvent extends Event {

@@ -1,6 +1,6 @@
-import { Event } from 'klasa';
 import { isTextChannel } from '@components/Utils';
 import { stripIndents } from 'common-tags';
+import { Event } from 'klasa';
 import moment from 'moment';
 
 export default class ErrorEvent extends Event {

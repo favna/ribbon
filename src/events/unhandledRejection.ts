@@ -1,6 +1,6 @@
-import { Event, EventOptions } from 'klasa';
 import { ApplyOptions } from '@components/Utils';
 import { stripIndents } from 'common-tags';
+import { Event, EventOptions } from 'klasa';
 import moment from 'moment';
 
 @ApplyOptions<EventOptions>({emitter: process})

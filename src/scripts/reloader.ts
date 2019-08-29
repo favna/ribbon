@@ -1,12 +1,12 @@
-import { sync as globby } from 'glob';
-import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
-import { join, resolve } from 'path';
-import { stripIndent } from 'common-tags';
 import chalk from 'chalk';
+import { stripIndent } from 'common-tags';
 import { readFileSync as readFile, writeFileSync as writeFile } from 'fs';
-import { TranspileOutput, CompilerOptions, transpileModule } from 'typescript';
+import { sync as globby } from 'glob';
 import { readFileSync as readJson } from 'jsonfile';
+import { join, resolve } from 'path';
 import { minify as terser } from 'terser';
+import { CompilerOptions, transpileModule, TranspileOutput } from 'typescript';
+import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
 
 (async () => {
   type YargResult = {

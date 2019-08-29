@@ -1,7 +1,7 @@
-import { Monitor, MonitorOptions, KlasaMessage } from 'klasa';
+import { badwords, caps, duptext, emojis, invites, links, mentions } from '@components/AutomodHelper';
 import { ApplyOptions } from '@components/Utils';
+import { KlasaMessage, Monitor, MonitorOptions } from 'klasa';
 import { GuildSettings } from 'RibbonTypes';
-import { caps, duptext, emojis, badwords, invites, links, mentions } from '@components/AutomodHelper';
 
 @ApplyOptions<MonitorOptions>({
   name: 'automod',

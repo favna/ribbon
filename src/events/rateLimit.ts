@@ -1,5 +1,5 @@
-import { Event, Colors } from 'klasa';
 import { RateLimitData } from 'discord.js';
+import { Colors, Event } from 'klasa';
 
 const HEADER = new Colors({text: 'red'}).format('[RATELIMIT]');
 

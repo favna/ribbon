@@ -1,13 +1,13 @@
-import { ConnectionOptions, Connection, createConnection, getConnection } from 'typeorm';
-import Warning from './Entities/Warning';
+import path from 'path';
+import { Connection, ConnectionOptions, createConnection, getConnection } from 'typeorm';
+import { prod } from '../Utils';
 import Casino from './Entities/Casino';
 import CasinoTimeout from './Entities/CasinoTimeout';
 import Countdown from './Entities/Countdown';
 import Pasta from './Entities/Pasta';
 import Reminder from './Entities/Reminder';
 import Timer from './Entities/Timer';
-import path from 'path';
-import { prod } from '../Utils';
+import Warning from './Entities/Warning';
 
 /** The root path of the project to easily resolve the path to the database files */
 export const projectRoot = path.resolve(__dirname, '..', '..', '..');

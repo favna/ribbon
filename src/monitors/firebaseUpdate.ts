@@ -1,9 +1,9 @@
-import { Monitor, MonitorOptions, KlasaMessage } from 'klasa';
-import { ApplyOptions, isTextChannel } from '@components/Utils';
-import FirebaseStorage from '@components/FirebaseStorage';
 import { setMessagesData } from '@components/FirebaseActions';
-import moment from 'moment';
+import FirebaseStorage from '@components/FirebaseStorage';
+import { ApplyOptions, isTextChannel } from '@components/Utils';
 import { stripIndents } from 'common-tags';
+import { KlasaMessage, Monitor, MonitorOptions } from 'klasa';
+import moment from 'moment';
 
 @ApplyOptions<MonitorOptions>({
   name: 'firebaseUpdate',

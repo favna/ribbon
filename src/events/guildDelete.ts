@@ -1,10 +1,10 @@
-import { Event } from 'klasa';
-import { Guild } from 'discord.js';
-import moment from 'moment';
-import FirebaseStorage from '@components/FirebaseStorage';
 import { setServersData } from '@components/FirebaseActions';
+import FirebaseStorage from '@components/FirebaseStorage';
 import { isTextChannel } from '@components/Utils';
 import { stripIndents } from 'common-tags';
+import { Guild } from 'discord.js';
+import { Event } from 'klasa';
+import moment from 'moment';
 
 export default class GuildDeleteEvent extends Event {
   run(guild: Guild) {

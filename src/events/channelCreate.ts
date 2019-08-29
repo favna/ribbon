@@ -1,9 +1,9 @@
-import { Event } from 'klasa';
-import { Channel, TextChannel, GuildChannel } from 'discord.js';
-import { isTextChannel } from '@components/Utils';
-import FirebaseStorage from '@components/FirebaseStorage';
 import { setChannelsData } from '@components/FirebaseActions';
+import FirebaseStorage from '@components/FirebaseStorage';
+import { isTextChannel } from '@components/Utils';
 import { stripIndents } from 'common-tags';
+import { Channel, GuildChannel, TextChannel } from 'discord.js';
+import { Event } from 'klasa';
 import moment from 'moment';
 
 export default class ChannelCreateEvent extends Event {

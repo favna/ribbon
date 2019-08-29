@@ -1,6 +1,6 @@
+import { stripIndents } from 'common-tags';
 import { Event } from 'klasa';
 import moment from 'moment';
-import { stripIndents } from 'common-tags';
 
 export default class ShardErrorEvent extends Event {
   run(event: Error, shard: number) {

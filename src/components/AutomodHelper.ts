@@ -1,6 +1,6 @@
-import { KlasaClient, KlasaMessage } from 'klasa';
 import { Message } from 'discord.js';
 import levenshtein from 'fast-levenshtein';
+import { KlasaClient, KlasaMessage } from 'klasa';
 import moment from 'moment';
 import { countCaps, countEmojis, countMentions, isNumberBetween } from './Utils';
 

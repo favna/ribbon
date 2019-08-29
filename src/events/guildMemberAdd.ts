@@ -1,4 +1,6 @@
 import { ASSET_BASE_PATH } from '@components/Constants';
+import { setUsersData } from '@components/FirebaseActions';
+import FirebaseStorage from '@components/FirebaseStorage';
 import { isTextChannel, parseOrdinal } from '@components/Utils';
 import { stripIndents } from 'common-tags';
 import { GuildMember, MessageAttachment, MessageEmbed, TextChannel } from 'discord.js';
@@ -7,8 +9,6 @@ import { Event } from 'klasa';
 import moment from 'moment';
 import path from 'path';
 import { GuildSettings } from 'RibbonTypes';
-import FirebaseStorage from '@components/FirebaseStorage';
-import { setUsersData } from '@components/FirebaseActions';
 
 export default class GuildMemberAddEvent extends Event {
   async run(member: GuildMember) {

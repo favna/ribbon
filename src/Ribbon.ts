@@ -1,11 +1,6 @@
 /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
-import fs from 'fs-nextra';
 import { KlasaClient, KlasaClientOptions } from 'klasa';
 import moment from 'moment';
-import path from 'path';
-import { decache } from './components/Decache';
-import { getChannelsData, getCommandsData, getMessagesData, getServersData, getUsersData } from './components/FirebaseActions';
-import FirebaseStorage from './components/FirebaseStorage';
 import { prod } from './components/Utils';
 
 export default class Ribbon extends KlasaClient {

@@ -1,9 +1,9 @@
-import { Event, KlasaMessage, Command } from 'klasa';
-import FirebaseStorage from '@components/FirebaseStorage';
 import { setCommandsData } from '@components/FirebaseActions';
-import moment from 'moment';
+import FirebaseStorage from '@components/FirebaseStorage';
 import { isTextChannel } from '@components/Utils';
 import { stripIndents } from 'common-tags';
+import { Command, Event, KlasaMessage } from 'klasa';
+import moment from 'moment';
 
 export default class CommandRunEvent extends Event {
   run(msg: KlasaMessage, command: Command) {

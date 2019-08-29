@@ -1,11 +1,11 @@
-import Casino, { CasinoData } from './Entities/Casino';
 import connect from './DbConfig';
+import Casino, { CasinoData } from './Entities/Casino';
+import CasinoTimeout, { CasinoTimeoutData } from './Entities/CasinoTimeout';
+import Countdown, { CountdownData } from './Entities/Countdown';
 import Pasta, { PastaData } from './Entities/Pasta';
 import Reminder, { ReminderData } from './Entities/Reminder';
-import Countdown, { CountdownData } from './Entities/Countdown';
 import Timer, { TimerData } from './Entities/Timer';
 import Warning, { WarningData } from './Entities/Warning';
-import CasinoTimeout, { CasinoTimeoutData } from './Entities/CasinoTimeout';
 
 /** Fetches a single casino entry by userId and guildId */
 export const readCasino = async (userId: Casino['userId'], guildId: Casino['guildId']) => {

@@ -1,8 +1,5 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, EVERY_THIRD_HOUR } from '@components/Constants';
-import {
-  createCasinoTimeout, readAllCasinoForGuild, readAllCasinoGuildIds,
-  readCasinoTimeout, updateCasinoTimeout, writeCasino
-} from '@components/Typeorm/DbInteractions';
+import { createCasinoTimeout, readAllCasinoForGuild, readAllCasinoGuildIds, readCasinoTimeout, updateCasinoTimeout, writeCasino } from '@components/Typeorm/DbInteractions';
 import { ApplyOptions } from '@components/Utils';
 import { stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';

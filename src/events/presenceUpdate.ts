@@ -1,10 +1,10 @@
-import { Event } from 'klasa';
-import { GuildMember, MessageEmbed } from 'discord.js';
-import { GuildSettings } from 'RibbonTypes';
-import moment from 'moment';
-import { stripIndents } from 'common-tags';
 import { isTextChannel } from '@components/Utils';
 import stringify from '@favware/querystring';
+import { stripIndents } from 'common-tags';
+import { GuildMember, MessageEmbed } from 'discord.js';
+import { Event } from 'klasa';
+import moment from 'moment';
+import { GuildSettings } from 'RibbonTypes';
 
 export default class PresenceUpdateEvent extends Event {
   async run(oldMember: GuildMember, newMember: GuildMember) {
