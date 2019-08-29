@@ -4,9 +4,9 @@ aliases:
   - &checkout
     checkout
 
-# job_node_10: &job_node_10
-#   docker:
-#     - image: circleci/node:10
+job_node_10: &job_node_10
+  docker:
+    - image: circleci/node:10
 
 job_node_11: &job_node_11
   docker:
@@ -53,10 +53,10 @@ commands:
 
 # List of jobs
 jobs:
-  # node-v10:
-  #   <<: *job_node_10
-  #   steps:
-  #     - nodejs
+  node-v10:
+    <<: *job_node_10
+    steps:
+      - nodejs
   node-v11:
     <<: *job_node_11
     steps:
