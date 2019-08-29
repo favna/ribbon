@@ -20,7 +20,6 @@
     "prebuild": "yarn lint",
     "build": "tsc",
     "postbuild": "yarn copyfiles",
-    "build:quick": "tsc",
     "start": "cross-env NODE_ENV=development ts-node ./src/app.ts",
     "start:prod": "cross-env NODE_ENV=production ts-node ./src/app.ts",
     "start:js": "yarn build && cross-env NODE_ENV=development node ./dist/app.js",
@@ -37,7 +36,8 @@
     "up": "yarn upgrade-interactive --latest",
     "release:version": "standard-version",
     "release:push": "git push --follow-tags origin master",
-    "scripts:reload": "babel-node src/scripts/reloader --extensions \".ts\""
+    "scripts:reload": "babel-node src/scripts/reloader --extensions \".ts\"",
+    "ci:build": "tsc"
   },
   "keywords": [
     "bot",

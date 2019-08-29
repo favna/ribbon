@@ -21,6 +21,6 @@ jobs:
     - name: install and build
       uses: comchangs/action-yarn@master
       with:
-        args: yarn install; yarn build
+        args: yarn install; yarn ci:build
       env:
         CI: true
