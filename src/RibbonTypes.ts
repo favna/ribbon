@@ -1570,6 +1570,9 @@ export namespace GuildSettings {
   };
 
 
+  // Klasa Build-Ins
+  export const prefix = 'prefix';
+
   // Parent groups
   export const saydata = 'saydata';
   export const deleteCommand = 'deleteCommand';

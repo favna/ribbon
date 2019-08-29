@@ -37,7 +37,7 @@
     "up": "yarn upgrade-interactive --latest",
     "release:version": "standard-version",
     "release:push": "git push --follow-tags origin master",
-    "scripts:reload": "babel-node scripts/reloader --extensions \".ts\""
+    "scripts:reload": "babel-node src/scripts/reloader --extensions \".ts\""
   },
   "keywords": [
     "bot",

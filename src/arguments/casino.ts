@@ -1,12 +1,13 @@
 import { roundNumber } from '@components/Utils';
 import { Argument, KlasaMessage, Possible } from 'klasa';
 import { isNumber } from 'util';
+import { GuildSettings } from 'RibbonTypes';
 
 export default class CasinoArgument extends Argument {
   run(arg: string, possible: Possible, msg: KlasaMessage) {
     if (!msg.guild) throw new Error('This command can only be used inside a server.');
-    const lowerLimit = msg.guildSettings.get('casinoLowerLimit') || 1;
-    const upperLimit = msg.guildSettings.get('casinoUpperLimit') || 10000;
+    const lowerLimit = msg.guildSettings.get(GuildSettings.casinoLowerLimit) as GuildSettings.casino['lowerLimit'];
+    const upperLimit = msg.guildSettings.get(GuildSettings.casinoUpperLimit) as GuildSettings.casino['upperLimit'];
     const chips = roundNumber(parseInt(arg));
 
     if (chips >= lowerLimit && chips <= upperLimit) return chips;

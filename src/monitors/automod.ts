@@ -16,7 +16,7 @@ import { caps, duptext, emojis, badwords, invites, links, mentions } from '@comp
 })
 export default class MessageMonitor extends Monitor {
   async run(msg: KlasaMessage) {
-    if (msg.guild && msg.deletable && msg.guildSettings.get('automod.enabled')) {
+    if (msg.guild && msg.deletable && msg.guildSettings.get(GuildSettings.automodEnabled)) {
       if (
         msg.member &&
         msg.member.roles

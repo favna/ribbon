@@ -14,6 +14,7 @@ export const MAX_LENGTH = 10;
 export const MAX_SONGS = 3;
 export const PAGINATED_ITEMS = 5;
 export const DURA_FORMAT = '[in] Y[ year, ]M[ month, ]D[ day, ]H[ hour and ]m[ minute]';
+export const MOMENT_LOG_FORMAT = 'YYYY-MM-DD_HH:mm';
 
 // Cron strings
 export const EVERY_MINUTE = '*/1 * * * *';

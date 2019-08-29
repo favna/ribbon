@@ -22,7 +22,7 @@ import { minify as terser } from 'terser';
     exclude: string[];
   };
 
-  const srcDir = join(__dirname, '../src');
+  const srcDir = join(__dirname, '../');
   const commandDir = join(srcDir, 'commands');
   const ribbonCommands = globby(`${commandDir}/**/*.ts`).map(file => {
     const parts = file.split('/');

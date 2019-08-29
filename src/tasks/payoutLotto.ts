@@ -56,10 +56,10 @@ export default class PayoutLottoTask extends Task {
           if (!winnerMember) continue;
           const winnerLastMessageChannelId: string | null = winnerMember.lastMessageChannelID;
           const winnerLastMessageChannel = winnerLastMessageChannelId ?
-            this.client.guilds.get(guildId)!.channels.get(winnerLastMessageChannelId)! :
+            this.client.guilds.get(guildId)!.channels.get(winnerLastMessageChannelId)! as TextChannel :
             null;
           const winnerLastMessageChannelPermitted: boolean = winnerLastMessageChannel ?
-            winnerLastMessageChannel.permissionsFor(this.client.user!)!.has('SEND_MESSAGES') :
+            winnerLastMessageChannel.postable :
             false;
 
           winnerEmbed
@@ -70,7 +70,7 @@ export default class PayoutLottoTask extends Task {
             .addField('Balance', `${previousBalance} ➡ ${newBalance}`);
 
           if (winnerLastMessageChannelPermitted && winnerLastMessageChannel) {
-            (winnerLastMessageChannel as TextChannel).send(`<@${casinoGuildEntries[winner].userId}>`, { embed: winnerEmbed });
+            winnerLastMessageChannel.send(`<@${casinoGuildEntries[winner].userId}>`, { embed: winnerEmbed });
           } else if (defaultChannel) {
             defaultChannel.send(`<@${casinoGuildEntries[winner].userId}>`, { embed: winnerEmbed });
           }
