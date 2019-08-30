@@ -1,4 +1,4 @@
-import { CurrencyUnits } from 'RibbonTypes';
+import { CurrencyUnits } from '../RibbonTypes';
 import { currencySymbolMap } from './Constants';
 
 export const currencyMap = (code: string): string | null => {

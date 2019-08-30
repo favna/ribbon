@@ -7,10 +7,10 @@ import path from 'path';
 
 export default class AEvent extends Event {
   async run() {
-    fs.watch(path.join(__dirname, 'data/dex/formats.json'),
+    fs.watch(path.join(__dirname, '../', 'data/dex/formats.json'),
       (eventType, filename) => {
         if (filename) {
-          decache(path.join(__dirname, 'data/dex/formats.json'));
+          decache(path.join(__dirname, '../', 'data/dex/formats.json'));
           this.client.commands.get('dex').reload();
         }
       }

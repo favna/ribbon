@@ -1,5 +1,5 @@
 /* eslint-disable max-len, object-curly-newline */
-import { abilityAlias, PokedexAlias, itemAlias, moveAlias, tierAlias } from 'RibbonTypes';
+import { abilityAlias, PokedexAlias, itemAlias, moveAlias, tierAlias } from '../../RibbonTypes';
 
 export const tierAliases: tierAlias[] = [
   { alias: 'randbats', tier: 'randombattle' },
