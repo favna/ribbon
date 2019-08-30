@@ -24,4 +24,5 @@ To get ready to work on the codebase, please do the following:
 2. Run `yarn install`
 3. Code your heart out!
 4. Run `yarn run lint` to run ESLint and ensure your code abides by the coding style
-5. [Submit a pull request](https://github.com/favna/ribbon/compare)
+5. Run `yarn build` to ensure your code compiles
+6. [Submit a pull request](https://github.com/favna/ribbon/compare)
