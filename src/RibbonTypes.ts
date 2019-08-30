@@ -1,7 +1,7 @@
 import { GoogleSource } from '@components/Constants';
 import { Song } from '@components/Utils';
 import { Role, Snowflake, TextChannel, VoiceChannel, VoiceConnection } from 'discord.js';
-import { Command, KlasaUser } from 'klasa';
+import { Command, KlasaUser, ScheduledTaskJSON } from 'klasa';
 
 export type StringOrNumber = string | number;
 
@@ -1642,4 +1642,14 @@ export namespace GuildSettings {
   export const twitchChannel = 'twitch.channel';
   export const twitchEnabled = 'twitch.enabled';
   export const twitchUsers = 'twitch.users';
+}
+
+export namespace ClientSettings {
+  export type UserBlacklist = ReadonlyArray<string>;
+  export type GuildBlacklist = ReadonlyArray<string>;
+  export type Schedules = ReadonlyArray<ScheduledTaskJSON>;
+
+  export const UserBlacklist = 'userBlacklist';
+  export const GuildBlacklist = 'guildBlacklist';
+  export const Schedules = 'schedules';
 }

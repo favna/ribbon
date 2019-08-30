@@ -3,8 +3,9 @@ import { createCasinoTimeout, readAllCasinoForGuild, readAllCasinoGuildIds, read
 import { ApplyOptions } from '@components/Utils';
 import { stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
-import { Task, TaskOptions } from 'klasa';
+import { ScheduledTask, Task, TaskOptions } from 'klasa';
 import moment from 'moment';
+import { ClientSettings } from '../RibbonTypes';
 
 @ApplyOptions<TaskOptions>({ name: 'payoutLotto', enabled: true })
 export default class PayoutLottoTask extends Task {
@@ -88,7 +89,14 @@ export default class PayoutLottoTask extends Task {
 
   async init() {
     if (this.client.options.production) {
-      this.client.schedule.create('payoutLotto', EVERY_THIRD_HOUR, { catchUp: true });
+      this.ensureTask('payoutLotto', EVERY_THIRD_HOUR);
     }
+  }
+
+  private ensureTask(name: string, time: string): Promise<ScheduledTask> | void {
+    const schedules = this.client.settings!.get(ClientSettings.Schedules) as ClientSettings.Schedules;
+    if (!schedules.some(task => task.taskName === name)) return this.client.schedule.create(name, time, { catchUp: true });
+
+    return undefined;
   }
 }

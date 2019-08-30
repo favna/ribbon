@@ -7,7 +7,7 @@ import path from 'path';
 import 'reflect-metadata';
 import createDatabaseConnection from './components/Typeorm/DbConfig';
 import { prod } from './components/Utils';
-import Ribbon from './Ribbon';
+import createRibbonInstance from './Ribbon';
 import 'array-flat-polyfill';
 
 // Configure dotenv
@@ -120,6 +120,8 @@ KlasaClient.defaultGuildSchema
 
 // Start the bot
 (async () => {
-  await createDatabaseConnection();
-  await new Ribbon(process.env.NODE_ENV === 'development' ? process.env.TEST_TOKEN! : process.env.BOT_TOKEN!).init();
+  const token = process.env.NODE_ENV === 'development'
+    ? process.env.TEST_TOKEN!
+    : process.env.BOT_TOKEN!;
+  await Promise.all([ createDatabaseConnection(), createRibbonInstance(token) ]);
 })();

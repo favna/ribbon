@@ -3,8 +3,9 @@ import { deleteCountdown, readAllCountdowns, writeCountdown } from '@components/
 import { ApplyOptions } from '@components/Utils';
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
-import { Task, TaskOptions } from 'klasa';
+import { ScheduledTask, Task, TaskOptions } from 'klasa';
 import moment from 'moment';
+import { ClientSettings } from '../RibbonTypes';
 
 @ApplyOptions<TaskOptions>({ name: 'sendCountdownMessage', enabled: true })
 export default class SendCountdownMessageTask extends Task {
@@ -68,7 +69,14 @@ export default class SendCountdownMessageTask extends Task {
 
   async init() {
     if (this.client.options.production) {
-      this.client.schedule.create('sendCountdownMessage', EVERY_THREE_MINUTES, { catchUp: true });
+      this.ensureTask('sendCountdownMessage', EVERY_THREE_MINUTES);
     }
+  }
+
+  private ensureTask(name: string, time: string): Promise<ScheduledTask> | void {
+    const schedules = this.client.settings!.get(ClientSettings.Schedules) as ClientSettings.Schedules;
+    if (!schedules.some(task => task.taskName === name)) return this.client.schedule.create(name, time, { catchUp: true });
+
+    return undefined;
   }
 }

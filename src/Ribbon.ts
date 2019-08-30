@@ -3,10 +3,8 @@ import { KlasaClient, KlasaClientOptions } from 'klasa';
 import moment from 'moment';
 import { prod } from './components/Utils';
 
-export default class Ribbon extends KlasaClient {
-  public token: string;
-
-  public constructor(token: string, options?: KlasaClientOptions) {
+export class Ribbon extends KlasaClient {
+  public constructor(options?: KlasaClientOptions) {
     super({
       ...options,
       commandEditing: true,
@@ -44,19 +42,8 @@ export default class Ribbon extends KlasaClient {
       messageCacheLifetime: 10 * 60,
       messageSweepInterval: 5 * 60,
     });
-    this.token = token;
-  }
-
-  public async init() {
-    // .on('commandUnknown', (msg: KlasaMessage, cmd: Command, prefix: RegExp, prefixLength: number): void => handleUnknownCommand(msg,cmd,prefix,prefixLength))
-    // .on('channelCreate', (channel: DMChannel | GuildChannel): void => handleChannelCreate(this.client, channel))
-    // .on('channelDelete', (channel: DMChannel | GuildChannel): void => handleChannelDelete(this.client, channel))
-    // .on('guildCreate', async (guild: KlasaGuild) => handleGuildJoin(this.client, guild))
-    // .on('guildDelete', (guild: KlasaGuild) => handleGuildLeave(this.client, guild))
-    // .on('guildMemberAdd', (member: GuildMember) => handleMemberJoin(this.client, member))
-    // .on('guildMemberRemove', (member: GuildMember) => handleMemberLeave(this.client, member))
-    // .on('presenceUpdate', async (oldMember: GuildMember, newMember: GuildMember) => handlePresenceUpdate(this.client, oldMember, newMember))
-
-    return this.login(this.token);
   }
 }
+
+export const ribbon = (token: string, options?: KlasaClientOptions) => new Ribbon(options).login(token);
+export default ribbon;
