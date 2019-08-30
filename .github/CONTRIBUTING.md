@@ -13,7 +13,7 @@ To get ready to work on the codebase, please do the following:
    - On Windows this can best be done by opening an administrative powershell and running `npm i -g windows-build-tools`
    - On MacOS this can best be done through `xcode-select --install`
    - On Debian / Ubuntu this can be done through `sudo apt install -y build-essential`
-   - On Fedora / CentOS / REHL this can be be done through `yum groupinstall 'Development Tools' -y`
+   - On Fedora / CentOS / RHEL this can be be done through `yum groupinstall 'Development Tools' -y`
 1. Fork & clone the repository, and make sure you're on the **master** branch
    - If you forked in the past:
      - Add the upstream repository: `git remote add upstream https://github.com/favna/ribbon`
