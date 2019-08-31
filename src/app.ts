@@ -10,6 +10,12 @@ import { prod } from './components/Utils';
 import createRibbonInstance from './Ribbon';
 import 'array-flat-polyfill';
 
+// Add module aliases
+moduleAlias.addAlias('@root', `${__dirname}`);
+moduleAlias.addAlias('@components', `${__dirname}/components`);
+moduleAlias.addAlias('@pokedex', `${__dirname}/data/dex`);
+moduleAlias.addAlias('@databases', `${__dirname}/data/databases`);
+
 // Configure dotenv
 config({
   path: path.join(__dirname, '.env'),
@@ -26,11 +32,6 @@ fireadmin.initializeApp({
   }),
   databaseURL: `https://${prod ? process.env.FIREBASE_PROJECT : process.env.DEV_FIREBASE_PROJECT}.firebaseio.com`,
 });
-
-// Add module aliases
-moduleAlias.addAlias('@components', `${__dirname}/components`);
-moduleAlias.addAlias('@pokedex', `${__dirname}/data/dex`);
-moduleAlias.addAlias('@databases', `${__dirname}/data/databases`);
 
 // Setup Klasa settings schema
 KlasaClient.defaultGuildSchema
