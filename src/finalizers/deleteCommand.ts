@@ -1,5 +1,5 @@
 import { Finalizer, KlasaMessage } from 'klasa';
-import { GuildSettings } from '../RibbonTypes';
+import { GuildSettings } from '@root/RibbonTypes';
 
 export default class DeleteCommandFinalizer extends Finalizer {
   async run(msg: KlasaMessage) {

@@ -1,5 +1,5 @@
 /* eslint-disable max-len, object-curly-newline */
-import { Pokedex } from '../../RibbonTypes';
+import { Pokedex } from '@root/RibbonTypes';
 
 const pokedex: Pokedex[] = [
   {

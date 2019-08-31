@@ -5,7 +5,7 @@ import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
 import { ScheduledTask, Task, TaskOptions } from 'klasa';
 import moment from 'moment';
-import { ClientSettings } from '../RibbonTypes';
+import { ClientSettings } from '@root/RibbonTypes';
 
 @ApplyOptions<TaskOptions>({ name: 'sendCountdownMessage', enabled: true })
 export default class SendCountdownMessageTask extends Task {

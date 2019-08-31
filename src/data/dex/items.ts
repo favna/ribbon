@@ -1,5 +1,5 @@
 /* eslint-disable max-len, object-curly-newline */
-import { PokemonItem } from '../../RibbonTypes';
+import { PokemonItem } from '@root/RibbonTypes';
 
 const pokemonItem: PokemonItem[] = [
   {

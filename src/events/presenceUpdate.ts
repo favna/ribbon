@@ -4,7 +4,7 @@ import { stripIndents } from 'common-tags';
 import { GuildMember, MessageEmbed } from 'discord.js';
 import { Event } from 'klasa';
 import moment from 'moment';
-import { GuildSettings } from '../RibbonTypes';
+import { GuildSettings } from '@root/RibbonTypes';
 
 export default class PresenceUpdateEvent extends Event {
   async run(oldMember: GuildMember, newMember: GuildMember) {

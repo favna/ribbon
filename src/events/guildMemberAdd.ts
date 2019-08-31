@@ -8,7 +8,7 @@ import jimp from 'jimp';
 import { Event } from 'klasa';
 import moment from 'moment';
 import path from 'path';
-import { GuildSettings } from '../RibbonTypes';
+import { GuildSettings } from '@root/RibbonTypes';
 
 export default class GuildMemberAddEvent extends Event {
   async run(member: GuildMember) {

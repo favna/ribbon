@@ -20,11 +20,12 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "incremental": true,
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
-      "@components/*": ["components/*"],
-      "@databases/*": ["data/databases/*"],
-      "@pokedex/*": ["data/dex/*"]
+      "@root/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@databases/*": ["src/data/databases/*"],
+      "@pokedex/*": ["src/data/dex/*"]
     },
     "typeRoots": ["typings","./node_modules/@types"]
   },

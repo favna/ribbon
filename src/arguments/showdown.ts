@@ -6,7 +6,7 @@ import Fuse, { FuseOptions } from 'fuse.js';
 import { Argument, ArgumentOptions } from 'klasa';
 import fetch from 'node-fetch';
 import { table } from 'table';
-import { tierAlias } from '../RibbonTypes';
+import { tierAlias } from '@root/RibbonTypes';
 
 type Fuser = {
   hasMatch: boolean;

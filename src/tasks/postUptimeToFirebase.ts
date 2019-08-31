@@ -4,7 +4,7 @@ import { ApplyOptions, isTextChannel } from '@components/Utils';
 import { stripIndents } from 'common-tags';
 import { ScheduledTask, Task, TaskOptions } from 'klasa';
 import moment from 'moment';
-import { ClientSettings } from '../RibbonTypes';
+import { ClientSettings } from '@root/RibbonTypes';
 
 @ApplyOptions<TaskOptions>({ name: 'postUptimeToFirebase', enabled: true })
 export default class PostUptimeToFirebaseTask extends Task {

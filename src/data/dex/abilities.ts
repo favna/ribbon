@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { PokemonAbility } from '../../RibbonTypes';
+import { PokemonAbility } from '@root/RibbonTypes';
 
 const ABILITIES: PokemonAbility[] = [
   {
