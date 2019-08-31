@@ -7,6 +7,9 @@
   },
   "rules": {
     "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-unnecessary-type-assertion": "off",
+
+    // TODO: Remove Once Done:
     "new-cap": [
       "error",
       {
