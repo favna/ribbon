@@ -1,5 +1,5 @@
 /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
-import { KlasaClient, KlasaClientOptions } from 'klasa';
+import { KlasaClient, KlasaClientOptions, PermissionLevels } from 'klasa';
 import moment from 'moment';
 import { prod } from './components/Utils';
 
@@ -20,8 +20,19 @@ export class Ribbon extends KlasaClient {
       },
       noPrefixDM: true,
       prefix: '.',
-      readyMessage: client => `Client ready at ${moment().format('HH:mm:ss')}. Logged in as ${client.user!.tag} (${client.user!.id})`,
       typing: true,
+      permissionLevels: new PermissionLevels()
+        .add(0, () => true)
+        .add(1, ({ guild, member }) => guild! && member!.permissions.has('MANAGE_NICKNAMES'), { fetch: true })
+        .add(2, ({ guild, member }) => guild! && member!.permissions.has('MANAGE_MESSAGES'), { fetch: true })
+        .add(3, ({ guild, member }) => guild! && member!.permissions.has('MANAGE_ROLES'), { fetch: true })
+        .add(4, ({ guild, member }) => guild! && member!.permissions.has('KICK_MEMBERS'), { fetch: true })
+        .add(5, ({ guild, member }) => guild! && member!.permissions.has('BAN_MEMBERS'), { fetch: true })
+        .add(6, ({ guild, member }) => guild! && member!.permissions.has('MANAGE_GUILD'), { fetch: true })
+        .add(7, ({ guild, member }) => guild! && member!.permissions.has('ADMINISTRATOR'), { fetch: true })
+        .add(8, ({ guild, member }) => guild! && member === guild!.owner, { fetch: true })
+        .add(9, ({ author, client }) => client.owners.has(author!), { break: true })
+        .add(10, ({ author, client }) => client.owners.has(author!)),
       providers: { default: 'firestore' },
       presence: {
         status: 'online',
@@ -30,6 +41,7 @@ export class Ribbon extends KlasaClient {
           type: 'WATCHING',
         },
       },
+      readyMessage: client => `Client ready at ${moment().format('HH:mm:ss')}. Logged in as ${client.user!.tag} (${client.user!.id})`,
       disabledEvents: [
         'CHANNEL_PINS_UPDATE', 'CHANNEL_UPDATE', 'GUILD_BAN_ADD',
         'GUILD_BAN_REMOVE', 'GUILD_EMOJIS_UPDATE', 'GUILD_INTEGRATIONS_UPDATE',
