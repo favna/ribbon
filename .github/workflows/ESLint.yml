@@ -9,7 +9,7 @@ jobs:
         node: [ '12' ]
         os: [ macOS-latest ]
 
-    name: lint on Node v${{ matrix.node }} - ${{ matrix.os }}
+    name: linting
     runs-on: ${{ matrix.os }}
 
     steps:

@@ -9,7 +9,7 @@ jobs:
         node: [ '12' ]
         os: [ ubuntu-latest ]
 
-    name: install and build on Node v${{ matrix.node }} - ${{ matrix.os }}
+    name: install and build
     runs-on: ${{ matrix.os }}
 
     steps:
