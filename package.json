@@ -26,7 +26,7 @@
     "serve": "pm2 start pm2.ecosystem.yml --env production",
     "serve:dev": "pm2 start pm2.ecosystem.yml",
     "rebuild": "yarn reload",
-    "copyfiles": "run-s copyfiles:**",
+    "copyfiles": "run-p copyfiles:**",
     "copyfiles:fonts": "copyfiles -u 1 ./src/data/fonts/* ./dist",
     "copyfiles:databases": "copyfiles -u 1 ./src/data/*.sqlite ./dist",
     "copyfiles:env": "copyfiles -u 1 ./src/.env ./dist",
@@ -86,6 +86,7 @@
     "sqlite": "^3.0.3",
     "sqlite3": "^4.1.0",
     "table": "^5.4.6",
+    "tslib": "^1.10.0",
     "turndown": "^5.0.3",
     "typeorm": "^0.2.18",
     "zlib-sync": "^0.1.5"
@@ -130,7 +131,6 @@
     "standard-version": "^7.0.0",
     "terser": "^4.2.1",
     "ts-node": "^8.3.0",
-    "tslib": "^1.10.0",
     "typescript": "~3.5.3",
     "utility-types": "^3.7.0",
     "yargs-interactive": "^3.0.0"
