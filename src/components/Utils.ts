@@ -1,9 +1,9 @@
 /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 import { oneLineTrim } from 'common-tags';
-import { Channel, Constructor, GuildMember, MessageEmbed, TextChannel, Util } from 'discord.js';
+import { Channel, Constructor, GuildMember, MessageEmbed, TextChannel, Util, BitFieldResolvable, PermissionString } from 'discord.js';
 import emojiRegex from 'emoji-regex';
-import { KlasaClient, KlasaGuild, KlasaMessage, Piece, PieceOptions, Store } from 'klasa';
-import { YoutubeVideoType } from '../RibbonTypes';
+import { KlasaMessage, Piece, PieceOptions, Store } from 'klasa';
+import { GuildSettings, YoutubeVideoType } from '../RibbonTypes';
 import { diacriticsMap } from './Constants';
 
 /** Validation on whether this connection will be production or not */
@@ -75,29 +75,19 @@ export const countMentions = (str: string) => {
   return counter;
 };
 
-/** Helper function to delete command messages */
-export const deleteCommandMessages = (msg: KlasaMessage, client: KlasaClient) => {
-  // if (msg.deletable && client.provider.get(msg.guild, 'deletecommandmessages', false)) msg.delete();
+/** Logs moderation commands */
+export const logModMessage = async (msg: KlasaMessage, embed: MessageEmbed) => {
+  if (msg.guildSettings.get(GuildSettings.loggingModlogsEnabled)) {
+    let modLogChannel = msg.guildSettings.get(GuildSettings.loggingModlogsChannel) as GuildSettings.loggingModlogs['channel'] | null;
+    if (!modLogChannel) modLogChannel = msg.guild!.channels.find(channel => channel.name === 'mod-logs' || channel.name === 'modlogs') as TextChannel | null;
+
+    if (modLogChannel) {
+      modLogChannel.send('', embed);
+    }
+  }
 };
 
-/** Helper function to log moderation commands */
-export const logModMessage = async (
-  msg: KlasaMessage, guild: KlasaGuild, outChannelID: string, outChannel: TextChannel, embed: MessageEmbed
-) => {
-  // if (!guild.settings.get('hasSentModLogMessage', false)) {
-  //   msg.reply(oneLine`
-  //           📃 I can keep a log of moderator actions if you create a channel named \'mod-logs\'
-  //           (or some other name configured by the ${guild.commandPrefix}setmodlogs command) and give me access to it.
-  //           This message will only show up this one time and never again after this so if you desire to set up mod logs make sure to do so now.`);
-  //   guild.settings.set('hasSentModLogMessage', true);
-  // }
-
-  // return outChannelID && guild.settings.get('modlogs', false)
-  //   ? outChannel.send('', { embed })
-  //   : null;
-};
-
-/** Helper function to validate if number (num) is between lower and upper boundaries */
+/** Validates if number (num) is between lower and upper boundaries */
 export const isNumberBetween = (num: number, lower: number, upper: number, inclusive: boolean) => {
   const max = Math.max(lower, upper);
   const min = Math.min(lower, upper);
@@ -105,7 +95,7 @@ export const isNumberBetween = (num: number, lower: number, upper: number, inclu
   return inclusive ? num >= min && num <= max : num > min && num < max;
 };
 
-/** Helper function to create the ordinal version of any number */
+/** Creates the ordinal version of any number */
 export const parseOrdinal = (num: number) => {
   const cent = num % 100;
   const dec = num % 10;
@@ -126,7 +116,7 @@ export const parseOrdinal = (num: number) => {
   }
 };
 
-/** Helper function to remove any diacritics (such as é and ê) from a message */
+/** Remove any diacritics (such as é and ê) from a string and replaces them with their non-diacritic counterparts */
 export const removeDiacritics = (input: string) => {
   let sentence = input;
   for (const diacritic of diacriticsMap) {
@@ -136,7 +126,7 @@ export const removeDiacritics = (input: string) => {
   return sentence;
 };
 
-/** Helper function to properly round up or down a number */
+/** Properly rounds up or down a number */
 export const roundNumber = (num: number, scale = 0) => {
   if (!num.toString().includes('e')) {
     return Number(`${Math.round(Number(`${num}e+${scale}`))}e-${scale}`);
@@ -164,48 +154,22 @@ export function ApplyOptions<T extends PieceOptions>(options: T): Function {
   });
 }
 
-/** Decorator function that checks if the bot client has the permissions to manage messages */
-// export const clientHasManageMessages = () => {
-//   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
-//     const fn: (...args: unknown[]) => unknown = descriptor.value;
+export const clientHasPermission = (permission: BitFieldResolvable<PermissionString>): MethodDecorator => {
+  return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+    const fn: (...args: unknown[]) => unknown = descriptor.value;
 
-//     descriptor.value = async function value(msg: KlasaMessage, args: { hasManageMessages: boolean }, fromPattern: boolean) {
-//       const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has('MANAGE_MESSAGES');
-//       args.hasManageMessages = clientHasPermission;
+    descriptor.value = async function value(msg: KlasaMessage, ...params: unknown[][]) {
+      let hasPermission: boolean;
 
-//       return fn.apply(this, [ msg, args, fromPattern ]);
-//     };
-//   };
-// };
+      if (!msg.guild || !msg.guild.me) hasPermission = false;
+      else hasPermission = msg.guild.me.permissions.has(permission);
 
-/** Decorator function that checks if the user and the client have the required permissions */
-// export const shouldHavePermission = (permission: PermissionString, shouldClientHavePermission = false): MethodDecorator => {
-//   return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
-// const fn: (...args: unknown[]) => unknown = descriptor.value;
+      params[0].push(hasPermission);
 
-// descriptor.value = async function value(msg: KlasaMessage, args: object, fromPattern: boolean) {
-//   const authorIsOwner = msg.client.isOwner(msg.author);
-//   const memberHasPermission = msg.member!.hasPermission(permission);
-
-//   if (!memberHasPermission && !authorIsOwner) {
-//     return msg.command.onBlock(msg, 'permission',
-//       { response: `You need the "${CommandoUtil.permissions[permission]}" permission to use the ${msg.command.name} command`});
-//   }
-
-//   if (shouldClientHavePermission) {
-//     const clientHasPermission = (msg.channel as TextChannel).permissionsFor(msg.client.user)!.has(permission);
-
-//     if (!clientHasPermission) {
-//       return msg.command.onBlock(msg, 'clientPermissions', { missing: [ permission ] });
-//     }
-//   }
-
-//   return fn.apply(this, [ msg, args, fromPattern ]);
-// };
-
-//     return descriptor;
-//   };
-// };
+      return fn.apply(this, [ msg, ...params ]);
+    };
+  };
+};
 
 /** Song class used in music commands to track the song data */
 export class Song {
