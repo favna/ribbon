@@ -23,15 +23,13 @@ import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
   };
 
   const srcDir = join(__dirname, '../');
-  const commandDir = join(srcDir, 'commands');
-  const ribbonCommands = globby(`${commandDir}/**/*.ts`).map(file => {
+  const commandsDir = join(srcDir, 'commands');
+  const commands = globby(`${commandsDir}/**/*.ts`).map(file => {
     const parts = file.split('/');
-    const platform = process.platform.toLowerCase();
 
-    if (platform === 'linux' || platform === 'darwin') return parts[8].slice(0, -3);
-
-    return parts[6].slice(0, -3);
+    return parts[parts.length - 1].slice(0, -3);
   });
+
   const baseTSConfig = readJson(resolve(srcDir, '..', 'tsconfig.json')) as BaseTSConfig;
 
   const compile = (fileContent: string, options?: CompilerOptions): TranspileOutput => {
@@ -50,7 +48,7 @@ import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
         type: 'checkbox',
         describe: 'Which commands should be reloaded?',
         prompt: 'if-empty',
-        choices: ribbonCommands,
+        choices: commands,
       },
     };
 
@@ -69,7 +67,7 @@ import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
     if (!commandsResult.length) throw new Error('You didn\'t give any commands to reload');
 
     for (const result of commandsResult) {
-      const filePath = globby(`${commandDir}/**/${result}.ts`)[0];
+      const filePath = globby(`${commandsDir}/**/${result}.ts`)[0];
       const fileContent = readFile(filePath, { encoding: 'utf8' });
       const transpiledModule = compile(fileContent).outputText;
       const minfiedModule = terser(transpiledModule, { compress: true, ecma: 6, mangle: true }).code;
