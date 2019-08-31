@@ -65,8 +65,8 @@
      - Add the upstream repository: `git remote add upstream https://github.com/favna/ribbon`
      - Checkout master: `git checkout master`
      - Fetch all remotes: `git fetch --all`
-     - Pull upstream/master: `git pull upstream/master`
-     - Push master: `git push origin/master --force`
+     - Pull upstream/master: `git pull upstream master`
+     - Push master: `git push origin master --force`
 2. Run `yarn install`
 3. Code your heart out!
 5. Run `yarn build` to ensure your code compiles
