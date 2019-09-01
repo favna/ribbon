@@ -1,5 +1,5 @@
 import fireadmin from 'firebase-admin';
-import { Provider } from 'klasa';
+import { Provider, ScheduledTask } from 'klasa';
 
 export default class Firestore extends Provider {
   public db: FirebaseFirestore.Firestore | null = null;
@@ -37,11 +37,33 @@ export default class Firestore extends Provider {
   }
 
   create(table: string, id: string, doc: FirebaseFirestore.DocumentData = {}) {
-    return this.db!.collection(table).doc(id).set(this.parseUpdateInput(doc));
+    doc = this.parseUpdateInput(doc);
+
+    if ((doc as { schedules: ScheduledTask[]}).schedules && doc.schedules.every((schedule: unknown) => schedule instanceof ScheduledTask)) {
+      const [ data ] = (doc as { schedules: ScheduledTask[]}).schedules.map(schedule => schedule.toJSON());
+      doc = {
+        schedules: [
+          data
+        ],
+      };
+    }
+
+    return this.db!.collection(table).doc(id).set(doc);
   }
 
   update(table: string, id: string, doc: FirebaseFirestore.UpdateData) {
-    return this.db!.collection(table).doc(id).update(this.parseUpdateInput(doc));
+    doc = this.parseUpdateInput(doc);
+
+    if ((doc as { schedules: ScheduledTask[]}).schedules && doc.schedules.every((schedule: unknown) => schedule instanceof ScheduledTask)) {
+      const [ data ] = (doc as { schedules: ScheduledTask[]}).schedules.map(schedule => schedule.toJSON());
+      doc = {
+        schedules: [
+          data
+        ],
+      };
+    }
+
+    return this.db!.collection(table).doc(id).update(doc);
   }
 
   delete(table: string, id: string) {
