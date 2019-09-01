@@ -1,3 +1,5 @@
+import { RPoolConnectionOptions } from 'rethinkdb-ts';
+
 /* eslint-disable max-len, object-curly-newline  */
 
 // Maps
@@ -15,6 +17,16 @@ export const MAX_SONGS = 3;
 export const PAGINATED_ITEMS = 5;
 export const DURA_FORMAT = '[in] Y[ year, ]M[ month, ]D[ day, ]H[ hour and ]m[ minute]';
 export const MOMENT_LOG_FORMAT = 'YYYY-MM-DD_HH:mm';
+
+// Configs
+export const DATABASE_PRODUCTION: RPoolConnectionOptions = {
+  db: 'production',
+  port: 32769,
+};
+export const DATABASE_DEVELOPMENT: RPoolConnectionOptions = {
+  db: 'development',
+  port: 32769,
+};
 
 // Cron strings
 export const EVERY_MINUTE = '*/1 * * * *';

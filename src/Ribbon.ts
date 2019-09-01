@@ -2,6 +2,7 @@
 import { KlasaClient, KlasaClientOptions, PermissionLevels } from 'klasa';
 import moment from 'moment';
 import { prod } from './components/Utils';
+import { DATABASE_PRODUCTION, DATABASE_DEVELOPMENT } from './components/Constants';
 
 export class Ribbon extends KlasaClient {
   public constructor(options?: KlasaClientOptions) {
@@ -19,7 +20,7 @@ export class Ribbon extends KlasaClient {
         quotedStringSupport: true,
       },
       noPrefixDM: true,
-      prefix: '.',
+      prefix: prod ? '!' : '.',
       typing: true,
       permissionLevels: new PermissionLevels()
         .add(0, () => true)
@@ -33,7 +34,16 @@ export class Ribbon extends KlasaClient {
         .add(8, ({ guild, member }) => guild! && member === guild!.owner, { fetch: true })
         .add(9, ({ author, client }) => client.owners.has(author!), { break: true })
         .add(10, ({ author, client }) => client.owners.has(author!)),
-      providers: { default: 'firestore' },
+      pieceDefaults: {
+        commands: {
+          deletable: true,
+          quotedStringSupport: true,
+        },
+      },
+      providers: {
+        default: 'rethinkdb',
+        rethinkdb: prod ? DATABASE_PRODUCTION : DATABASE_DEVELOPMENT,
+      },
       presence: {
         status: 'online',
         activity: {
@@ -53,6 +63,7 @@ export class Ribbon extends KlasaClient {
       restTimeOffset: 800,
       messageCacheLifetime: 10 * 60,
       messageSweepInterval: 5 * 60,
+      schedule: { interval: 5000 },
     });
   }
 }

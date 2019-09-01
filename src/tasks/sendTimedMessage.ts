@@ -40,11 +40,13 @@ export default class SendTimerMessageTask extends Task {
     } catch (err) {
       const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!) as TextChannel;
 
-      channel.send(stripIndents`
-        ${this.client.options.owners.map(owner => `<@${owner}>`).join(' and ')}, an error occurred sending a timed message!
-        **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
-        **Error Message:** ${err}`
-      );
+      channel.send(stripIndents(
+        `
+          ${this.client.options.owners.map(owner => `<@${owner}>`).join(' and ')}, an error occurred sending a timed message!
+          **Time:** ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
+          **Error Message:** ${err}
+        `
+      ));
     }
   }
 
