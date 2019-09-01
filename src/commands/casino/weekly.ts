@@ -13,7 +13,7 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { readCasino, writeCasino } from '@components/Typeorm/DbInteractions';
+import { readCasino, writeCasino, updateCasinoWeekly } from '@components/Typeorm/DbInteractions';
 
 export default class WeeklyCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -51,10 +51,11 @@ export default class WeeklyCommand extends Command {
         if (weeklyDura.asDays() <= 0) {
           const newBalance = casino.balance + 2000;
 
-          await writeCasino({
+          await updateCasinoWeekly({
             userId: msg.author.id,
             guildId: msg.guild.id,
             balance: newBalance,
+            lastweekly: new Date(),
           });
 
           chipStr = `${prevBal} ➡ ${newBalance}`;

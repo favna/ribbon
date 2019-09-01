@@ -13,7 +13,7 @@ import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { readCasino, writeCasino } from '@components/Typeorm/DbInteractions';
+import { readCasino, writeCasino, updateCasinoDaily } from '@components/Typeorm/DbInteractions';
 
 export default class DailyCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -50,7 +50,7 @@ export default class DailyCommand extends Command {
         const newBalance = prevBal + 300;
 
         if (dailyDura.asHours() <= 0) {
-          await writeCasino({
+          await updateCasinoDaily({
             userId: msg.author.id,
             guildId: msg.guild.id,
             balance: newBalance,

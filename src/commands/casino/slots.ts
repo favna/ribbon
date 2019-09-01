@@ -10,13 +10,13 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { readCasino, updateCasino } from '@components/Typeorm/DbInteractions';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { SlotMachine, SlotSymbol } from 'slot-machine';
-import { readCasino, writeCasino } from '@components/Typeorm/DbInteractions';
 
 type SlotsArgs = {
   chips: 1 | 2 | 3;
@@ -124,7 +124,7 @@ export default class SlotsCommand extends Command {
 
         const newBalance = winningPoints ? casino.balance + winningPoints - chips : casino.balance - chips;
 
-        await writeCasino({
+        await updateCasino({
           userId: msg.author.id,
           guildId: msg.guild.id,
           balance: newBalance,

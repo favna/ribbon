@@ -10,12 +10,12 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { readCasino, updateCasino } from '@components/Typeorm/DbInteractions';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndent, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { readCasino, writeCasino } from '@components/Typeorm/DbInteractions';
 
 type WheelOfFortuneArgs = {
   chips: number;
@@ -67,7 +67,7 @@ export default class WheelOfFortuneCommand extends Command {
         const nextBalance = chips * multipliers[spin];
         const newBalance = roundNumber(casino.balance - chips + nextBalance);
 
-        await writeCasino({
+        await updateCasino({
           userId: msg.author.id,
           guildId: msg.guild.id,
           balance: newBalance,

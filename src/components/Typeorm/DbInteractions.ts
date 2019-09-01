@@ -57,7 +57,7 @@ export const readAllCasinoGuildIds = async () => {
     .getMany();
 };
 
-/** Writes a single casino entry */
+/** Writes a new single casino entry */
 export const writeCasino = async (data: CasinoData) => {
   const connection = await connect();
   const casinoRepo = connection.getRepository(Casino);
@@ -67,7 +67,7 @@ export const writeCasino = async (data: CasinoData) => {
   return casinoRepo.save(newCasino);
 };
 
-/** Writes multiple casino entries */
+/** Writes multiple new casino entries */
 export const writeCasinoMultiple = async (data: CasinoData[]) => {
   const connection = await connect();
   const casinoRepo = connection.getRepository(Casino);
@@ -75,6 +75,38 @@ export const writeCasinoMultiple = async (data: CasinoData[]) => {
   data.map(entry => new Casino(entry));
 
   return casinoRepo.save(data);
+};
+
+/** Updates the casino without time variable */
+export const updateCasino = async (data: Required<Pick<CasinoData, 'userId' | 'guildId' | 'balance'>>) => {
+  const connection = await connect();
+  const casinoRepo = connection.getRepository(Casino);
+
+  return casinoRepo.update({ userId: data.userId, guildId: data.guildId }, { balance: data.balance });
+};
+
+/** Updates the casino vault */
+export const updateCasinoVault = async (data: Required<Pick<CasinoData, 'userId' | 'guildId' | 'balance' | 'vault'>>) => {
+  const connection = await connect();
+  const casinoRepo = connection.getRepository(Casino);
+
+  return casinoRepo.update({ userId: data.userId, guildId: data.guildId }, { balance: data.balance, vault: data.vault });
+};
+
+/** Updates the casino for daily topups */
+export const updateCasinoDaily = async (data: Required<Pick<CasinoData, 'userId' | 'guildId' | 'balance' | 'lastdaily'>>) => {
+  const connection = await connect();
+  const casinoRepo = connection.getRepository(Casino);
+
+  return casinoRepo.update({ userId: data.userId, guildId: data.guildId }, { balance: data.balance, lastdaily: data.lastdaily });
+};
+
+/** Updates the casino for weekly topups */
+export const updateCasinoWeekly = async (data: Required<Pick<CasinoData, 'userId' | 'guildId' | 'balance' | 'lastweekly'>>) => {
+  const connection = await connect();
+  const casinoRepo = connection.getRepository(Casino);
+
+  return casinoRepo.update({ userId: data.userId, guildId: data.guildId }, { balance: data.balance, lastweekly: data.lastweekly });
 };
 
 /** Removes a casino entry by userId and guildId */
@@ -200,7 +232,7 @@ export const readAllCountdowns = async () => {
   return countdownRepo.find();
 };
 
-/** Writes a new or overwrites an existing countdown */
+/** Writes a new countdown */
 export const writeCountdown = async (data: CountdownData) => {
   const connection = await connect();
   const countdownRepo = connection.getRepository(Countdown);
@@ -208,6 +240,13 @@ export const writeCountdown = async (data: CountdownData) => {
   const newCountdown = new Countdown(data);
 
   return countdownRepo.save(newCountdown);
+};
+
+export const updateCountdown = async (data: Required<Pick<CountdownData, 'name' | 'guildId' | 'lastsend'>>) => {
+  const connection = await connect();
+  const countdownRepo = connection.getRepository(Countdown);
+
+  return countdownRepo.update({ name: data.name, guildId: data.guildId }, { lastsend: data.lastsend });
 };
 
 /** Removes a countdown by name and guildId */
@@ -242,7 +281,7 @@ export const readAllTimers = async () => {
   return timerRepo.find();
 };
 
-/** Writes a new or overwrites an existing timer */
+/** Writes a new timer */
 export const writeTimer = async (data: TimerData) => {
   const connection = await connect();
   const timerRepo = connection.getRepository(Timer);
@@ -250,6 +289,14 @@ export const writeTimer = async (data: TimerData) => {
   const newTimer = new Timer(data);
 
   return timerRepo.save(newTimer);
+};
+
+/** Updates an existing timer */
+export const updateTimer = async (data: Required<Pick<TimerData, 'name' | 'guildId' | 'lastsend'>>) => {
+  const connection = await connect();
+  const timerRepo = connection.getRepository(Timer);
+
+  return timerRepo.update({ name: data.name, guildId: data.guildId }, { lastsend: data.lastsend });
 };
 
 /** Removes a timer by name and guildId */

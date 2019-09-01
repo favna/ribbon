@@ -13,19 +13,18 @@ import { badwords, caps, duptext, emojis, invites, links, mentions, slowmode } f
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from './Constants';
 import { decache } from './Decache';
 import {
-  getChannelsData, getCommandsData, getMessagesData,
-  getServersData, getUsersData, setChannelsData,
-  setCommandsData, setMessagesData, setServersData,
-  setUptimeData, setUsersData
+  getChannelsData, getCommandsData, getMessagesData, getServersData,
+  getUsersData, setChannelsData, setCommandsData, setMessagesData,
+  setServersData, setUptimeData, setUsersData
 } from './FirebaseActions';
 import FirebaseStorage from './FirebaseStorage';
-import { parseOrdinal, prod } from './Utils';
 import {
-  readAllReminders, deleteReminder, readAllCountdowns,
-  writeCountdown, deleteCountdown, deleteCasino,
-  readCasinoTimeout, updateCasinoTimeout, readAllCasinoForGuild,
-  writeCasino, readAllTimers, writeTimer, readAllCasinoGuildIds, createCasinoTimeout
+  createCasinoTimeout, deleteCasino, deleteCountdown, deleteReminder,
+  readAllCasinoForGuild, readAllCasinoGuildIds, readAllCountdowns,
+  readAllReminders, readAllTimers, readCasinoTimeout, updateCasino,
+  updateCasinoTimeout, updateCountdown, updateTimer
 } from './Typeorm/DbInteractions';
+import { parseOrdinal, prod } from './Utils';
 
 const sendReminderMessages = async (client: CommandoClient) => {
   try {
@@ -93,9 +92,9 @@ const sendCountdownMessages = async (client: CommandoClient) => {
           );
 
         if (moment(countdown.datetime).diff(new Date(), 'hours') >= 24) {
-          await writeCountdown({
-            name: countdown.name,
-            guildId: countdown.guildId,
+          await updateCountdown({
+            name: countdown.name!,
+            guildId: countdown.guildId!,
             lastsend: new Date(),
           });
         }
@@ -246,8 +245,8 @@ const payoutLotto = async (client: CommandoClient) => {
         const previousBalance = casinoGuildEntries[winner].balance!;
         const newBalance = previousBalance + 2000;
 
-        await writeCasino({
-          userId: casinoGuildEntries[winner].userId,
+        await updateCasino({
+          userId: casinoGuildEntries[winner].userId!,
           guildId,
           balance: newBalance,
         });
@@ -305,9 +304,9 @@ const sendTimedMessages = async (client: CommandoClient) => {
       const dura = moment.duration(timerMoment.diff(moment()));
 
       if (dura.asMinutes() <= 0) {
-        await writeTimer({
-          name: timer.name,
-          guildId: timer.guildId,
+        await updateTimer({
+          name: timer.name!,
+          guildId: timer.guildId!,
           lastsend: new Date(),
         });
         const guild = client.guilds.get(timer.guildId!);

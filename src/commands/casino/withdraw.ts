@@ -10,12 +10,12 @@
  */
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
+import { readCasino, updateCasinoVault } from '@components/Typeorm/DbInteractions';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
-import { readCasino, writeCasino } from '@components/Typeorm/DbInteractions';
 
 type WithdrawArgs = {
   chips: number;
@@ -70,7 +70,7 @@ export default class WithdrawCommand extends Command {
         const newBalance = casino.balance + chips;
         const newVault = casino.balance - chips;
 
-        await writeCasino({
+        await updateCasinoVault({
           userId: msg.author.id,
           guildId: msg.guild.id,
           balance: newBalance,
