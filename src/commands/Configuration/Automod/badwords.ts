@@ -1,6 +1,6 @@
 import { ApplyOptions, logModMessage } from '@root/components/Utils';
 import { GuildSettings } from '@root/RibbonTypes';
-import { stripIndents, oneLine } from 'common-tags';
+import { stripIndents, oneLine, stripIndent } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
@@ -9,7 +9,14 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
   cooldown: 3,
   cooldownLevel: 'guild',
   description: 'Toggle the bad words filter',
-  extendedHelp: 'Please note that when adding new words to your server\'s filter you overwrite all your currently set words!',
+  extendedHelp: stripIndent`
+    Please note that when adding new words to your server\'s filter you overwrite all your currently set words!
+
+    = Argument Details =
+    shouldEnable  ::  Whether the filter should be enabled or not
+    words         ::  The words to assign as the "bad words".
+                      Defaults to "fuck"
+  `,
   permissionLevel: 2,
   runIn: [ 'text' ],
   usage: '<shouldEnable:boolean> [words:str] [...]',

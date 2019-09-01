@@ -1,14 +1,22 @@
 import { ApplyOptions, logModMessage } from '@root/components/Utils';
 import { GuildSettings } from '@root/RibbonTypes';
-import { stripIndents, oneLine } from 'common-tags';
+import { stripIndents, oneLine, stripIndent } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-  aliases: [ 'spammedcaps', 'manycaps', 'caps' ],
+  aliases: [ 'spammedcaps', 'manycaps', 'caps', 'ecf' ],
   cooldown: 3,
   cooldownLevel: 'guild',
   description: 'Toggle the excessive caps filter',
+  extendedHelp: stripIndent`
+    = Argument Details =
+    shouldEnable :: Whether the filter should be enabled or not
+    threshold    :: The percentile amount of a message that should be caps before it is deleted.
+                    Defaults to 60%
+    minLength    :: The minimum length for a message before it is checked for deletion.
+                    Defaults to 10
+  `,
   permissionLevel: 2,
   runIn: [ 'text' ],
   usage: '<shouldEnable:boolean> [threshold:int{1}] [minLength:int{1}]',
@@ -23,7 +31,7 @@ export default class ExcessiveCapsCommand extends Command {
 
     msg.guildSettings.set(GuildSettings.automodCaps, { enabled: shouldEnable, threshold, minLength });
 
-    const dtfEmbed = new MessageEmbed()
+    const ecEmbed = new MessageEmbed()
       .setColor('#439DFF')
       .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents(
@@ -37,8 +45,8 @@ export default class ExcessiveCapsCommand extends Command {
         `
       ));
 
-    logModMessage(msg, dtfEmbed);
+    logModMessage(msg, ecEmbed);
 
-    return msg.sendEmbed(dtfEmbed);
+    return msg.sendEmbed(ecEmbed);
   }
 }

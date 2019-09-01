@@ -1,14 +1,22 @@
 import { ApplyOptions, logModMessage } from '@root/components/Utils';
 import { GuildSettings } from '@root/RibbonTypes';
-import { stripIndents, oneLine } from 'common-tags';
+import { stripIndents, oneLine, stripIndent } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
-  aliases: [ 'emojifilter', 'spammedemojis', 'manyemojis', 'ef' ],
+  aliases: [ 'emojifilter', 'spammedemojis', 'manyemojis', 'eef', 'ef' ],
   cooldown: 3,
   cooldownLevel: 'guild',
   description: 'Toggle the excessive emojis filter',
+  extendedHelp: stripIndent`
+    = Argument Details =
+    shouldEnable  ::  Whether the filter should be enabled or not
+    threshold     ::  The percentile amount of a message that should be emojis before it is deleted
+                      Defaults to 5
+    minLength     ::  The minimum length for a message before it is checked for deletion
+                      Defaults to 10
+  `,
   permissionLevel: 2,
   runIn: [ 'text' ],
   usage: '<shouldEnable:boolean> [threshold:int{1}] [minLength:int{1}]',
@@ -17,13 +25,13 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
 export default class ExcessiveEmojisCommand extends Command {
   async run(msg: KlasaMessage, [ shouldEnable, threshold, minLength ]: [boolean, number, number]) {
     if (shouldEnable) {
-      if (!threshold) threshold = 60;
+      if (!threshold) threshold = 5;
       if (!minLength) minLength = 10;
     }
 
     msg.guildSettings.set(GuildSettings.automodCaps, { enabled: shouldEnable, threshold, minLength });
 
-    const dtfEmbed = new MessageEmbed()
+    const eeEmbed = new MessageEmbed()
       .setColor('#439DFF')
       .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents(
@@ -37,8 +45,8 @@ export default class ExcessiveEmojisCommand extends Command {
         `
       ));
 
-    logModMessage(msg, dtfEmbed);
+    logModMessage(msg, eeEmbed);
 
-    return msg.sendEmbed(dtfEmbed);
+    return msg.sendEmbed(eeEmbed);
   }
 }

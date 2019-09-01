@@ -1,6 +1,6 @@
 import { ApplyOptions, logModMessage } from '@root/components/Utils';
 import { GuildSettings } from '@root/RibbonTypes';
-import { stripIndents, oneLine } from 'common-tags';
+import { stripIndents, oneLine, stripIndent } from 'common-tags';
 import { MessageEmbed } from 'discord.js';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
@@ -9,14 +9,15 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
   cooldown: 3,
   cooldownLevel: 'guild',
   description: 'Toggle the bad words filter',
-  extendedHelp: stripIndents`
-    Please note that when adding new words to your server\'s filter you overwrite all your currently set words!
-
+  extendedHelp: stripIndent`
     = Argument Details =
-    shouldEnable :: Whether the filter should be enabled or not
-    within :: The amount of minutes during which should be checked for duplicate messages
-    equals :: How many similar mesasges any user can send before getting them deleted
-    distance :: The levenshtein distance of how similar messages can be
+    shouldEnable  ::  Whether the filter should be enabled or not
+    within        ::  The amount of minutes during which should be checked for duplicate messages
+                      Defaults to 3
+    equals        ::  How many similar mesasges any user can send before getting them deleted
+                      Defaults to 2
+    distance      ::  The levenshtein distance of how similar messages can be
+                      Defaults to 20
   `,
   permissionLevel: 2,
   runIn: [ 'text' ],
