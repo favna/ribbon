@@ -1,11 +1,11 @@
 import { ASSET_BASE_PATH, EVERY_THREE_MINUTES } from '@components/Constants';
 import { deleteReminder, readAllReminders } from '@components/Typeorm/DbInteractions';
 import { ApplyOptions } from '@components/Utils';
+import { ClientSettings } from '@root/RibbonTypes';
 import { stripIndents } from 'common-tags';
 import { TextChannel } from 'discord.js';
-import { ScheduledTask, Task, TaskOptions } from 'klasa';
+import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
-import { ClientSettings } from '@root/RibbonTypes';
 
 @ApplyOptions<TaskOptions>({ name: 'sendReminderMessage', enabled: true })
 export default class SendReminderMessageTask extends Task {
@@ -55,10 +55,8 @@ export default class SendReminderMessageTask extends Task {
     }
   }
 
-  private ensureTask(name: string, time: string): Promise<ScheduledTask> | void {
+  private ensureTask(name: string, time: string): void {
     const schedules = this.client.settings!.get(ClientSettings.Schedules) as ClientSettings.Schedules;
-    if (!schedules.some(task => task.taskName === name)) return this.client.schedule.create(name, time, { catchUp: true });
-
-    return undefined;
+    if (!schedules.some(task => task.taskName === name)) this.client.schedule.create(name, time, { catchUp: true });
   }
 }

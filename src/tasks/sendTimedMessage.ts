@@ -1,10 +1,10 @@
-import { EVERY_MINUTE } from '@components/Constants';
 import { readAllTimers, writeTimer } from '@components/Typeorm/DbInteractions';
 import { ApplyOptions } from '@components/Utils';
 import { stripIndents } from 'common-tags';
 import { MessageEmbed, TextChannel } from 'discord.js';
-import { ScheduledTask, Task, TaskOptions } from 'klasa';
+import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
+import { EVERY_MINUTE } from '@root/components/Constants';
 import { ClientSettings } from '@root/RibbonTypes';
 
 @ApplyOptions<TaskOptions>({ name: 'sendTimerMessage', enabled: true })
@@ -54,10 +54,8 @@ export default class SendTimerMessageTask extends Task {
     }
   }
 
-  private ensureTask(name: string, time: string): Promise<ScheduledTask> | void {
+  private ensureTask(name: string, time: string): void {
     const schedules = this.client.settings!.get(ClientSettings.Schedules) as ClientSettings.Schedules;
-    if (!schedules.some(task => task.taskName === name)) return this.client.schedule.create(name, time, { catchUp: true });
-
-    return undefined;
+    if (!schedules.some(task => task.taskName === name)) this.client.schedule.create(name, time, { catchUp: true });
   }
 }

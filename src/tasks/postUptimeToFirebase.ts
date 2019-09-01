@@ -1,10 +1,10 @@
-import { EVERY_THREE_MINUTES } from '@components/Constants';
 import { setUptimeData } from '@components/FirebaseActions';
 import { ApplyOptions, isTextChannel } from '@components/Utils';
-import { stripIndents } from 'common-tags';
-import { ScheduledTask, Task, TaskOptions } from 'klasa';
-import moment from 'moment';
+import { EVERY_THREE_MINUTES } from '@root/components/Constants';
 import { ClientSettings } from '@root/RibbonTypes';
+import { stripIndents } from 'common-tags';
+import { Task, TaskOptions } from 'klasa';
+import moment from 'moment';
 
 @ApplyOptions<TaskOptions>({ name: 'postUptimeToFirebase', enabled: true })
 export default class PostUptimeToFirebaseTask extends Task {
@@ -33,10 +33,8 @@ export default class PostUptimeToFirebaseTask extends Task {
     }
   }
 
-  private ensureTask(name: string, time: string): Promise<ScheduledTask> | void {
+  private ensureTask(name: string, time: string): void {
     const schedules = this.client.settings!.get(ClientSettings.Schedules) as ClientSettings.Schedules;
-    if (!schedules.some(task => task.taskName === name)) return this.client.schedule.create(name, time, { catchUp: true });
-
-    return undefined;
+    if (!schedules.some(task => task.taskName === name)) this.client.schedule.create(name, time, { catchUp: true });
   }
 }
