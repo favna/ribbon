@@ -32,3 +32,4 @@ src/data/*.sqlite
 
 # My own stuff
 src/commands/owner/testing.ts
+src/serializers/scheduledtask.ts
