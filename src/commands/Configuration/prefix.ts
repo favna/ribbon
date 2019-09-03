@@ -1,7 +1,6 @@
 import { ApplyOptions, logModMessage } from '@components/Utils';
 import RibbonEmbed from '@root/components/RibbonEmbed';
 import { GuildSettings } from '@root/RibbonTypes';
-import { stripIndents } from 'common-tags';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
@@ -25,18 +24,12 @@ export default class PrefixCommand extends Command {
     if (msg.guildSettings.get(GuildSettings.prefix) === prefix) return msg.sendLocale('CONFIGURATION_EQUALS', [ prefix ]);
     await msg.guildSettings.update(GuildSettings.prefix, prefix);
 
-    logModMessage(
-      msg,
-      new RibbonEmbed(msg.author!)
-        .setDescription(stripIndents(
-          `
-            **Action:** Changed guild prefix
-            **New prefix:** \`${prefix}\`
-          `
-        ))
-    );
+    const prefixEmbed = new RibbonEmbed(msg.author!)
+      .setDescription(`The prefix for this guild has been set to \`${prefix}\``);
 
-    return msg.send(`The prefix for this guild has been set to \`${prefix}\``);
+    logModMessage(msg, prefixEmbed);
+
+    return msg.sendEmbed(prefixEmbed);
   }
 
   async reset(msg: KlasaMessage) {
