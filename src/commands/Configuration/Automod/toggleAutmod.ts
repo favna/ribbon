@@ -15,7 +15,7 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
   `,
   permissionLevel: 2,
   runIn: [ 'text' ],
-  usage: '<shouldEnable:bool',
+  usage: '<shouldEnable:bool>',
 })
 export default class ToggleAutmodCommand extends Command {
   async run(msg: KlasaMessage, [ shouldEnable ]: [boolean]) {
