@@ -70,7 +70,7 @@
     "firebase-admin": "8.4.0",
     "fs-nextra": "^0.4.5",
     "fuse.js": "^3.4.5",
-    "jimp": "^0.6.4",
+    "jimp": "^0.6.7",
     "klasa": "dirigeants/klasa#settings",
     "klasa-decorators": "^0.0.1",
     "libsodium-wrappers": "^0.7.5",
