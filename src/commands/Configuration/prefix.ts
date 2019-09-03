@@ -1,7 +1,7 @@
 import { ApplyOptions, logModMessage } from '@components/Utils';
+import RibbonEmbed from '@root/components/RibbonEmbed';
 import { GuildSettings } from '@root/RibbonTypes';
 import { stripIndents } from 'common-tags';
-import { MessageEmbed } from 'discord.js';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
@@ -27,16 +27,13 @@ export default class PrefixCommand extends Command {
 
     logModMessage(
       msg,
-      new MessageEmbed()
-        .setColor('#3DFFE5')
-        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+      new RibbonEmbed(msg.author!)
         .setDescription(stripIndents(
           `
             **Action:** Changed guild prefix
             **New prefix:** \`${prefix}\`
           `
         ))
-        .setTimestamp()
     );
 
     return msg.send(`The prefix for this guild has been set to \`${prefix}\``);

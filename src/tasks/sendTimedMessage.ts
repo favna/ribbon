@@ -1,11 +1,12 @@
 import { readAllTimers, writeTimer } from '@components/Typeorm/DbInteractions';
 import { ApplyOptions } from '@components/Utils';
+import { EVERY_MINUTE } from '@root/components/Constants';
+import RibbonEmbed from '@root/components/RibbonEmbed';
+import { ClientSettings } from '@root/RibbonTypes';
 import { stripIndents } from 'common-tags';
-import { MessageEmbed, TextChannel } from 'discord.js';
+import { TextChannel } from 'discord.js';
 import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
-import { EVERY_MINUTE } from '@root/components/Constants';
-import { ClientSettings } from '@root/RibbonTypes';
 
 @ApplyOptions<TaskOptions>({ name: 'sendTimerMessage', enabled: true })
 export default class SendTimerMessageTask extends Task {
@@ -26,13 +27,10 @@ export default class SendTimerMessageTask extends Task {
           const guild = this.client.guilds.get(timer.guildId!);
           if (!guild) continue;
           const channel = guild.channels.get(timer.channelId!) as TextChannel;
-          const me = guild.me!;
           const memberMentions = timer.members ? timer.members.map(member => `<@${member}>`).join(' ') : null;
-          const timerEmbed = new MessageEmbed()
-            .setAuthor(`${this.client.user!.username} Timed Message`, me.user.displayAvatarURL({ format: 'png' }))
-            .setColor(me.displayHexColor)
-            .setDescription(timer.content)
-            .setTimestamp();
+          const timerEmbed = new RibbonEmbed(this.client.user!)
+            .setTitle('Timed Message')
+            .setDescription(timer.content);
 
           channel.send(memberMentions ? memberMentions : '', timerEmbed);
         }

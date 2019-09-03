@@ -9,11 +9,11 @@ import { Event } from 'klasa';
 import moment from 'moment';
 import path from 'path';
 import { GuildSettings } from '@root/RibbonTypes';
+import RibbonEmbed from '@root/components/RibbonEmbed';
 
 export default class GuildMemberAddEvent extends Event {
   async run(member: GuildMember) {
-    let newMemberEmbed = new MessageEmbed()
-      .setColor('#80F31F')
+    let newMemberEmbed = new RibbonEmbed(this.client.user!)
       .setTitle('NEW MEMBER!')
       .setDescription(`Please give a warm welcome to __**${member.displayName}**__  (\`${member.id}\`)`);
 
@@ -90,11 +90,9 @@ export default class GuildMemberAddEvent extends Event {
           memberLogs = member.guild.channels.find(channel => channel.name === 'member-logs') as TextChannel;
         }
 
-        const memberLogsEmbed = new MessageEmbed()
+        const memberLogsEmbed = new RibbonEmbed(this.client.user!)
           .setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({ format: 'png' }))
-          .setFooter('User joined')
-          .setTimestamp()
-          .setColor('#80F31F');
+          .setFooter('User joined');
 
         if (memberLogs && memberLogs.postable) {
           logOpts.channel.send('', { embed: memberLogsEmbed });

@@ -2,13 +2,14 @@ import { ASSET_BASE_PATH } from '@components/Constants';
 import { setUsersData } from '@components/FirebaseActions';
 import FirebaseStorage from '@components/FirebaseStorage';
 import { isTextChannel } from '@components/Utils';
+import RibbonEmbed from '@root/components/RibbonEmbed';
+import { GuildSettings } from '@root/RibbonTypes';
 import { stripIndents } from 'common-tags';
-import { GuildMember, MessageAttachment, MessageEmbed, TextChannel } from 'discord.js';
+import { GuildMember, MessageAttachment, TextChannel } from 'discord.js';
 import jimp from 'jimp';
 import { Event } from 'klasa';
 import moment from 'moment';
 import path from 'path';
-import { GuildSettings } from '@root/RibbonTypes';
 
 export default class GuildMemberAddEvent extends Event {
   async run(member: GuildMember) {
@@ -39,9 +40,8 @@ export default class GuildMemberAddEvent extends Event {
       const buffer = await canvas.getBufferAsync(jimp.MIME_PNG);
       const embedAttachment = new MessageAttachment(buffer, 'leaveimg.png');
 
-      const embed = new MessageEmbed()
+      const embed = new RibbonEmbed(this.client.user!)
         .attachFiles([ embedAttachment ])
-        .setColor('#F4BF42')
         .setTitle('Member Left 😢')
         .setDescription(`You will be missed __**${member.displayName}**__ (\`${member.id}\`)`)
         .setImage('attachment://leaveimg.png');
@@ -77,10 +77,9 @@ export default class GuildMemberAddEvent extends Event {
           memberLogs = member.guild.channels.find(channel => channel.name === 'member-logs') as TextChannel;
         }
 
-        const memberLogsEmbed = new MessageEmbed()
+        const memberLogsEmbed = new RibbonEmbed(this.client.user!)
           .setAuthor(`${member.user.tag} (${member.id})`, member.user.displayAvatarURL({ format: 'png' }))
           .setFooter('User left')
-          .setTimestamp()
           .setColor('#F4BF42');
 
         if (memberLogs && memberLogs.postable) {

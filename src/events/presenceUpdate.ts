@@ -1,10 +1,11 @@
 import { isTextChannel } from '@components/Utils';
 import stringify from '@favware/querystring';
+import RibbonEmbed from '@root/components/RibbonEmbed';
+import { GuildSettings } from '@root/RibbonTypes';
 import { stripIndents } from 'common-tags';
-import { GuildMember, MessageEmbed } from 'discord.js';
+import { GuildMember } from 'discord.js';
 import { Event } from 'klasa';
 import moment from 'moment';
-import { GuildSettings } from '@root/RibbonTypes';
 
 export default class PresenceUpdateEvent extends Event {
   async run(oldMember: GuildMember, newMember: GuildMember) {
@@ -64,21 +65,23 @@ export default class PresenceUpdateEvent extends Event {
             };
           }
           if (!/(twitch)/i.test(oldActivity.url!) && /(twitch)/i.test(newActivity.url!)) {
+            const TWITCH_PURPLE = '#6441A4';
             const userFetch = await fetch(`https://api.twitch.tv/helix/users?${stringify({ login: newActivity.url!.split('/')[3] })}`,
               { headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID! } });
             const userData = await userFetch.json();
             const streamFetch = await fetch(`https://api.twitch.tv/helix/streams?${stringify({ channel: userData.data[0].id })}`,
               { headers: { 'Client-ID': process.env.TWITCH_CLIENT_ID! } });
             const streamData = await streamFetch.json();
-            const twitchEmbed = new MessageEmbed();
-
-            twitchEmbed
+            const twitchEmbed = new RibbonEmbed(this.client.user!)
               .setThumbnail(curUser.displayAvatarURL())
               .setURL(newActivity.url!)
-              .setColor('#6441A4')
+              .setColor(TWITCH_PURPLE)
               .setTitle(`${curDisplayName} just went live!`)
-              .setDescription(stripIndents`
-                streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}`);
+              .setDescription(stripIndents(
+                `
+                  streaming \`${newActivity.details}\`!\n\n**Title:**\n${newActivity.name}
+                `
+              ));
 
             if (userFetch.ok && userData.data.length > 0 && userData.data[0]) {
               twitchEmbed

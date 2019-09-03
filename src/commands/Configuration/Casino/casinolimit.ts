@@ -1,8 +1,8 @@
-import { Command, KlasaMessage, CommandOptions } from 'klasa';
 import { ApplyOptions, logModMessage } from '@components/Utils';
-import { MessageEmbed } from 'discord.js';
-import { stripIndents } from 'common-tags';
+import RibbonEmbed from '@root/components/RibbonEmbed';
 import { GuildSettings } from '@root/RibbonTypes';
+import { stripIndents } from 'common-tags';
+import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
   aliases: [ 'cl' ],
@@ -16,17 +16,14 @@ export default class CasinoLimitCommand extends Command {
   async run(msg: KlasaMessage, [ lowerLimit, upperLimit ]: [number, number]) {
     msg.guildSettings.set(GuildSettings.casinoLowerLimit, lowerLimit);
     msg.guildSettings.set(GuildSettings.casinoUpperLimit, upperLimit);
-    const casinoLimitEmbed = new MessageEmbed()
-      .setColor('#3DFFE5')
-      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+    const casinoLimitEmbed = new RibbonEmbed(msg.author!)
       .setDescription(stripIndents(
         `
           **Action:** Changed casino limits
           **Lower Limit:** \`${lowerLimit}\`
           **Upper Limit:** \`${upperLimit}\`
         `
-      ))
-      .setTimestamp();
+      ));
 
     logModMessage(msg, casinoLimitEmbed);
 

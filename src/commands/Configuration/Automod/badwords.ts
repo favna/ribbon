@@ -1,7 +1,7 @@
+import RibbonEmbed from '@root/components/RibbonEmbed';
 import { ApplyOptions, logModMessage } from '@root/components/Utils';
 import { GuildSettings } from '@root/RibbonTypes';
-import { stripIndents, oneLine, stripIndent } from 'common-tags';
-import { MessageEmbed } from 'discord.js';
+import { oneLine, stripIndent, stripIndents } from 'common-tags';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({
@@ -28,9 +28,7 @@ export default class BadwordsCommand extends Command {
 
     msg.guildSettings.set(GuildSettings.automodBadwords, { enabled: shouldEnable, words });
 
-    const bwfEmbed = new MessageEmbed()
-      .setColor('#439DFF')
-      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
+    const bwfEmbed = new RibbonEmbed(msg.author!)
       .setDescription(stripIndents(
         `
           **Action:** Bad words filter has been ${shouldEnable ? 'enabled' : 'disabled'}

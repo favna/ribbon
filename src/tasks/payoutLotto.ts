@@ -1,9 +1,10 @@
-import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR, EVERY_THIRD_HOUR } from '@components/Constants';
+import { ASSET_BASE_PATH, EVERY_THIRD_HOUR } from '@components/Constants';
 import { createCasinoTimeout, readAllCasinoForGuild, readAllCasinoGuildIds, readCasinoTimeout, updateCasinoTimeout, writeCasino } from '@components/Typeorm/DbInteractions';
 import { ApplyOptions } from '@components/Utils';
+import RibbonEmbed from '@root/components/RibbonEmbed';
 import { ClientSettings } from '@root/RibbonTypes';
 import { stripIndents } from 'common-tags';
-import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
+import { GuildMember, TextChannel } from 'discord.js';
 import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
 
@@ -49,7 +50,6 @@ export default class PayoutLottoTask extends Task {
           });
 
           const defaultChannel = this.client.guilds.get(guildId)!.systemChannel;
-          const winnerEmbed = new MessageEmbed();
           const winnerMember: GuildMember = this.client.guilds.get(guildId)!.members.get(casinoGuildEntries[winner].userId!)!;
           if (!winnerMember) continue;
           const winnerLastMessageChannelId: string | null = winnerMember.lastMessageChannelID;
@@ -60,8 +60,7 @@ export default class PayoutLottoTask extends Task {
             winnerLastMessageChannel.postable :
             false;
 
-          winnerEmbed
-            .setColor(DEFAULT_EMBED_COLOR)
+          const winnerEmbed = new RibbonEmbed(this.client.user!)
             .setDescription(`Congratulations <@${casinoGuildEntries[winner].userId}>! You won today's random lotto and were granted 2000 chips 🎉!`)
             .setAuthor(winnerMember.displayName, winnerMember.user.displayAvatarURL({ format: 'png' }))
             .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`)

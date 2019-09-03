@@ -1,11 +1,12 @@
 import { deleteCountdown, readAllCountdowns, writeCountdown } from '@components/Typeorm/DbInteractions';
 import { ApplyOptions } from '@components/Utils';
+import { EVERY_THREE_MINUTES } from '@root/components/Constants';
+import RibbonEmbed from '@root/components/RibbonEmbed';
+import { ClientSettings } from '@root/RibbonTypes';
 import { stripIndents } from 'common-tags';
-import { MessageEmbed, TextChannel } from 'discord.js';
+import { TextChannel } from 'discord.js';
 import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
-import { EVERY_THREE_MINUTES } from '@root/components/Constants';
-import { ClientSettings } from '@root/RibbonTypes';
 
 @ApplyOptions<TaskOptions>({ name: 'sendCountdownMessage', enabled: true })
 export default class SendCountdownMessageTask extends Task {
@@ -21,11 +22,8 @@ export default class SendCountdownMessageTask extends Task {
           const guild = this.client.guilds.get(countdown.guildId!);
           if (!guild) continue;
           const channel = guild.channels.get(countdown.channelId!) as TextChannel;
-          const me = guild.me!;
-          const countdownEmbed = new MessageEmbed()
-            .setAuthor('Countdown Reminder', me.user.displayAvatarURL({ format: 'png' }))
-            .setColor(me.displayHexColor)
-            .setTimestamp()
+          const countdownEmbed = new RibbonEmbed(this.client.user!)
+            .setTitle('Countdown Reminder')
             .setDescription(stripIndents`
               Event on: ${moment(countdown.datetime).format('MMMM Do YYYY [at] HH:mm')}
               That is:

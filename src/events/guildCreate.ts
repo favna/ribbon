@@ -2,13 +2,14 @@ import { ASSET_BASE_PATH, MOMENT_LOG_FORMAT } from '@components/Constants';
 import { setServersData } from '@components/FirebaseActions';
 import FirebaseStorage from '@components/FirebaseStorage';
 import { ApplyOptions, isTextChannel } from '@components/Utils';
+import RibbonEmbed from '@root/components/RibbonEmbed';
+import { GuildSettings } from '@root/RibbonTypes';
 import { stripIndents } from 'common-tags';
-import { Guild, MessageAttachment, MessageEmbed } from 'discord.js';
+import { Guild, MessageAttachment } from 'discord.js';
 import jimp from 'jimp';
 import { Event, EventOptions } from 'klasa';
 import moment from 'moment';
 import path from 'path';
-import { GuildSettings } from '@root/RibbonTypes';
 
 @ApplyOptions<EventOptions>({event: 'guildCreate'})
 export default class GuildCreateEvent extends Event {
@@ -40,7 +41,6 @@ export default class GuildCreateEvent extends Event {
       const canvas = await jimp.read(500, 150);
       const mask = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/mask.png`);
       const fontMedium = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
-      const newGuildEmbed = new MessageEmbed();
       const channel = guild.systemChannel ? guild.systemChannel : null;
 
       avatar.resize(136, jimp.AUTO);
@@ -55,9 +55,8 @@ export default class GuildCreateEvent extends Event {
       const buffer = await canvas.getBufferAsync(jimp.MIME_PNG);
       const embedAttachment = new MessageAttachment(buffer, 'added.png');
 
-      newGuildEmbed
+      const newGuildEmbed = new RibbonEmbed(this.client.user!)
         .attachFiles([ embedAttachment ])
-        .setColor('#80F31F')
         .setTitle('Ribbon is here!')
         .setDescription(stripIndents`
           I'm an all-purpose bot and I hope I can make your server better!
