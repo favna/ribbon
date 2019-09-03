@@ -27,7 +27,8 @@
       "@databases/*": ["src/data/databases/*"],
       "@pokedex/*": ["src/data/dex/*"]
     },
-    "typeRoots": ["typings","./node_modules/@types"]
+    "typeRoots": ["typings","./node_modules/@types"],
+    "skipLibCheck": true
   },
   "include": ["src"]
 }
