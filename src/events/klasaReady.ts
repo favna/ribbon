@@ -1,20 +1,17 @@
-import { decache } from '@components/Decache';
+// import { decache } from '@components/Decache';
 import { getChannelsData, getCommandsData, getMessagesData, getServersData, getUsersData } from '@components/FirebaseActions';
 import FirebaseStorage from '@components/FirebaseStorage';
-import fs from 'fs';
+// import fs from 'fs-nextra';
 import { Event } from 'klasa';
-import path from 'path';
+// import path from 'path';
 
 export default class AEvent extends Event {
   async run() {
-    fs.watch(path.join(__dirname, '../', 'data/dex/formats.json'),
-      (eventType, filename) => {
-        if (filename) {
-          decache(path.join(__dirname, '../', 'data/dex/formats.json'));
-          this.client.commands.get('dex').reload();
-        }
-      }
-    );
+    // const formatsWatcher = fs.watch(path.join(__dirname, '../', 'data/dex/formats.json'));
+    // formatsWatcher.on('change', () => {
+    //   decache(path.join(__dirname, '../', 'data/dex/formats.json'));
+    //   this.client.commands.get('dex').reload();
+    // });
 
     FirebaseStorage.channels = parseInt(await getChannelsData());
     FirebaseStorage.commands = parseInt(await getCommandsData());
