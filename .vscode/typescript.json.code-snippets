@@ -1,0 +1,89 @@
+{
+  // Place your webcomponents workspace snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and
+  // description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope
+  // is left empty or omitted, the snippet gets applied to all languages. The prefix is what is
+  // used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+  // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders.
+  // Placeholders with the same ids are connected.
+  // Example:
+  // "Print to console": {
+  // 	"scope": "javascript,typescript",
+  // 	"prefix": "log",
+  // 	"body": [
+  // 		"console.log('$1');",
+  // 		"$2"
+  // 	],
+  // 	"description": "Log output to console"
+  // }
+  "insert snapshot test block": {
+    "scope": "javascriptreact, typescriptreact",
+    "prefix": "snaptest",
+    "description": "Generates a Snapshot testing block",
+    "body": [
+      "describe('Snapshot Testing', () => {",
+      "  test('Required Props', () => {",
+      "    const $1 = shallow(<$2 />);",
+      "    expect($1).toMatchSnapshot();",
+      "  });",
+      "",
+      "  test('Optional Props', () => {",
+      "    const $1 = shallow(<$2 />);",
+      "    expect($1).toMatchSnapshot();",
+      "  });",
+      "",
+      "  test('AdditionalTest', () => {",
+      "    const $1 = shallow(<$2 />);",
+      "    expect($1).toMatchSnapshot();",
+      "  });",
+      "});"
+    ]
+  },
+  "insert a klasa argument": {
+    "scope": "typescript",
+    "prefix": "klarg",
+    "description": "Inserts an Argument class block for Klasa",
+    "body": [
+      "import { Argument, Possible, KlasaMessage } from 'klasa';",
+      "",
+      "export default class $1Argument extends Argument {",
+      "  run(arg: string, possible: Possible, msg: KlasaMessage) {",
+      "    if (arg) return arg;",
+      "",
+      "    throw new Error('arg');",
+      "  }",
+      "}"
+    ]
+  },
+  "insert a klasa command": {
+    "scope": "typescript",
+    "prefix": "klac",
+    "description": "Inserts a Command class block for Klasa",
+    "body": [
+      "import RibbonEmbed from '@root/components/RibbonEmbed';",
+      "import { ApplyOptions, logModMessage } from '@root/components/Utils';",
+      "import { GuildSettings } from '@root/RibbonTypes';",
+      "import { stripIndents, oneLine, stripIndent } from 'common-tags';",
+      "import { Command, CommandOptions, KlasaMessage } from 'klasa';",
+      "",
+      "@ApplyOptions<CommandOptions>({",
+      "  aliases: [ $1 ],",
+      "  cooldown: 3,",
+      "  cooldownLevel: 'guild',",
+      "  description: '$2',",
+      "  extendedHelp: stripIndent`",
+      "    = Argument Details =",
+      "    ${6:arg} :: ${8:Does something awesome}",
+      "  `,",
+      "  permissionLevel: ${3:0},",
+      "  runIn: [ ${4:'text', 'dm'} ],",
+      "  usage: '<${5:arg:type>}',",
+      "  usageDelim: ' ',",
+      "})",
+      "export default class ${TM_FILENAME_BASE/(^[a-z])/${1:/upcase}/}Command extends Command {",
+      "  async run(msg: KlasaMessage, [ ${6:arg} ]: [ ${7:unknown} ]) {",
+      "    return msg.send('sample');",
+      "  }",
+      "}"
+    ]
+  }
+}

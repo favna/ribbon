@@ -17,7 +17,6 @@ logs/
 # IDE settings
 .idea/
 .vs/
-.vscode/
 
 # Build Output
 dist/
