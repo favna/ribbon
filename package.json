@@ -65,7 +65,7 @@
     "dotenv": "^8.1.0",
     "emoji-regex": "^8.0.0",
     "fast-levenshtein": "^2.0.6",
-    "firebase-admin": "8.4.0",
+    "firebase-admin": "8.5.0",
     "fs-nextra": "^0.4.5",
     "fuse.js": "^3.4.5",
     "jimp": "^0.6.8",
