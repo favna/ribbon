@@ -26,7 +26,8 @@
       "@pokedex/*": ["data/dex/*"],
       "@i18n/*": ["data/i18n/*"]
     },
-    "typeRoots": ["typings","./node_modules/@types"]
+    "typeRoots": ["typings","./node_modules/@types"],
+    "incremental": true
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules","dist","src/**/*.js","typings"]
