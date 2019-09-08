@@ -17,7 +17,7 @@
   "scripts": {
     "lint": "eslint src scripts --fix --ext ts",
     "clean": "rimraf ./dist",
-    "prebuild": "yarn clean && yarn lint",
+    "prebuild": "yarn lint",
     "build": "tsc",
     "postbuild": "yarn copyfiles && yarn replace",
     "start": "cross-env NODE_ENV=development ts-node ./src/app.ts",
@@ -47,6 +47,7 @@
     "db:up": "docker-compose up -d",
     "db:stop": "docker-compose stop",
     "db:down": "docker-compose down",
+    "ci:build": "tsc",
     "up": "yarn upgrade-interactive --latest",
     "commit": "git-cz",
     "cz": "git-cz",

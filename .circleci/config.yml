@@ -22,7 +22,7 @@ commands:
           command: yarn lint
       - run:
           name: Build code
-          command: yarn build
+          command: yarn ci:build
 
 # List of jobs
 jobs:
