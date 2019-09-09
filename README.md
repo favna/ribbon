@@ -49,8 +49,6 @@
 
 - Auto-moderation
 
-- Support for being self-hosted. Installation instructions [can be found on the wiki](https://github.com/favna/ribbon/wiki/Self-hosting-Installation)
-
 - Many other commands. See [All Commands on the Wiki](https://github.com/favna/ribbon/wiki/All-Commands) for the full list
 
 # Contributing
