@@ -1,6 +1,6 @@
-import { TextChannel, Role } from 'discord.js';
-import { KlasaUser } from 'klasa';
 import { SayData } from '@typings/General';
+import { Role, TextChannel } from 'discord.js';
+import { KlasaUser } from 'klasa';
 
 export namespace GuildSettings {
   export type automessage = {

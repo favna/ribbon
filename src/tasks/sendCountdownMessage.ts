@@ -1,12 +1,12 @@
-import { deleteCountdown, readAllCountdowns, writeCountdown } from '@typeorm/DbInteractions';
-import { ApplyOptions } from '@utils/Utils';
-import { EVERY_THREE_MINUTES } from '@utils/Constants';
+import { ClientSettings } from '@settings/ClientSettings';
 import RibbonEmbed from '@structures/RibbonEmbed';
+import { deleteCountdown, readAllCountdowns, writeCountdown } from '@typeorm/DbInteractions';
+import { EVERY_THREE_MINUTES } from '@utils/Constants';
+import { ApplyOptions } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import { TextChannel } from 'discord.js';
 import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
-import { ClientSettings } from '@settings/ClientSettings';
 
 @ApplyOptions<TaskOptions>({ name: 'sendCountdownMessage', enabled: true })
 export default class SendCountdownMessageTask extends Task {

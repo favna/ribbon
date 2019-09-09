@@ -1,5 +1,5 @@
-import { Language, LanguageStore, LanguageOptions } from 'klasa';
 import { PermissionString } from 'discord.js';
+import { Language, LanguageOptions, LanguageStore } from 'klasa';
 
 export default class EnglishLanguage extends Language {
   constructor(store: LanguageStore, file: string[], directory: string, options?: LanguageOptions) {

@@ -1,11 +1,11 @@
 /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 import { oneLineTrim } from 'common-tags';
-import { Channel, Constructor, GuildMember, MessageEmbed, TextChannel, Util, BitFieldResolvable, PermissionString } from 'discord.js';
+import { BitFieldResolvable, Channel, Constructor, GuildMember, MessageEmbed, PermissionString, TextChannel, Util } from 'discord.js';
 import emojiRegex from 'emoji-regex';
 import { KlasaMessage, Piece, PieceOptions, Store } from 'klasa';
-import { diacriticsMap } from './Constants';
-import { GuildSettings } from '../typings/settings/GuildSettings';
 import { YoutubeVideoType } from '../typings/Music';
+import { GuildSettings } from '../typings/settings/GuildSettings';
+import { diacriticsMap } from './Constants';
 
 /** Validation on whether this connection will be production or not */
 export const prod = process.env.NODE_ENV === 'production';

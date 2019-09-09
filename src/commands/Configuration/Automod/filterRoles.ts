@@ -1,6 +1,6 @@
+import { GuildSettings } from '@settings/GuildSettings';
 import RibbonEmbed from '@structures/RibbonEmbed';
 import { ApplyOptions, logModMessage } from '@utils/Utils';
-import { GuildSettings } from '@settings/GuildSettings';
 import { stripIndent, stripIndents } from 'common-tags';
 import { Role } from 'discord.js';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';

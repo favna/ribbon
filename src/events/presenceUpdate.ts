@@ -1,7 +1,7 @@
-import { isTextChannel } from '@utils/Utils';
 import stringify from '@favware/querystring';
-import RibbonEmbed from '@structures/RibbonEmbed';
 import { GuildSettings } from '@settings/GuildSettings';
+import RibbonEmbed from '@structures/RibbonEmbed';
+import { isTextChannel } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import { GuildMember } from 'discord.js';
 import { Event } from 'klasa';

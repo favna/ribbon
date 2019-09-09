@@ -1,6 +1,6 @@
-import { Command } from 'klasa';
-import { TextChannel, VoiceChannel, VoiceConnection } from 'discord.js';
 import { Song } from '@utils/Utils';
+import { TextChannel, VoiceChannel, VoiceConnection } from 'discord.js';
+import { Command } from 'klasa';
 
 export type MusicCommand = {
   queue: Map<string, MusicQueueType>;

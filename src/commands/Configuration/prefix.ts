@@ -1,6 +1,6 @@
-import { ApplyOptions, logModMessage } from '@utils/Utils';
-import RibbonEmbed from '@structures/RibbonEmbed';
 import { GuildSettings } from '@settings/GuildSettings';
+import RibbonEmbed from '@structures/RibbonEmbed';
+import { ApplyOptions, logModMessage } from '@utils/Utils';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
 @ApplyOptions<CommandOptions>({

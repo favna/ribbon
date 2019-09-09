@@ -1,15 +1,15 @@
-import { ASSET_BASE_PATH, MOMENT_LOG_FORMAT, LIB_FOLDER } from '@utils/Constants';
+import { GuildSettings } from '@settings/GuildSettings';
+import RibbonEmbed from '@structures/RibbonEmbed';
+import { ASSET_BASE_PATH, LIB_FOLDER, MOMENT_LOG_FORMAT } from '@utils/Constants';
 import { setServersData } from '@utils/FirebaseActions';
 import FirebaseStorage from '@utils/FirebaseStorage';
 import { ApplyOptions, isTextChannel } from '@utils/Utils';
-import RibbonEmbed from '@structures/RibbonEmbed';
-import { GuildSettings } from '@settings/GuildSettings';
 import { stripIndents } from 'common-tags';
 import { Guild, MessageAttachment } from 'discord.js';
 import jimp from 'jimp';
 import { Event, EventOptions } from 'klasa';
 import moment from 'moment';
-import {join} from 'path';
+import { join } from 'path';
 
 @ApplyOptions<EventOptions>({event: 'guildCreate'})
 export default class GuildCreateEvent extends Event {

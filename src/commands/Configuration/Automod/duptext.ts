@@ -1,8 +1,8 @@
+import { GuildSettings } from '@settings/GuildSettings';
 import RibbonEmbed from '@structures/RibbonEmbed';
 import { ApplyOptions, logModMessage } from '@utils/Utils';
 import { oneLine, stripIndent, stripIndents } from 'common-tags';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
-import { GuildSettings } from '@settings/GuildSettings';
 
 @ApplyOptions<CommandOptions>({
   aliases: [ 'duplicatefilter', 'duplicatetextfilter', 'dtf' ],

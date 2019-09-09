@@ -1,6 +1,6 @@
+import { GuildSettings } from '@settings/GuildSettings';
 import RibbonEmbed from '@structures/RibbonEmbed';
 import { ApplyOptions, logModMessage } from '@utils/Utils';
-import { GuildSettings } from '@settings/GuildSettings';
 import { oneLine, stripIndent, stripIndents } from 'common-tags';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 

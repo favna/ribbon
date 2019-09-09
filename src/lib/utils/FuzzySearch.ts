@@ -1,5 +1,5 @@
-import Fuse, { FuseOptions } from 'fuse.js';
 import { Collection } from 'discord.js';
+import Fuse, { FuseOptions } from 'fuse.js';
 import { KlasaMessage } from 'klasa';
 
 export default class FuzzySearch<K extends string, V> {

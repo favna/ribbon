@@ -1,4 +1,4 @@
-import {join} from 'path';
+import { join } from 'path';
 
 /* eslint-disable max-len, object-curly-newline  */
 
