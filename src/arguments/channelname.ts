@@ -16,7 +16,7 @@ export default class ChannelnameArgument extends Argument {
     const results = new FuzzySearch(message.guild!.channels, [ 'name', 'id' ]).run(message, arg);
 
     if (results && results.length) return results[0];
-    if (results.length >= 5) throw `Found multiple matches: ${results.map(result => `<@${result}>`).join(', ')}. Please be more specific`;
+    if (results.length >= 5) throw `Found multiple matches: ${results.map(result => `<@${result.name}>`).join(', ')}. Please be more specific`;
     throw message.language.get('RESOLVER_INVALID_CHANNELNAME', possible.name);
   }
 
