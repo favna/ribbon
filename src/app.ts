@@ -1,3 +1,4 @@
+import 'array-flat-polyfill';
 import { config } from 'dotenv';
 import fireadmin from 'firebase-admin';
 import { KlasaClient } from 'klasa';
@@ -5,16 +6,18 @@ import moduleAlias from 'module-alias';
 import 'moment-duration-format';
 import path from 'path';
 import 'reflect-metadata';
-import createDatabaseConnection from './components/Typeorm/DbConfig';
-import { prod } from './components/Utils';
+import createDatabaseConnection from './lib/typeorm/DbConfig';
+import { prod } from './lib/utils/Utils';
 import createRibbonInstance from './Ribbon';
-import 'array-flat-polyfill';
 
 // Add module aliases
-moduleAlias.addAlias('@root', `${__dirname}`);
-moduleAlias.addAlias('@components', `${__dirname}/components`);
-moduleAlias.addAlias('@pokedex', `${__dirname}/data/dex`);
-moduleAlias.addAlias('@databases', `${__dirname}/data/databases`);
+moduleAlias.addAlias('@databases', `${__dirname}/lib/databases`);
+moduleAlias.addAlias('@dex', `${__dirname}/lib/dex`);
+moduleAlias.addAlias('@settings', `${__dirname}/lib/typings/settings`);
+moduleAlias.addAlias('@structures', `${__dirname}/lib/structures`);
+moduleAlias.addAlias('@typeorm', `${__dirname}/lib/typeorm`);
+moduleAlias.addAlias('@typings', `${__dirname}/lib/typings`);
+moduleAlias.addAlias('@utils', `${__dirname}/lib/utils`);
 
 // Configure dotenv
 config({
@@ -22,6 +25,7 @@ config({
   encoding: 'utf8',
   debug: false,
 });
+
 
 // Initialize Firebase connection
 fireadmin.initializeApp({

@@ -1,8 +1,8 @@
-import RibbonEmbed from '@root/components/RibbonEmbed';
-import { ApplyOptions, logModMessage } from '@root/components/Utils';
-import { GuildSettings } from '@root/RibbonTypes';
+import RibbonEmbed from '@structures/RibbonEmbed';
+import { ApplyOptions, logModMessage } from '@utils/Utils';
 import { oneLine, stripIndent, stripIndents } from 'common-tags';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
+import { GuildSettings } from '@settings/GuildSettings';
 
 @ApplyOptions<CommandOptions>({
   aliases: [ 'badwordsfilter', 'bwf' ],

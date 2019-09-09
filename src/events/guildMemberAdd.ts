@@ -1,15 +1,15 @@
-import { ASSET_BASE_PATH } from '@components/Constants';
-import { setUsersData } from '@components/FirebaseActions';
-import FirebaseStorage from '@components/FirebaseStorage';
-import { isTextChannel, parseOrdinal } from '@components/Utils';
+import { GuildSettings } from '@settings/GuildSettings';
+import RibbonEmbed from '@structures/RibbonEmbed';
+import { ASSET_BASE_PATH, LIB_FOLDER } from '@utils/Constants';
+import { setUsersData } from '@utils/FirebaseActions';
+import FirebaseStorage from '@utils/FirebaseStorage';
+import { isTextChannel, parseOrdinal } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import { GuildMember, MessageAttachment, MessageEmbed, TextChannel } from 'discord.js';
 import jimp from 'jimp';
 import { Event } from 'klasa';
 import moment from 'moment';
-import path from 'path';
-import { GuildSettings } from '@root/RibbonTypes';
-import RibbonEmbed from '@root/components/RibbonEmbed';
+import { join } from 'path';
 
 export default class GuildMemberAddEvent extends Event {
   async run(member: GuildMember) {
@@ -38,8 +38,8 @@ export default class GuildMemberAddEvent extends Event {
       const avatar = await jimp.read(member.user.displayAvatarURL({ format: 'png' }));
       const border = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/border.png`);
       const canvas = await jimp.read(500, 150);
-      const fontLarge = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-large.fnt'));
-      const fontMedium = await jimp.loadFont(path.join(__dirname, '../data/fonts/roboto-medium.fnt'));
+      const fontLarge = await jimp.loadFont(join(LIB_FOLDER, 'fonts', 'roboto-large.fnt'));
+      const fontMedium = await jimp.loadFont(join(LIB_FOLDER, 'fonts', 'roboto-medium.fnt'));
       const mask = await jimp.read(`${ASSET_BASE_PATH}/ribbon/jimp/mask.png`);
       const channel = member.guild.settings.get(GuildSettings.automessagesJoinmsgChannel) as GuildSettings.automessagesJoinmsgs['channel'];
 

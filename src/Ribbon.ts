@@ -1,8 +1,7 @@
 /* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 import { KlasaClient, KlasaClientOptions, PermissionLevels } from 'klasa';
 import moment from 'moment';
-import { prod } from './components/Utils';
-import { DATABASE_PRODUCTION, DATABASE_DEVELOPMENT } from './components/Constants';
+import { prod } from './lib/utils/Utils';
 
 export class Ribbon extends KlasaClient {
   public constructor(options?: KlasaClientOptions) {
@@ -40,10 +39,7 @@ export class Ribbon extends KlasaClient {
           quotedStringSupport: true,
         },
       },
-      providers: {
-        default: 'rethinkdb',
-        rethinkdb: prod ? DATABASE_PRODUCTION : DATABASE_DEVELOPMENT,
-      },
+      providers: { default: prod ? 'firestore' : 'json' },
       presence: {
         status: 'online',
         activity: {

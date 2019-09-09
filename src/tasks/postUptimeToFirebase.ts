@@ -1,10 +1,10 @@
-import { setUptimeData } from '@components/FirebaseActions';
-import { ApplyOptions, isTextChannel } from '@components/Utils';
-import { EVERY_THREE_MINUTES } from '@root/components/Constants';
-import { ClientSettings } from '@root/RibbonTypes';
+import { setUptimeData } from '@utils/FirebaseActions';
+import { ApplyOptions, isTextChannel } from '@utils/Utils';
+import { EVERY_THREE_MINUTES } from '@utils/Constants';
 import { stripIndents } from 'common-tags';
 import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
+import { ClientSettings } from '@settings/ClientSettings';
 
 @ApplyOptions<TaskOptions>({ name: 'postUptimeToFirebase', enabled: true })
 export default class PostUptimeToFirebaseTask extends Task {

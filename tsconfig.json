@@ -22,10 +22,13 @@
     "incremental": true,
     "baseUrl": "./",
     "paths": {
-      "@root/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@databases/*": ["src/data/databases/*"],
-      "@pokedex/*": ["src/data/dex/*"]
+      "@databases/*": ["src/lib/databases/*"],
+      "@dex/*": ["src/lib/dex/*"],
+      "@settings/*": ["src/lib/typings/settings/*"],
+      "@structures/*": ["src/lib/structures/*"],
+      "@typeorm/*": ["src/lib/typeorm/*"],
+      "@typings/*": ["src/lib/typings/*"],
+      "@utils/*": ["src/lib/utils/*"]
     },
     "typeRoots": ["typings","./node_modules/@types"],
     "skipLibCheck": true

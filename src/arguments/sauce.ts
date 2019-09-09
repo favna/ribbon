@@ -5,7 +5,7 @@ export default class SauceArgument extends Argument {
     if (this.hasMessageAttachment(msg)) return msg.attachments.first()!.url;
     if (this.isValidImageURL(arg)) return arg;
 
-    throw new Error('B-baka! I need an image to find a source for!');
+    throw 'B-baka! I need an image to find a source for!';
   }
 
   private hasMessageAttachment(msg: KlasaMessage) {

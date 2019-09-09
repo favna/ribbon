@@ -1,5 +1,5 @@
 /* eslint-disable max-len, object-curly-newline */
-import { PokemonMove } from '@root/RibbonTypes';
+import { PokemonMove } from '@typings/Pokemon';
 
 const pokemonMoves: PokemonMove[] = [
   {

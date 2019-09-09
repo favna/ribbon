@@ -1,7 +1,7 @@
-import { ASSET_BASE_PATH, EVERY_THREE_MINUTES } from '@components/Constants';
-import { deleteReminder, readAllReminders } from '@components/Typeorm/DbInteractions';
-import { ApplyOptions } from '@components/Utils';
-import { ClientSettings } from '@root/RibbonTypes';
+import { ASSET_BASE_PATH, EVERY_THREE_MINUTES } from '@utils/Constants';
+import { deleteReminder, readAllReminders } from '@typeorm/DbInteractions';
+import { ApplyOptions } from '@utils/Utils';
+import { ClientSettings } from '@settings/ClientSettings';
 import { stripIndents } from 'common-tags';
 import { TextChannel } from 'discord.js';
 import { Task, TaskOptions } from 'klasa';

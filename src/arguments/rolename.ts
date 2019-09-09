@@ -13,7 +13,7 @@ const resolveRole = (query: Role | string, guild: KlasaGuild) => {
 
 export default class RolenameArgument extends Argument {
   run(arg: string, possible: Possible, msg: KlasaMessage): Role {
-    if (!msg.guild) throw new Error('This command can only be used inside a server.');
+    if (!msg.guild) throw 'This command can only be used inside a server.';
     const resRole = resolveRole(arg, msg.guild);
     if (resRole) return resRole;
 
@@ -34,14 +34,14 @@ export default class RolenameArgument extends Argument {
       }
 
       switch (querySearch.length) {
-        case 0: throw new Error(`${possible.name} Must be a valid name, id or role mention`);
+        case 0: throw `${possible.name} Must be a valid name, id or role mention`;
         case 1: return querySearch[0];
         default:
           if (querySearch[0].name.toLowerCase() === arg.toLowerCase()) return querySearch[0];
-          throw new Error(`Found multiple matches: \`${querySearch.map(role => role.name).join('`, `')}\``);
+          throw `Found multiple matches: \`${querySearch.map(role => role.name).join('`, `')}\``;
       }
     }
 
-    throw new Error('an invalid argument was given');
+    throw 'an invalid argument was given';
   }
 }

@@ -1,8 +1,8 @@
-import { ASSET_BASE_PATH, EVERY_THIRD_HOUR } from '@components/Constants';
-import { createCasinoTimeout, readAllCasinoForGuild, readAllCasinoGuildIds, readCasinoTimeout, updateCasinoTimeout, writeCasino } from '@components/Typeorm/DbInteractions';
-import { ApplyOptions } from '@components/Utils';
-import RibbonEmbed from '@root/components/RibbonEmbed';
-import { ClientSettings } from '@root/RibbonTypes';
+import { ASSET_BASE_PATH, EVERY_THIRD_HOUR } from '@utils/Constants';
+import { createCasinoTimeout, readAllCasinoForGuild, readAllCasinoGuildIds, readCasinoTimeout, updateCasinoTimeout, writeCasino } from '@typeorm/DbInteractions';
+import { ApplyOptions } from '@utils/Utils';
+import RibbonEmbed from '@structures/RibbonEmbed';
+import { ClientSettings } from '@settings/ClientSettings';
 import { stripIndents } from 'common-tags';
 import { GuildMember, TextChannel } from 'discord.js';
 import { Task, TaskOptions } from 'klasa';
@@ -34,7 +34,7 @@ export default class PayoutLottoTask extends Task {
           const casinoGuildEntries = await readAllCasinoForGuild(guildId);
           const winner = Math.floor(Math.random() * casinoGuildEntries.length);
 
-          if (!casinoGuildEntries[winner]) throw new Error('no_rows');
+          if (!casinoGuildEntries[winner]) throw 'no_rows';
           const previousBalance = casinoGuildEntries[winner].balance!;
           const newBalance = previousBalance + 2000;
 

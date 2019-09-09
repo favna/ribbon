@@ -1,6 +1,7 @@
-import path from 'path';
+import { join } from 'path';
 import { Connection, ConnectionOptions, createConnection, getConnection } from 'typeorm';
-import { prod } from '../Utils';
+import { LIB_FOLDER } from '../utils/Constants';
+import { prod } from '../utils/Utils';
 import Casino from './Entities/Casino';
 import CasinoTimeout from './Entities/CasinoTimeout';
 import Countdown from './Entities/Countdown';
@@ -8,9 +9,6 @@ import Pasta from './Entities/Pasta';
 import Reminder from './Entities/Reminder';
 import Timer from './Entities/Timer';
 import Warning from './Entities/Warning';
-
-/** The root path of the project to easily resolve the path to the database files */
-export const projectRoot = path.resolve(__dirname, '..', '..', '..');
 
 /**
  * Creates the configuration required to load initialize a database connection
@@ -20,7 +18,7 @@ export const projectRoot = path.resolve(__dirname, '..', '..', '..');
  */
 export const config: ConnectionOptions =
 {
-  database: path.join(projectRoot, 'src', 'data', 'dev_store.sqlite'),
+  database: join(LIB_FOLDER, 'databases', 'dev_store.sqlite'),
   type: 'sqlite',
   name: 'db_con',
   logging: true,
@@ -28,7 +26,7 @@ export const config: ConnectionOptions =
   entities: [ Casino, CasinoTimeout, Countdown, Pasta, Reminder, Timer, Warning ],
 
   ...(prod && {
-    database: path.join(projectRoot, 'dist', 'data', 'prod_store.sqlite'),
+    database: join(LIB_FOLDER, 'databases', 'prod_store.sqlite'),
     logging: false,
     synchronize: false,
   }),

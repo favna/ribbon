@@ -1,6 +1,6 @@
 import { MessageEmbed, MessageEmbedOptions } from 'discord.js';
 import { KlasaUser } from 'klasa';
-import { DEFAULT_EMBED_COLOR } from './Constants';
+import { DEFAULT_EMBED_COLOR } from '../utils/Constants';
 
 export default class RibbonEmbed extends MessageEmbed {
   constructor(author: KlasaUser, data?: MessageEmbed | MessageEmbedOptions) {

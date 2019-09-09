@@ -1,5 +1,5 @@
 /* eslint-disable max-len, object-curly-newline, @typescript-eslint/camelcase */
-import { FrontlineGirl } from '@root/RibbonTypes';
+import { FrontlineGirl } from '@typings/General';
 
 const frontlineGirls: FrontlineGirl[] = [
   {

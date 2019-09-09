@@ -1,4 +1,4 @@
-import { RPoolConnectionOptions } from 'rethinkdb-ts';
+import {join} from 'path';
 
 /* eslint-disable max-len, object-curly-newline  */
 
@@ -18,15 +18,10 @@ export const PAGINATED_ITEMS = 5;
 export const DURA_FORMAT = '[in] Y[ year, ]M[ month, ]D[ day, ]H[ hour and ]m[ minute]';
 export const MOMENT_LOG_FORMAT = 'YYYY-MM-DD_HH:mm';
 
-// Configs
-export const DATABASE_PRODUCTION: RPoolConnectionOptions = {
-  db: 'production',
-  port: 32769,
-};
-export const DATABASE_DEVELOPMENT: RPoolConnectionOptions = {
-  db: 'development',
-  port: 32769,
-};
+// paths
+export const ROOT_PATH: string = join(__dirname, '..', '..', '..');
+export const SRC_PATH: string = join(ROOT_PATH, 'src');
+export const LIB_FOLDER: string = join(SRC_PATH, 'lib');
 
 // Cron strings
 export const EVERY_MINUTE = '*/1 * * * *';

@@ -1,8 +1,8 @@
-import { readAllTimers, writeTimer } from '@components/Typeorm/DbInteractions';
-import { ApplyOptions } from '@components/Utils';
-import { EVERY_MINUTE } from '@root/components/Constants';
-import RibbonEmbed from '@root/components/RibbonEmbed';
-import { ClientSettings } from '@root/RibbonTypes';
+import { readAllTimers, writeTimer } from '@typeorm/DbInteractions';
+import { ApplyOptions } from '@utils/Utils';
+import { EVERY_MINUTE } from '@utils/Constants';
+import RibbonEmbed from '@structures/RibbonEmbed';
+import { ClientSettings } from '@settings/ClientSettings';
 import { stripIndents } from 'common-tags';
 import { TextChannel } from 'discord.js';
 import { Task, TaskOptions } from 'klasa';

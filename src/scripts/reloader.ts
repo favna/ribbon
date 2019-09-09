@@ -64,7 +64,7 @@ import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
 
     const commandsResult: string[] = Array.isArray(results.command) ? results.command : [ results.command ];
 
-    if (!commandsResult.length) throw new Error('You didn\'t give any commands to reload');
+    if (!commandsResult.length) throw 'You didn\'t give any commands to reload';
 
     for (const result of commandsResult) {
       const filePath = globby(`${commandsDir}/**/${result}.ts`)[0];

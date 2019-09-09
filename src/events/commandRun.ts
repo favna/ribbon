@@ -1,6 +1,6 @@
-import { setCommandsData } from '@components/FirebaseActions';
-import FirebaseStorage from '@components/FirebaseStorage';
-import { isTextChannel } from '@components/Utils';
+import { setCommandsData } from '@utils/FirebaseActions';
+import FirebaseStorage from '@utils/FirebaseStorage';
+import { isTextChannel } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import { Command, Event, KlasaMessage } from 'klasa';
 import moment from 'moment';

@@ -1,8 +1,8 @@
-import { isArray, isStrings } from '@components/Utils';
+import { isArray, isStrings } from '@utils/Utils';
 import { oneLine } from 'common-tags';
 import dym, { ReturnTypeEnums } from 'didyoumean2';
 import { Event, KlasaMessage } from 'klasa';
-import { GuildSettings } from '@root/RibbonTypes';
+import { GuildSettings } from '@settings/GuildSettings';
 
 export default class CommandUnknownEvent extends Event {
   run(msg: KlasaMessage, cmd: string, prefix: RegExp, prefixLength: number) {

@@ -1,6 +1,6 @@
-// import { decache } from '@components/Decache';
-import { getChannelsData, getCommandsData, getMessagesData, getServersData, getUsersData } from '@components/FirebaseActions';
-import FirebaseStorage from '@components/FirebaseStorage';
+// import { decache } from '@utils/Decache';
+import { getChannelsData, getCommandsData, getMessagesData, getServersData, getUsersData } from '@utils/FirebaseActions';
+import FirebaseStorage from '@utils/FirebaseStorage';
 // import fs from 'fs-nextra';
 import { Event } from 'klasa';
 // import path from 'path';

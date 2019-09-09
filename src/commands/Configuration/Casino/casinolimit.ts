@@ -1,6 +1,6 @@
-import { ApplyOptions, logModMessage } from '@components/Utils';
-import RibbonEmbed from '@root/components/RibbonEmbed';
-import { GuildSettings } from '@root/RibbonTypes';
+import { ApplyOptions, logModMessage } from '@utils/Utils';
+import RibbonEmbed from '@structures/RibbonEmbed';
+import { GuildSettings } from '@settings/GuildSettings';
 import { stripIndents } from 'common-tags';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 

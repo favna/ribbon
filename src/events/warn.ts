@@ -1,5 +1,5 @@
 import { Event } from 'klasa';
-import { isTextChannel } from '@components/Utils';
+import { isTextChannel } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import moment from 'moment';
 

@@ -1,4 +1,4 @@
-import { ApplyOptions } from '@components/Utils';
+import { ApplyOptions } from '@utils/Utils';
 import { Argument, ArgumentOptions } from 'klasa';
 
 @ApplyOptions<ArgumentOptions>({aliases: [ 'tcgp' ]})
@@ -10,8 +10,10 @@ export default class TcgPropArgument extends Argument {
       return arg.split(' ').filter(Boolean);
     }
 
-    throw new Error(
-      `Has to be any combination of ${[ 'name', 'types', 'subtype', 'supertype', 'hp' ].map((val: string) => `\`${val}\``).join(', ')}`
+    throw (
+      `
+        Has to be any combination of ${[ 'name', 'types', 'subtype', 'supertype', 'hp' ].map((val: string) => `\`${val}\``).join(', ')}
+      `
     );
   }
 }

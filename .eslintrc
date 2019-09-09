@@ -8,6 +8,7 @@
   "rules": {
     "@typescript-eslint/no-namespace": "off",
     "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    "no-throw-literal": "off",
 
     // TODO: Remove Once Done:
     "new-cap": [

@@ -1,6 +1,6 @@
-import { setMessagesData } from '@components/FirebaseActions';
-import FirebaseStorage from '@components/FirebaseStorage';
-import { ApplyOptions, isTextChannel } from '@components/Utils';
+import { setMessagesData } from '@utils/FirebaseActions';
+import FirebaseStorage from '@utils/FirebaseStorage';
+import { ApplyOptions, isTextChannel } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import { KlasaMessage, Monitor, MonitorOptions } from 'klasa';
 import moment from 'moment';

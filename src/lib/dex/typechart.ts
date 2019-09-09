@@ -1,5 +1,5 @@
 /* eslint-disable max-len, object-curly-newline */
-import { TypeChart } from '@root/RibbonTypes';
+import { TypeChart } from '@typings/Pokemon';
 
 const typeChart: TypeChart = {
   Bug: {

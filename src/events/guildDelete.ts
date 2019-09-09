@@ -1,6 +1,6 @@
-import { setServersData } from '@components/FirebaseActions';
-import FirebaseStorage from '@components/FirebaseStorage';
-import { isTextChannel } from '@components/Utils';
+import { setServersData } from '@utils/FirebaseActions';
+import FirebaseStorage from '@utils/FirebaseStorage';
+import { isTextChannel } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import { Guild } from 'discord.js';
 import { Event } from 'klasa';

@@ -1,12 +1,12 @@
-import { ApplyOptions } from '@components/Utils';
-import { tierAliases } from '@pokedex/aliases';
+import { ApplyOptions } from '@utils/Utils';
+import { tierAliases } from '@dex/aliases';
 import cheerio from 'cheerio';
 import { stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import { Argument, ArgumentOptions } from 'klasa';
 import fetch from 'node-fetch';
 import { table } from 'table';
-import { tierAlias } from '@root/RibbonTypes';
+import { tierAlias } from '@typings/Pokemon';
 
 type Fuser = {
   hasMatch: boolean;
@@ -28,14 +28,14 @@ export default class ShowdownArgument extends Argument {
 
     if (isValid) return arg;
 
-    throw new Error(stripIndents(
+    throw stripIndents(
       `
         __**Unknown tier, reply with one of the following**__
         \`\`\`
           ${this.tablefier(ladders, 3)}
         \`\`\`
       `
-    ));
+    );
   }
 
   private tablefier(array: string[], size: number): string {

@@ -3,8 +3,9 @@ import { oneLineTrim } from 'common-tags';
 import { Channel, Constructor, GuildMember, MessageEmbed, TextChannel, Util, BitFieldResolvable, PermissionString } from 'discord.js';
 import emojiRegex from 'emoji-regex';
 import { KlasaMessage, Piece, PieceOptions, Store } from 'klasa';
-import { GuildSettings, YoutubeVideoType } from '../RibbonTypes';
 import { diacriticsMap } from './Constants';
+import { GuildSettings } from '../typings/settings/GuildSettings';
+import { YoutubeVideoType } from '../typings/Music';
 
 /** Validation on whether this connection will be production or not */
 export const prod = process.env.NODE_ENV === 'production';

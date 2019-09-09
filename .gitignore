@@ -24,11 +24,11 @@ build/
 tsconfig.tsbuildinfo
 
 # Data folders
-src/data/*.sqlite
+src/lib/databases/*.sqlite
 
 # Folder keep
 !**/*.gitkeep
 
 # My own stuff
-src/commands/owner/testing.ts
-src/serializers/scheduledtask.ts
+src/commands/Owner/testing.ts
+src/lib/databases/rethinkdb.ts

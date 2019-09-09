@@ -1,5 +1,5 @@
 /* eslint-disable max-len, object-curly-newline */
-import { PokemonLearnsets } from '@root/RibbonTypes';
+import { PokemonLearnsets } from '@typings/Pokemon';
 
 const learnsets: PokemonLearnsets = {
   missingno: {

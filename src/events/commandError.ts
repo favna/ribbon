@@ -1,4 +1,4 @@
-import { isTextChannel } from '@components/Utils';
+import { isTextChannel } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import { Command, Event, KlasaMessage } from 'klasa';
 import moment from 'moment';

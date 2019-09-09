@@ -21,7 +21,7 @@ const resolveMember = async (query: GuildMember | KlasaUser | string, guild: Kla
 
 export default class MembernameArgument extends Argument {
   async run(arg: string, possible: Possible, msg: KlasaMessage): Promise<GuildMember> {
-    if (!msg.guild) throw new Error('This command can only be used inside a server.');
+    if (!msg.guild) throw 'This command can only be used inside a server.';
     try {
       const resUser = await resolveMember(arg, msg.guild);
       if (resUser) return resUser;
@@ -46,12 +46,12 @@ export default class MembernameArgument extends Argument {
       }
 
       switch (querySearch.length) {
-        case 0: throw new Error(`${possible.name} Must be a valid name, id or user mention`);
+        case 0: throw `${possible.name} Must be a valid name, id or user mention`;
         case 1: return querySearch[0];
-        default: throw new Error(`Found multiple matches: \`${querySearch.map(member => member.user.tag).join('`, `')}\``);
+        default: throw `Found multiple matches: \`${querySearch.map(member => member.user.tag).join('`, `')}\``;
       }
     }
 
-    throw new Error('an invalid argument was given');
+    throw 'an invalid argument was given';
   }
 }

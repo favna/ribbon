@@ -1,6 +1,6 @@
-import { setChannelsData } from '@components/FirebaseActions';
-import FirebaseStorage from '@components/FirebaseStorage';
-import { isTextChannel } from '@components/Utils';
+import { setChannelsData } from '@utils/FirebaseActions';
+import FirebaseStorage from '@utils/FirebaseStorage';
+import { isTextChannel } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import { Channel, GuildChannel } from 'discord.js';
 import { Event } from 'klasa';

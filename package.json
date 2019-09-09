@@ -78,7 +78,6 @@
     "node-fetch": "^2.6.0",
     "qrcode": "^1.4.1",
     "reflect-metadata": "^0.1.13",
-    "rethinkdb-ts": "^2.4.0-rc.16",
     "sagiri": "^2.0.2",
     "slot-machine": "^2.1.0",
     "speedtest-net": "^1.5.1",

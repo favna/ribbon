@@ -1,5 +1,6 @@
-import { CurrencyUnits } from '@root/RibbonTypes';
+
 import { currencySymbolMap } from './Constants';
+import { CurrencyUnits } from '@typings/General';
 
 export const currencyMap = (code: string): string | null => {
   code = code.toUpperCase();

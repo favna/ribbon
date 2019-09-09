@@ -1,4 +1,4 @@
-import { ApplyOptions } from '@components/Utils';
+import { ApplyOptions } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import { Event, EventOptions } from 'klasa';
 import moment from 'moment';
