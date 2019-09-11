@@ -52,7 +52,7 @@
     "npm": ">=6"
   },
   "dependencies": {
-    "@favware/converter": "^1.0.4",
+    "@favware/converter": "^1.0.6",
     "@favware/querystring": "^3.0.2",
     "@favware/unescape": "^1.0.3",
     "@favware/zalgo": "^1.0.3",
