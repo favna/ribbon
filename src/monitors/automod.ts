@@ -20,7 +20,7 @@ export default class extends Monitor {
       if (
         msg.member &&
         msg.member.roles
-          .some(role => (msg.guildSettings.get(GuildSettings.automodFilterRoles) as GuildSettings.automod['filterRoles'])
+          .some(role => (msg.guildSettings.get(GuildSettings.automodFilterRoles) as GuildSettings.Automod['filterRoles'])
             .includes(role.id)
           )
       ) {
@@ -44,7 +44,7 @@ export default class extends Monitor {
       }
 
       if (msg.guildSettings.get(GuildSettings.automodBadwordsEnabled)) {
-        const words = msg.guildSettings.get(GuildSettings.automodBadwordsWords) as GuildSettings.automodBadwords['words'];
+        const words = msg.guildSettings.get(GuildSettings.automodBadwordsWords) as GuildSettings.AutomodBadwords['words'];
 
         if (badwords(msg, words, this.client)) {
           await msg.delete();
@@ -54,7 +54,7 @@ export default class extends Monitor {
       }
 
       if (msg.guildSettings.get(GuildSettings.automodMentionsEnabled)) {
-        const options = msg.guildSettings.get(GuildSettings.autmodMentions) as GuildSettings.automodMentions;
+        const options = msg.guildSettings.get(GuildSettings.autmodMentions) as GuildSettings.AutomodMentions;
 
         if (mentions(msg, options.threshold, this.client)) {
           await msg.delete();
@@ -64,7 +64,7 @@ export default class extends Monitor {
       }
 
       if (msg.guildSettings.get(GuildSettings.automodCapsEnabled)) {
-        const options = msg.guildSettings.get(GuildSettings.automodCaps) as GuildSettings.automodCaps;
+        const options = msg.guildSettings.get(GuildSettings.automodCaps) as GuildSettings.AutomodCaps;
 
         if (caps(msg, options.threshold, options.minLength, this.client)) {
           await msg.delete();
@@ -74,7 +74,7 @@ export default class extends Monitor {
       }
 
       if (msg.guildSettings.get(GuildSettings.automodDuptextEnabled)) {
-        const options = msg.guildSettings.get(GuildSettings.autmodDuptext) as GuildSettings.automodDuptext;
+        const options = msg.guildSettings.get(GuildSettings.autmodDuptext) as GuildSettings.AutomodDuptext;
 
         if (duptext(msg, options.within, options.equals, options.distance, this.client)) {
           await msg.delete();
@@ -84,7 +84,7 @@ export default class extends Monitor {
       }
 
       if (msg.guildSettings.get(GuildSettings.automodEmojisEnabled)) {
-        const options = msg.guildSettings.get(GuildSettings.automodEmojis) as GuildSettings.automodEmojis;
+        const options = msg.guildSettings.get(GuildSettings.automodEmojis) as GuildSettings.AutomodEmojis;
 
         if (emojis(msg, options.threshold, options.minLength, this.client)) {
           await msg.delete();

@@ -1,15 +1,15 @@
 import { StringOrNumber } from './General';
 
-type FlavorTextType = {
+interface FlavorTextType {
   version_id: string;
   flavor_text: string;
-};
+}
 
-type PokeAlias = {
+interface PokeAlias {
   alias: string;
-};
+}
 
-type PokeStatType = {
+interface PokeStatType {
   hp: number;
   atk: number;
   def: number;
@@ -18,18 +18,18 @@ type PokeStatType = {
   spe: number;
 
   [propName: string]: StringOrNumber | undefined;
-};
+}
 
-type PokeAbilityType = {
+interface PokeAbilityType {
   0: string;
   1?: string;
   H?: string;
   S?: string;
 
   [propName: string]: string | undefined;
-};
+}
 
-type PokeTypesType = {
+interface PokeTypesType {
   bug: number;
   dark: number;
   dragon: number;
@@ -50,21 +50,21 @@ type PokeTypesType = {
   water: number;
 
   [propName: string]: number;
-};
+}
 
-type PokeGenderRatioType = {
+interface PokeGenderRatioType {
   M: number;
   F: number;
-};
+}
 
-export type PokeDataType = {
+export interface PokeDataType {
   abilities?: string;
   evos?: string;
   flavors?: string;
   genders?: string;
   sprite: string;
   tier?: string;
-};
+}
 
 export type FlavorDataType = PokeDataType & {
   entries: {
@@ -73,7 +73,7 @@ export type FlavorDataType = PokeDataType & {
   }[];
 };
 
-export type Pokedex = {
+export interface Pokedex {
   num: number;
   species: string;
   types: string[];
@@ -94,26 +94,26 @@ export type Pokedex = {
   evoLevel?: StringOrNumber;
   eggGroups?: string[];
   otherFormes?: string[];
-};
+}
 
-export type PokemonAbility = {
+export interface PokemonAbility {
   desc?: string;
   shortDesc: string;
   id: string;
   name: string;
   num: number;
-};
+}
 
-export type PokemonItem = {
+export interface PokemonItem {
   id: string;
   name: string;
   desc: string;
   gen: number;
   num: number;
   shortDesc?: string;
-};
+}
 
-export type PokemonMove = {
+export interface PokemonMove {
   id: string;
   num: number;
   name: string;
@@ -128,7 +128,7 @@ export type PokemonMove = {
   contestType: string;
   isZ?: string;
   desc?: string;
-};
+}
 
 export type abilityAlias = PokeAlias & {
   ability: string;
@@ -150,15 +150,15 @@ export type moveAlias = PokeAlias & {
   move: string;
 };
 
-export type TCGPropsType = {
+export interface TCGPropsType {
   name: string;
   types: string;
   subtype: string;
   supertype?: string;
   hp: string;
-};
+}
 
-export type PokeTypeDataType = {
+export interface PokeTypeDataType {
   doubleEffectiveTypes: string[];
   doubleResistedTypes: string[];
   effectiveTypes: string[];
@@ -166,19 +166,19 @@ export type PokeTypeDataType = {
   multi: PokeTypesType;
   normalTypes: string[];
   resistedTypes: string[];
-};
+}
 
-export type FlavorJSONType = {
+export interface FlavorJSONType {
   [propName: string]: FlavorTextType[];
-};
+}
 
-export type FormatsJSONType = {
+export interface FormatsJSONType {
   [propName: string]: string;
-};
+}
 
-type DamageDealtTakenType = { damageTaken: Required<PokeTypesType>; damageDealt: Required<PokeTypesType> };
+interface DamageDealtTakenType { damageTaken: Required<PokeTypesType>; damageDealt: Required<PokeTypesType> }
 
-export type TypeChart = {
+export interface TypeChart {
   Bug: DamageDealtTakenType;
   Dark: DamageDealtTakenType;
   Dragon: DamageDealtTakenType;
@@ -199,11 +199,11 @@ export type TypeChart = {
   Water: DamageDealtTakenType;
 
   [propName: string]: DamageDealtTakenType;
-};
+}
 
 type ShowdownTierUnion = 'ou' | 'uu' | 'uber' | 'nu' | 'ru' | 'pu' | 'lc' | 'monotype' | string;
 
-type ShowdownRanker = {
+interface ShowdownRanker {
   userid: string;
   username: string;
   w: number;
@@ -218,22 +218,22 @@ type ShowdownRanker = {
   rprd: number;
   rpsigma: number;
   elo: number;
-};
+}
 
-export type ShowdownData = {
+export interface ShowdownData {
   formatid: ShowdownTierUnion;
   format: ShowdownTierUnion;
   toplist: ShowdownRanker[];
-};
+}
 
 
-export type PokemonLearnsets = {
+export interface PokemonLearnsets {
   [propName: string]: {
     learnset: {
       [propName: string]: string[];
     };
   };
-};
+}
 
 export type TCGType =
   'Grass' | 'Fire' | 'Water' | 'Lightning' |
@@ -248,26 +248,26 @@ export type TCGSubType =
   'Pokémon Tool' | 'Basic' | 'LEGEND' | 'Stage 2' |
   'BREAK' | 'Rocket\'s Secret Machine';
 
-type TCGAttack = {
+interface TCGAttack {
   cost: TCGType[];
   name: string;
   text: string;
   damage: string;
   convertedEnergyCost: number;
-};
+}
 
-type TCGResistWeakness = {
+interface TCGResistWeakness {
   type: TCGType;
   value: string;
-};
+}
 
-type TCGAbility = {
+interface TCGAbility {
   name: string;
   text: string;
   type: string;
-};
+}
 
-type TCGCard = {
+interface TCGCard {
   name: string;
   id: string;
   nationalPokedexNumber?: number;
@@ -293,8 +293,8 @@ type TCGCard = {
   contains?: string;
   imageUrl: string;
   imageUrlHiRes: string;
-};
+}
 
-export type TCGCardData = {
+export interface TCGCardData {
   cards: TCGCard[];
-};
+}

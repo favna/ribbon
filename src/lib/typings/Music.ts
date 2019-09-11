@@ -7,7 +7,7 @@ export type MusicCommand = {
   votes: Map<string, MusicVoteType>;
 } & Command;
 
-export type MusicQueueType = {
+export interface MusicQueueType {
   textChannel: TextChannel;
   voiceChannel: VoiceChannel;
   connection: VoiceConnection | null;
@@ -15,9 +15,9 @@ export type MusicQueueType = {
   volume: number;
   playing: boolean;
   isTriggeredByStop?: boolean;
-};
+}
 
-export type MusicVoteType = {
+export interface MusicVoteType {
   count: number;
   users: string[];
   queue: MusicQueueType;
@@ -25,14 +25,14 @@ export type MusicVoteType = {
   start: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   timeout: any;
-};
+}
 
-type YoutubeVideoContentDetailsType = {
+interface YoutubeVideoContentDetailsType {
   videoId: string;
   videoPublishedAt: string;
-};
+}
 
-export type YoutubeVideoSnippetType = {
+export interface YoutubeVideoSnippetType {
   channelId: string;
   channelTitle: string;
   description: string;
@@ -43,21 +43,21 @@ export type YoutubeVideoSnippetType = {
   thumbnails: YoutubeVideoThumbnailType;
   title: string;
   liveBroadcastContent: string;
-};
+}
 
-type YoutubeVideoThumbnailType = {
+interface YoutubeVideoThumbnailType {
   default: { height: number; width: null; url: string };
   high?: { height: number; width: null; url: string };
   medium?: { height: number; width: null; url: string };
   standard?: { height: number; width: null; url: string };
-};
+}
 
-export type YoutubeVideoResourceType = {
+export interface YoutubeVideoResourceType {
   kind: string;
   videoId: string;
-};
+}
 
-export type YoutubeResultList = {
+export interface YoutubeResultList {
   etag: string;
   items: {
     etag: string;
@@ -69,9 +69,9 @@ export type YoutubeResultList = {
   nextPageToken: string;
   pageInfo: { resultsPerPage: number; totalResults: number };
   regionCode: string;
-};
+}
 
-export type YoutubeVideoType = {
+export interface YoutubeVideoType {
   id: string;
   title: string;
   kind: string;
@@ -79,4 +79,4 @@ export type YoutubeVideoType = {
   durationSeconds: number;
   contentDetails?: YoutubeVideoContentDetailsType;
   snippet?: YoutubeVideoSnippetType;
-};
+}

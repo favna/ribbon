@@ -1,11 +1,11 @@
 import { StringOrNumber } from './General';
 
-export type FortniteStatsType = {
+export interface FortniteStatsType {
   key: string;
   value: string;
-};
+}
 
-export type RedditAbout = {
+export interface RedditAbout {
   comment_karma: number;
   created: number;
   created_utc: number;
@@ -23,9 +23,9 @@ export type RedditAbout = {
   pref_show_snoovatar: boolean;
   subreddit: unknown;
   verified: boolean;
-};
+}
 
-export type RedditComment = {
+export interface RedditComment {
   all_awardings: unknown[];
   total_awards_received: number;
   approved_at_utc: unknown;
@@ -95,10 +95,10 @@ export type RedditComment = {
   quarantine: boolean;
   subreddit_type: string;
   ups: number;
-};
+}
 
 
-export type RedditPost = {
+export interface RedditPost {
   all_awardings: unknown[];
   allow_live_comments: boolean;
   approved_at_utc: number | null;
@@ -214,9 +214,9 @@ export type RedditPost = {
   visited: boolean;
   whitelist_status?: unknown;
   wls?: unknown;
-};
+}
 
-export type RedditResponse<K extends 'comments' | 'posts'> = {
+export interface RedditResponse<K extends 'comments' | 'posts'> {
   kind: string;
   data: {
     after: string;
@@ -229,9 +229,9 @@ export type RedditResponse<K extends 'comments' | 'posts'> = {
       data: K extends 'comments' ? RedditComment : RedditPost;
     }[];
   };
-};
+}
 
-export type SpeedTestResponse = {
+export interface SpeedTestResponse {
   speeds: {
     download: number;
     upload: number;
@@ -262,9 +262,9 @@ export type SpeedTestResponse = {
     ping: number;
     id: string;
   };
-};
+}
 
-type OverwatchTopHeroStats = {
+interface OverwatchTopHeroStats {
   timePlayed: string;
   timePlayedInSeconds: number;
   gamesWon: number;
@@ -275,9 +275,9 @@ type OverwatchTopHeroStats = {
   objectiveKills: number;
 
   [topHeroStat: string]: StringOrNumber;
-};
+}
 
-type OverwatchAwardStats = {
+interface OverwatchAwardStats {
   cards: number;
   medals: number;
   medalsBronze: number;
@@ -285,9 +285,9 @@ type OverwatchAwardStats = {
   medalsGold: number;
 
   [awardStat: string]: number;
-};
+}
 
-type OverwatchCareerAllHeroesAssists = {
+interface OverwatchCareerAllHeroesAssists {
   defensiveAssists: number;
   defensiveAssistsAvgPer10Min: number;
   defensiveAssistsMostInGame: number;
@@ -299,9 +299,9 @@ type OverwatchCareerAllHeroesAssists = {
   offensiveAssistsMostInGame: number;
 
   [stat: string]: number;
-};
+}
 
-type OverwatchCareerAllHeroesAverage = {
+interface OverwatchCareerAllHeroesAverage {
   allDamageDoneAvgPer10Min: number;
   barrierDamageDoneAvgPer10Min: number;
   deathsAvgPer10Min: number;
@@ -315,9 +315,9 @@ type OverwatchCareerAllHeroesAverage = {
   timeSpentOnFireAvgPer10Min: string;
 
   [stat: string]: StringOrNumber;
-};
+}
 
-type OverwatchCareerAllHeroesBest = {
+interface OverwatchCareerAllHeroesBest {
   allDamageDoneMostInGame: number;
   barrierDamageDoneMostInGame: number;
   defensiveAssistsMostInGame: number;
@@ -338,9 +338,9 @@ type OverwatchCareerAllHeroesBest = {
   turretsDestroyedMostInGame: number;
 
   [stat: string]: StringOrNumber;
-};
+}
 
-type OverwatchCareerAllHeroesCombat = {
+interface OverwatchCareerAllHeroesCombat {
   barrierDamageDone: number;
   damageDone: number;
   deaths: number;
@@ -356,9 +356,9 @@ type OverwatchCareerAllHeroesCombat = {
   timeSpentOnFire: string;
 
   [stat: string]: StringOrNumber;
-};
+}
 
-type OverwatchCareerAllHeroesGame = {
+interface OverwatchCareerAllHeroesGame {
   gamesLost: number;
   gamesPlayed: number;
   gamesTied: number;
@@ -366,9 +366,9 @@ type OverwatchCareerAllHeroesGame = {
   timePlayed: string;
 
   [stat: string]: StringOrNumber;
-};
+}
 
-type OverwatchCareerAllHeroesMatchAwards = {
+interface OverwatchCareerAllHeroesMatchAwards {
   cards: number;
   medals: number;
   medalsBronze: number;
@@ -376,17 +376,17 @@ type OverwatchCareerAllHeroesMatchAwards = {
   medalsSilver: number;
 
   [stat: string]: number;
-};
+}
 
-type OverwatchCareerAllHeroesMisc = {
+interface OverwatchCareerAllHeroesMisc {
   teleporterPadsDestroyed: number;
   turretsDestroyed: number;
 
   [stat: string]: number;
-};
+}
 
 
-type OverwatchHeroStats = {
+interface OverwatchHeroStats {
   assists: OverwatchCareerAllHeroesAssists;
   average: OverwatchCareerAllHeroesAverage;
   best: OverwatchCareerAllHeroesBest;
@@ -396,33 +396,33 @@ type OverwatchHeroStats = {
   game: OverwatchCareerAllHeroesGame;
   matchAwards: OverwatchCareerAllHeroesMatchAwards;
   miscellaneous?: OverwatchCareerAllHeroesMisc;
-};
+}
 
-type OverwatchCareerStats = {
+interface OverwatchCareerStats {
   allHeroes: OverwatchHeroStats;
 
   [heroName: string]: OverwatchHeroStats;
-};
+}
 
-type OverwatchTopHeroes = {
+interface OverwatchTopHeroes {
   [heroName: string]: OverwatchTopHeroStats;
-};
+}
 
-type OverwatchGamesStats = {
+interface OverwatchGamesStats {
   played: number;
   won: number;
 
   [gameStats: string]: number;
-};
+}
 
-type OverwatchStatsGroup = {
+interface OverwatchStatsGroup {
   awards: OverwatchAwardStats;
   careerStats: OverwatchCareerStats;
   games: OverwatchGamesStats;
   topHeroes: OverwatchTopHeroes;
-};
+}
 
-export type OverwatchData = {
+export interface OverwatchData {
   error: unknown;
   endorsement: number;
   endorsementIcon: string;
@@ -439,20 +439,20 @@ export type OverwatchData = {
   ratingName?: string;
   competitiveStats: OverwatchStatsGroup;
   quickPlayStats: OverwatchStatsGroup;
-};
+}
 
 type PubgSetTypeUnion = 'season' | 'player' | 'playerSeason';
 
-type PubgSeasonSet = {
+interface PubgSeasonSet {
   type: Exclude<PubgSetTypeUnion, 'playerSeason' | 'player'>;
   id: string;
   attributes: {
     isCurrentSeason: boolean;
     isOffSeason: boolean;
   };
-};
+}
 
-type PubgPlayerSet = {
+interface PubgPlayerSet {
   type: Exclude<PubgSetTypeUnion, 'playerSeason' | 'season'>;
   id: string;
   attributes: {
@@ -472,9 +472,9 @@ type PubgPlayerSet = {
       data: unknown[];
     };
   };
-};
+}
 
-type PubgStatistics = {
+interface PubgStatistics {
   assists: number;
   bestRankPoint: number;
   boosts: number;
@@ -511,9 +511,9 @@ type PubgStatistics = {
   weeklyWins: number;
   winPoints: number;
   wins: number;
-};
+}
 
-type PubgPlayerStatsSet = {
+interface PubgPlayerStatsSet {
   type: Exclude<PubgSetTypeUnion, 'season' | 'player'>;
   attributes: {
     gameModeStats: {
@@ -545,9 +545,9 @@ type PubgPlayerStatsSet = {
     matchesDuo: { data: unknown };
     matchesDuoFPP: { data: unknown };
   };
-};
+}
 
-export type PubgData<K extends PubgSetTypeUnion> = {
+export interface PubgData<K extends PubgSetTypeUnion> {
   data: K extends Exclude<PubgSetTypeUnion, 'playerSeason' | 'player'>
     ? PubgSeasonSet[]
     : K extends Exclude<PubgSetTypeUnion, 'playerSeason' | 'season'>
@@ -558,4 +558,4 @@ export type PubgData<K extends PubgSetTypeUnion> = {
     schema: string;
   };
   meta: {};
-};
+}

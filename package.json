@@ -68,7 +68,7 @@
     "firebase-admin": "8.5.0",
     "fs-nextra": "^0.4.5",
     "fuse.js": "^3.4.5",
-    "jimp": "0.8.0",
+    "jimp": "0.7.0",
     "klasa": "dirigeants/klasa#settings",
     "klasa-decorators": "^0.0.1",
     "libsodium-wrappers": "^0.7.5",

@@ -25,7 +25,7 @@ export default class extends Event {
 
   private assignDefaultRole(member: GuildMember, embed: MessageEmbed) {
     const guild = member.guild;
-    const defaultRole = guild.settings.get(GuildSettings.moderationDefaultRole) as GuildSettings.moderation['defaultRole'];
+    const defaultRole = guild.settings.get(GuildSettings.moderationDefaultRole) as GuildSettings.Moderation['defaultRole'];
     if (defaultRole && member.manageable) {
       member.roles.add(defaultRole);
       embed.setDescription(`Automatically assigned the role ${defaultRole.name} to this member`);

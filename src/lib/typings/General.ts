@@ -1,17 +1,17 @@
 export type StringOrNumber = string | number;
 
-export type SimpleEmbedFieldType = { name: string; value: string };
+export interface SimpleEmbedFieldType { name: string; value: string }
 
-type FrontlineGirlConstantsType = {
+interface FrontlineGirlConstantsType {
   mov: number;
   crit_rate: number;
   crit_dmg: number;
   pen: number;
 
   [propName: string]: number;
-};
+}
 
-type FrontlineGirlStatsType = {
+interface FrontlineGirlStatsType {
   hp: number;
   ammo: number;
   ration: number;
@@ -22,9 +22,9 @@ type FrontlineGirlStatsType = {
   armor: number;
 
   [propName: string]: number;
-};
+}
 
-type FrontlineGirlAbilityType = {
+interface FrontlineGirlAbilityType {
   name: string;
   icon: string;
   text: string;
@@ -36,18 +36,18 @@ type FrontlineGirlAbilityType = {
   time_value?: string[];
 
   [propName: string]: string | string[] | undefined;
-};
+}
 
-export type FrontlineGirlProductionRequirementsType = {
+export interface FrontlineGirlProductionRequirementsType {
   manpower: number;
   ammo: number;
   rations: number;
   parts: number;
 
   [propName: string]: number;
-};
+}
 
-export type FrontlineGirl = {
+export interface FrontlineGirl {
   url: string;
   num: number;
   name: string;
@@ -68,9 +68,9 @@ export type FrontlineGirl = {
     stage?: string;
   };
   img?: string;
-};
+}
 
-export type SayData = {
+export interface SayData {
   argString: string;
   authorID: string;
   authorTag: string;
@@ -79,9 +79,9 @@ export type SayData = {
   memberHexColor: string;
   messageDate: Date;
   attachment: string;
-};
+}
 
-export type CurrencyUnits = {
+export interface CurrencyUnits {
   AED: number; AFN: number; ALL: number; AMD: number; ANG: number; AOA: number; ARS: number;
   AUD: number; AWG: number; AZN: number; BAM: number; BBD: number; BDT: number; BGN: number;
   BHD: number; BIF: number; BMD: number; BND: number; BOB: number; BRL: number; BSD: number;
@@ -109,4 +109,4 @@ export type CurrencyUnits = {
   ZAR: number; ZMW: number; ZWL: number;
 
   [propName: string]: number;
-};
+}

@@ -12,12 +12,12 @@ export default class extends Event {
     const guild = newMember.guild;
 
     if (guild.settings.get(GuildSettings.twitchEnabled)) {
-      const users = guild.settings.get(GuildSettings.twitchUsers) as GuildSettings.twitch['users'];
+      const users = guild.settings.get(GuildSettings.twitchUsers) as GuildSettings.Twitch['users'];
       if (users.map(user => user.id).includes(newMember.id)) {
         const curDisplayName = newMember.displayName;
         const curGuild = newMember.guild;
         const curUser = newMember.user;
-        const twitchChannel = guild.settings.get(GuildSettings.twitchChannel) as GuildSettings.twitch['channel'];
+        const twitchChannel = guild.settings.get(GuildSettings.twitchChannel) as GuildSettings.Twitch['channel'];
         let newActivity = newMember.presence.activity;
         let oldActivity = oldMember.presence.activity;
 

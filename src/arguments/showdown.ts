@@ -8,11 +8,11 @@ import fetch from 'node-fetch';
 import { table } from 'table';
 import { tierAlias } from '@typings/Pokemon';
 
-type Fuser = {
+interface Fuser {
   hasMatch: boolean;
   tier: string;
   alias: string;
-};
+}
 
 @ApplyOptions<ArgumentOptions>({aliases: [ 'sdtier' ]})
 export default class extends Argument {

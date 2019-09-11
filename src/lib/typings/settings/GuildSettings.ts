@@ -3,82 +3,82 @@ import { Role, TextChannel } from 'discord.js';
 import { KlasaUser } from 'klasa';
 
 export namespace GuildSettings {
-  export type automessage = {
+  export interface AutoMessage {
     channel: TextChannel;
     enabled: boolean;
-  };
-  export type automessagesJoinmsgs = automessage;
-  export type automessagesLeavemsgs = automessage;
-  export type loggingMemberlogs = automessage;
-  export type loggingModlogs = automessage;
+  }
+  export type automessagesJoinmsgs = AutoMessage;
+  export type automessagesLeavemsgs = AutoMessage;
+  export type loggingMemberlogs = AutoMessage;
+  export type loggingModlogs = AutoMessage;
 
   export type saydata = SayData;
   export type deleteCommand = boolean;
   export type unknownMessages = boolean;
-  export type automodBadwords = {
+  export interface AutomodBadwords {
     enabled: boolean;
     words: string[];
-  };
-  export type automodDuptext = {
+  }
+  export interface AutomodDuptext {
     enabled: boolean;
     within: number;
     equals: number;
     distance: number;
-  };
-  export type automodCaps = {
+  }
+  export interface AutomodCaps {
     enabled: boolean;
     threshold: number;
     minLength: number;
-  };
-  export type automodEmojis = {
+  }
+  export interface AutomodEmojis {
     enabled: boolean;
     threshold: number;
     minLength: number;
-  };
-  export type automodMentions = {
+  }
+  export interface AutomodMentions {
     enabled: boolean;
     threshold: number;
-  };
-  export type automod = {
-    badwords: automodBadwords;
-    duptext: automodDuptext;
-    caps: automodCaps;
-    emojis: automodEmojis;
-    mentions: automodMentions;
+  }
+  export interface Automod {
+    badwords: AutomodBadwords;
+    duptext: AutomodDuptext;
+    caps: AutomodCaps;
+    emojis: AutomodEmojis;
+    mentions: AutomodMentions;
     invites: boolean;
     links: boolean;
     enabled: boolean;
     filterRoles: string[];
-  };
-  export type casino = {
+  }
+  export interface Casino {
     lowerLimit: number;
     upperLimit: number;
-  };
-  export type moderation = {
+  }
+  export interface Moderation {
     announcementsChannel: TextChannel;
     defaultRole: Role;
     muteRole: Role;
     selfRoles: Role[];
     unknownMessages: boolean;
-  };
-  export type automessages = {
+  }
+  export interface AutoMessages {
     joinmsgs: automessagesJoinmsgs;
     leavemsgs: automessagesLeavemsgs;
-  };
-  export type logging = {
+  }
+  export interface Logging {
     memberlogs: loggingMemberlogs;
     modlogs: loggingModlogs;
-  };
-  export type music = {
+  }
+  export interface Music {
     defaultVolume: number;
     maxLength: number;
     maxSongs: number;
-  };
-  export type twitch = {
+  }
+  export interface Twitch {
     channel: TextChannel;
     enabled: boolean;
     users: KlasaUser[];
-  };
+  }
 
 
   // Klasa Build-Ins

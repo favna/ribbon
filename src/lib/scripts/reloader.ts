@@ -10,18 +10,18 @@ import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
 import { ROOT_PATH, SRC_PATH } from '../utils/Constants';
 
 (async () => {
-  type YargResult = {
+  interface YargResult {
     help: boolean;
     version: boolean;
     interactive: boolean;
     command: string | string[];
-  };
+  }
 
-  type BaseTSConfig = {
+  interface BaseTSConfig {
     compilerOptions: CompilerOptions;
     include: string[];
     exclude: string[];
-  };
+  }
 
   const commandsDir = join(SRC_PATH, 'commands');
   const commands = globby(`${commandsDir}/**/*.ts`).map(file => {

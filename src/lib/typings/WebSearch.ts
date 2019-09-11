@@ -1,16 +1,16 @@
 import { GoogleSource } from '@utils/Constants';
 
-type DiscordGameExecutableType = {
+interface DiscordGameExecutableType {
   name: string;
   os: string;
-};
+}
 
-type KitsuPosterImageDimensions = {
+interface KitsuPosterImageDimensions {
   width: number | null;
   height: number | null;
-};
+}
 
-type KitsuPosterImage = {
+interface KitsuPosterImage {
   tiny?: string;
   small?: string;
   medium?: string;
@@ -24,21 +24,21 @@ type KitsuPosterImage = {
       tiny: KitsuPosterImageDimensions;
     };
   };
-};
+}
 
-type KitsuTitles = {
+interface KitsuTitles {
   en: string;
   en_jp: string;
   ja_jp: string;
-};
+}
 
-export type CydiaAPIPackageType = {
+export interface CydiaAPIPackageType {
   display: string;
   name: string;
   summary: string;
   version: string;
   thumbnail: string;
-};
+}
 
 export type CydiaData = {
   source: string;
@@ -48,19 +48,19 @@ export type CydiaData = {
   price: 'Free' | string;
 } & CydiaAPIPackageType;
 
-export type DiscordGameDevType = { id: string; name: string };
+export interface DiscordGameDevType { id: string; name: string }
 
-export type WordDefinitionType = {
+export interface WordDefinitionType {
   language: string;
   text: string;
-};
+}
 
-export type DiscordGameSKUType = {
+export interface DiscordGameSKUType {
   distributor: string;
   sku: string;
-};
+}
 
-export type DiscordGameType = {
+export interface DiscordGameType {
   description: string;
   developers: string[];
   distributor_applications: DiscordGameSKUType[];
@@ -72,9 +72,9 @@ export type DiscordGameType = {
   splash: string;
   summary: string;
   third_party_skus: DiscordGameSKUType[];
-};
+}
 
-export type DiscordGameParsedType = {
+export interface DiscordGameParsedType {
   id: string;
   icon: string;
   name?: string;
@@ -84,9 +84,9 @@ export type DiscordGameParsedType = {
   summary?: string;
   price?: string;
   thumbnail?: string;
-};
+}
 
-export type DiscordStoreGameType = {
+export interface DiscordStoreGameType {
   code?: string;
   id?: string;
   summary?: string;
@@ -100,9 +100,9 @@ export type DiscordStoreGameType = {
   thumbnail?: {
     id: string;
   };
-};
+}
 
-export type KitsuHit = {
+export interface KitsuHit {
   abbreviatedTitles: string[];
   ageRating: 'PG' | 'G' | string;
   averageRating: number;
@@ -126,9 +126,9 @@ export type KitsuHit = {
   posterImage: KitsuPosterImage;
   titles: KitsuTitles;
   _tags: string[];
-};
+}
 
-export type KitsuResult = {
+export interface KitsuResult {
   exhaustiveNbHits: boolean;
   hitsPerPage: number;
   nbHits: number;
@@ -139,9 +139,9 @@ export type KitsuResult = {
   query: string;
   queryAfterRemoval: string;
   hits: KitsuHit[];
-};
+}
 
-export type eShopHit = {
+export interface EShopHit {
   type: string;
   locale: string;
   url: string;
@@ -171,32 +171,32 @@ export type eShopHit = {
   salePrice: number | null;
   availability: string[];
   objectID: string;
-};
+}
 
-type eShoData = {
-  hits: eShopHit[];
+interface EShopData {
+  hits: EShopHit[];
   nbHits: number;
   page: number;
   nbPages: number;
   hitsPerPage: number;
   processingTimeMS: number;
-};
+}
 
-export type eShopResult = {
-  results: eShoData[];
-};
+export interface EShopResult {
+  results: EShopData[];
+}
 
-type GoogleCSEImage = {
+interface GoogleCSEImage {
   src: string;
   height?: string;
   width?: string;
-};
+}
 
-export type GoogleItemCommon = {
+export interface GoogleItemCommon {
   source: GoogleSource;
-};
+}
 
-export type GoogleKnowledgeItem = {
+export interface GoogleKnowledgeItem {
   '@type': string;
   resultScore: number;
   result: {
@@ -214,7 +214,7 @@ export type GoogleKnowledgeItem = {
       contentUrl: string;
     };
   } & GoogleItemCommon;
-};
+}
 
 export type GoogleCSEItem = {
   cacheId: string;
@@ -235,7 +235,7 @@ export type GoogleCSEItem = {
 
 export type GoogleItem = GoogleKnowledgeItem['result'] | GoogleCSEItem;
 
-type GoogleImage = {
+interface GoogleImage {
   byteSize: number;
   contextLink: string;
   height: number;
@@ -243,9 +243,9 @@ type GoogleImage = {
   thumbnailLink: string;
   thumbnailWidth: number;
   width: number;
-};
+}
 
-export type GoogleImageData = {
+export interface GoogleImageData {
   displayLink: string;
   htmlSnippet: string;
   htmlTitle: string;
@@ -255,15 +255,15 @@ export type GoogleImageData = {
   snippet: string;
   title: string;
   image: GoogleImage;
-};
+}
 
-export type GoogleImageResult = {
+export interface GoogleImageResult {
   kind: string;
   context: { title: string };
   items: GoogleImageData[];
-};
+}
 
-export type IgdbGame = {
+export interface IgdbGame {
   id: number;
   name: string;
   rating: number;
@@ -280,9 +280,9 @@ export type IgdbGame = {
   }[];
   platforms: { id: number; name: string }[];
   release_dates: { id: string; date: number }[];
-};
+}
 
-export type iTunesData = {
+export interface AppleItunesData {
   artistId: number;
   artistName: string;
   artistViewUrl: string;
@@ -314,18 +314,18 @@ export type iTunesData = {
   trackTimeMillis: number;
   trackViewUrl: string;
   wrapperType: 'track' | string;
-};
+}
 
-export type iTunesResult = {
-  results: iTunesData[];
+export interface AppleItunesResult {
+  results: AppleItunesData[];
   resultCount: number;
-};
+}
 
-export type MovieGenreType = {
+export interface MovieGenreType {
   name: string;
-};
+}
 
-type TMDBCommon = {
+interface TMDBCommon {
   id: number;
   adult: boolean;
   backdrop_path: string;
@@ -339,14 +339,14 @@ type TMDBCommon = {
   video: boolean;
   vote_average?: number;
   vote_count?: number;
-};
+}
 
-export type TMDBMovieList = {
+export interface TMDBMovieList {
   page: number;
   total_pages: number;
   total_results: number;
   results: (TMDBCommon & { genre_ids: number[] })[];
-};
+}
 
 export type TMDBMovie = {
   budget: number;
@@ -372,7 +372,7 @@ export type TVDBSeriesList = {
   })[];
 } & TMDBMovieList;
 
-type TMDBSerieEpisode = {
+interface TMDBSerieEpisode {
   id: number;
   air_date: string;
   episode_number: number;
@@ -384,7 +384,7 @@ type TMDBSerieEpisode = {
   still_path: string;
   vote_average: number;
   vote_count: number;
-};
+}
 
 export type TMDBSerie = {
   created_by: string[];
@@ -411,7 +411,7 @@ export type TMDBSerie = {
   production_companies?: { id: number; logo_path: string | null; name: string; origin_country: string }[];
 } & TMDBCommon;
 
-export type UrbanDefinition = {
+export interface UrbanDefinition {
   author: string;
   current_vote: string;
   defid: number;
@@ -423,12 +423,12 @@ export type UrbanDefinition = {
   thumbs_up: number;
   word: string;
   written_on: string;
-};
+}
 
-export type UrbanDefinitionResults = {
+export interface UrbanDefinitionResults {
   list: UrbanDefinition[];
-};
+}
 
-export type NekoData = {
+export interface NekoData {
   url: string;
-};
+}
