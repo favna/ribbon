@@ -851,10 +851,10 @@
     "@typescript-eslint/parser" "^2.0.0"
     eslint-plugin-jest "^22.15.1"
 
-"@favware/querystring@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@favware/querystring/-/querystring-3.0.2.tgz#b23fe246afe4899a73097caa98cf93a434ed66d8"
-  integrity sha512-GfqZ5sDCh0mJN+Ng4x2/Kh3HpignExHFVt7Jw3YGcEITw5nEwsghP5ykl/uYymwMcvR7tEXVu4aXdGnqEnBYqg==
+"@favware/querystring@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@favware/querystring/-/querystring-4.0.0.tgz#d684e16c20957fdb06b84e4ebe5334481c896277"
+  integrity sha512-vI20Bc2bbeN6n7FGQP4AonWx8xiBshJeJzirO5i8luwDHcuOcGwkJ2xw4tzhHovavbeVfJjqH+ujpaesCSWA7A==
 
 "@favware/unescape@^1.0.3":
   version "1.0.3"
