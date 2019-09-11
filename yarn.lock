@@ -861,10 +861,10 @@
   resolved "https://registry.yarnpkg.com/@favware/unescape/-/unescape-1.0.3.tgz#dfc8589b3b51a0af6158fb196420965b9bea22e5"
   integrity sha512-b2MqXo8Ior/B1NMsh9+7oa8aVMee5C4G8gWdL0mvFXGuIX5DJJTSP4wr4q82hjiE3oxuIFYiJoxYzfLh7EY8bw==
 
-"@favware/zalgo@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@favware/zalgo/-/zalgo-1.0.3.tgz#9731e1f772cbf5c52fc77313b7167afc4279e765"
-  integrity sha512-A1v887ZvruVyGLr3ZEJqXP8vZ9JVwcO6IDo5GBT8AzX7z+9w/SdImAgIfJMgp/m48wbM1/7bemPtd1RS6r7rWA==
+"@favware/zalgo@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@favware/zalgo/-/zalgo-1.0.4.tgz#0102ba230d2e192ba235b41e4f970d3fa4fe9ccb"
+  integrity sha512-CwPyT6Z7BeniwuDCKHripCHr/pyR2ULWmUwWLoNNBzQdpxj2xtvummHtlgeywrNCd/h3fexmZ1JY0pKq1rB3TA==
 
 "@firebase/app-types@0.x":
   version "0.4.3"
