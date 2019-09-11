@@ -835,10 +835,10 @@
   dependencies:
     find-up "^4.0.0"
 
-"@favware/converter@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/@favware/converter/-/converter-1.0.4.tgz#fed57dc6cb611871f2ba88f27f9a177124ae0db0"
-  integrity sha512-rHN1DZW8OaxcEib50Vy5FZPZo/CmP2q3FbNs5Kw+90hz43zNie3odyemP5qi8Wyzr9upUoLbX/NjwmsEgWNShA==
+"@favware/converter@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@favware/converter/-/converter-1.0.5.tgz#89c382da79cd8b8021785dbb2d3e51b9603b3dcc"
+  integrity sha512-Ch1uD3RWlVjpzo9soXN2mDuGGk7VtL8WV6ujJJc+Atm72v30umQHtS2XnrX3o89VajG9b4eR8JzA/V9bJpa27w==
   dependencies:
     array-flat-polyfill "^1.0.1"
 
