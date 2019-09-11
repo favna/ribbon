@@ -856,10 +856,10 @@
   resolved "https://registry.yarnpkg.com/@favware/querystring/-/querystring-3.0.2.tgz#b23fe246afe4899a73097caa98cf93a434ed66d8"
   integrity sha512-GfqZ5sDCh0mJN+Ng4x2/Kh3HpignExHFVt7Jw3YGcEITw5nEwsghP5ykl/uYymwMcvR7tEXVu4aXdGnqEnBYqg==
 
-"@favware/unescape@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@favware/unescape/-/unescape-1.0.3.tgz#dfc8589b3b51a0af6158fb196420965b9bea22e5"
-  integrity sha512-b2MqXo8Ior/B1NMsh9+7oa8aVMee5C4G8gWdL0mvFXGuIX5DJJTSP4wr4q82hjiE3oxuIFYiJoxYzfLh7EY8bw==
+"@favware/unescape@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@favware/unescape/-/unescape-1.0.4.tgz#c722c8f85b238d07b260d958a3ffa3dd9bfe9637"
+  integrity sha512-kDGxop2Ixmnynl5IuxcaaF25SlLNktmWLEliU43xHgs7faO30TC/bKcOb9byNlZTa61harp/NTnKkI5MK/YCRw==
 
 "@favware/zalgo@^1.0.3":
   version "1.0.3"
