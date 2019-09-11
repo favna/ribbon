@@ -26,24 +26,27 @@ export const isTextChannel = (channel: Channel | TextChannel): channel is TextCh
   return channel.type === 'text' && channel instanceof TextChannel;
 };
 
-/** TypeGuard to ensure param is string */
+/** TypeGuard to ensure input is string */
 export const isString = (str: string | unknown): str is string => {
   return typeof str === 'string';
 };
 
-/** TypeGuard to ensure param is number */
+/** TypeGuard to ensure input is number */
 export const isNumber = (num: string | unknown): num is number => {
   return (num as number).valueOf() !== undefined && typeof num === 'number';
 };
 
+/** TypeGuard toe ensure input is an array */
 export const isArray = (arr: unknown[] | unknown): arr is unknown[] => {
   return Array.isArray(arr);
 };
 
+/** TypeGuard to ensure input is an array of only numbers */
 export const isNumbers = (array: number[] | string[] | (string | number)[]): array is number[] => {
   return array.every(val => typeof val === 'number');
 };
 
+/** TypeGuard to ensure input is an array of only strings */
 export const isStrings = (array: number[] | string[] | (string | number)[]): array is number[] => {
   return array.every(val => typeof val === 'string');
 };
