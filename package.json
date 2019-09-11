@@ -55,7 +55,7 @@
     "@favware/converter": "^1.0.4",
     "@favware/querystring": "^3.0.2",
     "@favware/unescape": "^1.0.3",
-    "@favware/zalgo": "^1.0.3",
+    "@favware/zalgo": "^1.0.5",
     "array-flat-polyfill": "^1.0.1",
     "booru": "^2.0.3",
     "cheerio": "^1.0.0-rc.3",
