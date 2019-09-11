@@ -59,7 +59,7 @@
     "prefix": "klac",
     "description": "Inserts a Command class block for Klasa",
     "body": [
-      "import RibbonEmbed from '@root/components/RibbonEmbed';",
+      "import RibbonEmbed from '@extensions/RibbonEmbed';",
       "import { ApplyOptions } from '@utils/Utils';",
       "import { GuildSettings } from '@settings/GuildSettings';",
       "import { stripIndents, oneLine, stripIndent } from 'common-tags';",

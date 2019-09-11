@@ -14,7 +14,7 @@ import { KlasaMessage, Monitor, MonitorOptions } from 'klasa';
   ignoreBlacklistedGuilds: false,
   ignoreBlacklistedUsers: false,
 })
-export default class MessageMonitor extends Monitor {
+export default class extends Monitor {
   async run(msg: KlasaMessage) {
     if (msg.guild && msg.deletable && msg.guildSettings.get(GuildSettings.automodEnabled)) {
       if (

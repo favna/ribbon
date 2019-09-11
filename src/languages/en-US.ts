@@ -1,7 +1,7 @@
 import { PermissionString } from 'discord.js';
 import { Language, LanguageOptions, LanguageStore } from 'klasa';
 
-export default class EnglishLanguage extends Language {
+export default class extends Language {
   constructor(store: LanguageStore, file: string[], directory: string, options?: LanguageOptions) {
     super(store, file, directory, options);
     this.language = {
@@ -12,11 +12,17 @@ export default class EnglishLanguage extends Language {
       RESOLVER_INVALID_CHANNELNAME: name => `\`${name}\` must be a valid channel name, id, or tag.`,
       RESOLVER_INVALID_ROLENAME: name => `\`${name}\` must be a valid role name, id, or mention.`,
       RESOLVER_INVALID_USERNAME: name => `\`${name}\` must be a valid user name, id, or mention.`,
+      RESOLVER_INVALID_MEMBERNAME: name => `\`${name}\` must be a valid member name, member nickname, id, or mention.`,
+
+      NOT_IN_A_GUILD: commandName => `\`${commandName}\` can only be ran in a server.`,
 
       COMMAND_COUNTDOWN_NAME: 'You must provide a countdown name',
       COMMAND_COUNTDOWN_DATE: 'You must provide a date to count down to',
       COMMAND_COUNTDOWN_CHANNEL: 'You must provide a channel to send the countdown to',
       COMMAND_COUNTDOWN_CONTENT: 'You must provide a content for the countdown',
+
+      USER_NOT_IN_GUILD: 'This user is not in this server.',
+      USER_NOT_EXISTENT: 'This user does not exist. Are you sure you used a valid user ID?',
     };
   }
 }

@@ -2,7 +2,7 @@ import { stripIndents } from 'common-tags';
 import { Event } from 'klasa';
 import moment from 'moment';
 
-export default class ShardResumedEvent extends Event {
+export default class extends Event {
   run(shard: number, replayedEvents: number) {
     this.client.console.error(stripIndents(
       `

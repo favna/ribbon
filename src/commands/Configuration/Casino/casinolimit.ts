@@ -1,5 +1,5 @@
 import { GuildSettings } from '@settings/GuildSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { ApplyOptions, logModMessage } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
@@ -12,7 +12,7 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
   runIn: [ 'text' ],
   usage: '<upperLimit:integer{10}> <lowerLimit:integer{10}>',
 })
-export default class CasinoLimitCommand extends Command {
+export default class extends Command {
   async run(msg: KlasaMessage, [ lowerLimit, upperLimit ]: [number, number]) {
     msg.guildSettings.set(GuildSettings.casinoLowerLimit, lowerLimit);
     msg.guildSettings.set(GuildSettings.casinoUpperLimit, upperLimit);

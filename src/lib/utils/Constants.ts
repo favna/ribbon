@@ -1,4 +1,7 @@
+import { KlasaClient, PermissionLevels } from 'klasa';
+import moment from 'moment';
 import { join } from 'path';
+import { prod } from './Utils';
 
 /* eslint-disable max-len, object-curly-newline  */
 
@@ -27,6 +30,62 @@ export const LIB_FOLDER: string = join(SRC_PATH, 'lib');
 export const EVERY_MINUTE = '*/1 * * * *';
 export const EVERY_THREE_MINUTES = '*/3 * * * *';
 export const EVERY_THIRD_HOUR = '0 */3 * * *';
+
+export const CLIENT_OPTIONS = {
+  commandEditing: true,
+  commandLogging: !prod,
+  console: { useColor: true },
+  consoleEvents: {
+    debug: !prod,
+    verbose: !prod,
+  },
+  customPromptDefaults: {
+    limit: 5,
+    quotedStringSupport: true,
+  },
+  noPrefixDM: true,
+  prefix: prod ? '!' : '.',
+  typing: true,
+  permissionLevels: new PermissionLevels()
+    .add(0, () => true)
+    .add(1, ({ guild, member }) => guild! && member!.permissions.has('MANAGE_NICKNAMES'), { fetch: true })
+    .add(2, ({ guild, member }) => guild! && member!.permissions.has('MANAGE_MESSAGES'), { fetch: true })
+    .add(3, ({ guild, member }) => guild! && member!.permissions.has('MANAGE_ROLES'), { fetch: true })
+    .add(4, ({ guild, member }) => guild! && member!.permissions.has('KICK_MEMBERS'), { fetch: true })
+    .add(5, ({ guild, member }) => guild! && member!.permissions.has('BAN_MEMBERS'), { fetch: true })
+    .add(6, ({ guild, member }) => guild! && member!.permissions.has('MANAGE_GUILD'), { fetch: true })
+    .add(7, ({ guild, member }) => guild! && member!.permissions.has('ADMINISTRATOR'), { fetch: true })
+    .add(8, ({ guild, member }) => guild! && member === guild!.owner, { fetch: true })
+    .add(9, ({ author, client }) => client.owners.has(author!), { break: true })
+    .add(10, ({ author, client }) => client.owners.has(author!)),
+  pieceDefaults: {
+    commands: {
+      deletable: true,
+      quotedStringSupport: true,
+    },
+  },
+  providers: { default: 'firestore' },
+  presence: {
+    status: 'online',
+    activity: {
+      name: prod ? '@Ribbon help' : '@Unraveled help',
+      type: 'WATCHING',
+    },
+  },
+  readyMessage: (client: KlasaClient) => `Client ready at ${moment().format('HH:mm:ss')}. Logged in as ${client.user!.tag} (${client.user!.id})`,
+  disabledEvents: [
+    'CHANNEL_PINS_UPDATE', 'CHANNEL_UPDATE', 'GUILD_BAN_ADD',
+    'GUILD_BAN_REMOVE', 'GUILD_EMOJIS_UPDATE', 'GUILD_INTEGRATIONS_UPDATE',
+    'GUILD_ROLE_CREATE', 'GUILD_ROLE_DELETE', 'GUILD_ROLE_UPDATE',
+    'MESSAGE_DELETE_BULK', 'MESSAGE_DELETE', 'TYPING_START',
+    'WEBHOOKS_UPDATE', 'MESSAGE_REACTION_REMOVE_ALL'
+  ],
+  ws: { compress: true },
+  restTimeOffset: 800,
+  messageCacheLifetime: 10 * 60,
+  messageSweepInterval: 5 * 60,
+  schedule: { interval: 5000 },
+};
 
 // Enums
 export enum IGBDAgeRating {Three = 1, Seven = 2, Twelve = 3, Sixteen = 4, Eighteen = 5, RP = 6, EC = 7, E = 8, E10 = 9, T = 10, M = 11, AO = 12}

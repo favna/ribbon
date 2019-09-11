@@ -3,7 +3,7 @@ import { stripIndents } from 'common-tags';
 import { Event } from 'klasa';
 import moment from 'moment';
 
-export default class ErrorEvent extends Event {
+export default class extends Event {
   run(err: Error) {
     const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!);
 

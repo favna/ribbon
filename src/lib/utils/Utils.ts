@@ -172,6 +172,29 @@ export const clientHasPermission = (permission: BitFieldResolvable<PermissionStr
   };
 };
 
+/**
+ * @enumerable decorator that sets the enumerable property of a class field to false.
+ * @param value true|false
+ */
+export const enumerable = (value: boolean) => {
+  return (target: unknown, key: string) => {
+    Object.defineProperty(target, key, {
+      enumerable: value,
+      set(this: unknown, val: unknown) {
+        Object.defineProperty(this, key, {
+          configurable: true,
+          enumerable: value,
+          value: val,
+          writable: true,
+        });
+      },
+      get() {
+        return this;
+      },
+    });
+  };
+};
+
 /** Song class used in music commands to track the song data */
 export class Song {
   public name: string;

@@ -10,7 +10,7 @@ import moment from 'moment';
   enabled: true,
   ignoreSelf: false,
 })
-export default class MessageMonitor extends Monitor {
+export default class extends Monitor {
   async run(msg: KlasaMessage) {
     const guild = msg.guild;
 

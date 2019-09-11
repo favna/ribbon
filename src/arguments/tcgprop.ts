@@ -2,7 +2,7 @@ import { ApplyOptions } from '@utils/Utils';
 import { Argument, ArgumentOptions } from 'klasa';
 
 @ApplyOptions<ArgumentOptions>({aliases: [ 'tcgp' ]})
-export default class TcgPropArgument extends Argument {
+export default class extends Argument {
   run(arg: string) {
     const props: string[] = arg.split(' ').filter(Boolean);
 

@@ -6,7 +6,7 @@ import { Guild } from 'discord.js';
 import { Event } from 'klasa';
 import moment from 'moment';
 
-export default class GuildDeleteEvent extends Event {
+export default class extends Event {
   run(guild: Guild) {
     try {
       let serverCount = FirebaseStorage.servers;

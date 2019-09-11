@@ -16,7 +16,7 @@
   },
   "scripts": {
     "lint": "eslint src --fix --ext ts",
-    "clean": "rimraf ./dist",
+    "clean": "rimraf ./dist tsconfig.tsbuildinfo",
     "prebuild": "yarn lint",
     "build": "tsc",
     "postbuild": "yarn copyfiles",

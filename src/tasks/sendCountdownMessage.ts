@@ -1,5 +1,5 @@
 import { ClientSettings } from '@settings/ClientSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { deleteCountdown, readAllCountdowns, writeCountdown } from '@typeorm/DbInteractions';
 import { EVERY_THREE_MINUTES } from '@utils/Constants';
 import { ApplyOptions } from '@utils/Utils';
@@ -9,7 +9,7 @@ import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
 
 @ApplyOptions<TaskOptions>({ name: 'sendCountdownMessage', enabled: true })
-export default class SendCountdownMessageTask extends Task {
+export default class extends Task {
   async run() {
     try {
       const countdowns = await readAllCountdowns();

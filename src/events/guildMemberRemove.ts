@@ -1,5 +1,5 @@
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { GuildSettings } from '@settings/GuildSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
 import { ASSET_BASE_PATH, LIB_FOLDER } from '@utils/Constants';
 import { setUsersData } from '@utils/FirebaseActions';
 import FirebaseStorage from '@utils/FirebaseStorage';
@@ -11,8 +11,9 @@ import { Event } from 'klasa';
 import moment from 'moment';
 import { join } from 'path';
 
-export default class GuildMemberAddEvent extends Event {
+export default class extends Event {
   async run(member: GuildMember) {
+    this.deleteStoredMember(member);
     await Promise.all([ this.sendLeaveMessage(member), this.sendMemberLog(member) ]);
     this.updateUserCount(member);
   }
@@ -125,5 +126,11 @@ export default class GuildMemberAddEvent extends Event {
         ));
       }
     }
+  }
+
+  private deleteStoredMember(member: GuildMember) {
+    member.guild!.memberSnowflakes.delete(member.id);
+    if (!this.client.guilds.some(g => g.memberSnowflakes.has(member.id))) this.client.usertags.delete(member.id);
+    if (member.guild!.members.has(member.id)) member.guild!.members.delete(member.id);
   }
 }

@@ -1,5 +1,5 @@
 import { GuildSettings } from '@settings/GuildSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { ASSET_BASE_PATH, LIB_FOLDER, MOMENT_LOG_FORMAT } from '@utils/Constants';
 import { setServersData } from '@utils/FirebaseActions';
 import FirebaseStorage from '@utils/FirebaseStorage';
@@ -12,7 +12,7 @@ import moment from 'moment';
 import { join } from 'path';
 
 @ApplyOptions<EventOptions>({event: 'guildCreate'})
-export default class GuildCreateEvent extends Event {
+export default class extends Event {
   async run(guild: Guild) {
     try {
       let serverCount = FirebaseStorage.servers;

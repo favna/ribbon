@@ -15,7 +15,7 @@ type Fuser = {
 };
 
 @ApplyOptions<ArgumentOptions>({aliases: [ 'sdtier' ]})
-export default class ShowdownArgument extends Argument {
+export default class extends Argument {
   async run(arg: string) {
     const fuseRes = this.fuser(arg);
     if (fuseRes.hasMatch) arg = fuseRes.alias;

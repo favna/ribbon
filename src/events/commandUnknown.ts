@@ -4,7 +4,7 @@ import { oneLine } from 'common-tags';
 import dym, { ReturnTypeEnums } from 'didyoumean2';
 import { Event, KlasaMessage } from 'klasa';
 
-export default class CommandUnknownEvent extends Event {
+export default class extends Event {
   run(msg: KlasaMessage, cmd: string, prefix: RegExp, prefixLength: number) {
     if (msg.guild && msg.guildSettings.get(GuildSettings.unknownMessages) as GuildSettings.unknownMessages) {
       const commandsAndAliases = this.client.commands

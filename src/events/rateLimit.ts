@@ -3,7 +3,7 @@ import { Colors, Event } from 'klasa';
 
 const HEADER = new Colors({text: 'red'}).format('[RATELIMIT]');
 
-export default class RateLimitEvent extends Event {
+export default class extends Event {
   run(rtData: RateLimitData) {
     this.client.emit('verbose', [
       HEADER,

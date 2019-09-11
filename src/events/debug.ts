@@ -1,6 +1,6 @@
 import { Event } from 'klasa';
 
-export default class DebugEvent extends Event {
+export default class extends Event {
   run(warning: string) {
     if (this.client.ready) this.client.console.debug(warning);
   }

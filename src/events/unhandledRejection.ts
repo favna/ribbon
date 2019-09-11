@@ -4,7 +4,7 @@ import { Event, EventOptions } from 'klasa';
 import moment from 'moment';
 
 @ApplyOptions<EventOptions>({emitter: process})
-export default class UnhandledRejectionEvent extends Event {
+export default class extends Event {
   run(err: Error) {
     if (!err) return;
 

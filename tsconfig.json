@@ -20,10 +20,12 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "incremental": true,
+    "removeComments": true,
     "baseUrl": "./",
     "paths": {
       "@databases/*": ["src/lib/databases/*"],
       "@dex/*": ["src/lib/dex/*"],
+      "@extensions/*": ["src/lib/extensions/*"],
       "@settings/*": ["src/lib/typings/settings/*"],
       "@structures/*": ["src/lib/structures/*"],
       "@typeorm/*": ["src/lib/typeorm/*"],

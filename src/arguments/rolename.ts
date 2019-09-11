@@ -11,7 +11,7 @@ const resolveRole = (query: Role | string, guild: KlasaGuild) => {
   return null;
 };
 
-export default class RolenameArgument extends Argument {
+export default class extends Argument {
   run(arg: string, possible: Possible, msg: KlasaMessage): Role {
     if (!msg.guild) throw 'This command can only be used inside a server.';
     const resRole = resolveRole(arg, msg.guild);

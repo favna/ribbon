@@ -7,6 +7,7 @@ import { join, resolve } from 'path';
 import { minify as terser } from 'terser';
 import { CompilerOptions, transpileModule, TranspileOutput } from 'typescript';
 import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
+import { ROOT_PATH, SRC_PATH } from '../utils/Constants';
 
 (async () => {
   type YargResult = {
@@ -22,15 +23,14 @@ import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
     exclude: string[];
   };
 
-  const srcDir = join(__dirname, '../');
-  const commandsDir = join(srcDir, 'commands');
+  const commandsDir = join(SRC_PATH, 'commands');
   const commands = globby(`${commandsDir}/**/*.ts`).map(file => {
     const parts = file.split('/');
 
     return parts[parts.length - 1].slice(0, -3);
   });
 
-  const baseTSConfig = readJson(resolve(srcDir, '..', 'tsconfig.json')) as BaseTSConfig;
+  const baseTSConfig = readJson(resolve(ROOT_PATH, 'tsconfig.json')) as BaseTSConfig;
 
   const compile = (fileContent: string, options?: CompilerOptions): TranspileOutput => {
     const compilerOptions: typeof options = {

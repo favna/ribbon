@@ -6,7 +6,7 @@ import { Channel, GuildChannel, TextChannel } from 'discord.js';
 import { Event } from 'klasa';
 import moment from 'moment';
 
-export default class ChannelCreateEvent extends Event {
+export default class extends Event {
   run(channel: Channel) {
     if (channel.type === 'category' || channel.type === 'dm') return;
 

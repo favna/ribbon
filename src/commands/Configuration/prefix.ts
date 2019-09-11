@@ -1,5 +1,5 @@
 import { GuildSettings } from '@settings/GuildSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { ApplyOptions, logModMessage } from '@utils/Utils';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
 
@@ -13,7 +13,7 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
   runIn: [ 'text' ],
   usage: '[reset|prefix:str{1,10}]',
 })
-export default class PrefixCommand extends Command {
+export default class extends Command {
   // @clientHasPermission('BAN_MEMBERS')
   async run(msg: KlasaMessage, [ prefix ]: [string]) {
     // if (!hasPermission) {

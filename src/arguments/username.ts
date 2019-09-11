@@ -1,62 +1,48 @@
-import { GuildMember } from 'discord.js';
-import { Argument, KlasaGuild, KlasaMessage, KlasaUser, Possible, util } from 'klasa';
-import { isString } from 'util';
+import FuzzySearch from '@utils/FuzzySearch';
+import { Argument, KlasaMessage, KlasaUser, Possible } from 'klasa';
 
 const USER_REGEXP = Argument.regex.userOrMember;
+const USER_TAG = /^\w{1,32}#\d{4}$/;
 
-const resolveUser = async (query: GuildMember | KlasaUser | string, guild: KlasaGuild): Promise<KlasaUser | null> => {
-  if (query instanceof GuildMember) return query.user;
-  if (query instanceof KlasaUser) return query;
-  if (typeof query === 'string') {
-    if (USER_REGEXP.test(query)) {
-      const member = await guild.members.fetch((USER_REGEXP.exec(query) as RegExpExecArray)[1]);
+export default class extends Argument {
+  async run(arg: string, possible: Possible, msg: KlasaMessage): Promise<KlasaUser> {
+    if (!arg) throw msg.language.get('RESOLVER_INVALID_USERNAME', possible.name);
+    if (!msg.guild) return this.user.run(arg, possible, msg);
+    const resUser = await this.resolveUser(arg, msg);
+    if (resUser) return resUser;
 
-      return member.user;
-    }
-    if (/\w{1,32}#\d{4}/.test(query)) {
-      const res = guild.members.find(member => member.user.tag.toLowerCase() === query.toLowerCase());
+    if (USER_REGEXP.test(arg)) arg = arg.replace(USER_REGEXP, '$1');
 
-      return res ? res.user : null;
-    }
+    const users = await msg.guild!.fetchMemberUsers();
+    const results = new FuzzySearch(users, [ 'username', 'id', 'tag' ]).run(msg, arg);
+
+    if (results.length >= 1 && results.length < 5) return results[0];
+    if (results.length >= 5) throw `Found multiple matches: ${results.map(result => `${result.tag}`).join(', ')}. Please be more specific`;
+    throw msg.language.get('RESOLVER_INVALID_USERNAME', possible.name);
   }
 
-  return null;
-};
-
-export default class UsernameArgument extends Argument {
-  async run(arg: string, possible: Possible, msg: KlasaMessage): Promise<KlasaUser> {
-    if (!msg.guild) return this.store.get('user').run(arg, possible, msg);
-    try {
-      const resUser = await resolveUser(arg, msg.guild);
-      if (resUser) return resUser;
-    } catch {
-      // Proceed normally
+  public async resolveUser(query: string, msg: KlasaMessage) {
+    let id: string | null;
+    if (USER_REGEXP.test(query)) {
+      id = USER_REGEXP.exec(query)![0];
+    } else {
+      if (USER_TAG.test(query)) {
+        id = this.client.usertags.findKey(tag => tag === query) || null;
+      }
+      id = null;
     }
 
-    if (isString(arg)) {
-      const results = [];
-      const reg = new RegExp(util.regExpEsc(arg), 'i');
-      for (const member of msg.guild.members.values()) {
-        if (reg.test(member.user.username)) results.push(member.user);
-      }
-
-      let querySearch: KlasaUser[];
-
-      if (results.length > 0) {
-        const regWord = new RegExp(`\\b${util.regExpEsc(arg)}\\b`, 'i');
-        const filtered = results.filter(user => regWord.test(user.username));
-        querySearch = filtered.length > 0 ? filtered : results;
-      } else {
-        querySearch = results;
-      }
-
-      switch (querySearch.length) {
-        case 0: throw `${possible.name} Must be a valid name, id or user mention`;
-        case 1: return querySearch[0];
-        default: throw `Found multiple matches: \`${querySearch.map(user => user.tag).join('`, `')}\``;
-      }
+    if (id) {
+      return this.client.users.fetch(id)
+        .catch(() => {
+          throw msg.language.get('USER_NOT_EXISTENT');
+        });
     }
 
-    throw 'an invalid argument was given';
+    return null;
+  }
+
+  public get user() {
+    return this.store.get('user');
   }
 }

@@ -1,5 +1,5 @@
 import { GuildSettings } from '@settings/GuildSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { ApplyOptions, logModMessage } from '@utils/Utils';
 import { stripIndent, stripIndents } from 'common-tags';
 import { Role } from 'discord.js';
@@ -18,7 +18,7 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
   runIn: [ 'text' ],
   usage: '<roles:rolename> [...]',
 })
-export default class FilterRolesCommand extends Command {
+export default class extends Command {
   async run(msg: KlasaMessage, [ roles ]: [Role[]]) {
     msg.guildSettings.set(GuildSettings.automodFilterRoles, roles);
     const filterRolesEmbed = new RibbonEmbed(msg.author!)

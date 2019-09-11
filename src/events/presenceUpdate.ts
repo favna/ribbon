@@ -1,13 +1,13 @@
 import stringify from '@favware/querystring';
 import { GuildSettings } from '@settings/GuildSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { isTextChannel } from '@utils/Utils';
 import { stripIndents } from 'common-tags';
 import { GuildMember } from 'discord.js';
 import { Event } from 'klasa';
 import moment from 'moment';
 
-export default class PresenceUpdateEvent extends Event {
+export default class extends Event {
   async run(oldMember: GuildMember, newMember: GuildMember) {
     const guild = newMember.guild;
 

@@ -1,5 +1,5 @@
 import { ClientSettings } from '@settings/ClientSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { readAllTimers, writeTimer } from '@typeorm/DbInteractions';
 import { EVERY_MINUTE } from '@utils/Constants';
 import { ApplyOptions } from '@utils/Utils';
@@ -9,7 +9,7 @@ import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
 
 @ApplyOptions<TaskOptions>({ name: 'sendTimerMessage', enabled: true })
-export default class SendTimerMessageTask extends Task {
+export default class extends Task {
   async run() {
     try {
       const timers = await readAllTimers();

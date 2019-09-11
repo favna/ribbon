@@ -1,5 +1,5 @@
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { GuildSettings } from '@settings/GuildSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
 import { ASSET_BASE_PATH, LIB_FOLDER } from '@utils/Constants';
 import { setUsersData } from '@utils/FirebaseActions';
 import FirebaseStorage from '@utils/FirebaseStorage';
@@ -11,13 +11,14 @@ import { Event } from 'klasa';
 import moment from 'moment';
 import { join } from 'path';
 
-export default class GuildMemberAddEvent extends Event {
+export default class extends Event {
   async run(member: GuildMember) {
     let newMemberEmbed = new RibbonEmbed(this.client.user!)
       .setTitle('NEW MEMBER!')
       .setDescription(`Please give a warm welcome to __**${member.displayName}**__  (\`${member.id}\`)`);
 
     newMemberEmbed = this.assignDefaultRole(member, newMemberEmbed);
+    this.addStoredMember(member);
     await Promise.all([ this.sendJoinMessage(member, newMemberEmbed), this.sendMemberLog(member) ]);
     this.updateUserCount(member);
   }
@@ -137,5 +138,11 @@ export default class GuildMemberAddEvent extends Event {
         ));
       }
     }
+  }
+
+  private addStoredMember(member: GuildMember) {
+    member.guild!.memberSnowflakes.add(member.id);
+    this.client.usertags.set(member.id, member.user!.tag);
+    member.guild!.members.add(member);
   }
 }

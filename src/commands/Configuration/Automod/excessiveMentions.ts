@@ -1,5 +1,5 @@
 import { GuildSettings } from '@settings/GuildSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { ApplyOptions, logModMessage } from '@utils/Utils';
 import { oneLine, stripIndent, stripIndents } from 'common-tags';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
@@ -20,7 +20,7 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
   usage: '<shouldEnable:boolean> [threshold:int{1}]',
   usageDelim: ' ',
 })
-export default class ExcessiveMentionsCommand extends Command {
+export default class extends Command {
   async run(msg: KlasaMessage, [ shouldEnable, threshold ]: [boolean, number]) {
     if (shouldEnable) {
       if (!threshold) threshold = 5;

@@ -1,5 +1,5 @@
 import { GuildSettings } from '@settings/GuildSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { ApplyOptions, logModMessage } from '@utils/Utils';
 import { oneLine, stripIndent, stripIndents } from 'common-tags';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
@@ -17,7 +17,7 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
   runIn: [ 'text' ],
   usage: '<shouldEnable:bool>',
 })
-export default class ExternallinkCommand extends Command {
+export default class extends Command {
   async run(msg: KlasaMessage, [ shouldEnable ]: [boolean]) {
     msg.guildSettings.set(GuildSettings.automodLinks, shouldEnable);
 

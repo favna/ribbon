@@ -5,7 +5,7 @@ import { stripIndents } from 'common-tags';
 import { Command, Event, KlasaMessage } from 'klasa';
 import moment from 'moment';
 
-export default class CommandRunEvent extends Event {
+export default class extends Event {
   run(msg: KlasaMessage, command: Command) {
     try {
       if (command.category === 'owner') return;

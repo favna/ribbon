@@ -8,7 +8,7 @@ import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
 
 @ApplyOptions<TaskOptions>({ name: 'sendReminderMessage', enabled: true })
-export default class SendReminderMessageTask extends Task {
+export default class extends Task {
   async run() {
     try {
       const reminders = await readAllReminders();

@@ -2,7 +2,7 @@ import { Currency } from '@utils/Constants';
 import { stripIndents } from 'common-tags';
 import { Argument } from 'klasa';
 
-export default class CurrencyArgument extends Argument {
+export default class extends Argument {
   run(arg: Currency) {
     if (Currency[arg]) return Currency[arg];
 

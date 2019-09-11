@@ -7,7 +7,7 @@ import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
 
 @ApplyOptions<TaskOptions>({ name: 'postUptimeToFirebase', enabled: true })
-export default class PostUptimeToFirebaseTask extends Task {
+export default class extends Task {
   async run() {
     try {
       const uptime = moment.duration(process.uptime() * 1000).format('D [days], H [hours] [and] m [minutes]');

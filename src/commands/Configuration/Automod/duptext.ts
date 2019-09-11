@@ -1,5 +1,5 @@
 import { GuildSettings } from '@settings/GuildSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { ApplyOptions, logModMessage } from '@utils/Utils';
 import { oneLine, stripIndent, stripIndents } from 'common-tags';
 import { Command, CommandOptions, KlasaMessage } from 'klasa';
@@ -24,7 +24,7 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
   usage: '<shouldEnable:boolean> [within:int{1,15}] [equals:int{1,15}] [distance:int{1,50}]',
   usageDelim: ' ',
 })
-export default class DuptextCommand extends Command {
+export default class extends Command {
   async run(msg: KlasaMessage, [ shouldEnable, within, equals, distance ]: [boolean, number, number, number]) {
     if (shouldEnable) {
       if (!within) within = 3;

@@ -1,5 +1,5 @@
 import { ClientSettings } from '@settings/ClientSettings';
-import RibbonEmbed from '@structures/RibbonEmbed';
+import RibbonEmbed from '@extensions/RibbonEmbed';
 import { createCasinoTimeout, readAllCasinoForGuild, readAllCasinoGuildIds, readCasinoTimeout, updateCasinoTimeout, writeCasino } from '@typeorm/DbInteractions';
 import { ASSET_BASE_PATH, EVERY_THIRD_HOUR } from '@utils/Constants';
 import { ApplyOptions } from '@utils/Utils';
@@ -9,7 +9,7 @@ import { Task, TaskOptions } from 'klasa';
 import moment from 'moment';
 
 @ApplyOptions<TaskOptions>({ name: 'payoutLotto', enabled: true })
-export default class PayoutLottoTask extends Task {
+export default class extends Task {
   async run() {
     try {
       const casinoData = await readAllCasinoGuildIds();

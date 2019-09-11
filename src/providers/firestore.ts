@@ -1,7 +1,7 @@
 import fireadmin from 'firebase-admin';
 import { Provider, ScheduledTask } from 'klasa';
 
-export default class Firestore extends Provider {
+export default class extends Provider {
   public db: FirebaseFirestore.Firestore | null = null;
 
   async init() {
