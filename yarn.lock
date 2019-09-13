@@ -840,10 +840,10 @@
   resolved "https://registry.yarnpkg.com/@discordjs/collection/-/collection-0.1.2.tgz#f3d88dfc0ca62bb4cbf24f80202cdfdfccf9fa4d"
   integrity sha512-N4lTTbLYb4aiOVqi2xQgkNrzWouCkT1QisAVg/gi1h4rZdw8d5JEuIdqISkG+Zl8BTmyxEb8zXmfsORLGoeDig==
 
-"@favware/converter@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@favware/converter/-/converter-1.0.6.tgz#4c507c1d8095b2ee0a4e9c39fba0125f8c1a216d"
-  integrity sha512-ht3X3DUZdgiqmqHIDY1/b00swqMhW5AFGDzElTSTyHZVq7xEYukK3UrT7c8hzi41pKIxeKtfglwB5vhHyIIwMQ==
+"@favware/converter@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@favware/converter/-/converter-1.1.0.tgz#7ec7d9f1afecd97499a462b66d31879f440acd7f"
+  integrity sha512-4rPP6RiPa6/Xo8x0jUZgmJByv0Fm2+C3+3LpJ2i48AQEpSB2depL8YjNarkFg+bQsl5a3R6tjbOXRLXOwKzjVw==
   dependencies:
     array-flat-polyfill "^1.0.1"
 
@@ -884,9 +884,9 @@
     "@firebase/app-types" "0.x"
 
 "@firebase/database@^0.5.1":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@firebase/database/-/database-0.5.2.tgz#9f480c64f7a16569ae8cf18ed82b22acf0ea0885"
-  integrity sha512-LnXKRE1AmjlS+iRF7j8vx+Ni8x85CmLP5u5Pw5rDKhKLn2eTR1tJKD937mUeeGEtDHwR1rrrkLYOqRR2cSG3hQ==
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@firebase/database/-/database-0.5.3.tgz#e731de97f2d12490df1614a86b993e9ab86ed7cb"
+  integrity sha512-TFjQ/M0T4jO24jAMU5cZAHNk3ndNfeNtGKe5PL4o/YrGYJHg3XaE2LKzU/vFrXUFLnLxqbETzXjFa4hTA6cDUg==
   dependencies:
     "@firebase/database-types" "0.4.3"
     "@firebase/logger" "0.1.24"
@@ -2897,9 +2897,9 @@ ecdsa-sig-formatter@1.0.11:
     safe-buffer "^5.0.1"
 
 electron-to-chromium@^1.3.247:
-  version "1.3.256"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.256.tgz#7f680d5f04df8e2bd9cb9758026d70f5ff1808a9"
-  integrity sha512-GHY1r2mO56BRMng6rkxxJvsWKtqy9k/IlSBrAV/VKwZKpTydVUJnOwajTNnl5uutJpthHgZy+HeofK5K6PqEgQ==
+  version "1.3.257"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.257.tgz#35da0ad5833b27184c8298804c498a4d2f4ed27d"
+  integrity sha512-EcKVmUeHCZelPA0wnIaSmpAN8karKhKBwFb+xLUjSVZ8sGRE1l3fst1zQZ7KJUkyJ7H5edPd4RP94pzC9sG00A==
 
 emoji-regex@^7.0.1:
   version "7.0.3"
@@ -3491,9 +3491,9 @@ gaxios@^2.0.0, gaxios@^2.0.1:
     node-fetch "^2.3.0"
 
 gcp-metadata@^2.0.0:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/gcp-metadata/-/gcp-metadata-2.0.2.tgz#6b391c531cdd0c1d1ebde35050fdaaf5462aa544"
-  integrity sha512-dxPXBvjyfz5qFEBXzEwNmuZXwsGYfuASGYeg3CKZDaQRXdiWti9J3/Ezmtyon1OrCNpDO2YekyoSjEqMtsrcXw==
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/gcp-metadata/-/gcp-metadata-2.0.3.tgz#b7565aaf31f5089153cb39e9bf47af64672cf167"
+  integrity sha512-E27NslVNL61Qg0krivnl0bbC+VH0iHTupQoEy2NY2YOgQ3Ipg0TnyEZMSH/dRGUFzEBdQ8tiuuVTh39Jplu5RA==
   dependencies:
     gaxios "^2.0.1"
     json-bigint "^0.3.0"
@@ -4501,7 +4501,7 @@ klasa-decorators@^0.0.1:
 
 klasa@dirigeants/klasa#settings:
   version "0.5.0-dev"
-  resolved "https://codeload.github.com/dirigeants/klasa/tar.gz/f5bb315217856bda6158ef8c85d674cc5c42b423"
+  resolved "https://codeload.github.com/dirigeants/klasa/tar.gz/952fe9b317f8461900693bdf3de18d153ca8334b"
   dependencies:
     fs-nextra "^0.4.5"
 
@@ -4953,9 +4953,9 @@ minipass@^2.2.1, minipass@^2.3.5:
     yallist "^3.0.0"
 
 minizlib@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/minizlib/-/minizlib-1.2.1.tgz#dd27ea6136243c7c880684e8672bb3a45fd9b614"
-  integrity sha512-7+4oTUOWKg7AuL3vloEWekXY2/D20cevzsrNT2kGWm+39J9hGTCBv8VI5Pm5lXZ/o3/mdR4f8rflAPhnQb8mPA==
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/minizlib/-/minizlib-1.2.2.tgz#6f0ccc82fa53e1bf2ff145f220d2da9fa6e3a166"
+  integrity sha512-hR3At21uSrsjjDTWrbu0IMLTpnkpv8IIMFDFaoz43Tmu4LkmAXfH44vNNzpTnf+OAQQCHrb91y/wc2J4x5XgSQ==
   dependencies:
     minipass "^2.2.1"
 
@@ -5916,9 +5916,9 @@ regexpp@^2.0.1:
   integrity sha512-lv0M6+TkDVniA3aD1Eg0DVpfU/booSu7Eev3TDO/mZKHBfVjgCGTV4t4buppESEYDtkArYFOxTJWv6S5C+iaNw==
 
 regexpu-core@^4.5.4:
-  version "4.5.5"
-  resolved "https://registry.yarnpkg.com/regexpu-core/-/regexpu-core-4.5.5.tgz#aaffe61c2af58269b3e516b61a73790376326411"
-  integrity sha512-FpI67+ky9J+cDizQUJlIlNZFKual/lUkFr1AG6zOCpwZ9cLrg8UUVakyUQJD7fCDIe9Z2nwTQJNPyonatNmDFQ==
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/regexpu-core/-/regexpu-core-4.6.0.tgz#2037c18b327cfce8a6fea2a4ec441f2432afb8b6"
+  integrity sha512-YlVaefl8P5BnFYOITTNzDvan1ulLOiXJzCNZxduTIosN17b87h3bvG9yHMoHaRuo88H4mQ06Aodj5VtYGGGiTg==
   dependencies:
     regenerate "^1.4.0"
     regenerate-unicode-properties "^8.1.0"

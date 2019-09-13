@@ -1,5 +1,5 @@
 import FuzzySearch from '@utils/FuzzySearch';
-import { GuildChannel } from 'discord.js';
+import { GuildChannel, Collection } from 'discord.js';
 import { Argument, KlasaGuild, KlasaMessage, Possible } from 'klasa';
 
 const CHANNEL_REGEXP = Argument.regex.channel;
@@ -12,7 +12,7 @@ export default class extends Argument {
     if (resChannel) return resChannel;
 
     if (CHANNEL_REGEXP.test(arg)) arg = arg.replace(CHANNEL_REGEXP, '$1');
-    const textChannels = msg.guild!.channels.filter(channel => channel.type === 'text');
+    const textChannels = msg.guild!.channels.filter(channel => channel.type === 'text') as Collection<string, GuildChannel>;
 
     const results = new FuzzySearch(textChannels, [ 'name', 'id' ]).run(msg, arg);
 
