@@ -840,10 +840,10 @@
   resolved "https://registry.yarnpkg.com/@discordjs/collection/-/collection-0.1.2.tgz#f3d88dfc0ca62bb4cbf24f80202cdfdfccf9fa4d"
   integrity sha512-N4lTTbLYb4aiOVqi2xQgkNrzWouCkT1QisAVg/gi1h4rZdw8d5JEuIdqISkG+Zl8BTmyxEb8zXmfsORLGoeDig==
 
-"@favware/converter@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@favware/converter/-/converter-1.0.6.tgz#4c507c1d8095b2ee0a4e9c39fba0125f8c1a216d"
-  integrity sha512-ht3X3DUZdgiqmqHIDY1/b00swqMhW5AFGDzElTSTyHZVq7xEYukK3UrT7c8hzi41pKIxeKtfglwB5vhHyIIwMQ==
+"@favware/converter@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@favware/converter/-/converter-1.1.0.tgz#7ec7d9f1afecd97499a462b66d31879f440acd7f"
+  integrity sha512-4rPP6RiPa6/Xo8x0jUZgmJByv0Fm2+C3+3LpJ2i48AQEpSB2depL8YjNarkFg+bQsl5a3R6tjbOXRLXOwKzjVw==
   dependencies:
     array-flat-polyfill "^1.0.1"
 
