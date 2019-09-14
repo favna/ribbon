@@ -1,4 +1,5 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
     "outDir": "dist/",
     "rootDir": "src/",
@@ -31,9 +32,7 @@
       "@typeorm/*": ["src/lib/typeorm/*"],
       "@typings/*": ["src/lib/typings/*"],
       "@utils/*": ["src/lib/utils/*"]
-    },
-    "typeRoots": ["typings","./node_modules/@types"],
-    "skipLibCheck": true
+    }
   },
   "include": ["src"]
 }

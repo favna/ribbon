@@ -9,14 +9,18 @@ import RibbonClient from './lib/RibbonClient';
 import { prod } from './lib/utils/Utils';
 
 // Add module aliases
-moduleAlias.addAlias('@databases', `${__dirname}/lib/databases`);
-moduleAlias.addAlias('@dex', `${__dirname}/lib/dex`);
-moduleAlias.addAlias('@extensions', `${__dirname}/lib/extensions`);
-moduleAlias.addAlias('@settings', `${__dirname}/lib/typings/settings`);
-moduleAlias.addAlias('@structures', `${__dirname}/lib/structures`);
-moduleAlias.addAlias('@typeorm', `${__dirname}/lib/typeorm`);
-moduleAlias.addAlias('@typings', `${__dirname}/lib/typings`);
-moduleAlias.addAlias('@utils', `${__dirname}/lib/utils`);
+moduleAlias.addAliases(
+  {
+    '@databases': `${__dirname}/lib/databases`,
+    '@dex': `${__dirname}/lib/dex`,
+    '@extensions': `${__dirname}/lib/extensions`,
+    '@settings': `${__dirname}/lib/typings/settings`,
+    '@structures': `${__dirname}/lib/structures`,
+    '@typeorm': `${__dirname}/lib/typeorm`,
+    '@typings': `${__dirname}/lib/typings`,
+    '@utils': `${__dirname}/lib/utils`,
+  }
+);
 
 // Configure dotenv
 config({

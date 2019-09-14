@@ -1,9 +1,9 @@
 {
   "extends": [
-    "@favware/eslint-config"
+    "@favware"
   ],
   "parserOptions": {
-    "createDefaultProgram": true,
+    "createDefaultProgram": true
   },
   "rules": {
     "@typescript-eslint/no-namespace": "off",
