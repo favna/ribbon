@@ -19,6 +19,21 @@
       "preLaunchTask": "yarn: ci:build",
       "console": "internalConsole",
       "outputCapture": "std",
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Ribbon (No Build)",
+      "args": [
+        "${workspaceFolder}\\dist\\app.js"
+      ],
+      "protocol": "inspector",
+      "internalConsoleOptions": "openOnSessionStart",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",
+      "outputCapture": "std",
     }
   ]
 }
