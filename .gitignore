@@ -17,7 +17,6 @@ logs/
 # IDE settings
 .idea/
 .vs/
-.vscode/
 
 # Build Output
 dist/
@@ -32,3 +31,4 @@ src/data/databases/*
 
 # My own stuff
 src/commands/owner/testing.ts
+src/lib

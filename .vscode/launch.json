@@ -1,0 +1,39 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Ribbon",
+      "args": [
+        "${workspaceFolder}\\dist\\app.js"
+      ],
+      "protocol": "inspector",
+      "internalConsoleOptions": "openOnSessionStart",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "preLaunchTask": "yarn: ci:build",
+      "console": "internalConsole",
+      "outputCapture": "std",
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Ribbon (No-Build)",
+      "args": [
+        "${workspaceFolder}\\dist\\app.js"
+      ],
+      "protocol": "inspector",
+      "internalConsoleOptions": "openOnSessionStart",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",
+      "outputCapture": "std",
+    }
+  ]
+}
