@@ -76,7 +76,7 @@
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
     "node-fetch": "^2.6.0",
-    "qrcode": "^1.4.1",
+    "qrcode": "^1.4.2",
     "reflect-metadata": "^0.1.13",
     "sagiri": "^2.0.2",
     "slot-machine": "^2.1.0",
