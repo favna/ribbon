@@ -42,8 +42,16 @@ export default class ChipsCommand extends Command {
       const casino = await readCasino(msg.author.id, msg.guild.id);
 
       if (casino && casino.balance !== undefined && casino.balance >= 0) {
-        const dailyDura = moment.duration(moment(casino.lastdaily).add(24, 'hours').diff(moment()));
-        const weeklyDura = moment.duration(moment(casino.lastweekly).add(7, 'days').diff(moment()));
+        const dailyDura = moment.duration(
+          moment(casino.lastdaily)
+            .add(24, 'hours')
+            .diff(Date.now())
+        );
+        const weeklyDura = moment.duration(
+          moment(casino.lastweekly)
+            .add(7, 'days')
+            .diff(Date.now())
+        );
 
         balEmbed.setDescription(stripIndents`
           **Balance**

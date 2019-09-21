@@ -1,5 +1,5 @@
-import { Entity, BaseEntity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import { Snowflake } from 'awesome-djs';
+import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
 import { NonFunctionKeys } from 'utility-types';
 
 export type CasinoTimeoutData = Pick<CasinoTimeout, Exclude<NonFunctionKeys<CasinoTimeout>, undefined>>;
@@ -9,8 +9,8 @@ export default class CasinoTimeout extends BaseEntity {
   @PrimaryColumn()
   public guildId?: Snowflake;
 
-  @UpdateDateColumn()
-  public timeout?: Date;
+  @Column()
+  public timeout?: string;
 
   public constructor(data?: CasinoTimeoutData) {
     super();

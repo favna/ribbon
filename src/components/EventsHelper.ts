@@ -32,7 +32,7 @@ const sendReminderMessages = async (client: CommandoClient) => {
 
     for (const reminder of reminders) {
       const remindTime = moment(reminder.date);
-      const dura = moment.duration(remindTime.diff(moment()));
+      const dura = moment.duration(remindTime.diff(Date.now()));
 
       if (dura.asMinutes() <= 0) {
         const user = await client.users.fetch(reminder.userId!);
@@ -72,7 +72,7 @@ const sendCountdownMessages = async (client: CommandoClient) => {
 
     for (const countdown of countdowns) {
       const cdMoment = moment(countdown.lastsend).add(24, 'hours');
-      const dura = moment.duration(cdMoment.diff(moment()));
+      const dura = moment.duration(cdMoment.diff(Date.now()));
 
       if (dura.asMinutes() <= 0) {
         const guild = client.guilds.get(countdown.guildId!);
@@ -86,16 +86,18 @@ const sendCountdownMessages = async (client: CommandoClient) => {
           .setDescription(stripIndents`
             Event on: ${moment(countdown.datetime).format('MMMM Do YYYY [at] HH:mm')}
             That is:
-            ${moment.duration(moment(countdown.datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+            ${moment.duration(
+    moment(countdown.datetime).diff(Date.now(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]'
+  )}
 
             **__${countdown.content}__**`
           );
 
-        if (moment(countdown.datetime).diff(new Date(), 'hours') >= 24) {
+        if (moment(countdown.datetime).diff(Date.now(), 'hours') >= 24) {
           await updateCountdown({
             name: countdown.name!,
             guildId: countdown.guildId!,
-            lastsend: new Date(),
+            lastsend: moment().format(),
           });
         }
         await deleteCountdown(countdown.name, countdown.guildId);
@@ -228,13 +230,17 @@ const payoutLotto = async (client: CommandoClient) => {
         const lastCheck = await readCasinoTimeout(guildId);
 
         if (lastCheck && lastCheck.timeout) {
-          const diff = moment.duration(moment(lastCheck.timeout).add(1, 'days').diff(moment()));
+          const diff = moment.duration(
+            moment(lastCheck.timeout)
+              .add(1, 'days')
+              .diff(Date.now())
+          );
           const diffInDays = diff.asDays();
           if (diffInDays >= 0) continue;
         } else {
           await createCasinoTimeout({
             guildId,
-            timeout: new Date(),
+            timeout: moment().format(),
           });
         }
 
@@ -253,7 +259,7 @@ const payoutLotto = async (client: CommandoClient) => {
 
         await updateCasinoTimeout({
           guildId,
-          timeout: new Date(),
+          timeout: moment().format(),
         });
 
         const defaultChannel = client.guilds.get(guildId)!.systemChannel;
@@ -301,13 +307,13 @@ const sendTimedMessages = async (client: CommandoClient) => {
 
     for (const timer of timers) {
       const timerMoment = moment(timer.lastsend).add(timer.interval, 'ms');
-      const dura = moment.duration(timerMoment.diff(moment()));
+      const dura = moment.duration(timerMoment.diff(Date.now()));
 
       if (dura.asMinutes() <= 0) {
         await updateTimer({
           name: timer.name!,
           guildId: timer.guildId!,
-          lastsend: new Date(),
+          lastsend: moment().format(),
         });
         const guild = client.guilds.get(timer.guildId!);
         if (!guild) continue;
@@ -891,15 +897,14 @@ export const handleReady = async (client: CommandoClient) => {
   FirebaseStorage.servers = parseInt(await getServersData());
   FirebaseStorage.users = parseInt(await getUsersData());
 
+  const everyMinute = 1 * 60 * 1000;
+  const everyThreeMinutes = 3 * 60 * 1000;
+  const everyThirdHour = 3 * 60 * 60 * 1000;
+  interval(async () => sendReminderMessages(client), everyMinute);
   if (prod) {
-    const everyMinute = 1 * 60 * 1000;
-    const everyThreeMinutes = 3 * 60 * 1000;
-    const everyThirdHour = 3 * 60 * 60 * 1000;
-
     interval(async () => setUpdateToFirebase(client), everyThreeMinutes);
     interval(async () => sendTimedMessages(client), everyMinute);
     interval(async () => sendCountdownMessages(client), everyThreeMinutes);
-    interval(async () => sendReminderMessages(client), everyMinute);
     interval(async () => payoutLotto(client), everyThirdHour);
   }
 

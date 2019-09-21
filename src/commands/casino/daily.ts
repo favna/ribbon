@@ -42,7 +42,11 @@ export default class DailyCommand extends Command {
       const casino = await readCasino(msg.author.id, msg.guild.id);
 
       if (casino && casino.balance !== undefined && casino.balance >= 0) {
-        const dailyDura = moment.duration(moment(casino.lastdaily).add(24, 'hours').diff(moment()));
+        const dailyDura = moment.duration(
+          moment(casino.lastdaily)
+            .add(24, 'hours')
+            .diff(Date.now())
+        );
         const prevBal = casino.balance;
 
         let chipStr = '';
@@ -54,7 +58,7 @@ export default class DailyCommand extends Command {
             userId: msg.author.id,
             guildId: msg.guild.id,
             balance: newBalance,
-            lastdaily: new Date(),
+            lastdaily: moment().format(),
           });
 
           chipStr = `${prevBal} ➡ ${newBalance}`;

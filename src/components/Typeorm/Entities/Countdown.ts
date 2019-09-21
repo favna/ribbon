@@ -1,5 +1,5 @@
-import { Entity, Column, BaseEntity, UpdateDateColumn, PrimaryColumn } from 'typeorm';
 import { Snowflake } from 'awesome-djs';
+import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
 import { NonFunctionKeys } from 'utility-types';
 
 export type CountdownData = Pick<Countdown, Exclude<NonFunctionKeys<Countdown>, undefined>>;
@@ -12,8 +12,8 @@ export default class Countdown extends BaseEntity {
   @PrimaryColumn()
   public guildId?: Snowflake;
 
-  @UpdateDateColumn()
-  public datetime?: Date;
+  @Column()
+  public datetime?: string;
 
   @Column()
   public channelId?: Snowflake;
@@ -24,8 +24,8 @@ export default class Countdown extends BaseEntity {
   @Column({ nullable: false, default: 'none' })
   public tag?: 'everyone' | 'here' | 'none';
 
-  @UpdateDateColumn()
-  public lastsend?: Date;
+  @Column()
+  public lastsend?: string;
 
   public constructor(data?: CountdownData) {
     super();

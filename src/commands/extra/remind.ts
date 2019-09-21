@@ -62,7 +62,7 @@ export default class RemindCommand extends Command {
     try {
       await writeReminder({
         userId: msg.author.id,
-        date: moment().add(time, 'ms').toDate(),
+        date: moment().add(time, 'ms').format(),
         content: reminder,
       });
 

@@ -77,7 +77,7 @@ export default class CountdownRemove extends Command {
         cdrEmbed.setDescription(stripIndents`
           **Action:** Countdown removed
           **Event was at:** ${moment(countdown.datetime).format('YYYY-MM-DD HH:mm')}
-          **Countdown Duration:** ${moment.duration(moment(countdown.datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+          **Countdown Duration:** ${this.parseDateTime(countdown.datetime!)}
           **Tag on event:** ${countdown.tag === 'none' ? 'No one' : `@${countdown.tag}`}
           **Channel:** <#${countdown.channelId}>
           **Message:** ${countdown.content}`
@@ -110,5 +110,11 @@ export default class CountdownRemove extends Command {
         Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
       );
     }
+  }
+
+  private parseDateTime(date: string) {
+    moment
+      .duration(moment(date).diff(Date.now(), 'days'), 'days')
+      .format('w [weeks][, ] d [days] [and] h [hours]');
   }
 }

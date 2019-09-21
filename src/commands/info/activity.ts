@@ -213,7 +213,10 @@ export default class ActivityCommand extends Command {
           .setTimestamp(activity.timestamps.start);
         if (activity.timestamps.end) {
           embed.addField('End Time',
-            `${moment.duration(moment(activity.timestamps.end).diff(Date.now())).format('H [hours], m [minutes] [and] s [seconds]')}`,
+            `${moment.duration(
+              moment(activity.timestamps.end)
+                .diff(Date.now())
+            ).format('H [hours], m [minutes] [and] s [seconds]')}`,
             true);
         }
       }

@@ -42,7 +42,11 @@ export default class WeeklyCommand extends Command {
       const casino = await readCasino(msg.author.id, msg.guild.id);
 
       if (casino && casino.balance !== undefined && casino.balance >= 0) {
-        const weeklyDura = moment.duration(moment(casino.lastweekly).add(7, 'days').diff(moment()));
+        const weeklyDura = moment.duration(
+          moment(casino.lastweekly)
+            .add(7, 'days')
+            .diff(Date.now())
+        );
         const prevBal = casino.balance;
 
         let chipStr = '';
@@ -55,7 +59,7 @@ export default class WeeklyCommand extends Command {
             userId: msg.author.id,
             guildId: msg.guild.id,
             balance: newBalance,
-            lastweekly: new Date(),
+            lastweekly: moment().format(),
           });
 
           chipStr = `${prevBal} ➡ ${newBalance}`;

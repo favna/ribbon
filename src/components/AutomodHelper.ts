@@ -19,7 +19,7 @@ export const duptext = (
     return false;
   }
   const authorMessages = msg.channel.messages.filter((message: Message) => {
-    const diff = moment.duration(moment(message.createdTimestamp).diff(moment()));
+    const diff = moment.duration(moment(message.createdTimestamp).diff(Date.now()));
 
     return (
       isNumberBetween(diff.asMinutes(), within * -1, 0, true) &&
@@ -96,7 +96,7 @@ export const slowmode = (msg: CommandoMessage, within: number, client: CommandoC
     return false;
   }
   const authorMessages = msg.channel.messages.filter((message: Message) => {
-    const diff = moment.duration(moment(message.createdTimestamp).diff(moment()));
+    const diff = moment.duration(moment(message.createdTimestamp).diff(Date.now()));
 
     return (
       isNumberBetween(diff.asSeconds(), within * -1, 0, true) &&
@@ -107,7 +107,7 @@ export const slowmode = (msg: CommandoMessage, within: number, client: CommandoC
   const msgArray = authorMessages.array();
 
   if (msgArray.length) {
-    const diff = moment.duration(moment(msgArray[0].createdAt).diff(moment()));
+    const diff = moment.duration(moment(msgArray[0].createdAt).diff(Date.now()));
 
     if (diff.asSeconds() <= within) {
       return true;

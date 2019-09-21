@@ -80,6 +80,7 @@ export default class CurrencyType extends ArgumentType {
         return 60 * 1000;
       case 'h':
       case 'hr':
+      case 'hrs':
       case 'hour':
       case 'hours':
         return 60 * 60 * 1000;

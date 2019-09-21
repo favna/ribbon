@@ -41,7 +41,7 @@ export default class CountdownList extends Command {
         `${stripIndents`
           **Name:** ${row.name}
           **Event at:** ${moment(row.datetime).format('YYYY-MM-DD HH:mm')}
-          **Countdown Duration:** ${moment.duration(moment(row.datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+          **Countdown Duration:** ${this.parseDateTime(row.datetime!)}
           **Tag on event:** ${row.tag === 'none' ? 'No one' : `@${row.tag}`}
           **Channel:** <#${row.channelId}> (\`${row.channelId}\`)
           **Content:** ${row.content}
@@ -91,5 +91,11 @@ export default class CountdownList extends Command {
         Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
       );
     }
+  }
+
+  private parseDateTime(date: string) {
+    moment
+      .duration(moment(date).diff(Date.now(), 'days'), 'days')
+      .format('w [weeks][, ] d [days] [and] h [hours]');
   }
 }

@@ -107,7 +107,7 @@ export default class TimerAddCommand extends Command {
         interval,
         channelId: timerChannel.id,
         guildId: msg.guild.id,
-        lastsend: moment().subtract(interval, 'ms').toDate(),
+        lastsend: moment().subtract(interval, 'ms').format(),
         members: members.map(member => member.id),
       });
 

@@ -30,7 +30,7 @@ import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@com
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
 import { MessageEmbed, TextChannel } from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import { writeCountdown } from '@components/Typeorm/DbInteractions';
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 
@@ -127,10 +127,10 @@ export default class CountdownAddCommand extends Command {
         name,
         tag,
         guildId: msg.guild.id,
-        datetime: datetime.toDate(),
+        datetime: datetime.format(),
         channelId: channel.id,
         content: stripIndents(content),
-        lastsend: moment().subtract(1, 'hour').toDate(),
+        lastsend: moment().subtract(1, 'hour').format(),
       });
 
       countdownEmbed
@@ -139,7 +139,7 @@ export default class CountdownAddCommand extends Command {
         .setDescription(stripIndents`
           **Action:** Countdown stored
           **Event at:** ${datetime.format('YYYY-MM-DD HH:mm')}
-          **Countdown Duration:** ${moment.duration(datetime.diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+          **Countdown Duration:** ${this.parseDateTime(datetime)}
           **Tag on event:** ${tag === 'none' ? 'No one' : `@${tag}`}
           **Channel:** <#${channel.id}>
           **Message:** ${content}`
@@ -175,5 +175,11 @@ export default class CountdownAddCommand extends Command {
         Join the support server by getting an invite by using the \`${msg.guild.commandPrefix}invite\` command`
       );
     }
+  }
+
+  private parseDateTime(date: Moment) {
+    moment
+      .duration(moment(date).diff(Date.now(), 'days'), 'days')
+      .format('w [weeks][, ] d [days] [and] h [hours]');
   }
 }
