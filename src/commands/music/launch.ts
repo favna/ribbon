@@ -22,11 +22,14 @@ import { deleteCommandMessages, Song } from '@components/Utils';
 import { parse, stringify } from '@favware/querystring';
 import ytdl, { downloadOptions } from '@favware/ytdl-prismplayer';
 import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { Guild, Message, Snowflake, StreamDispatcher, StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection } from 'awesome-djs';
+import {
+  Guild, Message, Snowflake, StreamDispatcher,
+  StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection
+} from 'awesome-djs';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { MusicQueueType, MusicVoteType, YoutubeVideoType } from 'RibbonTypes';
+import { MusicQueueType, MusicVoteType, YoutubeVideoType, YoutubeResultList } from 'RibbonTypes';
 
 type LaunchMusicArgs = {
   videoQuery: string;
@@ -97,6 +100,7 @@ export default class LaunchMusicCommand extends Command {
       })}`);
 
       const data = await request.json();
+      if (!data.items || !data.items.length) throw new Error('cannot_find_video');
 
       return {
         durationSeconds: moment.duration(data.items[0].contentDetails.duration).asSeconds(),
@@ -136,8 +140,21 @@ export default class LaunchMusicCommand extends Command {
     if (!queue) {
       const permissions = voiceChannel.permissionsFor(msg.client.user);
 
-      if (!permissions.has('CONNECT')) return msg.reply('I don\'t have permission to join your voice channel. Fix your server\'s permissions');
-      if (!permissions.has('SPEAK')) return msg.reply('I don\'t have permission to speak in your voice channel. Fix your server\'s permissions');
+      if (!permissions.has('CONNECT')) {
+        return msg.reply(oneLine(
+          `
+            I don't have permission to join your voice channel. Fix your server's permissions
+          `
+        ));
+      }
+
+      if (!permissions.has('SPEAK')) {
+        return msg.reply(oneLine(
+          `
+            I don't have permission to speak in your voice channel. Fix your server's permissions
+          `
+        ));
+      }
 
       const listQueue: MusicQueueType = {
         textChannel: msg.channel as TextChannel,
@@ -170,7 +187,12 @@ export default class LaunchMusicCommand extends Command {
       const videos = await this.getPlaylistVideos(playlist);
 
       if (!videos) {
-        statusMsg.edit(`${msg.author}, I did not find any videos in that playlist. Are you sure they are public and not unlisted / private?`);
+        statusMsg.edit(oneLine(
+          `
+            ${msg.author},
+            I did not find any videos in that playlist. Are you sure they are public and not unlisted / private?
+          `
+        ));
 
         return null;
       }
@@ -224,7 +246,7 @@ export default class LaunchMusicCommand extends Command {
     video: YoutubeVideoType, queue: MusicQueueType, voiceChannel: VoiceChannel,
     msg: CommandoMessage, statusMsg: Message
   ): Promise<null> {
-    if (!video.durationSeconds || video.durationSeconds === 0) {
+    if (!video || !video.durationSeconds || video.durationSeconds === 0) {
       statusMsg.edit(oneLine`${msg.author}, you can't play live streams`);
 
       return null;
@@ -242,6 +264,13 @@ export default class LaunchMusicCommand extends Command {
       this.queue.set(msg.guild.id, queue);
 
       const result = this.addSong(msg, video);
+
+      if (!result) {
+        statusMsg.edit(oneLine`${msg.author}, I can't play live streams or private videos.`);
+
+        return null;
+      }
+
       const resultMessage = {
         author: {
           iconURL: msg.author.displayAvatarURL({ format: 'png' }),
@@ -267,14 +296,25 @@ export default class LaunchMusicCommand extends Command {
         return null;
       } catch (error) {
         this.queue.delete(msg.guild.id);
-        statusMsg.edit(oneLine`${msg.author}, something went wrong playing music.
-                    Please contact <@${this.client.owners[0].id}> as there is likely something wrong in the code!
-                    Use \`${msg.guild.commandPrefix}invite\` to get an invite to the support server.`);
+        statusMsg.edit(oneLine(
+          `
+            ${msg.author}, something went wrong playing music.
+            Please contact <@${this.client.owners[0].id}> as there is likely something wrong in the code!
+            Use \`${msg.guild.commandPrefix}invite\` to get an invite to the support server.
+          `
+        ));
 
         return null;
       }
     } else {
       const result = this.addSong(msg, video);
+
+      if (!result) {
+        statusMsg.edit(oneLine`${msg.author}, I can't play live streams or private videos.`);
+
+        return null;
+      }
+
       const resultMessage = {
         author: {
           iconURL: msg.author.displayAvatarURL({ format: 'png' }),
@@ -292,42 +332,56 @@ export default class LaunchMusicCommand extends Command {
 
   private async handlePlaylist(video: YoutubeVideoType, playlistId: string,
     msg: CommandoMessage, statusMsg: Message): Promise<null> {
-    if (!video.durationSeconds || video.durationSeconds === 0) {
-      statusMsg.edit(oneLine`${msg.author}, you can't play live streams.`);
+    if (!video || !video.durationSeconds || video.durationSeconds === 0) {
+      statusMsg.edit(oneLine`${msg.author}, I can't play live streams or private videos.`);
 
       return null;
     }
 
     const result = this.addSong(msg, video);
-    const resultMessage = {
-      author: {
-        iconURL: msg.author.displayAvatarURL({ format: 'png' }),
-        name: `${msg.author.tag} (${msg.author.id})`,
-      },
-      color: 3447003,
-      description: result,
-    };
 
-    if (!result.startsWith('👍')) {
-      this.queue.delete(msg.guild.id);
-      statusMsg.edit('', { embed: resultMessage });
+    if (result) {
+      const resultMessage = {
+        author: {
+          iconURL: msg.author.displayAvatarURL({ format: 'png' }),
+          name: `${msg.author.tag} (${msg.author.id})`,
+        },
+        color: 3447003,
+        description: result,
+      };
+
+      if (!result.startsWith('👍')) {
+        this.queue.delete(msg.guild.id);
+        statusMsg.edit('', { embed: resultMessage });
+
+        return null;
+      }
+
+      statusMsg.edit('', {
+        embed: {
+          description: stripIndents(
+            `
+              Adding [the playlist](https://www.youtube.com/playlist?list=${playlistId}) to the queue!
+              Check what's been added with: \`${msg.guild.commandPrefix}queue\`!
+            `
+          ),
+          color: 3447003,
+          author: {
+            name: `${msg.author.tag} (${msg.author.id})`,
+            iconURL: msg.author.displayAvatarURL({ format: 'png' }),
+          },
+        },
+      });
 
       return null;
     }
 
-    statusMsg.edit('', {
-      embed: {
-        description: stripIndents`
-                      Adding [the playlist](https://www.youtube.com/playlist?list=${playlistId}) to the queue!
-                      Check what's been added with: \`${msg.guild.commandPrefix}queue\`!
-                    `,
-        color: 3447003,
-        author: {
-          name: `${msg.author.tag} (${msg.author.id})`,
-          iconURL: msg.author.displayAvatarURL({ format: 'png' }),
-        },
-      },
-    });
+    statusMsg.edit(oneLine(
+      `
+        ${msg.author},
+        Found a live stream or private video in the playlist which I cannot play so I skipped in.
+      `
+    ));
 
     return null;
   }
@@ -341,32 +395,35 @@ export default class LaunchMusicCommand extends Command {
 
       return prev;
     };
+    if (video) {
+      if (!this.client.isOwner(msg.author)) {
+        const songMaxLength = msg.guild.settings.get('maxLength', MAX_LENGTH);
+        const songMaxSongs = msg.guild.settings.get('maxSongs', MAX_SONGS);
 
-    if (!this.client.isOwner(msg.author)) {
-      const songMaxLength = msg.guild.settings.get('maxLength', MAX_LENGTH);
-      const songMaxSongs = msg.guild.settings.get('maxSongs', MAX_SONGS);
+        if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
+          return oneLine`
+        👎 ${Util.escapeMarkdown(video.title)}
+        (${Song.timeString(video.durationSeconds)})
+        is too long. No songs longer than ${songMaxLength} minutes!
+      `;
+        }
+        if ((queue as MusicQueueType).songs.some((songIterator: Song) => songIterator.id === video.id)) {
+          return `👎 ${Util.escapeMarkdown(video.title)} is already queued.`;
+        }
 
-      if (songMaxLength > 0 && video.durationSeconds > songMaxLength * 60) {
-        return oneLine`
-          👎 ${Util.escapeMarkdown(video.title)}
-          (${Song.timeString(video.durationSeconds)})
-          is too long. No songs longer than ${songMaxLength} minutes!
-        `;
-      }
-      if ((queue as MusicQueueType).songs.some((songIterator: Song) => songIterator.id === video.id)) {
-        return `👎 ${Util.escapeMarkdown(video.title)} is already queued.`;
+        if (songMaxSongs > 0 && (queue as MusicQueueType).songs.reduce(songNumerator, 0) >= songMaxSongs) {
+          return `👎 you already have ${songMaxSongs} songs in the queue. Don't hog all the airtime!`;
+        }
       }
 
-      if (songMaxSongs > 0 && (queue as MusicQueueType).songs.reduce(songNumerator, 0) >= songMaxSongs) {
-        return `👎 you already have ${songMaxSongs} songs in the queue. Don't hog all the airtime!`;
-      }
+      const song = new Song(video, msg.member);
+
+      (queue as MusicQueueType).songs.push(song);
+
+      return oneLine`👍 ${`[${song}](${`${song.url}`})`}`;
     }
 
-    const song = new Song(video, msg.member);
-
-    (queue as MusicQueueType).songs.push(song);
-
-    return oneLine`👍 ${`[${song}](${`${song.url}`})`}`;
+    return null;
   }
 
   private async play(guild: Guild, song: Song): Promise<void | boolean> {
@@ -438,17 +495,18 @@ export default class LaunchMusicCommand extends Command {
       const request = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?${stringify({
         key: process.env.GOOGLE_API_KEY!,
         maxResults: 25,
-        part: 'snippet,contentDetails',
+        part: [ 'snippet', 'contentDetails' ].join(','),
         playlistId: id,
       })}`);
+      const data = await request.json() as YoutubeResultList;
 
-      const data = await request.json();
-      const arr: (YoutubeVideoType | null)[] = [];
-      const videos = data.items;
+      const videos = await Promise.all(
+        data.items.map(async video => (
+          LaunchMusicCommand.getVideo(video.snippet.resourceId.videoId)
+        ))
+      );
 
-      videos.forEach(async (video: YoutubeVideoType) => arr.push(await LaunchMusicCommand.getVideo(video.snippet!.resourceId.videoId)));
-
-      return arr;
+      return videos;
     } catch (err) {
       return null;
     }

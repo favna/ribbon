@@ -48,6 +48,7 @@
     "db:stop": "docker-compose stop",
     "db:down": "docker-compose down",
     "ci:build": "tsc",
+    "debug:build": "tsc && yarn postbuild",
     "up": "yarn upgrade-interactive --latest",
     "commit": "git-cz",
     "cz": "git-cz",

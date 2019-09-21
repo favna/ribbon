@@ -16,7 +16,7 @@
       "env": {
         "NODE_ENV": "development"
       },
-      "preLaunchTask": "yarn: ci:build",
+      "preLaunchTask": "yarn: debug:build",
       "console": "internalConsole",
       "outputCapture": "std",
     },

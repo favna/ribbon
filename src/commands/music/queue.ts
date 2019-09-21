@@ -83,7 +83,7 @@ export default class ViewQueueCommand extends Command {
     : `${song.name} (${song.lengthString})`}`).join('\n')}
 
     ${paginated.maxPage > 1
-    ? `\nUse ${msg.usage()} to view a specific page.\n`
+    ? `\nUse \`${msg.guild.commandPrefix}queue <page_number>\` to view a specific page.\n`
     : ''}
 
 

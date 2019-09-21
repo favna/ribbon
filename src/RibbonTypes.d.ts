@@ -47,6 +47,7 @@ export declare type YoutubeVideoResourceType = {
 export declare type YoutubeResultList = {
   etag: string;
   items: {
+    contentDetails: YoutubeVideoContentDetailsType;
     etag: string;
     id: YoutubeVideoResourceType;
     kind: string;
@@ -55,7 +56,6 @@ export declare type YoutubeResultList = {
   kind: string;
   nextPageToken: string;
   pageInfo: { resultsPerPage: number; totalResults: number };
-  regionCode: string;
 };
 
 declare type DiscordGameExecutableType = {
