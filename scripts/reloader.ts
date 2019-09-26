@@ -1,38 +1,39 @@
-import { sync as globby } from 'glob';
-import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
-import { join, resolve } from 'path';
-import { stripIndent } from 'common-tags';
 import chalk from 'chalk';
+import { stripIndent } from 'common-tags';
 import { readFileSync as readFile, writeFileSync as writeFile } from 'fs';
-import { TranspileOutput, CompilerOptions, transpileModule } from 'typescript';
+import { sync as globby } from 'glob';
 import { readFileSync as readJson } from 'jsonfile';
+import { join, resolve } from 'path';
 import { minify as terser } from 'terser';
+import { CompilerOptions, transpileModule, TranspileOutput } from 'typescript';
+import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
+
+const ROOT_PATH = join(__dirname, '../');
+const SRC_PATH = join(ROOT_PATH, 'src');
 
 (async () => {
-  type YargResult = {
+  interface YargResult {
     help: boolean;
     version: boolean;
     interactive: boolean;
     command: string | string[];
-  };
+  }
 
-  type BaseTSConfig = {
+  interface BaseTSConfig {
     compilerOptions: CompilerOptions;
     include: string[];
     exclude: string[];
-  };
+  }
 
-  const srcDir = join(__dirname, '../src');
-  const commandDir = join(srcDir, 'commands');
-  const ribbonCommands = globby(`${commandDir}/**/*.ts`).map(file => {
+  const commandsDir = join(SRC_PATH, 'commands');
+  const commands = globby(`${commandsDir}/**/*.ts`).map(file => {
     const parts = file.split('/');
-    const platform = process.platform.toLowerCase();
 
-    if (platform === 'linux' || platform === 'darwin') return parts[8].slice(0, -3);
-
-    return parts[6].slice(0, -3);
+    return parts[parts.length - 1].slice(0, -3);
   });
-  const baseTSConfig = readJson(resolve(srcDir, '..', 'tsconfig.json')) as BaseTSConfig;
+  console.log(commands.length);
+
+  const baseTSConfig = readJson(resolve(ROOT_PATH, 'tsconfig.json')) as BaseTSConfig;
 
   const compile = (fileContent: string, options?: CompilerOptions): TranspileOutput => {
     const compilerOptions: typeof options = {
@@ -50,7 +51,7 @@ import { minify as terser } from 'terser';
         type: 'checkbox',
         describe: 'Which commands should be reloaded?',
         prompt: 'if-empty',
-        choices: ribbonCommands,
+        choices: commands,
       },
     };
 
@@ -66,10 +67,10 @@ import { minify as terser } from 'terser';
 
     const commandsResult: string[] = Array.isArray(results.command) ? results.command : [ results.command ];
 
-    if (!commandsResult.length) throw new Error('You didn\'t give any commands to reload');
+    if (!commandsResult.length) throw 'You didn\'t give any commands to reload';
 
     for (const result of commandsResult) {
-      const filePath = globby(`${commandDir}/**/${result}.ts`)[0];
+      const filePath = globby(`${commandsDir}/**/${result}.ts`)[0];
       const fileContent = readFile(filePath, { encoding: 'utf8' });
       const transpiledModule = compile(fileContent).outputText;
       const minfiedModule = terser(transpiledModule, { compress: true, ecma: 6, mangle: true }).code;
