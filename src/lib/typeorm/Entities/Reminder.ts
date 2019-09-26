@@ -1,5 +1,4 @@
-import { Snowflake } from 'discord.js';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { NonFunctionKeys } from 'utility-types';
 
 export type ReminderData = Pick<Reminder, Exclude<NonFunctionKeys<Reminder>, undefined>>;
@@ -10,10 +9,10 @@ export default class Reminder extends BaseEntity {
   public id?: number;
 
   @Column()
-  public userId?: Snowflake;
+  public userId?: string;
 
-  @UpdateDateColumn()
-  public date?: Date;
+  @Column()
+  public date?: string;
 
   @Column({ nullable: false, default: '' })
   public content?: string;

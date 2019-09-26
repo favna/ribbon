@@ -1,5 +1,4 @@
-import { Snowflake } from 'discord.js';
-import { BaseEntity, Column, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
 import { NonFunctionKeys } from 'utility-types';
 
 export type CountdownData = Pick<Countdown, Exclude<NonFunctionKeys<Countdown>, undefined>>;
@@ -10,13 +9,13 @@ export default class Countdown extends BaseEntity {
   public name?: string;
 
   @PrimaryColumn()
-  public guildId?: Snowflake;
-
-  @UpdateDateColumn()
-  public datetime?: Date;
+  public guildId?: string;
 
   @Column()
-  public channelId?: Snowflake;
+  public datetime?: string;
+
+  @Column()
+  public channelId?: string;
 
   @Column({ nullable: false, default: '' })
   public content?: string;
@@ -24,8 +23,8 @@ export default class Countdown extends BaseEntity {
   @Column({ nullable: false, default: 'none' })
   public tag?: 'everyone' | 'here' | 'none';
 
-  @UpdateDateColumn()
-  public lastsend?: Date;
+  @Column()
+  public lastsend?: string;
 
   public constructor(data?: CountdownData) {
     super();

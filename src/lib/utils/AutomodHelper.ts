@@ -19,7 +19,7 @@ export const duptext = (
     return false;
   }
   const authorMessages = msg.channel.messages.filter((message: Message) => {
-    const diff = moment.duration(moment(message.createdTimestamp).diff(moment()));
+    const diff = moment.duration(moment(message.createdTimestamp).diff(Date.now()));
 
     return (
       isNumberBetween(diff.asMinutes(), within * -1, 0, true) &&

@@ -15,7 +15,7 @@ export default class extends Task {
 
       for (const reminder of reminders) {
         const remindTime = moment(reminder.date);
-        const dura = moment.duration(remindTime.diff(moment()));
+        const dura = moment.duration(remindTime.diff(Date.now()));
 
         if (dura.asMinutes() <= 0) {
           const user = await this.client.users.fetch(reminder.userId!);

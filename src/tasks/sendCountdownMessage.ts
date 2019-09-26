@@ -16,7 +16,7 @@ export default class extends Task {
 
       for (const countdown of countdowns) {
         const cdMoment = moment(countdown.lastsend).add(24, 'hours');
-        const dura = moment.duration(cdMoment.diff(moment()));
+        const dura = moment.duration(cdMoment.diff(Date.now()));
 
         if (dura.asMinutes() <= 0) {
           const guild = this.client.guilds.get(countdown.guildId!);
@@ -26,17 +26,16 @@ export default class extends Task {
             .setTitle('Countdown Reminder')
             .setDescription(stripIndents`
               Event on: ${moment(countdown.datetime).format('MMMM Do YYYY [at] HH:mm')}
-              That is:
-              ${moment.duration(moment(countdown.datetime).diff(moment(), 'days'), 'days').format('w [weeks][, ] d [days] [and] h [hours]')}
+              That is: ${this.parseDate(countdown.datetime!)}
 
               **__${countdown.content}__**`
             );
 
-          if (moment(countdown.datetime).diff(new Date(), 'hours') >= 24) {
+          if (moment(countdown.datetime).diff(Date.now(), 'hours') >= 24) {
             await writeCountdown({
               name: countdown.name,
               guildId: countdown.guildId,
-              lastsend: new Date(),
+              lastsend: moment().format(),
             });
           }
           await deleteCountdown(countdown.name, countdown.guildId);
@@ -74,5 +73,14 @@ export default class extends Task {
   private ensureTask(name: string, time: string): void {
     const schedules = this.client.settings!.get(ClientSettings.Schedules) as ClientSettings.Schedules;
     if (!schedules.some(task => task.taskName === name)) this.client.schedule.create(name, time, { catchUp: true });
+  }
+
+  private parseDate(date: string) {
+    moment.duration(
+      moment(date)
+        .add(new Date().getTimezoneOffset() * -1, 'minutes')
+        .diff(moment(), 'days'), 'days'
+    )
+      .format('w [weeks][, ] d [days] [and] h [hours]');
   }
 }

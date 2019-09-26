@@ -1,4 +1,3 @@
-import { Snowflake } from 'discord.js';
 import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
 import { NonFunctionKeys } from 'utility-types';
 
@@ -7,10 +6,10 @@ export type WarningData = Pick<Warning, Exclude<NonFunctionKeys<Warning>, undefi
 @Entity()
 export default class Warning extends BaseEntity {
   @PrimaryColumn()
-  public userId?: Snowflake;
+  public userId?: string;
 
   @PrimaryColumn()
-  public guildId?: Snowflake;
+  public guildId?: string;
 
   @Column()
   public tag?: string;

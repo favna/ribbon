@@ -16,13 +16,13 @@ export default class extends Task {
 
       for (const timer of timers) {
         const timerMoment = moment(timer.lastsend).add(timer.interval, 'ms');
-        const dura = moment.duration(timerMoment.diff(moment()));
+        const dura = moment.duration(timerMoment.diff(Date.now()));
 
         if (dura.asMinutes() <= 0) {
           await writeTimer({
             name: timer.name,
             guildId: timer.guildId,
-            lastsend: new Date(),
+            lastsend: moment().format(),
           });
           const guild = this.client.guilds.get(timer.guildId!);
           if (!guild) continue;

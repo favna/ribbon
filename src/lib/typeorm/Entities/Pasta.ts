@@ -1,4 +1,3 @@
-import { Snowflake } from 'discord.js';
 import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
 import { NonFunctionKeys } from 'utility-types';
 
@@ -10,7 +9,7 @@ export default class Pasta extends BaseEntity {
   public name?: string;
 
   @PrimaryColumn()
-  public guildId?: Snowflake;
+  public guildId?: string;
 
   @Column({ nullable: false, default: '' })
   public content?: string;

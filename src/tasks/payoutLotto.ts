@@ -21,13 +21,17 @@ export default class extends Task {
           const lastCheck = await readCasinoTimeout(guildId);
 
           if (lastCheck && lastCheck.timeout) {
-            const diff = moment.duration(moment(lastCheck.timeout).add(1, 'days').diff(moment()));
+            const diff = moment.duration(
+              moment(lastCheck.timeout)
+                .add(1, 'days')
+                .diff(Date.now())
+            );
             const diffInDays = diff.asDays();
             if (diffInDays >= 0) continue;
           } else {
             await createCasinoTimeout({
               guildId,
-              timeout: new Date(),
+              timeout: moment().format(),
             });
           }
 
@@ -46,7 +50,7 @@ export default class extends Task {
 
           await updateCasinoTimeout({
             guildId,
-            timeout: new Date(),
+            timeout: moment().format(),
           });
 
           const defaultChannel = this.client.guilds.get(guildId)!.systemChannel;

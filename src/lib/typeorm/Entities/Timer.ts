@@ -1,5 +1,4 @@
-import { Snowflake } from 'discord.js';
-import { BaseEntity, Column, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
 import { NonFunctionKeys } from 'utility-types';
 
 export type TimerData = Pick<Timer, Exclude<NonFunctionKeys<Timer>, undefined>>;
@@ -10,19 +9,19 @@ export default class Timer extends BaseEntity {
   public name?: string;
 
   @PrimaryColumn()
-  public guildId?: Snowflake;
+  public guildId?: string;
 
   @Column()
   public interval?: number;
 
   @Column()
-  public channelId?: Snowflake;
+  public channelId?: string;
 
   @Column({ nullable: false, default: '' })
   public content?: string;
 
-  @UpdateDateColumn()
-  public lastsend?: Date;
+  @Column()
+  public lastsend?: string;
 
   @Column('simple-array', { nullable: false, default: '' })
   public members?: string[];

@@ -1,5 +1,4 @@
-import { Snowflake } from 'discord.js';
-import { BaseEntity, Column, Entity, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
 import { NonFunctionKeys } from 'utility-types';
 
 export type CasinoData = Pick<Casino, Exclude<NonFunctionKeys<Casino>, undefined>>;
@@ -7,19 +6,19 @@ export type CasinoData = Pick<Casino, Exclude<NonFunctionKeys<Casino>, undefined
 @Entity()
 export default class Casino extends BaseEntity {
   @PrimaryColumn()
-  public userId?: Snowflake;
+  public userId?: string;
 
   @PrimaryColumn()
-  public guildId?: Snowflake;
+  public guildId?: string;
 
   @Column({ nullable: false, default: 0})
   public balance?: number;
 
-  @UpdateDateColumn()
-  public lastdaily?: Date;
+  @Column()
+  public lastdaily?: string;
 
-  @UpdateDateColumn()
-  public lastweekly?: Date;
+  @Column()
+  public lastweekly?: string;
 
   @Column({nullable: false, default: 0})
   public vault?: number;
