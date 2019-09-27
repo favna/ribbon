@@ -12,18 +12,18 @@ const ROOT_PATH = join(__dirname, '../');
 const SRC_PATH = join(ROOT_PATH, 'src');
 
 (async () => {
-  interface YargResult {
+  type YargResult = {
     help: boolean;
     version: boolean;
     interactive: boolean;
     command: string | string[];
-  }
+  };
 
-  interface BaseTSConfig {
+  type BaseTSConfig = {
     compilerOptions: CompilerOptions;
     include: string[];
     exclude: string[];
-  }
+  };
 
   const commandsDir = join(SRC_PATH, 'commands');
   const commands = globby(`${commandsDir}/**/*.ts`).map(file => {
@@ -31,7 +31,6 @@ const SRC_PATH = join(ROOT_PATH, 'src');
 
     return parts[parts.length - 1].slice(0, -3);
   });
-  console.log(commands.length);
 
   const baseTSConfig = readJson(resolve(ROOT_PATH, 'tsconfig.json')) as BaseTSConfig;
 
@@ -67,7 +66,7 @@ const SRC_PATH = join(ROOT_PATH, 'src');
 
     const commandsResult: string[] = Array.isArray(results.command) ? results.command : [ results.command ];
 
-    if (!commandsResult.length) throw 'You didn\'t give any commands to reload';
+    if (!commandsResult.length) throw new Error('You didn\'t give any commands to reload');
 
     for (const result of commandsResult) {
       const filePath = globby(`${commandsDir}/**/${result}.ts`)[0];
