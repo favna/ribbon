@@ -4499,8 +4499,8 @@ klasa-decorators@^0.0.1:
 
 klasa@dirigeants/klasa#settings:
   version "0.5.0-dev"
-  uid f130836bbd99a25752b341e1db81c970958d9d77
-  resolved "https://codeload.github.com/dirigeants/klasa/tar.gz/f130836bbd99a25752b341e1db81c970958d9d77"
+  uid "7a80c0bd1fb03b03ca6f3723fd7e320e6b94f20f"
+  resolved "https://codeload.github.com/dirigeants/klasa/tar.gz/7a80c0bd1fb03b03ca6f3723fd7e320e6b94f20f"
   dependencies:
     fs-nextra "^0.4.5"
 
