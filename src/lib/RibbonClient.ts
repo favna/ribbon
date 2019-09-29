@@ -1,4 +1,3 @@
-/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 import { Collection } from 'discord.js';
 import { KlasaClient, KlasaClientOptions, KlasaUser, util } from 'klasa';
 import './extensions/RibbonGuild';

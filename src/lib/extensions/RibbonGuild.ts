@@ -39,7 +39,6 @@ export class RibbonGuild extends Structures.get('Guild') {
 
 
 declare module 'discord.js' {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   export interface Guild {
     memberSnowflakes: Set<string>;
     memberTags: Collection<string, string>;
