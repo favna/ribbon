@@ -55,7 +55,7 @@
     "release": "standard-version",
     "push": "git push --follow-tags origin master",
     "publish": "git push --follow-tags origin master && npm publish",
-    "scripts:reload": "babel-node scripts/reloader --extensions \".ts\""
+    "scripts:reload": "ts-node scripts/reloader"
   },
   "keywords": [
     "bot",
@@ -113,11 +113,6 @@
     "zlib-sync": "^0.1.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/node": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-typescript": "^7.3.3",
-    "@babel/register": "^7.5.5",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
     "@favware/eslint-config": "^3.0.2",
