@@ -318,7 +318,7 @@ export default class DexCommand extends Command {
       }
 
       dexEmbed.fields = fields;
-      dexEmbed.author.name = zalgo(dexEmbed.author.name!);
+      dexEmbed.author!.name = zalgo(dexEmbed.author!.name!);
       dexEmbed.setImage(`${ASSET_BASE_PATH}/ribbon/missingno.png`);
     }
 

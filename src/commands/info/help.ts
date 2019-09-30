@@ -112,7 +112,7 @@ export default class HelpCommand extends Command {
         Unable to identify command.
         Use ${msg.usage(undefined,
     msg.channel.type === 'dm' ? this.client.commandPrefix : msg.guild.commandPrefix,
-    msg.channel.type === 'dm' ? this.client.user : undefined)} to view the list of all commands.`
+    msg.channel.type === 'dm' ? this.client.user! : undefined)} to view the list of all commands.`
         );
       }
 
@@ -121,8 +121,8 @@ export default class HelpCommand extends Command {
         const body = stripIndents`
           ${oneLine`
           To run a command in ${msg.guild ? msg.guild.name : 'any server'},
-          use ${Command.usage('command', msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix, this.client.user)}.
-          For example, ${Command.usage('prefix', msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix, this.client.user)}.`}
+          use ${Command.usage('command', msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix, this.client.user!)}.
+          For example, ${Command.usage('prefix', msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix, this.client.user!)}.`}
           To run a command in this DM, simply use ${Command.usage('command', undefined, undefined)} with no prefix.
 
           Use ${this.usage('<command>', undefined, undefined)} to view detailed information about a specific command.

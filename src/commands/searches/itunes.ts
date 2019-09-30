@@ -17,7 +17,7 @@ import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } f
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { } from 'RibbonTypes';
+import { AppleItunesResult, AppleItunesData } from 'RibbonTypes';
 
 interface AppleTunesArgs {
   music: string;
@@ -62,7 +62,7 @@ export default class ITunesCommand extends Command {
         media: 'music',
         term: music,
       }).replace(/%2B/gm, '+')}`);
-      const tracks: iTunesResult = await request.json();
+      const tracks: AppleItunesResult = await request.json();
       const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
       if (!tracks.resultCount) throw new Error('nosong');
@@ -119,7 +119,7 @@ export default class ITunesCommand extends Command {
   }
 
   private prepMessage(
-    color: string, song: iTunesData, songResultsLength: number,
+    color: string, song: AppleItunesData, songResultsLength: number,
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
     return new MessageEmbed()

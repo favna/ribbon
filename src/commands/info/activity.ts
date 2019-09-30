@@ -201,8 +201,8 @@ export default class ActivityCommand extends Command {
       }
 
       if (activity.assets) {
-        embed.setThumbnail(activity.assets.largeImage.includes('spotify')
-          ? `https://i.scdn.co/image/${activity.assets.largeImage.split(':')[1]}`
+        embed.setThumbnail(activity.assets.largeImage!.includes('spotify')
+          ? `https://i.scdn.co/image/${activity.assets.largeImage!.split(':')[1]}`
           : `https://cdn.discordapp.com/app-assets/${activity.applicationID}/${activity.assets.largeImage}.png`
         );
       }

@@ -257,7 +257,7 @@ export default class FlavorCommand extends Command {
       }
 
       dataEmbed.description = zalgo(dataEmbed.description);
-      dataEmbed.author.name = zalgo(dataEmbed.author.name!);
+      dataEmbed.author!.name = zalgo(dataEmbed.author!.name!);
       dataEmbed.fields = fields;
       dataEmbed.setImage(`${ASSET_BASE_PATH}/ribbon/missingno.png`);
     }

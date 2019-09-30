@@ -2137,7 +2137,7 @@ dijkstrajs@^1.0.1:
 
 discord.js-commando@favna/Commando#awesome-commando:
   version "0.11.0-dev"
-  resolved "https://codeload.github.com/favna/Commando/tar.gz/d04bfcd4551bb0f6d90ea48f64ccdc199e9792dc"
+  resolved "https://codeload.github.com/favna/Commando/tar.gz/0a8ee7760cb11b0887d3808667bd1283dde1027d"
   dependencies:
     common-tags "^1.8.0"
     require-all "^3.0.0"
