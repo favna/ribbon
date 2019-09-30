@@ -12,14 +12,14 @@
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 import { WordDefinitionType } from 'RibbonTypes';
 
-type DefineArgs = {
+interface DefineArgs {
   query: string;
-};
+}
 
 export default class DefineCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -71,7 +71,7 @@ export default class DefineCommand extends Command {
       });
 
       defineEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .setDescription(final);
 
       deleteCommandMessages(msg, this.client);

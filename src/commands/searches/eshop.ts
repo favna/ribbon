@@ -12,17 +12,17 @@
 import { CollectorTimeout } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'discord.js';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { eShopHit, eShopResult } from 'RibbonTypes';
+import { EShopHit, EShopResult } from 'RibbonTypes';
 
-type EShopArgs = {
+interface EShopArgs {
   query: string;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class EShopCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -80,7 +80,7 @@ export default class EShopCommand extends Command {
           method: 'POST',
         });
 
-      const games: eShopResult = await gamesList.json();
+      const games: EShopResult = await gamesList.json();
       const results = games.results[0];
 
       let currentGame = results.hits[position];
@@ -115,7 +115,7 @@ export default class EShopCommand extends Command {
     }
   }
 
-  private prepMessage(game: eShopHit, gamesLength: number,
+  private prepMessage(game: EShopHit, gamesLength: number,
     position: number, hasManageMessages: boolean): MessageEmbed {
     let price = 'Free';
     if (game.msrp && game.msrp > 0) price = `$${game.msrp} USD`;

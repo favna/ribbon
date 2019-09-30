@@ -1,17 +1,17 @@
 import { tierAliases } from '@pokedex/aliases';
-import { ArgumentType, CommandoClient } from 'awesome-commando';
+import { ArgumentType, CommandoClient } from 'discord.js-commando';
 import cheerio from 'cheerio';
 import { stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import fetch from 'node-fetch';
 import { table } from 'table';
-import { tierAlias } from '../../RibbonTypes';
+import { tierAlias } from 'RibbonTypes';
 
-type Fuser = {
+interface Fuser {
   hasMatch: boolean;
   tier: string;
   alias: string;
-};
+}
 
 export default class ShowdownTierType extends ArgumentType {
   public constructor(client: CommandoClient) {

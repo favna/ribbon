@@ -14,15 +14,15 @@
 
 import { deleteCommandMessages, logModMessage, resolveGuildI18n, shouldHavePermission } from '@components/Utils';
 import i18n from '@i18n/i18n';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
-type BadWordsArgs = {
+interface BadWordsArgs {
   shouldEnable: boolean;
   words: string[];
   language: string;
-};
+}
 
 export default class BadWordsCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -66,7 +66,7 @@ export default class BadWordsCommand extends Command {
     msg.guild.settings.set('badwords', options);
     bwfEmbed
       .setColor('#439DFF')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         ${this.getAction(this, language).replace('OPTION', this.getActiveState(this, language, shouldEnable ? 'enabled' : 'disabled'))}
         ${shouldEnable ? this.getWords(this, language).replace('WORDS', words.map((word: string) => `\`${word}\``).join(', ')) : ''}

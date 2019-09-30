@@ -14,15 +14,15 @@ import { currencyMap } from '@components/MoneyHelper';
 import { deleteCommandMessages } from '@components/Utils';
 import { stringify } from '@favware/querystring';
 import { unescape } from '@favware/unescape';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 import cheerio from 'cheerio';
 import fetch from 'node-fetch';
 import { SteamGenreType } from 'RibbonTypes';
 
-type SteamArgs = {
+interface SteamArgs {
   game: string;
-};
+}
 
 export default class SteamCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -78,7 +78,7 @@ export default class SteamCommand extends Command {
       });
 
       steamEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .setTitle(steamData.name)
         .setURL(`http://store.steampowered.com/app/${steamData.steam_appid}/`)
         .setImage(steamData.header_image)

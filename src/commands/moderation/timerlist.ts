@@ -9,8 +9,8 @@
 
 import { DURA_FORMAT } from '@components/Constants';
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { TextChannel, Util } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { TextChannel, Util } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { readAllTimersForGuild } from '@components/Typeorm/DbInteractions';
@@ -56,7 +56,7 @@ export default class TimerListCommand extends Command {
 
         splitContent.forEach(part => {
           msg.embed({
-            color: msg.guild.me.displayColor,
+            color: msg.guild.me!.displayColor,
             description: part,
             title: 'Timed messages stored on this server',
           });
@@ -66,7 +66,7 @@ export default class TimerListCommand extends Command {
       }
 
       return msg.embed({
-        color: msg.guild.me.displayColor,
+        color: msg.guild.me!.displayColor,
         description: body,
         title: 'Timed messages stored on this server',
       });
@@ -79,7 +79,7 @@ export default class TimerListCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`timerlist\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`
       );

@@ -10,13 +10,13 @@
  */
 
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember } from 'discord.js';
 import { oneLine } from 'common-tags';
 
-type TagMemberArgs = {
+interface TagMemberArgs {
   member: GuildMember;
-};
+}
 
 export default class TagMemberCommand extends Command {
   public constructor(client: CommandoClient) {

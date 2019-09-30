@@ -10,14 +10,14 @@
  */
 
 import { badwords, caps, duptext, emojis, invites, links, mentions } from '@components/AutomodHelper';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageAttachment } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageAttachment } from 'discord.js';
 import { SayData } from 'RibbonTypes';
 
-type SayArgs = {
+interface SayArgs {
   txt: string;
   attachment: MessageAttachment;
-};
+}
 
 export default class SayCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -105,11 +105,11 @@ export default class SayCommand extends Command {
 
     const saydata: SayData = {
       argString: msg.argString.slice(1),
-      authorID: msg.author.id,
-      authorTag: msg.author.tag,
-      avatarURL: msg.author.displayAvatarURL({ format: 'png' }),
+      authorID: msg.author!.id,
+      authorTag: msg.author!.tag,
+      avatarURL: msg.author!.displayAvatarURL({ format: 'png' }),
       commandPrefix: msg.guild.commandPrefix,
-      memberHexColor: msg.member.displayHexColor,
+      memberHexColor: msg.member!.displayHexColor,
       messageDate: msg.createdAt,
       attachment: attachment ? attachment.url : '',
     };

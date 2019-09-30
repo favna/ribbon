@@ -9,14 +9,14 @@
 
 import { ASSET_BASE_PATH } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember } from 'discord.js';
 import fetch from 'node-fetch';
 import { NekoData } from 'RibbonTypes';
 
-type CuddleArgs = {
+interface CuddleArgs {
   member: GuildMember;
-};
+}
 
 export default class CuddleCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -47,18 +47,18 @@ export default class CuddleCommand extends Command {
     try {
       const cuddleFetch = await fetch('https://nekos.life/api/v2/img/cuddle');
       const cuddleImg: NekoData = await cuddleFetch.json();
-      const isNotSelf = member.id !== msg.member.id;
+      const isNotSelf = member.id !== msg.member!.id;
 
       deleteCommandMessages(msg, this.client);
 
       return msg.embed({
-        color: msg.guild ? msg.guild.me.displayColor : 10610610,
+        color: msg.guild ? msg.guild.me!.displayColor : 10610610,
         description: isNotSelf
-          ? `Awww ${msg.member.displayName} is giving ${member.displayName} cuddles 💕!`
-          : `${msg.member.displayName} you must feel alone... Have a 🐈`,
+          ? `Awww ${msg.member!.displayName} is giving ${member.displayName} cuddles 💕!`
+          : `${msg.member!.displayName} you must feel alone... Have a 🐈`,
         image: { url: isNotSelf ? cuddleImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
       },
-      `<@${member ? member.id : msg.author.id}>`);
+      `<@${member ? member.id : msg.author!.id}>`);
     } catch (err) {
       return msg.reply('something went wrong getting a cuddle image 💔');
     }

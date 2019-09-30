@@ -17,23 +17,23 @@
  * @param {string} Video One of the options linking to a video to play
  */
 
-import { DEFAULT_VOLUME, MAX_LENGTH, MAX_SONGS, PASSES } from '@components/Constants';
+import { DEFAULT_VOLUME, MAX_LENGTH, MAX_SONGS } from '@components/Constants';
 import { deleteCommandMessages, Song } from '@components/Utils';
 import { parse, stringify } from '@favware/querystring';
 import ytdl, { downloadOptions } from '@favware/ytdl-prismplayer';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import {
   Guild, Message, Snowflake, StreamDispatcher,
   StreamOptions, TextChannel, Util, VoiceChannel, VoiceConnection
-} from 'awesome-djs';
+} from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { MusicQueueType, MusicVoteType, YoutubeVideoType, YoutubeResultList } from 'RibbonTypes';
 
-type LaunchMusicArgs = {
+interface LaunchMusicArgs {
   videoQuery: string;
-};
+}
 
 /* eslint-disable require-atomic-updates */
 export default class LaunchMusicCommand extends Command {
@@ -132,15 +132,15 @@ export default class LaunchMusicCommand extends Command {
   public async run(msg: CommandoMessage, { videoQuery }: LaunchMusicArgs) {
     const queue = this.queue.get(msg.guild.id);
 
-    if (!msg.member.voice.channel) return msg.reply('please join a voice channel before issuing this command.');
+    if (!msg.member!.voice.channel) return msg.reply('please join a voice channel before issuing this command.');
 
-    const voiceChannel: VoiceChannel = msg.member.voice.channel;
-    const statusMsg: Message = await msg.reply('obtaining video details...') as Message;
+    const voiceChannel: VoiceChannel = msg.member!.voice.channel;
+    const statusMsg: Message = await msg.reply('obtaining video details...');
 
     if (!queue) {
-      const permissions = voiceChannel.permissionsFor(msg.client.user);
+      const permissions = voiceChannel.permissionsFor(msg.client.user!);
 
-      if (!permissions.has('CONNECT')) {
+      if (!permissions!.has('CONNECT')) {
         return msg.reply(oneLine(
           `
             I don't have permission to join your voice channel. Fix your server's permissions
@@ -148,7 +148,7 @@ export default class LaunchMusicCommand extends Command {
         ));
       }
 
-      if (!permissions.has('SPEAK')) {
+      if (!permissions!.has('SPEAK')) {
         return msg.reply(oneLine(
           `
             I don't have permission to speak in your voice channel. Fix your server's permissions
@@ -176,7 +176,7 @@ export default class LaunchMusicCommand extends Command {
 
         return null;
       }
-    } else if (!queue.voiceChannel.members.has(msg.author.id)) {
+    } else if (!queue.voiceChannel.members.has(msg.author!.id)) {
       return msg.reply('please join a voice channel before issuing this command.');
     }
 
@@ -234,11 +234,11 @@ export default class LaunchMusicCommand extends Command {
         } catch (err) {
           deleteCommandMessages(msg, this.client);
 
-          return statusMsg.edit(`<@${msg.author.id}>, couldn't obtain the search result video's details.`);
+          return statusMsg.edit(`<@${msg.author!.id}>, couldn't obtain the search result video's details.`);
         }
       }
 
-      return statusMsg.edit(`<@${msg.author.id}>, couldn't match a youtube result. Was that really a youtube video?`);
+      return statusMsg.edit(`<@${msg.author!.id}>, couldn't match a youtube result. Was that really a youtube video?`);
     }
   }
 
@@ -273,8 +273,8 @@ export default class LaunchMusicCommand extends Command {
 
       const resultMessage = {
         author: {
-          iconURL: msg.author.displayAvatarURL({ format: 'png' }),
-          name: `${msg.author.tag} (${msg.author.id})`,
+          iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
+          name: `${msg.author!.tag} (${msg.author!.id})`,
         },
         color: 3447003,
         description: result,
@@ -317,8 +317,8 @@ export default class LaunchMusicCommand extends Command {
 
       const resultMessage = {
         author: {
-          iconURL: msg.author.displayAvatarURL({ format: 'png' }),
-          name: `${msg.author.tag} (${msg.author.id})`,
+          iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
+          name: `${msg.author!.tag} (${msg.author!.id})`,
         },
         color: 3447003,
         description: result,
@@ -343,8 +343,8 @@ export default class LaunchMusicCommand extends Command {
     if (result) {
       const resultMessage = {
         author: {
-          iconURL: msg.author.displayAvatarURL({ format: 'png' }),
-          name: `${msg.author.tag} (${msg.author.id})`,
+          iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
+          name: `${msg.author!.tag} (${msg.author!.id})`,
         },
         color: 3447003,
         description: result,
@@ -367,8 +367,8 @@ export default class LaunchMusicCommand extends Command {
           ),
           color: 3447003,
           author: {
-            name: `${msg.author.tag} (${msg.author.id})`,
-            iconURL: msg.author.displayAvatarURL({ format: 'png' }),
+            name: `${msg.author!.tag} (${msg.author!.id})`,
+            iconURL: msg.author!.displayAvatarURL({ format: 'png' }),
           },
         },
       });
@@ -389,14 +389,14 @@ export default class LaunchMusicCommand extends Command {
   private addSong(msg: CommandoMessage, video: YoutubeVideoType) {
     const queue = this.queue.get(msg.guild.id);
     const songNumerator = (prev: number, curSong: Song) => {
-      if (curSong.member.id === msg.author.id) {
+      if (curSong.member.id === msg.author!.id) {
         prev += 1;
       }
 
       return prev;
     };
     if (video) {
-      if (!this.client.isOwner(msg.author)) {
+      if (!this.client.isOwner(msg.author!)) {
         const songMaxLength = msg.guild.settings.get('maxLength', MAX_LENGTH);
         const songMaxSongs = msg.guild.settings.get('maxSongs', MAX_SONGS);
 
@@ -416,7 +416,7 @@ export default class LaunchMusicCommand extends Command {
         }
       }
 
-      const song = new Song(video, msg.member);
+      const song = new Song(video, msg.member!);
 
       (queue as MusicQueueType).songs.push(song);
 
@@ -462,7 +462,7 @@ export default class LaunchMusicCommand extends Command {
       dispatcher = await LaunchMusicCommand.startTheJam(((queue as MusicQueueType).connection as VoiceConnection),
         song.url,
         { quality: 'highestaudio', highWaterMark: 1 << 25 },
-        { type: 'opus', passes: Number(PASSES), fec: true });
+        { type: 'opus', fec: true });
 
       dispatcher.on('end', () => {
         if (streamErrored) return;

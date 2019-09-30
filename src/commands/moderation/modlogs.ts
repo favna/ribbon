@@ -11,15 +11,15 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
-type ModLogsArgs = {
+interface ModLogsArgs {
   shouldEnable: boolean;
   msgChannel: TextChannel | string;
-};
+}
 
 export default class ModLogsCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -65,7 +65,7 @@ export default class ModLogsCommand extends Command {
       const modlogChannel = msg.guild.settings.get('modlogchannel', null);
       const modlogsEmbed = new MessageEmbed()
         .setColor('#3DFFE5')
-        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
         .setDescription(`**Action:** ${description}`)
         .setTimestamp();
 
@@ -92,7 +92,7 @@ export default class ModLogsCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`memberlogs\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

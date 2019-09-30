@@ -13,15 +13,15 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { readCasino, writeCasino } from '@components/Typeorm/DbInteractions';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
-type CustomTopUpArgs = {
+interface CustomTopUpArgs {
   player: GuildMember;
   chips: number;
-};
+}
 
 export default class CustomTopUpCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -55,8 +55,8 @@ export default class CustomTopUpCommand extends Command {
 
   public async run(msg: CommandoMessage, { player, chips }: CustomTopUpArgs) {
     const coinEmbed = new MessageEmbed()
-      .setAuthor(msg.member.displayName, player.user.displayAvatarURL({ format: 'png' }))
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(msg.member!.displayName, player.user.displayAvatarURL({ format: 'png' }))
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`)
       .setTitle('💰💰 HEIST! Daniël Ocean has stolen chips for you');
 

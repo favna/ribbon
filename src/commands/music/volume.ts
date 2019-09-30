@@ -13,12 +13,12 @@
  */
 
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { MusicCommand, MusicQueueType } from 'RibbonTypes';
 
-type ChangeVolumeArgs = {
+interface ChangeVolumeArgs {
   volume: number;
-};
+}
 
 export default class ChangeVolumeCommand extends Command {
   private songQueue: Map<string, MusicQueueType>;
@@ -65,7 +65,7 @@ export default class ChangeVolumeCommand extends Command {
 
     if (!queue) return msg.reply('there isn\'t any music playing to change the volume of. Better queue some up!');
     if (volume < 0) return msg.reply(`the dial is currently set to ${queue.volume}.`);
-    if (!queue.voiceChannel.members.has(msg.author.id)) {
+    if (!queue.voiceChannel.members.has(msg.author!.id)) {
       return msg.reply('you\'re not in the voice channel. You better not be trying to mess with their mojo, man.');
     }
 

@@ -9,8 +9,8 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
 export default class InviteCommand extends Command {
@@ -36,9 +36,9 @@ export default class InviteCommand extends Command {
 
     inviteEmbed
       .setTitle('Ribbon by Favna')
-      .setThumbnail(this.client.user.displayAvatarURL({ format: 'png' }))
+      .setThumbnail(this.client.user!.displayAvatarURL({ format: 'png' }))
       .setURL('https://favware.tech/ribbon')
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setDescription(stripIndents`
         Enrich your Discord server with a fully modular Discord bot with many many commands\n
         [Add me to your server](https://favware.tech/redirect/ribbon)

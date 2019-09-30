@@ -9,14 +9,14 @@
 
 import { ASSET_BASE_PATH } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember } from 'discord.js';
 import fetch from 'node-fetch';
 import { NekoData } from 'RibbonTypes';
 
-type HugArgs = {
+interface HugArgs {
   member: GuildMember;
-};
+}
 
 export default class HugCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -47,18 +47,18 @@ export default class HugCommand extends Command {
     try {
       const hugFetch = await fetch('https://nekos.life/api/v2/img/hug');
       const hugImg: NekoData = await hugFetch.json();
-      const isNotSelf = member.id !== msg.member.id;
+      const isNotSelf = member.id !== msg.member!.id;
 
       deleteCommandMessages(msg, this.client);
 
       return msg.embed({
-        color: msg.guild ? msg.guild.me.displayColor : 10610610,
+        color: msg.guild ? msg.guild.me!.displayColor : 10610610,
         description: isNotSelf
-          ? `${member.displayName}! You were hugged by ${msg.member.displayName} 💖!`
-          : `${msg.member.displayName} you must feel alone... Have a 🐈`,
+          ? `${member.displayName}! You were hugged by ${msg.member!.displayName} 💖!`
+          : `${msg.member!.displayName} you must feel alone... Have a 🐈`,
         image: { url: isNotSelf ? hugImg.url : `${ASSET_BASE_PATH}/ribbon/digicat.gif` },
       },
-      `<@${member ? member.id : msg.author.id}>`);
+      `<@${member ? member.id : msg.author!.id}>`);
     } catch (err) {
       return msg.reply('something went wrong getting a hug image 💔');
     }

@@ -12,16 +12,16 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { readCasinoMultiple, writeCasinoMultiple } from '@components/Typeorm/DbInteractions';
 
-type GiveArgs = {
+interface GiveArgs {
   player: GuildMember;
   chips: number;
-};
+}
 
 export default class GiveCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -56,13 +56,13 @@ export default class GiveCommand extends Command {
   public async run(msg: CommandoMessage, { player, chips }: GiveArgs) {
     const giveEmbed = new MessageEmbed()
       .setTitle('Transaction Log')
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
     try {
       const casino = await readCasinoMultiple([
         {
-          userId: msg.author.id,
+          userId: msg.author!.id,
           guildId: msg.guild.id,
         },
         {
@@ -74,7 +74,7 @@ export default class GiveCommand extends Command {
       if (casino.length !== 2) throw new Error('no_balance');
 
       casino.forEach(row => {
-        if (row.userId === msg.author.id && row.balance !== undefined && chips > row.balance) {
+        if (row.userId === msg.author!.id && row.balance !== undefined && chips > row.balance) {
           throw new Error('insufficient_balance');
         }
       });
@@ -83,7 +83,7 @@ export default class GiveCommand extends Command {
       let receiverEntry = 0;
 
       casino.forEach((row, index) => {
-        if (row.userId === msg.author.id) giverEntry = index;
+        if (row.userId === msg.author!.id) giverEntry = index;
         if (row.userId === player.id) receiverEntry = index;
       });
 
@@ -95,7 +95,7 @@ export default class GiveCommand extends Command {
 
       await writeCasinoMultiple([
         {
-          userId: msg.author.id,
+          userId: msg.author!.id,
           guildId: msg.guild.id,
           balance: newGiverBalance,
         },
@@ -107,7 +107,7 @@ export default class GiveCommand extends Command {
       ]);
 
       giveEmbed
-        .addField(msg.member.displayName, `${oldGiverBalance} ➡ ${newGiverBalance}`)
+        .addField(msg.member!.displayName, `${oldGiverBalance} ➡ ${newGiverBalance}`)
         .addField(player.displayName, `${oldReceiverEntry} ➡ ${newReceiverBalance}`);
 
       deleteCommandMessages(msg, this.client);
@@ -127,7 +127,7 @@ export default class GiveCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`give\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`
       );

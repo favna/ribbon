@@ -10,13 +10,13 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
-type SetAnnounceArgs = {
+interface SetAnnounceArgs {
   channel: TextChannel;
-};
+}
 
 export default class SetAnnounceCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -52,7 +52,7 @@ export default class SetAnnounceCommand extends Command {
 
     setAnnouncementEmbed
       .setColor('#3DFFE5')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Announcements Channel channel changed
         **Channel:** <#${channel.id}>`)

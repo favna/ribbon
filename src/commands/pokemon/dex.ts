@@ -20,19 +20,19 @@ import { pokedexAliases } from '@pokedex/aliases';
 import entries from '@pokedex/flavorText.json';
 import formats from '@pokedex/formats.json';
 import BattlePokedex from '@pokedex/pokedex';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import { FlavorJSONType, FormatsJSONType, PokeDataType, PokedexAlias, Pokedex } from 'RibbonTypes';
 
-type DexArgs = {
+interface DexArgs {
   pokemon: string;
   shines: boolean;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class DexCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -152,7 +152,7 @@ export default class DexCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`dex\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${pokemon}
         **Shiny?:** ${shines ? 'yes' : 'no'}

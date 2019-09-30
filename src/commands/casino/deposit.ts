@@ -12,14 +12,14 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { readCasino, updateCasinoVault } from '@components/Typeorm/DbInteractions';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
-type DepositArgs = {
+interface DepositArgs {
   chips: number;
-};
+}
 
 export default class DepositCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -49,12 +49,12 @@ export default class DepositCommand extends Command {
 
   public async run(msg: CommandoMessage, { chips }: DepositArgs) {
     const depositEmbed = new MessageEmbed()
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(msg.member!.displayName, msg.author!.displayAvatarURL())
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/bank.png`);
 
     try {
-      const casino = await readCasino(msg.author.id, msg.guild.id);
+      const casino = await readCasino(msg.author!.id, msg.guild.id);
 
       if (casino && casino.balance !== undefined && casino.balance >= 0) {
         if (chips > casino.balance) {
@@ -70,7 +70,7 @@ export default class DepositCommand extends Command {
         const newVault = casino.vault! + chips;
 
         await updateCasinoVault({
-          userId: msg.author.id,
+          userId: msg.author!.id,
           guildId: msg.guild.id,
           balance: newBalance,
           vault: newVault,
@@ -99,7 +99,7 @@ export default class DepositCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`withdraw\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`
       );

@@ -9,8 +9,8 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, removeNullAndUndefined } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 
 export default class EmotesCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -47,7 +47,7 @@ export default class EmotesCommand extends Command {
     let description = '';
 
     emotesEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setAuthor(`${staticEmotes.length + animEmotes.length} ${msg.guild.name} Emotes`, msg.guild.iconURL({ format: 'png' })!)
       .setTimestamp();
 

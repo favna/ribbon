@@ -10,8 +10,8 @@
  */
 
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { Snowflake } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Snowflake } from 'discord.js';
 import { MusicCommand, MusicQueueType } from 'RibbonTypes';
 
 export default class PauseSongCommand extends Command {

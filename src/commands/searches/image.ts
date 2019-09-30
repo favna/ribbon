@@ -12,18 +12,18 @@
 import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'discord.js';
 import cheerio from 'cheerio';
 import { oneLine } from 'common-tags';
 import fetch from 'node-fetch';
 import { GoogleImageData, GoogleImageResult } from 'RibbonTypes';
 
-type ImageArgs = {
+interface ImageArgs {
   query: string;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class ImageCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -57,7 +57,7 @@ export default class ImageCommand extends Command {
   @clientHasManageMessages()
   public async run(msg: CommandoMessage, { query, hasManageMessages, position = 0 }: ImageArgs) {
     const nsfwAllowed = msg.channel.type === 'text' ? (msg.channel as TextChannel).nsfw : true;
-    const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
+    const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
     let imageEmbed = new MessageEmbed()
       .setColor(color);

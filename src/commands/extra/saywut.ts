@@ -8,8 +8,8 @@
  */
 
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageAttachment, MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
 import { SayData } from 'RibbonTypes';

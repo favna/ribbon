@@ -12,14 +12,14 @@
  */
 
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 import { search as booru } from 'booru';
 import { stripIndents } from 'common-tags';
 
-type PahealArgs = {
+interface PahealArgs {
   tags: string[];
-};
+}
 
 export default class PahealCommand extends Command {
   public constructor(client: CommandoClient) {

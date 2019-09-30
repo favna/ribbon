@@ -11,14 +11,14 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, Role, TextChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
-type AutomodArgs = {
+interface AutomodArgs {
   shouldEnable: boolean;
   roles: Role[];
-};
+}
 
 export default class AutomodCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -65,7 +65,7 @@ export default class AutomodCommand extends Command {
 
     automodEmbed
       .setColor('#3DFFE5')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Automod features are now ${shouldEnable ? 'enabled' : 'disabled'}
         **Notice:** Be sure to enable your desired individual features, they are all off by default!

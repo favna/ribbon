@@ -13,11 +13,11 @@
 
 import { deleteCommandMessages } from '@components/Utils';
 import zalgo, { banish } from '@favware/zalgo';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 
-type ZalgoArgs = {
+interface ZalgoArgs {
   txt: string;
-};
+}
 
 export default class ZalgoCommand extends Command {
   public constructor(client: CommandoClient) {

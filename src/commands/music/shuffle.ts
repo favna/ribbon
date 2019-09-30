@@ -13,8 +13,8 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, Song } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
-import { MessageEmbed, Snowflake } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage, util } from 'discord.js-commando';
+import { MessageEmbed, Snowflake } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import { MusicCommand, MusicQueueType } from 'RibbonTypes';
 
@@ -67,8 +67,8 @@ export default class ShuffleCommand extends Command {
     const paginated = util.paginate(queue.songs, 1, Math.floor(10));
 
     embed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
-      .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL({ format: 'png' }))
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(`${msg.author!.tag} (${msg.author!.id})`, msg.author!.displayAvatarURL({ format: 'png' }))
       .setImage(currentSong.thumbnail)
       .setDescription(stripIndents`
     __**First 10 songs in the queue**__

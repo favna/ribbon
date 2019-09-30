@@ -9,8 +9,8 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { Message, MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Message, MessageEmbed } from 'discord.js';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
 import { SpeedTestResponse } from 'RibbonTypes';
@@ -50,7 +50,7 @@ export default class RibbonStatsCommand extends Command {
                     The default prefix is \`!\`. You can change this with the \`
                     ${msg.guild ? msg.guild.commandPrefix : this.client.commandPrefix}
                     prefix\` command.
-                    If you ever forget the command prefix, just use \`${this.client.user.tag} prefix\``,
+                    If you ever forget the command prefix, just use \`${this.client.user!.tag} prefix\``,
       },
       time: {
         name: 'Current server time',
@@ -59,8 +59,8 @@ export default class RibbonStatsCommand extends Command {
     };
 
     statsEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
-      .setAuthor(`${this.client.user.username} Stats`, this.client.user.displayAvatarURL({ format: 'png' }))
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(`${this.client.user!.username} Stats`, this.client.user!.displayAvatarURL({ format: 'png' }))
       .addField('Guilds', this.client.guilds.size, true)
       .addField('Channels', this.client.channels.size, true)
       .addField('Users', this.client.users.size, true)
@@ -76,7 +76,7 @@ export default class RibbonStatsCommand extends Command {
       .addField('Uptime', moment.duration(process.uptime() * 1000).format('D [days], H [hours] [and] m [minutes]'), true)
       .addField(fields.time.name, fields.time.value)
       .addField(fields.info.name, fields.info.value)
-      .setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, this.client.user.displayAvatarURL({ format: 'png' }));
+      .setFooter(`Ribbon | ${moment().format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}`, this.client.user!.displayAvatarURL({ format: 'png' }));
 
     deleteCommandMessages(msg, this.client);
 

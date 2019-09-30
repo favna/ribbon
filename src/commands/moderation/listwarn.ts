@@ -10,15 +10,15 @@
  */
 
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { readWarning } from '@components/Typeorm/DbInteractions';
 
-type ListWarnArgs = {
+interface ListWarnArgs {
   member: GuildMember;
-};
+}
 
 export default class ListWarnCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -49,7 +49,7 @@ export default class ListWarnCommand extends Command {
   public async run(msg: CommandoMessage, { member }: ListWarnArgs) {
     const listwarnEmbed = new MessageEmbed()
       .setColor('#ECECC9')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setTimestamp();
 
     try {
@@ -71,7 +71,7 @@ export default class ListWarnCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`listwarn\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** \`${member.user.tag} (${member.id})\`
         **Error Message:** ${err}`

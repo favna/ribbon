@@ -14,7 +14,7 @@
 
 import { MAX_LENGTH } from '@components/Constants';
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { oneLine } from 'common-tags';
 
 export default class MaxLengthCommand extends Command {

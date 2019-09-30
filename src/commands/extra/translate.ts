@@ -16,17 +16,17 @@
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
-type TranslateArgs = {
+interface TranslateArgs {
   fromlang: string;
   tolang: string;
   text: string;
-};
+}
 
 export default class TranslateCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -79,7 +79,7 @@ export default class TranslateCommand extends Command {
       if (response.error) throw new Error('invalid_request');
 
       transEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .setTitle(`__Translating from ${fromlang.toUpperCase()} to ${tolang.toUpperCase()}__`)
         .setDescription(stripIndents`
           \`${text}\`
@@ -101,7 +101,7 @@ export default class TranslateCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`translate\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **From Language** ${fromlang}
         **To Language** ${tolang}

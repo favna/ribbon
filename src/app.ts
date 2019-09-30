@@ -34,5 +34,6 @@ moduleAlias.addAlias('@databases', `${__dirname}/data/databases`);
 // Start the bot
 (async () => {
   await createDatabaseConnection();
-  await new Ribbon(process.env.NODE_ENV === 'development' ? process.env.TEST_TOKEN! : process.env.BOT_TOKEN!).init();
+  const ribbon = new Ribbon();
+  await ribbon.init(process.env.NODE_ENV === 'development' ? process.env.TEST_TOKEN! : process.env.BOT_TOKEN!);
 })();

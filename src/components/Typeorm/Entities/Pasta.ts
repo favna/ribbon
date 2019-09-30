@@ -1,5 +1,5 @@
 import { Entity, Column, BaseEntity, PrimaryColumn } from 'typeorm';
-import { Snowflake } from 'awesome-djs';
+import { Snowflake } from 'discord.js';
 import { NonFunctionKeys } from 'utility-types';
 
 export type PastaData = Pick<Pasta, Exclude<NonFunctionKeys<Pasta>, undefined>>;

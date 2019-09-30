@@ -12,16 +12,16 @@
 
 import { deleteCommandMessages } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
-type DjsDocsArgs = {
+interface DjsDocsArgs {
   query: string;
   version: 'stable' | 'master' | 'commando' | 'rpc' | 'main';
-};
+}
 
 export default class DjsDocsCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -89,7 +89,7 @@ export default class DjsDocsCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`docs\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`);
 

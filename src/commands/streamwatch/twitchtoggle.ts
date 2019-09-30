@@ -10,12 +10,12 @@
  */
 
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { oneLine } from 'common-tags';
 
-type TwitchToggleArgs = {
+interface TwitchToggleArgs {
   shouldEnable: boolean;
-};
+}
 
 export default class TwitchToggleCommand extends Command {
   public constructor(client: CommandoClient) {

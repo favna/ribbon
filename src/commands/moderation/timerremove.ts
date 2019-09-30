@@ -13,15 +13,15 @@
 
 import { DURA_FORMAT } from '@components/Constants';
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { readAllTimersForGuild, readTimer, deleteTimer } from '@components/Typeorm/DbInteractions';
 
-type TimerRemoveArgs = {
+interface TimerRemoveArgs {
   name: string;
-};
+}
 
 export default class TimerRemoveCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -73,7 +73,7 @@ export default class TimerRemoveCommand extends Command {
 
       timerRemoveEmbed
         .setColor('#F7F79D')
-        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
         .setDescription(stripIndents`
           **Action:** Timed message removed
           ${timerInterval ? `**Interval:** ${moment.duration(timerInterval).format(DURA_FORMAT)}` : ''}
@@ -96,7 +96,7 @@ export default class TimerRemoveCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in removing message in the \`timerremove\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`
       );

@@ -15,18 +15,18 @@ import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@compone
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import { itemAliases } from '@pokedex/aliases';
 import BattleItems from '@pokedex/items';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import { itemAlias, PokemonItem } from 'RibbonTypes';
 
-type ItemArgs = {
+interface ItemArgs {
   item: string;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class ItemCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -65,7 +65,7 @@ export default class ItemCommand extends Command {
       const itemFuse = new Fuse(BattleItems, itemOptions);
       const aliasSearch = aliasFuse.search(item);
       const itemSearch = aliasSearch.length ? itemFuse.search(aliasSearch[0].item) : itemFuse.search(item);
-      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
       if (!itemSearch.length) throw new Error('no_item');
 
@@ -107,7 +107,7 @@ export default class ItemCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`item\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${item}
         **Error Message:** ${err}`);

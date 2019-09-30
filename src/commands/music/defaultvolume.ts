@@ -11,11 +11,11 @@
 
 import { DEFAULT_VOLUME } from '@components/Constants';
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 
-type DefaultVolumeArgs = {
+interface DefaultVolumeArgs {
   volume: string;
-};
+}
 
 export default class DefaultVolumeCommand extends Command {
   public constructor(client: CommandoClient) {

@@ -15,15 +15,15 @@
  * @param {string} [hex] Optional: colour hex to display
  */
 
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageAttachment, MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageAttachment, MessageEmbed } from 'discord.js';
 import { deleteCommandMessages } from '@components/Utils';
 import jimp from 'jimp';
 import { stripIndents } from 'common-tags';
 
-type RandomColArgs = {
+interface RandomColArgs {
   colour: string;
-};
+}
 
 export default class RandomColCommand extends Command {
   public constructor(client: CommandoClient) {

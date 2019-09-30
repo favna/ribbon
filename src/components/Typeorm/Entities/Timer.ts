@@ -1,4 +1,4 @@
-import { Snowflake } from 'awesome-djs';
+import { Snowflake } from 'discord.js';
 import { BaseEntity, Column, Entity, PrimaryColumn } from 'typeorm';
 import { NonFunctionKeys } from 'utility-types';
 

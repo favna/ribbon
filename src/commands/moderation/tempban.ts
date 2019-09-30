@@ -17,17 +17,17 @@
 
 import { DURA_FORMAT } from '@components/Constants';
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 import moment from 'moment';
 
-type TempbanArgs = {
+interface TempbanArgs {
   member: GuildMember;
   time: number;
   reason: string;
   keepMessages: boolean;
-};
+}
 
 export default class TempbanCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -69,7 +69,7 @@ export default class TempbanCommand extends Command {
   public async run(msg: CommandoMessage, {
     member, time, reason, keepMessages = false,
   }: TempbanArgs) {
-    if (member.id === msg.author.id) return msg.reply('I don\'t think you want to ban yourself.');
+    if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to ban yourself.');
     if (!member.bannable) return msg.reply('I cannot ban that member, their role is probably higher than my own!');
 
     if (/--nodelete/im.test(msg.argString)) {
@@ -90,7 +90,7 @@ export default class TempbanCommand extends Command {
 
     banEmbed
       .setColor('#FF1900')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Member:** ${member.user.tag} (${member.id})
         **Action:** Temporary Ban
@@ -100,7 +100,7 @@ export default class TempbanCommand extends Command {
 
     unbanEmbed
       .setColor('#FF1900')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Member:** ${member.user.tag} (${member.id})
         **Action:** Temporary ban removed`)

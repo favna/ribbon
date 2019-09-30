@@ -10,12 +10,12 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, MessageEmbed } from 'discord.js';
 
-type CookieArgs = {
+interface CookieArgs {
   member: GuildMember;
-};
+}
 
 export default class CookieCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -46,11 +46,11 @@ export default class CookieCommand extends Command {
     if (msg.patternMatches && !this.verifyRmt(msg)) return null;
 
     const cookieEmbed = new MessageEmbed();
-    const isNotSelf = member.id !== msg.member.id;
+    const isNotSelf = member.id !== msg.member!.id;
 
     cookieEmbed
       .setImage(this.fetchImage())
-      .setColor(msg.guild ? msg.guild.me.displayColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me!.displayColor : DEFAULT_EMBED_COLOR)
       .setDescription(isNotSelf ? `Gnanahahahaha eating your cookie <@${member.id}>` : 'You won\'t steal my cookie!!');
 
     deleteCommandMessages(msg, this.client);
@@ -80,6 +80,6 @@ export default class CookieCommand extends Command {
     if (msg.guild.commandPrefix === '.') return true;
     if (msg.guild.settings.get('regexmatches', false)) return true;
 
-    return this.client.isOwner(msg.author);
+    return this.client.isOwner(msg.author!);
   }
 }

@@ -1,4 +1,4 @@
-import { ArgumentType, CommandoClient } from 'awesome-commando';
+import { ArgumentType, CommandoClient } from 'discord.js-commando';
 
 export default class CurrencyType extends ArgumentType {
   private timeIds: Set<string>;

@@ -19,16 +19,16 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
-type DuplicateTextArgs = {
+interface DuplicateTextArgs {
   shouldEnable: boolean;
   within: number;
   equals: number;
   distance: number;
-};
+}
 
 export default class DuplicateTextCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -92,7 +92,7 @@ export default class DuplicateTextCommand extends Command {
 
     dtfEmbed
       .setColor('#439DFF')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Duplicate text filter has been ${shouldEnable ? 'enabled' : 'disabled'}
         ${shouldEnable ? `**Timeout:** Duplicate text is checked between messages sent in the past ${within} minutes` : ''}

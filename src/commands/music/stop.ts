@@ -12,8 +12,8 @@
  */
 
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
-import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'awesome-commando';
-import { Snowflake } from 'awesome-djs';
+import { Command, CommandoClient, CommandoGuild, CommandoMessage } from 'discord.js-commando';
+import { Snowflake } from 'discord.js';
 import { oneLine } from 'common-tags';
 import { MusicCommand, MusicQueueType, MusicVoteType } from 'RibbonTypes';
 
@@ -62,7 +62,7 @@ export default class StopMusicCommand extends Command {
     const queue = this.queue.get(msg.guild.id);
 
     if (!queue) return msg.reply('there isn\'t any music playing right now.');
-    if (!queue.voiceChannel.members.has(msg.author.id)) {
+    if (!queue.voiceChannel.members.has(msg.author!.id)) {
       return msg.reply('you\'re not in the voice channel. They really don\'t want you to mess up their vibe man.');
     }
     if (!queue.songs[0].dispatcher) return msg.reply('the song hasn\'t even begun playing yet. Why not give it a chance?');
@@ -71,8 +71,8 @@ export default class StopMusicCommand extends Command {
     const force =
       threshold <= 1 ||
       queue.voiceChannel.members.size < threshold ||
-      queue.songs[0].member.id === msg.author.id ||
-      (msg.member.hasPermission('MANAGE_MESSAGES') && args.toLowerCase() === 'force');
+      queue.songs[0].member.id === msg.author!.id ||
+      (msg.member!.hasPermission('MANAGE_MESSAGES') && args.toLowerCase() === 'force');
 
     if (force) {
       deleteCommandMessages(msg, this.client);
@@ -86,14 +86,14 @@ export default class StopMusicCommand extends Command {
     const vote = this.songVotes.get(msg.guild.id);
 
     if (vote && vote.count >= 1) {
-      if (vote.users.some((userId: string) => userId === msg.author.id)) {
+      if (vote.users.some((userId: string) => userId === msg.author!.id)) {
         deleteCommandMessages(msg, this.client);
 
         return msg.reply('you\'ve already voted to stop the music.');
       }
 
       vote.count += 1;
-      vote.users.push(msg.author.id);
+      vote.users.push(msg.author!.id);
       if (vote.count >= threshold) {
         deleteCommandMessages(msg, this.client);
 
@@ -113,7 +113,7 @@ export default class StopMusicCommand extends Command {
 
     const newVote: MusicVoteType = {
       count: 1,
-      users: [ msg.author.id ],
+      users: [ msg.author!.id ],
       queue,
       guild: msg.guild.id,
       start: Date.now(),

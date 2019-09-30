@@ -16,8 +16,8 @@
 import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, roundNumber } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'discord.js';
 import cheerio from 'cheerio';
 import { oneLine, stripIndents } from 'common-tags';
 import Fuse, { FuseOptions } from 'fuse.js';
@@ -25,11 +25,11 @@ import moment from 'moment';
 import fetch from 'node-fetch';
 import { CydiaAPIPackageType, CydiaData } from 'RibbonTypes';
 
-type CydiaArgs = {
+interface CydiaArgs {
   deb: string;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class CydiaCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -80,7 +80,7 @@ export default class CydiaCommand extends Command {
       const packages = await res.json();
       const fuzzyList = new Fuse(packages.results as CydiaAPIPackageType[], fsoptions);
       const search = fuzzyList.search(deb);
-      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
       if (!search.length) throw new Error('no_packages');
 
@@ -122,7 +122,7 @@ export default class CydiaCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`cydia\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Package:** ${deb}
         **Regex Match:** \`${msg.patternMatches ? 'yes' : 'no'}\`

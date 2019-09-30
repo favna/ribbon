@@ -9,15 +9,15 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { readCasinoLimited } from '@components/Typeorm/DbInteractions';
 
-type LeaderboardArgs = {
+interface LeaderboardArgs {
   limit: number;
-};
+}
 
 export default class LeaderboardCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -49,7 +49,7 @@ export default class LeaderboardCommand extends Command {
   public async run(msg: CommandoMessage, { limit }: LeaderboardArgs) {
     const lbEmbed = new MessageEmbed()
       .setTitle(`Top ${limit} players`)
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
     try {
@@ -78,7 +78,7 @@ export default class LeaderboardCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`leaderboard\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`
       );

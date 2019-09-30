@@ -1,4 +1,4 @@
-import { ArgumentType, CommandoClient } from 'awesome-commando';
+import { ArgumentType, CommandoClient } from 'discord.js-commando';
 
 export default class StringArrayType extends ArgumentType {
   public constructor(client: CommandoClient) {

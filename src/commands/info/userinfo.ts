@@ -9,13 +9,13 @@
  */
 
 import { deleteCommandMessages, sentencecase, removeNullAndUndefined } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, MessageEmbed } from 'discord.js';
 import moment from 'moment';
 
-type UserInfoArgs = {
+interface UserInfoArgs {
   member: GuildMember;
-};
+}
 
 export default class UserInfoCommand extends Command {
   public constructor(client: CommandoClient) {

@@ -11,12 +11,12 @@
 
 import { DEFAULT_EMBED_COLOR, eightBallPredictionsMap } from '@components/Constants';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 
-type EightBallArgs = {
+interface EightBallArgs {
   question: string;
-};
+}
 
 export default class EightBallCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -47,7 +47,7 @@ export default class EightBallCommand extends Command {
     const eightBallEmbed = new MessageEmbed();
 
     eightBallEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .addField(':question: Question', question, false)
       .addField(':8ball: 8ball',
         eightBallPredictionsMap[roundNumber(Math.random() * eightBallPredictionsMap.length)],

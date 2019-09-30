@@ -14,15 +14,15 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageAttachment, MessageEmbed, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, MessageAttachment, MessageEmbed, User } from 'discord.js';
 import { oneLine } from 'common-tags';
 import jimp from 'jimp';
 
-type ShipArgs = {
+interface ShipArgs {
   firstMember: GuildMember | string;
   secondMember: GuildMember | string;
-};
+}
 
 export default class ShipCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -84,7 +84,7 @@ export default class ShipCommand extends Command {
     const embedAttachment = new MessageAttachment(buffer, 'ship.png');
 
     boat.attachFiles([ embedAttachment ])
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setTitle(`Shipping ${romeo.username} and ${juliet.username}`)
       .setDescription(oneLine`I call it... ${shipName}! 😘`)
       .setImage('attachment://ship.png');

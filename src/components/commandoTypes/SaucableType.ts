@@ -1,4 +1,4 @@
-import { ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { ArgumentType, CommandoClient, CommandoMessage } from 'discord.js-commando';
 
 export default class SaucableType extends ArgumentType {
   public constructor(client: CommandoClient) {

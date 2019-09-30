@@ -12,15 +12,15 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { readAllPastas, readPasta, deletePasta } from '@components/Typeorm/DbInteractions';
 
-type CopypastaRemoveArgs = {
+interface CopypastaRemoveArgs {
   name: string;
-};
+}
 
 export default class CopypastaRemoveCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -70,7 +70,7 @@ export default class CopypastaRemoveCommand extends Command {
 
       cprEmbed
         .setColor('#F7F79D')
-        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
         .setDescription(stripIndents`
           **Action:** Copypasta removed
           **Name was:** ${name}
@@ -93,7 +93,7 @@ export default class CopypastaRemoveCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in the \`copypastaremove\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Name:** ${name}
         **Error Message:** ${err}`

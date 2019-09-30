@@ -10,12 +10,12 @@
  */
 
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { TextChannel } from 'discord.js';
 
-type TwitchOutputArgs = {
+interface TwitchOutputArgs {
   channel: TextChannel;
-};
+}
 
 export default class TwitchOutputCommand extends Command {
   public constructor(client: CommandoClient) {

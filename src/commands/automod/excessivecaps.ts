@@ -12,15 +12,15 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
-type ExcessiveCapsArgs = {
+interface ExcessiveCapsArgs {
   shouldEnable: boolean;
   threshold: string;
   minLength: number;
-};
+}
 
 export default class ExcessiveCapsCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -81,7 +81,7 @@ export default class ExcessiveCapsCommand extends Command {
 
     ecfEmbed
       .setColor('#439DFF')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Excessive Caps filter has been ${shouldEnable ? 'enabled' : 'disabled'}
         ${shouldEnable ? `**Threshold:** Messages that have at least ${threshold}% caps will be deleted` : ''}

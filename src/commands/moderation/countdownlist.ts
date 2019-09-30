@@ -8,8 +8,8 @@
  */
 
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { TextChannel, Util } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { TextChannel, Util } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { readAllCountdownsForGuild } from '@components/Typeorm/DbInteractions';
@@ -56,7 +56,7 @@ export default class CountdownList extends Command {
 
         splitContent.forEach(part => {
           msg.embed({
-            color: msg.guild.me.displayColor,
+            color: msg.guild.me!.displayColor,
             description: part,
             title: 'Countdowns stored on this server',
           });
@@ -67,7 +67,7 @@ export default class CountdownList extends Command {
 
 
       return msg.embed({
-        color: msg.guild.me.displayColor,
+        color: msg.guild.me!.displayColor,
         description: body,
         title: 'Countdowns stored on this server',
       });
@@ -80,7 +80,7 @@ export default class CountdownList extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`countdownlist\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`
       );

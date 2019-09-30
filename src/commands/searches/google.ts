@@ -14,19 +14,19 @@
 import { CollectorTimeout, DEFAULT_EMBED_COLOR, GoogleSource } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'discord.js';
 import cheerio from 'cheerio';
 import { oneLine } from 'common-tags';
 import fetch from 'node-fetch';
 import { GoogleCSEItem, GoogleItem, GoogleKnowledgeItem } from 'RibbonTypes';
 import unescape from '@favware/unescape';
 
-type GoogleArgs = {
+interface GoogleArgs {
   query: string;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class GoogleCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -139,7 +139,7 @@ export default class GoogleCommand extends Command {
         .split('&')[0];
 
       const googleEmbed = new MessageEmbed()
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .setTitle(`Google Search Result for ${query}`)
         .setDescription(href)
         .setURL(href)
@@ -162,7 +162,7 @@ export default class GoogleCommand extends Command {
     position: number, hasManageMessages: boolean
   ): MessageEmbed {
     const googleEmbed = new MessageEmbed()
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setFooter(hasManageMessages ? `Result ${position + 1} of ${itemLength}` : '');
 
     if (item.source === GoogleSource.CSE) {

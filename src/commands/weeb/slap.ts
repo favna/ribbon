@@ -9,14 +9,14 @@
 
 import { ASSET_BASE_PATH } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember } from 'discord.js';
 import fetch from 'node-fetch';
 import { NekoData } from 'RibbonTypes';
 
-type SlapArgs = {
+interface SlapArgs {
   member: GuildMember;
-};
+}
 
 export default class SlapCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -47,18 +47,18 @@ export default class SlapCommand extends Command {
     try {
       const slapFetch = await fetch('https://nekos.life/api/v2/img/slap');
       const slapImg: NekoData = await slapFetch.json();
-      const isNotSelf = member.id !== msg.member.id;
+      const isNotSelf = member.id !== msg.member!.id;
 
       deleteCommandMessages(msg, this.client);
 
       return msg.embed({
-        color: msg.guild ? msg.guild.me.displayColor : 10610610,
+        color: msg.guild ? msg.guild.me!.displayColor : 10610610,
         description: isNotSelf
-          ? `${member.displayName}! You got slapped by ${msg.member.displayName} 💢!`
-          : `${msg.member.displayName} did you mean to slap someone B-Baka 🤔?`,
+          ? `${member.displayName}! You got slapped by ${msg.member!.displayName} 💢!`
+          : `${msg.member!.displayName} did you mean to slap someone B-Baka 🤔?`,
         image: { url: isNotSelf ? slapImg.url : `${ASSET_BASE_PATH}/ribbon/baka.gif` },
       },
-      `<@${member ? member.id : msg.author.id}>`);
+      `<@${member ? member.id : msg.author!.id}>`);
     } catch (err) {
       return msg.reply('something went wrong getting a slap image 💔');
     }

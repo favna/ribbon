@@ -9,8 +9,8 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { readCasino, writeCasino, updateCasinoWeekly } from '@components/Typeorm/DbInteractions';
@@ -34,12 +34,12 @@ export default class WeeklyCommand extends Command {
   public async run(msg: CommandoMessage) {
     let returnMsg = '';
     const balEmbed = new MessageEmbed()
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(msg.member!.displayName, msg.author!.displayAvatarURL({ format: 'png' }))
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/casinologo.png`);
 
     try {
-      const casino = await readCasino(msg.author.id, msg.guild.id);
+      const casino = await readCasino(msg.author!.id, msg.guild.id);
 
       if (casino && casino.balance !== undefined && casino.balance >= 0) {
         const weeklyDura = moment.duration(
@@ -56,7 +56,7 @@ export default class WeeklyCommand extends Command {
           const newBalance = casino.balance + 2000;
 
           await updateCasinoWeekly({
-            userId: msg.author.id,
+            userId: msg.author!.id,
             guildId: msg.guild.id,
             balance: newBalance,
             lastweekly: moment().format(),
@@ -84,7 +84,7 @@ export default class WeeklyCommand extends Command {
       }
 
       const newCasino = await writeCasino({
-        userId: msg.author.id,
+        userId: msg.author!.id,
         guildId: msg.guild.id,
         balance: 2000,
       });
@@ -105,7 +105,7 @@ export default class WeeklyCommand extends Command {
       channel.send(stripIndents`
           <@${this.client.owners[0].id}> Error occurred in \`weekly\` command!
           **Server:** ${msg.guild.name} (${msg.guild.id})
-          **Author:** ${msg.author.tag} (${msg.author.id})
+          **Author:** ${msg.author!.tag} (${msg.author!.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Error Message:** ${err}`
       );

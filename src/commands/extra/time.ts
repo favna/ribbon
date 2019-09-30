@@ -15,14 +15,14 @@
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 import { stripIndents } from 'common-tags';
 import fetch from 'node-fetch';
 
-type TimeArgs = {
+interface TimeArgs {
   location: string;
-};
+}
 
 export default class TimeCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -69,7 +69,7 @@ export default class TimeCommand extends Command {
           **Current Date:** ${time.formatted.split(' ')[0]}
           **Country:** ${time.countryName}
           **DST:** ${time.dst}`)
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR);
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR);
 
       deleteCommandMessages(msg, this.client);
 

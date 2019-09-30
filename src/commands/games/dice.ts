@@ -12,13 +12,13 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 
-type DiceArgs = {
+interface DiceArgs {
   sides: number;
   rolls: number;
-};
+}
 
 export default class DiceCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -64,7 +64,7 @@ export default class DiceCommand extends Command {
     });
 
     diceEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setTitle('🎲 Dice Rolls 🎲')
       .setDescription(`| ${res.join(' | ')} |`)
       .addField('Total', dice.total, false);

@@ -1,5 +1,5 @@
-import { Command, CommandoClient, CommandoGuild, CommandoMessage, SQLiteProvider } from 'awesome-commando';
-import { DMChannel, GuildChannel, GuildMember, RateLimitData } from 'awesome-djs';
+import { Command, CommandoClient, CommandoGuild, CommandoMessage, SQLiteProvider, CommandoClientOptions } from 'discord.js-commando';
+import { DMChannel, GuildChannel, GuildMember, RateLimitData } from 'discord.js';
 import { open as openDb } from 'sqlite';
 import path from 'path';
 import {
@@ -26,13 +26,9 @@ import {
   handleWarn
 } from './components/EventsHelper';
 
-export default class Ribbon {
-  public token: string;
-  public client: CommandoClient;
-
-  public constructor(token: string) {
-    this.token = token;
-    this.client = new CommandoClient({
+export default class Ribbon extends CommandoClient {
+  public constructor(options?: CommandoClientOptions) {
+    super({
       commandPrefix: '!',
       owner: [ '268792781713965056', '437280139353653249' ],
       botIds: [ '512150391471996930', '512152952908152833' ],
@@ -56,38 +52,39 @@ export default class Ribbon {
       restTimeOffset: 800,
       messageCacheLifetime: 10 * 60,
       messageSweepInterval: 5 * 60,
+      ...options,
     });
   }
 
-  public async init() {
-    this.client
-      .on('commandError', (cmd: Command, err: Error, msg: CommandoMessage): void => handleCmdErr(this.client, cmd, err, msg))
-      .on('commandRun', (cmd: Command, promise: Promise<unknown>, message: CommandoMessage): void => handleCommandRun(this.client, cmd, message))
-      .on('channelCreate', (channel: DMChannel | GuildChannel): void => handleChannelCreate(this.client, channel))
-      .on('channelDelete', (channel: DMChannel | GuildChannel): void => handleChannelDelete(this.client, channel))
+  public async init(token: string) {
+    this
+      .on('commandError', (cmd: Command, err: Error, msg: CommandoMessage): void => handleCmdErr(this, cmd, err, msg))
+      .on('commandRun', (cmd: Command, promise: Promise<unknown>, message: CommandoMessage): void => handleCommandRun(this, cmd, message))
+      .on('channelCreate', (channel: DMChannel | GuildChannel): void => handleChannelCreate(this, channel))
+      .on('channelDelete', (channel: DMChannel | GuildChannel): void => handleChannelDelete(this, channel))
       .on('debug', (info: string) => handleDebug(info))
-      .on('error', async (err: Error) => handleErr(this.client, err))
-      .on('guildCreate', async (guild: CommandoGuild) => handleGuildJoin(this.client, guild))
-      .on('guildDelete', (guild: CommandoGuild) => handleGuildLeave(this.client, guild))
-      .on('guildMemberAdd', (member: GuildMember) => handleMemberJoin(this.client, member))
-      .on('guildMemberRemove', (member: GuildMember) => handleMemberLeave(this.client, member))
-      .on('message', (message: CommandoMessage) => handleMsg(this.client, message))
-      .on('presenceUpdate', async (oldMember: GuildMember, newMember: GuildMember) => handlePresenceUpdate(this.client, oldMember, newMember))
-      .on('rateLimit', async (info: RateLimitData) => handleRateLimit(this.client, info))
-      .on('warn', async (warn: string) => handleWarn(this.client, warn))
+      .on('error', async (err: Error) => handleErr(this, err))
+      .on('guildCreate', async (guild: CommandoGuild) => handleGuildJoin(this, guild))
+      .on('guildDelete', (guild: CommandoGuild) => handleGuildLeave(this, guild))
+      .on('guildMemberAdd', (member: GuildMember) => handleMemberJoin(this, member))
+      .on('guildMemberRemove', (member: GuildMember) => handleMemberLeave(this, member))
+      .on('message', (message: CommandoMessage) => handleMsg(this, message))
+      .on('presenceUpdate', async (oldMember: GuildMember, newMember: GuildMember) => handlePresenceUpdate(this, oldMember, newMember))
+      .on('rateLimit', async (info: RateLimitData) => handleRateLimit(this, info))
+      .on('warn', async (warn: string) => handleWarn(this, warn))
       .on('shardDisconnected', (event: CloseEvent, shard: number) => handleShardDisconnect(event, shard))
       .on('shardError', (error: Error, shard: number) => handleShardError(error, shard))
       .on('shardReady', (shard: number) => handleShardReady(shard))
       .on('shardReconnecting', (shard: number) => handleShardReconnecting(shard))
       .on('shardResumed', (shard: number, events: number) => handleShardResumed(shard, events))
-      .once('ready', async () => handleReady(this.client));
+      .once('ready', async () => handleReady(this));
     process.on('unhandledRejection', (reason: Error | unknown, promise: Promise<unknown>) => handleRejection(reason, promise));
 
     const database = await openDb(path.join(__dirname, 'data/databases/settings.sqlite'));
 
-    this.client.setProvider(new SQLiteProvider(database));
+    this.setProvider(new SQLiteProvider(database));
 
-    this.client.registry
+    this.registry
       .registerDefaultTypes()
       .registerTypesIn({
         dirname: path.join(__dirname, 'components/commandoTypes'),
@@ -125,6 +122,6 @@ export default class Ribbon {
         filter: (fileName: string) => /^.+\.ts$/.test(fileName) ? fileName : undefined,
       });
 
-    return this.client.login(this.token);
+    return this.login(token);
   }
 }

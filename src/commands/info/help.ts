@@ -16,14 +16,14 @@
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, resolveGuildI18n } from '@components/Utils';
 import i18n from '@i18n/i18n';
-import { Command, CommandoClient, CommandoMessage, util } from 'awesome-commando';
-import { Message, Util as DJSUtil } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage, util } from 'discord.js-commando';
+import { Message, Util as DJSUtil } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 
-type HelpArgs = {
+interface HelpArgs {
   command: string;
   language: string;
-};
+}
 
 export default class HelpCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -85,10 +85,10 @@ export default class HelpCommand extends Command {
           try {
             messages.push(await msg.embed({
               description: help,
-              color: msg.guild ? msg.guild.me.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
+              color: msg.guild ? msg.guild.me!.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
             }) as Message);
           } catch (err) {
-            messages.push(await msg.reply('Unable to send the help message.') as Message);
+            messages.push(await msg.reply('Unable to send the help message.'));
           }
 
           this.endHelpCommand(msg, this.client);
@@ -142,7 +142,7 @@ export default class HelpCommand extends Command {
           splitContent.forEach(async part => (
             messages.push(await msg.direct('', {
               embed: {
-                color: msg.guild ? msg.guild.me.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
+                color: msg.guild ? msg.guild.me!.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
                 description: part,
               },
             }) as Message)
@@ -150,15 +150,15 @@ export default class HelpCommand extends Command {
         } else {
           messages.push(await msg.direct('', {
             embed: {
-              color: msg.guild ? msg.guild.me.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
+              color: msg.guild ? msg.guild.me!.displayColor : this.hextodec(DEFAULT_EMBED_COLOR),
               description: body,
             },
           }) as Message);
         }
 
-        if (msg.channel.type !== 'dm') messages.push(await msg.reply('Sent you a DM with information.') as Message);
+        if (msg.channel.type !== 'dm') messages.push(await msg.reply('Sent you a DM with information.'));
       } catch (err) {
-        messages.push(await msg.reply('Unable to send you the help DM. You probably have DMs disabled.') as Message);
+        messages.push(await msg.reply('Unable to send you the help DM. You probably have DMs disabled.'));
       }
 
       this.endHelpCommand(msg, this.client);

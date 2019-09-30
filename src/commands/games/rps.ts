@@ -11,13 +11,13 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 
-type RockPaperScissorArgs = {
+interface RockPaperScissorArgs {
   hand: string;
-};
+}
 
 export default class RockPaperScissorCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -93,7 +93,7 @@ export default class RockPaperScissorCommand extends Command {
       }
 
       rpsEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .setTitle('Rock Paper Scissors')
         .setDescription(resString);
 

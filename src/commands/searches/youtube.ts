@@ -14,18 +14,18 @@
 import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'discord.js';
 import { stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { YoutubeResultList, YoutubeVideoSnippetType } from 'RibbonTypes';
 
-type YoutubeArgs = {
+interface YoutubeArgs {
   query: string;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class YouTubeCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -64,7 +64,7 @@ export default class YouTubeCommand extends Command {
           type: 'video',
         })}`);
       const videoList: YoutubeResultList = await tubeSearch.json();
-      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
       const commandPrefix = msg.guild ? msg.guild.commandPrefix.length : this.client.commandPrefix.length;
       const replyShouldBeSimple = msg.content.split(' ')[0].slice(commandPrefix) === 'yts';
       const amountOfVideos = videoList.items.length;

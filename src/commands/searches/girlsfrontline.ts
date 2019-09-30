@@ -12,19 +12,19 @@
 import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, sentencecase } from '@components/Utils';
 import frontlineGirls from '@pokedex/girlsfrontline';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'discord.js';
 import cheerio from 'cheerio';
 import Fuse, { FuseOptions } from 'fuse.js';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { FrontlineGirl } from 'RibbonTypes';
 
-type GirlsFrontlineArgs = {
+interface GirlsFrontlineArgs {
   character: string;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class GirlsFrontlineCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -53,7 +53,7 @@ export default class GirlsFrontlineCommand extends Command {
       const gfOptions: FuseOptions<FrontlineGirl> = { keys: [ 'name' ] };
       const fuse = new Fuse(frontlineGirls, gfOptions);
       const girlSearch = fuse.search(character);
-      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
       let currentGirl = girlSearch[position];
       let girlEmbed = await this.prepMessage(

@@ -9,8 +9,8 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 
 export default class XKCDCommand extends Command {
@@ -41,7 +41,7 @@ export default class XKCDCommand extends Command {
 
       xkcdEmbed
         .setTitle(randomImage.safe_title)
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .setDescription(randomImage.alt)
         .setImage(randomImage.img)
         .setURL(`https://xkcd.com/${randomNum}/`);

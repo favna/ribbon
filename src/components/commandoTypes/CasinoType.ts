@@ -1,4 +1,4 @@
-import { ArgumentType, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { ArgumentType, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { roundNumber } from '../Utils';
 
 export default class CasinoType extends ArgumentType {

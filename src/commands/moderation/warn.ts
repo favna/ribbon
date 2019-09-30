@@ -14,17 +14,17 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { readWarning, updateWarning } from '@components/Typeorm/DbInteractions';
 
-type WarnArgs = {
+interface WarnArgs {
   member: GuildMember;
   points: number;
   reason: string;
-};
+}
 
 export default class WarnCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -67,7 +67,7 @@ export default class WarnCommand extends Command {
     const modlogChannel = msg.guild.settings.get('modlogchannel', null);
     const warnEmbed = new MessageEmbed()
       .setColor('#FFFF00')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setTimestamp();
 
     try {
@@ -82,7 +82,7 @@ export default class WarnCommand extends Command {
 
       await updateWarning({
         userId: member.id,
-        guildId: msg.author.id,
+        guildId: msg.author!.id,
         tag: member.user.tag,
         points: newPoints,
       });
@@ -110,7 +110,7 @@ export default class WarnCommand extends Command {
       channel.send(stripIndents`
           <@${this.client.owners[0].id}> Error occurred in \`warn\` command!
           **Server:** ${msg.guild.name} (${msg.guild.id})
-          **Author:** ${msg.author.tag} (${msg.author.id})
+          **Author:** ${msg.author!.tag} (${msg.author!.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Input:** \`${member.user.tag} (${member.id})\`|| \`${points}\` || \`${reason}\`
           **Error Message:** ${err}`

@@ -13,16 +13,16 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, removeNullAndUndefined } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel, Util } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel, Util } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import dym from 'didyoumean2';
 import moment from 'moment';
 import { readPasta, readAllPastas } from '@components/Typeorm/DbInteractions';
 
-type CopypastaArgs = {
+interface CopypastaArgs {
   name: string;
-};
+}
 
 export default class CopypastaCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -78,7 +78,7 @@ export default class CopypastaCommand extends Command {
         }
 
         pastaEmbed
-          .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+          .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
           .setTitle(pasta.name)
           .setDescription(pasta.content);
 
@@ -102,7 +102,7 @@ export default class CopypastaCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`copypasta\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`
       );

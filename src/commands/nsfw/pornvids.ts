@@ -13,13 +13,13 @@
 
 import { deleteCommandMessages } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 
-type PornVidsArgs = {
+interface PornVidsArgs {
   porn: string;
-};
+}
 
 export default class PornVidsCommand extends Command {
   public constructor(client: CommandoClient) {

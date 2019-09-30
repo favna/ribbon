@@ -11,18 +11,18 @@
 
 import { CollectorTimeout, DEFAULT_EMBED_COLOR, IGBDAgeRating } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, roundNumber } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'discord.js';
 import { oneLine } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { IgdbGame } from 'RibbonTypes';
 
-type IGDBArgs = {
+interface CommandArgs {
   game: string;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class IGDBCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -50,7 +50,7 @@ export default class IGDBCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run(msg: CommandoMessage, { game, hasManageMessages, position = 0 }: IGDBArgs) {
+  public async run(msg: CommandoMessage, { game, hasManageMessages, position = 0 }: CommandArgs) {
     try {
       const headers = {
         Accept: 'application/json',
@@ -71,7 +71,7 @@ export default class IGDBCommand extends Command {
         method: 'POST',
       });
       const gameInfo: IgdbGame[] = await igdbSearch.json();
-      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
       let currentGame = gameInfo[position];
       let gameEmbed = this.prepMessage(

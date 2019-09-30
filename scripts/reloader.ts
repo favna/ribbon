@@ -4,7 +4,6 @@ import { readFileSync as readFile, writeFileSync as writeFile } from 'fs';
 import { sync as globby } from 'glob';
 import { readFileSync as readJson } from 'jsonfile';
 import { join, resolve } from 'path';
-import { minify as terser } from 'terser';
 import { CompilerOptions, transpileModule, TranspileOutput } from 'typescript';
 import yargsInteractive, { Option as YargOptions } from 'yargs-interactive';
 
@@ -12,18 +11,18 @@ const ROOT_PATH = join(__dirname, '../');
 const SRC_PATH = join(ROOT_PATH, 'src');
 
 (async () => {
-  type YargResult = {
+  interface YargResult {
     help: boolean;
     version: boolean;
     interactive: boolean;
     command: string | string[];
-  };
+  }
 
-  type BaseTSConfig = {
+  interface BaseTSConfig {
     compilerOptions: CompilerOptions;
     include: string[];
     exclude: string[];
-  };
+  }
 
   const commandsDir = join(SRC_PATH, 'commands');
   const commands = globby(`${commandsDir}/**/*.ts`).map(file => {
@@ -72,10 +71,9 @@ const SRC_PATH = join(ROOT_PATH, 'src');
       const filePath = globby(`${commandsDir}/**/${result}.ts`)[0];
       const fileContent = readFile(filePath, { encoding: 'utf8' });
       const transpiledModule = compile(fileContent).outputText;
-      const minfiedModule = terser(transpiledModule, { compress: true, ecma: 6, mangle: true }).code;
       const distPath = filePath.replace(/\/src\//, '/dist/').replace(/\.ts$/, '.js');
 
-      writeFile(distPath, minfiedModule, { encoding: 'utf8' });
+      writeFile(distPath, transpiledModule, { encoding: 'utf8' });
     }
 
     console.info(chalk.green('Done!')); // eslint-disable-line no-console

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ArgumentType, CommandoClient } from 'awesome-commando';
+import { ArgumentType, CommandoClient } from 'discord.js-commando';
 import { stripIndents } from 'common-tags';
 import { Language } from '../Constants';
 
@@ -9,6 +9,8 @@ export default class I18nType extends ArgumentType {
   }
 
   public validate(lang: any) {
+    // eslint-disable-next-line
+    // @ts-ignore
     if (Language[lang.toUpperCase()]) return true;
 
     return stripIndents`
@@ -17,6 +19,8 @@ export default class I18nType extends ArgumentType {
   }
 
   public parse(lang: any) {
+    // eslint-disable-next-line
+    // @ts-ignore
     return Language[lang.toUpperCase()];
   }
 }

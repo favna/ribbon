@@ -10,13 +10,13 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
-type ExternalLinksArgs = {
+interface ExternalLinksArgs {
   shouldEnable: boolean;
-};
+}
 
 export default class ExternalLinksCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -52,7 +52,7 @@ export default class ExternalLinksCommand extends Command {
 
     elEmbed
       .setColor('#439DFF')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** external links filter has been ${shouldEnable ? 'enabled' : 'disabled'}
         ${msg.guild.settings.get('automod', false) ? '' : `**Notice:** Be sure to enable the general automod toggle with the \`${msg.guild.commandPrefix}automod\` command!`}`)

@@ -13,18 +13,18 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, sentencecase, removeNullAndUndefined } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { OverwatchData } from 'RibbonTypes';
 
-type OverwatchArgs = {
+interface OverwatchArgs {
   player: string;
   platform: string;
   region: string;
-};
+}
 
 export default class OverwatchCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -133,7 +133,7 @@ export default class OverwatchCommand extends Command {
         .setTitle('Click here for more details on overwatchtracker.com')
         .setURL(`https://overwatchtracker.com/profile/${platform}/global/${player}`)
         .setThumbnail(data.icon)
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .addField(sentencecase('account stats'), stripIndents`
           Player Level: **${data.level}**
           Prestige level: **${data.level + (data.prestige * 100)}**
@@ -198,7 +198,7 @@ export default class OverwatchCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`overwatch\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Player:** ${player}
         **Platform:** ${platform}

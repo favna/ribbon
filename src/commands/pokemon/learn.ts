@@ -20,15 +20,15 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, sentencecase } from '@components/Utils';
 import BattleLearnsets from '@pokedex/learnsets';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
-type LearnArgs = {
+interface LearnArgs {
   pokemon: string;
   moves: string;
-};
+}
 
 export default class LearnCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -145,7 +145,7 @@ export default class LearnCommand extends Command {
       });
 
       learnEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .setThumbnail(`${ASSET_BASE_PATH}/ribbon/rotomphone.png`)
         .setAuthor(`${sentencecase(pokemon)}`,
           `${ASSET_BASE_PATH}/ribbon/pokesprites/regular/${pokemon}.png`)
@@ -162,7 +162,7 @@ export default class LearnCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`learn\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Pokemon:** ${pokemon}
         **Moves:** ${moves}

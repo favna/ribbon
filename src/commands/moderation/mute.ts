@@ -18,16 +18,16 @@
 
 import { DURA_FORMAT } from '@components/Constants';
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, Message, MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, Message, MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 
-type MuteArgs = {
+interface MuteArgs {
   member: GuildMember;
   duration: number;
   logs: boolean;
-};
+}
 
 export default class MuteCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -76,7 +76,7 @@ export default class MuteCommand extends Command {
 
         muteEmbed
           .setColor('#AAEFE6')
-          .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+          .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
           .setDescription(stripIndents`
                         **Action:** Muted <@${member.id}>
                         **Duration:** ${duration ? moment.duration(duration).format(DURA_FORMAT.slice(5)) : 'Until manually removed'}`)
@@ -119,7 +119,7 @@ export default class MuteCommand extends Command {
         channel.send(stripIndents`
           <@${this.client.owners[0].id}> Error occurred in \`mute\` command!
           **Server:** ${msg.guild.name} (${msg.guild.id})
-          **Author:** ${msg.author.tag} (${msg.author.id})
+          **Author:** ${msg.author!.tag} (${msg.author!.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Member:** \`${member.user.username} (${member.id})\`
           **Duration:** ${duration ? moment.duration(duration).format(DURA_FORMAT.slice(5)) : null}

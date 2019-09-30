@@ -10,16 +10,16 @@
 
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { Message, MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Message, MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { RedditAbout, RedditComment, RedditResponse, RedditPost } from 'RibbonTypes';
 
-type RedditArgs = {
+interface RedditArgs {
   user: string;
-};
+}
 
 export default class RedditCommand extends Command {
   private comments: RedditComment[];
@@ -143,7 +143,7 @@ export default class RedditCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`reddit\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **User:** ${user}
         **Error Message:** ${err}`);

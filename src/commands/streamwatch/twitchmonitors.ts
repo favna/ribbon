@@ -10,13 +10,13 @@
  */
 
 import { deleteCommandMessages, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
-type TwitchMonitorArgs = {
+interface TwitchMonitorArgs {
   members: GuildMember[];
-};
+}
 
 export default class TwitchMonitorsCommand extends Command {
   public constructor(client: CommandoClient) {

@@ -12,17 +12,17 @@
 import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, roundNumber } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'discord.js';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { MovieGenreType, TMDBSerie, TVDBSeriesList } from 'RibbonTypes';
 
-type TVArgs = {
+interface TVArgs {
   name: string;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class TVCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -56,7 +56,7 @@ export default class TVCommand extends Command {
         api_key: process.env.MOVIEDB_API_KEY!,
         query: name,
       })}`);
-      const color = msg.guild ? msg.member.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.member!.displayHexColor : DEFAULT_EMBED_COLOR;
       const showList: TVDBSeriesList = await movieSearch.json();
 
       let currentSeries = showList.results[position].id;

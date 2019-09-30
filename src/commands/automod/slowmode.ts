@@ -11,14 +11,14 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
-type SlowmodeArgs = {
+interface SlowmodeArgs {
   shouldEnable: boolean;
   within: number;
-};
+}
 
 export default class SlowmodeCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -61,7 +61,7 @@ export default class SlowmodeCommand extends Command {
 
     slEmbed
       .setColor('#439DFF')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Slowmode has been ${shouldEnable ? 'enabled' : 'disabled'}
         ${shouldEnable ? `**Info:** Slow mode enabled. Members can 1 message per ${within} second(s)` : ''}

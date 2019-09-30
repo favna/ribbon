@@ -12,18 +12,18 @@
 import { CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, TextChannel, User } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
-import { iTunesData, iTunesResult } from 'RibbonTypes';
+import { } from 'RibbonTypes';
 
-type ITunesArgs = {
+interface AppleTunesArgs {
   music: string;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class ITunesCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -51,7 +51,7 @@ export default class ITunesCommand extends Command {
   }
 
   @clientHasManageMessages()
-  public async run(msg: CommandoMessage, { music, hasManageMessages, position = 0 }: ITunesArgs) {
+  public async run(msg: CommandoMessage, { music, hasManageMessages, position = 0 }: AppleTunesArgs) {
     try {
       const request = await fetch(`https://itunes.apple.com/search?${stringify({
         country: 'US',
@@ -63,7 +63,7 @@ export default class ITunesCommand extends Command {
         term: music,
       }).replace(/%2B/gm, '+')}`);
       const tracks: iTunesResult = await request.json();
-      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
 
       if (!tracks.resultCount) throw new Error('nosong');
 
@@ -106,7 +106,7 @@ export default class ITunesCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`itunes\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Input:** ${music}
         **Error Message:** ${err}`);

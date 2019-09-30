@@ -12,15 +12,15 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
-type BanArgs = {
+interface BanArgs {
   member: GuildMember;
   reason: string;
   keepMessages: boolean;
-};
+}
 
 export default class BanCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -55,7 +55,7 @@ export default class BanCommand extends Command {
 
   @shouldHavePermission('BAN_MEMBERS', true)
   public async run(msg: CommandoMessage, { member, reason, keepMessages }: BanArgs) {
-    if (member.id === msg.author.id) return msg.reply('I don\'t think you want to ban yourself.');
+    if (member.id === msg.author!.id) return msg.reply('I don\'t think you want to ban yourself.');
     if (!member.bannable) return msg.reply('I cannot ban that member, their role is probably higher than my own!');
 
     if (/--nodelete/im.test(msg.argString)) {
@@ -75,7 +75,7 @@ export default class BanCommand extends Command {
 
     banEmbed
       .setColor('#FF1900')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Member:** ${member.user.tag} (${member.id})
         **Action:** Ban

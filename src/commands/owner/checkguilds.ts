@@ -5,7 +5,7 @@
  * @name checkguilds
  */
 
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 import { stripIndents } from 'common-tags';
 
 export default class CheckGuildsCommand extends Command {

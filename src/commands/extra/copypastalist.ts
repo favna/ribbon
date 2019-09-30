@@ -8,8 +8,8 @@
  */
 
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { TextChannel, Util } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { TextChannel, Util } from 'discord.js';
 import { stripIndents, oneLine } from 'common-tags';
 import moment from 'moment';
 import { readAllPastas } from '@components/Typeorm/DbInteractions';
@@ -46,7 +46,7 @@ export default class CopyPastaListCommand extends Command {
         const splitContent = Util.splitMessage(body, { maxLength: 1800 });
 
         splitContent.forEach(async part => msg.embed({
-          color: msg.guild.me.displayColor,
+          color: msg.guild.me!.displayColor,
           description: part,
           title: 'Copypastas available on this server',
         }));
@@ -55,7 +55,7 @@ export default class CopyPastaListCommand extends Command {
       }
 
       return msg.embed({
-        color: msg.guild.me.displayColor,
+        color: msg.guild.me!.displayColor,
         description: body,
         title: 'Copypastas available on this server',
       });
@@ -69,7 +69,7 @@ export default class CopyPastaListCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`copypastalist\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`
       );

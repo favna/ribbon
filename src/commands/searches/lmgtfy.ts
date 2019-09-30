@@ -10,11 +10,11 @@
  */
 
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
 
-type LmgtfyArgs = {
+interface LmgtfyArgs {
   question: string;
-};
+}
 
 export default class LmgtfyCommand extends Command {
   public constructor(client: CommandoClient) {

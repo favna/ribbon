@@ -9,8 +9,8 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 
 export default class DndCCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -34,7 +34,7 @@ export default class DndCCommand extends Command {
     const flip = roundNumber(Math.random());
 
     coinEmbed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setImage(flip === 1
         ? `${ASSET_BASE_PATH}/ribbon/dndheads.png`
         : `${ASSET_BASE_PATH}/ribbon/dndtails.png`)

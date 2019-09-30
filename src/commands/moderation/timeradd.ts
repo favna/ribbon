@@ -24,19 +24,19 @@
 
 import { DURA_FORMAT } from '@components/Constants';
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { writeTimer } from '@components/Typeorm/DbInteractions';
 
-type TimerAddArgs = {
+interface TimerAddArgs {
   name: string;
   interval: number;
   timerChannel: TextChannel;
   content: string;
   members: GuildMember[];
-};
+}
 
 export default class TimerAddCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -113,7 +113,7 @@ export default class TimerAddCommand extends Command {
 
       timedMsgEmbed
         .setColor('#9EF7C1')
-        .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+        .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
         .setDescription(stripIndents`
           **Action:** Timed message stored
           **Interval:** ${moment.duration(interval).format(DURA_FORMAT)}
@@ -137,7 +137,7 @@ export default class TimerAddCommand extends Command {
       logChannel.send(stripIndents`
           <@${this.client.owners[0].id}> Error occurred in \`timeradd\` command!
           **Server:** ${msg.guild.name} (${msg.guild.id})
-          **Author:** ${msg.author.tag} (${msg.author.id})
+          **Author:** ${msg.author!.tag} (${msg.author!.id})
           **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
           **Interval:** ${moment.duration(interval).format(DURA_FORMAT.slice(5))}
           **Channel:** ${logChannel.name} (${logChannel.id})>

@@ -10,8 +10,8 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { readCasino } from '@components/Typeorm/DbInteractions';
@@ -35,12 +35,12 @@ export default class BankCommand extends Command {
 
   public async run(msg: CommandoMessage) {
     const bankEmbed = new MessageEmbed()
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL())
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(msg.member!.displayName, msg.author!.displayAvatarURL())
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setThumbnail(`${ASSET_BASE_PATH}/ribbon/bank.png`);
 
     try {
-      const casino = await readCasino(msg.author.id, msg.guild.id);
+      const casino = await readCasino(msg.author!.id, msg.guild.id);
 
       if (casino && casino.balance !== undefined && casino.balance >= 0) {
         const dailyDura = moment.duration(
@@ -55,7 +55,7 @@ export default class BankCommand extends Command {
         );
 
         bankEmbed
-          .setTitle(`${msg.author.tag}'s vault content`)
+          .setTitle(`${msg.author!.tag}'s vault content`)
           .setDescription(stripIndents`
             **Vault Content**
             ${casino.vault}
@@ -79,7 +79,7 @@ export default class BankCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`bank\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}
       `);

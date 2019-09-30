@@ -11,18 +11,18 @@
 
 import { ASSET_BASE_PATH, CollectorTimeout, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { clientHasManageMessages, deleteCommandMessages, injectNavigationEmotes, navigationReactionFilter, removeDiacritics } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, MessageReaction, ReactionCollector, User } from 'discord.js';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { KitsuHit, KitsuResult } from 'RibbonTypes';
 import stringify from '@favware/querystring';
 
-type AnimeArgs = {
+interface AnimeArgs {
   anime: string;
   hasManageMessages: boolean;
   position: number;
-};
+}
 
 export default class AnimeCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -71,7 +71,7 @@ export default class AnimeCommand extends Command {
           method: 'POST',
         });
       const animes: KitsuResult = await animeList.json();
-      const color = msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR;
+      const color = msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR;
       let currentAnime = animes.hits[position];
       let animeEmbed = this.prepMessage(
         color, currentAnime, animes.hits.length, position, hasManageMessages

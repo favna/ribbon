@@ -12,16 +12,16 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import { writePasta } from '@components/Typeorm/DbInteractions';
 
-type CopypastaAddArgs = {
+interface CopypastaAddArgs {
   name: string;
   content: string;
-};
+}
 
 export default class CopypastaAddCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -56,8 +56,8 @@ export default class CopypastaAddCommand extends Command {
 
   public async run(msg: CommandoMessage, { name, content }: CopypastaAddArgs) {
     const pastaAddEmbed = new MessageEmbed()
-      .setAuthor(msg.member.displayName, msg.author.displayAvatarURL({ format: 'png' }))
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setAuthor(msg.member!.displayName, msg.author!.displayAvatarURL({ format: 'png' }))
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setDescription(content)
       .setTitle(`Stored the \`${name}\` copypasta`);
 
@@ -77,7 +77,7 @@ export default class CopypastaAddCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`copypastaadd\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Error Message:** ${err}`
       );

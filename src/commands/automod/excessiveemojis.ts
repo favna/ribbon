@@ -12,15 +12,15 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
-type ExcessiveEmojisArgs = {
+interface ExcessiveEmojisArgs {
   shouldEnable: boolean;
   threshold: string;
   minLength: number;
-};
+}
 
 export default class ExcessiveEmojisCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -69,7 +69,7 @@ export default class ExcessiveEmojisCommand extends Command {
 
     eeEmbed
       .setColor('#439DFF')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Excessive Emojis filter has been ${shouldEnable ? 'enabled' : 'disabled'}
         ${shouldEnable ? `**Threshold:** Messages that have at least ${threshold} emojis will be deleted` : ''}

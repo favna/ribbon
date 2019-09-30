@@ -12,14 +12,14 @@
  */
 
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 import { search as booru } from 'booru';
 import { stripIndents } from 'common-tags';
 
-type Rule34Args = {
+interface Rule34Args {
   tags: string[];
-};
+}
 
 export default class Rule34Command extends Command {
   public constructor(client: CommandoClient) {

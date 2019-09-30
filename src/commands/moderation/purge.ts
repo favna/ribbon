@@ -10,12 +10,12 @@
  */
 
 import { shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { Message } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { Message } from 'discord.js';
 
-type PurgeArgs = {
+interface PurgeArgs {
   amount: number;
-};
+}
 
 export default class PurgeCommand extends Command {
   public constructor(client: CommandoClient) {

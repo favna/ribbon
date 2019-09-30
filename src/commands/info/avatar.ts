@@ -12,13 +12,13 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { GuildMember, ImageSize, MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { GuildMember, ImageSize, MessageEmbed } from 'discord.js';
 
-type AvatarArgs = {
+interface AvatarArgs {
   member: GuildMember;
   size: ImageSize;
-};
+}
 
 export default class AvatarCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -59,7 +59,7 @@ export default class AvatarCommand extends Command {
     const ext = this.fetchExt(ava);
 
     embed
-      .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+      .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
       .setImage(ext.includes('gif') ? `${ava}&f=.gif` : ava)
       .setTitle(member.displayName)
       .setURL(ava)

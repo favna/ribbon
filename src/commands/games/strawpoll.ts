@@ -17,14 +17,14 @@
 
 import { DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 import fetch from 'node-fetch';
 
-type StrawpollArgs = {
+interface StrawpollArgs {
   title: string;
   options: string;
-};
+}
 
 export default class StrawpollCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -82,7 +82,7 @@ export default class StrawpollCommand extends Command {
       const strawpoll = await pollPost.json();
 
       pollEmbed
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .setTitle(strawpoll.title)
         .setURL(`http://www.strawpoll.me/${strawpoll.id}`)
         .setImage(`http://www.strawpoll.me/images/poll-results/${strawpoll.id}.png`)

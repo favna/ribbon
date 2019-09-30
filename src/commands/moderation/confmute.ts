@@ -10,13 +10,13 @@
  */
 
 import { deleteCommandMessages, logModMessage, shouldHavePermission } from '@components/Utils';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, Role, TextChannel } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, Role, TextChannel } from 'discord.js';
 import { stripIndents } from 'common-tags';
 
-type ConfigureMuteArgs = {
+interface ConfigureMuteArgs {
   role: Role;
-};
+}
 
 export default class ConfigureMuteCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -52,7 +52,7 @@ export default class ConfigureMuteCommand extends Command {
 
     confMuteEmbed
       .setColor('#3DFFE5')
-      .setAuthor(msg.author.tag, msg.author.displayAvatarURL())
+      .setAuthor(msg.author!.tag, msg.author!.displayAvatarURL())
       .setDescription(stripIndents`
         **Action:** Configured mute role to \`${role.name}\``)
       .setTimestamp();

@@ -21,20 +21,20 @@
 
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { stringify } from '@favware/querystring';
-import { ArgumentCollector, Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed, TextChannel, Message } from 'awesome-djs';
+import { ArgumentCollector, Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed, TextChannel, Message } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 import { TCGPropsType, TCGCardData } from 'RibbonTypes';
 
-type NameArgumentCollection = { name: string };
-type TypeArgumentCollection = { types: string };
-type SubTypeArgumentCollection = { subtype: string };
-type SuperTypeArgumentCollection = { supertype: string };
-type HpSelectionArgumentCollection = { hp: number };
-type CardChooserArgumentCollection = { card: number };
-type PokemonTCGArgs = { props: string[] };
+interface NameArgumentCollection { name: string }
+interface TypeArgumentCollection { types: string }
+interface SubTypeArgumentCollection { subtype: string }
+interface SuperTypeArgumentCollection { supertype: string }
+interface HpSelectionArgumentCollection { hp: number }
+interface CardChooserArgumentCollection { card: number }
+interface PokemonTCGArgs { props: string[] }
 
 export default class PokemonTCGCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -221,7 +221,7 @@ export default class PokemonTCGCommand extends Command {
         }
 
         const selectionEmbed = await command.embed({
-          color: command.guild ? command.member.displayColor : 14827841,
+          color: command.guild ? command.member!.displayColor : 14827841,
           description: body,
           thumbnail: { url: `${ASSET_BASE_PATH}/ribbon/tcglogo.png` },
         }) as Message;
@@ -248,7 +248,7 @@ export default class PokemonTCGCommand extends Command {
         if (messagesDeletable) cardSelection.answers[0].delete();
 
         tcgEmbed
-          .setColor(msg.guild ? msg.member.displayHexColor : DEFAULT_EMBED_COLOR)
+          .setColor(msg.guild ? msg.member!.displayHexColor : DEFAULT_EMBED_COLOR)
           .setThumbnail(`${ASSET_BASE_PATH}/ribbon/tcglogo.png`)
           .setTitle(`${cards[selection].name} (${cards[selection].id})`)
           .setImage(cards[selection].imageUrl)
@@ -324,7 +324,7 @@ export default class PokemonTCGCommand extends Command {
       channel.send(stripIndents`
         <@${this.client.owners[0].id}> Error occurred in \`tcg\` command!
         **Server:** ${msg.guild.name} (${msg.guild.id})
-        **Author:** ${msg.author.tag} (${msg.author.id})
+        **Author:** ${msg.author!.tag} (${msg.author!.id})
         **Time:** ${moment(msg.createdTimestamp).format('MMMM Do YYYY [at] HH:mm:ss [UTC]Z')}
         **Props:** ${props.map(val => `\`${val}\``).join(', ')}
         **Name:** \`${properties.name}\`

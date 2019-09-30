@@ -18,15 +18,15 @@
 import { ASSET_BASE_PATH, DEFAULT_EMBED_COLOR } from '@components/Constants';
 import { deleteCommandMessages, roundNumber } from '@components/Utils';
 import { stringify } from '@favware/querystring';
-import { Command, CommandoClient, CommandoMessage } from 'awesome-commando';
-import { MessageEmbed } from 'awesome-djs';
+import { Command, CommandoClient, CommandoMessage } from 'discord.js-commando';
+import { MessageEmbed } from 'discord.js';
 import { oneLine, stripIndents } from 'common-tags';
 import moment from 'moment';
 import fetch from 'node-fetch';
 
-type WeatherArgs = {
+interface WeatherArgs {
   location: string;
-};
+}
 
 export default class WeatherCommand extends Command {
   public constructor(client: CommandoClient) {
@@ -94,7 +94,7 @@ export default class WeatherCommand extends Command {
 
       weatherEmbed
         .setTitle(`Weather forecast for ${cords.address}`)
-        .setColor(msg.guild ? msg.guild.me.displayHexColor : DEFAULT_EMBED_COLOR)
+        .setColor(msg.guild ? msg.guild.me!.displayHexColor : DEFAULT_EMBED_COLOR)
         .setFooter('Powered by DarkSky')
         .setTimestamp()
         .setThumbnail(`${ASSET_BASE_PATH}/ribbon/weather/${weather.currently.icon}.png`)
