@@ -117,7 +117,7 @@
     "@types/yargs-interactive": "^2.1.0",
     "chalk": "^2.4.2",
     "copyfiles": "^2.1.1",
-    "cross-env": "^6.0.0",
+    "cross-env": "^6.0.2",
     "cz-conventional-changelog": "3.0.2",
     "eslint": "^6.5.1",
     "glob": "^7.1.4",
