@@ -71,7 +71,7 @@
     "jimp": "0.7.0",
     "klasa": "dirigeants/klasa#settings",
     "libsodium-wrappers": "^0.7.5",
-    "module-alias": "^2.2.1",
+    "module-alias": "^2.2.2",
     "moment": "^2.24.0",
     "moment-duration-format": "^2.3.2",
     "node-fetch": "^2.6.0",
