@@ -107,7 +107,7 @@
     "@types/libsodium-wrappers": "^0.7.5",
     "@types/module-alias": "^2.0.0",
     "@types/moment-duration-format": "^2.2.2",
-    "@types/node": "^12.7.8",
+    "@types/node": "^12.7.9",
     "@types/node-fetch": "^2.5.2",
     "@types/qrcode": "^1.3.4",
     "@types/sqlite3": "^3.1.5",
