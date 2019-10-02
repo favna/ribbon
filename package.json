@@ -121,7 +121,7 @@
     "cz-conventional-changelog": "3.0.2",
     "eslint": "^6.5.1",
     "glob": "^7.1.4",
-    "husky": "^3.0.7",
+    "husky": "^3.0.8",
     "jsonfile": "^5.0.0",
     "lint-staged": "^9.4.1",
     "npm-run-all": "^4.1.5",
