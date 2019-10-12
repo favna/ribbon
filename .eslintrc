@@ -7,19 +7,12 @@
   },
   "rules": {
     "@typescript-eslint/no-namespace": "off",
-    "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "no-throw-literal": "off",
-
-    // TODO: Remove Once Done:
     "new-cap": [
       "error",
       {
         "capIsNewExceptionPattern": "^[A-Z][a-z]+(?:[A-Z][a-z]+)*$"
       }
-    ],
-    "multiline-comment-style": "off",
-    "capitalized-comments": "off",
-    "line-comment-position":"off",
-    "@typescript-eslint/no-unused-vars": "off"
+    ]
   }
 }

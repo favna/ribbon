@@ -1,3 +1,4 @@
+/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 // import { decache } from '@utils/Decache';
 import { getChannelsData, getCommandsData, getMessagesData, getServersData, getUsersData } from '@utils/FirebaseActions';
 import FirebaseStorage from '@utils/FirebaseStorage';

@@ -1,3 +1,4 @@
+/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 import { Collection } from 'discord.js';
 import { KlasaClient, KlasaClientOptions, KlasaUser, util } from 'klasa';
 import './extensions/RibbonGuild';
@@ -132,7 +133,6 @@ RibbonClient.defaultGuildSchema
 export default RibbonClient;
 
 declare module 'discord.js' {
-  // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
   export interface Client {
     // lavalink: Lavalink | null;
     usertags: Collection<string, string>;

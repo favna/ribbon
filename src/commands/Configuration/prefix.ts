@@ -1,3 +1,4 @@
+/* eslint-disable multiline-comment-style, capitalized-comments, line-comment-position*/
 import { GuildSettings } from '@settings/GuildSettings';
 import RibbonEmbed from '@extensions/RibbonEmbed';
 import { ApplyOptions, logModMessage } from '@utils/Utils';

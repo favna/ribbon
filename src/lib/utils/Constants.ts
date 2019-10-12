@@ -19,7 +19,7 @@ export const PAGINATED_ITEMS = 5;
 export const DURA_FORMAT = '[in] Y[ year, ]M[ month, ]D[ day, ]H[ hour and ]m[ minute]';
 export const MOMENT_LOG_FORMAT = 'YYYY-MM-DD_HH:mm';
 
-// paths
+// Paths
 export const ROOT_PATH: string = join(__dirname, '..', '..', '..');
 export const SRC_PATH: string = join(ROOT_PATH, 'src');
 export const LIB_FOLDER: string = join(SRC_PATH, 'lib');

@@ -22,16 +22,16 @@
     "importHelpers": true,
     "incremental": true,
     "removeComments": true,
-    "baseUrl": "./",
+    "baseUrl": "src",
     "paths": {
-      "@databases/*": ["src/lib/databases/*"],
-      "@dex/*": ["src/lib/dex/*"],
-      "@extensions/*": ["src/lib/extensions/*"],
-      "@settings/*": ["src/lib/typings/settings/*"],
-      "@structures/*": ["src/lib/structures/*"],
-      "@typeorm/*": ["src/lib/typeorm/*"],
-      "@typings/*": ["src/lib/typings/*"],
-      "@utils/*": ["src/lib/utils/*"]
+      "@databases/*": ["lib/databases/*"],
+      "@dex/*": ["lib/dex/*"],
+      "@extensions/*": ["lib/extensions/*"],
+      "@settings/*": ["lib/typings/settings/*"],
+      "@structures/*": ["lib/structures/*"],
+      "@typeorm/*": ["lib/typeorm/*"],
+      "@typings/*": ["lib/typings/*"],
+      "@utils/*": ["lib/utils/*"]
     }
   },
   "include": ["src"]

@@ -179,7 +179,7 @@ export const clientHasPermission = (permission: BitFieldResolvable<PermissionStr
 };
 
 /**
- * decorator that sets the enumerable property of a class field to false.
+ * Decorator that sets the enumerable property of a class field to false.
  * @param value true|false
  */
 export const enumerable = (value: boolean) => {

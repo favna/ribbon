@@ -81,7 +81,7 @@ export default class extends Provider {
     return filter.length ? data.filter(nodes => filter.includes(nodes.id)) : data;
   }
 
-  async deleteTable(table: string) {
+  async deleteTable() {
     return undefined;
   }
 

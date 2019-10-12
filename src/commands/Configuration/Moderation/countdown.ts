@@ -39,7 +39,7 @@ export default class extends Command {
       });
   }
 
-  run(msg: KlasaMessage, ...args: unknown[]) {
+  run(msg: KlasaMessage) {
     return msg.send('blub');
   }
 }
