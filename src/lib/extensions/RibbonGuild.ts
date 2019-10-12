@@ -9,7 +9,7 @@ export class RibbonGuild extends Structures.get('Guild') {
   public get memberTags() {
     const collection = new Collection<string, string>();
     for (const snowflake of this.memberSnowflakes) {
-      const username = this.client!.usertags.get(snowflake);
+      const username = this.client.usertags.get(snowflake);
       if (username) collection.set(snowflake, username);
     }
 

@@ -31,7 +31,7 @@ export default class extends Command {
 
     msg.guildSettings.set(GuildSettings.automodCaps, { enabled: shouldEnable, threshold, minLength });
 
-    const eeEmbed = new RibbonEmbed(msg.author!)
+    const eeEmbed = new RibbonEmbed(msg.author)
       .setDescription(stripIndents(
         `
           **Action:** Excessive Caps filter has been ${shouldEnable ? 'enabled' : 'disabled'}

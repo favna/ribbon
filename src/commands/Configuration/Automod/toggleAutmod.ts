@@ -20,7 +20,7 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
 export default class extends Command {
   async run(msg: KlasaMessage, [ shouldEnable ]: [boolean]) {
     msg.guildSettings.set(GuildSettings.automodEnabled, shouldEnable);
-    const automodEmbed = new RibbonEmbed(msg.author!)
+    const automodEmbed = new RibbonEmbed(msg.author)
       .setDescription(stripIndents(
         `
           **Action:** Automod features have been ${shouldEnable ? 'enabled' : 'disabled'}

@@ -21,7 +21,7 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
 export default class extends Command {
   async run(msg: KlasaMessage, [ roles ]: [Role[]]) {
     msg.guildSettings.set(GuildSettings.automodFilterRoles, roles);
-    const filterRolesEmbed = new RibbonEmbed(msg.author!)
+    const filterRolesEmbed = new RibbonEmbed(msg.author)
       .setDescription(stripIndents(
         `
         **Action:** Automod filter roles have been ${roles.map(role => `\`${role.name}\``).join(', ')}

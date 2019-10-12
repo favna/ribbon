@@ -7,8 +7,8 @@ export default class extends Event {
   }
 
   private updateStoredMember(member: GuildMember) {
-    member.guild!.memberSnowflakes.add(member.id);
-    this.client.usertags.set(member.id, member.user!.tag);
-    if (member.guild!.members.has(member.id)) member.guild!.members.delete(member.id);
+    member.guild.memberSnowflakes.add(member.id);
+    this.client.usertags.set(member.id, member.user.tag);
+    if (member.guild.members.has(member.id)) member.guild.members.delete(member.id);
   }
 }

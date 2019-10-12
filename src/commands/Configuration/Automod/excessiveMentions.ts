@@ -28,7 +28,7 @@ export default class extends Command {
 
     msg.guildSettings.set(GuildSettings.autmodMentions, { enabled: shouldEnable, threshold });
 
-    const eeEmbed = new RibbonEmbed(msg.author!)
+    const eeEmbed = new RibbonEmbed(msg.author)
       .setDescription(stripIndents(
         `
         **Action:** Mentions filter has been ${shouldEnable ? 'enabled' : 'disabled'}

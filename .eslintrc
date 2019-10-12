@@ -7,7 +7,7 @@
   },
   "rules": {
     "@typescript-eslint/no-namespace": "off",
-    "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "no-throw-literal": "off",
 
     // TODO: Remove Once Done:

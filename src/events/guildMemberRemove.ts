@@ -129,8 +129,8 @@ export default class extends Event {
   }
 
   private deleteStoredMember(member: GuildMember) {
-    member.guild!.memberSnowflakes.delete(member.id);
+    member.guild.memberSnowflakes.delete(member.id);
     if (!this.client.guilds.some(g => g.memberSnowflakes.has(member.id))) this.client.usertags.delete(member.id);
-    if (member.guild!.members.has(member.id)) member.guild!.members.delete(member.id);
+    if (member.guild.members.has(member.id)) member.guild.members.delete(member.id);
   }
 }

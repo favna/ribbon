@@ -36,7 +36,7 @@ export default class extends Command {
       enabled: shouldEnable, within, equals, distance,
     });
 
-    const dtfEmbed = new RibbonEmbed(msg.author!)
+    const dtfEmbed = new RibbonEmbed(msg.author)
       .setDescription(stripIndents(
         `
           **Action:** Duplicate text filter has been ${shouldEnable ? 'enabled' : 'disabled'}

@@ -13,7 +13,7 @@ export default class extends Argument {
 
     if (USER_REGEXP.test(arg)) arg = arg.replace(USER_REGEXP, '$1');
 
-    const users = await msg.guild!.fetchMemberUsers();
+    const users = await msg.guild.fetchMemberUsers();
     const results = new FuzzySearch(users, [ 'username', 'id', 'tag' ]).run(msg, arg);
 
     if (results.length >= 1 && results.length < 5) return results[0];

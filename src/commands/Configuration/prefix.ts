@@ -24,7 +24,7 @@ export default class extends Command {
     if (msg.guildSettings.get(GuildSettings.prefix) === prefix) return msg.sendLocale('CONFIGURATION_EQUALS', [ prefix ]);
     await msg.guildSettings.update(GuildSettings.prefix, prefix);
 
-    const prefixEmbed = new RibbonEmbed(msg.author!)
+    const prefixEmbed = new RibbonEmbed(msg.author)
       .setDescription(`The prefix for this guild has been set to \`${prefix}\``);
 
     logModMessage(msg, prefixEmbed);

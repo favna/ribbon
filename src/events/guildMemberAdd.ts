@@ -141,8 +141,8 @@ export default class extends Event {
   }
 
   private addStoredMember(member: GuildMember) {
-    member.guild!.memberSnowflakes.add(member.id);
-    this.client.usertags.set(member.id, member.user!.tag);
-    member.guild!.members.add(member);
+    member.guild.memberSnowflakes.add(member.id);
+    this.client.usertags.set(member.id, member.user.tag);
+    member.guild.members.add(member);
   }
 }

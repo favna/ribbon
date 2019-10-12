@@ -1,9 +1,8 @@
-import { MessageEmbed, MessageEmbedOptions } from 'discord.js';
-import { KlasaUser } from 'klasa';
+import { MessageEmbed, MessageEmbedOptions, User } from 'discord.js';
 import { DEFAULT_EMBED_COLOR } from '../utils/Constants';
 
 export default class extends MessageEmbed {
-  constructor(author: KlasaUser, data?: MessageEmbed | MessageEmbedOptions) {
+  constructor(author: User, data?: MessageEmbed | MessageEmbedOptions) {
     super(data);
 
     this.setAuthor(author.tag, author.displayAvatarURL());

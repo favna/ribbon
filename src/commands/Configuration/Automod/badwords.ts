@@ -28,7 +28,7 @@ export default class extends Command {
 
     msg.guildSettings.set(GuildSettings.automodBadwords, { enabled: shouldEnable, words });
 
-    const bwfEmbed = new RibbonEmbed(msg.author!)
+    const bwfEmbed = new RibbonEmbed(msg.author)
       .setDescription(stripIndents(
         `
           **Action:** Bad words filter has been ${shouldEnable ? 'enabled' : 'disabled'}

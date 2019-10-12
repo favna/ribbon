@@ -54,8 +54,8 @@ export const CLIENT_OPTIONS = {
     .add(6, ({ guild, member }) => guild! && member!.permissions.has('MANAGE_GUILD'), { fetch: true })
     .add(7, ({ guild, member }) => guild! && member!.permissions.has('ADMINISTRATOR'), { fetch: true })
     .add(8, ({ guild, member }) => guild! && member === guild!.owner, { fetch: true })
-    .add(9, ({ author, client }) => client.owners.has(author!), { break: true })
-    .add(10, ({ author, client }) => client.owners.has(author!)),
+    .add(9, ({ author, client }) => client.owners.has(author), { break: true })
+    .add(10, ({ author, client }) => client.owners.has(author)),
   pieceDefaults: {
     commands: {
       deletable: true,

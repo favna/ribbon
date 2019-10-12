@@ -24,15 +24,15 @@ export default class extends Event {
 
     // Fill the dictionary name for faster user fetching
     for (const guild of this.client.guilds.values()) {
-      const me = guild!.me!;
+      const me = guild.me!;
 
       // Populate the snowflakes
-      for (const member of guild!.members.values()) {
-        guild!.memberSnowflakes.add(member.id);
+      for (const member of guild.members.values()) {
+        guild.memberSnowflakes.add(member.id);
       }
 
       // Set the proper client me
-      guild!.members.set(me.id, me);
+      guild.members.set(me.id, me);
     }
 
     const ConnectionData = await Promise.all([

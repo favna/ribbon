@@ -20,7 +20,7 @@ import { Command, CommandOptions, KlasaMessage } from 'klasa';
 export default class extends Command {
   async run(msg: KlasaMessage, [ shouldEnable ]: [ boolean ]) {
     msg.guildSettings.set(GuildSettings.automodLinks, shouldEnable);
-    const elfEmbed = new RibbonEmbed(msg.author!)
+    const elfEmbed = new RibbonEmbed(msg.author)
       .setDescription(stripIndents(
         `
         **Action:** External Links filter has been ${shouldEnable ? 'enabled' : 'disabled'}

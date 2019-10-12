@@ -16,7 +16,7 @@ export default class extends Command {
   async run(msg: KlasaMessage, [ lowerLimit, upperLimit ]: [number, number]) {
     msg.guildSettings.set(GuildSettings.casinoLowerLimit, lowerLimit);
     msg.guildSettings.set(GuildSettings.casinoUpperLimit, upperLimit);
-    const casinoLimitEmbed = new RibbonEmbed(msg.author!)
+    const casinoLimitEmbed = new RibbonEmbed(msg.author)
       .setDescription(stripIndents(
         `
           **Action:** Changed casino limits

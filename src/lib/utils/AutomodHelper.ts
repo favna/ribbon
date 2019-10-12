@@ -5,7 +5,7 @@ import moment from 'moment';
 import { countCaps, countEmojis, countMentions, isNumberBetween } from './Utils';
 
 export const badwords = (msg: KlasaMessage, words: string[], client: KlasaClient) => {
-  if (msg.author!.bot || client.options.owners.includes(msg.author!.id) || msg.member!.hasPermission('MANAGE_MESSAGES') || !words || !words.length) {
+  if (msg.author.bot || client.options.owners.includes(msg.author.id) || msg.member!.hasPermission('MANAGE_MESSAGES') || !words || !words.length) {
     return false;
   }
 
@@ -15,7 +15,7 @@ export const badwords = (msg: KlasaMessage, words: string[], client: KlasaClient
 export const duptext = (
   msg: KlasaMessage, within: number, equals: number, distance: number, client: KlasaClient
 ) => {
-  if (msg.author!.bot || client.options.owners.includes(msg.author!.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.options.owners.includes(msg.author.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
   const authorMessages = msg.channel.messages.filter((message: Message) => {
@@ -23,7 +23,7 @@ export const duptext = (
 
     return (
       isNumberBetween(diff.asMinutes(), within * -1, 0, true) &&
-      message.author!.id === msg.author!.id
+      message.author.id === msg.author.id
     );
   });
 
@@ -42,7 +42,7 @@ export const duptext = (
 };
 
 export const caps = (msg: KlasaMessage, threshold: number, minlength: number, client: KlasaClient) => {
-  if (msg.author!.bot || client.options.owners.includes(msg.author!.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.options.owners.includes(msg.author.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
   if (msg.cleanContent.length >= minlength) {
@@ -55,7 +55,7 @@ export const caps = (msg: KlasaMessage, threshold: number, minlength: number, cl
 };
 
 export const emojis = (msg: KlasaMessage, threshold: number, minlength: number, client: KlasaClient) => {
-  if (msg.author!.bot || client.options.owners.includes(msg.author!.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.options.owners.includes(msg.author.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
   if (msg.cleanContent.length >= minlength) {
@@ -68,7 +68,7 @@ export const emojis = (msg: KlasaMessage, threshold: number, minlength: number, 
 };
 
 export const mentions = (msg: KlasaMessage, threshold: number, client: KlasaClient) => {
-  if (msg.author!.bot || client.options.owners.includes(msg.author!.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.options.owners.includes(msg.author.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
 
@@ -76,7 +76,7 @@ export const mentions = (msg: KlasaMessage, threshold: number, client: KlasaClie
 };
 
 export const links = (msg: KlasaMessage, client: KlasaClient) => {
-  if (msg.author!.bot || client.options.owners.includes(msg.author!.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.options.owners.includes(msg.author.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
 
@@ -84,7 +84,7 @@ export const links = (msg: KlasaMessage, client: KlasaClient) => {
 };
 
 export const invites = (msg: KlasaMessage, client: KlasaClient) => {
-  if (msg.author!.bot || client.options.owners.includes(msg.author!.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.options.owners.includes(msg.author.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
 
@@ -92,7 +92,7 @@ export const invites = (msg: KlasaMessage, client: KlasaClient) => {
 };
 
 export const slowmode = (msg: KlasaMessage, within: number, client: KlasaClient) => {
-  if (msg.author!.bot || client.options.owners.includes(msg.author!.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
+  if (msg.author.bot || client.options.owners.includes(msg.author.id) || msg.member!.hasPermission('MANAGE_MESSAGES')) {
     return false;
   }
   const authorMessages = msg.channel.messages.filter((message: Message) => {
@@ -100,7 +100,7 @@ export const slowmode = (msg: KlasaMessage, within: number, client: KlasaClient)
 
     return (
       isNumberBetween(diff.asSeconds(), within * -1, 0, true) &&
-      message.author!.id === msg.author!.id
+      message.author.id === msg.author.id
     );
   });
 
