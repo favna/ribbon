@@ -13,7 +13,7 @@ export default class extends Argument {
 
     if (ROLE_REGEXP.test(arg)) arg = arg.replace(ROLE_REGEXP, '$1');
 
-    const results = new FuzzySearch(msg.guild.roles, [ 'name', 'id' ]).run(msg, arg);
+    const results = new FuzzySearch(msg.guild.roles, [ 'name', 'id' ]).run(arg);
 
     if (results.length >= 1 && results.length < 5) return results[0];
     if (results.length >= 5) throw `Found multiple matches: ${results.map(result => `<@${result.name}>`).join(', ')}. Please be more specific`;

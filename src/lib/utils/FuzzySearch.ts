@@ -1,6 +1,5 @@
 import { Collection } from 'discord.js';
 import Fuse, { FuseOptions } from 'fuse.js';
-import { KlasaMessage } from 'klasa';
 
 export default class FuzzySearch<K extends string, V> {
   private readonly collectionArray: ReadonlyArray<V>;
@@ -14,7 +13,7 @@ export default class FuzzySearch<K extends string, V> {
     };
   }
 
-  public run(msg: KlasaMessage, query: string) {
+  public run(query: string) {
     const locquery = query.toLowerCase();
 
     const fuzzyFuse = new Fuse(this.collectionArray, this.fuseOptions);

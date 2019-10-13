@@ -1,7 +1,7 @@
 import { Argument, KlasaMessage, Possible } from 'klasa';
 
 export default class extends Argument {
-  run(arg: string, possible: Possible, msg: KlasaMessage) {
+  run(arg: string, _possible: Possible, msg: KlasaMessage) {
     if (this.hasMessageAttachment(msg)) return msg.attachments.first()!.url;
     if (this.isValidImageURL(arg)) return arg;
 

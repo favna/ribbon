@@ -2,7 +2,7 @@ import { CoinSide } from '@utils/Constants';
 import { Argument, KlasaMessage, Possible } from 'klasa';
 
 export default class extends Argument {
-  run(arg: CoinSide, possible: Possible, msg: KlasaMessage) {
+  run(arg: CoinSide, _possible: Possible, msg: KlasaMessage) {
     if (!msg.guild) throw 'This command can only be used inside a server.';
 
     if (CoinSide[arg]) return CoinSide[arg];

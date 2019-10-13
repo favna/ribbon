@@ -14,7 +14,7 @@ export default class extends Argument {
 
     if (USER_REGEXP.test(arg)) arg = arg.replace(USER_REGEXP, '$1');
 
-    const results = new FuzzySearch(msg.guild.members, [ 'displayName', 'id' ]).run(msg, arg);
+    const results = new FuzzySearch(msg.guild.members, [ 'displayName', 'id' ]).run(arg);
 
     if (results.length >= 1 && results.length < 5) return results[0];
     if (results.length >= 5) throw `Found multiple matches: ${results.map(result => `${result.user.tag}`).join(', ')}. Please be more specific`;

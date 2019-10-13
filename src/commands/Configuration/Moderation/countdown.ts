@@ -33,7 +33,7 @@ import { Command, CommandOptions, KlasaMessage, Possible } from 'klasa';
 export default class extends Command {
   async init() {
     this
-      .createCustomResolver('name', (arg: string, possible: Possible, msg: KlasaMessage, [ action ]: unknown[]) => {
+      .createCustomResolver('name', (_arg: string, _possible: Possible, msg: KlasaMessage, [ action ]: unknown[]) => {
         if (action === 'add' || action === 'remove') return null;
         throw msg.language.get('COMMAND_CONF_NOKEY');
       });

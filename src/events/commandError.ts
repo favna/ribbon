@@ -4,7 +4,7 @@ import { Command, Event, KlasaMessage } from 'klasa';
 import moment from 'moment';
 
 export default class extends Event {
-  run(msg: KlasaMessage, command: Command, params: unknown[], error: Error) {
+  run(msg: KlasaMessage, command: Command, _params: unknown[], error: Error) {
     const channel = this.client.channels.get(process.env.ISSUE_LOG_CHANNEL_ID!)!;
     if (error instanceof Error) this.client.emit('wtf', `[COMMAND] ${command.path}\n${error.stack || error}`);
 

@@ -14,7 +14,7 @@ export default class extends Argument {
     if (CHANNEL_REGEXP.test(arg)) arg = arg.replace(CHANNEL_REGEXP, '$1');
     const textChannels = msg.guild.channels.filter(channel => channel.type === 'text');
 
-    const results = new FuzzySearch(textChannels, [ 'name', 'id' ]).run(msg, arg);
+    const results = new FuzzySearch(textChannels, [ 'name', 'id' ]).run(arg);
 
     if (results.length >= 1 && results.length < 5) return results[0];
     if (results.length >= 5) throw `Found multiple matches: ${results.map(result => `<@${result.name}>`).join(', ')}. Please be more specific`;

@@ -162,7 +162,7 @@ export function ApplyOptions<T extends PieceOptions>(options: T): Function {
 
 /** Decorator function that checks if client has permission before running a command */
 export const clientHasPermission = (permission: BitFieldResolvable<PermissionString>): MethodDecorator => {
-  return (target: unknown, propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
+  return (_target: unknown, _propertyKey: string | symbol, descriptor: PropertyDescriptor) => {
     const fn: (...args: unknown[]) => unknown = descriptor.value;
 
     descriptor.value = async function value(msg: KlasaMessage, ...params: unknown[][]) {

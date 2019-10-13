@@ -5,7 +5,7 @@ import { GuildSettings } from '@settings/GuildSettings';
 import { oneLine } from 'common-tags';
 
 export default class extends Argument {
-  run(arg: string, possible: Possible, msg: KlasaMessage) {
+  run(arg: string, _possible: Possible, msg: KlasaMessage) {
     if (!msg.guild) throw 'This command can only be used inside a server.';
     const lowerLimit = msg.guildSettings.get(GuildSettings.casinoLowerLimit) as GuildSettings.Casino['lowerLimit'];
     const upperLimit = msg.guildSettings.get(GuildSettings.casinoUpperLimit) as GuildSettings.Casino['upperLimit'];
