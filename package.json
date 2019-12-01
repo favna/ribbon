@@ -1,9 +1,9 @@
 {
   "name": "@favware/ribbon",
-  "version": "10.1.0",
+  "version": "11.0.0",
   "description": "feature rich, modular Discord.JS-Commando server bot",
   "author": "@favware",
-  "license": "GPL-3.0",
+  "license": "Unlicense",
   "private": true,
   "main": "./dist/app.js",
   "homepage": "https://favware.tech/ribbon",

@@ -15,7 +15,6 @@
 **Project Status**
 
 [![GitHub](https://img.shields.io/github/license/favna/ribbon?logo=github&style=flat-square)](https://github.com/favna/ribbon/blob/master/LICENSE.md)
-[![CircleCI](https://img.shields.io/circleci/build/github/Favna/ribbon?logo=circleci&style=flat-square)](https://circleci.com/gh/favna/ribbon/tree/master)
 
 **Social Media and Donations**
 
@@ -24,6 +23,10 @@
 [![Patreon Donate](https://img.shields.io/badge/patreon-donate-brightgreen.svg?label=Donate%20with%20Patreon&logo=patreon&colorB=F96854&style=flat-square&link=https://www.patreon.com/bePatron?u=9336537)](https://www.patreon.com/bePatron?u=9336537)
 [![PayPal Donate](https://img.shields.io/badge/paypal-donate-brightgreen.svg?label=Donate%20with%20Paypal&logo=paypal&colorB=00457C&style=flat-square&link=https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XMAYCF9SDHZ34)](https://www.patreon.com/bePatron?u=9336537)
 
+
+## Notice of deprecation!
+
+As of December 1st 2019 Ribbon has been discontinued after about 2 years of continued support. This decision was made for me to be able to put my full efforts in the joint project to make Skyra ([website](https://skyra.pw/#/)) an even better Discord bot than it already is. Skyra offers all features that Ribbon used to + much much more!
 
 ## Features
 
@@ -52,25 +55,6 @@
 - Support for being self-hosted. Installation instructions [can be found on the wiki](https://github.com/favna/ribbon/wiki/Self-hosting-Installation)
 
 - Many other commands. See [All Commands on the Wiki](https://github.com/favna/ribbon/wiki/All-Commands) for the full list
-
-# Contributing
-
-0. Setup NodeJS as well as build tools for your OS
-   - On Windows this can best be done by opening an administrative powershell and running `npm i -g windows-build-tools`
-   - On MacOS this can best be done through `xcode-select --install`
-   - On Debian / Ubuntu this can be done through `sudo apt install -y build-essential`
-   - On Fedora / CentOS / RHEL this can be be done through `yum groupinstall 'Development Tools' -y`
-1. Fork & clone the repository, and make sure you're on the **master** branch
-   - If you forked in the past:
-     - Add the upstream repository: `git remote add upstream https://github.com/favna/ribbon`
-     - Checkout master: `git checkout master`
-     - Fetch all remotes: `git fetch --all`
-     - Pull upstream/master: `git pull upstream master`
-     - Push master: `git push origin master --force`
-2. Run `yarn install`
-3. Code your heart out!
-5. Run `yarn build` to ensure your code compiles
-6. [Submit a pull request](https://github.com/favna/ribbon/compare)
 
 ## Special Thanks
 
