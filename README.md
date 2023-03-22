@@ -1,7 +1,7 @@
 <div align="center">
 
   <p>
-  <a href="https://favware.tech/ribbon"><img src="https://storage.googleapis.com/data-sunlight-146313.appspot.com/website-project-icons/ribbon.png" height="200" alt="ribbon"/></a>
+  <a href="https://favware.tech/ribbon"><img src="https://cdn.favware.tech/img/ribbon.png" height="200" alt="ribbon"/></a>
   </p>
 
   <p>
@@ -67,17 +67,11 @@ As of December 1st 2019 Ribbon has been discontinued after about 2 years of cont
 Copyright © 2019, [Favna](https://github.com/favna).
 Released under the [The Unlicense](LICENSE.md).
 
-### Buy us a donut
-
-Favware projects are open source and always will be, even if there are no donations. That said, we also know there are people out there that may still want to donate just to show their appreciation so this is for you guys. Thanks in advance!
+### Buy me a donut
 
 You can contribute in a multitude of ways:
 
 - [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XMAYCF9SDHZ34)
 - [Patreon](https://www.patreon.com/favna)
 - [Ko-Fi](https://ko-fi.com/favna)
-- [GitHub Sponsors Favware](https://github.com/sponsors/favware)
 - [GitHub Sponsors Favna](https://github.com/sponsors/Favna)
-- Bitcoin: `1E643TNif2MTh75rugepmXuq35Tck4TnE5`
-- Ethereum: `0xF653F666903cd8739030D2721bF01095896F5D6E`
-- LiteCoin: `LZHvBkaJqKJRa8N7Dyu41Jd1PDBAofCik6`
